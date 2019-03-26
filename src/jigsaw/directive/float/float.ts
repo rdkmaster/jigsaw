@@ -361,37 +361,51 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
+        // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
             this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
-            // 调整上下位置
             const upDelta = offsetHeight + popupElement.offsetHeight;
-            if (document.body.clientHeight <= upDelta) {
-                // 可视区域比弹出的UI高度还小就不要调整了
-                return pos;
-            }
-            const totalHeight = window.pageYOffset + document.body.clientHeight;
-            if (pos.top < 0 && pos.top + upDelta <= totalHeight) {
-                // 上位置不够且下方位置足够的时候才做调整
-                pos.top += upDelta;
-            } else if (pos.top + popupElement.offsetHeight >= totalHeight && pos.top >= upDelta) {
-                // 下方位置不够且上方位置足够的时候才做调整
-                pos.top -= upDelta;
-            }
+            pos = this._calPositionY(pos, upDelta, popupElement);
+            const leftDelta = popupElement.offsetWidth;
+            pos = this._calPositionX(pos, leftDelta, popupElement);
         } else {
-            // 调整左右位置
+            const upDelta = popupElement.offsetHeight;
+            pos = this._calPositionY(pos, upDelta, popupElement);
             const leftDelta = popupElement.offsetWidth + offsetWidth;
-            if (document.body.clientWidth <= leftDelta) {
-                // 可视区域比弹出的UI高度还小就不要调整了
-                return pos;
-            }
-            const totalWidth = window.pageXOffset + document.body.clientWidth;
-            if (pos.left < 0 && pos.left + leftDelta <= totalWidth) {
-                // 左边位置不够且右边位置足够的时候才做调整
-                pos.left += leftDelta;
-            } else if (pos.left + popupElement.offsetWidth >= totalWidth && pos.left >= leftDelta) {
-                // 右边位置不够且左边位置足够的时候才做调整
-                pos.left -= leftDelta;
-            }
+            pos = this._calPositionX(pos, leftDelta, popupElement);
+
+        }
+        return pos;
+    }
+
+    private _calPositionX(pos, leftDelta, popupElement) {
+        if (document.body.clientWidth <= leftDelta) {
+            // 可视区域比弹出的UI宽度还小就不要调整了
+            return pos;
+        }
+        const totalWidth = window.pageXOffset + document.body.clientWidth;
+        if (pos.left < 0 && pos.left + leftDelta + popupElement.offsetWidth <= totalWidth) {
+            // 左边位置不够且右边位置足够的时候才做调整
+            pos.left += leftDelta;
+        } else if (pos.left + popupElement.offsetWidth >= totalWidth && pos.left >= leftDelta) {
+            // 右边位置不够且左边位置足够的时候才做调整
+            pos.left -= leftDelta;
+        }
+        return pos;
+    }
+
+    private _calPositionY(pos, upDelta, popupElement) {
+        if (document.body.clientHeight <= upDelta) {
+            // 可视区域比弹出的UI高度还小就不要调整了
+            return pos;
+        }
+        const totalHeight = window.pageYOffset + document.body.clientHeight;
+        if (pos.top < 0 && pos.top + upDelta + popupElement.offsetHeight <= totalHeight) {
+            // 上位置不够且下方位置足够的时候才做调整
+            pos.top += upDelta;
+        } else if (pos.top + popupElement.offsetHeight >= totalHeight && pos.top >= upDelta) {
+            // 下方位置不够且上方位置足够的时候才做调整
+            pos.top -= upDelta;
         }
         return pos;
     }
