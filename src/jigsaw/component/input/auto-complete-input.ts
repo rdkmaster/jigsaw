@@ -171,7 +171,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     /**
      * @internal
      */
-    public _$add(item) {
+    public _$add(event,item) {
+        event.preventDefault();
+        event.stopPropagation();
         this.value = item;
         this.selectEvent.emit(item);
     }
