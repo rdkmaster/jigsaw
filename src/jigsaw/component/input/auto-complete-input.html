@@ -11,7 +11,7 @@
         <div *ngFor="let category of _$data;">
             <label *ngIf="category.category" class="jigsaw-auto-complete-input-item-title">{{category.category}}</label>
             <ul>
-                <li class="jigsaw-auto-complete-input-item" (click)="_$add(item)" *ngFor="let item of category.items;">
+                <li class="jigsaw-auto-complete-input-item" (click)="_$add($event,item)" *ngFor="let item of category.items;">
                     <label>{{item}}</label>
                 </li>
             </ul>
