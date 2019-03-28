@@ -12,6 +12,7 @@
         <jigsaw-pagination [data]="pageable"
                            [pageSizeOptions]="[5, 10, 20]"
                            [searchable]="true"
+                           [placeholder]="'搜一搜'"
                            [showQuickJumper]="true"
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"

@@ -95,13 +95,32 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         });
     };
 
-    @Input() public searchable: boolean = false; // 搜索功能开关
-    @Input() public showQuickJumper: boolean = false; // 是否可以快速跳转至某页
-    @Input() public mode: 'complex' | 'simple' = 'complex'; // 当为「small」时，是小尺寸分页
+    /**
+     * 搜索功能开关
+     */
+    @Input() public searchable: boolean = false;
+    /**
+     * 是否可以快速跳转至某页
+     */
+    @Input() public showQuickJumper: boolean = false;
+    /**
+     * 当为「small」时，是小尺寸分页
+     */
+    @Input() public mode: 'complex' | 'simple' = 'complex';
+    /**
+     * 搜索框的提示信息
+     */
+    @Input() public placeholder: string = '';
 
     @Output() public search = new EventEmitter<string>();
-    @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>(); //页码改变的事件
-    @Output() public pageSizeChange: EventEmitter<number> = new EventEmitter<number>(); // pageSize 变化的事件
+    /**
+     * 页码改变的事件
+     */
+    @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>();
+    /**
+     * pageSize 变化的事件
+     */
+    @Output() public pageSizeChange: EventEmitter<number> = new EventEmitter<number>();
 
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
