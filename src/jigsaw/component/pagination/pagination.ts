@@ -141,6 +141,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @Input() public showQuickJumper: boolean = false; // 是否可以快速跳转至某页
 
     @Input() public mode: 'complex' | 'simple' = 'complex'; // 当为「small」时，是小尺寸分页
+    @Input() public placeholder: string = '';
 
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;

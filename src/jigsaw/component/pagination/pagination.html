@@ -1,6 +1,7 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchDefault>
-        <jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160" (valueChange)="search.emit($event)">
+        <jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160"
+                      [placeholder]="placeholder" (valueChange)="search.emit($event)">
             <span jigsaw-prefix-icon class="fa fa-search"></span>
         </jigsaw-input>
 
