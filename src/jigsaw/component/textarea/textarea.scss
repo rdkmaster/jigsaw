@@ -16,6 +16,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         line-height: 1;
     }
     textarea {
+        background: $component-background;
         resize: none;
         width: 100%;
         height: 100%;

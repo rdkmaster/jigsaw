@@ -1,4 +1,4 @@
-@import "./settings/zte-deep";
+@import "settings/zte-dark";
 @import "../all-theme";
 @import "../theming-api";
 
@@ -13,7 +13,7 @@
 @include setTableTextAlign(left, 8px);
 
 @include setTag($opacity-bg-3, 25px);
-@include setCollapse(#f4f6f8);
+@include setCollapse($opacity-bg-3);
 @include setTabTriangle(true);
 
 // ------ Own for zte ------
@@ -104,8 +104,87 @@
     }
 }
 
+@mixin setBreadCrumbTheme() {
+    .#{$bc-prefix-cls} {
+        &-item {
+            color: $text-color-secondary;
+            &:hover, &.#{$bc-prefix-cls}-current {
+                color: $text-color;
+            }
+        }
+        &.#{$bc-prefix-cls}-light {
+            background: $background-color-base;
+            .#{$bc-prefix-cls}-item {
+                color: $text-color-secondary;
+                &:hover, &.#{$bc-prefix-cls}-current {
+                    color: $text-color;
+                }
+            }
+        }
+        &.#{$bc-prefix-cls}-dark {
+            background: $nav-bg-2;
+            .#{$bc-prefix-cls}-item {
+                color: $gray-3;
+                &:hover, &.#{$bc-prefix-cls}-current {
+                    color: $gray-2;
+                }
+            }
+        }
+        &.#{$bc-prefix-cls}-inner {
+            background: $nav-bg-3;
+            .#{$bc-prefix-cls}-item {
+                .#{$bc-prefix-cls}-label {
+                    color: $gray-2;
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin setCollapseTheme() {
+    .#{$collapse-prefix} {
+        &-item &-content {
+            color: $gray-2;
+            background-color: $light-bg-2;
+        }
+    }
+}
+
+@mixin setTableTheme() {
+    .#{$table-prefix-cls}-host table tbody tr {
+        td[rowspan] {
+            background: $opacity-bg-2;
+        }
+    }
+}
+
+@mixin setListTheme() {
+    .#{$list-option-prefix-cls} {
+        &-title {
+            color: $gray-2;
+        }
+        &-sub-title {
+            color: $gray-3;
+        }
+    }
+}
+
+@mixin setTreeTheme() {
+    .ztree li span {
+        color: $text-color;
+    }
+}
+
 @include setPopupCloseBar($primary-color, $primary-7);
 @include setTimeGrTab(#008fd4);
 @include setBtnDefault($primary-color);
 @include setTableBorder($opacity-bg-3);
 @include setSliderTheme();
+@include setBreadCrumbTheme();
+@include setCollapseTheme();
+@include setTableTheme();
+@include setListTheme();
+@include setTreeTheme();

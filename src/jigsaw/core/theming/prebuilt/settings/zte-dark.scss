@@ -83,7 +83,7 @@ $component-background   : $light-bg-2;
 $font-family            : "Microsoft YaHei", Arial;
 $code-family            : Consolas, Menlo, Courier, monospace;
 $heading-color          : $gray-1;
-$heading-color-dark     : #222;
+$heading-color-dark     : #eeeeee;
 $text-color             : $gray-2;
 $text-color-secondary   : $gray-3;
 $text-color-dark        : $gray-4;
@@ -116,10 +116,10 @@ $box-shadow-base        : $shadow-1-down;
 $box-focus-shadow       : 0 0 0 2px fade-out($primary-color, .8);
 
 // Disabled
-$disabled-color         : rgba(#000, .25);
-$disabled-color-ie11    : #bfbfbf; // 兼容IE11
-$disabled-bg            : $background-color-base;
-$disabled-bg-dark       : #f4f4f4; // switch组件disabled bg
+$disabled-color         : $gray-3;
+$disabled-color-ie11    : $gray-3; // 兼容IE11
+$disabled-bg            : $gray-5;
+$disabled-bg-dark       : #333; // switch组件disabled bg
 
 // The background colors for active and hover states for things like
 // list items or table cells.
