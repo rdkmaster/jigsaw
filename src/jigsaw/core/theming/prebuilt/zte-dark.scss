@@ -8,7 +8,7 @@
 
 @include showBtnAnimation(false);
 
-@include setTableHead($opacity-bg-2, $gray-1, 14px, $primary-color, 1px);
+@include setTableHead($opacity-bg-2, $fill-color-4, 14px, $primary-color, 1px);
 @include setTableBody($gray-2, default, $opacity-bg-1, $opacity-bg-2);
 @include setTableTextAlign(left, 8px);
 
