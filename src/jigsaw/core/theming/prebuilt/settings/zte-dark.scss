@@ -27,10 +27,8 @@ $fill-color-1: #015c91;
 $fill-color-2: #027bc2;
 /*主按钮填充/灌边，icon悬停，操作中状态描边，文本链接，组件选中*/
 $fill-color-3: $primary-color;
-/*下拉点击填充，输入框输入状态，外灌边，特殊文字*/
+/*表头，特殊文字*/
 $fill-color-4: #ccebfc;
-/*下拉悬浮填充*/
-$fill-color-5: #e6f5fe;
 
 /*灰度*/
 /*标题*/
@@ -79,7 +77,7 @@ $opacity-bg-5: rgba(#fff, .25);
 
 // ------ Base & Require ------
 $body-background        : $light-bg-1;
-$component-background   : $light-bg-2;
+$component-background   : transparent;
 $font-family            : "Microsoft YaHei", Arial;
 $code-family            : Consolas, Menlo, Courier, monospace;
 $heading-color          : $gray-1;
@@ -118,13 +116,13 @@ $box-focus-shadow       : 0 0 0 2px fade-out($primary-color, .8);
 // Disabled
 $disabled-color         : $gray-3;
 $disabled-color-ie11    : $gray-3; // 兼容IE11
-$disabled-bg            : $gray-5;
-$disabled-bg-dark       : #333; // switch组件disabled bg
+$disabled-bg            : $opacity-bg-2;
+$disabled-bg-dark       : $opacity-bg-3; // switch组件disabled bg
 
 // The background colors for active and hover states for things like
 // list items or table cells.
-$item-hover-bg          : $fill-color-5;
-$item-active-bg         : $fill-color-4;
+$item-hover-bg          : $fill-color-1;
+$item-active-bg         : $fill-color-2;
 
 // Buttons
 $btn-box-shadow         : none;

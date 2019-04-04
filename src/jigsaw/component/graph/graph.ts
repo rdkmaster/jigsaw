@@ -79,21 +79,17 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = VMAX_GRAPH_THEME;
+    private static _globalTheme: any = VMAX_GRAPH_THEME;
 
     @Input()
-    public get globalTheme() {
+    public static get globalTheme() {
         return this._globalTheme;
     };
 
-    public set globalTheme(value) {
+    public static set globalTheme(value) {
         if (!value) return;
         value = value == 'light' ? VMAX_GRAPH_THEME : value == 'dark' ? VMAX_GRAPH_THEME_DARK : value;
         this._globalTheme = value;
-        if (this._graph) {
-            this._graph._theme = value;
-            this.data.refresh();
-        }
     }
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
@@ -167,7 +163,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         this._zone.runOutsideAngular(() => {
             // echarts的Animation对象里的_startLoop方法有个递归调用requestAnimationFrame,会触发变更检查，见#289
             this._graph = echarts.init(this._graphContainer);
-            this._graph._theme = this.globalTheme;
+            this._graph._theme = JigsawGraph.globalTheme;
         });
         this._listenWindowResize();
         if (this.data) {

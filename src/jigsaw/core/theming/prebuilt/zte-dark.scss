@@ -3,7 +3,7 @@
 @import "../theming-api";
 
 // ------ Custom for zte by theming-api ------
-@include setDialogHead($primary-color, $opacity-bg-3, 30px);
+@include setDialogHead($primary-color, $light-bg-3, 30px);
 @include setDialogButton(right, false);
 
 @include showBtnAnimation(false);
@@ -148,7 +148,7 @@
     .#{$collapse-prefix} {
         &-item &-content {
             color: $gray-2;
-            background-color: $light-bg-2;
+            background-color: $component-background;
         }
     }
 }
@@ -178,9 +178,28 @@
     }
 }
 
+@mixin setInputTheme() {
+    .#{$input-prefix-cls} {
+        &.#{$input-prefix-cls}-disabled {
+            input {
+                background-color: $disabled-bg;
+            }
+        }
+    }
+}
+
+@mixin setDialogTheme() {
+    .#{$dialog-prefix-cls} {
+        background: $light-bg-2;
+    }
+    .#{$alert-prefix-cls} {
+        background: $light-bg-2;
+    }
+}
+
 @include setPopupCloseBar($primary-color, $primary-7);
 @include setTimeGrTab(#008fd4);
-@include setBtnDefault($primary-color);
+@include setBtnDefault($text-color);
 @include setTableBorder($opacity-bg-3);
 @include setSliderTheme();
 @include setBreadCrumbTheme();
@@ -188,3 +207,5 @@
 @include setTableTheme();
 @include setListTheme();
 @include setTreeTheme();
+@include setInputTheme();
+@include setDialogTheme();

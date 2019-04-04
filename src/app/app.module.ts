@@ -9,6 +9,7 @@ import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
+import {JigsawGraph} from "../jigsaw/component/graph";
 
 {
     (<any[]>routerConfig).push(
@@ -36,4 +37,7 @@ import {routerConfig} from "./router-config";
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor() {
+        JigsawGraph.globalTheme = 'dark';
+    }
 }
