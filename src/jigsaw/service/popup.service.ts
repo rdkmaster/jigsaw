@@ -279,7 +279,7 @@ export class PopupService {
         setTimeout(() => {
             this._setPopup(options, element);
             // 给弹出设置皮肤
-            if(PopupService.theme) {
+            if(PopupService.theme && element.tagName.toLowerCase() != 'jigsaw-block' && element.tagName.toLowerCase() != 'j-block') {
                 PopupService._renderer.setStyle(element, 'background', PopupService.theme == 'light' ? '#fff' : PopupService.theme == 'dark' ? '#102331' : PopupService.theme);
             }
         }, 0);

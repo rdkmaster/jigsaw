@@ -186,6 +186,12 @@
             }
         }
     }
+
+    .#{$jigsaw-auto-complete-input} {
+        &-item-title{
+            background: $opacity-bg-2;
+        }
+    }
 }
 
 @include setPopupCloseBar($primary-color, $primary-7);
