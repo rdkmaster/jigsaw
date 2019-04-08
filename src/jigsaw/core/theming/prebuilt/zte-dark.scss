@@ -187,10 +187,43 @@
         }
     }
 
+    .#{$numeric-input-prefix-cls} {
+        &.#{$numeric-input-prefix-cls}-disabled {
+            input {
+                background-color: $disabled-bg;
+            }
+        }
+    }
+
     .#{$jigsaw-auto-complete-input} {
         &-item-title{
             background: $opacity-bg-2;
         }
+    }
+}
+
+@mixin setDrawerTheme() {
+    .#{$drawer-prefix-cls} {
+        background: $light-bg-2;
+    }
+}
+
+@mixin setFishBoneTheme() {
+    .#{$fish-bone-prefix-cls} {
+        &-dark {
+            background: $component-background;
+        }
+    }
+}
+
+@mixin setTimeTheme() {
+    .bootstrap-datetimepicker-widget table td.day:hover,
+    .bootstrap-datetimepicker-widget table td.hour:hover,
+    .bootstrap-datetimepicker-widget table td.minute:hover,
+    .bootstrap-datetimepicker-widget table td.second:hover,
+    .bootstrap-datetimepicker-widget table td span:hover{
+        background: $fill-color-2;
+        color: $text-color;
     }
 }
 
@@ -205,3 +238,6 @@
 @include setListTheme();
 @include setTreeTheme();
 @include setInputTheme();
+@include setDrawerTheme();
+@include setFishBoneTheme();
+@include setTimeTheme();
