@@ -188,15 +188,6 @@
     }
 }
 
-@mixin setDialogTheme() {
-    .#{$dialog-prefix-cls} {
-        background: $light-bg-2;
-    }
-    .#{$alert-prefix-cls} {
-        background: $light-bg-2;
-    }
-}
-
 @include setPopupCloseBar($primary-color, $primary-7);
 @include setTimeGrTab(#008fd4);
 @include setBtnDefault($text-color);
@@ -208,4 +199,3 @@
 @include setListTheme();
 @include setTreeTheme();
 @include setInputTheme();
-@include setDialogTheme();

@@ -10,6 +10,7 @@ import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
 import {JigsawGraph} from "../jigsaw/component/graph";
+import {PopupService} from "../jigsaw/service/popup.service";
 
 {
     (<any[]>routerConfig).push(
@@ -39,5 +40,6 @@ import {JigsawGraph} from "../jigsaw/component/graph";
 export class AppModule {
     constructor() {
         JigsawGraph.globalTheme = 'dark';
+        PopupService.theme = 'dark';
     }
 }

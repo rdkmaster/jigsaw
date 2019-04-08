@@ -180,6 +180,11 @@ export class PopupInfo {
 
 @Injectable()
 export class PopupService {
+    /**
+     * 给弹框设置背景，如果theme==‘dark’，会默认取色值'#102331'，还可以直接给个色值
+     */
+    public static theme : string;
+
     private static _instance: PopupService;
 
     public static get instance(): PopupService {
@@ -273,6 +278,10 @@ export class PopupService {
         removeWindowListens = this._beforePopup(options, element, disposer);
         setTimeout(() => {
             this._setPopup(options, element);
+            // 给弹出设置皮肤
+            if(PopupService.theme == 'dark') {
+                PopupService._renderer.setStyle(element, 'background', PopupService.theme == 'dark' ? '#102331' : PopupService.theme);
+            }
         }, 0);
 
         return {
