@@ -43,29 +43,3 @@
         </div>
     </ng-template>
 </span>
-
-<br><br>
-
-<div j-movable style="position: fixed" class="movable-box">
-    <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
-          [jigsawFloatTarget]="jigsawFloatArea5" [jigsawFloatPosition]="position"
-          style="margin: 40px 16px 40px 0">
-       鼠标挪过来
-        <ng-template #jigsawFloatArea5>
-            <div class="jigsawFloatArea" style="width: 300px; height: 150px;">
-                <p>
-                    请注意：<br>
-                    如果选中的弹出位置超出了当前的可视区域，<br>
-                    float指令会采用内置算法调整成其他最佳弹出位置。<br>
-                    请试试把这个块拖到屏幕的4个角落，<br>
-                    再触发下拉，查看位置调整的效果
-                </p>
-            </div>
-        </ng-template>
-    </span>
-    <span>切换位置</span>
-    <jigsaw-select [(value)]="position"
-                   [data]="['bottomLeft', 'bottomRight', 'topLeft', 'topRight',
-                            'leftTop', 'leftBottom', 'rightTop', 'rightBottom']">
-    </jigsaw-select>
-</div>
