@@ -89,8 +89,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set globalTheme(value) {
         if (!value) return;
-        value = value == 'dark' ? VMAX_GRAPH_THEME_DARK : value;
         this._globalTheme = value;
+        if (this._graph) {
+            this._graph._theme = value;
+            this.data.refresh();
+        }
     }
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
