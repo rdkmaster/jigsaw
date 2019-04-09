@@ -18,8 +18,6 @@ if [ "$?" != "0" ]; then
     npm install -g @compodoc/compodoc@1.0.9
 fi
 
-echo $output
-
 cd $home
 rm -fr $output/documentation.json $output/fragments
 compodoc src/jigsaw -p tsconfig.json --silent --disableSourceCode --disableGraph \
