@@ -176,6 +176,10 @@
     .ztree li span {
         color: $text-color;
     }
+    .ztree li a.curSelectedNode {
+        background-color: $opacity-bg-2;
+        border: 1px solid $primary-color;
+    }
 }
 
 @mixin setInputTheme() {
