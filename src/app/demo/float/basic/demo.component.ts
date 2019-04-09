@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {FloatTargetDemo} from "../target/demo.component";
 
 @Component({
     templateUrl: './demo.component.html',
