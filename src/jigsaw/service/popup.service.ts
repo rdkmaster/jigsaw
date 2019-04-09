@@ -278,7 +278,10 @@ export class PopupService {
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
             if(tagName != 'jigsaw-block' && tagName != 'j-block') {
-                PopupService._renderer.setStyle(element, 'background', JigsawTheme.getPopupBackgroundColor());
+                const backgroundColor = JigsawTheme.getPopupBackgroundColor();
+                if(backgroundColor) {
+                    PopupService._renderer.setStyle(element, 'background', backgroundColor);
+                }
             }
         }, 0);
 

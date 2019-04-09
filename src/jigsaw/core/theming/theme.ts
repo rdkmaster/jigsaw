@@ -4,11 +4,11 @@ export class JigsawTheme {
     public static getPopupBackgroundColor() {
         switch (JigsawTheme.majorStyle) {
             case "light":
-                return '#fff';
+                return null;
             case "dark":
                 return "#102331";
             default:
-                return '#fff';
+                return null;
         }
     }
 }
