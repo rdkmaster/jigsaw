@@ -5,8 +5,8 @@ import {
     PopupPositionOffset,
     PopupPositionType,
     PopupSize
-} from "../../../../jigsaw/service/popup.service";
-import {CommonUtils} from "../../../../jigsaw/core/utils/common-utils";
+} from "jigsaw/service/popup.service";
+import {CommonUtils} from "jigsaw/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
