@@ -111,6 +111,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
+    @Output('textSelect')
+    public textSelectEvent = new EventEmitter<Event>();
+
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _changeDetectorRef: ChangeDetectorRef,
@@ -171,7 +174,15 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     /**
      * @internal
      */
-    public _$add(event,item) {
+    _$handleSelect($event: Event) {
+        $event.stopPropagation();
+        this.textSelectEvent.emit($event);
+    }
+
+    /**
+     * @internal
+     */
+    public _$add(event, item) {
         event.preventDefault();
         event.stopPropagation();
         this.value = item;
