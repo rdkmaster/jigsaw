@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {PopupOptions, PopupPositionValue} from "../../../../jigsaw/service/popup.service";
-import {FloatBasicDemo} from "../basic/demo.component";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -40,6 +39,12 @@ export class FloatPosReviserDemo {
             return pos;
         }
     };
+
+    public position;
+
+    constructor() {
+        this.position = "bottomLeft";
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

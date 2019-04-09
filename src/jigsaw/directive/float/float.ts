@@ -255,16 +255,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     private _getPos(): PopupPoint {
-        let point = new PopupPoint();
-        if (this.jigsawFloatOptions && this.jigsawFloatOptions.posType == PopupPositionType.fixed) {
-            // 获取触发点相对于视窗的位置
-            const tempRect = this._elementRef.nativeElement.getBoundingClientRect();
-            point.y = tempRect.top;
-            point.x = tempRect.left;
-        } else {
-            point.y = AffixUtils.offset(this._elementRef.nativeElement).top;
-            point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
-        }
+        let point = this._getHostElementPos();
         window['jigsawFloatTarget'] = this.jigsawFloatTarget;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
@@ -287,6 +278,20 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 point.x += this._elementRef.nativeElement.offsetWidth;
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
+        }
+        return point;
+    }
+
+    private _getHostElementPos() {
+        let point = new PopupPoint();
+        if (this.jigsawFloatOptions && this.jigsawFloatOptions.posType == PopupPositionType.fixed) {
+            // 获取触发点相对于视窗的位置
+            const tempRect = this._elementRef.nativeElement.getBoundingClientRect();
+            point.y = tempRect.top;
+            point.x = tempRect.left;
+        } else {
+            point.y = AffixUtils.offset(this._elementRef.nativeElement).top;
+            point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
         }
         return point;
     }
@@ -361,49 +366,63 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
+        const point = this._getHostElementPos();
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
             this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
             const upDelta = offsetHeight + popupElement.offsetHeight;
-            pos = this._calPositionY(pos, upDelta, popupElement);
+            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth;
-            pos = this._calPositionX(pos, leftDelta, popupElement);
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         } else {
             const upDelta = popupElement.offsetHeight;
-            pos = this._calPositionY(pos, upDelta, popupElement);
+            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth + offsetWidth;
-            pos = this._calPositionX(pos, leftDelta, popupElement);
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
 
         }
         return pos;
     }
 
-    private _calPositionX(pos, leftDelta, popupElement) {
+    private _calPositionX(pos, leftDelta, popupElement, point, offsetWidth) {
         if (document.body.clientWidth <= leftDelta) {
             // 可视区域比弹出的UI宽度还小就不要调整了
             return pos;
         }
         const totalWidth = window.pageXOffset + document.body.clientWidth;
+        //宿主组件在可视范围外
+        if (point.x < 0 && (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'bottomLeft') && leftDelta <= totalWidth - (offsetWidth + point.x)) {
+            pos.left += offsetWidth;
+        } else if (point.x + offsetWidth > totalWidth && (this.jigsawFloatPosition === 'topRight' || this.jigsawFloatPosition === 'bottomRight') && point.x >= leftDelta) {
+            pos.left -= offsetWidth;
+        }
         if (pos.left < 0 && pos.left + leftDelta + popupElement.offsetWidth <= totalWidth) {
             // 左边位置不够且右边位置足够的时候才做调整
             pos.left += leftDelta;
-        } else if (pos.left + popupElement.offsetWidth >= totalWidth && pos.left >= leftDelta) {
+        } else if (pos.left + popupElement.offsetWidth > totalWidth && pos.left >= leftDelta) {
             // 右边位置不够且左边位置足够的时候才做调整
             pos.left -= leftDelta;
         }
         return pos;
     }
 
-    private _calPositionY(pos, upDelta, popupElement) {
+    private _calPositionY(pos, upDelta, popupElement, point, offsetHeight) {
         if (document.body.clientHeight <= upDelta) {
             // 可视区域比弹出的UI高度还小就不要调整了
             return pos;
         }
         const totalHeight = window.pageYOffset + document.body.clientHeight;
+
+        //宿主组件在可视范围外
+        if (point.y < 0 && (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop') && upDelta <= totalHeight - (offsetHeight + point.y)) {
+            pos.top += offsetHeight;
+        } else if (point.y + offsetHeight > totalHeight && (this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') && point.y >= upDelta) {
+            pos.top -= offsetHeight;
+        }
         if (pos.top < 0 && pos.top + upDelta + popupElement.offsetHeight <= totalHeight) {
             // 上位置不够且下方位置足够的时候才做调整
             pos.top += upDelta;
-        } else if (pos.top + popupElement.offsetHeight >= totalHeight && pos.top >= upDelta) {
+        } else if (pos.top + popupElement.offsetHeight > totalHeight && pos.top >= upDelta) {
             // 下方位置不够且上方位置足够的时候才做调整
             pos.top -= upDelta;
         }

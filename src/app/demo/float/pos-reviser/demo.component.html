@@ -48,7 +48,7 @@
 
 <div j-movable style="position: fixed" class="movable-box">
     <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
-          [jigsawFloatTarget]="jigsawFloatArea5" [jigsawFloatPosition]="pos.value"
+          [jigsawFloatTarget]="jigsawFloatArea5" [jigsawFloatPosition]="position"
           style="margin: 40px 16px 40px 0">
        鼠标挪过来
         <ng-template #jigsawFloatArea5>
@@ -64,7 +64,7 @@
         </ng-template>
     </span>
     <span>切换位置</span>
-    <jigsaw-select #pos value="bottomRight"
+    <jigsaw-select [(value)]="position"
                    [data]="['bottomLeft', 'bottomRight', 'topLeft', 'topRight',
                             'leftTop', 'leftBottom', 'rightTop', 'rightBottom']">
     </jigsaw-select>
