@@ -1,3 +1,26 @@
+## v1.1.22 (2019-4-9)
+
+### 新特性 / New Features
+- [新增] tab增加enableAnimation属性，用于打开和关闭切换tab内容的动画
+- [新增] CollapsePane折叠组件的isActive属性支持双绑
+- [新增] jigsaw-pagination组件给搜索框增加placeholder属性
+- [新增] 增加一套深色皮肤
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] 采用覆盖png图片的方式来重新定义ztree皮肤，对齐ux最新规范
+
+### 修复 / Fixes
+- [修复]graph事件回调无法被angular变更检查
+- [修复] 上传控件按文件类型检测时，需要无视大小写
+- [修复] 在node里面require jigsaw的的umd包时报错，fixes #889
+- [修复] 给graph加个afterViewInit钩子并调下resize，让图表撑开
+- [修复] Tabs组件在初始化组件时，如果一开始就显示按钮，会报错
+- [修复] 修复auto-input在float里面选择时，float也被关闭
+- [修复] float指令弹出位置算法修正
+
 ## v1.1.21 (2019-1-31)
 
 ### 新特性 / New Features
