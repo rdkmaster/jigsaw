@@ -1,14 +1,14 @@
 export class JigsawTheme {
-    public static majorStyle : "dark" | "light" = "light";
+    public static majorStyle : "dark" | "default" = "default";
 
     public static getPopupBackgroundColor() {
         switch (JigsawTheme.majorStyle) {
-            case "light":
-                return '#fff';
+            case 'default':
+                return null;
             case "dark":
                 return "#102331";
             default:
-                return '#fff';
+                return null;
         }
     }
 }
