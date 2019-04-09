@@ -3,8 +3,6 @@ export class JigsawTheme {
 
     public static getPopupBackgroundColor() {
         switch (JigsawTheme.majorStyle) {
-            case "light":
-                return null;
             case "dark":
                 return "#102331";
             default:
