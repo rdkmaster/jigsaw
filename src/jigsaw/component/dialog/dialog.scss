@@ -27,6 +27,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     position: relative;
     border: 1px solid $border-color-base;
     border-radius: $border-radius-base;
+    background: $component-background;
     &-head {
         @include clearfix;
         line-height: 20px;

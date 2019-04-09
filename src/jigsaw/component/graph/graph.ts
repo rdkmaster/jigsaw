@@ -80,7 +80,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = JigsawTheme.majorStyle == 'light' ? VMAX_GRAPH_THEME : JigsawTheme.majorStyle == 'dark' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
+    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
 
     @Input()
     public get globalTheme() {
@@ -89,8 +89,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set globalTheme(value) {
         if (!value) return;
-        value = value == 'light' ? VMAX_GRAPH_THEME : value == 'dark' ? VMAX_GRAPH_THEME_DARK : value;
         this._globalTheme = value;
+        if (this._graph) {
+            this._graph._theme = value;
+            this.data.refresh();
+        }
     }
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
