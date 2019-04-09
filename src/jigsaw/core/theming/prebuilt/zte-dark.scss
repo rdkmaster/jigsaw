@@ -180,6 +180,9 @@
         background-color: $opacity-bg-2;
         border: 1px solid $primary-color;
     }
+    .ztree li span input {
+        background: $opacity-bg-1;
+    }
 }
 
 @mixin setInputTheme() {
