@@ -404,10 +404,7 @@ export class DoughnutGraphData extends AbstractNormalGraphData {
             y: 'center',
             itemGap: 20,
             textStyle: {
-                color: '#000',
-                fontFamily: '微软雅黑',
                 fontSize: 12,
-                fontWeight: 'normal'
             }
         },
         series: [
@@ -442,9 +439,7 @@ export class DoughnutGraphData extends AbstractNormalGraphData {
                         return params.name + '\n' + params.value + '%'
                     },
                     textStyle: {
-                        baseline: 'top',
-                        color: '#000',
-                        fontFamily: '微软雅黑'
+                        baseline: 'top'
                     }
                 }
             },

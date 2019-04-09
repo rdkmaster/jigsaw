@@ -17,7 +17,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     font-weight: $btn-font-weight;
     user-select: none;
     @include prefixer(transition, all .3s $ease-in-out);
-    background-color: #fff;
+    background-color: $component-background;
     border: 1px solid $border-color-base;
     color: $text-color;
     &:before {

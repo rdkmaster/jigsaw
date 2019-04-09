@@ -48,6 +48,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border: none;
         outline: none;
         border-radius: 3px;
+        background: $component-background;
     }
     input::-webkit-input-placeholder {
         color: $text-color-secondary;

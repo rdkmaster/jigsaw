@@ -58,6 +58,7 @@ $amount: 10px;
     position: relative;
     height: 15px;
     width: 70px;
+    background: transparent !important;
 }
 
 .#{$loading-prefix-cls}-content {
