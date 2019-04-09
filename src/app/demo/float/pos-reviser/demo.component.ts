@@ -16,6 +16,14 @@ import {PopupOptions, PopupPositionValue} from "jigsaw/service/popup.service";
             text-align: center;
         }
 
+        .movable-box {
+            background-color: #b5d3dc;
+            display: inline-block;
+            border-radius: 4px;
+            padding: 12px;
+            cursor: move;
+        }
+
         p {
             margin: 10px;
         }
