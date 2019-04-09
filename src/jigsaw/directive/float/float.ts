@@ -256,7 +256,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     private _getPos(): PopupPoint {
         let point = this._getHostElementPos();
-        window['jigsawFloatTarget'] = this.jigsawFloatTarget;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
                 point.y += this._elementRef.nativeElement.offsetHeight;
