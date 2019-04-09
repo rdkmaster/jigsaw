@@ -25,7 +25,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-textarea]': 'true',
-        '[class.jigsaw-textarea-error]': '!valid'
+        '[class.jigsaw-textarea-error]': '!valid',
+        '[class.jigsaw-textarea-disabled]': 'disabled'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},

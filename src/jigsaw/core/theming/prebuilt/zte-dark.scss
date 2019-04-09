@@ -204,6 +204,14 @@
             background: $opacity-bg-2;
         }
     }
+
+    .#{$textarea-prefix-cls} {
+        &.#{$textarea-prefix-cls}-disabled {
+            textarea {
+                background-color: $disabled-bg;
+            }
+        }
+    }
 }
 
 @mixin setDrawerTheme() {

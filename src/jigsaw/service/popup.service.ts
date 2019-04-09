@@ -18,6 +18,7 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import {Subscription} from "rxjs/Subscription";
+import {JigsawTheme} from "../core/theming/theme";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -180,10 +181,6 @@ export class PopupInfo {
 
 @Injectable()
 export class PopupService {
-    /**
-     * 给弹框设置背景，如果theme==‘light’，会默认取色值'#fff'，如果theme==‘dark’，会默认取色值'#102331'，还可以直接给个色值
-     */
-    public static theme : string = 'light';
 
     private static _instance: PopupService;
 
@@ -279,8 +276,9 @@ export class PopupService {
         setTimeout(() => {
             this._setPopup(options, element);
             // 给弹出设置皮肤
-            if(PopupService.theme && element.tagName.toLowerCase() != 'jigsaw-block' && element.tagName.toLowerCase() != 'j-block') {
-                PopupService._renderer.setStyle(element, 'background', PopupService.theme == 'light' ? '#fff' : PopupService.theme == 'dark' ? '#102331' : PopupService.theme);
+            let tagName = element.tagName.toLowerCase();
+            if(tagName != 'jigsaw-block' && tagName != 'j-block') {
+                PopupService._renderer.setStyle(element, 'background', JigsawTheme.getPopupBackgroundColor());
             }
         }, 0);
 
