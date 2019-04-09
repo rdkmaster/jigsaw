@@ -11,7 +11,8 @@
 /* 大标题 */
 .live-demo-wrap h2 {
     margin-bottom: 40px;
-    color: #fff;
+    color: #333;
+    /*color: #fff;*/
     font-size: 24px;
     font-weight: 700;
 }
@@ -41,7 +42,8 @@
 /* demo标题 */
 .live-demo h3 {
     margin: 0 0 10px -10px;
-    color: #ccc;
+    color: #333;
+    /*color: #ccc;*/
     font-size: 16px;
     padding: 2px 14px;
     position: relative;
@@ -65,7 +67,8 @@
 /* demo文字描述 */
 .live-demo p.comment {
     margin-bottom: 10px;
-    color: #ccc;
+    color: #666;
+    /*color: #ccc;*/
     font-size: 14px;
 }
 
@@ -83,7 +86,8 @@
 /* demo消息高亮字 */
 .live-demo p.message span {
     margin: 0 4px;
-    color: #ccc;
+    color: #666;
+    /*color: #ccc;*/
 }
 
 /* toggle */

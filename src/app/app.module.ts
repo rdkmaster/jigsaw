@@ -9,7 +9,7 @@ import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
-import {JigsawTheme} from "../jigsaw/core/theming/theme";
+//import {JigsawTheme} from "../jigsaw/core/theming/theme";
 
 {
     (<any[]>routerConfig).push(
@@ -38,6 +38,6 @@ import {JigsawTheme} from "../jigsaw/core/theming/theme";
 })
 export class AppModule {
     constructor() {
-        JigsawTheme.majorStyle = 'dark';
+        //JigsawTheme.majorStyle = 'dark';
     }
 }
