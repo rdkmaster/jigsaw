@@ -124,11 +124,14 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     ngOnInit() {
         super.ngOnInit();
         this._input.valueChange.debounceTime(300).subscribe(() => {
-            this.getfilteredDropDownData();
+            this._getFilteredDropDownData();
         });
     }
 
-    getfilteredDropDownData() {
+    /**
+     * @internal
+     */
+    private _getFilteredDropDownData() {
         let filterKey = this._input.value;
         filterKey = filterKey ? filterKey.trim() : '';
         let data: any = [];
@@ -159,7 +162,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
-        this.getfilteredDropDownData();
+        this._getFilteredDropDownData();
         this._showDropdownList(event);
     }
 
@@ -174,7 +177,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     /**
      * @internal
      */
-    _$handleSelect($event: Event) {
+    public _$handleSelect($event: Event) {
         $event.stopPropagation();
         this.textSelectEvent.emit($event);
     }
