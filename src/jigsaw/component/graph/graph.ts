@@ -8,6 +8,8 @@ import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../common";
 import {EchartOptions} from "../../core/data/echart-types";
 import {VMAX_GRAPH_THEME} from "./vmax-theme";
+import {VMAX_GRAPH_THEME_DARK} from './vmax-theme-dark';
+import {JigsawTheme} from "../../core/theming/theme";
 
 @Component({
     selector: 'jigsaw-graph, j-graph',
@@ -78,7 +80,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = VMAX_GRAPH_THEME;
+    private _globalTheme: any = JigsawTheme.majorStyle == 'light' ? VMAX_GRAPH_THEME : JigsawTheme.majorStyle == 'dark' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
 
     @Input()
     public get globalTheme() {
@@ -87,11 +89,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public set globalTheme(value) {
         if (!value) return;
+        value = value == 'light' ? VMAX_GRAPH_THEME : value == 'dark' ? VMAX_GRAPH_THEME_DARK : value;
         this._globalTheme = value;
-        if (this._graph) {
-            this._graph._theme = value;
-            this.data.refresh();
-        }
     }
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
@@ -165,7 +164,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         this._zone.runOutsideAngular(() => {
             // echarts的Animation对象里的_startLoop方法有个递归调用requestAnimationFrame,会触发变更检查，见#289
             this._graph = echarts.init(this._graphContainer);
-            this._graph._theme = VMAX_GRAPH_THEME;
+            this._graph._theme = this.globalTheme;
         });
         this._listenWindowResize();
         if (this.data) {

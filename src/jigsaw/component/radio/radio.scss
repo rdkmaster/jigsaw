@@ -40,7 +40,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         height: 14px;
         border: 1px solid $border-color-base;
         border-radius: 14px;
-        background-color: $default-color;
+        background-color: $component-background;
         margin-right: 5px;
         @include prefixer(transition, all 0.3s);
         &:after {

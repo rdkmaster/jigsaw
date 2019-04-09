@@ -8,7 +8,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 }
 
 .#{$alert-prefix-cls} {
-    background: $default-color;
+    background: $component-background;
     border-radius: 4px;
     position: relative;
     padding: 0 10px 10px;

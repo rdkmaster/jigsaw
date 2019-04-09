@@ -18,6 +18,7 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import {Subscription} from "rxjs/Subscription";
+import {JigsawTheme} from "../core/theming/theme";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -180,6 +181,7 @@ export class PopupInfo {
 
 @Injectable()
 export class PopupService {
+
     private static _instance: PopupService;
 
     public static get instance(): PopupService {
@@ -273,6 +275,11 @@ export class PopupService {
         removeWindowListens = this._beforePopup(options, element, disposer);
         setTimeout(() => {
             this._setPopup(options, element);
+            // 给弹出设置皮肤
+            let tagName = element.tagName.toLowerCase();
+            if(tagName != 'jigsaw-block' && tagName != 'j-block') {
+                PopupService._renderer.setStyle(element, 'background', JigsawTheme.getPopupBackgroundColor());
+            }
         }, 0);
 
         return {

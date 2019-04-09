@@ -5,6 +5,7 @@ $default-loading-prefix-cls: #{$jigsaw-prefix}-loading;
     position: relative;
     width: 80px;
     height: 80px;
+    background: transparent !important;
 }
 
 .loadingProcess {

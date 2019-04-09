@@ -69,6 +69,7 @@ export * from "./core/data/layout-data";
 export * from "./core/utils/common-utils";
 export * from "./core/utils/internal-utils";
 export * from "./core/utils/translate-helper";
+export * from "./core/theming/theme";
 export * from "./directive/dragdrop/index";
 export * from "./directive/dragdrop/types";
 export * from "./directive/float/index";
@@ -79,3 +80,4 @@ export * from "./service/loading.service";
 export * from "./service/popup.service";
 export * from "./service/time.service";
 export * from "./service/time.types";
+
