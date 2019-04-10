@@ -159,7 +159,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this.data) {
             this.dataValid = this._isOptionsValid(this.data.options);
         }
-        this.onGraphInit.emit();
+        this.init.emit();
     }
 
     ngAfterViewInit() {
@@ -349,7 +349,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     // 将onInit 暴露给外面
     @Output()
-    public onGraphInit = new EventEmitter<any>();
+    public init = new EventEmitter<any>();
 
 
     /* *************** 事件声明 end ***************************** */
