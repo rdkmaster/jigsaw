@@ -196,8 +196,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * @internal
      */
     public _$openAndCloseByClick(event) {
-        event.preventDefault();
-        event.stopPropagation();
         if (this._openTrigger == 'click' && this.jigsawFloatOpen == false) {
             this.jigsawFloatOpen = true;
         }
