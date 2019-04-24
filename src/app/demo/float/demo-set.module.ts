@@ -14,6 +14,8 @@ import {FloatPosReviserDemo} from "./pos-reviser/demo.component";
 import {FloatPosReviserModule} from "./pos-reviser/demo.module";
 import {FloatMultiLevelModule} from "./multi-level/demo.module";
 import {FloatMultiLevelDemo} from "./multi-level/demo.component";
+import {FloatComplexDemo} from "./complex/demo.component";
+import {FloatComplexDemoModule} from "./complex/demo.module";
 
 export const routerConfig = [
     {
@@ -37,11 +39,14 @@ export const routerConfig = [
     {
         path: 'multi-level', component: FloatMultiLevelDemo
     },
+    {
+        path: 'complex', component: FloatComplexDemo
+    },
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), FloatPosReviserModule, FloatMultiLevelModule,
+        RouterModule.forChild(routerConfig), FloatPosReviserModule, FloatMultiLevelModule, FloatComplexDemoModule,
         FloatBasicModule, FloatTriggerDemoModule, FloatPositionDemoModule, FloatTargetDemoModule, FloatOptionDemoModule
     ]
 })
