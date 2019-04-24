@@ -159,7 +159,6 @@ export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
     [index: string]: any;
-
     label?: string;
     clazz?: string = '';
     type?: string;

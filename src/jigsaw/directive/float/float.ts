@@ -83,15 +83,15 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     public set jigsawFloatOpen(value: boolean) {
         this.callLater(() => {
-        // toggle open 外部控制时，用异步触发变更检查
-        // 初始化open，等待组件初始化后执行
-        if (value) {
-            this._openFloat();
-        } else {
-            this._closeFloat();
-        }
-        this._$opened = value;
-        this.jigsawFloatOpenChange.emit(value);
+            // toggle open 外部控制时，用异步触发变更检查
+            // 初始化open，等待组件初始化后执行
+            if (value) {
+                this._openFloat();
+            } else {
+                this._closeFloat();
+            }
+            this._$opened = value;
+            this.jigsawFloatOpenChange.emit(value);
         });
     }
 
@@ -169,7 +169,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     /**
      * @internal
-     * offset 代表偏移，注册在float触发器上的mouseleave在计算_elements中的位置是要往前回退一个坐标，注册在弹出层上的mouseleave无需偏移
+     * @param offset 代表偏移，注册在float触发器上的mouseleave在计算_elements中的位置是要往前回退一个坐标，注册在弹出层上的mouseleave无需偏移
      */
     public _$closeByHover(event, offset = 0) {
         this.clearCallLater(this._rollInDenouncesTimer);
@@ -253,15 +253,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (!this._removeMouseOverHandler) {
             this._removeMouseOverHandler = this._renderer.listen(
                 this._popupElement, 'mouseenter',
-                () => {
-                    this.clearCallLater(this._rollOutDenouncesTimer);
-                });
+                () => this.clearCallLater(this._rollOutDenouncesTimer));
         }
         if (this._closeTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
             this._removeMouseOutHandler = this._renderer.listen(
-                this._popupElement, 'mouseleave', event => {
-                    this._$closeByHover(event)
-                });
+                this._popupElement, 'mouseleave', event => this._$closeByHover(event));
         }
 
         // 阻止点击行为冒泡到window
