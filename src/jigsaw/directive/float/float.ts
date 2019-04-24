@@ -83,15 +83,15 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     public set jigsawFloatOpen(value: boolean) {
         this.callLater(() => {
-            // toggle open 外部控制时，用异步触发变更检查
-            // 初始化open，等待组件初始化后执行
-            if (value) {
-                this._openFloat();
-            } else {
-                this._closeFloat();
-            }
-            this._$opened = value;
-            this.jigsawFloatOpenChange.emit(value);
+        // toggle open 外部控制时，用异步触发变更检查
+        // 初始化open，等待组件初始化后执行
+        if (value) {
+            this._openFloat();
+        } else {
+            this._closeFloat();
+        }
+        this._$opened = value;
+        this.jigsawFloatOpenChange.emit(value);
         });
     }
 
@@ -190,7 +190,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 canClose = !this.isChildOf(event.toElement, this._elements[i]);
             }
         }
-        console.log(this._elements.length, currentIndex, canClose);
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => this.jigsawFloatOpen = false, 400);

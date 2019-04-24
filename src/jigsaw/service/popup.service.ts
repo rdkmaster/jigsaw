@@ -261,7 +261,7 @@ export class PopupService {
         this.elements.push(element);
         //set disposer
         disposer = () => {
-            this.elements.splice(this.elements.indexOf(element));
+            this.elements.splice(this.elements.indexOf(element), 1);
             if (popupDisposer) {
                 popupDisposer();
             }
