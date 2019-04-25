@@ -5,7 +5,6 @@
 
 <!-- start to learn the demo from here -->
 <span jigsaw-float class="menu"
-      jigsawFloatCloseTrigger="click"
       [jigsawFloatTarget]="subMenu">
     菜单 hover
 </span>
@@ -13,7 +12,6 @@
 <ng-template #subMenu>
     <j-list width="200" trackItemBy="title">
         <j-list-option *ngFor="let title of titles" [value]="title" jigsaw-float jigsawFloatPosition="rightTop"
-                       jigsawFloatOpenTrigger="click" jigsawFloatCloseTrigger="mouseleave"
                        [jigsawFloatTarget]="subMenu2">
             <span j-title>{{title.title}}</span>
             <div j-sub-title>{{title.subTitle}} <span class="fa fa-angle-right"></span>
@@ -24,8 +22,29 @@
 
 <ng-template #subMenu2>
     <j-list width="200">
+        <j-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx" jigsaw-float [jigsawFloatTarget]="subMenu3" jigsawFloatPosition="rightTop">
+            子菜单2 {{idx}}
+        </j-list-option>
+    </j-list>
+</ng-template>
+<ng-template #subMenu3>
+    <j-list width="200">
+        <j-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx" jigsaw-float [jigsawFloatTarget]="subMenu4" jigsawFloatPosition="rightTop">
+            子菜单3 {{idx}}
+        </j-list-option>
+    </j-list>
+</ng-template>
+<ng-template #subMenu4>
+    <j-list width="200">
+        <j-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx" jigsaw-float [jigsawFloatTarget]="subMenu5" jigsawFloatPosition="rightTop">
+            子菜单4 {{idx}}
+        </j-list-option>
+    </j-list>
+</ng-template>
+<ng-template #subMenu5>
+    <j-list width="200">
         <j-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx">
-            子菜单 {{idx}}
+            子菜单5 {{idx}}
         </j-list-option>
     </j-list>
 </ng-template>
