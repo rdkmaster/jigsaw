@@ -25,31 +25,32 @@
 <span class="fa fa-bars" jigsaw-float
       [jigsawFloatOpenTrigger]="openTrigger"
       [jigsawFloatCloseTrigger]="closeTrigger"
-      [jigsawFloatTarget]="jigsawFloatArea"  [(jigsawFloatOpen)]="open"> click or hover me! autoInput
-</span>
-<span class="fa fa-bars" jigsaw-float
-      [jigsawFloatOpenTrigger]="openTrigger"
-      [jigsawFloatCloseTrigger]="closeTrigger"
-      (jigsawFloatOpenChange)="popupGlobalLoading($event)"
-      [jigsawFloatTarget]="jigsawFloatArea2"> click or hover me! loading
+      [jigsawFloatTarget]="jigsawFloatArea" [(jigsawFloatOpen)]="open"> 鼠标挪到这里来。。。
 </span>
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
-        <jigsaw-auto-complete-input placeholder="auto complete input" width="200" [data]="_$dropdownData">
-        </jigsaw-auto-complete-input><br><br>
-        
+        <jigsaw-auto-complete-input placeholder="auto complete input" width="200"
+                                    [data]="[
+                                        '点击发送事件', '滚动页面', '发送事件到事件总线',
+                                        '更新变量', '等待弹出关闭', '自定义代码块'
+                                    ]">
+        </jigsaw-auto-complete-input>
+        <br><br>
+
         <jigsaw-combo-select width="200">
             <ng-template>
-                <div class="jigsawFloatArea" style="background: #a3cdaf;">
-
+                <div class="jigsawFloatArea" style="background: rgb(195,205,185);">
+                    <span jigsaw-float
+                          [jigsawFloatOpenTrigger]="openTrigger"
+                          [jigsawFloatCloseTrigger]="closeTrigger"
+                          [jigsawFloatTarget]="jigsawFloatArea">
+                        再次触发下拉
+                    </span>
                 </div>
             </ng-template>
         </jigsaw-combo-select>
+        <br><br>
+        <a (click)="popupGlobalLoading($event)">触发loading</a>
     </div>
 </ng-template>
 
-<ng-template #jigsawFloatArea2>
-    <div class="jigsawFloatArea">
-        dropdown placeholder
-    </div>
-</ng-template>

@@ -14,7 +14,7 @@ import {PopupInfo} from "jigsaw/service/popup.service";
             width: 360px;
             height: 180px;
             padding-top: 30px;
-            background: orange;
+            background: #e4d7c0;
             text-align: center;
         }
     `]
@@ -33,8 +33,6 @@ export class FloatOverlappingDemo {
     public closeFloat() {
         this.open = false;
     }
-
-    public _$dropdownData = ['点击发送事件', '滚动页面', '发送事件到事件总线', '更新变量', '等待弹出关闭', '自定义代码块'];
 
     constructor(private loadingService: LoadingService) {
     }
