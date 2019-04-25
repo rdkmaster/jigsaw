@@ -1,14 +1,4 @@
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type
-} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -27,7 +17,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
     selector: '[jigsaw-float],[j-float],[jigsawFloat]',
     host: {
         '(mouseenter)': "_$openByHover($event)",
-        '(mouseleave)': "_$closeByHover($event)",
+        '(mouseleave)': "_$closeByHover($event, 1)",
         '(click)': "_$openAndCloseByClick($event)"
     }
 })
@@ -179,17 +169,33 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     /**
      * @internal
+     * @param event
+     * @param offset 代表偏移，注册在float触发器上的mouseleave在计算element中的位置是要往前回退一个坐标，
+     * 注册在弹出层上的mouseleave无需偏移
      */
-    public _$closeByHover(event) {
+    public _$closeByHover(event, offset = 0) {
+        const popups = this._popupService.popups;
         this.clearCallLater(this._rollInDenouncesTimer);
-        if (this.jigsawFloatCloseTrigger != 'mouseleave') {
+        if (this.jigsawFloatCloseTrigger != 'mouseleave' || !popups || popups.length == 0) {
             return;
         }
         event.preventDefault();
         event.stopPropagation();
-        this._rollOutDenouncesTimer = this.callLater(() =>
-                this.jigsawFloatOpen = false
-            , 400);
+        let canClose = true;
+        // currentIndex之后的弹层导致触发mouseleave不应关闭float
+        const currentIndex = popups.indexOf(popups.find(p => p.element === this._popupElement));
+        for (let i = popups.length - 1; i > currentIndex - offset && i >= 0; i--) {
+            if (canClose == false) {
+                break;
+            }
+            if (i > currentIndex - offset) {
+                canClose = !this._isChildOf(event.toElement, popups[i].element);
+            }
+        }
+        // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
+        if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
+            this._rollOutDenouncesTimer = this.callLater(() => this.jigsawFloatOpen = false, 400);
+        }
     }
 
     /**
@@ -202,6 +208,19 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._closeTrigger == 'click' && this.jigsawFloatOpen == true) {
             this.jigsawFloatOpen = false;
         }
+    }
+
+    private _isChildOf(child, parent) {
+        if (child && parent) {
+            let parentNode = child;
+            while (parentNode) {
+                if (parent === parentNode) {
+                    return true;
+                }
+                parentNode = parentNode.parentNode;
+            }
+        }
+        return false;
     }
 
     private _openFloat(): void {
@@ -225,7 +244,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
-
         if (!this._popupElement) {
             console.error('unable to popup drop down, unknown error!');
             return;
@@ -238,9 +256,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         if (this._closeTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
             this._removeMouseOutHandler = this._renderer.listen(
-                this._popupElement, 'mouseleave', () => {
-                    this._rollOutDenouncesTimer = this.callLater(() => this.jigsawFloatOpen = false, 400);
-                });
+                this._popupElement, 'mouseleave', event => this._$closeByHover(event));
         }
 
         // 阻止点击行为冒泡到window
@@ -248,8 +264,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             event.stopPropagation();
             event.preventDefault();
         });
-
-
     }
 
     private _getPos(): PopupPoint {
