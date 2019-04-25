@@ -198,8 +198,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _handleEvent(params: any, eventType?: string) {
         // 防止和ng2 事件冲突，响应两遍.
-        event.preventDefault();
-        event.stopPropagation();
+        if (!!event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
         this._zone.run(() => {
             this[eventType].emit(params)
         });
