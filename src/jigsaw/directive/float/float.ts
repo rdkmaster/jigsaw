@@ -172,22 +172,22 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * @param offset 代表偏移，注册在float触发器上的mouseleave在计算_elements中的位置是要往前回退一个坐标，注册在弹出层上的mouseleave无需偏移
      */
     public _$closeByHover(event, offset = 0) {
+        const popups = PopupService.popups;
         this.clearCallLater(this._rollInDenouncesTimer);
-        if (this.jigsawFloatCloseTrigger != 'mouseleave' || this._elements.length == 0) {
+        if (this.jigsawFloatCloseTrigger != 'mouseleave' || !popups || popups.length == 0) {
             return;
         }
         event.preventDefault();
         event.stopPropagation();
         let canClose = true;
-
         // currentIndex之后的弹层导致触发mouseleave不应关闭float
-        const currentIndex = this._elements.indexOf(this._popupElement);
-        for (let i = this._elements.length - 1; i > currentIndex - offset; i--) {
+        const currentIndex = popups.indexOf(popups.find(p => p.element === this._popupElement));
+        for (let i = popups.length - 1; i > currentIndex - offset && i >= 0; i--) {
             if (canClose == false) {
                 break;
             }
             if (i > currentIndex - offset) {
-                canClose = !this.isChildOf(event.toElement, this._elements[i]);
+                canClose = !this._isChildOf(event.toElement, popups[i].element);
             }
         }
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
@@ -208,9 +208,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
     }
 
-    private _elements: HTMLElement[] = [];
-
-    private isChildOf(child, parent) {
+    private _isChildOf(child, parent) {
         if (child && parent) {
             let parentNode = child.parentNode;
             while (parentNode) {
@@ -244,7 +242,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
-        this._elements = popupInfo.elements;
         if (!this._popupElement) {
             console.error('unable to popup drop down, unknown error!');
             return;

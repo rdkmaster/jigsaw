@@ -159,6 +159,7 @@ export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
     [index: string]: any;
+
     label?: string;
     clazz?: string = '';
     type?: string;
@@ -179,7 +180,6 @@ export class PopupInfo {
     element: HTMLElement;
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
-    elements?: HTMLElement[];
 }
 
 @Injectable()
@@ -189,6 +189,11 @@ export class PopupService {
 
     public static get instance(): PopupService {
         return PopupService._instance;
+    }
+
+    private static _popups: PopupInfo[] = [];
+    public static get popups(): PopupInfo[] {
+        return PopupService._popups.concat();
     }
 
     public elements: HTMLElement[] = [];
@@ -257,10 +262,14 @@ export class PopupService {
         [popupInfo, popupRef] = this._popupFactory(what, options);
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
-        this.elements.push(element);
         //set disposer
         disposer = () => {
-            this.elements.splice(this.elements.indexOf(element), 1);
+            const target = PopupService._popups.find(p => p.element === element);
+            const index = PopupService._popups.indexOf(target);
+            if (index >= 0) {
+                PopupService._popups.splice(index, 1);
+            }
+
             if (popupDisposer) {
                 popupDisposer();
             }
@@ -288,11 +297,12 @@ export class PopupService {
                 }
             }
         }, 0);
-        return {
+        const result = {
             instance: popupRef['instance'], element: element, dispose: disposer,
-            answer: popupRef['instance'] ? popupRef['instance'].answer : undefined,
-            elements: this.elements
-        }
+            answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
+        };
+        PopupService._popups.push(result);
+        return result;
     }
 
     private _popupBlocker(options: PopupOptions): PopupDisposer {
@@ -356,7 +366,7 @@ export class PopupService {
         PopupService._renderer.setStyle(element, 'position', 'fixed');
         PopupService._renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element);
-        return [{element: element, dispose: disposer, answer: null, instance: null, elements: null}, ref];
+        return [{element: element, dispose: disposer, answer: null, instance: null}, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
