@@ -6,19 +6,20 @@ import {PopupInfo} from "jigsaw/service/popup.service";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-               .fa-bars{
-                     margin:100px
-               }
-               .jigsawFloatArea{
-                   width:200px;
-                   height:360px;
-                   padding-top:30px;
-                   background:orange;
-                   text-align:center;
-               }
+        .fa-bars {
+            margin: 100px
+        }
+
+        .jigsawFloatArea {
+            width: 360px;
+            height: 180px;
+            padding-top: 30px;
+            background: orange;
+            text-align: center;
+        }
     `]
 })
-export class FloatComplexDemo {
+export class FloatOverlappingDemo {
     globalLoading: PopupInfo;
     @ViewChild('jigsawFloatArea2') block: TemplateRef<any>;
     openTrigger = "mouseenter";
@@ -57,10 +58,6 @@ export class FloatComplexDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '演示了如何改变jigsawFloat指令的触发器';
+    summary: string = '演示了jigsawFloat指令在复杂的重叠场景下的表现';
     description: string = '';
-    tags: string[] = [
-        'JigsawFloat.jigsawFloatOpenTrigger',
-        'JigsawFloat.jigsawFloatCloseTrigger',
-    ];
 }

@@ -35,8 +35,16 @@
 </span>
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
-        <jigsaw-auto-complete-input placeholder="auto complete input demo" width="200" [data]="_$dropdownData">
-        </jigsaw-auto-complete-input>
+        <jigsaw-auto-complete-input placeholder="auto complete input" width="200" [data]="_$dropdownData">
+        </jigsaw-auto-complete-input><br><br>
+        
+        <jigsaw-combo-select width="200">
+            <ng-template>
+                <div class="jigsawFloatArea" style="background: #a3cdaf;">
+
+                </div>
+            </ng-template>
+        </jigsaw-combo-select>
     </div>
 </ng-template>
 

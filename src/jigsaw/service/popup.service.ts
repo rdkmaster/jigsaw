@@ -191,9 +191,10 @@ export class PopupService {
         return PopupService._instance;
     }
 
-    private static _popups: PopupInfo[] = [];
-    public static get popups(): PopupInfo[] {
-        return PopupService._popups.concat();
+    private _popups: PopupInfo[] = [];
+    
+    public get popups(): PopupInfo[] {
+        return this._popups.concat();
     }
 
     public elements: HTMLElement[] = [];
@@ -264,10 +265,10 @@ export class PopupService {
         popupDisposer = popupInfo.dispose;
         //set disposer
         disposer = () => {
-            const target = PopupService._popups.find(p => p.element === element);
-            const index = PopupService._popups.indexOf(target);
+            const target = this._popups.find(p => p.element === element);
+            const index = this._popups.indexOf(target);
             if (index >= 0) {
-                PopupService._popups.splice(index, 1);
+                this._popups.splice(index, 1);
             }
 
             if (popupDisposer) {
@@ -301,7 +302,7 @@ export class PopupService {
             instance: popupRef['instance'], element: element, dispose: disposer,
             answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
         };
-        PopupService._popups.push(result);
+        this._popups.push(result);
         return result;
     }
 

@@ -17,7 +17,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
     selector: '[jigsaw-float],[j-float],[jigsawFloat]',
     host: {
         '(mouseenter)': "_$openByHover($event)",
-        '(mouseleave)': "_$closeByHover($event,1)",
+        '(mouseleave)': "_$closeByHover($event, 1)",
         '(click)': "_$openAndCloseByClick($event)"
     }
 })
@@ -169,10 +169,12 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     /**
      * @internal
-     * @param offset 代表偏移，注册在float触发器上的mouseleave在计算_elements中的位置是要往前回退一个坐标，注册在弹出层上的mouseleave无需偏移
+     * @param event
+     * @param offset 代表偏移，注册在float触发器上的mouseleave在计算_elements中的位置是要往前回退一个坐标，
+     * 注册在弹出层上的mouseleave无需偏移
      */
     public _$closeByHover(event, offset = 0) {
-        const popups = PopupService.popups;
+        const popups = this._popupService.popups;
         this.clearCallLater(this._rollInDenouncesTimer);
         if (this.jigsawFloatCloseTrigger != 'mouseleave' || !popups || popups.length == 0) {
             return;
@@ -262,8 +264,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             event.stopPropagation();
             event.preventDefault();
         });
-
-
     }
 
     private _getPos(): PopupPoint {
