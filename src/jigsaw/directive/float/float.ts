@@ -170,7 +170,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     /**
      * @internal
      * @param event
-     * @param offset 代表偏移，注册在float触发器上的mouseleave在计算_elements中的位置是要往前回退一个坐标，
+     * @param offset 代表偏移，注册在float触发器上的mouseleave在计算element中的位置是要往前回退一个坐标，
      * 注册在弹出层上的mouseleave无需偏移
      */
     public _$closeByHover(event, offset = 0) {
@@ -212,7 +212,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     private _isChildOf(child, parent) {
         if (child && parent) {
-            let parentNode = child.parentNode;
+            let parentNode = child;
             while (parentNode) {
                 if (parent === parentNode) {
                     return true;
