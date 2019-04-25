@@ -29,7 +29,7 @@
 </span>
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
-        <jigsaw-auto-complete-input placeholder="auto complete input" width="200"
+        <jigsaw-auto-complete-input placeholder="click here..." width="200"
                                     [data]="[
                                         '点击发送事件', '滚动页面', '发送事件到事件总线',
                                         '更新变量', '等待弹出关闭', '自定义代码块'
@@ -37,20 +37,27 @@
         </jigsaw-auto-complete-input>
         <br><br>
 
-        <jigsaw-combo-select width="200">
+        <jigsaw-combo-select width="200" placeholder="move mouse here...">
             <ng-template>
                 <div class="jigsawFloatArea" style="background: rgb(195,205,185);">
+                    <a (click)="popupGlobalLoading($event)">点击触发loading</a>&nbsp;&nbsp;&nbsp;
+                    <a jigsaw-float
+                       [jigsawFloatOpenTrigger]="openTrigger"
+                       [jigsawFloatCloseTrigger]="closeTrigger"
+                       [jigsawFloatTarget]="jigsawFloatArea">
+                        触发次级下拉
+                    </a>
                 </div>
             </ng-template>
         </jigsaw-combo-select>
         <br><br>
-        <a (click)="popupGlobalLoading($event)">触发loading</a>
-        <span jigsaw-float
+        <a (click)="popupGlobalLoading($event)">点击触发loading</a>&nbsp;&nbsp;&nbsp;
+        <a jigsaw-float
               [jigsawFloatOpenTrigger]="openTrigger"
               [jigsawFloatCloseTrigger]="closeTrigger"
               [jigsawFloatTarget]="jigsawFloatArea">
             触发次级下拉
-        </span>
+        </a>
     </div>
 </ng-template>
 

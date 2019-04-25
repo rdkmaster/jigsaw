@@ -15,7 +15,7 @@ import {PopupInfo} from "jigsaw/service/popup.service";
             height: 180px;
             padding-top: 30px;
             background: #e4d7c0;
-            text-align: center;
+            padding-left: 32px;
         }
     `]
 })
