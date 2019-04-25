@@ -40,17 +40,17 @@
         <jigsaw-combo-select width="200">
             <ng-template>
                 <div class="jigsawFloatArea" style="background: rgb(195,205,185);">
-                    <span jigsaw-float
-                          [jigsawFloatOpenTrigger]="openTrigger"
-                          [jigsawFloatCloseTrigger]="closeTrigger"
-                          [jigsawFloatTarget]="jigsawFloatArea">
-                        再次触发下拉
-                    </span>
                 </div>
             </ng-template>
         </jigsaw-combo-select>
         <br><br>
         <a (click)="popupGlobalLoading($event)">触发loading</a>
+        <span jigsaw-float
+              [jigsawFloatOpenTrigger]="openTrigger"
+              [jigsawFloatCloseTrigger]="closeTrigger"
+              [jigsawFloatTarget]="jigsawFloatArea">
+            触发次级下拉
+        </span>
     </div>
 </ng-template>
 
