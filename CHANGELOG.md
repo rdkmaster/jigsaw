@@ -1,3 +1,19 @@
+## v1.1.24 (2019-4-25)
+
+### 新特性 / New Features
+- [新增] graph组件增加一个init事件，在其初始化时发出
+- [新增] PopupService加一个popups数组返回当前所有弹出视图，float指令支持任意多层级下拉
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] float去掉对宿主节点click事件的阻止冒泡
+- [优化] Graph组件注册事件的代码增加必要的保护
+
+### 修复 / Fixes
+- 无
+
 ## v1.1.23 (2019-4-9)
 
 ### 新特性 / New Features
