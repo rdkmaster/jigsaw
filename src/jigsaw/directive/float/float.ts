@@ -24,6 +24,9 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
     private _popupElement: HTMLElement;
+    public get popupElement(): HTMLElement {
+        return this._popupElement;
+    }
     private _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;

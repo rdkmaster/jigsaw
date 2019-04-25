@@ -1,9 +1,11 @@
 <div class="jigsaw-combo-select"
-     [class.jigsaw-combo-select-opened]="_$opened"
      [class.jigsaw-combo-select-disabled]="disabled"
-     (mouseenter)="_$openByHover($event)"
-     (mouseleave)="_$closeByHover($event)"
-     (click)="_$openAndCloseByClick($event)">
+     jigsaw-float
+     [jigsawFloatOpenTrigger]="openTrigger"
+     [jigsawFloatCloseTrigger]="closeTrigger"
+     [jigsawFloatTarget]="_contentTemplateRef"
+     [jigsawFloatOpen]="_$opened"
+     (jigsawFloatOpenChange)="_comboOpenChange($event)">
     <div class="jigsaw-combo-select-selection">
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"
