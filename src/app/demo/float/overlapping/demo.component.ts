@@ -56,6 +56,7 @@ export class FloatOverlappingDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '演示了jigsawFloat指令在复杂的重叠场景下的表现';
+    summary: string = '演示了jigsawFloat指令在极端复杂的重叠场景下的表现。' +
+        '提示：应该尽量避免设计出3层甚至更多层级下拉的功能来。';
     description: string = '';
 }
