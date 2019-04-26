@@ -1,11 +1,13 @@
 <div class="jigsaw-combo-select"
      [class.jigsaw-combo-select-disabled]="disabled"
+     (click)="_$stopPropagationClick($event)"
      jigsaw-float
      [jigsawFloatOpenTrigger]="openTrigger"
      [jigsawFloatCloseTrigger]="closeTrigger"
      [jigsawFloatTarget]="_contentTemplateRef"
-     [jigsawFloatOpen]="_$opened"
-     (jigsawFloatOpenChange)="_comboOpenChange($event)">
+     [(jigsawFloatOpen)]="_$opened"
+     (jigsawFloatOpenChange)="_comboOpenChange($event)"
+     [jigsawFloatOptions]="_options">
     <div class="jigsaw-combo-select-selection">
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"

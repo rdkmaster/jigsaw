@@ -23,6 +23,7 @@ import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {JigsawFloat} from "../../directive/float";
+import {PopupOptions} from "../../service/popup.service";
 
 export enum DropDownTrigger {
     click,
@@ -146,26 +147,47 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 控件disabled，并且想打开下拉
             return;
         }
-        // toggle open 外部控制时，用异步触发变更检查
-        // 初始化open，等待组件初始化后执行
-        if (value) {
-            this._openDropDown();
-            if (this._editor) this._editor.focus();
-        } else {
-            this.searchKeyword = '';
-        }
+        this.callLater(() => {
+            // toggle open 外部控制时，用异步触发变更检查
+            // 初始化open，等待组件初始化后执行
+            if (value) {
+                if (this._editor) this._editor.focus();
+            } else {
+                this.searchKeyword = '';
+            }
+        });
         this._$opened = value;
     }
 
     private _comboOpenChange(value) {
+        if (value) {
+            // 同步dropdown宽度
+            this._autoWidth();
+            if (this._editor) {
+                this._editor.select();
+            }
+        }
+
         this.openChange.emit(value);
     }
 
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    private _options: PopupOptions = {};
+
+    private _showBorder: boolean = true;
+
     @Input()
-    public showBorder: boolean;
+    public set showBorder(value: boolean) {
+        this._showBorder = value;
+        this._options.showBorder = this.showBorder;
+    }
+
+    public get showBorder(): boolean {
+        return this._showBorder;
+    }
+
 
     @Input()
     public autoClose: boolean; //自动关闭dropdown
@@ -242,7 +264,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoWidth() {
-        if (!this.autoWidth) {
+        if (!this.autoWidth || !this._jigsawFloat.popupElement) {
             return;
         }
         this.callLater(() => {
@@ -275,13 +297,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
 
-    private _openDropDown(): void {
-        if (this._$opened) {
-            return;
-        }
-
-        //同步dropdown宽度
-        this._autoWidth();
+    private _$stopPropagationClick(event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     private _$tagClick(tagItem) {
@@ -337,7 +355,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (!value || this._value === value) {
             return;
         }
-
         this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
         this.callLater(() => this.valueChange.emit(this._value));
         this._autoWidth();
