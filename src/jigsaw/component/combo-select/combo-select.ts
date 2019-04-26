@@ -127,7 +127,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public maxWidth: string;
 
     @ContentChild(TemplateRef)
-    private _contentTemplateRef: any;
+    public _$contentTemplateRef: any;
 
     @ViewChild(JigsawFloat)
     private _jigsawFloat: any;
@@ -159,7 +159,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._$opened = value;
     }
 
-    private _comboOpenChange(value) {
+    public _$comboOpenChange(value) {
         if (value) {
             // 同步dropdown宽度
             this._autoWidth();
@@ -174,14 +174,14 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private _options: PopupOptions = {};
+    public _$options: PopupOptions = {};
 
     private _showBorder: boolean = true;
 
     @Input()
     public set showBorder(value: boolean) {
         this._showBorder = value;
-        this._options.showBorder = this.showBorder;
+        this._$options.showBorder = this.showBorder;
     }
 
     public get showBorder(): boolean {
@@ -297,7 +297,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
 
-    private _$stopPropagationClick(event) {
+    public _$stopPropagationClick(event) {
         event.preventDefault();
         event.stopPropagation();
     }
