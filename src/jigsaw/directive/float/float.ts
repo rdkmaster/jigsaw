@@ -1,14 +1,4 @@
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type
-} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -22,6 +12,13 @@ import {AbstractJigsawViewBase} from "../../component/common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
+
+export enum DropDownTrigger {
+    click,
+    mouseenter,
+    mouseleave,
+    none,
+}
 
 @Directive({
     selector: '[jigsaw-float],[j-float],[jigsawFloat]',
@@ -123,7 +120,21 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none') {
         // 从模板过来的值，不会受到类型的约束
-        this._openTrigger = value;
+        if (typeof value as any === 'string') {
+            this._openTrigger = value;
+        } else {
+            switch (value as any) {
+                case DropDownTrigger.none:
+                    this._openTrigger = 'none';
+                    break;
+                case DropDownTrigger.click:
+                    this._openTrigger = 'click';
+                    break;
+                case DropDownTrigger.mouseenter:
+                    this._openTrigger = 'mouseenter';
+                    break;
+            }
+        }
     }
 
     private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave'; // 打开下拉触发方式，默认值是'mouseleave'
@@ -137,7 +148,21 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none') {
         // 从模板过来的值，不会受到类型的约束
-        this._closeTrigger = value;
+        if (typeof value as any === 'string') {
+            this._closeTrigger = value;
+        } else {
+            switch (value as any) {
+                case DropDownTrigger.none:
+                    this._closeTrigger = 'none';
+                    break;
+                case DropDownTrigger.click:
+                    this._closeTrigger = 'click';
+                    break;
+                case DropDownTrigger.mouseleave:
+                    this._closeTrigger = 'mouseleave';
+                    break;
+            }
+        }
     }
 
     constructor(private _renderer: Renderer2,

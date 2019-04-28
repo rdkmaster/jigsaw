@@ -22,15 +22,9 @@ import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
-import {JigsawFloat} from "../../directive/float/float";
+import {DropDownTrigger, JigsawFloat} from "../../directive/float/float";
 import {PopupOptions} from "../../service/popup.service";
 
-export enum DropDownTrigger {
-    click,
-    mouseenter,
-    mouseleave,
-    none,
-}
 
 export class ComboSelectValue {
     [index: string]: any;
