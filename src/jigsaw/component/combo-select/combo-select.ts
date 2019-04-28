@@ -22,7 +22,7 @@ import {ArrayCollection} from "../../core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
-import {JigsawFloat} from "../../directive/float";
+import {JigsawFloat} from "../../directive/float/float";
 import {PopupOptions} from "../../service/popup.service";
 
 export enum DropDownTrigger {
@@ -132,7 +132,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
-    @ViewChild(forwardRef(() => JigsawFloat))
+    @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
     /**
      * @internal
