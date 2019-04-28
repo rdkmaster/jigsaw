@@ -1,4 +1,14 @@
-import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type
+} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -23,10 +33,6 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 })
 export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
-    private _popupElement: HTMLElement;
-    public get popupElement(): HTMLElement {
-        return this._popupElement;
-    }
     private _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
@@ -35,6 +41,12 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
     private _$target: Type<IPopupable> | TemplateRef<any>;
+
+    private _popupElement: HTMLElement;
+    
+    public get popupElement(): HTMLElement {
+        return this._popupElement;
+    }
 
     /**
      * $demo = float/target

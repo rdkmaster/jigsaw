@@ -1,6 +1,6 @@
 <div class="jigsaw-combo-select"
      [class.jigsaw-combo-select-disabled]="disabled"
-     (click)="_$stopPropagationClick($event)"
+     (click)="$event.preventDefault();$event.stopPropagation();"
      jigsaw-float
      [jigsawFloatOpenTrigger]="openTrigger"
      [jigsawFloatCloseTrigger]="closeTrigger"

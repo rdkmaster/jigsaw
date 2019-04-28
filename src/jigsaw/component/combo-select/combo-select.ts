@@ -102,35 +102,38 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
-    public get openTrigger(): DropDownTrigger | string {
-        return typeof this._openTrigger === 'string' ? this._openTrigger : DropDownTrigger[this._openTrigger];
+    public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
+        return this._openTrigger;
     }
 
-    public set openTrigger(value: DropDownTrigger | string) {
+    public set openTrigger(value: 'mouseenter' | 'click' | 'none' | DropDownTrigger) {
         //从模板过来的值，不会受到类型的约束
-        this._openTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
+        this._openTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
     }
 
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
 
     @Input()
-    public get closeTrigger(): DropDownTrigger | string {
-        return typeof this._closeTrigger === 'string' ? this._closeTrigger : DropDownTrigger[this._closeTrigger];
+    public get closeTrigger(): 'mouseleave' | 'click' | 'none' | DropDownTrigger {
+        return this._closeTrigger;
     }
 
-    public set closeTrigger(value: DropDownTrigger | string) {
+    public set closeTrigger(value: 'mouseleave' | 'click' | 'none' | DropDownTrigger) {
         //从模板过来的值，不会受到类型的约束
-        this._closeTrigger = typeof value === 'string' ? DropDownTrigger[<string>value] : value;
+        this._closeTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
     }
 
     @Input()
     public maxWidth: string;
 
+    /**
+     * @internal
+     */
     @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
     @ViewChild(JigsawFloat)
-    private _jigsawFloat: any;
+    private _jigsawFloat: JigsawFloat;
     /**
      * @internal
      */
@@ -142,7 +145,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set open(value: boolean) {
-        if (value === this._$opened || (this.disabled && value && this.openTrigger != 'none')) {
+        if (value === this._$opened || (this.disabled && value && this.openTrigger != DropDownTrigger.none)) {
             // 设置值等于当前值
             // 控件disabled，并且想打开下拉
             return;
@@ -159,6 +162,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._$opened = value;
     }
 
+    /**
+     * @internal
+     */
     public _$comboOpenChange(value) {
         if (value) {
             // 同步dropdown宽度
@@ -174,6 +180,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    /**
+     * @internal
+     */
     public _$options: PopupOptions = {};
 
     private _showBorder: boolean = true;
@@ -187,7 +196,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public get showBorder(): boolean {
         return this._showBorder;
     }
-
 
     @Input()
     public autoClose: boolean; //自动关闭dropdown
@@ -294,12 +302,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         } else {
             this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', '100%');
         }
-    }
-
-
-    public _$stopPropagationClick(event) {
-        event.preventDefault();
-        event.stopPropagation();
     }
 
     private _$tagClick(tagItem) {
