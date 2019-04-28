@@ -43,7 +43,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _$target: Type<IPopupable> | TemplateRef<any>;
 
     private _popupElement: HTMLElement;
-    
+
     public get popupElement(): HTMLElement {
         return this._popupElement;
     }
