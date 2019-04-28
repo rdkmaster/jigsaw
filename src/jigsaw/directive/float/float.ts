@@ -116,11 +116,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * $demo = float/trigger
      */
     @Input()
-    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' {
+    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
 
-    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none') {
+    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none' | DropDownTrigger) {
         // 从模板过来的值，不会受到类型的约束
         switch (value as any) {
             case DropDownTrigger.none:
@@ -145,11 +145,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * $demo = float/trigger
      */
     @Input()
-    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' {
+    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
 
-    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none') {
+    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
         // 从模板过来的值，不会受到类型的约束
         switch (value as any) {
             case DropDownTrigger.none:
