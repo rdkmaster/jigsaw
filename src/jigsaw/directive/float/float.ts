@@ -12,6 +12,12 @@ import {AbstractJigsawViewBase} from "../../component/common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
+export enum DropDownTrigger {
+    click,
+    mouseenter,
+    mouseleave,
+    none,
+}
 
 @Directive({
     selector: '[jigsaw-float],[j-float],[jigsawFloat]',
@@ -23,7 +29,6 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 })
 export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
-    private _popupElement: HTMLElement;
     private _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
@@ -32,6 +37,12 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
     private _$target: Type<IPopupable> | TemplateRef<any>;
+
+    private _popupElement: HTMLElement;
+
+    public get popupElement(): HTMLElement {
+        return this._popupElement;
+    }
 
     /**
      * $demo = float/target
@@ -97,32 +108,63 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     @Output()
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter'; // 打开下拉触发方式，默认值是'mouseenter'
+
+    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
+
     /**
+     * 打开下拉触发方式，默认值是'mouseenter'
      * $demo = float/trigger
      */
     @Input()
-    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' {
+    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
 
-    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none') {
+    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none' | DropDownTrigger) {
         // 从模板过来的值，不会受到类型的约束
-        this._openTrigger = value;
+        switch (value as any) {
+            case DropDownTrigger.none:
+            case "none":
+                this._openTrigger = 'none';
+                break;
+            case DropDownTrigger.click:
+            case "click":
+                this._openTrigger = 'click';
+                break;
+            case DropDownTrigger.mouseenter:
+            case "mouseenter":
+                this._openTrigger = 'mouseenter';
+                break;
+        }
     }
 
-    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave'; // 打开下拉触发方式，默认值是'mouseleave'
+    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
+
     /**
+     * 打开下拉触发方式，默认值是'mouseleave'
      * $demo = float/trigger
      */
     @Input()
-    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' {
+    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
 
-    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none') {
+    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
         // 从模板过来的值，不会受到类型的约束
-        this._closeTrigger = value;
+        switch (value as any) {
+            case DropDownTrigger.none:
+            case "none":
+                this._closeTrigger = 'none';
+                break;
+            case DropDownTrigger.click:
+            case "click":
+                this._closeTrigger = 'click';
+                break;
+            case DropDownTrigger.mouseleave:
+            case "mouseleave":
+                this._closeTrigger = 'mouseleave';
+                break;
+        }
     }
 
     constructor(private _renderer: Renderer2,
