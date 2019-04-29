@@ -3,9 +3,9 @@
  */
 
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/core/data/graph-data";
-import {EchartOptions} from "jigsaw/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/component/graph/graph";
+import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
+import {EchartOptions} from "jigsaw/common/core/data/echart-types";
+import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
 
 @Component({
     templateUrl: './demo.component.html'

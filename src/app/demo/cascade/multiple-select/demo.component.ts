@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TreeData} from "jigsaw/core/data/tree-data";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {TreeData} from "jigsaw/common/core/data/tree-data";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 @Component({
     templateUrl: './demo.component.html'

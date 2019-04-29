@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {JigsawInput} from "jigsaw/component/input/input";
+import {JigsawInput} from "jigsaw/pc-components/input/input";
 
 @Component({
     templateUrl: './demo.component.html',

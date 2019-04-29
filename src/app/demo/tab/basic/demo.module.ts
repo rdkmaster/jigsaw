@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
-import {JigsawTabsModule} from "jigsaw/component/tabs/index";
-import {JigsawButtonModule} from "jigsaw/component/button/button";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawGraphModule} from "jigsaw/component/graph/index";
+import {JigsawTabsModule} from "jigsaw/pc-components/tabs/index";
+import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
+import {JigsawInputModule} from "jigsaw/pc-components/input/input";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawTabsDemoComponent} from './demo.component';
 

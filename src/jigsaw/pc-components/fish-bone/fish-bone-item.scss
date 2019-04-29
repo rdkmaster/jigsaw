@@ -1,0 +1,74 @@
+@import "../../common/assets/scss/core/base";
+
+$fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
+
+/* jigsaw-fish-bone-item 单个鱼骨的class */
+.#{$fish-bone-prefix-cls}-item {
+    position: absolute;
+    /* 鱼骨的最小长度是100px */
+    min-width: 100px;
+    /* 鱼骨的默认偏移是50px */
+    left: 50px;
+    /* 鱼骨的默认宽度是1px */
+    height: 1px;
+    transition: left 1s $ease-in-out;
+    transform-origin: 0 50%;
+    &:not(.#{$fish-bone-prefix-cls}-level-0) {
+        /* 除了最外面的父节点，其他节点先隐藏 */
+        opacity: 0;
+    }
+    &.#{$fish-bone-prefix-cls}-level-0 {
+        /* 最外面的父节点的偏移默认是0 */
+        left: 0;
+    }
+    > .#{$fish-bone-prefix-cls}-item-content, > .#{$fish-bone-prefix-cls}-item-description {
+        position: absolute;
+        min-width: 100px;
+        text-align: center;
+        font-size: $font-size-base;
+        line-height: 1.2;
+    }
+    > .#{$fish-bone-prefix-cls}-item-description {
+        left: 50%;
+        transform: translateX(-50%) translate3d(0, 0, 0);
+        color: $heading-color;
+        -webkit-font-smoothing: subpixel-antialiased;
+    }
+
+    /* jigsaw-fish-bone-item-rotate-up jigsaw-fish-bone-item-rotate-down 一个鱼骨向上向下旋转,放在各自鱼骨上 */
+    /* jigsaw-fish-bone-up jigsaw-fish-bone-down 一个鱼骨树在上面还是在下面，放在最外层的节点上 */
+    &-rotate-up {
+        transform: rotate(-60deg) translate3d(0, 0, 0);
+    }
+    &-rotate-down {
+        transform: rotate(60deg) translate3d(0, 0, 0);
+    }
+    .#{$fish-bone-prefix-cls}-up &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
+        bottom: 4px;
+    }
+    .#{$fish-bone-prefix-cls}-up &-rotate-down:not(.#{$fish-bone-prefix-cls}-item-no-child) > .#{$fish-bone-prefix-cls}-item-content {
+        top: 4px;
+    }
+    /* 没有子节点的节点文本放在上面 */
+    .#{$fish-bone-prefix-cls}-up &-rotate-down.#{$fish-bone-prefix-cls}-item-no-child > .#{$fish-bone-prefix-cls}-item-content {
+        bottom: 4px;
+    }
+    .#{$fish-bone-prefix-cls}-down &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
+        bottom: 6px;
+    }
+    .#{$fish-bone-prefix-cls}-down &-rotate-down > .#{$fish-bone-prefix-cls}-item-content {
+        top: 4px;
+    }
+
+    .#{$fish-bone-prefix-cls}-white & {
+        background: #BABABA;
+    }
+    .#{$fish-bone-prefix-cls}-dark & {
+        background: #6B6B6B;
+    }
+}
+
+.#{$fish-bone-prefix-cls}-level-0 {
+    height: 2px;
+}
+

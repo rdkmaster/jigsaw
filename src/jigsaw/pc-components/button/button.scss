@@ -1,0 +1,150 @@
+@import "../../common/assets/scss/core/base";
+
+$btn-prefix-cls: #{$jigsaw-prefix}-button;
+
+.#{$btn-prefix-cls} {
+    @include inline-block();
+    padding: 0 10px;
+    min-width: 80px;
+    height: $height-base;
+    font-size: $font-size-base;
+    line-height: 1;
+    text-align: center;
+    position: relative;
+    border-radius: $border-radius-base;
+    cursor: pointer;
+    box-shadow: $btn-box-shadow;
+    font-weight: $btn-font-weight;
+    user-select: none;
+    @include prefixer(transition, all .3s $ease-in-out);
+    background-color: $component-background;
+    border: 1px solid $border-color-base;
+    color: $text-color;
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+    &:hover {
+        color: $primary-5;
+        border: 1px solid $primary-5;
+    }
+
+    &:active {
+        color: $primary-7;
+        border: 1px solid $primary-7;
+    }
+
+    &#{&}-clicked:after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        bottom: -1px;
+        right: -1px;
+        border-radius: inherit;
+        border: 1px solid $primary-7;
+        opacity: 0.4;
+        @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
+        display: block;
+    }
+
+    &-content {
+        @include inline-block;
+    }
+
+    &-icon {
+        @include inline-block();
+        img {
+            vertical-align: top;
+            height: 20px;
+        }
+    }
+
+    &#{&}-color-primary {
+        background-color: $primary-color;
+        color: $text-color-of-bg;
+        border: 1px solid $primary-color;
+        &:hover {
+            background: $primary-7;
+        }
+        &:active {
+            background: $primary-8;
+        }
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid $primary-7;
+        }
+    }
+
+    &#{&}-color-warning {
+        background-color: $warning-color;
+        color: $text-color-of-bg;
+        border: 1px solid $warning-color;
+        &:hover {
+            background: mix(#000, $warning-color, 10%);
+        }
+        &:active {
+            background: mix(#000, $warning-color, 20%);
+        }
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid mix(#000, $warning-color, 10%);
+        }
+    }
+
+    &#{&}-color-error {
+        background-color: $error-color;
+        color: $text-color-of-bg;
+        border: 1px solid $error-color;
+        &:hover {
+            background: mix(#000, $error-color, 10%);
+        }
+        &:active {
+            background: mix(#000, $error-color, 20%);
+        }
+        &.#{$btn-prefix-cls}-clicked:after {
+            border: 1px solid mix(#000, $error-color, 10%);
+        }
+    }
+
+    &#{&}-size-large {
+        height: $height-lg;
+        font-size: $font-size-lg;
+    }
+
+    &#{&}-size-small {
+        height: $height-sm;
+        font-size: $font-size-sm;
+    }
+
+    &#{&}-disabled {
+        pointer-events: none;
+        cursor: default;
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background-color: $disabled-bg;
+        border-color: $border-color-base;
+    }
+}
+
+a[#{$btn-prefix-cls}] {
+    padding: 0 10px;
+    outline: none;
+    text-decoration: none !important;
+}
+
+button[#{$btn-prefix-cls}] {
+    padding: 0 10px;
+    outline: none;
+    text-decoration: none !important;
+}
+
+@include keyframes(buttonEffect) {
+    to {
+        @include opacity(0);
+        top: -6px;
+        left: -6px;
+        bottom: -6px;
+        right: -6px;
+        border-width: 6px;
+    }
+}

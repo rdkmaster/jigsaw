@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-import {JigsawTextareaModule} from "jigsaw/component/textarea";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {JigsawTextareaModule} from "jigsaw/pc-components/textarea";
+import {JigsawSwitchModule} from "jigsaw/pc-components/switch/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TextareaDisabledComponent} from "./demo.component";
 

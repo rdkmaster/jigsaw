@@ -15,7 +15,7 @@ describe('slider', () => {
             const messages = $$('.message'),
                 sliderHandle = element.all(by.css('.jigsaw-slider-handle')),
                 handleTag = element.all(by.tagName('slider-handle')),
-                spanEl = element.all(by.tagName('ng-component span')),
+                spanEl = element.all(by.tagName('ng-pc-components span')),
                 sliderSwitch = element(by.css('.jigsaw-switch-small')),
                 sliderTrack = element.all(by.tagName('jigsaw-slider')).get(3).element(by.css('.jigsaw-slider-track'));
             expect(messages.get(0).getText()).toBe('取值: 30');

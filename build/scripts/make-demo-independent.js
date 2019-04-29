@@ -201,7 +201,7 @@ function fixDemoComponentTs(component, moduleCode) {
     var mainComp = findExportsComponent(moduleCode);
     if (!mainComp) {
         console.error('ERROR: need a "exports" property in the module code, ' +
-                    'and the value of which should contains only one component!');
+                    'and the value of which should contains only one pc-components!');
         process.exit(1);
     }
 
@@ -209,11 +209,11 @@ function fixDemoComponentTs(component, moduleCode) {
     component.code = component.code.replace(/@Component\s*\(\s*\{([\s\S]*?)\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
         (found, props, className) => {
             if (className != mainComp) {
-                // 在demo.component.ts文件中可能被定义了多个组件
+                // 在demo.pc-components.ts文件中可能被定义了多个组件
                 return found;
             }
             if (found.match(/selector\s*:/)) {
-                console.error('ERROR: do NOT set "selector" property for the main component, ' +
+                console.error('ERROR: do NOT set "selector" property for the main pc-components, ' +
                     'remove it and try again, path=' + component.path);
                 process.exit(1);
             }
@@ -249,7 +249,7 @@ function fixDemoModuleTs(module, demoFolder) {
     var comp = findExportsComponent(module.code);
     if (!comp) {
         console.error('ERROR: need a "exports" property in the module code, ' +
-                    'and the value of which should contains only one component!');
+                    'and the value of which should contains only one pc-components!');
         console.error(`       module path=${demoFolder}`);
         process.exit(1);
     }

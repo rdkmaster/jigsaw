@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawSliderModule} from "jigsaw/component/slider/index";
-import {JigsawViewportModule} from "jigsaw/component/viewport/viewport";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {JigsawSliderModule} from "jigsaw/pc-components/slider/index";
+import {JigsawViewportModule} from "jigsaw/pc-components/viewport/viewport";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BigRowDemoComponent} from './demo.component';
 

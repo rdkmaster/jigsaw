@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawSelectModule} from "jigsaw/component/select/select";
-import {JigsawDialogModule} from "jigsaw/component/dialog/dialog";
-import {JigsawRadioModule} from "jigsaw/component/radio/radio";
-import {JigsawBoxModule} from "jigsaw/component/box/index";
+import {JigsawSelectModule} from "jigsaw/pc-components/select/select";
+import {JigsawDialogModule} from "jigsaw/pc-components/dialog/dialog";
+import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
+import {JigsawBoxModule} from "jigsaw/pc-components/box/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CustomTableComponent} from "./custom-table/demo.component";
 import {CustomTableModule} from "./custom-table/demo.module";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomGraphModule} from "./custom-graph/demo.module";
 import {CustomSceneLayoutDemoComponent} from "./demo.component";
-import {JigsawTabsWrapperModule} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
+import {JigsawTabsWrapperModule} from "jigsaw/pc-components/box/tabs-wrapper/tabs-wrapper";
 
 @NgModule({
     declarations: [

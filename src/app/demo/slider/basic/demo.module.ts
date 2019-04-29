@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {JigsawSliderModule} from "jigsaw/component/slider/index";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {JigsawSliderModule} from "jigsaw/pc-components/slider/index";
+import {JigsawSwitchModule} from "jigsaw/pc-components/switch/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SliderBasicDemoComponent} from './demo.component';
 

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {Shortcut} from "jigsaw/component/time";
-import {RangeTimeDataRanges} from "jigsaw/component/range-time";
-import {GrItem} from "jigsaw/component/time/time";
-import {TimeGr} from "jigsaw/service/time.service";
+import {Shortcut} from "jigsaw/pc-components/time";
+import {RangeTimeDataRanges} from "jigsaw/pc-components/range-time";
+import {GrItem} from "jigsaw/pc-components/time/time";
+import {TimeGr} from "jigsaw/common/service/time.service";
 
 @Component({
     templateUrl: './demo.component.html',

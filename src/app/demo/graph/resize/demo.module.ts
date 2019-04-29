@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {JigsawGraphModule} from "jigsaw/component/graph/index";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
+import {JigsawInputModule} from "jigsaw/pc-components/input/input";
+import {JigsawSwitchModule} from "jigsaw/pc-components/switch/index";
 import {GraphResizeComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

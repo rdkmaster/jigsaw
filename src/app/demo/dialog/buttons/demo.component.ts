@@ -3,7 +3,7 @@
  */
 
 import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {ButtonInfo, PopupInfo, PopupService} from "jigsaw/service/popup.service";
+import {ButtonInfo, PopupInfo, PopupService} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html',

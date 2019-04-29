@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {
     JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
     JigsawWarningAlert
-} from "jigsaw/component/alert/alert";
+} from "jigsaw/pc-components/alert/alert";
 
 @Component({
     templateUrl: './demo.component.html'

@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/10.
  */
 import {Component} from '@angular/core';
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 @Component({
     templateUrl: './demo.component.html',

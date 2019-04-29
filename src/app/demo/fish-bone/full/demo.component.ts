@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
-import {ChartIconFactory, ChartType} from "jigsaw/component/chart-icon/chart-icon-factory";
-import {TreeData} from "jigsaw/core/data/tree-data";
+import {ChartIconFactory, ChartType} from "jigsaw/pc-components/chart-icon/chart-icon-factory";
+import {TreeData} from "jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
 
 @Component({

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {PageableArray} from "jigsaw/core/data/array-collection";
+import {PageableArray} from "jigsaw/common/core/data/array-collection";
 
 
 @Component({

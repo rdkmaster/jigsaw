@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, PageableArray} from "jigsaw/core/data/array-collection";
-import {TableData} from "jigsaw/core/data/table-data";
+import {ArrayCollection, PageableArray} from "jigsaw/common/core/data/array-collection";
+import {TableData} from "jigsaw/common/core/data/table-data";
 
 @Component({
     templateUrl: './demo.component.html'

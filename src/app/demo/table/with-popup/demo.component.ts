@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
-import {PopupDisposer, PopupInfo, PopupService} from "jigsaw/service/popup.service";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {PopupDisposer, PopupInfo, PopupService} from "jigsaw/common/service/popup.service";
 
 
 @Component({

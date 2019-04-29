@@ -1,9 +1,9 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 import {OfficeHeaderRenderer} from "../renderer/renderers";
-import {TableCellRendererBase, TableCellSelectRenderer} from "jigsaw/component/table/table-renderer";
+import {TableCellRendererBase, TableCellSelectRenderer} from "jigsaw/pc-components/table/table-renderer";
 
 @Component({
     templateUrl: './demo.component.html'

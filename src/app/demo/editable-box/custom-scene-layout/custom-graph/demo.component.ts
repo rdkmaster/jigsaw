@@ -1,11 +1,11 @@
 import {Component, OnInit, Optional, ViewChild} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/core/data/graph-data";
-import {EchartOptions} from "jigsaw/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/component/graph/graph";
-import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
+import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
+import {EchartOptions} from "jigsaw/common/core/data/echart-types";
+import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
+import {DragDropInfo} from "jigsaw/common/directive/dragdrop/types";
 import {EmittableComponent} from "../linkage.common";
-import {JigsawTabsWrapper} from "../../../../../jigsaw/component/box/tabs-wrapper/tabs-wrapper";
-import {JigsawEditableBox} from "../../../../../jigsaw/component/box/editable-box";
+import {JigsawTabsWrapper} from "../../../../../jigsaw/pc-components/box/tabs-wrapper/tabs-wrapper";
+import {JigsawEditableBox} from "../../../../../jigsaw/pc-components/box/editable-box";
 
 @Component({
     selector: 'custom-graph',

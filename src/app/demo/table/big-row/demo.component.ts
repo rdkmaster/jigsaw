@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {BigTableData} from "jigsaw/core/data/table-data";
-import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
+import {BigTableData} from "jigsaw/common/core/data/table-data";
+import {AdditionalColumnDefine, TableValueGenerators} from "jigsaw/pc-components/table/table-typings";
 
 @Component({
     templateUrl: './demo.component.html'

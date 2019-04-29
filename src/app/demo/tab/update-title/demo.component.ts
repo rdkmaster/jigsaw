@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
-import {TranslateHelper} from "../../../../jigsaw/core/utils/translate-helper";
+import {TranslateHelper} from "../../../../jigsaw/common/core/utils/translate-helper";
 
 @Component({
     templateUrl: './demo.component.html',

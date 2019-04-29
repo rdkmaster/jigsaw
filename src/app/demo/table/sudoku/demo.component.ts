@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
+import {TableData} from "jigsaw/common/core/data/table-data";
 import {NumberRenderer} from "./number-renderer";
 import {CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
-import {JigsawInfoAlert} from "../../../../jigsaw/component/alert/alert";
+import {JigsawInfoAlert} from "../../../../jigsaw/pc-components/alert/alert";
 
 
 @Component({

@@ -1,7 +1,7 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/service/loading.service";
-import {JigsawBallLoading} from "jigsaw/component/loading/loading";
-import {PopupInfo} from "jigsaw/service/popup.service";
+import {LoadingService} from "jigsaw/common/service/loading.service";
+import {JigsawBallLoading} from "jigsaw/pc-components/loading/loading";
+import {PopupInfo} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html',

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableArray} from "jigsaw/core/data/array-collection";
-import {TableData} from "jigsaw/core/data/table-data";
-import {SortAs, SortOrder} from "../../../../jigsaw/core/data/component-data";
+import {LocalPageableArray} from "jigsaw/common/core/data/array-collection";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {SortAs, SortOrder} from "../../../../jigsaw/common/core/data/component-data";
 
 @Component({
     templateUrl: './demo.component.html', styles: ['.alert {color: red;}']

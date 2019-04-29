@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {BarGraphData, BarGraphDataByRow} from "jigsaw/core/data/graph-data";
+import {BarGraphData, BarGraphDataByRow} from "jigsaw/common/core/data/graph-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {AjaxInterceptor} from "../../../app.interceptor";
 

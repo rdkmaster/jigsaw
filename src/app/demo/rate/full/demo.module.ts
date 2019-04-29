@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawRateModule} from "jigsaw/component/rate";
+import {JigsawRateModule} from "jigsaw/pc-components/rate";
 import {RateFullComponent} from "./demo.component";
 import {CommonModule} from "@angular/common";
 

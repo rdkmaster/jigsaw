@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {LineGraphData} from "../../../../jigsaw/core/data/graph-data";
-import {JigsawBox} from "../../../../jigsaw/component/box/box";
+import {LineGraphData} from "../../../../jigsaw/common/core/data/graph-data";
+import {JigsawBox} from "../../../../jigsaw/pc-components/box/box";
 
 @Component({
     templateUrl: './demo.component.html',

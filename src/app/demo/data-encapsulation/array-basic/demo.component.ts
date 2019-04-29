@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewContainerRef, ViewEncapsulation} from "@angular/core";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 type TestMsg = {
     test: boolean,

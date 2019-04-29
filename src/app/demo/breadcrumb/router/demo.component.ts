@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {ProductService} from "./product.service";
-import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/component/breadcrumb/breadcrumb";
+import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/pc-components/breadcrumb/breadcrumb";
 
 @Component({
     templateUrl: './demo.component.html',

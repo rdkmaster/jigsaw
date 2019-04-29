@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {JigsawCheckBoxModule} from "jigsaw/pc-components/checkbox/index";
 import {TableRendererOfTemplateRefDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

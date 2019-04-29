@@ -34,10 +34,10 @@ export const routerConfig = [
         path: 'track-item-by', component: CascadeTrackItemByDemoComponent
     },
     // {
-    //     path: 'cross-select', component: CascadeCrossSelectDemoComponent
+    //     path: 'cross-select', pc-components: CascadeCrossSelectDemoComponent
     // },
     // {
-    //     path: 'preset-multi-dimensional-data', component: CascadeMultiDimensionalFillBackDemoComponent
+    //     path: 'preset-multi-dimensional-data', pc-components: CascadeMultiDimensionalFillBackDemoComponent
     // },
     {
         path: 'show-all', component: CascadeShowAllDemoComponent

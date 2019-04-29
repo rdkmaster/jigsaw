@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData} from "jigsaw/component/cascade/cascade";
+import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
 import {AjaxInterceptor} from "../../../app.interceptor";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 @Component({
     templateUrl: './demo.component.html'

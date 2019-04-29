@@ -1,7 +1,7 @@
-import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
+import {JigsawEditableBox} from "jigsaw/pc-components/box/editable-box";
 import {EventEmitter, OnDestroy} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
-import {IEmittable} from "jigsaw/core/data/component-data";
+import {IEmittable} from "jigsaw/common/core/data/component-data";
 
 export class EmittableComponent implements IEmittable, OnDestroy {
     public box: JigsawEditableBox;

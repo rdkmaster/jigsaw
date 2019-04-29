@@ -13,8 +13,8 @@ xdescribe('scrollbar', () => {
         });
 
         it('should exchange position', async () => {
-            const comBox1 = element(by.tagName('ng-component')).element(by.css('.box1')),
-                comBox2 = element(by.tagName('ng-component')).element(by.css('.box2')),
+            const comBox1 = element(by.tagName('ng-pc-components')).element(by.css('.box1')),
+                comBox2 = element(by.tagName('ng-pc-components')).element(by.css('.box2')),
                 dragwarpEl = element.all(by.css('.drag-wrap'));
             // expect(comBox1.getLocation()).toBe('');
             expect(dragwarpEl.get(0).getText()).toBe('111');

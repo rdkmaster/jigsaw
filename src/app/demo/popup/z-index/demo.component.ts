@@ -1,10 +1,10 @@
 import {Component, OnInit} from "@angular/core";
-import {TimeGr, TimeService} from "jigsaw/service/time.service";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
-import {LoadingService} from "jigsaw/service/loading.service";
-import {JigsawWarningAlert} from "jigsaw/component/alert/alert";
-import {JigsawNotification} from "../../../../jigsaw/component/notification/notification";
+import {TimeGr, TimeService} from "jigsaw/common/service/time.service";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/service/popup.service";
+import {LoadingService} from "jigsaw/common/service/loading.service";
+import {JigsawWarningAlert} from "jigsaw/pc-components/alert/alert";
+import {JigsawNotification} from "../../../../jigsaw/pc-components/notification/notification";
 
 @Component({
     templateUrl: './demo.component.html',

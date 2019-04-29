@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {DropDownTrigger} from "jigsaw/directive/float";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {DropDownTrigger} from "jigsaw/common/directive/float";
 
 @Component({
     templateUrl: './demo.component.html',

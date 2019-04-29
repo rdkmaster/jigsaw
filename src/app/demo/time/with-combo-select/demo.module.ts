@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {JigsawTimeModule} from "jigsaw/component/time/index";
-import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
-import {JigsawRangeTimeModule} from "jigsaw/component/range-time/index";
+import {JigsawTimeModule} from "jigsaw/pc-components/time/index";
+import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
+import {JigsawRangeTimeModule} from "jigsaw/pc-components/range-time/index";
 import {ComboSelectDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

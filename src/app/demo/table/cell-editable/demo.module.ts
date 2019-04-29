@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { JigsawInputModule } from "jigsaw/component/input/input";
-import { JigsawTableModule } from "jigsaw/component/table/table";
+import { JigsawInputModule } from "jigsaw/pc-components/input/input";
+import { JigsawTableModule } from "jigsaw/pc-components/table/table";
 import { TableSetCellEditableDemoComponent, MyTableCell, MyTableCellEditor }  from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

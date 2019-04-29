@@ -1,8 +1,8 @@
 import {Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
-import {PopupService} from "jigsaw/service/popup.service";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DialogBase, JigsawDialog} from "jigsaw/pc-components/dialog/dialog";
+import {PopupService} from "jigsaw/common/service/popup.service";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 import {MonitorService} from "./monitor-service";
 
 @Component({

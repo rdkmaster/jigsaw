@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawTransferModule} from "jigsaw/component/transfer/transfer";
+import {JigsawTransferModule} from "jigsaw/pc-components/transfer/transfer";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TransferItemDisabledDemoComponent} from "./demo.component";
 

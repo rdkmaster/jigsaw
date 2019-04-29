@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {TimeGr, TimeService} from "jigsaw/service/time.service";
-import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {TimeGr, TimeService} from "jigsaw/common/service/time.service";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 
 
 @Component({

@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
-import {JigsawSwitchModule} from "jigsaw/component/switch";
-import {JigsawTabsModule} from "jigsaw/component/tabs/index";
-import {JigsawButtonBarModule} from "jigsaw/component/list-and-tile/button-bar";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawGraphModule} from "jigsaw/component/graph/index";
+import {JigsawSwitchModule} from "jigsaw/pc-components/switch";
+import {JigsawTabsModule} from "jigsaw/pc-components/tabs/index";
+import {JigsawButtonBarModule} from "jigsaw/pc-components/list-and-tile/button-bar";
+import {JigsawInputModule} from "jigsaw/pc-components/input/input";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TabHeadlessDemoComponent} from './demo.component';
 
 /* #for-live-demo-only#
 const routes = [{
-    path: 'tab-page', component: DynamicTabDemoComponent
+    path: 'tab-page', pc-components: DynamicTabDemoComponent
 }];
 */
 @NgModule({

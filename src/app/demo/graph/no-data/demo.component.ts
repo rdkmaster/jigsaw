@@ -3,7 +3,7 @@
  */
 
 import {Component} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/core/data/graph-data";
+import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
 
 @Component({
     templateUrl: './demo.component.html'

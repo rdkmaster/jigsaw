@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {PopupOptions, PopupPositionValue} from "jigsaw/service/popup.service";
+import {PopupOptions, PopupPositionValue} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html',

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TimeGr} from "jigsaw/service/time.service";
+import {TimeGr} from "jigsaw/common/service/time.service";
 
 @Component({
     templateUrl: './demo.component.html',

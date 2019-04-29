@@ -1,11 +1,11 @@
 import {Component, ComponentRef, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ComponentMetaData, LayoutData} from "jigsaw/core/data/layout-data";
-import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/service/popup.service";
-import {JigsawEditableBox} from "jigsaw/component/box/editable-box";
+import {ComponentMetaData, LayoutData} from "jigsaw/common/core/data/layout-data";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/service/popup.service";
+import {JigsawEditableBox} from "jigsaw/pc-components/box/editable-box";
 import {CustomGraphComponent} from "./custom-graph/demo.component";
 import {CustomTableComponent} from "./custom-table/demo.component";
-import {JigsawTabsWrapper, TabsWrapperMetaData} from "jigsaw/component/box/tabs-wrapper/tabs-wrapper";
-import {JigsawTab} from "jigsaw/component/tabs/tab";
+import {JigsawTabsWrapper, TabsWrapperMetaData} from "jigsaw/pc-components/box/tabs-wrapper/tabs-wrapper";
+import {JigsawTab} from "jigsaw/pc-components/tabs/tab";
 
 export const GlobalComponentMetaDataList: ComponentMetaData[] = [
     {

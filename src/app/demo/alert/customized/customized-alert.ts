@@ -1,6 +1,6 @@
 import {Component, ViewChild, ViewEncapsulation} from "@angular/core";
-import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
-import {JigsawAlert} from "jigsaw/component/alert/alert";
+import {DialogBase, JigsawDialog} from "jigsaw/pc-components/dialog/dialog";
+import {JigsawAlert} from "jigsaw/pc-components/alert/alert";
 
 @Component({
     selector: 'my-alert',

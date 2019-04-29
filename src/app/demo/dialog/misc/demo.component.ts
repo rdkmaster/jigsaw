@@ -8,7 +8,7 @@ import {
     PopupOptions,
     PopupPositionType,
     PopupService
-} from "jigsaw/service/popup.service";
+} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -26,7 +26,7 @@ export class DialogMiscDemoComponent {
     }
 
     /*
-    * popup component
+    * popup pc-components
     * */
     popupComponentDialog() {
         const initData = {inputData: 'some data...'};
@@ -34,7 +34,7 @@ export class DialogMiscDemoComponent {
     }
 
     /*
-     * popup component at point
+     * popup pc-components at point
      * */
     popupComponentDialogAtPoint(event) {
         const initData = {inputData: 'some data...'};

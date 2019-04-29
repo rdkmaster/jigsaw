@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {LocalPageableTableData} from "jigsaw/core/data/table-data";
+import {LocalPageableTableData} from "jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
 
 @Component({

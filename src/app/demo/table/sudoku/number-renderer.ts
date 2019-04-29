@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
-import {PopupService} from "jigsaw/service/popup.service";
+import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {PopupService} from "jigsaw/common/service/popup.service";
 import {NumberSelectPad} from "./number-select-pad";
 import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, PUZZLE_RESET} from "./utils";
 

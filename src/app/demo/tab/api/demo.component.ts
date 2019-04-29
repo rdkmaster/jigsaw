@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {JigsawTab} from "jigsaw/component/tabs/tab";
+import {JigsawTab} from "jigsaw/pc-components/tabs/tab";
 import {TabContentDefine} from "./tabContent/tabContent";
 
 @Component({
@@ -48,7 +48,7 @@ export class DynamicTabDemoComponent {
     }
 
     public addComponentTab() {
-        this.addTab('component tab', TabContentDefine, 'jigsaw')
+        this.addTab('pc-components tab', TabContentDefine, 'jigsaw')
     }
 
     // ====================================================================

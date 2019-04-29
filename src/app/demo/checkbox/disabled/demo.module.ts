@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-import {JigsawCheckBoxModule} from "jigsaw/component/checkbox/index";
-import {JigsawSwitchModule} from "jigsaw/component/switch/index";
+import {JigsawCheckBoxModule} from "jigsaw/pc-components/checkbox/index";
+import {JigsawSwitchModule} from "jigsaw/pc-components/switch/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CheckBoxDisableDemoComponent} from "./demo.component";
 

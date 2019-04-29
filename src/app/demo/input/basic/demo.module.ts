@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawInputModule} from "jigsaw/component/input/input";
+import {JigsawInputModule} from "jigsaw/pc-components/input/input";
 import {InputBasicDemoComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

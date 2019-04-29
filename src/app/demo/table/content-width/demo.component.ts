@@ -1,6 +1,6 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 
 @Component({
     templateUrl: './demo.component.html'

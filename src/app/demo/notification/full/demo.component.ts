@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {JigsawNotification} from "jigsaw/component/notification/notification";
+import {JigsawNotification} from "jigsaw/pc-components/notification/notification";
 
 @Component({
     templateUrl: './demo.component.html',

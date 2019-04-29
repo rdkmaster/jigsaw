@@ -1,7 +1,7 @@
 import {Component, Input, Type, ViewChild} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
-import {TableData} from "jigsaw/core/data/table-data";
+import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {TableData} from "jigsaw/common/core/data/table-data";
 import {ToolbarComp} from "../comp/toolbar.comp";
 import {AbstractMonitorsBase} from "./monitors-base";
 

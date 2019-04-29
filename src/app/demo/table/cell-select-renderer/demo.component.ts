@@ -1,8 +1,8 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
-import {TableCellSelectRenderer} from "jigsaw/component/table/table-renderer";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {TableCellSelectRenderer} from "jigsaw/pc-components/table/table-renderer";
 import {AjaxInterceptor} from "../../../app.interceptor";
 
 @Component({

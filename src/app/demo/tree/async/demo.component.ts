@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types";
-import {TreeData} from "jigsaw/core/data/tree-data";
+import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types";
+import {TreeData} from "jigsaw/common/core/data/tree-data";
 
 @Component({
     templateUrl: 'demo.component.html'

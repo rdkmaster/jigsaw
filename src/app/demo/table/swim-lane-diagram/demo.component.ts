@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
-import {JigsawTable} from "jigsaw/component/table/table";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {JigsawTable} from "jigsaw/pc-components/table/table";
 import {TableSwimLaneCell} from "./table-renderer";
 
 @Component({

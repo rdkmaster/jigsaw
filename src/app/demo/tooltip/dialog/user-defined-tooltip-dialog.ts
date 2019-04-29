@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 
-import {JigsawTooltipDialog, TooltipBase} from "jigsaw/component/tooltip/tooltip";
+import {JigsawTooltipDialog, TooltipBase} from "jigsaw/pc-components/tooltip/tooltip";
 
 @Component({
     templateUrl: 'user-defined-tooltip-dialog.html',

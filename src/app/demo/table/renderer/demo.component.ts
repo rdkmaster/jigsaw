@@ -1,13 +1,13 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData} from "jigsaw/core/data/table-data";
+import {LocalPageableTableData} from "jigsaw/common/core/data/table-data";
 import {
     AdditionalColumnDefine,
     AdditionalTableData,
     ColumnDefine,
     TableValueGenerators,
-} from "jigsaw/component/table/table-typings";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
+} from "jigsaw/pc-components/table/table-typings";
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
 import {
     filterData,
     OfficeCellEditorRenderer,

@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {BigTableData} from "jigsaw/core/data/table-data";
-import {ViewportScrollEvent} from "jigsaw/component/viewport/viewport";
-import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/component/table/table-typings";
+import {BigTableData} from "jigsaw/common/core/data/table-data";
+import {ViewportScrollEvent} from "jigsaw/pc-components/viewport/viewport";
+import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/pc-components/table/table-typings";
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
 
 @Component({

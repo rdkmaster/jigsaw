@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData} from "jigsaw/component/cascade/cascade";
+import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
 import {AjaxInterceptor} from "../../../app.interceptor";
 
 @Component({

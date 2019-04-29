@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {DialogBase, JigsawDialog} from "jigsaw/component/dialog/dialog";
+import {DialogBase, JigsawDialog} from "jigsaw/pc-components/dialog/dialog";
 
 @Component({
     templateUrl: 'user-dialog.html',

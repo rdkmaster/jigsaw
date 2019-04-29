@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {JigsawSelectModule} from "jigsaw/component/select/select";
+import {JigsawSelectModule} from "jigsaw/pc-components/select/select";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SelectPresetDemoComponent} from './demo.component';
 

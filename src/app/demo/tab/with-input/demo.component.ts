@@ -3,7 +3,7 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
+import {TableData} from "jigsaw/common/core/data/table-data";
 
 @Component({
     templateUrl: "./demo.component.html"

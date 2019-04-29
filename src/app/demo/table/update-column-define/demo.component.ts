@@ -1,8 +1,8 @@
 import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
-import {JigsawTable} from "jigsaw/component/table/table";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {JigsawTable} from "jigsaw/pc-components/table/table";
 
 @Component({
     templateUrl: './demo.component.html'

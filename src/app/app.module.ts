@@ -4,7 +4,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {JigsawRootModule} from "jigsaw/component/root/root";
+import {JigsawRootModule} from "jigsaw/pc-components/root/root";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";

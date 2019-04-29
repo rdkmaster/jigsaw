@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
-import {JigsawRadioModule} from "jigsaw/component/radio/radio";
-import {JigsawRootModule} from "jigsaw/component/root/root";
-import {JigsawBoxModule} from "jigsaw/component/box/index";
-import {InternalUtils} from "jigsaw/core/utils/internal-utils";
-import {LoadingService} from "jigsaw/service/loading.service";
+import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
+import {JigsawRootModule} from "jigsaw/pc-components/root/root";
+import {JigsawBoxModule} from "jigsaw/pc-components/box/index";
+import {InternalUtils} from "jigsaw/common/core/utils/internal-utils";
+import {LoadingService} from "jigsaw/common/service/loading.service";
 
 import {AjaxInterceptor} from "app/app.interceptor";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";

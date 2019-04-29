@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {JigsawTileSelectModule} from "jigsaw/component/list-and-tile/tile";
-import {JigsawInputModule} from "jigsaw/component/input/input";
-import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
+import {JigsawTileSelectModule} from "jigsaw/pc-components/list-and-tile/tile";
+import {JigsawInputModule} from "jigsaw/pc-components/input/input";
+import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ComboSelectSetWidthDemo} from "./demo.component";
 

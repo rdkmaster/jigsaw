@@ -1,0 +1,115 @@
+@import "../../common/assets/scss/core/base";
+
+$editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
+
+.#{$editable-box-prefix-cls} {
+    position: relative;
+    &-root {
+        border: 1px solid $border-color-base;
+    }
+    &-block {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        opacity: 0.4;
+        z-index: $zindex-ui-level-0;
+    }
+    &-option-box {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: $zindex-ui-level-1;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 40px;
+        background: $primary-color;
+        background: radial-gradient($primary-7, $primary-color, $primary-4);
+        transition: background $animation-duration-base $ease-in;
+        box-shadow: $shadow-2;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+            background: $primary-7;
+            background: radial-gradient($primary-8, $primary-7, $primary-5);
+        }
+        &:active {
+            background: $primary-8;
+            background: radial-gradient($primary-9, $primary-8, $primary-6);
+        }
+        i {
+            font-size: 16px;
+            color: $text-color-of-bg;
+        }
+    }
+    &-option-bar {
+        display: none;
+        position: absolute;
+        font-size: 0;
+        line-height: 1;
+        width: 78px;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-48%);
+        margin-top: -40px;
+        background: $component-background;
+        border-radius: $border-radius-sm;
+        text-align: center;
+        z-index: $zindex-ui-level-1;
+        span {
+            font-size: 16px;
+            margin-right: 6px;
+            cursor: pointer;
+            color: $primary-color;
+            &:last-child {
+                margin-right: 0;
+            }
+            &:hover {
+                color: $primary-8;
+            }
+            &:active {
+                color: $primary-9;
+            }
+        }
+        .#{$editable-box-prefix-cls}:hover > & {
+            display: block;
+        }
+        .#{$editable-box-prefix-cls}.#{$editable-box-prefix-cls}-resizing .#{$editable-box-prefix-cls}:hover > & {
+            display: none;
+        }
+    }
+    &-has-content {
+        display: none;
+        .#{$editable-box-prefix-cls}:hover > & {
+            display: block;
+        }
+        .#{$editable-box-prefix-cls}.#{$editable-box-prefix-cls}-resizing .#{$editable-box-prefix-cls}:hover > & {
+            display: none;
+        }
+    }
+    &-resize {
+        position: absolute;
+        height: 100%;
+        width: 2px;
+        background: $border-color-base;
+        left: 0;
+        top: 0;
+        z-index: $zindex-ui-level-1;
+        &-column {
+            width: 100%;
+            height: 2px;
+            &:hover {
+                cursor: n-resize !important;
+            }
+        }
+        &:hover {
+            cursor: e-resize;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawGraphModule} from "jigsaw/component/graph/index";
+import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
 import {FunnelPlotGraphComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CommonModule} from "@angular/common";

@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/service/loading.service";
+import {LoadingService} from "jigsaw/common/service/loading.service";
 
 @Component({
     templateUrl: './demo.component.html',

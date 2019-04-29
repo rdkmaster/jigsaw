@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {SliderMark} from "jigsaw/component/slider/slider";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {SliderMark} from "jigsaw/pc-components/slider/slider";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 @Component({
     templateUrl: './demo.component.html',

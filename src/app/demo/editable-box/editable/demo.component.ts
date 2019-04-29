@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LayoutData} from "jigsaw/core/data/layout-data";
+import {LayoutData} from "jigsaw/common/core/data/layout-data";
 
 @Component({
     templateUrl: './demo.component.html',

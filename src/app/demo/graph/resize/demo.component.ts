@@ -4,10 +4,10 @@
 
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {combineLatest} from "rxjs/observable/combineLatest";
-import {AbstractGraphData} from "jigsaw/core/data/graph-data";
-import {EchartOptions} from "jigsaw/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/component/graph/graph";
-import {JigsawInput} from "jigsaw/component/input/input";
+import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
+import {EchartOptions} from "jigsaw/common/core/data/echart-types";
+import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
+import {JigsawInput} from "jigsaw/pc-components/input/input";
 
 @Component({
     templateUrl: './demo.component.html'

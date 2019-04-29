@@ -1,0 +1,49 @@
+@import "../../../common/assets/scss/core/base";
+
+$tab-prefix: #{$jigsaw-prefix}-tabs;
+$editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
+$editable-tab-title-prefix-cls: #{$jigsaw-prefix}-editable-tab-title;
+
+.#{$editable-tab-title-prefix-cls} {
+    &-bar {
+        color: $text-color-secondary;
+        &:hover {
+            color: $text-color-dark;
+        }
+    }
+    &-input {
+        color: $text-color;
+    }
+}
+
+.#{$tab-prefix} {
+    &-host {
+        display: block;
+        height: 100%;
+    }
+    &-wrapper {
+        display: block;
+        width: 100%;
+        height: 100%;
+        .#{$tab-prefix} {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            &-content {
+                flex: 1;
+                overflow: hidden;
+                .#{$editable-box-prefix-cls} {
+                    height: 100%;
+                }
+            }
+            &-tabpane {
+                height: 100%;
+                &.#{$tab-prefix}-tabpane-inactive {
+                    height: 0;
+                }
+            }
+        }
+    }
+}
+
+

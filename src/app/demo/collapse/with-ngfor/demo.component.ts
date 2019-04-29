@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/4/26.
  */
 import {Component, ViewChild} from '@angular/core';
-import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/component/collapse/collapse";
+import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/pc-components/collapse/collapse";
 
 @Component({
     templateUrl: './demo.component.html',

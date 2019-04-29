@@ -1,7 +1,7 @@
 import {Component, ComponentRef} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LayoutData} from "jigsaw/core/data/layout-data";
-import {LoadingService} from "jigsaw/service/loading.service";
+import {LayoutData} from "jigsaw/common/core/data/layout-data";
+import {LoadingService} from "jigsaw/common/service/loading.service";
 import {TableCellData, TableMonitorComponent} from "./monitors/table.comp";
 import {GraphMonitorComponent} from "./monitors/graph.comp";
 import {NewMonitorComponent} from "./monitors/new-monitor.comp";

@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/core/data/array-collection";
-import {GroupOptionValue} from "jigsaw/component/list-and-tile/group-common";
-import {JigsawListLite} from "jigsaw/component/list-and-tile/list-lite";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
+import {JigsawListLite} from "jigsaw/pc-components/list-and-tile/list-lite";
 
 @Component({
     templateUrl: './demo.component.html',

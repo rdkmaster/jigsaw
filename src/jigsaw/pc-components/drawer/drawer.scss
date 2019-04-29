@@ -1,0 +1,122 @@
+@import "../../common/assets/scss/core/base";
+
+$drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
+
+.#{$drawer-prefix-cls} {
+    border: 1px solid $border-color-base;
+    background: $component-background;
+    box-shadow: $box-shadow-base;
+    z-index: $zindex-popover-level-0;
+    &-in-dom {
+        position: relative;
+        display: inline-block;
+        transition: height $animation-duration-slow $ease-in-circ, width $animation-duration-slow $ease-in-circ;
+        overflow: hidden;
+        > .#{$drawer-prefix-cls} {
+            position: absolute;
+            .#{$drawer-prefix-cls}-content {
+                width: auto;
+                height: auto;
+            }
+        }
+    }
+
+    &-animation {
+        transition: transform $animation-duration-slow $ease-in-circ;
+    }
+    &-content {
+        width: 100%;
+        height: 100%;
+    }
+    &-bar {
+        position: absolute;
+        width: 14px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: $text-color-of-bg;
+        background: $primary-color;
+        cursor: pointer;
+        border-radius: 0 4px 4px 0;
+        box-shadow: $box-shadow-base;
+        &:hover {
+            background: $primary-7;
+        }
+        &:active {
+            background: $primary-8;
+        }
+    }
+    &-left > &-bar {
+        right: -14px;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+    &-top > &-bar {
+        left: 50%;
+        bottom: -32px;
+        transform: translate(-50%, 0) rotate(90deg);
+    }
+    &-right > &-bar {
+        left: -14px;
+        top: 50%;
+        transform: translate(0%, -50%) rotate(180deg);
+    }
+    &-bottom > &-bar {
+        left: 50%;
+        top: -32px;
+        transform: translate(-50%, 0) rotate(270deg);
+    }
+    &-close {
+        &.#{$drawer-prefix-cls}-left {
+            transform: translate(-100%, 0);
+        }
+        &.#{$drawer-prefix-cls}-top {
+            transform: translate(0, -100%);
+        }
+        &.#{$drawer-prefix-cls}-right {
+            transform: translate(100%, 0);
+        }
+        &.#{$drawer-prefix-cls}-bottom {
+            transform: translate(0, 100%);
+        }
+    }
+
+    &-left-center {
+        top: 50%;
+        transform: translate(0, -50%);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-100%, -50%);
+        }
+    }
+    &-top-center {
+        left: 50%;
+        transform: translate(-50%, 0);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-50%, -100%);
+        }
+    }
+    &-right-center {
+        top: 50%;
+        transform: translate(0, -50%);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(100%, -50%);
+        }
+    }
+    &-bottom-center {
+        left: 50%;
+        transform: translate(-50%, 0);
+        &.#{$drawer-prefix-cls}-close {
+            transform: translate(-50%, 100%);
+        }
+    }
+}
+
+@mixin setPosition() {
+    @each $direction in 'left', 'top', 'right', 'bottom' {
+        .#{$drawer-prefix-cls}-#{$direction} {
+            #{$direction}: 0
+        }
+    }
+}
+
+@include setPosition();

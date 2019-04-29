@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawTableModule} from "jigsaw/component/table/table";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
 import {JobCellRender, RebuildTableDataDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
+import {JigsawPaginationModule} from "jigsaw/pc-components/pagination/pagination";
 
 @NgModule({
     imports: [JigsawTableModule, JigsawPaginationModule, CommonModule, JigsawDemoDescriptionModule],

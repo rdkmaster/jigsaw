@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawTabsModule} from "jigsaw/component/tabs/index";
+import {JigsawTabsModule} from "jigsaw/pc-components/tabs/index";
 import {JigsawTabsWithNgForComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

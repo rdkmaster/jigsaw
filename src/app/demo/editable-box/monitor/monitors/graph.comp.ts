@@ -1,7 +1,7 @@
 import {Component, Input, Type, ViewChild} from "@angular/core";
-import {AbstractGraphData} from "jigsaw/core/data/graph-data";
-import {EchartOptions} from "jigsaw/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/component/graph/graph";
+import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
+import {EchartOptions} from "jigsaw/common/core/data/echart-types";
+import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
 import {MonitorService} from "./monitor-service";
 import {AbstractMonitorsBase} from "./monitors-base";
 import {ToolbarComp} from "../comp/toolbar.comp";

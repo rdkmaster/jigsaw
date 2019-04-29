@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {StripColorGraphData, StripGraphData, StripSequenceGraphData} from "jigsaw/core/data/graph-data";
+import {StripColorGraphData, StripGraphData, StripSequenceGraphData} from "jigsaw/common/core/data/graph-data";
 import {AjaxInterceptor} from "../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 

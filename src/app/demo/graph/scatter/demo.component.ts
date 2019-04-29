@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ScatterGraphData} from "jigsaw/core/data/graph-data";
+import {ScatterGraphData} from "jigsaw/common/core/data/graph-data";
 import {AjaxInterceptor} from "../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 

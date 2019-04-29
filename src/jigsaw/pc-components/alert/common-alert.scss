@@ -1,0 +1,5 @@
+@import "../../common/assets/scss/core/base";
+
+.#{$jigsaw-prefix}-common-alert{
+    @include inline-block
+}

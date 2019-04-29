@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule} from "jigsaw/component/table/table";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
 import {CustomTableComponent} from './demo.component';
-import {JigsawDroppableModule} from "jigsaw/directive/dragdrop/index";
+import {JigsawDroppableModule} from "jigsaw/common/directive/dragdrop/index";
 
 @NgModule({
     imports: [JigsawTableModule, JigsawDroppableModule,],

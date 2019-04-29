@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, Type} from "@angular/core";
-import {PopupInfo, PopupService} from "jigsaw/service/popup.service";
+import {PopupInfo, PopupService} from "jigsaw/common/service/popup.service";
 import {MonitorService} from "../monitors/monitor-service";
 
 @Component({

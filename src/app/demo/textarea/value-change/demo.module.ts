@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawTextareaModule} from "jigsaw/component/textarea";
+import {JigsawTextareaModule} from "jigsaw/pc-components/textarea";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TextareaValueChangeDemoComponent} from "./demo.component";
 

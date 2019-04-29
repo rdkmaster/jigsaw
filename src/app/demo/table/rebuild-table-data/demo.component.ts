@@ -1,8 +1,8 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {PageableTableData} from "jigsaw/core/data/table-data";
-import {ColumnDefine} from "jigsaw/component/table/table-typings";
-import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
+import {PageableTableData} from "jigsaw/common/core/data/table-data";
+import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
 
 @Component({
     templateUrl: './demo.component.html'

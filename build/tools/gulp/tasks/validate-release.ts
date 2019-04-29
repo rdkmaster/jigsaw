@@ -10,10 +10,10 @@ import {buildConfig} from '../packaging/build-config';
 /** Path to the directory where all releases are created. */
 const releasesDir = join(buildConfig.outputDir, 'releases');
 
-/** RegExp that matches Angular component inline styles that contain a sourcemap reference. */
+/** RegExp that matches Angular pc-components inline styles that contain a sourcemap reference. */
 const inlineStylesSourcemapRegex = /styles: ?\[["'].*sourceMappingURL=.*["']/;
 
-/** RegExp that matches Angular component metadata properties that refer to external resources. */
+/** RegExp that matches Angular pc-components metadata properties that refer to external resources. */
 const externalReferencesRegex = /(templateUrl|styleUrls): *["'[]/;
 
 task('validate-release', sequenceTask(':publish:build-releases', 'validate-release:check-bundles'));
@@ -43,7 +43,7 @@ function checkReleasePackage(packageName: string): string[] {
   let failures = [];
 
   if (inlineStylesSourcemapRegex.exec(bundleContent) !== null) {
-    failures.push('Bundles contain sourcemap references in component styles.');
+    failures.push('Bundles contain sourcemap references in pc-components styles.');
   }
 
   if (externalReferencesRegex.exec(bundleContent) !== null) {

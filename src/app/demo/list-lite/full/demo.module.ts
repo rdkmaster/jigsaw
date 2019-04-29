@@ -1,9 +1,9 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawComboSelectModule} from "jigsaw/component/combo-select/index";
+import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ListLiteFullDemoComponent} from "./demo.component";
-import {JigsawListLiteModule} from "jigsaw/component/list-and-tile/list-lite";
+import {JigsawListLiteModule} from "jigsaw/pc-components/list-and-tile/list-lite";
 
 @NgModule({
     imports: [

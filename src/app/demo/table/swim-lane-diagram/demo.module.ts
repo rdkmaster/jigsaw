@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {JigsawSliderModule} from "jigsaw/component/slider/index";
+import {TranslateHelper} from "jigsaw/common/core/utils/translate-helper";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {JigsawSliderModule} from "jigsaw/pc-components/slider/index";
 import {JigsawDemoDescriptionModule} from "../../../demo-description/demo-description";
 import {SwimLaneDiagramDemoComponent} from './demo.component';
 import {TableSwimLaneCell} from "./table-renderer";

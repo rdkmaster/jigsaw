@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawTableModule} from "jigsaw/component/table/table";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/component/table/table-renderer";
+import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
-import {JigsawTagModule} from "jigsaw/component/tag/tag";
+import {JigsawPaginationModule} from "jigsaw/pc-components/pagination/pagination";
+import {JigsawTagModule} from "jigsaw/pc-components/tag/tag";
 import {TableAddCheckboxColumnPageableDemoComponent} from './demo.component';
 
 @NgModule({

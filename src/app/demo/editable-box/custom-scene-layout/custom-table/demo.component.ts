@@ -1,7 +1,7 @@
 import {Component, ComponentRef} from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
+import {TableData} from "jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
-import {DragDropInfo} from "jigsaw/directive/dragdrop/types";
+import {DragDropInfo} from "jigsaw/common/directive/dragdrop/types";
 import {SubscribableComponent} from "../linkage.common";
 
 @Component({

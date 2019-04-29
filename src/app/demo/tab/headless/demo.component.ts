@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
-import {TableData} from "../../../../jigsaw/core/data/table-data";
+import {ArrayCollection} from "../../../../jigsaw/common/core/data/array-collection";
+import {TableData} from "../../../../jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
-import {LineGraphData} from "../../../../jigsaw/core/data/graph-data";
+import {LineGraphData} from "../../../../jigsaw/common/core/data/graph-data";
 
 @Component({
     templateUrl: './demo.component.html',

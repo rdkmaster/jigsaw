@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
-import {TableCellRendererBase} from "jigsaw/component/table/table-renderer";
-import {CommonUtils} from "jigsaw/core/utils/common-utils";
+import {TableData} from "jigsaw/common/core/data/table-data";
+import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
 
 export class CalendarTableData extends TableData {
     year: number = new Date().getFullYear();

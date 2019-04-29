@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {CheckBoxStatus} from "jigsaw/component/checkbox/typings";
+import {CheckBoxStatus} from "jigsaw/pc-components/checkbox/typings";
 
 @Component({
   templateUrl: './demo.component.html'

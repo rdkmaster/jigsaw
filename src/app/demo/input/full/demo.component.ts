@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
-import {JigsawInput} from "jigsaw/component/input/input";
+import {JigsawInput} from "jigsaw/pc-components/input/input";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -29,7 +29,7 @@ export class InputFullComponent {
     }
     focusHandler(event){
         console.log(event);
-        this.focusMessage = 'input component focused'
+        this.focusMessage = 'input pc-components focused'
     }
 
     // demo-5

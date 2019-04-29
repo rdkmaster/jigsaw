@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {JigsawInfoAlert} from "jigsaw/component/alert/alert";
+import {JigsawInfoAlert} from "jigsaw/pc-components/alert/alert";
 
 @Component({
     templateUrl: 'demo.component.html',

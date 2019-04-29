@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
-import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
-import {ButtonInfo} from "jigsaw/service/popup.service";
-import {LocalPageableTableData} from "../../../../jigsaw/core/data/table-data";
+import {TranslateHelper} from "jigsaw/common/core/utils/translate-helper";
+import {ButtonInfo} from "jigsaw/common/service/popup.service";
+import {LocalPageableTableData} from "../../../../jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
 
 /**

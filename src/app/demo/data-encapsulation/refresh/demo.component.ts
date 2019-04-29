@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TableData} from "jigsaw/core/data/table-data";
+import {TableData} from "jigsaw/common/core/data/table-data";
 
 @Component({
     templateUrl: './demo.component.html'
