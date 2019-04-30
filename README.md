@@ -129,9 +129,6 @@ If there is any difficulty in getting started, please add Jigsaw's official WeCh
 ## One More Star Please!
 This is the best encouragement for us.
 
-## The status of all components
-![](comp-map.png)
-
 ## Contribution
 We believe that the following acts are doing contributions:
 - Quietly concern about Jigsaw;
