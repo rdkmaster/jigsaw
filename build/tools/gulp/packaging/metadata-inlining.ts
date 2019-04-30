@@ -40,7 +40,7 @@ export function inlineMetadataResources(metadata: any, componentResources: Map<s
 /** Inlines HTML and CSS resources into `metadata.json` files. */
 export function inlinePackageMetadataFiles(packagePath: string) {
   // Create a map of fileName -> fullFilePath. This is needed because the templateUrl and
-  // styleUrls for each pc-components use just the filename because, in the source, the pc-components
+  // styleUrls for each component use just the filename because, in the source, the component
   // and the resources live in the same directory.
   const componentResources = new Map<string, string>();
 

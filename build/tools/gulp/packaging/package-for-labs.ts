@@ -13,8 +13,8 @@ export function updatePackageForLabs(packageDir: string) {
   // Replace the `0.0.0-PLACEHOLDER` version name with the version of the root package.json file.
   packageConfig.version = packageConfig.version.replace('0.0.0-PLACEHOLDER', projectVersion);
   packageConfig.name = "@rdkmaster/jigsaw-labs";
-  packageConfig.main = "./public_api.ts";
-  packageConfig.module = "./public_api.ts";
+  packageConfig.main = "./pc-components/public_api.ts";
+  packageConfig.module = "./pc-components/public_api.ts";
   packageConfig.es2015 = "";
   packageConfig.typings = "./index.d.ts";
 

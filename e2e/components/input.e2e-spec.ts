@@ -41,7 +41,7 @@ describe('input', () => {
             browser.get('/input/icons');
         });
 
-        it('should be mapped into pc-components and display prefix icon', () => {
+        it('should be mapped into component and display prefix icon', () => {
             const prefixIcons = element(by.id('test-input')).all(by.tagName('a')),
                 input = element(by.id('test-input')).element(by.tagName('input'));
             input.sendKeys('asf');
@@ -66,7 +66,7 @@ describe('input', () => {
             const callFunctionEl = element(by.id('call-function'));
             const focusMessage = element(by.id('focus-message'));
             callFunctionEl.click();
-            expect(focusMessage.getText()).toBe('input pc-components focused');
+            expect(focusMessage.getText()).toBe('input component focused');
         })
     });
 });

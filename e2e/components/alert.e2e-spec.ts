@@ -12,7 +12,7 @@ describe('alert', () => {
             await browser.sleep(300);
         });
         it('should be alert when click button popup and display ok when click definite', async () => {
-            const componentEl = element(by.tagName('ng-pc-components')),
+            const componentEl = element(by.tagName('ng-component')),
                 alertButtonEl = element(by.css('.app-wrap')).all(by.tagName('jigsaw-button')),
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 definiteEl = jigsawAlertEl.element(by.css('.jigsaw-button')),
@@ -34,7 +34,7 @@ describe('alert', () => {
         });
 
         it('should close alert when click "x"', async () => {
-            const componentEl = element(by.tagName('ng-pc-components')),
+            const componentEl = element(by.tagName('ng-component')),
                 alertButtonEl = componentEl.all(by.css('.jigsaw-button')),
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 alertCloseEl = jigsawAlertEl.element(by.css('.jigsaw-alert-head')).all(by.tagName('SPAN')).get(1),
@@ -47,7 +47,7 @@ describe('alert', () => {
         });
 
         it('should check color of warning and error alert', async () => {
-            const componentEl = element(by.tagName('ng-pc-components')),
+            const componentEl = element(by.tagName('ng-component')),
                 alertButtonEl = componentEl.all(by.css('.jigsaw-button')),
                 jigsawAlertEl = element(by.tagName('jigsaw-alert')),
                 warningColorEl = jigsawAlertEl.element(by.tagName('jigsaw-button'));

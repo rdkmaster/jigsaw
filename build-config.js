@@ -5,7 +5,7 @@
 const {join} = require('path');
 
 /** Current version of the project*/
-const buildVersion = require('./src/jigsaw/package.json').version;
+const buildVersion = require('./src/jigsaw/pc-components/package.json').version;
 
 /** License that will be placed inside of all created bundles. */
 const buildLicense = `/**
