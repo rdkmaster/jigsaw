@@ -2,14 +2,78 @@
 
 [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw)
 [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=master)](https://travis-ci.org/rdkmaster/jigsaw)
-[![Code Coverage Status](https://coveralls.io/repos/github/rdkmaster/jigsaw/badge.svg?branch=master)](https://coveralls.io/github/rdkmaster/jigsaw?branch=master)
-[![Doc Coverage Status](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=documentation)](http://rdkmaster.com/jigsaw/doc/coverage.html)
-<br>
-[![component count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=components)](http://rdk.zte.com.cn/component)
-[![directives count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=directives)](http://rdk.zte.com.cn/component)
-[![injectables count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=injectables)](http://rdk.zte.com.cn/component)
-[![demo count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=demo)](http://rdk.zte.com.cn/component)
-[![e2e testcases count](http://rdkmaster.com/rdk/service/app/badges/server/get-badge?type=e2e%20testcases)](http://rdk.zte.com.cn)
+
+
+## 可用清单
+
+### 组件 / Components
+
+\# | 名称 | 简述 | 链接
+---|-----|-------------|------
+1 | Alert | 一个简单的对话框，通常用于告诉用户一些重要的东西，它还可以收集用户的选择。 | [Demo](http://rdk.zte.com.cn/components/alert/demo#popup)
+2 | Auto Input | 一个全功能 [Input](http://rdk.zte.com.cn/components/input/demo#full) 组件，附带一个提示可选值的下拉列表。 | [Demo](http://rdk.zte.com.cn/components/auto-complete-input/demo#basic)
+3 | Breadcrumb | 轻量级导航器，可在用户浏览时自动跟踪。 | [Demo](http://rdk.zte.com.cn/components/breadcrumb/demo#router)
+4 | Button | 一个按钮。 | [Demo](http://rdk.zte.com.cn/components/button/demo#full)
+5 | Button Bar | 一个按钮栏，支持选择状态，单个或多个选择，它可以用作表单控件或导航器。 | [Demo](http://rdk.zte.com.cn/components/button-bar/demo#basic)
+6 | Cascade | 用于收集或者展示具有从属关系的数据的表单控件。 | [Demo](http://rdk.zte.com.cn/components/cascade/demo#search-and-paging)
+7 | Check Box | 用于收集多项选择的表单控件。 | [Demo](http://rdk.zte.com.cn/components/checkbox/demo#full)
+8 | Fish Bone | 鱼骨图通常用于以鱼骨的方式呈现具有从属关系的一些数据。 | [Demo](http://rdk.zte.com.cn/components/fish-bone/demo#full)
+9 | Graph | 以图形方式呈现任何数据，包括条形图，折线图，饼图，仪表等任何图形，基于 [echarts](echarts.baidu.com) 实现。 | [Demo](http://rdk.zte.com.cn/components/graph/demo#pie)
+10 | Icon | 一个字体图标，可作为链接按钮来用。 | [Demo](http://rdk.zte.com.cn/components/icon/demo#basic)
+11 | Input | 一个用于收集文本信息的表单控件。 | [Demo](http://rdk.zte.com.cn/components/input/demo#full)
+12 | List Lite | 用于将一组数据以文本列表方式呈现，支持单选和多选。 | [Demo](http://rdk.zte.com.cn/components/list-lite/demo#full)
+13 | List | 用于将一组数据渲染为任意形式的列表 | [Demo](http://rdk.zte.com.cn/components/list/demo#full)
+14 | Loading | 显示一段简单的动画以缓解用户在等执行某些操作期间的焦虑感。 | [Demo](http://rdk.zte.com.cn/components/loading/demo#full)
+15 | Notification | 在UI的角落里弹出一些不重要的消息，或收集一些不重要的用户选择。 | [Demo](http://rdk.zte.com.cn/components/notification/demo#full)
+16 | Numeric Input | 用于收集数字的表单控件，支持整数和浮点数。 | [Demo](http://rdk.zte.com.cn/components/numeric-input/demo#step)
+17 | Pagination | 用于将大量数据分成多个页面显示的控件。 | [Demo](http://rdk.zte.com.cn/components/pagination/demo#basic)
+18 | Radio Group | 用于收集单个选项的表单控件。 | [Demo](http://rdk.zte.com.cn/components/radio-group/demo#full)
+19 | Range Time | 用于收集日期开始和结束日期时间的表单控件。 | [Demo](http://rdk.zte.com.cn/components/radio-group/demo#full)
+20 | Rate | 一个用于打分的表单控件。 | [Demo](http://rdk.zte.com.cn/components/rate/demo#full)
+21 | Scrollbar | 给任意容器添加一个自定义滚动条，基于 [perfect scrollbar](https://github.com/utatti/perfect-scrollbar)。 | [Demo](http://rdk.zte.com.cn/components/scrollbar/demo#basic)
+22 | Select | 用于通过下拉列表来收集选项的表单控件。 | [Demo](http://rdk.zte.com.cn/components/select/demo#basic)
+23 | Slider | 用于通过滑动收集数字信息的表单控件。 | [Demo](http://rdk.zte.com.cn/components/select/demo#basic)
+24 | Steps | 显示一系列具有某些预定义状态的自定义步骤。 | [Demo](http://rdk.zte.com.cn/components/select/demo#basic)
+25 | Switch | 用于收集 是/否 开/关 的表单控件。 | [Demo](http://rdk.zte.com.cn/components/select/demo#basic)
+26 | Table | 一个非常非常强大的数据表。 | [Demo](http://rdk.zte.com.cn/components/table/demo#renderer)
+27 | Tag | 一个标签控件。 | [Demo](http://rdk.zte.com.cn/components/tag/demo#basic)
+28 | Textarea | 用于收集多行文本的表单控件。 | [Demo](http://rdk.zte.com.cn/components/textarea/demo#basic)
+29 | Tile | 通过平铺方式显示数据列表。 | [Demo](http://rdk.zte.com.cn/components/tile/demo#full)
+30 | TileLite | 通过平铺方式显示数据列表。 | [Demo](http://rdk.zte.com.cn/components/tile-lite/demo)
+31 | Time | 用于收集日期时间的表单控件。 | [Demo](http://rdk.zte.com.cn/components/time/demo#full)
+32 | Tooltip | 一个自定义的 tooltip。 | [Demo](http://rdk.zte.com.cn/components/tooltip/demo#inline)
+33 | Tree | 以树的方式渲染一些具有从属关系的数据，基于 [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo)。 | [Demo](http://rdk.zte.com.cn/components/tree/demo#editable)
+34 | Upload | 打开文件选择器挑选一些文件并上传到服务器。 | [Demo](http://rdk.zte.com.cn/components/upload/demo#basic)
+35 | Viewport | 表示一个抽象视图的一部分。 | [Demo](http://rdk.zte.com.cn/components/table/demo#big-table)
+
+### 容器 / Containers
+
+\# | 名称 | 简述 | 链接
+---|------|-------------|------
+1 | Collapse | 可以折叠或打开给定视图的容器。 | [Demo](http://rdk.zte.com.cn/components/collapse/demo#full)
+2 | Combo Select | 一个可以隐藏任何给定视图的容器，用户可以向下拉以显示此视图。 | [Demo](http://rdk.zte.com.cn/components/combo-select/demo#searchable)
+3 | Dialog | 将任意给定视图以对话框的形式展示的容器。 | [Demo](http://rdk.zte.com.cn/components/dialog/demo)
+4 | Drawer | 一个可以隐藏任何给定视图的容器，用户可以滑动打开此视图。 | [Demo](http://rdk.zte.com.cn/components/dialog/demo)
+5 | Tab | 在同一区域堆叠多个视图，同时只显示其中一个视图。 | [Demo](http://rdk.zte.com.cn/components/tab/demo#api)
+
+### 服务 / Services
+
+\# | 名称 | 简述 | 链接
+---|------|-------------|------
+1 | Translation | 用于创建一个支持多语言的视图。 | [Demo](http://rdk.zte.com.cn/components/i18n/demo#full)
+2 | TimeService | 将时间宏（如`now-1d`）转换为实际值。 | --
+3 | PopupService | 弹出任意给定视图到UI的顶部，非常强大。 | [Demo](http://rdk.zte.com.cn/components/popup/demo#dialog)
+4 | LoadingService | 用于弹出给定的 [Loading](http://rdk.zte.com.cn/components/loading/demo#full) 组件。 | [Demo](http://rdk.zte.com.cn/components/loading/demo#full)
+5 | ChartIconFactory | 将给定的简单数据渲染成一个小图标。 | --
+
+### 指令 / Directives
+
+\# | 名称 | 简述 | 链接
+---|------|-------------|------
+1 | Float | 在宿主附近以下拉的形式弹出任意给定的视图，支持多种下拉位置。 | [Demo](http://rdk.zte.com.cn/components/float/demo#pos-reviser)
+2 | Trusted Html | 与Angular的innerHtml指令功能相似，但不会删除给定的html片段中的敏感信息。 | [Demo](http://rdk.zte.com.cn/components/trusted-html/demo)
+3 | Draggable | 赋予宿主支持拖拽的能力。 | [Demo](http://rdk.zte.com.cn/components/drag-drop/demo)
+4 | Upload | 赋予宿主支持上传文件能力。 | [Demo](http://rdk.zte.com.cn/components/upload/demo#basic)
 
 ## 名字的内涵
 Jigsaw原意是七巧板，一种拼图游戏。游戏的过程和现代web页面开发过程很类似，游戏者按照既定的蓝图将杂乱的碎片组合成一幅图，我们使用这个名字正是为了让web页面开发者能够像玩Jigsaw游戏一样，边玩边开发你的页面。
