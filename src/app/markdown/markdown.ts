@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, NgModule, OnInit, ViewEncapsulation} from "@angular/core";
 import * as marked from 'marked';
 import {InternalUtils} from "../../jigsaw/common/core/utils/internal-utils";
-import {AbstractJigsawComponent} from "../../jigsaw/pc-components/common";
+import {AbstractJigsawComponent} from "../../jigsaw/common/common";
 
 @Component({
     selector: 'jigsaw-markdown, j-markdown',

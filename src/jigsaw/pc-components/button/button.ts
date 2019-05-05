@@ -1,6 +1,6 @@
 import {NgModule, Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from '../common';
+import {AbstractJigsawComponent} from '../../common/common';
 
 /**
  * 在界面上显示一个按钮，最常见最简单的组件。

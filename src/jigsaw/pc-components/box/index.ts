@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawBox} from "./box";
 import {JigsawBoxResizable} from "./box-resizable";
-import {JigsawCommonModule} from "../common";
+import {JigsawCommonModule} from "../../common/common";
 import {JigsawEditableBox} from "./editable-box";
 
 @NgModule({

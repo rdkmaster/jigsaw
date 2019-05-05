@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {ComponentInput, ComponentMetaData, LayoutData} from "../../common/core/data/layout-data";
-import {JigsawRendererHost} from "../common";
+import {JigsawRendererHost} from "../../common/common";
 import {JigsawResizableBoxBase} from "./common-box";
 
 @Component({

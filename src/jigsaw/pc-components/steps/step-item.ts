@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 
 /**
  * 代表了`JigsawSteps`组件的一个步骤，需要配合`JigsawSteps`组件一起使用

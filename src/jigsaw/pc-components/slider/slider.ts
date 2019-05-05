@@ -18,7 +18,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 
 export class SliderMark {
     value: number;

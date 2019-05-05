@@ -1,0 +1,72 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Button</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>用法</h3>
+            <jm-button colorType="primary">普通用法</jm-button>
+            <a jigsaw-mobile-button colorType="primary">使用 a 标签</a>
+            <button jigsaw-mobile-button colorType="primary">使用 button 标签</button>
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>类型</h3>
+            <p class="comment">四种类型：<code>default</code> <code>primary</code> <code>warning</code>
+                <code>error|danger</code></p>
+            <jm-button>Default</jm-button>
+            <jm-button colorType="primary">Primary</jm-button>
+            <jm-button colorType="warning">Warning</jm-button>
+            <jm-button colorType="danger">Danger</jm-button>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="demo-3 live-demo live-demo-block">
+            <h3>尺寸</h3>
+            <p class="comment">三种尺寸：<code>small</code> <code>default</code> <code>large</code></p>
+            <jm-button preSize="small" colorType="primary">Small</jm-button>
+            <jm-button preSize="default" colorType="primary">Default</jm-button>
+            <jm-button preSize="large" colorType="primary">Large</jm-button>
+        </div>
+
+        <div class="demo-4 live-demo live-demo-block">
+            <h3>设置宽高</h3>
+            <p class="comment">宽高支持 <code>number</code> <code>px</code> <code>%</code></p>
+            <jm-button width="150px" height="40">click me</jm-button>
+            <jm-button width="20%">click me</jm-button>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="demo-5 live-demo live-demo-block">
+            <h3>绑定click事件</h3>
+            <jm-button (click)="canClick()">click me</jm-button>
+        </div>
+
+        <div class="demo-6 live-demo live-demo-block">
+            <h3>不可点击状态</h3>
+            <jm-button [(disabled)]="disabled" (click)="changeClickCount()">click me</jm-button>
+            <jm-checkbox [(checked)]="disabled">disable/enable</jm-checkbox>
+            <p class="message">点击次数<span>{{clickCount}}</span></p>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="demo-7 live-demo live-demo-block">
+            <h3>内嵌图标</h3>
+            <jm-button>
+                <span class="fa fa-area-chart"></span>
+                <span>确定</span>
+            </jm-button>
+            <jm-button (click)="onClick()" colorType="primary">
+                <jm-font-loading *ngIf="isLoading" width="16px" height="16px" color="white"></jm-font-loading>
+                <span>{{label}}</span>
+            </jm-button>
+        </div>
+    </div>
+</div>

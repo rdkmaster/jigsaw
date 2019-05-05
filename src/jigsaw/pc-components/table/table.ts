@@ -3,7 +3,7 @@
     OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent, JigsawCommonModule} from "../common";
+import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 

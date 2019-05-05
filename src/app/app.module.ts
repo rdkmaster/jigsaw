@@ -7,20 +7,21 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {JigsawRootModule} from "jigsaw/pc-components/root/root";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
-import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
-//import {JigsawTheme} from "../jigsaw/core/theming/theme";
+import {PCDemoListComponent} from "./pc-demo-list.component";
+import {MobileDemoListComponent} from "./mobile-demo-list.component";
 
 {
     (<any[]>routerConfig).push(
-        {path: '', component: DemoListComponent},
+        {path: '', component: PCDemoListComponent},
+         {path: 'mobile', component: MobileDemoListComponent},
         {path: '**', redirectTo: ''}
     );
 }
 
 @NgModule({
     declarations: [
-        AppComponent, DemoListComponent
+        AppComponent, PCDemoListComponent, MobileDemoListComponent
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
@@ -38,6 +39,5 @@ import {routerConfig} from "./router-config";
 })
 export class AppModule {
     constructor() {
-        //JigsawTheme.majorStyle = 'dark';
     }
 }

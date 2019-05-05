@@ -7,7 +7,7 @@ import {Observable} from "rxjs/Observable";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {InternalUtils} from "../../common/core/utils/internal-utils";

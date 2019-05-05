@@ -3,7 +3,7 @@ import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs/Subscription";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 
 export type BreadcrumbRouteConfig = {
     [url: string]: BreadcrumbNode | BreadcrumbGenerator;

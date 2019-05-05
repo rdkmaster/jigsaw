@@ -1,4 +1,4 @@
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";

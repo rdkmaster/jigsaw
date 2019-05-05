@@ -5,7 +5,7 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDes
 import {AbstractGraphData} from "../../common/core/data/graph-data";
 
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {VMAX_GRAPH_THEME} from "./vmax-theme";
 import {VMAX_GRAPH_THEME_DARK} from './vmax-theme-dark';

@@ -1,4 +1,4 @@
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {EventEmitter, Input, Output} from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";

@@ -34,7 +34,7 @@ import {JigsawDraggableModule, JigsawDroppableModule} from '../common/directive/
 import {JigsawRootModule} from "./root/root";
 import {JigsawFishBoneModule} from "./fish-bone/fish-bone";
 import {JigsawViewportModule} from './viewport/viewport'
-import {JigsawCommonModule} from "./common";
+import {JigsawCommonModule} from "../common/common";
 import {JigsawListModule} from "./list-and-tile/list";
 import {JigsawTrustedHtmlModule} from "../common/directive/trusted-html/trusted-html";
 import {JigsawBoxModule} from "./box/index";

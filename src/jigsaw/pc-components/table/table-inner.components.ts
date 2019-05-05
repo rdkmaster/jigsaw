@@ -16,7 +16,7 @@ import {
     Type,
     ViewChild
 } from "@angular/core";
-import {AbstractJigsawViewBase, JigsawRendererHost} from "../common";
+import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";

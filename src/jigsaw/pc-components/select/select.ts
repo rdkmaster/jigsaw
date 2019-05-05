@@ -2,7 +2,7 @@ import {
     NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";

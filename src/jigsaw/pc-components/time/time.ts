@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscription} from "rxjs/Subscription";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";

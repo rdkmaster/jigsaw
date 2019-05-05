@@ -14,7 +14,7 @@ export * from "./pc-components/checkbox/index";
 export * from "./pc-components/checkbox/typings";
 export * from "./pc-components/collapse/collapse";
 export * from "./pc-components/combo-select/index";
-export * from "./pc-components/common";
+export * from "./common/common";
 export * from "./pc-components/dialog/dialog";
 export * from "./pc-components/drawer/drawer";
 export * from "./pc-components/fish-bone/fish-bone";

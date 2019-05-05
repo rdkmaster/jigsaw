@@ -3,7 +3,7 @@ import {
     AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
     ComponentRef, OnDestroy, Output, EventEmitter
 } from '@angular/core';
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 
 /**
  * 改变tab标题时发送事件的携带数据类型。

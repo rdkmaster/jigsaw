@@ -3,7 +3,7 @@ import {
     NgZone,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {fadeIn} from "../animations/fade-in";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {TreeData} from "../../common/core/data/tree-data";

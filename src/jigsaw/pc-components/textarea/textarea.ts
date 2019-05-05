@@ -10,7 +10,7 @@ import {
     ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent, IJigsawFormControl} from "../common";
+import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 /**

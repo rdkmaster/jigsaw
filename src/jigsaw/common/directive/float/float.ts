@@ -8,7 +8,7 @@ import {
     PopupPositionValue,
     PopupService
 } from "../../service/popup.service";
-import {AbstractJigsawViewBase} from "../../../pc-components/common";
+import {AbstractJigsawViewBase} from "../../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 

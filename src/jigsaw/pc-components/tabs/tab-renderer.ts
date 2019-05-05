@@ -1,4 +1,4 @@
-import {IDynamicInstantiatable} from "../common";
+import {IDynamicInstantiatable} from "../../common/common";
 import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";

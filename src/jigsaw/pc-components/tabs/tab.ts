@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../common";
+import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {PopupService, PopupSize, PopupInfo, PopupPositionValue} from "../../common/service/popup.service";
 import {Subscription} from "rxjs/Subscription";
 

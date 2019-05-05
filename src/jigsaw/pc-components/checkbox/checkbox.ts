@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
-import {AbstractJigsawComponent} from '../common';
+import {AbstractJigsawComponent} from '../../common/common';
 import {CheckBoxStatus} from "./typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 

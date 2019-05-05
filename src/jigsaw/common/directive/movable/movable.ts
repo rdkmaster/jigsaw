@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2} from "@angular/core";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
-import {AbstractJigsawViewBase} from "../../../pc-components/common";
+import {AbstractJigsawViewBase} from "../../common";
 
 @Directive({
     selector: '[jigsaw-movable], [jigsawMovable], [j-movable]'

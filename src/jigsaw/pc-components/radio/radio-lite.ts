@@ -4,7 +4,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawRadioModule} from "./radio";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({

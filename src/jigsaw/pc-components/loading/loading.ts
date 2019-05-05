@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2} from "@angular/core";
 import {IPopupable} from "../../common/service/popup.service";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {JigsawBlock, JigsawBlockModule} from "../block/block";
 
 /**

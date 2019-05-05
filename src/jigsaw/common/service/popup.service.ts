@@ -15,7 +15,7 @@ import {
 import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../../pc-components/block/block";
-import {IDynamicInstantiatable} from "../../pc-components/common";
+import {IDynamicInstantiatable} from "../common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';

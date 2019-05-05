@@ -12,7 +12,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 
 /**
  * 组件模式.

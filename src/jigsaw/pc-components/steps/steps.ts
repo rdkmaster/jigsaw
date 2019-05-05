@@ -1,4 +1,4 @@
-import {AbstractJigsawComponent} from "../common"
+import {AbstractJigsawComponent} from "../../common/common"
 import {Component, Input} from "@angular/core";
 
 /**

@@ -15,7 +15,7 @@ import {
     ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
 } from "../../common/service/popup.service";
 import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {TranslateService} from "@ngx-translate/core";
 
 @Directive({

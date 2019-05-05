@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 
 import {JigsawSelectModule} from '../select/select';
 import {JigsawInput, JigsawInputModule} from '../input/input';
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";

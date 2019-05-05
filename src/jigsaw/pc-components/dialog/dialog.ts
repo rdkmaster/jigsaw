@@ -14,7 +14,7 @@ import {
     Renderer2
 } from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../common/service/popup.service";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";

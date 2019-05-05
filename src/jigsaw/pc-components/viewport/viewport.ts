@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import {ViewportData} from "../../common/core/data/component-data";
 import {JigsawScrollbarModule} from "../scrollbar/index";
 import {JigsawSliderModule} from "../slider/index";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 
 /**
  * 视口滚动时所发出的事件里所携带的数据。

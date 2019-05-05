@@ -9,7 +9,7 @@ import {
     Output,
     Renderer2, ViewChild
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../common";
+import {AbstractJigsawComponent} from "../../common/common";
 
 /**
  * @internal

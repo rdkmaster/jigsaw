@@ -1,6 +1,6 @@
 import {Component, Input, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from '../common';
+import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
