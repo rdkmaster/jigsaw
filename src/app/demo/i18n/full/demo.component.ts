@@ -4,6 +4,8 @@ import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
 import {ButtonInfo} from "jigsaw/service/popup.service";
 import {LocalPageableTableData} from "../../../../jigsaw/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
+import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
+import {TimeGr, TimeService} from "../../../../jigsaw/service/time.service";
 
 /**
  * 覆盖控件内部的国际化词条
@@ -110,6 +112,19 @@ export class I18nFullDemoComponent {
                 type: 'primary'
             },
         ];
+    }
+
+    beginDate = TimeService.getFormatDate('now-7d', TimeGr.date);
+    endDate = TimeService.getFormatDate('now', TimeGr.date);
+    rangeTimeComboValue = new ArrayCollection([
+        {label: this.beginDate, closable: false},
+        {label: this.endDate, closable: false}
+    ]);
+
+    handleRangeDateChange() {
+        this.rangeTimeComboValue[0].label = this.beginDate;
+        this.rangeTimeComboValue[1].label = this.endDate;
+        this.rangeTimeComboValue.refresh();
     }
 
     // ====================================================================
