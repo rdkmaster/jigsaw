@@ -39,7 +39,6 @@ export class MobileDemoListManager {
 
     public static get fullRouterConfig() {
         const rc = routerConfigMobile.concat().sort((item1, item2) => item1.path.localeCompare(item2.path));
-       // rc.splice(0, 2);
         this._mergeRoutes(rc);
         return rc;
     }

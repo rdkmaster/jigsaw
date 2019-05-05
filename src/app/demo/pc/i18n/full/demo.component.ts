@@ -4,8 +4,8 @@ import {TranslateHelper} from "jigsaw/common/core/utils/translate-helper";
 import {ButtonInfo} from "jigsaw/common/service/popup.service";
 import {LocalPageableTableData} from "../../../../../jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection} from "../../../../jigsaw/core/data/array-collection";
-import {TimeGr, TimeService} from "../../../../jigsaw/service/time.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
+import {TimeGr, TimeService} from "../../../../../jigsaw/common/service/time.service";
 
 /**
  * 覆盖控件内部的国际化词条

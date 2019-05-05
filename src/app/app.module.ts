@@ -14,7 +14,7 @@ import {MobileDemoListComponent} from "./mobile-demo-list.component";
 {
     (<any[]>routerConfig).push(
         {path: '', component: PCDemoListComponent},
-         {path: 'mobile', component: MobileDemoListComponent},
+        {path: 'mobile', component: MobileDemoListComponent},
         {path: '**', redirectTo: ''}
     );
 }
