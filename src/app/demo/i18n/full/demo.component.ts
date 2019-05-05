@@ -1,7 +1,10 @@
 import {Component} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "jigsaw/core/utils/translate-helper";
 import {ButtonInfo} from "jigsaw/service/popup.service";
+import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {TimeGr, TimeService} from "jigsaw/service/time.service";
 
 /**
  * 覆盖控件内部的国际化词条
@@ -106,17 +109,23 @@ export class I18nFullDemoComponent {
         ];
     }
 
+    beginDate = TimeService.getFormatDate('now-7d', TimeGr.date);
+    endDate = TimeService.getFormatDate('now', TimeGr.date);
+    rangeTimeComboValue = new ArrayCollection([
+        {label: this.beginDate, closable: false},
+        {label: this.endDate, closable: false}
+    ]);
+
+    handleRangeDateChange() {
+        this.rangeTimeComboValue[0].label = this.beginDate;
+        this.rangeTimeComboValue[1].label = this.endDate;
+        this.rangeTimeComboValue.refresh();
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'TranslateService.use',
-        'TranslateService.getBrowserLang',
-        'TranslateService.setTranslation',
-        'TranslateService.instant',
-        'TranslateHelper.changeLanguage',
-    ];
 }
 
