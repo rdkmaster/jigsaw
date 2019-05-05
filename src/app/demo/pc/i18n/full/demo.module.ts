@@ -10,6 +10,7 @@ import {JigsawPaginationModule} from "jigsaw/pc-components/pagination/pagination
 
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
+import {JigsawComboSelectModule} from "jigsaw/component/combo-select";
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import {I18nFullDemoComponent} from "./demo.component";
     exports: [I18nFullDemoComponent],
     imports: [
         JigsawAlertModule, JigsawButtonModule, JigsawTimeModule, JigsawRangeTimeModule,
-        JigsawDialogModule, JigsawDemoDescriptionModule, JigsawPaginationModule,
+        JigsawDialogModule, JigsawDemoDescriptionModule, JigsawPaginationModule,JigsawComboSelectModule,
         TranslateModule/* #for-live-demo-only# .forRoot() */
     ],
     providers: [PopupService, TranslateService]
