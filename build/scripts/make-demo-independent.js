@@ -10,7 +10,7 @@ if (fs.existsSync(outputHome)) {
 outputHome = outputHome ? outputHome.trim() : './live-demo/';
 outputHome = outputHome.match(/[\/\\]$/) ? outputHome : outputHome + '/';
 
-makeAllJlunkers('demo');
+makeAllJlunkers('demo/pc');
 
 function makeAllJlunkers(dirName) {
     demoHome = getDemoHome(dirName);
