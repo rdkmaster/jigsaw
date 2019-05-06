@@ -171,6 +171,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return tableData.data[row][index];
     }
 
+    private _updateAdditionalData(field: string, row: number, cellData: string) {
+        let [index, tableData] = this._getColumnIndex(field);
+        if (index == -1) {
+            console.error('no cell data found, unknown field: ' + field);
+            return;
+        }
+        if (!tableData.data[row]) {
+            tableData.data[row] = [];
+        }
+        if (tableData instanceof AdditionalTableData) {
+            tableData.data[row][index] = cellData;
+        }
+    }
+
     /**
      * @internal
      */
@@ -221,8 +235,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 const cellDataGenerator = TableUtils.getGenerator(columnDefine, 'data');
                 if (cellDataGenerator) {
                     settings.cellData = cellDataGenerator(this.data, rowIndex, realColIndex, this._additionalData);
+                    this._updateAdditionalData(field, rowIndex, settings.cellData);
                 } else if (columnDefine.cell && typeof columnDefine.cell.data == 'string') {
                     settings.cellData = columnDefine.cell.data;
+                    this._updateAdditionalData(field, rowIndex, settings.cellData);
                 } else {
                     settings.cellData = this._getCellDataByField(field, rowIndex);
                 }
