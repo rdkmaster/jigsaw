@@ -45,7 +45,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _dragMove = (event) => {
         if (this._moving) {
-            const isFixed = this._movableTarget.style.position == 'fixed';
+            const isFixed = this._movableTarget.style.position == 'fixed' || getComputedStyle(this._movableTarget)['position'] == 'fixed';
             const ox = event.clientX - this._position[0] - (isFixed ? window.pageXOffset : 0);
             const oy = event.clientY - this._position[1] - (isFixed ? window.pageYOffset : 0);
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
@@ -77,7 +77,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _isElementAffixed(element: HTMLElement): boolean {
         if (!(element instanceof HTMLElement)) return false;
-        const positionType = element.style.position;
+        const positionType = element.style.position || getComputedStyle(this._movableTarget)['position'];
         return positionType == 'fixed' || positionType == 'absolute';
     }
 
