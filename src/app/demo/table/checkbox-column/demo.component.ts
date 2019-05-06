@@ -29,7 +29,10 @@ export class TableAddCheckboxColumnDemoComponent {
             renderer: TableHeadCheckboxRenderer,
         },
         cell: {
-            renderer: TableCellCheckboxRenderer
+            renderer: TableCellCheckboxRenderer,
+            data: (td, row, col) => {
+                return td.data[row][2] == 'Developer'
+            }
         }
     }];
 
