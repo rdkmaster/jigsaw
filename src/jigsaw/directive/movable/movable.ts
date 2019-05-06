@@ -77,7 +77,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _isElementAffixed(element: HTMLElement): boolean {
         if (!(element instanceof HTMLElement)) return false;
-        const positionType = element.style.position || getComputedStyle(this._movableTarget)['position'];
+        const positionType = element.style.position || getComputedStyle(element)['position'];
         return positionType == 'fixed' || positionType == 'absolute';
     }
 
