@@ -1,6 +1,6 @@
 import {Component, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {PopupService} from "../../common/service/popup.service";
-import {JigsawBlock, JigsawBlockModule} from "../block/block";
+import {JigsawBlock, JigsawBlockModule} from "../../common/components/block/block";
 import {
     JigsawAlertModule, JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
     JigsawWarningAlert
@@ -8,7 +8,7 @@ import {
 import {
     JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
     JigsawLoadingModule
-} from "../loading/loading";
+} from "../../common/components/loading/loading";
 import {JigsawNotification, JigsawNotificationModule} from "../notification/notification";
 
 @Component({

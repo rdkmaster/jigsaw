@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawLoadingModule} from "jigsaw/pc-components/loading/loading";
+import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
 import {JigsawInputModule} from "jigsaw/pc-components/input/input";
 import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 import {LoadingService} from "jigsaw/common/service/loading.service";

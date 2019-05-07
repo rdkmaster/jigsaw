@@ -21,7 +21,7 @@ const bundlesDir = join(outputDir, 'bundles');
  * file. Additionally the package will be Closure Compiler and AOT compatible.
  */
 export function composeRelease(packageName: string) {
-    const sourcePath = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
+    const sourcePath = join(packagesDir, 'jigsaw');
     const packagePath = join(outputDir, 'packages', packageName);
     const releasePath = join(outputDir, 'releases', packageName);
 
@@ -39,7 +39,7 @@ export function composeRelease(packageName: string) {
     copyFiles(bundlesDir, `${packageName}?(.es5).js?(.map)`, join(releasePath, '@rdkmaster'));
     copyFiles(projectDir, 'LICENSE', releasePath);
     copyFiles(packagesDir, 'README.md', releasePath);
-    copyFiles(sourcePath + '/pc-components', 'package.json', releasePath);
+    copyFiles(packageName === 'jigsaw' ? sourcePath + '/pc-components' : sourcePath + '/mobile-components', 'package.json', releasePath);
 
     updatePackageVersion(releasePath);
     createTypingsReexportFile(releasePath, packageName);
@@ -48,15 +48,15 @@ export function composeRelease(packageName: string) {
 }
 
 export function composeLabsRelease(packageName: string) {
-    const sourcePath = join(packagesDir, packageName === 'jigsaw' ? 'jigsaw' : packageName);
+    const sourcePath = join(packagesDir, 'jigsaw');
     const packagePath = join(outputDir, 'packages', packageName);
     const releasePath = join(outputDir, 'releases', packageName);
 
     copyFiles(packagePath, '**/*.+(d.ts)', releasePath);
     copyFiles(projectDir, 'LICENSE', releasePath);
     copyFiles(packagesDir, 'README.md', releasePath);
-    copyFiles(sourcePath + '/pc-components', 'package.json', releasePath);
+    copyFiles(packageName === 'jigsaw' ? sourcePath + '/pc-components' : sourcePath + '/mobile-components', 'package.json', releasePath);
 
-    updatePackageForLabs(releasePath);
+    updatePackageForLabs(releasePath, packageName);
     //createTypingsReexportFile(releasePath, packageName);
 }

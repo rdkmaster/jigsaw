@@ -4,7 +4,7 @@
  * Entry point for all public APIs of Jigsaw.
  */
 export * from "./pc-components/alert/alert";
-export * from "./pc-components/block/block";
+export * from "./common/components/block/block";
 export * from "./pc-components/box/index";
 export * from "./pc-components/box/tabs-wrapper/tabs-wrapper";
 export * from "./pc-components/button/button";
@@ -29,7 +29,7 @@ export * from "./pc-components/list-and-tile/list-lite";
 export * from "./pc-components/list-and-tile/tile";
 export * from "./pc-components/list-and-tile/tile-lite";
 export * from "./pc-components/list-and-tile/button-bar";
-export * from "./pc-components/loading/loading";
+export * from "./common/components/loading/loading";
 export * from "./pc-components/notification/notification";
 export * from "./pc-components/pagination/pagination";
 export * from "./pc-components/radio/radio";

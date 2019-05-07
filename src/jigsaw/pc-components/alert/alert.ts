@@ -26,7 +26,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawBlock} from "../block/block";
+import {JigsawBlock} from "../../common/components/block/block";
 
 export enum AlertLevel {
     info, warning, error, confirm

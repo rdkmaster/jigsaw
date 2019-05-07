@@ -1,15 +1,15 @@
 import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2} from "@angular/core";
-import {IPopupable} from "../../common/service/popup.service";
+import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../../common/common";
-import {JigsawMobileBlock, JigsawMobileBlockModule} from "../block/block";
+import {AbstractJigsawComponent} from "../../common";
+import {JigsawBlock, JigsawBlockModule} from "../block/block";
 
 /**
  * Loading组件的基类，自定义Loading组件必须继承这个类。
  *
  * $demo = loading/user-defined
  */
-export class JigsawMobileLoadingBase extends AbstractJigsawComponent implements IPopupable {
+export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopupable {
     public initData: any;
     public answer: EventEmitter<any>;
     public popupElement: HTMLElement;
@@ -62,10 +62,10 @@ export class JigsawMobileLoadingBase extends AbstractJigsawComponent implements 
 }
 
 @Component({
-    selector: 'jigsaw-mobile-loading, jm-loading',
+    selector: 'jigsaw-loading, j-loading',
     templateUrl: 'loading-ring.html'
 })
-export class JigsawMobileLoading extends JigsawMobileLoadingBase implements OnInit {
+export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
@@ -79,10 +79,10 @@ export class JigsawMobileLoading extends JigsawMobileLoadingBase implements OnIn
 }
 
 @Component({
-    selector: 'jigsaw-mobile-font-loading, jm-font-loading',
+    selector: 'jigsaw-font-loading, j-font-loading',
     templateUrl: 'loading-font.html'
 })
-export class JigsawMobileFontLoading extends JigsawMobileLoadingBase implements OnInit {
+export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
@@ -116,10 +116,10 @@ export class JigsawMobileFontLoading extends JigsawMobileLoadingBase implements 
 }
 
 @Component({
-    selector: 'jigsaw-mobile-bubble-loading, jm-bubble-loading',
+    selector: 'jigsaw-bubble-loading, j-bubble-loading',
     templateUrl: 'loading-bubble.html'
 })
-export class JigsawMobileBubbleLoading extends JigsawMobileLoadingBase implements OnInit {
+export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
 
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
@@ -138,10 +138,10 @@ export class JigsawMobileBubbleLoading extends JigsawMobileLoadingBase implement
 }
 
 @Component({
-    selector: 'jigsaw-mobile-ball-loading, jm-ball-loading',
+    selector: 'jigsaw-ball-loading, j-ball-loading',
     templateUrl: 'loading-ball.html'
 })
-export class JigsawMobileBallLoading extends JigsawMobileLoadingBase implements OnInit  {
+export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
@@ -157,12 +157,12 @@ export class JigsawMobileBallLoading extends JigsawMobileLoadingBase implements 
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawMobileBlockModule],
-    declarations: [JigsawMobileLoading, JigsawMobileBallLoading, JigsawMobileBubbleLoading, JigsawMobileFontLoading],
-    exports: [JigsawMobileLoading, JigsawMobileBallLoading, JigsawMobileBubbleLoading, JigsawMobileFontLoading],
-    entryComponents: [JigsawMobileBlock, JigsawMobileLoading, JigsawMobileBallLoading, JigsawMobileBubbleLoading, JigsawMobileFontLoading]
+    imports: [CommonModule, JigsawBlockModule],
+    declarations: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
+    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
+    entryComponents: [JigsawBlock, JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
 })
-export class JigsawMobileLoadingModule {
+export class JigsawLoadingModule {
 
 }
 

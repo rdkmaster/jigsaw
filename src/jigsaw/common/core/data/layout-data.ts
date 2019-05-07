@@ -2,8 +2,7 @@ import {GeneralCollection} from "./general-collection";
 import {ComponentRef, EmbeddedViewRef, Type} from "@angular/core";
 import {CommonUtils} from "../utils/common-utils";
 import {InternalUtils} from "../utils/internal-utils";
-import {JigsawEditableBox} from "../../../pc-components/box/editable-box";
-import {JigsawTab} from "../../../pc-components/tabs/tab";
+
 
 /**
  * 组件的输入属性结构化信息
@@ -20,6 +19,7 @@ export class ComponentInput {
  */
 export class ComponentMetaData {
     [index: string]: any;
+
     component: Type<any>;
     selector: string;
     inputs?: ComponentInput[];
@@ -28,7 +28,7 @@ export class ComponentMetaData {
 }
 
 export class LayoutComponentInfo {
-    box: JigsawEditableBox;
+    box: any;
     component: ComponentRef<any> | EmbeddedViewRef<any>;
 }
 
@@ -53,6 +53,7 @@ export type WrapperContentGetter = (component: any, arr: LayoutComponentInfo[]) 
  */
 export class LayoutData extends GeneralCollection<any> {
     [index: string]: any;
+
     direction?: string;
     justify?: string;
     align?: string;
@@ -63,7 +64,7 @@ export class LayoutData extends GeneralCollection<any> {
     componentMetaDataList?: ComponentMetaData[] = [];
     innerHtml?: string;
     components?: (ComponentRef<any> | EmbeddedViewRef<any>)[];
-    box: JigsawEditableBox;
+    box: any;
 
     /**
      * 把LayoutData转化为dom字符串
@@ -112,7 +113,7 @@ export class LayoutData extends GeneralCollection<any> {
     public static wrapperContentGetterList: WrapperContentGetterApi[] = [];
 
     public static addWrapperContentGetter(wrapper: Type<any>, contentGetter: WrapperContentGetter) {
-        if(this.wrapperContentGetterList.find(w => w.wrapper == wrapper)) return;
+        if (this.wrapperContentGetterList.find(w => w.wrapper == wrapper)) return;
         this.wrapperContentGetterList.push({
             wrapper: wrapper,
             contentGetter: contentGetter
@@ -121,7 +122,7 @@ export class LayoutData extends GeneralCollection<any> {
 
     public static removeWrapperContentGetter(wrapper: Type<any>) {
         const index = this.wrapperContentGetterList.findIndex(w => w.wrapper == wrapper);
-        if(index == -1) return;
+        if (index == -1) return;
         this.wrapperContentGetterList.splice(index, 1);
     }
 
@@ -143,7 +144,7 @@ export class LayoutData extends GeneralCollection<any> {
             if (!(item.component instanceof ComponentRef)) return arr;
             const component = item.component.instance;
             const wrapperContentGetter = LayoutData.wrapperContentGetterList.find(getter => component instanceof getter.wrapper);
-            if(wrapperContentGetter) {
+            if (wrapperContentGetter) {
                 return wrapperContentGetter.contentGetter(component, arr);
             }
             arr.push(item);
@@ -186,8 +187,7 @@ export class LayoutData extends GeneralCollection<any> {
     }
 
     private _parseTabPanesToHtml(componentMetaData: ComponentMetaData): string {
-        if (componentMetaData.component != JigsawTab || !(componentMetaData.panes instanceof Array) ||
-            componentMetaData.panes.length == 0) return '';
+        if (!(componentMetaData.panes instanceof Array) || componentMetaData.panes.length == 0) return '';
         let innerPaneHtml = '';
         componentMetaData.panes.forEach(pane => {
             innerPaneHtml += `<j-pane title="${pane.title}">\n<ng-template>\n`;

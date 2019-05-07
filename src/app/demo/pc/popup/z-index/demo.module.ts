@@ -6,7 +6,7 @@ import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
 import {JigsawDialogModule} from "jigsaw/pc-components/dialog/dialog";
 import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 import {JigsawRangeTimeModule} from "jigsaw/pc-components/range-time/index";
-import {JigsawLoadingModule} from "jigsaw/pc-components/loading/loading";
+import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
 import {LoadingService} from "jigsaw/common/service/loading.service";
 import {JigsawSelectModule} from "jigsaw/pc-components/select/select";
 import {JigsawTooltipModule} from "jigsaw/pc-components/tooltip/tooltip";

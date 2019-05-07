@@ -5,7 +5,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({
-    selector: 'jigsaw-tag, j-tag',
+    selector: 'jigsaw-mobile-tag, jm-tag',
     templateUrl: 'tag.html',
     host: {
         '[style.width]': 'width',
@@ -24,7 +24,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         AnimationDestroy
     ]
 })
-export class JigsawTag extends AbstractJigsawComponent implements OnInit {
+export class JigsawMobileTag extends AbstractJigsawComponent implements OnInit {
 
     @Input() public color: string;
 
@@ -52,7 +52,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         super();
     }
 
-    @Output() public close = new EventEmitter<JigsawTag>();
+    @Output() public close = new EventEmitter<JigsawMobileTag>();
 
     /**
      * @internal
@@ -63,7 +63,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         this._state = 'inactive';
     }
 
-    @Output() public select = new EventEmitter<JigsawTag>();
+    @Output() public select = new EventEmitter<JigsawMobileTag>();
 
     /**
      * @internal
@@ -93,9 +93,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [JigsawTag],
-    exports: [JigsawTag]
+    declarations: [JigsawMobileTag],
+    exports: [JigsawMobileTag]
 })
-export class JigsawTagModule {
+export class JigsawMobileTagModule {
 
 }

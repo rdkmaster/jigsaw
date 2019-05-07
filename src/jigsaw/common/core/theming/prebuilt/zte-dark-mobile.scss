@@ -1,0 +1,83 @@
+@import "settings/zte-dark";
+@import "../all-mobile-theme";
+@import "../theming-api";
+
+// ------ Custom for zte by theming-api ------
+@include setDialogHead($primary-color, $light-bg-3, 30px);
+@include setDialogButton(right, false);
+
+@include showBtnAnimation(false);
+
+@include setTableHead($opacity-bg-2, $fill-color-4, 14px, $primary-color, 1px);
+@include setTableBody($gray-2, default, $opacity-bg-1, $opacity-bg-2);
+@include setTableTextAlign(left, 8px);
+
+@include setTag($opacity-bg-3, 25px);
+@include setCollapse($opacity-bg-3);
+@include setTabTriangle(true);
+
+// ------ Own for zte ------
+/**
+ * 设置弹框close-bar的颜色
+ */
+@mixin setPopupCloseBar($color, $hoverColor) {
+    .jigsaw-dialog .jigsaw-dialog-head .jigsaw-dialog-close {
+        color: $color;
+        &:hover {
+            color: $hoverColor;
+        }
+    }
+    .jigsaw-alert .jigsaw-alert-head .jigsaw-alert-close {
+        color: $color;
+        &:hover {
+            color: $hoverColor;
+        }
+    }
+}
+
+/**
+ * 设置时间控件粒度tab的颜色
+ */
+@mixin setTimeGrTab($grTabColor) {
+    .jigsaw-time-host .jigsaw-time-granularity > span {
+        border: 1px solid $grTabColor;
+        border-right: 0;
+        color: $grTabColor;
+        &.active {
+            background: $grTabColor;
+        }
+        &:last-child {
+            border-right: 1px solid $grTabColor;
+        }
+    }
+    .jigsaw-range-time-host .jigsaw-range-time-shortcuts > span {
+        border: 1px solid $grTabColor;
+        color: $grTabColor;
+        border-right: 0;
+        &:last-child {
+            border-right: 1px solid $grTabColor;
+        }
+        &.active {
+            background-color: $grTabColor;
+        }
+    }
+}
+
+/**
+ * 设置按钮字体大小，和默认形式按钮的字体颜色
+ */
+@mixin setBtnDefault($defaultTextColor, $defaultFontSize: 12px) {
+    .#{$btn-prefix-cls} {
+        color: $defaultTextColor;
+        font-size: $defaultFontSize;
+        border: 1px solid $defaultTextColor;
+    }
+}
+
+
+
+
+@include setPopupCloseBar($primary-color, $primary-7);
+@include setTimeGrTab(#008fd4);
+@include setBtnDefault($text-color);
+

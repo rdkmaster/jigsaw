@@ -14,7 +14,7 @@ import {
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
-import {JigsawBlock} from "../../pc-components/block/block";
+import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';

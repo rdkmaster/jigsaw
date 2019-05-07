@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, NgModule, Renderer2} from "@angular/core";
-import {IPopupable} from "../../common/service/popup.service";
+import {IPopupable} from "../../../common/service/popup.service";
 import {CommonModule} from "@angular/common";
 
 /**

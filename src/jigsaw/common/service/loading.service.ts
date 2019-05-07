@@ -1,7 +1,7 @@
 import {ElementRef, Injectable, TemplateRef, Type} from "@angular/core";
 import {IPopupable, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "./popup.service";
-import {JigsawLoading} from "../../pc-components/loading/loading";
-import {JigsawBlock} from "../../pc-components/block/block";
+import {JigsawLoading} from "../components/loading/loading";
+import {JigsawBlock} from "../components/block/block";
 
 @Injectable()
 export class LoadingService {

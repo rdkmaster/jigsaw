@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 
 import {JigsawAlertModule} from './alert/alert';
-import {JigsawBlockModule} from './block/block';
+import {JigsawBlockModule} from '../common/components/block/block';
 import {JigsawButtonModule} from './button/button';
 import {JigsawCheckBoxModule} from './checkbox/index';
 import {JigsawCollapseModule} from './collapse/collapse';
@@ -10,7 +10,7 @@ import {JigsawDialogModule} from './dialog/dialog';
 import {JigsawGraphModule} from './graph/index';
 import {JigsawInputModule} from './input/input';
 import {JigsawAutoCompleteInputModule} from './input/auto-complete-input';
-import {JigsawLoadingModule} from './loading/loading';
+import {JigsawLoadingModule} from '../common/components/loading/loading';
 import {JigsawNotificationModule} from './notification/notification';
 import {JigsawPaginationModule} from './pagination/pagination';
 import {JigsawRadioModule} from './radio/radio';

@@ -4,7 +4,7 @@
 
 @import "../../../pc-components/alert/alert";
 @import "../../../pc-components/alert/common-alert";
-@import "../../../pc-components/block/block";
+@import "../../components/block/block";
 @import "../../../pc-components/button/button";
 @import "../../../pc-components/checkbox/checkbox";
 @import "../../../pc-components/collapse/collapse";
@@ -13,10 +13,10 @@
 @import "../../../pc-components/graph/graph";
 @import "../../../pc-components/input/input";
 @import "../../../pc-components/input/numeric-input";
-@import "../../../pc-components/loading/loading-ring";
-@import "../../../pc-components/loading/loading-font";
-@import "../../../pc-components/loading/loading-bubble";
-@import "../../../pc-components/loading/loading-ball";
+@import "../../components/loading/loading-ring";
+@import "../../components/loading/loading-font";
+@import "../../components/loading/loading-bubble";
+@import "../../components/loading/loading-ball";
 @import "../../../pc-components/notification/notification";
 @import "../../../pc-components/pagination/pagination";
 @import "../../../pc-components/pagination/page";
@@ -52,3 +52,4 @@
 @import "../../../pc-components/textarea/textarea";
 @import "../../../pc-components/breadcrumb/breadcrumb";
 @import "../../../pc-components/rate/rate";
+

@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 
 import {IPopupable, PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
-import {bubbleIn} from "../animations/bubble-in";
+import {bubbleIn} from "../../common/components/animations/bubble-in";
 import {CommonModule} from "@angular/common";
 
 export interface ITooltip extends IPopupable {
