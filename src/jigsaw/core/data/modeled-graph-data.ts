@@ -1,7 +1,8 @@
 import {TableDataBase} from "./table-data";
 import {
     EchartLegend,
-    EchartOptions, EchartSeriesItem,
+    EchartOptions,
+    EchartSeriesItem,
     EchartTitle,
     EchartToolbox,
     EchartTooltip,
@@ -9,14 +10,17 @@ import {
     EchartYAxis
 } from "./echart-types";
 import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
-import {AggregateAlgorithm, Grouped, aggregate, distinct, flat, getColumn, group} from "../utils/data-collection-utils";
+import {aggregate, AggregateAlgorithm, distinct, flat, getColumn, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
 import {Type} from "@angular/core";
 
-export class ModeledGraphTemplate {
-    tooltip?: EchartTooltip;
-    toolbox?: EchartToolbox;
-    legend?: EchartLegend;
+export abstract class AbstractModeledGraphTemplate {
+    public title?: EchartTitle;
+    public tooltip?: EchartTooltip;
+    public toolbox?: EchartToolbox;
+    public legend?: EchartLegend;
+
+    public abstract getInstance(): EchartOptions;
 }
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
@@ -41,7 +45,7 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
     /**
      * 图形个关键配置项的模板
      */
-    public template: Type<ModeledGraphTemplate>;
+    public template: AbstractModeledGraphTemplate;
 
     protected constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, field, header);
@@ -57,6 +61,63 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
         let idx = this.field.indexOf(field);
         return idx == -1 ? this.header.indexOf(field) : idx;
     }
+
+    protected getRealDimensions(dimField: string, dimensions: Dimension[], usingAllDimensions: boolean): Dimension[] {
+        const dims = [];
+        const dimIndex = this.getIndex(dimField);
+        if (dimIndex == -1) {
+            return dims;
+        }
+        if (usingAllDimensions) {
+            const series = distinct(getColumn(this.data, dimIndex));
+            if (series) {
+                dims.push(...series.map(s => {
+                    const d = dimensions.find(d => d.name === s);
+                    return d ? d : new Dimension(s);
+                }));
+            }
+        } else {
+            dims.push(...dimensions);
+        }
+        return dims;
+    }
+
+    /**
+     * 确保给定的数据中，每一个给定的维度，都有且只有一个记录，缺少的记录用默认值补齐，多出的记录删除， 重复的记录用聚集算法聚集，
+     * 并且要保证每组中的维度顺序一致。
+     *
+     * @param indicators
+     * @param xAxisIndex
+     * @param dimIndex
+     * @param dimensions
+     */
+    protected pruneData(indicators: Indicator[], xAxisIndex: number, dimIndex: number, dimensions: Dimension[]): Grouped {
+        const aggregateBy = indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
+        const groups = group(this.data, xAxisIndex);
+        for (let xAxisItem in groups) {
+            const records: string[][] = groups[xAxisItem];
+            if (records === groups._$groupItems) {
+                continue;
+            }
+
+            const dimGroups = group(records, dimIndex);
+            const pruned: string[][] = [];
+            dimensions.forEach(dim => {
+                const dimRecords = dimGroups[dim.name];
+                if (dimRecords) {
+                    pruned.push(dimRecords.length > 1 ? aggregate(dimRecords, aggregateBy) : dimRecords[0]);
+                } else {
+                    const row = [];
+                    row[xAxisIndex] = xAxisItem;
+                    row[dimIndex] = dim.name;
+                    indicators.forEach(i => row[i.index] = i.defaultValue);
+                    pruned.push(row);
+                }
+            });
+            groups[xAxisItem] = pruned;
+        }
+        return groups;
+    }
 }
 
 export class Dimension {
@@ -71,8 +132,9 @@ export class Dimension {
 }
 
 export class Indicator {
+    public name?: string;
     public field?: string;
-    public index?:number = -1;
+    public index?: number = -1;
     public yAxisIndex?: 0 | 1 = 0;
     public stack?: string = undefined;
     public shade?: 'bar' | 'line' | 'area' = 'bar';
@@ -84,7 +146,10 @@ export class Indicator {
     }
 }
 
-export class ModeledRectangularTemplate extends ModeledGraphTemplate {
+// ------------------------------------------------------------------------------------------------
+// 直角系图相关数据对象
+
+export abstract class ModeledRectangularTemplate extends AbstractModeledGraphTemplate {
     xAxis?: EchartXAxis;
     yAxis1?: EchartYAxis;
     yAxis2?: EchartYAxis;
@@ -92,6 +157,14 @@ export class ModeledRectangularTemplate extends ModeledGraphTemplate {
 }
 
 export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            toolbox: CommonUtils.extendObjects<EchartToolbox>({}, this.toolbox),
+            legend: CommonUtils.extendObjects<EchartLegend>({data: null}, this.legend),
+        };
+    }
+
     tooltip = {
         trigger: 'axis',
         axisPointer: {
@@ -101,6 +174,7 @@ export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate 
             }
         }
     };
+
     toolbox = {
         feature: {
             dataView: {show: true, readOnly: false},
@@ -109,39 +183,44 @@ export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate 
             saveAsImage: {show: true}
         }
     };
+
     legend = {
         data: null
     };
+
     xAxis = {
         type: 'category',
         axisPointer: {
             type: 'shadow'
         }
     };
+
     yAxis1 = {
         type: 'value',
         axisLabel: {
             formatter: '{value}'
         }
     };
+
     yAxis2 = {
         type: 'value',
         axisLabel: {
             formatter: '{value}'
         }
     };
+
     seriesItem = {
-        type:'bar', data: null
+        type: 'bar', data: null
     };
 }
 
 export class ModeledRectangularGraphData extends AbstractModeledGraphData {
-    public template: Type<ModeledRectangularTemplate> = BasicModeledRectangularTemplate;
+    public template: ModeledRectangularTemplate = new BasicModeledRectangularTemplate();
 
-    public seriesField: string;
-    public xAxis: {field?: string, style?: EchartXAxis} = {};
+    public xAxis: { field?: string, style?: EchartXAxis } = {};
     public yAxis1: EchartYAxis;
     public yAxis2: EchartYAxis;
+    public dimensionField: string;
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
@@ -162,7 +241,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.seriesField || !this.xAxis || !this.xAxis.field) {
+        if (!this.dimensionField || !this.xAxis || !this.xAxis.field) {
             return undefined;
         }
         if (!this.indicators || this.indicators.length == 0) {
@@ -173,29 +252,9 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
-        const dimensions = this.getRealDimensions();
+        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         return dimensions.length > 1 ? this.createMultiDimensionOptions(dimensions) :
             this.createMultiKPIOptions(dimensions[0]);
-    }
-
-    protected getRealDimensions(): Dimension[] {
-        const dimensions = [];
-        const serialIndex = this.getIndex(this.seriesField);
-        if (serialIndex == -1) {
-            return dimensions;
-        }
-        if (this.usingAllDimensions) {
-            const series = distinct(getColumn(this.data, serialIndex));
-            if (series) {
-                dimensions.push(...series.map(s => {
-                    const d = this.dimensions.find(d => d.name === s);
-                    return d ? d : new Dimension(s);
-                }));
-            }
-        } else {
-            dimensions.push(...this.dimensions);
-        }
-        return dimensions;
     }
 
     /**
@@ -214,28 +273,25 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return undefined
         }
 
-        const template = new this.template();
-        const options: EchartOptions = {
-            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, template.tooltip),
-            toolbox: CommonUtils.extendObjects<EchartToolbox>({}, template.toolbox),
-            legend: CommonUtils.extendObjects<EchartLegend>({data: null}, template.legend),
-            xAxis: [
-                CommonUtils.extendObjects<EchartXAxis>({}, template.xAxis, this.xAxis.style)
-            ],
-            yAxis: [
-                CommonUtils.extendObjects<EchartYAxis>({}, template.yAxis1, this.yAxis1),
-                CommonUtils.extendObjects<EchartYAxis>({}, template.yAxis2, this.yAxis2)
-            ]
-        };
-        options.legend.data = dimensions.map(d => d.name);
+        const options: EchartOptions = this.template.getInstance();
+        options.xAxis = [
+            CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
+        ];
+        options.yAxis = [
+            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis1, this.yAxis1),
+            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis2, this.yAxis2)
+        ];
+        if (options.legend) {
+            options.legend.data = dimensions.map(d => d.name);
+        }
         options.xAxis[0].data = xAxisItems;
 
-        const serialIndex = this.getIndex(this.seriesField);
-        const pruned = this.pruneData(xAxisIndex, serialIndex, dimensions);
-        const groupedByDim = group(flat(pruned), serialIndex);
+        const dimIndex = this.getIndex(this.dimensionField);
+        const pruned = this.pruneData(this.indicators, xAxisIndex, dimIndex, dimensions);
+        const groupedByDim = group(flat(pruned), dimIndex);
         options.series = groupedByDim._$groupItems
             .map(dimName => ({data: getColumn(groupedByDim[dimName], this.indicators[0].index), name: dimName}))
-            .map(seriesData => CommonUtils.extendObjects<EchartToolbox>(seriesData, template.seriesItem));
+            .map(seriesData => CommonUtils.extendObjects<EchartToolbox>(seriesData, this.template.seriesItem));
 
         return options;
     }
@@ -248,8 +304,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         if (xAxisIndex == -1) {
             return undefined;
         }
-        const serialIndex = this.getIndex(this.seriesField);
-        if (serialIndex == -1) {
+        const dimIndex = this.getIndex(this.dimensionField);
+        if (dimIndex == -1) {
             return undefined;
         }
         const xAxisGroups = group(this.data, xAxisIndex);
@@ -259,7 +315,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             if (records === xAxisGroups._$groupItems) {
                 continue;
             }
-            const prunedRecords = records.filter(r => r[serialIndex] == dim.name);
+            const prunedRecords = records.filter(r => r[dimIndex] == dim.name);
             if (prunedRecords.length == 1) {
                 pruned.push(prunedRecords[0]);
             } else if (prunedRecords.length > 1) {
@@ -268,68 +324,140 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             } else {
                 const row = [];
                 row[xAxisIndex] = xAxisItem;
-                row[serialIndex] = dim.name;
+                row[dimIndex] = dim.name;
                 this.indicators.forEach(i => row[i.index] = i.defaultValue);
                 pruned.push(row);
             }
         }
 
-        const template = new this.template();
-        const options: EchartOptions = {
-            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, template.tooltip),
-            toolbox: CommonUtils.extendObjects<EchartToolbox>({}, template.toolbox),
-            legend: CommonUtils.extendObjects<EchartLegend>({data: null}, template.legend),
-            xAxis: [
-                CommonUtils.extendObjects<EchartXAxis>({}, template.xAxis, this.xAxis.style)
-            ],
-            yAxis: [
-                CommonUtils.extendObjects<EchartYAxis>({}, template.yAxis1, this.yAxis1),
-                CommonUtils.extendObjects<EchartYAxis>({}, template.yAxis2, this.yAxis2)
-            ]
-        };
+        const options: EchartOptions = this.template.getInstance();
+        options.xAxis = [
+            CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
+        ];
+        options.yAxis = [
+            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis1, this.yAxis1),
+            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis2, this.yAxis2)
+        ];
 
-        options.legend.data = this.indicators.map(kpi => this.header[kpi.index]);
+        if (options.legend) {
+            options.legend.data = this.indicators.map(kpi => this.header[kpi.index]);
+        }
         options.xAxis[0].data = xAxisGroups._$groupItems;
         options.series = this.indicators
             .map(kpi => ({name: this.header[kpi.index], data: getColumn(pruned, kpi.index)}))
-            .map(seriesData => CommonUtils.extendObjects<EchartToolbox>(seriesData, template.seriesItem));
+            .map(seriesData => CommonUtils.extendObjects<EchartToolbox>(seriesData, this.template.seriesItem));
 
         return options;
     }
+}
 
-    /**
-     * 确保给定的数据中，每一个给定的维度，都有且只有一个记录，缺少的记录用默认值补齐，多出的记录删除， 重复的记录用聚集算法聚集，
-     * 并且要保证每组中的维度顺序一致。
-     *
-     * @param xAxisIndex
-     * @param serialIndex
-     * @param dimensions
-     */
-    protected pruneData(xAxisIndex: number, serialIndex: number, dimensions: Dimension[]): Grouped {
-        const aggregateBy = this.indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
-        const groups = group(this.data, xAxisIndex);
-        for (let xAxisItem in groups) {
-            const records: string[][] = groups[xAxisItem];
-            if (records === groups._$groupItems) {
-                continue;
+// ------------------------------------------------------------------------------------------------
+// 饼图相关数据对象
+
+export class PieSeries {
+    public dimensionField: string;
+    public dimensions: Dimension[] = [];
+    public usingAllDimensions: boolean = true;
+    public indicators: Indicator[] = [];
+    public innerRadius: string;
+    public outerRadius: string;
+}
+
+export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartToolbox>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({data: null}, this.legend),
+        };
+    }
+
+    title = {
+        x: 'center'
+    };
+
+    tooltip = {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    };
+
+    legend = {
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        top: 20,
+        bottom: 20,
+        data: null
+    };
+
+    seriesItem = {
+        type: 'pie', data: null, name: '', radius: ['0%', '80%'],
+        center: ['40%', '50%'],
+        itemStyle: {
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
-
-            const dimGroups = group(records, serialIndex);
-            const pruned: string[][] = [];
-            dimensions.forEach(dim => {
-                const dimRecords = dimGroups[dim.name];
-                if (dimRecords) {
-                    pruned.push(dimRecords.length > 1 ? aggregate(dimRecords, aggregateBy) : dimRecords[0]);
-                } else {
-                    const row = [];
-                    row[xAxisIndex] = xAxisItem;
-                    row[serialIndex] = dim.name;
-                    this.indicators.forEach(i => row[i.index] = i.defaultValue);
-                    pruned.push(row);
-                }
-            });
-            groups[xAxisItem] = pruned;
         }
-        return groups;
+    };
+}
+
+export class ModeledPieGraphData extends AbstractModeledGraphData {
+    public template: ModeledPieTemplate = new BasicModeledPieTemplate();
+
+    public series: PieSeries[];
+    public legend: EchartLegend;
+    public title: EchartTitle;
+
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+        options.series = this.series
+            .filter(seriesData => {
+                if (!seriesData.dimensionField) {
+                    return false;
+                }
+                if (!seriesData.indicators || seriesData.indicators.length == 0) {
+                    return false;
+                }
+                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
+            })
+            .map((seriesData, idx) => {
+                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                if (dimensions.length > 1) {
+                    // 多维度
+                    if (options.legend) {
+                        options.legend.data = dimensions.map(d => d.name);
+                    }
+                } else {
+                    // 多指标
+                    if (options.legend) {
+                        options.legend.data = seriesData.indicators.map(kpi => kpi.name);
+                    }
+                }
+
+                const seriesItem = CommonUtils.extendObjects<any>({}, this.template.seriesItem);
+                seriesItem.name = 'series' + idx;
+                seriesItem.radius = [seriesData.innerRadius + '%', seriesData.outerRadius + '%'];
+            });
+
+        return undefined;
     }
 }
+

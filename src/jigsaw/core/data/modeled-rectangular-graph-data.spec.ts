@@ -57,7 +57,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['一', '上海', '22', '12'],
             ['一', '深圳', '30', '23'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.dimensions = [new Dimension('南京')];
         rd.dimensions[0].yAxisIndex = 1;
         rd.dimensions[0].stack = 'stack';
@@ -107,7 +107,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['b', '南京', '120', '110'],
             ['b', '深圳', '130', '123'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3'), new Indicator('f4')];
 
@@ -137,7 +137,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['b', '南京', '120', '110'],
             ['b', '深圳', '130', '123'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3'), new Indicator('f4')];
         rd.indicators[0].index = 2;
@@ -165,7 +165,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['b', '南京', '120', '110'],
             ['b', '深圳', '130', '123'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3'), new Indicator('f4')];
         rd.indicators[0].index = 2;
@@ -193,7 +193,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['b', '南京', '120', '110'],
             ['b', '深圳', '130', '123'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3')];
         rd.indicators[0].index = 2;
@@ -235,7 +235,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['b', '南京', '120', '110'],
             ['b', '深圳', '130', '123'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3'), new Indicator('最低气温')];
         rd.indicators.forEach(kpi => kpi.index = rd.getIndex(kpi.field));
@@ -284,7 +284,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             ['b', '南京', '120', '110'],
             ['b', '深圳', '130', '123'],
         ];
-        rd.seriesField = 'f2';
+        rd.dimensionField = 'f2';
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3')];
         rd.indicators[0].index = 2;
@@ -322,7 +322,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         let options;
         options = rd.createChartOptions();
         expect(options).toEqual(undefined);
-        rd.seriesField = 'ff';
+        rd.dimensionField = 'ff';
         options = rd.createChartOptions();
         expect(options).toEqual(undefined);
         rd.xAxis = {};
