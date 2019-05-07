@@ -25,10 +25,13 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         super();
     }
 
+    private _isFixed: boolean;
+
     private _dragStart = (event) => {
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
+        this._isFixed = this._movableTarget.style.position == 'fixed' || getComputedStyle(this._movableTarget)['position'] == 'fixed';
 
         if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
@@ -45,9 +48,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _dragMove = (event) => {
         if (this._moving) {
-            const isFixed = this._movableTarget.style.position == 'fixed';
-            const ox = event.clientX - this._position[0] - (isFixed ? window.pageXOffset : 0);
-            const oy = event.clientY - this._position[1] - (isFixed ? window.pageYOffset : 0);
+            const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0);
+            const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0);
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
             this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
         }
@@ -77,7 +79,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _isElementAffixed(element: HTMLElement): boolean {
         if (!(element instanceof HTMLElement)) return false;
-        const positionType = element.style.position;
+        const positionType = element.style.position || getComputedStyle(element)['position'];
         return positionType == 'fixed' || positionType == 'absolute';
     }
 
