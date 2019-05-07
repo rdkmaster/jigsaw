@@ -96,7 +96,7 @@ export const routerConfig = [
         path: 'heat', component: HeatGraphComponent
     },
     /*{
-        path: 'relational', pc-components: RelationalGraphComponent
+        path: 'relational', component: RelationalGraphComponent
     },*/
     {
         path: 'funnel-plot', component: FunnelPlotGraphComponent

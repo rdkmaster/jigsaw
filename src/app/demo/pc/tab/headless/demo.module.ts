@@ -10,13 +10,13 @@ import {TabHeadlessDemoComponent} from './demo.component';
 
 /* #for-live-demo-only#
 const routes = [{
-    path: 'tab-page', pc-components: DynamicTabDemoComponent
+    path: 'tab-page', component: DynamicTabDemoComponent
 }];
 */
 @NgModule({
     imports: [
         JigsawTabsModule, JigsawSwitchModule, JigsawDemoDescriptionModule, JigsawButtonBarModule, JigsawInputModule,
-        JigsawTableModule,JigsawGraphModule
+        JigsawTableModule, JigsawGraphModule
     ],
     declarations: [TabHeadlessDemoComponent],
     exports: [TabHeadlessDemoComponent]

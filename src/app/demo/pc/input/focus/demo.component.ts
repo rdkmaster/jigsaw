@@ -15,7 +15,7 @@ export class InputFocusDemoComponent {
 
     focusHandler(event) {
         console.log(event);
-        this.focusMessage = 'input pc-components focused'
+        this.focusMessage = 'input component focused'
     }
 
     // ====================================================================

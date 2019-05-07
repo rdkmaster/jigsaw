@@ -29,7 +29,7 @@ export class InputFullComponent {
     }
     focusHandler(event){
         console.log(event);
-        this.focusMessage = 'input pc-components focused'
+        this.focusMessage = 'input component focused'
     }
 
     // demo-5

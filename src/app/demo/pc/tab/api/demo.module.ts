@@ -10,7 +10,7 @@ import {TabContentModule} from "./tabContent/tab-content.module";
 
 /* #for-live-demo-only#
 const routes = [{
-    path: 'tab-page', pc-components: DynamicTabDemoComponent
+    path: 'tab-page', component: DynamicTabDemoComponent
 }];
 */
 @NgModule({

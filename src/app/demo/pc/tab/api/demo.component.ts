@@ -48,7 +48,7 @@ export class DynamicTabDemoComponent {
     }
 
     public addComponentTab() {
-        this.addTab('pc-components tab', TabContentDefine, 'jigsaw')
+        this.addTab('component tab', TabContentDefine, 'jigsaw')
     }
 
     // ====================================================================

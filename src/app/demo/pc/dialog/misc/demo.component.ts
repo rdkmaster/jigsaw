@@ -26,7 +26,7 @@ export class DialogMiscDemoComponent {
     }
 
     /*
-    * popup pc-components
+    * popup component
     * */
     popupComponentDialog() {
         const initData = {inputData: 'some data...'};
@@ -34,7 +34,7 @@ export class DialogMiscDemoComponent {
     }
 
     /*
-     * popup pc-components at point
+     * popup component at point
      * */
     popupComponentDialogAtPoint(event) {
         const initData = {inputData: 'some data...'};
