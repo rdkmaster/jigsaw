@@ -12,7 +12,6 @@ import {
 import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, getColumn, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
-import {Type} from "@angular/core";
 
 export abstract class AbstractModeledGraphTemplate {
     public title?: EchartTitle;
@@ -82,41 +81,22 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
         return dims;
     }
 
-    /**
-     * 确保给定的数据中，每一个给定的维度，都有且只有一个记录，缺少的记录用默认值补齐，多出的记录删除， 重复的记录用聚集算法聚集，
-     * 并且要保证每组中的维度顺序一致。
-     *
-     * @param indicators
-     * @param xAxisIndex
-     * @param dimIndex
-     * @param dimensions
-     */
-    protected pruneData(indicators: Indicator[], xAxisIndex: number, dimIndex: number, dimensions: Dimension[]): Grouped {
+    protected pruneData(records: (string | number)[][], dimIndex: number, dimensions: Dimension[], indicators: Indicator[]): string[][] {
         const aggregateBy = indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
-        const groups = group(this.data, xAxisIndex);
-        for (let xAxisItem in groups) {
-            const records: string[][] = groups[xAxisItem];
-            if (records === groups._$groupItems) {
-                continue;
+        const dimGroups = group(records, dimIndex);
+        const pruned: string[][] = [];
+        dimensions.forEach(dim => {
+            const dimRecords = dimGroups[dim.name];
+            if (dimRecords) {
+                pruned.push(dimRecords.length > 1 ? aggregate(dimRecords, aggregateBy) : dimRecords[0]);
+            } else {
+                const row = [];
+                row[dimIndex] = dim.name;
+                indicators.forEach(i => row[i.index] = i.defaultValue);
+                pruned.push(row);
             }
-
-            const dimGroups = group(records, dimIndex);
-            const pruned: string[][] = [];
-            dimensions.forEach(dim => {
-                const dimRecords = dimGroups[dim.name];
-                if (dimRecords) {
-                    pruned.push(dimRecords.length > 1 ? aggregate(dimRecords, aggregateBy) : dimRecords[0]);
-                } else {
-                    const row = [];
-                    row[xAxisIndex] = xAxisItem;
-                    row[dimIndex] = dim.name;
-                    indicators.forEach(i => row[i.index] = i.defaultValue);
-                    pruned.push(row);
-                }
-            });
-            groups[xAxisItem] = pruned;
-        }
-        return groups;
+        });
+        return pruned;
     }
 }
 
@@ -287,13 +267,36 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         options.xAxis[0].data = xAxisItems;
 
         const dimIndex = this.getIndex(this.dimensionField);
-        const pruned = this.pruneData(this.indicators, xAxisIndex, dimIndex, dimensions);
+        const pruned = this.pruneAllData(xAxisIndex, dimIndex, dimensions);
         const groupedByDim = group(flat(pruned), dimIndex);
         options.series = groupedByDim._$groupItems
             .map(dimName => ({data: getColumn(groupedByDim[dimName], this.indicators[0].index), name: dimName}))
-            .map(seriesData => CommonUtils.extendObjects<EchartToolbox>(seriesData, this.template.seriesItem));
+            .map(seriesData => CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem));
 
         return options;
+    }
+
+    /**
+     * 确保给定的数据中，每一个给定的维度，都有且只有一个记录，缺少的记录用默认值补齐，多出的记录删除， 重复的记录用聚集算法聚集，
+     * 并且要保证每组中的维度顺序一致。
+     *
+     * @param xAxisIndex
+     * @param dimIndex
+     * @param dimensions
+     */
+    protected pruneAllData(xAxisIndex: number, dimIndex: number, dimensions: Dimension[]): Grouped {
+        const aggregateBy = this.indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
+        const groups = group(this.data, xAxisIndex);
+        for (let xAxisItem in groups) {
+            const records: string[][] = groups[xAxisItem];
+            if (records === groups._$groupItems) {
+                continue;
+            }
+            const pruned = this.pruneData(records, dimIndex, dimensions, this.indicators);
+            pruned.forEach(row => row[xAxisIndex] = xAxisItem);
+            groups[xAxisItem] = pruned;
+        }
+        return groups;
     }
 
     protected createMultiKPIOptions(dim: Dimension): EchartOptions {
@@ -345,7 +348,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         options.xAxis[0].data = xAxisGroups._$groupItems;
         options.series = this.indicators
             .map(kpi => ({name: this.header[kpi.index], data: getColumn(pruned, kpi.index)}))
-            .map(seriesData => CommonUtils.extendObjects<EchartToolbox>(seriesData, this.template.seriesItem));
+            .map(seriesData => CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem));
 
         return options;
     }
@@ -428,6 +431,9 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
             return undefined;
         }
         const options = this.template.getInstance();
+        if (options.legend) {
+            options.legend.data = [];
+        }
         options.series = this.series
             .filter(seriesData => {
                 if (!seriesData.dimensionField) {
@@ -440,24 +446,46 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
             })
             .map((seriesData, idx) => {
                 const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                const dimIndex = this.getIndex(seriesData.dimensionField);
+                seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
+
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
                 if (dimensions.length > 1) {
                     // 多维度
-                    if (options.legend) {
-                        options.legend.data = dimensions.map(d => d.name);
+                    this._mergeLegend(options.legend, dimensions);
+                    let records;
+                    if (seriesData.usingAllDimensions) {
+                        records = this.data;
+                    } else {
+                        records = this.data.filter(row => dimensions.find(d => d.name == row[dimIndex]));
                     }
+                    const kpiIndex = seriesData.indicators[0].index;
+                    records = records.map(row => [row[dimIndex], row[kpiIndex]]);
+                    seriesItem.data = this.pruneData(records, 0, dimensions, [seriesData.indicators[0]])
+                        .map(row => ({name: row[0], value: row[1]}));
                 } else {
                     // 多指标
-                    if (options.legend) {
-                        options.legend.data = seriesData.indicators.map(kpi => kpi.name);
-                    }
+                    this._mergeLegend(options.legend, seriesData.indicators);
+                    const dim = dimensions[0].name;
+                    const records = this.data.filter(row => row[dimIndex] == dim);
+                    const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
+                    seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
                 }
 
-                const seriesItem = CommonUtils.extendObjects<any>({}, this.template.seriesItem);
                 seriesItem.name = 'series' + idx;
                 seriesItem.radius = [seriesData.innerRadius + '%', seriesData.outerRadius + '%'];
+                return seriesItem;
             });
 
-        return undefined;
+        return options;
+    }
+
+    private _mergeLegend(legendObject: EchartLegend, candidates: (Indicator | Dimension)[]): void {
+        if (!legendObject) {
+            return;
+        }
+        const names = candidates.map(can => can.name);
+        legendObject.data.push(...names.filter(legend => legendObject.data.indexOf(legend) == -1));
     }
 }
 

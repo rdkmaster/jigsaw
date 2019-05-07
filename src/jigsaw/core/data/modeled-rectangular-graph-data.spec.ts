@@ -7,8 +7,8 @@ class ModeledRectangularGraphData1 extends ModeledRectangularGraphData {
         return super.getRealDimensions();
     }
 
-    public pruneData(xAxisIndex: number, serialIndex: number, dimensions: Dimension[]): Grouped {
-        return super.pruneData(xAxisIndex, serialIndex, dimensions);
+    public pruneAllData(xAxisIndex: number, serialIndex: number, dimensions: Dimension[]): Grouped {
+        return super.pruneAllData(xAxisIndex, serialIndex, dimensions);
     }
 
     public createMultiDimensionOptions(dimensions: Dimension[]): EchartOptions {
@@ -94,7 +94,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 
         done();
     });
-    it('pruneData - normal', (done) => {
+    it('pruneAllData - normal', (done) => {
         const rd = new ModeledRectangularGraphData1();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
@@ -111,7 +111,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3'), new Indicator('f4')];
 
-        const r = rd.pruneData(0, 1, rd.getRealDimensions());
+        const r = rd.pruneAllData(0, 1, rd.getRealDimensions());
         expect(JSON.stringify(r._$groupItems)).toEqual(JSON.stringify(['a', 'b']));
         let g = r.a;
         expect(JSON.stringify(g)).toEqual(JSON.stringify(
@@ -126,7 +126,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 
         done();
     });
-    it('pruneData - add item', (done) => {
+    it('pruneAllData - add item', (done) => {
         const rd = new ModeledRectangularGraphData1();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
@@ -144,7 +144,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].defaultValue = 1122;
         rd.indicators[1].index = 3;
 
-        const r = rd.pruneData(0, 1, rd.getRealDimensions());
+        const r = rd.pruneAllData(0, 1, rd.getRealDimensions());
         expect(JSON.stringify(r._$groupItems)).toEqual(JSON.stringify(['a', 'b']));
         expect(JSON.stringify(r.b)).toEqual(JSON.stringify(
             [['b', '南京', '120', '110'],
@@ -153,7 +153,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 
         done();
     });
-    it('pruneData - aggregate item', (done) => {
+    it('pruneAllData - aggregate item', (done) => {
         const rd = new ModeledRectangularGraphData1();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
@@ -172,7 +172,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].defaultValue = 1122;
         rd.indicators[1].index = 3;
 
-        const r = rd.pruneData(0, 1, rd.getRealDimensions());
+        const r = rd.pruneAllData(0, 1, rd.getRealDimensions());
         expect(JSON.stringify(r._$groupItems)).toEqual(JSON.stringify(['a', 'b']));
         expect(JSON.stringify(r.b)).toEqual(JSON.stringify(
             [['b', '南京', 240, 220],
