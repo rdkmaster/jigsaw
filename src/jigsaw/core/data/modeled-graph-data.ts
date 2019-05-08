@@ -17,7 +17,7 @@ import {VMAX_GRAPH_THEME_DARK} from "../../component/graph/vmax-theme-dark";
 
 export abstract class AbstractModeledGraphTemplate {
     public abstract getInstance(): EchartOptions;
-    
+
     public themes? = [
         {name: '默认浅色系', theme: VMAX_GRAPH_THEME},
         {name: '默认深色系', theme: VMAX_GRAPH_THEME_DARK}
