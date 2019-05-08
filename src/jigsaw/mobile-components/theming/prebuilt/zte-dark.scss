@@ -1,19 +1,19 @@
-@import "./settings/zte";
-@import "../all-mobile-theme";
-@import "../theming-api";
+@import "../../../common/core/theming/prebuilt/settings/zte-dark";
+@import "../all-theme";
+@import "../../../common/core/theming/theming-api";
 
 // ------ Custom for zte by theming-api ------
-@include setDialogHead($primary-color, #f2f2f2, 30px);
+@include setDialogHead($primary-color, $light-bg-3, 30px);
 @include setDialogButton(right, false);
 
 @include showBtnAnimation(false);
 
-@include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
-@include setTableBody(#333, default, default, #f8f8f8);
+@include setTableHead($opacity-bg-2, $fill-color-4, 14px, $primary-color, 1px);
+@include setTableBody($gray-2, default, $opacity-bg-1, $opacity-bg-2);
 @include setTableTextAlign(left, 8px);
 
-@include setTag(#fff, 25px);
-@include setCollapse(#f4f6f8);
+@include setTag($opacity-bg-3, 25px);
+@include setCollapse($opacity-bg-3);
 @include setTabTriangle(true);
 
 // ------ Own for zte ------
@@ -70,9 +70,14 @@
     .#{$btn-prefix-cls} {
         color: $defaultTextColor;
         font-size: $defaultFontSize;
+        border: 1px solid $defaultTextColor;
     }
 }
 
+
+
+
 @include setPopupCloseBar($primary-color, $primary-7);
 @include setTimeGrTab(#008fd4);
-@include setBtnDefault($primary-color);
+@include setBtnDefault($text-color);
+

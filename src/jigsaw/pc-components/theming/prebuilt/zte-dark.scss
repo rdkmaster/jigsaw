@@ -1,6 +1,6 @@
-@import "settings/zte-dark";
-@import "../all-pc-theme";
-@import "../theming-api";
+@import "../../../common/core/theming/prebuilt/settings/zte-dark";
+@import "../all-theme";
+@import "../../../common/core/theming/theming-api";
 
 // ------ Custom for zte by theming-api ------
 @include setDialogHead($primary-color, $light-bg-3, 30px);

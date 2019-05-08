@@ -11,7 +11,7 @@ import './tasks/publish';
 //import './tasks/aot';
 createReleaseTasks('jigsaw');
 createReleaseTasks('jigsaw-mobile');
-import './tasks/jigsaw-labs-release';
+// import './tasks/jigsaw-labs-release';
 import './tasks/validate-release';
 
 import './tasks/ensure-url-matches-path'

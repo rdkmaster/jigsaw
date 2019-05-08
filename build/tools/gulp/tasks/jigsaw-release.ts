@@ -25,8 +25,8 @@ export function createReleaseTasks(packageName: string, requiredPackages: string
 // Path to the release output of jigsaw.
     const releasePath = join(releasesDir, packageName);
 // The entry-point for the scss theming bundle.
-    const themingEntryPointPath = join(jigsawPath, 'common', 'core', 'theming',
-        packageName === 'jigsaw' ? 'all-pc-theme.scss' : 'all-mobile-theme.scss');
+    const themingEntryPointPath = join(jigsawPath,
+        packageName === 'jigsaw' ? 'pc-components/theming/all-theme.scss' : 'mobile-components/theming/all-theme.scss');
 // Output path for the scss theming bundle.
     const themingBundlePath = join(releasePath, 'theming.scss');
 // Matches all pre-built theme css files

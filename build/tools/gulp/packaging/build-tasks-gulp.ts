@@ -83,7 +83,8 @@ export function createPackageBuildTasks(packageName: string, requiredPackages: s
         `${packageName}:assets:html`
     ]);
     task(`${packageName}:assets:scss`, sassBuildTask(packageOut,
-        join(packageRoot, packageName === 'jigsaw' ? '**/theming/prebuilt/*pc.scss' : '**/theming/prebuilt/*mobile.scss'), true
+        join(packageRoot, packageName === 'jigsaw' ?
+            '**/pc-components/theming/prebuilt/*.scss' : '**/mobile-components/theming/prebuilt/*.scss'), true
     ));
     task(`${packageName}:assets:copy-styles`, copyTask(stylesGlob, packageOut));
     task(`${packageName}:assets:html`, () => {

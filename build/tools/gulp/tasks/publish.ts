@@ -23,10 +23,10 @@ task(':publish:build-releases', sequenceTask(
   releasePackages.map(packageName => `${packageName}:build-release`)
 ));
 
-task(':publish:build-labs-releases', sequenceTask(
-    'clean',
-    releasePackages.map(packageName => `${packageName}:build-labs-release`)
-));
+// task(':publish:build-labs-releases', sequenceTask(
+//     'clean',
+//     releasePackages.map(packageName => `${packageName}:build-labs-release`)
+// ));
 
 /** Make sure we're logged in. */
 task(':publish:whoami', execTask(npm, ['whoami'], {

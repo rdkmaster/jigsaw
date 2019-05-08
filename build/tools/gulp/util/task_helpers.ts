@@ -51,9 +51,6 @@ export function sassBuildTask(dest: string, root: string, minify = false) {
         return gulp.src(_globify(root, '**/*.scss'))
             .pipe(gulpSass().on('error', gulpSass.logError))
             .pipe(gulpIf(minify, gulpCleanCss()))
-            .pipe(rename(function (path:any) {
-                path.basename = path.basename.replace('-mobile', '').replace('-pc', '');
-            }))
             .pipe(gulp.dest(dest));
     };
 }
