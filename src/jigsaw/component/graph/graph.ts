@@ -1,23 +1,21 @@
 /**
  * Created by 10177553 on 2017/3/23.
  */
-import {
-    Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output,
-    Renderer2
-} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2,} from "@angular/core";
 import {AbstractGraphData} from "../../core/data/graph-data";
 
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawComponent} from "../common";
 import {EchartOptions} from "../../core/data/echart-types";
-import {CallbackRemoval} from "../../core/utils/common-utils";
 import {VMAX_GRAPH_THEME} from "./vmax-theme";
+import {VMAX_GRAPH_THEME_DARK} from './vmax-theme-dark';
+import {JigsawTheme} from "../../core/theming/theme";
 
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
 })
-export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
     public dataValid: boolean = false;
 
@@ -82,7 +80,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = VMAX_GRAPH_THEME;
+    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
 
     @Input()
     public get globalTheme() {
@@ -115,12 +113,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (!this._graph) {
             return;
         }
-        if (!this._isOptionsValid(option)) {
-            this.dataValid = false;
+        this.dataValid = this._isOptionsValid(this.data.options);
+        // 若数据非法，那么不能给graph赋值，故直接返回
+        if (!this.dataValid) {
             return;
         }
-        this.dataValid = true;
-
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
     }
@@ -159,18 +156,24 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     ngOnInit() {
         super.ngOnInit();
+        if (this.data) {
+            this.dataValid = this._isOptionsValid(this.data.options);
+        }
+        this.init.emit();
+    }
+
+    ngAfterViewInit() {
         this._renderer.addClass(this._host, 'jigsaw-graph-host');
         this._graphContainer = <HTMLElement>this._host.querySelector(".jigsaw-graph");
-
         this._zone.runOutsideAngular(() => {
             // echarts的Animation对象里的_startLoop方法有个递归调用requestAnimationFrame,会触发变更检查，见#289
             this._graph = echarts.init(this._graphContainer);
-            this._graph._theme = VMAX_GRAPH_THEME;
+            this._graph._theme = this.globalTheme;
         });
-
-        if (this.data) this.setOption(this.data.options);
-
         this._listenWindowResize();
+        if (this.data) {
+            this.setOption(this.data.options);
+        }
     }
 
     ngOnDestroy() {
@@ -195,8 +198,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _handleEvent(params: any, eventType?: string) {
         // 防止和ng2 事件冲突，响应两遍.
-        event.preventDefault();
-        event.stopPropagation();
+        if (!!event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
         this._zone.run(() => {
             this[eventType].emit(params)
         });
@@ -343,6 +348,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public brush = new EventEmitter<any>();
     @Output()
     public brushselected = new EventEmitter<any>();
+
+    // 将onInit 暴露给外面
+    @Output()
+    public init = new EventEmitter<any>();
+
 
     /* *************** 事件声明 end ***************************** */
 }

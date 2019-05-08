@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
-import {PopupOptions, PopupPositionValue} from "../../../../jigsaw/service/popup.service";
-import {FloatBasicDemo} from "../basic/demo.component";
+import {PopupOptions, PopupPositionValue} from "jigsaw/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -16,7 +15,15 @@ import {FloatBasicDemo} from "../basic/demo.component";
             color: #fff;
             text-align: center;
         }
-        
+
+        .movable-box {
+            background-color: #b5d3dc;
+            display: inline-block;
+            border-radius: 4px;
+            padding: 12px;
+            cursor: move;
+        }
+
         p {
             margin: 10px;
         }
@@ -32,6 +39,12 @@ export class FloatPosReviserDemo {
             return pos;
         }
     };
+
+    public position;
+
+    constructor() {
+        this.position = "bottomLeft";
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

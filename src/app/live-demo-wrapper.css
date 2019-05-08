@@ -12,6 +12,7 @@
 .live-demo-wrap h2 {
     margin-bottom: 40px;
     color: #333;
+    /*color: #fff;*/
     font-size: 24px;
     font-weight: 700;
 }
@@ -42,6 +43,7 @@
 .live-demo h3 {
     margin: 0 0 10px -10px;
     color: #333;
+    /*color: #ccc;*/
     font-size: 16px;
     padding: 2px 14px;
     position: relative;
@@ -66,6 +68,7 @@
 .live-demo p.comment {
     margin-bottom: 10px;
     color: #666;
+    /*color: #ccc;*/
     font-size: 14px;
 }
 
@@ -84,6 +87,7 @@
 .live-demo p.message span {
     margin: 0 4px;
     color: #666;
+    /*color: #ccc;*/
 }
 
 /* toggle */

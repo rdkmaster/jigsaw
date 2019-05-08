@@ -7,6 +7,17 @@ import {Component} from '@angular/core';
     templateUrl: './demo.component.html'
 })
 export class CollapseBasicDemoComponent {
+
+    public _$isActiveChange(isActive: boolean) {
+        console.log(isActive);
+    }
+
+    public isActive = true;
+
+    public _$click() {
+        this.isActive = !this.isActive;
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

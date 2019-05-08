@@ -25,7 +25,8 @@ import {CommonUtils} from "../../core/utils/common-utils";
         '(click)': '_$stopPropagation($event)',
         '[class.jigsaw-input]': 'true',
         '[class.jigsaw-input-error]': '!valid',
-        '[class.jigsaw-input-focused]': 'focused'
+        '[class.jigsaw-input-focused]': 'focused',
+        '[class.jigsaw-input-disabled]': 'disabled'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},

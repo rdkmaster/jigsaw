@@ -1,6 +1,7 @@
-<j-input #input [placeholder]="placeholder" [(value)]="value" [width]="width ? '100%' : null" [height]="height ? '100%' : null"
+<j-input #input [placeholder]="placeholder" [(value)]="value" [width]="width ? '100%' : null"
+         [height]="height ? '100%' : null"
          [blurOnClear]="blurOnClear" [clearable]="clearable" [disabled]="disabled" [valid]="valid"
-         (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)">
+         (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)">
     <ng-content jigsaw-prefix-icon select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
     <ng-content jigsaw-icon select="[jigsaw-icon], [j-icon]"></ng-content>
 </j-input>
@@ -11,7 +12,8 @@
         <div *ngFor="let category of _$data;">
             <label *ngIf="category.category" class="jigsaw-auto-complete-input-item-title">{{category.category}}</label>
             <ul>
-                <li class="jigsaw-auto-complete-input-item" (click)="_$add(item)" *ngFor="let item of category.items;">
+                <li class="jigsaw-auto-complete-input-item" (click)="_$add($event,item)"
+                    *ngFor="let item of category.items;">
                     <label>{{item}}</label>
                 </li>
             </ul>

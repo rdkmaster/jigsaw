@@ -111,6 +111,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('select')
     public selectEvent = new EventEmitter<string>();
 
+    @Output('textSelect')
+    public textSelectEvent = new EventEmitter<Event>();
+
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _changeDetectorRef: ChangeDetectorRef,
@@ -121,11 +124,14 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     ngOnInit() {
         super.ngOnInit();
         this._input.valueChange.debounceTime(300).subscribe(() => {
-            this.getfilteredDropDownData();
+            this._getFilteredDropDownData();
         });
     }
 
-    getfilteredDropDownData() {
+    /**
+     * @internal
+     */
+    private _getFilteredDropDownData() {
         let filterKey = this._input.value;
         filterKey = filterKey ? filterKey.trim() : '';
         let data: any = [];
@@ -156,7 +162,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
-        this.getfilteredDropDownData();
+        this._getFilteredDropDownData();
         this._showDropdownList(event);
     }
 
@@ -171,7 +177,17 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     /**
      * @internal
      */
-    public _$add(item) {
+    public _$handleSelect($event: Event) {
+        $event.stopPropagation();
+        this.textSelectEvent.emit($event);
+    }
+
+    /**
+     * @internal
+     */
+    public _$add(event, item) {
+        event.preventDefault();
+        event.stopPropagation();
         this.value = item;
         this.selectEvent.emit(item);
     }

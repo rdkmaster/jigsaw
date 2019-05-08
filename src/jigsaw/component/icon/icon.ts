@@ -39,7 +39,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     /**
      * 图标颜色
      */
-    @Input() public iconColor: string = 'black';
+    @Input() public iconColor: string = 'inherit';
 
     /**
      * 图标的文本
@@ -52,7 +52,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     /**
      * 文字的颜色
      */
-    @Input() public textColor: string = 'black';
+    @Input() public textColor: string = 'inherit';
     /**
      * 图标相对于文字的位置，left为左侧，默认值：top为上方
      */

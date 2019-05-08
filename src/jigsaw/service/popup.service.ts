@@ -3,21 +3,24 @@ import {
     ComponentRef,
     ElementRef,
     EmbeddedViewRef,
-    Injectable, Renderer2,
+    EventEmitter,
+    Injectable,
+    NgZone,
+    Optional,
+    Renderer2,
     TemplateRef,
     Type,
     ViewContainerRef,
-    EventEmitter, Optional, NgZone,
 } from "@angular/core";
 import {CommonUtils} from "../core/utils/common-utils";
-import {ElementEventHelper} from "../core/utils/internal-utils";
+import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../component/block/block";
-import {AffixUtils} from "../core/utils/internal-utils";
 import {IDynamicInstantiatable} from "../component/common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import {Subscription} from "rxjs/Subscription";
+import {JigsawTheme} from "../core/theming/theme";
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -156,6 +159,7 @@ export type PopupRef = ComponentRef<IPopupable> | EmbeddedViewRef<any>;
 
 export class ButtonInfo {
     [index: string]: any;
+
     label?: string;
     clazz?: string = '';
     type?: string;
@@ -180,12 +184,20 @@ export class PopupInfo {
 
 @Injectable()
 export class PopupService {
+
     private static _instance: PopupService;
 
     public static get instance(): PopupService {
         return PopupService._instance;
     }
 
+    private _popups: PopupInfo[] = [];
+    
+    public get popups(): PopupInfo[] {
+        return this._popups.concat();
+    }
+
+    public elements: HTMLElement[] = [];
     /**
      * 全局插入点
      * @internal
@@ -238,7 +250,6 @@ export class PopupService {
             console.error("please use 'jigsaw-root' element as the root of your root component");
             return;
         }
-
         let popupInfo: PopupInfo,
             popupRef: PopupRef,
             element: HTMLElement,
@@ -252,9 +263,14 @@ export class PopupService {
         [popupInfo, popupRef] = this._popupFactory(what, options);
         element = popupInfo.element;
         popupDisposer = popupInfo.dispose;
-
         //set disposer
         disposer = () => {
+            const target = this._popups.find(p => p.element === element);
+            const index = this._popups.indexOf(target);
+            if (index >= 0) {
+                this._popups.splice(index, 1);
+            }
+
             if (popupDisposer) {
                 popupDisposer();
             }
@@ -273,12 +289,21 @@ export class PopupService {
         removeWindowListens = this._beforePopup(options, element, disposer);
         setTimeout(() => {
             this._setPopup(options, element);
+            // 给弹出设置皮肤
+            let tagName = element.tagName.toLowerCase();
+            if (tagName != 'jigsaw-block' && tagName != 'j-block') {
+                const backgroundColor = JigsawTheme.getPopupBackgroundColor();
+                if (backgroundColor) {
+                    PopupService._renderer.setStyle(element, 'background', backgroundColor);
+                }
+            }
         }, 0);
-
-        return {
+        const result = {
             instance: popupRef['instance'], element: element, dispose: disposer,
             answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
-        }
+        };
+        this._popups.push(result);
+        return result;
     }
 
     private _popupBlocker(options: PopupOptions): PopupDisposer {
@@ -605,8 +630,8 @@ export class PopupService {
      * 默认靠左弹，当右边位置不足时，靠右弹
      */
     public positionReviser(pos: PopupPositionValue, popupElement: HTMLElement,
-                           options?: {offsetWidth?: number, offsetHeight?: number, direction?: 'v' | 'h'}): PopupPositionValue {
-        if(!options || !options.direction || options.direction == 'v') {
+                           options?: { offsetWidth?: number, offsetHeight?: number, direction?: 'v' | 'h' }): PopupPositionValue {
+        if (!options || !options.direction || options.direction == 'v') {
             // 调整上下位置
             const upDelta = (options && options.offsetHeight ? options.offsetHeight : 0) + popupElement.offsetHeight;
             if (document.body.clientHeight <= upDelta) {
@@ -621,7 +646,7 @@ export class PopupService {
             }
         }
 
-        if(!options || !options.direction || options.direction == 'h') {
+        if (!options || !options.direction || options.direction == 'h') {
             // 调整左右位置
             const leftDelta = popupElement.offsetWidth - (options && options.offsetWidth ? options.offsetWidth : 0);
             if (document.body.clientWidth <= leftDelta && leftDelta <= 0) {
@@ -630,7 +655,7 @@ export class PopupService {
                 return pos;
             }
             const needWidth = pos.left + popupElement.offsetWidth;
-            const totalWidth = window.pageXOffset  + document.body.clientWidth;
+            const totalWidth = window.pageXOffset + document.body.clientWidth;
             if (needWidth >= totalWidth && pos.left > leftDelta) {
                 // 右边位置不够且左边位置足够的时候才做调整
                 pos.left -= leftDelta;

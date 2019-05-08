@@ -74,10 +74,13 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         this.select.emit(this);
     }
 
+    public show() {
+        this._state = 'active';
+    }
+
     private _animationDone($event) {
         if ($event.toState === 'inactive') {
             this.close.emit(this);
-            this._renderer.parentNode(this._elementRef.nativeElement).removeChild(this._elementRef.nativeElement);
         }
     }
 

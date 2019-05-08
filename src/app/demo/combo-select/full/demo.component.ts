@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {DropDownTrigger} from "jigsaw/component/combo-select/combo-select";
 import {ArrayCollection} from "jigsaw/core/data/array-collection";
+import {DropDownTrigger} from "jigsaw/directive/float";
 
 @Component({
     templateUrl: './demo.component.html',

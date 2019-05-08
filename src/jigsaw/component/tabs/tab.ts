@@ -143,6 +143,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this._calulateContentHeight();
     }
 
+    @Input()
+    public enableAnimation: boolean = true;
 
     /**
      * 当前的tab页数量，包含被隐藏的tab页
@@ -627,9 +629,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     private _updateOverflowButton() {
         if(!this._tabsNav || !this._tabsNavWrap) return;
-        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth
+        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth;
+        this._changeDetector.detectChanges();
     }
-
     @HostListener('window:resize')
     onResize() {
         this._createTabList();

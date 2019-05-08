@@ -46,7 +46,7 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
         overflow: hidden;
         border: $border-width-base $border-style-base $border-color-base;
         border-radius: $border-radius-sm;
-        background-color: #fff;
+        background-color: $component-background;
         transition: all .3s;
 
         &:after {
