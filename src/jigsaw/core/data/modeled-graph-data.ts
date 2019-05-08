@@ -12,14 +12,20 @@ import {
 import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, getColumn, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
+import {VMAX_GRAPH_THEME} from "../../component/graph/vmax-theme";
+import {VMAX_GRAPH_THEME_DARK} from "../../component/graph/vmax-theme-dark";
 
 export abstract class AbstractModeledGraphTemplate {
+    public abstract getInstance(): EchartOptions;
+    
+    public themes? = [
+        {name: '默认浅色系', theme: VMAX_GRAPH_THEME},
+        {name: '默认深色系', theme: VMAX_GRAPH_THEME_DARK}
+    ];
     public title?: EchartTitle;
     public tooltip?: EchartTooltip;
     public toolbox?: EchartToolbox;
     public legend?: EchartLegend;
-
-    public abstract getInstance(): EchartOptions;
 }
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
