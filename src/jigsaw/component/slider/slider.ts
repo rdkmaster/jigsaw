@@ -519,6 +519,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     // ngModel触发的writeValue方法，只会在ngOnInit,ngAfterContentInit,ngAfterViewInit这些生命周期之后才调用
     public writeValue(value: any): void {
+        if(value instanceof Array) {
+            value = new ArrayCollection(value);
+        }
         if (value instanceof ArrayCollection) {
             if (this._$value !== value) {
                 this._$value = value;
