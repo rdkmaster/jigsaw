@@ -362,8 +362,8 @@ export class PieSeries {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
-    public innerRadius: string;
-    public outerRadius: string;
+    public innerRadius: number;
+    public outerRadius: number;
 }
 
 export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
@@ -411,6 +411,10 @@ export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
 }
 
 export class ModeledPieGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
     public template: ModeledPieTemplate = new BasicModeledPieTemplate();
 
     public series: PieSeries[];
@@ -461,7 +465,9 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                     }
                     const kpiIndex = seriesData.indicators[0].index;
                     records = records.map(row => [row[dimIndex], row[kpiIndex]]);
-                    seriesItem.data = this.pruneData(records, 0, dimensions, [seriesData.indicators[0]])
+                    const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
+                    indicator.index = 1;
+                    seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
                         .map(row => ({name: row[0], value: row[1]}));
                 } else {
                     // 多指标

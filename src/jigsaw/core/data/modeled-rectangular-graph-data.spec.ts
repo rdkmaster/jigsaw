@@ -1,10 +1,11 @@
-import {Dimension, Indicator, ModeledRectangularGraphData} from "./modeled-graph-data";
-import {EchartOptions} from "./echart-types";
+import {Dimension, Indicator, ModeledRectangularGraphData, ModeledRectangularTemplate} from "./modeled-graph-data";
+import {EchartLegend, EchartOptions, EchartToolbox, EchartTooltip} from "./echart-types";
 import {Grouped} from "../utils/data-collection-utils";
+import {CommonUtils} from "../utils/common-utils";
 
-class ModeledRectangularGraphData1 extends ModeledRectangularGraphData {
-    public getRealDimensions(): Dimension[] {
-        return super.getRealDimensions();
+class ModeledRectangularGraphDataSpec extends ModeledRectangularGraphData {
+    public getRealDimensions(dimField: string, dimensions: Dimension[], usingAllDimensions: boolean): Dimension[] {
+        return super.getRealDimensions(dimField, dimensions, usingAllDimensions);
     }
 
     public pruneAllData(xAxisIndex: number, serialIndex: number, dimensions: Dimension[]): Grouped {
@@ -24,12 +25,21 @@ class ModeledRectangularGraphData1 extends ModeledRectangularGraphData {
     }
 }
 
+class ModeledRectangularTemplateSpec extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            tooltip: {},
+            toolbox: {},
+        };
+    }
+}
+
 describe('Unit Test for ModeledRectangularGraphData', () => {
-    it('basic property access', (done) => {
+    it('basic property access', () => {
         const data = [[1, 2, 3]];
         const header = ['a', 'b', 'c'];
         const field = ['f1', 'f2', 'f3'];
-        const rd = new ModeledRectangularGraphData1();
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.data = data;
         rd.header = header;
         rd.field = field;
@@ -43,12 +53,10 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(rd.getIndex('c')).toEqual(2);
         expect(rd.getIndex(null)).toEqual(-1);
         expect(rd.getIndex('invalid')).toEqual(-1);
-
-        done();
     });
-    it('getRealDimensions - all', (done) => {
-        const rd = new ModeledRectangularGraphData1();
-        let realDims = rd.getRealDimensions();
+    it('getRealDimensions - all', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
+        let realDims = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
         expect(JSON.stringify(realDims)).toEqual(JSON.stringify([]));
 
         rd.field = ['f1', 'f2', 'f3', 'f4'];
@@ -64,7 +72,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.dimensions[0].shade = 'area';
 
         rd.usingAllDimensions = false;
-        realDims = rd.getRealDimensions();
+        realDims = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
         expect(realDims.length).toEqual(1);
         let dim = realDims[0];
         expect(dim.name).toEqual('南京');
@@ -73,7 +81,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(dim.shade).toEqual('area');
 
         rd.usingAllDimensions = true;
-        realDims = rd.getRealDimensions();
+        realDims = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
         expect(realDims.length).toEqual(3);
 
         dim = realDims[0];
@@ -91,11 +99,9 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(dim.yAxisIndex).toEqual(0);
         expect(dim.stack).toEqual(undefined);
         expect(dim.shade).toEqual('bar');
-
-        done();
     });
-    it('pruneAllData - normal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('pruneAllData - normal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -111,7 +117,8 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.xAxis = {field: 'f1'};
         rd.indicators = [new Indicator('f3'), new Indicator('f4')];
 
-        const r = rd.pruneAllData(0, 1, rd.getRealDimensions());
+        const dimensions = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
+        const r = rd.pruneAllData(0, 1, dimensions);
         expect(JSON.stringify(r._$groupItems)).toEqual(JSON.stringify(['a', 'b']));
         let g = r.a;
         expect(JSON.stringify(g)).toEqual(JSON.stringify(
@@ -123,11 +130,9 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
             [['b', '南京', '120', '110'],
                 ['b', '上海', '122', '112'],
                 ['b', '深圳', '130', '123']]));
-
-        done();
     });
-    it('pruneAllData - add item', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('pruneAllData - add item', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -144,17 +149,16 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].defaultValue = 1122;
         rd.indicators[1].index = 3;
 
-        const r = rd.pruneAllData(0, 1, rd.getRealDimensions());
+        const dimensions = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
+        const r = rd.pruneAllData(0, 1, dimensions);
         expect(JSON.stringify(r._$groupItems)).toEqual(JSON.stringify(['a', 'b']));
         expect(JSON.stringify(r.b)).toEqual(JSON.stringify(
             [['b', '南京', '120', '110'],
                 ['b', '上海', 1122, 0],
                 ['b', '深圳', '130', '123']]));
-
-        done();
     });
-    it('pruneAllData - aggregate item', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('pruneAllData - aggregate item', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -172,17 +176,16 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].defaultValue = 1122;
         rd.indicators[1].index = 3;
 
-        const r = rd.pruneAllData(0, 1, rd.getRealDimensions());
+        const dimensions = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
+        const r = rd.pruneAllData(0, 1, dimensions);
         expect(JSON.stringify(r._$groupItems)).toEqual(JSON.stringify(['a', 'b']));
         expect(JSON.stringify(r.b)).toEqual(JSON.stringify(
             [['b', '南京', 240, 220],
                 ['b', '上海', 1122, 0],
                 ['b', '深圳', '130', '123']]));
-
-        done();
     });
-    it('createMultiDimensionOptions - normal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('createMultiDimensionOptions - normal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -199,18 +202,17 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].index = 2;
         rd.indicators[0].defaultValue = 1122;
 
-        const options = rd.createMultiDimensionOptions(rd.getRealDimensions());
+        const dimensions = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
+        const options = rd.createMultiDimensionOptions(dimensions);
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['南京', '上海', '深圳']));
         expect(JSON.stringify(options.xAxis[0].data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(3);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['20', 240]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['22', 1122]));
         expect(JSON.stringify(options.series[2].data)).toEqual(JSON.stringify(['30', '130']));
-
-        done();
     });
-    it('createMultiDimensionOptions - abnormal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('createMultiDimensionOptions - abnormal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         let options;
         options = rd.createMultiDimensionOptions([]);
         expect(options).toEqual(undefined);
@@ -221,10 +223,9 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.xAxis = {field: 'f'};
         options = rd.createMultiDimensionOptions([{}]);
         expect(options).toEqual(undefined);
-        done();
     });
-    it('createMultiKPIOptions - normal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('createMultiKPIOptions - normal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', '最高气温', '最低气温'];
         rd.data = [
@@ -255,11 +256,9 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(options.series.length).toEqual(2);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['20', 240]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['10', 220]));
-
-        done();
     });
-    it('createMultiKPIOptions - abnormal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('createMultiKPIOptions - abnormal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         let options;
         options = rd.createMultiKPIOptions(null);
         expect(options).toEqual(undefined);
@@ -270,10 +269,9 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.xAxis = {field: 'f'};
         options = rd.createMultiKPIOptions(new Dimension('上海'));
         expect(options).toEqual(undefined);
-        done();
     });
-    it('createChartOptions - normal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('createChartOptions - normal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', '最高气温', '最低气温'];
         rd.data = [
@@ -314,11 +312,9 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(JSON.stringify(newOptions)).toEqual(JSON.stringify(options));
         const newOptions1 = rd.options;
         expect(newOptions === newOptions1).toEqual(true);
-
-        done();
     });
-    it('createChartOptions - abnormal', (done) => {
-        const rd = new ModeledRectangularGraphData1();
+    it('createChartOptions - abnormal', () => {
+        const rd = new ModeledRectangularGraphDataSpec();
         let options;
         options = rd.createChartOptions();
         expect(options).toEqual(undefined);
@@ -343,7 +339,51 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.dimensions = [];
         options = rd.createChartOptions();
         expect(options).toEqual(undefined);
-        done();
+    });
+    it('createMultiDimensionOptions - invalid legend', function () {
+        const rd = new ModeledRectangularGraphDataSpec();
+        rd.template = new ModeledRectangularTemplateSpec();
+        rd.field = ['f1', 'f2', 'f3', 'f4'];
+        rd.header = ['h1', 'h2', '最高气温', '最低气温'];
+        rd.data = [
+            ['a', '南京', '20', '10'],
+            ['a', '上海', '22', '12'],
+            ['a', '深圳', '30', '23'],
+            ['b', '南京', '120', '110'],
+            ['b', '南京', '120', '110'],
+            ['b', '深圳', '130', '123'],
+        ];
+        rd.dimensionField = 'f2';
+        rd.xAxis = {field: 'f1'};
+        rd.indicators = [new Indicator('f3')];
+        rd.indicators[0].index = 2;
+        rd.indicators[0].defaultValue = 1122;
+
+        let options = rd.createChartOptions();
+        expect(options.legend).toBeUndefined();
+    });
+    it('createMultiKPIOptions - invalid legend', function () {
+        const rd = new ModeledRectangularGraphDataSpec();
+        rd.template = new ModeledRectangularTemplateSpec();
+        rd.field = ['f1', 'f2', 'f3', 'f4'];
+        rd.header = ['h1', 'h2', '最高气温', '最低气温'];
+        rd.data = [
+            ['a', '南京', '20', '10'],
+            ['a', '上海', '22', '12'],
+            ['a', '深圳', '30', '23'],
+            ['b', '南京', '120', '110'],
+            ['b', '南京', '120', '110'],
+            ['b', '深圳', '130', '123'],
+        ];
+        rd.dimensionField = 'f2';
+        rd.xAxis = {field: 'f1'};
+        rd.indicators = [new Indicator('f3'), new Indicator('最低气温')];
+        rd.indicators.forEach(kpi => kpi.index = rd.getIndex(kpi.field));
+        rd.indicators[0].index = 2;
+        rd.indicators[0].defaultValue = 1122;
+
+        let options = rd.createMultiKPIOptions(new Dimension('上海'));
+        expect(options.legend).toBeUndefined();
     });
 });
 
