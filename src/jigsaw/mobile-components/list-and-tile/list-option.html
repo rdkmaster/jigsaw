@@ -1,0 +1,14 @@
+<div class="jigsaw-list-option-wrapper" *ngIf="value; else optionSeparator">
+    <div class="jigsaw-list-option-title-box">
+        <div class="jigsaw-list-option-title">
+            <ng-content select="[jm-title],[jigsaw-title]"></ng-content>
+        </div>
+        <div class="jigsaw-list-option-sub-title">
+            <ng-content select="[jm-sub-title],[jigsaw-sub-title]"></ng-content>
+        </div>
+    </div>
+    <ng-content></ng-content>
+</div>
+<ng-template #optionSeparator>
+    <span class="jigsaw-list-option-separator-line"></span>
+</ng-template>

@@ -1,0 +1,12 @@
+<a *ngIf="isLinkButton" [ngClass]="{'icon-position-left':iconPosition=='left','icon-position-top':iconPosition=='top'}"
+    [href]="_$secureUrl" [target]="target" [title]="title">
+    <i [ngClass]="icon" [ngStyle]="{'font-size.px':iconSize, 'color':iconColor}"></i>
+    <span [ngClass]="{'text-padding-left':iconPosition=='left','text-padding-top':iconPosition=='top'}" 
+          [ngStyle]="{'font-size.px':textSize, 'color':textColor}">{{text}}</span>
+</a>
+<div *ngIf="!isLinkButton" [ngClass]="{'icon-position-left':iconPosition=='left','icon-position-top':iconPosition=='top'}"
+    [title]="title">
+    <i [ngClass]="icon" [ngStyle]="{'font-size.px':iconSize, 'color':iconColor}"></i>
+    <span [ngClass]="{'text-padding-left':iconPosition=='left','text-padding-top':iconPosition=='top'}"
+          [ngStyle]="{'font-size.px':textSize, 'color':textColor}">{{text}}</span>
+</div>

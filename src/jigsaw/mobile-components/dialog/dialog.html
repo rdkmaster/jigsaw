@@ -1,0 +1,24 @@
+<div class="jigsaw-dialog">
+    <div class="jigsaw-dialog-head jigsaw-dialog-base-head" jigsaw-movable movableAffected="jigsaw-dialog">
+        <ng-content select="[jigsaw-title]"></ng-content>
+        <span>{{caption}}</span>
+        <span class="jigsaw-dialog-close jigsaw-popup-close" (click)='dispose()'>&times;</span>
+    </div>
+    <div class="jigsaw-dialog-content">
+        <div class="jigsaw-dialog-content-inner">
+            <ng-content></ng-content>
+        </div>
+    </div>
+    <div class="jigsaw-dialog-button-group"
+         *ngIf="(_$inlineButtons && _$inlineButtons.length > 0) || (buttons && buttons.length > 0)">
+        <ng-content select="[jigsaw-button], [jigsaw-button-bar]"></ng-content>
+        <jigsaw-mobile-button
+            *ngFor="let bi of buttons"
+            [colorType]="bi.type"
+            [disabled]="bi.disabled"
+            [preSize]="bi.preSize ? bi.preSize : 'default'"
+            (click)="dispose(bi)"
+            class="{{bi.clazz}}">{{bi.label}}
+        </jigsaw-mobile-button>
+    </div>
+</div>

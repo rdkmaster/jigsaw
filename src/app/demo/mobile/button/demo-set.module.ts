@@ -46,5 +46,5 @@ export const routerConfig = [
         ButtonFullModule
     ]
 })
-export class ButtonDemoModule {
+export class ButtonMobileDemoModule {
 }

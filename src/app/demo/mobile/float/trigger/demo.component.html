@@ -1,0 +1,35 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+触发打开：
+<jigsaw-mobile-radios [(value)]="openTrigger">
+    <jigsaw-mobile-radio-option id="openByClick" value="click">鼠标单击</jigsaw-mobile-radio-option>
+    <jigsaw-mobile-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-mobile-radio-option>
+    <jigsaw-mobile-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-mobile-radio-option>
+</jigsaw-mobile-radios>
+<a *ngIf="openTrigger=='none'" (click)="openFloat()">open</a>
+
+<br><br>
+触发关闭：
+<jigsaw-mobile-radios [(value)]="closeTrigger">
+    <jigsaw-mobile-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-mobile-radio-option>
+    <jigsaw-mobile-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-mobile-radio-option>
+    <jigsaw-mobile-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-mobile-radio-option>
+</jigsaw-mobile-radios>
+<a *ngIf="closeTrigger=='none'" (click)="closeFloat()">close</a>
+
+<br><br>
+<span class="fa fa-bars" jigsaw-float
+      [jigsawFloatOpenTrigger]="openTrigger"
+      [jigsawFloatCloseTrigger]="closeTrigger"
+      [jigsawFloatTarget]="jigsawFloatArea"  [(jigsawFloatOpen)]="open"> click or hover me!
+</span>
+<ng-template #jigsawFloatArea>
+    <div class="jigsawFloatArea">
+        dropdown placeholder
+    </div>
+</ng-template>
+

@@ -1,0 +1,34 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <div class="items">
+        <span>隐藏tab头</span>
+        <jigsaw-mobile-switch [(checked)]="headless"></jigsaw-mobile-switch>
+    </div>
+    <div class="items">
+        <jigsaw-mobile-button-bar style="display:block;" [data]="tabs"
+                           (selectedItemsChange)="selectedIndex = $event[0].idx">
+        </jigsaw-mobile-button-bar>
+    </div>
+    <div style="border: 1px solid #eee; width: 600px">
+        <jigsaw-mobile-tabs [headless]="headless" height="200px" [selectedIndex]="selectedIndex">
+            <jigsaw-mobile-tab-pane title="Tab 1">
+                <ng-template>This is the body of the first tab</ng-template>
+            </jigsaw-mobile-tab-pane>
+            <jigsaw-mobile-tab-pane title="Tab 2">
+                <ng-template>This is the body of the second tab</ng-template>
+            </jigsaw-mobile-tab-pane>
+            <jigsaw-mobile-tab-pane title="Tab 4">
+                <ng-template>
+                    <jigsaw-mobile-graph [data]="lineBarGraphData"></jigsaw-mobile-graph>
+                </ng-template>
+            </jigsaw-mobile-tab-pane>
+        </jigsaw-mobile-tabs>
+    </div>
+</div>
+
+

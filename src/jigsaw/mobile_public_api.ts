@@ -3,11 +3,33 @@
  * @description
  * Entry point for all public APIs of Jigsaw.
  */
+export * from "./mobile-components/alert/alert";
 export * from "./common/components/block/block";
+export * from "./mobile-components/button/button";
 export * from "./mobile-components/checkbox/index";
 export * from "./mobile-components/checkbox/typings";
 export * from "./common/common";
+export * from "./mobile-components/dialog/dialog";
+export * from "./mobile-components/graph/index";
+export * from "./mobile-components/input/input";
+export * from "./mobile-components/list-and-tile/group-common";
+export * from "./mobile-components/list-and-tile/group-lite-common";
+export * from "./mobile-components/list-and-tile/list";
+export * from "./mobile-components/list-and-tile/list-lite";
+export * from "./mobile-components/list-and-tile/tile";
+export * from "./mobile-components/list-and-tile/tile-lite";
+export * from "./mobile-components/list-and-tile/button-bar";
 export * from "./common/components/loading/loading";
+export * from "./mobile-components/radio/radio";
+export * from "./mobile-components/radio/radio-lite";
+export * from "./mobile-components/root/root";
+export * from "./common/components/scrollbar/index";
+export * from "./mobile-components/slider/index";
+export * from "./mobile-components/switch/index";
+export * from "./mobile-components/tabs/index";
+export * from "./mobile-components/tag/tag";
+export * from "./mobile-components/icon/icon";
+export * from "./mobile-components/rate/index";
 export * from "./common/core/data/array-collection";
 export * from "./common/core/data/component-data";
 export * from "./common/core/data/echart-types";
@@ -30,5 +52,4 @@ export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
 export * from "./common/service/time.types";
-export * from "./mobile-components/tag/tag";
 

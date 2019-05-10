@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-dialog width="400px" (close)="onAnswer()">
+    <div jigsaw-title>
+        <span class="fa fa-thumbs-up"></span>Title of the dialog
+    </div>
+    <div jigsaw-body>
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </div>
+    <div jigsaw-mobile-button-bar>
+        <jigsaw-mobile-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-mobile-button>
+        <jigsaw-mobile-button (click)="onAnswer('Cancel')">Cancel</jigsaw-mobile-button>
+    </div>
+</jigsaw-mobile-dialog>

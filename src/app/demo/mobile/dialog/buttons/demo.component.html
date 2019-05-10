@@ -1,0 +1,25 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-button width="300px" (click)="popupDialog1(dialog1)">点击我</jigsaw-mobile-button>
+
+{{message}}
+<ng-template #dialog1>
+    <jigsaw-mobile-dialog width="40%" caption="dialog title" (close)="showInfo()" >
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+
+        <div jigsaw-mobile-button-bar>
+            <jigsaw-mobile-button colorType="primary" (click)="showInfo('OK')">OK</jigsaw-mobile-button>
+            <jigsaw-mobile-button (click)="showInfo('Cancel')">Cancel</jigsaw-mobile-button>
+            <a class="button-bar-link" (click)="showInfo('Help')">需要帮助？</a>
+        </div>
+    </jigsaw-mobile-dialog>
+</ng-template>
+

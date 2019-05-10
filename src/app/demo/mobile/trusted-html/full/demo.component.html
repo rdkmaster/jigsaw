@@ -1,0 +1,21 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<div class="live-demo-wrap">
+    <h2>trustedHtml</h2>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block">
+            <h3>基本用法</h3>
+            <div class="host" [trustedHtml]="html" [trustedHtmlContext]="context">
+            </div>
+            <p><strong>HTML 源码</strong></p>
+            <textarea [(ngModel)]="html"></textarea>
+            <p><strong>JS 源码</strong></p>
+            <textarea [(ngModel)]="jsCode" (ngModelChange)="onCodeChange($event)"></textarea>
+        </div>
+    </div>
+</div>

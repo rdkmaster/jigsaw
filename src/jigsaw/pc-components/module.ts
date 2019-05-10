@@ -15,7 +15,7 @@ import {JigsawNotificationModule} from './notification/notification';
 import {JigsawPaginationModule} from './pagination/pagination';
 import {JigsawRadioModule} from './radio/radio';
 import {JigsawRangeTimeModule} from './range-time/index';
-import {JigsawScrollbarModule} from './scrollbar/index';
+import {JigsawScrollbarModule} from '../common/components/scrollbar/index';
 import {JigsawSelectModule} from './select/select';
 import {JigsawSliderModule} from './slider/index';
 import {JigsawStepsModule} from './steps/index';

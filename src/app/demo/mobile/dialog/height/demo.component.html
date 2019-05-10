@@ -1,0 +1,29 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Dialog</h2>
+    <div class="demo-1 live-demo">
+        <h3>Height</h3>
+        <p class="comment">
+            一般dialog不设高度，dialog会随内容撑开，设置了高度，用户可以在自定义的content中加
+            <code>style="height: 100%"</code>，使内容撑满dialog-content</p>
+        <jigsaw-mobile-button (click)="popupDialog1(dialog1)">popup</jigsaw-mobile-button>
+        <ng-template #dialog1>
+            <jigsaw-mobile-dialog width="80%" height="400" caption="dialog title" (close)="close()">
+                <div class="dialog-content" style="height: 100%">
+                    <p>dialog content</p>
+                </div>
+                <div jigsaw-mobile-button-bar>
+                    <jigsaw-mobile-button colorType="danger" (click)="close()">OK</jigsaw-mobile-button>
+                </div>
+            </jigsaw-mobile-dialog>
+        </ng-template>
+    </div>
+</div>
+
+
+

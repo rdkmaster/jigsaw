@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-checkbox id="test-checkbox" [(checked)]="checked" [(disabled)]="!enabled">a great checkbox!</jigsaw-mobile-checkbox>
+<jigsaw-mobile-switch id="close-disabled" [(checked)]="enabled"></jigsaw-mobile-switch>
+<br>
+<span id="state-message">The checkbox value is {{checked}}!</span>

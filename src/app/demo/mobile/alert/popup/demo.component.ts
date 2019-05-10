@@ -1,0 +1,54 @@
+import {Component} from "@angular/core";
+import {
+    JigsawMobileConfirmAlert, JigsawMobileErrorAlert, JigsawMobileInfoAlert,
+    JigsawMobileWarningAlert
+} from "jigsaw/mobile-components/alert/alert";
+
+@Component({
+    templateUrl: './demo.component.html'
+})
+export class AlertPopupDemoComponent {
+
+    answer = '';
+
+    commonInfoAlert() {
+        this.answer = 'waiting for an answer';
+        JigsawMobileInfoAlert.show('this is a great info alert!', answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
+        });
+    }
+
+    commonWarningAlert() {
+        this.answer = 'waiting for an answer';
+        JigsawMobileWarningAlert.show('this is a great warning alert!', answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
+        });
+    }
+
+    commonErrorAlert() {
+        this.answer = 'waiting for an answer';
+        JigsawMobileErrorAlert.show('this is a great error alert!', answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
+        }, null, null, false);
+    }
+
+    commonConfirmAlert() {
+        this.answer = 'waiting for an answer';
+        JigsawMobileConfirmAlert.show('Jigsaw is great, do you agree?', answer => {
+                this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
+            },
+            /* custom your own buttons*/
+            [{label: 'alert.button.yes'}, {label: 'alert.button.no'}, {label: "不知道"}]);
+    }
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '演示了如何弹出一个Alert组件';
+    description: string = '';
+    tags: string[] = [
+        'JigsawMobileInfoAlert.show', 'JigsawMobileWarningAlert.show',
+        'JigsawMobileErrorAlert.show', 'JigsawMobileConfirmAlert.show'
+    ];
+}
+

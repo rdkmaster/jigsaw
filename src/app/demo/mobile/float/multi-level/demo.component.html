@@ -1,0 +1,50 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<span jigsaw-float class="menu"
+      [jigsawFloatTarget]="subMenu">
+    菜单 hover
+</span>
+
+<ng-template #subMenu>
+    <jm-list width="200" trackItemBy="title">
+        <jm-list-option *ngFor="let title of titles" [value]="title" jigsaw-float jigsawFloatPosition="rightTop"
+                       [jigsawFloatTarget]="subMenu2">
+            <span j-title>{{title.title}}</span>
+            <div j-sub-title>{{title.subTitle}} <span class="fa fa-angle-right"></span>
+            </div>
+        </jm-list-option>
+    </jm-list>
+</ng-template>
+
+<ng-template #subMenu2>
+    <jm-list width="200">
+        <jm-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx" jigsaw-float [jigsawFloatTarget]="subMenu3" jigsawFloatPosition="rightTop">
+            子菜单2 {{idx}}
+        </jm-list-option>
+    </jm-list>
+</ng-template>
+<ng-template #subMenu3>
+    <jm-list width="200">
+        <jm-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx" jigsaw-float [jigsawFloatTarget]="subMenu4" jigsawFloatPosition="rightTop">
+            子菜单3 {{idx}}
+        </jm-list-option>
+    </jm-list>
+</ng-template>
+<ng-template #subMenu4>
+    <jm-list width="200">
+        <jm-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx" jigsaw-float [jigsawFloatTarget]="subMenu5" jigsawFloatPosition="rightTop">
+            子菜单4 {{idx}}
+        </jm-list-option>
+    </jm-list>
+</ng-template>
+<ng-template #subMenu5>
+    <jm-list width="200">
+        <jm-list-option *ngFor="let idx of [1,2,3,4]" [value]="idx">
+            子菜单5 {{idx}}
+        </jm-list-option>
+    </jm-list>
+</ng-template>

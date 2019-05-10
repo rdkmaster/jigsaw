@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-input #myInput value="使文本框获得焦点试试" width="200px"
+              (focus)="select && myInput.select()">
+</jigsaw-mobile-input>
+
+<jigsaw-mobile-checkbox [(checked)]="select">自动选中文本</jigsaw-mobile-checkbox>
+

@@ -1,0 +1,22 @@
+<div class="jigsaw-alert" [ngClass]="_$alertClass">
+    <div class="jigsaw-alert-head jigsaw-dialog-base-head" jigsaw-movable movableAffected=".jigsaw-common-alert">
+        <i class="jigsaw-alert-icon fa "></i>
+        <span class="jigsaw-alert-title">{{caption | translate}}</span>
+        <span class="jigsaw-alert-close jigsaw-popup-close" (click)='dispose()'>&times;</span>
+    </div>
+
+    <div class="jigsaw-alert-content">
+        <ng-content></ng-content>
+    </div>
+
+    <div class="jigsaw-alert-button-group"
+         *ngIf="(_$inlineButtons && _$inlineButtons.length > 0) || (buttons && buttons.length > 0)">
+        <ng-content select="[jigsaw-button], [jigsaw-button-bar]"></ng-content>
+        <jigsaw-mobile-button *ngFor="let bi of buttons"
+                       [colorType]="bi.type"
+                       (click)="dispose(bi)"
+                       class="{{bi.clazz}}">
+            {{bi.label | translate}}
+        </jigsaw-mobile-button>
+    </div>
+</div>
