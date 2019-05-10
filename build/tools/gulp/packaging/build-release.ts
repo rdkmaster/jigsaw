@@ -6,7 +6,6 @@ import {inlinePackageMetadataFiles} from './metadata-inlining';
 import {createTypingsReexportFile} from './typings-reexport';
 import {createMetadataReexportFile} from './metadata-reexport';
 import {buildConfig} from './build-config';
-import {updatePackageForLabs} from "./package-for-labs";
 import {readFileSync, writeFileSync} from 'fs';
 import {sync as glob} from "glob";
 
@@ -47,16 +46,16 @@ export function composeRelease(packageName: string) {
     addPureAnnotationsToFile(join(releasePath, '@rdkmaster', `${packageName}.es5.js`));
 }
 
-export function composeLabsRelease(packageName: string) {
-    const sourcePath = join(packagesDir, 'jigsaw');
-    const packagePath = join(outputDir, 'packages', packageName);
-    const releasePath = join(outputDir, 'releases', packageName);
-
-    copyFiles(packagePath, '**/*.+(d.ts)', releasePath);
-    copyFiles(projectDir, 'LICENSE', releasePath);
-    copyFiles(packagesDir, 'README.md', releasePath);
-    copyFiles(packageName === 'jigsaw' ? sourcePath + '/pc-components' : sourcePath + '/mobile-components', 'package.json', releasePath);
-
-    updatePackageForLabs(releasePath, packageName);
-    //createTypingsReexportFile(releasePath, packageName);
-}
+// export function composeLabsRelease(packageName: string) {
+//     const sourcePath = join(packagesDir, 'jigsaw');
+//     const packagePath = join(outputDir, 'packages', packageName);
+//     const releasePath = join(outputDir, 'releases', packageName);
+//
+//     copyFiles(packagePath, '**/*.+(d.ts)', releasePath);
+//     copyFiles(projectDir, 'LICENSE', releasePath);
+//     copyFiles(packagesDir, 'README.md', releasePath);
+//     copyFiles(packageName === 'jigsaw' ? sourcePath + '/pc-components' : sourcePath + '/mobile-components', 'package.json', releasePath);
+//
+//     updatePackageForLabs(releasePath, packageName);
+//     //createTypingsReexportFile(releasePath, packageName);
+// }

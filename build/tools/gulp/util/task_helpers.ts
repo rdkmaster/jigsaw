@@ -140,44 +140,44 @@ export function cleanTask(glob: string) {
 
 
 /** Build an task that depends on all application build tasks. */
-export function buildAppTask(appName: string) {
-    const buildTasks = ['ts', 'scss', 'assets']
-        .map(taskName => `:build:${appName}:${taskName}`)
-        .filter(taskName => gulp.hasTask(taskName));
-
-    return (done: () => void) => {
-        gulpRunSequence(
-            'jigsaw:clean-build',
-            [...buildTasks],
-            done
-        );
-    };
-}
+// export function buildAppTask(appName: string) {
+//     const buildTasks = ['ts', 'scss', 'assets']
+//         .map(taskName => `:build:${appName}:${taskName}`)
+//         .filter(taskName => gulp.hasTask(taskName));
+//
+//     return (done: () => void) => {
+//         gulpRunSequence(
+//             'jigsaw:clean-build',
+//             [...buildTasks],
+//             done
+//         );
+//     };
+// }
 
 /**
  * Create a task that serves a given directory in the project.
  * The server rewrites all node_module/ or dist/ requests to the correct directory.
  */
-export function serverTask(packagePath: string, livereload = true) {
-    // The http-rewrite-middlware only supports relative paths as rewrite destinations.
-    const relativePath = path.relative(projectDir, packagePath);
-
-    return () => {
-        gulpConnect.server({
-            root: projectDir,
-            livereload: livereload,
-            port: 4200,
-            fallback: path.join(packagePath, 'index.html'),
-            middleware: () => {
-                return [httpRewrite.getMiddleware([
-                    {from: '^/node_modules/(.*)$', to: '/node_modules/$1'},
-                    {from: '^/dist/(.*)$', to: '/dist/$1'},
-                    {from: '^(.*)$', to: `/${relativePath}/$1`}
-                ])];
-            }
-        });
-    };
-}
+// export function serverTask(packagePath: string, livereload = true) {
+//     // The http-rewrite-middlware only supports relative paths as rewrite destinations.
+//     const relativePath = path.relative(projectDir, packagePath);
+//
+//     return () => {
+//         gulpConnect.server({
+//             root: projectDir,
+//             livereload: livereload,
+//             port: 4200,
+//             fallback: path.join(packagePath, 'index.html'),
+//             middleware: () => {
+//                 return [httpRewrite.getMiddleware([
+//                     {from: '^/node_modules/(.*)$', to: '/node_modules/$1'},
+//                     {from: '^/dist/(.*)$', to: '/dist/$1'},
+//                     {from: '^(.*)$', to: `/${relativePath}/$1`}
+//                 ])];
+//             }
+//         });
+//     };
+// }
 
 /** Triggers a reload when livereload is enabled and a gulp-connect server is running. */
 export function triggerLivereload() {

@@ -50,16 +50,16 @@ function checkReleasePackage(packageName: string): string[] {
     failures.push('Bundles are including references to external resources (templates or styles)');
   }
 
-  if (packageName === 'jigsaw') {
-    failures = failures.concat(checkJigsawPackage());
+  if (packageName === 'jigsaw' || packageName === 'jigsaw-mobile') {
+    failures = failures.concat(checkJigsawPackage(packageName));
   }
 
   return failures;
 }
 
 /** Function that includes special checks for the Jigsaw package. */
-function checkJigsawPackage(): string[] {
-  const packagePath = join(releasesDir, 'jigsaw');
+function checkJigsawPackage(packageName: string): string[] {
+  const packagePath = join(releasesDir, packageName);
   const prebuiltThemesPath = join(packagePath, 'prebuilt-themes');
   const themingFilePath = join(packagePath, 'theming.scss');
   const failures = [];
