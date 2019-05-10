@@ -10,6 +10,7 @@ import {JigsawFloatModule} from "../common/directive/float/index";
 import {JigsawDraggableModule, JigsawDroppableModule} from '../common/directive/dragdrop/index';
 import {JigsawCommonModule} from "../common/common";
 import {JigsawTrustedHtmlModule} from "../common/directive/trusted-html/trusted-html";
+import {JigsawMobileRootModule} from "./root/root";
 const JIGSAW_MODULE = [
     JigsawBlockModule,
     JigsawMobileButtonModule,
@@ -21,6 +22,7 @@ const JIGSAW_MODULE = [
     JigsawMovableModule,
     JigsawFloatModule,
     JigsawTrustedHtmlModule,
+    JigsawMobileRootModule
 ];
 
 @NgModule({
