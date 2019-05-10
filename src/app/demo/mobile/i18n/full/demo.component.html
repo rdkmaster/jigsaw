@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<p style="padding-bottom: 12px">
+    <span>{{'desc' | translate}}</span>
+    <span [innerHtml]="'lang' | translate:  { lang: this.translateService.currentLang }"></span>
+</p>
+<jigsaw-mobile-button (click)="changeLang('en')">
+    change language to English
+</jigsaw-mobile-button>
+<jigsaw-mobile-button (click)="changeLang('zh')">
+    change language to Chinese
+</jigsaw-mobile-button><br>
+
+<h4>alert</h4><jigsaw-mobile-info-alert [initData]="infoInitData"></jigsaw-mobile-info-alert><br>
+<h4>dialog</h4>
+<jigsaw-mobile-dialog width="400" [buttons]="buttons">
+    <div jigsaw-title>
+        <span class="fa fa-thumbs-up"></span>{{'dialogTitle' | translate}}
+    </div>
+    <div jigsaw-body>
+        <div class="dialog-content">
+            <span class="fa fa-info-circle"></span> <span>{{'dialogContent' | translate}}</span>
+        </div>
+    </div>
+</jigsaw-mobile-dialog>
+<br>
+

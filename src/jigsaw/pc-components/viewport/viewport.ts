@@ -1,7 +1,7 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgModule, Output} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ViewportData} from "../../common/core/data/component-data";
-import {JigsawScrollbarModule} from "../scrollbar/index";
+import {JigsawScrollbarModule} from "../../common/components/scrollbar/index";
 import {JigsawSliderModule} from "../slider/index";
 import {AbstractJigsawComponent} from "../../common/common";
 

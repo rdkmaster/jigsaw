@@ -1,0 +1,64 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="boxes">
+    <div class="box">
+        <h3>仅图标</h3>
+        <p>只有图标，没有文字</p>
+        <hr>
+        <jigsaw-mobile-icon [icon]="'fa fa-edit'" [iconSize]="40" title="编辑"
+                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'">
+        </jigsaw-mobile-icon>
+    </div>
+
+    <div class="box">
+        <h3>图文都有</h3>
+        <p>既有图标，又有文字</p>
+        <hr>
+        <jigsaw-mobile-icon [icon]="'fa fa-edit'" [iconSize]="20" [text]="'编辑'" title="编辑">
+        </jigsaw-mobile-icon>
+    </div>
+
+    <div class="box">
+        <h3>类似超链</h3>
+        <p>点击一下试试看</p>
+        <hr>
+        <jigsaw-mobile-icon [isLinkButton]="true" [icon]="'fa fa-edit'" [iconSize]="16" text="这是超链"
+                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'" title="这是超链">
+        </jigsaw-mobile-icon>
+    </div>
+</div>
+
+<div class="boxes">
+    <div class="box">
+        <h3>设置图文样式</h3>
+        <p>可独立对图文的颜色做配置</p>
+        <hr>
+        <jigsaw-mobile-icon [icon]="'fa fa-edit'" [iconSize]="20" iconColor="green"
+                     [text]="'编辑'" title="编辑" textColor="blue">
+        </jigsaw-mobile-icon>
+    </div>
+
+    <div class="box">
+        <h3>按钮模式</h3>
+        <p>改变鼠标光标样式</p>
+        <hr>
+        <jigsaw-mobile-icon [isLinkButton]="true" [icon]="'fa fa-edit'" [iconSize]="20"
+                     [text]="'编辑'" title="编辑" (click)="onClick()">
+        </jigsaw-mobile-icon>
+    </div>
+
+    <div class="box">
+        <h3>图标位置</h3>
+        <p>图标在上，文字在下</p>
+        <hr>
+        <jigsaw-mobile-icon [isLinkButton]="true" [icon]="'fa fa-info'" [iconSize]="40"
+                     [text]="'提示'" title="提示" iconPosition="top" (click)="onClick()">
+        </jigsaw-mobile-icon>
+    </div>
+
+</div>
+

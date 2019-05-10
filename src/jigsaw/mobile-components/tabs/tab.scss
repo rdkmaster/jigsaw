@@ -1,0 +1,198 @@
+@import "../../common/assets/scss/core/base";
+
+$tab-prefix: #{$jigsaw-prefix}-tabs;
+
+.#{$tab-prefix} {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    @include clearfix;
+    color: $text-color;
+    background: $component-background;
+
+    &-bar {
+        border-bottom: $border-width-base $border-style-base $border-color-base;
+        margin-bottom: 6px;
+        outline: none;
+    }
+
+    &-remove-bar {
+        position: absolute;
+        right: 6px;
+        top: -2px;
+        font-size: 18px;
+        color: $text-color-secondary;
+        &:hover {
+            color: $text-color-dark;
+        }
+    }
+
+    &-add-bar {
+        cursor: pointer;
+        font-size: 24px;
+        vertical-align: middle;
+        color: $text-color-secondary;
+        &:hover {
+            color: $text-color-dark;
+        }
+    }
+
+    &-overflow-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        font-size: 24px;
+        color: $text-color-secondary;
+        width: 40px;
+        height: 100%;
+        text-align: center;
+        &:hover {
+            background-color: $primary-color;
+            color: $primary-1;
+        }
+    }
+
+    &-list {
+        box-shadow: none !important;
+        border-radius: 0;
+        border: none;
+        width: 200px;
+        .jigsaw-list-option {
+            .span-margin {
+                margin: 0 4px;
+                width: 10px;
+                height: 9px;
+            }
+            &-selected {
+                color: $primary-color;
+            }
+            &-hidden {
+                display: none;
+            }
+        }
+    }
+
+    &-nav-container {
+        font-size: $font-size-lg;
+        line-height: $line-height-base;
+        box-sizing: border-box;
+        position: relative;
+        white-space: nowrap;
+
+        .#{$tab-prefix}-ink-bar {
+            position: absolute;
+            z-index: $zindex-level-1;
+            left: 0;
+            bottom: -1px;
+            height: 2px;
+            background-color: $primary-color;
+            transition: transform 0.3s $ease-in-out;
+            transform-origin: 0 0;
+            &:after {
+                position: absolute;
+                top: 2px;
+                left: 50%;
+                margin-left: -4px;
+                width: 0;
+                height: 0;
+                border: {
+                    width: 4px 4px;
+                    style: solid;
+                    color: $primary-color transparent transparent transparent;
+                }
+                content: '';
+                display: none;
+            }
+        }
+
+        .#{$tab-prefix}-nav-wrap {
+            @include clearfix();
+            width: calc( 100% - 40px );
+            overflow: hidden;
+            .#{$tab-prefix}-nav {
+                position: relative;
+                float: left; /*用于width为auto，并能撑开tab nav*/
+                transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
+
+                .#{$tab-prefix}-tab-disabled {
+                    pointer-events: none;
+                    cursor: default;
+                    @include compatible(color, $disabled-color, $disabled-color-ie11);
+                }
+
+                jigsaw-tab-label {
+                    a:hover {
+                        text-decoration: none;
+                        color: $primary-color;
+                    }
+                    * {
+                        outline: 0;
+                    }
+                }
+
+                .#{$tab-prefix}-tab {
+                    display: inline-block;
+                    height: 100%;
+                    margin-right: 24px;
+                    position: relative;
+
+                    padding: 8px 20px;
+                    transition: color 0.3s $ease-in-out;
+                    cursor: pointer;
+                    text-decoration: none;
+
+                    &:hover {
+                        color: $primary-5;
+                    }
+
+                    &:active {
+                        color: $primary-7;
+                    }
+
+                    &-hidden {
+                        display: none;
+                    }
+
+                    span.fa {
+                        margin-right: 6px;
+                    }
+
+                    a:hover {
+                        text-decoration: none;
+                        color: $primary-color;
+                    }
+                    * {
+                        outline: 0;
+                    }
+                }
+
+                .#{$tab-prefix}-tab-active {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+
+    &-content {
+        width: 100%;
+
+        .#{$tab-prefix}-tabpane {
+            display: block;
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+
+            &-inactive {
+                opacity: 0;
+                height: 0;
+                overflow: hidden;
+            }
+
+            &-hidden {
+                display: none;
+            }
+        }
+    }
+}

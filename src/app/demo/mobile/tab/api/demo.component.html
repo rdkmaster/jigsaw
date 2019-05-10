@@ -1,0 +1,65 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <div class="option-button-group">
+        <jigsaw-mobile-button (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">增加tab-模板标题</jigsaw-mobile-button>
+        <jigsaw-mobile-button (click)="addTabWidthStringTitle(tabContent)">增加tab-字符串标题</jigsaw-mobile-button>
+        <jigsaw-mobile-button (click)="addComponentTab()">增加component tab</jigsaw-mobile-button>
+        <jigsaw-mobile-button (click)="hideTab(0)">隐藏第一个Tab页</jigsaw-mobile-button>
+        <jigsaw-mobile-button (click)="showTab(0)">显示第一个Tab页</jigsaw-mobile-button>
+        <jigsaw-mobile-button (click)="removeTab(0)">删除第一个Tab页</jigsaw-mobile-button>
+    </div>
+
+    <jigsaw-mobile-tabs>
+        <jigsaw-mobile-tab-pane title="Tab 1">
+            <ng-template>This is the body of the first tab</ng-template>
+        </jigsaw-mobile-tab-pane>
+        <jigsaw-mobile-tab-pane title="Tab 2" [disabled]="true">
+            <ng-template>This is the body of the first tab</ng-template>
+        </jigsaw-mobile-tab-pane>
+        <jigsaw-mobile-tab-pane title="Tab 3">
+            <ng-template>
+                <jigsaw-mobile-input>
+                    <a jigsaw-mobile-prefix-icon><span class="fa fa-search"></span></a>
+                </jigsaw-mobile-input>
+            </ng-template>
+        </jigsaw-mobile-tab-pane>
+        <jigsaw-mobile-tab-pane>
+            <div jigsaw-title><span routerLink="tab-page" [skipLocationChange]="true">router link tab</span></div>
+            <ng-template><router-outlet name="tab-page"></router-outlet></ng-template>
+        </jigsaw-mobile-tab-pane>
+    </jigsaw-mobile-tabs>
+</div>
+
+<ng-template #tabTitle>
+    <span class="fa fa-gift"></span>template tab
+</ng-template>
+<ng-template #tabContent let-userInfo="userInfo">
+    <div class="content-box">
+        <h3 class="content-title">Hi {{userInfo.username}}, please input your information</h3>
+        <div class="content-line">
+            <label>e-mail: </label>
+            <jigsaw-mobile-input [value]="userInfo.email"></jigsaw-mobile-input>
+        </div>
+        <div class="content-line">
+            <label>phone number: </label>
+            <jigsaw-mobile-input [value]="userInfo.phoneNumber"></jigsaw-mobile-input>
+        </div>
+        <div class="content-line">
+            <label>address: </label>
+            <jigsaw-mobile-input width="400px" [value]="userInfo.address"></jigsaw-mobile-input>
+        </div>
+        <jigsaw-mobile-button>submit</jigsaw-mobile-button>
+    </div>
+</ng-template>
+
+<!--<ng-template #routerTabTitle>
+    <span routerLink="tab-page" [skipLocationChange]="true">router link tab</span>
+</ng-template>
+<ng-template #routerTabContent>
+    <router-outlet></router-outlet>
+</ng-template>-->

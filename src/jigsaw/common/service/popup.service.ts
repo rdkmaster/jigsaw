@@ -247,7 +247,7 @@ export class PopupService {
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
         if (!PopupService._viewContainerRef || !PopupService._renderer) {
-            console.error("please use 'jigsaw-root' element as the root of your root pc-components");
+            console.error("please use 'jigsaw-root' or 'jigsaw-mobile-root' element as the root of your root component");
             return;
         }
         let popupInfo: PopupInfo,

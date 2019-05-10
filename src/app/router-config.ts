@@ -208,8 +208,104 @@ export const routerConfigPC = [
         loadChildren: "./demo/pc/breadcrumb/demo-set.module#BreadcrumbDemoModule",
     }
 ];
-export const routerConfigMobile = [{
-    path: "mobile/button",
-    loadChildren: "./demo/mobile/button/demo-set.module#ButtonDemoModule",
-}];
+export const routerConfigMobile = [
+    {
+        path: "mobile/alert",
+        loadChildren: "./demo/mobile/alert/demo-set.module#AlertMobileDemoModule",
+    },
+    {
+        path: "mobile/button",
+        loadChildren: "./demo/mobile/button/demo-set.module#ButtonMobileDemoModule",
+    },
+    {
+        path: "mobile/button-bar",
+        loadChildren: "./demo/mobile/button-bar/demo-set.module#ButtonBarMobileDemoModule",
+    },
+
+    {
+        path: "mobile/checkbox",
+        loadChildren: "./demo/mobile/checkbox/demo-set.module#CheckBoxMobileDemoModule",
+    },
+    {
+        path: "mobile/dialog",
+        loadChildren: "./demo/mobile/dialog/demo-set.module#DialogMobileDemoModule",
+    },
+    {
+        path: "mobile/float",
+        loadChildren: "./demo/mobile/float/demo-set.module#FloatMobileDemoModule",
+    },
+    {
+        path: "mobile/graph",
+        loadChildren: "./demo/mobile/graph/demo-set.module#GraphMobileDemoModule",
+    },
+    {
+        path: "mobile/i18n",
+        loadChildren: "./demo/mobile/i18n/demo-set.module#I18nMobileDemoModule",
+    },
+    {
+        path: "mobile/input",
+        loadChildren: "./demo/mobile/input/demo-set.module#InputMobileDemoModule",
+    },
+    {
+        path: "mobile/list",
+        loadChildren: "./demo/mobile/list/demo-set.module#ListMobileDemoModule",
+    },
+    {
+        path: "mobile/list-lite",
+        loadChildren: "./demo/mobile/list-lite/demo-set.module#ListLiteMobileDemoModule",
+    },
+    {
+        path: "mobile/loading",
+        loadChildren: "./demo/mobile/loading/demo-set.module#LoadingMobileDemoModule",
+    },
+    {
+        path: "mobile/movable",
+        loadChildren: "./demo/mobile/movable/demo-set.module#MovableMobileDemoModule",
+    },
+    {
+        path: "mobile/radio-group",
+        loadChildren: "./demo/mobile/radio-group/demo-set.module#RadioMobileDemoModule",
+    },
+    {
+        path: "mobile/radio-lite",
+        loadChildren: "./demo/mobile/radio-lite/demo-set.module#RadioLiteMobileDemoModule",
+    },
+    {
+        path: "mobile/rate",
+        loadChildren: "./demo/mobile/rate/demo-set.module#RateMobileDemoModule",
+    },
+    {
+        path: "mobile/scrollbar",
+        loadChildren: "./demo/mobile/scrollbar/demo-set.module#ScrollbarMobileDemoModule",
+    },
+    {
+        path: "mobile/slider",
+        loadChildren: "./demo/mobile/slider/demo-set.module#SliderMobileDemoModule",
+    },
+
+    {
+        path: "mobile/switch",
+        loadChildren: "./demo/mobile/switch/demo-set.module#SwitchMobileDemoModule",
+    },
+    {
+        path: "mobile/tab",
+        loadChildren: "./demo/mobile/tab/demo-set.module#TabsMobileDemoModule",
+    },
+    {
+        path: "mobile/tag",
+        loadChildren: "./demo/mobile/tag/demo-set.module#TagMobileDemoModule",
+    },
+    {
+        path: "mobile/tile",
+        loadChildren: "./demo/mobile/tile/demo-set.module#TileSelectMobileDemoModule",
+    },
+    {
+        path: "mobile/tile-lite",
+        loadChildren: "./demo/mobile/tile-lite/demo-set.module#TileLiteMobileDemoModule",
+    },
+    {
+        path: "mobile/trusted-html",
+        loadChildren: "./demo/mobile/trusted-html/demo-set.module#TrustedHtmlMobileDemoModule",
+    },
+];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

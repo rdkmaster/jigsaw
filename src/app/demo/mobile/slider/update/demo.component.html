@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+
+<div class="live-demo-wrap">
+    <h2>Slider</h2>
+    <div class="demo-4 live-demo">
+        <h3>更新value</h3>
+        <button (click)="updateValue()">update value</button><br>
+        <jigsaw-mobile-slider [(value)]="rangeValue" [max]="rangeMax" (change)="handleChange($event)"></jigsaw-mobile-slider>
+        <p class="message">取值范围：{{rangeValueStr}}</p>
+    </div>
+</div>
