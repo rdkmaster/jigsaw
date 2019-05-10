@@ -11,9 +11,10 @@ import {JigsawMobileTabContent, JigsawMobileTabLabel} from "./tab-item";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawMobileListModule} from "../list-and-tile/list";
 import {JigsawMobileEditableTabTitleRenderer} from "./tab-renderer";
+import {JigsawMobileInputModule} from "../input/input";
 
 @NgModule({
-    imports: [CommonModule, PerfectScrollbarModule, JigsawMobileListModule],
+    imports: [CommonModule, PerfectScrollbarModule, JigsawMobileListModule, JigsawMobileInputModule],
     exports: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileEditableTabTitleRenderer],
     declarations: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileTabLabel,
         JigsawMobileTabContent, JigsawMobileEditableTabTitleRenderer],
