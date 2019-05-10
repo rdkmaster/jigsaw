@@ -10,15 +10,18 @@ import {CommonModule} from "@angular/common";
 import {JigsawMobileTabContent, JigsawMobileTabLabel} from "./tab-item";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawMobileListModule} from "../list-and-tile/list";
+import {JigsawMobileEditableTabTitleRenderer} from "./tab-renderer";
 
 @NgModule({
     imports: [CommonModule, PerfectScrollbarModule, JigsawMobileListModule],
-    exports: [JigsawMobileTab, JigsawMobileTabPane],
-    declarations: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileTabLabel, JigsawMobileTabContent],
+    exports: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileEditableTabTitleRenderer],
+    declarations: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileTabLabel,
+        JigsawMobileTabContent, JigsawMobileEditableTabTitleRenderer],
     providers: [],
-    entryComponents: [JigsawMobileTabPane]
+    entryComponents: [JigsawMobileTabPane, JigsawMobileEditableTabTitleRenderer]
 })
-export class JigsawMobileTabsModule { }
+export class JigsawMobileTabsModule {
+}
 
 export * from './tab';
 export * from './tab-pane';
