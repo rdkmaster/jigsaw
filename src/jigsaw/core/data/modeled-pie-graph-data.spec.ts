@@ -59,7 +59,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
         pd.series = [
             {
                 dimensionField: 'f2', dimensions: [], usingAllDimensions: true,
-                innerRadius: 15, outerRadius: 75, indicators: [new Indicator('f3')]
+                radius: [15, 75], center: [50, 50], indicators: [new Indicator('f3')]
             }
         ];
         const opt = pd.options;
@@ -89,7 +89,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
         pd.series = [
             {
                 dimensionField: 'f2', dimensions: [new Dimension('南京'), new Dimension('上海')],
-                usingAllDimensions: false, innerRadius: 15, outerRadius: 75,
+                usingAllDimensions: false, radius: [15, 75], center: [50, 50],
                 indicators: [indicator]
             }
         ];
@@ -123,23 +123,23 @@ describe('Unit Test for ModeledPieGraphData', () => {
         pd.series = [
             {
                 dimensionField: 'f2', dimensions: [new Dimension('南京')],
-                usingAllDimensions: false, innerRadius: 15, outerRadius: 75,
+                usingAllDimensions: false, radius: [15, 75], center: [50, 50],
                 indicators: [indicator1, indicator2]
             },
             {
                 // 测试 dimensionField 为空的情形
                 dimensionField: null, dimensions: null, usingAllDimensions: true,
-                innerRadius: 0, outerRadius: 0, indicators: null
+                radius: [0, 0], center: [0, 0], indicators: null
             },
             {
                 // 测试 indicators 为空的情形
                 dimensionField: 'f2', dimensions: null, usingAllDimensions: true,
-                innerRadius: 0, outerRadius: 0, indicators: null
+                radius: [0, 0], center: [0, 0], indicators: null
             },
             {
                 // 测试 indicators 为空的情形
                 dimensionField: 'f2', dimensions: null, usingAllDimensions: true,
-                innerRadius: 0, outerRadius: 0, indicators: []
+                radius: [0, 0], center: [0, 0], indicators: []
             }
         ];
         const opt = pd.options;
@@ -174,7 +174,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
         pd.series = [
             {
                 dimensionField: 'f2', dimensions: [new Dimension('南京'), new Dimension('上海')],
-                usingAllDimensions: false, innerRadius: 15, outerRadius: 75,
+                usingAllDimensions: false, radius: [15, 75], center: [50, 50],
                 indicators: [indicator]
             }
         ];

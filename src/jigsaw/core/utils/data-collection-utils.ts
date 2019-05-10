@@ -49,7 +49,7 @@ export function flat(group: Grouped): string[][] {
     return result;
 }
 
-type ReduceFunction = (previousValue?: number, currentValue?: number, currentIndex?: number, array?: number[]) => number;
+export type ReduceFunction = (previousValue?: number, currentValue?: number, currentIndex?: number, array?: number[]) => number;
 export type AggregateAlgorithm = 'sum' | 'average' | 'max' | 'min' | 'head' | 'tail' | ReduceFunction;
 
 function aggregateAlgorithms2Function(algorithm: AggregateAlgorithm): [ReduceFunction, number] {
