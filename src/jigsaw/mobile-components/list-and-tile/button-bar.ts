@@ -16,10 +16,10 @@ import {AbstractJigsawMobileGroupLiteComponent} from "./group-lite-common";
             </jm-tile-option>
         </jm-tile>`,
     host: {
-        '[class.jigsaw-mobile-button-bar]': 'true',
-        '[class.jigsaw-mobile-button-bar-primary]': "colorType === 'primary'",
-        '[class.jigsaw-mobile-button-bar-warning]': "colorType === 'warning'",
-        '[class.jigsaw-mobile-button-bar-error]': "colorType === 'error' || colorType === 'danger'",
+        '[class.jigsaw-button-bar]': 'true',
+        '[class.jigsaw-button-bar-primary]': "colorType === 'primary'",
+        '[class.jigsaw-button-bar-warning]': "colorType === 'warning'",
+        '[class.jigsaw-button-bar-error]': "colorType === 'error' || colorType === 'danger'",
         '[style.height]': 'height',
     },
     providers: [

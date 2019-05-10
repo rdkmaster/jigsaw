@@ -5,7 +5,7 @@ import {JigsawBlockModule} from '../common/components/block/block';
 import {JigsawMobileButtonModule} from './button/button';
 import {JigsawMobileCheckBoxModule} from './checkbox/index';
 import {JigsawMobileDialogModule} from './dialog/dialog';
-import {JigsawMobileGraph} from './graph/index';
+import {JigsawMobileGraphModule} from './graph/index';
 import {JigsawMobileInputModule} from './input/input';
 import {JigsawLoadingModule} from '../common/components/loading/loading';
 import {JigsawMobileRadioModule} from './radio/radio';
@@ -38,7 +38,7 @@ const JIGSAW_MODULE = [
     JigsawMobileInputModule,
     JigsawMobileRadioModule,
     JigsawMobileTileSelectModule,
-    JigsawMobileGraph,
+    JigsawMobileGraphModule,
     JigsawScrollbarModule,
     JigsawMobileRootModule,
     JigsawMobileSliderModule,

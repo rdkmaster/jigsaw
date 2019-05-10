@@ -242,8 +242,8 @@ export class JigsawMobileInput extends AbstractJigsawComponent
      * @private
      */
     private _setInputPaddingStyle() {
-        let prefixIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-mobileinput-icon-front").offsetWidth;
-        let endIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-mobileinput-icon-end").offsetWidth;
+        let prefixIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-front").offsetWidth;
+        let endIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-end").offsetWidth;
 
         let prefixIconPadding = prefixIconWidth + 10;
         if (prefixIconWidth !== 0) {

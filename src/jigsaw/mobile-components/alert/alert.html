@@ -11,7 +11,7 @@
 
     <div class="jigsaw-alert-button-group"
          *ngIf="(_$inlineButtons && _$inlineButtons.length > 0) || (buttons && buttons.length > 0)">
-        <ng-content select="[jigsaw-button], [jigsaw-button-bar]"></ng-content>
+        <ng-content select="[jigsaw-mobile-button], [jigsaw-mobile-button-bar]"></ng-content>
         <jigsaw-mobile-button *ngFor="let bi of buttons"
                        [colorType]="bi.type"
                        (click)="dispose(bi)"

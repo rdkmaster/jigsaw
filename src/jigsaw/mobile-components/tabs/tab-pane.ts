@@ -6,7 +6,7 @@ import {IDynamicInstantiatable} from "../../common/common";
     template: `
         <ng-template #label>
             {{title}}
-            <ng-content select="[jigsaw-mobiletitle]"></ng-content>
+            <ng-content select="[jigsaw-mobile-title]"></ng-content>
         </ng-template>
     `
 })
