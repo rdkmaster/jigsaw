@@ -40,7 +40,7 @@ script:
   - sh build/scripts/integrate-with-seed.sh
   - sh build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
-  - travis_wait 30 ng build -prod -aot
+  - ng build -prod -aot
   - #ng e2e
 
 after_script:
