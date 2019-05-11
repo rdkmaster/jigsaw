@@ -16,7 +16,7 @@ import {VMAX_GRAPH_THEME} from "../../component/graph/vmax-theme";
 import {VMAX_GRAPH_THEME_DARK} from "../../component/graph/vmax-theme-dark";
 
 export abstract class AbstractModeledGraphTemplate {
-    public abstract getInstance(modeledGraphData: AbstractModeledGraphData): EchartOptions;
+    public abstract getInstance(): EchartOptions;
 
     public themes? = [
         {name: '默认浅色系', theme: VMAX_GRAPH_THEME},
@@ -51,22 +51,6 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
      * 图形个关键配置项的模板
      */
     public template: AbstractModeledGraphTemplate;
-    /**
-     * 图例
-     */
-    public legend: EchartLegend;
-    /**
-     * 标题
-     */
-    public title: EchartTitle;
-    /**
-     * 提示
-     */
-    public tooltip: EchartTooltip;
-    /**
-     * 工具栏
-     */
-    public toolbox: EchartToolbox;
 
     protected constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, field, header);
@@ -159,12 +143,12 @@ export abstract class ModeledRectangularTemplate extends AbstractModeledGraphTem
 }
 
 export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate {
-    getInstance(modeledGraphData: ModeledRectangularGraphData): EchartOptions {
+    getInstance(): EchartOptions {
         return {
-            title: CommonUtils.extendObjects<EchartTooltip>(this.title, modeledGraphData.title),
-            tooltip: CommonUtils.extendObjects<EchartTooltip>(this.tooltip, modeledGraphData.tooltip),
-            toolbox: CommonUtils.extendObjects<EchartToolbox>(this.toolbox, modeledGraphData.toolbox),
-            legend: CommonUtils.extendObjects<EchartLegend>(this.legend, modeledGraphData.legend),
+            title: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            toolbox: CommonUtils.extendObjects<EchartToolbox>({}, this.toolbox),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
         };
     }
 
@@ -227,6 +211,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
+    public legend: EchartLegend;
+    public title: EchartTitle;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -274,7 +260,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return undefined
         }
 
-        const options: EchartOptions = this.template.getInstance(this);
+        const options: EchartOptions = this.template.getInstance();
         options.xAxis = [
             CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
         ];
@@ -354,7 +340,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             }
         }
 
-        const options: EchartOptions = this.template.getInstance(this);
+        const options: EchartOptions = this.template.getInstance();
         options.xAxis = [
             CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
         ];
@@ -398,11 +384,11 @@ export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
 }
 
 export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
-    getInstance(modeledGraphData: ModeledPieGraphData): EchartOptions {
+    getInstance(): EchartOptions {
         return {
-            title: CommonUtils.extendObjects<EchartTitle>(this.title, modeledGraphData.title),
-            tooltip: CommonUtils.extendObjects<EchartTooltip>(this.tooltip, modeledGraphData.tooltip),
-            legend: CommonUtils.extendObjects<EchartLegend>(this.legend, modeledGraphData.legend),
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
         };
     }
 
@@ -446,6 +432,8 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
 
     public template: ModeledPieTemplate = new BasicModeledPieTemplate();
     public series: PieSeries[];
+    public legend: EchartLegend;
+    public title: EchartTitle;
     private _options: EchartOptions;
 
     get options(): EchartOptions {
@@ -459,7 +447,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
         if (!this.series) {
             return undefined;
         }
-        const options = this.template.getInstance(this);
+        const options = this.template.getInstance();
         if (options.legend) {
             options.legend.data = [];
         }
@@ -477,7 +465,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
                 const dimIndex = this.getIndex(seriesData.dimensionField);
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
-                seriesData.indicators.forEach(kpi => kpi.name = this.header[kpi.index]);
+                seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
                 const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
                 if (dimensions.length > 1) {
@@ -519,6 +507,11 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
         }
         const names = candidates.map(can => can.name);
         legendObject.data.push(...names.filter(legend => legendObject.data.indexOf(legend) == -1));
+    }
+
+    public refresh(): void {
+        this._options = undefined;
+        super.refresh();
     }
 }
 
