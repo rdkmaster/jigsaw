@@ -243,6 +243,10 @@ export const routerConfigMobile = [
         loadChildren: "./demo/mobile/i18n/demo-set.module#I18nMobileDemoModule",
     },
     {
+        path: "mobile/icon",
+        loadChildren: "./demo/mobile/icon/demo-set.module#IconMobileDemoModule",
+    },
+    {
         path: "mobile/input",
         loadChildren: "./demo/mobile/input/demo-set.module#InputMobileDemoModule",
     },

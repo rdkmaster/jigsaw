@@ -17,7 +17,7 @@ import {SwitchDemoComponent} from "./switch-demo.component";
         {path: '', component: SwitchDemoComponent},
         {path: 'pc', component: PCDemoListComponent},
         {path: 'mobile', component: MobileDemoListComponent},
-        {path: '**', redirectTo: SwitchDemoComponent}
+        {path: '**', redirectTo: '/'}
     );
 }
 
