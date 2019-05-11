@@ -10,18 +10,20 @@ import {AjaxInterceptor} from './app.interceptor';
 import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
+import {SwitchDemoComponent} from "./switch-demo.component";
 
 {
     (<any[]>routerConfig).push(
-        {path: '', component: PCDemoListComponent},
+        {path: '', component: SwitchDemoComponent},
+        {path: 'pc', component: PCDemoListComponent},
         {path: 'mobile', component: MobileDemoListComponent},
-        {path: '**', redirectTo: ''}
+        {path: '**', redirectTo: SwitchDemoComponent}
     );
 }
 
 @NgModule({
     declarations: [
-        AppComponent, PCDemoListComponent, MobileDemoListComponent
+        AppComponent, PCDemoListComponent, MobileDemoListComponent, SwitchDemoComponent
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
