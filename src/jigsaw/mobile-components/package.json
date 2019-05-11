@@ -1,7 +1,7 @@
 {
     "name": "@rdkmaster/jigsaw-mobile",
     "version": "1.0.0-beta1",
-    "description": "Jigsaw-moblie",
+    "description": "Jigsaw-mobile",
     "main": "./bundles/jigsaw-mobile.umd.js",
     "module": "./@rdkmaster/jigsaw-mobile.es5.js",
     "es2015": "./@rdkmaster/jigsaw-mobile.js",
