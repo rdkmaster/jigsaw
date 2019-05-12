@@ -7,9 +7,8 @@ import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
-import {VMAX_GRAPH_THEME} from "./vmax-theme";
-import {VMAX_GRAPH_THEME_DARK} from './vmax-theme-dark';
 import {JigsawTheme} from "../../common/core/theming/theme";
+import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts-theme";
 
 @Component({
     selector: 'jigsaw-graph, j-graph',
@@ -80,7 +79,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
+    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? darkGraphTheme : lightGraphTheme;
 
     @Input()
     public get globalTheme() {

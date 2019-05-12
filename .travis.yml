@@ -35,6 +35,7 @@ script:
   - gulp generate-demo-info
   - gulp jigsaw:build-release:clean
   - gulp jigsaw-mobile:build-release:clean
+  - ng test --watch false
   - # ng test --code-coverage --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
