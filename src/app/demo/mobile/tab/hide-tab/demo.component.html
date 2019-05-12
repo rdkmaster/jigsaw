@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <jigsaw-mobile-tabs #myTab>
+        <jigsaw-mobile-tab-pane>
+            <div jigsaw-title><span class="fa fa-gift"></span>tab 1</div>
+            <ng-template>tab content 1</ng-template>
+        </jigsaw-mobile-tab-pane>
+        <jigsaw-mobile-tab-pane>
+            <span jigsaw-title><span class="fa fa-gift"></span>tab 2</span>
+            <ng-template>tab content 2</ng-template>
+        </jigsaw-mobile-tab-pane>
+    </jigsaw-mobile-tabs>
+</div>
+
+<jigsaw-mobile-button (click)="hideTab()" width="150">隐藏第一个Tab</jigsaw-mobile-button>
+
+

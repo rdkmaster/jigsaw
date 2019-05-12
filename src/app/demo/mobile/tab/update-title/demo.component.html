@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-button (click)="changeTitle()">change title</jigsaw-mobile-button>
+<jigsaw-mobile-button (click)="changeLang()">
+    toggle change language
+</jigsaw-mobile-button>
+<jigsaw-mobile-tabs>
+    <jigsaw-mobile-tab-pane>
+        <div jigsaw-title>{{title}}</div>
+        <ng-template>tab content 1</ng-template>
+    </jigsaw-mobile-tab-pane>
+    <jigsaw-mobile-tab-pane title="{{'title2' | translate}}">
+        <ng-template>tab content 2</ng-template>
+    </jigsaw-mobile-tab-pane>
+</jigsaw-mobile-tabs>

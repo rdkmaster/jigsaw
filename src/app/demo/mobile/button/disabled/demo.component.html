@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-button id="test-button" [(disabled)]="disabled" (click)="click()">click me</jigsaw-mobile-button>
+<jigsaw-mobile-checkbox id="toggle-disabled" [(checked)]="disabled">disable / enable</jigsaw-mobile-checkbox>
+<br>
+<span id="click-counter">{{clickCount}}</span>

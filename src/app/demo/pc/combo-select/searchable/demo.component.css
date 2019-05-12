@@ -1,0 +1,15 @@
+.dropdown {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 570px;
+    max-height: 400px;
+}
+
+.dropdown-wrap{
+    width: 570px;
+    background: #fff;
+    padding-top: 4px;
+}
+.dropdown-wrap j-input{
+    margin-bottom: 4px;
+}

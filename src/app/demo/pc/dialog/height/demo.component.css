@@ -1,0 +1,16 @@
+.dialog-content {
+    background: aquamarine;
+    position: relative;
+}
+
+.dialog-content p {
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+

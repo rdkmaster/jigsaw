@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-button width="175" (click)="commonInfoAlert()">
+    通用信息提示框
+</jigsaw-button>
+
+<jigsaw-button width="175" (click)="commonWarningAlert()">
+    通用警告提示框
+</jigsaw-button>
+
+<jigsaw-button width="175" (click)="commonErrorAlert()">
+    通用错误提示框
+</jigsaw-button>
+
+<jigsaw-button width="175" (click)="commonConfirmAlert()">
+    通用确认提示框
+</jigsaw-button>
+
+<p style="margin-top: 20px; font-size: 16px">{{answer}}</p>
+

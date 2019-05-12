@@ -1,0 +1,32 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-mobile-button width="300px" (click)="popupDialog1(dialog1)">通过属性配置</jigsaw-mobile-button>
+
+<jigsaw-mobile-button width="300px" (click)="popupDialog2(dialog2)">自定义ElementTitle</jigsaw-mobile-button>
+
+<ng-template #dialog1>
+    <jigsaw-mobile-dialog width="80%" caption="dialog title" (close)="close(dialogInfo1)">
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+    </jigsaw-mobile-dialog>
+</ng-template>
+
+<ng-template #dialog2>
+    <jigsaw-mobile-dialog width="60%" (close)="close(dialogInfo2)">
+        <div jigsaw-title>Title of the dialog</div>
+        <div jigsaw-body>
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </div>
+    </jigsaw-mobile-dialog>
+</ng-template>

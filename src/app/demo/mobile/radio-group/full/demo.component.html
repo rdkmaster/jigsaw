@@ -1,0 +1,45 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Radio</h2>
+    <div class="demo-1 live-demo live-demo-block">
+        <h3>数据是对象数组</h3>
+        <p class="comment">数据是对象数组时必须输入<code>trackItemBy</code></p>
+        <jm-radios [(value)]="selectedCity" trackItemBy="name"
+                       (valueChange)="radioChange($event)">
+            <jm-radio-option *ngFor="let item of cities" [value]="item">
+                {{item.name}}
+            </jm-radio-option>
+        </jm-radios>
+        <p class="message">选择的城市是: <span>{{selectedCity.name}}</span></p>
+    </div>
+    <div class="demo-2 live-demo live-demo-block">
+        <h3>数据是字符串数组</h3>
+        <p class="comment">数据是对象数组时不需要输入<code>trackItemBy</code></p>
+        <jm-radios [(value)]="selectedCity2">
+            <jm-radio-option *ngFor="let item of citys2" [value]="item">
+                {{item}}
+            </jm-radio-option>
+        </jm-radios>
+        <p class="message">选择的城市是: <span>{{selectedCity2}}</span></p>
+    </div>
+
+    <div class="demo-3 live-demo live-demo-block">
+        <h3>复杂的场景</h3>
+        <jm-radios [(value)]="selectedGoods" trackItemBy="name"
+                       (valueChange)="radioChange($event)">
+            <jm-radio-option *ngFor="let goods of goodsList" [value]="goods" [disabled]="!!goods.disabled">
+                <div class="goods-box">
+                    <span class="logo fa fa-{{goods.logo}}"></span>
+                    <p>{{goods.desc}}</p>
+                </div>
+            </jm-radio-option>
+        </jm-radios>
+        <p class="message">选择的商品是: <span>{{selectedGoods.name}}</span></p>
+    </div>
+</div>
+

@@ -4,23 +4,26 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {JigsawRootModule} from "jigsaw/component/root/root";
+import {JigsawRootModule} from "jigsaw/pc-components/root/root";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
-import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
-//import {JigsawTheme} from "../jigsaw/core/theming/theme";
+import {PCDemoListComponent} from "./pc-demo-list.component";
+import {MobileDemoListComponent} from "./mobile-demo-list.component";
+import {SwitchDemoComponent} from "./switch-demo.component";
 
 {
     (<any[]>routerConfig).push(
-        {path: '', component: DemoListComponent},
-        {path: '**', redirectTo: ''}
+        {path: '', component: SwitchDemoComponent},
+        {path: 'pc', component: PCDemoListComponent},
+        {path: 'mobile', component: MobileDemoListComponent},
+        {path: '**', redirectTo: '/'}
     );
 }
 
 @NgModule({
     declarations: [
-        AppComponent, DemoListComponent
+        AppComponent, PCDemoListComponent, MobileDemoListComponent, SwitchDemoComponent
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
@@ -38,6 +41,5 @@ import {routerConfig} from "./router-config";
 })
 export class AppModule {
     constructor() {
-        //JigsawTheme.majorStyle = 'dark';
     }
 }

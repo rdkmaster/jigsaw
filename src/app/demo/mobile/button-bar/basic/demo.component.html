@@ -1,0 +1,46 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Button Bar</h2>
+    <jigsaw-mobile-switch [(checked)]="multiple" onLabel="多选" offLabel="单选" (change)="resetSelection()">
+    </jigsaw-mobile-switch>
+    <div class="demo-1 live-demo">
+        <h3>对象数组</h3>
+        <jigsaw-mobile-button-bar [(selectedItems)]="selectedCity" [data]="cities" [multipleSelect]="multiple"
+                           (selectedItemsChange)="basicSelectChange($event)">
+        </jigsaw-mobile-button-bar>
+        <p class="message">选择的城市是：{{selectedCityStr}}</p>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>字符串数组</h3>
+        <jigsaw-mobile-button-bar [(selectedItems)]="selectedCity2" [data]="cities2" [multipleSelect]="multiple"
+                           (selectedItemsChange)="basicSelectChange2($event)">
+        </jigsaw-mobile-button-bar>
+        <p class="message">选择的城市是：{{selectedCityStr2}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>colorType</h3>
+        <jigsaw-mobile-radios-lite [data]="colorTypeList" [(value)]="colorType">
+        </jigsaw-mobile-radios-lite><br>
+        <jigsaw-mobile-button-bar [data]="cities2" [(selectedItems)]="selectedCity3" [colorType]="colorType"
+                           [multipleSelect]="multiple">
+        </jigsaw-mobile-button-bar>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>height</h3>
+        <jigsaw-mobile-button-bar [data]="cities2" [(selectedItems)]="selectedCity4" height="22"
+                           [multipleSelect]="multiple">
+        </jigsaw-mobile-button-bar>
+    </div>
+</div>
+
+
+
+
+

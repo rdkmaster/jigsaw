@@ -1,0 +1,132 @@
+@import "../../common/assets/scss/core/base";
+
+$switch-prefix: #{$jigsaw-prefix}-switch;
+
+.#{$switch-prefix}-host {
+    @include inline-block;
+    &.#{$switch-prefix}-error .#{$switch-prefix} {
+        border-color: $error-color;
+    }
+}
+
+.#{$switch-prefix} {
+    @include inline-block;
+    position: relative;
+    height: 22px;
+    min-width: 44px;
+    line-height: 20px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background-color: $disabled-color;
+    cursor: pointer;
+    transition: all $animation-duration-slow;
+    -ms-transition: none;
+    user-select: none;
+
+    .#{$switch-prefix}-inner {
+        color: $default-color;
+        font-size: $font-size-base;
+        margin-left: 24px;
+        margin-right: 6px;
+        display: block;
+    }
+
+    &:after {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        left: 1px;
+        top: 1px;
+
+        border-radius: 18px;
+        background-color: $default-color;
+        content: " ";
+        cursor: pointer;
+        transition: all $animation-duration-slow, width $animation-duration-slow;
+    }
+
+    &:active:after {
+        width: 24px;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba($primary-color, .2);
+        outline: 0;
+    }
+
+    &:focus:hover {
+        box-shadow: none;
+    }
+
+    &-checked {
+        border-color: $primary-color;
+        background-color: $primary-color;
+
+        .#{$switch-prefix}-inner {
+            margin-left: 6px;
+            margin-right: 24px;
+        }
+
+        &:after {
+            left: 100%;
+            margin-left: -19px;
+        }
+        &:active:after {
+            margin-left: -25px;
+        }
+    }
+
+    &-disabled {
+        cursor: not-allowed;
+        background-color: $disabled-bg-dark;
+        border-color: $disabled-bg-dark;
+
+        &:after {
+            background-color: $disabled-color;
+            cursor: not-allowed;
+        }
+
+        .#{$switch-prefix}-inner {
+            @include compatible(color, $disabled-color, $disabled-color-ie11);
+        }
+    }
+
+    // 小一号的开关
+    &-small {
+        height: 14px;
+        line-height: 12px;
+        min-width: 28px;
+
+        .#{$switch-prefix}-inner {
+            margin-left: 18px;
+            margin-right: 3px;;
+        }
+
+        &:after {
+            width: 12px;
+            height: 12px;
+            top: 0px;
+            left: 0.5px;
+        }
+
+        &:active:after {
+            width: 16px;
+        }
+
+        &.#{$switch-prefix}-checked {
+            .#{$switch-prefix}-inner {
+                margin-left: 3px;
+                margin-right: 18px;
+            }
+
+            &:after {
+                left: 100%;
+                margin-left: -12.5px;
+            }
+
+            &:active:after {
+                margin-left: -16.5px;
+            }
+        }
+    }
+}

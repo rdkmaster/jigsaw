@@ -1,0 +1,66 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="popup-option-demo">
+    <div class="show-box">
+        <div #left class="left box">left</div>
+        <div #middle class="middle box">middle</div>
+        <div #right class="right box">right</div>
+    </div>
+
+    <h4>Basic params</h4><br>
+    <div class="line-box"><label>Is modal:</label>
+        <jigsaw-mobile-switch [(checked)]="option.modal"></jigsaw-mobile-switch>
+    </div>
+    <div class="line-box">
+        <label>PositionType：</label>
+        <jigsaw-mobile-radios [(value)]="selectedPositionType" trackItemBy="id">
+            <jigsaw-mobile-radio-option *ngFor="let popPositionType of popPositionTypes" [value]="popPositionType">{{popPositionType.label}}</jigsaw-mobile-radio-option>
+        </jigsaw-mobile-radios>
+    </div>
+    <div class="line-box">
+        <label>Relate to:</label>
+        <jigsaw-mobile-radios [(value)]="selectedPos" trackItemBy="label">
+            <jigsaw-mobile-radio-option *ngFor="let pose of poses" [value]="pose">{{pose.label}}</jigsaw-mobile-radio-option>
+        </jigsaw-mobile-radios>
+        <span *ngIf="selectedPos.label=='point'">
+            <jigsaw-mobile-input [(value)]="detailPos.x" placeholder="X" width="60px" height="23px"></jigsaw-mobile-input>
+            <jigsaw-mobile-input [(value)]="detailPos.y" placeholder="Y" width="60px" height="23px"></jigsaw-mobile-input>
+        </span>
+    </div>
+
+    <h4>Position offset</h4><br>
+    <div class="line-box">
+        <label>top: </label>
+        <jigsaw-mobile-input [(value)]="offset.top" placeholder="Top" width="200px"></jigsaw-mobile-input>
+    </div>
+    <div class="line-box">
+        <label>left: </label>
+        <jigsaw-mobile-input [(value)]="offset.left" placeholder="Left" width="200px"></jigsaw-mobile-input>
+    </div>
+    <div class="line-box">
+        <label>bottom: </label>
+        <jigsaw-mobile-input [(value)]="offset.bottom" placeholder="Bottom" width="200px"></jigsaw-mobile-input>
+    </div>
+    <div class="line-box">
+        <label>right: </label>
+        <jigsaw-mobile-input [(value)]="offset.right" placeholder="Right" width="200px"></jigsaw-mobile-input>
+    </div>
+    <jigsaw-mobile-button colorType="primary" width="200px" (click)="popupDialog1(dialog1)">Popup</jigsaw-mobile-button>
+
+    <!--用于撑出滚动条，用于体现positionType属性的作用-->
+    <div class="padding"></div>
+
+    <ng-template #dialog1>
+        <jigsaw-mobile-dialog width="400px" header="dialog title" (close)="close()">
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+        </jigsaw-mobile-dialog>
+    </ng-template>
+</div>

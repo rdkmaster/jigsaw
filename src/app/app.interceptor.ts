@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
-import {CommonUtils} from "../jigsaw/core/utils/common-utils";
-import {RawTableData, TableData} from "../jigsaw/core/data/table-data";
-import {PagingInfo} from "../jigsaw/core/data/component-data";
+import {CommonUtils} from "../jigsaw/common/core/utils/common-utils";
+import {RawTableData, TableData} from "../jigsaw/common/core/data/table-data";
+import {PagingInfo} from "../jigsaw/common/core/data/component-data";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {

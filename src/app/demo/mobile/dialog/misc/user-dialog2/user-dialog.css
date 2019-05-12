@@ -1,0 +1,11 @@
+.dialog-body {
+    margin: 12px;
+}
+
+.dialog-body h4 {
+    margin-bottom: 6px;
+}
+
+[jigsaw-mobile-button-bar] a {
+    margin-right: 12px;
+}

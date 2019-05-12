@@ -1,0 +1,31 @@
+.wrap {
+    padding-bottom: 800px;
+}
+
+.wrap .block {
+    width: 500px;
+    line-height: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.wrap .content-box {
+    padding-bottom: 10px;
+}
+
+.wrap .content-box .content-title {
+    margin-bottom: 20px;
+}
+
+.wrap .content-box .content-line {
+    margin-bottom: 10px;
+}
+
+.wrap .content-box .content-line label {
+    display: inline-block;
+    width: 100px;
+}
+
+.wrap .content-box jigsaw-mobile-button {
+    margin-left: 100px;
+}

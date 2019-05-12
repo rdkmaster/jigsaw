@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="container">
+    <jigsaw-mobile-tabs (selectChange)="testEvent()">
+        <jigsaw-mobile-tab-pane *ngFor="let tabData of tabDatas">
+            <div jigsaw-title><span class="fa fa-gift"></span>{{tabData}}</div>
+            <ng-template>{{tabData}} Content</ng-template>
+        </jigsaw-mobile-tab-pane>
+    </jigsaw-mobile-tabs>
+</div>

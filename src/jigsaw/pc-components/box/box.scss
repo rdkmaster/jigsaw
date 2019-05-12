@@ -1,0 +1,58 @@
+@import "../../common/assets/scss/core/base";
+
+$box-prefix-cls: #{$jigsaw-prefix}-box;
+$flex-prefix-cls: #{$jigsaw-prefix}-flex;
+
+.#{$box-prefix-cls} {
+    @include clearfix();
+    display: block;
+    flex: 1 0 0;
+    overflow: auto;
+    &-relative {
+        position: relative;
+        display: block;
+        width: 0;
+        height: 0;
+    }
+    &-resize-line {
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border: {
+            left: 3px dashed transparent;
+            top: none;
+        }
+        z-index: $zindex-ui-level-1;
+        &:hover, &.#{$box-prefix-cls}-resizing {
+            cursor: e-resize;
+            border-left-color: rgba(0, 0, 0, .2);
+        }
+        &-column {
+            width: 100%;
+            height: 3px;
+            border: {
+                left: none;
+                top: 3px dashed transparent;
+            }
+            &:hover, &.#{$box-prefix-cls}-resizing {
+                cursor: n-resize !important;
+                border-top-color: rgba(0, 0, 0, .2);
+            }
+        }
+    }
+    &-flicker {
+        visibility: hidden;
+    }
+}
+
+.#{$flex-prefix-cls} {
+    display: flex;
+    &:after {
+        content: normal;
+    }
+    &.#{$box-prefix-cls}-flicker {
+        visibility: hidden;
+    }
+}

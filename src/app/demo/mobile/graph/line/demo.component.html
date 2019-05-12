@@ -1,0 +1,41 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>折线图</h2>
+
+    <div class="live-demo">
+        <h3>LineGraphData静态数据</h3>
+        <p class="comment">数据的一列为一个系列情形，请使用 LineBarGraphData 作为数据。这个和一般的数据库表的结构非常契合，推荐优先使用。</p>
+        <jigsaw-mobile-graph id="test-graph1" [data]="lineBarData" height="400"></jigsaw-mobile-graph>
+    </div>
+
+    <div class="live-demo">
+        <h3>LineGraphData异步数据</h3>
+        <jigsaw-mobile-graph id="test-graph2" [data]="lineBarFromAjax" height="400"></jigsaw-mobile-graph>
+    </div>
+
+    <div class="live-demo">
+        <h3>LineGraphDataByRow静态数据</h3>
+        <p class="comment">数据的一行为一个系列情形，请使用 LineBarGraphDataByRow 作为数据。</p>
+        <jigsaw-mobile-graph id="test-graph3" [data]="lineBarByRow" height="400"></jigsaw-mobile-graph>
+    </div>
+
+    <div class="live-demo">
+        <h3>LineGraphDataByRow异步数据</h3>
+        <jigsaw-mobile-graph id="test-graph4" [data]="lineBarByRowFromAjax" height="400"></jigsaw-mobile-graph>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

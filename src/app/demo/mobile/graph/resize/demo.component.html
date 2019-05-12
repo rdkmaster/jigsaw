@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+width:
+<jigsaw-mobile-input id="graph-width" [value]="graphWidth" #widthInput></jigsaw-mobile-input>
+height:
+<jigsaw-mobile-input id="graph-height" [value]="graphHeight" #heightInput></jigsaw-mobile-input><br><br>
+<jigsaw-mobile-graph id="test-graph" #graph [data]="data" [width]="graphWidth" [height]="graphHeight">
+</jigsaw-mobile-graph>
+

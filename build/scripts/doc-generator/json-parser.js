@@ -820,7 +820,7 @@ function getDemoList(metaInfo) {
 }
 
 function getDemoSummary(comp, demoName) {
-    var demoPath = `${__dirname}/../../../src/app/demo/${comp}/${demoName}/demo.component.ts`;
+    var demoPath = `${__dirname}/../../../src/app/demo/pc/${comp}/${demoName}/demo.component.ts`;
     var code = fs.readFileSync(demoPath).toString();
     var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
     if (!summaryMatch) {

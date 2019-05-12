@@ -1,0 +1,23 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<span>Top:</span><jigsaw-mobile-input [(value)]="top" width="80px"></jigsaw-mobile-input>
+<jigsaw-mobile-button (click)="popupDialog1(dialog1)">popup</jigsaw-mobile-button>
+
+{{message}}
+<ng-template #dialog1>
+    <jigsaw-mobile-dialog width="40%" caption="dialog title" [top]="top" (close)="close()">
+        <ul class="dialog-content">
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+            <li>Dialog content...</li>
+        </ul>
+        <div jigsaw-mobile-button-bar>
+            <jigsaw-mobile-button colorType="danger" (click)="close()">OK</jigsaw-mobile-button>
+        </div>
+    </jigsaw-mobile-dialog>
+</ng-template>
+

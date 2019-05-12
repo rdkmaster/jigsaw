@@ -1,6 +1,6 @@
 import {Component, Input, NgModule, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {CommonUtils} from "../../jigsaw/core/utils/common-utils";
+import {CommonUtils} from "../../jigsaw/common/core/utils/common-utils";
 import {JigsawMarkdownModule} from "../markdown/markdown";
 
 @Component({

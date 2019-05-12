@@ -1,0 +1,65 @@
+@import "../../common/assets/scss/core/base";
+
+$cascade-prefix-cls: #{$jigsaw-prefix}-cascade;
+$tile-prefix-cls: #{$jigsaw-prefix}-tile;
+
+.#{$cascade-prefix-cls} {
+    display: inline-block;
+    border: 1px solid $border-color-base;
+    border-radius: $border-radius-base;
+
+    .#{$tile-prefix-cls} {
+        border: none;
+    }
+    &-show-all {
+        @include inline-block();
+        width: 50px;
+        height: $height-base;
+        line-height: $height-base;
+        font-size: $font-size-base;
+        text-align: center;
+        margin: {
+            right: 8px;
+            bottom: 8px;
+        }
+        cursor: pointer;
+        color: $primary-color;
+        font-weight: 700;
+        &:hover {
+            color: $primary-5;
+        }
+        &:active {
+            color: $primary-7;
+        }
+    }
+
+    &-loading {
+        position: relative;
+        width: 100%;
+        height: 100px;
+        background: #000;
+        opacity: 0.4;
+        span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 20px;
+            color: #fff;
+            left: 50%;
+            top: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+    }
+
+    &-search-wrapper {
+        padding: 0 8px;
+    }
+
+    &-pagination-wrapper {
+        padding: 4px 0;
+        text-align: center;
+    }
+}
+

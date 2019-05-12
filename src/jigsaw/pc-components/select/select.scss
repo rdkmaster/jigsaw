@@ -1,0 +1,22 @@
+@import "../../common/assets/scss/core/base";
+
+$select-prefix-cls: #{$jigsaw-prefix}-select;
+$jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
+
+.#{$select-prefix-cls}-host {
+    @include inline-block();
+    .#{$jigsaw-combo-select}-host {
+        .jigsaw-tag-host {
+            max-width: 100%;
+            background: none;
+        }
+    }
+    &.#{$select-prefix-cls}-single-select {
+        .#{$jigsaw-combo-select}-host {
+            .jigsaw-tag-host {
+                padding: 0;
+            }
+        }
+    }
+}
+

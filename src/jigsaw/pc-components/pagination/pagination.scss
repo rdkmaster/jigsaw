@@ -1,0 +1,81 @@
+@import "../../common/assets/scss/core/base";
+
+$paging-prefix-cls: #{$jigsaw-prefix}-paging;
+
+.#{$paging-prefix-cls} {
+    @include inline-block();
+    font-size: $font-size-base;
+    user-select: none;
+    &-page {
+        position: relative;
+        @include inline-block;
+        width: $height-base;
+        height: $height-base;
+        line-height: $height-base;
+        text-align: center;
+        border: 1px solid $border-color-base;
+        border-radius: 4px;
+        margin-right: 8px;
+        cursor: pointer;
+        vertical-align: top;
+        @include prefixer(transition, all .3s ease);
+        &.#{$paging-prefix-cls}-disabled {
+            cursor: not-allowed;
+            border: 1px solid $border-color-base;
+            @include compatible(color, $disabled-color, $disabled-color-ie11);
+            &:hover {
+                border: 1px solid $border-color-base;
+                @include compatible(color, $disabled-color, $disabled-color-ie11);
+            }
+        }
+        &:hover {
+            border: 1px solid $primary-color;
+            color: $primary-color;
+        }
+    }
+    jigsaw-select {
+        margin-right: 8px;
+    }
+    &-goto {
+        @include inline-block;
+        height: $height-base;
+        vertical-align: top;
+        > span {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    }
+    jigsaw-input {
+        vertical-align: middle;
+        margin-right: 8px;
+    }
+    &.#{$paging-prefix-cls}-small {
+        &:before {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            height: $height-sm;
+        }
+        .#{$paging-prefix-cls}-page {
+            height: $height-sm;
+            line-height: $height-sm;
+            border: none;
+            font-size: 16px;
+            width: 12px;
+            margin-right: 0;
+        }
+        .#{$paging-prefix-cls}-total-page-number {
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        jigsaw-input {
+            margin: 0 4px;
+            vertical-align: middle;
+            input {
+                text-align: center;
+                padding: 0 2px !important;
+            }
+        }
+    }
+
+}
