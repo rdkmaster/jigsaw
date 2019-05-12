@@ -52,10 +52,6 @@ export const routerConfigPC = [
         loadChildren: "./demo/pc/drawer/demo-set.module#DrawerDemoModule",
     },
     {
-        path: "pc/editable-box",
-        loadChildren: "./demo/pc/editable-box/demo-set.module#EditableBoxDemoModule",
-    },
-    {
         path: "pc/fish-bone",
         loadChildren: "./demo/pc/fish-bone/demo-set.module#FishBoneDemoModule",
     },

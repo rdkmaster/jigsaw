@@ -3,18 +3,20 @@
  */
 
 import {NgModule} from '@angular/core';
+import {CommonModule} from "@angular/common";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 import {JigsawTab} from './tab';
 import {JigsawTabPane} from "./tab-pane";
-import {CommonModule} from "@angular/common";
 import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawListModule} from "../list-and-tile/list";
+import {JigsawEditableTabTitleRenderer} from "./tab-renderer";
+import {JigsawInputModule} from "../input/input";
 
 @NgModule({
-    imports: [CommonModule, PerfectScrollbarModule, JigsawListModule],
-    exports: [JigsawTab, JigsawTabPane],
-    declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent],
+    imports: [CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule],
+    exports: [JigsawTab, JigsawTabPane, JigsawEditableTabTitleRenderer],
+    declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer],
     providers: [],
     entryComponents: [JigsawTabPane]
 })
