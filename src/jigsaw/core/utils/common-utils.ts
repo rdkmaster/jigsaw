@@ -119,6 +119,11 @@ export class CommonUtils {
         return targetObject;
     }
 
+    public static extendObjects<T = Object>(targetObject: T, ...sources): T {
+        sources.forEach(s => this.extendObject(targetObject, s));
+        return targetObject;
+    }
+
     /**
      * 把一个值转为px或%
      * @param value
