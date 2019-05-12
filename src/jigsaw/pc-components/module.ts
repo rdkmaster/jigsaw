@@ -38,7 +38,6 @@ import {JigsawCommonModule} from "../common/common";
 import {JigsawListModule} from "./list-and-tile/list";
 import {JigsawTrustedHtmlModule} from "../common/directive/trusted-html/trusted-html";
 import {JigsawBoxModule} from "./box/index";
-import {JigsawTabsWrapperModule} from "./box/tabs-wrapper/tabs-wrapper";
 import {JigsawDrawerModule} from "./drawer/drawer";
 import {JigsawCascadeModule} from "./cascade/cascade";
 import {JigsawNumericInputModule} from "./input/numeric-input";
@@ -92,7 +91,6 @@ const JIGSAW_MODULE = [
     JigsawTableModule,
     JigsawTableRendererModule,
     JigsawTabsModule,
-    JigsawTabsWrapperModule,
     JigsawTagModule,
     JigsawTileSelectModule,
     JigsawTileLiteModule,

@@ -12,7 +12,6 @@ export * from "./common/core/data/component-data";
 export * from "./common/core/data/echart-types";
 export * from "./common/core/data/general-collection";
 export * from "./common/core/data/graph-data";
-export * from "./common/core/data/layout-data";
 export * from "./common/core/data/table-data";
 export * from "./common/core/data/tree-data";
 export * from "./common/core/theming/theme";

@@ -382,7 +382,7 @@ export class PopupService {
     private _getElement(ref: PopupRef): HTMLElement {
         let element: HTMLElement;
         if (ref instanceof ComponentRef) {
-            element = ref.location.nativeElement.localName == 'ng-pc-components' ?
+            element = ref.location.nativeElement.localName == 'ng-component' ?
                 ref.location.nativeElement.children[0] : ref.location.nativeElement;
         } else {
             element = ref.rootNodes.find(rootNode => rootNode instanceof HTMLElement);

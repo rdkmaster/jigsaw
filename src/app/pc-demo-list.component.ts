@@ -12,7 +12,6 @@ import {routerConfig as comboSelectConfig} from "./demo/pc/combo-select/demo-set
 import {routerConfig as dialogConfig} from "./demo/pc/dialog/demo-set.module";
 import {routerConfig as dragDropConfig} from "./demo/pc/drag-drop/demo-set.module";
 import {routerConfig as drawerConfig} from "./demo/pc/drawer/demo-set.module";
-import {routerConfig as editableBoxConfig} from "./demo/pc/editable-box/demo-set.module";
 import {routerConfig as fishBoneConfig} from "./demo/pc/fish-bone/demo-set.module";
 import {routerConfig as floatConfig} from "./demo/pc/float/demo-set.module";
 import {routerConfig as formConfig} from "./demo/pc/form/demo-set.module";
@@ -108,7 +107,6 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'dialog', dialogConfig);
         this._addRouterConfig(routerConfig, 'drag-drop', dragDropConfig);
         this._addRouterConfig(routerConfig, 'drawer', drawerConfig);
-        this._addRouterConfig(routerConfig, 'editable-box', editableBoxConfig);
         this._addRouterConfig(routerConfig, 'fish-bone', fishBoneConfig);
         this._addRouterConfig(routerConfig, 'float', floatConfig);
         this._addRouterConfig(routerConfig, 'form', formConfig);
