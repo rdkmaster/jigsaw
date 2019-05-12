@@ -10,6 +10,7 @@ export * from "./common/components/scrollbar/index";
 export * from "./common/core/data/array-collection";
 export * from "./common/core/data/component-data";
 export * from "./common/core/data/echart-types";
+export * from "./common/core/data/modeled-graph-data";
 export * from "./common/core/data/general-collection";
 export * from "./common/core/data/graph-data";
 export * from "./common/core/data/table-data";
