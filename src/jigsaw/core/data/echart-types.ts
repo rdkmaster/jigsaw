@@ -8,7 +8,7 @@ export class EchartOptions {
 
 export class EchartTitle {
     //TODO: 补充完整
-    text: string;
+    text?: string;
     subtext?: string;
     left?: string | number;
     right?: string | number;
@@ -18,15 +18,27 @@ export class EchartTitle {
     [prop:string]: any;
 }
 
+export class EchartXAxis {
+    [prop:string]: any;
+}
+
+export class EchartYAxis {
+    [prop:string]: any;
+}
+
 export class GraphLegendItem {
     name?: string;
     icon?: string;
     [prop:string]: any;
 }
 
+export class EchartToolbox {
+    [prop:string]: any;
+}
+
 export class EchartLegend {
     //TODO: 补充完整
-    data: Array<GraphLegendItem|string>;
+    data?: Array<GraphLegendItem|string>;
     left?: string | number;
     right?: string | number;
     top?: string | number;
@@ -43,6 +55,6 @@ export class EchartTooltip {
 }
 
 export class EchartSeriesItem {
-    data: any[];
+    data?: any[];
     [prop:string]: any;
 }
