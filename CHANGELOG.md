@@ -1,3 +1,29 @@
+## v1.2.0-beta4 (2019-05-12)
+
+### 新特性 / New Features
+- [新增] graph组件增加一个init事件，在其初始化时发出
+- [新增] PopupService加一个popups数组返回当前所有弹出视图，float指令支持任意多层级下拉
+- [新增] 增加模型化的饼图/直角系图的图形数据，为Awade图形可视化配置做准备
+- [新增] 调整代码结构以支持在此仓库中制作适用于移动端的npm包，以及添加第一批适用于移动端的组件
+- [新增] 增加一个内置的Tabs标题渲染器 `JigsawEditableTabTitleRenderer` 可用于动态修改Tab页标题
+
+### 破坏性修改 / Breaking Changes
+- [优化] 删除了`jigsaw-editable`组件及其相关的所有功能，包括：`LayoutData`数据对象，`JigsawEditableBox`等。后续将可能会提供一个以全新的交互方式实现的视图编辑器作为替代品。
+- [优化] `VMAX_GRAPH_THEME` 更名为 `lightGraphTheme`
+- [优化] `VMAX_GRAPH_THEME_DARK` 更名为 `darkGraphTheme`
+
+###  优化 / Modified
+- [优化] 抽屉的width/height默认值改为auto，以自动处理offsetTop/offsetLeft等带来的偏移问题
+- [优化] float去掉对宿主节点click事件的阻止冒泡
+- [优化] Graph组件注册事件的代码增加必要的保护
+- [优化] 使用float指令改写combo的下拉实现，以获得统一的下拉功能
+- [优化] Slider支持普通数组作为输入
+
+### 修复 / Fixes
+- [故障] 修复在combo里面time的国际化无法生效，fixes #666
+- [故障] 修复table的checkbox渲染器设置初始data会导致功能不可用，fixes #925
+- [故障] 解决j-moveable指令宿主节点的position属性在class中设置无效的问题
+
 ## v1.2.0-beta3 (2019-04-09)
 
 ### 新特性 / New Features
