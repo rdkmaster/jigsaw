@@ -30,6 +30,13 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
             box-shadow: none;
         }
     }
+    &.#{$numeric-input-prefix-cls}-disabled {
+        pointer-events: none;
+        cursor: default;
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background-color: $disabled-bg;
+        border-color: $border-color-base;
+    }
     input {
         width: 100%;
         height: 100%;

@@ -29,6 +29,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             box-shadow: none;
         }
     }
+    &.#{$input-prefix-cls}-disabled {
+        pointer-events: none;
+        cursor: default;
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background-color: $disabled-bg;
+        border-color: $border-color-base;
+    }
     &-icon-front {
         position: absolute;
         left: 8px;
