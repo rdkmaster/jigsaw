@@ -1,4 +1,4 @@
-import {HttpHeaders} from "@angular/common/http";
+import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
@@ -28,7 +28,7 @@ export class HttpClientOptions {
      *
      * $demo = /data-encapsulation/array-ssp
      */
-    public params?: { [key: string]: any | any [] };
+    public params?: { [key: string]: any | any [] } | HttpParams;
     public reportProgress?: boolean;
     public responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     public withCredentials?: boolean;
@@ -78,9 +78,12 @@ export class HttpClientOptions {
  * 一般Jigsaw内部使用，应用无需关注，详情参考`HttpClientOptions.prepare`的说明。
  */
 export class PreparedHttpClientOptions extends HttpClientOptions {
-    public params?: { [key: string]: string | string[] };
+    public params?: { [key: string]: string | string[] } | HttpParams;
 
-    public static prepareParams(params): { [key: string]: string | string[] } {
+    public static prepareParams(params: any): { [key: string]: string | string[] } | HttpParams {
+        if (params instanceof HttpParams) {
+            return params;
+        }
         const result: { [key: string]: string | string[] } = {};
         for (let p in params) {
             if (!params.hasOwnProperty(p)) {
