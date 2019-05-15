@@ -1,7 +1,7 @@
 import {task} from 'gulp';
 import {join} from 'path';
 import {writeFileSync} from "fs"
-import {routerConfig} from "../../../../src/app/router-config";
+import {routerConfigPC} from "../../../../src/app/router-config";
 import {getRouterConfig} from "../util/get-router-config";
 
 /**
@@ -22,9 +22,9 @@ task('generate-demo-info', () => {
     const demoHome = join(__dirname, '../../../../src/app/demo');
     let demos: any[] = [];
 
-    routerConfig.forEach((router: any) => {
+    routerConfigPC.forEach((router: any) => {
         const childDemos: any[] = [];
-        demos.push({name: router.path, demos: childDemos});
+        demos.push({name: router.path.replace(/^pc\//, ''), demos: childDemos});
         const childRouters = getRouterConfig(join(demoHome, router.path, 'demo-set.module.ts'));
         childRouters.forEach((child: any) => {
             const url = child.hasOwnProperty('url') ? child.url : `/${router.path}/${child.path}`;
