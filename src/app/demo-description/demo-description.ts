@@ -64,7 +64,7 @@ export class JigsawDemoDescription implements OnInit {
 
     gotoPlunker() {
         const pathName = location.pathname;
-        let match = pathName.match(/(\/jigsaw)?(\/.*?\/.*?)(\/.*)*$/);
+        let match = pathName.match(/(\/jigsaw\/pc)?(\/.*?\/.*?)(\/.*)*$/);
         if (!match) {
             alert('unexpected demo url[' + pathName + '], please send us an issue here:\n' +
                 'https://github.com/rdkmaster/jigsaw/issues/new');
