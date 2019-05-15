@@ -109,6 +109,8 @@ export class CommonUtils {
                 // 如果原数据为数组, 已经是属性的值，直接覆盖;
                 if (sourceObject[i] instanceof Array) {
                     targetObject[i] = sourceObject[i];
+                } else if(this.isUndefined(targetObject[i])) {
+                    targetObject[i] = this.extendObject({}, sourceObject[i]);
                 } else {
                     this.extendObject(targetObject[i], sourceObject[i]);
                 }
