@@ -181,7 +181,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public set value(newValue: any) {
-        if (newValue && this._value != newValue) {
+        if (this._value != newValue) {
             this._propagateChange(newValue);
         }
         this.writeValue(newValue);
@@ -228,11 +228,15 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     };
 
     public writeValue(value: any): void {
-        if (!value || this._value == value) {
+        if (this._value == value) {
             return;
         }
         this._value = value;
-        this._$selectedItems = this.multipleSelect ? value : [value];
+        if (CommonUtils.isDefined(value)) {
+            this._$selectedItems = this.multipleSelect ? value : [value];
+        } else {
+            this._$selectedItems = [];
+        }
         if (this.initialized) {
             this.valueChange.emit(this.value);
         }
