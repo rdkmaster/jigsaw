@@ -231,7 +231,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         if (this._value == value) {
             return;
         }
-        value = !!value ? value : [];
         this._value = value;
         this._$selectedItems = this.multipleSelect ? value : [value];
         if (this.initialized) {
