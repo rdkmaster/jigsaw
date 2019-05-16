@@ -232,7 +232,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
             return;
         }
         this._value = value;
-        this._$selectedItems = this.multipleSelect ? value : [value];
+        if (CommonUtils.isDefined(value)) {
+            this._$selectedItems = this.multipleSelect ? value : [value];
+        } else {
+            this._$selectedItems = [];
+        }
         if (this.initialized) {
             this.valueChange.emit(this.value);
         }
