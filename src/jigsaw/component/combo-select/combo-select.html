@@ -11,11 +11,11 @@
     <div class="jigsaw-combo-select-selection">
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"
-                        [closable]='tagItem.closable'
+                        [closable]='tagItem?.closable'
                         [showBorder]="showValueBorder"
                         (select)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
-                {{tagItem[labelField] ? tagItem[labelField] : tagItem}}
+                {{tagItem && tagItem[labelField] ? tagItem[labelField] : tagItem}}
             </jigsaw-tag>
             <jigsaw-input #editor *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
                           width="100%" (valueChange)="_$handleSearchBoxChange()"
