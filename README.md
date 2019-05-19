@@ -107,7 +107,7 @@ npm install
 npm start
 ```
 
-- **Attensions to the Chinese developers**, do **NOT** use `cnpm` to install the dependencies, we are still looking for the reason.
+- **Attensions to the Chinese developers**, do **NOT** use `cnpm` to install the dependencies because of [this issue](https://github.com/cnpm/cnpmjs.org/issues/1463).
 - **Attensions to all ZTErs**, you can use the npm mirror inside of ZTE for faster speed of installing, [check this link for more details](docs/how-to-use-npm-mirror-inside-of-zte/index.md).
 
 4. Open `http://localhost:4200` in your browser, your development environment is completed set up if you can see the welcome page;
