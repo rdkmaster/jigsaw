@@ -195,6 +195,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
+    /**
+     * 在多选时，用户点击被选中条目的叉叉时发出此事件
+     *
+     * $demo = select/multiple
+     */
     @Output() public remove: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
