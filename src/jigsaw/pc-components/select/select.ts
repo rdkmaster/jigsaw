@@ -195,6 +195,13 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
+    /**
+     * 在多选时，用户点击被选中条目的叉叉时发出此事件
+     *
+     * $demo = select/multiple
+     */
+    @Output() public remove: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
 
     /**
@@ -222,6 +229,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._listCmp._$handleSearching();
+    }
+
+    public _$onTagRemove(removedItem): void {
+        this.remove.emit(removedItem);
+        this.valueChange.emit(this.value);
     }
 
     private _propagateChange: any = () => {
