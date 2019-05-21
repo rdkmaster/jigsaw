@@ -8,8 +8,8 @@
     <h2>Select</h2>
     <div class="live-demo">
         <h3>多选</h3>
-        <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
-                       placeholder="请选择城市" [data]="cityListForSelect" [multipleSelect]="true">
+        <jigsaw-select [(value)]="selectedCity" (valueChange)="selectChange($event)" (remove)="onItemRemove($event)"
+                       placeholder="请选择城市" [data]="cityList" [multipleSelect]="true">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>

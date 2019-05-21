@@ -2,6 +2,7 @@
                 [autoClose]="!multipleSelect" [placeholder]="placeholder" [disabled]="disabled"
                 [showValueBorder]="multipleSelect" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
                 (openChange)="_$onComboOpenChange($event)" (valueChange)="_$handleClearable($event)"
+                (remove)="_$onTagRemove($event)"
                 width="100%" [autoWidth]="true" [valid]="valid">
     <ng-template>
         <j-list-lite [data]="data" [labelField]="labelField" [trackItemBy]="trackItemBy"
