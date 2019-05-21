@@ -80,7 +80,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
+    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' || JigsawTheme.majorStyle == 'gray' || JigsawTheme.majorStyle == 'black' ||
+    JigsawTheme.majorStyle == 'purple' || JigsawTheme.majorStyle == 'blue' ? VMAX_GRAPH_THEME_DARK : VMAX_GRAPH_THEME;
 
     @Input()
     public get globalTheme() {
