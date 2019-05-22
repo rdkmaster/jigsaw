@@ -42,6 +42,6 @@ import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
 })
 export class AppModule {
     constructor() {
-        JigsawTheme.majorStyle = 'purple';
+        //JigsawTheme.majorStyle = 'purple';
     }
 }
