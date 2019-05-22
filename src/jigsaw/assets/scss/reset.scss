@@ -18,13 +18,13 @@ body {
     background-color: $body-background;
 }
 
-// unify the setting of elements's margin and padding for browsers
+/*unify the setting of elements's margin and padding for browsers*/
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     margin: 0;
     padding: 0;
 }
 
-// Reset fonts for relevant elements
+/*Reset fonts for relevant elements*/
 button, input, select, textarea, span {
     font-family: inherit;
     font-size: inherit;
@@ -36,7 +36,7 @@ ol {
     list-style: none;
 }
 
-// Remove the clear button of a text input control in IE10+
+/*Remove the clear button of a text input control in IE10+*/
 input::-ms-clear, input::-ms-reveal {
     display: none;
 }
@@ -46,7 +46,7 @@ input::-ms-clear, input::-ms-reveal {
     color: #fff;
 }
 
-// Links
+/*Links*/
 a {
     color: $link-color;
     background: transparent;

@@ -27,6 +27,6 @@
 @include setListTheme();
 @include setTreeTheme();
 @include setInputTheme();
-@include setDrawerTheme();
+@include setDrawerTheme($light-bg-2);
 @include setFishBoneTheme();
 @include setTimeTheme();

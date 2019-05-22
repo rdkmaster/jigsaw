@@ -1,32 +1,15 @@
-@import "settings/zte-gray";
-@import "../all-theme";
+@import "./zte-dark";
 @import "../theming-api";
+
+/*浅色大面积背景*/
+/*浅色大面积背景*/
+$light-bg-1: #19191e;
+/*浅色大面积背景，页内卡片填充*/
+$light-bg-2: #232429;
+/*页内卡片灌边*/
+$light-bg-3: #45464c;
 
 // ------ Custom for zte by theming-api ------
 @include setDialogHead($primary-color, $light-bg-3, 30px);
-@include setDialogButton(right, false);
-
-@include showBtnAnimation(false);
-
-@include setTableHead($opacity-bg-2, $fill-color-4, 14px, $primary-color, 1px);
-@include setTableBody($gray-2, default, $opacity-bg-1, $opacity-bg-2);
-@include setTableTextAlign(left, 8px);
-
-@include setTag($opacity-bg-3, 25px);
-@include setCollapse($opacity-bg-3);
-@include setTabTriangle(true);
-
-@include setPopupCloseBar($primary-color, $primary-7);
-@include setTimeGrTab(#008fd4);
-@include setBtnDefault($text-color);
-@include setTableBorder($opacity-bg-3);
-@include setSliderTheme();
-@include setBreadCrumbTheme();
-@include setCollapseTheme();
-@include setTableTheme();
-@include setListTheme();
-@include setTreeTheme();
-@include setInputTheme();
-@include setDrawerTheme();
-@include setFishBoneTheme();
-@include setTimeTheme();
+@include setDrawerTheme($light-bg-2);
+@include setBodyBackground($light-bg-1);

@@ -400,9 +400,9 @@
     }
 }
 
-@mixin setDrawerTheme() {
+@mixin setDrawerTheme($bgColor) {
     .#{$drawer-prefix-cls} {
-        background: $light-bg-2;
+        background: $bgColor;
     }
 }
 
@@ -422,6 +422,12 @@
     .bootstrap-datetimepicker-widget table td span:hover{
         background: $fill-color-2;
         color: $text-color;
+    }
+}
+
+@mixin setBodyBackground($bgColor) {
+    body {
+        background-color: $bgColor;
     }
 }
 
