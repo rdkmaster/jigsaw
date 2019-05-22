@@ -79,7 +79,8 @@ export class JigsawMobileGraph extends AbstractJigsawComponent implements OnInit
         }
     }
 
-    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? darkGraphTheme : lightGraphTheme;
+    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' || JigsawTheme.majorStyle == 'gray' || JigsawTheme.majorStyle == 'black' ||
+    JigsawTheme.majorStyle == 'purple' || JigsawTheme.majorStyle == 'blue' ? darkGraphTheme : lightGraphTheme;
 
     @Input()
     public get globalTheme() {
