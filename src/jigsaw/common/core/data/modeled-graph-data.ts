@@ -514,3 +514,133 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
     }
 }
 
+// ------------------------------------------------------------------------------------------------
+// 仪表盘相关数据对象
+
+export class GaugeSeries {
+    public dimensionField: string;
+    public dimensions: Dimension[] = [];
+    public usingAllDimensions: boolean = true;
+    public indicators: Indicator[] = [];
+    public radius?: number;
+    public center?: number[];
+    public name?: string;
+
+    constructor(name?: string) {
+        this.name = name;
+    }
+}
+
+export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            toolbox: CommonUtils.extendObjects<EchartTitle>({}, this.toolbox),
+        };
+    }
+
+    tooltip = {
+        formatter: "{a} <br/>{b} : {c}%"
+    };
+
+    toolbox = {
+        show : true,
+        feature : {
+            mark : {show: true},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    };
+
+    seriesItem = {
+        name: '',
+        type:'gauge',
+        //center : ['50%', '50%'],    // 默认全局居中
+        //radius : [0, '75%'],
+        min: 0,  // 最小值
+        max: 100,  // 最大值
+        precision: 0,  // 小数精度，默认为0，无小数点
+        detail : {formatter:'{value}%'},
+        data: null
+    };
+}
+
+export class ModeledGaugeGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    public template: ModeledPieTemplate = new BasicModeledGaugeTemplate();
+    public series: GaugeSeries[];
+    public title: EchartTitle;
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series || !this.field.length || !this.header.length || !this.data.length) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+        options.series = this.series
+            .filter(seriesData => {
+                if (!seriesData.dimensionField) {
+                    return false;
+                }
+                if (!seriesData.indicators || seriesData.indicators.length == 0) {
+                    return false;
+                }
+                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
+            })
+            .map((seriesData, idx) => {
+                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                const dimIndex = this.getIndex(seriesData.dimensionField);
+                seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
+                seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
+
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                if (dimensions.length > 1) {
+                    // 多维度
+                    let records;
+                    if (seriesData.usingAllDimensions) {
+                        records = this.data;
+                    } else {
+                        records = this.data.filter(row => dimensions.find(d => d.name == row[dimIndex]));
+                    }
+                    const kpiIndex = seriesData.indicators[0].index;
+                    records = records.map(row => [row[dimIndex], row[kpiIndex]]);
+                    const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
+                    indicator.index = 1;
+                    seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
+                        .map(row => ({name: row[0], value: row[1]}));
+                } else {
+                    // 多指标
+                    const dim = dimensions[0].name;
+                    const records = this.data.filter(row => row[dimIndex] == dim);
+                    const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
+                    seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+                }
+
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                if(seriesData.radius) {
+                    seriesItem.radius = seriesData.radius + '%';
+                }
+                if(seriesData.center) {
+                    seriesItem.center = seriesData.center.map(r => r + '%');
+                }
+                return seriesItem;
+            });
+
+        return options;
+    }
+
+    public refresh(): void {
+        this._options = undefined;
+        super.refresh();
+    }
+}
