@@ -519,12 +519,28 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
 
 export class GaugeSeries {
     public dimensionField: string;
-    public dimensions: Dimension[] = [];
-    public usingAllDimensions: boolean = true;
+    public dimensions: Dimension[] = [new Dimension('')];
+    public usingAllDimensions: boolean = false;
     public indicators: Indicator[] = [];
-    public radius?: number;
-    public center?: number[];
+
     public name?: string;
+
+    public center?: number[] = [50, 50];
+    public radius?: number = 75;
+    public startAngle?: number = 225;
+    public endAngle?: number = -45;
+    public min?: number = 0;
+    public max?: number = 100;
+    public splitNumber?: number;
+    public axisLine?: any = {};
+    public axisTick?: any = {};
+    public axisLabel?: any = {};
+    public splitLine?: any = {};
+    public pointer?: any = {};
+    public title?: any = {};
+    public detail?: any = {formatter:'{value}%'};
+
+    public more?: any;
 
     constructor(name?: string) {
         this.name = name;
@@ -546,7 +562,6 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     toolbox = {
         show : true,
         feature : {
-            mark : {show: true},
             restore : {show: true},
             saveAsImage : {show: true}
         }
@@ -555,11 +570,10 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     seriesItem = {
         name: '',
         type:'gauge',
-        //center : ['50%', '50%'],    // 默认全局居中
-        //radius : [0, '75%'],
-        min: 0,  // 最小值
-        max: 100,  // 最大值
-        precision: 0,  // 小数精度，默认为0，无小数点
+        center : ['50%', '50%'],
+        radius : '75%',
+        min: 0,
+        max: 100,
         detail : {formatter:'{value}%'},
         data: null
     };
@@ -632,6 +646,43 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                 }
                 if(seriesData.center) {
                     seriesItem.center = seriesData.center.map(r => r + '%');
+                }
+
+                if(seriesData.startAngle) {
+                    seriesItem.startAngle = seriesData.startAngle;
+                }
+                if(seriesData.endAngle) {
+                    seriesItem.endAngle = seriesData.endAngle;
+                }
+                if(seriesData.min) {
+                    seriesItem.min = seriesData.min;
+                }
+                if(seriesData.max) {
+                    seriesItem.max = seriesData.max;
+                }
+                if(seriesData.splitNumber) {
+                    seriesItem.splitNumber = seriesData.splitNumber;
+                }
+                if(seriesData.axisLine) {
+                    seriesItem.axisLine = seriesData.axisLine;
+                }
+                if(seriesData.axisTick) {
+                    seriesItem.axisTick = seriesData.axisTick;
+                }
+                if(seriesData.axisLabel) {
+                    seriesItem.axisLabel = seriesData.axisLabel;
+                }
+                if(seriesData.splitLine) {
+                    seriesItem.splitLine = seriesData.splitLine;
+                }
+                if(seriesData.pointer) {
+                    seriesItem.pointer = seriesData.pointer;
+                }
+                if(seriesData.title) {
+                    seriesItem.title = seriesData.title;
+                }
+                if(seriesData.detail) {
+                    seriesItem.detail = seriesData.detail;
                 }
                 return seriesItem;
             });
