@@ -522,9 +522,9 @@ export class GaugeSeries {
     public dimensions: Dimension[] = [new Dimension('')];
     public usingAllDimensions: boolean = false;
     public indicators: Indicator[] = [];
+    public model?: any[];
 
     public name?: string;
-
     public center?: number[] = [50, 50];
     public radius?: number = 75;
     public startAngle?: number = 225;
@@ -532,12 +532,12 @@ export class GaugeSeries {
     public min?: number = 0;
     public max?: number = 100;
     public splitNumber?: number;
-    public axisLine?: any = {};
-    public axisTick?: any = {};
-    public axisLabel?: any = {};
-    public splitLine?: any = {};
-    public pointer?: any = {};
-    public title?: any = {};
+    public axisLine?: any;
+    public axisTick?: any;
+    public axisLabel?: any;
+    public splitLine?: any;
+    public pointer?: any;
+    public title?: any;
     public detail?: any = {formatter:'{value}%'};
 
     public more?: any;
