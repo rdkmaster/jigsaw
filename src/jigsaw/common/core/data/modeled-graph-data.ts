@@ -564,6 +564,7 @@ export class GaugeSeries {
     public usingAllDimensions: boolean = false;
     public indicators: Indicator[] = [];
     public model?: any[];
+    public more?: any;
 
     public name?: string;
     public center?: number[] = [50, 50];
@@ -572,16 +573,7 @@ export class GaugeSeries {
     public endAngle?: number = -45;
     public min?: number = 0;
     public max?: number = 100;
-    public splitNumber?: number;
-    public axisLine?: any;
-    public axisTick?: any;
-    public axisLabel?: any;
-    public splitLine?: any;
-    public pointer?: any;
-    public title?: any;
     public detail?: any = {formatter:'{value}%'};
-
-    public more?: any;
 
     constructor(name?: string) {
         this.name = name;
@@ -613,6 +605,8 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
         type:'gauge',
         center : ['50%', '50%'],
         radius : '75%',
+        startAngle: 225,
+        endAngle: -45,
         min: 0,
         max: 100,
         detail : {formatter:'{value}%'},
@@ -658,28 +652,13 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
-                if (dimensions.length > 1) {
-                    // 多维度
-                    let records;
-                    if (seriesData.usingAllDimensions) {
-                        records = this.data;
-                    } else {
-                        records = this.data.filter(row => dimensions.find(d => d.name == row[dimIndex]));
-                    }
-                    const kpiIndex = seriesData.indicators[0].index;
-                    records = records.map(row => [row[dimIndex], row[kpiIndex]]);
-                    const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
-                    indicator.index = 1;
-                    seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
-                        .map(row => ({name: row[0], value: row[1]}));
-                } else {
-                    // 多指标
-                    const dim = dimensions[0].name;
-                    const records = this.data.filter(row => row[dimIndex] == dim);
-                    const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
-                    seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
-                }
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem, seriesData);
+
+                // 多指标
+                const dim = dimensions[0].name;
+                const records = this.data.filter(row => row[dimIndex] == dim);
+                const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
+                seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
                 if(seriesData.radius) {
@@ -689,42 +668,10 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                     seriesItem.center = seriesData.center.map(r => r + '%');
                 }
 
-                if(seriesData.startAngle) {
-                    seriesItem.startAngle = seriesData.startAngle;
-                }
-                if(seriesData.endAngle) {
-                    seriesItem.endAngle = seriesData.endAngle;
-                }
-                if(seriesData.min) {
-                    seriesItem.min = seriesData.min;
-                }
-                if(seriesData.max) {
-                    seriesItem.max = seriesData.max;
-                }
-                if(seriesData.splitNumber) {
-                    seriesItem.splitNumber = seriesData.splitNumber;
-                }
-                if(seriesData.axisLine) {
-                    seriesItem.axisLine = seriesData.axisLine;
-                }
-                if(seriesData.axisTick) {
-                    seriesItem.axisTick = seriesData.axisTick;
-                }
-                if(seriesData.axisLabel) {
-                    seriesItem.axisLabel = seriesData.axisLabel;
-                }
-                if(seriesData.splitLine) {
-                    seriesItem.splitLine = seriesData.splitLine;
-                }
-                if(seriesData.pointer) {
-                    seriesItem.pointer = seriesData.pointer;
-                }
-                if(seriesData.title) {
-                    seriesItem.title = seriesData.title;
-                }
-                if(seriesData.detail) {
-                    seriesItem.detail = seriesData.detail;
-                }
+                delete seriesItem.dimensionField;
+                delete seriesItem.dimensions;
+                delete seriesItem.indicators;
+                delete seriesItem.usingAllDimensions;
                 return seriesItem;
             });
 
