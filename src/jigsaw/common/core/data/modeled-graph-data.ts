@@ -575,6 +575,14 @@ export class GaugeSeries {
     public max?: number = 100;
     public detail?: any = {formatter:'{value}%'};
 
+    public splitNumber?: number;
+    public axisLine?: any;
+    public axisTick?: any;
+    public axisLabel?: any;
+    public splitLine?: any;
+    public pointer?: any;
+    public title?: any;
+
     constructor(name?: string) {
         this.name = name;
     }
@@ -593,7 +601,7 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     };
 
     toolbox = {
-        show : true,
+        show : false,
         feature : {
             restore : {show: true},
             saveAsImage : {show: true}
@@ -668,10 +676,14 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                     seriesItem.center = seriesData.center.map(r => r + '%');
                 }
 
-                delete seriesItem.dimensionField;
-                delete seriesItem.dimensions;
-                delete seriesItem.indicators;
-                delete seriesItem.usingAllDimensions;
+                let extendParam = ['startAngle', 'endAngle', 'min', 'max', 'splitNumber', 'axisLine', 'axisTick', 'axisLabel', 'splitLine', 'pointer', 'title', 'detail'];
+
+                extendParam.forEach(param => {
+                    if(CommonUtils.isDefined(seriesData[param])) {
+                        seriesItem[param] = seriesData[param];
+                    }
+                });
+
                 return seriesItem;
             });
 
