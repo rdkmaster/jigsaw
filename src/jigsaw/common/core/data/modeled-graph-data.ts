@@ -211,8 +211,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public template: ModeledRectangularTemplate = new BasicModeledRectangularTemplate();
 
     public xAxis: { field?: string, style?: EchartXAxis } = {};
-    public yAxis1: EchartYAxis = { position: 'left' };
-    public yAxis2: EchartYAxis = { position: 'right' };
+    public yAxis1: EchartYAxis = {position: 'left'};
+    public yAxis2: EchartYAxis = {position: 'right'};
     public dimensionField: string;
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
@@ -286,7 +286,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
-                    if(dim.shade == 'area') {
+                    if (dim.shade == 'area') {
                         // 面积图
                         seriesData['type'] = 'line';
                         seriesData['areaStyle'] = {};
@@ -381,7 +381,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 // 再取用户配置
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
-                    if(indicator.shade == 'area') {
+                    if (indicator.shade == 'area') {
                         // 面积图
                         seriesData['type'] = 'line';
                         seriesData['areaStyle'] = {};
@@ -555,6 +555,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
     }
 }
 
+
 // ------------------------------------------------------------------------------------------------
 // 仪表盘相关数据对象
 
@@ -573,7 +574,7 @@ export class GaugeSeries {
     public endAngle?: number = -45;
     public min?: number = 0;
     public max?: number = 100;
-    public detail?: any = {formatter:'{value}%'};
+    public detail?: any = {formatter: '{value}%'};
 
     public splitNumber?: number;
     public axisLine?: any;
@@ -601,23 +602,23 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     };
 
     toolbox = {
-        show : false,
-        feature : {
-            restore : {show: true},
-            saveAsImage : {show: true}
+        show: false,
+        feature: {
+            restore: {show: true},
+            saveAsImage: {show: true}
         }
     };
 
     seriesItem = {
         name: '',
-        type:'gauge',
-        center : ['50%', '50%'],
-        radius : '75%',
+        type: 'gauge',
+        center: ['50%', '50%'],
+        radius: '75%',
         startAngle: 225,
         endAngle: -45,
         min: 0,
         max: 100,
-        detail : {formatter:'{value}%'},
+        detail: {formatter: '{value}%'},
         data: null
     };
 }
@@ -669,23 +670,166 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                 seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
-                if(seriesData.radius) {
+                if (seriesData.radius) {
                     seriesItem.radius = seriesData.radius + '%';
                 }
-                if(seriesData.center) {
+                if (seriesData.center) {
                     seriesItem.center = seriesData.center.map(r => r + '%');
                 }
 
                 let extendParam = ['startAngle', 'endAngle', 'min', 'max', 'splitNumber', 'axisLine', 'axisTick', 'axisLabel', 'splitLine', 'pointer', 'title', 'detail'];
 
                 extendParam.forEach(param => {
-                    if(CommonUtils.isDefined(seriesData[param])) {
+                    if (CommonUtils.isDefined(seriesData[param])) {
                         seriesItem[param] = seriesData[param];
                     }
                 });
 
                 return seriesItem;
             });
+
+        return options;
+    }
+
+    public refresh(): void {
+        this._options = undefined;
+        super.refresh();
+    }
+}
+
+// ------------------------------------------------------------------------------------------------
+// 雷达图相关数据对象
+
+export class RadarSeries {
+    public name: string;
+    public type: string = 'radar';
+    public data: any[];
+    public areaStyle: any;
+
+    constructor(name?: string) {
+        this.name = name;
+    }
+}
+
+export class RadarItem {
+    public indicator: RadarIndicator[] = [];
+    public radius: any;
+    public center: any[];
+}
+
+export class RadarIndicator extends Indicator {
+    public max?: number;
+    public min?: number;
+    public color?: string;
+}
+
+export class RadarDimension extends Dimension {
+    public area: boolean; // 是否填充
+}
+
+export abstract class ModeledRadarTemplate extends AbstractModeledGraphTemplate {
+    radarItem?: RadarItem;
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            radar: CommonUtils.extendObjects<EchartLegend>({}, this.radarItem),
+        };
+    }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {};
+
+    legend = {
+        data: null
+    };
+
+    radarItem: RadarItem = {
+        radius: '60%', //radius 在awade中给数组，不识别
+        center: ['50%', '50%'],
+        indicator: []
+    };
+
+    seriesItem: RadarSeries = {
+        type: 'radar', data: null, name: '', areaStyle: null
+    };
+}
+
+export class ModeledRadarGraphData extends AbstractModeledGraphData {
+    public template: ModeledRadarTemplate = new BasicModeledRadarTemplate();
+
+    public dimensionField: string;
+    public usingAllDimensions: boolean = true;
+    public dimensions: RadarDimension[] = [];
+    public indicators: RadarIndicator[] = [];
+
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.dimensionField) {
+            return undefined;
+        }
+        if (!this.indicators || this.indicators.length == 0) {
+            return undefined;
+        }
+        if (!this.usingAllDimensions && (!this.dimensions || this.dimensions.length == 0)) {
+            return undefined;
+        }
+        const dimIndex = this.getIndex(this.dimensionField);
+        if (dimIndex == -1) {
+            return undefined;
+        }
+
+        const options = this.template.getInstance();
+
+        this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
+        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        if (options.legend) {
+            options.legend.data = dimensions.map(d => d.name);
+        }
+        let radarItem = this.template.radarItem;
+        radarItem.indicator = this.indicators.map((indicator: RadarIndicator) => {
+            return {
+                name: indicator.name,
+                max: indicator.max,
+                min: indicator.min ? indicator.min : 0,
+                color: indicator.color
+            }
+        });
+        options.radar = radarItem;
+
+        let series = this.template.seriesItem;
+        series.data = dimensions.map((dimension: RadarDimension) => {
+            const records = this.data.filter(row => row[dimIndex] == dimension.name);
+            const pruned = this.pruneData(records, dimIndex, [dimension], this.indicators)[0];
+            return {
+                name: dimension.name,
+                value: this.indicators.map(i => pruned[i.index]),
+                areaStyle: dimension.area ? {} : null
+            };
+        });
+        options.series = [series];
 
         return options;
     }
