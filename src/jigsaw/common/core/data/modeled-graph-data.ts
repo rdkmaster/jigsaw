@@ -555,3 +555,143 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
     }
 }
 
+// ------------------------------------------------------------------------------------------------
+// 仪表盘相关数据对象
+
+export class GaugeSeries {
+    public dimensionField: string;
+    public dimensions: Dimension[] = [new Dimension('')];
+    public usingAllDimensions: boolean = false;
+    public indicators: Indicator[] = [];
+    public model?: any[];
+    public more?: any;
+
+    public name?: string;
+    public center?: number[] = [50, 50];
+    public radius?: number = 75;
+    public startAngle?: number = 225;
+    public endAngle?: number = -45;
+    public min?: number = 0;
+    public max?: number = 100;
+    public detail?: any = {formatter:'{value}%'};
+
+    public splitNumber?: number;
+    public axisLine?: any;
+    public axisTick?: any;
+    public axisLabel?: any;
+    public splitLine?: any;
+    public pointer?: any;
+    public title?: any;
+
+    constructor(name?: string) {
+        this.name = name;
+    }
+}
+
+export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            toolbox: CommonUtils.extendObjects<EchartTitle>({}, this.toolbox),
+        };
+    }
+
+    tooltip = {
+        formatter: "{a} <br/>{b} : {c}%"
+    };
+
+    toolbox = {
+        show : false,
+        feature : {
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    };
+
+    seriesItem = {
+        name: '',
+        type:'gauge',
+        center : ['50%', '50%'],
+        radius : '75%',
+        startAngle: 225,
+        endAngle: -45,
+        min: 0,
+        max: 100,
+        detail : {formatter:'{value}%'},
+        data: null
+    };
+}
+
+export class ModeledGaugeGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    public template: ModeledPieTemplate = new BasicModeledGaugeTemplate();
+    public series: GaugeSeries[];
+    public title: EchartTitle;
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series || !this.field.length || !this.header.length || !this.data.length) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+        options.series = this.series
+            .filter(seriesData => {
+                if (!seriesData.dimensionField) {
+                    return false;
+                }
+                if (!seriesData.indicators || seriesData.indicators.length == 0) {
+                    return false;
+                }
+                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
+            })
+            .map((seriesData, idx) => {
+                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                const dimIndex = this.getIndex(seriesData.dimensionField);
+                seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
+                seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
+
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem, seriesData);
+
+                // 多指标
+                const dim = dimensions[0].name;
+                const records = this.data.filter(row => row[dimIndex] == dim);
+                const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
+                seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                if(seriesData.radius) {
+                    seriesItem.radius = seriesData.radius + '%';
+                }
+                if(seriesData.center) {
+                    seriesItem.center = seriesData.center.map(r => r + '%');
+                }
+
+                let extendParam = ['startAngle', 'endAngle', 'min', 'max', 'splitNumber', 'axisLine', 'axisTick', 'axisLabel', 'splitLine', 'pointer', 'title', 'detail'];
+
+                extendParam.forEach(param => {
+                    if(CommonUtils.isDefined(seriesData[param])) {
+                        seriesItem[param] = seriesData[param];
+                    }
+                });
+
+                return seriesItem;
+            });
+
+        return options;
+    }
+
+    public refresh(): void {
+        this._options = undefined;
+        super.refresh();
+    }
+}
