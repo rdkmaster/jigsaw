@@ -839,3 +839,162 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         super.refresh();
     }
 }
+
+
+// ------------------------------------------------------------------------------------------------
+// 散点图相关数据对象
+export class ScatterSeries {
+    public dimensionField: string;
+    public dimensions: Dimension[] = [new Dimension('')];
+    public usingAllDimensions: boolean = false;
+    public model?: any[];
+    public more?: any;
+
+    public name?: string;
+
+    constructor(name?: string) {
+        this.name = name;
+    }
+}
+
+export abstract class ModeledScatterTemplate extends AbstractModeledGraphTemplate {
+    xAxis?: EchartXAxis;
+    yAxis?: EchartYAxis;
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+        };
+    }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    };
+
+    toolbox = {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    };
+
+    legend = {
+        data: null
+    };
+
+    seriesItem = {
+        type: 'scatter', data: null, symbolSize: 20
+    };
+}
+
+export class ModeledScatterGraphData extends AbstractModeledGraphData {
+    public template: ModeledRectangularTemplate = new BasicModeledScatterTemplate();
+
+    public xAxis: EchartXAxis = {};
+    public yAxis: EchartYAxis = {};
+    public xAxisKpiField: {name: string, field: string};
+    public yAxisKpiField: {name: string, field: string};
+    public series: ScatterSeries[];
+
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series) {
+            return undefined;
+        }
+
+        if (!this.xAxisKpiField || !this.yAxisKpiField) {
+            return undefined;
+        }
+
+        let [xAxisKpiIndex, yAxisKpiIndex] = [this.getIndex(this.xAxisKpiField.field), this.getIndex(this.yAxisKpiField.field)];
+
+        if(xAxisKpiIndex == -1 || yAxisKpiIndex == -1) {
+            return undefined;
+        }
+
+        const options = this.template.getInstance();
+
+        if (options.legend) {
+            options.legend.data = [];
+        }
+
+        options.xAxis = this.xAxis;
+        options.yAxis = this.yAxis;
+
+        options.series = this.series
+            .filter(seriesData => {
+                if (!seriesData.dimensionField) {
+                    return false;
+                }
+                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
+            })
+            .map((seriesData, idx) => {
+                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                const dimIndex = this.getIndex(seriesData.dimensionField);
+
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                // 多指标
+                this._mergeLegend(options.legend, seriesData.dimensions);
+                const dim = dimensions[0].name;
+                const records = this.data.filter(row => row[dimIndex] == dim)
+                    .map(row => {
+                    return [
+                        row[xAxisKpiIndex],
+                        row[yAxisKpiIndex]
+                    ]
+                });
+
+                seriesItem.data = records;
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+
+                return seriesItem;
+            });
+
+        return options;
+    }
+
+    private _mergeLegend(legendObject: EchartLegend, candidates: (Indicator | Dimension)[]): void {
+        if (!legendObject) {
+            return;
+        }
+        const names = candidates.map(can => can.name);
+        legendObject.data.push(...names.filter(legend => legendObject.data.indexOf(legend) == -1));
+    }
+
+
+    public refresh(): void {
+        this._options = undefined;
+        super.refresh();
+    }
+}
