@@ -675,13 +675,13 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                     records = records.map(row => [row[dimIndex], row[kpiIndex]]);
                     const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
                     indicator.index = 1;
-                    seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
+                    seriesItem.data = this.aggregateData(records, [indicator])
                         .map(row => ({name: indicator.name, value: row[1]}));
                 } else {
                     // 多指标
                     const dim = dimensions[0].name;
                     const records = this.data.filter(row => row[dimIndex] == dim);
-                    const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
+                    const pruned = this.aggregateData(records, seriesData.indicators)[0];
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
                 }
 
@@ -707,10 +707,9 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
         return options;
     }
 
-    protected pruneData(records: (string|number)[][], dimIndex: number, dimensions: Dimension[], indicators: Indicator[]): string[][] {
+    protected aggregateData(records: (string|number)[][], indicators: Indicator[]): string[][] {
         const aggregateBy = indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
-        const pruned: string[][] = [aggregate(<any>records, aggregateBy)];
-        return pruned;
+        return [aggregate(<any>records, aggregateBy)];
     }
 
     public refresh(): void {
