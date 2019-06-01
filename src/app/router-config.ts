@@ -1,311 +1,311 @@
 export const routerConfigPC = [
     {
         path: "pc/alert",
-        loadChildren: "./demo/pc/alert/demo-set.module#AlertDemoModule",
+        loadChildren: () => import('./demo/pc/alert/demo-set.module').then(m => m.AlertDemoModule),
     },
     {
         path: "pc/auto-complete-input",
-        loadChildren: "./demo/pc/auto-complete-input/demo-set.module#AutoCompleteInputDemoModule",
+        loadChildren: () => import('./demo/pc/auto-complete-input/demo-set.module').then(m => m.AutoCompleteInputDemoModule),
     },
     {
         path: "pc/data-encapsulation",
-        loadChildren: "./demo/pc/data-encapsulation/demo-set.module#DataEncapsulationDemoModule",
+        loadChildren: () => import('./demo/pc/data-encapsulation/demo-set.module').then(m => m.DataEncapsulationDemoModule),
     },
     {
         path: "pc/box",
-        loadChildren: "./demo/pc/box/demo-set.module#BoxDemoModule",
+        loadChildren: () => import('./demo/pc/box/demo-set.module').then(m => m.BoxDemoModule),
     },
     {
         path: "pc/button",
-        loadChildren: "./demo/pc/button/demo-set.module#ButtonDemoModule",
+        loadChildren: () => import('./demo/pc/button/demo-set.module').then(m => m.ButtonDemoModule),
     },
     {
         path: "pc/button-bar",
-        loadChildren: "./demo/pc/button-bar/demo-set.module#ButtonBarDemoModule",
+        loadChildren: () => import('./demo/pc/button-bar/demo-set.module').then(m => m.ButtonBarDemoModule),
     },
     {
         path: "pc/cascade",
-        loadChildren: "./demo/pc/cascade/demo-set.module#CascadeDemoModule",
+        loadChildren: () => import('./demo/pc/cascade/demo-set.module').then(m => m.CascadeDemoModule),
     },
     {
         path: "pc/checkbox",
-        loadChildren: "./demo/pc/checkbox/demo-set.module#CheckBoxDemoModule",
+        loadChildren: () => import('./demo/pc/checkbox/demo-set.module').then(m => m.CheckBoxDemoModule),
     },
     {
         path: "pc/collapse",
-        loadChildren: "./demo/pc/collapse/demo-set.module#CollapseDemoModule",
+        loadChildren: () => import('./demo/pc/collapse/demo-set.module').then(m => m.CollapseDemoModule),
     },
     {
         path: "pc/combo-select",
-        loadChildren: "./demo/pc/combo-select/demo-set.module#ComboSelectDemoModule",
+        loadChildren: () => import('./demo/pc/combo-select/demo-set.module').then(m => m.ComboSelectDemoModule),
     },
     {
         path: "pc/dialog",
-        loadChildren: "./demo/pc/dialog/demo-set.module#DialogDemoModule",
+        loadChildren: () => import('./demo/pc/dialog/demo-set.module').then(m => m.DialogDemoModule),
     },
     {
         path: "pc/drag-drop",
-        loadChildren: "./demo/pc/drag-drop/demo-set.module#DragDropDemoModule",
+        loadChildren: () => import('./demo/pc/drag-drop/demo-set.module').then(m => m.DragDropDemoModule),
     },
     {
         path: "pc/drawer",
-        loadChildren: "./demo/pc/drawer/demo-set.module#DrawerDemoModule",
+        loadChildren: () => import('./demo/pc/drawer/demo-set.module').then(m => m.DrawerDemoModule),
     },
     {
         path: "pc/fish-bone",
-        loadChildren: "./demo/pc/fish-bone/demo-set.module#FishBoneDemoModule",
+        loadChildren: () => import('./demo/pc/fish-bone/demo-set.module').then(m => m.FishBoneDemoModule),
     },
     {
         path: "pc/float",
-        loadChildren: "./demo/pc/float/demo-set.module#FloatDemoModule",
+        loadChildren: () => import('./demo/pc/float/demo-set.module').then(m => m.FloatDemoModule),
     },
     {
         path: "pc/form",
-        loadChildren: "./demo/pc/form/demo-set.module#FormDemoModule",
+        loadChildren: () => import('./demo/pc/form/demo-set.module').then(m => m.FormDemoModule),
     },
     {
         path: "pc/graph",
-        loadChildren: "./demo/pc/graph/demo-set.module#GraphDemoModule",
+        loadChildren: () => import('./demo/pc/graph/demo-set.module').then(m => m.GraphDemoModule),
     },
     {
         path: "pc/i18n",
-        loadChildren: "./demo/pc/i18n/demo-set.module#I18nDemoModule",
+        loadChildren: () => import('./demo/pc/i18n/demo-set.module').then(m => m.I18nDemoModule),
     },
     {
         path: "pc/input",
-        loadChildren: "./demo/pc/input/demo-set.module#InputDemoModule",
+        loadChildren: () => import('./demo/pc/input/demo-set.module').then(m => m.InputDemoModule),
     },
     {
         path: "pc/numeric-input",
-        loadChildren: "./demo/pc/numeric-input/demo-set.module#NumericInputDemoModule",
+        loadChildren: () => import('./demo/pc/numeric-input/demo-set.module').then(m => m.NumericInputDemoModule),
     },
     {
         path: "pc/list",
-        loadChildren: "./demo/pc/list/demo-set.module#ListDemoModule",
+        loadChildren: () => import('./demo/pc/list/demo-set.module').then(m => m.ListDemoModule),
     },
     {
         path: "pc/list-lite",
-        loadChildren: "./demo/pc/list-lite/demo-set.module#ListLiteDemoModule",
+        loadChildren: () => import('./demo/pc/list-lite/demo-set.module').then(m => m.ListLiteDemoModule),
     },
     {
         path: "pc/loading",
-        loadChildren: "./demo/pc/loading/demo-set.module#LoadingDemoModule",
+        loadChildren: () => import('./demo/pc/loading/demo-set.module').then(m => m.LoadingDemoModule),
     },
     {
         path: "pc/misc",
-        loadChildren: "./demo/pc/misc/demo-set.module#MiscDemoModule",
+        loadChildren: () => import('./demo/pc/misc/demo-set.module').then(m => m.MiscDemoModule),
     },
     {
         path: "pc/movable",
-        loadChildren: "./demo/pc/movable/demo-set.module#MovableDemoModule",
+        loadChildren: () => import('./demo/pc/movable/demo-set.module').then(m => m.MovableDemoModule),
     },
     {
         path: "pc/notification",
-        loadChildren: "./demo/pc/notification/demo-set.module#NotificationDemoModule",
+        loadChildren: () => import('./demo/pc/notification/demo-set.module').then(m => m.NotificationDemoModule),
     },
     {
         path: "pc/pagination",
-        loadChildren: "./demo/pc/pagination/demo-set.module#PaginationDemoModule",
+        loadChildren: () => import('./demo/pc/pagination/demo-set.module').then(m => m.PaginationDemoModule),
     },
     {
         path: "pc/popup",
-        loadChildren: "./demo/pc/popup/demo-set.module#PopupServiceModule",
+        loadChildren: () => import('./demo/pc/popup/demo-set.module').then(m => m.PopupServiceModule),
     },
     {
         path: "pc/radio-group",
-        loadChildren: "./demo/pc/radio-group/demo-set.module#RadioDemoModule",
+        loadChildren: () => import('./demo/pc/radio-group/demo-set.module').then(m => m.RadioDemoModule),
     },
     {
         path: "pc/radio-lite",
-        loadChildren: "./demo/pc/radio-lite/demo-set.module#RadioLiteDemoModule",
+        loadChildren: () => import('./demo/pc/radio-lite/demo-set.module').then(m => m.RadioLiteDemoModule),
     },
     {
         path: "pc/range-time",
-        loadChildren: "./demo/pc/range-time/demo-set.module#RangeTimeDemoModule",
+        loadChildren: () => import('./demo/pc/range-time/demo-set.module').then(m => m.RangeTimeDemoModule),
     },
     {
         path: "pc/rate",
-        loadChildren: "./demo/pc/rate/demo-set.module#RateDemoModule",
+        loadChildren: () => import('./demo/pc/rate/demo-set.module').then(m => m.RateDemoModule),
     },
     {
         path: "pc/scrollbar",
-        loadChildren: "./demo/pc/scrollbar/demo-set.module#ScrollbarDemoModule",
+        loadChildren: () => import('./demo/pc/scrollbar/demo-set.module').then(m => m.ScrollbarDemoModule),
     },
     {
         path: "pc/select",
-        loadChildren: "./demo/pc/select/demo-set.module#SelectDemoModule",
+        loadChildren: () => import('./demo/pc/select/demo-set.module').then(m => m.SelectDemoModule),
     },
     {
         path: "pc/slider",
-        loadChildren: "./demo/pc/slider/demo-set.module#SliderDemoModule",
+        loadChildren: () => import('./demo/pc/slider/demo-set.module').then(m => m.SliderDemoModule),
     },
     {
         path: "pc/steps",
-        loadChildren: "./demo/pc/steps/demo-set.module#StepsDemoModule",
+        loadChildren: () => import('./demo/pc/steps/demo-set.module').then(m => m.StepsDemoModule),
     },
     {
         path: "pc/switch",
-        loadChildren: "./demo/pc/switch/demo-set.module#SwitchDemoModule",
+        loadChildren: () => import('./demo/pc/switch/demo-set.module').then(m => m.SwitchDemoModule),
     },
     {
         path: "pc/table",
-        loadChildren: "./demo/pc/table/demo-set.module#TableDemoModule",
+        loadChildren: () => import('./demo/pc/table/demo-set.module').then(m => m.TableDemoModule),
     },
     {
         path: "pc/tab",
-        loadChildren: "./demo/pc/tab/demo-set.module#TabsDemoModule",
+        loadChildren: () => import('./demo/pc/tab/demo-set.module').then(m => m.TabsDemoModule),
     },
     {
         path: "pc/tag",
-        loadChildren: "./demo/pc/tag/demo-set.module#TagDemoModule",
+        loadChildren: () => import('./demo/pc/tag/demo-set.module').then(m => m.TagDemoModule),
     },
     {
         path: "pc/textarea",
-        loadChildren: "./demo/pc/textarea/demo-set.module#TextareaDemoModule",
+        loadChildren: () => import('./demo/pc/textarea/demo-set.module').then(m => m.TextareaDemoModule),
     },
     {
         path: "pc/tile",
-        loadChildren: "./demo/pc/tile/demo-set.module#TileSelectDemoModule",
+        loadChildren: () => import('./demo/pc/tile/demo-set.module').then(m => m.TileSelectDemoModule),
     },
     {
         path: "pc/tile-lite",
-        loadChildren: "./demo/pc/tile-lite/demo-set.module#TileLiteDemoModule",
+        loadChildren: () => import('./demo/pc/tile-lite/demo-set.module').then(m => m.TileLiteDemoModule),
     },
     {
         path: "pc/time",
-        loadChildren: "./demo/pc/time/demo-set.module#TimeDemoModule",
+        loadChildren: () => import('./demo/pc/time/demo-set.module').then(m => m.TimeDemoModule),
     },
     {
         path: "pc/tooltip",
-        loadChildren: "./demo/pc/tooltip/demo-set.module#TooltipDemoModule",
+        loadChildren: () => import('./demo/pc/tooltip/demo-set.module').then(m => m.TooltipDemoModule),
     },
     {
         path: "pc/tree",
-        loadChildren: "./demo/pc/tree/demo-set.module#ZtreeDemoModule",
+        loadChildren: () => import('./demo/pc/tree/demo-set.module').then(m => m.ZtreeDemoModule),
     },
     {
         path: "pc/trusted-html",
-        loadChildren: "./demo/pc/trusted-html/demo-set.module#TrustedHtmlDemoModule",
+        loadChildren: () => import('./demo/pc/trusted-html/demo-set.module').then(m => m.TrustedHtmlDemoModule),
     },
     {
         path: "pc/upload",
-        loadChildren: "./demo/pc/upload/demo-set.module#UploadDemoModule",
+        loadChildren: () => import('./demo/pc/upload/demo-set.module').then(m => m.UploadDemoModule),
     },
     {
         path: "pc/icon",
-        loadChildren: "./demo/pc/icon/demo-set.module#IconDemoModule",
+        loadChildren: () => import('./demo/pc/icon/demo-set.module').then(m => m.IconDemoModule),
     },
     {
         path: "pc/transfer",
-        loadChildren: "./demo/pc/transfer/demo-set.module#TransferDemoModule",
+        loadChildren: () => import('./demo/pc/transfer/demo-set.module').then(m => m.TransferDemoModule),
     },
     {
         path: "pc/breadcrumb",
-        loadChildren: "./demo/pc/breadcrumb/demo-set.module#BreadcrumbDemoModule",
+        loadChildren: () => import('./demo/pc/breadcrumb/demo-set.module').then(m => m.BreadcrumbDemoModule),
     }
 ];
 export const routerConfigMobile = [
     {
         path: "mobile/alert",
-        loadChildren: "./demo/mobile/alert/demo-set.module#AlertMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/alert/demo-set.module').then(m => m.AlertMobileDemoModule),
     },
     {
         path: "mobile/button",
-        loadChildren: "./demo/mobile/button/demo-set.module#ButtonMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/button/demo-set.module').then(m => m.ButtonMobileDemoModule),
     },
     {
         path: "mobile/button-bar",
-        loadChildren: "./demo/mobile/button-bar/demo-set.module#ButtonBarMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/button-bar/demo-set.module').then(m => m.ButtonBarMobileDemoModule),
     },
 
     {
         path: "mobile/checkbox",
-        loadChildren: "./demo/mobile/checkbox/demo-set.module#CheckBoxMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/checkbox/demo-set.module').then(m => m.CheckBoxMobileDemoModule),
     },
     {
         path: "mobile/dialog",
-        loadChildren: "./demo/mobile/dialog/demo-set.module#DialogMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/dialog/demo-set.module').then(m => m.DialogMobileDemoModule),
     },
     {
         path: "mobile/float",
-        loadChildren: "./demo/mobile/float/demo-set.module#FloatMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/float/demo-set.module').then(m => m.FloatMobileDemoModule),
     },
     {
         path: "mobile/graph",
-        loadChildren: "./demo/mobile/graph/demo-set.module#GraphMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/graph/demo-set.module').then(m => m.GraphMobileDemoModule),
     },
     {
         path: "mobile/i18n",
-        loadChildren: "./demo/mobile/i18n/demo-set.module#I18nMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/i18n/demo-set.module').then(m => m.I18nMobileDemoModule),
     },
     {
         path: "mobile/icon",
-        loadChildren: "./demo/mobile/icon/demo-set.module#IconMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/icon/demo-set.module').then(m => m.IconMobileDemoModule),
     },
     {
         path: "mobile/input",
-        loadChildren: "./demo/mobile/input/demo-set.module#InputMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/input/demo-set.module').then(m => m.InputMobileDemoModule),
     },
     {
         path: "mobile/list",
-        loadChildren: "./demo/mobile/list/demo-set.module#ListMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/list/demo-set.module').then(m => m.ListMobileDemoModule),
     },
     {
         path: "mobile/list-lite",
-        loadChildren: "./demo/mobile/list-lite/demo-set.module#ListLiteMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/list-lite/demo-set.module').then(m => m.ListLiteMobileDemoModule),
     },
     {
         path: "mobile/loading",
-        loadChildren: "./demo/mobile/loading/demo-set.module#LoadingMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/loading/demo-set.module').then(m => m.LoadingMobileDemoModule),
     },
     {
         path: "mobile/movable",
-        loadChildren: "./demo/mobile/movable/demo-set.module#MovableMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/movable/demo-set.module').then(m => m.MovableMobileDemoModule),
     },
     {
         path: "mobile/radio-group",
-        loadChildren: "./demo/mobile/radio-group/demo-set.module#RadioMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/radio-group/demo-set.module').then(m => m.RadioMobileDemoModule),
     },
     {
         path: "mobile/radio-lite",
-        loadChildren: "./demo/mobile/radio-lite/demo-set.module#RadioLiteMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/radio-lite/demo-set.module').then(m => m.RadioLiteMobileDemoModule),
     },
     {
         path: "mobile/rate",
-        loadChildren: "./demo/mobile/rate/demo-set.module#RateMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/rate/demo-set.module').then(m => m.RateMobileDemoModule),
     },
     {
         path: "mobile/scrollbar",
-        loadChildren: "./demo/mobile/scrollbar/demo-set.module#ScrollbarMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/scrollbar/demo-set.module').then(m => m.ScrollbarMobileDemoModule),
     },
     {
         path: "mobile/slider",
-        loadChildren: "./demo/mobile/slider/demo-set.module#SliderMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/slider/demo-set.module').then(m => m.SliderMobileDemoModule),
     },
 
     {
         path: "mobile/switch",
-        loadChildren: "./demo/mobile/switch/demo-set.module#SwitchMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/switch/demo-set.module').then(m => m.SwitchMobileDemoModule),
     },
     {
         path: "mobile/tab",
-        loadChildren: "./demo/mobile/tab/demo-set.module#TabsMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/tab/demo-set.module').then(m => m.TabsMobileDemoModule),
     },
     {
         path: "mobile/tag",
-        loadChildren: "./demo/mobile/tag/demo-set.module#TagMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/tag/demo-set.module').then(m => m.TagMobileDemoModule),
     },
     {
         path: "mobile/tile",
-        loadChildren: "./demo/mobile/tile/demo-set.module#TileSelectMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/tile/demo-set.module').then(m => m.TileSelectMobileDemoModule),
     },
     {
         path: "mobile/tile-lite",
-        loadChildren: "./demo/mobile/tile-lite/demo-set.module#TileLiteMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/tile-lite/demo-set.module').then(m => m.TileLiteMobileDemoModule),
     },
     {
         path: "mobile/trusted-html",
-        loadChildren: "./demo/mobile/trusted-html/demo-set.module#TrustedHtmlMobileDemoModule",
+        loadChildren: () => import('./demo/mobile/trusted-html/demo-set.module').then(m => m.TrustedHtmlMobileDemoModule),
     },
 ];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

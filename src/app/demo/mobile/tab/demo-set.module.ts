@@ -30,7 +30,7 @@ export const routerConfig = [
         path: 'api', component: DynamicTabDemoComponent,
         children: [
             {
-                path: 'tab-page', loadChildren: './api/tabContent/tab-content.module#TabMobileContentModule'
+                path: 'tab-page', loadChildren: () => import('./api/tabContent/tab-content.module').then(m => m.TabMobileContentModule)
             }
         ]
     },
