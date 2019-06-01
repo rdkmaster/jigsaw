@@ -15,5 +15,8 @@
             "jasmine",
             "node"
         ]
+    },
+    "angularCompilerOptions": {
+        "preserveWhitespaces": "off"
     }
 }
