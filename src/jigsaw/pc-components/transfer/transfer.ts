@@ -10,7 +10,7 @@ import {AbstractJigsawGroupLiteComponent} from "../list-and-tile/group-lite-comm
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {Subscriber} from "rxjs/Subscriber";
+import {Subscriber} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {LoadingService} from "../../common/service/loading.service";

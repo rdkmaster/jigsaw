@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({

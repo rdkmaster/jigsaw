@@ -22,7 +22,7 @@ import {JigsawMobileTabPane} from "./tab-pane";
 import {JigsawMobileTabContent, JigsawMobileTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {PopupService, PopupSize, PopupInfo, PopupPositionValue} from "../../common/service/popup.service";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。

@@ -1,7 +1,7 @@
-﻿import {HttpClient} from "@angular/common/http";
-import {Subject} from "rxjs/Subject";
+import {HttpClient} from "@angular/common/http";
+import {Subject} from "rxjs";
 import "rxjs/add/operator/map";
-import 'rxjs/add/operator/debounceTime';
+
 
 import {AbstractGeneralCollection} from "./general-collection";
 import {

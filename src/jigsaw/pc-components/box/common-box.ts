@@ -1,5 +1,5 @@
 import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2} from "@angular/core";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBox} from "./box";

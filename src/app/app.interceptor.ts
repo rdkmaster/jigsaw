@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {CommonUtils} from "../jigsaw/common/core/utils/common-utils";
 import {RawTableData, TableData} from "../jigsaw/common/core/data/table-data";
 import {PagingInfo} from "../jigsaw/common/core/data/component-data";

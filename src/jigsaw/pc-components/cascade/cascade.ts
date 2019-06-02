@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";

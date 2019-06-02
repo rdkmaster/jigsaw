@@ -1,7 +1,7 @@
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import "rxjs/add/operator/map";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 

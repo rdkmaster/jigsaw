@@ -3,7 +3,7 @@
  */
 
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
-import {combineLatest} from "rxjs/observable/combineLatest";
+import {combineLatest} from "rxjs";
 import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
 import {EchartOptions} from "jigsaw/common/core/data/echart-types";
 import {JigsawGraph} from "jigsaw/pc-components/graph/graph";

@@ -17,9 +17,9 @@ import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import {Subscription} from "rxjs/Subscription";
+
+
+import {Subscription} from "rxjs";
 import {JigsawTheme} from "../core/theming/theme";
 
 export enum PopupEffect {

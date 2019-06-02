@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+
+
 import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types"
 import {TreeData} from "jigsaw/common/core/data/tree-data";
 

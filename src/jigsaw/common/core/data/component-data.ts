@@ -1,6 +1,6 @@
 import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 /**

@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "root": "",
@@ -21,13 +21,13 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
+              "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
@@ -94,7 +94,7 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
