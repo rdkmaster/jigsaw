@@ -113,7 +113,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
-    @ViewChild(JigsawInput)
+    @ViewChild(JigsawInput, {static: false})
     protected input: JigsawInput;
 
     ngAfterViewInit() {

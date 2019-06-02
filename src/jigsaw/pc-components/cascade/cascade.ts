@@ -87,7 +87,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * @internal
      */
-    @ViewChild(JigsawTab) public _tabs: JigsawTab;
+    @ViewChild(JigsawTab, {static: false}) public _tabs: JigsawTab;
 
     /**
      * @internal

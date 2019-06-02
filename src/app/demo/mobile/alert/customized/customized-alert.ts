@@ -10,7 +10,7 @@ import {JigsawMobileAlert} from "jigsaw/mobile-components/alert/alert";
 })
 //todo encapsulation属性为了覆盖原来控件的样式属性，如有需要请添加自己的演示到buttons的class属性里面。
 export class CustomizedAlert extends DialogBase {
-    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
 
     afterClose(message?) {
         console.log("after close..." + (message ? message : ''));

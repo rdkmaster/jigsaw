@@ -29,7 +29,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         super();
     }
 
-    @ViewChild(JigsawRendererHost)
+    @ViewChild(JigsawRendererHost, {static: false})
     protected rendererHost: JigsawRendererHost;
     protected targetData: TableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;

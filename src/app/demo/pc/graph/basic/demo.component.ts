@@ -13,7 +13,7 @@ import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
 export class BasicGraphComponent implements OnInit {
     data: AbstractGraphData;
 
-    @ViewChild("graph") graph: JigsawGraph;
+    @ViewChild("graph", {static: false}) graph: JigsawGraph;
 
     patchOption = {
         title: {

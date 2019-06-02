@@ -34,7 +34,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     @Input()
     public valid: boolean = true;
 
-    @ViewChild("timeStart") private _timeStart: JigsawTime;
+    @ViewChild("timeStart", {static: false}) private _timeStart: JigsawTime;
 
     /**
      * @internal

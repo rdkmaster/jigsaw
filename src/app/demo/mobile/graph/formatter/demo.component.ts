@@ -2,6 +2,7 @@
  * Created by 10177553 on 2017/3/28.
  */
 
+import {debounceTime} from "rxjs/operators";
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
 import {EchartOptions} from "jigsaw/common/core/data/echart-types";
@@ -13,7 +14,7 @@ import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
 
 export class GraphFormatterComponent implements OnInit, AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph") graph: JigsawMobileGraph;
+    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
 
 
     ngOnInit() {
@@ -22,12 +23,12 @@ export class GraphFormatterComponent implements OnInit, AfterViewChecked {
 
     ngAfterViewChecked() {
         if (this.graph) {
-            this.graph.mouseover.debounceTime(500).subscribe((event) => {
+            this.graph.mouseover.pipe(debounceTime(500)).subscribe((event: any) => {
                 if (event.targetType == "axisLabel") {
                     this.addSpan(this.graph, event);
                 }
             });
-            this.graph.mouseout.debounceTime(500).subscribe((event) => {
+            this.graph.mouseout.pipe(debounceTime(500)).subscribe(() => {
                 this.deleteSpan(this.graph);
             });
         }
@@ -37,14 +38,13 @@ export class GraphFormatterComponent implements OnInit, AfterViewChecked {
         let p = graph._elementRef.nativeElement;
         let w = p.offsetWidth / 2;
         let span = document.createElement("span");
-        let css = `position: absolute;
+        span.style.cssText = `position: absolute;
                   color: rgb(255, 255, 255); 
                   background: rgba(125, 125, 125, 0.9); 
                   display: inline-block; 
                   padding: 5px; 
                   border: 1px solid rgb(0, 0, 0); 
                   border-radius: 4px;`;
-        span.style.cssText = css;
         let left = event.event.offsetX;
         span.style.left = left + 'px';
         if (w < left) {

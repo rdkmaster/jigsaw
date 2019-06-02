@@ -10,7 +10,7 @@ import {AjaxInterceptor} from "../../../../app.interceptor";
 })
 export class TableCellSelectRenderDemoComponent {
 
-    @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
+    @ViewChild("jobCellRender", {static: false}) jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
 

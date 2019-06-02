@@ -8,7 +8,7 @@ import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
 
     public data: TreeData;
 

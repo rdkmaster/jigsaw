@@ -9,7 +9,7 @@ import {JigsawMobileTab} from "jigsaw/mobile-components/tabs/tab";
 })
 export class JigsawShowTabComponent {
 
-    @ViewChild('myTab') myTab: JigsawMobileTab;
+    @ViewChild('myTab', {static: false}) myTab: JigsawMobileTab;
 
     showTab() {
         this.myTab.showTab(1);

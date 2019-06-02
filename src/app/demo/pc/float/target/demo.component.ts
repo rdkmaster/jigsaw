@@ -28,9 +28,9 @@ import {UserComponent} from "./user-component/user-component";
     `]
 })
 export class FloatTargetDemo implements AfterViewInit {
-    @ViewChild('jigsawFloatArea1')
+    @ViewChild('jigsawFloatArea1', {static: false})
     jigsawFloatArea1: TemplateRef<any>;
-    @ViewChild('jigsawFloatArea2')
+    @ViewChild('jigsawFloatArea2', {static: false})
     jigsawFloatArea2: TemplateRef<any>;
 
     public target: any = UserComponent;

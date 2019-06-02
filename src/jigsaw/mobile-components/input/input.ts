@@ -145,7 +145,7 @@ export class JigsawMobileInput extends AbstractJigsawComponent
     }
 
 
-    @ViewChild('input')
+    @ViewChild('input', {static: false})
     private _inputElement: ElementRef;
 
     /**

@@ -30,9 +30,9 @@ export class DialogPopOptionDemo implements OnInit {
 
     offset: PopupPositionOffset;
 
-    @ViewChild("left") left: ElementRef;
-    @ViewChild("middle") middle: ElementRef;
-    @ViewChild("right") right: ElementRef;
+    @ViewChild("left", {static: false}) left: ElementRef;
+    @ViewChild("middle", {static: false}) middle: ElementRef;
+    @ViewChild("right", {static: false}) right: ElementRef;
 
     constructor(private popupService: PopupService) {
     }

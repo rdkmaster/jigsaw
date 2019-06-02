@@ -7,7 +7,7 @@ import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
 export class InputFocusDemoComponent {
     inputValue: any;
     focusMessage: string;
-    @ViewChild('myInput') myInput: JigsawMobileInput;
+    @ViewChild('myInput', {static: false}) myInput: JigsawMobileInput;
 
     click() {
         this.myInput.focus();

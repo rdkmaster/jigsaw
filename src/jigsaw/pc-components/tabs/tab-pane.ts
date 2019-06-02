@@ -39,8 +39,8 @@ export class JigsawTabPane {
     @Input()
     public initData: Object;
 
-    @ViewChild('label') label: TemplateRef<any> | Type<IDynamicInstantiatable>;
-    @ContentChild(TemplateRef) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ViewChild('label', {static: false}) label: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ContentChild(TemplateRef, {static: false}) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }
 
 

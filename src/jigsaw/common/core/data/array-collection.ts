@@ -1,7 +1,8 @@
+import {debounceTime} from "rxjs/operators";
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Subject, Subscription} from "rxjs";
-import "rxjs/add/operator/map";
+import {map} from "rxjs/operators";
 
 import {
     ComponentDataHelper,
@@ -511,7 +512,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
         const op = HttpClientOptions.prepare(optionsOrUrl);
         this.http.request(op.method, op.url, op)
-            .map(res => this.reviseData(res) as T[])
+            .pipe(map(res => this.reviseData(res) as T[]))
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
                 error => this.ajaxErrorHandler(error),
@@ -642,11 +643,11 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 
     private _initSubjects(): void {
-        this._filterSubject.debounceTime(300).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
         });
-        this._sortSubject.debounceTime(300).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
             this.sortInfo = sort;
             this._ajax();
         });
@@ -716,18 +717,19 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         }
 
         this.http.request(options.method, PagingInfo.pagingServerUrl, options)
-            .map(res => this.reviseData(res))
-            .map(data => {
-                this._updatePagingInfo(data);
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
 
-                const tableData: TableData = new TableData();
-                if (TableData.isTableData(data)) {
-                    tableData.fromObject(data);
-                } else {
-                    console.error('invalid data format, need a TableData object.');
-                }
-                return tableData;
-            })
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
             .subscribe(
                 tableData => this.ajaxSuccessHandler(tableData),
                 error => this.ajaxErrorHandler(error),
@@ -923,12 +925,12 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     private _initSubjects(): void {
-        this._filterSubject.debounceTime(300).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
         });
 
-        this._sortSubject.debounceTime(300).subscribe((sortInfo: DataSortInfo) => {
+        this._sortSubject.pipe(debounceTime(300)).subscribe((sortInfo: DataSortInfo) => {
             const orderFlag = sortInfo.order == SortOrder.asc ? 1 : -1;
             if (sortInfo.as == SortAs.number) {
                 this.filteredData.sort((a, b) => orderFlag * (Number(sortInfo.field ? a[sortInfo.field] : a) - Number(sortInfo.field ? b[sortInfo.field] : b)));
@@ -946,7 +948,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        if(!this._bakData) return;
+        if (!this._bakData) return;
         if (term instanceof Function) {
             this.filteredData = this._bakData.filter(term.bind(fields));
             this.firstPage();

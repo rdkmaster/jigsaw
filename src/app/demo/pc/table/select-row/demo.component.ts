@@ -16,7 +16,7 @@ export class TableSelectRowDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
     }
 
-    @ViewChild('Table1')
+    @ViewChild('Table1', {static: false})
     private _table: JigsawTable;
 
     getCurrentRow() {

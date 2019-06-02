@@ -22,7 +22,7 @@ import {
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererDemoComponent {
-    @ViewChild('operation') operationTemplate: TemplateRef<any>;
+    @ViewChild('operation', {static: false}) operationTemplate: TemplateRef<any>;
 
     message: string = 'change message goes here ...';
     tableData: LocalPageableTableData;

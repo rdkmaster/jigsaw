@@ -24,7 +24,7 @@ export class JigsawEditableTabTitleRenderer implements IDynamicInstantiatable {
     public initData: any;
     public title: string = 'New Tab';
 
-    @ViewChild(JigsawInput)
+    @ViewChild(JigsawInput, {static: false})
     public input: JigsawInput;
 
     /**

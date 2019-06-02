@@ -68,7 +68,7 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
     template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltipMessage"></span></jigsaw-tooltip-dialog>'
 })
 export class JigsawSimpleTooltipComponent extends TooltipBase {
-    @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
+    @ViewChild(JigsawTooltipDialog, {static: false}) public tooltip: JigsawTooltipDialog;
 
     public tooltipMessage:string = '';
 

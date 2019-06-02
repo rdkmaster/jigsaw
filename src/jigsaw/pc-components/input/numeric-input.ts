@@ -1,3 +1,4 @@
+import {debounceTime} from "rxjs/operators";
 import {
     NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, AfterContentInit,
     Renderer2, forwardRef
@@ -41,7 +42,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     ngOnInit() {
-        this.valueChange.debounceTime(300).subscribe((val) => {
+        this.valueChange.pipe(debounceTime(300)).subscribe((val) => {
             if(val < this.min) {
                 this._value = this.min;
                 this.valueChange.emit(this._value);
@@ -209,7 +210,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    @ViewChild('input')
+    @ViewChild('input', {static: false})
     private _inputElement: ElementRef;
 
     public _$upDisabled: boolean;

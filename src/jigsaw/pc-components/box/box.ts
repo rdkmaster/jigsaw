@@ -2,6 +2,7 @@ import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
     Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
 } from "@angular/core";
+import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 
@@ -40,10 +41,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     @ContentChildren(JigsawBox)
     private _childrenBoxRaw: QueryList<JigsawBox>;
 
-    @ViewChild('resizeLine')
+    @ViewChild('resizeLine', {static: false})
     private _resizeLine: ElementRef;
 
-    @ViewChild('resizeLineParent')
+    @ViewChild('resizeLineParent', {static: false})
     private _resizeLineParent: ElementRef;
 
     /**
@@ -57,8 +58,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this.childrenBox = v;
     }
 
-    private _removeResizeStartListener: EventEmitter<any>;
-    private _removeResizeEndListener: EventEmitter<any>;
+    private _removeResizeStartListener: Subscription;
+    private _removeResizeEndListener: Subscription;
     private _removeWindowResizeListener: CallbackRemoval;
 
     private _isCurrentResizingBox: boolean;

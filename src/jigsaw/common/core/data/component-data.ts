@@ -1,3 +1,4 @@
+import {debounceTime} from "rxjs/operators";
 import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
 import {Subscription} from "rxjs";
@@ -663,7 +664,7 @@ export class PagingInfo implements IEmittable {
     }
 
     public subscribe(callback?: (value:any) => void): Subscription {
-        return this._emitter.debounceTime(300).subscribe(callback);
+        return this._emitter.pipe(debounceTime(300)).subscribe(callback);
     }
 
     public unsubscribe() {

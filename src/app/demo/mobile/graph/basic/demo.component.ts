@@ -13,7 +13,7 @@ import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
 export class BasicGraphComponent implements OnInit {
     data: AbstractGraphData;
 
-    @ViewChild("graph") graph: JigsawMobileGraph;
+    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
 
     patchOption = {
         title: {

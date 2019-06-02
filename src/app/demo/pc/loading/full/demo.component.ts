@@ -6,7 +6,7 @@ import {LoadingService} from "jigsaw/common/service/loading.service";
     styleUrls: ['./demo.component.css']
 })
 export class LoadingFullDemoComponent {
-    @ViewChild('block')
+    @ViewChild('block', {static: false})
     private _block: ElementRef;
 
     public isLoading: boolean = false;

@@ -200,7 +200,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
         super();
     }
 
-    @ViewChild(JigsawScrollHandle) private _sliderHandle: JigsawScrollHandle;
+    @ViewChild(JigsawScrollHandle, {static: false}) private _sliderHandle: JigsawScrollHandle;
 
     private _value: number;
 

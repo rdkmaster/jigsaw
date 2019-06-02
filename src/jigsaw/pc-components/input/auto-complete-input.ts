@@ -1,3 +1,4 @@
+import {debounceTime} from "rxjs/operators";
 import {
     ChangeDetectorRef,
     Component,
@@ -97,10 +98,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Input()
     public valid: boolean = true;
 
-    @ViewChild('dropdownTemp')
+    @ViewChild('dropdownTemp', {static: false})
     private _dropdownTemp: TemplateRef<any>;
 
-    @ViewChild('input')
+    @ViewChild('input', {static: false})
     private _input: JigsawInput;
 
     /**
@@ -123,7 +124,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
 
     ngOnInit() {
         super.ngOnInit();
-        this._input.valueChange.debounceTime(300).subscribe(() => {
+        this._input.valueChange.pipe(debounceTime(300)).subscribe(() => {
             this._getFilteredDropDownData();
         });
     }

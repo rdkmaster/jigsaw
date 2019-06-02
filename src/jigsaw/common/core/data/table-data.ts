@@ -1,6 +1,6 @@
+import {debounceTime, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
-import "rxjs/add/operator/map";
 
 
 import {AbstractGeneralCollection} from "./general-collection";
@@ -389,11 +389,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     private _initSubjects(): void {
-        this._filterSubject.debounceTime(300).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
         });
-        this._sortSubject.debounceTime(300).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
             this.sortInfo = sort;
             this._ajax();
         });
@@ -481,18 +481,19 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
 
         this.http.request(options.method, PagingInfo.pagingServerUrl, options)
-            .map(res => this.reviseData(res))
-            .map(data => {
-                this._updatePagingInfo(data);
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
 
-                const tableData: TableData = new TableData();
-                if (TableData.isTableData(data)) {
-                    tableData.fromObject(data);
-                } else {
-                    console.error('invalid data format, need a TableData object.');
-                }
-                return tableData;
-            })
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
             .subscribe(
                 tableData => this.ajaxSuccessHandler(tableData),
                 error => this.ajaxErrorHandler(error),

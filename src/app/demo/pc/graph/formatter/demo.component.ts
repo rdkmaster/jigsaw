@@ -2,6 +2,7 @@
  * Created by 10177553 on 2017/3/28.
  */
 
+import {debounceTime} from "rxjs/operators";
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
 import {combineLatest} from "rxjs";
 import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
@@ -15,7 +16,7 @@ import {JigsawInput} from "jigsaw/pc-components/input/input";
 
 export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph") graph: JigsawGraph;
+    @ViewChild("graph", {static: false}) graph: JigsawGraph;
 
 
     ngOnInit() {
@@ -23,12 +24,12 @@ export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     }
     ngAfterViewChecked(){
         if(this.graph){
-            this.graph.mouseover.debounceTime(500).subscribe((event) =>{
+            this.graph.mouseover.pipe(debounceTime(500)).subscribe((event) =>{
                 if(event.targetType == "axisLabel" ){
                     this.addSpan(this.graph,event);
                 }
             });
-            this.graph.mouseout.debounceTime(500).subscribe((event) =>{
+            this.graph.mouseout.pipe(debounceTime(500)).subscribe((event) =>{
                     this.deleteSpan(this.graph);
             });
         }

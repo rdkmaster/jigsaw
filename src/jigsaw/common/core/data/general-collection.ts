@@ -1,6 +1,6 @@
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import "rxjs/add/operator/map";
+import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
@@ -88,7 +88,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
         const op = HttpClientOptions.prepare(optionsOrUrl);
         this.http.request(op.method, op.url, op)
-            .map(res => this.reviseData(res))
+            .pipe(map(res => this.reviseData(res)))
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
                 error => this.ajaxErrorHandler(error),

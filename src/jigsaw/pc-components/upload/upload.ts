@@ -27,7 +27,7 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
         super(_http, _renderer, _elementRef, _translateService);
     }
 
-    @ViewChild('fileInput')
+    @ViewChild('fileInput', {static: false})
     private _fileInput: ElementRef;
 
     ngAfterViewInit() {

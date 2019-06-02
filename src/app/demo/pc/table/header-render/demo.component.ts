@@ -9,7 +9,7 @@ import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 })
 export class TableSetHeaderRenderDemoComponent {
 
-    @ViewChild("headerRender") headerRender: TemplateRef<any>;
+    @ViewChild("headerRender", {static: false}) headerRender: TemplateRef<any>;
 
     tableData: TableData;
 

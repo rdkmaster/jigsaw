@@ -7,7 +7,7 @@ import {TabContentDefine} from "./tabContent/tabContent";
     styleUrls: ['./demo.component.css']
 })
 export class DynamicTabDemoComponent {
-    @ViewChild(JigsawTab) tabs: JigsawTab;
+    @ViewChild(JigsawTab, {static: false}) tabs: JigsawTab;
 
     public removeTab(index) {
         this.tabs.removeTab(index);

@@ -20,7 +20,7 @@ export class CollapseWithNGForDemoComponent {
         {id: 3, name: "NE3", content: "content of ne3"}
     ];
 
-    @ViewChild("coll_ne") collapse: JigsawCollapse;
+    @ViewChild("coll_ne", {static: false}) collapse: JigsawCollapse;
 
     activePane: JigsawCollapsePane;
 

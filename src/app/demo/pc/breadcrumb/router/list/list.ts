@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {map} from "rxjs/operators";
 import {ProductService} from "../product.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 
@@ -16,9 +17,9 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 })
 export class BreadcrumbRouterList {
     constructor(public productService: ProductService, public route: ActivatedRoute) {
-        this.productList = this.route.paramMap.map((params: ParamMap) => {
+        this.productList = this.route.paramMap.pipe(map((params: ParamMap) => {
             return this.productService.getProductListByTypeId(parseInt(params.get('typeId')))
-        })
+        }));
     }
 
     productList: any;

@@ -2,6 +2,7 @@
  * Created by 10177553 on 2017/3/28.
  */
 
+import {debounceTime} from "rxjs/operators";
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {combineLatest} from "rxjs";
 import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
@@ -18,11 +19,11 @@ export class GraphResizeComponent implements OnInit {
     graphWidth: string = '100%';
     graphHeight: string = '300';
 
-    @ViewChild("graph") graph: JigsawGraph;
+    @ViewChild("graph", {static: false}) graph: JigsawGraph;
 
-    @ViewChild("widthInput") widthInput: JigsawInput;
+    @ViewChild("widthInput", {static: false}) widthInput: JigsawInput;
 
-    @ViewChild("heightInput") heightInput: JigsawInput;
+    @ViewChild("heightInput", {static: false}) heightInput: JigsawInput;
 
     resizeGraph() {
         this.graph.resize();
@@ -30,7 +31,7 @@ export class GraphResizeComponent implements OnInit {
 
     ngOnInit() {
         this.data = new GraphDataDemo();
-        combineLatest(this.widthInput.valueChange, this.heightInput.valueChange).debounceTime(500)
+        combineLatest(this.widthInput.valueChange, this.heightInput.valueChange).pipe(debounceTime(500))
             .subscribe(
                 () => {
                     this.graphWidth = <string>this.widthInput.value;

@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ProductService} from "../product.service";
+import {map} from "rxjs/operators";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 
 @Component({
@@ -11,9 +12,9 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 })
 export class BreadcrumbRouterDetail implements OnInit {
     constructor(public productService: ProductService, public route: ActivatedRoute) {
-        this.product = this.route.paramMap.map((params: ParamMap) => {
+        this.product = this.route.paramMap.pipe(map((params: ParamMap) => {
             return this.productService.getProductById(parseInt(params.get('id')))
-        })
+        }));
     }
 
     product: any;

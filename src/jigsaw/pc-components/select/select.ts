@@ -202,7 +202,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     @Output() public remove: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
+    @ViewChild(JigsawListLite, {static: false}) private _listCmp: JigsawListLite;
 
     /**
      * @internal
