@@ -1005,7 +1005,7 @@ export class MapSeries {
 
     public name?: string;
 
-    public mapType?: string;
+    public mapType?: string = '';
     public label?: string;
     public itemStyle?: string;
     public animation?: string;
@@ -1015,7 +1015,11 @@ export class MapSeries {
     }
 }
 
-export class BasicModeledMapTemplate extends ModeledRectangularTemplate {
+export abstract class ModeledMapTemplate extends AbstractModeledGraphTemplate {
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledMapTemplate extends ModeledMapTemplate {
     getInstance(): EchartOptions {
         return {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
@@ -1035,7 +1039,7 @@ export class BasicModeledMapTemplate extends ModeledRectangularTemplate {
         formatter: ""
     };
 
-    visualMap = {};
+    visualMap = {more: ''};
 
     seriesItem = {
         type: 'map',
@@ -1049,7 +1053,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public template: ModeledPieTemplate = new BasicModeledMapTemplate();
+    public template: BasicModeledMapTemplate = new BasicModeledMapTemplate();
     public series: MapSeries[];
     private _options: EchartOptions;
 
@@ -1100,6 +1104,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
                     .map(row => ({name: row[0], value: row[1]}));
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                seriesItem.mapType = seriesData.mapType;
 
                 let extendParam = ['label', 'itemStyle', 'animation'];
 
