@@ -1,5 +1,5 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output, forwardRef
+    Component, ElementRef, EventEmitter, Input, OnDestroy, Renderer2, Output, forwardRef, AfterViewInit
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -9,7 +9,6 @@ import {PopupInfo, PopupPositionType, PopupService} from "../../common/service/p
 import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../common/service/time.types";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ElementEventHelper, InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateService} from "@ngx-translate/core";
 
@@ -96,7 +95,7 @@ export class GrItem {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
-export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
     @Input()
     public valid: boolean = true;
@@ -350,10 +349,11 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             en: {recommendedLabel: 'Recommend'}
         });
         _translateService.setDefaultLang(_translateService.getBrowserLang());
+
+        this._defineLocale();
     }
 
-    ngOnInit() {
-        this._defineLocale();
+    ngAfterViewInit() {
         this._initDatePicker();
         this._checkMacro();
     }

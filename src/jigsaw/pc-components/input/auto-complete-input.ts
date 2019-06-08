@@ -7,12 +7,11 @@ import {
     Input,
     NgModule,
     OnDestroy,
-    OnInit,
     Renderer2,
     TemplateRef,
     ViewChild,
     Output,
-    EventEmitter
+    EventEmitter, AfterViewInit
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -51,7 +50,7 @@ export class DropDownValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, OnInit {
+export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
     /**
      * @internal
      */
@@ -122,8 +121,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         super(_render2, _elementRef, _changeDetectorRef);
     }
 
-    ngOnInit() {
-        super.ngOnInit();
+    ngAfterViewInit() {
         this._input.valueChange.pipe(debounceTime(300)).subscribe(() => {
             this._getFilteredDropDownData();
         });
