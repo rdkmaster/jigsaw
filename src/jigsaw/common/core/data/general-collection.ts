@@ -214,7 +214,7 @@ export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
                     continue;
                 }
                 needRefresh = true;
-                this[key] = data[key];
+                this[key] = data[key] as any;
                 this.propList.push(key);
             }
         }

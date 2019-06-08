@@ -28,7 +28,7 @@ export abstract class JigsawMobileTabBase extends AbstractJigsawComponent implem
     @Input()
     public initData: Object;
 
-    @ViewChild('body', {read: ViewContainerRef}, {static: false})
+    @ViewChild('body', {read: ViewContainerRef, static: false})
     protected _body: ViewContainerRef;
 
     /**

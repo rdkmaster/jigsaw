@@ -12,14 +12,15 @@ import {
     Type,
     ViewContainerRef,
 } from "@angular/core";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import { filter, map } from 'rxjs/operators';
+import {Subscription} from "rxjs";
 import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 
-import {Subscription} from "rxjs";
 import {JigsawTheme} from "../core/theming/theme";
 
 export enum PopupEffect {
@@ -224,12 +225,16 @@ export class PopupService {
             return;
         }
         const disposerSubscription: Subscription = this._router.events
-            .filter(event => event instanceof NavigationEnd)
-            .map(() => this._activatedRoute)
-            .map(route => {
-                while (route.firstChild) route = route.firstChild;
-                return route;
-            })
+            .pipe(
+                filter(event => event instanceof NavigationEnd),
+                map(() => this._activatedRoute),
+                map(route => {
+                    while (route.firstChild) {
+                        route = route.firstChild;
+                    }
+                    return route;
+                })
+            )
             .subscribe(() => {
                 disposerSubscription.unsubscribe();
                 disposer();

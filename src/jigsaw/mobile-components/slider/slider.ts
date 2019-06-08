@@ -157,7 +157,7 @@ export class JigsawMobileSliderHandle implements OnInit {
 
     private _slider: JigsawMobileSlider; // 父组件;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawMobileSlider)) slider: JigsawMobileSlider, private _zone: NgZone) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawMobileSlider)) slider: any, private _zone: NgZone) {
         this._slider = slider;
     }
 

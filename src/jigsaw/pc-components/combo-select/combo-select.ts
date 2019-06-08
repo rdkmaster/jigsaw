@@ -203,7 +203,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @ViewChild('editor', {static: false})
     private _editor: JigsawInput;
 
-    @ViewChild('editor', {read: ElementRef}, {static: false})
+    @ViewChild('editor', {read: ElementRef, static: false})
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)

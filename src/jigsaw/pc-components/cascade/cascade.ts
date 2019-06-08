@@ -565,7 +565,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
 
     private _init(data: any[], allSelectedData: any[]) {
         this._$list = data;
-        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
+        if (allSelectedData instanceof Array || (allSelectedData as any) instanceof ArrayCollection) {
             // 等待根据list数据渲染option后回填数据
             this.callLater(() => {
                 this._$currentPageSelectedItems = allSelectedData.filter(item => {

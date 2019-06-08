@@ -540,7 +540,8 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     private _fromArray(source: T[]): boolean {
-        source = source instanceof Array || source instanceof ArrayCollection ? source : CommonUtils.isDefined(source) ? [source] : [];
+        source = source instanceof Array || (source as any) instanceof ArrayCollection ?
+            source : CommonUtils.isDefined(source) ? [source] : [];
         let needRefresh = this.length > 0;
 
         this.splice(0, this.length);
@@ -878,7 +879,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     public set filteredData(value: T[]) {
         this._filteredData = value;
-        if (this._filteredData instanceof Array || this._filteredData instanceof ArrayCollection) {
+        if (this._filteredData instanceof Array || (this._filteredData as any) instanceof ArrayCollection) {
             this.pagingInfo.totalRecord = this._filteredData.length;
         }
     }

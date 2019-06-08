@@ -31,7 +31,7 @@ export class JigsawScrollHandle implements OnInit {
                  * @internal
                  */
                 public _elementRef: ElementRef,
-                @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: JigsawScrollbar) {
+                @Host() @Inject(forwardRef(() => JigsawScrollbar)) slider: any) {
         this._scrollbar = slider;
     }
 
