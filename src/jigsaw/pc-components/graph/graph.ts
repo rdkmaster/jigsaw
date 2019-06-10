@@ -16,7 +16,19 @@ import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
-    public dataValid: boolean = false;
+    public _dataValid: boolean = false;
+
+    public get dataValid(): boolean {
+        return this._dataValid
+    }
+
+    public set dataValid(value: boolean) {
+        if(this._dataValid == value) return;
+        this._dataValid = value;
+        if(this._dataValid) {
+            this.resize();
+        }
+    }
 
     // 通过 echarts.init 创建的实例
     private _graph: any;
