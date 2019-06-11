@@ -16,16 +16,19 @@ import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
-    public _dataValid: boolean = false;
+    /**
+     * @internal
+     */
+    public _$dataValid: boolean = false;
 
-    public get dataValid(): boolean {
-        return this._dataValid
+    private get dataValid(): boolean {
+        return this._$dataValid
     }
 
-    public set dataValid(value: boolean) {
-        if(this._dataValid == value) return;
-        this._dataValid = value;
-        if(this._dataValid) {
+    private set dataValid(value: boolean) {
+        if(this._$dataValid == value) return;
+        this._$dataValid = value;
+        if(this._$dataValid) {
             this.resize();
         }
     }
