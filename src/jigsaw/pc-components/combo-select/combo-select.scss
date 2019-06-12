@@ -15,6 +15,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     cursor: pointer;
 
     &-selection {
+        min-height: $height-base;
         border-radius: $border-radius-base;
         border: $border-width-base $border-style-base $border-color-base;
         background: $component-background;

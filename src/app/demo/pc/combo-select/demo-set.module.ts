@@ -29,6 +29,8 @@ import {ComboDropDownStatusDemoComponent} from "./drop-down-status/demo.componen
 import {ComboSelectSetWidthDemo} from "./set-width/demo.component";
 import {ComboSelectFullComponent} from "./full/demo.component";
 import {ComboSelectTriggerDemo} from "./trigger/demo.component";
+import {ComboSelectHeightDemo} from "./height/demo.component";
+import {ComboSelectHeightDemoModule} from "./height/demo.module";
 
 export const routerConfig = [
     {
@@ -66,6 +68,9 @@ export const routerConfig = [
     },
     {
         path: 'trigger', component: ComboSelectTriggerDemo
+    },
+    {
+        path: 'height', component: ComboSelectHeightDemo
     }
 ];
 
@@ -83,7 +88,8 @@ export const routerConfig = [
         OpenComboSelectDemoModule,
         ComboSelectSetWidthDemoModule,
         ComboSelectFullModule,
-        ComboSelectTriggerDemoModule
+        ComboSelectTriggerDemoModule,
+        ComboSelectHeightDemoModule,
     ]
 })
 export class ComboSelectDemoModule {
