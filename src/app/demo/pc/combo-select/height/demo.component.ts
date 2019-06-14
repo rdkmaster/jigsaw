@@ -4,7 +4,7 @@ import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 @Component({
     templateUrl: './demo.component.html',
 })
-export class ComboSelectHeightDemo {
+export class ComboSelectMaxHeightDemo {
 
     selectedCity = new ArrayCollection([{label: "北京"}]);
     selectedCity2 = new ArrayCollection([{label: "北京"}]);
