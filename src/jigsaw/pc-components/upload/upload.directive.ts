@@ -83,7 +83,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     private _addRollInDenouncesTimer() {
         this._rollInDenouncesTimer = this.callLater(() => {
             if (this._popupInfo) return;
-            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getUnModalOptions(), this._$fileInfoList);
+            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getNonModelOptions(), this._$fileInfoList);
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
                 console.error('unable to popup drop down, unknown error!');
@@ -115,7 +115,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 
     private _popupInfo: PopupInfo;
 
-    private _getUnModalOptions(): PopupOptions {
+    private _getNonModelOptions(): PopupOptions {
         return {
             modal: false,
             showEffect: PopupEffect.fadeIn,
@@ -156,18 +156,18 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 
     protected _upload() {
         super._upload();
-        this._reCalculatePopupPosition();
+        this._recalculatePopupPosition();
     }
 
     public _$removeFile(file) {
         super._$removeFile(file);
-        this._reCalculatePopupPosition();
+        this._recalculatePopupPosition();
     }
 
-    private _reCalculatePopupPosition() {
+    private _recalculatePopupPosition() {
         setTimeout(() => {
             if (this._popupInfo) {
-                this._popupService.setPosition(this._getUnModalOptions(), this._popupInfo.element);
+                this._popupService.setPosition(this._getNonModelOptions(), this._popupInfo.element);
             }
         });
     }
