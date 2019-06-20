@@ -1,4 +1,14 @@
-import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type
+} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -33,6 +43,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
     private _removeMouseOutHandler: Function;
+    private _removeResizeHandler: Function;
     private _removeRefreshCallback: CallbackRemoval;
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
@@ -278,6 +289,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             if (this.jigsawFloatCloseTrigger != 'none') {
                 this._removeWindowClickHandler();
                 this._removeWindowClickHandler = null;
+                this._removeResizeHandler();
+                this._removeResizeHandler = null;
                 this.jigsawFloatOpen = false;
             }
         });
@@ -302,10 +315,22 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
 
         // 阻止点击行为冒泡到window
+        if (this._removePopupClickHandler) {
+            this._removePopupClickHandler();
+        }
         this._removePopupClickHandler = this._renderer.listen(this._popupElement, 'click', event => {
             event.stopPropagation();
             event.preventDefault();
         });
+
+        // 监听window的resize事件，自动更新位置
+        if (this._removeResizeHandler) {
+            this._removeResizeHandler();
+        }
+        this._removeResizeHandler = this._renderer.listen("window", "resize",
+            () => {
+                PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
+            });
     }
 
     private _getPos(): PopupPoint {
@@ -350,7 +375,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     // 被弹出的控件高度宽度，在弹出之前并不知道，故要再控件位置微调时加入进去
-    private changePosByFloatPosition(pos: PopupPositionValue, popupElement: HTMLElement) {
+    private _changePosByFloatPosition(pos: PopupPositionValue, popupElement: HTMLElement) {
         switch (this.jigsawFloatPosition) {
             case 'bottomRight':
                 pos.left -= popupElement.offsetWidth;
@@ -383,7 +408,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             pos: this._getPos(),
             posType: PopupPositionType.absolute,
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                this.changePosByFloatPosition(pos, popupElement);
+                this._changePosByFloatPosition(pos, popupElement);
                 this._positionReviser(pos, popupElement);
                 return pos;
             },
@@ -404,7 +429,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             }
             if (CommonUtils.isDefined(this.jigsawFloatOptions.posReviser)) {
                 option.posReviser = (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                    this.changePosByFloatPosition(pos, popupElement);
+                    this._changePosByFloatPosition(pos, popupElement);
                     this.jigsawFloatOptions.posReviser(pos, popupElement);
                     return pos;
                 };
@@ -498,6 +523,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._removePopupClickHandler) {
             this._removePopupClickHandler();
             this._removePopupClickHandler = null;
+        }
+        if (this._removeResizeHandler) {
+            this._removeResizeHandler();
+            this._removeResizeHandler = null;
         }
         if (this._removeMouseOverHandler) {
             this._removeMouseOverHandler();

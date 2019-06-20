@@ -29,8 +29,8 @@ import {ComboDropDownStatusDemoComponent} from "./drop-down-status/demo.componen
 import {ComboSelectSetWidthDemo} from "./set-width/demo.component";
 import {ComboSelectFullComponent} from "./full/demo.component";
 import {ComboSelectTriggerDemo} from "./trigger/demo.component";
-import {ComboSelectMaxHeightDemo} from "./height/demo.component";
-import {ComboSelectMaxHeightDemoModule} from "./height/demo.module";
+import {ComboSelectMaxHeightDemo} from "./max-height/demo.component";
+import {ComboSelectMaxHeightDemoModule} from "./max-height/demo.module";
 
 export const routerConfig = [
     {
