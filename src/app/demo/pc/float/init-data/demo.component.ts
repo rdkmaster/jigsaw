@@ -3,7 +3,11 @@ import {UserComponent} from "./user-component/user-component";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: []
+    styles: [`
+        .fa-bars {
+            margin: 100px
+        }
+    `]
 })
 export class FloatInitDataDemo {
     public target: any = UserComponent;
