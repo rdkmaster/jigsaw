@@ -8,7 +8,8 @@
      [(jigsawFloatOpen)]="_$opened"
      (jigsawFloatOpenChange)="_$comboOpenChange($event)"
      [jigsawFloatOptions]="_$options">
-    <div class="jigsaw-combo-select-selection">
+    <div class="jigsaw-combo-select-selection"
+         [perfectScrollbar]="{suppressScrollX: true, wheelPropagation: true, wheelSpeed: 0.1, minScrollbarLength: 20}" [style.max-height]="maxHeight">
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"
                         [closable]='tagItem?.closable'

@@ -663,11 +663,27 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
 
                 const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem, seriesData);
 
-                // 多指标
-                const dim = dimensions[0].name;
-                const records = this.data.filter(row => row[dimIndex] == dim);
-                const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
-                seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+                if (dimensions.length > 1) {
+                    // 多维度
+                    let records;
+                    if (seriesData.usingAllDimensions) {
+                        records = this.data;
+                    } else {
+                        records = this.data.filter(row => dimensions.find(d => d.name == row[dimIndex]));
+                    }
+                    const kpiIndex = seriesData.indicators[0].index;
+                    records = records.map(row => [row[dimIndex], row[kpiIndex]]);
+                    const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
+                    indicator.index = 1;
+                    seriesItem.data = this.aggregateData(records, [indicator])
+                        .map(row => ({name: indicator.name, value: row[1]}));
+                } else {
+                    // 多指标
+                    const dim = dimensions[0].name;
+                    const records = this.data.filter(row => row[dimIndex] == dim);
+                    const pruned = this.aggregateData(records, seriesData.indicators)[0];
+                    seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+                }
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
                 if (seriesData.radius) {
@@ -689,6 +705,11 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
             });
 
         return options;
+    }
+
+    protected aggregateData(records: (string|number)[][], indicators: Indicator[]): string[][] {
+        const aggregateBy = indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
+        return [aggregate(<any>records, aggregateBy)];
     }
 
     public refresh(): void {
@@ -843,20 +864,6 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 
 // ------------------------------------------------------------------------------------------------
 // 散点图相关数据对象
-export class ScatterSeries {
-    public dimensionField: string;
-    public dimensions: Dimension[] = [new Dimension('')];
-    public usingAllDimensions: boolean = false;
-    public model?: any[];
-    public more?: any;
-
-    public name?: string;
-
-    constructor(name?: string) {
-        this.name = name;
-    }
-}
-
 export abstract class ModeledScatterTemplate extends AbstractModeledGraphTemplate {
     xAxis?: EchartXAxis;
     yAxis?: EchartYAxis;
@@ -913,7 +920,9 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public yAxis: EchartYAxis = {};
     public xAxisKpiField: {name: string, field: string};
     public yAxisKpiField: {name: string, field: string};
-    public series: ScatterSeries[];
+    public dimensionField: string;
+    public dimensions: Dimension[] = [];
+    public usingAllDimensions: boolean = true;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -929,10 +938,6 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.series) {
-            return undefined;
-        }
-
         if (!this.xAxisKpiField || !this.yAxisKpiField) {
             return undefined;
         }
@@ -952,34 +957,22 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         options.xAxis = this.xAxis;
         options.yAxis = this.yAxis;
 
-        options.series = this.series
-            .filter(seriesData => {
-                if (!seriesData.dimensionField) {
-                    return false;
-                }
-                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
-            })
-            .map((seriesData, idx) => {
-                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
-                const dimIndex = this.getIndex(seriesData.dimensionField);
+        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        const dimIndex = this.getIndex(this.dimensionField);
+        this._mergeLegend(options.legend, dimensions);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
-                // 多指标
-                this._mergeLegend(options.legend, seriesData.dimensions);
-                const dim = dimensions[0].name;
-                const records = this.data.filter(row => row[dimIndex] == dim)
-                    .map(row => {
-                    return [
-                        row[xAxisKpiIndex],
-                        row[yAxisKpiIndex]
-                    ]
-                });
-
-                seriesItem.data = records;
-                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
-
-                return seriesItem;
+        options.series = dimensions.map((dim, idx) => {
+            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+            seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
+                .map(row => {
+                return [
+                    row[xAxisKpiIndex],
+                    row[yAxisKpiIndex]
+                ]
             });
+            seriesItem.name = dim.name ? dim.name : 'series' + idx;
+            return seriesItem;
+        });
 
         return options;
     }
@@ -998,3 +991,138 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         super.refresh();
     }
 }
+
+
+// ------------------------------------------------------------------------------------------------
+// 轮廓图相关数据对象
+export class MapSeries {
+    public dimensionField: string;
+    public dimensions: Dimension[] = [];
+    public usingAllDimensions: boolean = true;
+    public indicators: Indicator[] = [];
+    public model?: any[];
+    public more?: any;
+
+    public name?: string;
+
+    public mapType?: string = '';
+    public label?: string;
+    public itemStyle?: string;
+    public animation?: string;
+
+    constructor(name?: string) {
+        this.name = name;
+    }
+}
+
+export abstract class ModeledMapTemplate extends AbstractModeledGraphTemplate {
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledMapTemplate extends ModeledMapTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            visualMap: CommonUtils.extendObjects<EchartTooltip>({}, this.visualMap),
+        };
+    }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        trigger: 'item',
+        formatter: ""
+    };
+
+    visualMap = {more: ''};
+
+    seriesItem = {
+        type: 'map',
+        data: null,
+        mapType: ''
+    };
+}
+
+export class ModeledMapGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    public template: BasicModeledMapTemplate = new BasicModeledMapTemplate();
+    public series: MapSeries[];
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+
+        options.series = this.series
+            .filter(seriesData => {
+                if (!seriesData.dimensionField) {
+                    return false;
+                }
+                if (!seriesData.indicators || seriesData.indicators.length == 0) {
+                    return false;
+                }
+                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
+            })
+            .map((seriesData, idx) => {
+                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                const dimIndex = this.getIndex(seriesData.dimensionField);
+                seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
+                seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
+
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                if(!dimensions.length) return {};
+
+                // 多维度单指标
+                let records;
+                if (seriesData.usingAllDimensions) {
+                    records = this.data;
+                } else {
+                    records = this.data.filter(row => dimensions.find(d => d.name == row[dimIndex]));
+                }
+                const kpiIndex = seriesData.indicators[0].index;
+                records = records.map(row => [row[dimIndex], row[kpiIndex]]);
+                const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
+                indicator.index = 1;
+                seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
+                    .map(row => ({name: row[0], value: row[1]}));
+
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                seriesItem.mapType = seriesData.mapType;
+
+                let extendParam = ['label', 'itemStyle', 'animation'];
+
+                extendParam.forEach(param => {
+                    if (CommonUtils.isDefined(seriesData[param])) {
+                        seriesItem[param] = seriesData[param];
+                    }
+                });
+
+                return seriesItem;
+            });
+
+        return options;
+    }
+
+    public refresh(): void {
+        this._options = undefined;
+        super.refresh();
+    }
+}
+

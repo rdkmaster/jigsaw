@@ -57,7 +57,7 @@ function aggregateAlgorithms2Function(algorithm: AggregateAlgorithm): [ReduceFun
     if (algorithm == 'sum') {
         func = (previous, current) => previous + parseFloat(String(current));
     } else if (algorithm == 'average') {
-        func = (previous, current, index, array) => previous + parseFloat(String(current)) / array.length;
+        func = (previous, current, index, array) => parseFloat((previous + parseFloat(String(current)) / array.length).toFixed(2));
     } else if (algorithm == 'max') {
         func = (previous, current) => Math.max(previous, parseFloat(String(current)));
     } else if (algorithm == 'min') {

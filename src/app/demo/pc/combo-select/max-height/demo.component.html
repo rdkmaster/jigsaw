@@ -1,0 +1,52 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>ComboSelect</h2>
+    <div class="demo-1 live-demo">
+        <h3>单行显示</h3>
+        <p class="comment">设置单行显示时，需要设置<code>height</code>为<code>32px</code>，如果设置了比<code>32px</code>小，我们会限制在<code>32px</code>。</p>
+        <jigsaw-combo-select placeholder="请输入姓名~"
+                             [(value)]="selectedCity"
+                             maxWidth="300"
+                             [clearable]="true"
+                             maxHeight="16">
+            <ng-template>
+                <jigsaw-tile [(selectedItems)]="selectedCity"
+                             trackItemBy="label"
+                             width="400px">
+                    <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
+                        {{city.label}}
+                    </jigsaw-tile-option>
+                </jigsaw-tile>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>多行显示</h3>
+        <jigsaw-combo-select placeholder="请输入姓名~"
+                             [(value)]="selectedCity2"
+                             maxWidth="300"
+                             [clearable]="true"
+                             maxHeight="60">
+            <ng-template>
+                <jigsaw-tile [(selectedItems)]="selectedCity2"
+                             trackItemBy="label"
+                             width="400px">
+                    <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
+                        {{city.label}}
+                    </jigsaw-tile-option>
+                </jigsaw-tile>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+</div>
+
+
+
+
+
+
+

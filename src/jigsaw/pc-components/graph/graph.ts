@@ -16,7 +16,22 @@ import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
-    public dataValid: boolean = false;
+    /**
+     * @internal
+     */
+    public _$dataValid: boolean = false;
+
+    private get _dataValid(): boolean {
+        return this._$dataValid
+    }
+
+    private set _dataValid(value: boolean) {
+        if(this._$dataValid == value) return;
+        this._$dataValid = value;
+        if(this._$dataValid) {
+            this.resize();
+        }
+    }
 
     // 通过 echarts.init 创建的实例
     private _graph: any;
@@ -112,9 +127,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (!this._graph) {
             return;
         }
-        this.dataValid = this._isOptionsValid(this.data.options);
+        this._dataValid = this._isOptionsValid(this.data.options);
         // 若数据非法，那么不能给graph赋值，故直接返回
-        if (!this.dataValid) {
+        if (!this._dataValid) {
             return;
         }
         this._graph.setOption(option, true, lazyUpdate);
@@ -156,7 +171,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     ngOnInit() {
         super.ngOnInit();
         if (this.data) {
-            this.dataValid = this._isOptionsValid(this.data.options);
+            this._dataValid = this._isOptionsValid(this.data.options);
         }
         this.init.emit();
     }
