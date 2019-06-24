@@ -19,11 +19,11 @@ export class GraphResizeComponent implements OnInit {
     graphWidth: string = '100%';
     graphHeight: string = '300';
 
-    @ViewChild("graph", {static: false}) graph: JigsawGraph;
+    @ViewChild("graph", {static: true}) graph: JigsawGraph;
 
-    @ViewChild("widthInput", {static: false}) widthInput: JigsawInput;
+    @ViewChild("widthInput", {static: true}) widthInput: JigsawInput;
 
-    @ViewChild("heightInput", {static: false}) heightInput: JigsawInput;
+    @ViewChild("heightInput", {static: true}) heightInput: JigsawInput;
 
     resizeGraph() {
         this.graph.resize();
