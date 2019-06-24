@@ -6,7 +6,7 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 @Component({
     template: `
         <ul>
-            <li *ngFor="let product of productList"><a routerLink="/breadcrumb/router/detail/{{product.id}}">{{product.name}}</a></li>
+            <li *ngFor="let product of productList"><a routerLink="/pc/breadcrumb/router/detail/{{product.id}}">{{product.name}}</a></li>
         </ul>
     `,
     styles: [`

@@ -25,10 +25,10 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     routes: BreadcrumbRouteConfig[] = [
-        {'breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
-        {'breadcrumb/router/list/*': this.listBreadcrumbGenerator},
-        {'breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
-        {'breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
+        {'pc/breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
+        {'pc/breadcrumb/router/list/*': this.listBreadcrumbGenerator},
+        {'pc/breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
+        {'pc/breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
     ];
 
     listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
@@ -59,7 +59,7 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     getDetailNode(detail) {
-        return {label: detail.name, routeLink: '/breadcrumb/router/detail/' + detail.id} // 请尽量使用绝对路径
+        return {label: detail.name, routeLink: '/pc/breadcrumb/router/detail/' + detail.id} // 请尽量使用绝对路径
     }
 
     getListNode(typeId) {
@@ -74,7 +74,7 @@ export class BreadcrumbRouterDemoComponent {
             default:
                 listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
         }
-        listNode.routeLink = '/breadcrumb/router/list/' + typeId; // 请尽量使用绝对路径
+        listNode.routeLink = '/pc/breadcrumb/router/list/' + typeId; // 请尽量使用绝对路径
         return listNode;
     }
 
