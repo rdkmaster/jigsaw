@@ -508,7 +508,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         this._bindActiveDayClickHandler(picker);
 
         this._timePicker = $(insert).data("DateTimePicker");
-        this._timePicker.locale(this._translateService.currentLang);
+        this._timePicker.locale(this._translateService.currentLang ? this._translateService.currentLang : this._translateService.defaultLang);
 
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
