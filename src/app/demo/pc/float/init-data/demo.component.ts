@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {UserComponent} from "./user-component/user-component";
 
 @Component({
@@ -21,6 +21,6 @@ export class FloatInitDataDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '演示了如何改变jigsawFloat指令的弹出目标';
+    summary: string = '演示了如何使用jigsawFloatInitData来属性初始化jigsawFloat指令的弹出目标';
     description: string = '';
 }
