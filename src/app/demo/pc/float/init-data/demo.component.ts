@@ -15,9 +15,6 @@ export class FloatInitDataDemo {
         inputData: 'some data...'
     };
 
-    ngAfterViewInit() {
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
