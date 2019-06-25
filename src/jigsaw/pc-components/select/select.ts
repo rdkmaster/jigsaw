@@ -228,7 +228,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     public _$onComboOpenChange(optionState: boolean) {
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
-        this._listCmp._$handleSearching();
+        this._listCmp && this._listCmp._$handleSearching();
     }
 
     public _$onTagRemove(removedItem): void {
