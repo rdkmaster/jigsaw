@@ -101,6 +101,7 @@ const notificationInstances = {
     leftTop: [], leftBottom: [], rightTop: [], rightBottom: []
 };
 
+// @dynamic
 @Component({
     selector: 'jigsaw-notification,j-notification',
     templateUrl: 'notification.html',

@@ -21,6 +21,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
  * - 可以和combo结合起来使用
  *
  */
+// @dynamic
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `

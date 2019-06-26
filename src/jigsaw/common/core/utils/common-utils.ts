@@ -1,3 +1,4 @@
+// @dynamic
 export class CommonUtils {
 
     // to avoid compodoc generation error

@@ -33,14 +33,20 @@ export class JigsawDroppable implements OnInit, OnDestroy {
     @Output()
     public jigsawDrop: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
 
-    private _dragEnterHandle(event) {
+    /**
+     * @internal
+     */
+    public _dragEnterHandle(event) {
         /*拖拽元素进入目标元素头上的时候*/
         event.stopPropagation();
         this.jigsawDragEnter.emit(new DragDropInfo(event, this._elementRef.nativeElement));
         return true;
     }
 
-    private _dragLeaveHandle(event) {
+    /**
+     * @internal
+     */
+    public _dragLeaveHandle(event) {
         /*拖拽元素离开目标元素头上的时候*/
         event.stopPropagation();
         this.jigsawDragLeave.emit(new DragDropInfo(event, this._elementRef.nativeElement));
@@ -55,7 +61,10 @@ export class JigsawDroppable implements OnInit, OnDestroy {
         return true;
     };
 
-    private _dropHandle(event) {
+    /**
+     * @internal
+     */
+    public _dropHandle(event) {
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
         event.stopPropagation();
         this.jigsawDrop.emit(new DragDropInfo(event, this._elementRef.nativeElement));

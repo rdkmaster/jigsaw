@@ -173,10 +173,16 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     private _drawerEl: ElementRef;
 
     @HostBinding('style.width')
-    private _$hostWidth: string;
+    /**
+     * @internal
+     */
+    public _$hostWidth: string;
 
     @HostBinding('style.height')
-    private _$hostHeight: string;
+    /**
+     * @internal
+     */
+    public _$hostHeight: string;
 
     private _setHostSize() {
         this._$hostWidth = this._calcHostWidth();

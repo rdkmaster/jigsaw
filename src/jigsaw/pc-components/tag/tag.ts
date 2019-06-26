@@ -45,7 +45,10 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input()
     public showBorder: boolean = true;
 
-    private _state: string;
+    /**
+     * @internal
+     */
+    public _state: string;
 
     constructor(private _renderer: Renderer2,
                 public _elementRef: ElementRef) {
@@ -78,7 +81,10 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         this._state = 'active';
     }
 
-    private _animationDone($event) {
+    /**
+     * @internal
+     */
+    public _animationDone($event) {
         if ($event.toState === 'inactive') {
             this.close.emit(this);
         }

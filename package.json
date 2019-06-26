@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve --poll 500 --proxy-config proxy-config.json",
     "build": "ng build --prod --aot --delete-output-path",
+    "build-lib": "ng build --prod jigsaw",
     "test": "ng test --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.2",
+    "@angular-devkit/build-ng-packagr": "~0.800.0",
     "@angular/cli": "^8.0.2",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
@@ -73,6 +75,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "minimist": "~1.2.0",
+    "ng-packagr": "^5.1.0",
     "protractor": "~5.4.0",
     "resolve-bin": "~0.4.0",
     "rollup": "~0.41.6",
@@ -81,6 +84,7 @@
     "scss-bundle": "~2.1.0",
     "sorcery": "~0.10.0",
     "ts-node": "~7.0.0",
+    "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3",
     "uglify-js": "~2.8.14"

@@ -355,7 +355,10 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         this.grChange.emit(value);
     }
 
-    private _changeShortcut(selectedShortcut: Shortcut) {
+    /**
+     * @internal
+     */
+    public _changeShortcut(selectedShortcut: Shortcut) {
         if (selectedShortcut.dateRange) {
             let [beginDate, endDate] = typeof  selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
 

@@ -183,6 +183,7 @@ export class PopupInfo {
     answer: EventEmitter<ButtonInfo>;
 }
 
+// @dynamic
 @Injectable()
 export class PopupService {
 

@@ -5,6 +5,7 @@ import {TranslateHelper} from "./translate-helper";
 /**
  * @internal
  */
+// @dynamic
 export class InternalUtils {
     public static uedSiteHost = 'http://rdk.zte.com.cn';
 
@@ -98,6 +99,7 @@ export class InternalUtils {
  * 用于获取dom元素的位置信息
  * @internal
  */
+// @dynamic
 export class AffixUtils {
     /*
      * 获取元素距离文档的top和left

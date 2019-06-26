@@ -334,9 +334,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     /**
+     * @internal
      * goto功能
      * */
-    private _goto(pageNum): void {
+    public _goto(pageNum): void {
         pageNum = parseInt(pageNum);
         if (pageNum <= this._totalPage && pageNum >= 1) {
             if (this.mode != 'simple') {
@@ -348,9 +349,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     /**
+     * @internal
      * select组件改变pageSize
      * */
-    private _changePageSize(pageSize) {
+    public _changePageSize(pageSize) {
         if (this.pageSize != pageSize.value) {
             this.pageSize = pageSize.value;
             this.current = 1;
@@ -455,7 +457,10 @@ export class JigsawPagingItem {
     public showPrev: boolean = false;
     public showNext: boolean = false;
 
-    private _isShow: boolean = false;
+    /**
+     * @internal
+     */
+    public _isShow: boolean = false;
     private _pagination: JigsawPagination;
 
     @Input() public pageNumber: number;
@@ -464,7 +469,10 @@ export class JigsawPagingItem {
         this._pagination = pagination;
     }
 
-    private _onClick(): void {
+    /**
+     * @internal
+     */
+    public _onClick(): void {
         if (!this.current) {
             this._pagination.current = this.pageNumber;
         }
@@ -486,12 +494,18 @@ export class JigsawPagingItem {
         this._isShow = false;
     }
 
-    private _prevPages(): void {
+    /**
+     * @internal
+     */
+    public _prevPages(): void {
         event.stopPropagation();
         this._pagination.pagesPrev();
     }
 
-    private _nextPages(): void {
+    /**
+     * @internal
+     */
+    public _nextPages(): void {
         event.stopPropagation();
         this._pagination.pagesNext();
     }

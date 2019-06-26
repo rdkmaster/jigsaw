@@ -22,7 +22,7 @@
             </div>
             <div class="jigsaw-tabs-overflow-button" *ngIf="_$showOverflowButton"
                  (mouseenter)="_$popupTabList(tabsList,$event,overflowButton)"
-                 (mouseleave)="_$menuAreaLeave(false)" #overflowButton>
+                 (mouseleave)="_$menuAreaLeave()" #overflowButton>
                 <span class="fa  fa-angle-double-right">
                 </span>
             </div>
@@ -44,7 +44,7 @@
 <ng-template #tabsList>
     <j-list class="jigsaw-tabs-list"
             (mouseenter)="_$clearPopupTimeout()"
-            (mouseleave)="_$menuAreaLeave(false)"
+            (mouseleave)="_$menuAreaLeave()"
             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <jigsaw-list-option *ngFor="let tab of _$tabPanes; let i = index;" [value]="tab" (click)="_$listOptionClick(i)"
                             [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden">

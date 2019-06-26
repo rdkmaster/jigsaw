@@ -12,13 +12,23 @@
         "experimentalDecorators": true,
         "target": "es2015",
         "typeRoots": [
-            "node_modules/@types"
+            "node_modules/@types",
+            "src/jigsaw/typings.d.ts"
         ],
         "lib": [
             "es2016",
             "dom"
-        ]
+        ],
+        "paths": {
+            "jigsaw": [
+                "dist/jigsaw"
+            ],
+            "jigsaw/*": [
+                "dist/jigsaw/*"
+            ]
+        }
     },
+    "include": ["./**/*.d.ts"],
     "preserveWhitespaces": {
         "preserveWhitespaces": "off"
     }

@@ -5,6 +5,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 export type HtmlCallback = (...args) => any;
 type CallbackValues = { [callbackName: string]: HtmlCallback };
 
+// @dynamic
 @Directive({
     selector: '[trustedHtml]',
 })
