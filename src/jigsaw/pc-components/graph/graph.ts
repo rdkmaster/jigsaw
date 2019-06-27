@@ -10,6 +10,8 @@ import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts-theme";
 
+declare const echarts: any;
+
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',

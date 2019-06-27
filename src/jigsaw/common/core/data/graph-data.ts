@@ -3,6 +3,8 @@ import {TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 import {Type} from "@angular/core";
 
+declare const echarts: any;
+
 export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
 export type GraphDataField = string[];

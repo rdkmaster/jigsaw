@@ -454,7 +454,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         return this._list;
     }
 
-    public set _$list(value: any[] | ArrayCollection<any> | LocalPageableArray<any>) {
+    public set _$list(value: any) {
         if(!value || this._list == value) return;
         if (value instanceof LocalPageableArray && value.pagingInfo) {
             this._list = value;

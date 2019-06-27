@@ -1,6 +1,8 @@
 import {Time, Moment, WeekTime} from "./time.types";
 import {CommonUtils} from "../core/utils/common-utils";
 
+declare const moment: any;
+
 /**
  * 时间粒度值
  */
@@ -42,6 +44,7 @@ export enum TimeFormatters {
 /**
  * 提供了日期运算、格式化、转换等一系列常用的方法，当你需要对时间做任何操作时，它都可以帮到你。
  */
+// @dynamic
 export class TimeService {
     /**
      * 将一个时刻转成符合改粒度的值，例如

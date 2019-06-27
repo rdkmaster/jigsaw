@@ -1,4 +1,7 @@
 import {Time} from "../../common/service/time.types";
+
+declare const moment: any;
+
 export class RangeTimeDataRanges {
     public static RecentMonth(): [Time, Time] {
         let start = moment().date(1);

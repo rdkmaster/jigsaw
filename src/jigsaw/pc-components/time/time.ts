@@ -12,6 +12,9 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {ElementEventHelper, InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateService} from "@ngx-translate/core";
 
+declare const moment: any;
+declare const $: any;
+
 /**
  * 时间范围生成函数，用于生成自定义的时间范围
  *

@@ -5,6 +5,8 @@ import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service
 import {GrItem, JigsawTime, Shortcut} from "../time/time";
 import {WeekTime} from "../../common/service/time.types";
 
+declare const moment: any;
+
 /**
  * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
  *
