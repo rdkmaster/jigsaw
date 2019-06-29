@@ -2,13 +2,12 @@
  * Created by 10177553 on 2017/3/23.
  */
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2,} from "@angular/core";
-import {AbstractGraphData} from "../../common/core/data/graph-data";
 
+import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
-import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts-theme";
 
 @Component({
     selector: 'jigsaw-graph, j-graph',
@@ -94,10 +93,13 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' ? darkGraphTheme : lightGraphTheme;
+    private _globalTheme: any;
 
     @Input()
     public get globalTheme() {
+        if (!this._globalTheme) {
+            this._globalTheme = JigsawTheme.getGraphTheme();
+        }
         return this._globalTheme;
     };
 

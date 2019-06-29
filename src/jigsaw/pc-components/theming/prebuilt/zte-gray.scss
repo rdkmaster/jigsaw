@@ -1,0 +1,15 @@
+@import "./zte-dark";
+@import "../../../common/core/theming/theming-api";
+
+/*浅色大面积背景*/
+/*浅色大面积背景*/
+$light-bg-1: #19191e;
+/*浅色大面积背景，页内卡片填充*/
+$light-bg-2: #232429;
+/*页内卡片灌边*/
+$light-bg-3: #45464c;
+
+// ------ Custom for zte by theming-api ------
+@include setDialogHead($primary-color, $light-bg-3, 30px);
+@include setDrawerTheme($light-bg-2);
+@include setBodyBackground($light-bg-1);
