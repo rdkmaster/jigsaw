@@ -1,7 +1,7 @@
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
-type MajorStyle = "dark" | "gray" | "black" | "purple" | "blue" | "default";
-type PopupBackgroundColor = "#102331" | "#232429" | "#151518" | "#1c1c2e" | "#102940" | null;
+export type MajorStyle = "dark" | "gray" | "black" | "purple" | "blue" | "default";
+export type PopupBackgroundColor = "#102331" | "#232429" | "#151518" | "#1c1c2e" | "#102940" | null;
 
 export class JigsawTheme {
     private static _popupBackgroundColor: PopupBackgroundColor = null;
