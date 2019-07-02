@@ -9,6 +9,6 @@ npm install
 
 #update jigsaw npm package
 rm -fr node_modules/@rdkmaster/jigsaw
-cp -r $home/dist/releases/jigsaw node_modules/@rdkmaster/
+cp -r $home/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
 
 ng build -prod -aot

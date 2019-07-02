@@ -154,7 +154,7 @@
               "test": {
                   "builder": "@angular-devkit/build-angular:karma",
                   "options": {
-                      "main": "src/test.ts",
+                      "main": "src/jigsaw/test.ts",
                       "tsConfig": "src/jigsaw/tsconfig.spec.json",
                       "karmaConfig": "src/jigsaw/karma.conf.js"
                   }
