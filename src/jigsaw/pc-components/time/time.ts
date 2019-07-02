@@ -11,6 +11,7 @@ import {Time, WeekTime} from "../../common/service/time.types";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {ElementEventHelper, InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateService} from "@ngx-translate/core";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 declare const moment: any;
 declare const $: any;
