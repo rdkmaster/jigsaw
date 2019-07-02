@@ -32,8 +32,8 @@ script:
   - node build/scripts/make-demo-independent.js
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
-  - gulp jigsaw:build-release:clean
-  - gulp jigsaw-mobile:build-release
+  - gulp build-jigsaw-lib
+  - #gulp jigsaw-mobile:build-release
   - ng test  --code-coverage false --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/

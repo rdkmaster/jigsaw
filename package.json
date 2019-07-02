@@ -66,6 +66,8 @@
     "gulp-htmlmin": "~3.0.0",
     "gulp-if": "~2.0.2",
     "gulp-rename": "^1.4.0",
+    "gulp-run": "^1.7.1",
+    "gulp-sass": "^4.0.2",
     "http-rewrite-middleware": "~0.1.6",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
