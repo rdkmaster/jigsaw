@@ -229,8 +229,8 @@ export class AdditionalTableData extends TableData {
      *
      * @deprecated
      *
-     * @param {string | number} field
-     * @param {number} row
+     * @param field
+     * @param row
      * @param value
      */
     public cacheValue(field: string | number, row: number, value: any): void {
@@ -243,8 +243,8 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要更新的列名或者列索引
-     * @param {number} row 当前页行索引，只支持更新表格的当前页数据，如果需要更新其他页的数据，请使用`touchValue()`方法
+     * @param field 需要更新的列名或者列索引
+     * @param row 当前页行索引，只支持更新表格的当前页数据，如果需要更新其他页的数据，请使用`touchValue()`方法
      * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
      */
     public touchValueByRow(field: string | number, row: number, value: any): void {
@@ -258,11 +258,11 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要更新的列名或者列索引
-     * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
+     * @param field 需要更新的列名或者列索引
+     * @param key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
      * 一般需要配合[`trackRowBy`属性]($demo=table/checkbox-column#open-desc=true)一起使用。
      * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
-     * @param {any[]} data 可选，表格内置渲染器会自动将该行对应的数据存放在这个属性上，
+     * @param data 可选，表格内置渲染器会自动将该行对应的数据存放在这个属性上，
      * 方便应用在需要时使用该行的其他数据。
      */
     public touchValue(field: string | number, key: any | any[], value: any, data?: any[]): void {
@@ -297,9 +297,9 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要获取的列名或者列索引
-     * @param {number} row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
-     * @return {any} 用户“摸过”之后改单元格的新值。
+     * @param field 需要获取的列名或者列索引
+     * @param row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
+     * @return 用户“摸过”之后改单元格的新值。
      */
     public getTouchedValueByRow(field: string | number, row: number): any {
         const v = this.getTouchedInfoByRow(field, row);
@@ -313,9 +313,9 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要获取的列名或者列索引
-     * @param {number} row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
-     * @return {TouchedValue} 用户“摸过”之后该单元格对应缓存数据对象。
+     * @param field 需要获取的列名或者列索引
+     * @param row 当前页行索引，支持获取表格的当前页数据，如果需要获取其他页的数据，请使用`getTouchedValue()`方法
+     * @return 用户“摸过”之后该单元格对应缓存数据对象。
      */
     public getTouchedInfoByRow(field: string | number, row: number): TouchedValue {
         const fieldString = this._toFieldString(field);
@@ -328,17 +328,17 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要获取的列名或者列索引
-     * @param {any | any[]} key
-     * @return {any}
+     * @param field 需要获取的列名或者列索引
+     * @param key
+     *
      */
     public getTouchedValue(field: string | number, key: any | any[]): any;
     /**
      * @deprecated
      *
-     * @param {string | number} field
-     * @param {number} row 按行索引取值的重载**已经被废弃**，请使用`getTouchedValueByRow()`替代。
-     * @returns {any}
+     * @param field
+     * @param row 按行索引取值的重载**已经被废弃**，请使用`getTouchedValueByRow()`替代。
+     *
      */
     public getTouchedValue(field: string | number, row: number): any;
     /**
@@ -362,10 +362,10 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要获取的列名或者列索引
-     * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
+     * @param field 需要获取的列名或者列索引
+     * @param key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
      * 一般需要配合[`trackRowBy`属性]($demo=table/checkbox-column#open-desc=true)一起使用。
-     * @return {TouchedValue}
+     *
      */
     public getTouchedInfo(field: string | number, key: any | any[]): TouchedValue {
         const fieldString = this._toFieldString(field);
@@ -387,8 +387,8 @@ export class AdditionalTableData extends TableData {
      *
      * @param key1
      * @param key2
-     * @return {boolean}
-     * @private
+     *
+     *
      */
     private _isKeyEquals(key1: any, key2: any): boolean {
         if (key1 instanceof Array && key2 instanceof Array) {
@@ -421,8 +421,8 @@ export class AdditionalTableData extends TableData {
      *
      * @deprecated
      *
-     * @param {string | number} field
-     * @returns {TouchedValue[]}
+     * @param field
+     *
      */
     public getTouchedValues(field: string | number): TouchedValue[] {
         console.warn("`getTouchedValues()` is deprecated from v1.1.4, use `getAllTouched()` instead");
@@ -434,8 +434,8 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要获取的列名或者列索引
-     * @returns {TouchedValue[]} 返回所有行的详细信息
+     * @param field 需要获取的列名或者列索引
+     * @returns 返回所有行的详细信息
      */
     public getAllTouched(field: string | number): TouchedValue[] {
         const fieldString = this._toFieldString(field);

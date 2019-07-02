@@ -80,7 +80,7 @@ export class JigsawMobileCheckBox extends AbstractJigsawComponent implements Con
     /**
      * 选中状态变化时发出此事件，此事件可以简化为`change`
      *
-     * @type {EventEmitter<CheckBoxValue>}
+     *
      */
     @Output()
     public checkedChange: EventEmitter<CheckBoxValue> = new EventEmitter();
@@ -88,7 +88,7 @@ export class JigsawMobileCheckBox extends AbstractJigsawComponent implements Con
     /**
      * 选中状态变化时发出此事件
      *
-     * @type {EventEmitter<CheckBoxValue>}
+     *
      */
     @Output()
     public change = this.checkedChange;

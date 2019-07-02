@@ -74,7 +74,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      * 当所选的tab页发生变化时发出此事件，事件携带的是被选中的tab页实例，
      * 如果需要索引值，请使用`selectedIndexChange`事件。
      *
-     * @type {EventEmitter<JigsawTabPane>}
+     *
      */
     @Output()
     public selectChange = new EventEmitter<JigsawMobileTabPane>();
@@ -84,7 +84,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      *
      * $demo = tab/editable
      *
-     * @type {EventEmitter<number>}
+     *
      */
     @Output()
     public remove = new EventEmitter<number>();
@@ -94,7 +94,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      *
      * $demo = tab/editable
      *
-     * @type {EventEmitter<JigsawTab>}
+     *
      */
     @Output()
     public add = new EventEmitter<JigsawMobileTab>();
@@ -102,7 +102,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
     /**
      * 改变tab标题时发送此事件，事件携带一个`TabTitleInfo`类型的数据。
      *
-     * @type {EventEmitter<TabTitleInfo>}
+     *
      */
     @Output()
     public titleChange = new EventEmitter<TabTitleInfo>();
@@ -115,7 +115,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      *
      * $demo = tab/editable
      *
-     * @type {boolean}
+     *
      */
     @Input()
     public editable: boolean;
@@ -127,7 +127,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      *
      * $demo = tab/headless
      *
-     * @type {boolean}
+     *
      */
 
     @Input()
@@ -167,7 +167,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
 
     /**
      * 当前选中的tab页编号，在双绑模式下，改变这个值可以实现选中tab页的切换。
-     * @returns {number}
+     *
      */
     @Input()
     public get selectedIndex(): number {
@@ -189,7 +189,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      * 当前选中的tab页编号发生变化时，发出此事件。
      * 事件携带的是索引值，如果需要获取更多信息，请参考`selectChange`事件。
      *
-     * @type {EventEmitter<number>}
+     *
      */
     @Output()
     public selectedIndexChange = new EventEmitter<number>();
@@ -330,7 +330,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      * $demo = tab/api
      * $demo = tab/hide-tab
      *
-     * @param {number} index tab页的编号，从0开始
+     * @param index tab页的编号，从0开始
      */
     public hideTab(index: number): void {
         let tabPane = this._getTabPaneByIndex(index);
@@ -348,7 +348,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      * $demo = tab/api
      * $demo = tab/show-tab
      *
-     * @param {number} index tab页的编号，从0开始
+     * @param index tab页的编号，从0开始
      */
     public showTab(index: number) {
         let tabPane = this._getTabPaneByIndex(index);
@@ -373,54 +373,54 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      *
      * $demo = tab/api
      *
-     * @param {string} titleString 以一个简单的字符串作为标题
-     * @param {TemplateRef<any>} contentTemplate 以一个`ng-template`标签包围起来的模板作为tab页的内容，
+     * @param titleString 以一个简单的字符串作为标题
+     * @param contentTemplate 以一个`ng-template`标签包围起来的模板作为tab页的内容，
      * 当tab页的内容比较简单时，建议采用此方式。
-     * @param {Object} initData 提供给`contentTemplate`的初始化数据
-     * @param {boolean} activateImmediately 是否立即激活新增的Tab页，默认值是`true`
+     * @param initData 提供给`contentTemplate`的初始化数据
+     * @param activateImmediately 是否立即激活新增的Tab页，默认值是`true`
      */
     public addTab(titleString: string, contentTemplate: TemplateRef<any>,
                   initData?: Object, activateImmediately?: boolean);
     /**
-     * @param {TemplateRef<any>} titleTemplate 以一个`ng-template`标签包围起来的模板作为标题，
+     * @param titleTemplate 以一个`ng-template`标签包围起来的模板作为标题，
      * 这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。
-     * @param {TemplateRef<any>} contentTemplate
-     * @param {Object} initData
-     * @param {boolean} activateImmediately
+     * @param contentTemplate
+     * @param initData
+     * @param activateImmediately
      */
     public addTab(titleTemplate: TemplateRef<any>, contentTemplate: TemplateRef<any>,
                   initData?: Object, activateImmediately?: boolean);
     /**
-     * @param {Type<IDynamicInstantiatable>} titleComponent 以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，
+     * @param titleComponent 以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，
      * 例如加图标，甚至添加按钮、进度条等复杂视图。
-     * @param {TemplateRef<any>} contentTemplate
-     * @param {Object} initData
-     * @param {boolean} activateImmediately
+     * @param contentTemplate
+     * @param initData
+     * @param activateImmediately
      */
     public addTab(titleComponent: Type<IDynamicInstantiatable>, contentTemplate: TemplateRef<any>,
                   initData?: Object, activateImmediately?: boolean);
     /**
-     * @param {string} titleString
-     * @param {Type<IDynamicInstantiatable>} contentComponent 以一个组件作为tab页的内容，
+     * @param titleString
+     * @param contentComponent 以一个组件作为tab页的内容，
      * 如果新增的tab页内容比较复杂，建议采用此方式添加，以让各部分代码的耦合解开。
-     * @param {Object} initData
-     * @param {boolean} activateImmediately
+     * @param initData
+     * @param activateImmediately
      */
     public addTab(titleString: string, contentComponent: Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately?: boolean);
     /**
-     * @param {TemplateRef<any>} titleTemplate
-     * @param {Type<IDynamicInstantiatable>} contentComponent
-     * @param {Object} initData
-     * @param {boolean} activateImmediately
+     * @param titleTemplate
+     * @param contentComponent
+     * @param initData
+     * @param activateImmediately
      */
     public addTab(titleTemplate: TemplateRef<any>, contentComponent: Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately?: boolean);
     /**
-     * @param {Type<IDynamicInstantiatable>} titleComponent
-     * @param {Type<IDynamicInstantiatable>} contentComponent
-     * @param {Object} initData
-     * @param {boolean} activateImmediately
+     * @param titleComponent
+     * @param contentComponent
+     * @param initData
+     * @param activateImmediately
      */
     public addTab(titleComponent: Type<IDynamicInstantiatable>, contentComponent: Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately?: boolean);
@@ -496,7 +496,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
      *  2. 删除了当前的tab-pane
      *  规则: 1. 最后一个非disabled的tabPane
      *        2. 否则隐藏tab 条.
-     * @private
+     *
      */
     private _handleSelect() {
         let tabPane = this._getTabPaneByIndex(this.selectedIndex);

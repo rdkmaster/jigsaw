@@ -30,7 +30,7 @@ export abstract class AbstractGraphData extends TableDataBase {
      * 从数据的特征上判断当前对象是否是一个图形数据
      *
      * @param data
-     * @returns {boolean}
+     *
      */
     public static isGraphData(data: any): boolean {
         if (!data) {
@@ -53,7 +53,7 @@ export abstract class AbstractGraphData extends TableDataBase {
     constructor(/**
                  * 图形的数据，二维数组。
                  *
-                 * @type {Array}
+                 *
                  */
                 public data: GraphDataMatrix = [],
                 public header: GraphDataHeader = [],
@@ -185,7 +185,7 @@ export class GraphData extends AbstractGraphData {
      * 用于通过type属性快速构建出对应的图形类型实例
      *
      * @param rawTableData
-     * @returns {AbstractGraphData}
+     *
      */
     public static of(rawTableData: any): AbstractGraphData {
         if (!super.isGraphData(rawTableData) || !rawTableData.type) {

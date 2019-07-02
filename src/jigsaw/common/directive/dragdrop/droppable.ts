@@ -14,9 +14,9 @@ export class JigsawDroppable implements OnInit, OnDestroy {
     /**
      * jigsawDragEnter、jigsawDragLeave、jigsawDrop 有可能是其子元素触发的，所以有必要保存elementRef
      *
-     * @param {Renderer2} _renderer
-     * @param {ElementRef} _elementRef
-     * @param {NgZone} _zone
+     * @param _renderer
+     * @param _elementRef
+     * @param _zone
      */
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
     }

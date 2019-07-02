@@ -64,7 +64,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      *
      * $demo = drawer/basic
      *
-     * @type {EventEmitter<boolean>}
      */
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();

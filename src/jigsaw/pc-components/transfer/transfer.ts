@@ -245,8 +245,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      *
      * data和selectedItems不和list里数据双绑，list里面要做一些转换
      *
-     * @param {string} from
-     * @private
+     * @param from
+     *
      */
     public _$transferTo(from: string) {
         if (this.disabled) return;
@@ -384,8 +384,8 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     /**
      * 这边把transfer过来的数组转成分页数据，中间变量data主要用于消除数据闪动
-     * @param {GroupOptionValue[] | ArrayCollection<GroupOptionValue>} value
-     * @private
+     * @param value
+     *
      */
     private _updateData(value: GroupOptionValue[] | ArrayCollection<GroupOptionValue>) {
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) return;

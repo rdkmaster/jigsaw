@@ -108,7 +108,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/gr
      *
-     * @type {EventEmitter<TimeGr>}
      */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
@@ -123,7 +122,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/gr
      *
-     * @return {TimeGr | string}
+     *
      */
     public get gr(): TimeGr | string {
         return this._$gr;
@@ -153,7 +152,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/basic
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get date(): WeekTime {
@@ -172,7 +171,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/basic
      *
-     * @type {EventEmitter<WeekTime>}
      */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
@@ -187,7 +185,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      * $demo = time/limit-start
      * $demo = time/limit-end
      *
-     * @return {Time}
+     *
      */
     public get limitEnd(): Time {
         return this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this.gr)
@@ -219,7 +217,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      * $demo = time/limit-start
      * $demo = time/limit-end
      *
-     * @return {Time}
+     *
      */
     public get limitStart(): Time {
         return this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this.gr);
@@ -258,7 +256,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/refresh-interval
      *
-     * @return {number}
+     *
      */
     @Input()
     public get refreshInterval(): number {

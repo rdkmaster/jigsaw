@@ -48,7 +48,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/gr
      *
-     * @return {TimeGr | string}
+     *
      */
     @Input("gr")
     public get gr(): TimeGr | string {
@@ -70,7 +70,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/gr
      *
-     * @type {EventEmitter<TimeGr>}
      */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
@@ -110,7 +109,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/basic
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get endDate(): WeekTime {
@@ -133,7 +132,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      * $demo = range-time/limit-start
      * $demo = range-time/limit-end
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get limitStart(): WeekTime {
@@ -157,7 +156,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      * $demo = range-time/limit-start
      * $demo = range-time/limit-end
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get limitEnd(): WeekTime {
@@ -224,7 +223,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = time/with-combo-select
      *
-     * @type {EventEmitter<any>}
      */
     @Output()
     public change = new EventEmitter<any>();
@@ -234,7 +232,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/basic
      *
-     * @type {EventEmitter<WeekTime>}
      */
     @Output()
     public beginDateChange = new EventEmitter<WeekTime>();
@@ -244,7 +241,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/basic
      *
-     * @type {EventEmitter<WeekTime>}
      */
     @Output()
     public endDateChange = new EventEmitter<WeekTime>();

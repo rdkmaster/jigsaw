@@ -37,21 +37,20 @@ export class PopupOptions {
     /**
      * 控制弹出的视图是否模态。
      *
-     * @type {boolean} 默认值是false
      */
     modal?: boolean;
 
     /**
      * 弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
      *
-     * @type {PopupEffect}
+     *
      */
     showEffect?: PopupEffect = PopupEffect.fadeIn;
 
     /**
      * 隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
      *
-     * @type {PopupEffect}
+     *
      */
     hideEffect?: PopupEffect = PopupEffect.fadeOut;
 
@@ -65,7 +64,7 @@ export class PopupOptions {
      *
      * 请参考[这个demo]($demo=dialog/popup-option)。
      *
-     * @type {PopupPosition}
+     *
      */
     pos?: PopupPosition;
 
@@ -75,7 +74,7 @@ export class PopupOptions {
      *
      * 请参考[这个demo]($demo=dialog/popup-option)。
      *
-     * @type {PopupPositionOffset}
+     *
      */
     posOffset?: PopupPositionOffset;
 
@@ -84,7 +83,7 @@ export class PopupOptions {
      *
      * 请参考[这个demo]($demo=dialog/popup-option)。
      *
-     * @type {PopupPositionType}
+     *
      */
     posType?: PopupPositionType;
 
@@ -103,7 +102,7 @@ export class PopupOptions {
      * 在这个场景下就可以通过这个属性设置组件在弹出状态下的尺寸。
      * 如果你的组件在实现的时候就给定了尺寸或者最大尺寸，则无需设置这个属性。
      *
-     * @type {PopupSize}
+     *
      */
     size?: PopupSize;
 
@@ -114,7 +113,7 @@ export class PopupOptions {
      * 但凡事都有两面性，当你弹出的视图在全局下都有意义时，请注意务必关闭这个功能。
      * 这样的场景比如通知类的对话框（alert或者notification），他们弹出后，就需要等待用户关闭，不应该自动关闭。
      *
-     * @type {boolean}
+     *
      */
     disposeOnRouterChanged?: boolean = true;
 
@@ -122,7 +121,7 @@ export class PopupOptions {
      * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
      * 设置了true/false之后，则`PopupService`不再自动检测，而是根据这个属性的值决定是否要还是不加边框&阴影。
      *
-     * @type {boolean}
+     *
      */
     showBorder?: boolean;
 }
@@ -406,7 +405,7 @@ export class PopupService {
      * 或options为空对象
      * 或者modal为true
      * @param options
-     * @returns {boolean}
+     *
      */
     private _isModal(options: PopupOptions): boolean {
         return CommonUtils.isEmptyObject(options) || options.modal;
@@ -418,7 +417,7 @@ export class PopupService {
      * 或options为空对象
      * 或没有配options.pos
      * @param options
-     * @returns {boolean}
+     *
      */
     private _isGlobalPopup(options: PopupOptions): boolean {
         return CommonUtils.isEmptyObject(options) || !options.pos;

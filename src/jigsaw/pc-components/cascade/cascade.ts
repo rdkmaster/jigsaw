@@ -53,7 +53,7 @@ export class CascadeData {
  *         selectedItems: 已有的所有级items
  *         data: 已有的所有级的数据集合
  *         level: 当前tab的下标索引值，从0开始
- * @returns {CascadeData}
+ *
  */
 export type CascadeDateGenerator = (selectedItem: any, selectedItems: any[], data: any[], level: number) => CascadeData;
 
@@ -164,7 +164,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 级联选择的数据
-     * @type {Array}
      *
      * $demo = cascade/selected-items
      */
@@ -182,7 +181,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 级联选择数据发生变化时发送的事件
-     * @type {EventEmitter<any[]>}
      *
      * $demo = cascade/basic
      * $demo = cascade/lazy-load
@@ -194,7 +192,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 数据要显示的文本key
-     * @type {string}
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
@@ -248,7 +245,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 设置数据分页存储数，默认不分页
-     * @type {number}
      */
     @Input()
     public pageSize: number = Infinity;

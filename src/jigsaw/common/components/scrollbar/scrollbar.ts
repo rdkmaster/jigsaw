@@ -232,7 +232,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 可选范围的最小值
-     * @returns {number}
+     *
      */
     @Input()
     public get min() {
@@ -247,7 +247,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 输入范围的可选最大值.
-     * @returns {number}
+     *
      */
     @Input()
     public get max() {
@@ -265,7 +265,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 每次变化的最小值, 最小支持小数点后两位.
-     * @returns {number}
+     *
      */
     @Input()
     public get step() {
@@ -297,7 +297,6 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 垂直滑动条 默认 false
-     * @type {boolean}
      */
     @Input()
     public vertical: boolean = false;

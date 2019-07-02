@@ -182,7 +182,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
      *
-     * @return {NotificationPosition | string}
+     *
      */
     @Input()
     public get position(): NotificationPosition | string {
@@ -334,7 +334,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      * 用于重新定位视图上所有的提示框，一般需要在视图上的提示框有变动时调用。
      * `JigsawNotification.show`方法、以及提示框被关掉时，Jigsaw会自动调用此方法，无需应用再次调用。
      *
-     * @param {NotificationPosition} position 调整哪个方向上的提示框，可选，默认调试所有4个方向。
+     * @param position 调整哪个方向上的提示框，可选，默认调试所有4个方向。
      */
     public static reposition(position?: NotificationPosition) {
         if (CommonUtils.isUndefined(position)) {
@@ -364,20 +364,20 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      *
      * $demo = notification/full
      *
-     * @param {string} message 消息内容，支持基础html标记的富文本，也支持在html中添交互加动作。
-     * @return {PopupInfo} 返回的是被弹出的`JigsawNotification`组件实例的相关信息
+     * @param message 消息内容，支持基础html标记的富文本，也支持在html中添交互加动作。
+     * @return 返回的是被弹出的`JigsawNotification`组件实例的相关信息
      */
     public static show(message: string): PopupInfo;
     /**
-     * @param {string} message
-     * @param {string} caption 提示框的标题
-     * @return {PopupInfo}
+     * @param message
+     * @param caption 提示框的标题
+     *
      */
     public static show(message: string, caption: string): PopupInfo;
     /**
-     * @param {string} message
-     * @param {NotificationMessage} options 提示框的所有配置项，对提示做的行为做详细配置
-     * @return {PopupInfo}
+     * @param message
+     * @param options 提示框的所有配置项，对提示做的行为做详细配置
+     *
      */
     public static show(message: string, options?: NotificationMessage): PopupInfo;
     /**

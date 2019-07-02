@@ -239,7 +239,7 @@ export class JigsawMobileInput extends AbstractJigsawComponent
     /**
      * 动态计算 input的padding-left 和padding-right (不确定图标的个数, 好空出对应的位置.)
      * 当前计算方法根据图标的个数计算, 默认图标大小为12px , dom大小获取的不准确.
-     * @private
+     *
      */
     private _setInputPaddingStyle() {
         let prefixIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-front").offsetWidth;

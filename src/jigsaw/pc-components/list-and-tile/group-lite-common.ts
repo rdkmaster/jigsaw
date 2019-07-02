@@ -32,7 +32,6 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     /**
      * 设置数据的显示字段
-     * @type {string}
      */
     @Input()
     public labelField: string = 'label';
@@ -52,7 +51,6 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     /**
      * 选择结果发生变化时，向外面发送事件
-     * @type {EventEmitter<any[]>}
      *
      */
     @Output() public selectedItemsChange = new EventEmitter<any[]>();

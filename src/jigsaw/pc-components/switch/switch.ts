@@ -42,7 +42,6 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
 
     /**
      * size 默认 'default' 可选值 ‘small’
-     * @type {string}
      */
     @Input()
     public size: string = 'default';
@@ -51,7 +50,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
 
     /**
      * 选中 默认值false;
-     * @returns {boolean}
+     *
      */
     @Input()
     public get checked(): boolean  { return this._checked};
@@ -62,13 +61,11 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
 
     /**
      * 可以忽略, 主要使checked 属性支持双向数据绑定.
-     * @type {EventEmitter<boolean>}
      */
     @Output() public checkedChange = new EventEmitter<boolean>();
 
     /**
      * 对外暴露事件,
-     * @type {EventEmitter<boolean>}
      */
     @Output() public change = this.checkedChange;
 
@@ -76,7 +73,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
 
     /**
      * 是否禁用 类型 boolean 默认值 false;
-     * @returns {boolean}
+     *
      */
     @Input()
     public get disabled(): boolean { return this._disabled; };

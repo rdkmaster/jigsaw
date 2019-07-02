@@ -14,15 +14,15 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
      *
      * $demo = tree/basic
      *
-     * @param {T} data 原始数据
-     * @returns {AbstractGeneralCollection<T>} 返回持有输入的原始数据的当前数据对象
+     * @param data 原始数据
+     * @returns AbstractGeneralCollection<T> 返回持有输入的原始数据的当前数据对象
      */
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
     /**
      * 调用在`onAjaxSuccess`里注册的所有回调函数。
      *
-     * @param {any} data 服务端返回的数据
+     * @param data 服务端返回的数据
      */
     protected abstract ajaxSuccessHandler(data): void;
 
@@ -46,7 +46,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
      * 安全地调用`dataReviser`函数。
      *
      * @param originData
-     * @return {any}
+     *
      */
     protected reviseData(originData: any): any {
         if (!this.dataReviser) {

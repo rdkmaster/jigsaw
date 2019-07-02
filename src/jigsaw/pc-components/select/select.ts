@@ -58,7 +58,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 用于多选时设置最小宽度
-     * @returns {string}
+     *
      */
     @Input()
     public get minWidth(): string {
@@ -73,7 +73,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 用于多选时设置最大宽度
-     * @returns {string}
+     *
      */
     @Input()
     public get maxWidth(): string {
@@ -91,7 +91,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 设置数据的显示字段
-     * @type {string}
      */
     @Input() public labelField: string = 'label';
 
@@ -136,7 +135,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 打开下拉的触发方式
-     * @type {string}
      *
      * $demo = select/trigger
      */
@@ -144,7 +142,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 关闭下拉的触发方式
-     * @type {string}
      *
      * $demo = select/trigger
      */
@@ -154,7 +151,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 提供选择的数据集合
-     * @returns {ArrayCollection<Object> | Object[]}
+     *
      */
     @Input()
     public get data(): ArrayCollection<object> | object[] {
@@ -169,7 +166,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
-     * @returns {any}
+     *
      *
      * $demo = select/basic
      * $demo = select/multiple
@@ -189,7 +186,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 选择结果发生变化时，向外面发送事件
-     * @type {EventEmitter<any>}
      *
      * $demo = select/basic
      */

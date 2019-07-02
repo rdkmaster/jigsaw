@@ -334,7 +334,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
     /**
      * 计算偏移并设置样式
-     * @private
+     *
      */
     private _setOffset() {
         if (this.level !== 0) {
@@ -373,7 +373,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
     /**
      * 计算宽度并设置样式
-     * @private
+     *
      */
     private _setWidth() {
         if (this.childBones.last) {

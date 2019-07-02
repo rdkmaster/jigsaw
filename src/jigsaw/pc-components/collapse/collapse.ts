@@ -106,7 +106,6 @@ export class JigsawCollapse extends AbstractJigsawComponent {
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)
-     * @type {string| CollapseMode}
      */
     @Input()
     public mode: string | CollapseMode = 'default';  // accordion

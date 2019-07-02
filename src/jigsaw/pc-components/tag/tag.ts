@@ -40,7 +40,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 是否显示tag的边框和删除按钮，默认显示
-     * @type {boolean}
+     *
      */
     @Input()
     public showBorder: boolean = true;

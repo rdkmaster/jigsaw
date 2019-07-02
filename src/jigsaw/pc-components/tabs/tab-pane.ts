@@ -31,7 +31,7 @@ export class JigsawTabPane {
     /**
      * 为true时，Tab页的视图延将被迟到该Tab页被打开的时候才被初始化。
      *
-     * @type {boolean}
+     *
      */
     @Input()
     public lazy: boolean = true;
