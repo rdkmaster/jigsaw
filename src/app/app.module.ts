@@ -11,6 +11,7 @@ import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
+import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
 
 {
     (<any[]>routerConfig).push(
@@ -41,5 +42,6 @@ import {SwitchDemoComponent} from "./switch-demo.component";
 })
 export class AppModule {
     constructor() {
+        //JigsawTheme.majorStyle = 'purple';
     }
 }
