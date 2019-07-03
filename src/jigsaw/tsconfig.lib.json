@@ -11,14 +11,6 @@
       "es2018"
     ]
   },
-    "files": [
-        "jigsaw/typings.d.ts",
-        "jigsaw/public_api.ts"
-    ],
-    "include": [
-        "jigsaw/typings.d.ts",
-        "jigsaw/public_api.ts"
-    ],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,
