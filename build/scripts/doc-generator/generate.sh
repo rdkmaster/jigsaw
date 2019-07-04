@@ -15,7 +15,7 @@ output=`pwd`
 
 compodoc -V >/dev/null
 if [ "$?" != "0" ]; then
-    npm install -g @compodoc/compodoc@1.1.9
+    npm install -g @compodoc/compodoc@1.0.9
 fi
 
 cd $home

@@ -33,7 +33,7 @@ task(':publish:logout', execTask(npm, ['logout']));
 
 
 function _execNpmPublish(label: string, packageName: string): Promise<{}> {
-    const packageDir = join(buildConfig.outputDir, 'releases', packageName);
+    const packageDir = join(buildConfig.outputDir, '@rdkmaster', packageName);
 
     if (!statSync(packageDir).isDirectory()) {
         return;
