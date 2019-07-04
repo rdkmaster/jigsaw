@@ -41,7 +41,7 @@ script:
   - sh build/scripts/integrate-with-seed.sh
   - # sh build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
-  - travis_wait 30 ng build --prod --aot
+  - travis_wait 30 node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --aot
   - #ng e2e
 
 after_script:
