@@ -24,6 +24,7 @@
     "@ngx-translate/core": "~11.0.1",
     "@rdkmaster/icon-font": "^1.0.6",
     "@types/marked": "~0.3.0",
+    "core-js": "~3.0.1",
     "echarts": "~4.1.0",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
     "font-awesome": "~4.7.0",
@@ -40,7 +41,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.2",
     "@angular-devkit/build-ng-packagr": "~0.800.0",
-    "@angular/cli": "^8.0.2",
+    "@angular/cli": "~8.0.0",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
     "@types/chalk": "~0.4.31",

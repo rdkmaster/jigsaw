@@ -18,8 +18,5 @@
             "es2016",
             "dom"
         ]
-    },
-    "preserveWhitespaces": {
-        "preserveWhitespaces": "off"
     }
 }

@@ -11,4 +11,4 @@ npm install
 rm -fr node_modules/@rdkmaster/jigsaw
 cp -r $home/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
 
-ng build -prod -aot
+ng build --prod --aot
