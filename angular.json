@@ -134,11 +134,51 @@
                   "builder": "@angular-devkit/build-ng-packagr:build",
                   "options": {
                       "tsConfig": "src/jigsaw/tsconfig.lib.json",
-                      "project": "src/jigsaw/ng-package.json"
+                      "project": "src/jigsaw/pc-components/ng-package.json"
                   },
                   "configurations": {
                       "production": {
-                          "project": "src/jigsaw/ng-package.json"
+                          "project": "src/jigsaw/pc-components/ng-package.json"
+                      }
+                  }
+              },
+              "test": {
+                  "builder": "@angular-devkit/build-angular:karma",
+                  "options": {
+                      "main": "src/jigsaw/test.ts",
+                      "tsConfig": "src/jigsaw/tsconfig.spec.json",
+                      "karmaConfig": "src/jigsaw/karma.conf.js"
+                  }
+              },
+              "lint": {
+                  "builder": "@angular-devkit/build-angular:tslint",
+                  "options": {
+                      "tsConfig": [
+                          "src/jigsaw/tsconfig.lib.json",
+                          "src/jigsaw/tsconfig.spec.json"
+                      ],
+                      "exclude": [
+                          "**/node_modules/**"
+                      ]
+                  }
+              }
+          }
+      },
+    "jigsaw-mobile": {
+          "projectType": "library",
+          "root": "src/jigsaw",
+          "sourceRoot": "src/jigsaw",
+          "prefix": "jigsaw-mobile",
+          "architect": {
+              "build": {
+                  "builder": "@angular-devkit/build-ng-packagr:build",
+                  "options": {
+                      "tsConfig": "src/jigsaw/tsconfig.lib.json",
+                      "project": "src/jigsaw/mobile-components/ng-package-mobile.json"
+                  },
+                  "configurations": {
+                      "production": {
+                          "project": "src/jigsaw/mobile-components/ng-package-mobile.json"
                       }
                   }
               },

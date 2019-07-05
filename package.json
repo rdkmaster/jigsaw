@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve --poll 500 --proxy-config proxy-config.json",
     "build": "ng build --prod jigsaw",
+    "build-mobile": "ng build --prod jigsaw-mobile",
     "build-app": "ng build --prod --aot --delete-output-path",
     "test": "ng test jigsaw --code-coverage",
     "lint": "ng lint",
