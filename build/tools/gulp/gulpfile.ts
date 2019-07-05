@@ -1,8 +1,10 @@
+import {createBuildTask} from './create-build-task';
 
 import './tasks/clean';
 import './tasks/default';
 
-import './build-pc-pkg';
+createBuildTask('jigsaw');
+createBuildTask('jigsaw-mobile');
 
 import './tasks/publish';
 
