@@ -1,4 +1,4 @@
-import {createTask} from './create-task';
+import {createTask} from './tasks/create-task';
 
 import './tasks/clean';
 import './tasks/default';

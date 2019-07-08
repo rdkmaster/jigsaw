@@ -2,10 +2,10 @@ import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {writeFileSync} from 'fs-extra';
-import {sequenceTask} from "./util/task_helpers";
-import {checkReleasePackage} from "./tasks/validate-release";
+import {sequenceTask} from "../util/task_helpers";
+import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
-import {publishPackage} from './tasks/publish';
+import {publishPackage} from './publish';
 
 const sass = require('gulp-sass');
 const run = require('gulp-run');

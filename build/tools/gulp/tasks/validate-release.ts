@@ -1,7 +1,7 @@
 import {readFileSync, existsSync} from 'fs';
 import {join} from 'path';
 import {sync as glob} from 'glob';
-import {buildConfig} from '../packaging/build-config';
+import {buildConfig} from './build-config';
 
 /** Path to the directory where all releases are created. */
 const releasesDir = join(buildConfig.outputDir, '@rdkmaster');
