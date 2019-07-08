@@ -1,10 +1,10 @@
-import {createBuildTask} from './create-build-task';
+import {createTask} from './create-task';
 
 import './tasks/clean';
 import './tasks/default';
 
-createBuildTask('jigsaw');
-createBuildTask('jigsaw-mobile');
+createTask('jigsaw');
+createTask('jigsaw-mobile');
 
 import './tasks/publish';
 
