@@ -60,8 +60,10 @@ export function createTask(packageName: string) {
             .pipe(dest(join(releasePath)));
     });
 
-    task(`:build:${packageName}-copy-license`,() => {
+    task(`:build:${packageName}-copy-files`,() => {
         src('./LICENSE')
+            .pipe(dest(join(releasePath)));
+        src('./README.md')
             .pipe(dest(join(releasePath)));
     });
 
@@ -81,14 +83,12 @@ export function createTask(packageName: string) {
     task(`build:${packageName}`, sequenceTask(
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
-        `:build:${packageName}-copy-license`,
+        `:build:${packageName}-copy-files`,
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
         'clean',
-        `:build:${packageName}-package`,
-        `:build:${packageName}-copy-license`,
-        `:build:${packageName}-styles`
+        `build:${packageName}`
     ));
 
     task(`:publish:${packageName}`, async () => publishPackage(packageName));
