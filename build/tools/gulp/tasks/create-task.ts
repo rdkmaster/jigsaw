@@ -7,8 +7,9 @@ import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
 import {publishPackage} from './publish';
 
-const sass = require('gulp-sass');
-const run = require('gulp-run');
+const gulpSass = require('gulp-sass');
+const gulpRun = require('gulp-run');
+const gulpCleanCss = require('gulp-clean-css');
 
 export function createTask(packageName: string) {
     const projectName = packageName;
@@ -26,7 +27,7 @@ export function createTask(packageName: string) {
     const themingApiGlob = join(jigsawCommonPath, 'core/theming/theming-api.scss');
 
     task(`:build:${packageName}-package`, function () {
-        return run('ng build ' + projectName + ' --prod', {}).exec();
+        return gulpRun('ng build ' + projectName + ' --prod', {}).exec();
     });
 
     task(`:build:${packageName}-styles`, [
@@ -38,7 +39,8 @@ export function createTask(packageName: string) {
 
     task(`:build:${packageName}-all-theme-file`,function () {
         return src([allThemingStyleGlob])
-            .pipe(sass().on('error', sass.logError))
+            .pipe(gulpSass().on('error', gulpSass.logError))
+            .pipe(gulpCleanCss())
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
     });
 
