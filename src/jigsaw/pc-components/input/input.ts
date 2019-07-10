@@ -262,8 +262,6 @@ export class JigsawInput extends AbstractJigsawComponent
             "padding-left": prefixIconPadding + "px",
             "padding-right": endPadding + "px"
         };
-
-        this._changeDetectorRef.detectChanges();
     }
 
     ngAfterContentInit() {
