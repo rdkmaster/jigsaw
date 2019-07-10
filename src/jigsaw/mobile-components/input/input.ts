@@ -1,6 +1,6 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild,
-    AfterContentInit, Renderer2, ChangeDetectorRef, forwardRef
+    AfterContentInit, Renderer2, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -77,8 +77,7 @@ export class JigsawMobileInput extends AbstractJigsawComponent
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(protected _render2: Renderer2,
-                protected _elementRef: ElementRef,
-                protected _changeDetectorRef: ChangeDetectorRef) {
+                protected _elementRef: ElementRef) {
         super();
     }
 
@@ -176,7 +175,7 @@ export class JigsawMobileInput extends AbstractJigsawComponent
     /**
      * @internal
      */
-    public _$clearValue(event): void {
+    public _$clearValue(): void {
         this.value = '';
         this.focus();
     }
