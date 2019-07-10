@@ -116,10 +116,8 @@ export class JigsawInput extends AbstractJigsawComponent
             return;
         }
 
-        if((newValue != '' && this._value == '') || newValue == '' && this._value != '') {
-            this.callLater(() => {
-                this._setInputPaddingStyle();
-            });
+        if ((newValue != '' && this._value == '') || (newValue == '' && this._value != '')) {
+            this.callLater(() => this._setInputPaddingStyle());
         }
         this._value = newValue;
         this.valueChange.emit(this._value);
