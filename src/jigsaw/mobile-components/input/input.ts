@@ -116,7 +116,7 @@ export class JigsawMobileInput extends AbstractJigsawComponent
             return;
         }
 
-        if ((newValue != '' && this._value == '') || (newValue == '' && this._value != '')) {
+        if (this.clearable && ((newValue != '' && this._value == '') || (newValue == '' && this._value != ''))) {
             this.callLater(() => this._setInputPaddingStyle());
         }
         this._value = newValue;
