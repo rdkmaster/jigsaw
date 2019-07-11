@@ -62,6 +62,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     @Input()
     public uploadOptionCount: number;
 
+    @Input()
+    public popupList: boolean = true;
+
     @HostListener('click', ['$event'])
     onClick($event) {
         this._$selectFile($event);
@@ -69,13 +72,14 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 
     @HostListener('mouseenter', ['$event'])
     onMouseEnter() {
-        if (!this._$fileInfoList.length) return;
+        if (!this._$fileInfoList.length || !this.popupList) return;
         this.clearCallLater(this._rollOutDenouncesTimer);
         this._addRollInDenouncesTimer();
     }
 
     @HostListener('mouseleave', ['$event'])
     onMouseLeave() {
+        if (!this.popupList) return;
         this.clearCallLater(this._rollInDenouncesTimer);
         this._addRollOutDenouncesTimer();
     }
