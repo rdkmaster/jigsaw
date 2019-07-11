@@ -1,5 +1,4 @@
 import {
-    ChangeDetectorRef,
     Component,
     ElementRef,
     forwardRef,
@@ -24,6 +23,9 @@ export class DropDownValue {
     constructor(data = null) {
         if (data) {
             for (let attrItem in data) {
+                if (!data.hasOwnProperty(attrItem)) {
+                    continue;
+                }
                 this[attrItem] = data[attrItem];
             }
         }
@@ -116,9 +118,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
 
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
-                protected _changeDetectorRef: ChangeDetectorRef,
                 private _popupService: PopupService) {
-        super(_render2, _elementRef, _changeDetectorRef);
+        super(_render2, _elementRef);
     }
 
     ngOnInit() {

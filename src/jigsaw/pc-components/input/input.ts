@@ -1,6 +1,6 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild,
-    AfterContentInit, Renderer2, AfterViewChecked, ChangeDetectorRef, forwardRef
+    AfterContentInit, Renderer2, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -33,7 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     ]
 })
 export class JigsawInput extends AbstractJigsawComponent
-    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit, AfterViewChecked {
+    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit {
 
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
@@ -77,8 +77,7 @@ export class JigsawInput extends AbstractJigsawComponent
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(protected _render2: Renderer2,
-                protected _elementRef: ElementRef,
-                protected _changeDetectorRef: ChangeDetectorRef) {
+                protected _elementRef: ElementRef) {
         super();
     }
 
@@ -114,6 +113,10 @@ export class JigsawInput extends AbstractJigsawComponent
     public set value(newValue: string) {
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
+        }
+
+        if (this.clearable && ((newValue != '' && this._value == '') || (newValue == '' && this._value != ''))) {
+            this.callLater(() => this._setInputPaddingStyle());
         }
         this._value = newValue;
         this.valueChange.emit(this._value);
@@ -172,7 +175,7 @@ export class JigsawInput extends AbstractJigsawComponent
     /**
      * @internal
      */
-    public _$clearValue(event): void {
+    public _$clearValue(): void {
         this.value = '';
         this.focus();
     }
@@ -256,18 +259,13 @@ export class JigsawInput extends AbstractJigsawComponent
             "padding-left": prefixIconPadding + "px",
             "padding-right": endPadding + "px"
         };
-
-        this._changeDetectorRef.detectChanges();
     }
 
     ngAfterContentInit() {
         this.callLater(() => {
             this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
+            this._setInputPaddingStyle();
         });
-    }
-
-    ngAfterViewChecked() {
-        this._setInputPaddingStyle();
     }
 }
 
