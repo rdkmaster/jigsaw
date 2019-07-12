@@ -49,7 +49,7 @@ export class uploadDemoComponent {
         })
     }
 
-    showUploadFileName(files: UploadFileInfo[]) {
+    showUploadFileName(files?: UploadFileInfo[]) {
         this.uploadedFile = !!files ? files[0].name : '正在上传...';
     }
 
