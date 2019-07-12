@@ -26,6 +26,15 @@
     </div>
     <div class="demo-2 live-demo">
         <h3>指令</h3>
+        <span style="font-weight: bold;">常见模式：</span>
+        <a #normalUpload j-upload [uploadMultiple]="false" [uploadShowFileList]="false"
+           (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
+           class="link-upload">上传文件</a>
+        <span>{{uploadedFile}}</span>
+
+        <br><br>
+
+        <span style="font-weight: bold;">极简模式：</span>
         <j-button #uploadDirective j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType"
                   (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
                   (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadOptionCount]="4">
