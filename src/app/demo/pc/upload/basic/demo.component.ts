@@ -1,6 +1,6 @@
-import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {Component, QueryList, ViewChildren} from "@angular/core";
 import {UploadFileInfo} from "jigsaw/pc-components/upload/upload.base";
-import {JigsawUploadDirective} from "../../../../../jigsaw/pc-components/upload/upload.directive";
+import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directive";
 
 @Component({
     templateUrl: './demo.component.html',
