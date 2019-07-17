@@ -1,3 +1,19 @@
+## v1.1.26 (2019-7-17)
+
+### 新特性 / New Features
+- [新增] select组件增加一个remove事件，在多选时，点击选中项的x后发出，同时发出valueChange事件
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] select组件的value属性支持null/undefined值清空已选择项
+
+### 修复 / Fixes
+- [故障] 修复input输入框disable没有背景的问题
+- [故障] 修复无法使用服务端分页排序的问题
+
+
 ## v1.1.25 (2019-5-12)
 
 ### 新特性 / New Features
