@@ -705,7 +705,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             options[paramProperty].filter = this.filterInfo;
         }
         if (CommonUtils.isDefined(this.sortInfo)) {
-            options[paramProperty].sortInfo = this.sortInfo;
+            options[paramProperty].sort = this.sortInfo;
         }
         if (paramProperty == 'params') {
             options.params = PreparedHttpClientOptions.prepareParams(options.params)
