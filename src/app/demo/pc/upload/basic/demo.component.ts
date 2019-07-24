@@ -1,6 +1,6 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
 import {UploadFileInfo} from "jigsaw/pc-components/upload/upload.base";
-import {JigsawUploadDirective} from "../../../../../jigsaw/pc-components/upload/upload.directive";
+import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directive";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -20,11 +20,13 @@ import {JigsawUploadDirective} from "../../../../../jigsaw/pc-components/upload/
 })
 export class uploadDemoComponent {
     fileType = '.png';
-
     multiple: boolean;
-
     isButtonUploadWaiting: boolean;
     isLinkUploadWaiting: boolean;
+    uploadedFile: string = '';
+
+    @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
+    uploadDirectives: QueryList<JigsawUploadDirective>;
 
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log('one file uploaded',fileInfo);
@@ -41,12 +43,14 @@ export class uploadDemoComponent {
         }
     }
 
-    @ViewChildren('uploadDirective', {read: JigsawUploadDirective}) uploadDirectives: QueryList<JigsawUploadDirective>;
-
     clearFileList() {
         this.uploadDirectives.forEach(upload => {
             upload.clearFileList();
         })
+    }
+
+    showUploadFileName(files?: UploadFileInfo[]) {
+        this.uploadedFile = !!files ? files[0].name : '正在上传...';
     }
 
     // ====================================================================

@@ -249,17 +249,6 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
     }
 
     /**
-     * 此函数用于ngFor比较数组的值更新视图时，使数组不管值是否相等都能够更新
-     * @internal
-     * @param index
-     * @param item
-     *
-     */
-    public _$trackByFun = function(index: number, item: any) {
-        return index + new Date().getTime()
-    };
-
-    /**
      * 设置单个的值。内部使用
      * 子级组件需要用到
      * @internal
