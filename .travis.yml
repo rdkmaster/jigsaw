@@ -6,7 +6,8 @@ node_js:
 branches:
   - master
   - v1.1
-  - plunker-live-demo-test
+  - v5.0
+
 env:
   global:
   - SAUCE_USERNAME=pkozlowski
