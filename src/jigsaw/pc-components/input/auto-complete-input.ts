@@ -1,3 +1,4 @@
+import {debounceTime} from "rxjs/operators";
 import {
     Component,
     ElementRef,
@@ -5,12 +6,11 @@ import {
     Input,
     NgModule,
     OnDestroy,
-    OnInit,
     Renderer2,
     TemplateRef,
     ViewChild,
     Output,
-    EventEmitter
+    EventEmitter, AfterViewInit
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -52,7 +52,7 @@ export class DropDownValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, OnInit {
+export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
     /**
      * @internal
      */
@@ -99,10 +99,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Input()
     public valid: boolean = true;
 
-    @ViewChild('dropdownTemp')
+    @ViewChild('dropdownTemp', {static: false})
     private _dropdownTemp: TemplateRef<any>;
 
-    @ViewChild('input')
+    @ViewChild('input', {static: false})
     private _input: JigsawInput;
 
     /**
@@ -122,9 +122,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         super(_render2, _elementRef);
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-        this._input.valueChange.debounceTime(300).subscribe(() => {
+    ngAfterViewInit() {
+        this._input.valueChange.pipe(debounceTime(300)).subscribe(() => {
             this._getFilteredDropDownData();
         });
     }

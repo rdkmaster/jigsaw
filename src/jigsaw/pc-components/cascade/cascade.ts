@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
@@ -53,7 +53,7 @@ export class CascadeData {
  *         selectedItems: 已有的所有级items
  *         data: 已有的所有级的数据集合
  *         level: 当前tab的下标索引值，从0开始
- * @returns {CascadeData}
+ *
  */
 export type CascadeDateGenerator = (selectedItem: any, selectedItems: any[], data: any[], level: number) => CascadeData;
 
@@ -87,7 +87,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * @internal
      */
-    @ViewChild(JigsawTab) public _tabs: JigsawTab;
+    @ViewChild(JigsawTab, {static: false}) public _tabs: JigsawTab;
 
     /**
      * @internal
@@ -164,7 +164,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 级联选择的数据
-     * @type {Array}
      *
      * $demo = cascade/selected-items
      */
@@ -182,7 +181,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 级联选择数据发生变化时发送的事件
-     * @type {EventEmitter<any[]>}
      *
      * $demo = cascade/basic
      * $demo = cascade/lazy-load
@@ -194,7 +192,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 数据要显示的文本key
-     * @type {string}
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
@@ -248,7 +245,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 设置数据分页存储数，默认不分页
-     * @type {number}
      */
     @Input()
     public pageSize: number = Infinity;
@@ -454,7 +450,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         return this._list;
     }
 
-    public set _$list(value: any[] | ArrayCollection<any> | LocalPageableArray<any>) {
+    public set _$list(value: any) {
         if(!value || this._list == value) return;
         if (value instanceof LocalPageableArray && value.pagingInfo) {
             this._list = value;
@@ -565,7 +561,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
 
     private _init(data: any[], allSelectedData: any[]) {
         this._$list = data;
-        if (allSelectedData instanceof Array || allSelectedData instanceof ArrayCollection) {
+        if (allSelectedData instanceof Array || (allSelectedData as any) instanceof ArrayCollection) {
             // 等待根据list数据渲染option后回填数据
             this.callLater(() => {
                 this._$currentPageSelectedItems = allSelectedData.filter(item => {

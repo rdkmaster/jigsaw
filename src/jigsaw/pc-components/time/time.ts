@@ -1,17 +1,20 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output, forwardRef
+    Component, ElementRef, EventEmitter, Input, OnDestroy, Renderer2, Output, forwardRef, AfterViewInit
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../common/service/time.types";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ElementEventHelper, InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateService} from "@ngx-translate/core";
+import {CommonUtils} from "../../common/core/utils/common-utils";
+
+declare const moment: any;
+declare const $: any;
 
 /**
  * 时间范围生成函数，用于生成自定义的时间范围
@@ -96,7 +99,7 @@ export class GrItem {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
-export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
     @Input()
     public valid: boolean = true;
@@ -106,7 +109,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/gr
      *
-     * @type {EventEmitter<TimeGr>}
      */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
@@ -121,7 +123,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/gr
      *
-     * @return {TimeGr | string}
+     *
      */
     public get gr(): TimeGr | string {
         return this._$gr;
@@ -151,7 +153,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/basic
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get date(): WeekTime {
@@ -170,7 +172,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/basic
      *
-     * @type {EventEmitter<WeekTime>}
      */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
@@ -185,7 +186,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      * $demo = time/limit-start
      * $demo = time/limit-end
      *
-     * @return {Time}
+     *
      */
     public get limitEnd(): Time {
         return this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this.gr)
@@ -217,7 +218,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      * $demo = time/limit-start
      * $demo = time/limit-end
      *
-     * @return {Time}
+     *
      */
     public get limitStart(): Time {
         return this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this.gr);
@@ -256,7 +257,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * $demo = time/refresh-interval
      *
-     * @return {number}
+     *
      */
     @Input()
     public get refreshInterval(): number {
@@ -350,10 +351,11 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             en: {recommendedLabel: 'Recommend'}
         });
         _translateService.setDefaultLang(_translateService.getBrowserLang());
+
+        this._defineLocale();
     }
 
-    ngOnInit() {
-        this._defineLocale();
+    ngAfterViewInit() {
         this._initDatePicker();
         this._checkMacro();
     }

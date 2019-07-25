@@ -21,6 +21,7 @@ import {AbstractJigsawMobileGroupLiteComponent} from "./group-lite-common";
  * - 可以和combo结合起来使用
  *
  */
+// @dynamic
 @Component({
     selector: 'jigsaw-mobile-list-lite, jm-list-lite',
     template: `
@@ -85,7 +86,7 @@ export class JigsawMobileListLite extends AbstractJigsawMobileGroupLiteComponent
 
     @ViewChildren(JigsawMobileListOption) private _listOptions: QueryList<JigsawMobileListOption>;
 
-    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild(PerfectScrollbarDirective, {static: false}) private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * @internal

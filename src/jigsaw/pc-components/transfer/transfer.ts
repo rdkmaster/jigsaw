@@ -1,18 +1,18 @@
 import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
-import {trigger, style, transition, state, animate, keyframes} from "@angular/animations"
+import {CommonModule} from "@angular/common";
+import {trigger, style, transition, animate, keyframes} from "@angular/animations"
+import {Subscription} from "rxjs/internal/Subscription";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {AbstractJigsawGroupLiteComponent} from "../list-and-tile/group-lite-common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {Subscriber} from "rxjs/Subscriber";
-import {CommonModule} from "@angular/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
@@ -245,8 +245,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      *
      * data和selectedItems不和list里数据双绑，list里面要做一些转换
      *
-     * @param {string} from
-     * @private
+     * @param from
+     *
      */
     public _$transferTo(from: string) {
         if (this.disabled) return;
@@ -356,7 +356,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     @Input()
     public searchable: boolean;
 
-    private _removeHostSubscribe: Subscriber<any>;
+    private _removeHostSubscribe: Subscription;
     private _filterFunction: (item: any) => boolean;
     private _removeArrayCallbackListener: CallbackRemoval;
 
@@ -384,8 +384,8 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 
     /**
      * 这边把transfer过来的数组转成分页数据，中间变量data主要用于消除数据闪动
-     * @param {GroupOptionValue[] | ArrayCollection<GroupOptionValue>} value
-     * @private
+     * @param value
+     *
      */
     private _updateData(value: GroupOptionValue[] | ArrayCollection<GroupOptionValue>) {
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) return;

@@ -3,7 +3,7 @@ import {
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {Observable} from "rxjs/Observable";
+import {Observable, Subscription} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
@@ -11,7 +11,6 @@ import {TableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
-import {Subscription} from "rxjs/Subscription";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 
@@ -114,7 +113,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
-    @ViewChild(JigsawInput)
+    @ViewChild(JigsawInput, {static: false})
     protected input: JigsawInput;
 
     ngAfterViewInit() {
@@ -240,6 +239,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 /**
  * Select renderer
  */
+// @dynamic
 @Component({
     template: `
         <jigsaw-select [value]="selected" [data]="data"

@@ -1,7 +1,7 @@
 import {AfterContentInit, Component, ContentChildren, forwardRef, Input, NgModule, OnDestroy, Optional, QueryList} from "@angular/core";
 import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 

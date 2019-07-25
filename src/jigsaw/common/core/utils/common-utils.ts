@@ -1,3 +1,4 @@
+// @dynamic
 export class CommonUtils {
 
     // to avoid compodoc generation error
@@ -40,8 +41,8 @@ export class CommonUtils {
      *
      * @param item1 待比较的值1
      * @param item2 待比较的值2
-     * @param {string[]} trackItemBy 待比较的属性列表
-     * @returns {boolean}
+     * @param trackItemBy 待比较的属性列表
+     *
      */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
@@ -73,7 +74,7 @@ export class CommonUtils {
      * 判断一个对象是否不包含任何属性
      *
      * @param obj
-     * @returns {boolean}
+     *
      */
     public static isEmptyObject(obj): boolean {
         for (let i in obj) return false;
@@ -85,7 +86,7 @@ export class CommonUtils {
      *
      * @param targetObject 要合并的源对象
      * @param sourceObject 合并的对象信息
-     * @returns {Object} 如果`targetObject`非空，则返回`targetObject`，否则返回一个新对象。
+     * @returns 如果`targetObject`非空，则返回`targetObject`，否则返回一个新对象。
      */
     public static extendObject(targetObject: Object, sourceObject: Object): Object {
         if (!sourceObject) {
@@ -142,7 +143,7 @@ export class CommonUtils {
      *
      * @param element
      * @param selector 支持'.className' '#id' '[attr]' 'tagName'
-     * @returns {HTMLElement}
+     *
      */
     public static getParentNodeBySelector(element: HTMLElement, selector: string): HTMLElement {
         if (element instanceof HTMLElement) {
@@ -225,9 +226,9 @@ export class CommonUtils {
      * 安全的调用一个函数，并返回该函数的返回值。如果该函数执行失败，可以在控制台给出实际的堆栈以协助排查问题
      *
      * @param context 执行函数的上下文
-     * @param {Function} callback 待执行的回调函数
-     * @param {any[]} args 传递给回调函数的参数列表
-     * @returns {any} 返回该函数的返回值
+     * @param callback 待执行的回调函数
+     * @param args 传递给回调函数的参数列表
+     * @returns 返回该函数的返回值
      */
     public static safeInvokeCallback(context: any, callback: Function, args?: any[]): any {
         if (CommonUtils.isUndefined(callback)) {
@@ -245,7 +246,7 @@ export class CommonUtils {
      * 可靠的判断一个值是否有效，输入 `""` 和 `0` 均返回true，只有`null`或者`undefined`才会返回false
      *
      * @param value 待测验的值
-     * @returns {boolean}
+     *
      */
     public static isDefined(value): boolean {
         return value !== undefined && value !== null;
@@ -255,7 +256,7 @@ export class CommonUtils {
      * 参考 `isDefined`
      *
      * @param value
-     * @returns {boolean}
+     *
      */
     public static isUndefined(value): boolean {
         return !this.isDefined(value);
@@ -264,8 +265,8 @@ export class CommonUtils {
     /**
      * 将url中的参数解析为一个对象
      *
-     * @param {string} rawParam 格式为`var1=value1&var2=value2`
-     * @returns {Object} 返回类似`{var1: "value1", var2: "value2"}`的对象
+     * @param rawParam 格式为`var1=value1&var2=value2`
+     * @returns 返回类似`{var1: "value1", var2: "value2"}`的对象
      */
     public static parseUrlParam(rawParam: string): Object {
         const result = {};
@@ -281,8 +282,8 @@ export class CommonUtils {
     /**
      * 是浏览器内置uri解码`decodeURI()`函数的火力增强版，可以解码任何uri
      *
-     * @param {string} uri
-     * @returns {string}
+     * @param uri
+     *
      */
     public static superDecodeURI(uri: string): string {
         if (!uri) {

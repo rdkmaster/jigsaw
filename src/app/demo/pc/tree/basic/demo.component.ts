@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+
+
 import {TreeData} from "jigsaw/common/core/data/tree-data";
 import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
 
@@ -8,7 +8,7 @@ import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
 
     public data: TreeData;
 

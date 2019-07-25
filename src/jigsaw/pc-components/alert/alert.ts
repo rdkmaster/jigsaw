@@ -215,7 +215,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawAlert) dialog: JigsawDialog;
+    @ViewChild(JigsawAlert, {static: true}) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.info;
@@ -240,7 +240,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawAlert) dialog: JigsawDialog;
+    @ViewChild(JigsawAlert, {static: true}) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.warning;
@@ -265,7 +265,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawAlert) dialog: JigsawDialog;
+    @ViewChild(JigsawAlert, {static: true}) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.error;
@@ -290,7 +290,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawAlert) dialog: JigsawDialog;
+    @ViewChild(JigsawAlert, {static: true}) dialog: JigsawDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.confirm;

@@ -1,7 +1,7 @@
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import "rxjs/add/operator/map";
-import {Subscription} from "rxjs/Subscription";
+import {map} from "rxjs/operators";
+import {Subscription} from "rxjs";
 import {ComponentDataHelper, DataReviser, HttpClientOptions, IAjaxComponentData, IEmittable} from "./component-data";
 import {CallbackRemoval} from "../utils/common-utils";
 
@@ -14,15 +14,15 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
      *
      * $demo = tree/basic
      *
-     * @param {T} data 原始数据
-     * @returns {AbstractGeneralCollection<T>} 返回持有输入的原始数据的当前数据对象
+     * @param data 原始数据
+     * @returns AbstractGeneralCollection<T> 返回持有输入的原始数据的当前数据对象
      */
     public abstract fromObject(data: T): AbstractGeneralCollection<T>;
 
     /**
      * 调用在`onAjaxSuccess`里注册的所有回调函数。
      *
-     * @param {any} data 服务端返回的数据
+     * @param data 服务端返回的数据
      */
     protected abstract ajaxSuccessHandler(data): void;
 
@@ -46,7 +46,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
      * 安全地调用`dataReviser`函数。
      *
      * @param originData
-     * @return {any}
+     *
      */
     protected reviseData(originData: any): any {
         if (!this.dataReviser) {
@@ -88,7 +88,7 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
 
         const op = HttpClientOptions.prepare(optionsOrUrl);
         this.http.request(op.method, op.url, op)
-            .map(res => this.reviseData(res))
+            .pipe(map(res => this.reviseData(res)))
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
                 error => this.ajaxErrorHandler(error),
@@ -214,7 +214,7 @@ export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
                     continue;
                 }
                 needRefresh = true;
-                this[key] = data[key];
+                this[key] = data[key] as any;
                 this.propList.push(key);
             }
         }

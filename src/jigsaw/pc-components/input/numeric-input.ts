@@ -1,3 +1,4 @@
+import {debounceTime} from "rxjs/operators";
 import {
     NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, AfterContentInit,
     Renderer2, forwardRef
@@ -41,7 +42,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     ngOnInit() {
-        this.valueChange.debounceTime(300).subscribe((val) => {
+        this.valueChange.pipe(debounceTime(300)).subscribe((val) => {
             if(val < this.min) {
                 this._value = this.min;
                 this.valueChange.emit(this._value);
@@ -56,7 +57,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 设置不可用
-     * @type {boolean}
+     *
      *
      * $demo = numeric-input/disabled
      */
@@ -64,7 +65,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 输入框的placeholder
-     * @type {string}
+     *
      *
      * $demo = numeric-input/basic
      */
@@ -74,7 +75,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 最小值
-     * @returns {number}
+     *
      *
      * $demo = numeric-input/basic
      */
@@ -95,7 +96,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 最大值
-     * @returns {number}
+     *
      *
      * $demo = numeric-input/basic
      */
@@ -119,7 +120,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 步长，默认是1
-     * @returns {number}
+     *
      *
      * $demo = numeric-input/step
      */
@@ -148,7 +149,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 输入框的值，双绑
-     * @returns {number}
+     *
      *
      * $demo = numeric-input/basic
      */
@@ -181,7 +182,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 尺寸，默认是‘default’
-     * @type {string}
+     *
      *
      * $demo = numeric-input/size
      */
@@ -190,26 +191,26 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     /**
      * 当value改变时，自动发出事件
-     * @type {EventEmitter<number>}
+     *
      */
     @Output()
     public valueChange: EventEmitter<number> = new EventEmitter<number>();
 
     /**
      * focus事件
-     * @type {EventEmitter<FocusEvent>}
+     *
      */
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     /**
      * blur事件
-     * @type {EventEmitter<FocusEvent>}
+     *
      */
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    @ViewChild('input')
+    @ViewChild('input', {static: false})
     private _inputElement: ElementRef;
 
     public _$upDisabled: boolean;

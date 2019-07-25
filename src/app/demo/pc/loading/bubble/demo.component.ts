@@ -8,7 +8,7 @@ import {JigsawBubbleLoading} from "jigsaw/common/components/loading/loading";
     styleUrls: ['./demo.component.css']
 })
 export class BubbleLoadingDemoComponent {
-    @ViewChild('block') block: ElementRef;
+    @ViewChild('block', {static: false}) block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
     }

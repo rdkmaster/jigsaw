@@ -45,7 +45,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
      * Angular的`OnInit`钩子是否已经执行过，是则为true，否则为false。
      * 方便子类判断当前组件的状态。
      *
-     * @type {boolean}
+     *
      */
     protected initialized: boolean = false;
 
@@ -54,23 +54,23 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
      * `setTimeout`里已经设置的逻辑依然会被执行，这在某些特定情况下会造成意外，从而造成组件出错。
      * 使用本方法启动的异步逻辑在组件销毁之后，不再被执行。
      *
-     * @param {Function} handler 需要延迟执行的函数
+     * @param handler 需要延迟执行的函数
      */
     protected callLater(handler: Function);
     /**
-     * @param {Function} handler 需要延迟执行的函数
-     * @param {number} timeout 延迟的毫秒数
+     * @param handler 需要延迟执行的函数
+     * @param timeout 延迟的毫秒数
      */
     protected callLater(handler: Function, timeout: number);
     /**
-     * @param {Function} handler 需要延迟执行的函数
-     * @param {any} context `handler`函数执行的上下文
+     * @param handler 需要延迟执行的函数
+     * @param context `handler`函数执行的上下文
      */
     protected callLater(handler: Function, context: any);
     /**
-     * @param {Function} handler 需要延迟执行的函数
+     * @param handler 需要延迟执行的函数
      * @param context `handler`函数执行的上下文
-     * @param {number} timeout 延迟的毫秒数
+     * @param timeout 延迟的毫秒数
      */
     protected callLater(handler: Function, context: any, timeout: number);
     /**
@@ -105,7 +105,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
      * 终止`callLater`所发起的异步任务，用法与`clearTimeout`非常类似，但是更加安全，
      * 可以顺便将`callLater`所缓存的定时器序号删除。
      *
-     * @param {number} handle `callLater`的返回值
+     * @param handle `callLater`的返回值
      */
     protected clearCallLater(handle: number):void {
         clearTimeout(handle);

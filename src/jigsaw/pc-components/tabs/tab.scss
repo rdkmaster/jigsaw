@@ -2,6 +2,11 @@
 
 $tab-prefix: #{$jigsaw-prefix}-tabs;
 
+.#{$tab-prefix}-host {
+    display: block;
+    height: auto;
+}
+
 .#{$tab-prefix} {
     display: block;
     position: relative;

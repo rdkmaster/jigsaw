@@ -5,6 +5,8 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {ZTreeSettingSetting} from "./ztree-types";
 import {TreeData} from "../../common/core/data/tree-data";
 
+declare const $: any;
+
 export class TreeEventData {
     treeId: string;
     treeNodes: object;

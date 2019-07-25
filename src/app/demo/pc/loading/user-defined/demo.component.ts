@@ -8,7 +8,7 @@ import {PopupInfo} from "jigsaw/common/service/popup.service";
     styleUrls: ['./demo.component.css']
 })
 export class DefinedLoadingDemoComponent {
-    @ViewChild('block') block: ElementRef;
+    @ViewChild('block', {static: false}) block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
     }

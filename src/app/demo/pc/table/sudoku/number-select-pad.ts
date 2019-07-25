@@ -10,7 +10,7 @@ import {JigsawWarningAlert} from "../../../../../jigsaw/pc-components/alert/aler
                 <span (click)="onClick('pencil')" class="fa fa-pencil"></span>
                 <span (click)="onClick('close')" class="fa fa-times"></span>
             </div>
-            <j-tile trackItemBy="label" width="185px" [multipleSelect]="false"
+            <j-tile trackItemBy="label" width="214px" [multipleSelect]="false"
                     (selectedItemsChange)="onSelect($event)" [(selectedItems)]="selectedItems">
                 <j-tile-option *ngFor="let num of numbers" [value]="num">
                     {{num.label}}

@@ -1,17 +1,12 @@
-import {createPackageBuildTasks} from './packaging/build-tasks-gulp';
-import {createReleaseTasks} from './tasks/jigsaw-release';
-// Create gulp tasks to build the different packages in the project.
-createPackageBuildTasks('jigsaw');
-createPackageBuildTasks('jigsaw-mobile');
+import {createTask} from './tasks/create-task';
 
 import './tasks/clean';
 import './tasks/default';
-//import './tasks/lint';
+
+createTask('jigsaw');
+createTask('jigsaw-mobile');
+
 import './tasks/publish';
-//import './tasks/aot';
-createReleaseTasks('jigsaw');
-createReleaseTasks('jigsaw-mobile');
-import './tasks/validate-release';
 
 import './tasks/ensure-url-matches-path'
 import './tasks/generate-demo-info'

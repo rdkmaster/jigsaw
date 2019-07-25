@@ -10,7 +10,7 @@ import {JigsawTooltipDialog, TooltipBase} from "jigsaw/pc-components/tooltip/too
     .tooltip-content p{line-height: 1.4;}`]
 })
 export class UserTooltipDialogComponent extends TooltipBase{
-    @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
+    @ViewChild(JigsawTooltipDialog, {static: false}) public tooltip: JigsawTooltipDialog;
 
 }
 

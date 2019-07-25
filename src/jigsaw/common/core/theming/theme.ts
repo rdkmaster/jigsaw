@@ -3,6 +3,7 @@ import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 export type MajorStyle = "dark" | "gray" | "black" | "purple" | "blue" | "default";
 export type PopupBackgroundColor = "#102331" | "#232429" | "#151518" | "#1c1c2e" | "#102940" | null;
 
+// @dynamic
 export class JigsawTheme {
     private static _popupBackgroundColor: PopupBackgroundColor = null;
     private static _majorStyle : MajorStyle = null;

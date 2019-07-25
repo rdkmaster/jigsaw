@@ -3,25 +3,14 @@ import {existsSync, statSync} from 'fs-extra';
 import {join} from 'path';
 import {task} from 'gulp';
 import {execTask, sequenceTask} from '../util/task_helpers';
-import {buildConfig} from '../packaging/build-config';
+import {buildConfig} from './build-config';
 import {yellow, green, red, grey} from 'chalk';
 import * as minimist from 'minimist';
-
-/** Packages that will be published to NPM by the release task. */
-export const releasePackages = [
-    'jigsaw', 'jigsaw-mobile'
-];
 
 /** Parse command-line arguments for release task. */
 const argv = minimist(process.argv.slice(3));
 
 const npm = process.platform === "win32" ? "npm.cmd" : "npm";
-
-/** Task that builds all releases that will be published. */
-task(':publish:build-releases', sequenceTask(
-    'clean',
-    releasePackages.map(packageName => `${packageName}:build-release`)
-));
 
 /** Make sure we're logged in. */
 task(':publish:whoami', execTask(npm, ['whoami'], {
@@ -31,9 +20,8 @@ task(':publish:whoami', execTask(npm, ['whoami'], {
 
 task(':publish:logout', execTask(npm, ['logout']));
 
-
 function _execNpmPublish(label: string, packageName: string): Promise<{}> {
-    const packageDir = join(buildConfig.outputDir, 'releases', packageName);
+    const packageDir = join(buildConfig.outputDir, '@rdkmaster', packageName);
 
     if (!statSync(packageDir).isDirectory()) {
         return;
@@ -52,7 +40,7 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
 
     const command = npm;
 
-    const args = ['publish', '--access', 'public'];
+    const args = ['publish', '--access', 'public', '--loglevel=warn'];
     if (label) {
         args.push('--tag', label);
     }
@@ -82,7 +70,7 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
     });
 }
 
-async function publishPackage(packageName: string) {
+export async function publishPackage(packageName: string) {
     const label = argv['tag'];
     const currentDir = process.cwd();
 
@@ -100,46 +88,3 @@ async function publishPackage(packageName: string) {
     process.chdir(currentDir);
 }
 
-// publish tasks for jigsaw
-
-task(':publish-pc', async () => publishPackage('jigsaw'));
-
-task('publish-pc', sequenceTask(
-    ':publish:whoami',
-    ':publish-pc-js',
-    ':publish:logout'
-));
-
-task(':publish-pc-js', sequenceTask(
-    ':publish:build-releases',
-    'validate-release:check-bundles',
-    ':publish-pc'
-));
-
-task('publish-pc-js', sequenceTask(
-    ':publish:whoami',
-    ':publish-pc-js',
-    ':publish:logout'
-));
-
-// publish tasks for jigsaw-mobile
-
-task(':publish-mobile', async () => publishPackage('jigsaw-mobile'));
-
-task('publish-mobile', sequenceTask(
-    ':publish:whoami',
-    ':publish-mobile-js',
-    ':publish:logout'
-));
-
-task(':publish-mobile-js', sequenceTask(
-    ':publish:build-releases',
-    'validate-release:check-bundles',
-    ':publish-mobile'
-));
-
-task('publish-mobile-js', sequenceTask(
-    ':publish:whoami',
-    ':publish-mobile-js',
-    ':publish:logout'
-));

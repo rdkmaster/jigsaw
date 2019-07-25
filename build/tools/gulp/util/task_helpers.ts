@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as gulp from 'gulp';
 import * as path from 'path';
 import {yellow} from 'chalk';
-import {buildConfig} from '../packaging/build-config';
+import {buildConfig} from '../tasks/build-config';
 
 /* Those imports lack typings. */
 const gulpClean = require('gulp-clean');

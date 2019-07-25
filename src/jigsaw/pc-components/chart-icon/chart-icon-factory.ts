@@ -1,5 +1,7 @@
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+declare const $: any;
+
 export class ChartIconPie {
     delimiter?: string = null;
     fill?: string[] | ((...any) => string) = ["#ff9900", "#fff4dd", "#ffd592"];

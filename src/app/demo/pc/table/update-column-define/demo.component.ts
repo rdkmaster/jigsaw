@@ -9,7 +9,7 @@ import {JigsawTable} from "jigsaw/pc-components/table/table";
 })
 export class TableColumnSetWidthDemoComponent {
     tableData: TableData;
-    @ViewChild('table') table: JigsawTable;
+    @ViewChild('table', {static: false}) table: JigsawTable;
 
     changeWidth(value) {
         this.columns[0].width = value;

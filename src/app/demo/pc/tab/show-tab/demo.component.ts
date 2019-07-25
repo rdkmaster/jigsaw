@@ -9,7 +9,7 @@ import {JigsawTab} from "jigsaw/pc-components/tabs/tab";
 })
 export class JigsawShowTabComponent {
 
-    @ViewChild('myTab') myTab: JigsawTab;
+    @ViewChild('myTab', {static: false}) myTab: JigsawTab;
 
     showTab() {
         this.myTab.showTab(1);

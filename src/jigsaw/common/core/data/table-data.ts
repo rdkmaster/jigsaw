@@ -1,7 +1,7 @@
-﻿import {HttpClient} from "@angular/common/http";
-import {Subject} from "rxjs/Subject";
-import "rxjs/add/operator/map";
-import 'rxjs/add/operator/debounceTime';
+import {debounceTime, map} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
+import {Subject} from "rxjs";
+
 
 import {AbstractGeneralCollection} from "./general-collection";
 import {
@@ -73,7 +73,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
      * 注意此方法并非使用类的血缘关系来判断，而是通过数据结构的特征来判断。
      *
      * @param data
-     * @return {boolean}
+     *
      */
     public static isTableData(data: any): boolean {
         return data && data.hasOwnProperty('data') && data.data instanceof Array &&
@@ -83,17 +83,17 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
     constructor(/**
                  * 表格的数据，是一个二维数组。
-                 * @type {TableDataMatrix}
+                 *
                  */
                 public data: TableDataMatrix = [],
                 /**
                  * 表格数据的字段序列，这个序列决定了`JigsawTable`实际渲染出来哪些列。无效、重复的字段将被抛弃。
-                 * @type {TableDataField}
+                 *
                  */
                 public field: TableDataField = [],
                 /**
                  * 表格的列头，这里的文本将会直接显示在界面上，请确保他们已经被正确国际化过。
-                 * @type {TableDataHeader}
+                 *
                  */
                 public header: TableDataHeader = []) {
         super();
@@ -103,7 +103,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
      * 参考 `TableData.isTableData`
      *
      * @param data
-     * @return {boolean}
+     *
      */
     protected isDataValid(data): boolean {
         return TableDataBase.isTableData(data);
@@ -150,7 +150,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
     /**
      * 参考 `TableData.toArray`
-     * @returns {any[]}
+     *
      */
     public toArray(): any[] {
         const result: any[] = [];
@@ -184,17 +184,17 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     /**
      * 在当前表格数据的`column`位置处插入一个新列。常常用于表格数据的`dataReviser`函数内，对服务端返回的数据做调整时用到。
      *
-     * @param {number} column 新列所在的位置
+     * @param column 新列所在的位置
      * @param cellData 新列的单元格的值，新插入列的每个单元格的值都相同。
-     * @param {string} field 新插入列的字段，不允许与已有字段相同。
-     * @param {string} header 新插入列的列头信息。
+     * @param field 新插入列的字段，不允许与已有字段相同。
+     * @param header 新插入列的列头信息。
      */
     public insertColumn(column: number, cellData: any, field: string, header: string): void;
     /**
-     * @param {number} column
-     * @param {any[]} cellDatas 新列的单元格的值，每个单元格的值与此数组的元素一一对应
-     * @param {string} field
-     * @param {string} header
+     * @param column
+     * @param cellDatas 新列的单元格的值，每个单元格的值与此数组的元素一一对应
+     * @param field
+     * @param header
      */
     public insertColumn(column: number, cellDatas: any[], field: string, header: string): void;
     /**
@@ -210,8 +210,8 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     /**
      * 删除当前表格数据`column`位置处的列。常常用于表格数据的`dataReviser`函数内，对服务端返回的数据做调整时用到。
      *
-     * @param {number} column 待删除的列索引
-     * @returns {TableData} 返回删除后的`TableData`对象，当前对象不变
+     * @param column 待删除的列索引
+     * @returns 返回删除后的`TableData`对象，当前对象不变
      */
     public removeColumn(column: number): TableData {
         if (isNaN(column) || column < 0 || column >= this.field.length) {
@@ -244,7 +244,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      * 注意：源对象的 `data` / `field` / `header` 属性会被**浅拷贝**到目标`TableData`对象中。
      *
      * @param rawData 结构为 `RawTableData` 的json对象
-     * @returns {TableData} 返回持有输入数据的`TableData`实例
+     * @returns 返回持有输入数据的`TableData`实例
      */
     public static of(rawData: any): TableData {
         return TableData.isTableData(rawData) ? new TableData(rawData.data, rawData.field, rawData.header) : new TableData();
@@ -282,7 +282,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      * ```
      *
      * @param rawData
-     * @returns {any[]}
+     *
      */
     public static toArray(rawData: any): any[] {
         return TableData.of(rawData).toArray();
@@ -303,10 +303,10 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     /**
      * 对输入的数据进行排序
      *
-     * @param {TableDataMatrix} data 输入的数据
-     * @param {SortAs | DataSortInfo | Function} as 排序参数
-     * @param {SortOrder} order 排序顺序
-     * @param {string | number} field 排序字段
+     * @param data 输入的数据
+     * @param as 排序参数
+     * @param order 排序顺序
+     * @param field 排序字段
      */
     protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number) {
         field = typeof field === 'string' ? this.field.indexOf(field) : field;
@@ -389,11 +389,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     private _initSubjects(): void {
-        this._filterSubject.debounceTime(300).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
         });
-        this._sortSubject.debounceTime(300).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
             this.sortInfo = sort;
             this._ajax();
         });
@@ -409,11 +409,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      * 这个方法除了更新`sourceRequestOptions`以外，还会自动重置`pagingInfo`的各个参数，
      * 以及清空`filterInfo`和`sortInfo`。
      *
-     * @param {HttpClientOptions} options 数据源的结构化信息
+     * @param options 数据源的结构化信息
      */
     public updateDataSource(options: HttpClientOptions): void;
     /**
-     * @param {string} url 包含查询参数的url，只能通过GET访问它。
+     * @param url 包含查询参数的url，只能通过GET访问它。
      */
     public updateDataSource(url: string): void;
     /**
@@ -481,18 +481,19 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
 
         this.http.request(options.method, PagingInfo.pagingServerUrl, options)
-            .map(res => this.reviseData(res))
-            .map(data => {
-                this._updatePagingInfo(data);
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
 
-                const tableData: TableData = new TableData();
-                if (TableData.isTableData(data)) {
-                    tableData.fromObject(data);
-                } else {
-                    console.error('invalid data format, need a TableData object.');
-                }
-                return tableData;
-            })
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
             .subscribe(
                 tableData => this.ajaxSuccessHandler(tableData),
                 error => this.ajaxErrorHandler(error),
@@ -776,7 +777,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
      * 相反的，给的数值越小，表格找服务端请求数据的机会越多，数据浏览体验下降，但是浏览器所需内存越小。
      * 需要根据服务端性能以及单页数据量而定。最小值为3页。
      *
-     * @type {number}
+     *
      */
     public numCachedPages = 3;
 
@@ -784,14 +785,14 @@ export class BigTableData extends PageableTableData implements ISlicedData {
      * 当预加载的一页数据剩下未展示出来的记录数小于这个比例时，{@link BigTableData}会在后台悄悄发起下一页数据的加载，
      * 以确保用户将这一页数据浏览完时，可以在不被打断的前提下继续浏览下一页数据。这个参数的有效取值范围是0.01 ~ 0.99。
      *
-     * @type {number}
+     *
      */
     public fetchDataThreshold = 0.5;
 
     /**
      * 和`busy`具有相同含义
      *
-     * @type {boolean}
+     *
      */
     protected reallyBusy = false;
 
@@ -805,7 +806,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     /**
      * 当前缓存的数据
      *
-     * @returns {RawTableData}
+     *
      */
     get cache(): RawTableData {
         return this._cache;
@@ -869,7 +870,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     /**
      * 检查缓冲区里的数据是否足够用，如果够用了，则会触发获取数据流程
      *
-     * @param {number} verticalTo
+     * @param verticalTo
      */
     protected checkCache(verticalTo: number): void {
         const pages = this._cache.endPage - this._cache.startPage + 1;
@@ -888,8 +889,8 @@ export class BigTableData extends PageableTableData implements ISlicedData {
     /**
      * `changePage`改用debounce之后，由于有debounce，`_busy`的值就不准了，只能自己维护这个状态
      *
-     * @type {boolean}
-     * @private
+     *
+     *
      */
     private _fetchingData: boolean = false;
 
@@ -1007,7 +1008,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
      * 这个属性为true时，表示{@link BigTableData}的预加载数据已经被浏览完，并且下一页数据还未取到。否则此值为false。
      * 即只有在{@link BigTableData}真的很忙的时候，此属性才是true。
      *
-     * @returns {boolean}
+     *
      */
     public get busy(): boolean {
         return this.reallyBusy;

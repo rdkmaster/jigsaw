@@ -7,7 +7,7 @@ import {JigsawTextarea} from "jigsaw/pc-components/textarea/textarea";
 export class TextareaBasicDemoComponent {
     textareaValue: any;
 
-    @ViewChild('myTextarea') myTextarea: JigsawTextarea;
+    @ViewChild('myTextarea', {static: false}) myTextarea: JigsawTextarea;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+
+
 import {TreeData} from "jigsaw/common/core/data/tree-data";
 import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
 import {ZTreeSettingSetting} from "../../../../../jigsaw/pc-components/tree/ztree-types";
@@ -9,7 +9,7 @@ import {ZTreeSettingSetting} from "../../../../../jigsaw/pc-components/tree/ztre
     templateUrl: './demo.component.html'
 })
 export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
 
     public data: TreeData;
     setting: ZTreeSettingSetting = {

@@ -64,7 +64,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      *
      * $demo = drawer/basic
      *
-     * @type {EventEmitter<boolean>}
      */
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -169,14 +168,20 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     @Input()
     public floating: boolean = true;
 
-    @ViewChild('drawer')
+    @ViewChild('drawer', {static: false})
     private _drawerEl: ElementRef;
 
     @HostBinding('style.width')
-    private _$hostWidth: string;
+    /**
+     * @internal
+     */
+    public _$hostWidth: string;
 
     @HostBinding('style.height')
-    private _$hostHeight: string;
+    /**
+     * @internal
+     */
+    public _$hostHeight: string;
 
     private _setHostSize() {
         this._$hostWidth = this._calcHostWidth();

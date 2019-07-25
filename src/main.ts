@@ -8,4 +8,5 @@ if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+// angular6增加了一个破坏性修改，默认取消inline-block间的留白，这里通过preserveWhitespaces: true还原, issue https://github.com/angular/angular/issues/23764
+platformBrowserDynamic().bootstrapModule(AppModule, { preserveWhitespaces: true });

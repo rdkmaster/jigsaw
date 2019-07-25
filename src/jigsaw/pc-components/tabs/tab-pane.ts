@@ -31,7 +31,7 @@ export class JigsawTabPane {
     /**
      * 为true时，Tab页的视图延将被迟到该Tab页被打开的时候才被初始化。
      *
-     * @type {boolean}
+     *
      */
     @Input()
     public lazy: boolean = true;
@@ -39,8 +39,8 @@ export class JigsawTabPane {
     @Input()
     public initData: Object;
 
-    @ViewChild('label') label: TemplateRef<any> | Type<IDynamicInstantiatable>;
-    @ContentChild(TemplateRef) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ViewChild('label', {static: true}) label: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ContentChild(TemplateRef, {static: true}) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }
 
 

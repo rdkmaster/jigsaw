@@ -14,7 +14,7 @@ export class SwimLaneDiagramDemoComponent {
     neHover: boolean = true;
     currentIndex: any;
     colWidth = 200;
-    @ViewChild(JigsawTable) table: JigsawTable;
+    @ViewChild(JigsawTable, {static: false}) table: JigsawTable;
 
     // 下面这个数组的个数决定了表格的列数，本demo假设它事先未知。
     neList = [

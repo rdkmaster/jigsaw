@@ -1,6 +1,7 @@
+import {debounceTime} from "rxjs/operators";
+import {Subscription} from "rxjs";
 import {HttpHeaders, HttpParams} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
-import {Subscription} from "rxjs/Subscription";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 /**
@@ -45,8 +46,8 @@ export class HttpClientOptions {
      * 并且兼容官方，我们增加了一个`PreparedHttpClientOptions`类型的参数用于自动将数字转为字符串。
      * 通过这个静态方法就可以实现一键式的转换。一般Jigsaw内部使用，应用无需关注。
      *
-     * @param {string | Object} options
-     * @return {PreparedHttpClientOptions}
+     * @param options
+     *
      */
     public static prepare(options: string | Object): PreparedHttpClientOptions {
         if (!options) {
@@ -211,13 +212,13 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/array-ajax
      *
-     * @param {string} url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
+     * @param url 采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
      * 提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个`HttpClientOptions`类型的参数。
      */
     fromAjax(url?: string): void;
 
     /**
-     * @param {HttpClientOptions} options 指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。
+     * @param options 指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。
      */
     fromAjax(options?: HttpClientOptions): void;
 
@@ -226,9 +227,9 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/ajax-events
      *
-     * @param {() => void} callback 回调函数，必选
+     * @param callback 回调函数，必选
      * @param context 回调函数`callback`执行的上下文，可选
-     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxStart(callback: () => void, context?: any): CallbackRemoval;
@@ -238,9 +239,9 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/ajax-events
      *
-     * @param {(data: any) => void} callback 回调函数
+     * @param callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
@@ -250,9 +251,9 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/ajax-events
      *
-     * @param {(data: any) => void} callback 回调函数
+     * @param callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxError(callback: (error: Response) => void, context?: any): CallbackRemoval;
@@ -263,9 +264,9 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/ajax-events
      *
-     * @param {(data: any) => void} callback 回调函数
+     * param callback 回调函数
      * @param context 回调函数`callback`执行的上下文
-     * @returns {CallbackRemoval} 返回一个函数，调用它后，`callback`则不会再次被触发。
+     * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
     onAjaxComplete(callback: () => void, context?: any): CallbackRemoval;
@@ -287,13 +288,13 @@ export interface IPageable extends IAjaxComponentData {
     /**
      * 设置数据对象的当前页为`currentPage`。
      *
-     * @param {number} currentPage 新的当前页序号，从1开始
-     * @param {number} pageSize 新的单页记录数，可选，不提供则不改变单页记录数。
+     * @param currentPage 新的当前页序号，从1开始
+     * @param pageSize 新的单页记录数，可选，不提供则不改变单页记录数。
      */
     changePage(currentPage: number, pageSize?: number): void;
 
     /**
-     * @param {PagingInfo} info 当前页的结构化信息
+     * @param info 当前页的结构化信息
      */
     changePage(info: PagingInfo): void;
 
@@ -326,12 +327,12 @@ export interface IServerSidePageable extends IPageable {
      * 更新数据源信息，一个分页数据对象在查询条件发生变化之后，可以通过调用这个方法来更新数据的查询条件。
      * 注意，在切换分页的时候，这些查询条件会发送给服务端，以确保能够查询到正确的数据。
      *
-     * @param {HttpClientOptions} options 数据源的结构化信息，需要通过POST等方式请求时，必须提供此类参数
+     * @param options 数据源的结构化信息，需要通过POST等方式请求时，必须提供此类参数
      */
     updateDataSource(options: HttpClientOptions): void;
 
     /**
-     * @param {string} url 数据源的url，查询参数可以在url的query区中提供，只支持GET方式请求。
+     * @param url 数据源的url，查询参数可以在url的query区中提供，只支持GET方式请求。
      */
     updateDataSource(url: string): void;
 }
@@ -350,23 +351,23 @@ export interface ISortable extends IAjaxComponentData {
      *
      * $demo = table/sortable
      *
-     * @param {(a: any[], b: any[]) => number} compareFn 对比函数，此函数需要返回 -1 / 0 / 1，分别表示小于等于和大于
+     * @param compareFn 对比函数，此函数需要返回 -1 / 0 / 1，分别表示小于等于和大于
      */
     sort(compareFn?: (a: any[], b: any[]) => number): void;
 
     /**
      * $demo = table/sortable
      *
-     * @param {SortAs} as 作为数字/字符串类型来排序
-     * @param {SortOrder} order 排序顺序
-     * @param {string | number} field 对此字段进行排序
+     * @param as 作为数字/字符串类型来排序
+     * @param order 排序顺序
+     * @param field 对此字段进行排序
      */
     sort(as: SortAs, order: SortOrder, field: string | number): void;
 
     /**
      * $demo = table/sortable
      *
-     * @param {DataSortInfo} sort 排序参数的结构化信息
+     * @param sort 排序参数的结构化信息
      */
     sort(sort: DataSortInfo): void;
 }
@@ -385,18 +386,18 @@ export interface IFilterable extends IAjaxComponentData {
      *
      * $demo = combo-select/searchable
      *
-     * @param {(value: any, index: number, array: any[]) => any} compareFn 实行过滤的函数。
+     * @param compareFn 实行过滤的函数。
      * 返回有效值时，该值会被保留，否则该值被丢弃
      * @param thisArg 执行过滤函数的上下文对象
-     * @returns {any} 返回一个过滤后的新对象，原对象不变
+     * @returns 返回一个过滤后的新对象，原对象不变
      */
     filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
 
     /**
      * $demo = combo-select/searchable
      *
-     * @param {string} term 过滤关键字
-     * @param {(string | number)[]} fields 对这些字段进行过滤
+     * @param term 过滤关键字
+     * @param fields 对这些字段进行过滤
      */
     filter(term: string, fields?: (string | number)[]): void;
 
@@ -404,7 +405,7 @@ export interface IFilterable extends IAjaxComponentData {
      * $demo = combo-select/searchable
      *
      * 过滤参数的结构化信息
-     * @param {DataFilterInfo} term
+     * @param term
      */
     filter(term: DataFilterInfo): void;
 }
@@ -456,22 +457,22 @@ export interface ISlicedData extends IComponentData {
     /**
      * 将视口中的视图滚动到参数指定的位置
      *
-     * @param {number} verticalTo 水平位置
-     * @param {number} horizontalTo 垂直位置
+     * @param verticalTo 水平位置
+     * @param horizontalTo 垂直位置
      */
     scroll(verticalTo: number, horizontalTo: number): void;
 
     /**
      * 将视口中的视图在垂直方向上滚动到参数指定的位置
      *
-     * @param {number} scrollTo 垂直位置
+     * @param scrollTo 垂直位置
      */
     vScroll(scrollTo: number): void;
 
     /**
      * 将视口中的视图在水平方向上滚动到参数指定的位置
      *
-     * @param {number} scrollTo 水平位置
+     * @param scrollTo 水平位置
      */
     hScroll(scrollTo: number): void;
 }
@@ -587,7 +588,7 @@ export class PagingInfo implements IEmittable {
      * - 如果你没有自己的实现，则建议使用[RDK](https://github.com/rdkmaster/rdk)提供服务，
      * 我们也建议你尽量使用[RDK](https://github.com/rdkmaster/rdk)提供的这个服务；
      *
-     * @type {string}
+     *
      */
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
@@ -607,7 +608,7 @@ export class PagingInfo implements IEmittable {
 
     /**
      * 总记录数
-     * @type {number}
+     *
      */
     public totalRecord: number = 0;
 
@@ -616,7 +617,7 @@ export class PagingInfo implements IEmittable {
      *
      * $demo = pagination/with-page-info
      *
-     * @return {number}
+     *
      */
     public get pageSize(): number {
         return this._pageSize;
@@ -633,7 +634,7 @@ export class PagingInfo implements IEmittable {
      *
      * $demo = pagination/with-page-info
      *
-     * @return {number}
+     *
      */
     public get currentPage(): number {
         return this._currentPage;
@@ -650,7 +651,7 @@ export class PagingInfo implements IEmittable {
      *
      * $demo = pagination/with-page-info
      *
-     * @return {number}
+     *
      */
     public get totalPage(): number {
         return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
@@ -663,7 +664,7 @@ export class PagingInfo implements IEmittable {
     }
 
     public subscribe(callback?: (value:any) => void): Subscription {
-        return this._emitter.debounceTime(300).subscribe(callback);
+        return this._emitter.pipe(debounceTime(300)).subscribe(callback);
     }
 
     public unsubscribe() {
@@ -673,7 +674,7 @@ export class PagingInfo implements IEmittable {
     /**
      * 获取分页数据的结构化信息
      *
-     * @return {any} 返回一个JSON对象
+     * @return 返回一个JSON对象
      */
     public valueOf(): any {
         return {
@@ -692,7 +693,7 @@ export class DataFilterInfo {
     constructor(/**
                  * 过滤关键字
                  *
-                 * @type {string}
+                 *
                  */
                 public key: string = '',
                 /**
@@ -780,8 +781,8 @@ export interface IEmittable {
      * td.unsubscribe();
      * ```
      *
-     * @param {Function} callback 事件回调函数
-     * @returns {Subscription} 返回当前订阅的回执，利用它可以取消本次订阅
+     * @param callback 事件回调函数
+     * @returns 返回当前订阅的回执，利用它可以取消本次订阅
      */
     subscribe(callback?: (value:any) => void): Subscription;
 

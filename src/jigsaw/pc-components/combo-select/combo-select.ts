@@ -123,10 +123,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, {static: false})
     public _$contentTemplateRef: any;
 
-    @ViewChild(JigsawFloat)
+    @ViewChild(JigsawFloat, {static: false})
     private _jigsawFloat: JigsawFloat;
     /**
      * @internal
@@ -200,10 +200,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public clearable: boolean = false;
 
-    @ViewChild('editor')
+    @ViewChild('editor', {static: false})
     private _editor: JigsawInput;
 
-    @ViewChild('editor', {read: ElementRef})
+    @ViewChild('editor', {read: ElementRef, static: false})
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
@@ -226,7 +226,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     /**
      * 是否显示tag的边框和删除按钮，默认显示
-     * @type {boolean}
      */
     @Input()
     public showValueBorder: boolean = true;
@@ -298,7 +297,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
-    private _$tagClick(tagItem) {
+    /**
+     * @internal
+     */
+    public _$tagClick(tagItem) {
         // 返回选中的tag
         this.select.emit(tagItem);
 

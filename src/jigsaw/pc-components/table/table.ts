@@ -159,10 +159,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 没有cellData generator获取数据的情况
-     * @param {string} field
-     * @param {number} row
-     * @returns {any}
-     * @private
+     * @param field
+     * @param row
+     *
+     *
      */
     private _getCellDataByField(field: string, row: number): any {
         let [index, tableData] = this._getColumnIndex(field);
@@ -280,8 +280,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 生成混合后的列定义序列
-     * @returns {ColumnDefine[]}
-     * @private
+     *
+     *
      */
     private _getMixedColumnDefines(): ColumnDefine[] {
         if (!this.data) {
@@ -573,10 +573,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective, static: false})
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective, static: false})
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -586,7 +586,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 根据内容计算自适应列宽
-     * @private
+     *
      */
     private _calculateContentWidth() {
         const host = this._elementRef.nativeElement;
@@ -656,7 +656,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 处理滚动条
-     * @private
+     *
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
@@ -666,7 +666,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 校正表头表体的宽度
-     * @private
+     *
      */
     private _calibrateTable() {
         const host = this._elementRef.nativeElement;
@@ -702,7 +702,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 设置纵向滚动条位置
-     * @private
+     *
      */
     private _setVerticalScrollbarOffset() {
         if (this._yScrollbarElement) {
@@ -713,7 +713,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 找到纵向滚动条，并设置初始位置
-     * @private
+     *
      */
     private _initVerticalScroll() {
         this.callLater(() => {
@@ -731,7 +731,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 当内容数据变化时，刷新一下滚动条
-     * @private
+     *
      */
     private _updateScrollbar() {
         if (this.contentScrollbar) {
@@ -746,7 +746,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 监听横向滚动事件，更新纵向滚动条的位置
-     * @private
+     *
      */
     private _listenHorizontalScroll() {
         if (!this.contentScrollbar) {

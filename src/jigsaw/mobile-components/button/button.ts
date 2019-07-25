@@ -56,10 +56,16 @@ export class JigsawMobileButton extends AbstractJigsawComponent {
      */
     @Input() public preSize: 'default' | 'small' | 'large' = 'default';
 
-    // 按钮动画执行状态
-    private _clicked: boolean = false;
+    /**
+     * @internal
+     * 按钮动画执行状态
+     */
+    public _clicked: boolean = false;
 
-    private _onClick(): void {
+    /**
+     * @internal
+     */
+    public _onClick(): void {
         if (!this.disabled && !this._clicked) {
             this._clicked = true;
             this.callLater(() => this._clicked = false, 360);

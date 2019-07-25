@@ -1,5 +1,5 @@
 import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2} from "@angular/core";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBox} from "./box";
@@ -251,10 +251,10 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     /**
      * 子box相对于父box的偏移
-     * @param {string} offsetProp
-     * @param {string} sizeProp
-     * @returns {number[]}
-     * @private
+     * @param offsetProp
+     * @param sizeProp
+     *
+     *
      */
     private _getOffsets(offsetProp: string, sizeProp: string): number[] {
         const offsets = this.parent.childrenBox.reduce((arr, box, index) => {

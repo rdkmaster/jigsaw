@@ -35,7 +35,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     /**
      * dragstart给的事件的offsetX和offsetY不准确，通过mousedown事件来弥补
      * @param event
-     * @private
+     *
      */
     private _mouseDownHandle(event) {
         this._offsetX = event.offsetY;

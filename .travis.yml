@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "8"
+  - "10"
 
 branches:
   - master
@@ -33,16 +33,16 @@ script:
   - node build/scripts/make-demo-independent.js
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
-  - gulp jigsaw:build-release:clean
-  - gulp jigsaw-mobile:build-release
-  - ng test  --code-coverage false --watch false
+  - gulp build:jigsaw
+  - #gulp build:jigsaw-mobile-library
+  - ng test jigsaw  --code-coverage false --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
   - sh build/scripts/build-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
   - # sh build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
-  - travis_wait 30 ng build -prod -aot
+  - travis_wait 30 node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --aot
   - #ng e2e
 
 after_script:

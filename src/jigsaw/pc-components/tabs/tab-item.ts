@@ -28,7 +28,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     @Input()
     public initData: Object;
 
-    @ViewChild('body', {read: ViewContainerRef})
+    @ViewChild('body', {read: ViewContainerRef, static: false})
     protected _body: ViewContainerRef;
 
     /**

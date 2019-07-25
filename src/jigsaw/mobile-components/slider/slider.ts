@@ -157,7 +157,7 @@ export class JigsawMobileSliderHandle implements OnInit {
 
     private _slider: JigsawMobileSlider; // 父组件;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawMobileSlider)) slider: JigsawMobileSlider, private _zone: NgZone) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawMobileSlider)) slider: any, private _zone: NgZone) {
         this._slider = slider;
     }
 
@@ -232,7 +232,7 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
 
     /**
      * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点.
-     * @returns {any}
+     *
      */
     @Input()
     public get value(): number | ArrayCollection<number> {
@@ -269,7 +269,7 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
 
     /**
      * 使 value 支持双向绑定
-     * @type {EventEmitter<number|ArrayCollection<number>>}
+     *
      */
     @Output()
     public valueChange = new EventEmitter<number | ArrayCollection<number>>();
@@ -282,7 +282,7 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
 
     /**
      * 可选范围的最小值
-     * @returns {number}
+     *
      */
     @Input()
     public get min() {
@@ -297,7 +297,7 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
 
     /**
      * 输入范围的可选最大值.
-     * @returns {number}
+     *
      */
     @Input()
     public get max() {
@@ -312,7 +312,7 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
 
     /**
      * 每次变化的最小值, 最小支持小数点后两位.
-     * @returns {number}
+     *
      */
     @Input()
     public get step() {
@@ -342,14 +342,14 @@ export class JigsawMobileSlider extends AbstractJigsawComponent implements Contr
 
     /**
      * 垂直滑动条 默认 false
-     * @type {boolean}
+     *
      */
     @Input()
     public vertical: boolean = false;
 
     /**
      * 是否禁用. 数据类型 boolean, 默认false;
-     * @type {boolean}
+     *
      */
     @Input()
     public disabled: boolean = false;

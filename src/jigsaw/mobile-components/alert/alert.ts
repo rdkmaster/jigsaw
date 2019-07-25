@@ -215,7 +215,7 @@ export class JigsawMobileInfoAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.info;
@@ -240,7 +240,7 @@ export class JigsawMobileWarningAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.warning;
@@ -265,7 +265,7 @@ export class JigsawMobileErrorAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.error;
@@ -290,7 +290,7 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.confirm;

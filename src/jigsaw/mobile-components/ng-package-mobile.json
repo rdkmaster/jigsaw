@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/@rdkmaster/jigsaw-mobile",
+  "lib": {
+    "entryFile": "../mobile_public_api.ts"
+  }
+}

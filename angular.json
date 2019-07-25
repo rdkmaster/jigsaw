@@ -1,0 +1,208 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "jigsaw-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/jigsaw-app",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
+              "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
+              "node_modules/@rdkmaster/icon-font/css/iconfont.css",
+              "src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/moment/min/moment.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/ztree/js/jquery.ztree.all.js",
+              "node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
+              "node_modules/peity/jquery.peity.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "jigsaw-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "jigsaw-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "jigsaw-app:build"
+          }
+        },
+        "test": {
+           "builder": "@angular-devkit/build-angular:karma",
+           "options": {
+              "main": "src/test.ts",
+              "tsConfig": "src/tsconfig.spec.json",
+              "karmaConfig": "karma.conf.js"
+           }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "jigsaw-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "jigsaw-app:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "jigsaw": {
+          "projectType": "library",
+          "root": "src/jigsaw",
+          "sourceRoot": "src/jigsaw",
+          "prefix": "jigsaw",
+          "architect": {
+              "build": {
+                  "builder": "@angular-devkit/build-ng-packagr:build",
+                  "options": {
+                      "tsConfig": "src/jigsaw/tsconfig.lib.json",
+                      "project": "src/jigsaw/pc-components/ng-package.json"
+                  },
+                  "configurations": {
+                      "production": {
+                          "project": "src/jigsaw/pc-components/ng-package.json"
+                      }
+                  }
+              },
+              "test": {
+                  "builder": "@angular-devkit/build-angular:karma",
+                  "options": {
+                      "main": "src/jigsaw/test.ts",
+                      "tsConfig": "src/jigsaw/tsconfig.spec.json",
+                      "karmaConfig": "src/jigsaw/karma.conf.js"
+                  }
+              },
+              "lint": {
+                  "builder": "@angular-devkit/build-angular:tslint",
+                  "options": {
+                      "tsConfig": [
+                          "src/jigsaw/tsconfig.lib.json",
+                          "src/jigsaw/tsconfig.spec.json"
+                      ],
+                      "exclude": [
+                          "**/node_modules/**"
+                      ]
+                  }
+              }
+          }
+      },
+    "jigsaw-mobile": {
+          "projectType": "library",
+          "root": "src/jigsaw",
+          "sourceRoot": "src/jigsaw",
+          "prefix": "jigsaw-mobile",
+          "architect": {
+              "build": {
+                  "builder": "@angular-devkit/build-ng-packagr:build",
+                  "options": {
+                      "tsConfig": "src/jigsaw/tsconfig.lib.json",
+                      "project": "src/jigsaw/mobile-components/ng-package-mobile.json"
+                  },
+                  "configurations": {
+                      "production": {
+                          "project": "src/jigsaw/mobile-components/ng-package-mobile.json"
+                      }
+                  }
+              },
+              "test": {
+                  "builder": "@angular-devkit/build-angular:karma",
+                  "options": {
+                      "main": "src/jigsaw/test.ts",
+                      "tsConfig": "src/jigsaw/tsconfig.spec.json",
+                      "karmaConfig": "src/jigsaw/karma.conf.js"
+                  }
+              },
+              "lint": {
+                  "builder": "@angular-devkit/build-angular:tslint",
+                  "options": {
+                      "tsConfig": [
+                          "src/jigsaw/tsconfig.lib.json",
+                          "src/jigsaw/tsconfig.spec.json"
+                      ],
+                      "exclude": [
+                          "**/node_modules/**"
+                      ]
+                  }
+              }
+          }
+      }},
+  "defaultProject": "jigsaw-app"
+}

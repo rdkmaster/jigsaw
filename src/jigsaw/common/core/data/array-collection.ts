@@ -1,9 +1,7 @@
+import {debounceTime, map} from "rxjs/operators";
+import {Subject, Subscription} from "rxjs";
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Subject} from "rxjs/Subject";
-import "rxjs/add/operator/map";
-import 'rxjs/add/operator/debounceTime';
-import {Subscription} from "rxjs/Subscription";
 
 import {
     ComponentDataHelper,
@@ -44,8 +42,8 @@ export class JigsawArray<T> implements Array<T> {
      * a.set(0, 123); // everything is fine.
      * ```
      *
-     * @param {number} index
-     * @param {T} value
+     * @param index
+     * @param value
      */
     public set(index: number, value: T): void {
         this._length = this._length > index ? this._length : index + 1;
@@ -61,8 +59,7 @@ export class JigsawArray<T> implements Array<T> {
      * a.get(0) === a[0] // true
      * ```
      *
-     * @param {number} index
-     * @returns {T}
+     * @param index
      */
     public get(index: number): T {
         return this[index];
@@ -72,7 +69,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/length>
-     * @return {number}
+     *
      */
     public get length(): number {
         return this._length;
@@ -87,9 +84,8 @@ export class JigsawArray<T> implements Array<T> {
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes>
      *
-     * @param {T} searchElement
-     * @param {number} fromIndex
-     * @return {boolean}
+     * @param searchElement
+     * @param fromIndex
      */
     public includes(searchElement: T, fromIndex?: number): boolean {
         return this._agent.includes.apply(this, arguments);
@@ -97,7 +93,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/toString>
-     * @return {string}
+     *
      */
     public toString(): string {
         return this._agent.toString.apply(this, arguments);
@@ -105,7 +101,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString>
-     * @return {string}
+     *
      */
     public toLocaleString(): string {
         return this._agent.toLocaleString.apply(this, arguments);
@@ -113,8 +109,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push>
-     * @param {T} items
-     * @return {number}
+     * @param items
      */
     public push(...items: T[]): number {
         return this._agent.push.apply(this, arguments);
@@ -122,7 +117,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop>
-     * @return {T}
+     *
      */
     public pop(): T {
         return this._agent.pop.apply(this, arguments);
@@ -131,7 +126,7 @@ export class JigsawArray<T> implements Array<T> {
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/concat>
      * @param items
-     * @return {any}
+     *
      */
     public concat(...items: any[]): any {
         return this._agent.concat.apply(this, arguments);
@@ -139,8 +134,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/join>
-     * @param {string} separator
-     * @return {string}
+     * @param separator
      */
     public join(separator?: string): string {
         return this._agent.join.apply(this, arguments);
@@ -148,7 +142,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse>
-     * @return {T[]}
+     *
      */
     public reverse(): T[] {
         return this._agent.reverse.apply(this, arguments);
@@ -156,7 +150,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/shift>
-     * @return {T}
+     *
      */
     public shift(): T {
         return this._agent.shift.apply(this, arguments);
@@ -164,9 +158,8 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/slice>
-     * @param {number} start
-     * @param {number} end
-     * @return {T[]}
+     * @param start
+     * @param end
      */
     public slice(start?: number, end?: number): T[] {
         return this._agent.slice.apply(this, arguments);
@@ -174,8 +167,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/sort>
-     * @param {(a: T, b: T) => number} compareFn
-     * @return {any}
+     * @param compareFn
      */
     public sort(compareFn?: (a: T, b: T) => number): any {
         return this._agent.sort.apply(this, arguments);
@@ -186,7 +178,7 @@ export class JigsawArray<T> implements Array<T> {
      * @param start
      * @param deleteCount
      * @param rest
-     * @return {T[]}
+     *
      */
     public splice(start: any, deleteCount?: any, ...rest: any[]): T[] {
         return this._agent.splice.apply(this, arguments);
@@ -194,8 +186,8 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift>
-     * @param {T} items
-     * @return {number}
+     * @param items
+     *
      */
     public unshift(...items: T[]): number {
         return this._agent.unshift.apply(this, arguments);
@@ -203,9 +195,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf>
-     * @param {T} searchElement
-     * @param {number} fromIndex
-     * @return {number}
+     * @param searchElement
+     * @param fromIndex
+     *
      */
     public indexOf(searchElement: T, fromIndex?: number): number {
         return this._agent.indexOf.apply(this, arguments);
@@ -213,9 +205,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf>
-     * @param {T} searchElement
-     * @param {number} fromIndex
-     * @return {number}
+     * @param searchElement
+     * @param fromIndex
+     *
      */
     public lastIndexOf(searchElement: T, fromIndex?: number): number {
         return this._agent.lastIndexOf.apply(this, arguments);
@@ -223,9 +215,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/every>
-     * @param {(value: T, index: number, array: T[]) => boolean} callbackfn
+     * @param callbackfn
      * @param thisArg
-     * @return {boolean}
+     *
      */
     public every(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean {
         return this._agent.every.apply(this, arguments);
@@ -233,9 +225,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some>
-     * @param {(value: T, index: number, array: T[]) => boolean} callbackfn
+     * @param callbackfn
      * @param thisArg
-     * @return {boolean}
+     *
      */
     public some(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean {
         return this._agent.some.apply(this, arguments);
@@ -243,7 +235,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach>
-     * @param {(value: T, index: number, array: T[]) => void} callbackfn
+     * @param callbackfn
      * @param thisArg
      */
     public forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void {
@@ -254,7 +246,7 @@ export class JigsawArray<T> implements Array<T> {
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map>
      * @param callbackfn
      * @param thisArg
-     * @return {[any , any , any , any , any]}
+     *
      */
     public map(callbackfn: any, thisArg?: any): [any, any, any, any, any] {
         return this._agent.map.apply(this, arguments);
@@ -262,9 +254,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter>
-     * @param {(value: T, index: number, array: T[]) => any} callbackfn
+     * @param callbackfn
      * @param thisArg
-     * @return {T[]}
+     *
      */
     public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): T[] {
         return this._agent.filter.apply(this, arguments);
@@ -274,7 +266,7 @@ export class JigsawArray<T> implements Array<T> {
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce>
      * @param callbackfn
      * @param initialValue
-     * @return {T}
+     *
      */
     public reduce(callbackfn: any, initialValue?: any): T {
         return this._agent.reduce.apply(this, arguments);
@@ -284,7 +276,7 @@ export class JigsawArray<T> implements Array<T> {
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight>
      * @param callbackfn
      * @param initialValue
-     * @return {T}
+     *
      */
     public reduceRight(callbackfn: any, initialValue?: any): T {
         return this._agent.reduceRight.apply(this, arguments);
@@ -308,7 +300,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/entries>
-     * @return {IterableIterator<[number , T]>}
+     *
      */
     public entries(): IterableIterator<[number, T]> {
         return this._agent.entries.apply(this, arguments);
@@ -316,7 +308,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/keys>
-     * @return {IterableIterator<number>}
+     *
      */
     public keys(): IterableIterator<number> {
         return this._agent.keys.apply(this, arguments);
@@ -324,7 +316,7 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/values>
-     * @return {IterableIterator<T>}
+     *
      */
     public values(): IterableIterator<T> {
         return this._agent.values.apply(this, arguments);
@@ -332,9 +324,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/find>
-     * @param {(value: T, index: number, obj: T[]) => boolean} predicate
+     * @param predicate
      * @param thisArg
-     * @return {T}
+     *
      */
     public find(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): T {
         return this._agent.find.apply(this, arguments);
@@ -342,9 +334,9 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex>
-     * @param {(value: T, index: number, obj: T[]) => boolean} predicate
+     * @param predicate
      * @param thisArg
-     * @return {number}
+     *
      */
     public findIndex(predicate: (value: T, index: number, obj: T[]) => boolean, thisArg?: any): number {
         return this._agent.findIndex.apply(this, arguments);
@@ -352,10 +344,10 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/fill>
-     * @param {T} value
-     * @param {number} start
-     * @param {number} end
-     * @return {any}
+     * @param value
+     * @param start
+     * @param end
+     *
      */
     public fill(value: T, start?: number, end?: number): any {
         return this._agent.fill.apply(this, arguments);
@@ -363,10 +355,10 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin>
-     * @param {number} target
-     * @param {number} start
-     * @param {number} end
-     * @return {any}
+     * @param target
+     * @param start
+     * @param end
+     *
      */
     public copyWithin(target: number, start: number, end?: number): any {
         return this._agent.copyWithin.apply(this, arguments);
@@ -471,7 +463,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
      * 安全地调用`dataReviser`函数。
      *
      * @param originData
-     * @return {any}
+     *
      */
     protected reviseData(originData: any): any {
         if (!this.dataReviser) {
@@ -513,7 +505,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
         const op = HttpClientOptions.prepare(optionsOrUrl);
         this.http.request(op.method, op.url, op)
-            .map(res => this.reviseData(res) as T[])
+            .pipe(map(res => this.reviseData(res) as T[]))
             .subscribe(
                 data => this.ajaxSuccessHandler(data),
                 error => this.ajaxErrorHandler(error),
@@ -530,8 +522,8 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
      * console.log(ac); // [1, 2, 3]
      * ```
      *
-     * @param {T[]} source 源数据
-     * @returns {ArrayCollection<T>} 返回当前数据对象的引用
+     * @param source 源数据
+     * @returns 返回当前数据对象的引用
      */
     public fromArray(source: T[]): ArrayCollection<T> {
         if (this._fromArray(source)) {
@@ -541,7 +533,8 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 
     private _fromArray(source: T[]): boolean {
-        source = source instanceof Array || source instanceof ArrayCollection ? source : CommonUtils.isDefined(source) ? [source] : [];
+        source = source instanceof Array || (source as any) instanceof ArrayCollection ?
+            source : CommonUtils.isDefined(source) ? [source] : [];
         let needRefresh = this.length > 0;
 
         this.splice(0, this.length);
@@ -644,11 +637,11 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 
     private _initSubjects(): void {
-        this._filterSubject.debounceTime(300).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
         });
-        this._sortSubject.debounceTime(300).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
             this.sortInfo = sort;
             this._ajax();
         });
@@ -718,18 +711,19 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         }
 
         this.http.request(options.method, PagingInfo.pagingServerUrl, options)
-            .map(res => this.reviseData(res))
-            .map(data => {
-                this._updatePagingInfo(data);
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
 
-                const tableData: TableData = new TableData();
-                if (TableData.isTableData(data)) {
-                    tableData.fromObject(data);
-                } else {
-                    console.error('invalid data format, need a TableData object.');
-                }
-                return tableData;
-            })
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
             .subscribe(
                 tableData => this.ajaxSuccessHandler(tableData),
                 error => this.ajaxErrorHandler(error),
@@ -878,7 +872,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     public set filteredData(value: T[]) {
         this._filteredData = value;
-        if (this._filteredData instanceof Array || this._filteredData instanceof ArrayCollection) {
+        if (this._filteredData instanceof Array || (this._filteredData as any) instanceof ArrayCollection) {
             this.pagingInfo.totalRecord = this._filteredData.length;
         }
     }
@@ -907,9 +901,9 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     /**
      * @internal
      * @param item
-     * @param {string} keyword
-     * @param {any[]} fields
-     * @returns {boolean}
+     * @param keyword
+     * @param fields
+     *
      */
     public static filterItemByKeyword(item: any, keyword: string, fields: any[]): boolean {
         if (typeof item == 'string') {
@@ -925,12 +919,12 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     private _initSubjects(): void {
-        this._filterSubject.debounceTime(300).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
         });
 
-        this._sortSubject.debounceTime(300).subscribe((sortInfo: DataSortInfo) => {
+        this._sortSubject.pipe(debounceTime(300)).subscribe((sortInfo: DataSortInfo) => {
             const orderFlag = sortInfo.order == SortOrder.asc ? 1 : -1;
             if (sortInfo.as == SortAs.number) {
                 this.filteredData.sort((a, b) => orderFlag * (Number(sortInfo.field ? a[sortInfo.field] : a) - Number(sortInfo.field ? b[sortInfo.field] : b)));
@@ -948,7 +942,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        if(!this._bakData) return;
+        if (!this._bakData) return;
         if (term instanceof Function) {
             this.filteredData = this._bakData.filter(term.bind(fields));
             this.firstPage();

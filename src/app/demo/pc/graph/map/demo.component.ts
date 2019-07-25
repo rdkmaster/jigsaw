@@ -14,7 +14,7 @@ export class MapGraphComponent implements AfterViewInit {
 
     }
 
-    @ViewChild('gisGraph') gisGraph: JigsawGraph;
+    @ViewChild('gisGraph', {static: false}) gisGraph: JigsawGraph;
 
     ngAfterViewInit() {
         this.http.get('mock-data/map/china').subscribe(data => {

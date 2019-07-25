@@ -5,6 +5,8 @@ import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service
 import {GrItem, JigsawTime, Shortcut} from "../time/time";
 import {WeekTime} from "../../common/service/time.types";
 
+declare const moment: any;
+
 /**
  * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
  *
@@ -34,7 +36,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     @Input()
     public valid: boolean = true;
 
-    @ViewChild("timeStart") private _timeStart: JigsawTime;
+    @ViewChild("timeStart", {static: true}) private _timeStart: JigsawTime;
 
     /**
      * @internal
@@ -46,7 +48,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/gr
      *
-     * @return {TimeGr | string}
+     *
      */
     @Input("gr")
     public get gr(): TimeGr | string {
@@ -68,7 +70,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/gr
      *
-     * @type {EventEmitter<TimeGr>}
      */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
@@ -108,7 +109,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/basic
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get endDate(): WeekTime {
@@ -131,7 +132,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      * $demo = range-time/limit-start
      * $demo = range-time/limit-end
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get limitStart(): WeekTime {
@@ -155,7 +156,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      * $demo = range-time/limit-start
      * $demo = range-time/limit-end
      *
-     * @return {WeekTime}
+     *
      */
     @Input()
     public get limitEnd(): WeekTime {
@@ -222,7 +223,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = time/with-combo-select
      *
-     * @type {EventEmitter<any>}
      */
     @Output()
     public change = new EventEmitter<any>();
@@ -232,7 +232,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/basic
      *
-     * @type {EventEmitter<WeekTime>}
      */
     @Output()
     public beginDateChange = new EventEmitter<WeekTime>();
@@ -242,7 +241,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      *
      * $demo = range-time/basic
      *
-     * @type {EventEmitter<WeekTime>}
      */
     @Output()
     public endDateChange = new EventEmitter<WeekTime>();
@@ -355,7 +353,10 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         this.grChange.emit(value);
     }
 
-    private _changeShortcut(selectedShortcut: Shortcut) {
+    /**
+     * @internal
+     */
+    public _changeShortcut(selectedShortcut: Shortcut) {
         if (selectedShortcut.dateRange) {
             let [beginDate, endDate] = typeof  selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
 

@@ -1,6 +1,8 @@
 import {Time, Moment, WeekTime} from "./time.types";
 import {CommonUtils} from "../core/utils/common-utils";
 
+declare const moment: any;
+
 /**
  * 时间粒度值
  */
@@ -42,6 +44,7 @@ export enum TimeFormatters {
 /**
  * 提供了日期运算、格式化、转换等一系列常用的方法，当你需要对时间做任何操作时，它都可以帮到你。
  */
+// @dynamic
 export class TimeService {
     /**
      * 将一个时刻转成符合改粒度的值，例如
@@ -52,9 +55,9 @@ export class TimeService {
      *
      * `"now"`的时分秒被切去。
      *
-     * @param {WeekTime} value 待转换的时刻，支持时间宏，请参考这里`TimeUnit`的说明。
-     * @param {TimeGr} gr 目标粒度
-     * @return {string} 符合粒度格式的时刻
+     * @param value 待转换的时刻，支持时间宏，请参考这里`TimeUnit`的说明。
+     * @param gr 目标粒度
+     * @return 符合粒度格式的时刻
      */
     public static convertValue(value: WeekTime, gr:TimeGr): string {
         value = TimeService._handleWeekValue(value);
@@ -91,8 +94,8 @@ export class TimeService {
     /**
      * 时间单位枚举值转对应字符串
      *
-     * @param {TimeUnit} unit 时间单位枚举值
-     * @return {string} 返回对应的字符串
+     * @param unit 时间单位枚举值
+     * @return 返回对应的字符串
      */
     public static timeUnitConvert(unit : TimeUnit):string {
        return TimeUnit[unit];
@@ -117,7 +120,7 @@ export class TimeService {
 
     /**
      * 仅仅是为了初始化moment对象
-     * @type {any}
+     *
      */
     private static init = TimeService._initMoment();
 
@@ -125,8 +128,8 @@ export class TimeService {
     /**
      * 判断给定的时刻值是否是时间宏字符串
      *
-     * @param {Time} time 给定的时刻值
-     * @returns {boolean} 如果给定的值非字符串，则必然返回false。
+     * @param time 给定的时刻值
+     * @returns 如果给定的值非字符串，则必然返回false。
      */
     public static isMacro(time:Time): boolean {
         if (typeof time === 'string') {
@@ -138,7 +141,7 @@ export class TimeService {
     /**
      * 特殊时间宏的转换
      * @param timeMacro
-     * @returns {any}
+     *
      */
     private static _convertBasicMacro(timeMacro:string): Date|string {
         let date;
@@ -156,9 +159,9 @@ export class TimeService {
     /**
      * 时间加减法
      *
-     * @param {Time} date  时间
-     * @param {string|number} num   数量，为负数即为减法
-     * @param {TimeUnit} unit  单位
+     * @param date  时间
+     * @param num   数量，为负数即为减法
+     * @param unit  单位
      */
     public static addDate(date:Time, num:string|number, unit:TimeUnit): Moment {
         return moment(date).add(num, TimeService._timeUnitMap.get(unit));
@@ -167,8 +170,8 @@ export class TimeService {
     /**
      * 根据粒度获取格式化字符串
      *
-     * @param {TimeGr} gr
-     * @returns {string}
+     * @param gr
+     *
      */
     public static getFormatter(gr: TimeGr): string {
         return TimeService._timeFormatMap.has(gr) ? TimeService._timeFormatMap.get(gr) : 'YYYY-MM-DD';
@@ -178,8 +181,8 @@ export class TimeService {
     /**
      * 时间格式化
      *
-     * @param {Time} date
-     * @param {string | TimeFormatters} formatter
+     * @param date
+     * @param formatter
      */
     public static format(date: Time, formatter: string | TimeFormatters): string {
         if(typeof formatter === "number") formatter = TimeService._timeFormatterConvert(formatter);
@@ -189,8 +192,8 @@ export class TimeService {
     /**
      * 根据粒度格式化时间
      *
-     * @param {Time} date
-     * @param {TimeGr} gr
+     * @param date
+     * @param gr
      */
     public static formatWithGr(date:Time, gr:TimeGr): string {
         let format = TimeService.getFormatter(gr);
@@ -201,7 +204,7 @@ export class TimeService {
     /**
      * 设置默认周开始，设置之后会影响之后的所有计算结果
      *
-     * @param {TimeWeekStart} weekStart
+     * @param weekStart
      */
     public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
         let locale = moment.locale();
@@ -215,8 +218,8 @@ export class TimeService {
     /**
      * 获取给定时间在当年的周数
      *
-     * @param {Time} date
-     * @return {number}
+     * @param date
+     *
      */
     public static getWeekOfYear(date:Time): number {
         return moment(date).week();
@@ -225,8 +228,8 @@ export class TimeService {
     /**
      * 获取给定时间的年数值
      *
-     * @param {Time} date
-     * @return {number}
+     * @param date
+     *
      */
     public static getYear(date:Time): number {
         return moment(date).year();
@@ -235,8 +238,8 @@ export class TimeService {
     /**
      * 获取给定时间的月数值
      *
-     * @param {Time} date
-     * @return {number}
+     * @param date
+     *
      */
     public static getMonth(date:Time): number {
         return moment(date).month() + 1;
@@ -245,8 +248,8 @@ export class TimeService {
     /**
      * 获取给定时间的天数值
      *
-     * @param {Time} date
-     * @return {number}
+     * @param date
+     *
      */
     public static getDay(date:Time): number {
         return moment(date).date();
@@ -263,9 +266,9 @@ export class TimeService {
     /**
      * 根据字符串获取真实时间
      *
-     * @param {Time} time
-     * @param {TimeGr} gr
-     * @returns {Time}
+     * @param time
+     * @param gr
+     *
      */
     public static getFormatDate(time: Time, gr?: TimeGr): Time {
         let result = time;

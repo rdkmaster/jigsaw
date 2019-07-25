@@ -6,11 +6,12 @@ rm -fr $seedDir
 mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
+git checkout -b upgrade-to-ng8 origin/upgrade-to-ng8
 npm install
 
 #update jigsaw npm package
 rm -fr node_modules/@rdkmaster/jigsaw
-cp -r $home/dist/releases/jigsaw node_modules/@rdkmaster/
+cp -r $home/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
 
 #copy demo source and e2e source.
 rm -fr ./e2e

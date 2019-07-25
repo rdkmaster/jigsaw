@@ -40,12 +40,15 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 是否显示tag的边框和删除按钮，默认显示
-     * @type {boolean}
+     *
      */
     @Input()
     public showBorder: boolean = true;
 
-    private _state: string;
+    /**
+     * @internal
+     */
+    public _state: string;
 
     constructor(private _renderer: Renderer2,
                 public _elementRef: ElementRef) {
@@ -78,7 +81,10 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         this._state = 'active';
     }
 
-    private _animationDone($event) {
+    /**
+     * @internal
+     */
+    public _animationDone($event) {
         if ($event.toState === 'inactive') {
             this.close.emit(this);
         }

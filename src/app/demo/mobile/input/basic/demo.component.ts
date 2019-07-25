@@ -11,7 +11,7 @@ export class InputBasicDemoComponent {
         console.log(`input value is: ${message}`);
     }
 
-    @ViewChild('myInput') myInput: JigsawMobileInput;
+    @ViewChild('myInput', {static: false}) myInput: JigsawMobileInput;
 
     click() {
         alert('你输入的值是 ' + this.myInput.value)

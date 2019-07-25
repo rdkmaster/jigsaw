@@ -5,6 +5,7 @@ import {TranslateHelper} from "./translate-helper";
 /**
  * @internal
  */
+// @dynamic
 export class InternalUtils {
     public static uedSiteHost = 'http://rdk.zte.com.cn';
 
@@ -58,8 +59,8 @@ export class InternalUtils {
 
     /**
      * 驼峰转短横线分隔命名
-     * @param {string} prop
-     * @returns {string}
+     * @param prop
+     *
      */
     public static camelToKebabCase(prop: string): string {
         return prop.match(/[A-Z]/g) ? prop.replace(/([A-Z])/g, '-$1') : prop;
@@ -67,8 +68,8 @@ export class InternalUtils {
 
     /**
      * 短横线分隔转驼峰命名
-     * @param {string} prop
-     * @returns {string}
+     * @param prop
+     *
      */
     public static kebabToCamelCase(prop: string): string {
         if (!prop.match(/[\-]/g)) return prop;
@@ -98,6 +99,7 @@ export class InternalUtils {
  * 用于获取dom元素的位置信息
  * @internal
  */
+// @dynamic
 export class AffixUtils {
     /*
      * 获取元素距离文档的top和left

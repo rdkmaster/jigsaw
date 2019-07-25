@@ -1,11 +1,7 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "5.0.0-beta1",
+    "version": "8.0.0-beta1",
     "description": "Jigsaw, the next generation component set for RDK",
-    "main": "./bundles/jigsaw.umd.js",
-    "module": "./@rdkmaster/jigsaw.es5.js",
-    "es2015": "./@rdkmaster/jigsaw.js",
-    "typings": "./jigsaw.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/rdkmaster/jigsaw.git"
@@ -29,9 +25,7 @@
         "jquery": "~3.1.1",
         "ztree": "~3.5.24",
         "font-awesome": "~4.7.0",
-        "ngx-perfect-scrollbar": "~5.0.2"
-    },
-    "dependencies": {
+        "ngx-perfect-scrollbar": "~5.0.2",
         "@rdkmaster/icon-font": "^1.0.4",
         "@angular/animations": "~5.2.11",
         "@angular/common": "~5.2.11",
