@@ -1,8 +1,7 @@
-import {debounceTime} from "rxjs/operators";
+import {debounceTime, map} from "rxjs/operators";
+import {Subject, Subscription} from "rxjs";
 import {EventEmitter} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Subject, Subscription} from "rxjs";
-import {map} from "rxjs/operators";
 
 import {
     ComponentDataHelper,
