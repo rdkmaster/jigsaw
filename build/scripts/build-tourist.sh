@@ -5,7 +5,6 @@ touristDir=`pwd`/../jigsaw-tourist
 mkdir -p $touristDir
 git clone https://github.com/rdkmaster/jigsaw-tourist.git $touristDir
 cd $touristDir
-git checkout -b upgrade-to-ng8 origin/upgrade-to-ng8
 npm install
 
 #update jigsaw npm package
