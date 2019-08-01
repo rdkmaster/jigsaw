@@ -2,6 +2,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type UploadFileInfo = {
     name: string, url: string, file: File, reason: string,
@@ -60,6 +61,11 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (!this._fileInputEl) {
             this._fileInputEl = document.createElement('input');
             this._fileInputEl.setAttribute('type', 'file');
+            if(CommonUtils.isIE()){
+                //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
+                this._fileInputEl.setAttribute('display', 'none');
+                document.body.appendChild(this._fileInputEl);
+            }
         }
         if (this.multiple) {
             this._fileInputEl.setAttribute('multiple', 'true');
