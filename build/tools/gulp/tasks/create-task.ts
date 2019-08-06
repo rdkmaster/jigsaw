@@ -6,6 +6,7 @@ import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
 import {publishPackage} from './publish';
+import {copyFiles} from "../util/copy-files";
 
 const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
@@ -61,10 +62,8 @@ export function createTask(packageName: string) {
     });
 
     task(`:build:${packageName}-copy-files`,() => {
-        src('./LICENSE')
-            .pipe(dest(join(releasePath)));
-        src('./README.md')
-            .pipe(dest(join(releasePath)));
+        copyFiles('./', 'LICENSE', releasePath);
+        copyFiles('./', 'README.md', releasePath);
     });
 
     task(`validate:check-${packageName}-bundles`, () => {
