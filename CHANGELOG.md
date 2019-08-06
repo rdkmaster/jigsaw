@@ -1,3 +1,51 @@
+## v8.0.0-beta1 (2019-8-6)
+
+### 新特性 / New Features
+- [新增] 重大更新：Jigsaw支持Angular8版本
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- [故障] 解决upload指令在ie11中无效的问题
+- [故障] ztree在弹窗中拖拽时，箭头和阴影被遮挡问题
+
+## v5.0.0-beta1 (2019-7-24)
+
+Jigsaw的版本策略变更为：大版本号跟随angular的大版本号，当前v1.2.x版本对应的angular大版本是5，所以，直接将最新的1.2.0-beta4的版本提升为5.0.0-beta1。这是Jigsaw的第二个大版本，将在近期结束beta。
+
+### 新特性 / New Features
+- [新增] upload指令增加uploadShowFileList属性用于控制是否要弹出已上传文件列表
+- [新增] 增加黑色、蓝色、灰色、紫色主题皮肤
+- [新增] float指令增加initData输入属性，用于传递参数进入到弹出组件内
+- [新增] 漂浮指令（jigsaw-float）在浏览器发生resize事件时，自动更正位置
+- [新增] 地图轮廓图可视化数据
+- [新增] 散点图可视化数据类型
+- [新增] 雷达图可视化配置模型数据
+- [新增] 可视化仪表盘数据
+- [新增] select组件增加一个remove事件，在多选时，点击选中项的x后发出，同时发出valueChange事件
+- [新增] HttpClientOptions.params参数支持HttpParams类型
+
+### 破坏性修改 / Breaking Changes
+- [修复] 修复无法使用服务端分页时排序的问题，服务端分页所用属性sortInfo属性名改为sort
+- [优化] combo-select的height属性改成maxHeight
+
+###  优化 / Modified
+- [优化] slider组件的性能提升
+- [优化] 优化input的padding计算时机，避免无效重复计算，提升性能
+- [优化] combo-select支持设置height，支持多行滚动显示
+- [优化] 直角系图数据对象优化
+- [优化] select组件的value属性支持null/undefined值清空已选择项
+
+### 修复 / Fixes
+- [修复] 修复graph设置visibility:hidden无法隐藏图形的问题
+- [故障] 修复仪表盘和散点图数据的多维度问题
+- [故障] 修复input输入框disable没有背景的问题
+- [故障] 修复CommonUtil.extendObject无法拷贝源对象属性值为对象目标对象不存在该属性的问题
+
 ## v1.2.0-beta4 (2019-05-12)
 
 ### 新特性 / New Features
