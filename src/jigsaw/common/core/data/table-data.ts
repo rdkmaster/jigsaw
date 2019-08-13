@@ -372,6 +372,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      */
     public sourceRequestOptions: HttpClientOptions;
 
+    public pagingServerUrl: string;
+
     public pagingInfo: PagingInfo = new PagingInfo();
 
     private _filterSubject = new Subject<DataFilterInfo>();
@@ -444,7 +446,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._ajax();
     }
 
-    private _ajax(): void {
+    protected _ajax(): void {
         if (this._busy) {
             this.ajaxErrorHandler(null);
             return;
@@ -480,7 +482,9 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
 
-        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
+        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
+
+        this.http.request(options.method, pagingService, options)
             .pipe(
                 map(res => this.reviseData(res)),
                 map(data => {
