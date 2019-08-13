@@ -372,7 +372,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
      */
     public sourceRequestOptions: HttpClientOptions;
 
-    public pagingService: string;
+    public pagingServerUrl: string;
 
     public pagingInfo: PagingInfo = new PagingInfo();
 
@@ -482,7 +482,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
 
-        const pagingService = this.pagingService || PagingInfo.pagingServerUrl;
+        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
 
         this.http.request(options.method, pagingService, options)
             .pipe(
