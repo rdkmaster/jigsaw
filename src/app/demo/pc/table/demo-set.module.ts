@@ -41,6 +41,8 @@ import {TableHideHeadDemoComponent} from "./hide-header/demo.component";
 import {TableHideHeadDemoModule} from "./hide-header/demo.module";
 import {TablePageableDemoComponent} from "./pageable/demo.component";
 import {TablePageableDemoModule} from "./pageable/demo.module";
+import {TablePageableReadyDemoComponent} from "./pageable-ready/demo.component";
+import {TablePageableReadyDemoModule} from "./pageable-ready/demo.module";
 import {TableRendererDemoComponent} from "./renderer/demo.component";
 import {TableRendererDemoModule} from "./renderer/demo.module";
 import {TableRendererOfTemplateRefDemoComponent} from "./template-ref-renderer/demo.component";
@@ -158,6 +160,9 @@ export const routerConfig = [
         path: 'pageable', component: TablePageableDemoComponent
     },
     {
+        path: 'pageable-ready', component: TablePageableReadyDemoComponent
+    },
+    {
         path: 'data-change', component: TableDataChangeDemoComponent
     },
     {
@@ -215,7 +220,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
-        TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,
+        TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,TablePageableReadyDemoModule,
         TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
