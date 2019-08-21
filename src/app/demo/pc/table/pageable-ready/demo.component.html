@@ -1,0 +1,25 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h3>ready属性为true</h3>
+<jigsaw-table style="margin-bottom: 10px;" maxHeight="400px" [data]="pageable" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-pagination
+    [data]="pageable"
+    [pageSizeOptions]="[5, 10, 20]"
+    [showQuickJumper]="true"
+></jigsaw-pagination>
+<span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
+
+<div style="height: 20px"></div>
+
+<h3>ready属性为false</h3>
+<jigsaw-table style="margin-bottom: 10px;" maxHeight="400px" [data]="pageableReady" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-pagination
+    [data]="pageableReady"
+    [pageSizeOptions]="[5, 10, 20]"
+    [showQuickJumper]="true"
+></jigsaw-pagination>
+<span>共{{pageableReady.pagingInfo.totalRecord}}条记录</span>

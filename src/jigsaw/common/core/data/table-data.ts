@@ -375,6 +375,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     public pagingServerUrl: string;
 
     public pagingInfo: PagingInfo = new PagingInfo();
+    /*
+    *  用于控制在初始化数据时，是否需要触发查询，如不需要需手动设置为false
+    */
+    public ready: boolean = true;
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
@@ -393,14 +397,20 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     private _initSubjects(): void {
         this._filterSubject.debounceTime(300).subscribe(filter => {
             this.filterInfo = filter;
-            this._ajax();
+            if (this.ready) {
+                this._ajax();
+            }
         });
         this._sortSubject.debounceTime(300).subscribe(sort => {
             this.sortInfo = sort;
-            this._ajax();
+            if (this.ready) {
+                this._ajax();
+            }
         });
         this.pagingInfo.subscribe(() => {
-            this._ajax();
+            if (this.ready) {
+                this._ajax();
+            }
         })
     }
 
