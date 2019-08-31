@@ -317,6 +317,10 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 this._setInkBarStyle(this.selectedIndex)
             }
         }
+
+        if(this.height && !this.height.match(/px$/)) {
+            this._$contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+        }
     }
 
     /**
