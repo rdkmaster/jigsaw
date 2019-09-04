@@ -561,6 +561,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.sort.emit(sortInfo);
     }
 
+    /**
+     * 手动重置sort按钮样式
+     */
+    public resetSort() {
+        this._headerComponents.forEach(comp => comp.updateSortOrderClass(comp.defaultSortOrder));
+    }
+
     private _initAdditionalData(): void {
         if (!this._additionalColumnDefines) {
             return;
