@@ -1,14 +1,17 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
 import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 import {SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
+import {JigsawTable} from "../../../../../jigsaw/pc-components/table/table";
 
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TableSetHeaderSortDemoComponent {
+    @ViewChild(JigsawTable, {static: false}) table: JigsawTable;
+
     tableData: TableData;
 
     constructor(http: HttpClient) {
@@ -34,6 +37,11 @@ export class TableSetHeaderSortDemoComponent {
             }
         }
     ];
+
+    changeData() {
+        this.tableData.fromAjax('mock-data/hr-list-short');
+        this.table.resetSort();
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -180,9 +180,16 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         }
     }
 
+    private _defaultSortOrder: SortOrder;
+
     @Input()
-    public set defaultSortOrder(newValue) {
-            this.updateSortOrderClass(newValue);
+    public get defaultSortOrder(): SortOrder {
+        return this._defaultSortOrder;
+    }
+
+    public set defaultSortOrder(newValue: SortOrder) {
+        this._defaultSortOrder = newValue;
+        this.updateSortOrderClass(newValue);
     };
 
     @Output()
