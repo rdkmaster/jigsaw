@@ -15,7 +15,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 })
 export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
 
-    private _status: "waiting" | "done" | "error" | "warning" | "skipped" | "processing" = "waiting";
+    private _status: "waiting" | "done" | "error" | "warning" | "skipped" | "processing" | "running" | "starting" | "ending" = "waiting";
 
     /**
      * 用于设置当前步骤的状态
@@ -24,11 +24,11 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
      * $demo = steps/step-interactive
      */
     @Input()
-    public get status(): "waiting" | "done" | "error" | "warning" | "skipped" | "processing" {
+    public get status(): "waiting" | "done" | "error" | "warning" | "skipped" | "processing" | "running" | "starting" | "ending" {
         return this._status;
     }
 
-    public set status(value: "waiting" | "done" | "error" | "warning" | "skipped" | "processing") {
+    public set status(value: "waiting" | "done" | "error" | "warning" | "skipped" | "processing" | "running" | "starting" | "ending") {
         if (!value) return;
         this._status = value;
         if (this.initialized) {
@@ -77,6 +77,18 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
      * $demo = steps/custom-icons
      */
     @Input() public warningIcon: string = 'fa-exclamation-triangle';
+    /**
+     * 设置`starting`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     *
+     * $demo = steps/custom-icons
+     */
+    @Input() public startingIcon: string = 'fa-hourglass-start';
+    /**
+     * 设置`ending`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     *
+     * $demo = steps/custom-icons
+     */
+    @Input() public endingIcon: string = 'fa-hourglass-end';
 
     /**
      * @internal
@@ -97,6 +109,7 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
                 this._$stepStatusIconClass = this.doneIcon;
                 break;
             case "processing":
+            case "running":
                 this._$stepStatusIconClass = this.processingIcon;
                 break;
             case "error":
@@ -107,6 +120,12 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
                 break;
             case "warning":
                 this._$stepStatusIconClass = this.warningIcon;
+                break;
+            case "starting":
+                this._$stepStatusIconClass = this.startingIcon;
+                break;
+            case "ending":
+                this._$stepStatusIconClass = this.endingIcon;
                 break;
             default:
                 this._$stepStatusIconClass = this.waitingIcon;

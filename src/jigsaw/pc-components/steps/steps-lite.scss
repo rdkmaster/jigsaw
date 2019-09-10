@@ -1,0 +1,437 @@
+@import "../../common/assets/scss/core/base";
+
+$steps-prefix-cls: #{$jigsaw-prefix}-steps;
+$steps-lite-prefix-cls: #{$jigsaw-prefix}-steps-lite;
+$step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
+
+.#{$steps-lite-prefix-cls} {
+    &-odd {
+        .#{$steps-prefix-cls}-container {
+            flex-direction: row-reverse !important;
+            .#{$jigsaw-prefix}-step-left-space {
+                flex: 0;
+            }
+            .#{$jigsaw-prefix}-step-right-space {
+                flex: 0;
+            }
+            .#{$step-item-prefix-cls} {
+                .#{$jigsaw-prefix}-logo-line-container {
+                    flex-direction: row-reverse !important;
+                    .#{$jigsaw-prefix}-step-status-logo {
+                        cursor: pointer;
+                    }
+                }
+
+                .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                    text-align: center !important;
+                    width: 100% !important;
+                    margin-left: 50%;
+                    padding-right: 26px;
+                    padding-left: 0px;
+                }
+
+                &:nth-child(2) {
+                    padding-left: 0px !important;
+                    .#{$jigsaw-prefix}-step-line {
+                        display: block;
+                    }
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        margin-right: 0 !important;
+                        margin-left: 50% !important;
+                        padding-right: 26px;
+                    }
+                }
+
+                &:nth-last-child(4) {
+                    display: inline-block;
+                    padding-right: 0px;
+                    flex: 0 !important;
+                    min-width: 26px;
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        flex-direction: column !important;
+                        align-items: flex-end !important;
+                        .#{$jigsaw-prefix}-step-line {
+                            display: block !important;
+                            min-height: 80px;
+                            width: 2px;
+                            min-width: 0;
+                            margin: 10px 13px;
+                            flex-grow: 1;
+                        }
+                        .#{$jigsaw-prefix}-sub-title-v {
+                            display: block;
+                            padding-left: 0px !important;
+                            margin-right: -100%;
+                            text-align: center;
+                        }
+
+                    }
+
+                    .#{$jigsaw-prefix}-step-line {
+                        display: block !important;
+                    }
+                    .#{$jigsaw-prefix}-step-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+
+                    }
+                    .#{$jigsaw-prefix}-sub-title {
+                        display: none;
+                    }
+
+                }
+
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                flex: 0;
+                .#{$step-item-prefix-cls}-container {
+
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            display: none !important;;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-even {
+        .#{$steps-prefix-cls}-container {
+            .#{$jigsaw-prefix}-step-left-space {
+                flex: 0;
+            }
+            .#{$jigsaw-prefix}-step-right-space {
+                flex: 0;
+            }
+            .#{$step-item-prefix-cls} {
+
+                .#{$jigsaw-prefix}-step-status-logo {
+                    cursor: pointer;
+                }
+
+                &:nth-last-child(4) {
+                    display: inline-block;
+                    padding-right: 0px;
+                    flex: 0 !important;
+                    min-width: 26px;
+
+                    .#{$jigsaw-prefix}-step-line {
+                        display: block !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        flex-direction: column;
+                        align-items: end !important;
+                        .#{$jigsaw-prefix}-step-line {
+                            display: block !important;
+                            min-height: 80px;
+                            width: 2px;
+                            min-width: 0;
+                            margin: 10px 13px;
+                            flex-grow: 1;
+                        }
+                    }
+
+                    .#{$jigsaw-prefix}-sub-title-v {
+                        display: block;
+                        padding-left: 0px !important;
+                        text-align: center;
+                        margin-left: -100%;
+                    }
+                    .#{$jigsaw-prefix}-step-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+                    .#{$jigsaw-prefix}-sub-title {
+                        display: none;
+                    }
+                }
+                &:nth-child(2) {
+                    padding-left: 0px !important;
+                }
+
+            }
+            .#{$step-item-prefix-cls}-last {
+                flex: 0;
+                .#{$step-item-prefix-cls}-container {
+
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            display: none !important;;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-odd.#{$steps-prefix-cls}-size-large {
+        .#{$steps-prefix-cls}-container {
+            .#{$step-item-prefix-cls} {
+                .#{$jigsaw-prefix}-step-status-logo {
+                    cursor: pointer;
+                }
+                .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                    text-align: center !important;
+                    //margin-left: 40% !important;
+                    width: 100% !important;
+                    margin-left: 50%;
+                    padding-right: 30px !important;
+                    padding-left: 0px !important;
+                }
+
+                &:nth-child(2) {
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        margin-right: 0 !important;
+                        margin-left: 50% !important;
+                        padding-right: 30px;
+                    }
+                }
+
+                &:nth-last-child(4) {
+                    min-width: 30px !important;
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            margin: 10px 15px;
+                        }
+
+                    }
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        margin-left: -50% !important;
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
+                    }
+                }
+
+
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                .#{$step-item-prefix-cls}-container {
+
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            display: none !important;;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-even.#{$steps-prefix-cls}-size-large {
+        .#{$steps-prefix-cls}-container {
+            .#{$step-item-prefix-cls} {
+                .#{$jigsaw-prefix}-step-status-logo {
+                    cursor: pointer;
+                }
+                &:nth-last-child(4) {
+                    min-width: 30px !important;
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            margin: 10px 15px;
+                        }
+                    }
+
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+                }
+
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                .#{$step-item-prefix-cls}-container {
+
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            display: none !important;;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-odd.#{$steps-prefix-cls}-size-small {
+        .#{$steps-prefix-cls}-container {
+            .#{$step-item-prefix-cls} {
+                .#{$jigsaw-prefix}-step-status-logo {
+                    cursor: pointer;
+                }
+                .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                    text-align: center !important;
+
+                    width: 100% !important;
+                    margin-left: 50%;
+                    padding-right: 20px;
+                    padding-left: 0px !important;
+                }
+
+                &:nth-child(2) {
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        margin-right: 0 !important;
+                        margin-left: 50% !important;
+                        padding-right: 20px;
+                    }
+                }
+
+                &:nth-last-child(4) {
+                    min-width: 20px !important;
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            margin: 10px 10px;
+                        }
+                    }
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+
+                        //margin-left: -50%;
+                        //padding-left: 0;
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+                }
+
+
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                .#{$step-item-prefix-cls}-container {
+
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        width: 100% !important;
+                        margin-left: -50% !important;
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            display: none !important;;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-even.#{$steps-prefix-cls}-size-small {
+        .#{$steps-prefix-cls}-container {
+            .#{$step-item-prefix-cls} {
+                .#{$jigsaw-prefix}-step-status-logo {
+                    cursor: pointer;
+                }
+                &:nth-last-child(4) {
+                    min-width: 20px !important;
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            margin: 10px 10px;
+                        }
+                    }
+                    .#{$jigsaw-prefix}-step-title,
+                    .#{$jigsaw-prefix}-sub-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+                }
+
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                .#{$step-item-prefix-cls}-container {
+
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        text-align: center;
+                        margin-left: -50% !important;
+                        padding-right: 0px !important;
+                        padding-left: 0px !important;
+                    }
+
+                    .#{$jigsaw-prefix}-logo-line-container {
+                        .#{$jigsaw-prefix}-step-line {
+                            display: none !important;;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-single {
+        .#{$steps-prefix-cls}-container {
+            .#{$jigsaw-prefix}-step-left-space {
+                flex: 0.5;
+            }
+            .#{$jigsaw-prefix}-step-right-space {
+                flex: 0.5;
+            }
+        }
+    }
+
+}
+
+
+
+
