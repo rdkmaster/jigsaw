@@ -14,7 +14,11 @@
         <jigsaw-button (click)="popupDialog1(dialog1)">popup</jigsaw-button>
         <ng-template #dialog1>
             <jigsaw-dialog width="80%" height="400" caption="dialog title" (close)="close()">
-                <div class="dialog-content" style="height: 100%">
+                <div class="dialog-content" style="height: 100%" [perfectScrollbar]="{wheelPropagation: true}">
+                    <p>dialog content</p>
+                    <p>dialog content</p>
+                    <p>dialog content</p>
+                    <p>dialog content</p>
                     <p>dialog content</p>
                 </div>
                 <div jigsaw-button-bar>
