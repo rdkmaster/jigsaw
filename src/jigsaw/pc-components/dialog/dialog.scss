@@ -14,6 +14,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
             .#{$dialog-prefix-cls}-content{
                 display: flex;
                 flex-grow: 1;
+                overflow: hidden;
                 .#{$dialog-prefix-cls}-content-inner {
                     flex-grow: 1;
                     width: 100%;
