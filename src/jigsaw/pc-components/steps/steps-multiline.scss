@@ -1,0 +1,72 @@
+@import "../../common/assets/scss/core/base";
+
+$steps-prefix-cls: #{$jigsaw-prefix}-steps;
+$steps-multiline-prefix-cls: #{$jigsaw-prefix}-steps-multiline;
+$step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
+
+.#{$steps-multiline-prefix-cls} {
+    &-odd {
+        .#{$steps-prefix-cls}-container {
+            flex-direction: row-reverse !important;
+
+            .#{$step-item-prefix-cls} {
+                .#{$jigsaw-prefix}-logo-line-container {
+                    flex-direction: row-reverse !important;
+                    .#{$jigsaw-prefix}-step-status-logo {
+                        cursor: pointer;
+                    }
+                }
+
+                &:nth-last-child(3) {
+                    padding-right: 0px !important;
+                    padding-left: 26px !important;
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        text-align: center;
+                        padding-right: 26px !important;
+                        margin-right: 50% !important;
+                        margin-left: 0 !important;
+                    }
+                }
+
+                .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                    text-align: center;
+                    margin-left: 50% !important;
+                    width: 100%;
+                    padding-right: 26px !important;
+                    padding-left: 0px !important;
+                }
+            }
+
+            .#{$step-item-prefix-cls}-overflow {
+                visibility: hidden;
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                .#{$jigsaw-prefix}-step-line {
+                    display: none;
+                }
+            }
+        }
+    }
+    &-even {
+
+        .#{$jigsaw-prefix}-logo-line-container {
+            .#{$jigsaw-prefix}-step-status-logo {
+                cursor: pointer;
+            }
+        }
+        .#{$steps-prefix-cls}-container {
+            .#{$step-item-prefix-cls}-overflow {
+                visibility: hidden;
+            }
+
+            .#{$step-item-prefix-cls}-last {
+                .#{$jigsaw-prefix}-step-line {
+                    display: none;
+                }
+            }
+        }
+
+    }
+
+}

@@ -8,8 +8,8 @@ import {StepsVerticalFullComponent} from "./vertical/demo.component";
 import {StepsClickChangeStatusComponent} from "./step-interactive/demo.component";
 import {StepsCustomIconsModule} from "./custom-icons/demo.module";
 import {StepsCustomIconsComponent} from "./custom-icons/demo.component";
-import {StepsLiteComponent} from "./steps-lite/demo.component";
-import {StepsLiteModule} from "./steps-lite/demo.module";
+import {StepsMultilineComponent} from "./steps-multiline/demo.component";
+import {StepsMultilineModule} from "./steps-multiline/demo.module";
 
 export const routerConfig = [
     {
@@ -25,7 +25,7 @@ export const routerConfig = [
         path:'custom-icons',component:StepsCustomIconsComponent
     },
     {
-        path:'steps-lite',component:StepsLiteComponent
+        path:'steps-multiline',component:StepsMultilineComponent
     }
 
 ];
@@ -37,7 +37,7 @@ export const routerConfig = [
         StepsClickChangeStatusModule,
         StepsCustomIconsModule,
         StepsVerticalModule,
-        StepsLiteModule
+        StepsMultilineModule
     ]
 })
 export class StepsDemoModule {

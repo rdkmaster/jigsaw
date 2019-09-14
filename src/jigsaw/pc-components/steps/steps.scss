@@ -14,14 +14,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         overflow-x: auto;
         overflow-y: hidden;
         .#{$jigsaw-prefix}-step-left-space {
-            height: 10px;
-            min-width: 100px;
             flex: 0.5;
-        }
-        .#{$jigsaw-prefix}-step-right-space {
             height: 10px;
-            min-width: 100px;
-            flex: 0.5;
+            min-width: 60px;
         }
         .#{$step-item-prefix-cls} {
             display: flex;
@@ -85,7 +80,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            &:nth-last-child(4) {
+            &:nth-last-child(3) {
                 flex: 0.5;
                 padding-right: 26px;
                 .#{$jigsaw-prefix}-step-line {
@@ -153,35 +148,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     background-color: $text-color;
                 }
             }
-
-            .#{$step-item-prefix-cls}-running {
-                .#{$jigsaw-prefix}-step-status-logo {
-                    background-color: #41ADDC;
-                }
-                .#{$jigsaw-prefix}-step-line {
-                    background-color: #41ADDC;
-                }
-            }
-
-            .#{$step-item-prefix-cls}-starting {
-                .#{$jigsaw-prefix}-step-status-logo {
-                    background-color: plum;
-                }
-
-                .#{$jigsaw-prefix}-step-line {
-                    background-color: plum;
-                }
-            }
-
-            .#{$step-item-prefix-cls}-ending {
-                .#{$jigsaw-prefix}-step-status-logo {
-                    background-color: plum;
-                }
-
-                .#{$jigsaw-prefix}-step-line {
-                    background-color: plum;
-                }
-            }
         }
 
     }
@@ -196,11 +162,6 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         width: auto;
         height: 100%;
         .#{$jigsaw-prefix}-step-left-space {
-            flex: 0;
-            min-width: 0;
-            height: 0;
-        }
-        .#{$jigsaw-prefix}-step-right-space {
             flex: 0;
             min-width: 0;
             height: 0;
@@ -257,7 +218,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     display: block;
                 }
             }
-            &:nth-last-child(4) {
+            &:nth-last-child(3) {
                 padding-right: 0;
                 .#{$jigsaw-prefix}-step-title {
                     text-align: center;
