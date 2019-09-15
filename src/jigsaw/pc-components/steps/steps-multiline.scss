@@ -47,9 +47,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
         }
+
     }
     &-even {
-
         .#{$jigsaw-prefix}-logo-line-container {
             .#{$jigsaw-prefix}-step-status-logo {
                 cursor: pointer;
@@ -67,6 +67,44 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             }
         }
 
+    }
+
+    &-odd.#{$steps-prefix-cls}-size-large {
+        .#{$steps-prefix-cls}-container {
+            .#{$step-item-prefix-cls} {
+
+                &:nth-last-child(3) {
+                    padding-left: 30px !important;
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        padding-right: 30px !important;
+                    }
+                }
+
+                .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                    padding-right: 30px !important;
+                }
+            }
+        }
+
+    }
+
+    &-odd.#{$steps-prefix-cls}-size-small {
+        .#{$steps-prefix-cls}-container {
+            flex-direction: row-reverse !important;
+
+            .#{$step-item-prefix-cls} {
+                &:nth-last-child(3) {
+                    padding-left: 20px !important;
+                    .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                        padding-right: 20px !important;
+                    }
+                }
+
+                .#{$jigsaw-prefix}-step-title, .#{$jigsaw-prefix}-sub-title {
+                    padding-right: 20px !important;
+                }
+            }
+        }
     }
 
 }

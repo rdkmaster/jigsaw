@@ -8,6 +8,8 @@ import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
+import {LoadingService} from "../../common/service/loading.service";
+import {PopupInfo} from "../../common/service/popup.service";
 
 export type StepsData =
     {
@@ -63,14 +65,13 @@ export type StepsData =
     ]
 })
 export class JigsawStepsMultiline extends AbstractJigsawComponent {
-    constructor() {
+    constructor(private _loading: LoadingService) {
         super();
     }
 
     /**
      * 设置步骤条图标的预设尺寸
      *
-     * $demo = steps/basic
      */
 
     private _presize: 'small' | 'default' | 'large' = "default";
@@ -102,9 +103,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     };
 
     /**
-     * 设置步骤条图标的预设尺寸
+     * 设置一行放置几个item
      *
-     * $demo = steps/basic
      */
     @Input()
     public get numInline(): number {
@@ -124,11 +124,6 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     private _selectedStep: any;
 
-    /**
-     * 设置步骤条图标的预设尺寸
-     *
-     * $demo = steps/basic
-     */
     @Input()
     public get selectedStep(): any {
         return this._selectedStep;
@@ -205,6 +200,9 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._setWidth();
     }
 
+
+    private _loadingInfo: PopupInfo;
+
     private _originWidth: number;
 
     private _overflow = false;
@@ -261,6 +259,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
             }
 
             setTimeout(() => {
+                this._loadingInfo = this._loading.show();
                 if (this._step.nativeElement.children[0].children[0].children[0].children[this.numInline].offsetWidth == minWidth) {
                     for (let i = 0; i < this._step.nativeElement.children.length; i++) {
                         if (i % 2 == 1) {
@@ -316,6 +315,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                         }
                     }
                 }
+                this._loadingInfo.dispose();
             });
         }
     }
@@ -325,7 +325,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 @NgModule({
     imports: [CommonModule, JigsawStepsModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     declarations: [JigsawStepsMultiline],
-    exports: [JigsawStepsMultiline]
+    exports: [JigsawStepsMultiline],
+    providers: [LoadingService]
 })
 export class JigsawStepsMultilineModule {
 
