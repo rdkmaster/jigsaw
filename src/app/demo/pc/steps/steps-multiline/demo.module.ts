@@ -5,10 +5,11 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 import {StepsMultilineComponent} from './demo.component';
 import {JigsawStepsMultilineModule} from "jigsaw/pc-components/steps/steps-multiline";
 import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @NgModule({
     imports: [
-        CommonModule, JigsawDemoDescriptionModule, JigsawStepsModule, JigsawStepsMultilineModule, JigsawButtonModule
+        CommonModule, JigsawDemoDescriptionModule, JigsawStepsModule, JigsawStepsMultilineModule, PerfectScrollbarModule,JigsawButtonModule
     ],
     declarations: [StepsMultilineComponent],
     exports: [StepsMultilineComponent]
