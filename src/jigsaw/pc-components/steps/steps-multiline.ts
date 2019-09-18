@@ -60,10 +60,7 @@ export type StepsData =
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
-    },
-    providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawStepsMultiline), multi: true},
-    ]
+    }
 })
 export class JigsawStepsMultiline extends AbstractJigsawComponent {
     constructor(public _elementRef: ElementRef) {
