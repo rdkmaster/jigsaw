@@ -1,28 +1,26 @@
 import {
-    Component, forwardRef, Input, NgModule, EventEmitter, Output, ViewChild, ElementRef, Renderer2, NgZone, HostListener
+    Component, Input, NgModule, EventEmitter, Output, ViewChild, ElementRef, HostListener
 } from "@angular/core";
 
 import {CommonModule} from "@angular/common";
 import {JigsawStepsModule} from "./index";
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {LoadingService} from "../../common/service/loading.service";
 
-export type StepsData =
-    {
-        status: string,
-        title?: string,
-        subTitle: string,
-        waitingIcon?: string,
-        doneIcon?: string,
-        processingIcon?: string,
-        errorIcon?: string,
-        warningIcon?: string,
-        skippedIcon?: string,
-        context?: any,
-    }
+export type StepsData = {
+    status: string,
+    title?: string,
+    subTitle: string,
+    waitingIcon?: string,
+    doneIcon?: string,
+    processingIcon?: string,
+    errorIcon?: string,
+    warningIcon?: string,
+    skippedIcon?: string,
+    context?: any,
+}
 
 
 @Component({
@@ -43,7 +41,7 @@ export type StepsData =
                                           [skippedIcon]="step.skippedIcon"
                                           (click)="_$handleItemClick($event,step)"
                                           [ngClass]="{'jigsaw-step-item-overflow': data && index* numInline + ind >= data.length,'jigsaw-step-item-last': data && index* numInline + ind == data.length-1}">
-                            <div jigsaw-title>{{step.title}}</div>
+                            <div jigsaw-title class="jigsaw-steps-multiline-title" [title]="step.title">{{step.title}}</div>
                             <div jigsaw-sub-title
                                  trustedHtml="{{step.subTitle}}"
                                  [trustedHtmlContext]="step.context"></div>
@@ -67,12 +65,15 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         super();
     }
 
-    /**
-     * 设置步骤条图标的预设尺寸
-     *
-     */
+    private _originWidth: number;
+    private _dataInSteps: StepsData[] = [];
+    private _numInline: number = 5;
+
     private _preSize: 'small' | 'default' | 'large' = "default";
 
+    /**
+     * 设置步骤条图标的预设尺寸
+     */
     @Input()
     public get preSize(): 'small' | 'default' | 'large' {
         return this._preSize;
@@ -86,6 +87,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     };
 
     private _data: StepsData[] = [];
+
     @Input()
     public get data(): StepsData[] {
         return this._data;
@@ -101,12 +103,11 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     /**
      * 设置一行放置几个item
-     *
      */
     @Input()
     public get numInline(): number {
         return this._numInline;
-    };
+    }
 
     public set numInline(value: number) {
         if (value == this._numInline || value < 1) {
@@ -116,8 +117,6 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._initData();
         this._setWidth();
     }
-
-    private _numInline: number = 5;
 
     @Output() public select = new EventEmitter<any>();
 
@@ -135,8 +134,6 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         }
     }
 
-    private _dataInSteps: StepsData[] = [];
-
     /**
      * @internal
      */
@@ -149,7 +146,6 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         }
         return stepsItemData;
     }
-
 
     public _$getColor(rowIndex): string {
         if (this.data && rowIndex < this._$rowIndexes.length - 1) {
@@ -177,19 +173,15 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._initData();
     }
 
-
     ngAfterViewInit() {
         this._originWidth = parseInt(this._step.nativeElement.offsetWidth);
         this._setWidth();
     }
 
-    private _originWidth: number;
-
     @ViewChild('step', {static: false})
     private _step: ElementRef;
 
     private _initData() {
-
         this._dataInSteps = [];
         this._dataInSteps.push(...this.data);
         if (this.data && this.data.length > this.numInline) {
@@ -215,21 +207,29 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     }
 
     private _setWidth() {
-        //146是presize为default的最小宽度，140和150分别是presize为small和large的宽度，60是每行起始处的留白
-        let minWidth = 146;
+        // preSize为default的最小宽度
+        const DEFAULT_ICON_MIN_WIDTH = 146;
+        // preSize为small的最小宽度
+        const SMALL_ICON_MIN_WIDTH = 140;
+        // preSize为large的最小宽度
+        const LARGE_ICON_MIN_WIDTH = 150;
+        // 每行起始处的留白
+        const MARGIN_WIDTH = 60;
+
+        let minWidth = DEFAULT_ICON_MIN_WIDTH;
         let logoWidth = 26;
         if (this.preSize == 'small') {
-            minWidth = 140;
+            minWidth = SMALL_ICON_MIN_WIDTH;
             logoWidth = 20;
         } else if (this.preSize == 'large') {
-            minWidth = 150;
+            minWidth = LARGE_ICON_MIN_WIDTH;
             logoWidth = 30;
         }
 
         if (this._step) {
             let overflow = false;
-            if (minWidth * this.numInline + 60 + 60 > this._originWidth) {
-                this._step.nativeElement.style.width = minWidth * this.numInline + 60 + 60 + 'px';
+            if (minWidth * this.numInline + MARGIN_WIDTH * 2 > this._originWidth) {
+                this._step.nativeElement.style.width = (minWidth * this.numInline + MARGIN_WIDTH * 2) + 'px';
                 overflow = true;
             } else {
                 this._step.nativeElement.style.width = this._originWidth + 'px';
@@ -252,14 +252,13 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                         space.style.minWidth = minWidth - logoWidth + 'px';
                     });
 
-
-                    if (oddSteps && oddSteps.length > 0 && this._step.nativeElement.offsetWidth < oddSteps[0].offsetWidth + 60 && overflow) {
-                        this._step.nativeElement.style.width = oddSteps[0].offsetWidth + 60 + 'px';
+                    if (oddSteps && oddSteps.length > 0 && this._step.nativeElement.offsetWidth < oddSteps[0].offsetWidth + MARGIN_WIDTH && overflow) {
+                        this._step.nativeElement.style.width = (oddSteps[0].offsetWidth + MARGIN_WIDTH) + 'px';
                     }
                 } else {
                     oddStepsSpaces && oddStepsSpaces.forEach((space, index) => {
                         space.style.flex = 0.5;
-                        space.style.minWidth = 60 + 'px';
+                        space.style.minWidth = MARGIN_WIDTH + 'px';
                     });
                 }
 
@@ -269,14 +268,14 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                             space.style.flex = 0;
                             space.style.minWidth = minWidth - logoWidth + 'px';
                         });
-                        if (this._step.nativeElement.offsetWidth < evenSteps[0].offsetWidth + 60 && overflow) {
-                            this._step.nativeElement.style.width = evenSteps[0].offsetWidth + 60 + 'px';
+                        if (this._step.nativeElement.offsetWidth < evenSteps[0].offsetWidth + MARGIN_WIDTH && overflow) {
+                            this._step.nativeElement.style.width = (evenSteps[0].offsetWidth + MARGIN_WIDTH) + 'px';
                         }
 
                     } else {
                         evenStepsSpaces.forEach((space, index) => {
                             space.style.flex = 0.5;
-                            space.style.minWidth = 60 + 'px';
+                            space.style.minWidth = MARGIN_WIDTH + 'px';
                         });
                     }
                 }
@@ -300,7 +299,6 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     }
 }
 
-
 @NgModule({
     imports: [CommonModule, JigsawStepsModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     declarations: [JigsawStepsMultiline],
@@ -308,5 +306,4 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     providers: [LoadingService]
 })
 export class JigsawStepsMultilineModule {
-
 }

@@ -107,4 +107,10 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 
+    &-title {
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+    }
+
 }

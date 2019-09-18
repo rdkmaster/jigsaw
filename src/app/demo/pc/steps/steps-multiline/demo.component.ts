@@ -1,260 +1,33 @@
 import {Component} from "@angular/core";
+import {InternalUtils} from "../../../../../jigsaw/common/core/utils/internal-utils";
 
 @Component({
     templateUrl: './demo.component.html',
 })
 export class StepsMultilineComponent {
+    steps = [];
 
-    steps = [
-        {
-            title: 'done',
-            status: "done",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'error',
-            status: "error",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'processing',
-            status: "processing",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'skipped',
-            status: "skipped",
-            subTitle: 'Add a window to configure its compare paramenters'
-        },
-        {
-            title: 'waiting',
-            status: "waiting",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
-        }, {
-            title: 'warning',
-            status: "warning",
-            subTitle: 'Add a window to configure its compare paramenters'
+    constructor() {
+        for (let i = 0; i < 50; i++) {
+            this.steps.push(this._createStepData(i));
         }
-    ];
+    }
+
+    public changeStatus(idx: number) {
+        this.steps = this.steps.concat([]);
+        this.steps[idx] = this._createStepData(idx);
+    }
+
+    private _createStepData(index: number) {
+        const statuses = ["done", "error", "processing", "warning", "skipped", "waiting"];
+        const status = statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
+        return {
+            title: `This is a ${status} node`,
+            status: status,
+            subTitle: `#${index + 1} - <a (click)="changeStatus(${index})">click here</a> to change a random status.`,
+            context: this
+        };
+    }
 
     public numInLine = 5;
 
