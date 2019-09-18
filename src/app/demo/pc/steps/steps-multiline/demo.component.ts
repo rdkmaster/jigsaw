@@ -4,6 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html',
 })
 export class StepsMultilineComponent {
+
     steps = [
         {
             title: 'done',
@@ -255,7 +256,7 @@ export class StepsMultilineComponent {
         }
     ];
 
-    public numInLine = 1;
+    public numInLine = 5;
 
     public presize = 'default';
 

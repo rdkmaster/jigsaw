@@ -9,7 +9,6 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {LoadingService} from "../../common/service/loading.service";
-import {PopupInfo} from "../../common/service/popup.service";
 
 export type StepsData =
     {
@@ -29,9 +28,10 @@ export type StepsData =
 @Component({
     selector: 'jigsaw-steps-multiline, j-steps-multiline',
     template: `
-        <div [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true,suppressScrollY:true}" style="width: 100%;height: 100%">
+        <div [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}" style="width: 100%;height: 100%">
             <div #step>
-                <div *ngFor="let item of stepsData;odd as odd;even as even; index as index;last as last" style="width: 100%;height: 100%">
+                <div *ngFor="let rowIndex of _$rowIndexes;odd as odd;even as even; index as index;last as last"
+                     style="width: 100%;height: 100%">
                     <jigsaw-steps [preSize]="preSize"
                                   [ngClass]="{'jigsaw-steps-multiline-odd':odd,'jigsaw-steps-multiline-even':even}">
                         <jigsaw-step-item *ngFor="let step of _$getData(index);index as ind" [status]="step.status"
@@ -50,7 +50,8 @@ export type StepsData =
                         </jigsaw-step-item>
                     </jigsaw-steps>
                     <div *ngIf="!last" style="width: 100%;height: 50px;position: relative">
-                        <div style="width: 2px;height: 100%;position: absolute;" [style.backgroundColor]="_$getColor(item)"></div>
+                        <div class="jigsaw-steps-multiline-v" style="width: 2px;height: 100%;position: absolute;"
+                             [style.backgroundColor]="_$getColor(rowIndex)"></div>
                     </div>
                 </div>
             </div>
@@ -65,7 +66,7 @@ export type StepsData =
     ]
 })
 export class JigsawStepsMultiline extends AbstractJigsawComponent {
-    constructor(private _loading: LoadingService) {
+    constructor(public _elementRef: ElementRef) {
         super();
     }
 
@@ -73,17 +74,16 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
      * 设置步骤条图标的预设尺寸
      *
      */
-
-    private _presize: 'small' | 'default' | 'large' = "default";
+    private _preSize: 'small' | 'default' | 'large' = "default";
 
     @Input()
     public get preSize(): 'small' | 'default' | 'large' {
-        return this._presize;
+        return this._preSize;
     };
 
     public set preSize(value: 'small' | 'default' | 'large') {
-        if (value && value != this._presize) {
-            this._presize = value;
+        if (value && value != this._preSize) {
+            this._preSize = value;
             this._setWidth();
         }
     };
@@ -120,35 +120,21 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._setWidth();
     }
 
-    private _numInline: number = 1;
+    private _numInline: number = 5;
 
-    private _selectedStep: any;
-
-    @Input()
-    public get selectedStep(): any {
-        return this._selectedStep;
-    }
-
-    public set selectedStep(value) {
-        this._selectedStep = value;
-        this.selectChange.emit(value);
-
-    }
-
-    @Output() public selectChange = new EventEmitter<any>();
-
+    @Output() public select = new EventEmitter<any>();
 
     /**
      * @internal
      */
-    public stepsData: number[] = [];
+    public _$rowIndexes: number[] = [];
 
     /**
      * @internal
      */
     public _$handleItemClick($event, step: any) {
         if ($event.path[0].tagName.toLowerCase() == 'i') {
-            this.selectedStep = step;
+            this.select.emit(step);
         }
     }
 
@@ -168,9 +154,9 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     }
 
 
-    public _$getColor(item): string {
-        if (this.data && item < this.stepsData.length - 1) {
-            switch (this.data[this.numInline * item + this.numInline - 1].status) {
+    public _$getColor(rowIndex): string {
+        if (this.data && rowIndex < this._$rowIndexes.length - 1) {
+            switch (this.data[this.numInline * rowIndex + this.numInline - 1].status) {
                 case "processing":
                     return "#41ADDC";
                 case "waiting":
@@ -200,12 +186,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._setWidth();
     }
 
-
-    private _loadingInfo: PopupInfo;
-
     private _originWidth: number;
-
-    private _overflow = false;
 
     @ViewChild('step', {static: false})
     private _step: ElementRef;
@@ -224,9 +205,9 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         }
 
         let row = this.data && this.numInline ? Math.ceil(this._dataInSteps.length / this.numInline) : 1;
-        this.stepsData = [];
+        this._$rowIndexes = [];
         for (let i = 0; i < row; i++) {
-            this.stepsData.push(i);
+            this._$rowIndexes.push(i);
         }
     }
 
@@ -239,83 +220,84 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     private _setWidth() {
         //146是presize为default的最小宽度，140和150分别是presize为small和large的宽度，60是每行起始处的留白
         let minWidth = 146;
-        let logWidth = 26;
+        let logoWidth = 26;
         if (this.preSize == 'small') {
             minWidth = 140;
-            logWidth = 20;
+            logoWidth = 20;
         } else if (this.preSize == 'large') {
             minWidth = 150;
-            logWidth = 30;
+            logoWidth = 30;
         }
 
-
         if (this._step) {
+            let overflow = false;
             if (minWidth * this.numInline + 60 + 60 > this._originWidth) {
                 this._step.nativeElement.style.width = minWidth * this.numInline + 60 + 60 + 'px';
-                this._overflow = true;
+                overflow = true;
             } else {
                 this._step.nativeElement.style.width = this._originWidth + 'px';
-                this._overflow = false;
+                overflow = false;
             }
 
             setTimeout(() => {
-                this._loadingInfo = this._loading.show();
-                if (this._step.nativeElement.children[0].children[0].children[0].children[this.numInline].offsetWidth == minWidth) {
-                    for (let i = 0; i < this._step.nativeElement.children.length; i++) {
-                        if (i % 2 == 1) {
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.flex = 0;
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.minWidth = minWidth - logWidth + 'px';
+                let oddStepsSpaces = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd .jigsaw-steps-container .jigsaw-step-left-space");
+                let evenStepsSpaces = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-left-space");
+                let oddSteps = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd");
+                let evenSteps = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even");
+                let vLines = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-v");
+                let oddItems = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd .jigsaw-steps-container .jigsaw-step-item");
+                let evenItems = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-item");
+                let items = this._step.nativeElement.querySelectorAll(".jigsaw-steps-container .jigsaw-step-item");
 
-                        }
-                    }
-                    if (this._step.nativeElement.offsetWidth < this._step.nativeElement.children[1].offsetWidth + 60 && this._overflow) {
-                        this._step.nativeElement.style.width = this._step.nativeElement.children[1].offsetWidth + 60 + 'px';
+                if (evenItems[this.numInline - 1].offsetWidth == minWidth) {
+                    oddStepsSpaces && oddStepsSpaces.forEach((space, index) => {
+                        space.style.flex = 0;
+                        space.style.minWidth = minWidth - logoWidth + 'px';
+                    });
+
+
+                    if (oddSteps && oddSteps.length > 0 && this._step.nativeElement.offsetWidth < oddSteps[0].offsetWidth + 60 && overflow) {
+                        this._step.nativeElement.style.width = oddSteps[0].offsetWidth + 60 + 'px';
                     }
                 } else {
-                    for (let i = 0; i < this._step.nativeElement.children.length - 1; i++) {
-                        if (i % 2 == 1) {
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.flex = 0.5;
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.minWidth = 60 + 'px';
-                        }
-                    }
+                    oddStepsSpaces && oddStepsSpaces.forEach((space, index) => {
+                        space.style.flex = 0.5;
+                        space.style.minWidth = 60 + 'px';
+                    });
                 }
 
-                if (this._step.nativeElement.children[1].children[0].children[0].children[this.numInline].offsetWidth == minWidth) {
-                    for (let i = 0; i < this._step.nativeElement.children.length - 1; i++) {
-                        if (i % 2 == 0) {
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.flex = 0;
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.minWidth = minWidth - logWidth + 'px';
+                if (oddItems && oddItems.length > 0) {
+                    if (oddItems[this.numInline - 1].offsetWidth == minWidth) {
+                        evenStepsSpaces.forEach((space, index) => {
+                            space.style.flex = 0;
+                            space.style.minWidth = minWidth - logoWidth + 'px';
+                        });
+                        if (this._step.nativeElement.offsetWidth < evenSteps[0].offsetWidth + 60 && overflow) {
+                            this._step.nativeElement.style.width = evenSteps[0].offsetWidth + 60 + 'px';
                         }
-                    }
-                    if (this._step.nativeElement.offsetWidth < this._step.nativeElement.children[0].offsetWidth + 60 && this._overflow) {
-                        this._step.nativeElement.style.width = this._step.nativeElement.children[0].offsetWidth + 60 + 'px';
-                    }
 
-                } else {
-                    for (let i = 0; i < this._step.nativeElement.children.length - 1; i++) {
-                        if (i % 2 == 0) {
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.flex = 0.5;
-                            this._step.nativeElement.children[i].children[0].children[0].children[0].style.minWidth = 60 + 'px';
-                        }
+                    } else {
+                        evenStepsSpaces.forEach((space, index) => {
+                            space.style.flex = 0.5;
+                            space.style.minWidth = 60 + 'px';
+                        });
                     }
                 }
-
 
                 if (this.numInline == 1) {
-                    for (let i = 0; i < this._step.nativeElement.children.length - 1; i++) {
-                        this._step.nativeElement.children[i].children[1].children[0].style.left = this._step.nativeElement.children[i].children[0].children[0].children[this.numInline].offsetWidth - logWidth / 2 - 1 + 'px';
-                    }
+                    vLines && vLines.forEach((line, index) => {
+                        line.style.left = items[0].offsetWidth - logoWidth / 2 - 1 + 'px';
+                    });
                 } else {
-                    for (let i = 0; i < this._step.nativeElement.children.length - 1; i++) {
-                        if (i % 2 == 1) {
-                            this._step.nativeElement.children[i].children[1].children[0].style.left = this._step.nativeElement.children[i].children[0].children[0].children[this.numInline].offsetWidth - logWidth / 2 - 2 + 'px';
+                    vLines && vLines.forEach((line, index) => {
+                        if (index % 2 == 1) {
+                            line.style.left = items[index * this.numInline + this.numInline - 1].offsetWidth - logoWidth / 2 - 2 + 'px';
                         } else {
-                            this._step.nativeElement.children[i].children[1].children[0].style.left = '';
-                            this._step.nativeElement.children[i].children[1].children[0].style.right = this._step.nativeElement.children[i].children[0].children[0].children[this.numInline].offsetWidth - logWidth / 2 - 2 + 'px';
+                            line.style.left = '';
+                            line.style.right = items[index * this.numInline + this.numInline - 1].offsetWidth - logoWidth / 2 - 2 + 'px';
                         }
-                    }
+                    });
                 }
-                this._loadingInfo.dispose();
             });
         }
     }
