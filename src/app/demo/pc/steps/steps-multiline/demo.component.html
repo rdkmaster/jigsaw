@@ -2,16 +2,16 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<div [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}" style="height: 600px">
-<!-- start to learn the demo from here -->
-<j-button (click) = "_$handleAdd()"> 点击递增 </j-button>
-<j-button (click) = "_$handleSub()" [disabled]="numInLine == 1 "> 点击递减 </j-button>
-<j-button (click) = "_$handleLarge()" > 大图标 </j-button>
-<j-button (click) = "_$handleSmall()" > 小图标</j-button>
-<j-button (click) = "_$handleDefault()" > 默认图标 </j-button>
-<div> 一行有 {{numInLine}} 个元素</div>
 
-<jigsaw-steps-multiline [data]="steps" [numInline]="numInLine" [preSize]="presize"
-                   (select)="_$selectChange($event)">
-</jigsaw-steps-multiline>
+start to learn the demo from here
+<j-button (click)="_$handleAdd()"> 点击递增</j-button>
+<j-button (click)="_$handleSub()" [disabled]="numInLine == 1 "> 点击递减</j-button>
+<j-button (click)="_$handleLarge()"> 大图标</j-button>
+<j-button (click)="_$handleSmall()"> 小图标</j-button>
+<j-button (click)="_$handleDefault()"> 默认图标</j-button>
+<div> 一行有 {{numInLine}} 个元素</div>
+<div style="height: calc( 100vh - 110px )">
+    <jigsaw-steps-multiline [data]="steps" [numInline]="numInLine" [preSize]="presize"
+                            (select)="_$selectChange($event)">
+    </jigsaw-steps-multiline>
 </div>
