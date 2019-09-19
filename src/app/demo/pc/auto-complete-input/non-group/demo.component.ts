@@ -6,6 +6,7 @@ import {Component} from '@angular/core';
 
 export class AutoCompleteInputNonGroupDemoComponent {
     inputValue: any;
+    filterOnFocus: boolean = false;
     public _$dropdownData = ['隐藏/显示元素', '滚动页面', '发送事件到事件总线', '更新变量', '等待弹出关闭', '自定义代码块'];
 
     // ====================================================================

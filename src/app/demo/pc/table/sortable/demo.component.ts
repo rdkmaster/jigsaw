@@ -10,7 +10,7 @@ import {JigsawTable} from "../../../../../jigsaw/pc-components/table/table";
     templateUrl: './demo.component.html'
 })
 export class TableSetHeaderSortDemoComponent {
-    @ViewChild(JigsawTable, {static: false}) table: JigsawTable;
+    @ViewChild(JigsawTable) table: JigsawTable;
 
     tableData: TableData;
 
