@@ -107,11 +107,11 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
      */
     @Input()
     public get numInline(): number {
-        return this._numInline;
+        return this._numInline <= this.data.length ? this._numInline : this.data.length;
     }
 
     public set numInline(value: number) {
-        if (value == this._numInline || value < 1) {
+        if (value == this._numInline || value < 1 || value > this.data.length) {
             return;
         }
         this._numInline = value;

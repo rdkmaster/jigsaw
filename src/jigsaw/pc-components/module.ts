@@ -19,6 +19,7 @@ import {JigsawScrollbarModule} from '../common/components/scrollbar/index';
 import {JigsawSelectModule} from './select/select';
 import {JigsawSliderModule} from './slider/index';
 import {JigsawStepsModule} from './steps/index';
+import {JigsawStepsMultilineModule} from "./steps/steps-multiline";
 import {JigsawSwitchModule} from './switch/index';
 import {JigsawTableModule} from './table/table';
 import {JigsawTableRendererModule} from "./table/table-renderer";
@@ -104,7 +105,8 @@ const JIGSAW_MODULE = [
     JigsawTransferModule,
     JigsawTextareaModule,
     JigsawBreadcrumbModule,
-    JigsawRateModule
+    JigsawRateModule,
+    JigsawStepsMultilineModule
 ];
 
 @NgModule({
