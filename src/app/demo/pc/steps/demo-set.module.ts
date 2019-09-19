@@ -8,6 +8,8 @@ import {StepsVerticalFullComponent} from "./vertical/demo.component";
 import {StepsClickChangeStatusComponent} from "./step-interactive/demo.component";
 import {StepsCustomIconsModule} from "./custom-icons/demo.module";
 import {StepsCustomIconsComponent} from "./custom-icons/demo.component";
+import {StepsMultilineComponent} from "./steps-multiline/demo.component";
+import {StepsMultilineModule} from "./steps-multiline/demo.module";
 
 export const routerConfig = [
     {
@@ -15,14 +17,17 @@ export const routerConfig = [
     },
     {
         path: 'vertical', component: StepsVerticalFullComponent,
-
     },
     {
         path: 'step-interactive', component: StepsClickChangeStatusComponent
     },
     {
         path:'custom-icons',component:StepsCustomIconsComponent
+    },
+    {
+        path:'steps-multiline',component:StepsMultilineComponent
     }
+
 ];
 
 @NgModule({
@@ -31,7 +36,8 @@ export const routerConfig = [
         StepsHorizontalBasicModule,
         StepsClickChangeStatusModule,
         StepsCustomIconsModule,
-        StepsVerticalModule
+        StepsVerticalModule,
+        StepsMultilineModule
     ]
 })
 export class StepsDemoModule {

@@ -8,6 +8,10 @@ export class StepsClickChangeStatusComponent {
     }
     steps = [
         {
+            title: 'starting',
+            status: "starting",
+        },
+        {
             title: 'done',
             status: "done",
         },
@@ -32,6 +36,14 @@ export class StepsClickChangeStatusComponent {
             title: 'waiting',
             status: "waiting",
         },
+        {
+            title: 'running',
+            status: "running",
+        },
+        {
+            title: 'ending',
+            status: "ending",
+        }
     ];
 
     skipStep(index){
