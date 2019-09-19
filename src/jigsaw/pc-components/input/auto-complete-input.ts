@@ -99,6 +99,11 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public valid: boolean = true;
 
+    /**
+     * 用于控制在输入框获得焦点后是否自动执行过滤
+     *
+     * $demo = auto-complete-input/with-group
+     */
     @Input()
     public filterOnFocus: boolean = true;
 
