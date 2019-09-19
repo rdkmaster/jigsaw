@@ -395,7 +395,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                     this._beginDate = value.beginDate;
                 } else {
                     // 从外部来需要转换
-                    this._beginDate = this.gr == TimeGr.week ? this._handleWeekSelect(value) : TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
+                    let timeStr = TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
+                    this._beginDate = this.gr == TimeGr.week ? this._handleWeekSelect(timeStr) : timeStr;
                 }
                 this._$endTimeLimitEnd = this._calculateLimitEnd();
                 this._startTimeLimitEnd = this._beginDate;
@@ -410,7 +411,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                     this._endDate = value.endDate;
                 } else {
                     // 从外部来需要转换
-                    this._endDate = this.gr == TimeGr.week ? this._handleWeekSelect(value) : TimeService.convertValue(value.endDate, <TimeGr>this.gr);
+                    let timeStr = TimeService.convertValue(value.endDate, <TimeGr>this.gr);
+                    this._endDate = this.gr == TimeGr.week ? this._handleWeekSelect(timeStr) : timeStr;
                 }
                 this.endDateChange.emit(this._endDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
