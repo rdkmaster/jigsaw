@@ -6,5 +6,11 @@
 
 <h3>带分组</h3>
 <p class="notes">输入值是：<span>{{inputValue}}</span></p>
-<jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" [width]="250" [data]="_$dropdownData">
+<jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo"
+                            [width]="250" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
 </jigsaw-auto-complete-input>
+
+<br><br>
+
+获得焦点后自动执行过滤
+<jigsaw-switch [(checked)]="filterOnFocus"></jigsaw-switch>
