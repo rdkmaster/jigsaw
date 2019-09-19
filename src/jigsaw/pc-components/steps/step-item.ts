@@ -41,42 +41,106 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
      *
      * $demo = steps/custom-icons
      */
-    @Input() public waitingIcon: string = 'fa-file-text-o';
+    private _waitingIcon: string = 'fa-file-text-o';
+    @Input()
+    public get waitingIcon(): string {
+        return this._waitingIcon;
+    }
+
+    public set waitingIcon(value: string) {
+        if (value && value != this._waitingIcon) {
+            this._waitingIcon = value;
+        }
+    }
 
     /**
      * 设置`done`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
      * $demo = steps/custom-icons
      */
-    @Input() public doneIcon: string = 'fa-check-square-o';
+
+    private _doneIcon: string = 'fa-check-square-o';
+    @Input()
+    public get doneIcon(): string {
+        return this._doneIcon;
+    }
+
+    public set doneIcon(value: string) {
+        if (value && value != this._doneIcon) {
+            this._doneIcon = value;
+        }
+    }
 
     /**
      * 设置`processing`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
      * $demo = steps/custom-icons
      */
-    @Input() public processingIcon: string = 'fa-cog fa-spin fa-2x fa-fw';
+
+    private _processingIcon: string = 'fa-cog fa-spin fa-2x fa-fw';
+    @Input()
+    public get processingIcon(): string {
+        return this._processingIcon;
+    }
+
+    public set processingIcon(value: string) {
+        if (value && value != this._processingIcon) {
+            this._processingIcon = value;
+        }
+    }
 
     /**
      * 设置`error`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
      * $demo = steps/custom-icons
      */
-    @Input() public errorIcon: string = 'fa-times';
+
+    private _errorIcon: string = 'fa-times';
+    @Input()
+    public get errorIcon(): string {
+        return this._errorIcon;
+    }
+
+    public set errorIcon(value: string) {
+        if (value && value != this._errorIcon) {
+            this._errorIcon = value;
+        }
+    }
 
     /**
      * 设置`skipped`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
      * $demo = steps/custom-icons
      */
-    @Input() public skippedIcon: string = 'fa-ban';
+
+    private _skippedIcon: string = 'fa-ban';
+    @Input()
+    public get skippedIcon(): string {
+        return this._waitingIcon;
+    }
+
+    public set skippedIcon(value: string) {
+        if (value && value != this._skippedIcon) {
+            this._skippedIcon = value;
+        }
+    }
 
     /**
      * 设置`warning`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
      * $demo = steps/custom-icons
      */
-    @Input() public warningIcon: string = 'fa-exclamation-triangle';
+    private _warningIcon: string = 'fa-exclamation-triangle';
+    @Input()
+    public get warningIcon(): string {
+        return this._warningIcon;
+    }
+
+    public set warningIcon(value: string) {
+        if (value && value != this._warningIcon) {
+            this._warningIcon = value;
+        }
+    }
 
     /**
      * @internal
