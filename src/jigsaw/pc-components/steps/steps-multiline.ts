@@ -40,7 +40,7 @@ export type StepsData = {
                                           [warningIcon]="step.warningIcon"
                                           [skippedIcon]="step.skippedIcon"
                                           (click)="_$handleItemClick($event,step)"
-                                          [ngClass]="{'jigsaw-step-item-overflow': data && index* numInline + ind >= data.length,'jigsaw-step-item-last': data && index* numInline + ind == data.length-1}">
+                                          [ngClass]="{'jigsaw-step-item-overflow': data && index* numInlineActual + ind >= data.length,'jigsaw-step-item-last': data && index* numInlineActual + ind == data.length-1}">
                             <div jigsaw-title class="jigsaw-steps-multiline-title" [title]="step.title">{{step.title}}</div>
                             <div jigsaw-sub-title
                                  trustedHtml="{{step.subTitle}}"
@@ -107,16 +107,24 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
      */
     @Input()
     public get numInline(): number {
-        return this._numInline <= this.data.length ? this._numInline : this.data.length;
+        return this._numInline;
     }
 
     public set numInline(value: number) {
-        if (value == this._numInline || value < 1 || value > this.data.length) {
+        if (value == this._numInline || value < 1) {
             return;
         }
         this._numInline = value;
         this._initData();
         this._setWidth();
+    }
+
+
+    /**
+     * @internal
+     */
+    public get numInlineActual(): number {
+        return this.numInline <= this.data.length ? this.numInline : this.data.length;
     }
 
     @Output() public select = new EventEmitter<any>();
@@ -140,9 +148,9 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
      */
     public _$getData(index): StepsData[] {
         let stepsItemData = [];
-        for (let i = 0; i < this.numInline; i++) {
-            if (index * this.numInline + i < this._dataInSteps.length) {
-                stepsItemData.push(this._dataInSteps[index * this.numInline + i]);
+        for (let i = 0; i < this.numInlineActual; i++) {
+            if (index * this.numInlineActual + i < this._dataInSteps.length) {
+                stepsItemData.push(this._dataInSteps[index * this.numInlineActual + i]);
             }
         }
         return stepsItemData;
@@ -150,7 +158,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     public _$getColor(rowIndex): string {
         if (this.data && rowIndex < this._$rowIndexes.length - 1) {
-            switch (this.data[this.numInline * rowIndex + this.numInline - 1].status) {
+            switch (this.data[this.numInlineActual * rowIndex + this.numInlineActual - 1].status) {
                 case "processing":
                     return "#41ADDC";
                 case "waiting":
@@ -185,16 +193,16 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
     private _initData() {
         this._dataInSteps = [];
         this._dataInSteps.push(...this.data);
-        if (this.data && this.data.length > this.numInline) {
-            let remainder = this.data.length % this.numInline;
+        if (this.data && this.data.length > this.numInlineActual) {
+            let remainder = this.data.length % this.numInlineActual;
             if (remainder != 0) {
-                for (let j = 0; j < this.numInline - remainder; j++) {
+                for (let j = 0; j < this.numInlineActual - remainder; j++) {
                     this._dataInSteps.push(this.data[this.data.length - 1]);
                 }
             }
         }
 
-        let row = this.data && this.numInline ? Math.ceil(this._dataInSteps.length / this.numInline) : 1;
+        let row = this.data && this.numInlineActual ? Math.ceil(this._dataInSteps.length / this.numInlineActual) : 1;
         this._$rowIndexes = [];
         for (let i = 0; i < row; i++) {
             this._$rowIndexes.push(i);
@@ -229,8 +237,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
         if (this._step) {
             let overflow = false;
-            if (minWidth * this.numInline + MARGIN_WIDTH * 2 > this._originWidth) {
-                this._step.nativeElement.style.width = (minWidth * this.numInline + MARGIN_WIDTH * 2) + 'px';
+            if (minWidth * this.numInlineActual + MARGIN_WIDTH * 2 > this._originWidth) {
+                this._step.nativeElement.style.width = (minWidth * this.numInlineActual + MARGIN_WIDTH * 2) + 'px';
                 overflow = true;
             } else {
                 this._step.nativeElement.style.width = this._originWidth + 'px';
@@ -247,7 +255,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                 let evenItems = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-item");
                 let items = this._step.nativeElement.querySelectorAll(".jigsaw-steps-container .jigsaw-step-item");
 
-                if (evenItems[this.numInline - 1].offsetWidth == minWidth) {
+                if (evenItems[this.numInlineActual - 1].offsetWidth == minWidth) {
                     oddStepsSpaces && oddStepsSpaces.forEach((space, index) => {
                         space.style.flex = 0;
                         space.style.minWidth = minWidth - logoWidth + 'px';
@@ -264,7 +272,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                 }
 
                 if (oddItems && oddItems.length > 0) {
-                    if (oddItems[this.numInline - 1].offsetWidth == minWidth) {
+                    if (oddItems[this.numInlineActual - 1].offsetWidth == minWidth) {
                         evenStepsSpaces.forEach((space, index) => {
                             space.style.flex = 0;
                             space.style.minWidth = minWidth - logoWidth + 'px';
@@ -281,17 +289,17 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                     }
                 }
 
-                if (this.numInline == 1) {
+                if (this.numInlineActual == 1) {
                     vLines && vLines.forEach((line, index) => {
                         line.style.left = items[0].offsetWidth - logoWidth / 2 - 1 + 'px';
                     });
                 } else {
                     vLines && vLines.forEach((line, index) => {
                         if (index % 2 == 1) {
-                            line.style.left = items[index * this.numInline + this.numInline - 1].offsetWidth - logoWidth / 2 - 2 + 'px';
+                            line.style.left = items[index * this.numInlineActual + this.numInlineActual - 1].offsetWidth - logoWidth / 2 - 2 + 'px';
                         } else {
                             line.style.left = '';
-                            line.style.right = items[index * this.numInline + this.numInline - 1].offsetWidth - logoWidth / 2 - 2 + 'px';
+                            line.style.right = items[index * this.numInlineActual + this.numInlineActual - 1].offsetWidth - logoWidth / 2 - 2 + 'px';
                         }
                     });
                 }
