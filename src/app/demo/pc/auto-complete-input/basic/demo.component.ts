@@ -9,6 +9,7 @@ export class AutoCompleteInputBasicDemoComponent {
     inputValue2: any = '事件';
     maxDropDownHeight: string = "100px";
     width = '30%';
+    filterOnFocus: boolean = false;
 
     public _$dropdownData = ['点击发送事件', '滚动页面', '发送事件到事件总线', '更新变量', '等待弹出关闭', '自定义代码块'];
 

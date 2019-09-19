@@ -7,6 +7,7 @@ import {DropDownValue} from "jigsaw/pc-components/input/auto-complete-input";
 
 export class AutoCompleteInputGroupDemoComponent {
     inputValue: any;
+    filterOnFocus: boolean = false;
 
     public _$dropdownData: string[] | DropDownValue[] = [{
         category: '事件与数据',

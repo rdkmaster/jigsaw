@@ -99,6 +99,14 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public valid: boolean = true;
 
+    /**
+     * 用于控制在输入框获得焦点后是否自动执行过滤
+     *
+     * $demo = auto-complete-input/with-group
+     */
+    @Input()
+    public filterOnFocus: boolean = true;
+
     @ViewChild('dropdownTemp', {static: false})
     private _dropdownTemp: TemplateRef<any>;
 
@@ -124,15 +132,15 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
 
     ngAfterViewInit() {
         this._input.valueChange.pipe(debounceTime(300)).subscribe(() => {
-            this._getFilteredDropDownData();
+            this._getFilteredDropDownData(true);
         });
     }
 
     /**
      * @internal
      */
-    private _getFilteredDropDownData() {
-        let filterKey = this._input.value;
+    private _getFilteredDropDownData(shouldFilter: boolean) {
+        let filterKey = shouldFilter ? this._input.value : '';
         filterKey = filterKey ? filterKey.trim() : '';
         let data: any = [];
         data = this._bakData.reduce((arr, category) => {
@@ -145,10 +153,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         this._$data = data;
     }
 
-    private _filter(category: DropDownValue, key) {
-        let items = category.items.filter(item => {
-            return item.toLowerCase().includes(key.toLowerCase());
-        });
+    private _filter(category: DropDownValue, key): DropDownValue {
+        let items = category.items.filter(item => item.toLowerCase().includes(key.toLowerCase()));
         if (items.length == 0) {
             return null;
         }
@@ -162,7 +168,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
-        this._getFilteredDropDownData();
+        this._getFilteredDropDownData(this.filterOnFocus);
         this._showDropdownList(event);
     }
 

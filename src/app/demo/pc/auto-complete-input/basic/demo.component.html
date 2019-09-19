@@ -5,10 +5,15 @@
 <!-- start to learn the demo from here -->
 
 <div class="demo-1">
-    <h3>图标</h3>
+    获得焦点后自动执行过滤
+    <jigsaw-switch [(checked)]="filterOnFocus"></jigsaw-switch>
+
+    <br><br>
+
+    <h3>输入框带有图标</h3>
     <p class="notes">输入值是：<span>{{inputValue}}</span></p>
     <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="250"
-                               (valueChange)="valueChanged($event)" [data]="_$dropdownData">
+                               (valueChange)="valueChanged($event)" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
         <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-search" style="font-size: 14px;"></span></a>
         <a jigsaw-icon (click)="click()"><span class="fa fa-question" style="font-size: 14px;"></span></a>
     </jigsaw-auto-complete-input>
@@ -19,7 +24,7 @@
     <h3>带默认值</h3>
     <p class="notes">输入值是：<span>{{inputValue2}}</span></p>
     <jigsaw-auto-complete-input [(value)]="inputValue2" placeholder="auto complete input demo" width="20%"
-                               [data]="_$dropdownData">
+                               [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
     </jigsaw-auto-complete-input>
 </div>
 <br><br><br>
@@ -30,6 +35,6 @@
         <jigsaw-input [(value)]="maxDropDownHeight"></jigsaw-input>
     </p>
     <jigsaw-auto-complete-input placeholder="auto complete input demo" [data]="_$dropdownData" [width]="width" height="32"
-                               [maxDropDownHeight]="maxDropDownHeight">
+                               [maxDropDownHeight]="maxDropDownHeight" [filterOnFocus]="filterOnFocus">
     </jigsaw-auto-complete-input>
 </div>
