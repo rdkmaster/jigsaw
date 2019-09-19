@@ -67,7 +67,6 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     private _originWidth: number;
     private _dataInSteps: StepsData[] = [];
-    private _numInline: number = 5;
 
     private _preSize: 'small' | 'default' | 'large' = "default";
 
@@ -100,6 +99,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
             this._setWidth();
         }
     };
+
+    private _numInline: number = 5;
 
     /**
      * 设置一行放置几个item
