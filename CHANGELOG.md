@@ -1,3 +1,25 @@
+## v8.0.1 (2019-9-20)
+
+### 新特性 / New Features
+- [新增] PageableTableData数据对象将_ajax从private改为protected，新增pagingServerUrl属性用于覆盖全局PagingInfo.pagingServerUrl
+- [新增] PageableTableData添加ready属性，用于控制是否在分页信息初始化时触发查询
+- [新增] 增加手动重置table排序按钮状态的功能
+- [新增] 增加一个支持多行版的steps组件jigsaw-steps-multiline，用于处理步骤节点多且复杂的情形
+- [新增] auto-complete-input支持新属性filterOnFocus，用于控制在输入框获得焦点后是否自动执行过滤
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] 优化多tab嵌套性能问题
+
+### 修复 / Fixes
+- [故障] 修复无法准确根据tab的高度计算tab-content高度的问题
+- [故障] table表头排序按钮与文字重叠，fixes #623, #663
+- [故障] dialog固定高度时，内容太高被撑开，无法产生纵向滚动条
+- [故障] 解决jigsw-steps-multiline在steps个数小于预设的一行数量时报错的问题
+- [故障] 修复range-time无法初始化显示周范围
+
 ## v8.0.0-beta1 (2019-8-6)
 
 ### 新特性 / New Features
