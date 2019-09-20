@@ -1,4 +1,4 @@
-## v5.0.1 (2019-9-20)
+## v5.0.2 (2019-9-20)
 
 ### 新特性 / New Features
 - [新增] PageableTableData数据对象将_ajax从private改为protected，新增pagingServerUrl属性用于覆盖全局PagingInfo.pagingServerUrl
