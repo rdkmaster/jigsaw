@@ -40,6 +40,7 @@ export * from "./component/scrollbar/index";
 export * from "./component/select/select";
 export * from "./component/slider/index";
 export * from "./component/steps/index";
+export * from "./component/steps/steps-multiline";
 export * from "./component/switch/index";
 export * from "./component/table/table";
 export * from "./component/table/table-inner.components";
