@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "8.0.0-beta1",
+    "version": "8.0.1",
     "description": "Jigsaw, the next generation component set for RDK",
     "repository": {
         "type": "git",
