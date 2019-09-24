@@ -21,7 +21,7 @@ export class MyTableCell extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" [clearable]="false"
-                      (blur)="dispatchChangeEvent(cellData)"></jigsaw-input>`
+                      (blur)="dispatchChangeEvent(cellData)" [placeholder]="initData.placeholder"></jigsaw-input>`
 })
 export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit {
 
@@ -53,6 +53,7 @@ export class TableSetCellEditableDemoComponent {
             group: true,
             cell: {
                 renderer: MyTableCell,
+                editorRendererInitData:{placeholder:"please input the position"},
                 editable: true,
                 editorRenderer: MyTableCellEditor
             }
