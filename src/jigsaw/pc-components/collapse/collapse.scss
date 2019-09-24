@@ -38,7 +38,7 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         top: 50%;
         margin-top: -7px;
 
-        @include prefixer(transition, all .5s ease);
+        @include prefixer(transition, all .3s ease);
     }
 
     &-item &-content {
