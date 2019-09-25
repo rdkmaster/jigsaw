@@ -21,11 +21,15 @@ export class MyTableCell extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" [clearable]="false"
-                      (blur)="dispatchChangeEvent(cellData)"></jigsaw-input>`
+                      (blur)="dispatchChangeEvent(cellData)" [placeholder]="_$placeholder"></jigsaw-input>`
 })
 export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit {
 
     @ViewChild(JigsawInput, {static: false}) input: JigsawInput;
+
+    public get _$placeholder() {
+        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
 
     ngAfterViewInit() {
         this.input.focus();
@@ -54,9 +58,9 @@ export class TableSetCellEditableDemoComponent {
             cell: {
                 renderer: MyTableCell,
                 editable: true,
-                editorRenderer: MyTableCellEditor
+                editorRenderer: MyTableCellEditor,
+                editorRendererInitData: {placeholder: "Type to edit..."}
             }
-
         }];
 
     changeMsg: string;
