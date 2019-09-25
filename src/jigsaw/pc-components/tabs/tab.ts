@@ -321,8 +321,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             }
         }
 
-        if(this.height && !this.height.match(/px$/)) {
-            this._$contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+        let contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
+        if(this.initialized && this.height && !this.height.match(/px$/) && this._$contentHeight != contentHeight) {
+            this._$contentHeight = contentHeight;
         }
     }
 

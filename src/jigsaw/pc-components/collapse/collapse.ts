@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
+import {collapseMotion} from "../../common/components/animations/collapse";
 
 /**
  * 组件模式.
@@ -23,7 +24,8 @@ export enum CollapseMode {
 
 @Component({
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
-    templateUrl: './collapse-pane.html'
+    templateUrl: './collapse-pane.html',
+    animations: [collapseMotion]
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
 
@@ -36,7 +38,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     public set isActive(value: boolean) {
         if (this._isActive != value) {
-            this._$isTransitionEnd = false;
             this.callLater(() => {
                 this._isActive = value;
                 this.isActiveChange.emit(value);
@@ -56,11 +57,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     @Input('header')
     public title: string;
-
-    /**
-     * @internal
-     */
-    public _$isTransitionEnd = true;
 
     /**
      * @internal
