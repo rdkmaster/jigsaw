@@ -15,6 +15,16 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     color: $text-color;
     background: $component-background;
 
+    &.#{$tab-prefix}-vertical-response {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .#{$tab-prefix}-content {
+            flex: 1;
+            overflow: hidden;
+        }
+    }
+
     &-bar {
         border-bottom: $border-width-base $border-style-base $border-color-base;
         margin-bottom: 6px;

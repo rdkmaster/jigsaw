@@ -137,7 +137,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             return;
         }
         this._$headless = value;
-        this._calulateContentHeight();
     }
 
     @Input()
@@ -259,23 +258,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this.remove.emit(index);
     }
 
-    /**
-     * @internal
-     */
-    public _$contentHeight: string = 'auto';
-
     ngOnInit() {
         super.ngOnInit();
-        this._calulateContentHeight();
-    }
-
-    private _calulateContentHeight() {
-        if (this.height) {
-            this.callLater(() => {
-                // 等待dom渲染
-                this._$contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
-            })
-        }
     }
 
     private _tabLabelsChangeHandler: Subscription;
@@ -316,11 +300,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             if (offset != labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) {
                 this._setInkBarStyle(this.selectedIndex)
             }
-        }
-
-        let contentHeight = this._$headless ? this._elementRef.nativeElement.offsetHeight + 'px' : this._elementRef.nativeElement.offsetHeight - 46 + 'px';
-        if(this.initialized && this.height && !this.height.match(/px$/) && this._$contentHeight != contentHeight) {
-            this._$contentHeight = contentHeight;
         }
     }
 
