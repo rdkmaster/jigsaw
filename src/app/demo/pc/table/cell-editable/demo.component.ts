@@ -59,7 +59,7 @@ export class TableSetCellEditableDemoComponent {
                 renderer: MyTableCell,
                 editable: true,
                 editorRenderer: MyTableCellEditor,
-                editorRendererInitData: {placeholder: ""}
+                editorRendererInitData: {placeholder: "Type to edit..."}
             }
         }];
 
