@@ -1,4 +1,4 @@
-<div class="jigsaw-tabs">
+<div class="jigsaw-tabs" [class.jigsaw-tabs-vertical-response]="!!height">
     <div *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless" class="jigsaw-tabs-bar">
         <div class="jigsaw-tabs-nav-container">
             <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="jigsaw-tabs-content" [style.height]="_$contentHeight">
+    <div class="jigsaw-tabs-content">
         <jigsaw-tab-content
             *ngFor="let tab of _$tabPanes; let i = index;"
             [key]="i"
