@@ -107,7 +107,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+        <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `
@@ -116,6 +116,10 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     @ViewChild(JigsawInput)
     protected input: JigsawInput;
+
+    public get _$placeholder() {
+        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
 
     ngAfterViewInit() {
         this.input.focus();
