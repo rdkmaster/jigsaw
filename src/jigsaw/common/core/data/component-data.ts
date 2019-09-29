@@ -136,6 +136,7 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
  *     - `LineBarGraphData` 通用的折线柱状图数据。
  * - 层次关系数据
  *     - `TreeData` 用于有层次关系的组件，包括树、鱼骨图等。
+ *     - `SimpleTreeData` 用于简单包装有层次关系的数据，避免`TreeData`的性能问题。
  * - 动态布局数据
  *     - `LayoutData` 用于动态布局页面的数据。
  *

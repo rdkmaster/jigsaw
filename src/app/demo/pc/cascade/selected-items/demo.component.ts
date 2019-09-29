@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
-import {TreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
@@ -10,7 +10,7 @@ import {AjaxInterceptor} from "../../../../app.interceptor";
 export class CascadeSelectedItemsDemoComponent implements OnInit {
     constructor(public http: HttpClient) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
-        http.get('/mock-data/tree-data').subscribe((data: TreeData) => {
+        http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => {
             // 设置静态数据
             this.areas = data;
 
@@ -26,7 +26,7 @@ export class CascadeSelectedItemsDemoComponent implements OnInit {
         });
     }
 
-    areas: TreeData;
+    areas: SimpleTreeData;
     staticSelectedItems: any[];
     multiSelectedItems: any[];
     lazyLoadSelectedItems: any[];

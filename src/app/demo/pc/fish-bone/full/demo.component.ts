@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
 import {ChartIconFactory, ChartType} from "jigsaw/pc-components/chart-icon/chart-icon-factory";
-import {TreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -11,7 +11,7 @@ import {HttpClient} from "@angular/common/http";
 export class FishBoneFullComponent implements AfterViewInit {
 
     constructor(public http: HttpClient) {
-        this.data = new TreeData();
+        this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
             {
@@ -139,7 +139,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             }
         ]);
-        this.data2 = new TreeData();
+        this.data2 = new SimpleTreeData();
         this.data2.label = '<span class="orange">申论万能思维体系</span>';
         this.data2.fromObject([
             {
@@ -287,7 +287,7 @@ export class FishBoneFullComponent implements AfterViewInit {
         // 在ChartIcon注册Custom Pie
         ChartIconFactory.registerCustomPie();
 
-        this.data3 = new TreeData();
+        this.data3 = new SimpleTreeData();
         this.data3.http = http;
         this.data3.fromAjax('mock-data/fish-bone-1');
         this.data3.onAjaxComplete(() => {
@@ -295,7 +295,7 @@ export class FishBoneFullComponent implements AfterViewInit {
             this.data3.nodes.forEach((node, index) => {
                 node.label = `<span class="orange">${node.name}</span>`;
                 let pieData = this.getPieData(node).join(",");
-                let nodesItem = new TreeData();
+                let nodesItem = new SimpleTreeData();
                 nodesItem.label = `<span class="pie-call-loss-${index}">${pieData}</span>`;
                 nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
                 node.nodes = [nodesItem];
@@ -311,11 +311,11 @@ export class FishBoneFullComponent implements AfterViewInit {
         })
     }
 
-    data: TreeData;
+    data: SimpleTreeData;
 
-    data2: TreeData;
+    data2: SimpleTreeData;
 
-    data3: TreeData;
+    data3: SimpleTreeData;
 
     sceneData = [
         {id: 1, label: "场景一",},
