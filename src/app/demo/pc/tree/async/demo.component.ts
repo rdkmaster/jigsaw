@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types";
-import {TreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 
 @Component({
     templateUrl: 'demo.component.html'
@@ -24,7 +24,7 @@ export class ZtreeAsynDemoComponent {
         }
     };
 
-    public data = new TreeData();
+    public data = new SimpleTreeData();
 
     constructor() {
         this.data.fromObject([
