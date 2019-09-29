@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
 
 
-import {TreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
 
 @Component({
@@ -10,10 +10,10 @@ import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
 export class ZtreeDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
 
-    public data: TreeData;
+    public data: SimpleTreeData;
 
     constructor() {
-        this.data = new TreeData();
+        this.data = new SimpleTreeData();
         this.data.fromObject([
             {
                 label: "父节点1 - 展开",

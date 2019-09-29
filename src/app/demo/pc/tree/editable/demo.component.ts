@@ -3,13 +3,13 @@ import {HttpClient} from "@angular/common/http";
 
 
 import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types"
-import {TreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoEditableComponent {
-    data: TreeData;
+    data: SimpleTreeData;
 
     setting: ZTreeSettingSetting = {
         data: {
@@ -29,7 +29,7 @@ export class ZtreeDemoEditableComponent {
     };
 
     constructor(http: HttpClient) {
-        this.data = new TreeData();
+        this.data = new SimpleTreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree-data");
         this.data.refresh();

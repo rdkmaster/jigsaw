@@ -3,7 +3,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";
-import {TreeData} from "../../common/core/data/tree-data";
+import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $: any;
 
@@ -62,15 +62,15 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     private _removeRefreshCallback: CallbackRemoval;
 
-    private _data: TreeData;
+    private _data: SimpleTreeData | TreeData;
 
     @Input()
-    public get data(): TreeData {
+    public get data(): SimpleTreeData | TreeData {
         return this._data;
     }
 
-    public set data(data: TreeData) {
-        if (!(data instanceof TreeData)) return;
+    public set data(data: SimpleTreeData | TreeData) {
+        if (!(data instanceof SimpleTreeData) && !(data instanceof TreeData)) return;
         this._data = data;
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
