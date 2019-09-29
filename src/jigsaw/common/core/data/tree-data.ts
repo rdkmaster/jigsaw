@@ -57,11 +57,17 @@ export class TreeData extends GeneralCollection<any> {
     }
 }
 
+export type SimpleNode = {
+    label: string;
+    nodes?: SimpleNode;
+    [prop: string]: any;
+}
+
 /**
  * 对树形结构的json进行一个简单的包装，比如把ztree的数据包装成jigsaw认识的数据
  */
 export class SimpleTreeData extends GeneralCollection<any> {
-    [index: string]: any;
+    [prop: string]: any;
     /**
      * 此属性的值一般用于显示在界面上
      */
@@ -69,9 +75,9 @@ export class SimpleTreeData extends GeneralCollection<any> {
     /**
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的
      */
-    nodes?: TreeData[];
+    nodes?: SimpleNode[];
 
-    public fromObject(data: any): TreeData {
+    public fromObject(data: any): SimpleTreeData {
         if (!data) {
             return this;
         }
