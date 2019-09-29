@@ -12,7 +12,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {TreeData} from "../../common/core/data/tree-data";
+import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 import {JigsawInputModule} from "../input/input";
 import {JigsawPaginationModule} from "../pagination/pagination";
 
@@ -115,22 +115,22 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     @Input()
     public generatorContext: any;
 
-    private _data: CascadeDateGenerator | TreeData;
+    private _data: CascadeDateGenerator | SimpleTreeData | TreeData;
 
     /**
      * 级联数据
      * - 可以是一个生产数据的函数，参考`dataGenerator`
-     * - 也可以是一个有层级关系的静态数据，参考`TreeData`
+     * - 也可以是一个有层级关系的静态数据，参考`SimpleTreeData`
      *
      * $demo = cascade/basic
      * $demo = cascade/lazy-load
      */
     @Input()
-    public get data(): CascadeDateGenerator | TreeData {
+    public get data(): CascadeDateGenerator | SimpleTreeData | TreeData {
         return this._data;
     }
 
-    public set data(value: CascadeDateGenerator | TreeData) {
+    public set data(value: CascadeDateGenerator | SimpleTreeData| TreeData) {
         this._data = value;
         if (value instanceof Function) {
             this.dataGenerator = value;
@@ -147,7 +147,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     private _treeDataGenerator(selectedItem: any): CascadeData {
         const cd = new CascadeData();
-        const td = <TreeData>this.data;
+        const td = <SimpleTreeData | TreeData>this.data;
         const si = selectedItem ? selectedItem : td;
         cd.list = si.nodes;
         cd.title = si.title;

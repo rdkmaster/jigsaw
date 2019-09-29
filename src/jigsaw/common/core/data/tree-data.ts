@@ -59,7 +59,7 @@ export class TreeData extends GeneralCollection<any> {
 
 export type SimpleNode = {
     label: string;
-    nodes?: SimpleNode;
+    nodes?: SimpleNode[];
     [prop: string]: any;
 }
 
