@@ -6,7 +6,7 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common/common";
 import {fadeIn} from "../../common/components/animations/fade-in";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
-import {TreeData} from "../../common/core/data/tree-data";
+import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 
 /**
@@ -33,7 +33,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     private _dataCallbackRemoval: CallbackRemoval;
 
-    private _data: TreeData;
+    private _data: SimpleTreeData | TreeData;
 
     /**
      * 图形数据，是一个树状结构的数据，对于鱼骨图展示目标不同，对树状结构的各分支页有不同的理解，分别为：
@@ -47,11 +47,11 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      * $demo = fish-bone/full
      */
     @Input()
-    get data(): TreeData {
+    get data(): SimpleTreeData | TreeData {
         return this._data;
     }
 
-    set data(value: TreeData) {
+    set data(value: SimpleTreeData | TreeData) {
         this._data = value;
         if (this._dataCallbackRemoval) {
             this._dataCallbackRemoval();
@@ -255,7 +255,7 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     }
 
     @Input()
-    public data: TreeData;
+    public data: SimpleTreeData | TreeData;
 
     @Input()
     public childRotate: string;
