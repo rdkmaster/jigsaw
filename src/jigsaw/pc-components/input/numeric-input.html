@@ -3,9 +3,9 @@
        [placeholder]="placeholder"
        [(ngModel)]="value"
        [disabled]="disabled"
-       (blur)="_$handleBlur($event)"
-       (focus)="_$handleFocus($event)"
-       (keydown)="_handleKeyDown($event)">
+       (blur)="handleBlur($event)"
+       (focus)="handleFocus($event)"
+       (keydown)="_$handleKeyDown($event)">
 
 <div class="jigsaw-numeric-input-option-box">
     <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"

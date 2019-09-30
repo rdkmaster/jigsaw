@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawInputBase} from "./input-base";
 
 /**
  * 数字输入框
@@ -23,7 +24,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '(click)': '_$stopPropagation($event)',
+        '(click)': 'stopPropagation($event)',
         '[class.jigsaw-numeric-input]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
@@ -35,15 +36,15 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
     ]
 })
-export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit {
-    constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef) {
-        super();
+export class JigsawNumericInput extends JigsawInputBase implements AfterContentInit, ControlValueAccessor {
+    constructor(protected _render2: Renderer2,
+                protected _elementRef: ElementRef) {
+        super(_elementRef);
     }
 
     ngOnInit() {
         this.valueChange.pipe(debounceTime(300)).subscribe((val) => {
-            if(val < this.min) {
+            if (val < this.min) {
                 this._value = this.min;
                 this.valueChange.emit(this._value);
                 this._checkDisabled();
@@ -51,25 +52,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             }
         });
     }
-
-    @Input()
-    public valid: boolean = true;
-
-    /**
-     * 设置不可用
-     *
-     *
-     * $demo = numeric-input/disabled
-     */
-    @Input() public disabled: boolean = false;
-
-    /**
-     * 输入框的placeholder
-     *
-     *
-     * $demo = numeric-input/basic
-     */
-    @Input() public placeholder = '';
 
     private _min: number = -Infinity;
 
@@ -196,23 +178,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Output()
     public valueChange: EventEmitter<number> = new EventEmitter<number>();
 
-    /**
-     * focus事件
-     *
-     */
-    @Output('focus')
-    private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
-
-    /**
-     * blur事件
-     *
-     */
-    @Output('blur')
-    private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
-
-    @ViewChild('input', {static: false})
-    private _inputElement: ElementRef;
-
     public _$upDisabled: boolean;
     public _$downDisabled: boolean;
 
@@ -252,9 +217,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
             this._precisionFactor * this._step) / this._precisionFactor);
 
-        if(tempValue < this.min) {
+        if (tempValue < this.min) {
             this.value = this.min;
-        }else {
+        } else {
             this.value = tempValue;
         }
     }
@@ -267,70 +232,14 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     /**
-     * 让输入框获取焦点的函数
-     */
-    public focus() {
-        this._focused = true;
-        this._inputElement.nativeElement.focus();
-    }
-
-    /**
-     * 让输入框文本选中的函数
-     */
-    public select() {
-        this._inputElement.nativeElement.select();
-    }
-
-    private _focused: boolean = false;
-
-    public get focused(): boolean {
-        return this._focused;
-    }
-
-    /**
      * @internal
      */
-    public _$handleFocus(event: FocusEvent) {
-        this._focused = true;
-        this._focusEmitter.emit(event);
-    }
-
-    @Input()
-    public blurOnClear: boolean = true;
-
-    /**
-     * @internal
-     */
-    public _$handleBlur(event: FocusEvent) {
-        this._focused = false;
-        if (this.blurOnClear) {
-            this._blurEmitter.emit(event);
-        } else {
-            this.callLater(() => {
-                if (!this._focused) {
-                    this._blurEmitter.emit(event);
-                }
-            }, 150);
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _handleKeyDown(event) {
+    public _$handleKeyDown(event) {
         if (event.keyCode == 38) {
             this._$increase(event);
         } else if (event.keyCode == 40) {
             this._$decrease(event);
         }
-    }
-
-    /**
-     * @internal
-     */
-    public _$stopPropagation(event) {
-        event.preventDefault();
-        event.stopPropagation();
     }
 
     ngAfterContentInit() {
@@ -339,18 +248,8 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         });
     }
 
-    private _propagateChange: any = () => {
-    };
-
     public writeValue(value: any): void {
         this.value = value;
-    }
-
-    public registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any): void {
     }
 }
 

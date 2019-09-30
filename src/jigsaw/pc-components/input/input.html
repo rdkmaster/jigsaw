@@ -3,15 +3,16 @@
 </div>
 <ng-content></ng-content>
 <input #input
-       [ngStyle]="_$inputPaddingStyle"
+       [ngStyle]="inputPaddingStyle"
        [placeholder]="placeholder"
        [(ngModel)]="value"
        [disabled]="disabled"
-       (blur)="_$handleBlur($event)"
-       (focus)="_$handleFocus($event)"
-       [type]="type" >
+       (blur)="handleBlur($event)"
+       (focus)="handleFocus($event)"
+       [type]="type">
 <div class="jigsaw-input-icon-end">
-    <span *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
+    <span *ngIf="clearable && !disabled" (click)="clearValue()" [hidden]="!value"
+          class="jigsaw-input-clear-bar">&times;</span>
     <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
 </div>
 

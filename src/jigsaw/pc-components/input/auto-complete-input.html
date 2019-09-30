@@ -1,10 +1,18 @@
-<j-input #input [placeholder]="placeholder" [(value)]="value" [width]="width ? '100%' : null"
-         [height]="height ? '100%' : null"
-         [blurOnClear]="blurOnClear" [clearable]="clearable" [disabled]="disabled" [valid]="valid"
-         (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)">
-    <ng-content jigsaw-prefix-icon select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
-    <ng-content jigsaw-icon select="[jigsaw-icon], [j-icon]"></ng-content>
-</j-input>
+<div class="jigsaw-input-icon-front">
+    <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
+</div>
+<input #input
+       [ngStyle]="inputPaddingStyle"
+       [placeholder]="placeholder"
+       [(ngModel)]="value"
+       [disabled]="disabled"
+       (blur)="_$handleBlur($event)"
+       (focus)="_$handleFocus($event)"
+       [type]="type">
+<div class="jigsaw-input-icon-end">
+    <span *ngIf="clearable && !disabled" (click)="clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
+    <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
+</div>
 
 <ng-template #dropdownTemp>
     <div class="jigsaw-auto-complete-input-list-box" [style.max-height]="_$maxDropDownHeight"

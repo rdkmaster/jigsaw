@@ -4,35 +4,105 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
 .#{$jigsaw-auto-complete-input} {
     @include inline-block();
+    position: relative;
+    width: 120px;
+    height: $height-base;
+    font-size: $font-size-base;
+    opacity: 0;
+    border: 1px solid $border-color-base;
+    border-radius: 3px;
+    @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
+    &:hover {
+        border: 1px solid $primary-color;
+    }
+    &.#{jigsaw-auto-complete-input}-focused {
+        border: 1px solid $primary-color;
+        box-shadow: $box-focus-shadow;
+    }
+    &.#{jigsaw-auto-complete-input}-error {
+        border: 1px solid $error-color;
+        &:hover {
+            border: 1px solid $error-color;
+        }
+        &.#{jigsaw-auto-complete-input}-focused {
+            border: 1px solid $error-color;
+            box-shadow: none;
+        }
+    }
+    &-icon-front {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    &-icon-end {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    input {
+        width: 100%;
+        height: 100%;
+        padding-right: 20px;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        background: $component-background;
+    }
+    &.#{jigsaw-auto-complete-input}-disabled input {
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background-color: $disabled-bg;
+    }
+    input::-webkit-input-placeholder {
+        color: $text-color-secondary;
+    }
+    input:-ms-input-placeholder {
+        color: $text-color-secondary;
+    }
+    input:-moz-placeholder {
+        color: $text-color-secondary;
+    }
+    &-clear-bar {
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 1;
+        &:hover {
+            color: $text-color-dark;
+        }
+        &[hidden] {
+            display: none !important;
+        }
+    }
 
-    &-list-box{
+    &-list-box {
         background-color: #fff;
         overflow: auto;
         border-radius: 4px;
-        ul{
+        ul {
             margin: 0;
             padding: 0;
-            li{
+            li {
                 padding: 6px 10px;
                 border-bottom: 1px solid #f2f2f2;
                 cursor: pointer;
                 font-size: 12px;
-                label{
+                label {
                     margin: 0;
                     font-weight: 400;
                     color: #666;
                 }
-                span{
+                span {
                     margin-left: 10px;
                     color: #999;
                 }
-                &:hover{
-                    background-color:rgba(28,173,247,.2);
+                &:hover {
+                    background-color: rgba(28, 173, 247, .2);
                 }
             }
         }
     }
-    &-item-title{
+    &-item-title {
         font-weight: 400;
         margin: 0;
         padding: 3px 10px;

@@ -13,11 +13,12 @@ import {
     EventEmitter, AfterViewInit
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {JigsawInput, JigsawInputModule} from "./input";
+import {FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor} from "@angular/forms";
 import {PopupInfo, PopupOptions, PopupPositionValue, PopupService} from "../../common/service/popup.service";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {AbstractJigsawComponent} from "../../common/common";
+import {JigsawInputBase} from "./input-base";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -46,13 +47,17 @@ export class DropDownValue {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-auto-complete-input]': 'true'
+        '[class.jigsaw-auto-complete-input]': 'true',
+        '(click)': 'stopPropagation($event)',
+        '[class.jigsaw-auto-complete-input-error]': '!valid',
+        '[class.jigsaw-auto-complete-input-focused]': 'focused',
+        '[class.jigsaw-auto-complete-input-disabled]': 'disabled'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
+export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit, ControlValueAccessor {
     /**
      * @internal
      */
@@ -96,9 +101,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         [...this._bakData] = this._$data;
     }
 
-    @Input()
-    public valid: boolean = true;
-
     /**
      * 用于控制在输入框获得焦点后是否自动执行过滤
      *
@@ -107,11 +109,48 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public filterOnFocus: boolean = true;
 
+    private _value: string = ''; //input表单值
+
+    /**
+     * 文本框中当前的文本
+     *
+     * $demo = input/valid
+     */
+    @Input()
+    public get value(): string {
+        return this._value;
+    }
+
+    public set value(newValue: string) {
+        if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
+            return;
+        }
+
+        if (this.clearable && ((newValue != '' && this._value == '') || (newValue == '' && this._value != ''))) {
+            this.callLater(() => this.setInputPaddingStyle());
+        }
+        this._value = newValue;
+        this.valueChange.emit(this._value);
+        this._propagateChange(this._value);
+    }
+
+    public writeValue(value: any): void {
+        if (CommonUtils.isUndefined(value)) {
+            return;
+        }
+        this._value = value.toString();
+    }
+
+    /**
+     * 当文本框中的文本发生变化时，组件会发出此事件。
+     *
+     * $demo = input/value-change
+     */
+    @Output()
+    public valueChange: EventEmitter<string> = new EventEmitter<string>();
+
     @ViewChild('dropdownTemp', {static: false})
     private _dropdownTemp: TemplateRef<any>;
-
-    @ViewChild('input', {static: false})
-    private _input: JigsawInput;
 
     /**
      * 下拉提示内容被选中时，会发出`select`事件，此事件可用于区分用户手工输入的还是选择的
@@ -127,12 +166,16 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     constructor(protected _render2: Renderer2,
                 protected _elementRef: ElementRef,
                 private _popupService: PopupService) {
-        super(_render2, _elementRef);
+        super(_elementRef);
     }
 
     ngAfterViewInit() {
-        this._input.valueChange.pipe(debounceTime(300)).subscribe(() => {
+        this.valueChange.pipe(debounceTime(300)).subscribe(() => {
             this._getFilteredDropDownData(true);
+        });
+        this.callLater(() => {
+            this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
+            this.setInputPaddingStyle();
         });
     }
 
@@ -140,7 +183,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     private _getFilteredDropDownData(shouldFilter: boolean) {
-        let filterKey = shouldFilter ? this._input.value : '';
+        let filterKey = shouldFilter ? this.value : '';
         filterKey = filterKey ? filterKey.trim() : '';
         let data: any = [];
         data = this._bakData.reduce((arr, category) => {
@@ -168,6 +211,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
+        this.handleFocus(event);
         this._getFilteredDropDownData(this.filterOnFocus);
         this._showDropdownList(event);
     }
@@ -176,7 +220,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _$handleBlur(event: FocusEvent) {
-        super._$handleBlur(event);
+        this.handleBlur(event);
         this._closeListPopup();
     }
 
@@ -199,6 +243,13 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     }
 
     private _propertyListPopupInfo: PopupInfo;
+
+    /**
+     * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
+     *
+     * $demo = input/clearable
+     */
+    @Input() public clearable: boolean = true;
 
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
@@ -246,13 +297,19 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     }
 
     public ngOnDestroy() {
-        super.ngOnDestroy();
         this._closeListPopup();
+    }
+
+    ngAfterContentInit() {
+        this.callLater(() => {
+            this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
+            this.setInputPaddingStyle();
+        });
     }
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawInputModule, PerfectScrollbarModule],
+    imports: [CommonModule, FormsModule, PerfectScrollbarModule],
     declarations: [JigsawAutoCompleteInput],
     exports: [JigsawAutoCompleteInput],
 })
