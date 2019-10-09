@@ -118,6 +118,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         this._input.focus();
     }
 
+    public select(){
+        this._input.select();
+    }
+
     /**
      * 下拉提示内容被选中时，会发出`select`事件，此事件可用于区分用户手工输入的还是选择的
      *
