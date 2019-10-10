@@ -113,6 +113,15 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @ViewChild('input', {static: false})
     private _input: JigsawInput;
 
+
+    public focus(){
+        this._input.focus();
+    }
+
+    public select(){
+        this._input.select();
+    }
+
     /**
      * 下拉提示内容被选中时，会发出`select`事件，此事件可用于区分用户手工输入的还是选择的
      *
@@ -168,6 +177,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _$handleFocus(event: FocusEvent) {
+        super._$handleFocus(event);
         this._getFilteredDropDownData(this.filterOnFocus);
         this._showDropdownList(event);
     }
