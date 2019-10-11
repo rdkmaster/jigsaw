@@ -43,6 +43,10 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
             box-shadow: none;
         }
     }
+    &.#{$textarea-prefix-cls}-disabled textarea {
+        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background-color: $disabled-bg;
+    }
     textarea::-webkit-textarea-placeholder {
         color: $text-color-secondary;
     }
