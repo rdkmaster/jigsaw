@@ -4,5 +4,30 @@
 
 
 <!-- start to learn the demo from here -->
-<button (click)="changeData()">click me</button>
-<jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
+<div class="live-demo-wrap">
+    <h2>Sortable</h2>
+    <div class="demo-1 live-demo">
+        <h3>TableData fromAjax</h3>
+        <j-button colorType="primary" (click)="changeData1()">改变数据</j-button>
+        <jigsaw-table [data]="tableData" [columnDefines]="columns" height="300"></jigsaw-table>
+    </div>
+
+    <div class="demo-1 live-demo">
+        <h3>TableData fromObject</h3>
+        <j-button colorType="primary" (click)="changeData2()">改变数据</j-button>
+        <jigsaw-table [data]="tableData1" [columnDefines]="columns" height="300"></jigsaw-table>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>LocalPageableTableData</h3>
+        <j-button colorType="primary" (click)="changeData3()">改变数据</j-button>
+        <jigsaw-table [data]="pageable" [columnDefines]="columns"></jigsaw-table>
+        <jigsaw-pagination
+            [data]="pageable"
+            [pageSizeOptions]="[5, 10, 20]"
+            [searchable]="true"
+            [showQuickJumper]="true"
+        ></jigsaw-pagination>
+        <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
+    </div>
+</div>

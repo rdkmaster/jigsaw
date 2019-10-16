@@ -278,39 +278,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    /**
-     * 生成混合后的列定义序列
-     *
-     *
-     */
-    private _getMixedColumnDefines(): ColumnDefine[] {
-        if (!this.data) {
-            return [];
-        }
-        const columnDefines: ColumnDefine[] = [];
-        this.data.field.forEach((field, index) => {
-            let cd = this._columnDefineGenerator(field, index);
-            if (cd) {
-                cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
-                cd.target = field;
-            }
-            columnDefines.push(cd ? cd : {target: field});
-        });
-
-        if (this._additionalColumnDefines) {
-            for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-                const acd = this._additionalColumnDefines[i];
-                const cd: ColumnDefine = {
-                    target: 'additional-field-' + i, header: acd.header, group: acd.group,
-                    cell: acd.cell, width: acd.width, visible: acd.visible
-                };
-                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
-                columnDefines.splice(pos, 0, cd);
-            }
-        }
-        return columnDefines;
-    }
-
     public update(): void {
         if (!this.initialized || !this._data) {
             return;
@@ -320,7 +287,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
-        const columnDefines = this._getMixedColumnDefines();
+        const columnDefines = this.data._getMixedColumnDefines();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
@@ -374,6 +341,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (value == this._data || !value) {
             return;
         }
+        console.log('==============set data');
         this._data = value;
         this._additionalData.reset();
         this._additionalData.originData = value;
@@ -383,7 +351,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
         }
-        this._removeTableDataRefresh = value.onRefresh(this.update, this);
+        this._removeTableDataRefresh = value.onRefresh(() => {
+            console.log('================refresh data');
+            this.update();
+        });
 
         if (!this._removeAdditionalDataRefresh) {
             this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
@@ -393,8 +364,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
+    private _columnDefines: ColumnDefine[] | ColumnDefineGenerator;
     @Input()
-    public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
+    public get columnDefines(): ColumnDefine[] | ColumnDefineGenerator {
+        return this._columnDefines;
+    };
+
+    public set columnDefines(value: ColumnDefine[] | ColumnDefineGenerator) {
+        this._columnDefines = value;
+        if(this.data) {
+            this.data._columnDefines = value;
+        }
+    }
 
     @Input()
     public columnDefineGeneratorContext: any;
@@ -409,21 +390,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
         this._additionalColumnDefines = value;
         this._initAdditionalData();
-    }
-
-    private _columnDefineGenerator(field: string, index: number): ColumnDefine {
-        if (!this.columnDefines) {
-            return undefined;
-        }
-        if (this.columnDefines instanceof Function) {
-            return CommonUtils.safeInvokeCallback(this.columnDefineGeneratorContext, this.columnDefines, [field, index]);
-        } else {
-            return this.columnDefines.find(colDef => {
-                const targets: (number | string)[] = colDef.target instanceof Array ? colDef.target : [colDef.target];
-                const idx = targets.findIndex(target =>
-                    (typeof target === 'number' && target === index) || (typeof target === 'string' && target === field));
-                return idx != -1;
-            });
+        if(this.data) {
+            this.data._additionalColumnDefines = value;
         }
     }
 
@@ -464,31 +432,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             }
         })
     }
-
-    // /**
-    //  * 一旦数据有更新，表格将自动对已经设置了排序的行做自动排序处理。在某些情况下会很方便，但是在表格数据量大的时候，可能会有性能问题，
-    //  * 表格数据量大的时候，最好关闭这个选项，由应用自行对`data`属性做排序。也可以不自动排序，由用户自行点击列头触发行排序
-    //  *
-    //  * @type {boolean}
-    //  */
-    // @Input()
-    // public autoSort: boolean = false;
-    //
-    // private _sortedColumn: number = -1;
-    // private _sortedOrder: SortOrder;
-    //
-    // private _sortColumn(): void {
-    //     if (!this.autoSort) {
-    //         return;
-    //     }
-    //     let headSetting = this._$headerSettings.find(headSetting => headSetting.sortable &&
-    //         (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
-    //     );
-    //     // if (headSetting) {
-    //     //     this._sortedColumn = headSetting.field;
-    //     // }
-    //     this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
-    // }
 
     @Input()
     public floatingHeader: boolean = false;
@@ -777,8 +720,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngOnInit() {
         super.ngOnInit();
 
-        if (this._data && this._data.field && this._data.field.length != 0) {
-            this.update();
+        if(this.data) {
+            this.data._columnDefines = this.columnDefines;
+            this.data._columnDefineGeneratorContext = this.columnDefineGeneratorContext;
+            this.data._additionalColumnDefines = this.additionalColumnDefines;
+            if (this.data.field && this.data.field.length != 0) {
+                this.update();
+            }
         }
 
         this._addWindowListener();

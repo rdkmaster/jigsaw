@@ -15,12 +15,13 @@ import {
     ISortable,
     PagingInfo,
     PreparedHttpClientOptions,
+    serializeFilterFunction,
     SortAs,
     SortOrder,
-    serializeFilterFunction,
     ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
+import {ColumnDefine} from "../../../pc-components/table/table-typings";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -121,6 +122,10 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
+    protected refreshData() {
+        this.refresh();
+    }
+
     public fromObject(data: any): TableDataBase {
         if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
@@ -131,8 +136,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         TableDataBase.arrayAppend(this.data, data.data);
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
-
-        this.refresh();
+        this.refreshData();
 
         return this;
     }
@@ -288,6 +292,71 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         return TableData.of(rawData).toArray();
     }
 
+    protected getSortColumnDefine(): ColumnDefine {
+        const columnDefines: ColumnDefine[] = this._getMixedColumnDefines();
+        return columnDefines.find(colDef => !!(colDef.header && colDef.header.sortable &&
+            (colDef.header.defaultSortOrder === SortOrder.asc || colDef.header.defaultSortOrder === SortOrder.desc)));
+    }
+
+    protected refreshData() {
+        if(!this.sortInfo) {
+            let sortColumnDefine = this.getSortColumnDefine();
+            if(!sortColumnDefine) {
+                this.refresh();
+                return;
+            }
+            let sortHeader = sortColumnDefine.header;
+            this.sortInfo =  new DataSortInfo(sortHeader.sortAs, sortHeader.defaultSortOrder, <string>sortColumnDefine.target);
+        }
+        this.sort(this.sortInfo);
+    }
+
+    public _columnDefines;
+    public _additionalColumnDefines;
+    public _columnDefineGeneratorContext;
+
+    private _columnDefineGenerator(field: string, index: number): ColumnDefine {
+        if (!this._columnDefines) {
+            return undefined;
+        }
+        if (this._columnDefines instanceof Function) {
+            return CommonUtils.safeInvokeCallback(this._columnDefineGeneratorContext, this._columnDefines, [field, index]);
+        } else {
+            return this._columnDefines.find(colDef => {
+                const targets: (number | string)[] = colDef.target instanceof Array ? colDef.target : [colDef.target];
+                const idx = targets.findIndex(target =>
+                    (typeof target === 'number' && target === index) || (typeof target === 'string' && target === field));
+                return idx != -1;
+            });
+        }
+    }
+
+    public _getMixedColumnDefines(): ColumnDefine[] {
+        const columnDefines: ColumnDefine[] = [];
+        this.field.forEach((field, index) => {
+            let cd = this._columnDefineGenerator(field, index);
+            if (cd) {
+                cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
+                cd.target = field;
+            }
+            columnDefines.push(cd ? cd : {target: field});
+        });
+
+        if (this._additionalColumnDefines) {
+            for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
+                const acd = this._additionalColumnDefines[i];
+                const cd: ColumnDefine = {
+                    target: 'additional-field-' + i, header: acd.header, group: acd.group,
+                    cell: acd.cell, width: acd.width, visible: acd.visible
+                };
+                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
+                columnDefines.splice(pos, 0, cd);
+            }
+        }
+        return columnDefines;
+    }
+
+
     public sortInfo: DataSortInfo;
 
     public sort(compareFn?: (a: any[], b: any[]) => number): void;
@@ -309,12 +378,12 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      * @param field 排序字段
      */
     protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number) {
-        field = typeof field === 'string' ? this.field.indexOf(field) : field;
         if (as instanceof Function) {
             // cast to any to peace the compiler.
             data.sort(<any>as);
         } else {
             this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+            field = typeof this.sortInfo.field === 'string' ? this.field.indexOf(this.sortInfo.field) : this.sortInfo.field;
             const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
             if (this.sortInfo.as == SortAs.number) {
                 data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
@@ -322,6 +391,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
                 data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
             }
         }
+
         this.refresh();
     }
 
@@ -392,6 +462,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initSubjects();
+    }
+
+    protected refreshData() {
+        this.refresh();
     }
 
     private _initSubjects(): void {
@@ -1080,13 +1154,23 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         })
     }
 
-    public fromObject(data: any): LocalPageableTableData {
-        super.fromObject(data);
+    protected refreshData(){
         this.originalData = this.data.concat();
         this.filteredData = this.originalData;
         this.data.length = 0; // 初始化时清空data，防止过大的data加载或屏闪
+
+        if(!this.sortInfo) {
+            let sortColumnDefine = this.getSortColumnDefine();
+            if(sortColumnDefine) {
+                let sortHeader = sortColumnDefine.header;
+                this.sortInfo = new DataSortInfo(sortHeader.sortAs, sortHeader.defaultSortOrder, <string>sortColumnDefine.target);
+            }
+        }
+        if(this.sortInfo) {
+            super.sortData(this.filteredData, this.sortInfo);
+        }
+
         this.firstPage();
-        return this;
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
