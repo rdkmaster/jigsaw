@@ -1,13 +1,14 @@
 import {
     ChangeDetectorRef,
     Component,
-    ContentChildren, EventEmitter,
+    ContentChildren,
+    EventEmitter,
     forwardRef,
     Host,
     Inject,
     Input,
-    Output,
     NgModule,
+    Output,
     QueryList,
     ViewEncapsulation
 } from '@angular/core';
@@ -38,13 +39,15 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     public set isActive(value: boolean) {
         if (this._isActive != value) {
-            this.callLater(() => {
-                this._isActive = value;
-                this.isActiveChange.emit(value);
-            });
+            this._changeActive(this, value);
             this._updateCollapsePaneStatus();
             this._changeDetector.detectChanges();
         }
+    }
+
+    private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
+        pane._isActive = value;
+        pane.isActiveChange.emit(value);
     }
 
     @Output()
@@ -72,7 +75,8 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
             if (this._collapse.mode === "accordion" || this._collapse.mode === CollapseMode.accordion) {
                 this._collapse.panes.forEach(item => {
                     if (item !== this && item.isActive) {
-                        item.isActive = false;
+                        // 如果直接调用item.isAction=false，当collapse初始打开的页签树多余一个时，会造成_updateCollapsePaneStatus方法死循环一直被调用
+                        this._changeActive(item, false);
                     }
                 })
             }
