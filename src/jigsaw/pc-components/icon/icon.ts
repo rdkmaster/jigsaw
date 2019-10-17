@@ -58,6 +58,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
      * 图标相对于文字的位置，left为左侧，默认值：top为上方
      */
     @Input() public iconPosition: 'left' | 'top' = 'left';
+
     /**
      * 超链接 href
      */
@@ -78,10 +79,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
      */
     @Input()
     public get target(): string {
-        if (this._href == 'javascript:void(0);' || CommonUtils.isUndefined(this._$secureUrl)) {
-            return '_self';
-        }
-        return this._target;
+        return (this._href == 'javascript:void(0);' || CommonUtils.isUndefined(this._$secureUrl)) ? '_self' : this._target;
     }
 
     public set target(value: string) {
