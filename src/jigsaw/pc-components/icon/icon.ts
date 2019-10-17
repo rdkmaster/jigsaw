@@ -4,6 +4,8 @@ import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+const defaultHrefValue = 'javascript:void(0);';
+
 /**
  * 图标控件，支持输入fontawesome的图标
  *
@@ -20,7 +22,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 })
 export class JigsawIcon extends AbstractJigsawComponent {
     public _$secureUrl;
-    private _href: string = 'javascript:void(0);';
+    private _href: string = defaultHrefValue;
+    private _target: string = '_blank';
 
     /**
      * 为true    生成的html是 <a class="fa fa-edit">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
@@ -57,6 +60,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
      * 图标相对于文字的位置，left为左侧，默认值：top为上方
      */
     @Input() public iconPosition: 'left' | 'top' = 'left';
+
     /**
      * 超链接 href
      */
@@ -73,9 +77,18 @@ export class JigsawIcon extends AbstractJigsawComponent {
     }
 
     /**
-     * 图标的文本
+     * 规定在何处打开超链
      */
-    @Input() public target: string = '_blank';
+    @Input()
+    public get target(): string {
+        return (this._href == defaultHrefValue || CommonUtils.isUndefined(this._$secureUrl)) ? '_self' : this._target;
+    }
+
+    public set target(value: string) {
+        if (this._target != value) {
+            this._target = value;
+        }
+    }
 
     @Input() public title: string = '';
 
