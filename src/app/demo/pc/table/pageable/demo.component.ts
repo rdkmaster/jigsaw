@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {PageableTableData} from "jigsaw/common/core/data/table-data";
 import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {DataSortInfo, SortAs, SortOrder} from "../../../../../jigsaw/common/core/data/component-data";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -20,14 +21,16 @@ export class TablePageableDemoComponent {
             console.log(this.pageable);
         });
         this.pageable.pagingInfo.pageSize = 5;
-        this.pageable.fromAjax();
+        this.pageable.sortInfo = new DataSortInfo(SortAs.string, 'desc', 'enName');
     }
 
     columnDefines: ColumnDefine[] = [
         {
             target: 0,
             header: {
-                sortable: true
+                sortable: true,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.desc
             }
         }
     ];

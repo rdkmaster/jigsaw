@@ -9,25 +9,38 @@
     <div class="demo-1 live-demo">
         <h3>TableData fromAjax</h3>
         <j-button colorType="primary" (click)="changeData1()">改变数据</j-button>
-        <jigsaw-table [data]="tableData" [columnDefines]="columns" height="300"></jigsaw-table>
-    </div>
-
-    <div class="demo-1 live-demo">
-        <h3>TableData fromObject</h3>
-        <j-button colorType="primary" (click)="changeData2()">改变数据</j-button>
-        <jigsaw-table [data]="tableData1" [columnDefines]="columns" height="300"></jigsaw-table>
+        <jigsaw-table [data]="tableDataFromAjax" [columnDefines]="columns" height="300"></jigsaw-table>
     </div>
 
     <div class="demo-2 live-demo">
+        <h3>TableData fromObject</h3>
+        <j-button colorType="primary" (click)="changeData2()">改变数据</j-button>
+        <jigsaw-table [data]="tableDataFromObject" [columnDefines]="columns" height="300"></jigsaw-table>
+    </div>
+
+    <div class="demo-3 live-demo">
         <h3>LocalPageableTableData</h3>
         <j-button colorType="primary" (click)="changeData3()">改变数据</j-button>
-        <jigsaw-table [data]="pageable" [columnDefines]="columns"></jigsaw-table>
+        <jigsaw-table [data]="localPageable" [columnDefines]="columns"></jigsaw-table>
+        <jigsaw-pagination
+            [data]="localPageable"
+            [pageSizeOptions]="[5, 10, 20]"
+            [searchable]="true"
+            [showQuickJumper]="true"
+            (search)="onSearch($event)"
+        ></jigsaw-pagination>
+        <span>共{{localPageable.pagingInfo.totalRecord}}条记录</span>
+    </div>
+
+    <div class="demo-4 live-demo">
+        <h3>PageableTableData</h3>
+        <jigsaw-table style="margin-bottom: 10px;" maxHeight="400px" [data]="pageable" [columnDefines]="columnsForPageable"></jigsaw-table>
         <jigsaw-pagination
             [data]="pageable"
             [pageSizeOptions]="[5, 10, 20]"
             [searchable]="true"
             [showQuickJumper]="true"
-            (search)="onSearch($event)"
+            (search)="onSearchForPageable($event)"
         ></jigsaw-pagination>
         <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
     </div>

@@ -1,8 +1,8 @@
 import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData, TableData} from "jigsaw/common/core/data/table-data";
+import {LocalPageableTableData, PageableTableData, TableData} from "jigsaw/common/core/data/table-data";
 import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
+import {DataSortInfo, SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
 import {JigsawTable} from "jigsaw/pc-components/table/table";
 
 
@@ -12,9 +12,10 @@ import {JigsawTable} from "jigsaw/pc-components/table/table";
 export class TableSetHeaderSortDemoComponent {
     @ViewChild(JigsawTable, {static: false}) table: JigsawTable;
 
-    tableData: TableData;
-    tableData1: TableData;
-    pageable: LocalPageableTableData;
+    tableDataFromAjax: TableData;
+    tableDataFromObject: TableData;
+    localPageable: LocalPageableTableData;
+    pageable: PageableTableData;
 
     tableJsonLong = {
         data: [
@@ -153,20 +154,31 @@ export class TableSetHeaderSortDemoComponent {
     };
 
     constructor(http: HttpClient) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
+        this.tableDataFromAjax = new TableData();
+        this.tableDataFromAjax.http = http;
+        this.tableDataFromAjax.fromAjax('mock-data/hr-list');
 
-        this.pageable = new LocalPageableTableData();
-        this.pageable.http = http;
-        this.pageable.pagingInfo.pageSize = 10;
-        this.pageable.fromAjax('mock-data/hr-list');
+        this.localPageable = new LocalPageableTableData();
+        this.localPageable.http = http;
+        this.localPageable.pagingInfo.pageSize = 10;
+        this.localPageable.fromAjax('mock-data/hr-list');
 
-        this.tableData1 = new TableData();
+        this.tableDataFromObject = new TableData();
         setTimeout(() => {
-            this.tableData1.fromObject(this.tableJsonLong)
-        })
+            this.tableDataFromObject.fromObject(this.tableJsonLong)
+        });
 
+        this.pageable = new PageableTableData(http, {
+            url: 'mock-data/countries', body: {aa: 11, bb: 22}, method: 'post'
+        });
+        /*this.pageable = new PageableTableData(http, {
+            url: 'mock-data/countries', params: {aa: 11, bb: 22}
+        });*/
+        this.pageable.onAjaxComplete(() => {
+            console.log(this.pageable);
+        });
+        this.pageable.pagingInfo.pageSize = 5;
+        this.pageable.sortInfo = new DataSortInfo(SortAs.string, 'desc', 'enName');
     }
 
     columns: ColumnDefine[] = [
@@ -188,32 +200,55 @@ export class TableSetHeaderSortDemoComponent {
     ];
 
     changeData1() {
-        if(this.tableData.data.length < 10) {
-            this.tableData.fromAjax('mock-data/hr-list');
+        if(this.tableDataFromAjax.data.length < 10) {
+            this.tableDataFromAjax.fromAjax('mock-data/hr-list');
         } else {
-            this.tableData.fromAjax('mock-data/hr-list-short');
+            this.tableDataFromAjax.fromAjax('mock-data/hr-list-short');
         }
     }
 
     changeData2() {
-        if(this.tableData1.data.length < 5) {
-            this.tableData1.fromObject(this.tableJsonLong);
+        if(this.tableDataFromObject.data.length < 5) {
+            this.tableDataFromObject.fromObject(this.tableJsonLong);
         } else {
-            this.tableData1.fromObject(this.tableJsonShort);
+            this.tableDataFromObject.fromObject(this.tableJsonShort);
         }
     }
 
     changeData3() {
-        if(this.pageable.pagingInfo.totalRecord < 10) {
-            this.pageable.fromAjax('mock-data/hr-list');
+        if(this.localPageable.pagingInfo.totalRecord < 10) {
+            this.localPageable.fromAjax('mock-data/hr-list');
         } else {
-            this.pageable.fromAjax('mock-data/hr-list-short');
+            this.localPageable.fromAjax('mock-data/hr-list-short');
         }
     }
 
     onSearch($event) {
         console.log($event);
-        this.pageable.filter($event, ['name']);
+        this.localPageable.filter($event, ['name']);
+    }
+
+    columnsForPageable: ColumnDefine[] = [
+        {
+            target: 0,
+            header: {
+                sortable: true,
+                sortAs: SortAs.string,
+                defaultSortOrder: SortOrder.desc
+            }
+        }
+    ];
+
+    onSearchForPageable(reg) {
+        // 这里需要特别注意，filter函数的执行是在服务端，而非在浏览器！
+        // 这里context变量是filter的执行上下文（即filter函数里的this所指向的对象），它将会一起传输给服务端，
+        // 因此这里需要注意控制context的值里只包含有用的数据，以加快前后端通信速度
+        const filter = function(item) {
+            return item[0].match(new RegExp(this.reg, 'g'));
+        };
+        const context = {reg};
+
+        this.pageable.filter(filter, context);
     }
 
     // ====================================================================
