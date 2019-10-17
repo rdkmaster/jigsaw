@@ -367,6 +367,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      */
     public sort(as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number): void {
         this.sortData(this.data, as, order, field);
+        this.refresh();
     }
 
     /**
@@ -391,8 +392,6 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
                 data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
             }
         }
-
-        this.refresh();
     }
 
     public filterInfo: DataFilterInfo;
@@ -1154,11 +1153,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         })
     }
 
-    protected refreshData(){
-        this.originalData = this.data.concat();
-        this.filteredData = this.originalData;
-        this.data.length = 0; // 初始化时清空data，防止过大的data加载或屏闪
-
+    private _sortAndPaging() {
         if(!this.sortInfo) {
             let sortColumnDefine = this.getSortColumnDefine();
             if(sortColumnDefine) {
@@ -1171,6 +1166,14 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         }
 
         this.firstPage();
+    }
+
+    protected refreshData(){
+        this.originalData = this.data.concat();
+        this.filteredData = this.originalData;
+        this.data.length = 0; // 初始化时清空data，防止过大的data加载或屏闪
+
+        this._sortAndPaging();
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -1203,7 +1206,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 }
                 this.filteredData = this.originalData.filter(
                     row => row.filter(
-                        (item, index) => numberFields.find(num => num == index)
+                        (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
                     ).filter(
                         item => (item + '').indexOf(key) != -1
                     ).length != 0
@@ -1216,7 +1219,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 );
             }
         }
-        this.firstPage();
+        this._sortAndPaging();
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;

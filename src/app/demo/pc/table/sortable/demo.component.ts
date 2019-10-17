@@ -211,6 +211,11 @@ export class TableSetHeaderSortDemoComponent {
         }
     }
 
+    onSearch($event) {
+        console.log($event);
+        this.pageable.filter($event, ['name']);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
