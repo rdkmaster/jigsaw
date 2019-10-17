@@ -21,6 +21,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 export class JigsawIcon extends AbstractJigsawComponent {
     public _$secureUrl;
     private _href: string = 'javascript:void(0);';
+    private _target: string = '_blank';
 
     /**
      * 为true    生成的html是 <a class="fa fa-edit">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
@@ -73,9 +74,21 @@ export class JigsawIcon extends AbstractJigsawComponent {
     }
 
     /**
-     * 图标的文本
+     * 规定在何处打开超链
      */
-    @Input() public target: string = '_blank';
+    @Input()
+    public get target(): string {
+        if (this._href == 'javascript:void(0);' || CommonUtils.isUndefined(this._$secureUrl)) {
+            return '_self';
+        }
+        return this._target;
+    }
+
+    public set target(value: string) {
+        if (this._target != value) {
+            this._target = value;
+        }
+    }
 
     @Input() public title: string = '';
 
