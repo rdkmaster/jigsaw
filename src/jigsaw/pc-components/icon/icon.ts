@@ -4,6 +4,8 @@ import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+const defaultHrefValue = 'javascript:void(0);';
+
 /**
  * 图标控件，支持输入fontawesome的图标
  *
@@ -20,7 +22,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 })
 export class JigsawIcon extends AbstractJigsawComponent {
     public _$secureUrl;
-    private _href: string = 'javascript:void(0);';
+    private _href: string = defaultHrefValue;
     private _target: string = '_blank';
 
     /**
@@ -79,7 +81,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
      */
     @Input()
     public get target(): string {
-        return (this._href == 'javascript:void(0);' || CommonUtils.isUndefined(this._$secureUrl)) ? '_self' : this._target;
+        return (this._href == defaultHrefValue || CommonUtils.isUndefined(this._$secureUrl)) ? '_self' : this._target;
     }
 
     public set target(value: string) {
