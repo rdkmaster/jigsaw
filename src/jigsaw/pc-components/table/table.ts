@@ -343,6 +343,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         console.log('==============set data');
         this._data = value;
+        if(this.initialized) {
+            this._data._columnDefines = this.columnDefines;
+            this._data._columnDefineGeneratorContext = this.columnDefineGeneratorContext;
+            this._data._additionalColumnDefines = this.additionalColumnDefines;
+        }
         this._additionalData.reset();
         this._additionalData.originData = value;
 

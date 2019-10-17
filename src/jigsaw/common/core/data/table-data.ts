@@ -21,7 +21,7 @@ import {
     ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
-import {ColumnDefine} from "../../../pc-components/table/table-typings";
+import {AdditionalColumnDefine, ColumnDefine, ColumnDefineGenerator} from "../../../pc-components/table/table-typings";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -311,9 +311,18 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         this.sort(this.sortInfo);
     }
 
-    public _columnDefines;
-    public _additionalColumnDefines;
-    public _columnDefineGeneratorContext;
+    /**
+     * @internal
+     */
+    public _columnDefines: ColumnDefine[] | ColumnDefineGenerator;
+    /**
+     * @internal
+     */
+    public _columnDefineGeneratorContext: any;
+    /**
+     * @internal
+     */
+    public _additionalColumnDefines: AdditionalColumnDefine[];
 
     private _columnDefineGenerator(field: string, index: number): ColumnDefine {
         if (!this._columnDefines) {
@@ -331,6 +340,9 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
+    /**
+     * @internal
+     */
     public _getMixedColumnDefines(): ColumnDefine[] {
         const columnDefines: ColumnDefine[] = [];
         this.field.forEach((field, index) => {
