@@ -341,7 +341,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (value == this._data || !value) {
             return;
         }
-        console.log('==============set data');
         this._data = value;
         if(this.initialized) {
             this._data._columnDefines = this.columnDefines;
@@ -356,10 +355,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
         }
-        this._removeTableDataRefresh = value.onRefresh(() => {
-            console.log('================refresh data');
-            this.update();
-        });
+        this._removeTableDataRefresh = value.onRefresh(this.update, this);
 
         if (!this._removeAdditionalDataRefresh) {
             this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
