@@ -156,17 +156,19 @@ export class TableSetHeaderSortDemoComponent {
     constructor(http: HttpClient) {
         this.tableDataFromAjax = new TableData();
         this.tableDataFromAjax.http = http;
+        this.tableDataFromAjax.sortInfo = new DataSortInfo(SortAs.string, SortOrder.asc, 'name');
         this.tableDataFromAjax.fromAjax('mock-data/hr-list');
+
+        // new TableData(data, field, header)这种形式无法默认排序，必须使用fromObject创建数据
+        this.tableDataFromObject = new TableData();
+        this.tableDataFromObject.sortInfo = new DataSortInfo(SortAs.string, SortOrder.asc, 'name');
+        this.tableDataFromObject.fromObject(this.tableJsonLong);
 
         this.localPageable = new LocalPageableTableData();
         this.localPageable.http = http;
         this.localPageable.pagingInfo.pageSize = 10;
+        this.localPageable.sortInfo = new DataSortInfo(SortAs.string, SortOrder.asc, 'name');
         this.localPageable.fromAjax('mock-data/hr-list');
-
-        this.tableDataFromObject = new TableData();
-        setTimeout(() => {
-            this.tableDataFromObject.fromObject(this.tableJsonLong)
-        });
 
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries', body: {aa: 11, bb: 22}, method: 'post'

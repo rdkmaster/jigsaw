@@ -15,13 +15,12 @@ import {
     ISortable,
     PagingInfo,
     PreparedHttpClientOptions,
-    serializeFilterFunction,
     SortAs,
     SortOrder,
+    serializeFilterFunction,
     ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
-import {AdditionalColumnDefine, ColumnDefine, ColumnDefineGenerator} from "../../../pc-components/table/table-typings";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -292,82 +291,13 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         return TableData.of(rawData).toArray();
     }
 
-    protected getSortColumnDefine(): ColumnDefine {
-        const columnDefines: ColumnDefine[] = this._getMixedColumnDefines();
-        return columnDefines.find(colDef => !!(colDef.header && colDef.header.sortable &&
-            (colDef.header.defaultSortOrder === SortOrder.asc || colDef.header.defaultSortOrder === SortOrder.desc)));
-    }
-
     protected refreshData() {
-        if(!this.sortInfo) {
-            let sortColumnDefine = this.getSortColumnDefine();
-            if(!sortColumnDefine) {
-                this.refresh();
-                return;
-            }
-            let sortHeader = sortColumnDefine.header;
-            this.sortInfo =  new DataSortInfo(sortHeader.sortAs, sortHeader.defaultSortOrder, <string>sortColumnDefine.target);
-        }
-        this.sort(this.sortInfo);
-    }
-
-    /**
-     * @internal
-     */
-    public _columnDefines: ColumnDefine[] | ColumnDefineGenerator;
-    /**
-     * @internal
-     */
-    public _columnDefineGeneratorContext: any;
-    /**
-     * @internal
-     */
-    public _additionalColumnDefines: AdditionalColumnDefine[];
-
-    private _columnDefineGenerator(field: string, index: number): ColumnDefine {
-        if (!this._columnDefines) {
-            return undefined;
-        }
-        if (this._columnDefines instanceof Function) {
-            return CommonUtils.safeInvokeCallback(this._columnDefineGeneratorContext, this._columnDefines, [field, index]);
+        if(this.sortInfo) {
+            this.sort(this.sortInfo);
         } else {
-            return this._columnDefines.find(colDef => {
-                const targets: (number | string)[] = colDef.target instanceof Array ? colDef.target : [colDef.target];
-                const idx = targets.findIndex(target =>
-                    (typeof target === 'number' && target === index) || (typeof target === 'string' && target === field));
-                return idx != -1;
-            });
+            this.refresh();
         }
     }
-
-    /**
-     * @internal
-     */
-    public _getMixedColumnDefines(): ColumnDefine[] {
-        const columnDefines: ColumnDefine[] = [];
-        this.field.forEach((field, index) => {
-            let cd = this._columnDefineGenerator(field, index);
-            if (cd) {
-                cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
-                cd.target = field;
-            }
-            columnDefines.push(cd ? cd : {target: field});
-        });
-
-        if (this._additionalColumnDefines) {
-            for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
-                const acd = this._additionalColumnDefines[i];
-                const cd: ColumnDefine = {
-                    target: 'additional-field-' + i, header: acd.header, group: acd.group,
-                    cell: acd.cell, width: acd.width, visible: acd.visible
-                };
-                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
-                columnDefines.splice(pos, 0, cd);
-            }
-        }
-        return columnDefines;
-    }
-
 
     public sortInfo: DataSortInfo;
 
@@ -1166,13 +1096,6 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     private _sortAndPaging() {
-        if(!this.sortInfo) {
-            let sortColumnDefine = this.getSortColumnDefine();
-            if(sortColumnDefine) {
-                let sortHeader = sortColumnDefine.header;
-                this.sortInfo = new DataSortInfo(sortHeader.sortAs, sortHeader.defaultSortOrder, <string>sortColumnDefine.target);
-            }
-        }
         if(this.sortInfo) {
             super.sortData(this.filteredData, this.sortInfo);
         }

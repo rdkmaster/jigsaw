@@ -278,6 +278,39 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    /**
+     * 生成混合后的列定义序列
+     *
+     *
+     */
+    private _getMixedColumnDefines(): ColumnDefine[] {
+        if (!this.data) {
+            return [];
+        }
+        const columnDefines: ColumnDefine[] = [];
+        this.data.field.forEach((field, index) => {
+            let cd = this._columnDefineGenerator(field, index);
+            if (cd) {
+                cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
+                cd.target = field;
+            }
+            columnDefines.push(cd ? cd : {target: field});
+        });
+
+        if (this._additionalColumnDefines) {
+            for (let i = this._additionalColumnDefines.length - 1; i >= 0; i--) {
+                const acd = this._additionalColumnDefines[i];
+                const cd: ColumnDefine = {
+                    target: 'additional-field-' + i, header: acd.header, group: acd.group,
+                    cell: acd.cell, width: acd.width, visible: acd.visible
+                };
+                const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
+                columnDefines.splice(pos, 0, cd);
+            }
+        }
+        return columnDefines;
+    }
+
     public update(): void {
         if (!this.initialized || !this._data) {
             return;
@@ -287,7 +320,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
-        const columnDefines = this.data._getMixedColumnDefines();
+        const columnDefines = this._getMixedColumnDefines();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
@@ -342,11 +375,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._data = value;
-        if(this.initialized) {
-            this._data._columnDefines = this.columnDefines;
-            this._data._columnDefineGeneratorContext = this.columnDefineGeneratorContext;
-            this._data._additionalColumnDefines = this.additionalColumnDefines;
-        }
         this._additionalData.reset();
         this._additionalData.originData = value;
 
@@ -365,18 +393,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
-    private _columnDefines: ColumnDefine[] | ColumnDefineGenerator;
     @Input()
-    public get columnDefines(): ColumnDefine[] | ColumnDefineGenerator {
-        return this._columnDefines;
-    };
-
-    public set columnDefines(value: ColumnDefine[] | ColumnDefineGenerator) {
-        this._columnDefines = value;
-        if(this.data) {
-            this.data._columnDefines = value;
-        }
-    }
+    public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
 
     @Input()
     public columnDefineGeneratorContext: any;
@@ -391,8 +409,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public set additionalColumnDefines(value: AdditionalColumnDefine[]) {
         this._additionalColumnDefines = value;
         this._initAdditionalData();
-        if(this.data) {
-            this.data._additionalColumnDefines = value;
+    }
+
+    private _columnDefineGenerator(field: string, index: number): ColumnDefine {
+        if (!this.columnDefines) {
+            return undefined;
+        }
+        if (this.columnDefines instanceof Function) {
+            return CommonUtils.safeInvokeCallback(this.columnDefineGeneratorContext, this.columnDefines, [field, index]);
+        } else {
+            return this.columnDefines.find(colDef => {
+                const targets: (number | string)[] = colDef.target instanceof Array ? colDef.target : [colDef.target];
+                const idx = targets.findIndex(target =>
+                    (typeof target === 'number' && target === index) || (typeof target === 'string' && target === field));
+                return idx != -1;
+            });
         }
     }
 
@@ -721,13 +752,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     ngOnInit() {
         super.ngOnInit();
 
-        if(this.data) {
-            this.data._columnDefines = this.columnDefines;
-            this.data._columnDefineGeneratorContext = this.columnDefineGeneratorContext;
-            this.data._additionalColumnDefines = this.additionalColumnDefines;
-            if (this.data.field && this.data.field.length != 0) {
-                this.update();
-            }
+        if (this._data && this._data.field && this._data.field.length != 0) {
+            this.update();
         }
 
         this._addWindowListener();
