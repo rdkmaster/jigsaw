@@ -552,7 +552,17 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             // 这里的fields相当于thisArg，即函数执行的上下文对象
             pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
-            pfi = new DataFilterInfo(term, fields);
+            let stringFields: string[];
+            if (typeof fields[0] === 'number') {
+                stringFields = [];
+                (<number[]>fields).forEach(field => {
+                        stringFields.push(this.field[field])
+                    }
+                )
+            } else {
+                stringFields = <string[]>fields;
+            }
+            pfi = new DataFilterInfo(term, stringFields);
         }
         this._filterSubject.next(pfi);
     }
@@ -1149,7 +1159,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             } else {
                 this.filteredData = this.originalData.filter(
                     row => row.filter(
-                        item => (<string>item).indexOf(key) != -1
+                        item => (item + '').indexOf(key) != -1
                     ).length != 0
                 );
             }

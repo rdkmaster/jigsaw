@@ -228,6 +228,8 @@ export class TableSetHeaderSortDemoComponent {
     onSearch($event) {
         console.log($event);
         this.localPageable.filter($event, ['name']);
+        // 过滤所有列
+        //this.localPageable.filter($event);
     }
 
     columnsForPageable: ColumnDefine[] = [
@@ -251,6 +253,9 @@ export class TableSetHeaderSortDemoComponent {
         const context = {reg};
 
         this.pageable.filter(filter, context);
+
+        // 直接过滤列
+        //this.pageable.filter(reg, [0]);
     }
 
     // ====================================================================
