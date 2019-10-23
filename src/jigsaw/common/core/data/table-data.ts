@@ -553,7 +553,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
             let stringFields: string[];
-            if (typeof fields[0] === 'number') {
+            if (fields && typeof fields[0] === 'number') {
                 stringFields = [];
                 (<number[]>fields).forEach(field => {
                         stringFields.push(this.field[field])
