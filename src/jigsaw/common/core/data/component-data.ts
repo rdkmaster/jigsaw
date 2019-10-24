@@ -740,7 +740,7 @@ export enum SortOrder {
  * $demo = table/sortable
  */
 export class DataSortInfo {
-    constructor(public as: SortAs = SortAs.string,
+    constructor(public as: SortAs | string = SortAs.string,
                 public order: SortOrder | string = SortOrder.asc,
                 public field: string | number) {
     }
