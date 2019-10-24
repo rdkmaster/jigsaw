@@ -163,7 +163,7 @@ PopupService弹出[alert]()，[tooltips](http://rdk.zte.com.cn/components/toolti
  - [BigTableData](http://rdk.zte.com.cn/components/table/demo#big-table)
  - [PieGraphData](http://rdk.zte.com.cn/components/graph/demo#pie)
  - [LineBarGraphData](http://rdk.zte.com.cn/components/graph/demo#line-bar-graph-ajax)
- - [TreeData](http://rdk.zte.com.cn/components/tree/demo#data-from-ajax)
+ - [TreeData/SimpleTreeData](http://rdk.zte.com.cn/components/tree/demo#data-from-ajax)
 
 这是我们的数据关系图
 ![data](data.png 'data')
