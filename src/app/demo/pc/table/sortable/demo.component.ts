@@ -189,7 +189,6 @@ export class TableSetHeaderSortDemoComponent {
             header: {
                 sortable: true,
                 sortAs: SortAs.number,
-                defaultSortOrder: SortOrder.desc,
             }
         }, {
             target: 'name',

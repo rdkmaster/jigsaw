@@ -292,7 +292,8 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     }
 
     protected refreshData() {
-        if(this.sortInfo) {
+        if (this.sortInfo) {
+            // sort的时候会调用一次refresh
             this.sort(this.sortInfo);
         } else {
             this.refresh();
@@ -553,14 +554,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
             let stringFields: string[];
-            if (fields && typeof fields[0] === 'number') {
-                stringFields = [];
-                (<number[]>fields).forEach(field => {
-                        stringFields.push(this.field[field])
-                    }
-                )
-            } else {
-                stringFields = <string[]>fields;
+            if (fields) {
+                stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
             pfi = new DataFilterInfo(term, stringFields);
         }
@@ -1106,14 +1101,14 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     private _sortAndPaging() {
-        if(this.sortInfo) {
+        if (this.sortInfo) {
             super.sortData(this.filteredData, this.sortInfo);
         }
 
         this.firstPage();
     }
 
-    protected refreshData(){
+    protected refreshData() {
         this.originalData = this.data.concat();
         this.filteredData = this.originalData;
         this.data.length = 0; // 初始化时清空data，防止过大的data加载或屏闪
