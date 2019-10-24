@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import {TreeData} from "jigsaw/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/core/data/tree-data";
 import {JigsawTreeExt} from "jigsaw/component/tree/tree-ext";
 import {ZTreeSettingSetting} from "../../../../jigsaw/component/tree/ztree-types";
 
@@ -11,7 +11,7 @@ import {ZTreeSettingSetting} from "../../../../jigsaw/component/tree/ztree-types
 export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
-    public data: TreeData;
+    public data: SimpleTreeData;
     setting: ZTreeSettingSetting = {
         data: {
             key: {
@@ -44,7 +44,7 @@ export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
     }
 
     constructor() {
-        this.data = new TreeData();
+        this.data = new SimpleTreeData();
         this.data.fromObject([
             {
                 label: "Cannot Click Node",
