@@ -12,8 +12,13 @@ export class DragDropInfo {
     }
 
     public get dragDropData(): any {
-        const v = JSON.parse(this.event.dataTransfer.getData('text'));
-        return v.hasOwnProperty("__jigsaw_internal_property__") ? v['__jigsaw_internal_property__'] : v;
+        try {
+            const v = JSON.parse(this.event.dataTransfer.getData('text'));
+            return v.hasOwnProperty("__jigsaw_internal_property__") ? v['__jigsaw_internal_property__'] : v;
+        } catch (e) {
+            // 未设置dragDropData时，value值不是json，直接parse会报错
+            return this.event.dataTransfer.getData('text');
+        }
     }
 
     public set dragDropData(value: any) {
