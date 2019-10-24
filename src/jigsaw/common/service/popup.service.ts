@@ -438,10 +438,11 @@ export class PopupService {
             this._zone.runOutsideAngular(() => {
                 // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
                 removeWindowListens.push(PopupService._renderer.listen('window', 'resize', () => {
+                    const documentBody = AffixUtils.getDocumentBody();
                     PopupService._renderer.setStyle(element, 'top',
-                        (document.body.clientHeight / 2 - element.offsetHeight / 2) + 'px');
+                        (documentBody.clientHeight / 2 - element.offsetHeight / 2) + 'px');
                     PopupService._renderer.setStyle(element, 'left',
-                        (document.body.clientWidth / 2 - element.offsetWidth / 2) + 'px');
+                        (documentBody.clientWidth / 2 - element.offsetWidth / 2) + 'px');
                 }));
             });
         }
@@ -636,15 +637,16 @@ export class PopupService {
      */
     public positionReviser(pos: PopupPositionValue, popupElement: HTMLElement,
                            options?: { offsetWidth?: number, offsetHeight?: number, direction?: 'v' | 'h' }): PopupPositionValue {
+        const documentBody = AffixUtils.getDocumentBody();
         if (!options || !options.direction || options.direction == 'v') {
             // 调整上下位置
             const upDelta = (options && options.offsetHeight ? options.offsetHeight : 0) + popupElement.offsetHeight;
-            if (document.body.clientHeight <= upDelta) {
+            if (documentBody.clientHeight <= upDelta) {
                 // 可视区域比弹出的UI高度还小就不要调整了
                 return pos;
             }
             const needHeight = pos.top + popupElement.offsetHeight;
-            const totalHeight = window.pageYOffset + document.body.clientHeight;
+            const totalHeight = window.pageYOffset + documentBody.clientHeight;
             if (needHeight >= totalHeight && pos.top > upDelta) {
                 // 下方位置不够且上方位置足够的时候才做调整
                 pos.top -= upDelta;
@@ -654,13 +656,13 @@ export class PopupService {
         if (!options || !options.direction || options.direction == 'h') {
             // 调整左右位置
             const leftDelta = popupElement.offsetWidth - (options && options.offsetWidth ? options.offsetWidth : 0);
-            if (document.body.clientWidth <= leftDelta && leftDelta <= 0) {
+            if (documentBody.clientWidth <= leftDelta && leftDelta <= 0) {
                 // 可视区域比弹出的UI高度还小就不要调整了
                 // 弹框宽度比宿主宽度小也不用调整
                 return pos;
             }
             const needWidth = pos.left + popupElement.offsetWidth;
-            const totalWidth = window.pageXOffset + document.body.clientWidth;
+            const totalWidth = window.pageXOffset + documentBody.clientWidth;
             if (needWidth >= totalWidth && pos.left > leftDelta) {
                 // 右边位置不够且左边位置足够的时候才做调整
                 pos.left -= leftDelta;
