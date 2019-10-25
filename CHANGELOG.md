@@ -1,4 +1,18 @@
-## v1.1.27 (2019-9-20)
+## v1.1.29 (2019-10-25)
+
+### 新特性 / New Features
+- [新增] 增加SimpleTreeData数据类型，代替TreeData作为JigsawTreeExt、cascade、fishbone的数据，以应对TreeData的性能问题
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- [故障] 修复弹框有时计算位置不对
+
+## v1.1.28 (2019-9-20)
 
 ### 新特性 / New Features
 - [新增] 增加一个支持多行版的steps组件jigsaw-steps-multiline，用于处理步骤节点多且复杂的情形
