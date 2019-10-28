@@ -121,6 +121,10 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
+    protected refreshData() {
+        this.refresh();
+    }
+
     public fromObject(data: any): TableDataBase {
         if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
@@ -131,8 +135,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         TableDataBase.arrayAppend(this.data, data.data);
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
-
-        this.refresh();
+        this.refreshData();
 
         return this;
     }
@@ -288,6 +291,15 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         return TableData.of(rawData).toArray();
     }
 
+    protected refreshData() {
+        if (this.sortInfo) {
+            // sort的时候会调用一次refresh
+            this.sort(this.sortInfo);
+        } else {
+            this.refresh();
+        }
+    }
+
     public sortInfo: DataSortInfo;
 
     public sort(compareFn?: (a: any[], b: any[]) => number): void;
@@ -298,6 +310,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      */
     public sort(as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number): void {
         this.sortData(this.data, as, order, field);
+        this.refresh();
     }
 
     /**
@@ -309,12 +322,12 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      * @param field 排序字段
      */
     protected sortData(data: TableDataMatrix, as: SortAs | DataSortInfo | Function, order?: SortOrder, field?: string | number) {
-        field = typeof field === 'string' ? this.field.indexOf(field) : field;
         if (as instanceof Function) {
             // cast to any to peace the compiler.
             data.sort(<any>as);
         } else {
             this.sortInfo = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+            field = typeof this.sortInfo.field === 'string' ? this.field.indexOf(this.sortInfo.field) : this.sortInfo.field;
             const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
             if (this.sortInfo.as == SortAs.number) {
                 data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
@@ -322,7 +335,6 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
                 data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
             }
         }
-        this.refresh();
     }
 
     public filterInfo: DataFilterInfo;
@@ -392,6 +404,10 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
 
         this._initSubjects();
+    }
+
+    protected refreshData() {
+        this.refresh();
     }
 
     private _initSubjects(): void {
@@ -537,7 +553,11 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             // 这里的fields相当于thisArg，即函数执行的上下文对象
             pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
-            pfi = new DataFilterInfo(term, fields);
+            let stringFields: string[];
+            if (fields) {
+                stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
+            }
+            pfi = new DataFilterInfo(term, stringFields);
         }
         this._filterSubject.next(pfi);
     }
@@ -1080,13 +1100,20 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         })
     }
 
-    public fromObject(data: any): LocalPageableTableData {
-        super.fromObject(data);
+    private _sortAndPaging() {
+        if (this.sortInfo) {
+            super.sortData(this.filteredData, this.sortInfo);
+        }
+
+        this.firstPage();
+    }
+
+    protected refreshData() {
         this.originalData = this.data.concat();
         this.filteredData = this.originalData;
         this.data.length = 0; // 初始化时清空data，防止过大的data加载或屏闪
-        this.firstPage();
-        return this;
+
+        this._sortAndPaging();
     }
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -1119,7 +1146,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 }
                 this.filteredData = this.originalData.filter(
                     row => row.filter(
-                        (item, index) => numberFields.find(num => num == index)
+                        (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
                     ).filter(
                         item => (item + '').indexOf(key) != -1
                     ).length != 0
@@ -1127,12 +1154,12 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             } else {
                 this.filteredData = this.originalData.filter(
                     row => row.filter(
-                        item => (<string>item).indexOf(key) != -1
+                        item => (item + '').indexOf(key) != -1
                     ).length != 0
                 );
             }
         }
-        this.firstPage();
+        this._sortAndPaging();
     }
 
     public sort(compareFn?: (a: any, b: any) => number): any;
