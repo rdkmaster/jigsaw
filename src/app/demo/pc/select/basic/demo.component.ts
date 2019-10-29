@@ -25,6 +25,11 @@ export class SelectBasicDemoComponent {
         this.selectedCityName = selectedItem.label;
     }
 
+    public selectChange2(selectedItem: any) {
+        console.log("select city is:" + selectedItem);
+        this.selectedCityForSelect2 = selectedItem;
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

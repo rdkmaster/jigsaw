@@ -30,6 +30,14 @@ export class SelectSearchableDemoComponent {
     selectedCountries: string;
     selectedCountries2: string;
 
+    selectChange2($event) {
+        this.selectedCountries = $event.map(s => s.enName).toString();
+    }
+
+    selectChange3($event) {
+        this.selectedCountries2 = $event.map(s => s.enName).toString();
+    }
+
     constructor(public http: HttpClient) {
         this.lpaCountries = new LocalPageableArray<GroupOptionValue>();
         this.lpaCountries.http = http;
