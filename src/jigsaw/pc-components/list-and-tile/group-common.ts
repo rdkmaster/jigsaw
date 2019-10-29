@@ -1,6 +1,6 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList} from "@angular/core";
+import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList, OnInit} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
@@ -10,7 +10,7 @@ export class GroupOptionValue {
     disabled?: boolean;
 }
 
-export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
+export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy, OnInit {
 
     protected _removeRefreshCallback: CallbackRemoval;
     private _removeItemsChanges: Subscription;
@@ -131,6 +131,14 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         });
     }
 
+    ngOnInit() {
+        super.ngOnInit();
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = this._selectedItems.onRefresh(() => this._setItemState(this._items));
+    }
+
     ngAfterContentInit() {
         this._setItemState(this._items);
         this._subscribeItemSelectedChange(this._items);
@@ -175,7 +183,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        this._removeRefreshCallback = newValue.onRefresh(() => this._setItemState(this._items));
+        this._removeRefreshCallback = this._selectedItems.onRefresh(() => this._setItemState(this._items));
     }
 
     public writeValue(newValue: any): void {
