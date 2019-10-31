@@ -172,9 +172,11 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         }
 
         this._value = value;
+
         if(<any>value===""){
             return;
         }
+        
         this.valueChange.emit(this._value);
         this._propagateChange(this._value);
 
@@ -305,7 +307,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
-        if(this._value < this.min) {
+        if(this._value < this.min || isNaN(this._value)) {
             this._value = this.min;
             this.valueChange.emit(this._value);
         }
