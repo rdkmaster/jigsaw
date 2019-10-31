@@ -1,12 +1,22 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList, OnInit} from "@angular/core";
+import {
+    AfterContentInit,
+    ChangeDetectorRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    QueryList,
+    OnInit
+} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
 
 export class GroupOptionValue {
     [index: string]: any;
+
     disabled?: boolean;
 }
 
@@ -48,7 +58,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
-    private _removeInvalidSelectedItems():void {
+    private _removeInvalidSelectedItems(): void {
         if (!this._items || !this._selectedItems) {
             return;
         }
@@ -147,7 +157,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._setItemState(items);
             this._subscribeItemSelectedChange(items);
         });
-        if(this._items.length) {
+        if (this._items.length) {
             // 在本地数据为空时，不检查无用选项
             this._removeInvalidSelectedItems();
         }
@@ -158,10 +168,10 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        if(this._items) {
+        if (this._items) {
             this._items.forEach(item => item.change.unsubscribe());
         }
-        if(this._removeItemsChanges) {
+        if (this._removeItemsChanges) {
             this._removeItemsChanges.unsubscribe();
         }
     }
@@ -181,7 +191,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
 
         if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
+            this._removeRefreshCallback();
         }
         this._removeRefreshCallback = this._selectedItems.onRefresh(() => this._setItemState(this._items));
     }
