@@ -574,6 +574,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         psi.order = SortOrder[psi.order];
+        psi.as = SortAs[psi.as];
         this._sortSubject.next(psi);
     }
 
