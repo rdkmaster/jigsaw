@@ -172,7 +172,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         }
 
         this._value = value;
-        if(value!==0&&value==0){
+        if(<any>value===""){
             return;
         }
         this.valueChange.emit(this._value);
