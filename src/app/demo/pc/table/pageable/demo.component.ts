@@ -25,7 +25,7 @@ export class TablePageableDemoComponent {
         this.pageable.sortInfo = new DataSortInfo('number', 'desc', 'salary');
     }
 
-    columns: ColumnDefine[] = [
+    columnDefines: ColumnDefine[] = [
         {
             target: 'salary',
             header: {
