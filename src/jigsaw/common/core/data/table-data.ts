@@ -83,17 +83,14 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 
     constructor(/**
                  * 表格的数据，是一个二维数组。
-                 *
                  */
                 public data: TableDataMatrix = [],
                 /**
                  * 表格数据的字段序列，这个序列决定了`JigsawTable`实际渲染出来哪些列。无效、重复的字段将被抛弃。
-                 *
                  */
                 public field: TableDataField = [],
                 /**
                  * 表格的列头，这里的文本将会直接显示在界面上，请确保他们已经被正确国际化过。
-                 *
                  */
                 public header: TableDataHeader = []) {
         super();
@@ -116,6 +113,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
             console.log('invalid raw TableData received from server...');
             this.clear();
             this.refresh();
+            this.componentDataHelper.invokeChangeCallback();
         }
         this._busy = false;
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
@@ -126,6 +124,12 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     }
 
     public fromObject(data: any): TableDataBase {
+        const td = this._fromObject(data);
+        this.componentDataHelper.invokeChangeCallback();
+        return td;
+    }
+
+    protected _fromObject(data: any): TableDataBase {
         if (!this.isDataValid(data)) {
             throw new Error('invalid raw TableData object!');
         }

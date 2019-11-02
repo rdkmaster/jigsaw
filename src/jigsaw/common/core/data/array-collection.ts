@@ -365,6 +365,20 @@ export class JigsawArray<T> implements Array<T> {
     }
 }
 
+function _fromArray(dest: ArrayCollection<any>, source: any[]): boolean {
+    source = source instanceof Array || (source as any) instanceof ArrayCollection ?
+        source : CommonUtils.isDefined(source) ? [source] : [];
+    let needRefresh = dest.length > 0;
+
+    dest.splice(0, dest.length);
+    if (source.length > 0) {
+        needRefresh = needRefresh || source.length > 0;
+        source.forEach(item => dest.push(item));
+    }
+
+    return needRefresh;
+}
+
 /**
  * 这是Jigsaw数据体系中两大分支之一：数组类型的基类。
  *
@@ -400,7 +414,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     constructor(source?: T[]) {
         super();
-        this._fromArray(source);
+        _fromArray(this, source);
     }
 
     protected _busy: boolean = false;
@@ -526,24 +540,11 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
      * @returns 返回当前数据对象的引用
      */
     public fromArray(source: T[]): ArrayCollection<T> {
-        if (this._fromArray(source)) {
+        if (_fromArray(this, source)) {
             this.refresh();
+            this.componentDataHelper.invokeChangeCallback();
         }
         return this;
-    }
-
-    private _fromArray(source: T[]): boolean {
-        source = source instanceof Array || (source as any) instanceof ArrayCollection ?
-            source : CommonUtils.isDefined(source) ? [source] : [];
-        let needRefresh = this.length > 0;
-
-        this.splice(0, this.length);
-        if (source.length > 0) {
-            needRefresh = needRefresh || source.length > 0;
-            source.forEach(item => this.push(item));
-        }
-
-        return needRefresh;
     }
 
     protected componentDataHelper: ComponentDataHelper = new ComponentDataHelper();
@@ -554,6 +555,10 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
 
     public onRefresh(callback: (thisData: ArrayCollection<T>) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
+    }
+
+    public onChange(callback: (thisData: ArrayCollection<T>) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getChangeRemoval({fn: callback, context: context});
     }
 
     public onAjaxStart(callback: () => void, context?: any): CallbackRemoval {
@@ -619,6 +624,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
+    private _dataSourceChanged: boolean = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
@@ -658,6 +664,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
+        this._dataSourceChanged = true;
     }
 
     public fromAjax(url?: string): void;
@@ -741,7 +748,13 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
     protected ajaxSuccessHandler(data: any): void {
         console.log('get data from paging server success!!');
-        this.fromArray(data.toArray());
+        if (_fromArray(this, data.toArray())) {
+            this.refresh();
+            if (this._dataSourceChanged) {
+                this.componentDataHelper.invokeChangeCallback();
+            }
+        }
+        this._dataSourceChanged = false;
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
@@ -801,7 +814,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
         }
         if (needRefresh) {
-            this.fromAjax();
+            this._ajax();
         }
     }
 
@@ -895,6 +908,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         this._bakData = source;
         this.filteredData = source;
         this.firstPage();
+        this.componentDataHelper.invokeChangeCallback();
         return this;
     }
 
@@ -997,13 +1011,17 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     private _setDataByPageInfo() {
+        let source: T[];
         if (this.pagingInfo.pageSize == Infinity) {
-            super.fromArray(this.filteredData);
+            source = this.filteredData;
         } else {
             const begin = (this.pagingInfo.currentPage - 1) * this.pagingInfo.pageSize;
             const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ?
                 this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
-            super.fromArray(this.filteredData.slice(begin, end));
+            source = this.filteredData.slice(begin, end);
+        }
+        if (_fromArray(this, source)) {
+            this.refresh();
         }
     }
 
