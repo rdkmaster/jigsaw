@@ -15,9 +15,9 @@ import {
     ISortable,
     PagingInfo,
     PreparedHttpClientOptions,
+    serializeFilterFunction,
     SortAs,
     SortOrder,
-    serializeFilterFunction,
     ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
@@ -106,14 +106,18 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         return TableDataBase.isTableData(data);
     }
 
+    protected invokeChangeCallback(): void {
+        this.componentDataHelper.invokeChangeCallback();
+    }
+
     protected ajaxSuccessHandler(data): void {
         if (this.isDataValid(data)) {
-            this.fromObject(data);
+            this._fromObject(data);
         } else {
             console.log('invalid raw TableData received from server...');
             this.clear();
             this.refresh();
-            this.componentDataHelper.invokeChangeCallback();
+            this.invokeChangeCallback();
         }
         this._busy = false;
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
@@ -124,9 +128,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     }
 
     public fromObject(data: any): TableDataBase {
-        const td = this._fromObject(data);
-        this.componentDataHelper.invokeChangeCallback();
-        return td;
+        return this._fromObject(data);
     }
 
     protected _fromObject(data: any): TableDataBase {
@@ -140,6 +142,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
         this.refreshData();
+        this.invokeChangeCallback();
 
         return this;
     }
@@ -398,6 +401,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
+    private _dataSourceChanged: boolean = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
@@ -460,6 +464,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
+        this._dataSourceChanged = true;
+    }
+
+    public fromObject(data: any): PageableTableData {
+        this._dataSourceChanged = true;
+        super.fromObject(data);
+        return this;
     }
 
     public fromAjax(url?: string): void;
@@ -533,6 +544,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
+    }
+
+    protected invokeChangeCallback(): void {
+        if (this._dataSourceChanged) {
+            this._dataSourceChanged = false;
+            super.invokeChangeCallback();
+        }
     }
 
     private _updatePagingInfo(data: any): void {

@@ -3,7 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, PageableArray, LocalPageableArray} from "jigsaw/common/core/data/array-collection";
 import {IPageable, SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
 import {GeneralCollection} from "jigsaw/common/core/data/general-collection";
-import {PageableTableData, TableData} from "jigsaw/common/core/data/table-data";
+import {BigTableData, LocalPageableTableData, PageableTableData, TableData} from "jigsaw/common/core/data/table-data";
+import {GraphData} from "jigsaw/common/core/data/graph-data";
 
 
 @Component({
@@ -29,10 +30,17 @@ export class OnChangeDemoComponent {
     gc: GeneralCollection<any> = new GeneralCollection();
     td: TableData = new TableData();
     ptd: PageableTableData;
+    btd: BigTableData;
+    lpd: LocalPageableTableData;
+    gd: GraphData;
 
     constructor(http: HttpClient) {
         this.ac.http = http;
         this.ac.onChange(this.onChange.bind(this));
+
+        this.pa = new PageableArray(http, 'mock-data/countries');
+        this.pa.onChange(this.onChange.bind(this));
+        this.pa.fromAjax();
 
         this.lpa = new LocalPageableArray([1,2,3,4,5,6]);
         this.lpa.http = http;
@@ -48,6 +56,20 @@ export class OnChangeDemoComponent {
         this.ptd = new PageableTableData(http, 'mock-data/countries');
         this.ptd.onChange(this.onChange.bind(this));
         this.ptd.fromAjax();
+
+        this.btd = new BigTableData(http, 'mock-data/countries');
+        this.btd.onChange(this.onChange.bind(this));
+        this.btd.fromAjax();
+
+        this.lpd = new LocalPageableTableData();
+        this.lpd.http = http;
+        this.lpd.onChange(this.onChange.bind(this));
+        this.lpd.fromAjax('mock-data/countries');
+
+        this.gd = new GraphData();
+        this.gd.http = http;
+        this.gd.onChange(this.onChange.bind(this));
+        this.gd.fromAjax('mock-data/countries');
     }
 
     onChange() {

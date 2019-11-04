@@ -368,11 +368,10 @@ export class JigsawArray<T> implements Array<T> {
 function _fromArray(dest: ArrayCollection<any>, source: any[]): boolean {
     source = source instanceof Array || (source as any) instanceof ArrayCollection ?
         source : CommonUtils.isDefined(source) ? [source] : [];
-    let needRefresh = dest.length > 0;
+    const needRefresh = dest.length > 0 || source.length > 0;
 
     dest.splice(0, dest.length);
     if (source.length > 0) {
-        needRefresh = needRefresh || source.length > 0;
         source.forEach(item => dest.push(item));
     }
 
@@ -1023,6 +1022,21 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         if (_fromArray(this, source)) {
             this.refresh();
         }
+    }
+
+    protected ajaxErrorHandler(error: Response): void {
+        if (!error) {
+            super.ajaxErrorHandler(error);
+            return;
+        }
+
+        console.error('get data from paging server error!! detail: ' + error['message']);
+        if (_fromArray(this, [])) {
+            this.refresh();
+            this.componentDataHelper.invokeChangeCallback();
+        }
+        this._busy = false;
+        this.componentDataHelper.invokeAjaxErrorCallback(error);
     }
 
     public firstPage(): void {

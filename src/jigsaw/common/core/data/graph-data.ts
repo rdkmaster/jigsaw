@@ -52,8 +52,6 @@ export abstract class AbstractGraphData extends TableDataBase {
 
     constructor(/**
                  * 图形的数据，二维数组。
-                 *
-                 *
                  */
                 public data: GraphDataMatrix = [],
                 public header: GraphDataHeader = [],
@@ -103,7 +101,7 @@ export abstract class AbstractGraphData extends TableDataBase {
 
     public ajaxSuccessHandler(data): void {
         super.ajaxSuccessHandler(data);
-        this.fromObject(data);
+        this._fromObject(data);
     }
 
     public ajaxErrorHandler(error): void {
@@ -179,6 +177,10 @@ export class GraphData extends AbstractGraphData {
 
     protected createChartOptions(): EchartOptions {
         return this.echartOptions;
+    }
+
+    public fromObject(data: any): AbstractGraphData {
+        return super.fromObject(data);
     }
 
     /**
