@@ -32,19 +32,19 @@
 <h3>GeneralCollection</h3>
 <a (click)="gc.fromObject([1,2,3,4])"><b>fromObject</b></a>
 <a (click)="gc.fromAjax('mock-data/core-members')"><b>fromAjax (success)</b></a>
-<a (click)="gc.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="gc.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
 
 <h3>TableData</h3>
 <a (click)="td.fromObject(rawTableData)"><b>fromObject</b></a>
 <a (click)="td.fromAjax('mock-data/hr-list')"><b>fromAjax (success)</b></a>
-<a (click)="td.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="td.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
 <a (click)="td.sort(sortAsString, orderByDesc, 'enName');">sort</a>
 
 <h3>PageableTableData</h3>
 <a (click)="ptd.fromObject(rawTableData)"><b>fromObject</b></a>
 <a (click)="ptd.updateDataSource('mock-data/hr-list')"><b>updateDataSource</b></a>
 <a (click)="ptd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
-<a (click)="ptd.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="ptd.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
 <a (click)="changePage(ptd)">changePage</a>
 <a (click)="ptd.sort(sortAsString, orderByDesc, 'enName');">sort</a>
 <a (click)="ptd.filter('china', ['enName']);">filter</a>
@@ -53,7 +53,7 @@
 <a (click)="btd.fromObject(rawTableData)"><b>fromObject</b></a>
 <a (click)="btd.updateDataSource('mock-data/hr-list')"><b>updateDataSource</b></a>
 <a (click)="btd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
-<a (click)="btd.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="btd.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
 <a (click)="changePage(btd)">changePage</a>
 <a (click)="btd.sort(sortAsString, orderByDesc, 'enName');">sort</a>
 <a (click)="btd.filter('china', ['enName']);">filter</a>
@@ -61,7 +61,7 @@
 <h3>LocalPageableTableData</h3>
 <a (click)="lpd.fromObject(rawTableData)"><b>fromObject</b></a>
 <a (click)="lpd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
-<a (click)="lpd.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="lpd.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
 <a (click)="changePage(lpd)">changePage</a>
 <a (click)="lpd.sort(sortAsString, orderByDesc, 'enName');">sort</a>
 <a (click)="lpd.filter('china', ['enName']);">filter</a>

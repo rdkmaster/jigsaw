@@ -144,7 +144,6 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
             error = new Response(reason, {status: 409, statusText: reason});
         } else {
             console.error('get data from paging server error!! detail: ' + error['message']);
-            this.componentDataHelper.invokeChangeCallback();
             this._busy = false;
         }
 
