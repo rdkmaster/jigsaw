@@ -663,7 +663,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._dataSourceChanged = true;
     }
 
     public fromAjax(url?: string): void;
@@ -677,6 +676,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         } else if (!!optionsOrUrl) {
             this.updateDataSource(<string>optionsOrUrl);
         }
+        this._dataSourceChanged = true;
         this._ajax();
     }
 

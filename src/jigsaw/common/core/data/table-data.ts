@@ -464,7 +464,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.pagingInfo.totalRecord = 0;
         this.filterInfo = null;
         this.sortInfo = null;
-        this._dataSourceChanged = true;
     }
 
     public fromObject(data: any): PageableTableData {
@@ -484,6 +483,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         } else if (!!optionsOrUrl) {
             this.updateDataSource(<string>optionsOrUrl);
         }
+        this._dataSourceChanged = true;
         this._ajax();
     }
 
