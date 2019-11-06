@@ -106,6 +106,10 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
         return this.componentDataHelper.getRefreshRemoval({fn: callback, context: context});
     }
 
+    public onChange(callback: (thisData: AbstractGeneralCollection<T>) => void, context?: any): CallbackRemoval {
+        return this.componentDataHelper.getChangeRemoval({fn: callback, context: context});
+    }
+
     public onAjaxStart(callback: (data: T) => void, context?: any): CallbackRemoval {
         return this.componentDataHelper.getAjaxStartRemoval({fn: callback, context: context});
     }
@@ -221,6 +225,7 @@ export class GeneralCollection<T> extends AbstractGeneralCollection<T> {
 
         if (needRefresh) {
             this.refresh();
+            this.componentDataHelper.invokeChangeCallback();
         }
 
         return this;
