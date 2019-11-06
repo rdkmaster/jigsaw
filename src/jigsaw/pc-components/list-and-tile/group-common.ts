@@ -58,16 +58,23 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
-    private _removeInvalidSelectedItems(): void {
+    /**
+     * @internal
+     */
+    public _removeInvalidSelectedItems(): void {
         if (!this._items || !this._selectedItems) {
             return;
         }
-        this._selectedItems.forEach(selectedItem => {
+        let needRefresh = false;
+        let selectedItems = this._selectedItems.concat();
+        selectedItems.forEach(selectedItem => {
             if (this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
                 return;
             }
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
+            needRefresh = true;
         });
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();

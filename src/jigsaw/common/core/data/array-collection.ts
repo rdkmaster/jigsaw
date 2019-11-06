@@ -891,6 +891,8 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         }
     }
 
+    private _dataSourceChanged: boolean = false;
+
     constructor(source?: T[]) {
         super(source);
         this._bakData = source;
@@ -901,6 +903,10 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
             }
             this._setDataByPageInfo();
             this.refresh();
+            if(this._dataSourceChanged) {
+                this.componentDataHelper.invokeChangeCallback();
+                this._dataSourceChanged = false;
+            }
         });
         this._initSubjects();
     }
@@ -909,7 +915,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         this._bakData = source;
         this.filteredData = source;
         this.firstPage();
-        this.componentDataHelper.invokeChangeCallback();
+        this._dataSourceChanged = true;
         return this;
     }
 

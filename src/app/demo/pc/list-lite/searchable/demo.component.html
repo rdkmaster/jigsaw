@@ -10,7 +10,9 @@
     <div class="clearfix">
         <div class="live-demo live-demo-block">
             <h3>搜索功能</h3>
-            <j-list-lite width="200" [data]="goodsList" labelField="name"
+            <button (click)="changeData()">change data</button>
+            <br>
+            <j-list-lite width="200" [(data)]="goodsList" labelField="name"
                          (selectedItemsChange)="handleSelect($event, 'selectedItems', 'name')" [multipleSelect]="true"
                          [searchable]="true"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems}}</span></p>
@@ -18,6 +20,8 @@
 
         <div class="live-demo live-demo-block">
             <h3>本地数据过滤</h3>
+            <button (click)="changeData2()">change data</button>
+            <br>
             <j-list-lite width="200" [optionCount]="4" [data]="lpaCountries" labelField="enName"
                          (selectedItemsChange)="handleSelect($event, 'selectedCountries', 'enName')" [multipleSelect]="true"
                          [searchable]="true"></j-list-lite>
@@ -28,6 +32,8 @@
     <div class="clearfix">
         <div class="live-demo  live-demo-block">
             <h3>服务端数据过滤</h3>
+            <button (click)="changeData3()">change data</button>
+            <br>
             <j-list-lite width="200" [optionCount]="4" [data]="spaCountries" labelField="enName"
                          (selectedItemsChange)="handleSelect($event, 'selectedCountries2', 'enName')" [multipleSelect]="true"
                          [searchable]="true"></j-list-lite>
