@@ -12,25 +12,32 @@ export class TablePageableDemoComponent {
 
     constructor(http: HttpClient) {
         this.pageable = new PageableTableData(http, {
-            url: 'mock-data/countries', body: {aa: 11, bb: 22}, method: 'post'
+            url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });
         /*this.pageable = new PageableTableData(http, {
-            url: 'mock-data/countries', params: {aa: 11, bb: 22}
+            url: 'mock-data/hr-list', params: {aa: 11, bb: 22}
         });*/
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
         });
         this.pageable.pagingInfo.pageSize = 5;
-        this.pageable.sortInfo = new DataSortInfo(SortAs.string, 'desc', 'enName');
+        // pageableTableData的DataSortInfo只支持字符串参数，不支持枚举和索引
+        this.pageable.sortInfo = new DataSortInfo('number', 'desc', 'salary');
     }
 
     columnDefines: ColumnDefine[] = [
         {
-            target: 0,
+            target: 'salary',
+            header: {
+                sortable: true,
+                sortAs: SortAs.number,
+                defaultSortOrder: SortOrder.desc
+            }
+        }, {
+            target: 'name',
             header: {
                 sortable: true,
                 sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.desc
             }
         }
     ];
