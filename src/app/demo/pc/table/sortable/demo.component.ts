@@ -171,16 +171,17 @@ export class TableSetHeaderSortDemoComponent {
         this.localPageable.fromAjax('mock-data/hr-list');
 
         this.pageable = new PageableTableData(http, {
-            url: 'mock-data/countries', body: {aa: 11, bb: 22}, method: 'post'
+            url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });
         /*this.pageable = new PageableTableData(http, {
-            url: 'mock-data/countries', params: {aa: 11, bb: 22}
+            url: 'mock-data/hr-list', params: {aa: 11, bb: 22}
         });*/
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
         });
         this.pageable.pagingInfo.pageSize = 5;
-        this.pageable.sortInfo = new DataSortInfo(SortAs.string, 'desc', 'enName');
+        // pageableTableData的DataSortInfo只支持字符串参数，不支持枚举和索引
+        this.pageable.sortInfo = new DataSortInfo('string', 'asc', 'name');
     }
 
     columns: ColumnDefine[] = [
@@ -230,17 +231,6 @@ export class TableSetHeaderSortDemoComponent {
         // 过滤所有列
         //this.localPageable.filter($event);
     }
-
-    columnsForPageable: ColumnDefine[] = [
-        {
-            target: 0,
-            header: {
-                sortable: true,
-                sortAs: SortAs.string,
-                defaultSortOrder: SortOrder.desc
-            }
-        }
-    ];
 
     onSearchForPageable(reg) {
         // 这里需要特别注意，filter函数的执行是在服务端，而非在浏览器！
