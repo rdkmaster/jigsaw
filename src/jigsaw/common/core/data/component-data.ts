@@ -181,9 +181,16 @@ export interface IComponentData {
     destroy(): void;
 
     /**
-     * 注册数据有更新时的处理逻辑，往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
+     * 注册数据有更新时的处理逻辑，在外部更新数据、排序、过滤、分页等动作，都会触发回调。
+     * 往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
      */
     onRefresh(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
+
+    /**
+     * 注册数据有变化时的处理逻辑，仅在外部更新数据时触发回调，排序、过滤、分页等动作不会触发回调
+     * 往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
+     */
+    onChange(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
 }
 
 /**
@@ -318,6 +325,11 @@ export interface IPageable extends IAjaxComponentData {
      * 跳转到最后一页
      */
     lastPage(): void;
+
+    /**
+     * 注册数据在执行分页后的处理逻辑，往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
+     */
+    // onPage(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
 }
 
 /**
@@ -371,6 +383,11 @@ export interface ISortable extends IAjaxComponentData {
      * @param sort 排序参数的结构化信息
      */
     sort(sort: DataSortInfo): void;
+
+    /**
+     * 注册数据在执行排序后的处理逻辑，往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
+     */
+    // onSort(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
 }
 
 /**
@@ -409,6 +426,11 @@ export interface IFilterable extends IAjaxComponentData {
      * @param term
      */
     filter(term: DataFilterInfo): void;
+
+    /**
+     * 注册数据在执行过滤后的处理逻辑，往往由Jigsaw的各个组件使用，应用一般无需调用此方法。
+     */
+    // onFilter(callback: (thisData: IComponentData) => void, context?: any): CallbackRemoval;
 }
 
 /**
@@ -519,6 +541,7 @@ export class ComponentDataHelper {
 
     private _timeout: any = null;
     private _refreshCallbacks: DataRefreshCallback[] = [];
+    private _changeCallbacks: DataRefreshCallback[] = [];
     private _ajaxStartCallbacks: AjaxSuccessCallback[] = [];
     private _ajaxSuccessCallbacks: AjaxSuccessCallback[] = [];
     private _ajaxErrorCallbacks: AjaxSuccessCallback[] = [];
@@ -544,6 +567,10 @@ export class ComponentDataHelper {
         return this._getRemoval(this._refreshCallbacks, callback);
     }
 
+    public getChangeRemoval(callback: DataRefreshCallback): CallbackRemoval {
+        return this._getRemoval(this._changeCallbacks, callback);
+    }
+
     public invokeRefreshCallback(): void {
         if (this._timeout !== null) {
             return;
@@ -552,6 +579,10 @@ export class ComponentDataHelper {
             this._timeout = null;
             this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
         }, 0);
+    }
+
+    public invokeChangeCallback(): void {
+        this._changeCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
     }
 
     public invokeAjaxStartCallback(): void {
@@ -572,6 +603,7 @@ export class ComponentDataHelper {
 
     public clearCallbacks(): void {
         this._refreshCallbacks.splice(0, this._refreshCallbacks.length);
+        this._changeCallbacks.splice(0, this._changeCallbacks.length);
         this._ajaxStartCallbacks.splice(0, this._ajaxStartCallbacks.length);
         this._ajaxSuccessCallbacks.splice(0, this._ajaxSuccessCallbacks.length);
         this._ajaxErrorCallbacks.splice(0, this._ajaxErrorCallbacks.length);
@@ -740,7 +772,7 @@ export enum SortOrder {
  * $demo = table/sortable
  */
 export class DataSortInfo {
-    constructor(public as: SortAs = SortAs.string,
+    constructor(public as: SortAs | string = SortAs.string,
                 public order: SortOrder | string = SortOrder.asc,
                 public field: string | number) {
     }

@@ -13,6 +13,8 @@ import {RefreshDemoComponent} from "./refresh/demo.component";
 import {AjaxEventsDemoComponent} from "./ajax-events/demo.component";
 import {LocalPageableArrayDemoComponent} from "./local-pageable-array/demo.component";
 import {LocalPageableArrayDemoModule} from "./local-pageable-array/demo.module";
+import {OnChangeDemoComponent} from "./on-change/demo.component";
+import {OnChangeDemoModule} from "./on-change/demo.module";
 
 export const routerConfig = [
     {
@@ -32,6 +34,9 @@ export const routerConfig = [
     },
     {
         path: 'local-pageable-array', component: LocalPageableArrayDemoComponent
+    },
+    {
+        path: 'on-change', component: OnChangeDemoComponent
     }
 ];
 
@@ -42,7 +47,7 @@ export const routerConfig = [
         ArrayCollectionBasicDemoModule,
         ArrayServerSidePaginationDemoModule,
         RefreshDemoModule, AjaxEventsDemoModule,
-        LocalPageableArrayDemoModule
+        LocalPageableArrayDemoModule, OnChangeDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {

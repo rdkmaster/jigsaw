@@ -52,8 +52,6 @@ export abstract class AbstractGraphData extends TableDataBase {
 
     constructor(/**
                  * 图形的数据，二维数组。
-                 *
-                 *
                  */
                 public data: GraphDataMatrix = [],
                 public header: GraphDataHeader = [],
@@ -102,17 +100,30 @@ export abstract class AbstractGraphData extends TableDataBase {
     }
 
     public ajaxSuccessHandler(data): void {
-        super.ajaxSuccessHandler(data);
-        this.fromObject(data);
+        if (AbstractGraphData.isGraphData(data)) {
+            this._fromObject(data);
+        } else {
+            console.log('invalid raw GraphData received from server...');
+            this.clear();
+            this.refresh();
+            this.invokeChangeCallback();
+        }
+        this._busy = false;
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
     public ajaxErrorHandler(error): void {
         super.ajaxErrorHandler(error);
         this.clear();
         this.refresh();
+        this.invokeChangeCallback();
     }
 
     public fromObject(data: any): AbstractGraphData {
+        return this._fromObject(data);
+    }
+
+    public _fromObject(data: any): AbstractGraphData {
         if (!AbstractGraphData.isGraphData(data)) {
             throw new Error('invalid graph data, need at least a "data" property which type is Array!');
         }
@@ -130,6 +141,7 @@ export abstract class AbstractGraphData extends TableDataBase {
         }
         this._makeFields();
         this.refresh();
+        this.invokeChangeCallback();
 
         return this;
     }

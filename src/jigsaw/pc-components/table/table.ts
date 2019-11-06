@@ -465,31 +465,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    // /**
-    //  * 一旦数据有更新，表格将自动对已经设置了排序的行做自动排序处理。在某些情况下会很方便，但是在表格数据量大的时候，可能会有性能问题，
-    //  * 表格数据量大的时候，最好关闭这个选项，由应用自行对`data`属性做排序。也可以不自动排序，由用户自行点击列头触发行排序
-    //  *
-    //  * @type {boolean}
-    //  */
-    // @Input()
-    // public autoSort: boolean = false;
-    //
-    // private _sortedColumn: number = -1;
-    // private _sortedOrder: SortOrder;
-    //
-    // private _sortColumn(): void {
-    //     if (!this.autoSort) {
-    //         return;
-    //     }
-    //     let headSetting = this._$headerSettings.find(headSetting => headSetting.sortable &&
-    //         (headSetting.defaultSortOrder == SortOrder.asc || headSetting.defaultSortOrder == SortOrder.des)
-    //     );
-    //     // if (headSetting) {
-    //     //     this._sortedColumn = headSetting.field;
-    //     // }
-    //     this.data.sort(headSetting.sortAs, headSetting.defaultSortOrder, headSetting.field);
-    // }
-
     @Input()
     public floatingHeader: boolean = false;
 
