@@ -1,0 +1,72 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<p>提示：挨个api点，粗体的要++，普通字体的不++。</p>
+<p>onChange次数：{{onChangeCount}}</p>
+
+<h3>ArrayCollection</h3>
+<a (click)="ac.fromArray([1,2,3,4])"><b>fromArray</b></a>
+<a (click)="ac.fromAjax('mock-data/core-members')"><b>fromAjax (success)</b></a>
+<a (click)="ac.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+
+<h3>PageableArray</h3>
+<a (click)="pa.fromArray([1,2,3,4])"><b>fromArray</b></a>
+<a (click)="pa.updateDataSource('mock-data/hr-list-short')"><b>updateDataSource</b></a>
+<a (click)="pa.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
+<a (click)="pa.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="changePage(pa)">changePage</a>
+<a (click)="pa.sort(sortAsString, orderByDesc, 'enName');">sort</a>
+<a (click)="pa.filter('china', ['enName']);">filter</a>
+
+<h3>LocalPageableArray</h3>
+<a (click)="lpa.fromArray([1,2,3,4])"><b>fromArray</b></a>
+<a (click)="lpa.fromAjax('mock-data/cities')"><b>fromAjax (success)</b></a>
+<a (click)="lpa.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
+<a (click)="changePage(lpa)">changePage</a>
+<a (click)="lpa.sort(sortAsString, orderByDesc, 'enName');">sort</a>
+<a (click)="lpa.filter('china', ['enName']);">filter</a>
+
+<h3>GeneralCollection</h3>
+<a (click)="gc.fromObject([1,2,3,4])"><b>fromObject</b></a>
+<a (click)="gc.fromAjax('mock-data/core-members')"><b>fromAjax (success)</b></a>
+<a (click)="gc.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
+
+<h3>TableData</h3>
+<a (click)="td.fromObject(rawTableData)"><b>fromObject</b></a>
+<a (click)="td.fromAjax('mock-data/hr-list')"><b>fromAjax (success)</b></a>
+<a (click)="td.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
+<a (click)="td.sort(sortAsString, orderByDesc, 'enName');">sort</a>
+
+<h3>PageableTableData</h3>
+<a (click)="ptd.fromObject(rawTableData)"><b>fromObject</b></a>
+<a (click)="ptd.updateDataSource('mock-data/hr-list')"><b>updateDataSource</b></a>
+<a (click)="ptd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
+<a (click)="ptd.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
+<a (click)="changePage(ptd)">changePage</a>
+<a (click)="ptd.sort(sortAsString, orderByDesc, 'enName');">sort</a>
+<a (click)="ptd.filter('china', ['enName']);">filter</a>
+
+<h3>BigTableData</h3>
+<a (click)="btd.fromObject(rawTableData)"><b>fromObject</b></a>
+<a (click)="btd.updateDataSource('mock-data/hr-list')"><b>updateDataSource</b></a>
+<a (click)="btd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
+<a (click)="btd.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
+<a (click)="changePage(btd)">changePage</a>
+<a (click)="btd.sort(sortAsString, orderByDesc, 'enName');">sort</a>
+<a (click)="btd.filter('china', ['enName']);">filter</a>
+
+<h3>LocalPageableTableData</h3>
+<a (click)="lpd.fromObject(rawTableData)"><b>fromObject</b></a>
+<a (click)="lpd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
+<a (click)="lpd.fromAjax('mock-data/invalid-url')">fromAjax (failure)</a>
+<a (click)="changePage(lpd)">changePage</a>
+<a (click)="lpd.sort(sortAsString, orderByDesc, 'enName');">sort</a>
+<a (click)="lpd.filter('china', ['enName']);">filter</a>
+
+<h3>GraphData</h3>
+<a (click)="gd.fromObject(rawTableData)"><b>fromObject</b></a>
+<a (click)="gd.fromAjax('mock-data/countries')"><b>fromAjax (success)</b></a>
+<a (click)="gd.fromAjax('mock-data/invalid-url')"><b>fromAjax (failure)</b></a>
