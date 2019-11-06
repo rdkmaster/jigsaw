@@ -3,6 +3,7 @@ import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/
 import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
+import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -17,6 +18,8 @@ export class SelectSearchableDemoComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
+
+    cityDataTemp = this.cityListForSelect.concat();
 
     selectedCityName: string;
 
@@ -36,6 +39,38 @@ export class SelectSearchableDemoComponent {
 
     selectChange3($event) {
         this.selectedCountries2 = $event.map(s => s.enName).toString();
+    }
+
+    changeData() {
+        this.cityListForSelect.fromArray(this.cityDataTemp.map(city => {
+            if(city && city.label) {
+                city = Object.assign({}, city);
+                city.label = city.label + '-1';
+            }
+            return city
+        }));
+    }
+
+    changeData2() {
+        this.lpaCountries.fromAjax('mock-data/countries');
+        this.lpaCountries.dataReviser = (td: TableData) => {
+            return TableData.toArray(CommonUtils.deepCopy(td)).map(item => {
+                item = Object.assign({}, item);
+                item['enName'] = item['enName'] + '-1';
+                return item;
+            });
+        }
+    }
+
+    changeData3() {
+        this.spaCountries.fromAjax();
+        this.spaCountries.dataReviser = (td: TableData) => {
+            td = <TableData>CommonUtils.deepCopy(td);
+            td.data.forEach(row => {
+                row[0] = row[0] + '-1';
+            });
+            return td;
+        }
     }
 
     constructor(public http: HttpClient) {
