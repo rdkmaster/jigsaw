@@ -82,7 +82,8 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             if(this._removeOnChange) {
                 this._removeOnChange();
             }
-            this._removeOnChange = this._data.onChange(() => {
+            const onChange: any = this._data.onChange;
+            this._removeOnChange = onChange(() => {
                 this.removeInvalidSelectedItems();
             });
         }
@@ -112,7 +113,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input() public optionCount: number;
 
-    @ViewChild(JigsawList, {static: false}) private _listInst: JigsawList;
+    @ViewChild(JigsawList) private _listInst: JigsawList;
 
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
