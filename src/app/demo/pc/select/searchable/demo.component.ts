@@ -3,7 +3,7 @@ import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/
 import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
-import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
+import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -42,10 +42,10 @@ export class SelectSearchableDemoComponent {
     }
 
     changeData() {
-        this.cityListForSelect.fromArray(this.cityDataTemp.map(city => {
+        this.cityListForSelect.fromArray(this.cityDataTemp.map((city, idx) => {
             if(city && city.label) {
                 city = Object.assign({}, city);
-                city.label = city.label + '-1';
+                city.label = idx % 2 == 0 ? city.label + '-1' : city.label;
             }
             return city
         }));
@@ -54,9 +54,9 @@ export class SelectSearchableDemoComponent {
     changeData2() {
         this.lpaCountries.fromAjax('mock-data/countries');
         this.lpaCountries.dataReviser = (td: TableData) => {
-            return TableData.toArray(CommonUtils.deepCopy(td)).map(item => {
+            return TableData.toArray(CommonUtils.deepCopy(td)).map((item, idx) => {
                 item = Object.assign({}, item);
-                item['enName'] = item['enName'] + '-1';
+                item['enName'] = idx % 2 == 0 ? item['enName'] + '-1' : item['enName'];
                 return item;
             });
         }
@@ -66,8 +66,8 @@ export class SelectSearchableDemoComponent {
         this.spaCountries.fromAjax();
         this.spaCountries.dataReviser = (td: TableData) => {
             td = <TableData>CommonUtils.deepCopy(td);
-            td.data.forEach(row => {
-                row[0] = row[0] + '-1';
+            td.data.forEach((row, idx) => {
+                row[0] = idx % 2 == 0 ? row[0] + '-1' : row[0];
             });
             return td;
         }
