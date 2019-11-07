@@ -1,15 +1,16 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
-    ViewChildren
+    ViewChildren, OnDestroy, Output, EventEmitter
 } from "@angular/core";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {CommonModule} from "@angular/common";
-import {JigsawListModule, JigsawListOption} from "./list";
+import {JigsawList, JigsawListModule, JigsawListOption} from "./list";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
+import {CallbackRemoval} from "../../common/core/utils/common-utils";
 
 /**
  * 一个轻量的list控件，是在list控件基础上做的封装，做了一些功能的拓展
@@ -47,7 +48,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true},
     ]
 })
-export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit {
+export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
     constructor(private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
@@ -61,11 +62,39 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         return null
     }
 
+    private _removeOnChange: CallbackRemoval;
+
     /**
      * 供选择的数据集合
      */
+    private _data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[];
+
     @Input()
-    public data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | GroupOptionValue[];
+    public get data(): ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[] {
+        return this._data;
+    }
+
+    public set data(data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[]) {
+        if(!data || this.data == data) return;
+        this._data = data;
+        this.dataChange.emit(this.data);
+        if(this._data instanceof ArrayCollection || this._data instanceof LocalPageableArray || this._data instanceof PageableArray) {
+            if(this._removeOnChange) {
+                this._removeOnChange();
+            }
+            this._removeOnChange = this._data.onChange(() => {
+                this.removeInvalidSelectedItems();
+            });
+        }
+        if(this._needCheckSelectedItems) {
+            this.removeInvalidSelectedItems();
+        } else {
+            this._needCheckSelectedItems = true;
+        }
+    }
+
+    @Output()
+    public dataChange = new EventEmitter();
 
     /**
      * 设置是否可以检索数据
@@ -83,9 +112,25 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input() public optionCount: number;
 
+    @ViewChild(JigsawList, {static: false}) private _listInst: JigsawList;
+
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
     @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
+
+    /**
+     * 搜索的时候，如果重新创建data为LocalPageableArray，这个时候检查selectItems，会误删选中值
+     */
+    private _needCheckSelectedItems: boolean = true;
+
+    public removeInvalidSelectedItems() {
+        if(this._listInst) {
+            // 等待ngFor渲染
+            this.callLater(() => {
+                this._listInst._removeInvalidSelectedItems();
+            })
+        }
+    }
 
     /**
      * @internal
@@ -95,6 +140,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             const data = new LocalPageableArray();
             data.pagingInfo.pageSize = Infinity;
             data.fromArray(this.data);
+            this._needCheckSelectedItems = false;
             this.data = data;
         }
         filterKey = filterKey ? filterKey.trim() : '';
@@ -113,6 +159,14 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         this._listOptions.changes.subscribe(() => {
             this._setListWrapperHeight();
         })
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if(this._removeOnChange) {
+            this._removeOnChange();
+            this._removeOnChange = null;
+        }
     }
 }
 

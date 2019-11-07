@@ -1,17 +1,29 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import {AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList} from "@angular/core";
+import {
+    AfterContentInit,
+    ChangeDetectorRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    QueryList,
+    OnInit
+} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
+import {Subscription} from "rxjs";
 
 export class GroupOptionValue {
     [index: string]: any;
+
     disabled?: boolean;
 }
 
-export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
+export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy, OnInit {
 
     protected _removeRefreshCallback: CallbackRemoval;
+    private _removeItemsChanges: Subscription;
 
     @Input()
     public valid: boolean = true;
@@ -44,19 +56,25 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             return;
         }
         this._propagateChange(newValue);
-        this._removeInvalidSelectedItems();
     }
 
-    private _removeInvalidSelectedItems():void {
+    /**
+     * @internal
+     */
+    public _removeInvalidSelectedItems(): void {
         if (!this._items || !this._selectedItems) {
             return;
         }
-        this._selectedItems.forEach(selectedItem => {
+        let needRefresh = false;
+        let selectedItems = this._selectedItems.concat();
+        selectedItems.forEach(selectedItem => {
             if (this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
                 return;
             }
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
+            needRefresh = true;
         });
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
@@ -75,19 +93,11 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
             }
-        } else { //单选选中
-            this._items.length && this._items.forEach((item: AbstractJigsawOptionComponent) => {
-                //去除其他option选中
-                if (!CommonUtils.compareWithKeyProperty(item.value, itemValue, this._trackItemBy) && item.selected) {
-                    item.selected = false;
-                    item.changeDetector.detectChanges();
-                    this._selectedItems.splice(this.selectedItems.indexOf(item.value), 1);
-                }
-            });
-            //添加选中数据
+        } else {
+            //单选选中
+            this._selectedItems.splice(0, this._selectedItems.length);
             this.selectedItems.push(itemValue);
         }
-        this._removeInvalidSelectedItems();
         this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
     }
@@ -138,16 +148,23 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         });
     }
 
+    ngOnInit() {
+        super.ngOnInit();
+        if (this._removeRefreshCallback) {
+            this._removeRefreshCallback()
+        }
+        this._removeRefreshCallback = this._selectedItems.onRefresh(() => this._setItemState(this._items));
+    }
+
     ngAfterContentInit() {
         this._setItemState(this._items);
         this._subscribeItemSelectedChange(this._items);
-        this._items.changes.subscribe(items => {
+        this._removeItemsChanges = this._items.changes.subscribe(items => {
             // 异步变更data数据
             this._setItemState(items);
             this._subscribeItemSelectedChange(items);
-            this._removeInvalidSelectedItems();
         });
-        if(this._items.length) {
+        if (this._items.length) {
             // 在本地数据为空时，不检查无用选项
             this._removeInvalidSelectedItems();
         }
@@ -158,8 +175,11 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
-        if(this._items) {
+        if (this._items) {
             this._items.forEach(item => item.change.unsubscribe());
+        }
+        if (this._removeItemsChanges) {
+            this._removeItemsChanges.unsubscribe();
         }
     }
 
@@ -178,9 +198,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
 
         if (this._removeRefreshCallback) {
-            this._removeRefreshCallback()
+            this._removeRefreshCallback();
         }
-        this._removeRefreshCallback = newValue.onRefresh(() => this._setItemState(this._items));
+        this._removeRefreshCallback = this._selectedItems.onRefresh(() => this._setItemState(this._items));
     }
 
     public writeValue(newValue: any): void {
