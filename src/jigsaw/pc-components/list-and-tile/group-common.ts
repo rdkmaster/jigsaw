@@ -62,7 +62,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
      * @internal
      */
     public _removeInvalidSelectedItems(): void {
-        if (!this._items || !this._selectedItems) {
+        if (!this._items || !this._selectedItems || !this._selectedItems.length) {
             return;
         }
         let needRefresh = false;
@@ -74,7 +74,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
             needRefresh = true;
         });
-        this.selectedItemsChange.emit(this.selectedItems);
+        if(needRefresh) {
+            this.selectedItemsChange.emit(this.selectedItems);
+        }
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
