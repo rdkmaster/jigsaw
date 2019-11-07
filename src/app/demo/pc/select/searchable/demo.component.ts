@@ -24,6 +24,7 @@ export class SelectSearchableDemoComponent {
     selectedCityName: string;
 
     public selectChange(selectedItem: any) {
+        selectedItem = selectedItem ? selectedItem : {label: ''};
         console.log("select city is:" + selectedItem.label);
         this.selectedCityName = selectedItem.label;
     }
