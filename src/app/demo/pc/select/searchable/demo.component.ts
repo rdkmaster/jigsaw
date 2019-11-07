@@ -3,6 +3,7 @@ import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/
 import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
+import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -18,6 +19,8 @@ export class SelectSearchableDemoComponent {
         {label: "西安"}
     ]);
 
+    cityDataTemp = this.cityListForSelect.concat();
+
     selectedCityName: string;
 
     public selectChange(selectedItem: any) {
@@ -29,6 +32,46 @@ export class SelectSearchableDemoComponent {
     spaCountries: PageableArray;
     selectedCountries: string;
     selectedCountries2: string;
+
+    selectChange2($event) {
+        this.selectedCountries = $event.map(s => s.enName).toString();
+    }
+
+    selectChange3($event) {
+        this.selectedCountries2 = $event.map(s => s.enName).toString();
+    }
+
+    changeData() {
+        this.cityListForSelect.fromArray(this.cityDataTemp.map((city, idx) => {
+            if(city && city.label) {
+                city = Object.assign({}, city);
+                city.label = idx % 2 == 0 ? city.label + '-1' : city.label;
+            }
+            return city
+        }));
+    }
+
+    changeData2() {
+        this.lpaCountries.fromAjax('mock-data/countries');
+        this.lpaCountries.dataReviser = (td: TableData) => {
+            return TableData.toArray(CommonUtils.deepCopy(td)).map((item, idx) => {
+                item = Object.assign({}, item);
+                item['enName'] = idx % 2 == 0 ? item['enName'] + '-1' : item['enName'];
+                return item;
+            });
+        }
+    }
+
+    changeData3() {
+        this.spaCountries.fromAjax();
+        this.spaCountries.dataReviser = (td: TableData) => {
+            td = <TableData>CommonUtils.deepCopy(td);
+            td.data.forEach((row, idx) => {
+                row[0] = idx % 2 == 0 ? row[0] + '-1' : row[0];
+            });
+            return td;
+        }
+    }
 
     constructor(public http: HttpClient) {
         this.lpaCountries = new LocalPageableArray<GroupOptionValue>();

@@ -1,16 +1,17 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
 import {JigsawListLite} from "jigsaw/pc-components/list-and-tile/list-lite";
-import {LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
+import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class ListLiteSearchableDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    goodsList = new ArrayCollection([
         {
             logo: 'bicycle',
             name: 'bicycle',
@@ -44,12 +45,47 @@ export class ListLiteSearchableDemoComponent {
             name: 'puzzle-piece',
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
-    ];
+    ]);
+
+    goodsListTemp = this.goodsList.concat();
 
     selectedItems: string;
 
     handleSelect(selectedItems: any[], property: string, labelField: string) {
         this[property] = selectedItems.map(item => item[labelField]).toString()
+    }
+
+    changeData() {
+        console.log('this.goodsList', this.goodsList);
+        this.goodsList.fromArray(this.goodsListTemp.map((goods, idx) => {
+            if (goods && goods.name) {
+                goods = Object.assign({}, goods);
+                goods.name = idx % 3 == 0 ? goods.name + '-1' : goods.name;
+            }
+            return goods
+        }));
+    }
+
+    changeData2() {
+        this.lpaCountries.fromAjax('mock-data/countries');
+        this.lpaCountries.dataReviser = (td: TableData) => {
+            return TableData.toArray(CommonUtils.deepCopy(td)).map((item, idx) => {
+                item = Object.assign({}, item);
+                item['enName'] = idx % 2 == 0 ? item['enName'] + '-1' : item['enName'];
+                return item;
+            });
+        }
+    }
+
+    changeData3() {
+        this.spaCountries.fromAjax();
+        this.spaCountries.dataReviser = (td: TableData) => {
+            td = <TableData>CommonUtils.deepCopy(td);
+            td.data.forEach((row, idx) => {
+                row[0] = idx % 2 == 0 ? row[0] + '-1' : row[0];
+            });
+            return td;
+        }
     }
 
     lpaCountries: LocalPageableArray<GroupOptionValue>;

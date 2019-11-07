@@ -109,6 +109,8 @@ export class ListLiteFullDemoComponent {
         },
     ]);
 
+    selectedItems7;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
