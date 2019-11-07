@@ -161,10 +161,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if (CommonUtils.isUndefined(value) || this._value == value) {
             return;
         }
-        value = Number((value + '').replace(/[^0-9-.]+/, ''));
-        if (isNaN(value)) {
+        if (isNaN(value) && <any>value !== "-") {
+            value = this.min == -Infinity ? 0 : this.min;
             console.error('value property must be a number, please input a number or number string');
-            return;
         }
 
         if (value > this.max) {
@@ -172,6 +171,11 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         }
 
         this._value = value;
+
+        if(<any>value === "") {
+            return;
+        }
+        
         this.valueChange.emit(this._value);
         this._propagateChange(this._value);
 
@@ -302,6 +306,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
+        if(this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+            this._value = this.min == -Infinity ? 0 : this.min;
+            this.valueChange.emit(this._value);
+        }
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
         } else {
