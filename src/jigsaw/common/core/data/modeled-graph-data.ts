@@ -232,13 +232,10 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.dimensionField || !this.xAxis || !this.xAxis.field) {
+        if (!this.xAxis || !this.xAxis.field) {
             return undefined;
         }
         if (!this.indicators || this.indicators.length == 0) {
-            return undefined;
-        }
-        if (!this.usingAllDimensions && (!this.dimensions || this.dimensions.length == 0)) {
             return undefined;
         }
 
@@ -327,17 +324,11 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     }
 
     protected createMultiKPIOptions(dim: Dimension): EchartOptions {
-        if (!dim) {
-            return undefined;
-        }
         const xAxisIndex = this.getIndex(this.xAxis.field);
         if (xAxisIndex == -1) {
             return undefined;
         }
         const dimIndex = this.getIndex(this.dimensionField);
-        if (dimIndex == -1) {
-            return undefined;
-        }
         const xAxisGroups = group(this.data, xAxisIndex);
         const pruned: string[][] = [];
         for (let xAxisItem in xAxisGroups) {
@@ -345,7 +336,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             if (records === xAxisGroups._$groupItems) {
                 continue;
             }
-            const prunedRecords = records.filter(r => r[dimIndex] == dim.name);
+            const prunedRecords = dim ? records.filter(r => r[dimIndex] == dim.name) : records;
             if (prunedRecords.length == 1) {
                 pruned.push(prunedRecords[0]);
             } else if (prunedRecords.length > 1) {
@@ -354,7 +345,9 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             } else {
                 const row = [];
                 row[xAxisIndex] = xAxisItem;
-                row[dimIndex] = dim.name;
+                if(dim) {
+                    row[dimIndex] = dim.name;
+                }
                 this.indicators.forEach(i => row[i.index] = i.defaultValue);
                 pruned.push(row);
             }
