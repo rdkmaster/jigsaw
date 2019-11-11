@@ -159,6 +159,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     public set value(value: number) {
+        debugger
         if (CommonUtils.isUndefined(value) || this._value == value) {
             return;
         }
@@ -166,6 +167,8 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             value = this.min == -Infinity ? 0 : this.min;
             console.error('value property must be a number, please input a number or number string');
         }
+
+        value = Number(value);
 
         if (value > this.max) {
             value = this.max;
@@ -176,7 +179,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if(<any>value === "") {
             return;
         }
-        
+
         this.valueChange.emit(this._value);
         this._propagateChange(this._value);
 
