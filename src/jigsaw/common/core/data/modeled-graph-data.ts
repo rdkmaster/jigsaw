@@ -217,6 +217,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
+    public dimDisabled: boolean;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -237,6 +238,15 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
         if (!this.indicators || this.indicators.length == 0) {
             return undefined;
+        }
+
+        if(!this.dimDisabled) {
+            if (!this.dimensionField) {
+                return undefined;
+            }
+            if (!this.usingAllDimensions && (!this.dimensions || this.dimensions.length == 0)) {
+                return undefined;
+            }
         }
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
@@ -324,11 +334,17 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     }
 
     protected createMultiKPIOptions(dim: Dimension): EchartOptions {
+        if (!this.dimDisabled && !dim) {
+            return undefined;
+        }
         const xAxisIndex = this.getIndex(this.xAxis.field);
         if (xAxisIndex == -1) {
             return undefined;
         }
         const dimIndex = this.getIndex(this.dimensionField);
+        if (!this.dimDisabled && dimIndex == -1) {
+            return undefined;
+        }
         const xAxisGroups = group(this.data, xAxisIndex);
         const pruned: string[][] = [];
         for (let xAxisItem in xAxisGroups) {
