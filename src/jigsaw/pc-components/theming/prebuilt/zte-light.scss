@@ -1,0 +1,33 @@
+@import "../../../common/core/theming/prebuilt/settings/zte-light";
+@import "../all-theme";
+@import "../../../common/core/theming/theming-api";
+
+// ------ Custom for zte by theming-api ------
+@include setDialogHead($primary-color, #f2f2f2, 30px);
+@include setDialogButton(right, false);
+
+@include showBtnAnimation(false);
+
+@include setTableHead(#f4f6f8, #294e79, 14px, #008fd4, 2px);
+@include setTableBody(#333, default, default, #f8f8f8);
+@include setTableTextAlign(left, 8px);
+
+@include setTag(#fff, 25px);
+@include setCollapse(#f4f6f8);
+@include setTabTriangle(true);
+
+// ------ Own for zte ------
+/**
+ * 设置按钮字体大小，和默认形式按钮的字体颜色
+ */
+@mixin setBtnDefault($defaultTextColor, $defaultFontSize: 12px) {
+    .#{$btn-prefix-cls} {
+        color: $defaultTextColor;
+        font-size: $defaultFontSize;
+    }
+}
+
+@include setPopupCloseBar($primary-color, $primary-7);
+@include setTimeGrTab(#008fd4);
+@include setBtnDefault($primary-color);
+@include setDrawerTheme(#fff);

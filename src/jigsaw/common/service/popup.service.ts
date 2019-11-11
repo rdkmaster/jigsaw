@@ -124,6 +124,11 @@ export class PopupOptions {
      *
      */
     showBorder?: boolean;
+
+    /**
+     * popupService默认是设置弹框背景的，此属性可以让弹框不自动设置默认背景
+     */
+    noSetBackground?: boolean;
 }
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
@@ -296,7 +301,7 @@ export class PopupService {
             this._setPopup(options, element);
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
-            if (tagName != 'jigsaw-block' && tagName != 'j-block') {
+            if ((!options || !options.noSetBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
                 const backgroundColor = JigsawTheme.getPopupBackgroundColor();
                 if (backgroundColor) {
                     PopupService._renderer.setStyle(element, 'background', backgroundColor);
