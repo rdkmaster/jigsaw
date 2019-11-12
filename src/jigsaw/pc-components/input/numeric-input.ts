@@ -41,17 +41,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         super();
     }
 
-    ngOnInit() {
-        this.valueChange.pipe(debounceTime(300)).subscribe((val) => {
-            if(val < this.min) {
-                this._value = this.min;
-                this.valueChange.emit(this._value);
-                this._checkDisabled();
-                this._checkInputValue();
-            }
-        });
-    }
-
     @Input()
     public valid: boolean = true;
 
@@ -167,23 +156,18 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             console.error('value property must be a number, please input a number or number string');
         }
 
-        value = Number(value);
-
-        if (value > this.max) {
-            value = this.max;
-        }
-
-        this._value = value;
-
-        if(<any>value === "") {
+        if(<any>value === "" || <any>value === "-" || Number(value) < this.min) {
+            // 正在输入的数值会在blur的时候处理
+            this._value = value;
             return;
         }
 
-        this.valueChange.emit(this._value);
-        this._propagateChange(this._value);
-
-        this._checkDisabled();
-        this._checkInputValue();
+        value = Number(value);
+        if (value > this.max) {
+            value = this.max;
+        }
+        this._value = value;
+        this._updateValue();
     }
 
     /**
@@ -221,6 +205,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     public _$upDisabled: boolean;
     public _$downDisabled: boolean;
+
+    private _updateValue() {
+        this.valueChange.emit(this._value);
+        this._propagateChange(this._value);
+        this._checkDisabled();
+        this._checkInputValue();
+    }
 
     private _checkDisabled() {
         this._$upDisabled = this.value >= this.max;
@@ -311,7 +302,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._focused = false;
         if(this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             this._value = this.min == -Infinity ? 0 : this.min;
-            this.valueChange.emit(this._value);
+            this._updateValue();
         }
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);

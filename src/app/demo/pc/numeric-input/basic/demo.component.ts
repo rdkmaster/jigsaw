@@ -6,6 +6,10 @@ import {Component} from "@angular/core";
 export class NumericInputBasicDemoComponent {
     value: number;
 
+    valueChange($event) {
+        console.log($event, typeof $event == 'number');
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
