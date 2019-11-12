@@ -230,11 +230,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$increase(event): void {
         event.preventDefault();
         event.stopPropagation();
-        if (CommonUtils.isUndefined(this.value)) {
+        if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+            // 非法的value取最小值
             this.value = this.min == -Infinity ? 0 : this.min;
+        } else {
+            this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
+                this._precisionFactor * this._step) / this._precisionFactor);
         }
-        this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
-            this._precisionFactor * this._step) / this._precisionFactor);
     }
 
     /**
@@ -243,16 +245,17 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$decrease(event): void {
         event.preventDefault();
         event.stopPropagation();
-        if (CommonUtils.isUndefined(this.value)) {
+        if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+            // 非法的value取最小值
             this.value = this.min == -Infinity ? 0 : this.min;
-        }
-        let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
-            this._precisionFactor * this._step) / this._precisionFactor);
-
-        if(tempValue < this.min) {
-            this.value = this.min;
-        }else {
-            this.value = tempValue;
+        } else {
+            let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
+                this._precisionFactor * this._step) / this._precisionFactor);
+            if(tempValue < this.min) {
+                this.value = this.min;
+            }else {
+                this.value = tempValue;
+            }
         }
     }
 
