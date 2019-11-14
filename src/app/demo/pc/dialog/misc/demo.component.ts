@@ -9,7 +9,6 @@ import {
     PopupPositionType,
     PopupService
 } from "jigsaw/common/service/popup.service";
-import {JigsawTheme} from "../../../../../jigsaw/common/core/theming/theme";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -67,7 +66,7 @@ export class DialogMiscDemoComponent {
     * */
     popupTemplate(tp) {
         // 默认皮肤不会给弹框设置背景，其他皮肤会给弹框加默认背景
-        this.dialogInfo3 = this._popupService.popup(tp, JigsawTheme.majorStyle && JigsawTheme.majorStyle != 'default' ? {noSetBackground: true} : null);
+        this.dialogInfo3 = this._popupService.popup(tp, {noSetBackground: true});
     }
 
     onAnswer(message: string) {
