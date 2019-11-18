@@ -250,7 +250,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
-        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        const dimensions = this.dimDisabled ? [] : this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         return dimensions.length > 1 ? this.createMultiDimensionOptions(dimensions) :
             this.createMultiKPIOptions(dimensions[0]);
     }
