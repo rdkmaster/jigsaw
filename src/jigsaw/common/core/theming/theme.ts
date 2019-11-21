@@ -1,11 +1,11 @@
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
 export type MajorStyle = "dark" | "gray" | "black" | "purple" | "blue" | "default";
-export type PopupBackgroundColor = "#102331" | "#232429" | "#151518" | "#1c1c2e" | "#102940" | null;
+export type PopupBackgroundColor = "#102331" | "#232429" | "#151518" | "#1c1c2e" | "#102940" | "#ffffff";
 
 // @dynamic
 export class JigsawTheme {
-    private static _popupBackgroundColor: PopupBackgroundColor = null;
+    private static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
     private static _majorStyle : MajorStyle = null;
 
     public static get majorStyle(): MajorStyle {
@@ -33,7 +33,7 @@ export class JigsawTheme {
                 break;
             case 'default':
             default:
-                this._popupBackgroundColor = null;
+                this._popupBackgroundColor = "#ffffff";
         }
     }
 
@@ -42,6 +42,6 @@ export class JigsawTheme {
     }
 
     public static getGraphTheme(): any {
-        return this._popupBackgroundColor == null ? lightGraphTheme : darkGraphTheme;
+        return this._popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
     }
 }
