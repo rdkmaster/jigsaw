@@ -65,7 +65,8 @@ export class DialogMiscDemoComponent {
     * popup user defined template
     * */
     popupTemplate(tp) {
-        this.dialogInfo3 = this._popupService.popup(tp);
+        // 默认皮肤不会给弹框设置背景，其他皮肤会给弹框加默认背景
+        this.dialogInfo3 = this._popupService.popup(tp, {useCustomizedBackground: true});
     }
 
     onAnswer(message: string) {

@@ -124,6 +124,11 @@ export class PopupOptions {
      *
      */
     showBorder?: boolean;
+
+    /**
+     * popupService会默认给弹框设置一个背景（除了默认皮肤），用来适配皮肤的风格，如果用户使用了自定义的背景，请设置这个属性为`true`
+     */
+    useCustomizedBackground?: boolean;
 }
 
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
@@ -296,7 +301,7 @@ export class PopupService {
             this._setPopup(options, element);
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
-            if (tagName != 'jigsaw-block' && tagName != 'j-block') {
+            if ((!options || !options.useCustomizedBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
                 const backgroundColor = JigsawTheme.getPopupBackgroundColor();
                 if (backgroundColor) {
                     PopupService._renderer.setStyle(element, 'background', backgroundColor);
