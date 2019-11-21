@@ -4,11 +4,9 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 
 .#{$input-prefix-cls} {
     @include inline-block();
-    position: relative;
     width: 120px;
     height: $height-base;
     font-size: $font-size-base;
-    opacity: 0;
     border: 1px solid $border-color-base;
     border-radius: 3px;
     @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
@@ -29,22 +27,21 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             box-shadow: none;
         }
     }
-    &-icon-front {
-        position: absolute;
-        left: 8px;
-        top: 50%;
-        transform: translateY(-50%);
+    &-wrapper {
+        display: flex;
+        height: 100%;
+        overflow: hidden;
     }
-    &-icon-end {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
+    &-icon-front, &-icon-end {
+        display: flex;
+        align-items: center;
+        flex: none;
+        padding: 0 4px;
     }
     input {
-        width: 100%;
+        flex: 1;
+        min-width: 0;
         height: 100%;
-        padding-right: 20px;
         border: none;
         outline: none;
         border-radius: 3px;
