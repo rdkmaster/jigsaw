@@ -371,7 +371,7 @@
 @mixin setInputTheme() {
     .#{$input-prefix-cls} {
         &.#{$input-prefix-cls}-disabled {
-            input {
+            .#{$input-prefix-cls}-wrapper {
                 background-color: $disabled-bg;
             }
         }

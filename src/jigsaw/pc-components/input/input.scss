@@ -46,9 +46,12 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border-radius: 3px;
         background: $component-background;
     }
-    &.#{$input-prefix-cls}-disabled input {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+    &.#{$input-prefix-cls}-disabled &-wrapper {
         background-color: $disabled-bg;
+        input {
+            background-color: transparent;
+            @include compatible(color, $disabled-color, $disabled-color-ie11);
+        }
     }
     input::-webkit-input-placeholder {
         color: $text-color-secondary;
