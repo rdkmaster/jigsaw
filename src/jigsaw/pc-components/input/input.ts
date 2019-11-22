@@ -1,6 +1,5 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild,
-    AfterContentInit, Renderer2, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -74,11 +73,6 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
 
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
-
-    constructor(protected _render2: Renderer2,
-                protected _elementRef: ElementRef) {
-        super();
-    }
 
     private _propagateChange: any = () => {
     };

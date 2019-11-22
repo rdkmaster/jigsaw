@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, Renderer2, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -34,11 +34,6 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     ]
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef) {
-        super();
-    }
-
     @Input()
     public valid: boolean = true;
 
