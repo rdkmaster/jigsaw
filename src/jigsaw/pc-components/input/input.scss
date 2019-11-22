@@ -9,12 +9,11 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     font-size: $font-size-base;
     border: 1px solid $border-color-base;
     border-radius: 3px;
-    @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-    &:hover {
+    &:hover, &.#{$input-prefix-cls}-focused {
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border: 1px solid $primary-color;
     }
     &.#{$input-prefix-cls}-focused {
-        border: 1px solid $primary-color;
         box-shadow: $box-focus-shadow;
     }
     &.#{$input-prefix-cls}-error {
