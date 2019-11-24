@@ -86,7 +86,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
-    @ViewChild(PerfectScrollbarDirective, {static: false}) private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * @internal

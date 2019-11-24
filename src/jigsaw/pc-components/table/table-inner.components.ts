@@ -1,21 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type,
-    ViewChild
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive } from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
@@ -23,13 +6,14 @@ import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+@Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected changeDetector: ChangeDetectorRef) {
         super();
     }
 
-    @ViewChild(JigsawRendererHost, {static: false})
+    @ViewChild(JigsawRendererHost)
     protected rendererHost: JigsawRendererHost;
     protected targetData: TableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;

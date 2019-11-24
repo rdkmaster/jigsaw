@@ -1,10 +1,11 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import {EventEmitter, Input, Output} from "@angular/core";
+import { EventEmitter, Input, Output, Directive } from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+@Directive()
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
     @Input() public valid: boolean = true;
 

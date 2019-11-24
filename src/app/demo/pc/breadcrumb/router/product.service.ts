@@ -1,3 +1,4 @@
+import { Injectable } from "@angular/core";
 export const ProduceData = [
     {
         id: 0,
@@ -37,6 +38,7 @@ export const ProduceData = [
     }
 ];
 
+@Injectable()
 export class ProductService {
     getProductById(id: number) {
         return ProduceData.find(p => p.id == id);

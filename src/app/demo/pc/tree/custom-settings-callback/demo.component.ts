@@ -9,7 +9,7 @@ import {ZTreeSettingSetting} from "../../../../../jigsaw/pc-components/tree/ztre
     templateUrl: './demo.component.html'
 })
 export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: TreeData;
     setting: ZTreeSettingSetting = {

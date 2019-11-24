@@ -22,7 +22,7 @@ export class JigsawMobileEditableTabTitleRenderer implements IDynamicInstantiata
     public initData: any;
     public title: string = 'New Tab';
 
-    @ViewChild(JigsawMobileInput, {static: false})
+    @ViewChild(JigsawMobileInput)
     public input: JigsawMobileInput;
 
     /**

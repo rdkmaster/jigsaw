@@ -16,7 +16,7 @@ import {JigsawInput} from "jigsaw/pc-components/input/input";
 
 export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph", {static: false}) graph: JigsawGraph;
+    @ViewChild("graph") graph: JigsawGraph;
 
 
     ngOnInit() {

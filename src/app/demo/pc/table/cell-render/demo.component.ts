@@ -10,7 +10,7 @@ import {TableCellSelectRenderer} from "jigsaw/pc-components/table/table-renderer
 })
 export class TableSetCellRenderDemoComponent {
 
-    @ViewChild("jobCellRender", {static: false}) jobCellRender: TemplateRef<any>;
+    @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
 

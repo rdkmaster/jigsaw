@@ -168,7 +168,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     @Input()
     public floating: boolean = true;
 
-    @ViewChild('drawer', {static: false})
+    @ViewChild('drawer')
     private _drawerEl: ElementRef;
 
     @HostBinding('style.width')

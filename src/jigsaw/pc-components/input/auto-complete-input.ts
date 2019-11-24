@@ -99,10 +99,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public valid: boolean = true;
 
-    @ViewChild('dropdownTemp', {static: false})
+    @ViewChild('dropdownTemp')
     private _dropdownTemp: TemplateRef<any>;
 
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     private _input: JigsawInput;
 
     /**
