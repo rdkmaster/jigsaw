@@ -30,6 +30,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         display: flex;
         height: 100%;
         overflow: hidden;
+        background: $component-background;
     }
     &-icon-front, &-icon-end {
         display: flex;
@@ -44,12 +45,11 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border: none;
         outline: none;
         border-radius: 3px;
-        background: $component-background;
+        background: transparent;
     }
     &.#{$input-prefix-cls}-disabled &-wrapper {
         background-color: $disabled-bg;
         input {
-            background-color: transparent;
             @include compatible(color, $disabled-color, $disabled-color-ie11);
         }
     }
