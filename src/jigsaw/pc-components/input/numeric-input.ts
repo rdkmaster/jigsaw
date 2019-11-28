@@ -1,7 +1,5 @@
-import {debounceTime} from "rxjs/operators";
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, AfterContentInit,
-    Renderer2, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -35,12 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
     ]
 })
-export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit {
-    constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef) {
-        super();
-    }
-
+export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
     @Input()
     public valid: boolean = true;
 
@@ -335,12 +328,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$stopPropagation(event) {
         event.preventDefault();
         event.stopPropagation();
-    }
-
-    ngAfterContentInit() {
-        this.callLater(() => {
-            this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
-        });
     }
 
     private _propagateChange: any = () => {

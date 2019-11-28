@@ -369,33 +369,9 @@
 }
 
 @mixin setInputTheme() {
-    .#{$input-prefix-cls} {
-        &.#{$input-prefix-cls}-disabled {
-            input {
-                background-color: $disabled-bg;
-            }
-        }
-    }
-
-    .#{$numeric-input-prefix-cls} {
-        &.#{$numeric-input-prefix-cls}-disabled {
-            input {
-                background-color: $disabled-bg;
-            }
-        }
-    }
-
     .#{$jigsaw-auto-complete-input} {
         &-item-title{
             background: $opacity-bg-2;
-        }
-    }
-
-    .#{$textarea-prefix-cls} {
-        &.#{$textarea-prefix-cls}-disabled {
-            textarea {
-                background-color: $disabled-bg;
-            }
         }
     }
 }

@@ -1,17 +1,17 @@
-<div class="jigsaw-input-icon-front">
-    <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
+<div class="jigsaw-input-wrapper">
+    <div class="jigsaw-input-icon-front">
+        <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
+    </div>
+    <ng-content></ng-content>
+    <input #input
+           [placeholder]="placeholder"
+           [(ngModel)]="value"
+           [disabled]="disabled"
+           (blur)="_$handleBlur($event)"
+           (focus)="_$handleFocus($event)"
+           [type]="type" >
+    <div class="jigsaw-input-icon-end">
+        <span *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
+        <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
+    </div>
 </div>
-<ng-content></ng-content>
-<input #input
-       [ngStyle]="_$inputPaddingStyle"
-       [placeholder]="placeholder"
-       [(ngModel)]="value"
-       [disabled]="disabled"
-       (blur)="_$handleBlur($event)"
-       (focus)="_$handleFocus($event)"
-       [type]="type" >
-<div class="jigsaw-input-icon-end">
-    <span *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
-    <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
-</div>
-

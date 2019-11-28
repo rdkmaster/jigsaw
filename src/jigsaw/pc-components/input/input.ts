@@ -1,6 +1,5 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild,
-    AfterContentInit, Renderer2, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -32,8 +31,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
     ]
 })
-export class JigsawInput extends AbstractJigsawComponent
-    implements IJigsawFormControl, ControlValueAccessor, AfterContentInit {
+export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
 
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
@@ -76,11 +74,6 @@ export class JigsawInput extends AbstractJigsawComponent
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    constructor(protected _render2: Renderer2,
-                protected _elementRef: ElementRef) {
-        super();
-    }
-
     private _propagateChange: any = () => {
     };
 
@@ -113,10 +106,6 @@ export class JigsawInput extends AbstractJigsawComponent
     public set value(newValue: string) {
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
-        }
-
-        if (this.clearable && ((newValue != '' && this._value == '') || (newValue == '' && this._value != ''))) {
-            this.callLater(() => this._setInputPaddingStyle());
         }
         this._value = newValue;
         this.valueChange.emit(this._value);
@@ -232,40 +221,6 @@ export class JigsawInput extends AbstractJigsawComponent
     public _$stopPropagation(event) {
         event.preventDefault();
         event.stopPropagation();
-    }
-
-    /**
-     * @internal
-     */
-    public _$inputPaddingStyle: {};
-
-    /**
-     * 动态计算 input的padding-left 和padding-right (不确定图标的个数, 好空出对应的位置.)
-     * 当前计算方法根据图标的个数计算, 默认图标大小为12px , dom大小获取的不准确.
-     *
-     */
-    private _setInputPaddingStyle() {
-        let prefixIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-front").offsetWidth;
-        let endIconWidth = this._elementRef.nativeElement.querySelector(".jigsaw-input-icon-end").offsetWidth;
-
-        let prefixIconPadding = prefixIconWidth + 10;
-        if (prefixIconWidth !== 0) {
-            prefixIconPadding = prefixIconPadding + 8;
-        }
-
-        let endPadding = endIconWidth + 8;
-
-        this._$inputPaddingStyle = {
-            "padding-left": prefixIconPadding + "px",
-            "padding-right": endPadding + "px"
-        };
-    }
-
-    ngAfterContentInit() {
-        this.callLater(() => {
-            this._render2.setStyle(this._elementRef.nativeElement, 'opacity', 1);
-            this._setInputPaddingStyle();
-        });
     }
 }
 

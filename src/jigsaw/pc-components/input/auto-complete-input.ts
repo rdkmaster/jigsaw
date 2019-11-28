@@ -133,10 +133,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _render2: Renderer2,
-                protected _elementRef: ElementRef,
+    constructor(private _render2: Renderer2,
+                private _elementRef: ElementRef,
                 private _popupService: PopupService) {
-        super(_render2, _elementRef);
+        super();
     }
 
     ngAfterViewInit() {
