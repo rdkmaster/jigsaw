@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div style="width: 1000px;height: 600px" jigsaw-graph-download [zipFileName]="'graph'">
+    <jigsaw-graph  id="test-graph1" [data]="data" width="50%" #graph (click)="handleClick($event)"></jigsaw-graph>
+    <div>
+        <div>
+            <jigsaw-graph id="test-graph2" [data]="data" width="50%" #graph1
+                          (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+    </div>
+</div>
+
+

@@ -1,7 +1,18 @@
 /**
  * Created by 10177553 on 2017/3/23.
  */
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2,} from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    Output,
+    Renderer2,
+} from "@angular/core";
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
@@ -27,15 +38,22 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private set _dataValid(value: boolean) {
-        if(this._$dataValid == value) return;
+        if (this._$dataValid == value) return;
         this._$dataValid = value;
-        if(this._$dataValid) {
+        if (this._$dataValid) {
             this.resize();
         }
     }
 
     // 通过 echarts.init 创建的实例
     private _graph: any;
+
+    /**
+     * @internal
+     */
+    public get graph(): any {
+        return this._graph;
+    }
 
     /**
      * @internal
@@ -171,6 +189,13 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _host: HTMLElement;
     private _graphContainer: HTMLElement;
+
+    /**
+     * @internal
+     */
+    public get host(): HTMLElement {
+        return this._host;
+    };
 
     ngOnInit() {
         super.ngOnInit();
