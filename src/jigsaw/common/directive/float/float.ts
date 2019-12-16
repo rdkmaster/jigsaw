@@ -7,7 +7,8 @@ import {
     Output,
     Renderer2,
     TemplateRef,
-    Type
+    Type,
+    ChangeDetectorRef
 } from "@angular/core";
 import {
     IPopupable,
@@ -107,7 +108,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     public set jigsawFloatOpen(value: boolean) {
-        if(value == this._$opened) return;
+        if(!!value == this._$opened) {
+            return;
+        }
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
@@ -118,6 +121,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             }
             this._$opened = value;
             this.jigsawFloatOpenChange.emit(value);
+            this._cdr.detectChanges();
         });
     }
 
@@ -184,7 +188,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
+                private _popupService: PopupService,
+                private _cdr: ChangeDetectorRef) {
         super();
     }
 
