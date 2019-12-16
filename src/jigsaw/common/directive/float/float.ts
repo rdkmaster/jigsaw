@@ -107,6 +107,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     public set jigsawFloatOpen(value: boolean) {
+        if(value == this._$opened) return;
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
