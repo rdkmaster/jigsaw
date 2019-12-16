@@ -48,10 +48,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     // 通过 echarts.init 创建的实例
     private _graph: any;
 
-    /**
-     * @internal
-     */
-    public get graph(): any {
+    //获取图形的echart实例
+    public get echarts(): any {
         return this._graph;
     }
 
@@ -189,13 +187,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _host: HTMLElement;
     private _graphContainer: HTMLElement;
-
-    /**
-     * @internal
-     */
-    public get host(): HTMLElement {
-        return this._host;
-    };
 
     ngOnInit() {
         super.ngOnInit();

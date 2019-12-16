@@ -24,13 +24,14 @@
     "@angular/router": "~8.0.0",
     "@ngx-translate/core": "~11.0.1",
     "@rdkmaster/icon-font": "^1.0.6",
-    "file-saver": "~2.0.1",
     "@types/marked": "~0.3.0",
     "core-js": "~3.0.1",
     "echarts": "~4.1.0",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
+    "file-saver": "~2.0.1",
     "font-awesome": "~4.7.0",
     "jquery": "~3.4.1",
+    "jszip": "3.2.1",
     "marked": "~0.7.0",
     "ngx-perfect-scrollbar": "~8.0.0",
     "peity": "~3.2.1",
@@ -38,8 +39,7 @@
     "tslib": "~1.9.0",
     "web-animations-js": "~2.3.2",
     "zone.js": "~0.9.1",
-    "ztree": "~3.5.24",
-    "jszip": "3.2.1"
+    "ztree": "~3.5.24"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.2",

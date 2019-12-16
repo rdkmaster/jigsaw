@@ -22,13 +22,11 @@ import {
 import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
 import {JigsawGraph} from "./graph";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {LoadingService} from "../../common/service/loading.service";
 import * as FileSaver from 'file-saver';
-
-declare const JSZip: any;
+import * as JSZip from 'jszip/dist/jszip.min';
 
 @Directive({
-    selector: '[j-graph-download], [jigsaw-graph-download]'
+    selector: '[j-graph-download], [jigsaw-graph-download], [jigsawGraphDownload]'
 })
 export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase implements OnDestroy {
     constructor(private _renderer: Renderer2,
@@ -80,6 +78,8 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     }
 
     @Input() zipFileName: string = "graphs";
+    @Input()
+    public jigsawGraphDownloadTooltip: string='';
 
     private _closePopup() {
         if (this._popupInfo) {
@@ -103,16 +103,18 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
 
     private _getGraphBase64Codes() {
         let codes = [];
-        this._graphs.forEach(graph => {
+        this._graphs.forEach((graph, index) => {
             let animation = graph.data.options.animation;
             graph.data.options.animation = false;
             graph.setOption(graph.data.options);
-            let id = !!graph.host.id ? graph.host.id : 'graph';
             let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '-title';
-            codes.push({
-                code: graph.graph.getDataURL().split("base64,")[1],
-                title: `${id}${graphTitle}-${new Date().getTime()}`
-            });
+            let codeArray = graph.echarts.getDataURL().split("base64,");
+            if (!!codeArray && codeArray.length == 2) {
+                codes.push({
+                    base64: codeArray[1],
+                    title: `chart-${index + 1}${graphTitle}`
+                });
+            }
             if (CommonUtils.isUndefined(animation)) {
                 graph.data.options.animation = true;
             } else {
@@ -130,7 +132,8 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
             }
             this._popupInfo = this._popupService.popup(JigsawGraphDownloadButton, this._getNonModelOptions(), {
                 base64Codes: this._getGraphBase64Codes(),
-                zipFileName: this.zipFileName
+                zipFileName: this.zipFileName,
+                jigsawGraphDownloadTooltip:this.jigsawGraphDownloadTooltip
             });
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
@@ -167,7 +170,8 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     template: `
         <div style="width: 15px;height: 10px"
              style="background: #41addc;color: #ffffff;text-align: center;cursor: pointer"
-             (click)="_$download()"><span
+             (click)="_$download()"
+             [title]="initData.jigsawGraphDownloadTooltip"><span
             class="fa fa-download"></span></div>`
 })
 export class JigsawGraphDownloadButton extends AbstractJigsawComponent implements IPopupable {
@@ -177,25 +181,16 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
 
     [index: string]: any;
 
-    constructor(private _loadingService: LoadingService) {
-        super();
-    }
-
-    private _loading: any;
-
     public _$download() {
-        this._loading = this._loadingService.show();
         let zip = new JSZip();
         this.initData.base64Codes.forEach(base64Code => {
-            zip.file(`${base64Code.title}.png`, base64Code.code, {base64: true});
+            zip.file(`${base64Code.title}.png`, base64Code.base64, {base64: true});
         });
         const zipFileName = this.initData.zipFileName;
         zip.generateAsync({type: "blob"})
             .then(function (content) {
                 FileSaver.saveAs(content, `${zipFileName}.zip`);
             });
-        this._loading.dispose();
     }
-
 }
 
