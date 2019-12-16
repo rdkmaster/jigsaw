@@ -7,8 +7,7 @@ import {
     Output,
     Renderer2,
     TemplateRef,
-    Type,
-    ChangeDetectorRef
+    Type
 } from "@angular/core";
 import {
     IPopupable,
@@ -121,7 +120,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             }
             this._$opened = value;
             this.jigsawFloatOpenChange.emit(value);
-            this._cdr.detectChanges();
         });
     }
 
@@ -188,8 +186,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService,
-                private _cdr: ChangeDetectorRef) {
+                private _popupService: PopupService) {
         super();
     }
 
