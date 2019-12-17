@@ -26,6 +26,11 @@ export class GraphDownloadDirectiveComponent implements OnInit {
         graphData.optionsPatch = this.patchOption;
     }
 
+    graphs: number[] = [1,2,3];
+
+    addGraph() {
+        this.graphs.push(this.graphs[this.graphs.length - 1] + 1);
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
@@ -43,7 +48,7 @@ export class GraphDataDemo extends AbstractGraphData {
     protected createChartOptions(): EchartOptions {
         return {
             title: {
-                text: '堆叠区域图'
+                // text: '堆叠区域图'
             },
             tooltip: {
                 trigger: 'axis'
