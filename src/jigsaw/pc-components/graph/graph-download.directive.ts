@@ -77,9 +77,11 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         };
     }
 
-    @Input() zipFileName: string = "graphs";
     @Input()
-    public jigsawGraphDownloadTooltip: string='';
+    jigsawGraphDownloadExportFileName: string = "graphs.zip";
+
+    @Input()
+    public jigsawGraphDownloadTooltip: string = '';
 
     private _closePopup() {
         if (this._popupInfo) {
@@ -104,14 +106,17 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     private _getGraphBase64Codes() {
         let codes = [];
         this._graphs.forEach((graph, index) => {
+            if (!graph || !graph.data || !graph.data.options) {
+                return;
+            }
             let animation = graph.data.options.animation;
             graph.data.options.animation = false;
             graph.setOption(graph.data.options);
-            let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '-title';
-            let codeArray = graph.echarts.getDataURL().split("base64,");
-            if (!!codeArray && codeArray.length == 2) {
+            let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
+            const chartData = graph.echarts.getDataURL();
+            if (chartData) {
                 codes.push({
-                    base64: codeArray[1],
+                    base64: chartData.replace(/.*?\bbase64,\s*/, ''),
                     title: `chart-${index + 1}${graphTitle}`
                 });
             }
@@ -132,8 +137,8 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
             }
             this._popupInfo = this._popupService.popup(JigsawGraphDownloadButton, this._getNonModelOptions(), {
                 base64Codes: this._getGraphBase64Codes(),
-                zipFileName: this.zipFileName,
-                jigsawGraphDownloadTooltip:this.jigsawGraphDownloadTooltip
+                jigsawGraphDownloadExportFileName: this.jigsawGraphDownloadExportFileName,
+                jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip
             });
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
@@ -186,10 +191,11 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
         this.initData.base64Codes.forEach(base64Code => {
             zip.file(`${base64Code.title}.png`, base64Code.base64, {base64: true});
         });
-        const zipFileName = this.initData.zipFileName;
+        const jigsawGraphDownloadExportFileName = !!this.initData.jigsawGraphDownloadExportFileName.match(/(.+)\.(.+)/g) ?
+            this.initData.jigsawGraphDownloadExportFileName : `${this.initData.jigsawGraphDownloadExportFileName}.zip`;
         zip.generateAsync({type: "blob"})
             .then(function (content) {
-                FileSaver.saveAs(content, `${zipFileName}.zip`);
+                FileSaver.saveAs(content, `${jigsawGraphDownloadExportFileName}`);
             });
     }
 }

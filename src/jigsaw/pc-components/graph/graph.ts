@@ -48,7 +48,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     // 通过 echarts.init 创建的实例
     private _graph: any;
 
-    //获取图形的echart实例
+    /**
+     * 获取图形的echart实例
+     */
     public get echarts(): any {
         return this._graph;
     }
