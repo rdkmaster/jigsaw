@@ -78,7 +78,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     }
 
     @Input()
-    jigsawGraphDownloadExportFileName: string = "graphs.zip";
+    public jigsawGraphDownloadExportFileName: string = "graphs.zip";
 
     @Input()
     public jigsawGraphDownloadTooltip: string = '';
