@@ -164,9 +164,10 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
             if (!graph || !graph.data || !graph.data.options) {
                 return;
             }
-            let animation = graph.data.options.animation;
-            graph.data.options.animation = false;
-            graph.setOption(graph.data.options);
+            let animation = graph.echarts.getOption().animation;
+            graph.echarts.setOption({
+                animation:false
+            });
             let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
             const chartData = graph.echarts.getDataURL();
             if (chartData) {
@@ -176,11 +177,11 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
                 });
             }
             if (CommonUtils.isUndefined(animation)) {
-                graph.data.options.animation = true;
-            } else {
-                graph.data.options.animation = animation;
+                animation = true;
             }
-            graph.setOption(graph.data.options);
+            graph.echarts.setOption({
+                animation:animation
+            });
         });
         return codes;
     }
