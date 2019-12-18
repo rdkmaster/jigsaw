@@ -102,41 +102,13 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         }
     }
 
-
-    private _getGraphBase64Codes() {
-        let codes = [];
-        this._graphs.forEach((graph, index) => {
-            if (!graph || !graph.data || !graph.data.options) {
-                return;
-            }
-            let animation = graph.data.options.animation;
-            graph.data.options.animation = false;
-            graph.setOption(graph.data.options);
-            let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
-            const chartData = graph.echarts.getDataURL();
-            if (chartData) {
-                codes.push({
-                    base64: chartData.replace(/.*?\bbase64,\s*/, ''),
-                    title: `chart-${index + 1}${graphTitle}`
-                });
-            }
-            if (CommonUtils.isUndefined(animation)) {
-                graph.data.options.animation = true;
-            } else {
-                graph.data.options.animation = animation;
-            }
-            graph.setOption(graph.data.options);
-        });
-        return codes;
-    }
-
     private _addRollInDenouncesTimer() {
         this._rollInDenouncesTimer = this.callLater(() => {
             if (this._popupInfo) {
                 return;
             }
             this._popupInfo = this._popupService.popup(JigsawGraphDownloadButton, this._getNonModelOptions(), {
-                base64Codes: this._getGraphBase64Codes(),
+                graphs: this._graphs,
                 jigsawGraphDownloadExportFileName: this.jigsawGraphDownloadExportFileName,
                 jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip
             });
@@ -186,9 +158,37 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
 
     [index: string]: any;
 
+    private _getGraphBase64Codes() {
+        let codes = [];
+        this.initData.graphs.forEach((graph, index) => {
+            if (!graph || !graph.data || !graph.data.options) {
+                return;
+            }
+            let animation = graph.data.options.animation;
+            graph.data.options.animation = false;
+            graph.setOption(graph.data.options);
+            let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
+            const chartData = graph.echarts.getDataURL();
+            if (chartData) {
+                codes.push({
+                    base64: chartData.replace(/.*?\bbase64,\s*/, ''),
+                    title: `chart-${index + 1}${graphTitle}`
+                });
+            }
+            if (CommonUtils.isUndefined(animation)) {
+                graph.data.options.animation = true;
+            } else {
+                graph.data.options.animation = animation;
+            }
+            graph.setOption(graph.data.options);
+        });
+        return codes;
+    }
+
     public _$download() {
         let zip = new JSZip();
-        this.initData.base64Codes.forEach(base64Code => {
+        const base64Codes = this._getGraphBase64Codes();
+        base64Codes.forEach(base64Code => {
             zip.file(`${base64Code.title}.png`, base64Code.base64, {base64: true});
         });
         const jigsawGraphDownloadExportFileName = !!this.initData.jigsawGraphDownloadExportFileName.match(/(.+)\.(.+)/g) ?
