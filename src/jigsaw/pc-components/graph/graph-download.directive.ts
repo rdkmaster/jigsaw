@@ -149,7 +149,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
              style="background: #41addc;color: #ffffff;text-align: center;cursor: pointer"
              (click)="_$download()"
              [title]="initData.jigsawGraphDownloadTooltip"><span
-            class="fa fa-download"></span></div>`
+                class="fa fa-download"></span></div>`
 })
 export class JigsawGraphDownloadButton extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
@@ -166,7 +166,7 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
             }
             let animation = graph.echarts.getOption().animation;
             graph.echarts.setOption({
-                animation:false
+                animation: false
             });
             let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
             const chartData = graph.echarts.getDataURL();
@@ -180,7 +180,7 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
                 animation = true;
             }
             graph.echarts.setOption({
-                animation:animation
+                animation: animation
             });
         });
         return codes;
@@ -194,10 +194,9 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
         });
         const jigsawGraphDownloadExportFileName = !!this.initData.jigsawGraphDownloadExportFileName.match(/(.+)\.(.+)/g) ?
             this.initData.jigsawGraphDownloadExportFileName : `${this.initData.jigsawGraphDownloadExportFileName}.zip`;
-        zip.generateAsync({type: "blob"})
-            .then(function (content) {
-                FileSaver.saveAs(content, `${jigsawGraphDownloadExportFileName}`);
-            });
+        zip.generateAsync({type: "blob"}).then(content => {
+            FileSaver.saveAs(content, `${jigsawGraphDownloadExportFileName}`);
+        });
     }
 }
 

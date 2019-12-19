@@ -6,7 +6,7 @@
 <!-- start to learn the demo from here -->
 <button (click)="addGraph()">add more graph</button>
 <div style="width: 1000px;height: 600px" jigsaw-graph-download
-     [jigsawGraphDownloadExportFileName]="'graph'"
+     [jigsawGraphDownloadExportFileName]="'graphs.zip'"
      [jigsawGraphDownloadTooltip]="'download graphs'">
     <jigsaw-graph [data]="data" width="50%" (click)="handleClick($event)"></jigsaw-graph>
     <div>
