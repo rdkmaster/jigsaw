@@ -45,6 +45,8 @@ import {GaugeGraphComponent} from "./gauge/demo.component";
 import {GaugeGraphModule} from "./gauge/demo.module";
 import {BarGraphComponent} from "app/demo/pc/graph/bar/demo.component";
 import {BarGraphModule} from "./bar/demo.module";
+import {GraphDownloadDirectiveModule} from "./download-directive/demo.module";
+import {GraphDownloadDirectiveComponent} from "./download-directive/demo.component";
 
 export const routerConfig = [
     {
@@ -106,6 +108,9 @@ export const routerConfig = [
     },
     {
         path: 'bar', component: BarGraphComponent
+    },
+    {
+        path: 'download-directive', component: GraphDownloadDirectiveComponent
     }
 ];
 
@@ -133,6 +138,7 @@ export const routerConfig = [
         FunnelPlotGraphModule,
         GaugeGraphModule,
         BarGraphModule,
+        GraphDownloadDirectiveModule
     ]
 })
 export class GraphDemoModule {
