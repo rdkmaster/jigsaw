@@ -148,8 +148,10 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         <div style="width: 15px;height: 10px"
              style="background: #41addc;color: #ffffff;text-align: center;cursor: pointer"
              (click)="_$download()"
-             [title]="initData.jigsawGraphDownloadTooltip"><span
-                class="fa fa-download"></span></div>`
+             [title]="initData.jigsawGraphDownloadTooltip">
+            <span class="fa fa-download"></span>
+        </div>
+    `
 })
 export class JigsawGraphDownloadButton extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
