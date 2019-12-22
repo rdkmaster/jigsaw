@@ -8,7 +8,7 @@ import {JigsawFontLoading} from "jigsaw/common/components/loading/loading";
     styleUrls: ['./demo.component.css']
 })
 export class FontLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;

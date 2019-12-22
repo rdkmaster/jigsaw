@@ -18,7 +18,7 @@ export class TableResizeDemoComponent implements OnInit {
 
     tableWidth: any = '100%';
 
-    @ViewChild('tableCmp', {static: false}) tableCmp: JigsawTable;
+    @ViewChild('tableCmp') tableCmp: JigsawTable;
 
     changeTableWidth() {
         // 修改table的width，table会自动resize

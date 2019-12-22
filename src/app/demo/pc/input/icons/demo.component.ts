@@ -6,7 +6,7 @@ import {JigsawInput} from "jigsaw/pc-components/input/input";
 })
 export class InputPrefixIconDemoComponent {
 
-    @ViewChild('myInput', {static: false}) myInput: JigsawInput;
+    @ViewChild('myInput') myInput: JigsawInput;
 
     click() {
         alert('你输入的值是 ' + this.myInput.value)

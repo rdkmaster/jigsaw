@@ -555,10 +555,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('contentScrollbar', { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('bodyScrollbar', { read: PerfectScrollbarDirective })
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**

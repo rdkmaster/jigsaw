@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2} from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
 import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common";
@@ -9,6 +9,7 @@ import {JigsawBlock, JigsawBlockModule} from "../block/block";
  *
  * $demo = loading/user-defined
  */
+@Directive()
 export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopupable {
     public initData: any;
     public answer: EventEmitter<any>;

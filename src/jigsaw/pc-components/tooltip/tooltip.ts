@@ -12,6 +12,7 @@ export interface ITooltip extends IPopupable {
     tooltip: JigsawTooltipDialog;
 }
 
+@Directive()
 export abstract class TooltipBase implements ITooltip {
 
     public initData: any;
@@ -68,7 +69,7 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
     template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltipMessage"></span></jigsaw-tooltip-dialog>'
 })
 export class JigsawSimpleTooltipComponent extends TooltipBase {
-    @ViewChild(JigsawTooltipDialog, {static: false}) public tooltip: JigsawTooltipDialog;
+    @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
 
     public tooltipMessage:string = '';
 

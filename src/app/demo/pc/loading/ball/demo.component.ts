@@ -8,7 +8,7 @@ import {JigsawBallLoading} from "jigsaw/common/components/loading/loading";
     styleUrls: ['./demo.component.css']
 })
 export class BallLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;

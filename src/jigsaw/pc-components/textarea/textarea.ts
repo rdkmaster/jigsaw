@@ -132,7 +132,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
 
-    @ViewChild('textarea', {static: false})
+    @ViewChild('textarea')
     private _textareaElement: ElementRef;
 
     /**

@@ -1,18 +1,4 @@
-import {
-    AfterContentInit,
-    AfterViewInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgModule,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    Renderer2
-} from "@angular/core";
+import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, QueryList, Renderer2, Directive } from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../common/service/popup.service";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
@@ -38,6 +24,7 @@ export type DialogCallback = (button: ButtonInfo) => void;
  * JigsawInfoAlert、JigsawWarningAlert、JigsawErrorAlert、JigsawConfirmAlert
  * 可以看到JigsawAlert使用起来比较麻烦，但是它具体化后的这些组件使用起来就非常简单了。
  */
+@Directive()
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     @Input()
@@ -97,6 +84,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
  * 这是所有对话框组件的基类，是一个内部，应用一般不应该直接使用这个类。
  * 当需要实现一种新的对话框的时候，则需要继承这个类，已知的对话框组件有JigsawDialog、JigsawAlert、JigsawNotification
  */
+@Directive()
 export abstract class AbstractDialogComponentBase
     extends AbstractJigsawComponent
     implements IPopupable, AfterContentInit, OnDestroy {

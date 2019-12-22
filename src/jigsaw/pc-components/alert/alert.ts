@@ -1,16 +1,4 @@
-import {
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    Renderer2,
-    Type,
-    ViewChild,
-} from "@angular/core";
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, Type, ViewChild, Directive } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
@@ -143,6 +131,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     }
 }
 
+@Directive()
 export abstract class JigsawCommonAlert extends DialogBase {
     @Input()
     public set initData(value: any) {

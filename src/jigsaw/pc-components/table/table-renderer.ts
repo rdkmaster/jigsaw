@@ -1,7 +1,4 @@
-import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, Renderer2,
-    ViewChild
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, Renderer2, ViewChild, Directive } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
@@ -14,6 +11,7 @@ import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 
+@Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
     @Input() public cellData: any;
     @Input() public row: number;
@@ -113,7 +111,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
-    @ViewChild(JigsawInput, {static: false})
+    @ViewChild(JigsawInput)
     protected input: JigsawInput;
 
     public get _$placeholder() {
