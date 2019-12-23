@@ -37,7 +37,8 @@ export class FloatPosReviserDemo {
                 pos.left = 10;
             }
             return pos;
-        }
+        },
+        useCustomizedBackground: true
     };
 
     public position;
