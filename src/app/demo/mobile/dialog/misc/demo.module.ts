@@ -11,7 +11,6 @@ import {UserDialog2Component} from "./user-dialog2/user-dialog";
     declarations: [DialogMiscDemoComponent, UserDialogComponent, UserDialog2Component],
     exports: [DialogMiscDemoComponent],
     imports: [JigsawMobileDialogModule, JigsawMobileButtonModule, JigsawDemoDescriptionModule],
-    entryComponents: [UserDialogComponent, UserDialog2Component],
     providers: [PopupService]
 })
 export class DialogMiscDemoModule {

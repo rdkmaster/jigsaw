@@ -193,8 +193,7 @@ export class JigsawMobileDialog extends AbstractMobileDialogComponentBase {
 @NgModule({
     imports: [CommonModule, JigsawMobileButtonModule, JigsawMovableModule, JigsawBlockModule],
     declarations: [JigsawMobileDialog],
-    exports: [JigsawMobileDialog],
-    entryComponents: [JigsawBlock]
+    exports: [JigsawMobileDialog]
 })
 export class JigsawMobileDialogModule {
 }

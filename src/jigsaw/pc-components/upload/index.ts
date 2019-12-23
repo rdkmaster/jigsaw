@@ -18,7 +18,6 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
     ],
     declarations: [JigsawUpload, JigsawUploadDirective, JigsawUploadFileInfoList],
     exports: [JigsawUpload, JigsawUploadDirective],
-    entryComponents: [JigsawUploadFileInfoList],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {

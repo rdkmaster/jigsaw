@@ -153,8 +153,7 @@ export class JigsawTooltip implements OnDestroy {
 @NgModule({
     imports: [CommonModule],
     declarations: [JigsawTooltipDialog, JigsawTooltip, JigsawSimpleTooltipComponent],
-    exports: [JigsawTooltipDialog, JigsawTooltip],
-    entryComponents: [JigsawSimpleTooltipComponent]
+    exports: [JigsawTooltipDialog, JigsawTooltip]
 })
 export class JigsawTooltipModule {
 }

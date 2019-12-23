@@ -8,10 +8,7 @@ import {TableCellSelectRenderer} from "jigsaw/pc-components/table/table-renderer
 @NgModule({
     imports: [JigsawTableModule, CommonModule, JigsawDemoDescriptionModule],
     declarations: [TableSetCellRenderDemoComponent],
-    exports: [TableSetCellRenderDemoComponent],
-    entryComponents: [
-        TableCellSelectRenderer
-    ]
+    exports: [TableSetCellRenderDemoComponent]
 })
 export class TableSetCellRenderDemoModule {
 }

@@ -193,8 +193,7 @@ export class JigsawDialog extends AbstractDialogComponentBase {
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawMovableModule, JigsawBlockModule],
     declarations: [JigsawDialog],
-    exports: [JigsawDialog],
-    entryComponents: [JigsawBlock]
+    exports: [JigsawDialog]
 })
 export class JigsawDialogModule {
 }

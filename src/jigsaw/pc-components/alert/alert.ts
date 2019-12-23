@@ -302,8 +302,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
         JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,
         JigsawErrorAlert, JigsawConfirmAlert
     ],
-    providers: [TranslateService],
-    entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawBlock]
+    providers: [TranslateService]
 })
 export class JigsawAlertModule {
     constructor(translateService: TranslateService) {

@@ -427,8 +427,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule],
     declarations: [JigsawNotification],
-    exports: [JigsawNotification],
-    entryComponents: [JigsawNotification]
+    exports: [JigsawNotification]
 })
 export class JigsawNotificationModule {
 }

@@ -31,12 +31,7 @@ export class JigsawRoot {
     imports: [
         JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawNotificationModule
     ],
-    providers: [PopupService],
-    entryComponents: [
-        JigsawBlock, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert,
-        JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-        JigsawNotification
-    ]
+    providers: [PopupService]
 })
 export class JigsawRootModule {
 }

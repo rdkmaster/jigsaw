@@ -618,8 +618,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule, CommonModule, JigsawInputModule, JigsawPaginationModule],
     declarations: [JigsawCascade, InternalTabContent],
     exports: [JigsawCascade],
-    providers: [TranslateService],
-    entryComponents: [InternalTabContent]
+    providers: [TranslateService]
 })
 export class JigsawCascadeModule {
     constructor(ts: TranslateService) {

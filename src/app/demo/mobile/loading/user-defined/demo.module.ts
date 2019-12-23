@@ -10,8 +10,7 @@ import {DefinedLoadingDemoComponent} from "./demo.component";
     declarations: [DefinedLoadingDemoComponent, DefinedLoading],
     exports: [DefinedLoadingDemoComponent],
     imports: [JigsawLoadingModule, JigsawDemoDescriptionModule],
-    providers: [PopupService, LoadingService],
-    entryComponents: [DefinedLoading]
+    providers: [PopupService, LoadingService]
 })
 export class DefinedLoadingDemoModule {
 }

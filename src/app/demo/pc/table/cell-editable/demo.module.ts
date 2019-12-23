@@ -8,8 +8,5 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
     imports: [ JigsawTableModule, JigsawInputModule, JigsawDemoDescriptionModule ],
     declarations: [ TableSetCellEditableDemoComponent, MyTableCell, MyTableCellEditor ],
     exports: [ TableSetCellEditableDemoComponent ],
-    entryComponents: [
-        MyTableCell, MyTableCellEditor
-    ],
 })
 export class TableSetCellEditableDemoModule {}
