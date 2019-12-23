@@ -16,3 +16,6 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 })
 export class JigsawStepsModule {
 }
+
+export * from './steps';
+export * from './step-item';
