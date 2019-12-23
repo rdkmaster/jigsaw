@@ -41,12 +41,12 @@ export class LoadingService {
         } else if (blockTo) {
             blockBy = blockTo;
             if (blockBy instanceof Type) {
-                popupInfo = this._popupService.popup(blockBy);
+                popupInfo = this._popupService.popup(blockBy, LoadingService._getDefaultOptions());
             } else if (blockBy instanceof TemplateRef) {
-                popupInfo = this._popupService.popup(blockBy);
+                popupInfo = this._popupService.popup(blockBy, LoadingService._getDefaultOptions());
             }
         } else {
-            popupInfo = this._popupService.popup(JigsawLoading);
+            popupInfo = this._popupService.popup(JigsawLoading, LoadingService._getDefaultOptions());
         }
         return popupInfo;
     }
@@ -61,8 +61,16 @@ export class LoadingService {
                 left: 0
             },
             posType: PopupPositionType.absolute, //定位类型
-            size: {width: element.offsetWidth, height: element.offsetHeight}
+            size: {width: element.offsetWidth, height: element.offsetHeight},
+            useCustomizedBackground: true
         };
+    }
+
+    private static _getDefaultOptions(): PopupOptions {
+        return {
+            modal: true,
+            useCustomizedBackground: true
+        }
     }
 }
 
