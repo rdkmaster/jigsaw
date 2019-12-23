@@ -32,9 +32,11 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
     public set color(rgb: string) {
         this._color = rgb;
-        if (this.getColorElement()) {
-            this.setElementsStyle(this.getColorElement(), 'backgroundColor', rgb);
-        }
+        Promise.resolve().then(() => {
+            if (this.getColorElement()) {
+                this.setElementsStyle(this.getColorElement(), 'backgroundColor', rgb);
+            }
+        })
     }
 
     protected getPopupElement(): HTMLElement {
@@ -101,9 +103,11 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
     public set color(rgb: string) {
         this._color = rgb;
-        if (this.getColorElement()) {
-            this.setElementsStyle(this.getColorElement(), 'color', rgb);
-        }
+        Promise.resolve().then(() => {
+            if (this.getColorElement()) {
+                this.setElementsStyle(this.getColorElement(), 'color', rgb);
+            }
+        })
     }
 
     public setElementSize(selector: string, width: number | string, height: number | string) {
@@ -160,8 +164,7 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
 @NgModule({
     imports: [CommonModule, JigsawBlockModule],
     declarations: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
-    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
-    entryComponents: [JigsawBlock, JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
+    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
 })
 export class JigsawLoadingModule {
 
