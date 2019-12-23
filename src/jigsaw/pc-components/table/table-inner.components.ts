@@ -7,7 +7,7 @@ import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 @Directive()
-export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit {
+export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected changeDetector: ChangeDetectorRef) {
         super();
@@ -83,7 +83,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     }
 
     private _initTargetData(): void {
-        if (!this.tableData || !this.additionalData) {
+        if (!this.tableData || !this.additionalData || !this.initialized) {
             return;
         }
         [this._column, this.targetData] = _getColumnIndex(this._tableData, this._additionalData, this.field);
@@ -119,6 +119,11 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     protected insertRenderer() {
         this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
         this.changeDetector.detectChanges();
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._initTargetData();
     }
 
     ngAfterViewInit(): void {
