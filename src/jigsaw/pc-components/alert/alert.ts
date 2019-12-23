@@ -40,7 +40,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     /**
      * @internal
      */
-    @ContentChildren(JigsawButton)
+    @ContentChildren(JigsawButton, {descendants: true})
     public _$inlineButtons: QueryList<JigsawButton>;
 
     /**
