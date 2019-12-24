@@ -18,7 +18,7 @@ import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directiv
         }
     `]
 })
-export class uploadDemoComponent {
+export class UploadBasicDemoComponent {
     fileType = '.png';
     multiple: boolean;
     isButtonUploadWaiting: boolean;

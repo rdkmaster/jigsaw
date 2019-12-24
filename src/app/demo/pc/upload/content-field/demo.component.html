@@ -1,0 +1,25 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<div class="live-demo-wrap">
+    <label style="width:90px;margin-bottom:16px;">contentField: </label>
+    <j-input #contentField [value]="'file'"></j-input>
+    <br>
+    <label style="width:90px;margin-bottom:16px;">fileNameField: </label>
+    <j-input #fileNameField [value]="'filename'"></j-input>
+    <br>
+    <jigsaw-button style="margin-bottom:16px;" jigsaw-upload
+                   [uploadContentField]="contentField.value"
+                   [uploadFileNameField]="fileNameField.value">上传
+    </jigsaw-button>
+    <br>
+    <j-upload [contentField]="contentField.value" [fileNameField]="fileNameField.value">
+    </j-upload>
+</div>
+
+
+

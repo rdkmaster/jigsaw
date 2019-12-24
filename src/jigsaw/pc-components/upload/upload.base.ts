@@ -26,6 +26,12 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Input()
     public multiple: boolean = true;
 
+    @Input()
+    public contentField: string = 'file';
+
+    @Input()
+    public fileNameField: string = 'filename';
+
     @Output()
     public progress = new EventEmitter<UploadFileInfo>();
 
@@ -132,8 +138,11 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     private _sequenceUpload(fileInfo: UploadFileInfo) {
         fileInfo.state = 'loading';
         const formData = new FormData();
-        formData.append('file', fileInfo.file);
-        formData.append("filename", encodeURI(fileInfo.file.name));
+        formData.append(this.contentField, fileInfo.file);
+        const fileNameField = this.fileNameField ? this.fileNameField.trim() : '';
+        if (fileNameField) {
+            formData.append(fileNameField, encodeURI(fileInfo.file.name));
+        }
         if (!this._http) {
             console.error('Jigsaw upload pc-components must inject HttpClientModule, please import it to the module!');
             return;
