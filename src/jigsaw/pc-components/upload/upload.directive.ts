@@ -44,6 +44,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     @Input('uploadMultiple')
     public multiple: boolean = true;
 
+    @Input('uploadContentField')
+    public contentField: string = 'file';
+
+    @Input('uploadFileNameField')
+    public fileNameField: string = 'filename';
+
     @Output('uploadProgress')
     public progress = new EventEmitter<UploadFileInfo>();
 
