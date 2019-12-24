@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {uploadDemoComponent} from "./demo.component";
+import {UploadBasicDemoComponent} from "./demo.component";
 import {JigsawUploadModule} from "jigsaw/pc-components/upload/index";
 import {JigsawSwitchModule} from "jigsaw/pc-components/switch/index";
 import {JigsawRadioLiteModule} from "jigsaw/pc-components/radio/radio-lite";
@@ -9,8 +9,8 @@ import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
 import {CommonModule} from "@angular/common";
 
 @NgModule({
-    declarations: [uploadDemoComponent],
-    exports: [ uploadDemoComponent ],
+    declarations: [UploadBasicDemoComponent],
+    exports: [ UploadBasicDemoComponent ],
     imports: [JigsawUploadModule, JigsawDemoDescriptionModule, JigsawSwitchModule,
         JigsawRadioLiteModule, JigsawButtonModule, JigsawLoadingModule, CommonModule]
 })
