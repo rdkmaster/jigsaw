@@ -25,6 +25,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip/dist/jszip.min';
 
+declare const echarts: any;
+
 @Directive({
     selector: '[j-graph-download], [jigsaw-graph-download], [jigsawGraphDownload]'
 })
@@ -59,7 +61,11 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     }
 
     @ContentChildren(JigsawGraph, {descendants: true})
-    private _graphs: QueryList<JigsawGraph>;
+    private _graphsInContent: QueryList<JigsawGraph>;
+
+    private _graphsInDom = [];
+
+    private _graphs = [];
 
     private _popupInfo: PopupInfo;
 
@@ -140,6 +146,30 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         super.ngOnDestroy();
         this._closePopup();
     }
+
+    ngAfterViewInit() {
+        //动态加载的图片无法通过dom获取，用两种获取方式，然后合并一下
+        //动态加载的图片只能获取到初始页内的图片，比如tab
+        this.getChildren(this._elementRef.nativeElement);
+        this._graphs.push(...this._graphsInDom);
+        this._graphsInContent.forEach(graphContent => {
+            if (this._graphsInDom.findIndex(graphDom => graphDom == graphContent.echarts) < 0) {
+                this._graphs.push(graphContent.echarts);
+            }
+        });
+    }
+
+    getChildren(element: any) {
+        if (element.localName == 'jigsaw-graph') {
+            this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
+            return;
+        }
+        if (element.children && element.children.length > 0) {
+            for (let i = 0; i < element.children.length; i++) {
+                this.getChildren(element.children[i]);
+            }
+        }
+    }
 }
 
 @Component({
@@ -163,15 +193,15 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
     private _getGraphBase64Codes() {
         let codes = [];
         this.initData.graphs.forEach((graph, index) => {
-            if (!graph || !graph.data || !graph.data.options) {
+            if (!graph || !graph.getOption()) {
                 return;
             }
-            let animation = graph.echarts.getOption().animation;
-            graph.echarts.setOption({
+            let animation = graph.getOption().animation;
+            graph.setOption({
                 animation: false
             });
-            let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
-            const chartData = graph.echarts.getDataURL();
+            let graphTitle = !!graph.getOption().title && !!graph.getOption().title[0] && !!graph.getOption().title[0].text ? `-${graph.getOption().title[0].text}` : '';
+            const chartData = graph.getDataURL();
             if (chartData) {
                 codes.push({
                     base64: chartData.replace(/.*?\bbase64,\s*/, ''),
@@ -181,7 +211,7 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
             if (CommonUtils.isUndefined(animation)) {
                 animation = true;
             }
-            graph.echarts.setOption({
+            graph.setOption({
                 animation: animation
             });
         });
