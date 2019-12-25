@@ -1,3 +1,17 @@
+## v1.1.30 (2019-12-25)
+
+### 新特性 / New Features
+- 无
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+-  [故障] 修复table表头排序按钮与文字重叠
+
 ## v1.1.29 (2019-10-25)
 
 ### 新特性 / New Features
