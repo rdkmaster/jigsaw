@@ -25,6 +25,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip/dist/jszip.min';
 
+declare const echarts: any;
+
 @Directive({
     selector: '[j-graph-download], [jigsaw-graph-download], [jigsawGraphDownload]'
 })
@@ -42,24 +44,15 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
 
     @HostListener('mouseenter', ['$event'])
     onMouseEnter() {
-        if (!this._graphs || this._graphs.length < 1) {
-            return;
-        }
         this.clearCallLater(this._rollOutDenouncesTimer);
         this._addRollInDenouncesTimer();
     }
 
     @HostListener('mouseleave', ['$event'])
     onMouseLeave() {
-        if (!this._graphs || this._graphs.length < 1) {
-            return;
-        }
         this.clearCallLater(this._rollInDenouncesTimer);
         this._addRollOutDenouncesTimer();
     }
-
-    @ContentChildren(JigsawGraph, {descendants: true})
-    private _graphs: QueryList<JigsawGraph>;
 
     private _popupInfo: PopupInfo;
 
@@ -108,9 +101,9 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
                 return;
             }
             this._popupInfo = this._popupService.popup(JigsawGraphDownloadButton, this._getNonModelOptions(), {
-                graphs: this._graphs,
                 jigsawGraphDownloadExportFileName: this.jigsawGraphDownloadExportFileName,
-                jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip
+                jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip,
+                dom: this._elementRef
             });
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
@@ -160,18 +153,44 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
 
     [index: string]: any;
 
+    private _graphsInDom: any[] = [];
+
+    private _getGraphs() {
+        this._getChildren(this.initData.dom.nativeElement);
+    }
+
+    private _getChildren(element: any) {
+        if (element.style.display == "none" || element.style.visibility == "hidden" || element.style.opacity == "0") {
+            return;
+        }
+        if (element.localName == 'jigsaw-graph' && element.offsetWidth > 0 && element.offsetHeight > 0) {
+            this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
+            return;
+        }
+        if (element.children && element.children.length > 0) {
+            for (let i = 0; i < element.children.length; i++) {
+                this._getChildren(element.children[i]);
+            }
+        }
+    }
+
     private _getGraphBase64Codes() {
         let codes = [];
-        this.initData.graphs.forEach((graph, index) => {
-            if (!graph || !graph.data || !graph.data.options) {
+        this._getGraphs();
+        this._graphsInDom.forEach((graph, index) => {
+            if (!graph) {
                 return;
             }
-            let animation = graph.echarts.getOption().animation;
-            graph.echarts.setOption({
+            let option = graph.getOption();
+            if (!option) {
+                return;
+            }
+            let animation = option.animation;
+            graph.setOption({
                 animation: false
             });
-            let graphTitle = !!graph.data.options.title && !!graph.data.options.title.text ? `-${graph.data.options.title.text}` : '';
-            const chartData = graph.echarts.getDataURL();
+            let graphTitle = !!option.title && !!option.title[0] && !!option.title[0].text ? `-${option.title[0].text}` : '';
+            const chartData = graph.getDataURL();
             if (chartData) {
                 codes.push({
                     base64: chartData.replace(/.*?\bbase64,\s*/, ''),
@@ -181,7 +200,7 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
             if (CommonUtils.isUndefined(animation)) {
                 animation = true;
             }
-            graph.echarts.setOption({
+            graph.setOption({
                 animation: animation
             });
         });
