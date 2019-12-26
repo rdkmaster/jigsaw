@@ -555,10 +555,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('contentScrollbar', { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('bodyScrollbar', { read: PerfectScrollbarDirective })
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -797,8 +797,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer]
 })
 export class JigsawTableModule {
 }

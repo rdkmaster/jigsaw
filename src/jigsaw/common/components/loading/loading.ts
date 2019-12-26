@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2} from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
 import {IPopupable} from "../../service/popup.service";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common";
@@ -9,6 +9,7 @@ import {JigsawBlock, JigsawBlockModule} from "../block/block";
  *
  * $demo = loading/user-defined
  */
+@Directive()
 export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopupable {
     public initData: any;
     public answer: EventEmitter<any>;
@@ -31,9 +32,11 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
     public set color(rgb: string) {
         this._color = rgb;
-        if (this.getColorElement()) {
-            this.setElementsStyle(this.getColorElement(), 'backgroundColor', rgb);
-        }
+        Promise.resolve().then(() => {
+            if (this.getColorElement()) {
+                this.setElementsStyle(this.getColorElement(), 'backgroundColor', rgb);
+            }
+        })
     }
 
     protected getPopupElement(): HTMLElement {
@@ -100,9 +103,11 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
     public set color(rgb: string) {
         this._color = rgb;
-        if (this.getColorElement()) {
-            this.setElementsStyle(this.getColorElement(), 'color', rgb);
-        }
+        Promise.resolve().then(() => {
+            if (this.getColorElement()) {
+                this.setElementsStyle(this.getColorElement(), 'color', rgb);
+            }
+        })
     }
 
     public setElementSize(selector: string, width: number | string, height: number | string) {
@@ -159,8 +164,7 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
 @NgModule({
     imports: [CommonModule, JigsawBlockModule],
     declarations: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
-    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
-    entryComponents: [JigsawBlock, JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
+    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
 })
 export class JigsawLoadingModule {
 

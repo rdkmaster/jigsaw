@@ -12,8 +12,7 @@ import {FloatTargetDemo} from "./demo.component";
     exports: [FloatTargetDemo],
     imports: [
         JigsawFloatModule, JigsawMobileRadioModule, JigsawDemoDescriptionModule, JigsawMobileButtonBarModule, CommonModule
-    ],
-    entryComponents: [UserComponent]
+    ]
 })
 export class FloatTargetDemoModule {
 }

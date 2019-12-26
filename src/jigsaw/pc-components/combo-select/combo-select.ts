@@ -123,10 +123,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    @ContentChild(TemplateRef, {static: false})
+    @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
-    @ViewChild(JigsawFloat, {static: false})
+    @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
     /**
      * @internal
@@ -200,10 +200,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public clearable: boolean = false;
 
-    @ViewChild('editor', {static: false})
+    @ViewChild('editor')
     private _editor: JigsawInput;
 
-    @ViewChild('editor', {read: ElementRef, static: false})
+    @ViewChild('editor', { read: ElementRef })
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
@@ -265,7 +265,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoWidth() {
-        if (!this.autoWidth || !this._jigsawFloat.popupElement) {
+        if (!this.autoWidth || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
             return;
         }
         this.callLater(() => {

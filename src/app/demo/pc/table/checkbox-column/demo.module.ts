@@ -7,8 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, JigsawDemoDescriptionModule],
     declarations: [TableAddCheckboxColumnDemoComponent],
-    exports: [TableAddCheckboxColumnDemoComponent],
-    entryComponents: [TableCellCheckboxRenderer, TableHeadCheckboxRenderer]
+    exports: [TableAddCheckboxColumnDemoComponent]
 })
 export class TableAddCheckboxColumnDemoModule {
 }

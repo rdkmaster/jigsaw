@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import {ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
+import { ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2, Directive } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -9,6 +9,7 @@ export type UploadFileInfo = {
     state: 'pause' | 'loading' | 'success' | 'error'
 };
 
+@Directive()
 export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestroy {
     constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,

@@ -86,7 +86,7 @@ export class JigsawMobileListLite extends AbstractJigsawMobileGroupLiteComponent
 
     @ViewChildren(JigsawMobileListOption) private _listOptions: QueryList<JigsawMobileListOption>;
 
-    @ViewChild(PerfectScrollbarDirective, {static: false}) private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * @internal

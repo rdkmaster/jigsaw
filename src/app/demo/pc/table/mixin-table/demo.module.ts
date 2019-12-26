@@ -7,10 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, CommonModule, JigsawDemoDescriptionModule],
     declarations: [TableMixinTableDemoComponent, MixinTable],
-    exports: [TableMixinTableDemoComponent],
-    entryComponents: [
-        MixinTable
-    ]
+    exports: [TableMixinTableDemoComponent]
 })
 export class TableMixinTableDemoModule {
 }

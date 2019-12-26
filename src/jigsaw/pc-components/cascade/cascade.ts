@@ -87,7 +87,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * @internal
      */
-    @ViewChild(JigsawTab, {static: false}) public _tabs: JigsawTab;
+    @ViewChild(JigsawTab) public _tabs: JigsawTab;
 
     /**
      * @internal
@@ -618,8 +618,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule, CommonModule, JigsawInputModule, JigsawPaginationModule],
     declarations: [JigsawCascade, InternalTabContent],
     exports: [JigsawCascade],
-    providers: [TranslateService],
-    entryComponents: [InternalTabContent]
+    providers: [TranslateService]
 })
 export class JigsawCascadeModule {
     constructor(ts: TranslateService) {

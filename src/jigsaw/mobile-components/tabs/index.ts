@@ -18,8 +18,7 @@ import {JigsawMobileInputModule} from "../input/input";
     exports: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileEditableTabTitleRenderer],
     declarations: [JigsawMobileTab, JigsawMobileTabPane, JigsawMobileTabLabel,
         JigsawMobileTabContent, JigsawMobileEditableTabTitleRenderer],
-    providers: [],
-    entryComponents: [JigsawMobileTabPane, JigsawMobileEditableTabTitleRenderer]
+    providers: []
 })
 export class JigsawMobileTabsModule {
 }

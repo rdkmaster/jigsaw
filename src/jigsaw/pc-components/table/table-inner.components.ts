@@ -1,21 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type,
-    ViewChild
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive } from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
@@ -23,13 +6,14 @@ import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit {
+@Directive()
+export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                 protected changeDetector: ChangeDetectorRef) {
         super();
     }
 
-    @ViewChild(JigsawRendererHost, {static: false})
+    @ViewChild(JigsawRendererHost)
     protected rendererHost: JigsawRendererHost;
     protected targetData: TableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
@@ -99,7 +83,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     }
 
     private _initTargetData(): void {
-        if (!this.tableData || !this.additionalData) {
+        if (!this.tableData || !this.additionalData || !this.initialized) {
             return;
         }
         [this._column, this.targetData] = _getColumnIndex(this._tableData, this._additionalData, this.field);
@@ -135,6 +119,11 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     protected insertRenderer() {
         this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
         this.changeDetector.detectChanges();
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._initTargetData();
     }
 
     ngAfterViewInit(): void {

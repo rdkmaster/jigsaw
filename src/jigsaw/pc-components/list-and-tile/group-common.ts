@@ -1,15 +1,6 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    QueryList,
-    OnInit
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList, OnInit, Directive } from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
@@ -20,6 +11,7 @@ export class GroupOptionValue {
     disabled?: boolean;
 }
 
+@Directive()
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy, OnInit {
 
     protected _removeRefreshCallback: CallbackRemoval;
@@ -217,6 +209,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 }
 
+@Directive()
 export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     @Input() public value: any;
 

@@ -113,11 +113,11 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input() public optionCount: number;
 
-    @ViewChild(JigsawList, {static: false}) private _listInst: JigsawList;
+    @ViewChild(JigsawList) private _listInst: JigsawList;
 
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
-    @ViewChild(PerfectScrollbarDirective, {static: false}) private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * 搜索的时候，如果重新创建data为LocalPageableArray，这个时候检查selectItems，会误删选中值

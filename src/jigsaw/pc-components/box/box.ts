@@ -41,10 +41,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     @ContentChildren(JigsawBox)
     private _childrenBoxRaw: QueryList<JigsawBox>;
 
-    @ViewChild('resizeLine', {static: false})
+    @ViewChild('resizeLine')
     private _resizeLine: ElementRef;
 
-    @ViewChild('resizeLineParent', {static: false})
+    @ViewChild('resizeLineParent')
     private _resizeLineParent: ElementRef;
 
     /**

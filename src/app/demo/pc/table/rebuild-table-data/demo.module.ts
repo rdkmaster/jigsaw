@@ -8,8 +8,7 @@ import {JigsawPaginationModule} from "jigsaw/pc-components/pagination/pagination
 @NgModule({
     imports: [JigsawTableModule, JigsawPaginationModule, CommonModule, JigsawDemoDescriptionModule],
     declarations: [RebuildTableDataDemoComponent, JobCellRender],
-    exports: [RebuildTableDataDemoComponent],
-    entryComponents: [JobCellRender]
+    exports: [RebuildTableDataDemoComponent]
 })
 export class RebuildTableDataDemoModule {
 }

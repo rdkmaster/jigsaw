@@ -7,7 +7,7 @@ import {JigsawInput} from "jigsaw/pc-components/input/input";
 export class InputFocusDemoComponent {
     inputValue: any;
     focusMessage: string;
-    @ViewChild('myInput', {static: false}) myInput: JigsawInput;
+    @ViewChild('myInput') myInput: JigsawInput;
 
     click() {
         this.myInput.focus();

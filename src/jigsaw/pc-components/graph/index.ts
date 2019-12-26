@@ -11,8 +11,7 @@ import {PopupService} from "../../common/service/popup.service";
     imports: [CommonModule],
     exports: [JigsawGraph,JigsawGraphDownloadDirective],
     declarations: [JigsawGraph,JigsawGraphDownloadButton,JigsawGraphDownloadDirective],
-    providers: [PopupService],
-    entryComponents:[JigsawGraphDownloadButton]
+    providers: [PopupService]
 })
 export class JigsawGraphModule { }
 

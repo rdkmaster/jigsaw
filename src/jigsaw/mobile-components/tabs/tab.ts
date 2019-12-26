@@ -107,7 +107,7 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
     @Output()
     public titleChange = new EventEmitter<TabTitleInfo>();
 
-    @ViewChild('tabsInkBar', {static: false})
+    @ViewChild('tabsInkBar')
     private _tabsInkBar: ElementRef;
 
     /**
@@ -621,10 +621,10 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
         };
     }
 
-    @ViewChild('tabsNavWrap', {static: false})
+    @ViewChild('tabsNavWrap')
     private _tabsNavWrap: ElementRef;
 
-    @ViewChild('tabsNav', {static: false})
+    @ViewChild('tabsNav')
     private _tabsNav: ElementRef;
 
     private _updateOverflowButton() {
