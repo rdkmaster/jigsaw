@@ -23,7 +23,7 @@ import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
-import {PopupOptions} from "../../common/service/popup.service";
+import {PopupOptions, PopupService} from "../../common/service/popup.service";
 
 
 export class ComboSelectValue {
@@ -48,7 +48,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+                private _elementRef: ElementRef,
+                private _popupService: PopupService) {
         super();
     }
 
@@ -123,10 +124,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    @ContentChild(TemplateRef, {static: false})
+    @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
-    @ViewChild(JigsawFloat, {static: false})
+    @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
     /**
      * @internal
@@ -200,10 +201,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public clearable: boolean = false;
 
-    @ViewChild('editor', {static: false})
+    @ViewChild('editor')
     private _editor: JigsawInput;
 
-    @ViewChild('editor', {read: ElementRef, static: false})
+    @ViewChild('editor', { read: ElementRef })
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
@@ -265,7 +266,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoWidth() {
-        if (!this.autoWidth || !this._jigsawFloat.popupElement) {
+        if (!this.autoWidth || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
             return;
         }
         this.callLater(() => {
@@ -294,6 +295,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', editorWidth);
         } else {
             this._renderer.setStyle(this._editorElementRef.nativeElement, 'width', '100%');
+        }
+    }
+
+    private _autoPopupPos() {
+        if(!this.autoClose && this._jigsawFloat) {
+            this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
         }
     }
 
@@ -366,6 +373,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._propagateChange(this._value);
             this._autoWidth();
             this._autoClose();
+            this._autoPopupPos();
         });
     }
 

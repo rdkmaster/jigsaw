@@ -49,7 +49,7 @@ export class ChartIconCustomPieLegend {
     orient: string;
     data: string[];
     width: number;
-    height: number;
+    height?: number;
     marginLeft: number;
 }
 

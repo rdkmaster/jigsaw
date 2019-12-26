@@ -1,16 +1,4 @@
-import {
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    Renderer2,
-    Type,
-    ViewChild,
-} from "@angular/core";
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, Type, ViewChild, Directive } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
@@ -52,7 +40,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     /**
      * @internal
      */
-    @ContentChildren(JigsawButton)
+    @ContentChildren(JigsawButton, {descendants: true})
     public _$inlineButtons: QueryList<JigsawButton>;
 
     /**
@@ -143,6 +131,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     }
 }
 
+@Directive()
 export abstract class JigsawCommonAlert extends DialogBase {
     @Input()
     public set initData(value: any) {
@@ -313,8 +302,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
         JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,
         JigsawErrorAlert, JigsawConfirmAlert
     ],
-    providers: [TranslateService],
-    entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawBlock]
+    providers: [TranslateService]
 })
 export class JigsawAlertModule {
     constructor(translateService: TranslateService) {

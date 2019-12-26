@@ -132,6 +132,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
 /**
  * 一般来说，应用无需关注此类
  */
+@Directive()
 export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
     /**
      * @internal

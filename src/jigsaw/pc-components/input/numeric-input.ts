@@ -193,7 +193,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     private _inputElement: ElementRef;
 
     public _$upDisabled: boolean;

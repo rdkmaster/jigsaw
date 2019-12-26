@@ -6,7 +6,7 @@ import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
 })
 export class InputPrefixIconDemoComponent {
 
-    @ViewChild('myInput', {static: false}) myInput: JigsawMobileInput;
+    @ViewChild('myInput') myInput: JigsawMobileInput;
 
     click() {
         alert('你输入的值是 ' + this.myInput.value)

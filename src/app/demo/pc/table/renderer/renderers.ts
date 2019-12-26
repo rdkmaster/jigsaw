@@ -25,7 +25,7 @@ export class OfficeRendererBase extends TableCellRendererBase {
                     <j-list [(selectedItems)]="selectedOffices" [multipleSelect]="true"
                             (selectedItemsChange)="onChange($event)" width="100%">
                         <j-list-option #listOption *ngFor="let office of officeList" [value]="office">
-                            <j-checkbox [checked]="listOption.selected">{{office.label}}</j-checkbox>
+                            <j-checkbox [checked]="listOption.selected"></j-checkbox><span style="margin-left: 6px; vertical-align: middle;">{{office.label}}</span>
                         </j-list-option>
                     </j-list>
                 </div>

@@ -1,15 +1,6 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    QueryList,
-    OnInit
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList, OnInit, Directive } from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
@@ -20,6 +11,7 @@ export class GroupOptionValue {
     disabled?: boolean;
 }
 
+@Directive()
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy, OnInit {
 
     protected _removeRefreshCallback: CallbackRemoval;
@@ -42,6 +34,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     //判断是否支持多选
     @Input() public multipleSelect: boolean;
+
+    @Input() public autoRemoveInvalidValue: boolean = true;
 
     protected _selectedItems = new ArrayCollection<any>();
 
@@ -166,7 +160,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._setItemState(items);
             this._subscribeItemSelectedChange(items);
         });
-        if (this._items.length) {
+        if (this._items.length && this.autoRemoveInvalidValue) {
             // 在本地数据为空时，不检查无用选项
             this._removeInvalidSelectedItems();
         }
@@ -217,6 +211,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 }
 
+@Directive()
 export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     @Input() public value: any;
 

@@ -1,10 +1,11 @@
-import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2} from "@angular/core";
+import { ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive } from "@angular/core";
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 
+@Directive()
 export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy {
     public element: HTMLElement;
 
@@ -170,6 +171,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 }
 
+@Directive()
 export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
 

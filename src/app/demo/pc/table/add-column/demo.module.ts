@@ -6,11 +6,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, JigsawDemoDescriptionModule],
     declarations: [TableAddColumnDemoComponent, MyTableHeadOption, MyTableCellOption],
-    exports: [TableAddColumnDemoComponent],
-    entryComponents: [
-        MyTableHeadOption,
-        MyTableCellOption,
-    ],
+    exports: [TableAddColumnDemoComponent]
 })
 export class TableAddColumnDemoModule {
 }

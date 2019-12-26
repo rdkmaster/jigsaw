@@ -5,7 +5,6 @@ import {RangeTimeGrModule} from "app/demo/pc/range-time/gr/demo.module";
 import {RangeTimeLimitEndModule} from "./limit-end/demo.module";
 import {RangeTimeRecommendedModule} from "./recommended/demo.module";
 import {RangeTimeRefreshIntervalModule} from "./refresh-interval/demo.module";
-import {RangeTimeWeekStartModule} from "./week-start/demo.module";
 import {RangeTimeLimitStartModule} from "./limit-start/demo.module";
 import {RangeTimeGrItemsModule} from "./gr-items/demo.module";
 import {RangeTimeFullModule} from "./full/demo.module";
@@ -17,8 +16,9 @@ import {RangeTimeLimitEndComponent} from "./limit-end/demo.component";
 import {RangeTimeLimitStartComponent} from "./limit-start/demo.component";
 import {RangeTimeRecommendedComponent} from "./recommended/demo.component";
 import {RangeTimeRefreshIntervalComponent} from "./refresh-interval/demo.component";
-import {RangeTimeWeekStartComponent} from "./week-start/demo.component";
 import {RangeTimeFullComponent} from "./full/demo.component";
+import {RangeTimeWeekSelectComponent} from "./week-select/demo.component";
+import {RangeTimeWeekSelectDemoModule} from "./week-select/demo.module";
 
 export const routerConfig:any = [
     {
@@ -52,8 +52,8 @@ export const routerConfig:any = [
         path: 'refresh-interval', component: RangeTimeRefreshIntervalComponent
     },
     {
-        path: 'week-start', component: RangeTimeWeekStartComponent
-    },
+        path: 'week-select', component: RangeTimeWeekSelectComponent
+    }
 ];
 
 @NgModule({
@@ -66,8 +66,8 @@ export const routerConfig:any = [
         RangeTimeLimitStartModule,
         RangeTimeRecommendedModule,
         RangeTimeRefreshIntervalModule,
-        RangeTimeWeekStartModule,
-        RangeTimeFullModule
+        RangeTimeFullModule,
+        RangeTimeWeekSelectDemoModule,
     ]
 })
 export class RangeTimeDemoModule {

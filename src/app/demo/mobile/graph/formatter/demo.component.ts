@@ -14,7 +14,7 @@ import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
 
 export class GraphFormatterComponent implements OnInit, AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
+    @ViewChild("graph") graph: JigsawMobileGraph;
 
 
     ngOnInit() {

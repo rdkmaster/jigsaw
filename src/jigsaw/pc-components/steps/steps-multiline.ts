@@ -187,7 +187,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._setWidth();
     }
 
-    @ViewChild('step', {static: false})
+    @ViewChild('step')
     private _step: ElementRef;
 
     private _initData() {

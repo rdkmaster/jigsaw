@@ -26,11 +26,7 @@ import {
         TableRendererDemoComponent, PositionHeaderRenderer, OfficeCellRenderer,
         OfficeCellEditorRenderer, OfficeHeaderRenderer
     ],
-    exports: [TableRendererDemoComponent],
-    entryComponents: [
-        PositionHeaderRenderer, TableCellCheckboxRenderer, TableHeadCheckboxRenderer,
-        OfficeCellRenderer, OfficeCellEditorRenderer, OfficeHeaderRenderer
-    ]
+    exports: [TableRendererDemoComponent]
 })
 export class TableRendererDemoModule {
 }

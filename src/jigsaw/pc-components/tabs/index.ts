@@ -17,8 +17,7 @@ import {JigsawInputModule} from "../input/input";
     imports: [CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule],
     exports: [JigsawTab, JigsawTabPane, JigsawEditableTabTitleRenderer],
     declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer],
-    providers: [],
-    entryComponents: [JigsawTabPane]
+    providers: []
 })
 export class JigsawTabsModule { }
 

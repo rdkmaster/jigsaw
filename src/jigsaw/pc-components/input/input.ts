@@ -137,7 +137,7 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
     }
 
 
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     private _inputElement: ElementRef;
 
     /**

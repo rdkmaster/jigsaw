@@ -17,7 +17,6 @@ const routes=[
     ],
     declarations: [
         TabContentComponent, TabContentDefine
-    ],
-    entryComponents: [ TabContentDefine, TabContentComponent ]
+    ]
 })
 export class TabContentModule { }
