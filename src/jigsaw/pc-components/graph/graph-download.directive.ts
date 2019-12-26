@@ -1,15 +1,4 @@
-import {
-    Component,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnDestroy,
-    QueryList,
-    Renderer2,
-    ContentChildren
-} from "@angular/core";
+import {Component, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Renderer2} from "@angular/core";
 import {
     ButtonInfo,
     IPopupable,
@@ -20,7 +9,6 @@ import {
     PopupService
 } from "../../common/service/popup.service";
 import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
-import {JigsawGraph} from "./graph";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip/dist/jszip.min';
