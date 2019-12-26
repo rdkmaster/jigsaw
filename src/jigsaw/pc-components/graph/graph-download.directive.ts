@@ -103,7 +103,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
             this._popupInfo = this._popupService.popup(JigsawGraphDownloadButton, this._getNonModelOptions(), {
                 jigsawGraphDownloadExportFileName: this.jigsawGraphDownloadExportFileName,
                 jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip,
-                dom:this._elementRef
+                dom: this._elementRef
             });
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
@@ -153,17 +153,17 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
 
     [index: string]: any;
 
-    private _graphsInDom :any[]= [];
+    private _graphsInDom: any[] = [];
 
-    private _getGraphs(){
+    private _getGraphs() {
         this._getChildren(this.initData.dom.nativeElement);
     }
 
     private _getChildren(element: any) {
-        if(element.style.display == "none" || element.style.visibility == "hidden" || element.style.opacity == "0"){
+        if (element.style.display == "none" || element.style.visibility == "hidden" || element.style.opacity == "0") {
             return;
         }
-        if (element.localName == 'jigsaw-graph' && element.offsetWidth >0 && element.offsetHeight >0 ) {
+        if (element.localName == 'jigsaw-graph' && element.offsetWidth > 0 && element.offsetHeight > 0) {
             this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
             return;
         }
@@ -182,7 +182,7 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
                 return;
             }
             let option = graph.getOption();
-            if(!option){
+            if (!option) {
                 return;
             }
             let animation = option.animation;
