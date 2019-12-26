@@ -160,7 +160,10 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
     }
 
     private _getChildren(element: any) {
-        if (element.localName == 'jigsaw-graph') {
+        if(element.style.display == "none" || element.style.visibility == "hidden" || element.style.opacity == "0"){
+            return;
+        }
+        if (element.localName == 'jigsaw-graph' && element.offsetWidth >0 && element.offsetHeight >0 ) {
             this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
             return;
         }
