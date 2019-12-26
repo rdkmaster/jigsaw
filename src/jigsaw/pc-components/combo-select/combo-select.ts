@@ -297,6 +297,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
+    private _autoPopupPos() {
+        if(!this.autoClose && this._jigsawFloat) {
+            this._jigsawFloat._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+        }
+    }
+
     /**
      * @internal
      */
@@ -366,6 +372,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             this._propagateChange(this._value);
             this._autoWidth();
             this._autoClose();
+            this._autoPopupPos();
         });
     }
 

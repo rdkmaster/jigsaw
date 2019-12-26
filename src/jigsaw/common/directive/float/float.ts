@@ -186,7 +186,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
+                public _popupService: PopupService) {
         super();
     }
 
@@ -406,7 +406,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
     }
 
-    private _getPopupOption(): PopupOptions {
+    public _getPopupOption(): PopupOptions {
 
         let option: any = {};
 
