@@ -18,6 +18,7 @@ export class ComboSelectAutoCompleteDemo {
     constructor(public http: HttpClient) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
         this.lpaCountries.http = http;
+        this.lpaCountries.pagingInfo.pageSize=1000;
         this.lpaCountries.fromAjax('mock-data/countries');
         // 这里模拟实际的场景：服务端返回的数据结构不能直接用的场景，需要对数据做一些简单的转换
         // RDK的服务端返回的数据多数是TableData格式，直接调用对应api做转换就行了
