@@ -44,28 +44,15 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
 
     @HostListener('mouseenter', ['$event'])
     onMouseEnter() {
-        if (!this._graphs || this._graphs.length < 1) {
-            return;
-        }
         this.clearCallLater(this._rollOutDenouncesTimer);
         this._addRollInDenouncesTimer();
     }
 
     @HostListener('mouseleave', ['$event'])
     onMouseLeave() {
-        if (!this._graphs || this._graphs.length < 1) {
-            return;
-        }
         this.clearCallLater(this._rollInDenouncesTimer);
         this._addRollOutDenouncesTimer();
     }
-
-    @ContentChildren(JigsawGraph, {descendants: true})
-    private _graphsInContent: QueryList<JigsawGraph>;
-
-    private _graphsInDom = [];
-
-    private _graphs = [];
 
     private _popupInfo: PopupInfo;
 
@@ -114,9 +101,9 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
                 return;
             }
             this._popupInfo = this._popupService.popup(JigsawGraphDownloadButton, this._getNonModelOptions(), {
-                graphs: this._graphs,
                 jigsawGraphDownloadExportFileName: this.jigsawGraphDownloadExportFileName,
-                jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip
+                jigsawGraphDownloadTooltip: this.jigsawGraphDownloadTooltip,
+                dom:this._elementRef
             });
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
@@ -146,30 +133,6 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         super.ngOnDestroy();
         this._closePopup();
     }
-
-    ngAfterViewInit() {
-        //动态加载的图片无法通过dom获取，用两种获取方式，然后合并一下
-        //动态加载的图片只能获取到初始页内的图片，比如tab
-        this.getChildren(this._elementRef.nativeElement);
-        this._graphs.push(...this._graphsInDom);
-        this._graphsInContent.forEach(graphContent => {
-            if (this._graphsInDom.findIndex(graphDom => graphDom == graphContent.echarts) < 0) {
-                this._graphs.push(graphContent.echarts);
-            }
-        });
-    }
-
-    getChildren(element: any) {
-        if (element.localName == 'jigsaw-graph') {
-            this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
-            return;
-        }
-        if (element.children && element.children.length > 0) {
-            for (let i = 0; i < element.children.length; i++) {
-                this.getChildren(element.children[i]);
-            }
-        }
-    }
 }
 
 @Component({
@@ -190,17 +153,40 @@ export class JigsawGraphDownloadButton extends AbstractJigsawComponent implement
 
     [index: string]: any;
 
+    private _graphsInDom :any[]= [];
+
+    private _getGraphs(){
+        this._getChildren(this.initData.dom.nativeElement);
+    }
+
+    private _getChildren(element: any) {
+        if (element.localName == 'jigsaw-graph') {
+            this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
+            return;
+        }
+        if (element.children && element.children.length > 0) {
+            for (let i = 0; i < element.children.length; i++) {
+                this._getChildren(element.children[i]);
+            }
+        }
+    }
+
     private _getGraphBase64Codes() {
         let codes = [];
-        this.initData.graphs.forEach((graph, index) => {
-            if (!graph || !graph.getOption()) {
+        this._getGraphs();
+        this._graphsInDom.forEach((graph, index) => {
+            if (!graph) {
                 return;
             }
-            let animation = graph.getOption().animation;
+            let option = graph.getOption();
+            if(!option){
+                return;
+            }
+            let animation = option.animation;
             graph.setOption({
                 animation: false
             });
-            let graphTitle = !!graph.getOption().title && !!graph.getOption().title[0] && !!graph.getOption().title[0].text ? `-${graph.getOption().title[0].text}` : '';
+            let graphTitle = !!option.title && !!option.title[0] && !!option.title[0].text ? `-${option.title[0].text}` : '';
             const chartData = graph.getDataURL();
             if (chartData) {
                 codes.push({
