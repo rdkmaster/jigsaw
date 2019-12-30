@@ -23,7 +23,7 @@ import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
-import {PopupOptions} from "../../common/service/popup.service";
+import {PopupOptions, PopupService} from "../../common/service/popup.service";
 
 
 export class ComboSelectValue {
@@ -48,7 +48,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+                private _elementRef: ElementRef,
+                private _popupService: PopupService) {
         super();
     }
 
@@ -299,7 +300,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _autoPopupPos() {
         if(!this.autoClose && this._jigsawFloat) {
-            this._jigsawFloat._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
         }
     }
 
