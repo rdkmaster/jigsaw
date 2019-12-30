@@ -1,3 +1,17 @@
+## v9.0.0 (2019-12-30)
+
+### 新特性 / New Features
+- [新增] 重大更新：Jigsaw支持Angular9版本
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- 无
+
 ## v8.0.1 (2019-9-20)
 
 ### 新特性 / New Features
