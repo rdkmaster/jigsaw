@@ -51,11 +51,11 @@ export class FloatOptionDemo implements OnInit {
     offset: PopupPositionOffset = {};
     showBorder = true;
     size: PopupSize = {};
-    options: PopupOptions = {};
+    options: PopupOptions = {useCustomizedBackground: true};
     _$height = 'auto';
 
     valueChange() {
-        this.options = {};
+        this.options = {useCustomizedBackground: true};
         this.options.showEffect = PopupEffect[<string>this.showHideEffect + 'In'];
         this.options.hideEffect = PopupEffect[<string>this.showHideEffect + 'Out'];
         this.options.posType = PopupPositionType[<string>this.selectedPositionType];

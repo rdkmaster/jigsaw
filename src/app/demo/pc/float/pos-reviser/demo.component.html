@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
-      [jigsawFloatTarget]="jigsawFloatArea1">
+      [jigsawFloatTarget]="jigsawFloatArea1" [jigsawFloatOptions]="{useCustomizedBackground: true}">
     内置位置修正算法
     <ng-template #jigsawFloatArea1>
         <div class="jigsawFloatArea">
@@ -14,7 +14,7 @@
     </ng-template>
 </span>
 <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
-      [jigsawFloatTarget]="jigsawFloatArea2">
+      [jigsawFloatTarget]="jigsawFloatArea2" [jigsawFloatOptions]="{useCustomizedBackground: true}">
     无需修正位置
     <ng-template #jigsawFloatArea2>
         <div class="jigsawFloatArea">
@@ -48,7 +48,7 @@
 
 <div j-movable style="position: fixed" class="movable-box">
     <span class="fa fa-bars" jigsaw-float jigsawFloatPosition="leftTop"
-          [jigsawFloatTarget]="jigsawFloatArea5" [jigsawFloatPosition]="position"
+          [jigsawFloatTarget]="jigsawFloatArea5" [jigsawFloatPosition]="position" [jigsawFloatOptions]="{useCustomizedBackground: true}"
           style="margin: 40px 16px 40px 0">
        鼠标挪过来
         <ng-template #jigsawFloatArea5>

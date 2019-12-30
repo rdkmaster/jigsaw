@@ -17,7 +17,7 @@
                         (searchKeywordChange)="handleSearching($event, lpaCountries)">
             <ng-template>
                 <div class="dropdown">
-                    <j-tile [(selectedItems)]="selectedCountries" trackItemBy="enName" width="550px">
+                    <j-tile [(selectedItems)]="selectedCountries" [autoRemoveInvalidValue]="false" trackItemBy="enName" width="550px">
                         <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
                             {{country.enName}}
                         </j-tile-option>
@@ -41,7 +41,7 @@
                         (searchKeywordChange)="handleSearching($event, spaCountries)">
             <ng-template>
                 <div class="dropdown">
-                    <j-tile [(selectedItems)]="selectedCountries2" trackItemBy="enName" width="550px">
+                    <j-tile [(selectedItems)]="selectedCountries2" [autoRemoveInvalidValue]="false" trackItemBy="enName" width="550px">
                         <j-tile-option *ngFor="let country of spaCountries" [value]="country" width="100px">
                             {{country.enName}}
                         </j-tile-option>
@@ -66,7 +66,7 @@
                         <span jigsaw-prefix-icon class="fa fa-search"></span>
                     </j-input>
                     <div class="dropdown">
-                        <j-tile [(selectedItems)]="selectedCountries3" trackItemBy="enName" width="550px">
+                        <j-tile [(selectedItems)]="selectedCountries3" [autoRemoveInvalidValue]="false" trackItemBy="enName" width="550px">
                             <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
                                 {{country.enName}}
                             </j-tile-option>

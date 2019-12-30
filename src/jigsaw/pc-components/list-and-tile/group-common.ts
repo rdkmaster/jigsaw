@@ -43,6 +43,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     //判断是否支持多选
     @Input() public multipleSelect: boolean;
 
+    @Input() public autoRemoveInvalidValue: boolean = true;
+
     protected _selectedItems = new ArrayCollection<any>();
 
     @Input()
@@ -166,7 +168,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._setItemState(items);
             this._subscribeItemSelectedChange(items);
         });
-        if (this._items.length) {
+        if (this._items.length && this.autoRemoveInvalidValue) {
             // 在本地数据为空时，不检查无用选项
             this._removeInvalidSelectedItems();
         }
