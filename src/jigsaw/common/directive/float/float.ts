@@ -406,6 +406,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
     }
 
+    /**
+     * @internal
+     */
     public _getPopupOption(): PopupOptions {
 
         let option: any = {};
