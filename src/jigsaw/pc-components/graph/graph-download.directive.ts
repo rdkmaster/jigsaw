@@ -51,7 +51,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
             hideEffect: PopupEffect.fadeOut,
             pos: this._elementRef,
             posOffset: {
-                left: this._elementRef.nativeElement.offsetWidth - 10
+                left: this._elementRef.nativeElement.offsetWidth - 20
             },
             posType: PopupPositionType.absolute,
             size: {width: 15},
