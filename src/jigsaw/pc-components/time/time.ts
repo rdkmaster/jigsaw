@@ -4,7 +4,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscription} from "rxjs/Subscription";
 import {AbstractJigsawComponent} from "../../common/common";
-import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
+import {TimeWeekDayStart, TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {JigsawSimpleTooltipComponent} from "../tooltip/tooltip";
 import {Time, WeekTime} from "../../common/service/time.types";
@@ -297,6 +297,33 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
+    private _weekDayStart: TimeWeekDayStart;
+
+    /**
+     * 用于在周粒度下使用
+     * 配置weekDayStart请参考(https://momentjs.com/docs/#/customization/dow-doy/)
+     * 请结合weekStart配置
+     */
+    @Input()
+    public get weekDayStart(): string | TimeWeekDayStart {
+        return this._weekDayStart;
+    }
+
+    public set weekDayStart(value: string | TimeWeekDayStart) {
+        if (value) {
+            if (typeof value === 'string') {
+                this._weekDayStart = TimeWeekDayStart[value];
+            } else {
+                this._weekDayStart = value;
+            }
+            if (this._timePicker) {
+                TimeService.setWeekDayStart(this._weekDayStart);
+                this._initDatePicker();
+                this._handleRecommended(this._el.nativeElement, this._popService);
+            }
+        }
+    }
+
     /**
      * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
      *
@@ -471,6 +498,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _initDatePicker() {
         const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
         TimeService.setWeekStart(this._weekStart);
+        TimeService.setWeekDayStart(this._weekDayStart);
         let [result, isChange] = this._handleValue(<Time>this.date);
         if (isChange) {
             this._value = result;
@@ -598,7 +626,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _handleWeekSelect() {
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
-        let year = TimeService.getYear(<string>this.date);
+        let year = TimeService.getWeekYear(<string>this.date);
         const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
         if (tdActive) {
             tdActive.parentNode.classList.add("active");
@@ -828,8 +856,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             return;
         }
         if (this._value && this.gr == TimeGr.week) {
-            let newValueYear = TimeService.getYear(<string>newValue);
-            let valueYear = TimeService.getYear(<string>this._value);
+            let newValueYear = TimeService.getWeekYear(<string>newValue);
+            let valueYear = TimeService.getWeekYear(<string>this._value);
             let newValueWeek = TimeService.getWeekOfYear(<string>newValue);
             let valueWeek = TimeService.getWeekOfYear(<string>this._value);
             if (newValueYear == valueYear && newValueWeek == valueWeek) return;

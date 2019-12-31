@@ -1,9 +1,9 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
-import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
 import {GrItem, JigsawTime, Shortcut} from "../time/time";
-import {WeekTime} from "../../common/service/time.types";
+import {TimeWeekDay, WeekTime} from "../../common/service/time.types";
 
 /**
  * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
@@ -176,6 +176,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      */
     @Input()
     public weekStart: TimeWeekStart | string;
+
+    /**
+     * 参考`JigsawTime.weekDayStart`
+     *
+     * $demo = range-time/week-day-start
+     */
+    @Input()
+    public weekDayStart: TimeWeekDayStart | string;
 
     /**
      * 参考`JigsawTime.grItems`
@@ -377,7 +385,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
     private _handleWeekSelect(date: string) {
         let weekNum = TimeService.getWeekOfYear(date);
-        let year = TimeService.getYear(date);
+        let year = TimeService.getWeekYear(date);
         return {year: year, week: weekNum};
     }
 

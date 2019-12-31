@@ -19,6 +19,8 @@ import {RangeTimeRecommendedComponent} from "./recommended/demo.component";
 import {RangeTimeRefreshIntervalComponent} from "./refresh-interval/demo.component";
 import {RangeTimeWeekStartComponent} from "./week-start/demo.component";
 import {RangeTimeFullComponent} from "./full/demo.component";
+import {RangeTimeWeekDayStartComponent} from "./week-day-start/demo.component";
+import {RangeTimeWeekDayStartDemoModule} from "./week-day-start/demo.module";
 
 export const routerConfig:any = [
     {
@@ -54,6 +56,9 @@ export const routerConfig:any = [
     {
         path: 'week-start', component: RangeTimeWeekStartComponent
     },
+    {
+        path: 'week-day-start', component: RangeTimeWeekDayStartComponent
+    }
 ];
 
 @NgModule({
@@ -67,7 +72,8 @@ export const routerConfig:any = [
         RangeTimeRecommendedModule,
         RangeTimeRefreshIntervalModule,
         RangeTimeWeekStartModule,
-        RangeTimeFullModule
+        RangeTimeFullModule,
+        RangeTimeWeekDayStartDemoModule,
     ]
 })
 export class RangeTimeDemoModule {
