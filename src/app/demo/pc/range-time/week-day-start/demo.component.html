@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Time</h2>
+    <h2>RangeTime</h2>
 
     <div class="demo-1 live-demo">
         <h3>WeekDayStart</h3>
@@ -19,10 +19,10 @@
             <jigsaw-tile-option *ngFor="let item of weekDayStartList" [value]="item">{{item.label}}</jigsaw-tile-option>
         </jigsaw-tile><br><br>
 
-        <jigsaw-time [(date)]="date" gr="week" [weekDayStart]="weekDayStart[0].label" [weekStart]="weekStart[0].label">
-        </jigsaw-time><br>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" gr="week" [weekDayStart]="weekDayStart[0].label"  [weekStart]="weekStart[0].label">
+        </jigsaw-range-time><br>
 
-        <p class="message">Selected Time : {{date | json}}</p>
+        <p class="message">beginDate : {{beginDate | json}} ， end ： {{endDate | json}}</p>
     </div>
 </div>
 

@@ -15,8 +15,10 @@ import {AfterContentInit, Component} from "@angular/core";
         }
     `]
 })
-export class TimeWeekDayStartComponent implements AfterContentInit {
-    date = "now";
+export class RangeTimeWeekDayStartComponent implements AfterContentInit {
+    beginDate = "now-20d";
+
+    endDate = "now";
 
     weekStartList = [{label: "sun"}, {label: "mon"}, {label: "tue"},
         {label: "wed"}, {label: "thu"}, {label: "fri"}, {label: "sat"}];

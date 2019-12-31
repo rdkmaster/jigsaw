@@ -2,6 +2,7 @@
     <jigsaw-time [date]="beginDate" [(gr)]="_$gr" [limitStart]="_$limitStart" [limitEnd]="_$limitEnd"
                  (dateChange)="_$dateChange('beginDate',$event)" [refreshInterval]="refreshInterval"
                  [weekStart]="weekStart"
+                 [weekDayStart]="weekDayStart"
                  [recommendedBegin]="recommendedBegin" [recommendedEnd]="recommendedEnd"
                  [recommendedLabel]="recommendedLabel" [grItems]="grItems" #timeStart
                  class.jigsaw-range-time-startTime="false" (grChange)="_$grChange($event)">
@@ -9,6 +10,7 @@
     <jigsaw-time [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate" [limitEnd]="_$endTimeLimitEnd"
                  (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="refreshInterval"
                  [weekStart]="weekStart"
+                 [weekDayStart]="weekDayStart"
                  [recommendedBegin]="recommendedBegin" [recommendedEnd]="recommendedEnd"
                  [recommendedLabel]="recommendedLabel" #timeEnd
                  [class.jigsaw-range-time-endTime]="(grItems && grItems.length!=0)">

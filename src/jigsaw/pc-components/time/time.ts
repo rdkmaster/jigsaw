@@ -301,6 +301,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _weekDayStart: TimeWeekDayStart;
 
     /**
+     * 用于在周粒度下使用
      * 配置weekDayStart请参考(https://momentjs.com/docs/#/customization/dow-doy/)
      * 请结合weekStart配置
      */

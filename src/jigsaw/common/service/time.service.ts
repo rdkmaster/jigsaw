@@ -18,7 +18,7 @@ export enum TimeWeekStart {
 }
 
 /**
- * 用于配置第一周包含日期，结合weekStart配置
+ * 用于在周粒度下配置第一周包含日期，结合weekStart配置
  */
 export enum TimeWeekDayStart {
     doy6 = 6, doy4 = 4, doy12 = 12, doy7 = 7
