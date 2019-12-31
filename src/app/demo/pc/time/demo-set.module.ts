@@ -21,6 +21,8 @@ import {TimeGrItemsComponent} from "./gr-items/demo.component";
 import {TimeRefreshIntervalComponent} from "./refresh-interval/demo.component";
 import {ComboSelectDemoComponent} from "./with-combo-select/demo.component";
 import {TimeFullComponent} from "./full/demo.component";
+import {TimeWeekDayStartComponent} from "./week-day-start/demo.component";
+import {TimeWeekDayStartDemoModule} from "./week-day-start/demo.module";
 
 export const routerConfig:any = [
     {
@@ -56,6 +58,9 @@ export const routerConfig:any = [
     {
         path: 'with-combo-select', component: ComboSelectDemoComponent
     },
+    {
+        path: 'week-day-start', component: TimeWeekDayStartComponent
+    },
 ];
 
 @NgModule({
@@ -63,7 +68,7 @@ export const routerConfig:any = [
         RouterModule.forChild(routerConfig),
         TimeBasicDemoModule, TimeComboDemoModule, TimeGrDemoModule, TimeGrItemsDemoModule, TimeLimitEndDemoModule,
         TimeLimitStartDemoModule, TimeRecommendedDemoModule, TimeRrefreshIntervalDemoModule, TimeWeekStartDemoModule,
-        TimeFullModule
+        TimeFullModule, TimeWeekDayStartDemoModule
     ],
     providers: []
 })
