@@ -22,6 +22,7 @@ export class BoxViewInitDemoComponent {
             [210, 310, 410, 320, 1320]
         ];
         JigsawBox.viewInit.subscribe(() => {
+            console.log(222);
             let e = document.createEvent("Event");
             e.initEvent("resize", true, true);
             window.dispatchEvent(e);

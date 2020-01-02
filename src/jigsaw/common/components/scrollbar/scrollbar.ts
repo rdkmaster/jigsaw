@@ -196,7 +196,7 @@ export class JigsawScrollHandle implements OnInit {
 })
 export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
         super();
     }
 

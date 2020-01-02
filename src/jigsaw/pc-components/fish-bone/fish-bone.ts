@@ -27,7 +27,7 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
     }
 })
 export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
         super();
     }
 

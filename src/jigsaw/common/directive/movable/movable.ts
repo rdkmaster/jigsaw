@@ -21,7 +21,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _zone: NgZone) {
+                protected _zone: NgZone) {
         super();
     }
 

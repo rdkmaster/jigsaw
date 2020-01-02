@@ -1,6 +1,6 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
@@ -18,7 +18,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     }
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
+    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone, private _cdr: ChangeDetectorRef) {
         super(elementRef, renderer, zone);
     }
 
@@ -113,7 +113,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         // resize line 视图渲染完成
         if (!this._resizeLine) return;
 
-        this.callLater(this._computeResizeLineWidth, this);
+        this.runAfterMicrotasks(this._computeResizeLineWidth, this);
 
         this._removeAllListener();
 
@@ -131,7 +131,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             if (this._isCurrentResizingBox) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
             }
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
             });
         });
@@ -169,6 +169,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             }
         });
 
+        // 不能使用微任务(https://github.com/angular/angular/issues/34611)
         this.callLater(() => {
             this._$isFlicker = false;
             if(!this.parent) JigsawBox.viewInit.emit();

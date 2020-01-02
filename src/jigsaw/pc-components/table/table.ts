@@ -61,7 +61,7 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
