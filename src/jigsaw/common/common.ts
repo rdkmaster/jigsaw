@@ -129,12 +129,17 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
         })
     }
 
+    /**
+     * 请注意这个函数的回调都是运行在zone之外的，如果要在zone里面运行，请在回调中加zone.run()
+     * @param handler
+     * @param context
+     */
     protected runAfterMicrotasks(handler: Function, context?: any) {
         if(!this._zone) {
             console.error('To use the function `runAfterMicrotasks`, you must inject NgZone!');
         }
         this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
-            console.log(' only once  _zone.onStable called');
+            console.log(' only once _zone.onStable called');
             CommonUtils.safeInvokeCallback(context, handler);
         });
     }
