@@ -24,5 +24,19 @@
 
         <p class="message">beginDate : {{beginDate | json}} ， end ： {{endDate | json}}</p>
     </div>
+    <div class="demo-2 live-demo">
+        <h3>withCombo</h3>
+
+        <jigsaw-combo-select [(value)]="rangeTimeComboValue">
+            <ng-template>
+                <jigsaw-range-time [(beginDate)]="beginDate2"
+                                   [(endDate)]="endDate2"
+                                   (change)="handleRangeDateChange()" gr="week">
+                </jigsaw-range-time>
+            </ng-template>
+        </jigsaw-combo-select>
+
+        <p class="message">beginDate : {{beginDate2 | json}} ， end ： {{endDate2 | json}}</p>
+    </div>
 </div>
 
