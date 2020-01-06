@@ -100,6 +100,22 @@ export class GrItem {
     ]
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+    constructor(private _el: ElementRef, private _renderer: Renderer2,
+                private _popService: PopupService, private _translateService: TranslateService) {
+        super();
+        this._refreshInterval = 0;
+
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
+            langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
+
+        InternalUtils.initI18n(_translateService, 'time', {
+            zh: {recommendedLabel: '推荐日期'},
+            en: {recommendedLabel: 'Recommend'}
+        });
+        _translateService.setDefaultLang(_translateService.getBrowserLang());
+
+        this._defineLocale();
+    }
 
     @Input()
     public valid: boolean = true;
@@ -271,7 +287,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    private _weekStart: TimeWeekStart;
+    private _weekStart: TimeWeekStart = TimeWeekStart.sun;
 
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat，默认值是sun。
@@ -284,21 +300,21 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if (value) {
+        if (CommonUtils.isDefined(value)) {
             if (typeof value === 'string') {
                 this._weekStart = TimeWeekStart[value];
             } else {
                 this._weekStart = value;
             }
+            TimeService.setWeekStart(this._weekStart);
             if (this._timePicker) {
-                TimeService.setWeekStart(this._weekStart);
                 this._initDatePicker();
                 this._handleRecommended(this._el.nativeElement, this._popService);
             }
         }
     }
 
-    private _weekDayStart: TimeWeekDayStart;
+    private _weekDayStart: TimeWeekDayStart = TimeWeekDayStart.doy6;
 
     /**
      * 用于在周粒度下使用
@@ -311,14 +327,14 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     public set weekDayStart(value: string | TimeWeekDayStart) {
-        if (value) {
+        if (CommonUtils.isDefined(value)) {
             if (typeof value === 'string') {
                 this._weekDayStart = TimeWeekDayStart[value];
             } else {
                 this._weekDayStart = value;
             }
+            TimeService.setWeekDayStart(this._weekDayStart);
             if (this._timePicker) {
-                TimeService.setWeekDayStart(this._weekDayStart);
                 this._initDatePicker();
                 this._handleRecommended(this._el.nativeElement, this._popService);
             }
@@ -363,29 +379,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     //定时器Id
     private _intervalId: number;
     private _langChangeSubscriber: Subscription;
-
-    constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService, private _translateService: TranslateService) {
-        super();
-        this._refreshInterval = 0;
-        this.weekStart = TimeWeekStart.sun;
-
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
-            langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
-
-        InternalUtils.initI18n(_translateService, 'time', {
-            zh: {recommendedLabel: '推荐日期'},
-            en: {recommendedLabel: 'Recommend'}
-        });
-        _translateService.setDefaultLang(_translateService.getBrowserLang());
-
-        this._defineLocale();
-    }
-
-    ngAfterViewInit() {
-        this._initDatePicker();
-        this._checkMacro();
-    }
 
     private _defineLocale() {
         moment.defineLocale('zh', {
@@ -477,11 +470,16 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 yy: '%d 年'
             },
             week: {
-                // GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
-                dow: 1, // Monday is the first day of the week.
-                doy: 4  // The week that contains Jan 4th is the first week of the year.
+                // US, Canada
+                dow: this.weekStart, // First day of week is Sunday
+                doy: this.weekDayStart  // First week of year must contain 1 January (7 + 0 - 1)
             }
         });
+    }
+
+    ngAfterViewInit() {
+        this._initDatePicker();
+        this._checkMacro();
     }
 
     ngOnDestroy() {

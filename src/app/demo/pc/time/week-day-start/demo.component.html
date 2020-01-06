@@ -24,5 +24,19 @@
 
         <p class="message">Selected Time : {{date | json}}</p>
     </div>
+
+    <div class="demo-2 live-demo">
+        <h3>withCombo</h3>
+        <p class="commend">配置weekDayStart请参考(https://momentjs.com/docs/#/customization/dow-doy/)，请结合weekStart配置</p>
+
+        <jigsaw-combo-select [(value)]="singleTimeComboValue" width="150px">
+            <ng-template>
+                <jigsaw-time [(date)]="date2" (dateChange)="handleDateChange($event)" gr="week">
+                </jigsaw-time>
+            </ng-template>
+        </jigsaw-combo-select>
+
+        <p class="message">Selected Time : {{date2 | json}}</p>
+    </div>
 </div>
 
