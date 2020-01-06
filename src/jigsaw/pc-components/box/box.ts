@@ -66,17 +66,15 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _computeResizeLineWidth() {
         if (!this._resizeLine) return;
-        this.zone.runOutsideAngular(() => {
-            if (this.parent.direction == 'column') {
-                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
-                }
-            } else {
-                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
-                }
+        if (this.parent.direction == 'column') {
+            if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
+                this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
             }
-        });
+        } else {
+            if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
+                this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
+            }
+        }
     }
 
     /**
@@ -117,25 +115,23 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
         this._removeAllListener();
 
-        this._zone.runOutsideAngular(() => {
-            this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
-                if (this._isCurrentResizingBox || !this._resizeLineParent) return;
-                // 兼容IE,去掉resize过程中产生的莫名滚动条
+        this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
+            if (this._isCurrentResizingBox || !this._resizeLineParent) return;
+            // 兼容IE,去掉resize过程中产生的莫名滚动条
+            this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
+        });
+
+        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
+            this._computeResizeLineWidth();
+
+            if (!this._resizeLineParent) return;
+            // 兼容IE,去掉resize过程中产生的莫名滚动条
+            if (this._isCurrentResizingBox) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
-            });
-
-            this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
-                this._computeResizeLineWidth();
-
-                if (!this._resizeLineParent) return;
-                // 兼容IE,去掉resize过程中产生的莫名滚动条
-                if (this._isCurrentResizingBox) {
-                    this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
-                }
-                this._zone.runOutsideAngular(() => {
-                    this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
-                })
-            });
+            }
+            this._zone.runOutsideAngular(() => {
+                this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
+            })
         });
 
         this._zone.runOutsideAngular(() => {
@@ -151,7 +147,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                     this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
                 }
             });
-        })
+        });
     }
 
     ngAfterContentInit() {
@@ -184,17 +180,13 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     private _supportSetSize(box: JigsawBox, parent: JigsawBox) {
         if (!parent) return;
         if (box.width && parent.direction != 'column') {
-            this._zone.runOutsideAngular(() => {
-                box.renderer.setStyle(box.element, 'flex-grow', '0');
-                box.renderer.setStyle(box.element, 'flex-basis', box.width);
-            });
+            box.renderer.setStyle(box.element, 'flex-grow', '0');
+            box.renderer.setStyle(box.element, 'flex-basis', box.width);
             box._isFixedSize = true;
         }
         if (box.height && parent.direction == 'column') {
-            this._zone.runOutsideAngular(() => {
-                box.renderer.setStyle(box.element, 'flex-grow', '0');
-                box.renderer.setStyle(box.element, 'flex-basis', box.height);
-            });
+            box.renderer.setStyle(box.element, 'flex-grow', '0');
+            box.renderer.setStyle(box.element, 'flex-basis', box.height);
             box._isFixedSize = true;
         }
     }
