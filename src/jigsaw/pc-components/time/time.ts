@@ -285,7 +285,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         console.warn('WeekStart setter has been abandoned, weekStart auto changed by locale language!');
     }
 
-    private _weekDayStart: TimeWeekDayStart = TimeWeekDayStart.doy6;
+    private _weekDayStart: TimeWeekDayStart;
 
     /**
      * @internal
