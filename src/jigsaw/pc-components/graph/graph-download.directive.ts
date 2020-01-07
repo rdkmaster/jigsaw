@@ -60,7 +60,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
             this._addButton = window.document.createElement('div');
             this._addButton.innerHTML = `
                 <div style="width: 100%;height: 0;position: relative;z-index: 999">
-                    <div style="width: 15px;height: 20px;background: #41addc;color: #ffffff;text-align: center;cursor: pointer;position: absolute;right: 10px"
+                    <div style="width: 15px;height: 20px;background: #41addc;color: #ffffff;text-align: center;cursor: pointer;position: absolute;right: 10px;top:8px"
                         title="${this.jigsawGraphDownloadTooltip}">
                     <span class="fa fa-download"></span>
                     </div>
