@@ -30,11 +30,6 @@ export class TimeFullComponent {
     // demo-4
     date4 = 'now';
 
-    // demo-5
-    date5 = "now";
-    weekStartList = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-    weekStart = this.weekStartList[0];
-
     // demo-6
     date6 = 'now';
 

@@ -8,25 +8,15 @@
     <h2>RangeTime</h2>
 
     <div class="demo-1 live-demo">
-        <h3>WeekDayStart</h3>
-        <p class="commend">配置weekDayStart请参考(https://momentjs.com/docs/#/customization/dow-doy/)，请结合weekStart配置</p>
-        WeekStart:
-        <jigsaw-tile trackItemBy="label" [(selectedItems)]="weekStart" [multipleSelect]="false">
-            <jigsaw-tile-option *ngFor="let item of weekStartList" [value]="item">{{item.label}}</jigsaw-tile-option>
-        </jigsaw-tile><br><br>
-        WeekDayStart:
-        <jigsaw-tile trackItemBy="label" [(selectedItems)]="weekDayStart" [multipleSelect]="false">
-            <jigsaw-tile-option *ngFor="let item of weekDayStartList" [value]="item">{{item.label}}</jigsaw-tile-option>
-        </jigsaw-tile><br><br>
-
-        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" gr="week" [weekDayStart]="weekDayStart[0].label"  [weekStart]="weekStart[0].label">
+        <h3>week select</h3>
+        <p class="commend">weekStart和weekDayStart根据语言环境自动更改，请参考(https://momentjs.com/docs/#/customization/dow-doy/)，请结合weekStart配置</p>
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" gr="week">
         </jigsaw-range-time><br>
-
         <p class="message">beginDate : {{beginDate | json}} ， end ： {{endDate | json}}</p>
     </div>
-    <div class="demo-2 live-demo">
-        <h3>withCombo</h3>
 
+    <div class="demo-2 live-demo">
+        <h3>with combo</h3>
         <jigsaw-combo-select [(value)]="rangeTimeComboValue">
             <ng-template>
                 <jigsaw-range-time [(beginDate)]="beginDate2"
@@ -35,7 +25,6 @@
                 </jigsaw-range-time>
             </ng-template>
         </jigsaw-combo-select>
-
         <p class="message">beginDate : {{beginDate2 | json}} ， end ： {{endDate2 | json}}</p>
     </div>
 </div>

@@ -271,12 +271,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         }
     }
 
-    private _weekStart: TimeWeekStart = TimeWeekStart.sun;
+    private _weekStart: TimeWeekStart;
 
     /**
-     * 设置周开始日期，可选值 sun mon tue wed thu fri sat，默认值是sun。
-     *
-     * $demo = time/week-start
+     * @internal
      */
     @Input()
     public get weekStart(): string | TimeWeekStart {
@@ -284,26 +282,13 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if (CommonUtils.isDefined(value)) {
-            if (typeof value === 'string') {
-                this._weekStart = TimeWeekStart[value];
-            } else {
-                this._weekStart = value;
-            }
-            TimeService.setWeekStart(this._weekStart);
-            if (this._timePicker) {
-                this._initDatePicker();
-                this._handleRecommended(this._el.nativeElement, this._popService);
-            }
-        }
+        console.warn('WeekStart setter has been abandoned, weekStart auto changed by locale language!');
     }
 
     private _weekDayStart: TimeWeekDayStart = TimeWeekDayStart.doy6;
 
     /**
-     * 用于在周粒度下使用
-     * 配置weekDayStart请参考(https://momentjs.com/docs/#/customization/dow-doy/)
-     * 请结合weekStart配置
+     * @internal
      */
     @Input()
     public get weekDayStart(): string | TimeWeekDayStart {
@@ -311,18 +296,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     public set weekDayStart(value: string | TimeWeekDayStart) {
-        if (CommonUtils.isDefined(value)) {
-            if (typeof value === 'string') {
-                this._weekDayStart = TimeWeekDayStart[value];
-            } else {
-                this._weekDayStart = value;
-            }
-            TimeService.setWeekDayStart(this._weekDayStart);
-            if (this._timePicker) {
-                this._initDatePicker();
-                this._handleRecommended(this._el.nativeElement, this._popService);
-            }
-        }
+        console.warn('weekDayStart setter has been abandoned, weekDayStart auto changed by locale language!');
     }
 
     /**
@@ -379,6 +353,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         _translateService.setDefaultLang(_translateService.getBrowserLang());
 
         this._defineLocale();
+        // defineLocale会使moment设置locale，需要重置为浏览器默认值
+        moment.locale(_translateService.getBrowserLang());
     }
 
     ngAfterViewInit() {
@@ -476,9 +452,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 yy: '%d 年'
             },
             week: {
-                // US, Canada
-                dow: this.weekStart, // First day of week is Sunday
-                doy: this.weekDayStart  // First week of year must contain 1 January (7 + 0 - 1)
+                // GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
+                dow: 1, // Monday is the first day of the week.
+                doy: 4  // The week that contains Jan 4th is the first week of the year.
             }
         });
     }
@@ -498,8 +474,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _initDatePicker() {
         const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
-        TimeService.setWeekStart(this._weekStart);
-        TimeService.setWeekDayStart(this._weekDayStart);
         let [result, isChange] = this._handleValue(<Time>this.date);
         if (isChange) {
             this._value = result;
