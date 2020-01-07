@@ -1,3 +1,17 @@
+## v1.1.31 (2020-1-7)
+
+### 新特性 / New Features
+- 无
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+-  [故障] time组件选择跨年周粒度时有问题，废弃weekStart属性，改为自动根据语言环境设置
+
 ## v1.1.30 (2019-12-25)
 
 ### 新特性 / New Features
