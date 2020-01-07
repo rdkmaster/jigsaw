@@ -3,8 +3,7 @@ import {
     ElementRef,
     HostListener,
     Input,
-    OnDestroy,
-    Renderer2
+    OnDestroy
 } from "@angular/core";
 import {AbstractJigsawViewBase} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -17,13 +16,10 @@ declare const echarts: any;
     selector: '[j-graph-download], [jigsaw-graph-download], [jigsawGraphDownload]'
 })
 export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase implements OnDestroy {
-    constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef) {
         super();
     }
 
-    private _removeMouseOverHandler: Function;
-    private _removeMouseOutHandler: Function;
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
 
@@ -39,7 +35,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         this._addRollOutDenouncesTimer();
     }
 
-    private addButton: HTMLElement;
+    private _addButton: HTMLElement;
 
     @Input()
     public jigsawGraphDownloadExportFileName: string = "graphs.zip";
@@ -48,58 +44,38 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     public jigsawGraphDownloadTooltip: string = '';
 
     private _closePopup() {
-        if (!this.addButton) {
+        if (!this._addButton) {
             return;
         }
-        this._elementRef.nativeElement.removeChild(this.addButton);
-        this.addButton = null;
-        this._closeAllListener();
-    }
-
-    private _closeAllListener() {
-        if (this._removeMouseOverHandler) {
-            this._removeMouseOverHandler();
-            this._removeMouseOverHandler = null;
-        }
-        if (this._removeMouseOutHandler) {
-            this._removeMouseOutHandler();
-            this._removeMouseOutHandler = null;
-        }
+        this._elementRef.nativeElement.removeChild(this._addButton);
+        this._addButton = null;
     }
 
     private _addRollInDenouncesTimer() {
         this._rollInDenouncesTimer = this.callLater(() => {
-            if (this.addButton) {
+            if (this._addButton) {
                 return;
             }
 
-            this.addButton = window.document.createElement('div');
-            this.addButton.innerHTML = `
+            this._addButton = window.document.createElement('div');
+            this._addButton.innerHTML = `
                 <div style="width: 100%;height: 0;position: relative;z-index: 999">
                     <div style="width: 15px;height: 20px;background: #41addc;color: #ffffff;text-align: center;cursor: pointer;position: absolute;right: 10px"
                         title="${this.jigsawGraphDownloadTooltip}">
                     <span class="fa fa-download"></span>
                     </div>
                 <div>`;
-            this.addButton.children[0].addEventListener('click', () => {
+            this._addButton.children[0].addEventListener('click', () => {
                 this._$download();
             });
-            this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this.addButton);
-            this._closeAllListener();
-            this._removeMouseOverHandler = this._renderer.listen(
-                this.addButton, 'mouseenter',
-                () => this.clearCallLater(this._rollOutDenouncesTimer));
-            this._removeMouseOutHandler = this._renderer.listen(
-                this.addButton, 'mouseleave', () => {
-                    this._addRollOutDenouncesTimer();
-                });
-        }, 100);
+            this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._addButton);
+        });
     }
 
     private _addRollOutDenouncesTimer() {
         this._rollOutDenouncesTimer = this.callLater(() => {
             this._closePopup();
-        }, 400);
+        });
     }
 
     ngOnDestroy() {
