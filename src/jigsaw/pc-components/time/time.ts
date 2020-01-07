@@ -100,22 +100,6 @@ export class GrItem {
     ]
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
-    constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService, private _translateService: TranslateService) {
-        super();
-        this._refreshInterval = 0;
-
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
-            langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
-
-        InternalUtils.initI18n(_translateService, 'time', {
-            zh: {recommendedLabel: '推荐日期'},
-            en: {recommendedLabel: 'Recommend'}
-        });
-        _translateService.setDefaultLang(_translateService.getBrowserLang());
-
-        this._defineLocale();
-    }
 
     @Input()
     public valid: boolean = true;
@@ -380,6 +364,28 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _intervalId: number;
     private _langChangeSubscriber: Subscription;
 
+    constructor(private _el: ElementRef, private _renderer: Renderer2,
+                private _popService: PopupService, private _translateService: TranslateService) {
+        super();
+        this._refreshInterval = 0;
+
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
+            langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
+
+        InternalUtils.initI18n(_translateService, 'time', {
+            zh: {recommendedLabel: '推荐日期'},
+            en: {recommendedLabel: 'Recommend'}
+        });
+        _translateService.setDefaultLang(_translateService.getBrowserLang());
+
+        this._defineLocale();
+    }
+
+    ngAfterViewInit() {
+        this._initDatePicker();
+        this._checkMacro();
+    }
+
     private _defineLocale() {
         moment.defineLocale('zh', {
             months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
@@ -475,11 +481,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 doy: this.weekDayStart  // First week of year must contain 1 January (7 + 0 - 1)
             }
         });
-    }
-
-    ngAfterViewInit() {
-        this._initDatePicker();
-        this._checkMacro();
     }
 
     ngOnDestroy() {
