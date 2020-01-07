@@ -204,12 +204,17 @@ export class TimeService {
      * @param {TimeWeekStart} weekStart
      */
     public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
-        let locale = moment.locale();
-        moment.updateLocale(locale, {
-            week: {
-                dow: weekStart
-            }
-        });
+        console.warn('setWeekStart function has been abandoned, weekStart auto changed by locale language!');
+    }
+
+    /**
+     * 获取周数对应的年份
+     *
+     * @param date
+     *
+     */
+    public static getWeekYear(date:Time): number {
+        return moment(date).weekYear();
     }
 
     /**
@@ -253,7 +258,7 @@ export class TimeService {
     }
 
     public static getDateFromYearAndWeek(year: number, week: number): Date {
-        return moment().year(year).week(week)
+        return moment().weekYear(year).week(week)
     }
 
     public static getDate(str:Time, gr: TimeGr): Moment {

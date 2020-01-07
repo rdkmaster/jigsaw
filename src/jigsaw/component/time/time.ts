@@ -1,5 +1,5 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Renderer2, Output, forwardRef
+    Component, ElementRef, EventEmitter, Input, OnDestroy, Renderer2, Output, forwardRef, AfterViewInit
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscription} from "rxjs/Subscription";
@@ -96,7 +96,7 @@ export class GrItem {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
     ]
 })
-export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
     @Input()
     public valid: boolean = true;
@@ -273,9 +273,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _weekStart: TimeWeekStart;
 
     /**
-     * 设置周开始日期，可选值 sun mon tue wed thu fri sat，默认值是sun。
-     *
-     * $demo = time/week-start
+     * @internal
      */
     @Input()
     public get weekStart(): string | TimeWeekStart {
@@ -283,18 +281,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if (value) {
-            if (typeof value === 'string') {
-                this._weekStart = TimeWeekStart[value];
-            } else {
-                this._weekStart = value;
-            }
-            if (this._timePicker) {
-                TimeService.setWeekStart(this._weekStart);
-                this._initDatePicker();
-                this._handleRecommended(this._el.nativeElement, this._popService);
-            }
-        }
+        console.warn('WeekStart setter has been abandoned, weekStart auto changed by locale language!');
     }
 
     /**
@@ -340,7 +327,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 private _popService: PopupService, private _translateService: TranslateService) {
         super();
         this._refreshInterval = 0;
-        this.weekStart = TimeWeekStart.sun;
 
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(
             langInfo => this._timePicker && this._timePicker.locale(langInfo.curLang));
@@ -350,10 +336,13 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             en: {recommendedLabel: 'Recommend'}
         });
         _translateService.setDefaultLang(_translateService.getBrowserLang());
+
+        this._defineLocale();
+        // defineLocale会使moment设置locale，需要重置为浏览器默认值
+        moment.locale(_translateService.getBrowserLang());
     }
 
-    ngOnInit() {
-        this._defineLocale();
+    ngAfterViewInit() {
         this._initDatePicker();
         this._checkMacro();
     }
@@ -470,7 +459,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _initDatePicker() {
         const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
-        TimeService.setWeekStart(this._weekStart);
         let [result, isChange] = this._handleValue(<Time>this.date);
         if (isChange) {
             this._value = result;
@@ -508,7 +496,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         this._bindActiveDayClickHandler(picker);
 
         this._timePicker = $(insert).data("DateTimePicker");
-        this._timePicker.locale(this._translateService.currentLang);
+        this._timePicker.locale(this._translateService.currentLang ? this._translateService.currentLang :
+            CommonUtils.getBrowserLang());
 
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
     }
@@ -597,7 +586,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     private _handleWeekSelect() {
         let weekNum = TimeService.getWeekOfYear(<string>this.date);
-        let year = TimeService.getYear(<string>this.date);
+        let year = TimeService.getWeekYear(<string>this.date);
         const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
         if (tdActive) {
             tdActive.parentNode.classList.add("active");
@@ -827,8 +816,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             return;
         }
         if (this._value && this.gr == TimeGr.week) {
-            let newValueYear = TimeService.getYear(<string>newValue);
-            let valueYear = TimeService.getYear(<string>this._value);
+            let newValueYear = TimeService.getWeekYear(<string>newValue);
+            let valueYear = TimeService.getWeekYear(<string>this._value);
             let newValueWeek = TimeService.getWeekOfYear(<string>newValue);
             let valueWeek = TimeService.getWeekOfYear(<string>this._value);
             if (newValueYear == valueYear && newValueWeek == valueWeek) return;

@@ -27,18 +27,6 @@ xdescribe('time', () => {
         })
     });
 
-    describe('test time', () => {
-        beforeEach(() => {
-            browser.get('/time/week-start');
-        });
-        it('should be set', () => {
-            const weekStartOp = element.all(by.tagName('jigsaw-tile-option')),
-                weekStartEl = element(by.css('.datepicker-days')).all(by.tagName('TR')).get(1).all(by.tagName('TH')).get(0);
-            expect(weekStartEl.getText()).toBe('Su');
-            weekStartOp.get(3).click();
-            expect(weekStartEl.getText()).toBe('Su');
-        })
-    });
     describe('test gr', () => {
         beforeEach(() => {
             browser.get('/time/gr');
