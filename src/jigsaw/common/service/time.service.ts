@@ -212,12 +212,7 @@ export class TimeService {
      * @param {TimeWeekStart} weekStart
      */
     public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
-        let locale = moment.locale();
-        moment.updateLocale(locale, {
-            week: {
-                dow: weekStart
-            }
-        });
+        console.warn('setWeekStart function has been abandoned, weekStart auto changed by locale language!');
     }
 
     /**
@@ -226,12 +221,7 @@ export class TimeService {
      * @param dayStart
      */
     public static setWeekDayStart(dayStart: TimeWeekDayStart = TimeWeekDayStart.doy6): void {
-        let locale = moment.locale();
-        moment.updateLocale(locale, {
-            week: {
-                doy: dayStart
-            }
-        });
+        console.warn('setWeekDayStart function has been abandoned, weekDayStart auto changed by locale language!');
     }
 
     /**
