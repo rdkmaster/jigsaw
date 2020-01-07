@@ -60,12 +60,6 @@ export class RangeTimeFullComponent {
     beginDate4 = "now-1d";
     endDate4 = "now";
 
-    // demo-5
-    beginDate5 = "now-1d";
-    endDate5 = "now";
-    weekStartList = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-    weekStart = this.weekStartList[0];
-
     // demo-6
     beginDate6 = "now-1d";
     endDate6 = "now";
