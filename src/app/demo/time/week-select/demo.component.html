@@ -1,0 +1,28 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Time</h2>
+
+    <div class="demo-1 live-demo">
+        <h3>week select</h3>
+        <p class="commend">weekStart根据语言环境自动设置，请参考(https://momentjs.com/docs/#/customization/dow-doy/)</p>
+        <jigsaw-time [(date)]="date" gr="week"></jigsaw-time><br>
+        <p class="message">Selected Time : {{date | json}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>with combo</h3>
+        <jigsaw-combo-select [(value)]="singleTimeComboValue" width="150px">
+            <ng-template>
+                <jigsaw-time [(date)]="date2" (dateChange)="handleDateChange()" gr="week">
+                </jigsaw-time>
+            </ng-template>
+        </jigsaw-combo-select>
+        <p class="message">Selected Time : {{date2 | json}}</p>
+    </div>
+</div>
+
