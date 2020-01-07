@@ -47,17 +47,6 @@
         </div>
     </div>
     <div class="clearfix">
-        <div class="demo-5 live-demo live-demo-block">
-            <h3>WeekStart</h3>
-            <div class="toggle up">
-                <label>weekStart: </label>
-                <j-radios [(value)]="weekStart">
-                    <j-radio-option *ngFor="let item of weekStartList" [value]="item">{{item}}</j-radio-option>
-                </j-radios>
-            </div>
-            <j-time [(date)]="date5" [weekStart]="weekStart"></j-time>
-            <p class="message">Selected Time: <span>{{date5}}</span></p>
-        </div>
         <div class="demo-6 live-demo live-demo-block">
             <h3>RefreshInterval</h3>
             <p class="comment">
@@ -67,8 +56,6 @@
             <j-time [(date)]="date6" gr="second" limitStart="now" [refreshInterval]="1000"></j-time>
             <p class="message">Selected Time: <span>{{date6}}</span></p>
         </div>
-    </div>
-    <div class="clearfix">
         <div class="demo-7 live-demo live-demo-block">
             <h3>时间宏</h3>
             <p>时间配置支持时间宏 s(秒),m(分钟),h(小时),d(天),M(月),y(年) 并且支持计算 如 now-10d now+10m</p>
