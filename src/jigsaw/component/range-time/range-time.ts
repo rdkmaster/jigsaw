@@ -170,9 +170,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     /**
-     * 参考`JigsawTime.weekStart`
-     *
-     * $demo = range-time/week-start
+     * @internal
      */
     @Input()
     public weekStart: TimeWeekStart | string;
