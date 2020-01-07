@@ -20,14 +20,17 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         super();
     }
 
+    private _rollOutDenouncesTimer: any = null;
+
     @HostListener('mouseenter', ['$event'])
     onMouseEnter() {
+        this.clearCallLater(this._rollOutDenouncesTimer);
         this._addSaveButton();
     }
 
     @HostListener('mouseleave', ['$event'])
     onMouseLeave() {
-        this._removeSaveButton();
+        this._addRollOutDenouncesTimer();
     }
 
     private _addButton: HTMLElement;
@@ -65,8 +68,10 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._addButton);
     }
 
-    private _removeSaveButton() {
-        this._closePopup();
+    private _addRollOutDenouncesTimer() {
+        this._rollOutDenouncesTimer = this.callLater(() => {
+            this._closePopup();
+        }, 400);
     }
 
     ngOnDestroy() {
