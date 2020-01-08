@@ -145,7 +145,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 控件disabled，并且想打开下拉
             return;
         }
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
@@ -269,6 +269,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (!this.autoWidth || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
             return;
         }
+        // 此处不可用微任务，会导致弹框宽度设置不生效
         this.callLater(() => {
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
         });
@@ -361,7 +362,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             return;
         }
         this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.callLater(() => this.valueChange.emit(this._value));
+        this.runMicrotask(() => this.valueChange.emit(this._value));
         this._autoWidth();
         this._autoClose();
 
