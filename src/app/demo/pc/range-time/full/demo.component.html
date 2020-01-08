@@ -57,18 +57,6 @@
         <p class="message">beginDate: <span>{{beginDate4}}</span>, end: <span>{{endDate4}}</span></p>
     </div>
 
-    <div class="demo-5 live-demo">
-        <h3>WeekStart</h3>
-        <div class="toggle up">
-            <label>weekStart: </label>
-            <j-radios [(value)]="weekStart">
-                <j-radio-option *ngFor="let item of weekStartList" [value]="item">{{item}}</j-radio-option>
-            </j-radios>
-        </div>
-        <j-range-time [(beginDate)]="beginDate5" [(endDate)]="endDate5" [weekStart]="weekStart"></j-range-time>
-        <p class="message">beginDate: <span>{{beginDate5}}</span>, end: <span>{{endDate5}}</span></p>
-    </div>
-
     <div class="demo-6 live-demo">
         <h3>RefreshInterval</h3>
         <p class="comment">

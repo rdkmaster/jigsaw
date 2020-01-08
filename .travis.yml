@@ -7,6 +7,7 @@ branches:
   - master
   - v1.1
   - v5.0
+  - v9.0
 
 env:
   global:
