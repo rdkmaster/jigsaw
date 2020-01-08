@@ -110,7 +110,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     ngAfterContentInit() {
         if (this._items) {
             if (this._items.last) {
-                this.callLater(() => {
+                this.runMicrotask(() => {
                     this._items.last.isLast = true;
                 })
             }
@@ -120,7 +120,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             }
             this._removeItemChangeSubscriber = this._items.changes.subscribe(() => {
                 if (this._items.last) {
-                    this.callLater(() => {
+                    this.runMicrotask(() => {
                         this._items.last.isLast = true;
                     })
                 }
