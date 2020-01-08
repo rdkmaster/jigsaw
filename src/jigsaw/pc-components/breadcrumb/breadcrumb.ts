@@ -63,7 +63,10 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     public set routesConfig(value: BreadcrumbRouteConfig[]) {
         if (!value || this._routesConfig == value) return;
         this._routesConfig = value;
-        this._$breadcrumbNodes = this._generateBreadcrumb(this._router.url);
+        this.runMicrotask(() => {
+            // _generateBreadcrumb需要用到generatorContext这个输入属性，这里需要异步执行
+            this._$breadcrumbNodes = this._generateBreadcrumb(this._router.url);
+        });
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
             this._removeRouterEventSubscriber = null;
