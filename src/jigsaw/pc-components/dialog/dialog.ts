@@ -1,4 +1,5 @@
-import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, QueryList, Renderer2, Directive } from "@angular/core";
+import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output,
+    QueryList, Renderer2, Directive, NgZone } from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../common/service/popup.service";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
@@ -89,6 +90,10 @@ export abstract class AbstractDialogComponentBase
     extends AbstractJigsawComponent
     implements IPopupable, AfterContentInit, OnDestroy {
 
+    constructor(protected _zone: NgZone) {
+        super(_zone);
+    }
+
     @Input()
     public buttons: ButtonInfo[];
     @Input()
@@ -146,7 +151,7 @@ export abstract class AbstractDialogComponentBase
         }
 
         //设置弹出位置和尺寸
-        this.callLater(() => {
+        this.runAfterMicrotasks(() => {
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
@@ -178,8 +183,8 @@ export class JigsawDialog extends AbstractDialogComponentBase {
     @ContentChildren(JigsawButton, {descendants: true})
     public _$inlineButtons:QueryList<JigsawButton>;
 
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super();
+    constructor(renderer: Renderer2, elementRef: ElementRef, protected _zone: NgZone) {
+        super(_zone);
         this.renderer = renderer;
         this.elementRef = elementRef;
         this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-dialog-host');

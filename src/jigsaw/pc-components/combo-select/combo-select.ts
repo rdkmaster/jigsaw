@@ -13,7 +13,8 @@ import {
     Renderer2,
     TemplateRef,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    NgZone
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -49,8 +50,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super();
+                private _popupService: PopupService, protected _zone: NgZone) {
+        super(_zone);
     }
 
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
@@ -269,8 +270,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (!this.autoWidth || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
             return;
         }
-        // 此处不可用微任务，会导致弹框宽度设置不生效
-        this.callLater(() => {
+        this.runAfterMicrotasks(() => {
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
         });
     }
