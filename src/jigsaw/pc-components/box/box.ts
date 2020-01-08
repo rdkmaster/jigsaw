@@ -129,9 +129,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             if (this._isCurrentResizingBox) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
             }
-            this._zone.runOutsideAngular(() => {
+            this.runMicrotask(() => {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
-            })
+            });
         });
 
         this._zone.runOutsideAngular(() => {
