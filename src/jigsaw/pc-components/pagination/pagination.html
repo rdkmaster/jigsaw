@@ -34,7 +34,8 @@
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)"></div>
         <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
-        <jigsaw-input #input [value]="current" (keyup.enter)="_goto(input.value)" width="50" height="22"
+        <jigsaw-input class="jigsaw-paging-current-page" #input [value]="current" (keyup.enter)="_goto(input.value)"
+                      width="50" height="22"
                       [clearable]="false"></jigsaw-input>
         <span class="jigsaw-paging-total-page-number">&nbsp;/&nbsp;&nbsp;{{data?.pagingInfo?.totalPage}}</span>
         <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right"
