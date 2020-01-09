@@ -76,6 +76,11 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
                 padding: 0 2px !important;
             }
         }
+        .jigsaw-paging-search {
+            input {
+                text-align: left;
+            }
+        }
     }
 
 }
