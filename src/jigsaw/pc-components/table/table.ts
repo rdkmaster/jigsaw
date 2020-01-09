@@ -149,9 +149,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             }
 
             const field: string = <string>columnDefine.target;
+            const [realColIndex,] = this._getColumnIndex(field);
             let settings = oldBackup[field];
             settings = TableUtils.updateHeaderSettings(columnDefine, settings);
-            settings.cellData = this._getHeaderValueByField(field);
+            let headerData = columnDefine.header && columnDefine.header.data ? columnDefine.header.data : null;
+            if(headerData instanceof Function) {
+                settings.cellData = headerData(this.data, realColIndex, this._additionalData);
+            } else if(typeof headerData == 'string') {
+                settings.cellData = headerData;
+            } else {
+                settings.cellData = this._getHeaderValueByField(field);
+            }
             this._$headerSettings.push(settings);
             this._headerSettingsBackup[field] = settings;
         });
