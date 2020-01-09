@@ -112,11 +112,8 @@ const notificationInstances = {
     }
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super();
-
-        this.renderer = renderer;
-        this.elementRef = elementRef;
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
+        super(renderer, elementRef, _zone);
     }
 
     protected getPopupElement(): HTMLElement {
