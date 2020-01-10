@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
     templateUrl: './demo.component.html'
 })
 export class PaginationBasicDemoComponent {
-
+    searchable: boolean = false;
     pageable: LocalPageableTableData;
     pageableForSimple: LocalPageableTableData;
 
