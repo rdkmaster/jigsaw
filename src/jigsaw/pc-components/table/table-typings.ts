@@ -15,6 +15,9 @@ export type TableCellDataGenerator = (tableData: TableData,
                                       row: number,
                                       column: number,
                                       additionalData: AdditionalTableData) => any;
+export type TableHeaderDataGenerator = (tableData: TableData,
+                                      column: number,
+                                      additionalData: AdditionalTableData) => any;
 
 export class TableValueGenerators {
     public static rowIndexGenerator(tableData: TableData, row: number): any {
@@ -68,12 +71,14 @@ export type TableSyncRenderer = Type<TableCellRendererBase> | TemplateRef<any>;
 export type TableRenderer = TableSyncRenderer | TableAsyncRenderer | string;
 
 export class TableHeader {
-    text?: string;
+    text?: string; // 此属性专门用于additionalColumnDefine的header设置显示表头
     renderer?: TableRenderer;
     clazz?: string;
     sortable?: boolean;
     sortAs?: SortAs;
     defaultSortOrder?: SortOrder;
+    data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
+    innerHtmlContext?: any;
 }
 
 export class TableCell {
@@ -98,6 +103,7 @@ export class TableHeadSetting {
     sortAs: SortAs;
     defaultSortOrder: SortOrder;
     field: string;
+    innerHtmlContext: any;
 }
 
 export class TableCellSetting {

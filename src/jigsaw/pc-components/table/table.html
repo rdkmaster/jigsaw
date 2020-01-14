@@ -8,17 +8,22 @@
         <thead>
         <tr>
             <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}">
-                <jigsaw-table-header [tableData]="data"
-                                     [additionalData]="additionalData"
-                                     [cellData]="head.cellData"
-                                     [field]="head.field"
-                                     [row]="0"
-                                     [renderer]="head.renderer"
-                                     [sortable]="head.sortable"
-                                     [sortAs]="head.sortAs"
-                                     [defaultSortOrder]="head.defaultSortOrder"
-                                     (sort)="_$onSort($event)">
-                </jigsaw-table-header>
+                <ng-container [ngSwitch]="head.renderer">
+                    <div *ngSwitchCase="'html'" class="jigsaw-table-cell-content"
+                         [trustedHtml]="head.cellData" [trustedHtmlContext]="head.innerHtmlContext"></div>
+                    <jigsaw-table-header *ngSwitchDefault [tableData]="data"
+                                         [additionalData]="additionalData"
+                                         [cellData]="head.cellData"
+                                         [field]="head.field"
+                                         [row]="0"
+                                         [renderer]="head.renderer"
+                                         [rendererInitData]="head.rendererInitData"
+                                         [sortable]="head.sortable"
+                                         [sortAs]="head.sortAs"
+                                         [defaultSortOrder]="head.defaultSortOrder"
+                                         (sort)="_$onSort($event)">
+                    </jigsaw-table-header>
+                </ng-container>
             </td>
         </tr>
         </thead>
