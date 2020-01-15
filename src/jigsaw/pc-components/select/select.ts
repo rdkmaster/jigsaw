@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild
+    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild, NgZone
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -34,6 +34,10 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     ]
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(protected _zone: NgZone) {
+        super(_zone);
+    }
+
     @Input()
     public valid: boolean = true;
 
@@ -46,11 +50,13 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.callLater(() => {
-            if (this.multipleSelect) {
-                this.minWidth = CommonUtils.getCssValue(value);
-                this.maxWidth = CommonUtils.getCssValue(value);
-            }
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                if (this.multipleSelect) {
+                    this.minWidth = CommonUtils.getCssValue(value);
+                    this.maxWidth = CommonUtils.getCssValue(value);
+                }
+            })
         })
     }
 
