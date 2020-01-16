@@ -240,7 +240,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     private _asyncSetStyle(index: number): void {
-        this.callLater(() => this._setInkBarStyle(index));
+        this.runMicrotask(() => this._setInkBarStyle(index));
     }
 
     /**
@@ -293,12 +293,12 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
         const tabElem = this._tabsInkBar.nativeElement;
         if (tabElem.offsetWidth != labelPos.width) {
-            this._setInkBarStyle(this.selectedIndex)
+            this._asyncSetStyle(this.selectedIndex)
         } else {
             const match = (tabElem.style.transform + '').match(/\btranslate3d\s*\((\d+)px\s*,/);
             const offset = match ? match[1] : -1;
             if (offset != labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) {
-                this._setInkBarStyle(this.selectedIndex)
+                this._asyncSetStyle(this.selectedIndex)
             }
         }
     }
@@ -430,7 +430,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         }
 
         //router link
-        this.callLater(() => {
+        this.runMicrotask(() => {
             const label = this._tabLabels.find(item => item.key === this.selectedIndex);
             if (!label) {
                 return;
