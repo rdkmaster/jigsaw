@@ -1024,6 +1024,7 @@ export class MapSeries {
     public label?: string;
     public itemStyle?: string;
     public animation?: string;
+    public roam?: boolean;
 
     constructor(name?: string) {
         this.name = name;
@@ -1121,6 +1122,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
                 seriesItem.mapType = seriesData.mapType;
+                seriesItem.roam = seriesData.roam;
 
                 let extendParam = ['label', 'itemStyle', 'animation'];
 
