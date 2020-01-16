@@ -324,7 +324,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             }
             this.rendererHost.viewContainerRef.clear();
 
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 this.insertRenderer();
                 this._setGoEditListener();
             });
