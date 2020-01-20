@@ -73,6 +73,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 this._$opened = false;
                 this._closeFloat();
                 this.callLater(() => {
+                    // 这里必须使用setTimeout来跳过第一次冒泡上来的window.click
                     this._openFloat();
                     this._$opened = true;
                 });
@@ -113,6 +114,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
+            // 这里必须使用setTimeout来跳过第一次冒泡上来的window.click
             if (value) {
                 this._openFloat();
             } else {
