@@ -4,6 +4,7 @@ import {
 } from "@angular/core";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CallbackRemoval} from "../../core/utils/common-utils";
+import 'rxjs/operator/take';
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -17,8 +18,8 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
     }
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
-        super(elementRef, renderer, zone);
+    constructor(elementRef: ElementRef, renderer: Renderer2, private _zone: NgZone) {
+        super(elementRef, renderer, _zone);
     }
 
     public static resizeEnd = new EventEmitter();
@@ -112,7 +113,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         // resize line 视图渲染完成
         if (!this._resizeLine) return;
 
-        this.callLater(this._computeResizeLineWidth, this);
+        this._zone.onStable.asObservable().take(1).subscribe(() => {
+            this._computeResizeLineWidth();
+        });
 
         this._removeAllListener();
 
@@ -130,23 +133,25 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             if (this._isCurrentResizingBox) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
             }
-            this.callLater(() => {
+            Promise.resolve().then(() => {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
             });
         });
 
-        this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
-            this._computeResizeLineWidth();
-        });
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
+                this._computeResizeLineWidth();
+            });
 
-        this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
-            if (this._resizeLine.nativeElement.scrollTop != this.element.scrollTop) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
-            }
-            if (this._resizeLine.nativeElement.scrollLeft != this.element.scrollLeft) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
-            }
-        });
+            this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
+                if (this._resizeLine.nativeElement.scrollTop != this.element.scrollTop) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
+                }
+                if (this._resizeLine.nativeElement.scrollLeft != this.element.scrollLeft) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
+                }
+            });
+        })
     }
 
     ngAfterContentInit() {
@@ -168,9 +173,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             }
         });
 
-        this.callLater(() => {
-            this._$isFlicker = false;
-            if(!this.parent) JigsawBox.viewInit.emit();
+        this._zone.onStable.asObservable().take(1).subscribe(() => {
+            this._zone.run(() => {
+                this._$isFlicker = false;
+                if(!this.parent) JigsawBox.viewInit.emit();
+            })
         });
     }
 

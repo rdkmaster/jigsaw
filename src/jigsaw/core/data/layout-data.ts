@@ -336,4 +336,8 @@ export class LayoutData extends GeneralCollection<any> {
         });
         return result;
     }
+
+    public refresh(): void {
+        this.componentDataHelper.invokeSyncRefreshCallback();
+    }
 }

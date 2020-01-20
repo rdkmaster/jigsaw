@@ -38,14 +38,12 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         top: 50%;
         margin-top: -7px;
 
-        @include prefixer(transition, all .5s ease);
+        @include prefixer(transition, all .3s ease);
     }
 
     &-item &-content {
         overflow: hidden;
-        color: rgba(0, 0, 0, .65);
         background-color: $default-color;
-        @include prefixer(transition, height .3s ease);
         .#{$collapse-prefix}-padding {
             padding: 16px;
         }

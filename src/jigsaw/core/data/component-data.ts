@@ -550,6 +550,10 @@ export class ComponentDataHelper {
         }, 0);
     }
 
+    public invokeSyncRefreshCallback(): void {
+        this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
+    }
+
     public invokeAjaxStartCallback(): void {
         this._ajaxStartCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
     }

@@ -71,6 +71,7 @@ const ROLLUP_GLOBALS = {
     'rxjs/operator/takeUntil': 'Rx.Observable.prototype',
     'rxjs/operator/toPromise': 'Rx.Observable.prototype',
     'rxjs/operator/concatMap': 'Rx.Observable.concatMap',
+    'rxjs/operator/take': 'Rx.Observable.prototype',
 
     //@ngx-translate
     '@ngx-translate': 'ngx.translate',

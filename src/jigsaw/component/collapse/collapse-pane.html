@@ -11,9 +11,8 @@
         <!-- 自定义的header render.-->
         <ng-content select="[jigsaw-title], [j-title]"></ng-content>
     </div>
-    <div class="jigsaw-collapse-content" (transitionend)="_$isTransitionEnd = true"
-         [style.height]="isActive ? (_$isTransitionEnd ? 'auto' : panelContent.offsetHeight + 'px') : 0">
-        <div #panelContent class="jigsaw-collapse-padding">
+    <div class="jigsaw-collapse-content" [@collapseMotion]="isActive ? 'expanded' : 'collapsed' ">
+        <div class="jigsaw-collapse-padding">
             <ng-content></ng-content>
         </div>
     </div>
