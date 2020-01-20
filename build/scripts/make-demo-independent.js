@@ -1,7 +1,7 @@
-var fs = require('fs');
-var template = getTemplate();
-var demoHome = null;
-var outputHome = process.argv.length > 2 ? process.argv[2] : './live-demo/';
+let fs = require('fs');
+let template = getTemplate();
+let demoHome = null;
+let outputHome = process.argv.length > 2 ? process.argv[2] : './live-demo/';
 
 if (fs.existsSync(outputHome)) {
     console.error("ERROR: remove output dir and try again: " + outputHome);
@@ -15,10 +15,10 @@ makeAllJlunkers('demo/pc');
 function makeAllJlunkers(dirName) {
     demoHome = getDemoHome(dirName);
 
-    var demoSetFolders = fs.readdirSync(demoHome);
+    let demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
-        var pathname = demoHome + demoFolder;
-        var stat = fs.lstatSync(pathname);
+        let pathname = demoHome + demoFolder;
+        let stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
             processDemoSet(pathname + '/');
         }
@@ -26,10 +26,10 @@ function makeAllJlunkers(dirName) {
 }
 
 function processDemoSet(demoSetFolder) {
-    var demoFolders = fs.readdirSync(demoSetFolder);
+    let demoFolders = fs.readdirSync(demoSetFolder);
     demoFolders.forEach(demoFolder => {
-        var pathname = demoSetFolder + demoFolder;
-        var stat = fs.lstatSync(pathname);
+        let pathname = demoSetFolder + demoFolder;
+        let stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
             makeJlunker(pathname + '/');
         }
@@ -37,11 +37,11 @@ function processDemoSet(demoSetFolder) {
 }
 
 function makeJlunker(demoFolder, dirName) {
-    var content = [];
+    let content = [];
     readFolderFiles(content, demoFolder);
 
-    var compContentIndex = -1;
-    var moduleContentIndex = -1;
+    let compContentIndex = -1;
+    let moduleContentIndex = -1;
     content.forEach((item, idx) => {
         item.path = 'app/demo/' + item.path.substring(demoFolder.length);
         if (item.path.match(/.+\.ts$/i)) {
@@ -73,9 +73,9 @@ function makeJlunker(demoFolder, dirName) {
         process.exit(1);
     }
 
-    var moduleItem = content[moduleContentIndex];
+    let moduleItem = content[moduleContentIndex];
     fixDemoModuleTs(moduleItem, demoFolder);
-    var compItem = content[compContentIndex];
+    let compItem = content[compContentIndex];
     fixDemoComponentTs(compItem, moduleItem.code);
 
     content.push(getIndexHtml());
@@ -88,19 +88,19 @@ function makeJlunker(demoFolder, dirName) {
     content.push(getAppComponentHtml());
     content.push(getAppModuleTs(findModuleClassName(moduleItem.code)));
 
-    var html = '';
+    let html = '';
     content.forEach(item => {
-        var path = item.path;
+        let path = item.path;
         item.code = escapeCode(item.code);
         html += `<input type="hidden" name="entries[${path}][encoding]" value="utf8" />\n`;
         html += `<input type="hidden" name="entries[${path}][content]" value="${item.code}" />\n`;
     });
 
-    var jlunker = template
+    let jlunker = template
         .replace('<!-- replace-by-content -->', html)
         .replace('<!-- replace-by-title -->', demoFolder.substring(demoHome.length, demoFolder.length-1));
 
-    var saveTo = outputHome + demoFolder.substring(demoHome.length) + (dirName ? dirName + '/' : '');
+    let saveTo = outputHome + demoFolder.substring(demoHome.length) + (dirName ? dirName + '/' : '');
     makeDirs(saveTo);
     saveTo += 'index.html';
     if (fs.existsSync(saveTo)) {
@@ -112,10 +112,10 @@ function makeJlunker(demoFolder, dirName) {
 }
 
 function readFolderFiles(content, fileFolder) {
-    var demoFiles = fs.readdirSync(fileFolder);
+    let demoFiles = fs.readdirSync(fileFolder);
     demoFiles.forEach(file => {
-        var pathname = fileFolder + file;
-        var stat = fs.lstatSync(pathname);
+        let pathname = fileFolder + file;
+        let stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
             readFolderFiles(content, pathname + '/');
         } else {
@@ -135,7 +135,7 @@ function fixTemplateUrl(code) {
 
 function fixStyleUrls(code) {
     return code.replace(/\bstyleUrls\s*:\s*(\[[\s\S]*?\])/g, (found, urlString) => {
-        var urls = eval(urlString);
+        let urls = eval(urlString);
         urls = urls.map(url => {
             if (url.substring(0, 2) !== './') {
                 url = './' + url;
@@ -147,16 +147,16 @@ function fixStyleUrls(code) {
 }
 
 function fixImport(code) {
-    var jigsawImports = [];
-    var rawImports = [];
+    let jigsawImports = [];
+    let rawImports = [];
     while (true) {
-        var match = code.match(/\bimport\s+\{([\s\S]+?)\}\s+from\s+['"](.+?)['"]/);
+        let match = code.match(/\bimport\s+{([\s\S]+?)}\s+from\s+['"](.+?)['"]/);
         if (!match) {
             break;
         }
         if (match[2].match(/jigsaw\/.+?/)) {
-            var importString = match[1];
-            var imports = importString.split(/,/g).map(item => item.trim());
+            let importString = match[1];
+            let imports = importString.split(/,/g).map(item => item.trim());
             imports.forEach(item => {
                 if (!!item) jigsawImports.push(item)
             });
@@ -169,10 +169,10 @@ function fixImport(code) {
     }
     jigsawImports = jigsawImports.sort((a, b) => a.localeCompare(b));
 
-    var jigsawImportString = '';
+    let jigsawImportString = '';
     if (jigsawImports.length > 0) {
         jigsawImportString = 'import {\n';
-        for(var i = 0, len = jigsawImports.length; i < len; i += 3) {
+        for(let i = 0, len = jigsawImports.length; i < len; i += 3) {
            jigsawImportString += '    ' + jigsawImports.slice(i, i+3).join(', ') + ',\n';
         }
         jigsawImportString += '} from "@rdkmaster/jigsaw";';
@@ -187,7 +187,7 @@ function fixCodeForDemoOnly(code) {
 
 // 删除 jigsaw-demo-description 相关内容
 function fixDemoComponentHtml(component, folder) {
-    var re = /<!-- ignore the following lines[\s\S]*<!-- start to learn the demo from here -->\r?\n/;
+    let re = /<!-- ignore the following lines[\s\S]*<!-- start to learn the demo from here -->\r?\n/;
     component.code = component.code.replace(re, '');
 
     if (component.code.indexOf('jigsaw-demo-description') != -1) {
@@ -198,7 +198,7 @@ function fixDemoComponentHtml(component, folder) {
 }
 
 function fixDemoComponentTs(component, moduleCode) {
-    var mainComp = findExportsComponent(moduleCode);
+    let mainComp = findExportsComponent(moduleCode);
     if (!mainComp) {
         console.error('ERROR: need a "exports" property in the module code, ' +
                     'and the value of which should contains only one component!');
@@ -220,7 +220,7 @@ function fixDemoComponentTs(component, moduleCode) {
             return found.replace(/@Component\s*\(\s*\{/, '@Component({\n    selector: "jigsaw-live-demo",');
         });
 
-    var requiredFiles = [];
+    let requiredFiles = [];
     // 处理代码中的 require mock data 部分，将真实的数据替换掉require引用
     component.code = component.code.replace(/\brequire\s*\(\s*["']\s*(.*?\.(.*?))\s*["']\s*\)/g,
         function(found, file, ext) {
@@ -229,7 +229,7 @@ function fixDemoComponentTs(component, moduleCode) {
                 return '"## 本DEMO的详细描述在readme.md中 ##"';
             }
 
-            var requiredFile = readCode(`${__dirname}/../../src/${file}`);
+            let requiredFile = readCode(`${__dirname}/../../src/${file}`);
             if (ext.toLowerCase() == 'json') {
                 // JSON文件去掉格式，等于压缩一下
                 requiredFile = JSON.stringify(JSON.parse(requiredFile));
@@ -246,7 +246,7 @@ function fixDemoComponentTs(component, moduleCode) {
 // 转变demo.module.ts文件
 function fixDemoModuleTs(module, demoFolder) {
     // @NgModule()里必须包含一个exports，用于将组件暴露给上级组件
-    var comp = findExportsComponent(module.code);
+    let comp = findExportsComponent(module.code);
     if (!comp) {
         console.error('ERROR: need a "exports" property in the module code, ' +
                     'and the value of which should contains only one component!');
@@ -261,12 +261,12 @@ function fixDemoModuleTs(module, demoFolder) {
 
 function findExportsComponent(moduleCode) {
     // 如果demo代码中，把exports这行给注释掉了，则会有bug，仅靠静态分析如何解决这个问题？
-    var match = moduleCode.match(/@NgModule\s*\(\s*{[\s\S]*\bexports\s*:\s*\[\s*(\w+)\s*\]/);
+    let match = moduleCode.match(/@NgModule\s*\(\s*{[\s\S]*\bexports\s*:\s*\[\s*(\w+)\s*\]/);
     return match && match[1] ? match[1] : '';
 }
 
 function findModuleClassName(moduleCode) {
-    var match = moduleCode.match(/@NgModule\s*\(\s*\{[\s\S]*?\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/);
+    let match = moduleCode.match(/@NgModule\s*\(\s*\{[\s\S]*?\}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/);
     return match[1];
 }
 
@@ -276,10 +276,10 @@ function escapeCode(code) {
 }
 
 function makeDirs(path) {
-    var pathPartials = path.split(/[\/\\]/g);
-    for(var i = 1; i < pathPartials.length; i++) {
-        var arr = pathPartials.slice(0, i);
-        var p = arr.join('/');
+    let pathPartials = path.split(/[\/\\]/g);
+    for(let i = 1; i < pathPartials.length; i++) {
+        let arr = pathPartials.slice(0, i);
+        let p = arr.join('/');
         // p == '' if path is absolute
         if (fs.existsSync(p) || !p) {
             continue;
@@ -293,10 +293,10 @@ function readCode(path) {
 }
 
 function getDemoHome(dirName) {
-    var pathPartials = __dirname.split(/[\/\\]/g);
+    let pathPartials = __dirname.split(/[\/\\]/g);
     pathPartials.pop();
     pathPartials.pop();
-    var demoHome = pathPartials.join('/') + '/src/app/'+ dirName + '/';
+    let demoHome = pathPartials.join('/') + '/src/app/'+ dirName + '/';
     return demoHome;
 }
 
@@ -333,21 +333,21 @@ function getSystemJsConfig() {
 }
 
 function getAjaxInterceptor(content) {
-    var code = readCode(__dirname + '/../../src/app/app.interceptor.ts');
+    let code = readCode(__dirname + '/../../src/app/app.interceptor.ts');
     code = fixImport(code);
 
     // 不能位于在replace之后
-    var urls = findMockDataUrls(code, content);
+    let urls = findMockDataUrls(code, content);
 
     // merge all mock data json file into this class
-    var re = /\bthis\.dataSet\s*\[\s*['"](.*?)['"]\s*\]\s*=\s*require\s*\(['"](\.\.\/mock-data\/)?(.+)['"]\s*\)/g;
-    var mockData;
+    let re = /\bthis\.dataSet\s*\[\s*['"](.*?)['"]\s*]\s*=\s*require\s*\(['"](\.\.\/mock-data\/)?(.+)['"]\s*\)/g;
+    let mockData;
     code = code.replace(re, function(found, prop, prefix, file) {
         if (!mockData) {
             mockData = {};
         }
         if (!mockData[prop]) {
-            var path = !!prefix ? 'src/mock-data' : 'node_modules';
+            let path = !!prefix ? 'src/mock-data' : 'node_modules';
             mockData[prop] = readCode(`${__dirname}/../../${path}/${file}`);
         }
 
@@ -359,8 +359,8 @@ function getAjaxInterceptor(content) {
     }
 
     code += '\nconst mockData = {\n';
-    for (var p in mockData) {
-        var value = {};
+    for (let p in mockData) {
+        let value = {};
         // 只有demo用到的数据才需要加进来
         if (urls.indexOf('mock-data/' + p) != -1) {
             value = JSON.parse(mockData[p]);
@@ -377,19 +377,19 @@ function getAjaxInterceptor(content) {
 }
 
 function findMockDataUrls(interceptorCode, content) {
-    var match = interceptorCode.match(/\bthis\.dataSet\s*\[\s*['"].*?['"]\s*\]\s*=\s*require\b/g);
+    let match = interceptorCode.match(/\bthis\.dataSet\s*\[\s*['"].*?['"]\s*\]\s*=\s*require\b/g);
     if (!match) {
         console.error('ERROR: parse app.interceptor.ts failed, no mock-data url found!');
         process.exit(1);
     }
-    var allUrls = [];
+    let allUrls = [];
     match.forEach(item => allUrls.push('mock-data/' + item.match(/['"]\s*(.*?)\s*['"]/)[1]));
     if (allUrls.length == 0) {
         console.error('ERROR: parse app.interceptor.ts failed, no mock-data url found! allUrls.length == 0');
         process.exit(1);
     }
-    var urls = allUrls.filter(url => {
-        var found = false;
+    let urls = allUrls.filter(url => {
+        let found = false;
         content.forEach(item => {
             if (found) {
                 return;
@@ -398,7 +398,7 @@ function findMockDataUrls(interceptorCode, content) {
                 return;
             }
             // 如果demo的代码的注释部分有这个url，则会有bug，仅靠静态分析如何解决？
-            var re = new RegExp('[\'"`/]' + url + '[\'"`]');
+            let re = new RegExp('[\'"`/]' + url + '[\'"`]');
             if (item.code.match(re)) {
                 found = true;
             }
