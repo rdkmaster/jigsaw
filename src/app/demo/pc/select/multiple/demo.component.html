@@ -7,8 +7,20 @@
     <h2>Select</h2>
     <div class="live-demo">
         <h3>多选</h3>
+        <p>可试试 maxWidth / maxHeight 对组件尺寸的影响</p>
+        <jigsaw-checkbox [(checked)]="enableMaxWidth">maxWidth</jigsaw-checkbox>
+        <jigsaw-numeric-input [(value)]="maxWidth" [disabled]="!enableMaxWidth"></jigsaw-numeric-input>
+        
+        <br><br>
+        <jigsaw-checkbox [(checked)]="enableMaxHeight">maxHeight</jigsaw-checkbox>
+        <jigsaw-numeric-input min="32" [(value)]="maxHeight" [disabled]="!enableMaxHeight"></jigsaw-numeric-input>
+
+        <br><br>
+        <span>被测select组件</span>
         <jigsaw-select [(value)]="selectedCity" (valueChange)="selectChange($event)" (remove)="onItemRemove($event)"
-                       placeholder="请选择城市" [data]="cityList" [multipleSelect]="true" maxHeight="16" maxWidth="300">
+                       placeholder="请选择城市" [data]="cityList" [multipleSelect]="true"
+                       [maxWidth]="enableMaxWidth ? maxWidth : undefined"
+                       [maxHeight]="enableMaxHeight ? maxHeight : undefined">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>
