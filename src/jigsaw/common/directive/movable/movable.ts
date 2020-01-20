@@ -71,9 +71,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
             if (this._removeHostMouseDownListener) {
                 this._removeHostMouseDownListener();
             }
-            this.callLater(() => {
-                this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
-            })
+            this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
         }
     }
 
