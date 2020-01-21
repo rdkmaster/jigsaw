@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../../../jigsaw-seed';
 const angularJson = fs.readFileSync(seedPath + '/angular.json').toString().trim();
 const packageJson = fs.readFileSync(seedPath + '/package.json').toString().trim();
@@ -7,7 +8,6 @@ const descCode = readCode('src/app/demo-description/demo-description.ts')
     .replace("'/* angular.json goes here */'", angularJson)
     .replace("'/* package.json goes here */'", packageJson);
 writeCode('src/app/demo-description/demo-description.ts', descCode);
-
 
 processAllComponents();
 
@@ -58,25 +58,15 @@ function patchDemoTs(demoPath) {
     }
     end1 = end1 + match1.index + match1[1].length;
     end2 = end2 + match2.index + match2[1].length;
-    let end = Math.max(end1, end2);
-    // 寻找下一行
-    for (; end < cmpCode.length; end++) {
-        if (cmpCode[end] === '\n') {
-            end++;
-            break;
-        }
-    }
-    if (end >= cmpCode.length) {
-        console.error('unable to find a valid new line to patch! path:', demoPath);
-        process.exit(1);
-    }
 
     const allFiles = [];
     readAllFiles(demoPath);
     const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}'),`).join('\n');
 
-    cmpCode = cmpCode.substring(0, end) + `    __codes: any = {\n${entries}\n    };\n` +
-        cmpCode.substring(end);
+    const end = Math.max(end1, end2) + 1;
+    const part1 = cmpCode.substring(0, end);
+    const part2 = cmpCode.substring(end).replace(/^\s*;?/, '');
+    cmpCode = part1 + `;\n    __codes: any = {\n${entries}\n    };\n` + part2;
     fs.writeFileSync(cmpPath, cmpCode);
 
     function readAllFiles(folder) {
@@ -112,13 +102,14 @@ function writeCode(path, content) {
     fs.writeFileSync(__dirname + '/../../' + path, content);
 }
 
-function findQuoteEnd(str, startIndex = 0) {
-    const target = str.charAt(startIndex);
+function findQuoteEnd(source, startIndex = 0) {
+    const target = source.charAt(startIndex);
     if ("'\"`".indexOf(target) === -1) {
         return -1;
     }
     const re = new RegExp(target);
     let index = startIndex;
+    let str = source;
     while (true) {
         str = str.substring(startIndex + 1);
         const match = str.match(re);
@@ -130,7 +121,13 @@ function findQuoteEnd(str, startIndex = 0) {
         const backSlashMatch = str.match(new RegExp(`(\\\\*?)${target}`));
         if (backSlashMatch[1].length % 2 === 0) {
             // 有偶数个反斜杠，他们相互抵消了，就不会转义当前这个边界字符了，所以，这个就是我们需要的
-            return index;
+            const match = source.substring(index).match(new RegExp(`^\\s*\\+\\s*${target}`));
+            if (match) {
+                // 这是一个类似 "aa" + "bb" 形式的字符串，继续找下去
+                return findQuoteEnd(source, index + match[0].length);
+            } else {
+                return index;
+            }
         }
     }
     return -1;
