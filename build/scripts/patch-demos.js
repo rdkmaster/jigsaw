@@ -48,22 +48,18 @@ function patchDemoTs(demoPath) {
         process.exit(1);
     }
 
-    const match1 = cmpCode.match(/\b(description:\s*string\s*=\s*)([\s\S]*)/);
-    let end1 = match1 ? findQuoteEnd(match1[2]) : -1;
-    const match2 = cmpCode.match(/\b(summary:\s*string\s*=\s*)([\s\S]*)/);
-    let end2 = match2 ? findQuoteEnd(match2[2]) : -1;
-    if (end1 === -1 && end2 === -1) {
+    const match = cmpCode.match(/\b(summary:\s*string\s*=\s*)([\s\S]*)/);
+    let end = match ? findQuoteEnd(match[2]) : -1;
+    if (end === -1) {
         console.error('unable to find a valid position to patch! path:', demoPath);
         process.exit(1);
     }
-    end1 = end1 + match1.index + match1[1].length;
-    end2 = end2 + match2.index + match2[1].length;
+    end = end + match.index + match[1].length + 1;
 
     const allFiles = [];
     readAllFiles(demoPath);
     const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}'),`).join('\n');
 
-    const end = Math.max(end1, end2) + 1;
     const part1 = cmpCode.substring(0, end);
     const part2 = cmpCode.substring(end).replace(/^\s*;?/, '');
     cmpCode = part1 + `;\n    __codes: any = {\n${entries}\n    };\n` + part2;
