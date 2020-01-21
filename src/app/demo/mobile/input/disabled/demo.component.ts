@@ -14,8 +14,5 @@ export class InputDisabledComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput',
-    ];
-}
+    }
 

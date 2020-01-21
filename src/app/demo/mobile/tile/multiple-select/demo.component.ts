@@ -24,8 +24,5 @@ export class TileSelectMultipleSelectDemoComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTile.multipleSelect',
-    ];
-}
+    }
 

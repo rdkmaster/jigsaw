@@ -12,8 +12,5 @@ export class InputPasswordComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput',
-    ];
-}
+    }
 

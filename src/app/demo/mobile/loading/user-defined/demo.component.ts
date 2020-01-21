@@ -50,8 +50,4 @@ export class DefinedLoadingDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'LoadingService.show',
-        'JigsawLoadingBase'
-    ];
 }

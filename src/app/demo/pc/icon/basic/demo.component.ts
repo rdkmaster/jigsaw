@@ -15,7 +15,4 @@ export class IconBasicDemoComponent {
     // ====================================================================
     summary: string = '这个Demo演示了Icon组件的基本用法';
     description: string = '';
-    tags: string[] = [
-        'JigsawIcon'
-    ];
-}
+    }

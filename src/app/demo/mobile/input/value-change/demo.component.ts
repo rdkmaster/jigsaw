@@ -15,8 +15,5 @@ export class InputValueChangeDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput.valueChange',
-    ];
-}
+    }
 

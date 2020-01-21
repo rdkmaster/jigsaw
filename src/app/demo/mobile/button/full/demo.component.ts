@@ -31,8 +31,5 @@ export class ButtonFullComponent {
     // ====================================================================
     summary: string = '演示了按钮的多种用法';
     description: string = '';
-    tags: string[] = [
-        'JigsawButton'
-    ];
-}
+    }
 

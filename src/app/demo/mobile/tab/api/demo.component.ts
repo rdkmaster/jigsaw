@@ -56,10 +56,4 @@ export class DynamicTabDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileTab.addTab',
-        'JigsawMobileTab.removeTab',
-        'JigsawMobileTab.showTab',
-        'JigsawMobileTab.hideTab',
-    ];
-}
+    }

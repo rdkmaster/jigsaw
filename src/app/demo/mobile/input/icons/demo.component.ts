@@ -17,8 +17,5 @@ export class InputPrefixIconDemoComponent {
     // ====================================================================
     summary: string = '左右侧可以有多个图标，并且有交互';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput',
-    ];
-}
+    }
 

@@ -14,7 +14,4 @@ export class ComboDropDownStatusDemoComponent {
     // ====================================================================
     summary: string = '下拉视图的状态 - 请关注这个demo的下拉视图的各个组件的值的变化';
     description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawComboSelect'
-    ];
-}
+    }

@@ -19,9 +19,5 @@ export class TableNoDataDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable',
-        'TableData'
-    ];
-}
+    }
 

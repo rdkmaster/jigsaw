@@ -40,8 +40,4 @@ export class ZtreeDemoEditableComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTreeExt.data',
-        'JigsawTreeExt.setting',
-    ];
-}
+    }

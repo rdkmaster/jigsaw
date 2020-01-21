@@ -33,7 +33,4 @@ export class RefreshDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'IComponentData.refresh',
-    ];
-}
+    }

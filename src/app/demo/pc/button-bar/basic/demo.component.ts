@@ -54,8 +54,5 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTile.trackItemBy',
-    ];
-}
+    }
 

@@ -10,6 +10,5 @@ export class CustomizeAlertDemoComponent {
     // ====================================================================
     summary: string = '使用`JigsawMobileAlert`组件自定义一个对话框';
     description: string = '';
-    tags: string[] = ['JigsawMobileAlert'];
-}
+    }
 

@@ -10,8 +10,5 @@ export class SwitchBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSwitch',
-    ];
 }
 

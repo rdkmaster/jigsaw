@@ -17,8 +17,5 @@ export class GraphWithNoDataComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileGraph',
-    ];
-}
+    }
 

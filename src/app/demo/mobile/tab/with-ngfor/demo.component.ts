@@ -22,7 +22,4 @@ export class JigsawMobileTabsWithNgForComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileTab',
-    ];
-}
+    }

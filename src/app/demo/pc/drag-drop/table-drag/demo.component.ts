@@ -127,7 +127,4 @@ export class TableDragDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawDraggable'
-    ];
-}
+    }

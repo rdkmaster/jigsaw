@@ -32,10 +32,5 @@ export class RadioBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawRadioGroup.value',
-        'JigsawRadioGroup.valueChange',
-        'JigsawRadioOption.value',
-    ];
-}
+    }
 

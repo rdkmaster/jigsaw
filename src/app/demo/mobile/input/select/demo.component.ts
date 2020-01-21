@@ -13,8 +13,5 @@ export class InputSelectDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput.focus',
-    ];
-}
+    }
 

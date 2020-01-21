@@ -34,8 +34,4 @@ export class FloatTriggerDemo {
     // ====================================================================
     summary: string = '演示了如何改变jigsawFloat指令的触发器';
     description: string = '';
-    tags: string[] = [
-        'JigsawFloat.jigsawFloatOpenTrigger',
-        'JigsawFloat.jigsawFloatCloseTrigger',
-    ];
-}
+    }

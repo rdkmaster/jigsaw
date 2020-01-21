@@ -13,8 +13,5 @@ export class CheckBoxDisableDemoComponent {
     // ====================================================================
     summary: string = '演示了如何使用`JigsawCheckBox`的disabled属性';
     description: string = '';
-    tags: string[] = [
-        'JigsawCheckBox.disabled'
-    ];
 }
 

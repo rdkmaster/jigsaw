@@ -69,8 +69,5 @@ export class RangeTimeFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawRangeTime',
-    ];
-}
+    }
 

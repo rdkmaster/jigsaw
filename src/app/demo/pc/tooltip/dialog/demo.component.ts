@@ -36,9 +36,5 @@ export class TooltipDialogDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'PopupService.popup',
-        'JigsawTooltipDialog'
-    ];
 }
 

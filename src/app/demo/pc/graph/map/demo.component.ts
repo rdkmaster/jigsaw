@@ -29,10 +29,7 @@ export class MapGraphComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'AbstractGraphData.createChartOptions',
-    ];
-}
+    }
 
 export class GraphDataDemo extends AbstractGraphData {
     geoCoordMap = {

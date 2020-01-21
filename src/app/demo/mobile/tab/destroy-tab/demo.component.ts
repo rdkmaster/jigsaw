@@ -19,7 +19,4 @@ export class JigsawDestoryTabComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileTab.removeTab',
-    ];
-}
+    }

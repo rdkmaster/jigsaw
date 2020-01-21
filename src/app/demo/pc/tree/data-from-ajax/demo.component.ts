@@ -31,9 +31,5 @@ export class ZtreeDemoDataFromAjaxComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTreeExt.data',
-        'JigsawTreeExt.setting',
-    ];
-}
+    }
 

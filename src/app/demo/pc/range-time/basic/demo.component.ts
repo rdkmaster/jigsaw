@@ -36,9 +36,5 @@ export class RangeTimeBasicDemoComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawRangeTime.beginDate',
-        'JigsawRangeTime.endDate',
-    ];
-}
+    }
 

@@ -38,8 +38,5 @@ export class TileLiteBasicDemoComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTile.trackItemBy',
-    ];
-}
+    }
 

@@ -36,12 +36,7 @@ export class BasicGraphComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawGraph',
-        'AbstractGraphData.createChartOptions',
-        'AbstractGraphData.optionsPatch',
-    ];
-}
+    }
 
 export class GraphDataDemo extends AbstractGraphData {
     protected createChartOptions(): EchartOptions {

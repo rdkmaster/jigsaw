@@ -35,8 +35,5 @@ export class TimeBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTime.date'
-    ];
-}
+    }
 

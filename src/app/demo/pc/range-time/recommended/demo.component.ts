@@ -35,9 +35,5 @@ export class RangeTimeRecommendedComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawRangeTime.recommendedBegin',
-        'JigsawRangeTime.recommendedEnd',
-    ];
-}
+    }
 

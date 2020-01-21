@@ -29,11 +29,7 @@ export class GraphSetSizeComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileGraph.width',
-        'JigsawMobileGraph.height',
-    ];
-}
+    }
 
 export class GraphDataSetSize extends AbstractGraphData {
     protected createChartOptions(): any {
