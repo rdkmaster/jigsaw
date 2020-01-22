@@ -9,10 +9,11 @@ const descCode = readCode('src/app/demo-description/demo-description.ts')
     .replace("'/* package.json goes here */'", packageJson);
 writeCode('src/app/demo-description/demo-description.ts', descCode);
 
-processAllComponents();
+processAllComponents('pc');
+processAllComponents('mobile');
 
-function processAllComponents() {
-    const demoHome = path.resolve(__dirname + '/../../src/app/demo/pc');
+function processAllComponents(platform) {
+    const demoHome = path.resolve(`${__dirname}/../../src/app/demo/${platform}`);
     const demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
         let pathname = path.join(demoHome, demoFolder);
@@ -41,6 +42,8 @@ function patchDemo(demoPath) {
 }
 
 function patchDemoTs(demoPath) {
+    checkDemoModuleCode(demoPath);
+
     const cmpPath = path.join(demoPath, 'demo.component.ts');
     let cmpCode = fs.readFileSync(cmpPath).toString();
     if (cmpCode.match(/\b__codes:\s*any\s*=\s*{/)) {
@@ -140,4 +143,17 @@ function findQuoteEnd(source, startIndex = 0) {
         }
     }
     return -1;
+}
+
+// 每个demo.module.ts的NgModule装饰器中，必须包含一个exports属性，并且其值必须包含一个组件类名
+// 凡是不符合这个规则的，都报错
+function checkDemoModuleCode(modulePath) {
+    // 如果demo代码中，把exports这行给注释掉了，则会有bug，仅靠静态分析如何解决这个问题？
+    const moduleCode = fs.readFileSync(path.join(modulePath, 'demo.module.ts')).toString();
+    const match = moduleCode.match(/@NgModule\s*\(\s*{[\s\S]*\bexports\s*:\s*\[\s*(\w+)\s*]/);
+    if (!match) {
+        console.error('The NgModule decorator of each demo.module.ts must include an exports attribute, ' +
+            'and its value must include a component class name, modulePath:', modulePath);
+        process.exit(1);
+    }
 }

@@ -98,6 +98,7 @@ export class JigsawDemoDescription implements OnInit {
         project.tags = ['jigsaw', 'angular', 'zte', 'awade'];
 
         const moduleClassName = findModuleClassName(project.files['src/app/demo.module.ts']);
+        const [angularJson, styles] = getAngularJson(project.dependencies);
         project.files['src/app/app.module.ts'] = getAppModuleTs(moduleClassName);
         project.files['src/app/app.component.ts'] = getAppComponentTS();
         project.files['src/app/app.component.html'] = getAppComponentHtml();
@@ -105,7 +106,6 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/app/live-demo-wrapper.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
         project.files['src/main.ts'] = getMainTs();
         project.files['src/polyfills.ts'] = getPolyfills();
-        const [angularJson, styles] = getAngularJson(project.dependencies);
         project.files['angular.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
 
