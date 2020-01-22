@@ -30,7 +30,6 @@ before_script:
   - # ./build/scripts/sauce_connect_setup.sh
 
 script:
-  - node build/scripts/patch-demos.js
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
   - gulp build:jigsaw
@@ -40,6 +39,7 @@ script:
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
   - sh build/scripts/build-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
+  - node build/scripts/patch-demos.js
   - # sh build/scripts/sauce_connect_block.sh
   - cd $SEED_DIR # run e2e in seed directory
   - travis_wait 30 node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --aot
