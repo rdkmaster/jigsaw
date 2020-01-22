@@ -32,6 +32,5 @@ export class TransferArrayDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

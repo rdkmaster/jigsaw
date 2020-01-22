@@ -18,12 +18,7 @@ export class BoxJustifyDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了box的对齐方式';
-    description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawBox.direction',
-        'JigsawBox.justify',
-        'JigsawBox.align',
-    ];
+    description: string = require('!!raw-loader!./readme.md');a:string='fdfdfd'
 }
 
 

@@ -35,11 +35,5 @@ export class SelectBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSelect.data',
-        'JigsawSelect.value',
-        'JigsawSelect.valueChange',
-        'JigsawSelect.placeholder',
-    ];
 }
 

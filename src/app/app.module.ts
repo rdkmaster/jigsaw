@@ -24,7 +24,7 @@ import {SwitchDemoComponent} from "./switch-demo.component";
             {path: 'pc', component: PCDemoListComponent},
             {path: 'mobile', component: MobileDemoListComponent},
             {path: '**', redirectTo: '/'}
-        ]),
+        ], {useHash: true}),
         JigsawRootModule
     ],
     providers: [

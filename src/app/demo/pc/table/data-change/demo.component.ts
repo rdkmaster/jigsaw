@@ -41,10 +41,5 @@ export class TableDataChangeDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'JigsawTable.refresh',
-        'DefaultCellRenderer'
-    ];
 }
 
