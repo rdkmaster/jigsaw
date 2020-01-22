@@ -28,4 +28,4 @@ export class ComboSelectLabelFieldDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

@@ -30,5 +30,5 @@ export class TimeGrItemsComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

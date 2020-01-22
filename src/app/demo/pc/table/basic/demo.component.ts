@@ -172,5 +172,5 @@ export class TableBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

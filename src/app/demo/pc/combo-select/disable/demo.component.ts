@@ -35,4 +35,4 @@ export class DisabledComboSelectDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

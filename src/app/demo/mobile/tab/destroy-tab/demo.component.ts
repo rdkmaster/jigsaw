@@ -19,4 +19,4 @@ export class JigsawDestoryTabComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

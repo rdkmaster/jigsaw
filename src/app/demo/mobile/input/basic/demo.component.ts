@@ -22,5 +22,5 @@ export class InputBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

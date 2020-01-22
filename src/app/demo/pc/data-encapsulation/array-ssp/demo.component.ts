@@ -64,4 +64,4 @@ export class ArrayServerSidePaginationDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

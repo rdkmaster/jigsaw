@@ -41,5 +41,5 @@ export class TimeFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

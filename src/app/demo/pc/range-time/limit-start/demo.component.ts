@@ -42,5 +42,5 @@ export class RangeTimeLimitStartComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

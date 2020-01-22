@@ -42,6 +42,6 @@ export class FormDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 
 

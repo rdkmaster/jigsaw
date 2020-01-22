@@ -109,7 +109,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['angular.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
 
-        sdk.openProject(project);
+        sdk.openProject(project, {openFile: 'src/app/demo.component.html'});
     }
 
     toggleDesc() {
@@ -194,6 +194,7 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: 'jigsaw-app',
+    styleUrls: ['./live-demo-wrapper.css'],
     templateUrl: './app.component.html'
 })
 export class AppComponent {
@@ -297,7 +298,7 @@ function getAngularJson(deps: any): [string, string] {
             return `  <link rel="stylesheet" type="text/css" href="${href}">`
         })
         .join('\n');
-    options.styles = ["/src/app/live-demo-wrapper.css"];
+    options.styles = [];
 
     return [JSON.stringify(json, null, '  '), styles];
 }
@@ -384,8 +385,10 @@ function findExportsComponent(moduleCode: string): string {
 function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
     let mainComp = findExportsComponent(moduleCode);
     if (!mainComp) {
-        return getError('Need a "exports" property in the module code, ' +
-            'and the value of which should contains only one component!');
+        return 'throw `看来Jigsaw自动生成的Demo代码出了问题了，请把这些文本拷贝一下，并在这里创建一个issue：  ' +
+            'https://github.com/rdkmaster/jigsaw/issues/new  这样可以协助我们解决这个问题。' +
+            '错误详情为：Need a "exports" property in the module code, and the value of which should contains only one component，' +
+            'DEMO的URL为：' + location.href + '`\n\n\n// ============================\n// 以下这些是此demo的原始代码\n/*' + cmpCode + '*/';
     }
 
     // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
@@ -400,14 +403,7 @@ function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
                 return found.replace(/\bselector\s*:\s*['"].*?['"],?\s*/, '')
                     .replace(/@Component\s*\(\s*{/, '@Component({\n    selector: "jigsaw-demo",');
             })
-        .replace(/\s*\/\/\s*={60,}\s+\/\/[\s\S]*\/\/\s*={60,}\s+/, '');
-}
-
-function getError(detail: string): string {
-    const error = '看来Jigsaw自动生成的Demo代码出了问题了，请把这些文本拷贝一下，并在这里创建一个issue：\n' +
-        'https://github.com/rdkmaster/jigsaw/issues/new\n' +
-        '这样可以协助我们解决这个问题。\n错误信息为：\n';
-    return error + detail + '\nurl: ' + location.href;
+        .replace(/\s*\/\/\s*={60,}\s+\/\/[\s\S]*\/\/\s*={60,}\s+/, '\n');
 }
 
 function fixDemoComponentHtml(html: string): string {

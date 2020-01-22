@@ -36,5 +36,5 @@ export class RangeTimeRefreshIntervalComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

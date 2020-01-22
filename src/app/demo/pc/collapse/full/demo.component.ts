@@ -59,5 +59,5 @@ export class CollapseFullComponent {
     // ====================================================================
     summary: string = '演示了`JigsawCollapse`的效果';
     description: string = '';
-    }
+}
 

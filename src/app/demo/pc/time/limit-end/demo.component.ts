@@ -31,5 +31,5 @@ export class TimeLimitEndComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

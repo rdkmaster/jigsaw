@@ -12,5 +12,5 @@ export class InputValidComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

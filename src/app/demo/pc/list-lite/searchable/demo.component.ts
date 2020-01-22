@@ -124,4 +124,4 @@ export class ListLiteSearchableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

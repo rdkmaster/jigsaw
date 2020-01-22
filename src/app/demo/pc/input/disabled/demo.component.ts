@@ -14,5 +14,5 @@ export class InputDisabledComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

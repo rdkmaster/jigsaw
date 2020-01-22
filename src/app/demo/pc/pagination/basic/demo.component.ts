@@ -40,5 +40,5 @@ export class PaginationBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

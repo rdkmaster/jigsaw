@@ -31,5 +31,5 @@ export class TimeGrComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

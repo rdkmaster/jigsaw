@@ -19,5 +19,5 @@ export class TableNoDataDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

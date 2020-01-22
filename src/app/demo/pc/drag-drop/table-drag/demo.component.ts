@@ -127,4 +127,4 @@ export class TableDragDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

@@ -53,5 +53,5 @@ export class TileSelectFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

@@ -45,4 +45,4 @@ export class JigsawTabsWithInputComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

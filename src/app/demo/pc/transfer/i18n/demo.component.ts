@@ -52,6 +52,5 @@ export class TransferArrayI18nDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

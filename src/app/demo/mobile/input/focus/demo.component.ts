@@ -23,5 +23,5 @@ export class InputFocusDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

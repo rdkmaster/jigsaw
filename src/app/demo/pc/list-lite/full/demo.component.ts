@@ -116,4 +116,4 @@ export class ListLiteFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

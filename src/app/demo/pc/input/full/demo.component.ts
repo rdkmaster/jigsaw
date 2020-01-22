@@ -43,5 +43,5 @@ export class InputFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

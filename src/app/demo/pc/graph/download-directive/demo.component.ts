@@ -37,7 +37,7 @@ export class GraphDownloadDirectiveComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 
 export class GraphDataDemo extends AbstractGraphData {
     protected createChartOptions(): EchartOptions {

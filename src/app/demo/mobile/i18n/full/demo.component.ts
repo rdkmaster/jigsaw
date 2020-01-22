@@ -132,5 +132,5 @@ export class I18nFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

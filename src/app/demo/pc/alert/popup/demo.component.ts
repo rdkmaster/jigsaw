@@ -46,5 +46,5 @@ export class AlertPopupDemoComponent {
     // ====================================================================
     summary: string = '演示了如何弹出一个Alert组件';
     description: string = '';
-    }
+}
 

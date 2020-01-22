@@ -108,5 +108,5 @@ export class PopupZIndexDemoComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

@@ -21,5 +21,5 @@ export class RadioTrackItemByDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

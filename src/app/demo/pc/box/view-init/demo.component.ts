@@ -33,6 +33,6 @@ export class BoxViewInitDemoComponent {
     // ====================================================================
     summary: string = '这个DEMO演示了在内容溢出后，j-box在滚动条方面的行为，以及如何添加自定义滚动条';
     description: string = '';
-    }
+}
 
 

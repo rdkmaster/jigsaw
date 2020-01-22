@@ -36,5 +36,5 @@ export class RangeTimeBasicDemoComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

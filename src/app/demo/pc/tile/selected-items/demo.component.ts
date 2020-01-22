@@ -25,5 +25,5 @@ export class TileSelectSelectedItemsComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

@@ -29,7 +29,7 @@ export class GraphSetSizeComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 
 export class GraphDataSetSize extends AbstractGraphData {
     protected createChartOptions(): any {

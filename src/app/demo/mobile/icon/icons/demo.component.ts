@@ -19,4 +19,4 @@ export class IconIconsDemoComponent {
     summary: string = '这个demo列举了所有icon-font图标，和一些常用的Font-Awesome图标，' +
         '要使用其它<a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font-Awesome</a>图标，可以参考官方图标库。';
     description: string = '';
-    }
+}

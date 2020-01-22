@@ -28,5 +28,5 @@ export class TimeRefreshIntervalComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

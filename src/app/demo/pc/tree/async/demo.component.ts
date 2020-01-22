@@ -39,4 +39,4 @@ export class ZtreeAsynDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

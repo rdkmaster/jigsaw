@@ -20,4 +20,4 @@ export class JigsawHideTabComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

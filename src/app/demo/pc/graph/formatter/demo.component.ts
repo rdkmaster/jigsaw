@@ -73,7 +73,7 @@ export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 export class GraphDataDemo extends AbstractGraphData {
     protected createChartOptions(): EchartOptions {
         let obj = {

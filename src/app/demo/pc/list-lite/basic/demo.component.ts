@@ -72,4 +72,4 @@ export class ListLiteBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

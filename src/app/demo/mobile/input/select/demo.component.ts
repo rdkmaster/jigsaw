@@ -13,5 +13,5 @@ export class InputSelectDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

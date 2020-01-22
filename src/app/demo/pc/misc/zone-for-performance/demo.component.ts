@@ -81,4 +81,4 @@ export class ZoneForBetterPerformanceDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

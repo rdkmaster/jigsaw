@@ -43,5 +43,5 @@ export class RangeTimeGrComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

@@ -36,7 +36,7 @@ export class BasicGraphComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 
 export class GraphDataDemo extends AbstractGraphData {
     protected createChartOptions(): EchartOptions {

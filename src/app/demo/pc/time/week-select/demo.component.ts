@@ -55,5 +55,5 @@ export class TimeWeekSelectComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

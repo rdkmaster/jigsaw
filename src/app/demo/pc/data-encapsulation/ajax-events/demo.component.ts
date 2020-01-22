@@ -55,4 +55,4 @@ export class AjaxEventsDemoComponent {
     // ====================================================================
     summary: string = '演示了如何在ajax请求过程中的各个重要阶段添加回调函数';
     description: string = '';
-    }
+}

@@ -23,5 +23,5 @@ export class TimeRecommendedComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

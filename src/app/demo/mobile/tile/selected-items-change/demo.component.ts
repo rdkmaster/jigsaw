@@ -24,5 +24,5 @@ export class TileSelecItemsChangeComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

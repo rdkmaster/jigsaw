@@ -124,4 +124,4 @@ export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

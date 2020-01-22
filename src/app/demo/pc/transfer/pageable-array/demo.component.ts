@@ -30,6 +30,5 @@ export class TransferPageableArrayComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

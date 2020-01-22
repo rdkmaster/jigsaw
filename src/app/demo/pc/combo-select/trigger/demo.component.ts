@@ -28,4 +28,4 @@ export class ComboSelectTriggerDemo {
     // ====================================================================
     summary: string = '演示了如何改变下拉视图的触发器';
     description: string = '';
-    }
+}

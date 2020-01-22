@@ -20,5 +20,5 @@ export class ScrollbarBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

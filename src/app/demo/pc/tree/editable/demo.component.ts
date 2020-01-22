@@ -40,4 +40,4 @@ export class ZtreeDemoEditableComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

@@ -12,5 +12,5 @@ export class InputPasswordComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

@@ -69,5 +69,5 @@ export class RangeTimeFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

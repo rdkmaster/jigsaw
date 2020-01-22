@@ -77,4 +77,4 @@ export class TemplateDrivenDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

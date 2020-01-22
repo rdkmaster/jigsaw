@@ -48,13 +48,25 @@ function patchDemoTs(demoPath) {
         process.exit(1);
     }
 
-    const match = cmpCode.match(/\b(summary:\s*string\s*=\s*)([\s\S]*)/);
+    const match1 = cmpCode.match(/\b(summary:\s*string\s*=\s*)([\s\S]*)/);
+    const match2 = cmpCode.match(/\b(description:\s*string\s*=\s*)([\s\S]*)/);
+    const match = match1.index > match2.index ? match1 : match2;
     let end = match ? findQuoteEnd(match[2]) : -1;
     if (end === -1) {
-        console.error('unable to find a valid position to patch! path:', demoPath);
-        process.exit(1);
+        // 有可能是下面的方式引入的文本
+        // description: string = require('!!raw-loader!./readme.md');
+        const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\);?/);
+        if (rMatch) {
+            end = rMatch[0].length;
+        } else {
+            console.error('unable to find a valid position to patch! path:', demoPath);
+            process.exit(1);
+        }
+    } else {
+        // 此时end指向最后一个引号，需要往后偏移一个位置
+        end++;
     }
-    end = end + match.index + match[1].length + 1;
+    end = end + match.index + match[1].length;
 
     const allFiles = [];
     readAllFiles(demoPath);
@@ -62,7 +74,8 @@ function patchDemoTs(demoPath) {
 
     const part1 = cmpCode.substring(0, end);
     const part2 = cmpCode.substring(end).replace(/^\s*;?/, '');
-    cmpCode = part1 + `;\n    __codes: any = {\n${entries}\n    };\n` + part2;
+    cmpCode = `${part1}\n    __codes: any = {\n${entries}\n    };\n` +
+        `    // ====================================================================\n${part2}`;
     fs.writeFileSync(cmpPath, cmpCode);
 
     function readAllFiles(folder) {
@@ -117,7 +130,7 @@ function findQuoteEnd(source, startIndex = 0) {
         const backSlashMatch = str.match(new RegExp(`(\\\\*?)${target}`));
         if (backSlashMatch[1].length % 2 === 0) {
             // 有偶数个反斜杠，他们相互抵消了，就不会转义当前这个边界字符了，所以，这个就是我们需要的
-            const match = source.substring(index).match(new RegExp(`^\\s*\\+\\s*${target}`));
+            const match = source.substring(index + 1).match(/^\s*\+\s*['"`]/);
             if (match) {
                 // 这是一个类似 "aa" + "bb" 形式的字符串，继续找下去
                 return findQuoteEnd(source, index + match[0].length);

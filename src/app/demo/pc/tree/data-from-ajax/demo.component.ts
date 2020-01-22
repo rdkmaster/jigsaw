@@ -31,5 +31,5 @@ export class ZtreeDemoDataFromAjaxComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

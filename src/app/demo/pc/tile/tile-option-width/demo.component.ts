@@ -19,5 +19,5 @@ export class TileSelectOptionWidthComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

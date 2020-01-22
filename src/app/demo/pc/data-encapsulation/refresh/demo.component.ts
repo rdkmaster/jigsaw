@@ -33,4 +33,4 @@ export class RefreshDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

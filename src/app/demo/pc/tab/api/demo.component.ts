@@ -56,4 +56,4 @@ export class DynamicTabDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}

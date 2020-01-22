@@ -19,5 +19,5 @@ export class TileSelectLabelFieldComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

@@ -32,5 +32,5 @@ export class RadioBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

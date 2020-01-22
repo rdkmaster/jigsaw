@@ -38,5 +38,5 @@ export class TileLiteBasicDemoComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 

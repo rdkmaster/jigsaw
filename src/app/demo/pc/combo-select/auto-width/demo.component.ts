@@ -31,4 +31,4 @@ export class ComboSelectAutoWidthDemo {
     // ====================================================================
     summary: string = '演示了如何实现下拉视图的宽度自动与组件对齐';
     description: string = '';
-    }
+}

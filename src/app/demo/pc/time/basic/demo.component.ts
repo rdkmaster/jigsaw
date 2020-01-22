@@ -35,5 +35,5 @@ export class TimeBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    }
+}
 
