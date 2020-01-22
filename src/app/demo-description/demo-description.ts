@@ -5,6 +5,8 @@ import {CommonUtils} from "../../jigsaw/common/core/utils/common-utils";
 import {JigsawMarkdownModule} from "../markdown/markdown";
 import {MockData} from "../app.interceptor";
 
+const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
+
 @Component({
     selector: 'jigsaw-demo-description, j-demo-description',
     styles: [`
@@ -65,6 +67,12 @@ export class JigsawDemoDescription implements OnInit {
     }
 
     gotoStackblitz() {
+        const platform = location.href.match(/\/mobile\/.+?\/.+?/) ? 'mobile' : 'pc';
+        if (platform == 'mobile') {
+            alert('暂未支持移动端的Demo代码演示。');
+            return;
+        }
+
         const project: any = {files: {}};
         let hasFile = false;
         for (let file in this.codes) {
@@ -114,13 +122,11 @@ export class JigsawDemoDescription implements OnInit {
 
     toggleDesc() {
         this.showDetail = !this.showDetail;
-        location.hash = 'open-desc=' + this.showDetail;
     }
 
     ngOnInit() {
         if (this.showDetail === undefined) {
-            const p = CommonUtils.parseUrlParam(location.hash.substring(1));
-            this.showDetail = p['open-desc'] == 'true';
+            this.showDetail = urlParams['open-desc'] == 'true';
         }
     }
 
@@ -133,6 +139,7 @@ export class JigsawDemoDescription implements OnInit {
 })
 export class JigsawDemoDescriptionModule {
 }
+
 
 function getPolyfills() {
     return `import 'zone.js/dist/zone';`;
