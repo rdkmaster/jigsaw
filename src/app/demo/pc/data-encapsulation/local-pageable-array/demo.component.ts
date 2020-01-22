@@ -63,5 +63,4 @@ export class LocalPageableArrayDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [];
 }

@@ -124,8 +124,4 @@ export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTreeExt.data',
-        'JigsawTreeExt.onClick',
-    ];
 }

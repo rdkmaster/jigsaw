@@ -72,7 +72,4 @@ export class ListLiteBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawList'
-    ];
 }

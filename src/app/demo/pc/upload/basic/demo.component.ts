@@ -58,6 +58,5 @@ export class UploadBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

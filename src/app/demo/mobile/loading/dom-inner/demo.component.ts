@@ -15,7 +15,4 @@ export class DomInnerDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawFontLoading',
-    ];
 }

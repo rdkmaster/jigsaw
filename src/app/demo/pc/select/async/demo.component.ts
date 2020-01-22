@@ -30,9 +30,6 @@ export class SelectAsyncComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSelect',
-    ];
 }
 
 
