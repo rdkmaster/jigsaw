@@ -24,8 +24,5 @@ export class PaginationBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawPagination'
-    ];
 }
 

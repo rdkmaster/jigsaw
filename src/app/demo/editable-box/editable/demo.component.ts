@@ -33,7 +33,4 @@ export class EditableDemoComponent {
     // ====================================================================
     summary: string = '这个DEMO演示了`j-editable-box`的是否可编辑的功能';
     description: string = '';
-    tags: string[] = [
-        'JigsawEditableBox.editable',
-    ];
 }

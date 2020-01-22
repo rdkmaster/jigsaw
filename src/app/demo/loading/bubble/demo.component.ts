@@ -62,8 +62,4 @@ export class BubbleLoadingDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'LoadingService.show',
-        'JigsawBubbleLoading'
-    ];
 }

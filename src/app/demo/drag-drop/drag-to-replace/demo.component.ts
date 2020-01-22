@@ -49,7 +49,4 @@ export class DragToReplaceDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawDraggable'
-    ];
 }

@@ -24,7 +24,4 @@ export class DialogHeightDemo {
     // ====================================================================
     summary: string = '这个demo演示了如何使用`height`属性来控制弹出的对话框的高度';
     description: string = '';
-    tags: string[] = [
-        'JigsawDialog.height',
-    ];
 }

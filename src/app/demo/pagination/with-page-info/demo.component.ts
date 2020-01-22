@@ -21,9 +21,5 @@ export class WithPagingInfoDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawPagination',
-        'PageableTableData'
-    ];
 }
 

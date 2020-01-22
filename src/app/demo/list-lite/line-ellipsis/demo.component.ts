@@ -52,7 +52,4 @@ export class ListLiteLineEllipsisDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawList'
-    ];
 }
