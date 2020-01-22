@@ -4,7 +4,7 @@ import {JigsawListLite} from "jigsaw/pc-components/list-and-tile/list-lite";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
 import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
-import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
+import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -124,7 +124,4 @@ export class ListLiteSearchableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawList'
-    ];
 }

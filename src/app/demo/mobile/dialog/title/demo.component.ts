@@ -34,8 +34,4 @@ export class DialogTitleDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileDialog.caption',
-        'JigsawMobileDialog.close',
-    ];
 }

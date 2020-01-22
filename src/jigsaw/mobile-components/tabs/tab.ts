@@ -30,7 +30,7 @@ import {Subscription} from "rxjs";
  * 这些是利用`JigsawTab`实现复杂、交互密集的视图的有力工具。
  *
  * 如果需要动态增减的视图内容形式比较单一，也可以通过`ng-for`来实现tab动态化，
- * 参考[这个demo]($demo=tab/with-ngfor)。
+ * 参考[这个demo]($demo=pc/tab/with-ngfor)。
  *
  * $demo = tab/basic
  * $demo = tab/update-title

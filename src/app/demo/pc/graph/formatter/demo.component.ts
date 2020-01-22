@@ -73,9 +73,6 @@ export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawGraph.resize',
-    ];
 }
 export class GraphDataDemo extends AbstractGraphData {
     protected createChartOptions(): EchartOptions {

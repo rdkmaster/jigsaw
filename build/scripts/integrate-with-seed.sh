@@ -25,9 +25,6 @@ cp -r $home/protractor-config-for-components.js ./protractor.conf.js
 mkdir -p src/mock-data
 cp -r $home/src/mock-data src/
 
-echo "processing .angular-cli.json"
-sed -i '11 i\ "mock-data",' .angular-cli.json
-
 cd src/app
 for file in `find $PWD | xargs ls -d`
 do

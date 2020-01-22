@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 import {LoadingService} from "jigsaw/common/service/loading.service";
 import {HttpClient} from "@angular/common/http";
-import {PopupInfo} from "../../../../../jigsaw/common/service/popup.service";
+import {PopupInfo} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -55,9 +55,4 @@ export class AjaxEventsDemoComponent {
     // ====================================================================
     summary: string = '演示了如何在ajax请求过程中的各个重要阶段添加回调函数';
     description: string = '';
-    tags: string[] = [
-        "LoadingService.show", "IAjaxComponentData.onAjaxStart",
-        "IAjaxComponentData.onAjaxSuccess", "IAjaxComponentData.onAjaxError",
-        "IAjaxComponentData.onAjaxComplete",
-    ];
 }

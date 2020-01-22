@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {LineGraphData} from "../../../../../jigsaw/common/core/data/graph-data";
-import {JigsawBox} from "../../../../../jigsaw/pc-components/box/box";
+import {LineGraphData} from "jigsaw/common/core/data/graph-data";
+import {JigsawBox} from "jigsaw/pc-components/box/box";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -33,10 +33,6 @@ export class BoxViewInitDemoComponent {
     // ====================================================================
     summary: string = '这个DEMO演示了在内容溢出后，j-box在滚动条方面的行为，以及如何添加自定义滚动条';
     description: string = '';
-    tags: string[] = [
-        'JigsawBox',
-        'PerfectScrollbarDirective'
-    ];
 }
 
 
