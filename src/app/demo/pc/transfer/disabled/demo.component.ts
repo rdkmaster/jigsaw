@@ -33,6 +33,5 @@ export class TransferArrayDisabledDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

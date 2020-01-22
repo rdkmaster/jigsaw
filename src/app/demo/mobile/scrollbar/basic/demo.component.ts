@@ -20,9 +20,5 @@ export class ScrollbarBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'PerfectScrollbarDirective',
-        'PerfectScrollbarConfigInterface'
-    ];
 }
 

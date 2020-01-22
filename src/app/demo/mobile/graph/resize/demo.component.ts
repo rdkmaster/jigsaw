@@ -44,9 +44,6 @@ export class GraphResizeComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileGraph.resize',
-    ];
 }
 
 export class GraphDataDemo extends AbstractGraphData {

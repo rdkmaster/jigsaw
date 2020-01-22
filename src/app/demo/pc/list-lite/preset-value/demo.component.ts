@@ -53,7 +53,4 @@ export class ListLitePresetValueDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawList'
-    ];
 }

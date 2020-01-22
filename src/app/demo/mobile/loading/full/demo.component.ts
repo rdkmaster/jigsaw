@@ -43,8 +43,4 @@ export class LoadingFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'LoadingService.show',
-        'JigsawLoading'
-    ];
 }

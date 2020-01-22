@@ -23,8 +23,4 @@ export class CollapseBasicDemoComponent {
     // ====================================================================
     summary: string = '演示了`JigsawCollapse`多个属性的基本用法';
     description: string = '';
-    tags: string[] = [
-        'JigsawCollapse.width', 'JigsawCollapse.mode',
-        'JigsawCollapsePane.header', 'JigsawCollapsePane.isActive',
-    ];
 }
