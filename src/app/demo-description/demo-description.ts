@@ -108,13 +108,13 @@ export class JigsawDemoDescription implements OnInit {
         project.tags = ['jigsaw', 'angular', 'zte', 'awade'];
 
         const moduleClassName = findModuleClassName(project.files['src/app/demo.module.ts']);
-        const [angularJson, styles] = getAngularJson(project.dependencies);
+        const [angularJson, styles, scripts] = getAngularJson(project.dependencies);
         project.files['src/app/app.module.ts'] = getAppModuleTs(moduleClassName);
         project.files['src/app/app.component.ts'] = getAppComponentTS();
         project.files['src/app/app.component.html'] = getAppComponentHtml();
         project.files['src/app/app.interceptor.ts'] = getAjaxInterceptor(project.files);
         project.files['src/app/live-demo-wrapper.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
-        project.files['src/main.ts'] = getMainTs();
+        project.files['src/main.ts'] = getMainTs(scripts);
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
@@ -147,7 +147,7 @@ function getPolyfills() {
     return `import 'zone.js/dist/zone';`;
 }
 
-function getMainTs() {
+function getMainTs(scripts: string) {
     return `
 import './polyfills';
 
@@ -156,15 +156,42 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-  // Ensure Angular destroys itself on hot reloads.
-  if (window['ngRef']) {
-    window['ngRef'].destroy();
-  }
-  window['ngRef'] = ref;
+const scripts = ${scripts};
+loadScript();
 
-  // Otherwise, log the boot error
-}).catch(err => console.error(err));
+function loadScript() {
+    if (scripts.length == 0) {
+        platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+          // Ensure Angular destroys itself on hot reloads.
+          if (window['ngRef']) {
+            window['ngRef'].destroy();
+          }
+          window['ngRef'] = ref;
+        
+          // Otherwise, log the boot error
+        }).catch(err => console.error(err));
+        return;
+    }
+    const src = scripts.shift();
+    const elements = document.head.getElementsByTagName('script');
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        if (element.getAttribute('src') == src) {
+            loadScript();
+            return;
+        }
+    }
+
+    console.log('Loading', src);
+    const element = document.createElement('script');
+    element.type = 'text/javascript';
+    element.src = src;
+    element.onload = () => {
+        element.onload = null;
+        loadScript();
+    };
+    document.head.appendChild(element);
+}
     `.trim();
 }
 
@@ -300,7 +327,7 @@ function findMockDataUrls(interceptorCode: string, files: any): string[] {
     });
 }
 
-function getAngularJson(deps: any): [string, string] {
+function getAngularJson(deps: any): [string, string, string] {
     const json: any = require('./angular.json');
     if (json.hasOwnProperty('jigsawTips')) {
         return null;
@@ -319,7 +346,10 @@ function getAngularJson(deps: any): [string, string] {
         .join('\n');
     options.styles = [];
 
-    return [JSON.stringify(json, null, '  '), styles];
+    const scripts: string = JSON.stringify(options.scripts.map(script => toUnpkgUrl(script)), null, '  ');
+    options.scripts = [];
+
+    return [JSON.stringify(json, null, '  '), styles, scripts];
 }
 
 function getDependencies() {
