@@ -113,7 +113,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/app/app.component.ts'] = getAppComponentTS();
         project.files['src/app/app.component.html'] = getAppComponentHtml();
         project.files['src/app/app.interceptor.ts'] = getAjaxInterceptor(project.files);
-        project.files['src/app/live-demo-wrapper.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
+        project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
         project.files['src/main.ts'] = getMainTs(scripts);
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
@@ -230,7 +230,7 @@ import { Component,ViewEncapsulation } from "@angular/core";
 
 @Component({
     selector: 'jigsaw-app',
-    styleUrls: ['./live-demo-wrapper.css'],
+    styleUrls: ['./app.component.css'],
     templateUrl: './app.component.html',
     encapsulation: ViewEncapsulation.None
 })
@@ -328,7 +328,7 @@ function findMockDataUrls(interceptorCode: string, files: any): string[] {
 }
 
 function getAngularJson(deps: any): [string, string, string] {
-    const json: any = require('./angular.json');
+    const json: any = CommonUtils.deepCopy(require('./angular.json'));
     if (json.hasOwnProperty('jigsawTips')) {
         return null;
     }
