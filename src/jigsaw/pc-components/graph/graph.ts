@@ -20,7 +20,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
-declare const echarts: any;
+import echarts from "echarts";
 
 @Component({
     selector: 'jigsaw-graph, j-graph',

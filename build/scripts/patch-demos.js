@@ -3,11 +3,9 @@ const path = require('path');
 
 const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../../../jigsaw-seed';
 const angularJson = fs.readFileSync(seedPath + '/angular.json').toString().trim();
+writeCode('src/app/demo-description/angular.json', angularJson);
 const packageJson = fs.readFileSync(seedPath + '/package.json').toString().trim();
-const descCode = readCode('src/app/demo-description/demo-description.ts')
-    .replace("'/* angular.json goes here */'", angularJson)
-    .replace("'/* package.json goes here */'", packageJson);
-writeCode('src/app/demo-description/demo-description.ts', descCode);
+writeCode('src/app/demo-description/package.json', packageJson);
 
 processAllComponents('pc');
 processAllComponents('mobile');
@@ -102,7 +100,7 @@ function patchDemoHtml(demoPath) {
         console.error('It seems that the demo has been patched! path:', demoPath);
         process.exit(1);
     }
-    htmlCode = htmlCode.replace(/(<jigsaw-demo-description\s+)/, '$1[codes]="__codes" ');
+    htmlCode = htmlCode.replace(/(<j(igsaw)?-demo-description\s+)/, '$1[codes]="__codes" ');
     fs.writeFileSync(htmlPath, htmlCode);
 }
 

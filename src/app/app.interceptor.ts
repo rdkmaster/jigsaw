@@ -208,7 +208,7 @@ class PageableData {
         return data.filter(item => {
             for (let i = 0, len = indexes.length; i < len; i++) {
                 let cell = item[indexes[i]];
-                if (cell == null || cell == undefined) {
+                if (cell == null) {
                     continue;
                 }
                 cell = String(cell);
