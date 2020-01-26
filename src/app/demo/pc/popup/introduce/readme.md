@@ -9,7 +9,7 @@
     - 导航菜单
 - Notification提示框
 - [como-select组件](#/pc/combo-select/full)
-- [select组件](#/pc/select/full)
+- [select组件](#/pc/select/basic)
 - [loading组件](#/pc/loading/full)
 - tooltip相关功能
     - [tooltip指令](#/pc/tooltip/inline)
