@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
-import {AjaxInterceptor} from "../../../../app.interceptor";
+import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 @Component({
@@ -69,9 +69,9 @@ export class CascadeSearchAndPagingDemoComponent implements OnInit {
 AjaxInterceptor.registerProcessor('/mock-data/cascade/selected-items/area', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>): any {
-    const provinces = require('mock-data/provinces.json');
-    const cities = require('mock-data/cities.json');
-    const districts = require('mock-data/districts.json');
+    const provinces = MockData.get('mock-data/provinces.json');
+    const cities = MockData.get('mock-data/cities.json');
+    const districts = MockData.get('mock-data/districts.json');
 
     if (req.params.get('cityId')) {
         return districts.filter(d => d.cityId == req.params.get('cityId')).map(d => ({...d}));

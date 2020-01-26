@@ -208,7 +208,7 @@ class PageableData {
         return data.filter(item => {
             for (let i = 0, len = indexes.length; i < len; i++) {
                 let cell = item[indexes[i]];
-                if (cell == null || cell == undefined) {
+                if (cell == null) {
                     continue;
                 }
                 cell = String(cell);
@@ -284,6 +284,7 @@ export class MockData {
             return;
         }
         this.dataSet = {};
+        // 模拟rest服务的数据
         this.dataSet['big-table-data'] = this.createBigTableData();
         this.dataSet['cities'] = require('../mock-data/cities.json');
         this.dataSet['core-members'] = require('../mock-data/core-members.json');
@@ -299,6 +300,11 @@ export class MockData {
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
+
+        // 静态文件引用数据
+        this.dataSet['provinces.json'] = require('mock-data/provinces.json');
+        this.dataSet['cities.json'] = require('mock-data/cities.json');
+        this.dataSet['districts.json'] = require('mock-data/districts.json');
     }
 
     static createBigTableData(): RawTableData {
