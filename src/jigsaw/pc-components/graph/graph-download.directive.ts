@@ -10,7 +10,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip/dist/jszip.min';
 
-declare const echarts: any;
+import echarts from "echarts";
 
 @Directive({
     selector: '[j-graph-download], [jigsaw-graph-download], [jigsawGraphDownload]'
