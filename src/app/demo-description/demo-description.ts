@@ -5,8 +5,8 @@ import {CommonUtils} from "../../jigsaw/common/core/utils/common-utils";
 import {JigsawMarkdownModule} from "../markdown/markdown";
 import {MockData} from "../app.interceptor";
 
-declare const __webpack_require__;
 const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
+
 
 @Component({
     selector: 'jigsaw-demo-description, j-demo-description',
@@ -460,9 +460,9 @@ function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
         .replace(/\s*\/\/\s*={60,}\s+\/\/[\s\S]*\/\/\s*={60,}\s+/, '\n');
 
     // 类似 cascade/lazy-load 这样的用例，有通过require获取静态json数据，需要把这些文件加进来
-    cmpCode = cmpCode.replace(/\brequire\s*\(\s*['"`]\s*(mock-data\/.*?)\s*['"`]\s*\);?/g,
+    cmpCode = cmpCode.replace(/\bMockData\s*\.\s*get\s*\(\s*['"`]\s*(mock-data\/.*?)\s*['"`]\s*\);?/g,
         // 这里必须采用webpack的内部api来读取main.bundle里的数据
-        (found, file) => JSON.stringify(__webpack_require__('./src/' + file)));
+        (found, file) => JSON.stringify(MockData.get(file), null, '  '));
 
     return cmpCode;
 }
