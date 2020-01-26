@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/mobile-components/list-and-tile/group-common";
 import {JigsawMobileListLite} from "jigsaw/mobile-components/list-and-tile/list-lite";
-import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
-import {TableData} from "../../../../../jigsaw/common/core/data/table-data";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {TableData} from "jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
