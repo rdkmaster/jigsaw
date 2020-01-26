@@ -159,7 +159,7 @@ export class TouchedValue {
 export class AdditionalTableData extends TableData {
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
-     * 请访问[这个链接]($demo=table/checkbox-column#open-desc=true)。
+     * 请访问[这个链接]($demo=?open-desc=true#/pc/table/checkbox-column)。
      */
     public trackRowBy: string;
     public originData: RawTableData;
@@ -264,9 +264,9 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要更新的列名或者列索引
-     * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
-     * 一般需要配合[`trackRowBy`属性]($demo=table/checkbox-column#open-desc=true)一起使用。
+     * @param field 需要更新的列名或者列索引
+     * @param key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
+     * 一般需要配合[`trackRowBy`属性]($demo=?open-desc=true#/pc/table/checkbox-column)一起使用。
      * @param value 将此变量替代缓存里的数据，如果缓存里不存在对应的数据，则会新建一个对应的数据
      * @param {any[]} data 可选，表格内置渲染器会自动将该行对应的数据存放在这个属性上，
      * 方便应用在需要时使用该行的其他数据。
@@ -368,10 +368,10 @@ export class AdditionalTableData extends TableData {
      *
      * $since = v1.1.4
      *
-     * @param {string | number} field 需要获取的列名或者列索引
-     * @param {any | any[]} key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
-     * 一般需要配合[`trackRowBy`属性]($demo=table/checkbox-column#open-desc=true)一起使用。
-     * @return {TouchedValue}
+     * @param field 需要获取的列名或者列索引
+     * @param key 通过此值来确定更新缓存中的哪一行或者哪些行的数据，
+     * 一般需要配合[`trackRowBy`属性]($demo=?open-desc=true#/pc/table/checkbox-column)一起使用。
+     *
      */
     public getTouchedInfo(field: string | number, key: any | any[]): TouchedValue {
         const fieldString = this._toFieldString(field);

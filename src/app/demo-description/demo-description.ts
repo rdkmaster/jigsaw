@@ -7,6 +7,7 @@ import {MockData} from "../app.interceptor";
 
 const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
 
+
 @Component({
     selector: 'jigsaw-demo-description, j-demo-description',
     styles: [`
@@ -90,6 +91,7 @@ export class JigsawDemoDescription implements OnInit {
             project.files[`src/app/${file}`] = code;
         }
         if (!hasFile) {
+            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
             return;
         }
         const moduleCode = project.files[`src/app/demo.module.ts`];
@@ -106,13 +108,13 @@ export class JigsawDemoDescription implements OnInit {
         project.tags = ['jigsaw', 'angular', 'zte', 'awade'];
 
         const moduleClassName = findModuleClassName(project.files['src/app/demo.module.ts']);
-        const [angularJson, styles] = getAngularJson(project.dependencies);
+        const [angularJson, styles, scripts] = getAngularJson(project.dependencies);
         project.files['src/app/app.module.ts'] = getAppModuleTs(moduleClassName);
         project.files['src/app/app.component.ts'] = getAppComponentTS();
         project.files['src/app/app.component.html'] = getAppComponentHtml();
         project.files['src/app/app.interceptor.ts'] = getAjaxInterceptor(project.files);
-        project.files['src/app/live-demo-wrapper.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
-        project.files['src/main.ts'] = getMainTs();
+        project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
+        project.files['src/main.ts'] = getMainTs(scripts);
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
@@ -145,7 +147,7 @@ function getPolyfills() {
     return `import 'zone.js/dist/zone';`;
 }
 
-function getMainTs() {
+function getMainTs(scripts: string) {
     return `
 import './polyfills';
 
@@ -154,15 +156,42 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-  // Ensure Angular destroys itself on hot reloads.
-  if (window['ngRef']) {
-    window['ngRef'].destroy();
-  }
-  window['ngRef'] = ref;
+const scripts = ${scripts};
+loadScript();
 
-  // Otherwise, log the boot error
-}).catch(err => console.error(err));
+function loadScript() {
+    if (scripts.length == 0) {
+        platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+          // Ensure Angular destroys itself on hot reloads.
+          if (window['ngRef']) {
+            window['ngRef'].destroy();
+          }
+          window['ngRef'] = ref;
+        
+          // Otherwise, log the boot error
+        }).catch(err => console.error(err));
+        return;
+    }
+    const src = scripts.shift();
+    const elements = document.head.getElementsByTagName('script');
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        if (element.getAttribute('src') == src) {
+            loadScript();
+            return;
+        }
+    }
+
+    console.log('Loading', src);
+    const element = document.createElement('script');
+    element.type = 'text/javascript';
+    element.src = src;
+    element.onload = () => {
+        element.onload = null;
+        loadScript();
+    };
+    document.head.appendChild(element);
+}
     `.trim();
 }
 
@@ -197,19 +226,25 @@ ${styles}
 
 function getAppComponentTS() {
     return `
-import { Component } from "@angular/core";
+import { Component,ViewEncapsulation } from "@angular/core";
 
 @Component({
     selector: 'jigsaw-app',
-    styleUrls: ['./live-demo-wrapper.css'],
-    templateUrl: './app.component.html'
+    styleUrls: ['./app.component.css'],
+    templateUrl: './app.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
 }`.trim();
 }
 
 function getAppComponentHtml() {
-    return `<jigsaw-root><jigsaw-demo></jigsaw-demo></jigsaw-root>`;
+    return `
+<jigsaw-root>
+  <div class="app-wrap">
+    <jigsaw-demo></jigsaw-demo>
+  </div>
+</jigsaw-root>`.trim();
 }
 
 function getAppModuleTs(moduleClassName: string) {
@@ -251,8 +286,9 @@ function getAjaxInterceptor(files: any) {
     // merge all mock data json file into this class
     let re = /\bthis\.dataSet\s*\[\s*['"](.*?)['"]\s*]\s*=\s*require\s*\(['"](\.\.\/mock-data\/)?.+['"]\s*\);?\s*/g;
     code = code.replace(re, (found, prop) => {
-        const using = urls.indexOf(`mock-data/${prop}`) != -1;
-        return using ? `this.dataSet['${prop}'] = ${JSON.stringify(MockData.dataSet[prop])};` : '';
+        const file = `mock-data/${prop}`;
+        const using = urls.indexOf(file) != -1;
+        return using ? `this.dataSet['${prop}'] = ${JSON.stringify(MockData.get(file))};` : '';
     });
     if (urls.indexOf(`mock-data/big-table-data`) == -1) {
         code = code.replace(/this\.dataSet\['big-table-data'] = .*;?\s*/, '');
@@ -282,7 +318,7 @@ function findMockDataUrls(interceptorCode: string, files: any): string[] {
                 continue;
             }
             // 如果demo的代码的注释部分有这个url，则会有bug，仅靠静态分析如何解决？
-            let re = new RegExp('[\'"`/]' + url + '[\'"`]');
+            const re = new RegExp('[\'"`/]' + url + '[\'"`]');
             if (files[file].match(re)) {
                 return true;
             }
@@ -291,27 +327,36 @@ function findMockDataUrls(interceptorCode: string, files: any): string[] {
     });
 }
 
-function getAngularJson(deps: any): [string, string] {
-    const json: any = '/* angular.json goes here */';
+function getAngularJson(deps: any): [string, string, string] {
+    const json: any = CommonUtils.deepCopy(require('./angular.json'));
+    if (json.hasOwnProperty('jigsawTips')) {
+        return null;
+    }
     const options = json.projects['jigsaw-seed'].architect.build.options;
+    const toUnpkgUrl = (entry: string): string => {
+        const re = entry.indexOf('@') == -1 ? /.*?\/node_modules\/(.*?)\/(.*)/ : /.*?\/node_modules\/(.*?\/.*?)\/(.*)/;
+        const match = entry.match(re);
+        const version = deps[match[1]];
+        return `https://unpkg.com/${match[1]}@${version}/${match[2]}`;
+    };
     // 由于stackblitz加载这里的styles会有问题，因此把这里的styles依赖挪到index.html里去
     const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/zte.css"])
         .filter(style => style.match(/^(\.\/)?node_modules\/.+/))
-        .map(style => {
-            const re = style.indexOf('@') == -1 ? /.*?\/node_modules\/(.*?)\/(.*)/ : /.*?\/node_modules\/(.*?\/.*?)\/(.*)/;
-            const match = style.match(re);
-            const version = deps[match[1]];
-            const href = `https://unpkg.com/${match[1]}@${version}/${match[2]}`;
-            return `  <link rel="stylesheet" type="text/css" href="${href}">`
-        })
+        .map(style => `  <link rel="stylesheet" type="text/css" href="${toUnpkgUrl(style)}">`)
         .join('\n');
     options.styles = [];
 
-    return [JSON.stringify(json, null, '  '), styles];
+    const scripts: string = JSON.stringify(options.scripts.map(script => toUnpkgUrl(script)), null, '  ');
+    options.scripts = [];
+
+    return [JSON.stringify(json, null, '  '), styles, scripts];
 }
 
 function getDependencies() {
-    const json: any = '/* package.json goes here */';
+    const json: any = require('./package.json');
+    if (json.hasOwnProperty('jigsawTips')) {
+        return null;
+    }
     return {...json.dependencies, ...json.devDependencies};
 }
 
@@ -330,7 +375,7 @@ function fixImport(code: string): string {
                 if (!!item) jigsawImports.push(item)
             });
         } else if (match[1].includes('AjaxInterceptor')) {
-            rawImports.push('import {AjaxInterceptor} from "../app.interceptor"');
+            rawImports.push('import {AjaxInterceptor} from "./app.interceptor"');
         } else {
             rawImports.push(match[0]);
         }
@@ -395,11 +440,12 @@ function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
         return 'throw `看来Jigsaw自动生成的Demo代码出了问题了，请把这些文本拷贝一下，并在这里创建一个issue：  ' +
             'https://github.com/rdkmaster/jigsaw/issues/new  这样可以协助我们解决这个问题。' +
             '错误详情为：Need a "exports" property in the module code, and the value of which should contains only one component，' +
-            'DEMO的URL为：' + location.href + '`\n\n\n// ============================\n// 以下这些是此demo的原始代码\n/*' + cmpCode + '*/';
+            'DEMO的URL为：' + location.href + '`\n\n\n// ============================\n// 以下这些是此demo的原始代码\n' +
+            cmpCode.replace(/^/gm, '// --> ');
     }
 
-    // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
-    return cmpCode
+    cmpCode = cmpCode
+        // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
         .replace(/@Component\s*\(\s*{([\s\S]*?)}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
             (found, props, className) => {
                 if (className != mainComp) {
@@ -410,13 +456,21 @@ function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
                 return found.replace(/\bselector\s*:\s*['"].*?['"],?\s*/, '')
                     .replace(/@Component\s*\(\s*{/, '@Component({\n    selector: "jigsaw-demo",');
             })
+        // 去掉demo-desc相关的变量
         .replace(/\s*\/\/\s*={60,}\s+\/\/[\s\S]*\/\/\s*={60,}\s+/, '\n');
+
+    // 类似 cascade/lazy-load 这样的用例，有通过require获取静态json数据，需要把这些文件加进来
+    cmpCode = cmpCode.replace(/\bMockData\s*\.\s*get\s*\(\s*['"`]\s*(mock-data\/.*?)\s*['"`]\s*\);?/g,
+        // 这里必须采用webpack的内部api来读取main.bundle里的数据
+        (found, file) => JSON.stringify(MockData.get(file), null, '  '));
+
+    return cmpCode;
 }
 
 function fixDemoComponentHtml(html: string): string {
     return html
         .replace(/<!-- ignore the following lines[\s\S]*<!-- start to learn the demo from here -->\r?\n/, '')
-        .replace(/<jigsaw-demo-description\s+.+>[\s\S]*?<\/jigsaw-demo-description>/, '');
+        .replace(/<j(igsaw)?-demo-description\s+.+>[\s\S]*?<\/j(igsaw)?-demo-description>/, '');
 }
 
 function findModuleClassName(moduleCode: string): string {
