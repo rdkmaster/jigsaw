@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
         <div>
             <p>Jigsaw组件演示，请选择对应的终端</p>
             <a [routerLink]="['/pc']" title="桌面版"><span class="fa fa-desktop"></span></a>
-            <a [routerLink]="['/mobile']" title="移动版"><span class="fa fa-mobile"></span></a>
+            <a [routerLink]="['/mobile']" title="移动版（Beta）"><span class="fa fa-mobile"></span></a>
         </div>
     `,
     styles: [`
