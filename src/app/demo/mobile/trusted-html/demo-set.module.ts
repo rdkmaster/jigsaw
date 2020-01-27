@@ -3,7 +3,6 @@ import {RouterModule} from "@angular/router";
 import {TrustedHtmlFullModule} from "./full/demo.module";
 
 import {TrustedHtmlFullComponent} from "./full/demo.component";
-import {ListMobileDemoModule} from "../list/demo-set.module";
 
 export const routerConfig = [
     {
