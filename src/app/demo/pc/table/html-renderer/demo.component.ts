@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {RawTableData, TableData} from "jigsaw/common/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
+import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html'

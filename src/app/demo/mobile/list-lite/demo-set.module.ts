@@ -12,7 +12,6 @@ import {ListLiteFullDemoComponent} from "./full/demo.component";
 import {ListLiteFullDemoModule} from "./full/demo.module";
 import {ListLiteLineEllipsisDemoComponent} from "./line-ellipsis/demo.component";
 import {ListLiteLineEllipsisDemoModule} from "./line-ellipsis/demo.module";
-import {ListMobileDemoModule} from "../list/demo-set.module";
 
 export const routerConfig = [
     {

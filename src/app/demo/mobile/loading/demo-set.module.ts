@@ -15,7 +15,6 @@ import {FontLoadingDemoComponent} from "./font-icon/demo.component";
 import {DefinedLoadingDemoComponent} from "./user-defined/demo.component";
 import {DomInnerDemoComponent} from "./dom-inner/demo.component";
 import {ColorfulLoadingDemoComponent} from "./color/demo.component";
-import {ListMobileDemoModule} from "../list/demo-set.module";
 
 export const routerConfig = [
     {
