@@ -298,7 +298,7 @@ function getAjaxInterceptor(files: any) {
 }
 
 function findMockDataUrls(interceptorCode: string, files: any): string[] {
-    let match = interceptorCode.match(/\bthis\.dataSet\s*\[\s*['"].*?['"]\s*]\s*=\s*require\b/g);
+    let match = interceptorCode.match(/\bthis\.dataSet\s*\[\s*['"].*?['"]\s*]\s*=/g);
     if (!match) {
         console.error('ERROR: parse app.interceptor.ts failed, no mock-data url found!');
         return [];

@@ -10,7 +10,6 @@ import {SliderBasicDemoComponent} from "./basic/demo.component";
 import {SliderVerticalDemoComponent} from "./vertical/demo.component";
 import {SliderUpdateDemoComponent} from "./update/demo.component";
 import {SliderUpdateDemoModule} from "./update/demo.module";
-import {ListMobileDemoModule} from "../list/demo-set.module";
 
 export const routerConfig = [
     {

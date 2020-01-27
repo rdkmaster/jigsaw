@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 import {LoadingService} from "jigsaw/common/service/loading.service";
 import {HttpClient} from "@angular/common/http";
-import {PopupInfo} from "../../../../../jigsaw/common/service/popup.service";
+import {PopupInfo} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html'

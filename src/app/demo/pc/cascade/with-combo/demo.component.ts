@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
-import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
