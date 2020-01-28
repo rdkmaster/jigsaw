@@ -85,7 +85,7 @@ function patchDemoTs(demoPath) {
             let pathname = path.join(folder, file);
             let stat = fs.lstatSync(pathname);
             if (stat.isDirectory()) {
-                readAllFiles(pathname, allFiles);
+                readAllFiles(pathname);
             } else {
                 allFiles.push(pathname.substring(demoPath.length + 1).replace(/\\/g, '/'));
             }
