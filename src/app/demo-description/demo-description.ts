@@ -328,11 +328,11 @@ function findMockDataUrls(interceptorCode: string, files: any): string[] {
 }
 
 function getAngularJson(deps: any): [string, string, string] {
-    const json: any = CommonUtils.deepCopy(require('./angular.json'));
+    const json: any = CommonUtils.deepCopy(require('./.angular-cli.json'));
     if (json.hasOwnProperty('jigsawTips')) {
         return null;
     }
-    const options = json.projects['jigsaw-seed'].architect.build.options;
+    const options = json.apps[0];
     const toUnpkgUrl = (entry: string): string => {
         const re = entry.indexOf('@') == -1 ? /.*?\/node_modules\/(.*?)\/(.*)/ : /.*?\/node_modules\/(.*?\/.*?)\/(.*)/;
         const match = entry.match(re);

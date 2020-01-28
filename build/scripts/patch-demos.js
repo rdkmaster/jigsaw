@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../../../jigsaw-seed';
-const angularJson = fs.readFileSync(seedPath + '/angular.json').toString().trim();
-writeCode('src/app/demo-description/angular.json', angularJson);
+const angularJson = fs.readFileSync(seedPath + '/.angular-cli.json').toString().trim();
+writeCode('src/app/demo-description/.angular-cli.json', angularJson);
 const packageJson = fs.readFileSync(seedPath + '/package.json').toString().trim();
 writeCode('src/app/demo-description/package.json', packageJson);
 
