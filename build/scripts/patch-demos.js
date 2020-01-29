@@ -171,6 +171,7 @@ function checkBranch(seedPath) {
 }
 
 function readBranch(cwd) {
+    console.log(`os.hostname()=${os.hostname()}, os.platform()=${os.platform()}, os.type()=${os.type()}, os.arch()=${os.arch()}`)
     let cmdRes = childProcess.execSync('git status', {cwd}).toString();
     console.log('1111111111111111111', cmdRes);
     let match = cmdRes.match(/^On branch (.*)/);
