@@ -162,12 +162,14 @@ function checkDemoModuleCode(modulePath) {
 function checkBranch(seedPath) {
     const seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
     const jigsawResult = childProcess.execSync('git status', {cwd: __dirname}).toString();
+    console.log('!!!!!!!!!!!!', __dirname, jigsawResult);
+
     const seedBranch = seedResult.match(/^On branch (.*)/)[1];
     const jigsawBranch = jigsawResult.match(/^On branch (.*)/)[1];
     const isMaster = (jigsawBranch === 'v9.0' || jigsawBranch === 'master') && seedBranch === 'master';
     const isV5orV1 = seedBranch === jigsawBranch;
     if (!isMaster && !isV5orV1) {
-        console.error(`Branch mismatch! Jigsaw is on ${jigsawBranch}, but seed is on ${seedBranch}`);
+        console.error(`Branch mismatch! Jigsaw is on branch ${jigsawBranch}, but seed is on branch ${seedBranch}`);
         process.exit(1);
     }
 }
