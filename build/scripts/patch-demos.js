@@ -1,7 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../../../jigsaw-seed';
+checkBranch(seedPath);
+
 const angularJson = fs.readFileSync(seedPath + '/angular.json').toString().trim();
 writeCode('src/app/demo-description/angular.json', angularJson);
 const packageJson = fs.readFileSync(seedPath + '/package.json').toString().trim();
@@ -152,6 +155,22 @@ function checkDemoModuleCode(modulePath) {
     if (!match) {
         console.error('The NgModule decorator of each demo.module.ts must include an exports attribute, ' +
             'and its value must include a component class name, modulePath:', modulePath);
+        process.exit(1);
+    }
+}
+
+function checkBranch(seedPath) {
+    if (os.hostname().indexOf('travis') !== -1) {
+        return;
+    }
+    const seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
+    const jigsawResult = childProcess.execSync('git status', {cwd: __dirname}).toString();
+    const seedBranch = seedResult.match(/^On branch (.*)/)[1];
+    const jigsawBranch = jigsawResult.match(/^On branch (.*)/)[1];
+    const isMaster = (jigsawBranch === 'v9.0' || jigsawBranch === 'master') && seedBranch === 'master';
+    const isV5orV1 = seedBranch === jigsawBranch;
+    if (!isMaster && !isV5orV1) {
+        console.error(`Branch mismatch! Jigsaw is on branch ${jigsawBranch}, but seed is on branch ${seedBranch}`);
         process.exit(1);
     }
 }
