@@ -172,12 +172,14 @@ function checkBranch(seedPath) {
 
 function readBranch(cwd) {
     let cmdRes = childProcess.execSync('git status', {cwd}).toString();
+    console.log('1111111111111111111', cmdRes);
     let match = cmdRes.match(/^On branch (.*)/);
     let stashed = false;
     if (!match) {
         childProcess.execSync('git stash', {cwd});
         stashed = true;
         cmdRes = childProcess.execSync('git status', {cwd}).toString();
+        console.log('222222222222222222222', cmdRes);
         match = cmdRes.match(/^On branch (.*)/);
     }
     const branch = match[1];
