@@ -161,32 +161,17 @@ function checkDemoModuleCode(modulePath) {
 }
 
 function checkBranch(seedPath) {
-    const seedBranch = readBranch(seedPath);
-    const jigsawBranch = readBranch(__dirname);
+    if (os.hostname().indexOf('travis') !== -1) {
+        return;
+    }
+    const seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
+    const jigsawResult = childProcess.execSync('git status', {cwd: __dirname}).toString();
+    const seedBranch = seedResult.match(/^On branch (.*)/)[1];
+    const jigsawBranch = jigsawResult.match(/^On branch (.*)/)[1];
     const isMaster = (jigsawBranch === 'v9.0' || jigsawBranch === 'master') && seedBranch === 'master';
     const isV5orV1 = seedBranch === jigsawBranch;
     if (!isMaster && !isV5orV1) {
         console.error(`Branch mismatch! Jigsaw is on branch ${jigsawBranch}, but seed is on branch ${seedBranch}`);
         process.exit(1);
     }
-}
-
-function readBranch(cwd) {
-    console.log(`os.hostname()=${os.hostname()}, os.platform()=${os.platform()}, os.type()=${os.type()}, os.arch()=${os.arch()}`)
-    let cmdRes = childProcess.execSync('git status', {cwd}).toString();
-    console.log('1111111111111111111', cmdRes);
-    let match = cmdRes.match(/^On branch (.*)/);
-    let stashed = false;
-    if (!match) {
-        childProcess.execSync('git stash', {cwd});
-        stashed = true;
-        cmdRes = childProcess.execSync('git status', {cwd}).toString();
-        console.log('222222222222222222222', cmdRes);
-        match = cmdRes.match(/^On branch (.*)/);
-    }
-    const branch = match[1];
-    if (stashed) {
-        childProcess.execSync('git stash pop', {cwd});
-    }
-    return branch;
 }
