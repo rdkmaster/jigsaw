@@ -11,11 +11,10 @@ writeCode('src/app/demo-description/.angular-cli.json', angularJson);
 const packageJson = fs.readFileSync(seedPath + '/package.json').toString().trim();
 writeCode('src/app/demo-description/package.json', packageJson);
 
-processAllComponents('pc');
-processAllComponents('mobile');
+processAllComponents();
 
-function processAllComponents(platform) {
-    const demoHome = path.resolve(`${__dirname}/../../src/app/demo/${platform}`);
+function processAllComponents() {
+    const demoHome = path.resolve(`${__dirname}/../../src/app/demo`);
     const demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
         let pathname = path.join(demoHome, demoFolder);
