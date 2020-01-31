@@ -331,22 +331,21 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     private _setContainer() {
-        if (this.container && this.floating) {
-            const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
-            if (containerEl) {
-                const containerStyle = getComputedStyle(containerEl);
-                if (!containerStyle.position || containerStyle.position == 'static') {
-                    containerEl.style.position = 'relative';
-                }
-                if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden') {
-                    containerEl.style.overflowX = 'hidden';
-                }
-                if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden') {
-                    containerEl.style.overflowY = 'hidden';
-                }
-            } else {
-                console.error('Can not find drawer container.');
+        if (!this.initialized || !this.container || !this.floating) return;
+        const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
+        if (containerEl) {
+            const containerStyle = getComputedStyle(containerEl);
+            if (!containerStyle.position || containerStyle.position == 'static') {
+                containerEl.style.position = 'relative';
             }
+            if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden') {
+                containerEl.style.overflowX = 'hidden';
+            }
+            if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden') {
+                containerEl.style.overflowY = 'hidden';
+            }
+        } else {
+            console.error('Can not find drawer container.');
         }
     }
 
@@ -354,7 +353,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         if (!this.initialized) return;
         this._setStyle();
         this._setClass();
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 等待抽屉的尺寸渲染完毕
             this._setHostSize();
         })
@@ -363,7 +362,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     ngOnInit() {
         super.ngOnInit();
         this._update();
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 等待视图初始化完成，获取computedStyle
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作

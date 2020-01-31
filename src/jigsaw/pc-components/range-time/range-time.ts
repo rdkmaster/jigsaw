@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, NgZone, ChangeDetectorRef} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
@@ -32,6 +32,10 @@ declare const moment: any;
     }
 })
 export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+
+    constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
+        super(_zone);
+    }
 
     @Input()
     public valid: boolean = true;
@@ -264,7 +268,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        this.callLater(this._init, this);
+        this.runMicrotask(this._init, this);
     }
 
     private _init() {
@@ -376,7 +380,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             this._$endTimeLimitEnd = this._calculateLimitEnd();
 
             //先设置好limit，再设置date
-            this.callLater(() => this._endDate = endDate);
+            this.runMicrotask(() => this._endDate = endDate);
         }
     }
 
@@ -394,7 +398,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             return;
         }
         if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._beginDate = value.beginDate;
@@ -407,10 +411,12 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 this._startTimeLimitEnd = this._beginDate;
                 this.beginDateChange.emit(this._beginDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+                // 这里给this._beginDate赋的值（为了避免循环调用writeValue），所有要加detectChanges执行子组件的变更检查
+                this._cdr.detectChanges();
             });
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._endDate = value.endDate;
@@ -421,6 +427,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 }
                 this.endDateChange.emit(this._endDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+                // 这里给this._beginDate赋的值（为了避免循环调用writeValue），所有要加detectChanges执行子组件的变更检查
+                this._cdr.detectChanges();
             });
         }
     }

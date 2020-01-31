@@ -19,7 +19,7 @@ import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-
+import {take} from 'rxjs/operators';
 
 import {JigsawTheme} from "../core/theming/theme";
 
@@ -297,7 +297,7 @@ export class PopupService {
             popupRef.instance.initData = initData;
         }
         removeWindowListens = this._beforePopup(options, element, disposer);
-        setTimeout(() => {
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             this._setPopup(options, element);
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
@@ -307,7 +307,7 @@ export class PopupService {
                     PopupService._renderer.setStyle(element, 'background', backgroundColor);
                 }
             }
-        }, 0);
+        });
         const result = {
             instance: popupRef['instance'], element: element, dispose: disposer,
             answer: popupRef['instance'] ? popupRef['instance'].answer : undefined

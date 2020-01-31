@@ -98,7 +98,7 @@ export class JigsawMobileGraph extends AbstractJigsawComponent implements OnInit
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
         super();
         this._host = this._elementRef.nativeElement;
     }

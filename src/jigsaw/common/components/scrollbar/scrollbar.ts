@@ -196,7 +196,7 @@ export class JigsawScrollHandle implements OnInit {
 })
 export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
         super();
     }
 
@@ -312,15 +312,13 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     }
 
     ngAfterViewInit() {
-        this.callLater(() => {
-            if (this.vertical) {
-                this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
-                    this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetHeight + 'px');
-            } else {
-                this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
-                    this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
-            }
-        });
+        if (this.vertical) {
+            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
+                this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetHeight + 'px');
+        } else {
+            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
+                this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
+        }
     }
 
     private _removeResizeEvent: Function;

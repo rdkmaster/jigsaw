@@ -1,6 +1,6 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
@@ -18,7 +18,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     }
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
+    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone, private _cdr: ChangeDetectorRef) {
         super(elementRef, renderer, zone);
     }
 
@@ -66,17 +66,15 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _computeResizeLineWidth() {
         if (!this._resizeLine) return;
-        this.zone.runOutsideAngular(() => {
-            if (this.parent.direction == 'column') {
-                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
-                }
-            } else {
-                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
-                }
+        if (this.parent.direction == 'column') {
+            if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
+                this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
             }
-        });
+        } else {
+            if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
+                this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
+            }
+        }
     }
 
     /**
@@ -113,7 +111,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         // resize line 视图渲染完成
         if (!this._resizeLine) return;
 
-        this.callLater(this._computeResizeLineWidth, this);
+        this.runAfterMicrotasks(this._computeResizeLineWidth, this);
 
         this._removeAllListener();
 
@@ -131,22 +129,24 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             if (this._isCurrentResizingBox) {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
             }
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
             });
         });
 
-        this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
-            this._computeResizeLineWidth();
-        });
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
+                this._computeResizeLineWidth();
+            });
 
-        this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
-            if (this._resizeLine.nativeElement.scrollTop != this.element.scrollTop) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
-            }
-            if (this._resizeLine.nativeElement.scrollLeft != this.element.scrollLeft) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
-            }
+            this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
+                if (this._resizeLine.nativeElement.scrollTop != this.element.scrollTop) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
+                }
+                if (this._resizeLine.nativeElement.scrollLeft != this.element.scrollLeft) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
+                }
+            });
         });
     }
 
@@ -169,9 +169,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             }
         });
 
-        this.callLater(() => {
-            this._$isFlicker = false;
-            if(!this.parent) JigsawBox.viewInit.emit();
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this._$isFlicker = false;
+                if(!this.parent) JigsawBox.viewInit.emit();
+            })
         });
     }
 

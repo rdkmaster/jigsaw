@@ -10,7 +10,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     public element: HTMLElement;
 
     constructor(private _elementRef: ElementRef, protected renderer: Renderer2, protected zone: NgZone) {
-        super();
+        super(zone);
         this.element = _elementRef.nativeElement;
     }
 
@@ -141,13 +141,13 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
-            this.callLater(() => this.type = 'flex');
+            this.runMicrotask(() => this.type = 'flex');
         }
     }
 
     protected checkFlexByChildren() {
         if (this.childrenBox.length > 0 && this.type != 'flex') {
-            this.callLater(() => this.type = 'flex');
+            this.runMicrotask(() => this.type = 'flex');
         }
     }
 

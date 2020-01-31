@@ -157,7 +157,7 @@ export class JigsawMobileSliderHandle implements OnInit {
 
     private _slider: JigsawMobileSlider; // 父组件;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawMobileSlider)) slider: any, private _zone: NgZone) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawMobileSlider)) slider: any, protected _zone: NgZone) {
         this._slider = slider;
     }
 
@@ -214,7 +214,7 @@ export class JigsawMobileSliderHandle implements OnInit {
 })
 export class JigsawMobileSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2, private _zone: NgZone) {
+    constructor(private _element: ElementRef, private _render: Renderer2, protected _zone: NgZone) {
         super();
     }
 

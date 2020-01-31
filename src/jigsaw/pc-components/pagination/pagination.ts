@@ -386,7 +386,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this.current = 1;
         }
 
-        this.callLater(() => {
+        this.runMicrotask(() => {
             this._getFirstAndLastPage();
             this._setCurrentShow();
         });
@@ -424,7 +424,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     ngAfterViewInit() {
         this._pages.changes.subscribe(() => {
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 //之前的上五页和下五页按钮居然有残留
                 this._pages.forEach(page => {
                     page.showPrev = false;
