@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
@@ -23,7 +23,8 @@ export class TreeEventData {
             display: inline-block;
             vertical-align: middle;
         }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
     constructor() {
@@ -167,7 +168,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     public selectNodes(key: string, value: any, parentNode: any) {
         if (!this.ztree) return;
         let nodes = this.ztree.getNodesByParam(key, value, parentNode);
-        if(nodes.length > 0) {
+        if (nodes.length > 0) {
             this.ztree.selectNode(nodes[0]);
         }
     }
