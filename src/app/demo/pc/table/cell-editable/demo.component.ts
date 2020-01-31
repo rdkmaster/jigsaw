@@ -78,14 +78,6 @@ export class TableSetCellEditableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'JigsawTable.dataChange',
-        'ColumnDefine',
-        'TableCell.renderer',
-        'TableCell.editable',
-        'TableCell.editorRenderer',
-    ];
 }
 
 

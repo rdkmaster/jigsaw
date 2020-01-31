@@ -43,8 +43,5 @@ export class InputFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput',
-    ];
 }
 

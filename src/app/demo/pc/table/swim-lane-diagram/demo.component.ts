@@ -198,9 +198,6 @@ export class SwimLaneDiagramDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了表格应对事先未知多少列，并且需要动态调整这些列定义的方法。';
-    description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawTable'
-    ];
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 

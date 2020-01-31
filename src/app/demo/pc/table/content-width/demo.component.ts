@@ -88,12 +88,6 @@ export class TableContentWidthDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用contentWidth控制表格的列宽。';
-    description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'JigsawTable.contentWidth',
-        'ColumnDefine.target',
-        'ColumnDefine.width',
-    ];
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 

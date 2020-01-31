@@ -547,7 +547,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
      * @internal
      */
     public _$updateCurrentPageSelectedItems() {
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 初始化时触发变更检查
             this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
             if(this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
@@ -563,7 +563,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         this._$list = data;
         if (allSelectedData instanceof Array || (allSelectedData as any) instanceof ArrayCollection) {
             // 等待根据list数据渲染option后回填数据
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 this._$currentPageSelectedItems = allSelectedData.filter(item => {
                     return this._$list.find(it =>
                         CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))

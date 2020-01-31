@@ -60,7 +60,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     public complete = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadStart')
-    public start = new EventEmitter<void>();
+    public start = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadUpdate')
     public update = new EventEmitter<UploadFileInfo[]>();

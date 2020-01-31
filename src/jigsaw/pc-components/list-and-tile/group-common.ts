@@ -113,7 +113,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }
-        this.callLater(() => {
+        this.runMicrotask(() => {
             items.forEach(item => {
                 let hasSelected = false;
                 this._selectedItems.forEach(selectedItem => {

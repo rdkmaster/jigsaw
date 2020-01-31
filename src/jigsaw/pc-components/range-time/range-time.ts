@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, NgZone, ChangeDetectorRef} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
@@ -11,11 +11,11 @@ declare const moment: any;
  * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
  *
  * - 如果需要选择的是一个时刻，则请使用`JigsawTime`；
- * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=table/calendar)，通过表格+渲染器的方式来模拟；
+ * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=pc/table/calendar)，通过表格+渲染器的方式来模拟；
  * - 时间选择器常常是收纳到下拉框中以解决视图空间，Jigsaw是通过`JigsawComboSelect`来组合使用的，
- * 参考[这个demo]($demo=time/with-combo-select)；
+ * 参考[这个demo]($demo=pc/time/with-combo-select)；
  *
- * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
+ * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=pc/form/template-driven)。
  *
  * $demo = range-time/full
  * $demo = range-time/basic
@@ -32,6 +32,10 @@ declare const moment: any;
     }
 })
 export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+
+    constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
+        super(_zone);
+    }
 
     @Input()
     public valid: boolean = true;
@@ -264,7 +268,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     private _startTimeLimitStart: WeekTime;
 
     ngOnInit() {
-        this.callLater(this._init, this);
+        this.runMicrotask(this._init, this);
     }
 
     private _init() {
@@ -376,7 +380,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             this._$endTimeLimitEnd = this._calculateLimitEnd();
 
             //先设置好limit，再设置date
-            this.callLater(() => this._endDate = endDate);
+            this.runMicrotask(() => this._endDate = endDate);
         }
     }
 
@@ -394,7 +398,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
             return;
         }
         if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._beginDate = value.beginDate;
@@ -407,10 +411,12 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 this._startTimeLimitEnd = this._beginDate;
                 this.beginDateChange.emit(this._beginDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+                // 这里给this._beginDate赋的值（为了避免循环调用writeValue），所有要加detectChanges执行子组件的变更检查
+                this._cdr.detectChanges();
             });
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 if (value.fromTimeComponent) {
                     // 从time控件来时，直接使用
                     this._endDate = value.endDate;
@@ -421,6 +427,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 }
                 this.endDateChange.emit(this._endDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
+                // 这里给this._beginDate赋的值（为了避免循环调用writeValue），所有要加detectChanges执行子组件的变更检查
+                this._cdr.detectChanges();
             });
         }
     }

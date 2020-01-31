@@ -11,16 +11,6 @@ import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
-import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
-
-{
-    (<any[]>routerConfig).push(
-        {path: '', component: SwitchDemoComponent},
-        {path: 'pc', component: PCDemoListComponent},
-        {path: 'mobile', component: MobileDemoListComponent},
-        {path: '**', redirectTo: '/'}
-    );
-}
 
 @NgModule({
     declarations: [
@@ -28,7 +18,13 @@ import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
-        RouterModule.forRoot(routerConfig),
+        RouterModule.forRoot([
+            ...routerConfig,
+            {path: '', component: SwitchDemoComponent},
+            {path: 'pc', component: PCDemoListComponent},
+            {path: 'mobile', component: MobileDemoListComponent},
+            {path: '**', redirectTo: '/'}
+        ], {useHash: true}),
         JigsawRootModule
     ],
     providers: [

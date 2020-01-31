@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
 import {NumberRenderer} from "./number-renderer";
 import {CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
-import {JigsawInfoAlert} from "../../../../../jigsaw/pc-components/alert/alert";
+import {JigsawInfoAlert} from "jigsaw/pc-components/alert/alert";
 
 
 @Component({
@@ -66,7 +66,4 @@ export class SudokuGameComponent {
     // ====================================================================
     summary: string = '通过数独游戏的实现过程来学习如何在表格的渲染器之间进行复杂的交互逻辑';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable'
-    ];
 }

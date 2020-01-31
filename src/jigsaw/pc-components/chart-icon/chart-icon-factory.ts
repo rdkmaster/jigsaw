@@ -306,7 +306,7 @@ export class ChartIconFactory {
                     $legend.append($rect).append($text);
 
                     // 等待text渲染
-                    setTimeout(() => {
+                    Promise.resolve().then(() => {
                         const rangeWidth = (opts.legend.orient == 'right' ? opts.legend.width : width) - 12;
                         if ($text.width() > rangeWidth) {
                             // 加入省略号

@@ -43,7 +43,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public complete = new EventEmitter<UploadFileInfo[]>();
 
     @Output()
-    public start = new EventEmitter<void>();
+    public start = new EventEmitter<UploadFileInfo[]>();
 
     @Output()
     public update = new EventEmitter<UploadFileInfo[]>();
@@ -68,7 +68,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (!this._fileInputEl) {
             this._fileInputEl = document.createElement('input');
             this._fileInputEl.setAttribute('type', 'file');
-            if(CommonUtils.isIE()){
+            if (CommonUtils.isIE()) {
                 //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
                 this._fileInputEl.setAttribute('display', 'none');
                 document.body.appendChild(this._fileInputEl);
@@ -118,7 +118,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         });
 
         this._$uploadMode = 'selectAndList';
-        this.start.emit();
+        this.start.emit(this._$fileInfoList);
 
         if (this._fileInputEl) {
             this._fileInputEl['value'] = null;
@@ -126,10 +126,12 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     private _filterValidFiles(files) {
-        if (!this.fileType) return files;
+        if (!this.fileType) {
+            return files;
+        }
         const fileTypes = this.fileType.split(',');
         return files.filter(f =>
-            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`,'i').test(f.name)));
+            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`, 'i').test(f.name)));
     }
 
     private _isAllFilesUploaded(): boolean {
@@ -175,7 +177,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public _$removeFile(file) {
         this.remove.emit(file);
         const fileIndex = this._$fileInfoList.findIndex(f => f == file);
-        if (fileIndex == -1) return;
+        if (fileIndex == -1) {
+            return;
+        }
         this._$fileInfoList.splice(fileIndex, 1);
         if (this._isAllFilesUploaded()) {
             this.update.emit(this._$fileInfoList);

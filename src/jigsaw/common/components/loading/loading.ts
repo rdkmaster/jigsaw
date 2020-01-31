@@ -32,7 +32,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
     public set color(rgb: string) {
         this._color = rgb;
-        Promise.resolve().then(() => {
+        this.runMicrotask(() => {
             if (this.getColorElement()) {
                 this.setElementsStyle(this.getColorElement(), 'backgroundColor', rgb);
             }
@@ -103,7 +103,7 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
     public set color(rgb: string) {
         this._color = rgb;
-        Promise.resolve().then(() => {
+        this.runMicrotask(() => {
             if (this.getColorElement()) {
                 this.setElementsStyle(this.getColorElement(), 'color', rgb);
             }

@@ -1,5 +1,6 @@
-import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone} from "@angular/core";
 import {CommonUtils} from "./core/utils/common-utils";
+import {take} from 'rxjs/operators';
 
 /**
  * 方便的定义一个渲染器视图的插槽
@@ -39,6 +40,9 @@ export interface IJigsawComponent {
  * 一般来说，应用无需关注此类
  */
 export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
+    constructor(protected _zone?: NgZone) {
+    }
+
     private _timerCache = [];
 
     /**
@@ -119,6 +123,27 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
         }
     }
 
+    protected runMicrotask(handler: Function, context?: any) {
+        Promise.resolve().then(() => {
+            CommonUtils.safeInvokeCallback(context, handler);
+        })
+    }
+
+    /**
+     * 请注意这个函数的回调都是运行在zone之外的，如果要在zone里面运行，请在回调中加zone.run()
+     * @param handler
+     * @param context
+     */
+    protected runAfterMicrotasks(handler: Function, context?: any) {
+        if(!this._zone) {
+            console.error('To use the function `runAfterMicrotasks`, you must inject NgZone!');
+        }
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            console.log(' only once _zone.onStable called');
+            CommonUtils.safeInvokeCallback(context, handler);
+        });
+    }
+
     ngOnInit() {
         this.initialized = true;
     }
@@ -134,6 +159,10 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
  */
 @Directive()
 export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
+    constructor(protected _zone?: NgZone) {
+        super(_zone);
+    }
+
     /**
      * @internal
      */

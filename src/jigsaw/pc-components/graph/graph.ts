@@ -20,7 +20,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
-declare const echarts: any;
+import echarts from "echarts";
 
 @Component({
     selector: 'jigsaw-graph, j-graph',
@@ -132,7 +132,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
         super();
         this._host = this._elementRef.nativeElement;
     }

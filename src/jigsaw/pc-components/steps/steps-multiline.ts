@@ -245,7 +245,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                 overflow = false;
             }
 
-            setTimeout(() => {
+            this.runMicrotask(() => {
                 let oddStepsSpaces = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd .jigsaw-steps-container .jigsaw-step-left-space");
                 let evenStepsSpaces = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-left-space");
                 let oddSteps = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd");

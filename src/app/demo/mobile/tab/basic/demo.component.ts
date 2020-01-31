@@ -44,12 +44,5 @@ export class JigsawMobileTabsDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '此demo主要描述tab的加载机制';
-    description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawMobileTab.selectedIndex',
-        'JigsawMobileTab.selectChange',
-        'JigsawMobileTabPane.lazy',
-        'JigsawMobileTabPane.title',
-        'JigsawMobileTabPane.disabled',
-    ];
+    description: string = require('!!raw-loader!./readme.md').default;
 }

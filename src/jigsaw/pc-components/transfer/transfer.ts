@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {Component, Input, NgModule, OnDestroy, Optional, ChangeDetectorRef} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {trigger, style, transition, animate, keyframes} from "@angular/animations"
 import {Subscription} from "rxjs/internal/Subscription";
@@ -153,7 +153,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._$data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
@@ -170,7 +170,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._$data.pagingInfo.pageSize = Infinity;
             this._$data.fromArray(value);
             this._filterFunction = transferFilterFunction;
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
@@ -303,7 +303,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer) {
+    constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
@@ -431,15 +431,13 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     }
 
     private _filterData(filterKey: string, field: string | number) {
-        this.callLater(() => {
-            // 触发变更检查
-            this._data.filter(this._filterFunction, {
-                selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
-                trackItemBy: this._transfer.trackItemBy,
-                keyword: filterKey,
-                fields: [field]
-            });
-        })
+        this._data.filter(this._filterFunction, {
+            selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
+            trackItemBy: this._transfer.trackItemBy,
+            keyword: filterKey,
+            fields: [field]
+        });
+        this._cdr.detectChanges();
     }
 
     /**
@@ -467,8 +465,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @internal
      */
     public _$updateCurrentPageSelectedItems() {
-        this.callLater(() => {
-            // 初始化时触发变更检查
+        this.runMicrotask(() => {
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             if (this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity) {
                 this._$currentPageSelectedItems = this.selectedItems.filter(item => (<any[]>this.data).some(it =>
