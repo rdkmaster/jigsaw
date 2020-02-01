@@ -156,6 +156,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 
+// =============================================================================
+// 注意！这部分代码是为了适配当前这个运行时而做的针对性修改，实际情况下不能这么搞，
+// 请不要以这部分代码作为种子工程
+// =============================================================================
 const scripts = ${scripts};
 loadScript();
 
@@ -336,8 +340,9 @@ function getAngularJson(deps: any): [string, string, string] {
     const toUnpkgUrl = (entry: string): string => {
         const re = entry.indexOf('@') == -1 ? /.*?\/node_modules\/(.*?)\/(.*)/ : /.*?\/node_modules\/(.*?\/.*?)\/(.*)/;
         const match = entry.match(re);
-        const version = deps[match[1]];
-        return `https://unpkg.com/${match[1]}@${version}/${match[2]}`;
+        let version = deps[match[1]];
+        version = !!version ? `@${version}` : '';
+        return `https://unpkg.com/${match[1]}${version}/${match[2]}`;
     };
     // 由于stackblitz加载这里的styles会有问题，因此把这里的styles依赖挪到index.html里去
     const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/zte.css"])
