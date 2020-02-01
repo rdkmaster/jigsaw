@@ -156,6 +156,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 
+// =============================================================================
+// 注意！这部分代码是为了适配当前这个运行时而做的针对性修改，实际情况下不能这么搞，
+// 请不要以这部分代码作为种子工程
+// =============================================================================
 const scripts = ${scripts};
 loadScript();
 
