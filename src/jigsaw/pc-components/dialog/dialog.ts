@@ -1,5 +1,7 @@
-import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output,
-    QueryList, Renderer2, Directive, NgZone } from "@angular/core";
+import {
+    AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output,
+    QueryList, Renderer2, Directive, NgZone, ChangeDetectionStrategy
+} from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../common/service/popup.service";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
@@ -7,6 +9,7 @@ import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBlock, JigsawBlockModule} from "../../common/components/block/block";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
+
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
@@ -142,7 +145,7 @@ export abstract class AbstractDialogComponentBase
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
 
-        if(this.height) {
+        if (this.height) {
             this.renderer.setStyle(this.popupElement, 'height', this.height);
             this.renderer.addClass(this.popupElement, 'jigsaw-dialog-fixed-height');
         }
@@ -167,6 +170,7 @@ export abstract class AbstractDialogComponentBase
 @Component({
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDialog extends AbstractDialogComponentBase {
     @Output()
@@ -178,7 +182,7 @@ export class JigsawDialog extends AbstractDialogComponentBase {
      * @internal
      */
     @ContentChildren(JigsawButton, {descendants: true})
-    public _$inlineButtons:QueryList<JigsawButton>;
+    public _$inlineButtons: QueryList<JigsawButton>;
 
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
         super(renderer, elementRef, _zone);
