@@ -116,7 +116,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
         project.files['src/main.ts'] = getMainTs(scripts);
         project.files['src/polyfills.ts'] = getPolyfills();
-        project.files['angular.json'] = angularJson;
+        project.files['.angular-cli.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
 
         sdk.openProject(project, {openFile: 'src/app/demo.component.html'});
@@ -336,12 +336,13 @@ function getAngularJson(deps: any): [string, string, string] {
     const toUnpkgUrl = (entry: string): string => {
         const re = entry.indexOf('@') == -1 ? /.*?\/node_modules\/(.*?)\/(.*)/ : /.*?\/node_modules\/(.*?\/.*?)\/(.*)/;
         const match = entry.match(re);
-        const version = deps[match[1]];
-        return `https://unpkg.com/${match[1]}@${version}/${match[2]}`;
+        let version = deps[match[1]];
+        version = !!version ? `@${version}` : '';
+        return `https://unpkg.com/${match[1]}${version}/${match[2]}`;
     };
     // 由于stackblitz加载这里的styles会有问题，因此把这里的styles依赖挪到index.html里去
-    const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/zte.css"])
-        .filter(style => style.match(/^(\.\/)?node_modules\/.+/))
+    const styles: string = options.styles.concat(["../node_modules/@rdkmaster/jigsaw/prebuilt-themes/zte.css"])
+        .filter(style => style.match(/^(\.\.\/)?node_modules\/.+/))
         .map(style => `  <link rel="stylesheet" type="text/css" href="${toUnpkgUrl(style)}">`)
         .join('\n');
     options.styles = [];
