@@ -10,7 +10,9 @@ import {
     TemplateRef,
     ViewChild,
     Output,
-    EventEmitter, AfterViewInit
+    EventEmitter,
+    AfterViewInit,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -50,7 +52,8 @@ export class DropDownValue {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
     /**
@@ -114,11 +117,11 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     private _input: JigsawInput;
 
 
-    public focus(){
+    public focus() {
         this._input.focus();
     }
 
-    public select(){
+    public select() {
         this._input.select();
     }
 

@@ -4,7 +4,8 @@ import {
     ElementRef,
     Optional,
     Renderer2,
-    ViewChild
+    ViewChild,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {JigsawUploadBase} from "./upload.base";
@@ -16,7 +17,8 @@ import {TranslateService} from "@ngx-translate/core";
     templateUrl: 'upload.html',
     host: {
         '[class.jigsaw-upload]': 'true'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
 

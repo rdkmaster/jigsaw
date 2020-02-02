@@ -1,5 +1,16 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Optional, Output, ViewChild, OnDestroy
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    NgModule,
+    OnInit,
+    Optional,
+    Output,
+    ViewChild,
+    OnDestroy,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
@@ -77,7 +88,8 @@ export class CascadeTabContentInitData {
     host: {
         '[class.jigsaw-cascade]': 'true',
         '[style.width]': 'width',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCascade extends AbstractJigsawComponent implements AfterViewInit, OnInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef) {
@@ -130,7 +142,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         return this._data;
     }
 
-    public set data(value: CascadeDateGenerator | SimpleTreeData| TreeData) {
+    public set data(value: CascadeDateGenerator | SimpleTreeData | TreeData) {
         this._data = value;
         if (value instanceof Function) {
             this.dataGenerator = value;
@@ -143,6 +155,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         if (this.initialized) {
             this._cascading(0);
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     private _treeDataGenerator(selectedItem: any): CascadeData {
@@ -408,10 +421,11 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                 </div>
             </ng-template>
         </div>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit, OnDestroy {
-    constructor(@Optional() public _$cascade: JigsawCascade) {
+    constructor(@Optional() public _$cascade: JigsawCascade, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -451,29 +465,31 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     }
 
     public set _$list(value: any) {
-        if(!value || this._list == value) return;
+        if (!value || this._list == value) return;
         if (value instanceof LocalPageableArray && value.pagingInfo) {
             this._list = value;
-            if(this._removeListRefreshListener) {
+            if (this._removeListRefreshListener) {
                 this._removeListRefreshListener();
                 this._removeListRefreshListener = null;
             }
             // 用于刷新分页
             this._removeListRefreshListener = this._list.onRefresh(this._$updateCurrentPageSelectedItems, this);
-        } else if(value instanceof Array || value instanceof ArrayCollection) {
+            this._changeDetectorRef.markForCheck();
+        } else if (value instanceof Array || value instanceof ArrayCollection) {
             const data = new LocalPageableArray();
             data.pagingInfo.pageSize = this._$cascade.pageSize;
             data.fromArray(value);
             const removeDataOnRefresh = data.onRefresh(() => {
                 removeDataOnRefresh();
                 this._list = data;
-                if(this._removeListRefreshListener) {
+                if (this._removeListRefreshListener) {
                     this._removeListRefreshListener();
                     this._removeListRefreshListener = null;
                 }
                 // 用于刷新分页
                 this._removeListRefreshListener = this._list.onRefresh(this._$updateCurrentPageSelectedItems, this);
                 this._list.refresh();
+                this._changeDetectorRef.markForCheck();
             });
         } else {
             console.error('value type error, jigsaw-list supports Array and ArrayCollection');
@@ -526,12 +542,13 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this._$list).filter(filterKey, [this._$cascade.labelField]);
+        this._changeDetectorRef.markForCheck();
     }
 
     private _updateSelectedItemsByCurrent() {
         this._$currentPageSelectedItems = this._$currentPageSelectedItems ? this._$currentPageSelectedItems : [];
         this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
-        if(this.initData.multipleSelect) {
+        if (this.initData.multipleSelect) {
             this._$selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
                 !this._$selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))));
             const currentUnselectedItems = this._$list.concat().filter(item =>
@@ -550,12 +567,13 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         this.runMicrotask(() => {
             // 初始化时触发变更检查
             this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
-            if(this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
+            if (this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
                 this._$currentPageSelectedItems = this._$selectedItems.filter(item => (<any[]>this._$list).some(it =>
                     CommonUtils.compareWithKeyProperty(it, item, <string[]>this._$cascade.trackItemBy)));
             } else {
                 this._$currentPageSelectedItems = this._$selectedItems;
             }
+            this._changeDetectorRef.markForCheck();
         });
     }
 
@@ -607,7 +625,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     }
 
     ngOnDestroy() {
-        if(this._removeListRefreshListener) {
+        if (this._removeListRefreshListener) {
             this._removeListRefreshListener();
             this._removeListRefreshListener = null;
         }

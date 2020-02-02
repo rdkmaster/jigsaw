@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ChangeDetectionStrategy} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -22,7 +22,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     animations: [
         AnimationDestroy
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 

@@ -12,7 +12,9 @@ import {
     QueryList,
     Renderer2,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -32,7 +34,8 @@ export class SliderMark {
 @Component({
     selector: 'jigsaw-slider-handle',
     templateUrl: './slider-handle.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSliderHandle implements OnInit {
 
@@ -210,11 +213,12 @@ export class JigsawSliderHandle implements OnInit {
     encapsulation: ViewEncapsulation.None,
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSlider), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2, protected _zone: NgZone) {
+    constructor(private _element: ElementRef, private _render: Renderer2, protected _zone: NgZone,private _changeDetectorRef:ChangeDetectorRef) {
         super();
     }
 
@@ -256,6 +260,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public _updateValue(index: number, value: number) {
         this._$value.set(index, value);
         this._$value.refresh();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -265,6 +270,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      */
     public _refresh() {
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -497,6 +503,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             this._zone.runOutsideAngular(() => this._setTrackStyle(this.value));
             this.valueChange.emit(this.value);
             this._propagateChange(this.value);
+            this._changeDetectorRef.markForCheck();
         });
     }
 
@@ -505,7 +512,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     // ngModel触发的writeValue方法，只会在ngOnInit,ngAfterContentInit,ngAfterViewInit这些生命周期之后才调用
     public writeValue(value: any): void {
-        if(value instanceof Array) {
+        if (value instanceof Array) {
             value = new ArrayCollection(value);
         }
         if (value instanceof ArrayCollection) {
@@ -523,6 +530,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
         // refresh的回调是异步的
         this._$value.refresh();
+        this._changeDetectorRef.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
