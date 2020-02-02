@@ -248,7 +248,7 @@ function findInheritedProperties(ci, properties) {
     while (ci && ci.extends) {
         ci = findTypeMetaInfo(ci.extends);
         if (!ci) {
-            console.warn('no meta info found!');
+            console.warn('no meta info found! findInheritedProperties', ci.extends);
             continue;
         }
         mergeProperties(ci).forEach(p => {
@@ -370,7 +370,7 @@ function findInheritedMethods(ci, methods) {
     while (ci && ci.extends) {
         ci = findTypeMetaInfo(ci.extends);
         if (!ci) {
-            console.warn('no meta info found!');
+            console.warn('no meta info found! findInheritedMethods', ci.extends);
             continue;
         }
         (ci.methodsClass || ci.methods).forEach(m => {
