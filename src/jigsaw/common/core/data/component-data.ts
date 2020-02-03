@@ -572,13 +572,13 @@ export class ComponentDataHelper {
     }
 
     public invokeRefreshCallback(): void {
-        if (this._timeout !== null) {
-            return;
-        }
-        this._timeout = setTimeout(() => {
-            this._timeout = null;
+        // if (this._timeout !== null) {
+        //     return;
+        // }
+        // this._timeout = setTimeout(() => {
+        //     this._timeout = null;
             this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
-        }, 0);
+        // }, 0);
     }
 
     public invokeChangeCallback(): void {
