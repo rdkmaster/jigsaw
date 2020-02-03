@@ -1,4 +1,15 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, NgZone, ChangeDetectorRef} from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    forwardRef,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    NgZone,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
@@ -29,7 +40,8 @@ declare const moment: any;
     host: {
         '[class.jigsaw-range-time-host]': 'true',
         '[class.jigsaw-range-time-error]': '!valid'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
@@ -87,6 +99,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         val[key] = value;
         this.writeValue(val);
         this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+        this._cdr.markForCheck();
     }
 
     private _beginDate: WeekTime;
@@ -291,6 +304,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 endTime = calculateTime;
             }
         }
+        this._cdr.markForCheck();
         return endTime;
     }
 
@@ -350,6 +364,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         if (item && item.shortcuts && item.shortcuts.length != 0) {
             return item.shortcuts;
         }
+        this._cdr.markForCheck();
         return null;
     }
 
@@ -359,6 +374,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     public _$grChange(value: TimeGr) {
         this._init();
         this.grChange.emit(value);
+        this._cdr.markForCheck();
     }
 
     /**
@@ -366,7 +382,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      */
     public _changeShortcut(selectedShortcut: Shortcut) {
         if (selectedShortcut.dateRange) {
-            let [beginDate, endDate] = typeof  selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
+            let [beginDate, endDate] = typeof selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
 
             beginDate = TimeService.convertValue(beginDate, <TimeGr>this._timeStart.gr);
             let limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, <TimeGr>this._timeStart.gr);
@@ -381,12 +397,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
             //先设置好limit，再设置date
             this.runMicrotask(() => this._endDate = endDate);
+            this._cdr.markForCheck();
         }
     }
 
     private _handleWeekSelect(date: string) {
         let weekNum = TimeService.getWeekOfYear(date);
         let year = TimeService.getWeekYear(date);
+        this._cdr.markForCheck();
         return {year: year, week: weekNum};
     }
 

@@ -1,4 +1,22 @@
-import { Component, Input, ViewContainerRef, TemplateRef, ViewChild, ElementRef, AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver, ComponentRef, OnDestroy, Output, EventEmitter, Directive } from '@angular/core';
+import {
+    Component,
+    Input,
+    ViewContainerRef,
+    TemplateRef,
+    ViewChild,
+    ElementRef,
+    AfterViewInit,
+    EmbeddedViewRef,
+    ChangeDetectorRef,
+    Type,
+    ComponentFactoryResolver,
+    ComponentRef,
+    OnDestroy,
+    Output,
+    EventEmitter,
+    Directive,
+    ChangeDetectionStrategy
+} from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 
 /**
@@ -25,7 +43,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     @Input()
     public initData: Object;
 
-    @ViewChild('body', { read: ViewContainerRef })
+    @ViewChild('body', {read: ViewContainerRef})
     protected _body: ViewContainerRef;
 
     /**
@@ -72,7 +90,8 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     template: `
         <ng-template #body></ng-template>
         <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">&times;</span>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
 

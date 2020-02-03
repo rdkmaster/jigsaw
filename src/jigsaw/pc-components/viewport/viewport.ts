@@ -1,4 +1,14 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgModule, Output} from "@angular/core";
+import {
+    AfterViewChecked,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
+    Output,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ViewportData} from "../../common/core/data/component-data";
 import {JigsawScrollbarModule} from "../../common/components/scrollbar/index";
@@ -31,7 +41,8 @@ export class ViewportScrollEvent {
         '(mouseleave)': '_$handleMouseLeave()',
         '(mousewheel)': '_$handleMouseWheel($event)', // Chrome IE
         '(DOMMouseScroll)': '_$handleMouseWheel($event)' // firefox
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawViewport extends AbstractJigsawComponent implements AfterViewChecked {
 

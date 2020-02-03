@@ -16,7 +16,8 @@ import {
     ViewChild,
     ElementRef,
     EmbeddedViewRef,
-    HostListener
+    HostListener,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
@@ -43,7 +44,8 @@ import {Subscription} from "rxjs";
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
 
