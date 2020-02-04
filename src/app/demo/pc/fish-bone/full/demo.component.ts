@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
+import {AfterViewInit, Component, ViewEncapsulation, NgZone} from "@angular/core";
 import {ChartIconFactory, ChartType} from "jigsaw/pc-components/chart-icon/chart-icon-factory";
 import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
+import {take} from 'rxjs/operators';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,7 +11,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public _zone: NgZone) {
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
@@ -300,13 +301,15 @@ export class FishBoneFullComponent implements AfterViewInit {
                 nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
                 node.nodes = [nodesItem];
             });
-            // 等待TreeData里的html字符串在鱼骨图中渲染
-            setTimeout(() => {
-                this.data3.nodes.forEach((node, index) => {
-                    const legendData = this.getLegendData(node);
-                    const pieData = this.getPieData(node);
-                    this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
-                });
+            // 等待TreeData里的html字符串在鱼骨图中渲染，此处的异步必须使用zone.onStable
+            this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+                this._zone.run(() => {
+                    this.data3.nodes.forEach((node, index) => {
+                        const legendData = this.getLegendData(node);
+                        const pieData = this.getPieData(node);
+                        this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
+                    });
+                })
             });
         })
     }
