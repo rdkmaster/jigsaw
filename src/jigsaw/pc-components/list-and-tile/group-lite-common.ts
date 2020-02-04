@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import { EventEmitter, Input, Output, Directive } from "@angular/core";
+import { EventEmitter, Input, Output, Directive ,ChangeDetectorRef} from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
@@ -7,6 +7,11 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 
 @Directive()
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
+
+    constructor(public changeDetectorRef:ChangeDetectorRef) {
+        super();
+    }
+
     @Input() public valid: boolean = true;
 
     @Input()

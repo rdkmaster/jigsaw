@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule, QueryList,} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    forwardRef,
+    Input,
+    NgModule,
+    QueryList,
+    ChangeDetectionStrategy
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
@@ -15,7 +24,8 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTile extends AbstractJigsawGroupComponent {
     // 默认多选
@@ -37,7 +47,8 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
         '[class.jigsaw-tile-option-active]': 'selected',
         '[class.jigsaw-tile-option-disabled]': 'disabled',
         '(click)': '_$handleClick()'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTileOption extends AbstractJigsawOptionComponent {
 
@@ -52,6 +63,7 @@ export class JigsawTileOption extends AbstractJigsawOptionComponent {
     public _$handleClick(): void {
         if (!this.disabled) {
             this.change.emit(this);
+            this.changeDetector.markForCheck();
         }
     }
 

@@ -304,7 +304,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
-        super();
+        super(_cdr);
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });

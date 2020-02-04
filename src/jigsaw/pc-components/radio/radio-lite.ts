@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, NgModule, Output} from "@angular/core";
+import {Component, EventEmitter, forwardRef, Input, NgModule, Output, ChangeDetectionStrategy, ChangeDetectorRef} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {JigsawRadioModule} from "./radio";
@@ -21,9 +21,13 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(private _changeDetector: ChangeDetectorRef) {
+        super();
+    }
 
     @Input()
     public valid: boolean = true;
@@ -63,6 +67,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     radioChange(item) {
         this.valueChange.emit(item);
         this._propagateChange(item);
+        this._changeDetector.markForCheck();
     }
 
     ngOnInit() {

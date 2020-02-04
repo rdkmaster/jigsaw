@@ -1,6 +1,6 @@
 import {
     AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, forwardRef, Input, NgModule,
-    QueryList
+    QueryList,ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -18,7 +18,8 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
     // 默认单选
@@ -40,7 +41,8 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[class.jigsaw-list-option-disabled]': 'disabled',
         '[class.jigsaw-list-option-separator]': '!value',
         '(click)': '_$handleClick()'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
     constructor(public changeDetector: ChangeDetectorRef, public elementRef: ElementRef) {
@@ -69,6 +71,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
     public _$handleClick(): void {
         if(this.disabled || !this.value) return;
         this.change.emit(this);
+        this.changeDetector.markForCheck();
     }
 }
 
