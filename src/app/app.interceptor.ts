@@ -270,7 +270,7 @@ class PageableData {
     }
 }
 
-class MockData {
+export class MockData {
     static dataSet: any;
 
     static get(url): any {
@@ -284,6 +284,8 @@ class MockData {
             return;
         }
         this.dataSet = {};
+        // 模拟rest服务的数据
+        this.dataSet['big-table-data'] = this.createBigTableData();
         this.dataSet['cities'] = require('../mock-data/cities.json');
         this.dataSet['core-members'] = require('../mock-data/core-members.json');
         this.dataSet['countries'] = require('../mock-data/countries.json');
@@ -296,9 +298,13 @@ class MockData {
         this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
-        this.dataSet['big-table-data'] = this.dataSet['big-table-data'] || this.createBigTableData();
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
+
+        // 静态文件引用数据
+        this.dataSet['provinces.json'] = require('mock-data/provinces.json');
+        this.dataSet['cities.json'] = require('mock-data/cities.json');
+        this.dataSet['districts.json'] = require('mock-data/districts.json');
     }
 
     static createBigTableData(): RawTableData {

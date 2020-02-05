@@ -19,9 +19,6 @@ export class TileSelectOptionWidthComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTileOption.width',
-    ];
 
 }
 

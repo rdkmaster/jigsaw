@@ -14,10 +14,5 @@ export class TagBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTag.closable',
-        'JigsawTag.close',
-        'JigsawTag.color',
-    ];
 }
 

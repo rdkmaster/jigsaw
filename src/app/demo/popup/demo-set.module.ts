@@ -22,9 +22,6 @@ export const routerConfig:any = [
         desc: 'combo-select', url: '/combo-select/full', path: ''
     },
     {
-        desc: 'select', url: '/select/full', path: ''
-    },
-    {
         desc: 'loading', url: '/loading/full', path: ''
     },
     {

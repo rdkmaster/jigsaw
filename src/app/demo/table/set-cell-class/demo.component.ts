@@ -32,10 +32,6 @@ export class TableSetCellClassDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'ColumnDefine.cell',
-        'TableCell.clazz'
-    ];
 }
 
 

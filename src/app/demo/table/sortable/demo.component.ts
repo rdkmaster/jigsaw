@@ -40,12 +40,6 @@ export class TableSetHeaderSortDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'ColumnDefine.header',
-        'TableHeader.sortable',
-        'TableHeader.sortAs',
-        'TableHeader.defaultSortOrder',
-    ];
 }
 
 

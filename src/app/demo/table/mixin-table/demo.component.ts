@@ -33,11 +33,6 @@ export class TableMixinTableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'ColumnDefine',
-        'TableCell.renderer'
-    ];
 }
 
 @Component({

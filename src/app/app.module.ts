@@ -9,14 +9,6 @@ import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
-//import {JigsawTheme} from "../jigsaw/core/theming/theme";
-
-{
-    (<any[]>routerConfig).push(
-        {path: '', component: DemoListComponent},
-        {path: '**', redirectTo: ''}
-    );
-}
 
 @NgModule({
     declarations: [
@@ -24,7 +16,11 @@ import {routerConfig} from "./router-config";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
-        RouterModule.forRoot(routerConfig),
+        RouterModule.forRoot([
+            ...routerConfig,
+            {path: '', component: DemoListComponent},
+            {path: '**', redirectTo: ''}
+        ], {useHash: true}),
         JigsawRootModule
     ],
     providers: [

@@ -30,9 +30,6 @@ export class TimeGrItemsComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTime.grItems'
-    ];
 
 }
 

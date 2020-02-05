@@ -1,5 +1,4 @@
-import {Component, ViewChild} from "@angular/core";
-import {JigsawTextarea} from "jigsaw/component/textarea";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html'

@@ -41,14 +41,5 @@ export class LocalPagingDataDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'LocalPageableTableData',
-        'JigsawPagination',
-        'JigsawTable.columnDefines',
-        'ColumnDefine',
-        'TableHeader.sortable',
-        'TableHeader.sortAs',
-        'TableHeader.defaultSortOrder'
-    ];
 }
 

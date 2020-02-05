@@ -28,7 +28,4 @@ export class ComboSelectLabelFieldDemo {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawComboSelect.labelField'
-    ];
 }

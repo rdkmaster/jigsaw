@@ -61,11 +61,6 @@ export class TableHtmlRendererDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'ColumnDefine',
-        'TableCell.renderer'
-    ];
 }
 
 

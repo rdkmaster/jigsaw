@@ -17,8 +17,5 @@ export class SelectClearableDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSelect.clearable',
-    ];
 }
 
