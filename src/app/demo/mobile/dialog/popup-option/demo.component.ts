@@ -102,9 +102,4 @@ export class DialogPopOptionDemo implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileDialog',
-        'PopupService.popup',
-        'PopupOptions'
-    ];
 }

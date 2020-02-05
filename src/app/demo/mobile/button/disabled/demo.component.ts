@@ -16,8 +16,5 @@ export class ButtonDisableDemoComponent {
     // ====================================================================
     summary: string = '演示了如何动态设置按钮的`disabled`属性';
     description: string = '';
-    tags: string[] = [
-        'JigsawButton.disabled', 'JigsawCheckBox.checked'
-    ];
 }
 

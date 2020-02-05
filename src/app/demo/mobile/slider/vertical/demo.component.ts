@@ -16,8 +16,4 @@ export class SliderVerticalDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSlider.vertical',
-        'JigsawSlider.height',
-    ];
 }

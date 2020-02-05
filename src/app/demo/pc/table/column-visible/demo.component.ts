@@ -32,9 +32,5 @@ export class TableColumnSetVisibleDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'ColumnDefine.visible'
-    ];
 }
 

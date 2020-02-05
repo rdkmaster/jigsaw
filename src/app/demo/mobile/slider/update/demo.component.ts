@@ -27,13 +27,4 @@ export class SliderUpdateDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawSlider.value',
-        'JigsawSlider.disabled',
-        'JigsawSlider.change',
-        'JigsawSlider.min',
-        'JigsawSlider.max',
-        'JigsawSlider.marks',
-        'JigsawSlider.vertical',
-    ];
 }

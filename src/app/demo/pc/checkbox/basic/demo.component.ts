@@ -16,8 +16,5 @@ export class CheckBoxBasicDemoComponent {
     // ====================================================================
     summary: string = '演示了`JigsawCheckBox`的基本用法以及如何使用它的中间状态';
     description: string = '';
-    tags: string[] = [
-        'JigsawCheckBox.checked', 'JigsawCheckBox.enableIndeterminate',
-    ];
 }
 

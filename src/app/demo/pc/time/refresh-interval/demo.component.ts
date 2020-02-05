@@ -28,8 +28,5 @@ export class TimeRefreshIntervalComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTime.refreshInterval',
-    ];
 }
 

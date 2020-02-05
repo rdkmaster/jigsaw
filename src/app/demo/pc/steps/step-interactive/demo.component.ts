@@ -56,5 +56,4 @@ export class StepsClickChangeStatusComponent {
     // ====================================================================
     summary: string = '本demo演示了如何配合trustedHtml对用户提供交互的例子';
     description: string = '';
-
 }
