@@ -62,7 +62,4 @@ export class FontLoadingDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawFontLoading',
-    ];
 }

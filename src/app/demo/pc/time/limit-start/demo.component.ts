@@ -31,8 +31,5 @@ export class TimeLimitStartComponent implements AfterContentInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTime.limitStart'
-    ];
 }
 

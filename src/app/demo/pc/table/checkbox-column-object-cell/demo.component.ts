@@ -77,14 +77,6 @@ export class TableCheckboxColumnObjectCellDemoComponent {
     // ====================================================================
     summary: string = '这demo介绍table中使用内置checkbox渲染器';
     description: string = require('!!raw-loader!../checkbox-column/readme.md');
-    tags: string[] = [
-        'JigsawTable.additionalColumnDefines',
-        'JigsawTable.additionalDataChange',
-        'AdditionalColumnDefine',
-        'AdditionalTableData',
-        'TableHeadCheckboxRenderer',
-        'TableCellCheckboxRenderer',
-    ];
 }
 
 @Component({

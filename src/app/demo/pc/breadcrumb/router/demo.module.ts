@@ -13,18 +13,13 @@ import {CommonModule} from "@angular/common";
 /* #for-live-demo-only#
 const routes = [
     {
-        path: 'router', component: BreadcrumbRouterDemoComponent,
-        children: [
-            {
-                path: 'list/:typeId', component: BreadcrumbRouterList
-            },
-            {
-                path: 'detail/:id', component: BreadcrumbRouterDetail
-            },
-            {
-                path: 'buy/:id', component: BreadcrumbRouterBuy
-            }
-        ]
+        path: 'list/:typeId', component: BreadcrumbRouterList
+    },
+    {
+        path: 'detail/:id', component: BreadcrumbRouterDetail
+    },
+    {
+        path: 'buy/:id', component: BreadcrumbRouterBuy
     }
 ];
 */

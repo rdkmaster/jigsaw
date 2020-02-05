@@ -23,7 +23,6 @@ import {TabsEditableDemoComponent} from "./editable/demo.component";
 import {TabsEditableDemoModule} from "./editable/demo.module";
 import {TabHeadlessDemoComponent} from "./headless/demo.component";
 import {TabHeadlessDemoModule} from "./headless/demo.module";
-import {ListMobileDemoModule} from "../list/demo-set.module";
 
 export const routerConfig = [
     {

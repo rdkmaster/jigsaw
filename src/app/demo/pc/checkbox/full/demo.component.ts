@@ -22,8 +22,5 @@ export class CheckBoxFullComponent {
     // ====================================================================
     summary: string = '演示了`JigsawCheckBox`的效果';
     description: string = '';
-    tags: string[] = [
-        'JigsawCheckBox'
-    ];
 }
 

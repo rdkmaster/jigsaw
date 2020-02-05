@@ -30,11 +30,6 @@ export class TableAddIDColumnDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.additionalColumnDefines',
-        'AdditionalColumnDefine',
-        'TableValueGenerators.rowIndexGenerator'
-    ];
 }
 
 
