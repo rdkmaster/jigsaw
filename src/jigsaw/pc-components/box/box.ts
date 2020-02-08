@@ -66,7 +66,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _computeResizeLineWidth() {
         if (!this._resizeLine) return;
-        this.zone.runOutsideAngular(() => {
+        this.callLater(() => {
             if (this.parent.direction == 'column') {
                 if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
                     this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
