@@ -1,5 +1,4 @@
-﻿
-import {
+﻿import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
@@ -14,7 +13,8 @@ import {
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
@@ -57,6 +57,7 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser'
     },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -153,9 +154,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             let settings = oldBackup[field];
             settings = TableUtils.updateHeaderSettings(columnDefine, settings);
             let headerData = columnDefine.header && columnDefine.header.data ? columnDefine.header.data : null;
-            if(headerData instanceof Function) {
+            if (headerData instanceof Function) {
                 settings.cellData = headerData(this.data, realColIndex, this._additionalData);
-            } else if(typeof headerData == 'string') {
+            } else if (typeof headerData == 'string') {
                 settings.cellData = headerData;
             } else {
                 settings.cellData = this._getHeaderValueByField(field);
@@ -563,10 +564,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    @ViewChild('contentScrollbar', { read: PerfectScrollbarDirective })
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', { read: PerfectScrollbarDirective })
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
