@@ -67,15 +67,17 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _computeResizeLineWidth() {
         if (!this._resizeLine) return;
-        if (this.parent.direction == 'column') {
-            if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
+        this.callLater(() => {
+            if (this.parent.direction == 'column') {
+                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
+                }
+            } else {
+                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
+                }
             }
-        } else {
-            if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
-            }
-        }
+        });
     }
 
     /**
