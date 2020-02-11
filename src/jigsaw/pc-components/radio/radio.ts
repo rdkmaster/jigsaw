@@ -7,10 +7,6 @@ import {
     NgModule,
     Output,
     QueryList,
-    ChangeDetectionStrategy,
-    ElementRef,
-    Renderer2,
-    ViewChild
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -27,8 +23,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    ]
 })
 export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
@@ -73,7 +68,6 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
         } else if (CommonUtils.isUndefined(newValue)) {
             this.selectedItems = [];
         }
-        this.changeDetectorRef.markForCheck();
     }
 }
 
@@ -84,52 +78,21 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
         '(click)': '_$handleClick()',
         '[class.jigsaw-radio-option]': 'true',
         '[class.jigsaw-radio-option-disabled]': 'disabled'
-    },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    }
 })
 export class JigsawRadioOption extends AbstractJigsawOptionComponent {
-    constructor(public changeDetector: ChangeDetectorRef, private _renderer: Renderer2) {
+    constructor(public changeDetector: ChangeDetectorRef) {
         super();
-    }
-
-    @ViewChild('inner') private _inner: ElementRef;
-
-    private _selected: boolean = false;
-    @Input()
-    public get selected(): boolean {
-        return this._selected;
-    }
-
-    public set selected(value: boolean) {
-        this._selected = value;
-        this._setStyle();
-    }
-
-    private _setStyle() {
-        if (this._inner) {
-            if (this.selected) {
-                this._renderer.addClass(this._inner.nativeElement, 'jigsaw-radio-option-checked');
-            } else {
-                this._renderer.removeClass(this._inner.nativeElement, 'jigsaw-radio-option-checked');
-            }
-        }
     }
 
     /**
      * 点击组件触发
      * @internal
      */
-    public
-
-    _$handleClick()
-        :
-        void {
-        if (!
-            this.disabled
-        ) {
+    public _$handleClick(): void {
+        if (!this.disabled) {
             this.change.emit(this);
         }
-        this.changeDetector.markForCheck();
     }
 
 }

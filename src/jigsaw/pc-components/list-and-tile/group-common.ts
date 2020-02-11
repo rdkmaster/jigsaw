@@ -1,16 +1,6 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import {
-    AfterContentInit,
-    ChangeDetectorRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    QueryList,
-    OnInit,
-    Directive
-} from "@angular/core";
+import { AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList, OnInit, Directive } from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
@@ -23,10 +13,6 @@ export class GroupOptionValue {
 
 @Directive()
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy, OnInit {
-
-    constructor(public changeDetectorRef: ChangeDetectorRef) {
-        super();
-    }
 
     protected _removeRefreshCallback: CallbackRemoval;
     private _removeItemsChanges: Subscription;
@@ -82,10 +68,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
             needRefresh = true;
         });
-        if (needRefresh) {
+        if(needRefresh) {
             this.selectedItemsChange.emit(this.selectedItems);
         }
-        this.changeDetectorRef.markForCheck();
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();
@@ -111,7 +96,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
         this._selectedItems.refresh();
         this.selectedItemsChange.emit(this.selectedItems);
-        this.changeDetectorRef.markForCheck();
     }
 
     //根据选中的item更新selectedItems
@@ -138,10 +122,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
                 item.selected = hasSelected;
-                this.changeDetectorRef.markForCheck();
             });
         });
-        this.changeDetectorRef.markForCheck();
     }
 
     private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>) {
@@ -158,7 +140,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                         this._updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
-                this.changeDetectorRef.markForCheck();
             })
         });
     }
@@ -215,7 +196,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
         }
-        this.changeDetectorRef.markForCheck();
         this._removeRefreshCallback = this._selectedItems.onRefresh(() => this._setItemState(this._items));
     }
 

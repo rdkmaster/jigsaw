@@ -1,4 +1,4 @@
-import {Component, Input, NgModule, OnDestroy, Optional, ChangeDetectorRef, ChangeDetectionStrategy} from "@angular/core";
+import {Component, Input, NgModule, OnDestroy, Optional, ChangeDetectorRef} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {trigger, style, transition, animate, keyframes} from "@angular/animations"
 import {Subscription} from "rxjs/internal/Subscription";
@@ -108,8 +108,7 @@ const transferServerFilterFunction = function (item) {
                     style({opacity: 0})
                 ]))
             ])
-        ])],
-    changeDetection: ChangeDetectionStrategy.OnPush
+        ])]
 
 })
 
@@ -164,7 +163,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 }
                 this._removePageableCallbackListener = value.onAjaxComplete(() => {
                     this._filterDataBySelectedItems();
-                    this.changeDetectorRef.markForCheck();
                 })
             }
         } else if (value instanceof Array || value instanceof ArrayCollection) {
@@ -183,7 +181,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
                     (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(res);
                     this._filterDataBySelectedItems();
-                    this.changeDetectorRef.markForCheck();
                 })
             }
         } else {
@@ -237,12 +234,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         } else {
             this._filterData();
         }
-        this.changeDetectorRef.markForCheck();
     }
 
     private _filterData() {
         this._$data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
-        this.changeDetectorRef.markForCheck();
     }
 
     /**
@@ -275,7 +270,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._$targetSelectedItems = [];
         }
         this.selectedItemsChange.emit(this.selectedItems);
-        this.changeDetectorRef.markForCheck();
     }
 
     ngOnDestroy() {
@@ -306,12 +300,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     templateUrl: './transfer-list.html',
     host: {
         '[class.jigsaw-transfer-list-frame]': 'true'
-    },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    }
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
-        super(_cdr);
+        super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });
@@ -340,7 +333,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
-                this.changeDetectorRef.markForCheck();
             });
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
@@ -352,7 +344,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 }
                 this._removeArrayCallbackListener = value.onAjaxSuccess(this._updateData, this);
             }
-            this.changeDetectorRef.markForCheck();
         }
     }
 
@@ -415,10 +406,9 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
-                this.changeDetectorRef.markForCheck();
             });
             this._data.refresh();
-        });
+        })
     }
 
     /**
@@ -438,7 +428,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         } else {
             this._filterData(filterKey, field);
         }
-        this.changeDetectorRef.markForCheck();
     }
 
     private _filterData(filterKey: string, field: string | number) {
@@ -449,7 +438,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             fields: [field]
         });
         this._cdr.detectChanges();
-        this.changeDetectorRef.markForCheck();
     }
 
     /**
@@ -471,7 +459,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
         }
         this.selectedItemsChange.emit(this.selectedItems);
-        this.changeDetectorRef.markForCheck();
     }
 
     /**
@@ -486,7 +473,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             } else {
                 this._$currentPageSelectedItems = this.selectedItems;
             }
-            this.changeDetectorRef.markForCheck();
         });
     }
 
@@ -503,7 +489,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         this.selectedItems = this.selectedItems.filter(item =>
             !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy)));
         this.selectedItemsChange.emit(this.selectedItems);
-        this.changeDetectorRef.markForCheck();
     }
 
     ngOnDestroy() {
