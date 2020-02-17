@@ -539,7 +539,7 @@ export class ComponentDataHelper {
         }
     }
 
-    private _timeout: any = null;
+    private _busy: boolean;
     private _refreshCallbacks: DataRefreshCallback[] = [];
     private _changeCallbacks: DataRefreshCallback[] = [];
     private _ajaxStartCallbacks: AjaxSuccessCallback[] = [];
@@ -572,7 +572,14 @@ export class ComponentDataHelper {
     }
 
     public invokeRefreshCallback(): void {
-        this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
+        if (this._busy) {
+            return;
+        }
+        this._busy = true;
+        Promise.resolve().then(() => {
+            this._busy = false;
+            this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
+        });
     }
 
     public invokeChangeCallback(): void {
