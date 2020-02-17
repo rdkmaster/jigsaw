@@ -539,7 +539,7 @@ export class ComponentDataHelper {
         }
     }
 
-    private _busy: boolean;
+    private _refreshDebounce: boolean;
     private _refreshCallbacks: DataRefreshCallback[] = [];
     private _changeCallbacks: DataRefreshCallback[] = [];
     private _ajaxStartCallbacks: AjaxSuccessCallback[] = [];
@@ -572,12 +572,12 @@ export class ComponentDataHelper {
     }
 
     public invokeRefreshCallback(): void {
-        if (this._busy) {
+        if (this._refreshDebounce) {
             return;
         }
-        this._busy = true;
+        this._refreshDebounce = true;
         Promise.resolve().then(() => {
-            this._busy = false;
+            this._refreshDebounce = false;
             this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
         });
     }
