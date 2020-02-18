@@ -11,7 +11,6 @@ import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
-import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
 
 @NgModule({
     declarations: [
