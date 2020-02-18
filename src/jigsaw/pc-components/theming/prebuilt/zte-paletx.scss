@@ -1,0 +1,337 @@
+@import "../../../common/core/theming/prebuilt/settings/zte-paletx";
+@import "../all-theme";
+@import "../../../common/core/theming/theming-api";
+
+.jigsaw-button {
+    &-disabled {
+        opacity: 0.3 !important;
+    }
+
+    &-color-primary {
+        color: $text-color-of-bg !important;
+        background-color: $primary-color !important;
+    }
+
+    &-color-warning {
+        color: $text-color-of-bg !important;
+        background-color: $warning-color !important;
+    }
+
+    &-color-error {
+        color: $text-color-of-bg !important;
+        background-color: $error-color !important;
+    }
+}
+
+.jigsaw-tag-host {
+    min-width: 50px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    line-height: 22px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: center;
+
+    .jigsaw-tag-close-bar {
+        line-height: 22px !important;
+    }
+}
+
+
+.jigsaw-drawer {
+    box-shadow: none;
+
+    &-bar {
+        border-color: #d9d9d9;
+        background: none;
+        cursor: pointer;
+        border-radius: 0;
+        box-shadow: none;
+
+        &:hover {
+            background: none;
+        }
+
+        &:active {
+            background: none;
+        }
+    }
+
+    &-left > &-bar {
+        height: 50px;
+        width: 0;
+        right: -7px;
+        top: calc(50% - 25px);
+        border-left-width: 6px;
+        border-left-style: solid;
+        border-bottom: 5px solid;
+        border-top: 5px solid;
+    }
+
+    &-top > &-bar {
+        left: calc(50% - 25px);
+        width: 50px;
+        height: 0;
+        bottom: -7px;
+        border-top-width: 6px;
+        border-top-style: solid;
+        border-left: 5px solid;
+        border-right: 5px solid;
+        transform: none;
+    }
+
+    &-right > &-bar {
+        height: 50px;
+        width: 0;
+        left: -7px;
+        top: calc(50% - 25px);
+        border-left-width: 6px;
+        border-left-style: solid;
+        border-bottom: 5px solid;
+        border-top: 5px solid;
+    }
+
+    &-bottom > &-bar {
+        left: calc(50% - 25px);
+        width: 50px;
+        height: 0;
+        top: -7px;
+        border-bottom-width: 6px;
+        border-bottom-style: solid;
+        border-left: 5px solid;
+        border-right: 5px solid;
+        transform: none;
+    }
+}
+
+.jigsaw-radio-option {
+    &-inner {
+        border-color: #d9d9d9 !important;
+        vertical-align: middle !important;
+
+        &:after {
+            display: none !important;
+        }
+
+        &.jigsaw-radio-option-checked {
+            border-width: 4px !important;
+            border-style: solid !important;
+            border-color: $primary-color !important;
+        }
+    }
+}
+
+.jigsaw-checkbox {
+    vertical-align: center;
+    background-color: #fff !important;
+
+    &:after {
+        left: 3px !important;
+        top: 0px !important;
+        width: 6px !important;
+        height: 10px !important;
+    }
+
+    &-checked {
+        background-color: $primary-color !important;
+        border-color: $primary-color !important;
+    }
+
+    // 选中状态
+    &-checked:after {
+        left: 3px !important;
+        top: 0px !important;
+        width: 6px !important;
+        height: 10px !important;
+    }
+
+    &-indeterminate {
+        background-color: #fff !important;
+        border-color: $border-color-base !important;
+
+        &:after {
+            left: 2px !important;
+            top: 2px !important;
+            border-width: 8px !important;
+            border-color: $primary-color !important;
+            height: 6px !important;
+        }
+    }
+
+    &-disabled {
+        cursor: not-allowed;
+
+        border-color: $border-color-base !important;
+        background-color: $disabled-bg !important;
+
+        & + span {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+
+    &-disabled:after {
+        animation-name: none;
+        border-color: #ccc !important;
+    }
+}
+
+input {
+    font-family: sans-serif !important;
+    color: #000 !important;
+}
+
+.jigsaw-combo-select {
+    &-arrow {
+        color: $Gray-5;
+    }
+}
+
+.jigsaw-numeric-input {
+    &-option-box {
+        border-left: 0px !important;
+        display: flex;
+    }
+
+    &-option-bar {
+        border-bottom: 0px !important;
+    }
+}
+
+
+.loadingProcess {
+    border: 6px solid $Gray-2;
+    border-left-color: $primary-color;
+    border-radius: 80px;
+    animation-direction: normal !important;
+}
+
+.jigsaw-tabs-tab-active {
+    color: $Gray-5 !important;
+    font-weight: bold;
+}
+
+.jigsaw-breadcrumb {
+    &-item {
+        font-size: 12px !important;
+    }
+
+    &-item:last-child {
+        font-size: 20px !important;
+    }
+
+    &-separator {
+        margin: 0 5px !important;
+        color: $Gray-3 !important;
+    }
+}
+
+.ztree * {
+    font-family: "Helvetica Neue", "PingFang SC", Tahoma, "Microsoft Yahei" !important;
+    color: $Gray-8 !important;
+}
+
+.jigsaw-table-host table {
+    text-align: left;
+
+    td {
+        border: 1px solid $Gray-3;
+        padding-left: 0.5rem;
+    }
+
+    thead {
+        color: $Gray-8 !important;
+        font-weight: 600 !important;
+
+        tr td {
+            background: $Gray-1;
+            border-bottom: 0px;
+        }
+    }
+}
+
+.jigsaw-page-item {
+    @include inline-block();
+    margin-right: 8px;
+    vertical-align: top;
+
+    span {
+        @include inline-block();
+        width: 28px;
+        height: 30px;
+        line-height: 28px;
+        font-size: $font-size-base;
+        text-align: center;
+        border: 1px solid $border-color-base;
+        border-radius: 3px;
+        cursor: pointer;
+
+        &:hover {
+            border: 1px solid $primary-color;
+            color: $primary-color;
+        }
+    }
+
+    &.jigsaw-page-current span {
+        background: #e6f7ff;
+        border: 1px solid $primary-color;
+        color: #595959;
+        font-weight: bold;
+    }
+
+    i {
+        @include inline-block();
+        width: 28px;
+        height: 30px;
+        cursor: pointer;
+
+        &:after {
+            display: block;
+            content: '. . .';
+            font-weight: 700;
+            font-size: 14px;
+            color: #bbbbbb;
+            line-height: 21px;
+            text-align: center;
+        }
+    }
+}
+
+.jigsaw-paging {
+    &-page {
+        width: 28px;
+        height: 30px;
+        line-height: 28px;
+    }
+
+    jigsaw-select {
+        margin-right: 8px;
+        height: 30px;
+    }
+
+    .jigsaw-combo-select-selection {
+        min-height: 30px;
+
+        .jigsaw-combo-select-selection-rendered {
+            min-height: 28px;
+            padding: 0px;
+
+            .jigsaw-tag-host {
+                margin-bottom: 0px;
+                line-height: 28px;
+            }
+        }
+
+    }
+
+    jigsaw-input {
+        vertical-align: middle;
+        margin-right: 8px;
+        height: 30px;
+    }
+}
+
+

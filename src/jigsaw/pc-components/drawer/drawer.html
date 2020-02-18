@@ -4,8 +4,8 @@
         <ng-content></ng-content>
     </div>
     <div class="jigsaw-drawer-bar fa"
-         [class.fa-angle-double-right]="!open"
-         [class.fa-angle-double-left]="open"
+         [class.fa-angle-double-right]="!open && !themeIsPaletx"
+         [class.fa-angle-double-left]="open && !themeIsPaletx"
          (click)="_$toggleOpen($event)">
     </div>
 </div>

@@ -5,10 +5,12 @@
             <span jigsaw-prefix-icon class="fa fa-search"></span>
         </jigsaw-input>
 
-        <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left"
+        <div class="jigsaw-paging-prev jigsaw-paging-page fa" [class.fa-angle-left]="!themeIsPaletx"
+             [class.fa-angle-double-left]="themeIsPaletx"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
         <jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></jigsaw-paging-item>
-        <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-right"
+        <div class="jigsaw-paging-next jigsaw-paging-page fa" [class.fa-angle-right]="!themeIsPaletx"
+             [class.fa-angle-double-right]="themeIsPaletx"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
 
         <jigsaw-select *ngIf="pageSizeOptions"
