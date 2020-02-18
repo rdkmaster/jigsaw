@@ -6,6 +6,7 @@ rm -fr $seedDir
 mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
+git checkout v9.0
 npm install
 
 #update jigsaw npm package
@@ -24,9 +25,6 @@ cp -r $home/protractor-config-for-components.js ./protractor.conf.js
 
 mkdir -p src/mock-data
 cp -r $home/src/mock-data src/
-
-echo "processing .angular-cli.json"
-sed -i '11 i\ "mock-data",' .angular-cli.json
 
 cd src/app
 for file in `find $PWD | xargs ls -d`

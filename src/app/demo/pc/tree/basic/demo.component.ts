@@ -97,8 +97,4 @@ export class ZtreeDemoComponent implements AfterViewInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTreeExt.data',
-        'JigsawTreeExt.onClick',
-    ];
 }

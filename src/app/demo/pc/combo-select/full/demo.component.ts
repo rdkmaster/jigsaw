@@ -77,7 +77,4 @@ export class ComboSelectFullComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawComboSelect'
-    ];
 }

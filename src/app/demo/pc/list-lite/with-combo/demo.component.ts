@@ -57,7 +57,4 @@ export class ListLiteWithComboDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawList'
-    ];
 }

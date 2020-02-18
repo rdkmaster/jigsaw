@@ -4,7 +4,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
 
 import {ComboSelectTriggerDemo} from "./demo.component";
-import {JigsawButtonModule} from "../../../../../jigsaw/pc-components/button/button";
+import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 import {CommonModule} from "@angular/common";
 
 @NgModule({

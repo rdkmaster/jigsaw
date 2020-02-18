@@ -37,7 +37,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/echarts/dist/echarts.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/moment/min/moment.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
@@ -66,8 +65,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",

@@ -71,15 +71,5 @@ export class TableRendererOfTemplateRefDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'TableHeader.renderer',
-        'TableCell.renderer',
-        'ColumnDefine.header',
-        'ColumnDefine.cell',
-        'AdditionalColumnDefine.header',
-        'AdditionalColumnDefine.cell',
-        'JigsawTable.columnDefines',
-        'JigsawTable.additionalColumnDefines',
-    ];
 }
 

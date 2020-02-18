@@ -5,8 +5,6 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {ZTreeSettingSetting} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
-declare const $: any;
-
 export class TreeEventData {
     treeId: string;
     treeNodes: object;
@@ -161,7 +159,8 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     public ztree: any;
 
     private _updateTree() {
-        if (!this._setting || !this._data) return;
+        const $ = window['$'];
+        if (!this._setting || !this._data || !$) return;
         this.ztree = $.fn.zTree.init($('#' + this._$uniqueId), this._setting, this._data.nodes);
     }
 

@@ -15,7 +15,6 @@ import {TileSelectMultipleSelectDemoComponent} from "./multiple-select/demo.comp
 import {TileSelectOptionWidthComponent} from "./tile-option-width/demo.component";
 import {TileSelectLabelFieldComponent} from "./label-field/demo.component";
 import {TileSelecItemsChangeComponent} from "./selected-items-change/demo.component";
-import {ListMobileDemoModule} from "../list/demo-set.module";
 
 
 export const routerConfig = [

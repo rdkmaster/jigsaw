@@ -10,7 +10,7 @@ import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 import {darkGraphTheme, lightGraphTheme} from "../../common/core/theming/echarts-theme";
 
-declare let echarts: any;
+import echarts from "echarts";
 
 @Component({
     selector: 'jigsaw-mobile-graph, jm-graph',
