@@ -10,10 +10,10 @@
 <div class="jigsaw-numeric-input-option-box">
     <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
          (mousedown)="_$increase($event)">
-        <span class="fa" [class.fa-angle-up]="!themeIsPaletx" [class.fa-caret-up]="themeIsPaletx"></span>
+        <span class="fa jigsaw-numeric-input-option-bar-up"></span>
     </div>
     <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$downDisabled"
          (mousedown)="_$decrease($event)">
-        <span class="fa" [class.fa-angle-down]="!themeIsPaletx" [class.fa-caret-down]="themeIsPaletx"></span>
+        <span class="fa jigsaw-numeric-input-option-bar-down"></span>
     </div>
 </div>

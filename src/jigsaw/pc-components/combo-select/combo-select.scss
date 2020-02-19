@@ -101,6 +101,12 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         transition: transform 0.3s $ease-in-out;
     }
 
+    &-down{
+        &:before{
+            content: "\f107";
+        }
+    }
+
     &-clear {
         position: absolute;
         top: 50%;

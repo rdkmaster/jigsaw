@@ -1,6 +1,5 @@
 import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy} from "@angular/core";
 import {CommonUtils} from "./core/utils/common-utils";
-import {JigsawTheme} from "./core/theming/theme";
 
 /**
  * 方便的定义一个渲染器视图的插槽
@@ -169,13 +168,6 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
 
     public set maxHeight(value: string) {
         this._maxHeight = CommonUtils.getCssValue(value);
-    }
-
-    /**
-     * @internal
-     */
-    public get themeIsPaletx(){
-        return JigsawTheme.majorStyle === 'paletx';
     }
 }
 

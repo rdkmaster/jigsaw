@@ -51,6 +51,10 @@
         border-radius: 0;
         box-shadow: none;
 
+        span {
+            display: none;
+        }
+
         &:hover {
             background: none;
         }
@@ -188,6 +192,12 @@ input {
     &-arrow {
         color: $Gray-5;
     }
+
+    &-down {
+        &:before {
+            content: "\f0d7";;
+        }
+    }
 }
 
 .jigsaw-numeric-input {
@@ -198,6 +208,18 @@ input {
 
     &-option-bar {
         border-bottom: 0px !important;
+
+        &-up {
+            &:before {
+                content: "\f0d8";
+            }
+        }
+
+        &-down {
+            &:before {
+                content: "\f0d7";
+            }
+        }
     }
 }
 
@@ -207,6 +229,18 @@ input {
     border-left-color: $primary-color;
     border-radius: 80px;
     animation-direction: normal !important;
+}
+
+.circleWhite {
+    display: none;
+}
+
+.circleYellow {
+    display: none;
+}
+
+.circleGreen {
+    display: none;
 }
 
 .jigsaw-tabs-tab-active {
@@ -300,6 +334,18 @@ input {
         width: 28px;
         height: 30px;
         line-height: 28px;
+    }
+
+    &-left {
+        &:before {
+            content: "\f100";
+        }
+    }
+
+    &-right {
+        &:before {
+            content: "\f101";
+        }
     }
 
     jigsaw-select {
