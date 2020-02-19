@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "1.1.31",
+    "version": "1.1.32",
     "description": "Jigsaw, the next generation component set for RDK",
     "main": "./bundles/jigsaw.umd.js",
     "module": "./@rdkmaster/jigsaw.es5.js",
