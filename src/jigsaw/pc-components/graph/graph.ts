@@ -135,7 +135,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
         this._host = this._elementRef.nativeElement;
     }
