@@ -40,17 +40,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         super();
     }
 
-    ngOnInit() {
-        this.valueChange.debounceTime(300).subscribe((val) => {
-            if(val < this.min) {
-                this._value = this.min;
-                this.valueChange.emit(this._value);
-                this._checkDisabled();
-                this._checkInputValue();
-            }
-        });
-    }
-
     @Input()
     public valid: boolean = true;
 
@@ -161,22 +150,23 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if (CommonUtils.isUndefined(value) || this._value == value) {
             return;
         }
-        value = Number((value + '').replace(/[^0-9-.]+/, ''));
-        if (isNaN(value)) {
+        if (isNaN(value) && <any>value !== "-") {
+            value = this.min == -Infinity ? 0 : this.min;
             console.error('value property must be a number, please input a number or number string');
+        }
+
+        if(<any>value === "" || <any>value === "-" || Number(value) < this.min) {
+            // 正在输入的数值会在blur的时候处理
+            this._value = value;
             return;
         }
 
+        value = Number(value);
         if (value > this.max) {
             value = this.max;
         }
-
         this._value = value;
-        this.valueChange.emit(this._value);
-        this._propagateChange(this._value);
-
-        this._checkDisabled();
-        this._checkInputValue();
+        this._updateValue();
     }
 
     /**
@@ -215,6 +205,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$upDisabled: boolean;
     public _$downDisabled: boolean;
 
+    private _updateValue() {
+        this.valueChange.emit(this._value);
+        this._propagateChange(this._value);
+        this._checkDisabled();
+        this._checkInputValue();
+    }
+
     private _checkDisabled() {
         this._$upDisabled = this.value >= this.max;
         this._$downDisabled = this.value <= this.min;
@@ -232,11 +229,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$increase(event): void {
         event.preventDefault();
         event.stopPropagation();
-        if (CommonUtils.isUndefined(this.value)) {
+        if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+            // 非法的value取最小值
             this.value = this.min == -Infinity ? 0 : this.min;
+        } else {
+            this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
+                this._precisionFactor * this._step) / this._precisionFactor);
         }
-        this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
-            this._precisionFactor * this._step) / this._precisionFactor);
     }
 
     /**
@@ -245,16 +244,17 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$decrease(event): void {
         event.preventDefault();
         event.stopPropagation();
-        if (CommonUtils.isUndefined(this.value)) {
+        if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+            // 非法的value取最小值
             this.value = this.min == -Infinity ? 0 : this.min;
-        }
-        let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
-            this._precisionFactor * this._step) / this._precisionFactor);
-
-        if(tempValue < this.min) {
-            this.value = this.min;
-        }else {
-            this.value = tempValue;
+        } else {
+            let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
+                this._precisionFactor * this._step) / this._precisionFactor);
+            if(tempValue < this.min) {
+                this.value = this.min;
+            }else {
+                this.value = tempValue;
+            }
         }
     }
 
@@ -302,6 +302,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
+        if(this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+            this._value = this.min == -Infinity ? 0 : this.min;
+            this._updateValue();
+        }
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
         } else {
