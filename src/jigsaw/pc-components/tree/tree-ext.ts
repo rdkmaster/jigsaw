@@ -4,7 +4,6 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
-import {JigsawTheme} from "../../common/core/theming/theme";
 
 export class TreeEventData {
     treeId: string;
@@ -194,11 +193,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     }
 
-
-    private _themeIsPaletx() {
-        return JigsawTheme.majorStyle === 'paletx';
-    }
-
     private _defaultSetting() {
         let that = this;
 
@@ -254,7 +248,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             },
             view: {
                 fontCss: undefined,
-                showLine: this._themeIsPaletx()
+                showLine: false
             }
         };
 
