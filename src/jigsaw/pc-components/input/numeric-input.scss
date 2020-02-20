@@ -12,24 +12,30 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     user-select: none;
     border: 1px solid $border-color-base;
     border-radius: 3px;
+    
     @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
     &:hover {
         border: 1px solid $primary-color;
     }
+
     &.#{$numeric-input-prefix-cls}-focused {
         border: 1px solid $primary-color;
         box-shadow: $box-focus-shadow;
     }
+
     &.#{$numeric-input-prefix-cls}-error {
         border: 1px solid $error-color;
+
         &:hover {
             border: 1px solid $error-color;
         }
+
         &.#{$numeric-input-prefix-cls}-focused {
             border: 1px solid $error-color;
             box-shadow: none;
         }
     }
+
     input {
         width: 100%;
         height: 100%;
@@ -39,16 +45,20 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         border-radius: 3px;
         background: $component-background;
     }
+
     &.#{$numeric-input-prefix-cls}-disabled input {
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         background-color: $disabled-bg;
     }
+
     input::-webkit-input-placeholder {
         color: $text-color-secondary;
     }
+
     input:-ms-input-placeholder {
         color: $text-color-secondary;
     }
+
     input:-moz-placeholder {
         color: $text-color-secondary;
     }
@@ -62,10 +72,12 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         border-left: 1px solid $border-color-base;
         display: none;
         flex-direction: column;
+
         .#{$numeric-input-prefix-cls}:not(.#{$numeric-input-prefix-cls}-disabled):hover & {
             display: flex;
         }
     }
+
     &-option-bar {
         display: flex;
         flex: 1;
@@ -74,20 +86,36 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         border-bottom: 1px solid $border-color-base;
         cursor: pointer;
         text-align: center;
+
         &:last-child {
             border-bottom: none;
         }
+
         &:hover {
             color: $primary-5;
         }
+
         &:active {
             color: $primary-7;
         }
+
         &.#{$numeric-input-prefix-cls}-option-bar-disabled {
             cursor: not-allowed;
             @include compatible(color, $disabled-color, $disabled-color-ie11);
+
             &:hover, &:active {
                 @include compatible(color, $disabled-color, $disabled-color-ie11);
+            }
+        }
+
+        &-up {
+            &:before {
+                content: "\f106";
+            }
+        }
+        &-down {
+            &:before {
+                content: "\f107";
             }
         }
     }
