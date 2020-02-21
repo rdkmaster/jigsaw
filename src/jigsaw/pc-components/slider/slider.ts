@@ -70,7 +70,9 @@ export class JigsawSliderHandle implements OnInit {
     public _$handleStyle = {};
 
     private setHandleStyle() {
-        if (isNaN(this._offset)) return;
+        if (isNaN(this._offset)) {
+            return;
+        }
         this._zone.runOutsideAngular(() => {
             if (this._slider.vertical) { // 兼容垂直滑动条;
                 this._$handleStyle = {
@@ -169,7 +171,9 @@ export class JigsawSliderHandle implements OnInit {
      * @internal
      */
     public _$updateValuePosition(event?) {
-        if (!this._dragging || this._slider.disabled) return;
+        if (!this._dragging || this._slider.disabled) {
+            return;
+        }
 
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();
@@ -182,7 +186,9 @@ export class JigsawSliderHandle implements OnInit {
 
         let newValue = this.transformPosToValue(pos);
 
-        if (this.value === newValue) return;
+        if (this.value === newValue) {
+            return;
+        }
 
         this.value = newValue;
 
@@ -218,7 +224,8 @@ export class JigsawSliderHandle implements OnInit {
 })
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2, protected _zone: NgZone,private _changeDetectorRef:ChangeDetectorRef) {
+    constructor(private _element: ElementRef, private _render: Renderer2,
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -372,8 +379,11 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             let min: number = this._$value[0];
 
             this._$value.map(item => {
-                if (max - item < 0) max = item;
-                else if (item - min < 0) min = item;
+                if (max - item < 0) {
+                    max = item;
+                } else if (item - min < 0) {
+                    min = item;
+                }
             });
 
             startPos = this._transformValueToPos(min);
@@ -413,7 +423,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     private _calcMarks() {
-        if (!this._marks || !this.initialized) return;
+        if (!this._marks || !this.initialized) {
+            return;
+        }
 
         this._$marks.splice(0, this._$marks.length);
         let size = Math.round(100 / this._marks.length);

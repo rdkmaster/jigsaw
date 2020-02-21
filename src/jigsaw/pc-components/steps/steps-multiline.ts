@@ -62,7 +62,8 @@ export type StepsData = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawStepsMultiline extends AbstractJigsawComponent {
-    constructor(public _elementRef: ElementRef,private _changeDetectorRef:ChangeDetectorRef) {
+    constructor(public _elementRef: ElementRef,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
