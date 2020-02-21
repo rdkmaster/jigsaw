@@ -35,5 +35,5 @@ export class ComboSelectMaxHeightDemo {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '演示了combo-select如何设置高度和实现多行滚动显示';
-    description: string = require('!!raw-loader!../events/readme.md');
+    description: string = require('!!raw-loader!../events/readme.md').default;
 }

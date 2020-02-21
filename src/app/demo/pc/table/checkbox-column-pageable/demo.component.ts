@@ -98,6 +98,6 @@ export class TableAddCheckboxColumnPageableDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这demo介绍table中使用内置checkbox渲染器';
-    description: string = require('!!raw-loader!../checkbox-column/readme.md');
+    description: string = require('!!raw-loader!../checkbox-column/readme.md').default;
 }
 

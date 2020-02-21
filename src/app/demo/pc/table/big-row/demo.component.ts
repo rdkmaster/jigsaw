@@ -44,6 +44,6 @@ export class BigRowDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了表格呈现海量数据时的一个解决方案，它能够以常数时间处理任何量级的数据。';
-    description: string = require('!!raw-loader!../big-table/readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 

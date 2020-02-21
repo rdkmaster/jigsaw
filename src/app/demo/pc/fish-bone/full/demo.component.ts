@@ -431,5 +431,5 @@ export class FishBoneFullComponent implements AfterViewInit {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = 'FishBone的使用说明';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }

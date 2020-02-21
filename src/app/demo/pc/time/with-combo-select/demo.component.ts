@@ -35,6 +35,6 @@ export class ComboSelectDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = 'ComboSelect和Time、RangeTime组合使用说明';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 

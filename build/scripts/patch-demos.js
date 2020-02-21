@@ -59,8 +59,8 @@ function patchDemoTs(demoPath) {
     let end = match ? findQuoteEnd(match[2]) : -1;
     if (end === -1) {
         // 有可能是下面的方式引入的文本
-        // description: string = require('!!raw-loader!./readme.md');
-        const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\);?/);
+        // description: string = require('!!raw-loader!./readme.md').default;
+        const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\)\.default;?/);
         if (rMatch) {
             end = rMatch[0].length;
         } else {
