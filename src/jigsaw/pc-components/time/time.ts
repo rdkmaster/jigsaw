@@ -350,7 +350,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _langChangeSubscriber: Subscription;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService, private _translateService: TranslateService, private _changeDetectorRef:ChangeDetectorRef) {
+                private _popService: PopupService, private _translateService: TranslateService,
+                private _changeDetectorRef:ChangeDetectorRef) {
         super();
         this._refreshInterval = 0;
 

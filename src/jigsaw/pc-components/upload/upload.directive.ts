@@ -229,7 +229,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
             </li>
         </ul>
     `,
-    //changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
