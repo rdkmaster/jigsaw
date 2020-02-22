@@ -106,8 +106,7 @@ task(':publish-pc', async () => publishPackage('jigsaw'));
 
 task('publish-pc', sequenceTask(
     ':publish:whoami',
-    ':publish-pc-js',
-    ':publish:logout'
+    ':publish-pc-js'
 ));
 
 task(':publish-pc-js', sequenceTask(
@@ -118,8 +117,7 @@ task(':publish-pc-js', sequenceTask(
 
 task('publish-pc-js', sequenceTask(
     ':publish:whoami',
-    ':publish-pc-js',
-    ':publish:logout'
+    ':publish-pc-js'
 ));
 
 // publish tasks for jigsaw-mobile
@@ -128,8 +126,7 @@ task(':publish-mobile', async () => publishPackage('jigsaw-mobile'));
 
 task('publish-mobile', sequenceTask(
     ':publish:whoami',
-    ':publish-mobile-js',
-    ':publish:logout'
+    ':publish-mobile-js'
 ));
 
 task(':publish-mobile-js', sequenceTask(
@@ -140,6 +137,5 @@ task(':publish-mobile-js', sequenceTask(
 
 task('publish-mobile-js', sequenceTask(
     ':publish:whoami',
-    ':publish-mobile-js',
-    ':publish:logout'
+    ':publish-mobile-js'
 ));
