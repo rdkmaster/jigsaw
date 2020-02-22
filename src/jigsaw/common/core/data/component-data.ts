@@ -1,6 +1,6 @@
 import {debounceTime} from "rxjs/operators";
 import {Subscription} from "rxjs";
-import {HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpHeaders, HttpParams, HttpParameterCodec} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
@@ -92,7 +92,7 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
             }
             result[p] = typeof params[p] === 'object' ? JSON.stringify(params[p]) : params[p];
         }
-        return result;
+        return new HttpParams({encoder: httpParameterEncoder, fromObject: result});
     }
 }
 
@@ -539,7 +539,7 @@ export class ComponentDataHelper {
         }
     }
 
-    private _timeout: any = null;
+    private _refreshDebounce: boolean;
     private _refreshCallbacks: DataRefreshCallback[] = [];
     private _changeCallbacks: DataRefreshCallback[] = [];
     private _ajaxStartCallbacks: AjaxSuccessCallback[] = [];
@@ -572,13 +572,14 @@ export class ComponentDataHelper {
     }
 
     public invokeRefreshCallback(): void {
-        if (this._timeout !== null) {
+        if (this._refreshDebounce) {
             return;
         }
-        this._timeout = setTimeout(() => {
-            this._timeout = null;
+        this._refreshDebounce = true;
+        Promise.resolve().then(() => {
+            this._refreshDebounce = false;
             this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
-        }, 0);
+        });
     }
 
     public invokeChangeCallback(): void {
@@ -744,6 +745,33 @@ export class DataFilterInfo {
                 ) {
     }
 }
+
+
+
+/**
+ * 自定义url参数编解码器，因为angular的这个bug
+ * https://github.com/angular/angular/issues/18261
+ */
+export class HttpParameterEncoder implements HttpParameterCodec {
+    encodeKey(key: string): string {
+        return encodeURIComponent(key);
+    }
+
+    encodeValue(value: string): string {
+        return encodeURIComponent(value);
+    }
+
+    decodeKey(key: string): string {
+        return decodeURIComponent(key);
+    }
+
+    decodeValue(value: string): string {
+        return decodeURIComponent(value);
+    }
+}
+
+export const httpParameterEncoder = new HttpParameterEncoder();
+
 
 /**
  * 表示将数据以何种类型来排序。当被排序的对象是一串数字时，以何种类型对他们进行排序对排序的结果会有较大影响。

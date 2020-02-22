@@ -14,7 +14,8 @@ import {
     TemplateRef,
     ViewChild,
     ViewChildren,
-    NgZone
+    NgZone,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -43,7 +44,8 @@ export class ComboSelectValue {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit, AfterViewInit {
     private _removeRefreshCallback: CallbackRemoval;
@@ -300,7 +302,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoPopupPos() {
-        if(!this.autoClose && this._jigsawFloat) {
+        if (!this.autoClose && this._jigsawFloat) {
             this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
         }
     }

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, forwardRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, forwardRef, ChangeDetectionStrategy} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 /**
@@ -16,7 +16,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class JigsawSwitch implements ControlValueAccessor, OnInit {
@@ -53,7 +54,10 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      *
      */
     @Input()
-    public get checked(): boolean  { return this._checked};
+    public get checked(): boolean {
+        return this._checked;
+    };
+
     public set checked(value: boolean) {
         this.writeValue(value);
         this._propagateChange(value);
@@ -76,9 +80,25 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      *
      */
     @Input()
-    public get disabled(): boolean { return this._disabled; };
+    public get disabled(): boolean {
+        return this._disabled;
+    };
+
     public set disabled(value: boolean) {
         this._disabled = value;
+        this._setSwitchClass();
+    }
+
+    private _readonly: boolean = false;
+
+    /**
+     * 是否只读 类型 boolean 默认值 false;
+     *
+     */
+    @Input()
+    public get readonly(): boolean { return this._readonly; };
+    public set readonly(value: boolean) {
+        this._readonly = value;
         this._setSwitchClass();
     }
 
@@ -86,7 +106,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      * @internal
      */
     public _$switchClick() {
-        if(!this.disabled) {
+        if(!this.disabled && !this.readonly) {
             this.checked = !this.checked;
 
             // 发出事件
@@ -108,7 +128,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
             'jigsaw-switch': 'true',
             'jigsaw-switch-small': this.size === 'small',
             'jigsaw-switch-checked': this.checked,
-            'jigsaw-switch-disabled': this.disabled
+            'jigsaw-switch-disabled': this.disabled,
+            'jigsaw-switch-readonly': this.readonly
         }
     }
 

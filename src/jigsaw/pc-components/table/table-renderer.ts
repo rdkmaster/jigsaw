@@ -1,7 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, Renderer2, ViewChild, Directive } from "@angular/core";
+import {
+    AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, Input, NgModule,
+    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
+import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../common/core/data/table-data";
@@ -10,6 +14,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
+import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -90,24 +95,26 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 }
 
-/*
+/**
  * 默认表格渲染组件
- * */
+ */
 @Component({
-    template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>'
+    template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
-/*
+/**
  * 编辑单元格渲染器
- * */
+ */
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
@@ -123,15 +130,99 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 }
 
-/*
- * head checkbox renderer
- * */
+/**
+ * 编辑单元格自动完成渲染器
+ */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`
+        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
+                                    (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
+                                    [filterOnFocus]="false" [blurOnClear]="false"
+                                    [maxDropDownHeight]="_$maxDropDownHeight"
+                                    [closeDropDownOnSelect]="false">
+        </jigsaw-auto-complete-input>
+    `
+})
+export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+
+    @ViewChild(JigsawAutoCompleteInput)
+    protected autoCompleteInput: JigsawAutoCompleteInput;
+
+    private _initDataJson: any;
+
+    protected onDataRefresh() {
+        this._initDataJson = this.initData instanceof Function ?
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
+    public get _$placeholder() {
+        return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
+    }
+
+    public get _$dropDownData() {
+        return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
+    }
+
+    public get _$maxDropDownHeight() {
+        return this._initDataJson && this._initDataJson.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
+    }
+
+    ngAfterViewInit() {
+        this.autoCompleteInput.focus();
+    }
+}
+
+/**
+ * 编辑单元格数字输入渲染器
+ */
+@Component({
+    template: `
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+                              (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
+        </jigsaw-numeric-input>
+    `
+})
+export class TableCellNumericEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+
+    @ViewChild(JigsawNumericInput)
+    protected input: JigsawNumericInput;
+
+    public get _$placeholder() {
+        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$min() {
+        return this.initData && this.initData.hasOwnProperty('min') ? this.initData.min : -Infinity;
+    }
+
+    public get _$max() {
+        return this.initData && this.initData.hasOwnProperty('max') ? this.initData.max : Infinity;
+    }
+
+    public get _$step() {
+        return this.initData && this.initData.hasOwnProperty('step') ? this.initData.step : 1;
+    }
+
+    ngAfterViewInit() {
+        this.input.focus();
+    }
+}
+
+/**
+ * head checkbox renderer
+ */
+@Component({
+    template: `
+        <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+        super();
+    }
+
 
     public get checked(): CheckBoxStatus {
         return this._checked;
@@ -165,22 +256,28 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             default:
                 this._checked = CheckBoxStatus.unchecked;
         }
+        this._changeDetectorRef.markForCheck();
     }
 }
 
-/*
+/**
  * cell checkbox renderer
- * */
+ */
 @Component({
     template: `
         <jigsaw-checkbox [checked]="checked" (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
+    }
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+        super();
     }
 
     public checked: boolean;
@@ -201,11 +298,13 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
+        this._changeDetectorRef.markForCheck();
     }
 
     private _updateTargetData() {
         if (CommonUtils.isDefined(this.targetData.data[this.row])) {
             this.targetData.data[this.row][this.column] = this.checked;
+            this._changeDetectorRef.markForCheck();
         }
     }
 
@@ -214,6 +313,8 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._additionalData.touchValueByRow(this.field, this.row, value);
         this._updateTargetData();
         this.dispatchChangeEvent(value);
+        this._changeDetectorRef.markForCheck();
+        this.targetData.refresh();
     }
 
     ngOnInit() {
@@ -225,14 +326,17 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
  * switch renderer
- * */
+ */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>'
+    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)" [readonly]="_$readonly"></j-switch>',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
-
+    public get _$readonly() {
+        return this.initData && this.initData.readonly;
+    }
 }
 
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
@@ -245,25 +349,35 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 @Component({
     template: `
         <jigsaw-select [value]="selected" [data]="data"
-                       (valueChange)="dispatchChangeEvent($event.label)"
-                       optionCount="5" width="100%" height="20">
+                       (valueChange)="_$handleValueChange($event)"
+                       [optionCount]="5" width="100%" height="20">
         </jigsaw-select>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
     public selected: any;
     public initData: InitDataGenerator | ArrayCollection<any> | any[];
     public data: ArrayCollection<any> | any[];
 
-    constructor(private _changeDetector: ChangeDetectorRef, renderer: Renderer2) {
+    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
-        this._removeKeyDownHandler = renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
+        this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
 
     private readonly _removeKeyDownHandler;
+    private _removeClickHandler;
 
-    private _onKeyDown() {
+    private _hostCellEl: HTMLElement;
+
+    private _onKeyDown($event) {
+        if($event.type == 'click' && $event.path.find(el => el == this._hostCellEl)) return;
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
+    }
+
+    public _$handleValueChange($event) {
+        if(!$event || $event.label == this.cellData) return;
+        this.dispatchChangeEvent($event.label)
     }
 
     protected onDataRefresh() {
@@ -274,7 +388,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                 const subscription = data.subscribe(
                     value => {
                         subscription.unsubscribe();
-                        if (!this.hasDestroyed) {
+                        if (!this._hasDestroyed) {
                             this.data = value;
                             this._changeDetector.detectChanges();
                         }
@@ -282,7 +396,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                     error => {
                         subscription.unsubscribe();
                         console.log('select renderer: read async data error', error);
-                        if (!this.hasDestroyed) {
+                        if (!this._hasDestroyed) {
                             this.data = [];
                             this._changeDetector.detectChanges();
                         }
@@ -293,6 +407,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         } else {
             this.data = this.initData;
         }
+        this._changeDetector.markForCheck();
     }
 
     public static defaultInitDataGenerator(tableData, row, col) {
@@ -318,43 +433,34 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.selected = {label: value};
     }
 
-    subscriber: Subscription;
-
-    public get hasDestroyed(): boolean {
-        return !this.subscriber;
-    }
+    private _hasDestroyed: boolean;
 
     ngOnInit() {
         super.ngOnInit();
 
         // 使用此方法使其他单元格退出编辑状态
-        this.tableData.emit(this);
-        this.subscriber = this.tableData.subscribe(renderer => {
-            if (this != renderer) {
-                this.dispatchChangeEvent(this.cellData);
-            }
-        });
+        this._hostCellEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, 'td');
+        this._removeClickHandler = this._renderer.listen('document', 'click', this._onKeyDown.bind(this));
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
 
         this._removeKeyDownHandler();
-        // 随手清理垃圾是一个好习惯
-        if (this.subscriber) {
-            this.subscriber.unsubscribe();
-            this.subscriber = null;
-        }
+        this._removeClickHandler();
+        this._hasDestroyed = true;
     }
 }
 
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
+        TableCellAutoCompleteEditorRenderer
     ],
     imports: [
-        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
+        JigsawAutoCompleteInputModule
     ]
 })
 export class JigsawTableRendererModule {

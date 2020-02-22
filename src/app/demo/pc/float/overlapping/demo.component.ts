@@ -1,7 +1,5 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/common/service/loading.service";
-import {JigsawBallLoading} from "jigsaw/common/components/loading/loading";
-import {PopupInfo} from "jigsaw/common/service/popup.service";
+import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService, JigsawMenu } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -17,6 +15,20 @@ import {PopupInfo} from "jigsaw/common/service/popup.service";
             background: #e4d7c0;
             padding-left: 32px;
         }
+
+        .context-menu {
+            width: 80px;
+            height: 149px;
+            background-color: #ddd;
+            position: absolute;
+            right: 16px;
+            top: 16px;
+        }
+
+        .context-menu p {
+            text-align: center;
+            margin-top: 56px;
+        }
     `]
 })
 export class FloatOverlappingDemo {
@@ -25,6 +37,7 @@ export class FloatOverlappingDemo {
     openTrigger = "mouseenter";
     closeTrigger = "mouseleave";
     public open: boolean = false;
+    public menuData: SimpleTreeData;
 
     public openFloat() {
         this.open = true;
@@ -35,6 +48,42 @@ export class FloatOverlappingDemo {
     }
 
     constructor(private loadingService: LoadingService) {
+        this.menuData = new SimpleTreeData();
+        this.menuData.fromXML(`
+            <node>
+                <node label="File">
+                    <node label="New">
+                        <node label="Project"></node>
+                        <node label="File"></node>
+                        <node label="Directory"></node>
+                    </node>
+                    <node label="Open"></node>
+                    <node label="Save As"></node>
+                </node>
+                <node label="Edit">
+                    <node label="Cut"></node>
+                    <node label="Copy">
+                        <node label="Copy Reference"></node>
+                        <node label="Copy Path"></node>
+                    </node>
+                    <node label="Paste" disabled="true"></node>
+                    <!-- 无labe属性的node节点表示这是一个分隔符 -->
+                    <node></node>
+                    <node label="Delete"></node>
+                </node>
+                <node label="Run" >
+                    <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
+                    <node label="Debug" icon="fa fa-bug" subTitle="Shift+F9"></node>
+                </node>
+                <!-- 无labe属性的node节点表示这是一个分隔符 -->
+                <node></node>
+                <node label="Exit"></node>
+            </node>
+        `);
+    }
+
+    public showContext(event) {
+        JigsawMenu.show(event, {data: this.menuData, width: 150});
     }
 
     popupGlobalLoading(event) {

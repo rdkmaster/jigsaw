@@ -8,10 +8,13 @@
     <h2>Tile Lite</h2>
     <div class="demo-1 live-demo">
         <h3>对象数组</h3>
+        <div style="margin-bottom: 10px">
+            是否显示边框 <j-switch [(checked)]="showBorder"></j-switch>
+        </div>
         <jigsaw-tile-lite [(selectedItems)]="selectedCity"
                           trackItemBy="id"
                           [multipleSelect]="true"
-                          (selectedItemsChange)="basicSelectChange($event)" [data]="cities">
+                          (selectedItemsChange)="basicSelectChange($event)" [data]="cities" [showBorder]="showBorder">
         </jigsaw-tile-lite>
         <p class="message">选择的城市是：{{selectedCityStr}}</p>
     </div>

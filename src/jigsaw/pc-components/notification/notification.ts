@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Renderer2, Input, ElementRef, NgZone
+    NgModule, Component, Renderer2, Input, ElementRef, NgZone,ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
@@ -109,7 +109,8 @@ const notificationInstances = {
         '[class.jigsaw-notification-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
@@ -409,7 +410,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        setTimeout(() => this.reposition(opt.position));
+        Promise.resolve().then(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
             this._zone.runOutsideAngular(() => {

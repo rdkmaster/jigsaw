@@ -85,6 +85,8 @@ import {RebuildTableDataDemoComponent} from "./rebuild-table-data/demo.component
 import {RebuildTableDataDemoModule} from "./rebuild-table-data/demo.module";
 import {TableMixinTableDemoComponent} from "./mixin-table/demo.component";
 import {TableMixinTableDemoModule} from "./mixin-table/demo.module";
+import {TableChangeDataDemoModule} from "./change-data/demo.module"
+import {TableChangeDataDemoComponent} from "./change-data/demo.component";
 
 export const routerConfig = [
     {
@@ -213,6 +215,9 @@ export const routerConfig = [
     {
         path: 'mixin-table', component: TableMixinTableDemoComponent
     },
+    {
+        path: 'change-data', component: TableChangeDataDemoComponent
+    },
 ];
 
 @NgModule({
@@ -220,11 +225,11 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
-        TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule,TablePageableReadyDemoModule,
+        TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule, TablePageableReadyDemoModule,
         TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
-        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule,
+        TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule, TableChangeDataDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule

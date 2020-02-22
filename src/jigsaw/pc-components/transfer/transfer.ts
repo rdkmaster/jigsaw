@@ -408,6 +408,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 }
             });
             this._data.refresh();
+            this._cdr.detectChanges();
         })
     }
 

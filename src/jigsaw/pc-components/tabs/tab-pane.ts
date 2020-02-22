@@ -1,4 +1,4 @@
-import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {Component, ContentChild, Input, TemplateRef, Type, ViewChild,ChangeDetectionStrategy} from '@angular/core';
 import {IDynamicInstantiatable} from "../../common/common";
 
 @Component({
@@ -8,7 +8,8 @@ import {IDynamicInstantiatable} from "../../common/common";
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
         </ng-template>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTabPane {
     @Input()

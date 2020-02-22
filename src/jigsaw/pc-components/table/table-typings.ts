@@ -1,4 +1,4 @@
-import {TemplateRef, Type} from "@angular/core";
+import {TemplateRef, Type, EventEmitter} from "@angular/core";
 import {
     BigTableData,
     LocalPageableTableData,
@@ -157,6 +157,9 @@ export class TouchedValue {
     data: any[];
 }
 export class AdditionalTableData extends TableData {
+
+	public change = new EventEmitter();
+
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
      * 请访问[这个链接]($demo=?open-desc=true#/pc/table/checkbox-column)。

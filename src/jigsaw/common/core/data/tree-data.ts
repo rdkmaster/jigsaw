@@ -1,4 +1,5 @@
 import {GeneralCollection} from "./general-collection";
+import {CommonUtils} from "../utils/common-utils";
 
 /**
  * 用于处理树状关系的数据，目前只实现了最基础的功能，后续会增加子级数据懒加载等功能。
@@ -9,6 +10,7 @@ import {GeneralCollection} from "./general-collection";
  */
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
+
     /**
      * 此属性的值一般用于显示在界面上
      */
@@ -63,11 +65,15 @@ export type SimpleNode = {
     [prop: string]: any;
 }
 
+declare const DOMParser;
+let domParser: any;
+
 /**
  * 对树形结构的json进行一个简单的包装，比如把ztree的数据包装成jigsaw认识的数据
  */
 export class SimpleTreeData extends GeneralCollection<any> {
     [prop: string]: any;
+
     /**
      * 此属性的值一般用于显示在界面上
      */
@@ -76,6 +82,16 @@ export class SimpleTreeData extends GeneralCollection<any> {
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的
      */
     nodes?: SimpleNode[];
+
+    public static parseXML(xml: string): XMLDocument {
+        if (CommonUtils.isUndefined(DOMParser)) {
+            throw new Error('DOMParser is not supported in current environment');
+        }
+        if (CommonUtils.isUndefined(domParser)) {
+            domParser = new DOMParser();
+        }
+        return xml ? domParser.parseFromString(xml, 'text/xml') : null;
+    }
 
     public fromObject(data: any): SimpleTreeData {
         if (!data) {
@@ -97,5 +113,44 @@ export class SimpleTreeData extends GeneralCollection<any> {
         this.refresh();
         return this;
     }
+
+    public fromXML(xml: string | XMLDocument): SimpleTreeData {
+        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(xml) : xml;
+        if (xmlDoc && xmlDoc.childElementCount > 0) {
+            this.nodes = [];
+            this._toSimpleNode(xmlDoc.children[0], this);
+        }
+
+        this.refresh();
+        return this;
+    }
+
+    private _toSimpleNode(xmlElement: Element, target?: SimpleTreeData): SimpleNode {
+        const node = target || {
+            // 如果属性里提供了label属性，可以会覆盖这个textContent，这是没有问题的
+            label: xmlElement.textContent,
+            nodes: []
+        };
+        const names: string[] = xmlElement.getAttributeNames();
+        names.forEach(name => {
+            node[name] = name == 'open' || name == 'isParent' ?
+                _isTruthy(xmlElement.getAttribute(name))
+                : xmlElement.getAttribute(name);
+        });
+        const children = xmlElement.children;
+        for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            if (/^parsererror$/.test(child.nodeName)) {
+                console.error('XML node parse error, detail:', (child.children[1] || child).textContent);
+                continue;
+            }
+            node.nodes.push(this._toSimpleNode(children[i]));
+        }
+        return node;
+    }
+}
+
+function _isTruthy(value: any): boolean {
+    return value == undefined ? false : value !== 'false';
 }
 

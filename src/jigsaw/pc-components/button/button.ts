@@ -1,4 +1,4 @@
-import {NgModule, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 
@@ -25,13 +25,14 @@ import {AbstractJigsawComponent} from '../../common/common';
         '(click)': '_onClick()',
         '[style.min-width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-button-clicked]': "_clicked",
+        '[class.jigsaw-button-clicked]': "_$clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
-    }
+    },
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawButton extends AbstractJigsawComponent {
 
@@ -60,15 +61,15 @@ export class JigsawButton extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public _clicked: boolean = false;
+    public _$clicked: boolean = false;
 
     /**
      * @internal
      */
     public _onClick(): void {
-        if (!this.disabled && !this._clicked) {
-            this._clicked = true;
-            this.callLater(() => this._clicked = false, 360);
+        if (!this.disabled && !this._$clicked) {
+            this._$clicked = true;
+            this.callLater(() => this._$clicked = false, 360);
         }
     }
 }

@@ -14,7 +14,6 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawBlock} from "../../common/components/block/block";
 
 export enum AlertLevel {
     info, warning, error, confirm
@@ -247,6 +246,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-error-alert, j-error-alert',
 })
+
 export class JigsawErrorAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);

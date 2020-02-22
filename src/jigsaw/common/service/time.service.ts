@@ -7,7 +7,7 @@ declare const moment: any;
  * 时间粒度值
  */
 export enum TimeGr {
-    second, minute, hour, date, week, month
+    second, minute, hour, date, week, month, time, time_hour_minute, time_minute_second
 }
 
 /**
@@ -39,14 +39,14 @@ export enum TimeWeekDayStart {
  * `TimeService`提供了许多有用的时间换算、格式化工具，当你有需要对时间进行运算时，可以参考它的api说。
  */
 export enum TimeUnit {
-    s,m,h,d,w,M,y
+    s, m, h, d, w, M, y
 }
 
 /**
  * 常用时间格式，`TimeService.format`可以支持任何格式，我们做这个枚举只是他们太常用了，使用这个枚举+IDE提示，你可以少敲很多次键盘。
  */
 export enum TimeFormatters {
-    yyyy_mm_dd_hh_mm_ss,yyyy_mm_dd_hh_mm,yyyy_mm_dd_hh,yyyy_mm_dd,yyyy_mm
+    yyyy_mm_dd_hh_mm_ss, yyyy_mm_dd_hh_mm, yyyy_mm_dd_hh, yyyy_mm_dd, yyyy_mm, hh_mm_ss, hh_mm, mm_ss
 }
 
 /**
@@ -67,26 +67,37 @@ export class TimeService {
      * @param gr 目标粒度
      * @return 符合粒度格式的时刻
      */
-    public static convertValue(value: WeekTime, gr:TimeGr): string {
+    public static convertValue(value: WeekTime, gr: TimeGr): string {
         value = TimeService._handleWeekValue(value);
         value = TimeService.getFormatDate(<Time>value, gr);
         return <string>value;
     }
 
-    private static _handleWeekValue(newValue:WeekTime) : Time{
+    private static _handleWeekValue(newValue: WeekTime): Time {
         if (newValue && typeof newValue["week"] === 'number') {
             return TimeService.getDateFromYearAndWeek(newValue["year"], newValue["week"])
         }
         return <Time>newValue;
     }
 
-    private static _timeFormatterConvert(formatter : TimeFormatters):string{
-        switch (formatter){
-            case TimeFormatters.yyyy_mm_dd_hh_mm_ss : return "YYYY-MM-DD HH:mm:ss";
-            case TimeFormatters.yyyy_mm_dd_hh_mm : return "YYYY-MM-DD HH:mm";
-            case TimeFormatters.yyyy_mm_dd_hh : return "YYYY-MM-DD HH";
-            case TimeFormatters.yyyy_mm_dd : return "YYYY-MM-DD";
-            case TimeFormatters.yyyy_mm : return "YYYY-MM";
+    private static _timeFormatterConvert(formatter: TimeFormatters): string {
+        switch (formatter) {
+            case TimeFormatters.yyyy_mm_dd_hh_mm_ss :
+                return "YYYY-MM-DD HH:mm:ss";
+            case TimeFormatters.yyyy_mm_dd_hh_mm :
+                return "YYYY-MM-DD HH:mm";
+            case TimeFormatters.yyyy_mm_dd_hh :
+                return "YYYY-MM-DD HH";
+            case TimeFormatters.yyyy_mm_dd :
+                return "YYYY-MM-DD";
+            case TimeFormatters.yyyy_mm :
+                return "YYYY-MM";
+            case TimeFormatters.hh_mm_ss :
+                return "HH:mm:ss";
+            case TimeFormatters.hh_mm :
+                return "HH:mm";
+            case TimeFormatters.mm_ss :
+                return "mm:ss";
         }
     }
 
@@ -96,7 +107,10 @@ export class TimeService {
         [TimeGr.hour, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh)],
         [TimeGr.date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)],
         [TimeGr.week, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)],
-        [TimeGr.month, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm)]
+        [TimeGr.month, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm)],
+        [TimeGr.time, TimeService._timeFormatterConvert(TimeFormatters.hh_mm_ss)],
+        [TimeGr.time_hour_minute, TimeService._timeFormatterConvert(TimeFormatters.hh_mm)],
+        [TimeGr.time_minute_second, TimeService._timeFormatterConvert(TimeFormatters.mm_ss)],
     ]);
 
     /**
@@ -105,8 +119,8 @@ export class TimeService {
      * @param unit 时间单位枚举值
      * @return 返回对应的字符串
      */
-    public static timeUnitConvert(unit : TimeUnit):string {
-       return TimeUnit[unit];
+    public static timeUnitConvert(unit: TimeUnit): string {
+        return TimeUnit[unit];
     }
 
     private static _timeUnitMap = new Map([
@@ -122,7 +136,7 @@ export class TimeService {
     private static _initMoment() {
         try {
             moment.suppressDeprecationWarnings = 1;
-        } catch(e) {
+        } catch (e) {
         }
     }
 
@@ -139,7 +153,7 @@ export class TimeService {
      * @param time 给定的时刻值
      * @returns 如果给定的值非字符串，则必然返回false。
      */
-    public static isMacro(time:Time): boolean {
+    public static isMacro(time: Time): boolean {
         if (typeof time === 'string') {
             return !!time.match(/^\s*(now|today|yestoday|tomorrow)\s*([+-]\s*\d+\s*\w+)?\s*$/i);
         }
@@ -151,7 +165,7 @@ export class TimeService {
      * @param timeMacro
      *
      */
-    private static _convertBasicMacro(timeMacro:string): Date|string {
+    private static _convertBasicMacro(timeMacro: string): Date | string {
         let date;
         switch (timeMacro) {
             case 'now':
@@ -171,7 +185,7 @@ export class TimeService {
      * @param num   数量，为负数即为减法
      * @param unit  单位
      */
-    public static addDate(date:Time, num:string|number, unit:TimeUnit): Moment {
+    public static addDate(date: Time, num: string | number, unit: TimeUnit): Moment {
         return moment(date).add(num, TimeService._timeUnitMap.get(unit));
     }
 
@@ -193,7 +207,7 @@ export class TimeService {
      * @param formatter
      */
     public static format(date: Time, formatter: string | TimeFormatters): string {
-        if(typeof formatter === "number") formatter = TimeService._timeFormatterConvert(formatter);
+        if (typeof formatter === "number") formatter = TimeService._timeFormatterConvert(formatter);
         return moment(date).format(formatter);
     }
 
@@ -203,7 +217,7 @@ export class TimeService {
      * @param date
      * @param gr
      */
-    public static formatWithGr(date:Time, gr:TimeGr): string {
+    public static formatWithGr(date: Time, gr: TimeGr): string {
         let format = TimeService.getFormatter(gr);
         return moment(date).format(format);
     }
@@ -233,7 +247,7 @@ export class TimeService {
      * @param date
      *
      */
-    public static getWeekYear(date:Time): number {
+    public static getWeekYear(date: Time): number {
         return moment(date).weekYear();
     }
 
@@ -243,7 +257,7 @@ export class TimeService {
      * @param date
      *
      */
-    public static getWeekOfYear(date:Time): number {
+    public static getWeekOfYear(date: Time): number {
         return moment(date).week();
     }
 
@@ -253,7 +267,7 @@ export class TimeService {
      * @param date
      *
      */
-    public static getYear(date:Time): number {
+    public static getYear(date: Time): number {
         return moment(date).year();
     }
 
@@ -263,7 +277,7 @@ export class TimeService {
      * @param date
      *
      */
-    public static getMonth(date:Time): number {
+    public static getMonth(date: Time): number {
         return moment(date).month() + 1;
     }
 
@@ -273,7 +287,7 @@ export class TimeService {
      * @param date
      *
      */
-    public static getDay(date:Time): number {
+    public static getDay(date: Time): number {
         return moment(date).date();
     }
 
@@ -281,7 +295,7 @@ export class TimeService {
         return moment().weekYear(year).week(week)
     }
 
-    public static getDate(str:Time, gr: TimeGr): Moment {
+    public static getDate(str: Time, gr: TimeGr): Moment {
         return moment(str, TimeService.getFormatter(gr));
     }
 

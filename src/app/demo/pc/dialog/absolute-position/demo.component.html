@@ -1,0 +1,42 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="line-box"><label>Is modal:</label>
+    <jigsaw-switch [(checked)]="isModal" (checkedChange)="onModalChange()"></jigsaw-switch>
+</div>
+<div class="line-box">
+    <label>Position：</label>
+    <jigsaw-radios [(value)]="selectedPositionType" trackItemBy="label">
+        <jigsaw-radio-option *ngFor="let popPositionType of popPositionTypes"
+                             [value]="popPositionType">{{popPositionType.label}}
+        </jigsaw-radio-option>
+    </jigsaw-radios>
+</div>
+<div class="line-box" *ngIf="selectedPositionType?.label != 'center'">
+    <div *ngFor="let property of objectKeys(selectedPositionType?.offset)" class="offset-box">
+        <label>{{property}}: </label>
+        <jigsaw-numeric-input [(value)]="selectedPositionType.offset[property]"></jigsaw-numeric-input>
+        <span style="margin-left: 5px;">px</span>
+    </div>
+</div>
+<jigsaw-button colorType="primary" width="200px" (click)="popupComponentDialog()">
+    Popup / Reposition
+</jigsaw-button>
+
+<ng-template #tpDialog>
+    <jigsaw-dialog width="400px" (close)="closeDialog()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>一个对话框
+        </div>
+        <div jigsaw-body>
+            <p class="dialog-content">
+                这是一个普通的对话框，请关注它的弹出位置
+            </p>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary" (click)="closeDialog()">OK</jigsaw-button>
+            <jigsaw-button (click)="closeDialog()">Cancel</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</ng-template>

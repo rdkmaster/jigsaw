@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive, NgZone } from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
@@ -9,13 +9,13 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
-                protected changeDetector: ChangeDetectorRef) {
-        super();
+                protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     @ViewChild(JigsawRendererHost)
     protected rendererHost: JigsawRendererHost;
-    protected targetData: TableData;
+    protected targetData: TableData | AdditionalTableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
     private _cellData;
@@ -35,9 +35,19 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     @Input()
     public field: string;
     @Input()
-    public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
+    public renderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
+
+    private _rendererInitData: any;
     @Input()
-    public rendererInitData: any;
+    public get rendererInitData() {
+        return this._rendererInitData;
+    };
+    public set rendererInitData(value: any) {
+        this._rendererInitData = value;
+        if(this.rendererRef instanceof ComponentRef) {
+            this.rendererRef.instance.initData = value;
+        }
+    }
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
@@ -117,8 +127,10 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
      * 插入渲染器
      * */
     protected insertRenderer() {
-        this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
-        this.changeDetector.detectChanges();
+        if(this.renderer != 'html') {
+            this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
+            this.changeDetector.detectChanges();
+        }
     }
 
     ngOnInit() {
@@ -127,7 +139,9 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     }
 
     ngAfterViewInit(): void {
-        this.insertRenderer();
+        if(this.renderer != 'html') {
+            this.insertRenderer();
+        }
     }
 }
 
@@ -141,6 +155,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     template: `
         <div class="jigsaw-table-header-cell" [style.padding-right]="sortable ? '14px' : '0'">
             <ng-template jigsaw-renderer-host></ng-template>
+            <div *ngIf="renderer == 'html'" class="jigsaw-table-header-content" [trustedHtml]="headerTrustedHtml"
+                 [trustedHtmlContext]="headerTrustedHtmlContext"></div>
             <div *ngIf="sortable" [ngClass]="_$sortOrderClass">
                 <span (click)="_$sortAsc()" class="jigsaw-table-sort-btn jigsaw-table-sort-up"></span>
                 <span (click)="_$sortDes()" class="jigsaw-table-sort-btn jigsaw-table-sort-down"></span>
@@ -148,13 +164,17 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         </div>`
 })
 export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
-    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef) {
-        super(resolver, changeDetector);
+    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        super(resolver, changeDetector, _zone);
     }
 
     @Input() public sortable: boolean;
 
     @Input() public sortAs: SortAs;
+
+    @Input() public headerTrustedHtml: string;
+
+    @Input() public headerTrustedHtmlContext: any;
 
     /**
      * @internal
@@ -277,8 +297,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     private _goEditCallback: () => void;
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef,
-                private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super(cfr, cd);
+                private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(cfr, cd, _zone);
     }
 
     private _emitDataChange(cellData: string | number): void {
@@ -288,7 +308,10 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             // update tableData directly, therefor table.ts need not to do this.
             this.targetData.data[this.row + i][this.column] = cellData;
         }
-        this.targetData.refresh();
+
+        if (this.targetData instanceof AdditionalTableData) {
+            this.targetData.change.emit();
+        }
 
         const change: TableDataChangeEvent = {
             field: this.field,
@@ -301,6 +324,12 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
         this.cellData = cellData;
         this.cellDataChange.emit(this.cellData);
+
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            })
+        });
     }
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {

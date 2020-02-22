@@ -26,6 +26,9 @@ export const routerConfig:any = [
     },
     {
         desc: 'tooltip', url: '/pc/tooltip/inline', path: ''
+    },
+    {
+        desc: 'absolute-position', url: '/pc/dialog/absolute-position', path: ''
     }
 ];
 

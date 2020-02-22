@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {JigsawTimeModule} from "jigsaw/pc-components/time/index";
-import {JigsawTileSelectModule} from "jigsaw/pc-components/list-and-tile/tile";
-import {TimeGrComponent} from './demo.component';
+import {JigsawButtonBarModule} from "jigsaw/pc-components/list-and-tile/button-bar";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {TimeGrComponent} from './demo.component';
 
 @NgModule({
-    imports: [CommonModule, JigsawTimeModule, JigsawTileSelectModule, JigsawDemoDescriptionModule],
+    imports: [CommonModule, JigsawTimeModule, JigsawDemoDescriptionModule, JigsawButtonBarModule],
     declarations: [TimeGrComponent],
     exports: [TimeGrComponent]
 })

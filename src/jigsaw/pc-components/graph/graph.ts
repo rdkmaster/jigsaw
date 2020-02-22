@@ -12,6 +12,8 @@ import {
     OnInit,
     Output,
     Renderer2,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
@@ -22,9 +24,17 @@ import {JigsawTheme} from "../../common/core/theming/theme";
 
 import echarts from "echarts";
 
+// 某些情况，需要把Jigsaw在服务端一起编译，直接使用window对象，会导致后端编译失败
+declare const window: any;
+try {
+    window.echarts = window.echarts || echarts;
+} catch(e) {
+}
+
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
@@ -132,7 +142,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
         this._host = this._elementRef.nativeElement;
     }
@@ -156,16 +167,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
+        this._changeDetectorRef.markForCheck();
     }
 
     public resize(): void {
-        if (this._graph) {
-            this._graph.resize({
-                width: this._host.offsetWidth + 'px',
-                height: this._host.offsetHeight + 'px',
-                silence: true
-            });
+        // 宿主元素没有尺寸就不resize
+        if (!this._graph || !this._host.offsetWidth || !this._host.offsetHeight) {
+            return;
         }
+        this._graph.resize({
+            width: this._host.offsetWidth + 'px',
+            height: this._host.offsetHeight + 'px',
+            silence: true
+        });
     }
 
     private _resizeEventRemoval: Function;
@@ -243,12 +257,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
+    /**
+     * @internal
+     */
+    public getMapMap(mapName: string): Object {
+        return this.getMap(mapName);
+    }
+
     /* ********************** echarts api 封装区 start  ******************************** */
     public registerMap(mapName: string, geoJson: Object, specialAreas?: Object): void {
         echarts.registerMap(mapName, geoJson, specialAreas);
     }
 
-    public getMapMap(mapName: string): Object {
+    public getMap(mapName: string): Object {
         return echarts.getMap(mapName);
     }
 

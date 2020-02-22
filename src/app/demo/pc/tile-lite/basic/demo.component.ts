@@ -5,6 +5,7 @@ import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
     templateUrl: './demo.component.html'
 })
 export class TileLiteBasicDemoComponent implements AfterContentInit {
+    showBorder = true;
     selectedCityStr: string;
     selectedCity: ArrayCollection<any>;
     cities = new ArrayCollection([
