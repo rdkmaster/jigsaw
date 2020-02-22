@@ -125,19 +125,16 @@ task(':publish-ts', sequenceTask(
 
 task('publish-js', sequenceTask(
     ':publish:whoami',
-    ':publish-js',
-    ':publish:logout'
+    ':publish-js'
 ));
 
 task('publish-ts', sequenceTask(
     ':publish:whoami',
-    ':publish-ts',
-    ':publish:logout'
+    ':publish-ts'
 ));
 
 task('publish', sequenceTask(
     ':publish:whoami',
     ':publish-js',
-    ':publish-ts',
-    ':publish:logout'
+    ':publish-ts'
 ));
