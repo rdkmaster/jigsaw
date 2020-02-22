@@ -8,8 +8,7 @@ import {
     OnDestroy,
     Optional,
     Output,
-    Renderer2,
-    ChangeDetectionStrategy
+    Renderer2
 } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
@@ -228,8 +227,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                 <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `
 })
 export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;

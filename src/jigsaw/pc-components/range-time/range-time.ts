@@ -285,6 +285,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     private _init() {
+        this._cdr.markForCheck();
         this._$shortcuts = this._getShortcuts();
         this._$endTimeLimitEnd = this._calculateLimitEnd();
     }
@@ -364,7 +365,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         if (item && item.shortcuts && item.shortcuts.length != 0) {
             return item.shortcuts;
         }
-        this._cdr.markForCheck();
         return null;
     }
 

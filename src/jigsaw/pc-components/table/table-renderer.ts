@@ -277,7 +277,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 @Component({
     template: `
         <jigsaw-select [value]="selected" [data]="data"
-                       (valueChange)="dispatchChangeEvent($event.label)"
+                       (valueChange)="dispatchChangeEvent($event?.label)"
                        optionCount="5" width="100%" height="20">
         </jigsaw-select>
     `,
