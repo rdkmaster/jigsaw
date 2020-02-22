@@ -1,4 +1,15 @@
-import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild, HostBinding} from "@angular/core";
+import {
+    Component,
+    Input,
+    NgModule,
+    Output,
+    EventEmitter,
+    OnInit,
+    ElementRef,
+    ViewChild,
+    HostBinding,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -14,7 +25,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     templateUrl: './drawer.html',
     host: {
         '[class.jigsaw-drawer-in-dom]': '!floating'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     constructor(private _elementRef: ElementRef) {
@@ -255,13 +267,13 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
 
     private _calcWidth(): string | undefined {
-        if(this.width && this.width != "auto") {
+        if (this.width && this.width != "auto") {
             return this.width;
         }
-        if(this.width == "auto") {
-            if(this.offsetLeft) {
+        if (this.width == "auto") {
+            if (this.offsetLeft) {
                 return `calc(100% - ${this.offsetLeft})`;
-            }else if(this.offsetRight) {
+            } else if (this.offsetRight) {
                 return `calc(100% - ${this.offsetRight})`;
             }
         }
@@ -278,13 +290,13 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     private _calcHeight(): string | undefined {
-        if(this.height && this.height != "auto") {
+        if (this.height && this.height != "auto") {
             return this.height;
         }
-        if(this.height == "auto") {
-            if(this.offsetTop) {
+        if (this.height == "auto") {
+            if (this.offsetTop) {
                 return `calc(100% - ${this.offsetTop})`;
-            }else if(this.offsetBottom) {
+            } else if (this.offsetBottom) {
                 return `calc(100% - ${this.offsetBottom})`;
             }
         }

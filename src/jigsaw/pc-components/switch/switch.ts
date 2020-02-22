@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit, forwardRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, forwardRef, ChangeDetectionStrategy} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 /**
@@ -16,7 +16,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class JigsawSwitch implements ControlValueAccessor, OnInit {
@@ -53,7 +54,10 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      *
      */
     @Input()
-    public get checked(): boolean  { return this._checked};
+    public get checked(): boolean {
+        return this._checked;
+    };
+
     public set checked(value: boolean) {
         this.writeValue(value);
         this._propagateChange(value);
@@ -76,7 +80,10 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      *
      */
     @Input()
-    public get disabled(): boolean { return this._disabled; };
+    public get disabled(): boolean {
+        return this._disabled;
+    };
+
     public set disabled(value: boolean) {
         this._disabled = value;
         this._setSwitchClass();
@@ -86,7 +93,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      * @internal
      */
     public _$switchClick() {
-        if(!this.disabled) {
+        if (!this.disabled) {
             this.checked = !this.checked;
 
             // 发出事件

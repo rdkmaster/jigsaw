@@ -1,6 +1,6 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef,ChangeDetectionStrategy
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
@@ -15,7 +15,8 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
         '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
     constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone, private _cdr: ChangeDetectorRef) {

@@ -1,4 +1,4 @@
-import {Component, Input, NgModule} from '@angular/core';
+import {Component, Input, NgModule,ChangeDetectionStrategy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
@@ -18,7 +18,8 @@ const defaultHrefValue = 'javascript:void(0);';
         '[class.jigsaw-icon]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawIcon extends AbstractJigsawComponent {
     public _$secureUrl;

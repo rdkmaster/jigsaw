@@ -1,6 +1,6 @@
 import {
     NgModule, Component, Input, Output, EventEmitter, OnInit,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit
+    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -27,10 +27,11 @@ export class PageSizeData {
         '[style.height]': 'height',
         '[class.jigsaw-paging]': 'true',
         '[class.jigsaw-paging-small]': 'mode == "simple"'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
-    constructor(private _translateService: TranslateService) {
+    constructor(private _translateService: TranslateService, private _changeDetectorRef: ChangeDetectorRef) {
         super()
     }
 
@@ -183,6 +184,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
         //设置当前页
         this._setCurrentPage();
+
     }
 
     /**
@@ -192,6 +194,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._pages.forEach(page => {
             page.current = page.pageNumber == this.current;
         });
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -214,6 +217,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 page.show();
             });
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -234,6 +238,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._pages.find(page => page.pageNumber == pageNum).setCurrent();
             this.current = pageNum;
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -254,6 +259,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._pages.find(page => page.pageNumber == pageNum).setCurrent();
             this.current = pageNum;
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -268,6 +274,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (pageNum > this._totalPage) pageNum = this._totalPage;
         this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -282,6 +289,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (pageNum < 1) pageNum = 1;
         this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -291,19 +299,17 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (this._totalPage <= 10) {
             if (this._firstPage) this._firstPage.showPrev = false;
             if (this._lastPage) this._lastPage.showNext = false;
-        }
-        else if (this.current <= 4) {
+        } else if (this.current <= 4) {
             if (this._firstPage) this._firstPage.showPrev = false;
             if (this._lastPage) this._lastPage.showNext = true;
-        }
-        else if (this.current >= this._totalPage - 3) {
+        } else if (this.current >= this._totalPage - 3) {
             if (this._firstPage) this._firstPage.showPrev = true;
             if (this._lastPage) this._lastPage.showNext = false;
-        }
-        else {
+        } else {
             if (this._firstPage) this._firstPage.showPrev = true;
             if (this._lastPage) this._lastPage.showNext = true;
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -312,6 +318,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _getFirstAndLastPage(): void {
         this._firstPage = this._pages.find(page => page.pageNumber == 1);
         this._lastPage = this._pages.find(page => page.pageNumber == this._totalPage);
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -331,6 +338,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._$prevDisabled = false;
             this._$nextDisabled = false;
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -346,6 +354,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             }
             this.current = pageNum;
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -357,6 +366,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this.pageSize = pageSize.value;
             this.current = 1;
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -385,11 +395,11 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (this.current <= 0 || this.current > this._totalPage) {
             this.current = 1;
         }
-
         this.runMicrotask(() => {
             this._getFirstAndLastPage();
             this._setCurrentShow();
         });
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -450,7 +460,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         '[class.jigsaw-page-current]': 'current',
         '[class.jigsaw-page-hidden]': '!_isShow',
         '[class.jigsaw-page-item]': 'true'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawPagingItem {
     public current: boolean = false;
@@ -465,7 +476,7 @@ export class JigsawPagingItem {
 
     @Input() public pageNumber: number;
 
-    constructor(@Optional() pagination: JigsawPagination) {
+    constructor(@Optional() pagination: JigsawPagination, private _changeDetectorRef: ChangeDetectorRef) {
         this._pagination = pagination;
     }
 
@@ -475,23 +486,28 @@ export class JigsawPagingItem {
     public _onClick(): void {
         if (!this.current) {
             this._pagination.current = this.pageNumber;
+            this._changeDetectorRef.markForCheck();
         }
     }
 
     public setCurrent(): void {
         this.current = true;
+        this._changeDetectorRef.markForCheck();
     }
 
     public cancelCurrent(): void {
         this.current = false;
+        this._changeDetectorRef.markForCheck();
     }
 
     public show(): void {
         this._isShow = true;
+        this._changeDetectorRef.markForCheck();
     }
 
     public hide(): void {
         this._isShow = false;
+        this._changeDetectorRef.markForCheck();
     }
 
     /**

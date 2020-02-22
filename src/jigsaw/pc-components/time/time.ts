@@ -1,5 +1,15 @@
 import {
-    Component, ElementRef, EventEmitter, Input, OnDestroy, Renderer2, Output, forwardRef, AfterViewInit
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Renderer2,
+    Output,
+    forwardRef,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -97,7 +107,8 @@ export class GrItem {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTime), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
@@ -339,7 +350,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _langChangeSubscriber: Subscription;
 
     constructor(private _el: ElementRef, private _renderer: Renderer2,
-                private _popService: PopupService, private _translateService: TranslateService) {
+                private _popService: PopupService, private _translateService: TranslateService,
+                private _changeDetectorRef:ChangeDetectorRef) {
         super();
         this._refreshInterval = 0;
 
@@ -515,6 +527,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             CommonUtils.getBrowserLang());
 
         this._handleValueChange(<Time>this.date, <TimeGr>this.gr, true);
+        this._changeDetectorRef.markForCheck();
     }
 
     private _bindActiveDayClickHandler(picker) {
@@ -540,6 +553,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
             this._timePicker.date(TimeService.getFormatDate(value, <TimeGr>this.gr));
             this._weekHandle();
             this._handleRecommended(this._el.nativeElement, this._popService);
+            this._changeDetectorRef.markForCheck();
         }
     }
 
@@ -549,6 +563,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     public _$changeGranularity(select: GrItem) {
         this.gr = select.value;
         this.grChange.emit(this.gr);
+        this._changeDetectorRef.markForCheck();
     }
 
     private _checkMacro() {
@@ -596,6 +611,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         if (this._limitEnd && value > this.limitEnd) {
             return [this.limitEnd, true];
         }
+        this._changeDetectorRef.markForCheck();
         return [value, false];
     }
 
@@ -606,6 +622,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         if (tdActive) {
             tdActive.parentNode.classList.add("active");
         }
+        this._changeDetectorRef.markForCheck();
         return {year: year, week: weekNum};
     }
 
@@ -672,6 +689,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
                 });
                 this._eventHelper.put(node, "mouseleave", removeMouseleaveListener);
             });
+            this._changeDetectorRef.markForCheck();
         }
     }
 
@@ -818,7 +836,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(newValue: any): void {
         if (!newValue || newValue == this._value) {

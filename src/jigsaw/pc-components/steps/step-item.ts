@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit,ChangeDetectionStrategy} from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 
 /**
@@ -11,7 +11,8 @@ import {AbstractJigsawComponent} from "../../common/common";
     templateUrl: 'step-item.html',
     host: {
         '[class.jigsaw-step-item]': 'true',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
 

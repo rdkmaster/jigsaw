@@ -1,4 +1,4 @@
-import {NgModule, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 
@@ -31,7 +31,8 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
-    }
+    },
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawButton extends AbstractJigsawComponent {
 
