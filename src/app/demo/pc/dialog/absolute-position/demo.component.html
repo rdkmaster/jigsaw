@@ -8,11 +8,32 @@
 <div class="line-box">
     <label>Position：</label>
     <jigsaw-radios [(value)]="_$selectedPositionType">
-        <jigsaw-radio-option *ngFor="let popPositionType of _$popPositionTypes" [value]="popPositionType">{{popPositionType}}</jigsaw-radio-option>
+        <jigsaw-radio-option *ngFor="let popPositionType of _$popPositionTypes"
+                             [value]="popPositionType">{{popPositionType}}
+        </jigsaw-radio-option>
     </jigsaw-radios>
 </div>
 <div class="line-box">
     <label>Offset：</label>
     <jigsaw-numeric-input [(value)]="_$offset"></jigsaw-numeric-input>
 </div>
-<jigsaw-button colorType="primary" width="200px" (click)="_$popupComponentDialog()">Popup</jigsaw-button>
+<jigsaw-button colorType="primary" width="200px" (click)="_$popupComponentDialog()">
+    Popup / Reposition
+</jigsaw-button>
+
+<ng-template #tpDialog>
+    <jigsaw-dialog width="400px" (close)="_$closeDialog()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>一个对话框
+        </div>
+        <div jigsaw-body>
+            <p class="dialog-content">
+                这是一个普通的对话框，请关注它的弹出位置
+            </p>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary" (click)="_$closeDialog()">OK</jigsaw-button>
+            <jigsaw-button (click)="_$closeDialog()">Cancel</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
