@@ -96,8 +96,7 @@ export function createTask(packageName: string) {
         ':publish:whoami',
         `build:${packageName}:clean`,
         `validate:check-${packageName}-bundles`,
-        `:publish:${packageName}`,
-        ':publish:logout'
+        `:publish:${packageName}`
     ));
 
 }

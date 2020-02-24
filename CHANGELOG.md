@@ -1,3 +1,60 @@
+## v8.0.5 (2020-02-20)
+
+### 新特性 / New Features
+- [新增] TableCellTextEditorRenderer添加placeholder属性
+- [新增] 增加SimpleTreeData数据类型，代替TreeData作为JigsawTreeExt的数据，以应对TreeData的性能问题
+- [新增] table默认排序功能，fixes #582
+- [新增] 组件数据支持onChange回调，只在组件数据有外部更新时才调度，分页、排序、过滤等不调度
+- [新增] 直角系数据模型对无dim的支持
+- [新增] 直角系数据模型对无dim的支持
+- [新增] 红色主题皮肤
+- [新增] PopupOption增加useCustomizedBackground属性，用来控制是否设置弹框背景
+- [新增] 保存图片指令，可一键保存一个容器里的所有图形的截图
+- [新增] upload指令和组件支持contentField和fileNameField属性，用于自定义内容和文件名字段名
+- [新增] time和rangeTime组件增加weekDayStart属性，用于配合weekStart选择周粒度时间,fixes #1040
+- [新增] 分页控件的simple模式支持搜索框
+- [新增] table在columnDefine中的表头现在可以设置html作为表头的渲染器
+- [新增] ModeledMapGraphData增加缩放属性
+- [新增] upload组件的start事件加上数据
+- [新增] 新增一套paletx风格的皮肤
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] 默认皮肤的弹出现在会默认加上白色的背景，自定义背景需要在popupOptions里面打开useCustomizedBackground
+
+###  优化 / Modified
+- [优化] 优化collapse动画
+- [优化] 优化tab的垂直响应
+- [优化] cascade、fishbone的数据换成SimpleTreeData，提升性能
+- [优化] drag指令在未设置dragData的时候，增加获取数据的保护
+- [优化] JigsawInput系组件性能优化
+- [优化] 添加从dom中获取图片的charts实例的途径，以解决有些场景下ContentChildren无法获取图片实例的问题
+- [优化] 调整图片保存按钮弹出位置
+- [优化] 将echarts的弹出z-index值归入jigsaw的z-index体系中，让它弹出在适当的层次
+- [优化] 修改图形下载指令按钮的弹出方式，以解决在宿主有滚动条情况下的位置异常
+- [优化] 修复表格demo中，美元和人民币换算错误的问题
+- [优化] select组件高度不够时跟combo一样撑出滚动条
+- [优化] 采用Stackblitz作为新的demo代码演示和编辑测试方式
+- [优化] box-resize-line高度计算改为callLater执行
+- [优化] 修改默认tree的皮肤
+
+### 修复 / Fixes
+- [故障] jigsaw-tree-ext销毁时清理刷新回调，否则会造成事件钩子泄露，影响性能
+- [故障] 解决auto-complete-input 的focus和select方法无效的问题
+- [故障] 解决textarea在disabled为true时，不变灰的问题
+- [故障] 解决在collapse设置为手风琴模式时，初始时打开的页签多于一个，页面点击卡死问题
+- [故障] icon的isLinkButton属性为true且href为空时，会打开空白页的问题
+- [故障] 修复弹框有时计算位置不对
+- [故障] 修复采用枚举方式配置服务端分页sortAs，会导致服务端报错
+- [故障] 修复select和list-lite搜索会删除已选中项，fixes #1007
+- [故障] 数字Input组件设置大于0的最小值后无法删除后输入
+- [故障] 修复numeric输出的值变成了字符串，优化通过输入框输入数字的交互
+- [故障] 修改直角系图形设置dimDisabled依旧会有dim的问题
+- [故障] 修复双绑jigsawFloatOpen，在OnInit里面设置为true，导致float不停的打开关闭
+- [故障] 修复input在flex布局中内容溢出的问题
+- [新增] 保存图片指令，可一键保存一个容器里的所有图形的截图
+- [故障] 修复测试demo时发现的bug
+- [故障] 修复日期选择周粒度时与combo配合使用有问题,废弃weekStart和weekDayStart的配置
+
 ## v8.0.1 (2019-9-20)
 
 ### 新特性 / New Features
