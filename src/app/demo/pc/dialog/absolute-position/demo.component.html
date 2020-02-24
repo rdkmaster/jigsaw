@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="line-box"><label>Is modal:</label>
+    <jigsaw-switch [(checked)]="_$isModel"></jigsaw-switch>
+</div>
+<div class="line-box">
+    <label>Position：</label>
+    <jigsaw-radios [(value)]="_$selectedPositionType">
+        <jigsaw-radio-option *ngFor="let popPositionType of _$popPositionTypes" [value]="popPositionType">{{popPositionType}}</jigsaw-radio-option>
+    </jigsaw-radios>
+</div>
+<div class="line-box">
+    <label>Offset：</label>
+    <jigsaw-numeric-input [(value)]="_$offset"></jigsaw-numeric-input>
+</div>
+<jigsaw-button colorType="primary" width="200px" (click)="_$popupComponentDialog()">Popup</jigsaw-button>
