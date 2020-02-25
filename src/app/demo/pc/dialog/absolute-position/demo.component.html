@@ -3,7 +3,7 @@
 </jigsaw-demo-description>
 
 <div class="line-box"><label>Is modal:</label>
-    <jigsaw-switch [(checked)]="_$isModel"></jigsaw-switch>
+    <jigsaw-switch [(checked)]="_$isModal" (checkedChange)="_$onModalChange()"></jigsaw-switch>
 </div>
 <div class="line-box">
     <label>Position：</label>

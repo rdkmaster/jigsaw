@@ -8,7 +8,7 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/
 })
 export class DialogAbsolutePositionDemoComponent {
     public _$offset: number = 16;
-    public _$isModel: boolean = false;
+    public _$isModal: boolean = false;
     public _$popPositionTypes: string[] = ['top', 'left', 'right', 'bottom', 'center'];
     public _$selectedPositionType: any = 'center';
     public _$popupInfo: PopupInfo;
@@ -17,6 +17,14 @@ export class DialogAbsolutePositionDemoComponent {
     private _tpDialog: TemplateRef<any>;
 
     constructor(private _popupService: PopupService) {
+    }
+
+    public _$onModalChange() {
+        if (!this._$popupInfo) {
+            return;
+        }
+        this._$closeDialog();
+        this._$popupComponentDialog();
     }
 
     public _$closeDialog() {
@@ -28,7 +36,7 @@ export class DialogAbsolutePositionDemoComponent {
 
     public _$popupComponentDialog() {
         const options: PopupOptions = {
-            modal: !!this._$isModel,
+            modal: !!this._$isModal,
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut,
             posOffset: {}
