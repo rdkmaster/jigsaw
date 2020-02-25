@@ -459,16 +459,23 @@ export class PopupService {
      */
     private _setAbsolutePosition(left: number, top: number, options: PopupOptions, element: HTMLElement): void {
         if (options.pos == 'top') {
+            PopupService._renderer.removeStyle(element, 'right');
+            PopupService._renderer.removeStyle(element, 'bottom');
             PopupService._renderer.setStyle(element, 'left', left + 'px');
             PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
         } else if (options.pos == 'right') {
+            PopupService._renderer.removeStyle(element, 'left');
+            PopupService._renderer.removeStyle(element, 'bottom');
             PopupService._renderer.setStyle(element, 'top', top + 'px');
             PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
         } else if (options.pos == 'left') {
+            PopupService._renderer.removeStyle(element, 'right');
+            PopupService._renderer.removeStyle(element, 'bottom');
             PopupService._renderer.setStyle(element, 'top', top + 'px');
             PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
         } else if (options.pos == 'bottom') {
             PopupService._renderer.removeStyle(element, 'top');
+            PopupService._renderer.removeStyle(element, 'right');
             PopupService._renderer.setStyle(element, 'left', left + 'px');
             PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
         } else {
