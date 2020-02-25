@@ -13,7 +13,7 @@ import {
     ViewContainerRef,
 } from "@angular/core";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import { filter, map } from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {Subscription} from "rxjs";
 import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
@@ -61,10 +61,10 @@ export class PopupOptions {
      * - `ElementRef`和`HTMLElement`类型：相对某个已知UI元素的位置，不配置偏移的话，弹出视图的左上角会和给定的UI元素的左上角位置重合。
      * Jigsaw会自动计算出给定元素的位置，并将弹出视图移动到该位置上。一般需要配合`posOffset`属性一起调整弹出位置，
      * 避免遮挡到给定的UI元素。这个方式在实现一些下拉功能的时候会非常有用。
+     * - 也可以是 'top' | 'left' | 'right' | 'bottom' 中的某一个值，用来控制弹出视图的绝对位置，
+     * 配合posOffset属性中的top/right/left/bottom，可以指定绝对位置的偏移量
      *
-     * 请参考[这个demo]($demo=pc/dialog/popup-option)。
-     *
-     *
+     * 请参考 [这个demo]($demo=pc/dialog/popup-option) 和[这个demo]($demo=pc/dialog/absolute-position)。
      */
     pos?: PopupPosition;
 
@@ -131,7 +131,8 @@ export class PopupOptions {
     useCustomizedBackground?: boolean;
 }
 
-export type PopupPosition = PopupPoint | ElementRef | HTMLElement;
+export type AbsolutePosition = 'top' | 'left' | 'right' | 'bottom';
+export type PopupPosition = PopupPoint | ElementRef | HTMLElement | AbsolutePosition;
 
 export class PopupPositionValue {
     left: number;
@@ -421,11 +422,12 @@ export class PopupService {
      * 没配options
      * 或options为空对象
      * 或没有配options.pos
+     * 或pos配置的是四个方位的绝对位置
      * @param options
      *
      */
     private _isGlobalPopup(options: PopupOptions): boolean {
-        return CommonUtils.isEmptyObject(options) || !options.pos;
+        return CommonUtils.isEmptyObject(options) || !options.pos || typeof options.pos == 'string';
     }
 
     private _setPopup(options: PopupOptions, element: HTMLElement) {
@@ -444,14 +446,42 @@ export class PopupService {
                 // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
                 removeWindowListens.push(PopupService._renderer.listen('window', 'resize', () => {
                     const documentBody = AffixUtils.getDocumentBody();
-                    PopupService._renderer.setStyle(element, 'top',
-                        (documentBody.clientHeight / 2 - element.offsetHeight / 2) + 'px');
-                    PopupService._renderer.setStyle(element, 'left',
-                        (documentBody.clientWidth / 2 - element.offsetWidth / 2) + 'px');
+                    this._setAbsolutePosition((documentBody.clientWidth / 2 - element.offsetWidth / 2),
+                        (documentBody.clientHeight / 2 - element.offsetHeight / 2), options, element)
                 }));
             });
         }
         return removeWindowListens;
+    }
+
+    /**
+     * 根据options中的pos属性，是否配置了 'top' | 'left' | 'right' | 'bottom' 值来设定弹窗的位置
+     */
+    private _setAbsolutePosition(left: number, top: number, options: PopupOptions, element: HTMLElement): void {
+        if (options.pos == 'top') {
+            PopupService._renderer.removeStyle(element, 'right');
+            PopupService._renderer.removeStyle(element, 'bottom');
+            PopupService._renderer.setStyle(element, 'left', left + 'px');
+            PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+        } else if (options.pos == 'right') {
+            PopupService._renderer.removeStyle(element, 'left');
+            PopupService._renderer.removeStyle(element, 'bottom');
+            PopupService._renderer.setStyle(element, 'top', top + 'px');
+            PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+        } else if (options.pos == 'left') {
+            PopupService._renderer.removeStyle(element, 'right');
+            PopupService._renderer.removeStyle(element, 'bottom');
+            PopupService._renderer.setStyle(element, 'top', top + 'px');
+            PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+        } else if (options.pos == 'bottom') {
+            PopupService._renderer.removeStyle(element, 'top');
+            PopupService._renderer.removeStyle(element, 'right');
+            PopupService._renderer.setStyle(element, 'left', left + 'px');
+            PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+        } else {
+            PopupService._renderer.setStyle(element, 'top', top + 'px');
+            PopupService._renderer.setStyle(element, 'left', left + 'px');
+        }
     }
 
     /*
@@ -540,8 +570,7 @@ export class PopupService {
         let posType: string = this._isGlobalPopup(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
         PopupService._renderer.setStyle(element, 'position', posType);
-        PopupService._renderer.setStyle(element, 'top', position.top + 'px');
-        PopupService._renderer.setStyle(element, 'left', position.left + 'px');
+        this._setAbsolutePosition(position.left, position.top, options, element);
     }
 
     /*
@@ -608,7 +637,7 @@ export class PopupService {
                 } else {
                     left = posOffsetLeft;
                 }
-            } else if (pos) {
+            } else if (typeof pos == 'object') {
                 if (typeof pos.y == 'number') {
                     if (posOffset && typeof posOffset.top == 'number') {
                         top = (pos.y + posOffset.top);
