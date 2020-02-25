@@ -13,19 +13,22 @@ export const routerConfig:any = [
         path: 'z-index', component: PopupZIndexDemoComponent
     },
     {
-        desc: 'alert', url: '/alert/popup', path: ''
+        desc: 'alert', url: '/pc/alert/popup', path: ''
     },
     {
-        desc: 'dialog', url: '/dialog/buttons', path: ''
+        desc: 'dialog', url: '/pc/dialog/buttons', path: ''
     },
     {
-        desc: 'combo-select', url: '/combo-select/full', path: ''
+        desc: 'combo-select', url: '/pc/combo-select/full', path: ''
     },
     {
         desc: 'loading', url: '/pc/loading/full', path: ''
     },
     {
-        desc: 'tooltip', url: '/tooltip/inline', path: ''
+        desc: 'tooltip', url: '/pc/tooltip/inline', path: ''
+    },
+    {
+        desc: 'absolute-position', url: '/pc/dialog/absolute-position', path: ''
     }
 ];
 
