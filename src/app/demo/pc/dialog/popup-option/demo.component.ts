@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
     PopupInfo,
     PopupOptions,
@@ -12,7 +12,7 @@ import {
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DialogPopOptionDemo implements OnInit {
+export class DialogPopOptionDemo implements OnInit, AfterViewInit {
 
     dialogInfo: PopupInfo;
 
@@ -34,18 +34,21 @@ export class DialogPopOptionDemo implements OnInit {
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
 
-    constructor(private popupService: PopupService) {
+    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef) {
     }
 
     ngOnInit() {
         this.generatePopPosition();
-        this.generatePopPos();
         this.detailPos = {x: null, y: null};
         this.offset = {top: 10, left: 10, right: null, bottom: null};
         this.option = {
             modal: false,
             posType: PopupPositionType.absolute
         };
+    }
+
+    ngAfterViewInit(): void {
+        this.generatePopPos();
     }
 
     close() {
@@ -60,6 +63,7 @@ export class DialogPopOptionDemo implements OnInit {
         this.poses.push({label: "no reference"});
         this.poses.push({label: "point"});
         this.selectedPos = this.poses[0];
+        this._cdr.detectChanges();
     }
 
     generatePopPosition() {

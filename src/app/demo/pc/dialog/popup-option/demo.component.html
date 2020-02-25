@@ -26,7 +26,7 @@
         <jigsaw-radios [(value)]="selectedPos" trackItemBy="label">
             <jigsaw-radio-option *ngFor="let pose of poses" [value]="pose">{{pose.label}}</jigsaw-radio-option>
         </jigsaw-radios>
-        <span *ngIf="selectedPos.label=='point'">
+        <span *ngIf="selectedPos?.label=='point'">
             <jigsaw-input [(value)]="detailPos.x" placeholder="X" width="60px" height="23px"></jigsaw-input>
             <jigsaw-input [(value)]="detailPos.y" placeholder="Y" width="60px" height="23px"></jigsaw-input>
         </span>

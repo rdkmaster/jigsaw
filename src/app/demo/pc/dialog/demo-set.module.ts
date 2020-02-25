@@ -15,6 +15,8 @@ import {DialogInDomDemoComponent} from "./in-dom/demo.component";
 import {DialogMiscDemoComponent} from "./misc/demo.component";
 import {DialogHeightDemo} from "./height/demo.component";
 import {DialogHeightDemoModule} from "./height/demo.module";
+import {DialogAbsolutePositionDemoComponent} from "./absolute-position/demo.component";
+import {DialogAbsolutePositionDemoModule} from "./absolute-position/demo.module";
 
 export const routerConfig:any = [
     {
@@ -38,6 +40,9 @@ export const routerConfig:any = [
     {
         path: 'height', component: DialogHeightDemo
     },
+    {
+        path: 'absolute-position', component: DialogAbsolutePositionDemoComponent
+    },
 ];
 
 @NgModule({
@@ -49,7 +54,8 @@ export const routerConfig:any = [
         DialogPopOptionDemoModule,
         DialogTitleDemoModule,
         DialogTopDemoModule,
-        DialogHeightDemoModule
+        DialogHeightDemoModule,
+        DialogAbsolutePositionDemoModule
     ]
 })
 export class DialogDemoModule {
