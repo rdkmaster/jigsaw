@@ -13,7 +13,7 @@ export class DialogAbsolutePositionDemoComponent {
     public _$selectedPositionType: any = 'center';
     public _$popupInfo: PopupInfo;
 
-    @ViewChild('tpDialog', {static: false})
+    @ViewChild('tpDialog')
     private _tpDialog: TemplateRef<any>;
 
     constructor(private _popupService: PopupService) {
