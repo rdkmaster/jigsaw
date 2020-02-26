@@ -7,8 +7,8 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/
     encapsulation: ViewEncapsulation.None
 })
 export class DialogAbsolutePositionDemoComponent {
-    public _$isModal: boolean = false;
-    public _$popPositionTypes = [
+    public isModal: boolean = false;
+    public popPositionTypes = [
         {label: "center"},
         {label: "top", offset: {top: 16}},
         {label: "left", offset: {left: 16}},
@@ -20,46 +20,46 @@ export class DialogAbsolutePositionDemoComponent {
         {label: "rightBottom", offset: {right: 16, bottom: 16}}
     ];
     public objectKeys = Object.keys;
-    public _$selectedPositionType: any;
-    public _$popupInfo: PopupInfo;
+    public selectedPositionType: any;
+    public popupInfo: PopupInfo;
 
     @ViewChild('tpDialog', {static: false})
     private _tpDialog: TemplateRef<any>;
 
     constructor(private _popupService: PopupService) {
-        this._$selectedPositionType = this._$popPositionTypes[0];
+        this.selectedPositionType = this.popPositionTypes[0];
     }
 
-    public _$onModalChange() {
-        if (!this._$popupInfo) {
+    public onModalChange() {
+        if (!this.popupInfo) {
             return;
         }
-        this._$closeDialog();
-        this._$popupComponentDialog();
+        this.closeDialog();
+        this.popupComponentDialog();
     }
 
-    public _$closeDialog() {
-        if (this._$popupInfo) {
-            this._$popupInfo.dispose();
-            this._$popupInfo = null;
+    public closeDialog() {
+        if (this.popupInfo) {
+            this.popupInfo.dispose();
+            this.popupInfo = null;
         }
     }
 
-    public _$popupComponentDialog() {
+    public popupComponentDialog() {
         const options: PopupOptions = {
-            modal: !!this._$isModal,
+            modal: !!this.isModal,
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut
         };
-        if (this._$selectedPositionType.label != 'center') {
-            options.pos = this._$selectedPositionType.label;
-            options.posOffset = this._$selectedPositionType.offset;
+        if (this.selectedPositionType.label != 'center') {
+            options.pos = this.selectedPositionType.label;
+            options.posOffset = this.selectedPositionType.offset;
         }
 
-        if (this._$popupInfo) {
-            this._popupService.setPosition(options, this._$popupInfo.element);
+        if (this.popupInfo) {
+            this._popupService.setPosition(options, this.popupInfo.element);
         } else {
-            this._$popupInfo = this._popupService.popup(this._tpDialog, options);
+            this.popupInfo = this._popupService.popup(this._tpDialog, options);
         }
     }
 

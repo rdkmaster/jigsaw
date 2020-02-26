@@ -3,29 +3,29 @@
 </jigsaw-demo-description>
 
 <div class="line-box"><label>Is modal:</label>
-    <jigsaw-switch [(checked)]="_$isModal" (checkedChange)="_$onModalChange()"></jigsaw-switch>
+    <jigsaw-switch [(checked)]="isModal" (checkedChange)="onModalChange()"></jigsaw-switch>
 </div>
 <div class="line-box">
     <label>Position：</label>
-    <jigsaw-radios [(value)]="_$selectedPositionType" trackItemBy="label">
-        <jigsaw-radio-option *ngFor="let popPositionType of _$popPositionTypes"
+    <jigsaw-radios [(value)]="selectedPositionType" trackItemBy="label">
+        <jigsaw-radio-option *ngFor="let popPositionType of popPositionTypes"
                              [value]="popPositionType">{{popPositionType.label}}
         </jigsaw-radio-option>
     </jigsaw-radios>
 </div>
-<div class="line-box" *ngIf="_$selectedPositionType?.label != 'center'">
-    <div *ngFor="let property of objectKeys(_$selectedPositionType?.offset)" class="offset-box">
+<div class="line-box" *ngIf="selectedPositionType?.label != 'center'">
+    <div *ngFor="let property of objectKeys(selectedPositionType?.offset)" class="offset-box">
         <label>{{property}}: </label>
-        <jigsaw-numeric-input [(value)]="_$selectedPositionType.offset[property]"></jigsaw-numeric-input>
+        <jigsaw-numeric-input [(value)]="selectedPositionType.offset[property]"></jigsaw-numeric-input>
         <span style="margin-left: 5px;">px</span>
     </div>
 </div>
-<jigsaw-button colorType="primary" width="200px" (click)="_$popupComponentDialog()">
+<jigsaw-button colorType="primary" width="200px" (click)="popupComponentDialog()">
     Popup / Reposition
 </jigsaw-button>
 
 <ng-template #tpDialog>
-    <jigsaw-dialog width="400px" (close)="_$closeDialog()">
+    <jigsaw-dialog width="400px" (close)="closeDialog()">
         <div jigsaw-title>
             <span class="fa fa-thumbs-up"></span>一个对话框
         </div>
@@ -35,8 +35,8 @@
             </p>
         </div>
         <div jigsaw-button-bar>
-            <jigsaw-button colorType="primary" (click)="_$closeDialog()">OK</jigsaw-button>
-            <jigsaw-button (click)="_$closeDialog()">Cancel</jigsaw-button>
+            <jigsaw-button colorType="primary" (click)="closeDialog()">OK</jigsaw-button>
+            <jigsaw-button (click)="closeDialog()">Cancel</jigsaw-button>
         </div>
     </jigsaw-dialog>
 </ng-template>
