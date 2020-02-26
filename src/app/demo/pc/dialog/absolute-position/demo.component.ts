@@ -7,16 +7,27 @@ import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/
     encapsulation: ViewEncapsulation.None
 })
 export class DialogAbsolutePositionDemoComponent {
-    public _$offset: number = 16;
     public _$isModal: boolean = false;
-    public _$popPositionTypes: string[] = ['top', 'left', 'right', 'bottom', 'center'];
-    public _$selectedPositionType: any = 'center';
+    public _$popPositionTypes = [
+        {label: "center"},
+        {label: "top", offset: {top: 16}},
+        {label: "left", offset: {left: 16}},
+        {label: "right", offset: {right: 16}},
+        {label: "bottom", offset: {bottom: 16}},
+        {label: "leftTop", offset: {left: 16, top: 16}},
+        {label: "leftBottom", offset: {left: 16, bottom: 16}},
+        {label: "rightTop", offset: {right: 16, top: 16}},
+        {label: "rightBottom", offset: {right: 16, bottom: 16}}
+    ];
+    public objectKeys = Object.keys;
+    public _$selectedPositionType: any;
     public _$popupInfo: PopupInfo;
 
     @ViewChild('tpDialog', {static: false})
     private _tpDialog: TemplateRef<any>;
 
     constructor(private _popupService: PopupService) {
+        this._$selectedPositionType = this._$popPositionTypes[0];
     }
 
     public _$onModalChange() {
@@ -38,12 +49,11 @@ export class DialogAbsolutePositionDemoComponent {
         const options: PopupOptions = {
             modal: !!this._$isModal,
             showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut,
-            posOffset: {}
+            hideEffect: PopupEffect.bubbleOut
         };
-        if (this._$selectedPositionType != 'center') {
-            options.pos = this._$selectedPositionType;
-            options.posOffset[this._$selectedPositionType] = this._$offset;
+        if (this._$selectedPositionType.label != 'center') {
+            options.pos = this._$selectedPositionType.label;
+            options.posOffset = this._$selectedPositionType.offset;
         }
 
         if (this._$popupInfo) {

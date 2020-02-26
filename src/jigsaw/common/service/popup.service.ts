@@ -61,7 +61,8 @@ export class PopupOptions {
      * - `ElementRef`和`HTMLElement`类型：相对某个已知UI元素的位置，不配置偏移的话，弹出视图的左上角会和给定的UI元素的左上角位置重合。
      * Jigsaw会自动计算出给定元素的位置，并将弹出视图移动到该位置上。一般需要配合`posOffset`属性一起调整弹出位置，
      * 避免遮挡到给定的UI元素。这个方式在实现一些下拉功能的时候会非常有用。
-     * - 也可以是 'top' | 'left' | 'right' | 'bottom' 中的某一个值，用来控制弹出视图的绝对位置，
+     * - 也可以是 'top' | 'left' | 'right' | 'bottom' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom'
+     *   中的某一个值，用来控制弹出视图的绝对位置，
      * 配合posOffset属性中的top/right/left/bottom，可以指定绝对位置的偏移量
      *
      * 请参考 [这个demo]($demo=pc/dialog/popup-option) 和[这个demo]($demo=pc/dialog/absolute-position)。
@@ -131,7 +132,7 @@ export class PopupOptions {
     useCustomizedBackground?: boolean;
 }
 
-export type AbsolutePosition = 'top' | 'left' | 'right' | 'bottom';
+export type AbsolutePosition = 'top' | 'left' | 'right' | 'bottom' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement | AbsolutePosition;
 
 export class PopupPositionValue {
@@ -455,32 +456,63 @@ export class PopupService {
     }
 
     /**
-     * 根据options中的pos属性，是否配置了 'top' | 'left' | 'right' | 'bottom' 值来设定弹窗的位置
+     * 根据options中的pos属性，是否配置了
+     * 'top' | 'left' | 'right' | 'bottom' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom'
+     * 值来设定弹窗的位置
      */
     private _setAbsolutePosition(left: number, top: number, options: PopupOptions, element: HTMLElement): void {
-        if (options.pos == 'top') {
-            PopupService._renderer.removeStyle(element, 'right');
-            PopupService._renderer.removeStyle(element, 'bottom');
-            PopupService._renderer.setStyle(element, 'left', left + 'px');
-            PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
-        } else if (options.pos == 'right') {
-            PopupService._renderer.removeStyle(element, 'left');
-            PopupService._renderer.removeStyle(element, 'bottom');
-            PopupService._renderer.setStyle(element, 'top', top + 'px');
-            PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
-        } else if (options.pos == 'left') {
-            PopupService._renderer.removeStyle(element, 'right');
-            PopupService._renderer.removeStyle(element, 'bottom');
-            PopupService._renderer.setStyle(element, 'top', top + 'px');
-            PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
-        } else if (options.pos == 'bottom') {
-            PopupService._renderer.removeStyle(element, 'top');
-            PopupService._renderer.removeStyle(element, 'right');
-            PopupService._renderer.setStyle(element, 'left', left + 'px');
-            PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
-        } else {
-            PopupService._renderer.setStyle(element, 'top', top + 'px');
-            PopupService._renderer.setStyle(element, 'left', left + 'px');
+        switch (options.pos) {
+            case 'top':
+                PopupService._renderer.removeStyle(element, 'right');
+                PopupService._renderer.removeStyle(element, 'bottom');
+                PopupService._renderer.setStyle(element, 'left', left + 'px');
+                PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+                break;
+            case 'left':
+                PopupService._renderer.removeStyle(element, 'right');
+                PopupService._renderer.removeStyle(element, 'bottom');
+                PopupService._renderer.setStyle(element, 'top', top + 'px');
+                PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+                break;
+            case 'right':
+                PopupService._renderer.removeStyle(element, 'left');
+                PopupService._renderer.removeStyle(element, 'bottom');
+                PopupService._renderer.setStyle(element, 'top', top + 'px');
+                PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+                break;
+            case 'bottom':
+                PopupService._renderer.removeStyle(element, 'top');
+                PopupService._renderer.removeStyle(element, 'right');
+                PopupService._renderer.setStyle(element, 'left', left + 'px');
+                PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+                break;
+            case 'leftTop':
+                PopupService._renderer.removeStyle(element, 'right');
+                PopupService._renderer.removeStyle(element, 'bottom');
+                PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+                PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+                break;
+            case 'leftBottom':
+                PopupService._renderer.removeStyle(element, 'right');
+                PopupService._renderer.removeStyle(element, 'top');
+                PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+                PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+                break;
+            case 'rightTop':
+                PopupService._renderer.removeStyle(element, 'left');
+                PopupService._renderer.removeStyle(element, 'bottom');
+                PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+                PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+                break;
+            case 'rightBottom':
+                PopupService._renderer.removeStyle(element, 'left');
+                PopupService._renderer.removeStyle(element, 'top');
+                PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+                PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+                break;
+            default:
+                PopupService._renderer.setStyle(element, 'top', top + 'px');
+                PopupService._renderer.setStyle(element, 'left', left + 'px');
         }
     }
 

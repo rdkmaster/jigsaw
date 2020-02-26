@@ -7,15 +7,18 @@
 </div>
 <div class="line-box">
     <label>Position：</label>
-    <jigsaw-radios [(value)]="_$selectedPositionType">
+    <jigsaw-radios [(value)]="_$selectedPositionType" trackItemBy="label">
         <jigsaw-radio-option *ngFor="let popPositionType of _$popPositionTypes"
-                             [value]="popPositionType">{{popPositionType}}
+                             [value]="popPositionType">{{popPositionType.label}}
         </jigsaw-radio-option>
     </jigsaw-radios>
 </div>
-<div class="line-box">
-    <label>Offset：</label>
-    <jigsaw-numeric-input [(value)]="_$offset"></jigsaw-numeric-input>
+<div class="line-box" *ngIf="_$selectedPositionType?.label != 'center'">
+    <div *ngFor="let property of objectKeys(_$selectedPositionType?.offset)" class="offset-box">
+        <label>{{property}}: </label>
+        <jigsaw-numeric-input [(value)]="_$selectedPositionType.offset[property]"></jigsaw-numeric-input>
+        <span style="margin-left: 5px;">px</span>
+    </div>
 </div>
 <jigsaw-button colorType="primary" width="200px" (click)="_$popupComponentDialog()">
     Popup / Reposition
