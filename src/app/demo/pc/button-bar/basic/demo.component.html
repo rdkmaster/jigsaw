@@ -11,7 +11,7 @@
     <div class="demo-1 live-demo">
         <h3>对象数组</h3>
         <jigsaw-button-bar [(selectedItems)]="selectedCity" [data]="cities" [multipleSelect]="multiple"
-                           (selectedItemsChange)="basicSelectChange($event)">
+                           (selectedItemsChange)="basicSelectChange($event)" optionWidth=80>
         </jigsaw-button-bar>
         <p class="message">选择的城市是：{{selectedCityStr}}</p>
     </div>
