@@ -187,6 +187,7 @@ export class PopupInfo {
     element: HTMLElement;
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
+    windowListeners?: PopupDisposer[]
 }
 
 // @dynamic
@@ -267,8 +268,7 @@ export class PopupService {
             element: HTMLElement,
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
-            disposer: PopupDisposer,
-            removeWindowListens: PopupDisposer[] = [];
+            disposer: PopupDisposer
 
         //popup block
         blockDisposer = this._popupBlocker(options);
@@ -290,7 +290,9 @@ export class PopupService {
             if (blockDisposer) {
                 blockDisposer();
             }
-            removeWindowListens.forEach(removeWindowListen => removeWindowListen());
+            if (target && target.windowListeners) {
+                target.windowListeners.forEach(removeWindowListen => removeWindowListen());
+            }
         };
 
         //set popup
@@ -298,7 +300,7 @@ export class PopupService {
             popupRef.instance.dispose = disposer;
             popupRef.instance.initData = initData;
         }
-        removeWindowListens = this._beforePopup(options, element, disposer);
+        this._beforePopup(options, element, disposer);
         setTimeout(() => {
             this._setPopup(options, element);
             // 给弹出设置皮肤
@@ -337,13 +339,12 @@ export class PopupService {
         return disposer
     }
 
-    private _beforePopup(options: PopupOptions, element: HTMLElement, disposer: PopupDisposer): PopupDisposer[] {
+    private _beforePopup(options: PopupOptions, element: HTMLElement, disposer: PopupDisposer): void {
         this._removeAnimation(options, element);
         this._setStyle(options, element);
         if (!options || !options.hasOwnProperty('disposeOnRouterChanged') || options.disposeOnRouterChanged) {
             this._listenRouterChange(disposer);
         }
-        return this._setWindowListener(options, element);
     }
 
     private _setStyle(options: PopupOptions, element: HTMLElement): void {
@@ -448,7 +449,7 @@ export class PopupService {
                 removeWindowListens.push(PopupService._renderer.listen('window', 'resize', () => {
                     const documentBody = AffixUtils.getDocumentBody();
                     this._setAbsolutePosition((documentBody.clientWidth / 2 - element.offsetWidth / 2),
-                        (documentBody.clientHeight / 2 - element.offsetHeight / 2), options, element)
+                        (documentBody.clientHeight / 2 - element.offsetHeight / 2), options, element);
                 }));
             });
         }
@@ -461,7 +462,8 @@ export class PopupService {
      * 值来设定弹窗的位置
      */
     private _setAbsolutePosition(left: number, top: number, options: PopupOptions, element: HTMLElement): void {
-        switch (options.pos) {
+        const pos = options ? options.pos : '';
+        switch (pos) {
             case 'top':
                 PopupService._renderer.removeStyle(element, 'right');
                 PopupService._renderer.removeStyle(element, 'bottom');
@@ -511,6 +513,8 @@ export class PopupService {
                 PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
                 break;
             default:
+                PopupService._renderer.removeStyle(element, 'right');
+                PopupService._renderer.removeStyle(element, 'bottom');
                 PopupService._renderer.setStyle(element, 'top', top + 'px');
                 PopupService._renderer.setStyle(element, 'left', left + 'px');
         }
@@ -603,6 +607,16 @@ export class PopupService {
         let position = this._getPositionValue(options, element);
         PopupService._renderer.setStyle(element, 'position', posType);
         this._setAbsolutePosition(position.left, position.top, options, element);
+
+        // 注册窗口事件
+        const target = this._popups.find(p => p.element === element);
+        if (!target) {
+            return;
+        }
+        if (target.windowListeners) {
+            target.windowListeners.forEach(removeWindowListen => removeWindowListen());
+        }
+        target.windowListeners = this._setWindowListener(options, element);
     }
 
     /*
