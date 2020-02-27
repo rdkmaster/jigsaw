@@ -12,7 +12,8 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
                 [multipleSelect]="multipleSelect"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
-                           [width]="optionWidth" [height]="optionHeight" [disabled]="item?.disabled">
+                           [width]="optionWidth" [height]="optionHeight" [disabled]="item?.disabled"
+                           title="{{item && item[labelField] ? item[labelField] : item}}">
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-tile-option>
         </j-tile>`,
