@@ -187,7 +187,7 @@ export class PopupInfo {
     element: HTMLElement;
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
-    windowListeners?: PopupDisposer[]
+    windowListener?: PopupDisposer;
 }
 
 // @dynamic
@@ -268,7 +268,7 @@ export class PopupService {
             element: HTMLElement,
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
-            disposer: PopupDisposer
+            disposer: PopupDisposer;
 
         //popup block
         blockDisposer = this._popupBlocker(options);
@@ -277,7 +277,7 @@ export class PopupService {
         popupDisposer = popupInfo.dispose;
         //set disposer
         disposer = () => {
-            const target = this._popups.find(p => p.element === element);
+            const target: PopupInfo = this._popups.find(p => p.element === element);
             const index = this._popups.indexOf(target);
             if (index >= 0) {
                 this._popups.splice(index, 1);
@@ -290,8 +290,8 @@ export class PopupService {
             if (blockDisposer) {
                 blockDisposer();
             }
-            if (target && target.windowListeners) {
-                target.windowListeners.forEach(removeWindowListen => removeWindowListen());
+            if (target && target.windowListener) {
+                target.windowListener();
             }
         };
 
@@ -441,19 +441,19 @@ export class PopupService {
         }
     }
 
-    private _setWindowListener(options: PopupOptions, element: HTMLElement): PopupDisposer[] {
-        let removeWindowListens: PopupDisposer[] = [];
+    private _setWindowListener(options: PopupOptions, element: HTMLElement): PopupDisposer {
+        let removeWindowListen: PopupDisposer;
         if (this._isGlobalPopup(options)) {
             this._zone.runOutsideAngular(() => {
                 // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
-                removeWindowListens.push(PopupService._renderer.listen('window', 'resize', () => {
+                removeWindowListen = PopupService._renderer.listen('window', 'resize', () => {
                     const documentBody = AffixUtils.getDocumentBody();
                     this._setAbsolutePosition((documentBody.clientWidth / 2 - element.offsetWidth / 2),
                         (documentBody.clientHeight / 2 - element.offsetHeight / 2), options, element);
-                }));
+                });
             });
         }
-        return removeWindowListens;
+        return removeWindowListen;
     }
 
     /**
@@ -609,14 +609,14 @@ export class PopupService {
         this._setAbsolutePosition(position.left, position.top, options, element);
 
         // 注册窗口事件
-        const target = this._popups.find(p => p.element === element);
+        const target: PopupInfo = this._popups.find(p => p.element === element);
         if (!target) {
             return;
         }
-        if (target.windowListeners) {
-            target.windowListeners.forEach(removeWindowListen => removeWindowListen());
+        if (target.windowListener) {
+            target.windowListener();
         }
-        target.windowListeners = this._setWindowListener(options, element);
+        target.windowListener = this._setWindowListener(options, element);
     }
 
     /*
