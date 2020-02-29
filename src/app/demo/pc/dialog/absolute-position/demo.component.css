@@ -4,6 +4,11 @@
     margin-bottom: 20px;
 }
 
+.offset-box {
+    display: inline;
+    margin-right: 10px;
+}
+
 .dialog-content {
     padding: 20px;
 }
