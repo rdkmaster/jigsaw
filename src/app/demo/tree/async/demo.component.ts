@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {ZTreeSettingSetting} from "jigsaw/tree/ztree-types";
 import {SimpleTreeData} from "jigsaw/core/data/tree-data";
+import {ZTreeSettingSetting} from "jigsaw/component/tree/ztree-types";
 
 declare const $:any;
 
