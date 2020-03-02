@@ -160,7 +160,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     public resize(): void {
         // 宿主元素没有尺寸就不resize
-        if (!this._graph || !this._host.offsetWidth || !this._host.offsetHeight) return;
+        if (!this._graph || !this._host.offsetWidth || !this._host.offsetHeight) {
+            return;
+        }
         this._graph.resize({
             width: this._host.offsetWidth + 'px',
             height: this._host.offsetHeight + 'px',
