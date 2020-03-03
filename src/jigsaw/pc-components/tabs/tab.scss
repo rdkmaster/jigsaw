@@ -72,7 +72,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         box-shadow: none !important;
         border-radius: 0;
         border: none;
-        width: 200px;
+        width: 200px!important;
+        height: 150px;
         .jigsaw-list-option {
             .span-margin {
                 margin: 0 4px;
