@@ -375,6 +375,14 @@ input {
     }
 }
 
+.jigsaw-select-host {
+    .jigsaw-combo-select-host {
+        .jigsaw-tag-host {
+            min-width: auto;
+        }
+    }
+}
+
 .ztree * {
     font-family: "Helvetica Neue", "PingFang SC", Tahoma, "Microsoft Yahei" !important;
     color: $Gray-8 !important;
