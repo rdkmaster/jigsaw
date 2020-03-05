@@ -8,10 +8,12 @@ import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directiv
         .common-param-setting {
             margin-bottom: 30px;
         }
-        .common-param-setting h3{
+
+        .common-param-setting h3 {
             font-size: 16px;
             margin-bottom: 10px;
         }
+
         .link-upload {
             text-decoration: underline;
             margin-left: 6px
@@ -24,22 +26,24 @@ export class UploadBasicDemoComponent {
     isButtonUploadWaiting: boolean;
     isLinkUploadWaiting: boolean;
     uploadedFile: string = '';
+    maxSize: number = Infinity;
+    minSize: number = 0;
 
     @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
     uploadDirectives: QueryList<JigsawUploadDirective>;
 
     getUploadFile(fileInfo: UploadFileInfo) {
-        console.log('one file uploaded',fileInfo);
+        console.log('one file uploaded', fileInfo);
     }
 
     getAllUploadFiles(fileInfoList: UploadFileInfo[], mode?: string) {
         console.log('all files uploaded', fileInfoList);
-        switch(mode) {
+        switch (mode) {
             case 'button':
                 this.isButtonUploadWaiting = false;
                 break;
             case 'link':
-                this.isLinkUploadWaiting =false;
+                this.isLinkUploadWaiting = false;
         }
     }
 

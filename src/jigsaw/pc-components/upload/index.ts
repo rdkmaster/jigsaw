@@ -78,7 +78,10 @@ export class JigsawUploadModule {
                 "Not Extended": "错误详情：非扩展",
                 "Network Authentication Required": "错误详情：需要网络授权",
                 "Network read timeout error": "错误详情：网络读取超时错误",
-                "Network connect timeout error": "错误详情：网络连接超时错误"
+                "Network connect timeout error": "错误详情：网络连接超时错误",
+                "fileTypeError": "错误详情：文件扩展名错误",
+                "fileMinSizeError": "错误详情：文件大小小于最小限制",
+                "fileMaxSizeError": "错误详情：文件大小大于最大限制"
             },
             en: {
                 "waiting": "Waiting",
@@ -134,7 +137,10 @@ export class JigsawUploadModule {
                 "Not Extended": "Error detail: Not Extended",
                 "Network Authentication Required": "Error detail: Network Authentication Required",
                 "Network read timeout error": "Error detail: Network read timeout error",
-                "Network connect timeout error": "Error detail: Network connect timeout error"
+                "Network connect timeout error": "Error detail: Network connect timeout error",
+                "fileTypeError": "Error detail: File extension error",
+                "fileMinSizeError": "Error detail: Size of the file is less than the minSize",
+                "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

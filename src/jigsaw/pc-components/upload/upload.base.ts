@@ -32,6 +32,37 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Input()
     public fileNameField: string = 'filename';
 
+    private _minSize: number;
+
+    @Input()
+    public get minSize(): number {
+        return this._minSize;
+    }
+
+    public set minSize(value: number) {
+        if (isNaN(value)) {
+            console.error('minSize property must be a number, please input a number or number string');
+            return;
+        }
+        this._minSize = Number(value);
+    }
+
+    private _maxSize: number;
+
+    @Input()
+    public get maxSize(): number {
+        return this._maxSize;
+    }
+
+    public set maxSize(value: number) {
+        if (isNaN(value)) {
+            console.error('max property must be a number, please input a number or number string');
+            return;
+        }
+        this._maxSize = Number(value);
+    }
+
+
     @Output()
     public progress = new EventEmitter<UploadFileInfo>();
 
@@ -54,6 +85,8 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     protected _fileInputEl: Element;
 
     private _removeFileChangeEvent: Function;
+
+    private _inValidFileInfoList: UploadFileInfo[] = [];
 
     /**
      * @internal
@@ -100,7 +133,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         }
 
         let validFiles = this._filterValidFiles(Array.from(files));
-        this._$fileInfoList = this._filterValidFiles(this._$fileInfoList);
 
         validFiles.forEach((file: File, index) => {
             const fileInfo: UploadFileInfo = {
@@ -122,15 +154,69 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (this._fileInputEl) {
             this._fileInputEl['value'] = null;
         }
+
+        if (validFiles.length == 0) {
+            this._$fileInfoList = this._$fileInfoList.concat(this._inValidFileInfoList);
+            this.complete.emit(this._$fileInfoList);
+            this.update.emit(this._$fileInfoList)
+        }
     }
 
-    private _filterValidFiles(files) {
-        if (!this.fileType) {
-            return files;
+    private _filterValidFiles(files: File[]): any[] {
+        let typeValidFiles: File[] = [];
+        let minSizeValidFiles: File[] = [];
+        let maxSizeValidFiles: File[] = [];
+        this._inValidFileInfoList = [];
+        if (this.fileType) {
+            const fileTypes = this.fileType.split(',');
+            typeValidFiles = files.filter(f =>
+                !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`, 'i').test(f.name)));
+            let inValidTypeFiles = files.filter(f =>
+                !fileTypes.find(ft => new RegExp(`${ft.trim()}$`, 'i').test(f.name)));
+            inValidTypeFiles.forEach(file => {
+                this._inValidFileInfoList.push({
+                    name: file.name,
+                    state: 'error',
+                    url: '',
+                    file: file,
+                    reason: this._translateService.instant(`upload.fileTypeError`)
+                })
+            });
+        } else {
+            typeValidFiles = typeValidFiles.concat(files);
         }
-        const fileTypes = this.fileType.split(',');
-        return files.filter(f =>
-            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`, 'i').test(f.name)));
+        if (this.minSize) {
+            minSizeValidFiles = typeValidFiles.filter(f => f.size >= this.minSize * 1024 * 1024);
+            let minSizeInValidFiles = typeValidFiles.filter(f => f.size < this.minSize * 1024 * 1024);
+            minSizeInValidFiles.forEach(file => {
+                this._inValidFileInfoList.push({
+                    name: file.name,
+                    state: 'error',
+                    url: '',
+                    file: file,
+                    reason: this._translateService.instant(`upload.fileMinSizeError`)
+                })
+            });
+        } else {
+            minSizeValidFiles = minSizeValidFiles.concat(typeValidFiles)
+        }
+
+        if (this.maxSize) {
+            maxSizeValidFiles = minSizeValidFiles.filter(f => f.size <= this.maxSize * 1024 * 1024);
+            let maxSizeInValidFiles = minSizeValidFiles.filter(f => f.size > this.maxSize * 1024 * 1024);
+            maxSizeInValidFiles.forEach(file => {
+                this._inValidFileInfoList.push({
+                    name: file.name,
+                    state: 'error',
+                    url: '',
+                    file: file,
+                    reason: this._translateService.instant(`upload.fileMaxSizeError`)
+                })
+            });
+        } else {
+            maxSizeValidFiles = maxSizeValidFiles.concat(minSizeValidFiles);
+        }
+        return maxSizeValidFiles;
     }
 
     private _isAllFilesUploaded(): boolean {
@@ -168,6 +254,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
+            this._$fileInfoList = this._$fileInfoList.concat(this._inValidFileInfoList);
             this.complete.emit(this._$fileInfoList);
             this.update.emit(this._$fileInfoList)
         }
