@@ -80,8 +80,8 @@ export class JigsawUploadModule {
                 "Network read timeout error": "错误详情：网络读取超时错误",
                 "Network connect timeout error": "错误详情：网络连接超时错误",
                 "fileTypeError": "错误详情：文件扩展名错误",
-                "fileMinSizeError": "错误详情：文件大小小于最小限制",
-                "fileMaxSizeError": "错误详情：文件大小大于最大限制"
+                "fileMinSizeError": "错误详情：文件尺寸小于最小限制",
+                "fileMaxSizeError": "错误详情：文件尺寸大于最大限制"
             },
             en: {
                 "waiting": "Waiting",

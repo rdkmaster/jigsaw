@@ -26,7 +26,7 @@ export class UploadBasicDemoComponent {
     isButtonUploadWaiting: boolean;
     isLinkUploadWaiting: boolean;
     uploadedFile: string = '';
-    maxSize: number = Infinity;
+    maxSize: number = 1024;
     minSize: number = 0;
 
     @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
@@ -54,7 +54,7 @@ export class UploadBasicDemoComponent {
     }
 
     showUploadFileName(files?: UploadFileInfo[]) {
-        this.uploadedFile = !!files ? files[0].name : '正在上传...';
+        this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
     }
 
     // ====================================================================
