@@ -153,9 +153,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             let settings = oldBackup[field];
             settings = TableUtils.updateHeaderSettings(columnDefine, settings);
             let headerData = columnDefine.header && columnDefine.header.data ? columnDefine.header.data : null;
-            if(headerData instanceof Function) {
+            if (headerData instanceof Function) {
                 settings.cellData = headerData(this.data, realColIndex, this._additionalData);
-            } else if(typeof headerData == 'string') {
+            } else if (typeof headerData == 'string') {
                 settings.cellData = headerData;
             } else {
                 settings.cellData = this._getHeaderValueByField(field);
@@ -580,6 +580,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _calculateContentWidth() {
         const host = this._elementRef.nativeElement;
+        //处理没有数据的情况
+        if (!this._$cellSettings.length) {
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
+            this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
+            return;
+        }
         const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header > colgroup col');
         const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body > colgroup col');
         const tHeadTds = host.querySelectorAll('.jigsaw-table-header > thead td');
@@ -659,6 +666,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _calibrateTable() {
+        if (!this._$cellSettings.length) {
+            return;
+        }
         const host = this._elementRef.nativeElement;
         const tableHeader = host.querySelector('table.jigsaw-table-header');
         const tableBody = host.querySelector('table.jigsaw-table-body');
