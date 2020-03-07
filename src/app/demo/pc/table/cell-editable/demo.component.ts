@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
 import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 import {JigsawInput} from "jigsaw/pc-components/input/input";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableCellRendererBase, TableCellNumericEditorRenderer} from "jigsaw/pc-components/table/table-renderer";
 
 
 /*
@@ -60,6 +60,20 @@ export class TableSetCellEditableDemoComponent {
                 editable: true,
                 editorRenderer: MyTableCellEditor,
                 editorRendererInitData: {placeholder: "Type to edit..."}
+            }
+        }, {
+            target: 'salary',
+            width: '20%',
+            group: true,
+            cell: {
+                editable: true,
+                editorRenderer: TableCellNumericEditorRenderer,
+                editorRendererInitData:
+                    {
+                        placeholder: "Type to edit...",
+                        min: 12000,
+                        step: 100
+                    }
             }
         }];
 

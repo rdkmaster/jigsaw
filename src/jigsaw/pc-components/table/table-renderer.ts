@@ -5,6 +5,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
+import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../common/core/data/table-data";
@@ -92,18 +93,18 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 }
 
-/*
+/**
  * 默认表格渲染组件
- * */
+ */
 @Component({
     template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>'
 })
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
-/*
+/**
  * 编辑单元格渲染器
- * */
+ */
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
@@ -125,9 +126,45 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 }
 
-/*
+/**
+ * 编辑单元格数字输入渲染器
+ */
+@Component({
+    template: `
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+                              (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
+        </jigsaw-numeric-input>
+    `
+})
+export class TableCellNumericEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+
+    @ViewChild(JigsawNumericInput, {static: false})
+    protected input: JigsawNumericInput;
+
+    public get _$placeholder() {
+        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$min() {
+        return this.initData && this.initData.hasOwnProperty('min') ? this.initData.min : -Infinity;
+    }
+
+    public get _$max() {
+        return this.initData && this.initData.hasOwnProperty('max') ? this.initData.max : Infinity;
+    }
+
+    public get _$step() {
+        return this.initData && this.initData.hasOwnProperty('step') ? this.initData.step : 1;
+    }
+
+    ngAfterViewInit() {
+        this.input.focus();
+    }
+}
+
+/**
  * head checkbox renderer
- * */
+ */
 @Component({
     template: `
         <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`
@@ -170,9 +207,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
  * cell checkbox renderer
- * */
+ */
 @Component({
     template: `
         <jigsaw-checkbox [checked]="checked" (checkedChange)="onChange($event)">
@@ -227,9 +264,9 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
  * switch renderer
- * */
+ */
 @Component({
     template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>'
 })
@@ -353,10 +390,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer
     ],
     imports: [
-        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule
     ]
 })
 export class JigsawTableRendererModule {
