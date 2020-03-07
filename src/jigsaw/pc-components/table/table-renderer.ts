@@ -93,18 +93,18 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 }
 
-/*
+/**
  * 默认表格渲染组件
- * */
+ */
 @Component({
     template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>'
 })
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
-/*
+/**
  * 编辑单元格渲染器
- * */
+ */
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
@@ -126,9 +126,9 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 }
 
-/*
+/**
  * 编辑单元格数字输入渲染器
- * */
+ */
 @Component({
     template: `
         <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
@@ -162,9 +162,9 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
     }
 }
 
-/*
+/**
  * head checkbox renderer
- * */
+ */
 @Component({
     template: `
         <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`
@@ -207,9 +207,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
  * cell checkbox renderer
- * */
+ */
 @Component({
     template: `
         <jigsaw-checkbox [checked]="checked" (checkedChange)="onChange($event)">
@@ -264,9 +264,9 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
  * switch renderer
- * */
+ */
 @Component({
     template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>'
 })
