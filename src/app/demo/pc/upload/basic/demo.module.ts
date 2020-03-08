@@ -7,13 +7,14 @@ import {JigsawRadioLiteModule} from "jigsaw/pc-components/radio/radio-lite";
 import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
 import {CommonModule} from "@angular/common";
+import {JigsawNumericInputModule} from "jigsaw/pc-components/input/numeric-input";
 
 @NgModule({
     declarations: [UploadBasicDemoComponent],
-    exports: [ UploadBasicDemoComponent ],
+    exports: [UploadBasicDemoComponent],
     imports: [JigsawUploadModule, JigsawDemoDescriptionModule, JigsawSwitchModule,
-        JigsawRadioLiteModule, JigsawButtonModule, JigsawLoadingModule, CommonModule]
+        JigsawRadioLiteModule, JigsawButtonModule, JigsawLoadingModule, CommonModule, JigsawNumericInputModule]
 })
-export class UploadBasicDemoModule{
+export class UploadBasicDemoModule {
 
 }
