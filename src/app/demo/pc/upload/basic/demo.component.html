@@ -21,11 +21,14 @@
         文件大小：
          最小限制 <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input> MB
          最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
+        <br>
+        <br>
+        <a (click)="clearFileList()">清空已上传文件</a>
     </div>
 
     <div class="demo-1 live-demo">
         <h3>组件</h3>
-        <j-upload [multiple]="multiple" [fileType]="fileType" [minSize]="minSize" [maxSize]="maxSize"
+        <j-upload #upload [multiple]="multiple" [fileType]="fileType" [minSize]="minSize" [maxSize]="maxSize"
                   (progress)="getUploadFile($event)" (update)="getAllUploadFiles($event)">
         </j-upload>
     </div>
@@ -55,7 +58,6 @@
            class="link-upload">上传文件</a>
         <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
         <br><br>
-        <a (click)="clearFileList()">Click here</a> to clear the uploaded files.
     </div>
 </div>
 

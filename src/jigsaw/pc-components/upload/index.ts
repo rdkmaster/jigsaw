@@ -79,7 +79,7 @@ export class JigsawUploadModule {
                 "Network Authentication Required": "错误详情：需要网络授权",
                 "Network read timeout error": "错误详情：网络读取超时错误",
                 "Network connect timeout error": "错误详情：网络连接超时错误",
-                "fileTypeError": "错误详情：文件扩展名错误",
+                "fileTypeError": "错误详情：文件类型错误",
                 "fileMinSizeError": "错误详情：文件尺寸小于最小限制",
                 "fileMaxSizeError": "错误详情：文件尺寸大于最大限制"
             },
@@ -138,7 +138,7 @@ export class JigsawUploadModule {
                 "Network Authentication Required": "Error detail: Network Authentication Required",
                 "Network read timeout error": "Error detail: Network read timeout error",
                 "Network connect timeout error": "Error detail: Network connect timeout error",
-                "fileTypeError": "Error detail: File extension error",
+                "fileTypeError": "Error detail: File type error",
                 "fileMinSizeError": "Error detail: Size of the file is less than the minSize",
                 "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize"
             }
