@@ -13,5 +13,5 @@
 </div>
 
 <div *ngIf="_$uploadMode == 'selectAndList'" class="jigsaw-upload-file-list-container">
-    <j-upload-file-list [initData]="_$fileInfoList" [uploader]="this" [optionCount]="null"></j-upload-file-list>
+    <j-upload-file-list [initData]="_$allFiles" [uploader]="this" [optionCount]="null"></j-upload-file-list>
 </div>
