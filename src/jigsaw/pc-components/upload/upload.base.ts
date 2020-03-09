@@ -33,6 +33,36 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Input()
     public fileNameField: string = 'filename';
 
+    private _minSize: number;
+
+    @Input()
+    public get minSize(): number {
+        return this._minSize;
+    }
+
+    public set minSize(value: number) {
+        if (isNaN(value)) {
+            console.error('minSize property must be a number, please input a number or number string');
+            return;
+        }
+        this._minSize = Number(value);
+    }
+
+    private _maxSize: number;
+
+    @Input()
+    public get maxSize(): number {
+        return this._maxSize;
+    }
+
+    public set maxSize(value: number) {
+        if (isNaN(value)) {
+            console.error('max property must be a number, please input a number or number string');
+            return;
+        }
+        this._maxSize = Number(value);
+    }
+
     @Output()
     public progress = new EventEmitter<UploadFileInfo>();
 
@@ -46,15 +76,24 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public start = new EventEmitter<UploadFileInfo[]>();
 
     @Output()
+    /**
+     * @deprecated
+     */
     public update = new EventEmitter<UploadFileInfo[]>();
 
     public _$uploadMode: 'select' | 'selectAndList' = 'select';
 
-    public _$fileInfoList: UploadFileInfo[] = [];
-
     protected _fileInputEl: Element;
 
     private _removeFileChangeEvent: Function;
+
+    public _$validFiles: UploadFileInfo[] = [];
+
+    public _$invalidFiles: UploadFileInfo[] = [];
+
+    public get _$allFiles(): UploadFileInfo[] {
+        return [...this._$validFiles, ...this._$invalidFiles];
+    }
 
     /**
      * @internal
@@ -100,42 +139,77 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             return;
         }
 
-        let validFiles = this._filterValidFiles(Array.from(files));
-        this._$fileInfoList = this._filterValidFiles(this._$fileInfoList);
+        if (!this.multiple) {
+            this._$validFiles = [];
+            this._$invalidFiles = [];
+        }
 
-        validFiles.forEach((file: File, index) => {
-            const fileInfo: UploadFileInfo = {
-                name: file.name, state: 'pause', url: '', file: file, reason: ''
-            };
-            if (this.multiple) {
-                this._$fileInfoList.push(fileInfo);
-            } else {
-                this._$fileInfoList = [fileInfo];
-            }
-            if (index < 5) {
-                this._sequenceUpload(fileInfo);
-            }
-        });
+        this._classifyFiles(Array.from(files));
+        const pendingFiles = this._$validFiles.filter(file => file.state == 'pause');
+        for (let i = 0, len = Math.min(5, pendingFiles.length); i < len; i++) {
+            // 最多前5个文件同时上传给服务器
+            this._sequenceUpload(pendingFiles[i]);
+        }
 
         this._$uploadMode = 'selectAndList';
-        this.start.emit(this._$fileInfoList);
+        if (pendingFiles.length > 0) {
+            this.start.emit(this._$validFiles);
+        }
 
         if (this._fileInputEl) {
             this._fileInputEl['value'] = null;
         }
     }
 
-    private _filterValidFiles(files) {
-        if (!this.fileType) {
-            return files;
+    private _testFileType(fileName: string, type: string): boolean {
+        const re = new RegExp(`.+\\${type.trim()}$`, 'i');
+        return re.test(fileName);
+    }
+
+    private _classifyFiles(files: File[]): void {
+        if (this.fileType) {
+            const fileTypes = this.fileType.split(',');
+            const oldFiles = files;
+            files = files.filter(f => !!fileTypes.find(ft => this._testFileType(f.name, ft)));
+            oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
+                this._$invalidFiles.push({
+                    name: file.name, state: 'error', url: '', file: file,
+                    reason: this._translateService.instant(`upload.fileTypeError`)
+                })
+            });
         }
-        const fileTypes = this.fileType.split(',');
-        return files.filter(f =>
-            !!fileTypes.find(ft => new RegExp(`${ft.trim()}$`, 'i').test(f.name)));
+
+        if (this.minSize) {
+            const oldFiles = files;
+            files = files.filter(f => f.size >= this.minSize * 1024 * 1024);
+            oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
+                this._$invalidFiles.push({
+                    name: file.name, state: 'error', url: '', file: file,
+                    reason: this._translateService.instant(`upload.fileMinSizeError`)
+                })
+            });
+        }
+
+        if (this.maxSize) {
+            const oldFiles = files;
+            files = files.filter(f => f.size <= this.maxSize * 1024 * 1024);
+            oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
+                this._$invalidFiles.push({
+                    name: file.name, state: 'error', url: '', file: file,
+                    reason: this._translateService.instant(`upload.fileMaxSizeError`)
+                })
+            });
+        }
+
+        files.forEach((file: File) => {
+            this._$validFiles.push({
+                name: file.name, state: 'pause', url: '', file: file, reason:  ''
+            });
+        });
     }
 
     private _isAllFilesUploaded(): boolean {
-        return !this._$fileInfoList.find(f => f.state == 'loading' || f.state == 'pause');
+        return !this._$validFiles.find(f => f.state == 'loading' || f.state == 'pause');
     }
 
     private _sequenceUpload(fileInfo: UploadFileInfo) {
@@ -165,24 +239,28 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
 
-        const waitingFile = this._$fileInfoList.find(f => f.state == 'pause');
+        const waitingFile = this._$validFiles.find(f => f.state == 'pause');
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
-            this.complete.emit(this._$fileInfoList);
-            this.update.emit(this._$fileInfoList)
+            this.complete.emit(this._$validFiles);
+            this.update.emit(this._$validFiles)
         }
     }
 
     public _$removeFile(file) {
         this.remove.emit(file);
-        const fileIndex = this._$fileInfoList.findIndex(f => f == file);
-        if (fileIndex == -1) {
-            return;
+        let fileIndex = this._$validFiles.findIndex(f => f == file);
+        if (fileIndex != -1) {
+            this._$validFiles.splice(fileIndex, 1);
+            // 保持向下兼容
+            if (this._isAllFilesUploaded()) {
+                this.update.emit(this._$validFiles);
+            }
         }
-        this._$fileInfoList.splice(fileIndex, 1);
-        if (this._isAllFilesUploaded()) {
-            this.update.emit(this._$fileInfoList);
+        fileIndex = this._$invalidFiles.findIndex(f => f == file);
+        if (fileIndex != -1) {
+            this._$invalidFiles.splice(fileIndex, 1);
         }
         if (this._fileInputEl) {
             this._fileInputEl['value'] = null;
@@ -190,7 +268,8 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     public clearFileList() {
-        this._$fileInfoList = [];
+        this._$validFiles = [];
+        this._$invalidFiles = [];
     }
 
     ngOnDestroy() {
@@ -202,5 +281,4 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         this._fileInputEl = null;
     }
-
 }
