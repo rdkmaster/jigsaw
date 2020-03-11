@@ -16,7 +16,8 @@ import {
     Type,
     ViewChild,
     ViewChildren,
-    ViewContainerRef
+    ViewContainerRef,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
