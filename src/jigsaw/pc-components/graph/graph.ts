@@ -225,12 +225,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
+    /**
+     * @internal
+     */
+    public getMapMap(mapName: string): Object {
+        return this.getMap(mapName);
+    }
+
     /* ********************** echarts api 封装区 start  ******************************** */
     public registerMap(mapName: string, geoJson: Object, specialAreas?: Object): void {
         echarts.registerMap(mapName, geoJson, specialAreas);
     }
 
-    public getMapMap(mapName: string): Object {
+    public getMap(mapName: string): Object {
         return echarts.getMap(mapName);
     }
 
