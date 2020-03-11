@@ -601,7 +601,7 @@ function addDescLink(desc) {
 
 function getOpenPopupScript(url) {
     url = url[0] == '/' ? url : '/' + url;
-    url = 'jigsaw-demo/#/pc' + url;
+    url = 'jigsaw-demo/#' + url;
     return `document.getElementById('panel').style.display = 'block';
             var evalator = document.getElementById('evalator');
             if (evalator.src != location.host + '${url}') evalator.src = '${url}';`;
