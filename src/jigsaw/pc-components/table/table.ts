@@ -1,5 +1,4 @@
-﻿
-import {
+﻿import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
@@ -666,14 +665,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _calibrateTable() {
-        if (!this._$cellSettings.length) {
-            return;
-        }
+
         const host = this._elementRef.nativeElement;
         const tableHeader = host.querySelector('table.jigsaw-table-header');
         const tableBody = host.querySelector('table.jigsaw-table-body');
         const tableBodyRange = host.querySelector('.jigsaw-table-body-range');
         const tableRange = host.querySelector('.jigsaw-table-range');
+
+        // 根据表头的高度，设置表体的padding-top
+        if (this.hideHeader) {
+            this._renderer.setStyle(tableRange, 'padding-top', 0);
+        } else {
+            this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
+        }
+
+        if (!this._$cellSettings.length) {
+            return;
+        }
 
         // table body's width is always not less than the host component
         if (host.offsetWidth > tableBody.offsetWidth) {
@@ -688,13 +696,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // table header's width is always equal to table body's
         if (tableHeader.offsetWidth != tableBody.offsetWidth) {
             this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
-        }
-
-        // 根据表头的高度，设置表体的padding-top
-        if (this.hideHeader) {
-            this._renderer.setStyle(tableRange, 'padding-top', 0);
-        } else {
-            this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
         }
     }
 
