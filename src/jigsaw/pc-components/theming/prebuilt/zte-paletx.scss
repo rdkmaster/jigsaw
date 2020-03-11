@@ -2,6 +2,45 @@
 @import "../all-theme";
 @import "../../../common/core/theming/theming-api";
 
+
+.jigsaw-dialog {
+
+    &-head {
+        font-family: 'Roboto', 'Helvetica Neue', 'Arial', 'Source Han Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei';
+        font-size: 20px;
+        font-weight: 400;
+        margin: 30px 30px 20px 30px;
+        padding: 0px 0px;
+        color: $Gray-8;
+        border-bottom: none;
+        line-height: 30px;
+
+        .jigsaw-dialog-close {
+            border-radius: 24px;
+            width: 24px;
+            height: 24px;
+            color: $Gray-5;
+            text-align: center;
+            line-height: 26px;
+
+            &:hover {
+                background-color: $Gray-3;
+            }
+        }
+    }
+
+    &-content {
+        padding: 0px 30px
+    }
+
+    &-button-group {
+        height: auto;
+        border-top: none;
+        margin: 32px 30px 32px 30px;
+    }
+}
+
+
 .jigsaw-button {
     &-disabled {
         opacity: 0.3 !important;
