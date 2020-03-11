@@ -548,7 +548,7 @@ function fixDescription(metaInfo) {
 function getInheritanceInfo(metaInfo) {
     var inherited = metaInfo.inheritInfo;
     return !inherited ? '' :
-        `<a href="/components/api/${inherited.type}/${inherited.from}#${metaInfo.name}">
+        `<a href="#/components/api/${inherited.type}/${inherited.from}#${metaInfo.name}">
         <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
 }
 
@@ -606,7 +606,7 @@ function addDescLink(desc) {
 
 function getOpenPopupScript(url) {
     url = url[0] == '/' ? url : '/' + url;
-    url = '/jigsaw' + url;
+    url = 'jigsaw-demo/#/pc' + url;
     return `document.getElementById('panel').style.display = 'block';
             var evalator = document.getElementById('evalator');
             if (evalator.src != location.host + '${url}') evalator.src = '${url}';`;
@@ -621,7 +621,7 @@ function getTypeUrl(type, allowUnknown) {
     // try native types
     var info = findTypeMetaInfo(type);
     if (info) {
-        return `/components/api/${info.subtype || info.type}/${type}`;
+        return `#/components/api/${info.subtype || info.type}/${type}`;
     }
 
     // try angular types
@@ -694,12 +694,12 @@ function getPropertyUrl(type, property, context) {
             // 此时的type是一个属性，这里的info里包含的可能是该属性在其父类里的信息
             var name = info.type.name;
             var subtype = info.type.subtype || info.type.type;
-            return `/components/api/${subtype}/${name}#${type}`;
+            return `#/components/api/${subtype}/${name}#${type}`;
         }
         var info = findTypeMetaInfo(type);
         if (info) {
             // 此时的type是一个类
-            return `/components/api/${info.subtype || info.type}/${info.name}`;
+            return `#/components/api/${info.subtype || info.type}/${info.name}`;
         }
         // 试一下是不是angular、ts等其他的类型
         return getTypeUrl(type, true);
@@ -709,7 +709,7 @@ function getPropertyUrl(type, property, context) {
             // 这里的info里包含的可能是该属性在其父类里的信息
             var name = info.type.name;
             var subtype = info.type.subtype || info.type.type;
-            return `/components/api/${subtype}/${name}#${property}`;
+            return `#/components/api/${subtype}/${name}#${property}`;
         }
     }
     return '';
@@ -1025,7 +1025,7 @@ function getFooterTemplate() {
             <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
             <li><a onclick="$wechatGroup" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
             <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
-            <li class="splitter"><a href="/components/quickstart/norm" target="_self">零基础起航</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
         </ul>
     </div>
 </div>
