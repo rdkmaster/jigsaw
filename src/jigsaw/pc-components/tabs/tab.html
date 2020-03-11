@@ -45,7 +45,7 @@
         <jigsaw-list-option *ngFor="let tab of _$tabPanes; let i = index;" [value]="tab" (click)="_$listOptionClick(i)"
                             [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden">
             <div [class.jigsaw-list-option-selected]="_$selectedIndex === i">
-                <span class="fa fa-check" *ngIf="_$selectedIndex === i"></span>
+                <span class="fa fa-check check-icon" *ngIf="_$selectedIndex === i"></span>
                 <span style="display: inline-block" [innerHTML]="_$tabList[i]"></span>
             </div>
         </jigsaw-list-option>

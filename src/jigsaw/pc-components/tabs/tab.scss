@@ -73,7 +73,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         border-radius: 0;
         border: none;
         width: 200px!important;
-        height: 150px;
+        max-height: 200px;
         .jigsaw-list-option {
             .span-margin {
                 margin: 0 4px;
@@ -82,6 +82,12 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             }
             &-selected {
                 color: $primary-color;
+                display: flex;
+                align-items: center;
+
+                .check-icon {
+                    margin-right: 5px;
+                }
             }
             &-hidden {
                 display: none;
