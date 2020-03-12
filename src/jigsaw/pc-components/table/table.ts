@@ -580,12 +580,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _calculateContentWidth() {
         const host = this._elementRef.nativeElement;
         //处理没有数据的情况
-        if (!this._$cellSettings.length) {
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
-            this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
-            return;
-        }
         const tHeadColGroup = host.querySelectorAll('.jigsaw-table-header > colgroup col');
         const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body > colgroup col');
         const tHeadTds = host.querySelectorAll('.jigsaw-table-header > thead td');
@@ -672,6 +666,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tableBodyRange = host.querySelector('.jigsaw-table-body-range');
         const tableRange = host.querySelector('.jigsaw-table-range');
 
+        if (this._$cellSettings.length || this._$headerSettings.length) {
+            // table body's width is always not less than the host component
+            if (host.offsetWidth > tableBody.offsetWidth) {
+                this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
+            }
+
+            // table body range's width is always equal to table body's
+            if (tableBodyRange.offsetWidth != tableBody.offsetWidth) {
+                this._renderer.setStyle(tableBodyRange, 'width', tableBody.offsetWidth + 'px');
+            }
+
+            // table header's width is always equal to table body's
+            if (tableHeader.offsetWidth != tableBody.offsetWidth) {
+                this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
+            }
+        }
+
         // 根据表头的高度，设置表体的padding-top
         if (this.hideHeader) {
             this._renderer.setStyle(tableRange, 'padding-top', 0);
@@ -679,24 +690,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
         }
 
-        if (!this._$cellSettings.length) {
-            return;
-        }
-
-        // table body's width is always not less than the host component
-        if (host.offsetWidth > tableBody.offsetWidth) {
-            this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
-        }
-
-        // table body range's width is always equal to table body's
-        if (tableBodyRange.offsetWidth != tableBody.offsetWidth) {
-            this._renderer.setStyle(tableBodyRange, 'width', tableBody.offsetWidth + 'px');
-        }
-
-        // table header's width is always equal to table body's
-        if (tableHeader.offsetWidth != tableBody.offsetWidth) {
-            this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
-        }
     }
 
     private _yScrollbarElement: HTMLElement;
