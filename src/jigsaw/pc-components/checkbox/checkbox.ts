@@ -121,10 +121,12 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public ngAfterContentInit() {
-        const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
-        if (labelEl.innerText.trim() === '') {
-            this._renderer.setStyle(labelEl, 'padding', '0');
-        }
+        this.callLater(() => {
+            const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
+            if (labelEl.innerText.trim() === '') {
+                this._renderer.setStyle(labelEl, 'padding', '0');
+            }
+        })
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
