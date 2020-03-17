@@ -1,3 +1,30 @@
+## v8.0.9 (2020-03-17)
+
+### 新特性 / New Features
+- [新增] 弹出选项新增可以配置 top / right / left / bottom 四个绝对位置
+- [新增] tile-lite和button-bar增加title提示文字
+- [新增] 弹出选项新增可以配置 leftTop/ leftBottom/ rightTop/ rightBottom 四个位置
+- [新增] 表格单元格编辑器新增数字编辑渲染器
+- [新增] upload组件新增文件大小限制，并在上传列表中将非法文件显示出来
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] icon控件的iconSize和textSize属性的默认值从14px改为"inherit"
+
+###  优化 / Modified
+- [优化] 当graph的宿主没有尺寸时，缩放浏览器不自动resize
+- [优化] 分页的跳转输入框，失去焦点时也跳转
+- [优化] 图形组件增加echarts的getMap方法，隐藏掉getMapMap方法（笔误）
+- [优化] Checkbox的label为变量的时候，在ngAfterContentInit中获取不到而导致增加了padding:0的样式
+- [优化] 添加三个时间粒度，以设置不带日期的时间
+
+### 修复 / Fixes
+- [故障]修复抽屉的offsetLeft和offsetRight同时出现时，抽屉宽度计算错误
+- [故障]解决paletx皮肤下，select选中项右侧空白过多的问题
+- [故障]cascade组件出现异常子级数据的问题
+- [故障] 弹出视图中包含tabs时，通过下拉列表切换tab页导致弹出视图意外关闭的问题
+- [故障] 修复表格在没有数据的时候，宽度计算异常的问题
+
+
 ## v8.0.5 (2020-02-20)
 
 ### 新特性 / New Features
