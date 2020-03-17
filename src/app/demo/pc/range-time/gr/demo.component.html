@@ -4,13 +4,15 @@
 
 
 <!-- start to learn the demo from here -->
-<h4>Gr</h4>
+<h4>粒度 Gr</h4>
 
-Gr : <jigsaw-tile trackItemBy="label" [(selectedItems)]="gr" [multipleSelect]="false">
-    <jigsaw-tile-option *ngFor="let item of datas" [value]="item">{{item.label}}</jigsaw-tile-option>
-</jigsaw-tile><br>
+<p>如下粒度（Gr）值支持日期和时间同时选择：</p>
+<jigsaw-button-bar [data]="['second','minute','hour','date','week','month']" [(selectedItems)]="gr">
+</jigsaw-button-bar>
 
-<jigsaw-range-time [(beginDate)]="beginDate" [gr]="gr[0].label" [(endDate)]="endDate" ></jigsaw-range-time><br>
+<br><br>
 
-<div *ngIf="gr[0].label!='week'">beginDate ： {{beginDate}}   endDate：{{endDate}}</div>
-<div *ngIf="gr[0].label=='week'">beginDate ： {{beginDate | json}}   endDate：{{endDate | json}}</div>
+<jigsaw-range-time [(beginDate)]="beginDate" [gr]="gr[0]" [(endDate)]="endDate" ></jigsaw-range-time><br>
+
+<div *ngIf="gr[0] !='week'">beginDate ： {{beginDate}}   endDate：{{endDate}}</div>
+<div *ngIf="gr[0] =='week'">beginDate ： {{beginDate | json}}   endDate：{{endDate | json}}</div>
