@@ -38,7 +38,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     /**
      * 图标字号，单位是px
      */
-    @Input() public iconSize: number = 14;
+    @Input() public iconSize: number | 'inherit' = 'inherit';
     /**
      * 图标颜色
      */
@@ -51,7 +51,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     /**
      * 文字的字号，单位是px
      */
-    @Input() public textSize: number = 14;
+    @Input() public textSize: number | 'inherit' = 'inherit';
     /**
      * 文字的颜色
      */
