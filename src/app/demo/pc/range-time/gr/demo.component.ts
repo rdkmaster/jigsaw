@@ -25,16 +25,13 @@ export class RangeTimeGrComponent implements AfterContentInit {
 
     endDate = "now";
 
-    datas = [{label: "second"}, {label: "minute"}, {label: "hour"},
-        {label: "date"}, {label: "week"}, {label: "month"}];
-
     gr:any;
 
     constructor(public changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngAfterContentInit() {
-        this.gr = [this.datas[3]];
+        this.gr = [`date`];
         this.changeDetectorRef.detectChanges();
     }
 
