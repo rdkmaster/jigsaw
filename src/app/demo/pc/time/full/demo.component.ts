@@ -15,7 +15,7 @@ export class TimeFullComponent {
 
     // demo-2
     date2 = 'now';
-    grList = ['second', 'minute', 'hour', 'date', 'week', 'month'];
+    grList = ['second', 'minute', 'hour', 'date', 'week', 'month', 'time', 'time_hour_minute', 'time_minute_second'];
     gr = this.grList[3];
 
     // demo-3
