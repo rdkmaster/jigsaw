@@ -11,7 +11,8 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-tile]': 'true',
-        '[class.jigsaw-tile-error]': '!valid'
+        '[class.jigsaw-tile-error]': '!valid',
+        '[class.jigsaw-tile-without-border]': '!showBorder'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
@@ -23,6 +24,9 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
 
     @ContentChildren(forwardRef(() => JigsawTileOption))
     protected _items: QueryList<JigsawTileOption>;
+
+    @Input()
+    public showBorder: boolean = true;
 
 }
 
