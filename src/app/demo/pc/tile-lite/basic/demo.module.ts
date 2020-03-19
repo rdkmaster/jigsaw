@@ -2,10 +2,10 @@ import {NgModule} from '@angular/core';
 import {TileLiteBasicDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawTileLiteModule} from "jigsaw/pc-components/list-and-tile/tile-lite";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
+import {JigsawSwitchModule} from "jigsaw/pc-components/switch";
 
 @NgModule({
-    imports: [JigsawTileLiteModule, JigsawDemoDescriptionModule, JigsawButtonModule],
+    imports: [JigsawTileLiteModule, JigsawDemoDescriptionModule, JigsawSwitchModule],
     declarations: [TileLiteBasicDemoComponent],
     exports: [TileLiteBasicDemoComponent]
 })
