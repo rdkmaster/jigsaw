@@ -4,7 +4,7 @@ export const lightGraphTheme = {
 
     // 默认色板
     // color:['#ff0000','#00ff00','#0000ff','#F8D282','#D2BC5A','#CEA67C','#429698','#57B8B0'],
-    color: ['#8AC8C8', '#DA8782', '#AAD2DC', '#F8D282', '#D2BC5A', '#CEA67C', '#429698', '#57B8B0'],
+    color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
     // color: ['#325bdb','#87cefa','#da70d6','#32cd32','#6495ed',
     //         '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
     //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
@@ -729,7 +729,7 @@ export const darkGraphTheme = {
 
     // 默认色板
     // color:['#ff0000','#00ff00','#0000ff','#F8D282','#D2BC5A','#CEA67C','#429698','#57B8B0'],
-    color: ['#8AC8C8', '#DA8782', '#AAD2DC', '#F8D282', '#D2BC5A', '#CEA67C', '#429698', '#57B8B0'],
+    color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
     // color: ['#325bdb','#87cefa','#da70d6','#32cd32','#6495ed',
     //         '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
     //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
