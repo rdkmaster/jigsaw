@@ -22,6 +22,8 @@ import {JigsawTheme} from "../../common/core/theming/theme";
 
 import echarts from "echarts";
 
+window['echarts'] = window['echarts'] ? window['echarts'] : echarts;
+
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
