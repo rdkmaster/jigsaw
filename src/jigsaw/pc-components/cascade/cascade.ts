@@ -63,6 +63,7 @@ export class CascadeTabContentInitData {
     noMore: boolean;
     multipleSelect: boolean;
     showAll: boolean;
+    optionWidth: number | string;
 }
 
 /**
@@ -249,6 +250,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     @Input()
     public pageSize: number = Infinity;
 
+    @Input()
+    public optionWidth: number | string;
+
     /**
      * @internal
      */
@@ -317,6 +321,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             noMore: this._cascadeDataList[level].noMore,
             multipleSelect: this._cascadeDataList[level].noMore && this.multipleSelect,
             showAll: this._cascadeDataList[level].showAll,
+            optionWidth: this.optionWidth
         }, !lazy);
     }
 
@@ -401,7 +406,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                          (click)="_$cascade?._selectAll(initData.level)">
                         {{'cascade.all' | translate}}
                     </div>
-                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" (click)="_$handleOptionClick()">
+                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" [width]="initData.optionWidth" (click)="_$handleOptionClick()">
                         <span [title]="item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item">
                             {{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>
