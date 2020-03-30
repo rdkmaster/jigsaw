@@ -3,9 +3,25 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
+        .field-label {
+            width: 137px;
+            margin-bottom: 16px;
+            text-align: right;
+        }
     `]
 })
 export class UploadContentFieldDemoComponent {
+    additionalFields = [{field: 'an-additional-field', value: 'value of the field'}];
+
+    get readAdditionalFields() {
+        const fields = {};
+        this.additionalFields.filter(f => !!f.value).forEach(f => fields[f.field] = f.value);
+        return fields;
+    }
+
+    addField() {
+        this.additionalFields.push({field: 'new-field', value: ''});
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

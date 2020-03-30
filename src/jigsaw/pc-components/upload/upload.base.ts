@@ -36,7 +36,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public fileVerify: string;
 
     @Input()
-    public additionalInfos: {[prop: string]: string};
+    public additionalFields: {[prop: string]: string};
 
     private _minSize: number;
 
@@ -239,23 +239,23 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     private _appendAdditionalFields(formData: FormData, fileName: string): void {
-        const additionalInfos = CommonUtils.shallowCopy(this.additionalInfos);
+        const additionalFields = CommonUtils.shallowCopy(this.additionalFields);
 
         // 为了避免引入破坏性，这里按照顺序append
         const fileNameField = this.fileNameField ? this.fileNameField.trim() : '';
         if (fileNameField) {
             formData.append(fileNameField, encodeURIComponent(fileName));
-            delete additionalInfos[fileNameField];
+            delete additionalFields[fileNameField];
         }
 
         const fileVerify = this.fileVerify ? this.fileVerify.trim() : '';
         if (fileVerify) {
             formData.append('file-verify', encodeURIComponent(fileVerify));
-            delete additionalInfos['file-verify'];
+            delete additionalFields['file-verify'];
         }
 
-        for (let prop in this.additionalInfos) {
-            formData.append(prop, encodeURIComponent(this.additionalInfos[prop]));
+        for (let prop in this.additionalFields) {
+            formData.append(prop, encodeURIComponent(this.additionalFields[prop]));
         }
     }
 
