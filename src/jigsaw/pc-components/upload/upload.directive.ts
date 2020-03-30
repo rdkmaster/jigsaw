@@ -50,6 +50,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     @Input('uploadFileNameField')
     public fileNameField: string = 'filename';
 
+    @Input('uploadFileVerify')
+    public fileVerify: string;
+
+    @Input('uploadAdditionalInfos')
+    public additionalInfos: {[prop: string]: string};
+
     @Input('uploadMinSize')
     public minSize: number;
 
