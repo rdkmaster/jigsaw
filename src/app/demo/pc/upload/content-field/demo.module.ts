@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {UploadContentFieldDemoComponent} from "./demo.component";
 import {JigsawUploadModule} from "jigsaw/pc-components/upload/index";
 import {JigsawInputModule} from "jigsaw/pc-components/input/input";
@@ -8,8 +9,7 @@ import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 @NgModule({
     declarations: [UploadContentFieldDemoComponent],
     exports: [ UploadContentFieldDemoComponent ],
-    imports: [JigsawDemoDescriptionModule, JigsawUploadModule, JigsawInputModule, JigsawButtonModule]
+    imports: [JigsawDemoDescriptionModule, JigsawUploadModule, JigsawInputModule, JigsawButtonModule, CommonModule]
 })
 export class UploadContentFieldDemoModule{
-
 }
