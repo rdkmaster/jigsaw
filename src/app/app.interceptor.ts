@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
+import { v4 as uuidv4 } from 'uuid';
 import {CommonUtils} from "../jigsaw/common/core/utils/common-utils";
 import {RawTableData, TableData} from "../jigsaw/common/core/data/table-data";
 import {PagingInfo} from "../jigsaw/common/core/data/component-data";
@@ -43,7 +44,8 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSideUploadRequest(req: HttpRequest<any>): any {
-        return `upload_files/${new Date().getTime()}/${req.body['filename']}`;
+        const filename = decodeURIComponent(req.body.get('filename'));
+        return `upload_files/${uuidv4()}/${filename}`;
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
