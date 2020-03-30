@@ -1,6 +1,6 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef,ChangeDetectionStrategy
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
@@ -15,7 +15,8 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
         '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
     constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone, private _cdr: ChangeDetectorRef) {
@@ -66,15 +67,17 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _computeResizeLineWidth() {
         if (!this._resizeLine) return;
-        if (this.parent.direction == 'column') {
-            if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
+        this.callLater(() => {
+            if (this.parent.direction == 'column') {
+                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
+                }
+            } else {
+                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
+                }
             }
-        } else {
-            if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
-            }
-        }
+        });
     }
 
     /**

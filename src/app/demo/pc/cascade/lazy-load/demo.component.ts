@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
-import {AjaxInterceptor} from "../../../../app.interceptor";
+import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -52,9 +52,9 @@ export class CascadeLazyLoadDemoComponent {
 AjaxInterceptor.registerProcessor('/mock-data/cascade/lazy-load/area', dealAreaRequest);
 
 function dealAreaRequest(req: HttpRequest<any>): any {
-    const provinces = require('mock-data/provinces.json');
-    const cities = require('mock-data/cities.json');
-    const districts = require('mock-data/districts.json');
+    const provinces = MockData.get('mock-data/provinces.json');
+    const cities = MockData.get('mock-data/cities.json');
+    const districts = MockData.get('mock-data/districts.json');
 
     if (req.params.get('cityId')) {
         return districts.filter(d => d.cityId == req.params.get('cityId')).map(d => ({...d}));

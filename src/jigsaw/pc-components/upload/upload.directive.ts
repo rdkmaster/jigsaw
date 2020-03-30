@@ -50,6 +50,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     @Input('uploadFileNameField')
     public fileNameField: string = 'filename';
 
+    @Input('uploadMinSize')
+    public minSize: number;
+
+    @Input('uploadMaxSize')
+    public maxSize: number;
+
     @Output('uploadProgress')
     public progress = new EventEmitter<UploadFileInfo>();
 
@@ -60,7 +66,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     public complete = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadStart')
-    public start = new EventEmitter<void>();
+    public start = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadUpdate')
     public update = new EventEmitter<UploadFileInfo[]>();
@@ -78,7 +84,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 
     @HostListener('mouseenter', ['$event'])
     onMouseEnter() {
-        if (!this._$fileInfoList.length || !this.uploadShowFileList) {
+        if (!this.uploadShowFileList || this._$validFiles.length + this._$invalidFiles.length == 0) {
             return;
         }
         this.clearCallLater(this._rollOutDenouncesTimer);
@@ -99,7 +105,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
             if (this._popupInfo) {
                 return;
             }
-            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getNonModelOptions(), this._$fileInfoList);
+            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getNonModelOptions(), this._$allFiles);
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
                 console.error('unable to popup drop down, unknown error!');

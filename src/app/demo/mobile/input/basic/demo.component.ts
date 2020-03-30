@@ -22,9 +22,5 @@ export class InputBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawMobileInput.value',
-        'JigsawMobileInput.placeholder',
-    ];
 }
 

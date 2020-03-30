@@ -1,3 +1,45 @@
+## v9.0.5-beta1 (2020-3-17)
+
+### 新特性 / New Features
+- [新增] time和rangeTime组件增加weekDayStart属性，用于配合weekStart选择周粒度时间,fixes #1040
+- [新增] 分页控件的simple模式支持搜索框
+- [新增] table在columnDefine中的表头现在可以设置html作为表头的渲染器
+- [新增] ModeledMapGraphData增加缩放属性
+- [新增] upload组件的start事件加上数据
+- [新增] 新增一套paletx风格的皮肤
+- [新增] 弹出选项新增可以配置 top / right / left / bottom 四个绝对位置
+- [新增] tile-lite和button-bar增加title提示文字
+- [新增] 弹出选项新增可以配置 leftTop/ leftBottom/ rightTop/ rightBottom 四个位置
+- [新增] 表格单元格编辑器新增数字编辑渲染器
+- [新增] upload组件新增文件大小限制，并在上传列表中将非法文件显示出来
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] icon控件的iconSize和textSize属性的默认值从14px改为"inherit"
+
+###  优化 / Modified
+- [优化] 调整图形组件导出图片按钮弹出位置
+- [优化] 修改图形下载指令按钮的弹出方式，以解决在宿主有滚动条情况下的位置异常
+- [优化] select组件高度不够时跟combo一样撑出滚动条
+- [优化] 优化所有组件的异步操作，提升组件性能
+- [优化] 采用Stackblitz作为新的demo代码演示和编辑测试方式
+- [优化] 修改默认tree的皮肤
+- [优化] 性能优化：变更检查策略由默认改为onpush，提升组件性能
+- [优化] 当graph的宿主没有尺寸时，缩放浏览器不自动resize
+- [优化] 分页的跳转输入框，失去焦点时也跳转
+- [优化] 图形组件增加echarts的getMap方法，隐藏掉getMapMap方法（笔误）
+- [优化] 将echarts的弹出z-index值归入jigsaw的z-index体系中，让它弹出在适当的层次
+- [优化] box-resize-line高度计算改为callLater执行
+- [优化] Checkbox的label为变量的时候，在ngAfterContentInit中获取不到而导致增加了padding:0的样式
+- [优化] 添加三个时间粒度，以设置不带日期的时间
+
+### 修复 / Fixes
+- [故障] 修复日期选择周粒度时与combo配合使用有问题,废弃weekStart和weekDayStart的配置
+- [故障] 修复抽屉的offsetLeft和offsetRight同时出现时，抽屉宽度计算错误
+- [故障] cascade组件出现异常子级数据的问题
+- [故障] 弹出视图中包含tabs时，通过下拉列表切换tab页导致弹出视图意外关闭的问题
+- [故障] 修复表格在没有数据的时候，宽度计算异常的问题
+
+
 ## v9.0.0-beta1 (2019-12-30)
 
 ### 新特性 / New Features

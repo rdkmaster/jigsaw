@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../../common/common"
-import {Component, Input} from "@angular/core";
+import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 
 /**
  * 用于在界面上显示一个步骤条，并且可以实时更新各个步骤的状态，需要配合`JigsawStepItem`组件一起使用。
@@ -21,7 +21,8 @@ import {Component, Input} from "@angular/core";
         '[class.jigsaw-steps-size-large]': "preSize === 'large'",
         '[class.jigsaw-steps-direction-vertical]': "direction === 'vertical'",
         '[class.jigsaw-steps-direction-horizontal]': "direction === 'horizontal'",
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSteps extends AbstractJigsawComponent {
     /**

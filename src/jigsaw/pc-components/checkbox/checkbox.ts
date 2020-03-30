@@ -3,7 +3,16 @@
  */
 
 import {
-    Component, Input, EventEmitter, Output, OnInit, AfterContentInit, Renderer2, ElementRef, forwardRef
+    Component,
+    Input,
+    EventEmitter,
+    Output,
+    OnInit,
+    AfterContentInit,
+    Renderer2,
+    ElementRef,
+    forwardRef,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -30,8 +39,9 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
         '[class.jigsaw-checkbox-error]': '!valid'
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },
-    ]
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true},
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit {
 
@@ -119,10 +129,12 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public ngAfterContentInit() {
-        const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
-        if (labelEl.innerText.trim() === '') {
-            this._renderer.setStyle(labelEl, 'padding', '0');
-        }
+        this.callLater(() => {
+            const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
+            if (labelEl.innerText.trim() === '') {
+                this._renderer.setStyle(labelEl, 'padding', '0');
+            }
+        })
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];

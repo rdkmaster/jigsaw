@@ -5,6 +5,7 @@ import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
     templateUrl: './demo.component.html'
 })
 export class TileSelectFullDemoComponent {
+    showBorder = true;
 
     citys = new ArrayCollection([
         {label: "北京"},
@@ -53,9 +54,5 @@ export class TileSelectFullDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTile',
-        'JigsawTileOption'
-    ];
 }
 

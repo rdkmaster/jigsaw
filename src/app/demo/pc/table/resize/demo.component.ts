@@ -42,10 +42,7 @@ export class TableResizeDemoComponent implements OnInit {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这是一个如何动态改变table宽高的demo';
-    description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawTable.resize'
-    ];
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 

@@ -7,7 +7,8 @@ import {
     Input,
     Output,
     Renderer2,
-    ViewChild
+    ViewChild,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
@@ -30,7 +31,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {

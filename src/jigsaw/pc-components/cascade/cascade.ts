@@ -63,6 +63,7 @@ export class CascadeTabContentInitData {
     noMore: boolean;
     multipleSelect: boolean;
     showAll: boolean;
+    optionWidth: number | string;
 }
 
 /**
@@ -153,7 +154,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         cd.title = si.title;
         // 子级必须全部包含nodes属性，才认为这个子级有下一级
         cd.noMore = si.hasOwnProperty('noMore') ? si.noMore :
-            si.nodes.reduce((noMore, item) => noMore && !item.hasOwnProperty('nodes'), true);
+            (si.nodes ? si.nodes.reduce((noMore, item) => noMore && !item.hasOwnProperty('nodes'), true) : false);
         cd.showAll = si.showAll;
         cd.labelField = si.labelField;
         cd.trackItemBy = si.trackItemBy;
@@ -249,6 +250,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     @Input()
     public pageSize: number = Infinity;
 
+    @Input()
+    public optionWidth: number | string;
+
     /**
      * @internal
      */
@@ -317,6 +321,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             noMore: this._cascadeDataList[level].noMore,
             multipleSelect: this._cascadeDataList[level].noMore && this.multipleSelect,
             showAll: this._cascadeDataList[level].showAll,
+            optionWidth: this.optionWidth
         }, !lazy);
     }
 
@@ -342,7 +347,10 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         const levelData = CommonUtils.safeInvokeCallback(context, this.dataGenerator,
             [selectedItem, this._selectedItems, this._cascadeDataList, level]);
         if (!levelData || !levelData.list) {
-            // 取不到下一级的数据，级联到此结束，更新选中的数据
+            // 取不到下一级的数据，级联到此结束
+            // 这里需要清除掉多余的tab页
+            this._removeCascadingTabs(level);
+            // 更新选中的数据
             this.selectedItemsChange.emit(this._selectedItems);
             return;
         }
@@ -398,7 +406,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                          (click)="_$cascade?._selectAll(initData.level)">
                         {{'cascade.all' | translate}}
                     </div>
-                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" (click)="_$handleOptionClick()">
+                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" [width]="initData.optionWidth" (click)="_$handleOptionClick()">
                         <span [title]="item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item">
                             {{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>

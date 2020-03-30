@@ -11,7 +11,8 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
                 [multipleSelect]="multipleSelect" [height]="height" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
-                           [width]="optionWidth" [height]="height" [disabled]="item?.disabled">
+                           [width]="optionWidth" [height]="height" [disabled]="item?.disabled" 
+                           title="{{item && item[labelField] ? item[labelField] : item}}">
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-tile-option>
         </j-tile>`,

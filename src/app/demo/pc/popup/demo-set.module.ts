@@ -22,13 +22,13 @@ export const routerConfig:any = [
         desc: 'combo-select', url: '/pc/combo-select/full', path: ''
     },
     {
-        desc: 'select', url: '/pc/select/full', path: ''
-    },
-    {
         desc: 'loading', url: '/pc/loading/full', path: ''
     },
     {
         desc: 'tooltip', url: '/pc/tooltip/inline', path: ''
+    },
+    {
+        desc: 'absolute-position', url: '/pc/dialog/absolute-position', path: ''
     }
 ];
 

@@ -1,6 +1,7 @@
-import {Component, QueryList, ViewChildren} from "@angular/core";
+import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {UploadFileInfo} from "jigsaw/pc-components/upload/upload.base";
 import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directive";
+import {JigsawUpload} from "jigsaw/pc-components/upload";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -8,10 +9,12 @@ import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directiv
         .common-param-setting {
             margin-bottom: 30px;
         }
-        .common-param-setting h3{
+
+        .common-param-setting h3 {
             font-size: 16px;
             margin-bottom: 10px;
         }
+
         .link-upload {
             text-decoration: underline;
             margin-left: 6px
@@ -24,33 +27,38 @@ export class UploadBasicDemoComponent {
     isButtonUploadWaiting: boolean;
     isLinkUploadWaiting: boolean;
     uploadedFile: string = '';
+    maxSize: number = 1024;
+    minSize: number = 0;
 
     @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
     uploadDirectives: QueryList<JigsawUploadDirective>;
+    @ViewChild('upload')
+    upload: JigsawUpload;
 
     getUploadFile(fileInfo: UploadFileInfo) {
-        console.log('one file uploaded',fileInfo);
+        console.log('one file uploaded', fileInfo);
     }
 
     getAllUploadFiles(fileInfoList: UploadFileInfo[], mode?: string) {
         console.log('all files uploaded', fileInfoList);
-        switch(mode) {
+        switch (mode) {
             case 'button':
                 this.isButtonUploadWaiting = false;
                 break;
             case 'link':
-                this.isLinkUploadWaiting =false;
+                this.isLinkUploadWaiting = false;
         }
     }
 
     clearFileList() {
         this.uploadDirectives.forEach(upload => {
             upload.clearFileList();
-        })
+        });
+        this.upload.clearFileList();
     }
 
     showUploadFileName(files?: UploadFileInfo[]) {
-        this.uploadedFile = !!files ? files[0].name : '正在上传...';
+        this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
     }
 
     // ====================================================================
@@ -58,6 +66,5 @@ export class UploadBasicDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

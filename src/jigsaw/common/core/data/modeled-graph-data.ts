@@ -165,7 +165,8 @@ export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate 
             crossStyle: {
                 color: '#999'
             }
-        }
+        },
+        extraCssText: 'z-index: 999'
     };
 
     toolbox = {
@@ -451,7 +452,8 @@ export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
 
     tooltip = {
         trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        formatter: "{a} <br/>{b} : {c} ({d}%)",
+        extraCssText: 'z-index: 999'
     };
 
     legend = {
@@ -607,7 +609,8 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     }
 
     tooltip = {
-        formatter: "{a} <br/>{b} : {c}%"
+        formatter: "{a} <br/>{b} : {c}%",
+        extraCssText: 'z-index: 999'
     };
 
     toolbox = {
@@ -778,7 +781,9 @@ export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
         subtextStyle: {}
     };
 
-    tooltip = {};
+    tooltip = {
+        extraCssText: 'z-index: 999'
+    };
 
     legend = {
         data: null
@@ -901,7 +906,8 @@ export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
             crossStyle: {
                 color: '#999'
             }
-        }
+        },
+        extraCssText: 'z-index: 999'
     };
 
     toolbox = {
@@ -1046,7 +1052,8 @@ export class BasicModeledMapTemplate extends ModeledMapTemplate {
 
     tooltip = {
         trigger: 'item',
-        formatter: ""
+        formatter: "",
+        extraCssText: 'z-index: 999'
     };
 
     visualMap = {more: ''};

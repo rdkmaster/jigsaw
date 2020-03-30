@@ -45,14 +45,5 @@ export class ComboSelectChangeDemo {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '演示了如何利用事件将下拉视图与`JigsawComboSelect`组件实现无缝融合';
-    description: string = require('!!raw-loader!../events/readme.md');
-    tags: string[] = [
-        'JigsawComboSelect.select',
-        'JigsawComboSelect.remove',
-        'JigsawComboSelect.value',
-        'JigsawComboSelect.valueChange',
-        'JigsawComboSelect.clearable',
-        'JigsawComboSelect.placeholder',
-        'JigsawComboSelect.maxWidth',
-    ];
+    description: string = require('!!raw-loader!../events/readme.md').default;
 }

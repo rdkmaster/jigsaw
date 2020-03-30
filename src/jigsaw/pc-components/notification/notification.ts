@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Renderer2, Input, ElementRef, NgZone
+    NgModule, Component, Renderer2, Input, ElementRef, NgZone,ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
@@ -109,7 +109,8 @@ const notificationInstances = {
         '[class.jigsaw-notification-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
@@ -356,8 +357,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     /**
      * 方便快速地将一些信息以卡片的方式弹出在视图上，起到通知用户的作用。
-     * 这种提示方式相比[alert]($demo=alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
-     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo=alert/popup)的方式通知用户。
+     * 这种提示方式相比[alert]($demo=pc/alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
+     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo=pc/alert/popup)的方式通知用户。
      *
      * $demo = notification/full
      *

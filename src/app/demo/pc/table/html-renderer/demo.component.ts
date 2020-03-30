@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {RawTableData, TableData} from "jigsaw/common/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
+import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -40,8 +40,8 @@ export class TableHtmlRendererDemoComponent {
                 renderer: 'html',
                 data: (data, col) => `${data.header[col]} 
                     <select onchange="changeUnit()" id="unitSelect">
-                        <option value="$">$</option>
                         <option value="￥">￥</option>
+                        <option value="$">$</option>
                     </select>`,
                 innerHtmlContext: this
             }
@@ -73,7 +73,7 @@ export class TableHtmlRendererDemoComponent {
         let curUnit = unitSelect.options[unitSelect.selectedIndex].value;
         console.log(curUnit);
         this.tableData.data = this.tableData.data.concat().map(row => {
-            row[3] = curUnit == '$' ? row[3]*7 : Math.round(row[3]/7);
+            row[3] = curUnit == '￥' ? row[3]*7 : Math.round(row[3]/7);
             return row;
         });
         this.tableData.refresh();
@@ -84,11 +84,6 @@ export class TableHtmlRendererDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTable.columnDefines',
-        'ColumnDefine',
-        'TableCell.renderer'
-    ];
 }
 
 

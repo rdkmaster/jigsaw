@@ -4,7 +4,7 @@ import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/service/popup.service";
 import {LoadingService} from "jigsaw/common/service/loading.service";
 import {JigsawWarningAlert} from "jigsaw/pc-components/alert/alert";
-import {JigsawNotification} from "../../../../../jigsaw/pc-components/notification/notification";
+import {JigsawNotification} from "jigsaw/pc-components/notification/notification";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -108,6 +108,5 @@ export class PopupZIndexDemoComponent implements OnInit {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [];
 }
 

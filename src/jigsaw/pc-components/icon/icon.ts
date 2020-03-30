@@ -1,4 +1,4 @@
-import {Component, Input, NgModule} from '@angular/core';
+import {Component, Input, NgModule,ChangeDetectionStrategy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
@@ -18,7 +18,8 @@ const defaultHrefValue = 'javascript:void(0);';
         '[class.jigsaw-icon]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawIcon extends AbstractJigsawComponent {
     public _$secureUrl;
@@ -38,7 +39,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     /**
      * 图标字号，单位是px
      */
-    @Input() public iconSize: number = 14;
+    @Input() public iconSize: number | 'inherit' = 'inherit';
     /**
      * 图标颜色
      */
@@ -51,7 +52,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     /**
      * 文字的字号，单位是px
      */
-    @Input() public textSize: number = 14;
+    @Input() public textSize: number | 'inherit' = 'inherit';
     /**
      * 文字的颜色
      */

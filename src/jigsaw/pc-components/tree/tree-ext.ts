@@ -1,11 +1,9 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeSettingSetting} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
-
-declare const $: any;
 
 export class TreeEventData {
     treeId: string;
@@ -23,7 +21,8 @@ export class TreeEventData {
             display: inline-block;
             vertical-align: middle;
         }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
     constructor() {
@@ -70,7 +69,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     public set data(data: SimpleTreeData | TreeData) {
-        if (!(data instanceof SimpleTreeData) && !(data instanceof TreeData)) return;
+        if (!(data instanceof SimpleTreeData) && !(data instanceof TreeData)) {
+            return;
+        }
         this._data = data;
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
@@ -160,14 +161,19 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     public ztree: any;
 
     private _updateTree() {
-        if (!this._setting || !this._data) return;
+        const $ = window['$'];
+        if (!this._setting || !this._data || !$) {
+            return;
+        }
         this.ztree = $.fn.zTree.init($('#' + this._$uniqueId), this._setting, this._data.nodes);
     }
 
     public selectNodes(key: string, value: any, parentNode: any) {
-        if (!this.ztree) return;
+        if (!this.ztree) {
+            return;
+        }
         let nodes = this.ztree.getNodesByParam(key, value, parentNode);
-        if(nodes.length > 0) {
+        if (nodes.length > 0) {
             this.ztree.selectNode(nodes[0]);
         }
     }

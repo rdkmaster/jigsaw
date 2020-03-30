@@ -44,13 +44,4 @@ export class TableAddIDWithPagingComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'PageableTableData',
-        'JigsawPagination',
-        'JigsawTable.additionalColumnDefines',
-        'AdditionalColumnDefine',
-        'TableValueGenerators.rowIndexGenerator',
-        'TableHeader.text',
-        'TableCell.data'
-    ];
 }

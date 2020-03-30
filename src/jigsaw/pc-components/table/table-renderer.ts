@@ -1,7 +1,22 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, Renderer2, ViewChild, Directive } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Output,
+    Renderer2,
+    ViewChild,
+    Directive,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
+import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData} from "../../common/core/data/table-data";
@@ -90,24 +105,26 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 }
 
-/*
+/**
  * 默认表格渲染组件
- * */
+ */
 @Component({
-    template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>'
+    template: '<span class="jigsaw-table-cell-text">{{cellData}}</span>',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
-/*
+/**
  * 编辑单元格渲染器
- * */
+ */
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
@@ -123,15 +140,57 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 }
 
-/*
- * head checkbox renderer
- * */
+/**
+ * 编辑单元格数字输入渲染器
+ */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+                              (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
+        </jigsaw-numeric-input>
+    `
+})
+export class TableCellNumericEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+
+    @ViewChild(JigsawNumericInput)
+    protected input: JigsawNumericInput;
+
+    public get _$placeholder() {
+        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$min() {
+        return this.initData && this.initData.hasOwnProperty('min') ? this.initData.min : -Infinity;
+    }
+
+    public get _$max() {
+        return this.initData && this.initData.hasOwnProperty('max') ? this.initData.max : Infinity;
+    }
+
+    public get _$step() {
+        return this.initData && this.initData.hasOwnProperty('step') ? this.initData.step : 1;
+    }
+
+    ngAfterViewInit() {
+        this.input.focus();
+    }
+}
+
+/**
+ * head checkbox renderer
+ */
+@Component({
+    template: `
+        <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+        super();
+    }
+
 
     public get checked(): CheckBoxStatus {
         return this._checked;
@@ -165,22 +224,28 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             default:
                 this._checked = CheckBoxStatus.unchecked;
         }
+        this._changeDetectorRef.markForCheck();
     }
 }
 
-/*
+/**
  * cell checkbox renderer
- * */
+ */
 @Component({
     template: `
         <jigsaw-checkbox [checked]="checked" (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
+    }
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+        super();
     }
 
     public checked: boolean;
@@ -201,11 +266,13 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
+        this._changeDetectorRef.markForCheck();
     }
 
     private _updateTargetData() {
         if (CommonUtils.isDefined(this.targetData.data[this.row])) {
             this.targetData.data[this.row][this.column] = this.checked;
+            this._changeDetectorRef.markForCheck();
         }
     }
 
@@ -214,6 +281,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._additionalData.touchValueByRow(this.field, this.row, value);
         this._updateTargetData();
         this.dispatchChangeEvent(value);
+        this._changeDetectorRef.markForCheck();
     }
 
     ngOnInit() {
@@ -225,11 +293,12 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
  * switch renderer
- * */
+ */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>'
+    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
 
@@ -245,10 +314,11 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 @Component({
     template: `
         <jigsaw-select [value]="selected" [data]="data"
-                       (valueChange)="dispatchChangeEvent($event.label)"
+                       (valueChange)="dispatchChangeEvent($event?.label)"
                        optionCount="5" width="100%" height="20">
         </jigsaw-select>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
     public selected: any;
@@ -293,6 +363,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         } else {
             this.data = this.initData;
         }
+        this._changeDetector.markForCheck();
     }
 
     public static defaultInitDataGenerator(tableData, row, col) {
@@ -351,10 +422,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer
     ],
     imports: [
-        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule
     ]
 })
 export class JigsawTableRendererModule {

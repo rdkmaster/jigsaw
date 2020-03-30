@@ -7,14 +7,10 @@ import {JigsawMobileGraphModule} from "jigsaw/mobile-components/graph/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TabHeadlessDemoComponent} from './demo.component';
 
-/* #for-live-demo-only#
-const routes = [{
-    path: 'tab-page', component: DynamicTabDemoComponent
-}];
-*/
 @NgModule({
     imports: [
-        JigsawMobileTabsModule, JigsawMobileSwitchModule, JigsawDemoDescriptionModule, JigsawMobileButtonBarModule, JigsawMobileInputModule, JigsawMobileGraphModule
+        JigsawMobileTabsModule, JigsawMobileSwitchModule, JigsawDemoDescriptionModule, JigsawMobileButtonBarModule,
+        JigsawMobileInputModule, JigsawMobileGraphModule
     ],
     declarations: [TabHeadlessDemoComponent],
     exports: [TabHeadlessDemoComponent]

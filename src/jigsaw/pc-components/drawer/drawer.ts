@@ -1,4 +1,15 @@
-import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild, HostBinding} from "@angular/core";
+import {
+    Component,
+    Input,
+    NgModule,
+    Output,
+    EventEmitter,
+    OnInit,
+    ElementRef,
+    ViewChild,
+    HostBinding,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -14,7 +25,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     templateUrl: './drawer.html',
     host: {
         '[class.jigsaw-drawer-in-dom]': '!floating'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     constructor(private _elementRef: ElementRef) {
@@ -36,7 +48,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     public set position(value: "left" | "right" | "top" | "bottom") {
-        if (!value) return;
+        if (!value) {
+            return;
+        }
         this._position = value;
         this._update();
         this._setContainer();
@@ -196,7 +210,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * 有值时则为width和height的属性值
      */
     private _calcHostWidth(): string {
-        if (this.floating) return null;
+        if (this.floating) {
+            return null;
+        }
         let width = this._calcWidth();
         if (this.position == "top" || this.position == "bottom") {
             // 上下抽屉宽度为固定值
@@ -209,7 +225,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     private _calcHostHeight(): string {
-        if (this.floating) return null;
+        if (this.floating) {
+            return null;
+        }
         let height = this._calcHeight();
         if (this.position == "left" || this.position == "right") {
             // 左右抽屉height为固定值
@@ -255,15 +273,13 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
 
     private _calcWidth(): string | undefined {
-        if(this.width && this.width != "auto") {
+        if (this.width && this.width != "auto") {
             return this.width;
         }
-        if(this.width == "auto") {
-            if(this.offsetLeft) {
-                return `calc(100% - ${this.offsetLeft})`;
-            }else if(this.offsetRight) {
-                return `calc(100% - ${this.offsetRight})`;
-            }
+        if (this.width == "auto") {
+            let left = this.offsetLeft ? `- ${this.offsetLeft}` : '';
+            let right = this.offsetRight ? `- ${this.offsetRight}` : '';
+            return `calc(100% ${left} ${right})`;
         }
         return undefined;
     }
@@ -278,15 +294,13 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     private _calcHeight(): string | undefined {
-        if(this.height && this.height != "auto") {
+        if (this.height && this.height != "auto") {
             return this.height;
         }
-        if(this.height == "auto") {
-            if(this.offsetTop) {
-                return `calc(100% - ${this.offsetTop})`;
-            }else if(this.offsetBottom) {
-                return `calc(100% - ${this.offsetBottom})`;
-            }
+        if (this.height == "auto") {
+            let top = this.offsetTop ? `- ${this.offsetTop}` : '';
+            let bottom = this.offsetBottom ? `- ${this.offsetBottom}` : '';
+            return `calc(100% ${top} ${bottom})`;
         }
         return undefined;
     }
@@ -350,7 +364,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     private _update() {
-        if (!this.initialized) return;
+        if (!this.initialized) {
+            return;
+        }
         this._setStyle();
         this._setClass();
         this.runMicrotask(() => {

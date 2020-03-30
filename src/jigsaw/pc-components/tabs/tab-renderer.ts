@@ -1,5 +1,5 @@
 import {IDynamicInstantiatable} from "../../common/common";
-import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, ViewChild, ChangeDetectionStrategy} from "@angular/core";
 import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";
 
@@ -15,7 +15,8 @@ import {JigsawTabLabel} from "./tab-item";
         <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()"
                  class="jigsaw-editable-tab-title-input">
         </j-input>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawEditableTabTitleRenderer implements IDynamicInstantiatable {
     constructor(private _tabLabel: JigsawTabLabel, private _changeDetectorRef: ChangeDetectorRef) {

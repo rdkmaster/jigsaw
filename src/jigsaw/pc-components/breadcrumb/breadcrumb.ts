@@ -1,4 +1,16 @@
-import {AfterContentInit, Component, ContentChildren, forwardRef, Input, NgModule, OnDestroy, Optional, QueryList} from "@angular/core";
+import {
+    AfterContentInit,
+    Component,
+    ContentChildren,
+    forwardRef,
+    Input,
+    NgModule,
+    OnDestroy,
+    Optional,
+    QueryList,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
+} from "@angular/core";
 import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
@@ -34,10 +46,11 @@ export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode | Breadc
         '[class.jigsaw-breadcrumb-light]': 'theme == "light"',
         '[class.jigsaw-breadcrumb-dark]': 'theme == "dark"',
         '[class.jigsaw-breadcrumb-inner]': 'theme == "inner"'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestroy, AfterContentInit {
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -61,10 +74,13 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     }
 
     public set routesConfig(value: BreadcrumbRouteConfig[]) {
-        if (!value || this._routesConfig == value) return;
+        if (!value || this._routesConfig == value) {
+            return;
+        }
         this._routesConfig = value;
         this.runMicrotask(() => {
             // _generateBreadcrumb需要用到generatorContext这个输入属性，这里需要异步执行
+            this._changeDetectorRef.markForCheck();
             this._$breadcrumbNodes = this._generateBreadcrumb(this._router.url);
         });
         if (this._removeRouterEventSubscriber) {
@@ -73,6 +89,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         }
         this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
+                this._changeDetectorRef.markForCheck();
                 this._$breadcrumbNodes = this._generateBreadcrumb(event.url);
             }
         })
@@ -85,10 +102,14 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
 
     private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
         breadcrumbNodes = breadcrumbNodes ? breadcrumbNodes : [];
-        if (!url) return breadcrumbNodes;
+        if (!url) {
+            return breadcrumbNodes;
+        }
         let routeConfig = this.routesConfig.find(route => {
             let configUrl = Object.keys(route)[0];
-            if (!configUrl) return false;
+            if (!configUrl) {
+                return false;
+            }
             configUrl = configUrl[0] == '/' ? configUrl : '/' + configUrl;
             let urlRegStr = '^' + configUrl.replace(/([\[\]\-|(){}^.+?$=!,\\])/g, '\\$1')
                 .replace(/\*/g, '[^\/]+\/?') + '$';
@@ -98,7 +119,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             const urlNode = url.slice(url.lastIndexOf('/') + 1);
             let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
             breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)])  : breadcrumbNodeTemp;
+                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)]) : breadcrumbNodeTemp;
             breadcrumbNodeTemp = breadcrumbNodeTemp instanceof Array ? breadcrumbNodeTemp : [breadcrumbNodeTemp];
             breadcrumbNodeTemp.reverse().forEach((breadcrumbNode: BreadcrumbNode) => {
                 // 拷贝一份，保证原数据不变
@@ -107,6 +128,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
                 breadcrumbNodes.unshift(breadcrumbNode);
             })
         }
+
         return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), breadcrumbNodes);
     }
 
@@ -152,7 +174,8 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     host: {
         '[class.jigsaw-breadcrumb-item]': 'true',
         '[class.jigsaw-breadcrumb-current]': 'isLast'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBreadcrumbItem {
     constructor(@Optional() public _$breadcrumbHost: JigsawBreadcrumb) {

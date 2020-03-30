@@ -182,17 +182,6 @@ export class TableRendererDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
-    description: string = require('!!raw-loader!./readme.md');
-    tags: string[] = [
-        'JigsawTable',
-        'ColumnDefine.header',
-        'ColumnDefine.cell',
-        'TableHeader',
-        'TableCell',
-        'TableCell.tooltip',
-        'TableValueGenerators.originCellDataGenerator',
-        'ColumnDefine.target',
-        'ColumnDefine.width',
-    ];
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 

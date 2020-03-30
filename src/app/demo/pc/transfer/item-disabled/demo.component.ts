@@ -26,6 +26,5 @@ export class TransferItemDisabledDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-
 }
 

@@ -17,10 +17,7 @@ import {Component} from "@angular/core";
 export class TimeGrComponent {
     date = "now";
 
-    datas = [{label: "second"}, {label: "minute"}, {label: "hour"},
-        {label: "date"}, {label: "week"}, {label: "month"}];
-
-    gr = [this.datas[2]];
+    gr = ['date'];
 
     dateChange($event) {
         console.log($event);
@@ -31,8 +28,5 @@ export class TimeGrComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawTime.gr'
-    ];
 }
 

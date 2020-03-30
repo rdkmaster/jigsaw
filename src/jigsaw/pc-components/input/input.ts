@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -9,7 +9,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 /**
  * 单行输入框组件，常常用于接收用户的文本输入。
  *
- * 支持前后置图标，且每个图标都可交互，[参考demo]($demo=input/icons)。
+ * 支持前后置图标，且每个图标都可交互，[参考demo]($demo=pc/input/icons)。
  *
  * 这是一个表单友好组件。
  *
@@ -29,7 +29,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
 
@@ -192,7 +193,7 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
      * 在单击了清除文本按钮时，是否让文本失去焦点，默认为失去焦点。
      * 一般来说，是否失去焦点关系不大，但是在一些特定场合，却有很大关系。`JigsawTable`的默认单元格编辑渲染就是`JigsawInput`组件，
      * 按照`JigsawTable`的交互逻辑，单元格编辑器一旦失去焦点，就必须退回到单元格显示渲染器。
-     * 在这个情况下，用户单击了清除文本按钮时就不能让输入框失去焦点。参考[这个demo]($demo=table/update-column-define)的职位列
+     * 在这个情况下，用户单击了清除文本按钮时就不能让输入框失去焦点。参考[这个demo]($demo=pc/table/update-column-define)的职位列
      *
      * $demo = table/update-column-define
      */

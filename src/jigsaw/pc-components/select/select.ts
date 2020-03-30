@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild, NgZone
+    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild, NgZone, ChangeDetectionStrategy,ChangeDetectorRef
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -31,10 +31,11 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(protected _zone: NgZone) {
+    constructor(protected _zone: NgZone,private _changeDetector: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -216,6 +217,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 
     public _$handleClearable(selectedItems: any[]) {
@@ -224,6 +226,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         }
         if (!selectedItems || selectedItems.length == 0) {
             this.value = [];
+            this._changeDetector.markForCheck();
         }
     }
 
@@ -236,6 +239,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
         this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 
     private _propagateChange: any = () => {

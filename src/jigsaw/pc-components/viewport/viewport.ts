@@ -1,4 +1,14 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgModule, Output} from "@angular/core";
+import {
+    AfterViewChecked,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
+    Output,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ViewportData} from "../../common/core/data/component-data";
 import {JigsawScrollbarModule} from "../../common/components/scrollbar/index";
@@ -20,7 +30,7 @@ export class ViewportScrollEvent {
 }
 
 /**
- * 为一个视口增加滚动条，让视口可以在整体可视区域中调整位置，具体用法请参考[这个demo]($demo=table/big-table)。
+ * 为一个视口增加滚动条，让视口可以在整体可视区域中调整位置，具体用法请参考[这个demo]($demo=pc/table/big-table)。
  */
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
@@ -31,7 +41,8 @@ export class ViewportScrollEvent {
         '(mouseleave)': '_$handleMouseLeave()',
         '(mousewheel)': '_$handleMouseWheel($event)', // Chrome IE
         '(DOMMouseScroll)': '_$handleMouseWheel($event)' // firefox
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawViewport extends AbstractJigsawComponent implements AfterViewChecked {
 

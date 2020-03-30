@@ -59,7 +59,4 @@ export class ListLiteOptionCountDemoComponent {
     // ====================================================================
     summary: string = '';
     description: string = '';
-    tags: string[] = [
-        'JigsawList'
-    ];
 }

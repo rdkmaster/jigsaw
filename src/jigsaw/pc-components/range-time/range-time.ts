@@ -1,4 +1,15 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild, NgZone, ChangeDetectorRef} from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    forwardRef,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    NgZone,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
@@ -11,11 +22,11 @@ declare const moment: any;
  * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
  *
  * - 如果需要选择的是一个时刻，则请使用`JigsawTime`；
- * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=table/calendar)，通过表格+渲染器的方式来模拟；
+ * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=pc/table/calendar)，通过表格+渲染器的方式来模拟；
  * - 时间选择器常常是收纳到下拉框中以解决视图空间，Jigsaw是通过`JigsawComboSelect`来组合使用的，
- * 参考[这个demo]($demo=time/with-combo-select)；
+ * 参考[这个demo]($demo=pc/time/with-combo-select)；
  *
- * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
+ * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=pc/form/template-driven)。
  *
  * $demo = range-time/full
  * $demo = range-time/basic
@@ -29,7 +40,8 @@ declare const moment: any;
     host: {
         '[class.jigsaw-range-time-host]': 'true',
         '[class.jigsaw-range-time-error]': '!valid'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRangeTime extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
@@ -87,6 +99,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         val[key] = value;
         this.writeValue(val);
         this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+        this._cdr.markForCheck();
     }
 
     private _beginDate: WeekTime;
@@ -272,6 +285,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     private _init() {
+        this._cdr.markForCheck();
         this._$shortcuts = this._getShortcuts();
         this._$endTimeLimitEnd = this._calculateLimitEnd();
     }
@@ -291,6 +305,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
                 endTime = calculateTime;
             }
         }
+        this._cdr.markForCheck();
         return endTime;
     }
 
@@ -359,6 +374,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     public _$grChange(value: TimeGr) {
         this._init();
         this.grChange.emit(value);
+        this._cdr.markForCheck();
     }
 
     /**
@@ -366,7 +382,7 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      */
     public _changeShortcut(selectedShortcut: Shortcut) {
         if (selectedShortcut.dateRange) {
-            let [beginDate, endDate] = typeof  selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
+            let [beginDate, endDate] = typeof selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
 
             beginDate = TimeService.convertValue(beginDate, <TimeGr>this._timeStart.gr);
             let limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, <TimeGr>this._timeStart.gr);
@@ -381,12 +397,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
             //先设置好limit，再设置date
             this.runMicrotask(() => this._endDate = endDate);
+            this._cdr.markForCheck();
         }
     }
 
     private _handleWeekSelect(date: string) {
         let weekNum = TimeService.getWeekOfYear(date);
         let year = TimeService.getWeekYear(date);
+        this._cdr.markForCheck();
         return {year: year, week: weekNum};
     }
 
