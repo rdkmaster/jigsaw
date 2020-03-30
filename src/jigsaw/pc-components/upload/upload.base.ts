@@ -250,12 +250,12 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         const fileVerify = this.fileVerify ? this.fileVerify.trim() : '';
         if (fileVerify) {
-            formData.append('file-verify', fileVerify);
+            formData.append('file-verify', encodeURIComponent(fileVerify));
             delete additionalInfos['file-verify'];
         }
 
         for (let prop in this.additionalInfos) {
-            formData.append(prop, this.additionalInfos[prop]);
+            formData.append(prop, encodeURIComponent(this.additionalInfos[prop]));
         }
     }
 
