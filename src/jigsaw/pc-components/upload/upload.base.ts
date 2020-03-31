@@ -240,7 +240,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     private _appendAdditionalFields(formData: FormData, fileName: string): void {
-        const additionalFields = CommonUtils.shallowCopy(this.additionalFields);
+        const additionalFields = CommonUtils.shallowCopy(this.additionalFields || {});
 
         // 为了避免引入破坏性，这里按照顺序append
         const fileNameField = this.fileNameField ? this.fileNameField.trim() : '';
