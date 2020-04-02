@@ -33,6 +33,12 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     @Input()
     public fileNameField: string = 'filename';
 
+    @Input()
+    public fileVerify: string;
+
+    @Input()
+    public additionalFields: {[prop: string]: string};
+
     private _minSize: number;
 
     @Input()
@@ -129,11 +135,15 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     }
 
     protected _upload(files?: FileList) {
+        if (!this._http) {
+            console.error('Jigsaw upload pc-components must inject HttpClientModule, please import it to the module!');
+            return;
+        }
+
         if (!files) {
             const fileInput = this._fileInputEl;
             files = fileInput['files'];
         }
-
         if (!files || !files.length) {
             console.warn('there are no upload files');
             return;
@@ -216,14 +226,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         fileInfo.state = 'loading';
         const formData = new FormData();
         formData.append(this.contentField, fileInfo.file);
-        const fileNameField = this.fileNameField ? this.fileNameField.trim() : '';
-        if (fileNameField) {
-            formData.append(fileNameField, encodeURI(fileInfo.file.name));
-        }
-        if (!this._http) {
-            console.error('Jigsaw upload pc-components must inject HttpClientModule, please import it to the module!');
-            return;
-        }
+        this._appendAdditionalFields(formData, fileInfo.file.name);
         this._http.post(this.targetUrl, formData, {responseType: 'text'}).subscribe(res => {
             fileInfo.state = 'success';
             fileInfo.url = res;
@@ -234,6 +237,27 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             fileInfo.reason = this._translateService.instant(`upload.${e.statusText}`);
             this._afterCurFileUploaded(fileInfo);
         });
+    }
+
+    private _appendAdditionalFields(formData: FormData, fileName: string): void {
+        const additionalFields = CommonUtils.shallowCopy(this.additionalFields || {});
+
+        // 为了避免引入破坏性，这里按照顺序append
+        const fileNameField = this.fileNameField ? this.fileNameField.trim() : '';
+        if (fileNameField) {
+            formData.append(fileNameField, encodeURIComponent(fileName));
+            delete additionalFields[fileNameField];
+        }
+
+        const fileVerify = this.fileVerify ? this.fileVerify.trim() : '';
+        if (fileVerify) {
+            formData.append('file-verify', encodeURIComponent(fileVerify));
+            delete additionalFields['file-verify'];
+        }
+
+        for (let prop in this.additionalFields) {
+            formData.append(prop, encodeURIComponent(this.additionalFields[prop]));
+        }
     }
 
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
