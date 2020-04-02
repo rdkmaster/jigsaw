@@ -40,7 +40,7 @@ export class JigsawEditableTabTitleRenderer implements IDynamicInstantiatable {
         e.preventDefault();
         e.stopPropagation();
         this._$editable = !this._$editable;
-        setTimeout(() => {
+        Promise.resolve().then(() => {
             // 等待input渲染
             this.input.focus();
         });
