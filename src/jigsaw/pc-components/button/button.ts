@@ -25,7 +25,7 @@ import {AbstractJigsawComponent} from '../../common/common';
         '(click)': '_onClick()',
         '[style.min-width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-button-clicked]': "_clicked",
+        '[class.jigsaw-button-clicked]': "_$clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
@@ -61,15 +61,15 @@ export class JigsawButton extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public _clicked: boolean = false;
+    public _$clicked: boolean = false;
 
     /**
      * @internal
      */
     public _onClick(): void {
-        if (!this.disabled && !this._clicked) {
-            this._clicked = true;
-            this.callLater(() => this._clicked = false, 360);
+        if (!this.disabled && !this._$clicked) {
+            this._$clicked = true;
+            this.callLater(() => this._$clicked = false, 360);
         }
     }
 }

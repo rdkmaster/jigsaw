@@ -12,7 +12,8 @@ import {
     Renderer2,
     ElementRef,
     forwardRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    NgZone
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -120,8 +121,8 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super();
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     public ngOnInit() {
@@ -129,7 +130,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public ngAfterContentInit() {
-        this.callLater(() => {
+        this.runAfterMicrotasks(() => {
             const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
             if (labelEl.innerText.trim() === '') {
                 this._renderer.setStyle(labelEl, 'padding', '0');
