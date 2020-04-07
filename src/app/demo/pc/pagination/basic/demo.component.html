@@ -29,7 +29,8 @@
                            (currentChange)="getCurrentPage($event)"
                            mode="simple"
                            [placeholder]="'搜一搜'"
-                           [searchable]="searchable">
+                           [searchable]="searchable"
+                           [pageSizeOptions]="[5, 10, 20]">
         </jigsaw-pagination>
         <p class="message">当前第{{pageableForSimple.pagingInfo.currentPage}}页</p>
     </div>

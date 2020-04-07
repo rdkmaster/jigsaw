@@ -43,6 +43,15 @@
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
         <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-double-right"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(data?.pagingInfo?.totalPage)"></div>
+        <jigsaw-select *ngIf="pageSizeOptions" class="jigsaw-paging-page-size"
+                       [value]="_$pageSize"
+                       (valueChange)="_changePageSize($event)"
+                       trackItemBy="value"
+                       labelField="label"
+                       width="80"
+                       maxHeight="22"
+                       [data]="pageSizeOptions">
+        </jigsaw-select>
     </ng-container>
 </ng-container>
 
