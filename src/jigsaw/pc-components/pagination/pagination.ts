@@ -90,7 +90,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     public set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
-        newValue.forEach(num => {
+        (newValue || []).forEach(num => {
             let option = {value: num, label: num + '/' + this._translateService.instant('pagination.page')};
             this._pageSizeOptions.push(option);
         });
