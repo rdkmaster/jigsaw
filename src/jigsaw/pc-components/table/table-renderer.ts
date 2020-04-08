@@ -14,6 +14,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
+import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 
 export class TableCellRendererBase implements OnInit, OnDestroy {
     @Input() public cellData: any;
@@ -123,6 +124,35 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngAfterViewInit() {
         this.input.focus();
+    }
+}
+
+/**
+ * 编辑单元格自动完成渲染器
+ */
+@Component({
+    template: `
+        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
+                                    (blur)="dispatchChangeEvent(cellData)" [data]="_$dropdownData"
+                                    [filterOnFocus]="false" [blurOnClear]="false" [blurOnDropdownSelect]="false">
+        </jigsaw-auto-complete-input>
+    `
+})
+export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+
+    @ViewChild(JigsawAutoCompleteInput, {static: false})
+    protected autoCompleteInput: JigsawAutoCompleteInput;
+
+    public get _$placeholder() {
+        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$dropdownData() {
+        return this.initData && this.initData.data ? this.initData.data : null;
+    }
+
+    ngAfterViewInit() {
+        this.autoCompleteInput.focus();
     }
 }
 
@@ -390,10 +420,12 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
+        TableCellAutoCompleteEditorRenderer
     ],
     imports: [
-        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
+        JigsawAutoCompleteInputModule
     ]
 })
 export class JigsawTableRendererModule {
