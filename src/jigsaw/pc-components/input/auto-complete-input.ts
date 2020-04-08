@@ -225,7 +225,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     private _showDropdownList(event) {
         const hostElement = this._elementRef.nativeElement;
         if (this._propertyListPopupInfo) {
-            this._closeListPopup();
             return;
         }
 

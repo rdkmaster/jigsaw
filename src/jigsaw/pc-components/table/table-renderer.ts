@@ -134,7 +134,8 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     template: `
         <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropdownData"
-                                    [filterOnFocus]="false" [blurOnClear]="false" [blurOnDropdownSelect]="false">
+                                    [filterOnFocus]="false" [blurOnClear]="false" [blurOnDropdownSelect]="false"
+                                    [maxDropDownHeight]="_$maxDropDownHeight">
         </jigsaw-auto-complete-input>
     `
 })
@@ -149,6 +150,10 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
 
     public get _$dropdownData() {
         return this.initData && this.initData.data ? this.initData.data : null;
+    }
+
+    public get _$maxDropDownHeight() {
+        return this.initData && this.initData.maxDropDownHeight ? this.initData.maxDropDownHeight : null;
     }
 
     ngAfterViewInit() {
