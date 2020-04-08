@@ -102,6 +102,22 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
             }
         }
 
+        .#{$paging-prefix-cls}-page-size {
+            margin-left: 8px;
+            .#{$jigsaw-prefix}-combo-select-selection {
+                min-height: 22px;
+                max-height: 22px;
+                .#{$jigsaw-prefix}-combo-select-selection-rendered {
+                    min-height: 20px;
+                    max-height: 20px;
+                    .#{$jigsaw-prefix}-tag-host {
+                        height: auto;
+                        line-height: 1;
+                    }
+                }
+            }
+        }
+
     }
 
 }
