@@ -9,6 +9,8 @@ export class PaginationBasicDemoComponent {
     searchable: boolean = false;
     pageable: LocalPageableTableData;
     pageableForSimple: LocalPageableTableData;
+    pageSizeOptions = null;
+    showQuickJumper = true;
 
     constructor(http: HttpClient) {
         this.pageable = new LocalPageableTableData();
@@ -33,6 +35,7 @@ export class PaginationBasicDemoComponent {
 
     changeCurrentPage(number) {
         this.pageable.pagingInfo.currentPage = number;
+        this.pageableForSimple.pagingInfo.currentPage = number;
     }
 
     // ====================================================================

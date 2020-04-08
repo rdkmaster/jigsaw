@@ -11,7 +11,7 @@
         <div class="jigsaw-paging-next jigsaw-paging-page fa jigsaw-paging-right"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
 
-        <jigsaw-select *ngIf="pageSizeOptions"
+        <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
                        [value]="_$pageSize"
                        (valueChange)="_changePageSize($event)"
                        trackItemBy="value"
@@ -43,7 +43,8 @@
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
         <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-double-right"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(data?.pagingInfo?.totalPage)"></div>
-        <jigsaw-select *ngIf="pageSizeOptions" class="jigsaw-paging-page-size"
+        <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
+                       class="jigsaw-paging-page-size"
                        [value]="_$pageSize"
                        (valueChange)="_changePageSize($event)"
                        trackItemBy="value"
