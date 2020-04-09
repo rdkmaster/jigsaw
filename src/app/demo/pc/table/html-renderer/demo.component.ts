@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {RawTableData, TableData} from "jigsaw/common/core/data/table-data";
 import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+import {SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -38,12 +39,15 @@ export class TableHtmlRendererDemoComponent {
             target: 'salary',
             header: {
                 renderer: 'html',
-                data: (data, col) => `${data.header[col]} 
+                data: (data, col) => `${data.header[col]}
                     <select onchange="changeUnit()" id="unitSelect">
                         <option value="￥">￥</option>
                         <option value="$">$</option>
                     </select>`,
-                innerHtmlContext: this
+                innerHtmlContext: this,
+                sortable: true,
+                sortAs: SortAs.number,
+                defaultSortOrder: SortOrder.asc
             }
         }
     ];
