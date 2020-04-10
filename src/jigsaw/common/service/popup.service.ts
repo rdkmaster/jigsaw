@@ -603,6 +603,9 @@ export class PopupService {
      * 设置弹出的位置
      * */
     public setPosition(options: PopupOptions, element: HTMLElement): void {
+        if (!element || !options) {
+            return;
+        }
         let posType: string = this._isGlobalPopup(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
         PopupService._renderer.setStyle(element, 'position', posType);
