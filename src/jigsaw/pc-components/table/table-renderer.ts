@@ -144,16 +144,23 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     @ViewChild(JigsawAutoCompleteInput, {static: false})
     protected autoCompleteInput: JigsawAutoCompleteInput;
 
+    private _initDataJson: any;
+
+    protected onDataRefresh() {
+        this._initDataJson = this.initData instanceof Function ? 
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
     public get _$placeholder() {
-        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+        return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
     }
 
     public get _$dropdownData() {
-        return this.initData && this.initData.data ? this.initData.data : null;
+        return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
     }
 
     public get _$maxDropDownHeight() {
-        return this.initData && this.initData.maxDropDownHeight ? this.initData.maxDropDownHeight : null;
+        return this._initDataJson && this._initDataJson.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
     }
 
     ngAfterViewInit() {

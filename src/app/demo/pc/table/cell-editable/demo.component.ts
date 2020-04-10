@@ -86,11 +86,13 @@ export class TableSetCellEditableDemoComponent {
             cell: {
                 editable: true,
                 editorRenderer: TableCellAutoCompleteEditorRenderer,
-                editorRendererInitData:
-                    {
+                editorRendererInitData: ()=>{
+                    return {
                         placeholder: "Try to edit...",
                         data: ['西格莉德，最被喜爱的人;胜利的。', '贾艾斯，持盾之人。']
                     }
+                }
+                    
             }
         },
     ];
