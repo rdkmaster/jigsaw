@@ -155,13 +155,13 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         let filterKey = shouldFilter ? this._input.value : '';
         filterKey = filterKey ? filterKey.trim() : '';
         let data: any = [];
-        data = this._bakData.reduce((arr, category) => {
+        data = this._bakData ? this._bakData.reduce((arr, category) => {
             let result = this._filter(category, filterKey);
             if (result) {
                 arr.push(result);
             }
             return arr;
-        }, data);
+        }, data) : [];
         this._$data = data;
     }
 

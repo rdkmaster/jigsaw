@@ -51,7 +51,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     @Input()
     public field: string;
     @Input()
-    public renderer: Type<TableCellRendererBase> | TemplateRef<any>;
+    public renderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
     @Input()
     public rendererInitData: any;
 
@@ -133,12 +133,16 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
      * 插入渲染器
      * */
     protected insertRenderer() {
-        this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
-        this.changeDetector.detectChanges();
+        if(this.renderer != 'html') {
+            this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
+            this.changeDetector.detectChanges();
+        }
     }
 
     ngAfterViewInit(): void {
-        this.insertRenderer();
+        if(this.renderer != 'html') {
+            this.insertRenderer();
+        }
     }
 }
 
@@ -152,6 +156,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     template: `
         <div class="jigsaw-table-header-cell" [style.padding-right]="sortable ? '14px' : '0'">
             <ng-template jigsaw-renderer-host></ng-template>
+            <div *ngIf="renderer == 'html'" class="jigsaw-table-header-content" [trustedHtml]="headerTrustedHtml"
+                 [trustedHtmlContext]="headerTrustedHtmlContext"></div>
             <div *ngIf="sortable" [ngClass]="_$sortOrderClass">
                 <span (click)="_$sortAsc()" class="jigsaw-table-sort-btn jigsaw-table-sort-up"></span>
                 <span (click)="_$sortDes()" class="jigsaw-table-sort-btn jigsaw-table-sort-down"></span>
@@ -166,6 +172,10 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     @Input() public sortable: boolean;
 
     @Input() public sortAs: SortAs;
+
+    @Input() public headerTrustedHtml: string;
+
+    @Input() public headerTrustedHtmlContext: any;
 
     /**
      * @internal
