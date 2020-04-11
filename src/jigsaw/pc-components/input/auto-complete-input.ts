@@ -107,9 +107,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public filterOnFocus: boolean = true;
 
-    @Input()
-    public blurOnDropdownSelect: boolean = true;
-
     @ViewChild('dropdownTemp', {static: false})
     private _dropdownTemp: TemplateRef<any>;
 
@@ -213,11 +210,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     }
 
     public _$selectDropdownItem(event) {
-        if(!this.blurOnDropdownSelect) {
-            // 阻止触发input框的blur
-            event.preventDefault();
-            event.stopPropagation();
-        }
+        // 阻止触发input框的blur
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     private _propertyListPopupInfo: PopupInfo;

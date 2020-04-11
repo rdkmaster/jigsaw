@@ -134,7 +134,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     template: `
         <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropdownData"
-                                    [filterOnFocus]="false" [blurOnClear]="false" [blurOnDropdownSelect]="false"
+                                    [filterOnFocus]="false" [blurOnClear]="false"
                                     [maxDropDownHeight]="_$maxDropDownHeight">
         </jigsaw-auto-complete-input>
     `
