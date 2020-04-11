@@ -206,10 +206,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         event.stopPropagation();
         this.value = item;
         this.selectEvent.emit(item);
-        this._closeListPopup();
+        //this._closeListPopup();
     }
 
-    public _$selectDropdownItem(event) {
+    public _$preventInputBlur(event) {
         // 阻止触发input框的blur
         event.preventDefault();
         event.stopPropagation();

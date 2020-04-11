@@ -56,9 +56,7 @@ export class TableSetCellEditableDemoComponent {
 
     columns: ColumnDefine[] = [
         {
-            target: 'position',
-            width: '20%',
-            group: true,
+            target: 'desc',
             cell: {
                 renderer: MyTableCell,
                 editable: true,
@@ -82,17 +80,19 @@ export class TableSetCellEditableDemoComponent {
             }
         },
         {
-            target: 'desc',
+            target: 'position',
+            width: '20%',
+            group: true,
             cell: {
                 editable: true,
                 editorRenderer: TableCellAutoCompleteEditorRenderer,
                 editorRendererInitData: ()=>{
                     return {
                         placeholder: "Try to edit...",
-                        data: ['西格莉德，最被喜爱的人;胜利的。', '贾艾斯，持盾之人。']
+                        data: ["Developer", "System Architect", "Test Engineer"]
                     }
                 }
-                    
+
             }
         },
     ];
