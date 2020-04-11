@@ -206,7 +206,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         event.stopPropagation();
         this.value = item;
         this.selectEvent.emit(item);
-        //this._closeListPopup();
     }
 
     public _$preventInputBlur(event) {
