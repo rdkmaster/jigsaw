@@ -42,6 +42,7 @@ import {
     TableCellTextEditorRenderer,
     TableHeadCheckboxRenderer,
     TableCellAutoCompleteEditorRenderer,
+    TableCellNumericEditorRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -811,7 +812,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellAutoCompleteEditorRenderer]
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer]
 })
 export class JigsawTableModule {
 }
