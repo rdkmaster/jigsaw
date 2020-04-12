@@ -133,9 +133,10 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 @Component({
     template: `
         <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
-                                    (blur)="dispatchChangeEvent(cellData)" [data]="_$dropdownData"
+                                    (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
                                     [filterOnFocus]="false" [blurOnClear]="false"
-                                    [maxDropDownHeight]="_$maxDropDownHeight">
+                                    [maxDropDownHeight]="_$maxDropDownHeight"
+                                    [closeDropDownOnSelect]="false">
         </jigsaw-auto-complete-input>
     `
 })
@@ -147,7 +148,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     private _initDataJson: any;
 
     protected onDataRefresh() {
-        this._initDataJson = this.initData instanceof Function ? 
+        this._initDataJson = this.initData instanceof Function ?
             this.initData(this.tableData, this.row, this.column) : this.initData;
     }
 
@@ -155,7 +156,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
         return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
     }
 
-    public get _$dropdownData() {
+    public get _$dropDownData() {
         return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
     }
 
@@ -327,7 +328,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     template: `
         <jigsaw-select [value]="selected" [data]="data"
                        (valueChange)="dispatchChangeEvent($event.label)"
-                       optionCount="5" width="100%" height="20">
+                       [optionCount]="5" width="100%" height="20">
         </jigsaw-select>
     `
 })
