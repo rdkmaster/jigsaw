@@ -1,4 +1,5 @@
 import {debounceTime} from "rxjs/operators";
+import {Subscription} from "rxjs";
 import {
     Component,
     ElementRef,
@@ -14,9 +15,9 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputModule} from "./input";
 import {PopupInfo, PopupOptions, PopupPositionValue, PopupService} from "../../common/service/popup.service";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export class DropDownValue {
@@ -65,6 +66,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _$maxDropDownHeight: string = '300px';
+
+    @Input()
+    public closeDropDownOnSelect: boolean = true;
+
     private _removeWindowMouseDownListener: Function;
 
     @Input()
@@ -107,18 +112,17 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public filterOnFocus: boolean = true;
 
-    @ViewChild('dropdownTemp', {static: false})
-    private _dropdownTemp: TemplateRef<any>;
+    @ViewChild('dropDownTemp', {static: false})
+    private _dropDownTemp: TemplateRef<any>;
 
     @ViewChild('input', {static: false})
     private _input: JigsawInput;
 
-
-    public focus(){
+    public focus() {
         this._input.focus();
     }
 
-    public select(){
+    public select() {
         this._input.select();
     }
 
@@ -140,9 +144,20 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     }
 
     ngAfterViewInit() {
-        this._input.valueChange.pipe(debounceTime(300)).subscribe(() => {
-            this._getFilteredDropDownData(true);
-        });
+        this._subscribeInputValueChange();
+    }
+
+    private _inputValueChangeSubscription: Subscription;
+
+    private _subscribeInputValueChange(): void {
+        if (this._inputValueChangeSubscription) {
+            this._inputValueChangeSubscription.unsubscribe();
+        }
+        this._inputValueChangeSubscription = this._input.valueChange
+            .pipe(debounceTime(300))
+            .subscribe(() => {
+                this._getFilteredDropDownData(true);
+            });
     }
 
     /**
@@ -179,7 +194,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     public _$handleFocus(event: FocusEvent) {
         super._$handleFocus(event);
         this._getFilteredDropDownData(this.filterOnFocus);
-        this._showDropdownList(event);
+        this._showDropDownList();
     }
 
     /**
@@ -204,11 +219,23 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     public _$add(event, item) {
         event.preventDefault();
         event.stopPropagation();
+
+        if (this._inputValueChangeSubscription) {
+            this._inputValueChangeSubscription.unsubscribe();
+        }
         this.value = item;
+
         this.selectEvent.emit(item);
     }
 
+    public _$onKeyDown() {
+        this._subscribeInputValueChange();
+    }
+
     public _$preventInputBlur(event) {
+        if (this.closeDropDownOnSelect) {
+            return;
+        }
         // 阻止触发input框的blur
         event.preventDefault();
         event.stopPropagation();
@@ -216,7 +243,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
 
     private _propertyListPopupInfo: PopupInfo;
 
-    private _showDropdownList(event) {
+    private _showDropDownList() {
         const hostElement = this._elementRef.nativeElement;
         if (this._propertyListPopupInfo) {
             return;
@@ -234,7 +261,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
                 });
             }
         };
-        this._propertyListPopupInfo = this._popupService.popup(this._dropdownTemp, popupOptions);
+        this._propertyListPopupInfo = this._popupService.popup(this._dropDownTemp, popupOptions);
         this._removeWindowListener();
         this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown.bind(this));
     }
@@ -263,6 +290,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     public ngOnDestroy() {
         super.ngOnDestroy();
         this._closeListPopup();
+        if (this._inputValueChangeSubscription) {
+            this._inputValueChangeSubscription.unsubscribe();
+        }
     }
 }
 
