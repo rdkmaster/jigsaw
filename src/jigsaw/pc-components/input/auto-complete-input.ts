@@ -150,7 +150,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     private _inputValueChangeSubscription: Subscription;
 
     private _subscribeInputValueChange(): void {
-        this._unsubscribeInputValueChange();
+        if(this._inputValueChangeSubscription) {
+        	return;
+        }
+
         this._inputValueChangeSubscription = this._input.valueChange
             .pipe(debounceTime(300))
             .subscribe(() => {
