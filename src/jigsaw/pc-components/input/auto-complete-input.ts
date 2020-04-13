@@ -150,14 +150,20 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     private _inputValueChangeSubscription: Subscription;
 
     private _subscribeInputValueChange(): void {
-        if (this._inputValueChangeSubscription) {
-            this._inputValueChangeSubscription.unsubscribe();
-        }
+        this._unsubscribeInputValueChange();
         this._inputValueChangeSubscription = this._input.valueChange
             .pipe(debounceTime(300))
             .subscribe(() => {
                 this._getFilteredDropDownData(true);
             });
+    }
+
+    private _unsubscribeInputValueChange(): void {
+        if (!this._inputValueChangeSubscription) {
+            return;
+        }
+        this._inputValueChangeSubscription.unsubscribe();
+        this._inputValueChangeSubscription = null;
     }
 
     /**
@@ -220,16 +226,16 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         event.preventDefault();
         event.stopPropagation();
 
-        if (this._inputValueChangeSubscription) {
-            this._inputValueChangeSubscription.unsubscribe();
-        }
+        this._unsubscribeInputValueChange();
         this.value = item;
 
         this.selectEvent.emit(item);
     }
 
     public _$onKeyDown() {
-        this._subscribeInputValueChange();
+        if (!this._inputValueChangeSubscription) {
+            this._subscribeInputValueChange();
+        }
     }
 
     public _$preventInputBlur(event) {
@@ -290,9 +296,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     public ngOnDestroy() {
         super.ngOnDestroy();
         this._closeListPopup();
-        if (this._inputValueChangeSubscription) {
-            this._inputValueChangeSubscription.unsubscribe();
-        }
+        this._unsubscribeInputValueChange();
     }
 }
 
