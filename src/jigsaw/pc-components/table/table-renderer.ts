@@ -1,6 +1,6 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnDestroy, OnInit, Output, Renderer2,
-    ViewChild
+    ViewChild, ElementRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
@@ -284,7 +284,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 @Component({
     template: `
         <jigsaw-select [value]="selected" [data]="data"
-                       (valueChange)="dispatchChangeEvent($event.label)"
+                       (valueChange)="_$handleValueChange($event)"
                        optionCount="5" width="100%" height="20">
         </jigsaw-select>
     `
@@ -294,15 +294,24 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     public initData: InitDataGenerator | ArrayCollection<any> | any[];
     public data: ArrayCollection<any> | any[];
 
-    constructor(private _changeDetector: ChangeDetectorRef, renderer: Renderer2) {
+    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
-        this._removeKeyDownHandler = renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
+        this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
 
     private readonly _removeKeyDownHandler;
+    private _removeClickHandler;
 
-    private _onKeyDown() {
+    private _hostCellEl: HTMLElement;
+
+    private _onKeyDown($event) {
+        if($event.type == 'click' && $event.path.find(el => el == this._hostCellEl)) return;
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
+    }
+
+    public _$handleValueChange($event) {
+        if(!$event || $event.label == this.cellData) return;
+        this.dispatchChangeEvent($event.label)
     }
 
     protected onDataRefresh() {
@@ -313,7 +322,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                 const subscription = data.subscribe(
                     value => {
                         subscription.unsubscribe();
-                        if (!this.hasDestroyed) {
+                        if (!this._hasDestroyed) {
                             this.data = value;
                             this._changeDetector.detectChanges();
                         }
@@ -321,7 +330,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                     error => {
                         subscription.unsubscribe();
                         console.log('select renderer: read async data error', error);
-                        if (!this.hasDestroyed) {
+                        if (!this._hasDestroyed) {
                             this.data = [];
                             this._changeDetector.detectChanges();
                         }
@@ -357,33 +366,22 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.selected = {label: value};
     }
 
-    subscriber: Subscription;
-
-    public get hasDestroyed(): boolean {
-        return !this.subscriber;
-    }
+    private _hasDestroyed: boolean;
 
     ngOnInit() {
         super.ngOnInit();
 
         // 使用此方法使其他单元格退出编辑状态
-        this.tableData.emit(this);
-        this.subscriber = this.tableData.subscribe(renderer => {
-            if (this != renderer) {
-                this.dispatchChangeEvent(this.cellData);
-            }
-        });
+        this._hostCellEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, 'td');
+        this._removeClickHandler = this._renderer.listen('document', 'click', this._onKeyDown.bind(this));
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
 
         this._removeKeyDownHandler();
-        // 随手清理垃圾是一个好习惯
-        if (this.subscriber) {
-            this.subscriber.unsubscribe();
-            this.subscriber = null;
-        }
+        this._removeClickHandler();
+        this._hasDestroyed = true;
     }
 }
 
