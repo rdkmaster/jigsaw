@@ -18,7 +18,7 @@ import {OfficeHeaderRenderer} from "./renderers";
     declarations: [TableSetCellRenderDemoComponent, OfficeHeaderRenderer],
     exports: [TableSetCellRenderDemoComponent],
     entryComponents: [
-        TableCellSelectRenderer
+        TableCellSelectRenderer, OfficeHeaderRenderer
     ]
 })
 export class TableSetCellRenderDemoModule {
