@@ -3,7 +3,11 @@ import {HttpClient} from "@angular/common/http";
 import {TableData} from "jigsaw/common/core/data/table-data";
 import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
 import {JigsawInput} from "jigsaw/pc-components/input/input";
-import {TableCellRendererBase, TableCellNumericEditorRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {
+    TableCellRendererBase,
+    TableCellNumericEditorRenderer,
+    TableCellAutoCompleteEditorRenderer
+} from "jigsaw/pc-components/table/table-renderer";
 
 
 /*
@@ -52,16 +56,15 @@ export class TableSetCellEditableDemoComponent {
 
     columns: ColumnDefine[] = [
         {
-            target: 'position',
-            width: '20%',
-            group: true,
+            target: 'desc',
             cell: {
                 renderer: MyTableCell,
                 editable: true,
                 editorRenderer: MyTableCellEditor,
                 editorRendererInitData: {placeholder: "Type to edit..."}
             }
-        }, {
+        },
+        {
             target: 'salary',
             width: '20%',
             group: true,
@@ -75,7 +78,24 @@ export class TableSetCellEditableDemoComponent {
                         step: 100
                     }
             }
-        }];
+        },
+        {
+            target: 'position',
+            width: '20%',
+            group: true,
+            cell: {
+                editable: true,
+                editorRenderer: TableCellAutoCompleteEditorRenderer,
+                editorRendererInitData: ()=>{
+                    return {
+                        placeholder: "Try to edit...",
+                        data: ["Developer", "System Architect", "Test Engineer"]
+                    }
+                }
+
+            }
+        },
+    ];
 
     changeMsg: string;
 
