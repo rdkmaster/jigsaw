@@ -37,13 +37,7 @@ import {SortOrder} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
-    TableCellCheckboxRenderer,
-    TableCellSelectRenderer,
-    TableCellSwitchRenderer,
-    TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer,
-    TableCellAutoCompleteEditorRenderer,
-    TableCellNumericEditorRenderer
+    TableCellTextEditorRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";

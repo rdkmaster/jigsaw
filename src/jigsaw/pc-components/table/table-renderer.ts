@@ -145,7 +145,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 })
 export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase implements AfterViewInit {
 
-    @ViewChild(JigsawAutoCompleteInput, {static: false})
+    @ViewChild(JigsawAutoCompleteInput)
     protected autoCompleteInput: JigsawAutoCompleteInput;
 
     private _initDataJson: any;
