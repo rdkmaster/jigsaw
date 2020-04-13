@@ -14,6 +14,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
+import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -126,6 +127,48 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngAfterViewInit() {
         this.input.focus();
+    }
+}
+
+/**
+ * 编辑单元格自动完成渲染器
+ */
+@Component({
+    template: `
+        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
+                                    (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
+                                    [filterOnFocus]="false" [blurOnClear]="false"
+                                    [maxDropDownHeight]="_$maxDropDownHeight"
+                                    [closeDropDownOnSelect]="false">
+        </jigsaw-auto-complete-input>
+    `
+})
+export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+
+    @ViewChild(JigsawAutoCompleteInput, {static: false})
+    protected autoCompleteInput: JigsawAutoCompleteInput;
+
+    private _initDataJson: any;
+
+    protected onDataRefresh() {
+        this._initDataJson = this.initData instanceof Function ?
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
+    public get _$placeholder() {
+        return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
+    }
+
+    public get _$dropDownData() {
+        return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
+    }
+
+    public get _$maxDropDownHeight() {
+        return this._initDataJson && this._initDataJson.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
+    }
+
+    ngAfterViewInit() {
+        this.autoCompleteInput.focus();
     }
 }
 
@@ -304,7 +347,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     template: `
         <jigsaw-select [value]="selected" [data]="data"
                        (valueChange)="_$handleValueChange($event)"
-                       optionCount="5" width="100%" height="20">
+                       [optionCount]="5" width="100%" height="20">
         </jigsaw-select>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -409,10 +452,12 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer
+        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
+        TableCellAutoCompleteEditorRenderer
     ],
     imports: [
-        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule
+        CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
+        JigsawAutoCompleteInputModule
     ]
 })
 export class JigsawTableRendererModule {

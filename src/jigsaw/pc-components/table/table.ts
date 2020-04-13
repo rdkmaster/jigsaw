@@ -41,7 +41,9 @@ import {
     TableCellSelectRenderer,
     TableCellSwitchRenderer,
     TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer
+    TableHeadCheckboxRenderer,
+    TableCellAutoCompleteEditorRenderer,
+    TableCellNumericEditorRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
