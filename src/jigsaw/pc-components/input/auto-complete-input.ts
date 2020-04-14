@@ -1,4 +1,4 @@
-import {debounceTime} from "rxjs/operators";
+import 'rxjs/add/operator/debounceTime';
 import {Subscription} from "rxjs/Subscription";
 import {
     Component,
@@ -156,7 +156,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         }
 
         this._inputValueChangeSubscription = this._input.valueChange
-            .pipe(debounceTime(300))
+            .debounceTime(300)
             .subscribe(() => {
                 this._getFilteredDropDownData(true);
             });
