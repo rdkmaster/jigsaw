@@ -7,13 +7,17 @@
 <div class="demo-1">
     获得焦点后自动执行过滤
     <jigsaw-switch [(checked)]="filterOnFocus"></jigsaw-switch>
+    <br><br>
+    选中推荐条目后关闭下拉
+    <jigsaw-switch [(checked)]="closeDropDownOnSelect"></jigsaw-switch>
 
     <br><br>
 
     <h3>输入框带有图标</h3>
     <p class="notes">输入值是：<span>{{inputValue}}</span></p>
     <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="250"
-                               (valueChange)="valueChanged($event)" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
+                                (valueChange)="valueChanged($event)" [data]="_$dropdownData"
+                                [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect">
         <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-search" style="font-size: 14px;"></span></a>
         <a jigsaw-icon (click)="click()"><span class="fa fa-question" style="font-size: 14px;"></span></a>
     </jigsaw-auto-complete-input>
@@ -24,7 +28,8 @@
     <h3>带默认值</h3>
     <p class="notes">输入值是：<span>{{inputValue2}}</span></p>
     <jigsaw-auto-complete-input [(value)]="inputValue2" placeholder="auto complete input demo" width="20%"
-                               [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
+                                [data]="_$dropdownData" [filterOnFocus]="filterOnFocus"
+                                [closeDropDownOnSelect]="closeDropDownOnSelect">
     </jigsaw-auto-complete-input>
 </div>
 <br><br><br>
@@ -34,7 +39,8 @@
     <p class="notes">最大高度：
         <jigsaw-input [(value)]="maxDropDownHeight"></jigsaw-input>
     </p>
-    <jigsaw-auto-complete-input placeholder="auto complete input demo" [data]="_$dropdownData" [width]="width" height="32"
-                               [maxDropDownHeight]="maxDropDownHeight" [filterOnFocus]="filterOnFocus">
+    <jigsaw-auto-complete-input placeholder="auto complete input demo" [data]="_$dropdownData" [width]="width"
+                                height="32" [maxDropDownHeight]="maxDropDownHeight" [filterOnFocus]="filterOnFocus"
+                                [closeDropDownOnSelect]="closeDropDownOnSelect">
     </jigsaw-auto-complete-input>
 </div>
