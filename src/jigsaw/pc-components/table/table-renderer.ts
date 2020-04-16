@@ -315,7 +315,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
     public get _$readonly() {
-        return this.initData && this.initData.readonly ? this.initData.readonly : false;
+        return this.initData && this.initData.readonly;
     }
 }
 
