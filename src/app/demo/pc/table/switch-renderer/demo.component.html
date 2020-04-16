@@ -4,7 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<span>“婚否”列是否可编辑</span><jigsaw-switch (checkedChange)="createColumnDefines(!$event);"></jigsaw-switch>
+<span>“婚否”列是否可编辑</span><jigsaw-switch [checked]='true' (checkedChange)="createColumnDefines(!$event);"></jigsaw-switch>
 <jigsaw-table height="400" [data]="tableData" [columnDefines]="columns" (edit)="onCellChange($event)"></jigsaw-table>
 
 更改数据的信息： {{changeMsg}}
