@@ -82,11 +82,24 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this._setSwitchClass();
     }
 
+    private _readonly: boolean = false;
+
+    /**
+     * 是否只读 类型 boolean 默认值 false;
+     *
+     */
+    @Input()
+    public get readonly(): boolean { return this._readonly; };
+    public set readonly(value: boolean) {
+        this._readonly = value;
+        this._setSwitchClass();
+    }
+
     /**
      * @internal
      */
     public _$switchClick() {
-        if(!this.disabled) {
+        if(!this.disabled && !this.readonly) {
             this.checked = !this.checked;
 
             // 发出事件
@@ -108,7 +121,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
             'jigsaw-switch': 'true',
             'jigsaw-switch-small': this.size === 'small',
             'jigsaw-switch-checked': this.checked,
-            'jigsaw-switch-disabled': this.disabled
+            'jigsaw-switch-disabled': this.disabled,
+            'jigsaw-switch-readonly': this.readonly
         }
     }
 

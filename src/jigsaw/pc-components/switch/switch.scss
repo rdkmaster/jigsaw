@@ -91,6 +91,13 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         }
     }
 
+    &-readonly {
+        cursor: not-allowed;
+        &:after {
+            cursor: not-allowed;
+        }
+    }
+
     /*小一号的开关*/
     &-small {
         height: 14px;
