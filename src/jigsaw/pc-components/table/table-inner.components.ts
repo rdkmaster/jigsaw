@@ -36,8 +36,18 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     public field: string;
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
+
+    private _rendererInitData: any;
     @Input()
-    public rendererInitData: any;
+    public get rendererInitData() {
+        return this._rendererInitData;
+    };
+    public set rendererInitData(value: any) {
+        this._rendererInitData = value;
+        if(this.rendererRef instanceof ComponentRef) {
+            this.rendererRef.instance.initData = value;
+        }
+    }
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
