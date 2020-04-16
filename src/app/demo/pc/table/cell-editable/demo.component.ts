@@ -55,6 +55,7 @@ export class TableSetCellEditableDemoComponent {
         this.tableData.fromAjax('mock-data/hr-list');
         // 添加switch列数据
         this.tableData.dataReviser = data => {
+            data = JSON.parse(JSON.stringify(data));
             data.field.splice(-1, 0, 'marriage');
             data.header.splice(-1, 0, '婚否');
             data.data.forEach(row => {
