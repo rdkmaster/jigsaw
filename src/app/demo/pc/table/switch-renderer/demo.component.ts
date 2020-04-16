@@ -30,7 +30,8 @@ export class TableSwitchRendererDemoComponent {
         {
             target: 'marriage',
             cell: {
-                renderer: TableCellSwitchRenderer
+                renderer: TableCellSwitchRenderer,
+                rendererInitData: {readonly: true}
             }
         }
     ];
