@@ -329,11 +329,13 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
  * switch renderer
  */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)"></j-switch>',
+    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)" [readonly]="_$readonly"></j-switch>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
-
+    public get _$readonly() {
+        return this.initData && this.initData.readonly;
+    }
 }
 
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
