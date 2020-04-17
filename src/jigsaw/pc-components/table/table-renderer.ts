@@ -225,6 +225,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             row[this.column] = value;
             this._additionalData.touchValueByRow(this.field, index, value);
         });
+        // if(this.targetData instanceof AdditionalTableData) {
+        //     this.targetData.change.emit();
+        // }
         this.targetData.refresh();
     }
 
@@ -296,6 +299,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._additionalData.touchValueByRow(this.field, this.row, value);
         this._updateTargetData();
         this.dispatchChangeEvent(value);
+        this.targetData.refresh();
     }
 
     ngOnInit() {
