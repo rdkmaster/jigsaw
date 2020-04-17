@@ -410,7 +410,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        setTimeout(() => this.reposition(opt.position));
+        Promise.resolve().then(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
             this._zone.runOutsideAngular(() => {

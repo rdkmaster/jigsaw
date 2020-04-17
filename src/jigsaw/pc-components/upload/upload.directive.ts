@@ -193,7 +193,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     }
 
     private _recalculatePopupPosition() {
-        setTimeout(() => {
+        this.runMicrotask(() => {
             if (this._popupInfo) {
                 this._popupService.setPosition(this._getNonModelOptions(), this._popupInfo.element);
             }

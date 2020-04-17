@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive, NgZone } from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
@@ -9,8 +9,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
-                protected changeDetector: ChangeDetectorRef) {
-        super();
+                protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     @ViewChild(JigsawRendererHost)
@@ -164,8 +164,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         </div>`
 })
 export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
-    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef) {
-        super(resolver, changeDetector);
+    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        super(resolver, changeDetector, _zone);
     }
 
     @Input() public sortable: boolean;
@@ -297,8 +297,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     private _goEditCallback: () => void;
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef,
-                private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super(cfr, cd);
+                private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(cfr, cd, _zone);
     }
 
     private _emitDataChange(cellData: string | number): void {
@@ -308,7 +308,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             // update tableData directly, therefor table.ts need not to do this.
             this.targetData.data[this.row + i][this.column] = cellData;
         }
-        this.targetData.refresh();
 
         const change: TableDataChangeEvent = {
             field: this.field,
@@ -321,6 +320,12 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
         this.cellData = cellData;
         this.cellDataChange.emit(this.cellData);
+
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            })
+        });
     }
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
