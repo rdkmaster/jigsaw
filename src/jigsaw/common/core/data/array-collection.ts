@@ -771,9 +771,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
+            pfi = new DataFilterInfo(undefined, undefined,encodeURIComponent(serializeFilterFunction(term)), fields);
         } else {
-            pfi = new DataFilterInfo(term, fields);
+            pfi = new DataFilterInfo(encodeURIComponent(term), fields);
         }
         this._filterSubject.next(pfi);
     }
