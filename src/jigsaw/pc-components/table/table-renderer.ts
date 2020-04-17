@@ -225,9 +225,6 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             row[this.column] = value;
             this._additionalData.touchValueByRow(this.field, index, value);
         });
-        // if(this.targetData instanceof AdditionalTableData) {
-        //     this.targetData.change.emit();
-        // }
         this.targetData.refresh();
     }
 
