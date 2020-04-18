@@ -566,7 +566,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._additionalData.header.push(acd.header.text);
         });
 
-        if(this._removeAdditionalDataChangeSubscription) {
+        if (this._removeAdditionalDataChangeSubscription) {
             this._removeAdditionalDataChangeSubscription.unsubscribe();
             this._removeAdditionalDataChangeSubscription = null;
         }
@@ -804,7 +804,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeHorizontalScrollListener();
             this._removeHorizontalScrollListener = null;
         }
-        if(this._removeAdditionalDataChangeSubscription) {
+        if (this._removeAdditionalDataChangeSubscription) {
             this._removeAdditionalDataChangeSubscription.unsubscribe();
             this._removeAdditionalDataChangeSubscription = null;
         }

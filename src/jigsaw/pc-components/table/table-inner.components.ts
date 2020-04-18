@@ -319,7 +319,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             // update tableData directly, therefor table.ts need not to do this.
             this.targetData.data[this.row + i][this.column] = cellData;
         }
-        if(this.targetData instanceof AdditionalTableData) {
+        if (this.targetData instanceof AdditionalTableData) {
             this.targetData.change.emit();
         }
 
