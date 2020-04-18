@@ -70,11 +70,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._$target != value) {
             this._$target = value;
             if (this._$opened == true) {
-                this._$opened = false;
-                this._closeFloat();
+                this.closeFloat();
                 this.callLater(() => {
-                    this._openFloat();
-                    this._$opened = true;
+                    this.openFloat();
                 });
             }
         }
@@ -107,18 +105,19 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     public set jigsawFloatOpen(value: boolean) {
-        if(!!value == this._$opened) {
+        value = !!value;
+        if(value == this._$opened) {
             return;
         }
+        this._$opened = value;
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
-                this._openFloat();
+                this.openFloat();
             } else {
-                this._closeFloat();
+                this.closeFloat();
             }
-            this._$opened = value;
             this.jigsawFloatOpenChange.emit(value);
         });
     }
@@ -209,6 +208,14 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     /**
+     * 弹出的视图在用户交互过程中，有可能发生尺寸变化，有可能造成位置错误
+     * 此时通过调用这个方法可以重新定位弹出视图的位置
+     */
+    public reposition(): void {
+        this._popupService.setPosition(this._getPopupOption(), this._popupElement);
+    }
+
+    /**
      * @internal
      */
     public _$openByHover(event): void {
@@ -269,7 +276,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
     }
 
-    private _isChildOf(child, parent) {
+    private _isChildOf(child, parent): boolean {
         if (child && parent) {
             let parentNode = child;
             while (parentNode) {
@@ -282,11 +289,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return false;
     }
 
-    private _openFloat(): void {
-        if (this._$opened) {
-            return;
-        }
-
+    /**
+     * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
+     */
+    public openFloat(): void {
+        this._$opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
@@ -410,9 +417,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * @internal
      */
     public _getPopupOption(): PopupOptions {
-
         let option: any = {};
-
         const calc: any = {
             pos: this._getPos(),
             posType: PopupPositionType.absolute,
@@ -516,7 +521,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return pos;
     }
 
-    private _closeFloat(): void {
+    /**
+     * 立即关闭下拉视图
+     */
+    public closeFloat(): void {
+        this._$opened = false;
         if (this._disposePopup) {
             this._disposePopup();
             this._disposePopup = null;
