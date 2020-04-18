@@ -17,7 +17,7 @@ import {
     ViewChild
 } from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {_getColumnIndex, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
@@ -31,7 +31,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     @ViewChild(JigsawRendererHost, {static: false})
     protected rendererHost: JigsawRendererHost;
-    protected targetData: TableData;
+    protected targetData: TableData | AdditionalTableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
     private _cellData;
@@ -319,7 +319,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             // update tableData directly, therefor table.ts need not to do this.
             this.targetData.data[this.row + i][this.column] = cellData;
         }
-        this.targetData.refresh();
+        if (this.targetData instanceof AdditionalTableData) {
+            this.targetData.change.emit();
+        }
 
         const change: TableDataChangeEvent = {
             field: this.field,

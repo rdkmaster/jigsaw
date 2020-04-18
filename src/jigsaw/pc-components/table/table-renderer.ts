@@ -296,6 +296,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._additionalData.touchValueByRow(this.field, this.row, value);
         this._updateTargetData();
         this.dispatchChangeEvent(value);
+        this.targetData.refresh();
     }
 
     ngOnInit() {

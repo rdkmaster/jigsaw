@@ -19,6 +19,7 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
+import {Subscription} from "rxjs";
 
 import {
     _getColumnIndex,
@@ -552,6 +553,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._headerComponents.forEach(comp => comp.updateSortOrderClass(comp.defaultSortOrder));
     }
 
+    private _removeAdditionalDataChangeSubscription: Subscription;
+
     private _initAdditionalData(): void {
         if (!this._additionalColumnDefines) {
             return;
@@ -562,6 +565,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._additionalData.field.push('additional-field-' + i);
             this._additionalData.header.push(acd.header.text);
         });
+
+        if (this._removeAdditionalDataChangeSubscription) {
+            this._removeAdditionalDataChangeSubscription.unsubscribe();
+            this._removeAdditionalDataChangeSubscription = null;
+        }
+
+        this._removeAdditionalDataChangeSubscription = this._additionalData.change.subscribe(() => {
+            this.additionalDataChange.emit(this.additionalData)
+        })
     }
 
     @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective, static: false})
@@ -792,6 +804,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeHorizontalScrollListener();
             this._removeHorizontalScrollListener = null;
         }
+        if (this._removeAdditionalDataChangeSubscription) {
+            this._removeAdditionalDataChangeSubscription.unsubscribe();
+            this._removeAdditionalDataChangeSubscription = null;
+        }
+
         this._removeWindowListener();
 
         this.columnDefines = null;
