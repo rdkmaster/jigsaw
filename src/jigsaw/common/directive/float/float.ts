@@ -212,7 +212,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * 此时通过调用这个方法可以重新定位弹出视图的位置
      */
     public reposition(): void {
-        this._popupService.setPosition(this._getPopupOption(), this._popupElement);
+        if (this._popupElement) {
+            this._popupService.setPosition(this._getPopupOption(), this._popupElement);
+        }
     }
 
     /**
