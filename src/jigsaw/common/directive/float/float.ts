@@ -34,7 +34,7 @@ export enum DropDownTrigger {
     host: {
         '(mouseenter)': "_$openByHover($event)",
         '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)': "_$openAndCloseByClick($event)"
+        '(click)': "_$onHostClick($event)"
     }
 })
 export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
@@ -269,7 +269,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     /**
      * @internal
      */
-    public _$openAndCloseByClick(event) {
+    public _$onHostClick() {
         if (this._openTrigger == 'click' && this.jigsawFloatOpen == false) {
             this.jigsawFloatOpen = true;
         }
@@ -470,7 +470,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth + offsetWidth;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
-
         }
         return pos;
     }
