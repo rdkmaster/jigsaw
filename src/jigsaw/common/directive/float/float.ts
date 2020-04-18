@@ -70,9 +70,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._$target != value) {
             this._$target = value;
             if (this._$opened == true) {
-                this.closeFloat();
+                this._closeFloat();
                 this.callLater(() => {
-                    this.openFloat();
+                    this._openFloat();
                 });
             }
         }
@@ -114,9 +114,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
-                this.openFloat();
+                this._openFloat();
             } else {
-                this.closeFloat();
+                this._closeFloat();
             }
             this.jigsawFloatOpenChange.emit(value);
         });
@@ -273,9 +273,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._openTrigger == 'click' && this.jigsawFloatOpen == false) {
             this.jigsawFloatOpen = true;
         }
-        if (this._closeTrigger == 'click' && this.jigsawFloatOpen == true) {
-            this.jigsawFloatOpen = false;
-        }
     }
 
     private _isChildOf(child, parent): boolean {
@@ -294,14 +291,14 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
-    public openFloat(): void {
+    private _openFloat(): void {
         this._$opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
         // 点击window时，自动关闭,但当closeTrigger为none时无法关掉的
-        this._removeWindowClickHandler = this._renderer.listen('window', 'click', () => {
-            if (this.jigsawFloatCloseTrigger != 'none') {
+        this._removeWindowClickHandler = this._renderer.listen('window', 'click', (event) => {
+            if (this.jigsawFloatCloseTrigger != 'none' && event.target != this._elementRef.nativeElement) {
                 this._removeWindowClickHandler();
                 this._removeWindowClickHandler = null;
                 this._removeResizeHandler();
@@ -526,7 +523,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     /**
      * 立即关闭下拉视图
      */
-    public closeFloat(): void {
+    private _closeFloat(): void {
         this._$opened = false;
         if (this._disposePopup) {
             this._disposePopup();
