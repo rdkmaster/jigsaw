@@ -298,13 +298,20 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         // 点击window时，自动关闭,但当closeTrigger为none时无法关掉的
         this._removeWindowClickHandler = this._renderer.listen('window', 'click', (event) => {
-            if (this.jigsawFloatCloseTrigger != 'none' && event.target != this._elementRef.nativeElement) {
-                this._removeWindowClickHandler();
-                this._removeWindowClickHandler = null;
-                this._removeResizeHandler();
-                this._removeResizeHandler = null;
-                this.jigsawFloatOpen = false;
+            if (this.jigsawFloatCloseTrigger == 'none') {
+                return;
             }
+            if (event.target == this._elementRef.nativeElement) {
+                return;
+            }
+            if (this._isChildOf(event.target, this._elementRef.nativeElement)) {
+                return;
+            }
+            this._removeWindowClickHandler();
+            this._removeWindowClickHandler = null;
+            this._removeResizeHandler();
+            this._removeResizeHandler = null;
+            this.jigsawFloatOpen = false;
         });
 
         const option: PopupOptions = this._getPopupOption();
