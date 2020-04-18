@@ -34,7 +34,7 @@ export enum DropDownTrigger {
     host: {
         '(mouseenter)': "_$openByHover($event)",
         '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)': "_$onHostClick($event)"
+        '(click)': "_$onHostClick()"
     }
 })
 export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
