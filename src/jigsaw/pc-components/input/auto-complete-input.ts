@@ -1,25 +1,23 @@
 import 'rxjs/add/operator/debounceTime';
 import {Subscription} from "rxjs/Subscription";
 import {
+    AfterViewInit,
     Component,
-    ElementRef,
+    EventEmitter,
     forwardRef,
     Input,
     NgModule,
     OnDestroy,
-    OnInit,
-    Renderer2,
-    TemplateRef,
-    ViewChild,
     Output,
-    EventEmitter
+    TemplateRef,
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputModule} from "./input";
-import {PopupInfo, PopupOptions, PopupPositionValue, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -54,7 +52,10 @@ export class DropDownValue {
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
     ]
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, OnInit {
+export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
+    @ViewChild(JigsawFloat)
+    private _dropdownFloat: JigsawFloat;
+
     /**
      * @internal
      */
@@ -68,10 +69,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
      */
     public _$maxDropDownHeight: string = '300px';
 
+    public _$propertyListOpen: boolean = false;
+
     @Input()
     public closeDropDownOnSelect: boolean = true;
-
-    private _removeWindowMouseDownListener: Function;
 
     @Input()
     public set maxDropDownHeight(value: string) {
@@ -138,12 +139,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _render2: Renderer2,
-                protected _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super(_render2, _elementRef);
-    }
-
     ngAfterViewInit() {
         this._subscribeInputValueChange();
     }
@@ -151,7 +146,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     private _inputValueChangeSubscription: Subscription;
 
     private _subscribeInputValueChange(): void {
-        if(this._inputValueChangeSubscription) {
+        if (this._inputValueChangeSubscription) {
         	return;
         }
 
@@ -185,6 +180,13 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
             return arr;
         }, data) : [];
         this._$data = data;
+
+        this._$propertyListOpen = data.length > 0;
+        if (this._$propertyListOpen) {
+            this.callLater(() => {
+                this._dropdownFloat.reposition();
+            });
+        }
     }
 
     private _filter(category: DropDownValue, key): DropDownValue {
@@ -204,7 +206,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
     public _$handleFocus(event: FocusEvent) {
         super._$handleFocus(event);
         this._getFilteredDropDownData(this.filterOnFocus);
-        this._showDropDownList();
+        this._$propertyListOpen = true;
     }
 
     /**
@@ -212,7 +214,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
      */
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
-        this._closeListPopup();
+        this._$propertyListOpen = false;
     }
 
     /**
@@ -236,9 +238,12 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         this.selectEvent.emit(item);
     }
 
-    public _$onKeyDown() {
+    public _$onKeyDown(event) {
         if (!this._inputValueChangeSubscription) {
             this._subscribeInputValueChange();
+        }
+        if (event.keyCode == 27) {
+            this._$propertyListOpen = false;
         }
     }
 
@@ -251,64 +256,17 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, O
         event.stopPropagation();
     }
 
-    private _propertyListPopupInfo: PopupInfo;
-
-    private _showDropDownList() {
-        const hostElement = this._elementRef.nativeElement;
-        if (this._propertyListPopupInfo) {
-            return;
-        }
-
-        const popupOptions: PopupOptions = {
-            modal: false,
-            pos: hostElement,
-            posOffset: {top: hostElement.offsetHeight},
-            size: {width: hostElement.offsetWidth},
-            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                return this._popupService.positionReviser(pos, popupElement, {
-                    offsetHeight: hostElement.offsetHeight,
-                    direction: 'v'
-                });
-            }
-        };
-        this._propertyListPopupInfo = this._popupService.popup(this._dropDownTemp, popupOptions);
-        this._removeWindowListener();
-        this._removeWindowMouseDownListener = this._render2.listen(document, 'mousedown', this._onMouseDown.bind(this));
-    }
-
-    private _onMouseDown() {
-        const element = this._elementRef.nativeElement;
-        if (!element.contains(document.activeElement)) {
-            this._closeListPopup();
-        }
-    }
-
-    private _removeWindowListener() {
-        if (this._removeWindowMouseDownListener) {
-            this._removeWindowMouseDownListener();
-        }
-    }
-
-    private _closeListPopup() {
-        if (this._propertyListPopupInfo) {
-            this._propertyListPopupInfo.dispose();
-            this._propertyListPopupInfo = null;
-        }
-        this._removeWindowListener();
-    }
-
     public ngOnDestroy() {
         super.ngOnDestroy();
-        this._closeListPopup();
+        this._$propertyListOpen = false;
         this._unsubscribeInputValueChange();
     }
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawInputModule, PerfectScrollbarModule],
+    imports: [CommonModule, FormsModule, JigsawInputModule, PerfectScrollbarModule, JigsawFloatModule],
     declarations: [JigsawAutoCompleteInput],
     exports: [JigsawAutoCompleteInput],
 })
 export class JigsawAutoCompleteInputModule {
-
 }
