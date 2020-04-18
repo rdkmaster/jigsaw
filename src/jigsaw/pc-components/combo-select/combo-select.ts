@@ -302,7 +302,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoPopupPos() {
-        if(!this.autoClose && this._jigsawFloat) {
+        if (!this.autoClose && this._jigsawFloat) {
             this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
         }
     }
