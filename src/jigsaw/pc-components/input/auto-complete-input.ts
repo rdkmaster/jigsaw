@@ -2,16 +2,18 @@ import {debounceTime} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     forwardRef,
     Input,
     NgModule,
+    NgZone,
     OnDestroy,
     Output,
     TemplateRef,
-    ViewChild,
-    NgZone
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -141,7 +143,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _zone: NgZone) {
+    constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -152,8 +154,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     private _inputValueChangeSubscription: Subscription;
 
     private _subscribeInputValueChange(): void {
-        if(this._inputValueChangeSubscription) {
-        	return;
+        if (this._inputValueChangeSubscription) {
+            return;
         }
 
         this._inputValueChangeSubscription = this._input.valueChange
@@ -190,9 +192,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         this._$propertyListOpen = data.length > 0;
         if (this._$propertyListOpen) {
             this.runAfterMicrotasks(() => {
-                this._zone.run(() => {
-                    this._dropdownFloat.reposition();
-                }
+                this._dropdownFloat.reposition();
+                this._cdr.markForCheck();
             });
         }
     }
