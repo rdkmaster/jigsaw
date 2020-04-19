@@ -192,8 +192,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         this._$propertyListOpen = data.length > 0;
         if (this._$propertyListOpen) {
             this.runAfterMicrotasks(() => {
-                this._dropdownFloat.reposition();
-                this._cdr.markForCheck();
+                this._zone.run(() => {
+                    this._dropdownFloat.reposition();
+                    this._cdr.markForCheck();
+                })
             });
         }
     }
