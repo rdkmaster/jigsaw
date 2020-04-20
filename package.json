@@ -95,6 +95,7 @@
     "tsickle": "~0.35.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3",
-    "uglify-js": "~2.8.14"
+    "uglify-js": "~2.8.14",
+    "uuid": "^3.3.2"
   }
 }
