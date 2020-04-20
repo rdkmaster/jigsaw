@@ -439,7 +439,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         if (data instanceof Array) {
             this.fromArray(data);
         } else {
-            console.error('invalid data type: ' + typeof(data) + ', need Array.');
+            console.error('invalid data type: ' + typeof (data) + ', need Array.');
             this.fromArray([]);
         }
         this._busy = false;
@@ -771,9 +771,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined,encodeURIComponent(serializeFilterFunction(term)), fields);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
-            pfi = new DataFilterInfo(encodeURIComponent(term), fields);
+            pfi = new DataFilterInfo(term, fields);
         }
         this._filterSubject.next(pfi);
     }
@@ -903,7 +903,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
             }
             this._setDataByPageInfo();
             this.refresh();
-            if(this._dataSourceChanged) {
+            if (this._dataSourceChanged) {
                 this.componentDataHelper.invokeChangeCallback();
                 this._dataSourceChanged = false;
             }

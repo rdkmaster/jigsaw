@@ -191,7 +191,7 @@ class PageableData {
             console.warn('invalid filter key, need at least ONE char!');
             return data.concat();
         }
-        key = decodeURIComponent(key.toLowerCase());
+        key = key.toLowerCase();
         field = !!field ? field : allField;
         field = field instanceof Array ? field : [field];
         console.log('filter param: key = [', key, '] field = [', field.join(','),
@@ -227,7 +227,7 @@ class PageableData {
     private static _filterWithFunction(data, rawFunction, context) {
         let func;
         try {
-            func = eval('(' + decodeURIComponent(rawFunction) + ')');
+            func = eval('(' + rawFunction + ')');
         } catch (e) {
             console.error('eval raw filter function error, detail: ' + e.message);
             return data;

@@ -575,13 +575,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, encodeURIComponent(serializeFilterFunction(term)), fields);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(encodeURIComponent(term), stringFields);
+            pfi = new DataFilterInfo(term, stringFields);
         }
         this._filterSubject.next(pfi);
     }
