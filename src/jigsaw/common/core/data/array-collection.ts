@@ -447,7 +447,7 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
         if (data instanceof Array) {
             this.fromArray(data);
         } else {
-            console.error('invalid data type: ' + typeof(data) + ', need Array.');
+            console.error('invalid data type: ' + typeof (data) + ', need Array.');
             this.fromArray([]);
         }
         this._busy = false;
@@ -910,7 +910,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
             }
             this._setDataByPageInfo();
             this.refresh();
-            if(this._dataSourceChanged) {
+            if (this._dataSourceChanged) {
                 this.componentDataHelper.invokeChangeCallback();
                 this._dataSourceChanged = false;
             }
