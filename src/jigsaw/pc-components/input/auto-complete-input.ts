@@ -73,7 +73,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      */
     public _$maxDropDownHeight: string = '300px';
 
-    public _$propertyListOpen: boolean = false;
+    public _$propertyListOpen: boolean | null = null;
 
     @Input()
     public closeDropDownOnSelect: boolean = true;
@@ -189,7 +189,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         }, data) : [];
         this._$data = data;
 
-        this._$propertyListOpen = data.length > 0;
+        if (this._$propertyListOpen !== null) {
+            this._$propertyListOpen = data.length > 0;
+        }
         if (this._$propertyListOpen) {
             this.runAfterMicrotasks(() => {
                 this._zone.run(() => {
