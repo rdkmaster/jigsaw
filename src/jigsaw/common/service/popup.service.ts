@@ -119,6 +119,11 @@ export class PopupOptions {
     disposeOnRouterChanged?: boolean = true;
 
     /**
+     * 是否自动给弹出视图添加 `box-shadow: 1px 1px 6px rgba(0, 0, 0, .2)` 的样式，为false则不加，默认会加上
+     */
+    showShadow?: boolean = true;
+
+    /**
      * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
      * 设置了true/false之后，则`PopupService`不再自动检测，而是根据这个属性的值决定是否要还是不加边框&阴影。
      *
@@ -415,6 +420,15 @@ export class PopupService {
     }
 
     /**
+     * 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true，但是人家给options的时候，有可能不是new出来的，而是给了json对象
+     * 在非new出来的时候，showShadow属性就有可能未定义，那么在未定义的时候，也必须认为它的值是true
+     * @param options
+     */
+    private _isShowShadow(options: PopupOptions): boolean {
+        return !(options && options.showShadow === false);
+    }
+
+    /**
      * 判断弹框是否居中显示:
      * 没配options
      * 或options为空对象
@@ -536,8 +550,9 @@ export class PopupService {
     /*
      * 设置边框、阴影、动画
      * */
-    private _setBackground(options: PopupOptions, element: HTMLElement) {
-        if (!this._isModal(options)) {
+    private _setBackground(options: PopupOptions, element: HTMLElement): void {
+        // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
+        if (!this._isModal(options) && this._isShowShadow(options)) {
             PopupService._renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         }
         if (options && options.showBorder) {
