@@ -413,7 +413,6 @@ export class PopupService {
      * 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true，但是人家给options的时候，有可能不是new出来的，而是给了json对象
      * 在非new出来的时候，showShadow属性就有可能未定义，那么在未定义的时候，也必须认为它的值是true
      * @param options
-     * @private
      */
     private _isShowShadow(options: PopupOptions): boolean {
         return !(options && options.showShadow === false);
