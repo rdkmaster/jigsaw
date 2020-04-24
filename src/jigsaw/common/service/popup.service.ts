@@ -106,9 +106,9 @@ export class PopupOptions {
     disposeOnRouterChanged?: boolean = true;
 
     /**
-     * 是否自动给弹出视图添加 `box-shadow: 1px 1px 6px rgba(0, 0, 0, .2)` 的样式
+     * 是否自动给弹出视图添加 `box-shadow: 1px 1px 6px rgba(0, 0, 0, .2)` 的样式，为true则不加，默认会加上
      */
-    showShadow?: boolean = true;
+    noShadow?: boolean;
 
     /**
      * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
@@ -531,8 +531,9 @@ export class PopupService {
     /*
      * 设置边框、阴影、动画
      * */
-    private _setBackground(options: PopupOptions, element: HTMLElement) {
-        if (!this._isModal(options) && options.showShadow) {
+    private _setBackground(options: PopupOptions, element: HTMLElement): void {
+        const noShadow = options && options.noShadow;
+        if (!this._isModal(options) && !noShadow) {
             PopupService._renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         }
         if (options && options.showBorder) {
