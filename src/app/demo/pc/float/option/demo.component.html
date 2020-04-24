@@ -40,6 +40,10 @@
             <jigsaw-switch [(checked)]="showBorder" (checkedChange)="valueChange()">
             </jigsaw-switch>
         </div>
+        <div class="row"><label>弹出视图加阴影:</label>
+            <jigsaw-switch [(checked)]="showShadow" (checkedChange)="valueChange()">
+            </jigsaw-switch>
+        </div>
         <div class="row">
             <label>宽度:</label>
             <j-numeric-input [(value)]="size.width" (valueChange)="valueChange()" min="0"
@@ -69,7 +73,8 @@
       jigsawFloatCloseTrigger="click"
       [jigsawFloatOptions]="options"
       [jigsawFloatTarget]="jigsawFloatArea"
-      [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}"> click me!
+      [ngStyle]="{'position':selectedPositionType=='fixed'?'fixed':'inherit'}">
+    点击这里弹出视图
 </span>
 
 <ng-template #jigsawFloatArea>

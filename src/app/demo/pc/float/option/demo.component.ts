@@ -37,7 +37,7 @@ import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
         
         .wrapper {
             display: flex;
-            height: 220px;
+            height: 250px;
         }
 
         label {
@@ -50,6 +50,7 @@ export class FloatOptionDemo implements OnInit {
     selectedPositionType = "";
     offset: PopupPositionOffset = {};
     showBorder = true;
+    showShadow = true;
     size: PopupSize = {};
     options: PopupOptions = {};
     _$height = 'auto';
@@ -61,6 +62,7 @@ export class FloatOptionDemo implements OnInit {
         this.options.posType = PopupPositionType[<string>this.selectedPositionType];
         this.options.posOffset = this.offset;
         this.options.showBorder = this.showBorder;
+        this.options.showShadow = this.showShadow;
         this.options.size = this.size;
     }
 
