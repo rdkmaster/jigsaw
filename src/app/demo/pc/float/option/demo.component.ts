@@ -62,7 +62,7 @@ export class FloatOptionDemo implements OnInit {
         this.options.posType = PopupPositionType[<string>this.selectedPositionType];
         this.options.posOffset = this.offset;
         this.options.showBorder = this.showBorder;
-        this.options.noShadow = !this.showShadow;
+        this.options.showShadow = this.showShadow;
         this.options.size = this.size;
     }
 
