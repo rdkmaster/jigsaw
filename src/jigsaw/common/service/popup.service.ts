@@ -36,21 +36,16 @@ export enum PopupEffect {
 export class PopupOptions {
     /**
      * 控制弹出的视图是否模态。
-     *
      */
     modal?: boolean;
 
     /**
      * 弹出的动效，fadeIn/fadeOut，wipeIn/wipeOut
-     *
-     *
      */
     showEffect?: PopupEffect = PopupEffect.fadeIn;
 
     /**
      * 隐藏的动效，fadeIn/fadeOut，wipeIn/wipeOut
-     *
-     *
      */
     hideEffect?: PopupEffect = PopupEffect.fadeOut;
 
@@ -74,8 +69,6 @@ export class PopupOptions {
      * right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
      *
      * 请参考[这个demo]($demo=pc/dialog/popup-option)。
-     *
-     *
      */
     posOffset?: PopupPositionOffset;
 
@@ -83,8 +76,6 @@ export class PopupOptions {
      * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似。
      *
      * 请参考[这个demo]($demo=pc/dialog/popup-option)。
-     *
-     *
      */
     posType?: PopupPositionType;
 
@@ -102,8 +93,6 @@ export class PopupOptions {
      * 这个组件在弹出来的时候，父级元素的宽度和高度都是100%，这会让自己占满整个屏幕，非常难看。
      * 在这个场景下就可以通过这个属性设置组件在弹出状态下的尺寸。
      * 如果你的组件在实现的时候就给定了尺寸或者最大尺寸，则无需设置这个属性。
-     *
-     *
      */
     size?: PopupSize;
 
@@ -113,16 +102,17 @@ export class PopupOptions {
      *
      * 但凡事都有两面性，当你弹出的视图在全局下都有意义时，请注意务必关闭这个功能。
      * 这样的场景比如通知类的对话框（alert或者notification），他们弹出后，就需要等待用户关闭，不应该自动关闭。
-     *
-     *
      */
     disposeOnRouterChanged?: boolean = true;
 
     /**
+     * 是否自动给弹出视图添加 `box-shadow: 1px 1px 6px rgba(0, 0, 0, .2)` 的样式，为false则不加，默认会加上
+     */
+    showShadow?: boolean = true;
+
+    /**
      * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
      * 设置了true/false之后，则`PopupService`不再自动检测，而是根据这个属性的值决定是否要还是不加边框&阴影。
-     *
-     *
      */
     showBorder?: boolean;
 
@@ -420,6 +410,15 @@ export class PopupService {
     }
 
     /**
+     * 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true，但是人家给options的时候，有可能不是new出来的，而是给了json对象
+     * 在非new出来的时候，showShadow属性就有可能未定义，那么在未定义的时候，也必须认为它的值是true
+     * @param options
+     */
+    private _isShowShadow(options: PopupOptions): boolean {
+        return !(options && options.showShadow === false);
+    }
+
+    /**
      * 判断弹框是否居中显示:
      * 没配options
      * 或options为空对象
@@ -541,8 +540,9 @@ export class PopupService {
     /*
      * 设置边框、阴影、动画
      * */
-    private _setBackground(options: PopupOptions, element: HTMLElement) {
-        if (!this._isModal(options)) {
+    private _setBackground(options: PopupOptions, element: HTMLElement): void {
+        // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
+        if (!this._isModal(options) && this._isShowShadow(options)) {
             PopupService._renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         }
         if (options && options.showBorder) {
