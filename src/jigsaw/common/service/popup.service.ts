@@ -121,10 +121,9 @@ export class PopupOptions {
      */
     useCustomizedBackground?: boolean;
     /**
-     * pointer表示弹出的模块带指向的三角,setArrow表示设置三角所在位置
+     * pointer表示弹出的模块带指向的三角
      */
     borderType?: 'default' | 'pointer';
-    setArrow?: (popupElement: HTMLElement) => void;
 }
 
 export type AbsolutePosition =
@@ -450,7 +449,6 @@ export class PopupService {
             this.setPosition(options, element);
             this._setBackground(options, element);
             this._setShowAnimate(options, element);
-            this._setArrow(options, element);
         }
     }
 
@@ -532,16 +530,6 @@ export class PopupService {
                 PopupService._renderer.setStyle(element, 'left', left + 'px');
         }
     }
-
-    /*
- * 设置弹框是否有三角指向
- * */
-    private _setArrow(options: PopupOptions, element: HTMLElement) {
-        if (options.borderType && options.borderType == 'pointer' && options.setArrow) {
-            options.setArrow(element);
-        }
-    }
-
 
     /*
      * 设置弹框尺寸

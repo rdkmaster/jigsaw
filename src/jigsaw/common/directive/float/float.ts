@@ -326,6 +326,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             return;
         }
 
+        if (option.borderType == 'pointer') {
+            setTimeout(() => this._setArrow(this._popupElement));
+        }
+
         if (!this._removeMouseOverHandler) {
             this._removeMouseOverHandler = this._renderer.listen(
                 this._popupElement, 'mouseenter',
@@ -352,6 +356,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         this._removeResizeHandler = this._renderer.listen("window", "resize",
             () => {
                 PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
+                if (option.borderType == 'pointer') {
+                    this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1])
+                    this._setArrow(this._popupElement);
+                }
             });
     }
 
@@ -457,11 +465,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                     return pos;
                 };
             }
-            if (CommonUtils.isDefined(this.jigsawFloatOptions.borderType)) {
-                option.setArrow = (popupElement: HTMLElement) => {
-                    this._setArrow(popupElement);
-                }
-            }
         }
         return option;
     }
@@ -471,8 +474,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     */
     private _setArrow(popupElement: HTMLElement) {
         if (this.jigsawFloatOptions.borderType != 'pointer' || !popupElement) return;
+        const hostPosition = this._getHostElementPos();
+        const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
         const host = this._elementRef.nativeElement;
-
         let ele = document.createElement('div');
         //根据tooltip尖角算出来大概在5√2，约为7px
         ele.style.width = '7px';
@@ -481,31 +485,42 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         ele.style.transform = 'rotateZ(-45deg)';
         ele.style.backgroundColor = 'inherit';
 
-        if (popupElement.offsetTop >= host.offsetTop + host.offsetHeight) {
+        if (popupElement.offsetTop >= position.y + host.offsetHeight) {
             ele.style.top = '-4px';
-            ele.style.left = this._getLeft(host, popupElement) + 'px';
+            if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
+                popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
+            }
+            ele.style.left = this._getLeft(host, popupElement, position) + 'px';
             if (this.jigsawFloatOptions.showBorder) {
                 ele.style.borderTop = "1px solid #dcdcdc";
                 ele.style.borderRight = "1px solid #dcdcdc";
             }
-        } else if (popupElement.offsetTop + popupElement.offsetHeight <= host.offsetTop) {
-            ele.style.top = popupElement.offsetHeight - 6 + 'px';
-            ele.style.left = ele.style.left = this._getLeft(host, popupElement) + 'px';
-            +'px';
+        } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
+            ele.style.top = popupElement.offsetHeight - 3 + 'px';
+            if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
+                popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
+            }
+            ele.style.left = this._getLeft(host, popupElement, position) + 'px';
             if (this.jigsawFloatOptions.showBorder) {
                 ele.style.borderLeft = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
-        } else if (popupElement.offsetLeft >= host.offsetLeft + host.offsetWidth) {
+        } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
             ele.style.left = '-4px';
-            ele.style.top = this._getTop(host, popupElement) + 'px';
+            if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
+                popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
+            }
+            ele.style.top = this._getTop(host, popupElement, position) + 'px';
             if (this.jigsawFloatOptions.showBorder) {
                 ele.style.borderTop = "1px solid #dcdcdc";
                 ele.style.borderLeft = "1px solid #dcdcdc";
             }
-        } else if (popupElement.offsetLeft + popupElement.offsetWidth <= host.offsetLeft) {
-            ele.style.left = popupElement.offsetWidth - 6 + 'px';
-            ele.style.top = this._getTop(host, popupElement) + 'px';
+        } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
+            ele.style.left = popupElement.offsetWidth - 3 + 'px';
+            if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
+                popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
+            }
+            ele.style.top = this._getTop(host, popupElement, position) + 'px';
             if (this.jigsawFloatOptions.showBorder) {
                 ele.style.borderRight = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
@@ -514,8 +529,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         popupElement.appendChild(ele);
     }
 
-    private _getLeft(host: HTMLElement, popupElement: HTMLElement): number {
-        let delta = host.offsetLeft + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
+    private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
         if (delta < 4) {
             delta = 4;
         } else if (delta > popupElement.offsetWidth - 13) {
@@ -524,8 +539,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return delta;
     }
 
-    private _getTop(host: HTMLElement, popupElement: HTMLElement): number {
-        let delta = host.offsetTop + host.offsetHeight / 2 - popupElement.offsetTop - 5;
+    private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 5;
         if (delta < 4) {
             delta = 4;
         } else if (delta > popupElement.offsetHeight - 13) {
