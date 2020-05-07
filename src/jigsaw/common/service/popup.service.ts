@@ -120,9 +120,22 @@ export class PopupOptions {
      * popupService会默认给弹框设置一个背景（除了默认皮肤），用来适配皮肤的风格，如果用户使用了自定义的背景，请设置这个属性为`true`
      */
     useCustomizedBackground?: boolean;
+    /**
+     * pointer表示弹出的模块带指向的三角,setArrow表示设置三角所在位置
+     */
+    borderType?: 'default' | 'pointer';
+    setArrow?: (popupElement: HTMLElement) => void;
 }
 
-export type AbsolutePosition = 'top' | 'left' | 'right' | 'bottom' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+export type AbsolutePosition =
+    'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'leftTop'
+    | 'leftBottom'
+    | 'rightTop'
+    | 'rightBottom';
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement | AbsolutePosition;
 
 export class PopupPositionValue {
@@ -437,6 +450,7 @@ export class PopupService {
             this.setPosition(options, element);
             this._setBackground(options, element);
             this._setShowAnimate(options, element);
+            this._setArrow(options, element);
         }
     }
 
@@ -518,6 +532,16 @@ export class PopupService {
                 PopupService._renderer.setStyle(element, 'left', left + 'px');
         }
     }
+
+    /*
+ * 设置弹框是否有三角指向
+ * */
+    private _setArrow(options: PopupOptions, element: HTMLElement) {
+        if (options.borderType && options.borderType == 'pointer' && options.setArrow) {
+            options.setArrow(element);
+        }
+    }
+
 
     /*
      * 设置弹框尺寸

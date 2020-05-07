@@ -106,7 +106,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     public set jigsawFloatOpen(value: boolean) {
         value = !!value;
-        if(value == this._$opened) {
+        if (value == this._$opened) {
             return;
         }
         this._$opened = value;
@@ -292,6 +292,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
     private _openFloat(): void {
+        if (!this.jigsawFloatTarget) {
+            return;
+        }
         this._$opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
@@ -454,8 +457,81 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                     return pos;
                 };
             }
+            if (CommonUtils.isDefined(this.jigsawFloatOptions.borderType)) {
+                option.setArrow = (popupElement: HTMLElement) => {
+                    this._setArrow(popupElement);
+                }
+            }
         }
         return option;
+    }
+
+    /*
+    * 设置弹框是否有三角指向
+    */
+    private _setArrow(popupElement: HTMLElement) {
+        if (this.jigsawFloatOptions.borderType != 'pointer' || !popupElement) return;
+        const host = this._elementRef.nativeElement;
+
+        let ele = document.createElement('div');
+        //根据tooltip尖角算出来大概在5√2，约为7px
+        ele.style.width = '7px';
+        ele.style.height = '7px';
+        ele.style.position = 'absolute';
+        ele.style.transform = 'rotateZ(-45deg)';
+        ele.style.backgroundColor = 'inherit';
+
+        if (popupElement.offsetTop >= host.offsetTop + host.offsetHeight) {
+            ele.style.top = '-4px';
+            ele.style.left = this._getLeft(host, popupElement) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderTop = "1px solid #dcdcdc";
+                ele.style.borderRight = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetTop + popupElement.offsetHeight <= host.offsetTop) {
+            ele.style.top = popupElement.offsetHeight - 6 + 'px';
+            ele.style.left = ele.style.left = this._getLeft(host, popupElement) + 'px';
+            +'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderLeft = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetLeft >= host.offsetLeft + host.offsetWidth) {
+            ele.style.left = '-4px';
+            ele.style.top = this._getTop(host, popupElement) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderTop = "1px solid #dcdcdc";
+                ele.style.borderLeft = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetLeft + popupElement.offsetWidth <= host.offsetLeft) {
+            ele.style.left = popupElement.offsetWidth - 6 + 'px';
+            ele.style.top = this._getTop(host, popupElement) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderRight = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        }
+        popupElement.appendChild(ele);
+    }
+
+    private _getLeft(host: HTMLElement, popupElement: HTMLElement): number {
+        let delta = host.offsetLeft + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
+        if (delta < 4) {
+            delta = 4;
+        } else if (delta > popupElement.offsetWidth - 13) {
+            delta = popupElement.offsetWidth - 13;
+        }
+        return delta;
+    }
+
+    private _getTop(host: HTMLElement, popupElement: HTMLElement): number {
+        let delta = host.offsetTop + host.offsetHeight / 2 - popupElement.offsetTop - 5;
+        if (delta < 4) {
+            delta = 4;
+        } else if (delta > popupElement.offsetHeight - 13) {
+            delta = popupElement.offsetHeight - 13;
+        }
+        return delta;
     }
 
     /**
