@@ -329,12 +329,17 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             }
             this._removeWindowClickHandler();
             this._removeWindowClickHandler = null;
-            this._removeResizeHandler();
+            if (this._removeResizeHandler) {
+                this._removeResizeHandler();
+            }
             this._removeResizeHandler = null;
             this.jigsawFloatOpen = false;
         });
 
         const option: PopupOptions = this._getPopupOption();
+        if (!this.jigsawFloatTarget) {
+            return;
+        }
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
