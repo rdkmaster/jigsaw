@@ -18,7 +18,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawInput, JigsawInputModule} from "./input";
+import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
 
@@ -56,7 +56,7 @@ export class DropDownValue {
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
+export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
     @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
@@ -107,9 +107,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         [...this._bakData] = this._$data;
     }
 
-    @Input()
-    public valid: boolean = true;
-
     /**
      * 用于控制在输入框获得焦点后是否自动执行过滤
      *
@@ -143,8 +140,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
-        super(_zone);
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_cdr, _zone);
     }
 
     ngAfterViewInit() {
