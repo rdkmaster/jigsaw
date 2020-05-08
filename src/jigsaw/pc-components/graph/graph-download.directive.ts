@@ -8,7 +8,7 @@ import {
 import {AbstractJigsawViewBase} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import * as FileSaver from 'file-saver';
-import * as JSZip from 'jszip/dist/jszip.min';
+import * as JSZip from 'jszip';
 
 import echarts from "echarts";
 
