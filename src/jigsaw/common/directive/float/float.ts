@@ -496,7 +496,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 ele.style.borderRight = "1px solid #dcdcdc";
             }
         } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
-            ele.style.top = popupElement.offsetHeight - 3 + 'px';
+            const Differ = this.jigsawFloatOptions.showBorder ? 5 : 3;
+            ele.style.top = popupElement.offsetHeight - Differ + 'px';
             if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
                 popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
             }
