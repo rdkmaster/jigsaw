@@ -25,7 +25,13 @@ import {Subscription} from 'rxjs';
 
 declare const moment: any;
 
-export type DateCell = {date: number; isToday?: boolean, isOwnPrevMonth?: boolean, isOwnNextMonth?: boolean};
+export type DateCell = {
+    date: number;
+    isToday?: boolean;
+    isOwnPrevMonth?: boolean;
+    isOwnNextMonth?: boolean;
+    isSelected?: boolean
+};
 
 @Component({
     selector: 'jigsaw-date-picker, j-date-picker',
@@ -58,7 +64,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         moment.locale(_translateService.getBrowserLang());
     }
 
-    public _$curMonth: number; _$curYear: number; _$dayList: DateCell[][] = []; _$monthList: number[] = [];
+    public _$curMonth: {month: number, label: string}; _$curYear: number; _$dayList: DateCell[][] = []; _$monthList: number[] = [];
     _$yearList: number[] = []; _$weekList: string[] = [];
     private _weekPos: number[];
 
@@ -75,7 +81,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     private _updateHead() {
         let curDate = TimeService.convertValue(this.date, TimeGr.date);
-        this._$curMonth = TimeService.getMonthShort()[TimeService.getMonth(curDate) - 1];
+        let month = TimeService.getMonth(curDate);
+        this._$curMonth = {month: month, label: TimeService.getMonthShort()[month - 1]};
         this._$curYear = TimeService.getYear(curDate);
     }
 
@@ -115,7 +122,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             let index = row == 0 ? firstDayWeekPos : 0;
             let rowArr: DateCell[] = Array.from(new Array(this._WEEK_NUM).keys()).map(num => ({date: -1}));
             while(index < rowArr.length && countDayNum <= maxDayNum) {
-                rowArr[index] = {date: countDayNum, isToday: this._isToday(year, month, countDayNum)};
+                rowArr[index] = {date: countDayNum, isToday: this._isToday(year, month, countDayNum), isSelected: this._isDaySelected(year, month, countDayNum)};
                 index++;
                 countDayNum++;
             }
@@ -144,17 +151,26 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return TimeService.getYear(today) == year && TimeService.getMonth(today) == month && TimeService.getDay(today) == date
     }
 
+    private _isDaySelected(year: number, month: number, date: number) {
+        if(!this._value) return false;
+        let day = TimeService.convertValue(this._value, TimeGr.date);
+        return TimeService.getYear(day) == year && TimeService.getMonth(day) == month && TimeService.getDay(day) == date
+    }
+
     /**
      * @internal
      */
     public _$handleCtrlBar(num: number) {
         this.date = TimeService.convertValue(TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M), <TimeGr>this.gr);
-        this._updateHead();
-        this._$dayList = this._createDayList();
     }
 
     public _$selectDate(day: DateCell) {
-        
+        let [year, month, date] = [this._$curYear, this._$curMonth.month, day.date];
+        if(day.isOwnPrevMonth || day.isOwnNextMonth) {
+            let date = TimeService.addDate(`${year}-${month}`, day.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
+            [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
+        }
+        this.date = TimeService.convertValue(`${year}-${month}-${date}`, TimeGr.date);
     }
 
     private _langChangeSubscriber: Subscription;
@@ -195,6 +211,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (newValue && newValue != this._value) {
             this._propagateChange(this._value);
         }
+
+        this._createCalendar();
     }
 
     @Output()

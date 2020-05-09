@@ -96,9 +96,9 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 height: 24px;
                 border-radius: 50%;
                 cursor: pointer;
-                &:hover {
-                    background: $primary-2;
-                }
+            }
+            & span:hover {
+                background: $primary-2;
             }
             &-today:before {
                 content: "";
@@ -111,6 +111,12 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
             &-no-current {
                 color: $text-color-secondary;
+            }
+            &-selected {
+                span, span:hover {
+                    background: $primary-color;
+                    color: $text-color-of-bg;
+                }
             }
         }
     }
