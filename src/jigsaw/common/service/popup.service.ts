@@ -120,9 +120,21 @@ export class PopupOptions {
      * popupService会默认给弹框设置一个背景（除了默认皮肤），用来适配皮肤的风格，如果用户使用了自定义的背景，请设置这个属性为`true`
      */
     useCustomizedBackground?: boolean;
+    /**
+     * pointer表示弹出的模块带指向的三角
+     */
+    borderType?: 'default' | 'pointer';
 }
 
-export type AbsolutePosition = 'top' | 'left' | 'right' | 'bottom' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+export type AbsolutePosition =
+    'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'leftTop'
+    | 'leftBottom'
+    | 'rightTop'
+    | 'rightBottom';
 export type PopupPosition = PopupPoint | ElementRef | HTMLElement | AbsolutePosition;
 
 export class PopupPositionValue {
