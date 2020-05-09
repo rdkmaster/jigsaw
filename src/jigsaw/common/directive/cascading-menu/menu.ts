@@ -1,41 +1,50 @@
-import {Component, Output, EventEmitter} from "@angular/core";
-import {IPopupable} from "../../service/popup.service";
+import {Component, Output, EventEmitter, Input, Type} from "@angular/core";
+import {IPopupable, PopupOptions} from "../../service/popup.service";
+import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
+import {AbstractJigsawComponent} from "../../common";
 
 @Component({
+    selector: 'jigsaw-menu, j-menu',
     template: `
-        <j-list [width]="initData.menuListSettings?.width"
-                (selectedItemsChange)="initData.menuListSettings?.selectedItemsChange && initData.menuListSettings?.selectedItemsChange($event)"
-                [disabled]="initData.menuListSettings?.disabled"
-                [valid]="initData.menuListSettings && initData.menuListSettings.hasOwnProperty('valid')?initData.menuListSettings.valid:true"
-                [maxHeight]="initData.menuListSettings?.maxHeight" [height]="initData.menuListSettings?.height"
-                [basicClass]="initData.menuListSettings?.basicClass"
+        <j-list [width]="width" [height]="height" [maxHeight]="maxHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <j-list-option *ngFor="let item of initData.menuData.nodes" [value]="item" jigsawFloat
-                           [jigsawFloatTarget]="getTarget(item)"
-                           jigsawFloatPosition="rightTop"
-                           [jigsawFloatInitData]="{menuData:item,menuListSettings:initData.menuListSettings,options:initData.options}"
-                           [jigsawFloatOptions]="initData.options"
-                           (click)="item.click && item.click($event)"
-                           [disabled]="item.disabled">
+            <j-list-option *ngFor="let node of data?.nodes" [value]="node" jigsawFloat
+                           [jigsawFloatTarget]="getTarget(node)"
+                           [jigsawFloatPosition]="'rightTop'"
+                           [jigsawFloatOptions]="popupOptions"
+                           [disabled]="node.disabled"
+                           (click)="select.emit(node)">
                 <span j-title>
-                    <i class="{{item.titleIcon}}"></i>
-                    {{item.label}}
+                    <i class="{{node.titleIcon}}"></i>
+                    {{node.label}}
                 </span>
-                <div j-sub-title>{{item.subTitle}}
-                    <i class="{{item.subTitleIcon}}"></i>
+                <div j-sub-title>{{node.subTitle}}
+                    <i class="{{node.subTitleIcon}}"></i>
                 </div>
             </j-list-option>
-        </j-list>`
+        </j-list>`,
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[style.maxHeight]': 'maxHeight'
+    }
 })
-export class MenuComponent implements IPopupable {
+export class JigsawMenuComponent extends AbstractJigsawComponent implements IPopupable {
+    public initData: any;
 
-    initData: any;
+    @Input()
+    public data: SimpleTreeData;
+    @Input()
+    public popupOptions: PopupOptions = {useCustomizedBackground:true};
+
     @Output()
     public answer: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
-    getTarget(item) {
+    public getTarget(item): Type<JigsawMenuComponent> {
         if (item.nodes && item.nodes.length > 0 && !item.disabled) {
-            return MenuComponent;
+            return JigsawMenuComponent;
         } else {
             return null;
         }
