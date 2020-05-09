@@ -25,8 +25,8 @@ import {Subscription} from 'rxjs';
 
 declare const moment: any;
 
-export type DateCell = {
-    date: number;
+export type DayCell = {
+    day: number;
     isToday?: boolean;
     isOwnPrevMonth?: boolean;
     isOwnNextMonth?: boolean;
@@ -64,7 +64,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         moment.locale(_translateService.getBrowserLang());
     }
 
-    public _$curMonth: {month: number, label: string}; _$curYear: number; _$dayList: DateCell[][] = []; _$monthList: number[] = [];
+    public _$curMonth: {month: number, label: string}; _$curYear: number; _$dayList: DayCell[][] = []; _$monthList: number[] = [];
     _$yearList: number[] = []; _$weekList: string[] = [];
     private _weekPos: number[];
 
@@ -72,18 +72,18 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _CALENDAR_NUM = 6;
     private _FIRST_DAY_NUM = 1;
 
-    private _createCalendar() {
-        this._updateHead();
+    private _createCalendar(date?: string) {
         this._weekPos = this._getWeekPos();
         this._$weekList = this._createWeekList();
-        this._$dayList = this._createDayList();
+        this._updateHead(date);
+        this._$dayList = this._createDayList(date);
     }
 
-    private _updateHead() {
-        let curDate = TimeService.convertValue(this.date, TimeGr.date);
-        let month = TimeService.getMonth(curDate);
+    private _updateHead(date?: string) {
+        date = date ? date : TimeService.convertValue(this.date ? this.date : 'now', TimeGr.date);
+        let month = TimeService.getMonth(date);
         this._$curMonth = {month: month, label: TimeService.getMonthShort()[month - 1]};
-        this._$curYear = TimeService.getYear(curDate);
+        this._$curYear = TimeService.getYear(date);
     }
 
     private _getWeekPos(): number[] {
@@ -105,24 +105,19 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return this._weekPos.map(pos => weekdays[pos]);
     }
 
-    private _createDayList(): DateCell[][] {
-        let date = TimeService.convertValue(this.date, TimeGr.date);
+    private _createDayList(date?: string): DayCell[][] {
+        date = date ? date : TimeService.convertValue(this.date ? this.date : 'now', TimeGr.date);
         let [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         let [firstDate,lastDate] = [TimeService.convertValue(TimeService.getFirstDateOfMonth(date), TimeGr.date),
             TimeService.convertValue(TimeService.getLastDateOfMonth(date), TimeGr.date)];
-        console.log('firstDate,lastDate',firstDate, lastDate);
         let [countDayNum, maxDayNum, countNextMonthDayNum] = [this._FIRST_DAY_NUM, TimeService.getDay(TimeService.getLastDateOfMonth(date)), this._FIRST_DAY_NUM];
         let firstDayWeek = new Date(firstDate).getDay();
         let firstDayWeekPos = this._weekPos.findIndex(w => w === firstDayWeek);
-        console.log('weekPos',this._weekPos);
-        console.log('weekOfFirstDay',firstDayWeek);
-        console.log('firstDayWeekPos',firstDayWeekPos);
-
         return Array.from(new Array(this._CALENDAR_NUM).keys()).map(row => {
             let index = row == 0 ? firstDayWeekPos : 0;
-            let rowArr: DateCell[] = Array.from(new Array(this._WEEK_NUM).keys()).map(num => ({date: -1}));
+            let rowArr: DayCell[] = Array.from(new Array(this._WEEK_NUM).keys()).map(num => ({day: -1}));
             while(index < rowArr.length && countDayNum <= maxDayNum) {
-                rowArr[index] = {date: countDayNum, isToday: this._isToday(year, month, countDayNum), isSelected: this._isDaySelected(year, month, countDayNum)};
+                rowArr[index] = {day: countDayNum, isToday: this._isToday(year, month, countDayNum), isSelected: this._isDaySelected(year, month, countDayNum)};
                 index++;
                 countDayNum++;
             }
@@ -130,14 +125,14 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 index = firstDayWeekPos - 1;
                 let addDay = -1;
                 while(index >= 0) {
-                    rowArr[index] = {date: TimeService.getDay(TimeService.addDate(firstDate, addDay, TimeUnit.d)), isOwnPrevMonth: true};
+                    rowArr[index] = {day: TimeService.getDay(TimeService.addDate(firstDate, addDay, TimeUnit.d)), isOwnPrevMonth: true};
                     addDay--;
                     index--;
                 }
             }
             if(countDayNum > maxDayNum) {
                 while(index < rowArr.length) {
-                    rowArr[index] = {date: TimeService.getDay(TimeService.addDate(lastDate, countNextMonthDayNum, TimeUnit.d)), isOwnNextMonth: true};
+                    rowArr[index] = {day: TimeService.getDay(TimeService.addDate(lastDate, countNextMonthDayNum, TimeUnit.d)), isOwnNextMonth: true};
                     countNextMonthDayNum++;
                     index++;
                 }
@@ -146,31 +141,35 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         })
     }
 
-    private _isToday(year: number, month: number, date: number) {
+    private _isToday(year: number, month: number, day: number) {
         let today = TimeService.convertValue('now', TimeGr.date);
-        return TimeService.getYear(today) == year && TimeService.getMonth(today) == month && TimeService.getDay(today) == date
+        return TimeService.getYear(today) == year && TimeService.getMonth(today) == month && TimeService.getDay(today) == day
     }
 
-    private _isDaySelected(year: number, month: number, date: number) {
-        if(!this._value) return false;
-        let day = TimeService.convertValue(this._value, TimeGr.date);
-        return TimeService.getYear(day) == year && TimeService.getMonth(day) == month && TimeService.getDay(day) == date
+    private _isDaySelected(year: number, month: number, day: number) {
+        if(!this.date) return false;
+        let date = TimeService.convertValue(this.date, TimeGr.date);
+        return TimeService.getYear(date) == year && TimeService.getMonth(date) == month && TimeService.getDay(date) == day
     }
 
     /**
      * @internal
      */
     public _$handleCtrlBar(num: number) {
-        this.date = TimeService.convertValue(TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M), <TimeGr>this.gr);
+        if(this.date) {
+            this.date = TimeService.convertValue(TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M), <TimeGr>this.gr);
+        } else {
+            this._createCalendar(TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.date))
+        }
     }
 
-    public _$selectDate(day: DateCell) {
-        let [year, month, date] = [this._$curYear, this._$curMonth.month, day.date];
-        if(day.isOwnPrevMonth || day.isOwnNextMonth) {
-            let date = TimeService.addDate(`${year}-${month}`, day.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
+    public _$selectDay(dayCell: DayCell) {
+        let [year, month, day] = [this._$curYear, this._$curMonth.month, dayCell.day];
+        if(dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth) {
+            let date = TimeService.addDate(`${year}-${month}`, dayCell.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
             [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         }
-        this.date = TimeService.convertValue(`${year}-${month}-${date}`, TimeGr.date);
+        this.date = TimeService.convertValue(`${year}-${month}-${day}`, <TimeGr>this.gr);
     }
 
     private _langChangeSubscriber: Subscription;
@@ -203,7 +202,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     @Input()
     public get date(): WeekTime {
-        return this._value ? this._value : TimeService.convertValue(new Date(), <TimeGr>this.gr);
+        return this._value;
     }
 
     public set date(newValue: WeekTime) {

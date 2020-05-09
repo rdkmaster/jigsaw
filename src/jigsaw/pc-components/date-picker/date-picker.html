@@ -18,12 +18,12 @@
         </thead>
         <tbody>
             <tr *ngFor="let row of _$dayList">
-                <td  *ngFor="let day of row" class="jigsaw-date-picker-content-date"
-                     [class.jigsaw-date-picker-content-date-no-current]="day.isOwnPrevMonth || day.isOwnNextMonth"
-                     [class.jigsaw-date-picker-content-date-today]="day.isToday"
-                     [class.jigsaw-date-picker-content-date-selected]="day.isSelected"
-                     (click)="_$selectDate(day)">
-                    <span>{{day.date}}</span>
+                <td  *ngFor="let dayCell of row" class="jigsaw-date-picker-content-date"
+                     [class.jigsaw-date-picker-content-date-no-current]="dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth"
+                     [class.jigsaw-date-picker-content-date-today]="dayCell.isToday"
+                     [class.jigsaw-date-picker-content-date-selected]="dayCell.isSelected"
+                     (click)="_$selectDay(dayCell)">
+                    <span>{{dayCell.day}}</span>
                 </td>
             </tr>
         </tbody>

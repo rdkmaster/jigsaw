@@ -28,7 +28,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             top: 50%;
             @include prefixer(transform, translateY(-50%));
             cursor: pointer;
-            font-size: 16px;
+            font-size: 20px;
             color: $text-color-secondary;
             padding: 4px;
             &:hover {
