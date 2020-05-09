@@ -25,6 +25,8 @@ import {Subscription} from 'rxjs';
 
 declare const moment: any;
 
+export type DateCell = {date: number; isToday?: boolean, isOwnPrevMonth?: boolean, isOwnNextMonth?: boolean};
+
 @Component({
     selector: 'jigsaw-date-picker, j-date-picker',
     templateUrl: './date-picker.html',
@@ -56,7 +58,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         moment.locale(_translateService.getBrowserLang());
     }
 
-    public _$curMonth: number; _$curYear: number; _$dayList: number[][] = []; _$monthList: number[] = [];
+    public _$curMonth: number; _$curYear: number; _$dayList: DateCell[][] = []; _$monthList: number[] = [];
     _$yearList: number[] = []; _$weekList: string[] = [];
     private _weekPos: number[];
 
@@ -96,8 +98,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return this._weekPos.map(pos => weekdays[pos]);
     }
 
-    private _createDayList(): number[][] {
+    private _createDayList(): DateCell[][] {
         let date = TimeService.convertValue(this.date, TimeGr.date);
+        let [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         let [firstDate,lastDate] = [TimeService.convertValue(TimeService.getFirstDateOfMonth(date), TimeGr.date),
             TimeService.convertValue(TimeService.getLastDateOfMonth(date), TimeGr.date)];
         console.log('firstDate,lastDate',firstDate, lastDate);
@@ -110,9 +113,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
         return Array.from(new Array(this._CALENDAR_NUM).keys()).map(row => {
             let index = row == 0 ? firstDayWeekPos : 0;
-            let rowArr = Array.from(new Array(this._WEEK_NUM).keys()).map(num => -1);
+            let rowArr: DateCell[] = Array.from(new Array(this._WEEK_NUM).keys()).map(num => ({date: -1}));
             while(index < rowArr.length && countDayNum <= maxDayNum) {
-                rowArr[index] = countDayNum;
+                rowArr[index] = {date: countDayNum, isToday: this._isToday(year, month, countDayNum)};
                 index++;
                 countDayNum++;
             }
@@ -120,20 +123,25 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 index = firstDayWeekPos - 1;
                 let addDay = -1;
                 while(index >= 0) {
-                    rowArr[index] = TimeService.getDay(TimeService.addDate(firstDate, addDay, TimeUnit.d));
+                    rowArr[index] = {date: TimeService.getDay(TimeService.addDate(firstDate, addDay, TimeUnit.d)), isOwnPrevMonth: true};
                     addDay--;
                     index--;
                 }
             }
             if(countDayNum > maxDayNum) {
                 while(index < rowArr.length) {
-                    rowArr[index] = TimeService.getDay(TimeService.addDate(lastDate, countNextMonthDayNum, TimeUnit.d));
+                    rowArr[index] = {date: TimeService.getDay(TimeService.addDate(lastDate, countNextMonthDayNum, TimeUnit.d)), isOwnNextMonth: true};
                     countNextMonthDayNum++;
                     index++;
                 }
             }
             return rowArr;
         })
+    }
+
+    private _isToday(year: number, month: number, date: number) {
+        let today = TimeService.convertValue('now', TimeGr.date);
+        return TimeService.getYear(today) == year && TimeService.getMonth(today) == month && TimeService.getDay(today) == date
     }
 
     /**
@@ -145,6 +153,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         this._$dayList = this._createDayList();
     }
 
+    public _$selectDate(day: DateCell) {
+        
+    }
 
     private _langChangeSubscriber: Subscription;
 
