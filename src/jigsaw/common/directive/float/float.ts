@@ -7,7 +7,8 @@ import {
     Output,
     Renderer2,
     TemplateRef,
-    Type
+    Type,
+    NgZone
 } from "@angular/core";
 import {
     IPopupable,
@@ -107,7 +108,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     public set jigsawFloatOpen(value: boolean) {
         value = !!value;
-        if(value == this._$opened) {
+        if (value == this._$opened) {
             return;
         }
         this._$opened = value;
@@ -187,8 +188,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super();
+                private _popupService: PopupService,
+                protected _zone: NgZone) {
+        super(_zone);
     }
 
     public ngOnDestroy() {
@@ -294,6 +296,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
     private _openFloat(): void {
+        if (!this.jigsawFloatTarget) {
+            return;
+        }
         this._$opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
@@ -325,6 +330,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             return;
         }
 
+        if (option.borderType == 'pointer') {
+            this.runAfterMicrotasks(() => this._setArrow(this._popupElement));
+        }
+
         if (!this._removeMouseOverHandler) {
             this._removeMouseOverHandler = this._renderer.listen(
                 this._popupElement, 'mouseenter',
@@ -351,18 +360,23 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         this._removeResizeHandler = this._renderer.listen("window", "resize",
             () => {
                 PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
+                if (option.borderType == 'pointer') {
+                    this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1])
+                    this._setArrow(this._popupElement);
+                }
             });
     }
 
     private _getPos(): PopupPoint {
         let point = this._getHostElementPos();
+        const differ = this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.y += this._elementRef.nativeElement.offsetHeight + differ;
                 break;
             case 'bottomRight':
                 point.x += this._elementRef.nativeElement.offsetWidth;
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.y += this._elementRef.nativeElement.offsetHeight + differ;
                 break;
             case 'topRight':
                 point.x += this._elementRef.nativeElement.offsetWidth;
@@ -371,10 +385,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
             case 'rightTop':
-                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.x += this._elementRef.nativeElement.offsetWidth + differ;
                 break;
             case 'rightBottom':
-                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.x += this._elementRef.nativeElement.offsetWidth + differ;
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
         }
@@ -460,6 +474,89 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return option;
     }
 
+    /*
+    * 设置弹框是否有三角指向
+    */
+    private _setArrow(popupElement: HTMLElement) {
+        if (this.jigsawFloatOptions.borderType != 'pointer' || !popupElement) {
+            return;
+        }
+        const hostPosition = this._getHostElementPos();
+        const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
+        const host = this._elementRef.nativeElement;
+        let ele = document.createElement('div');
+        //根据tooltip尖角算出来大概在5√2，约为7px
+        ele.style.width = '7px';
+        ele.style.height = '7px';
+        ele.style.position = 'absolute';
+        ele.style.transform = 'rotateZ(-45deg)';
+        ele.style.backgroundColor = 'inherit';
+
+        if (popupElement.offsetTop >= position.y + host.offsetHeight) {
+            ele.style.top = '-4px';
+            if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
+                popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
+            }
+            ele.style.left = this._getLeft(host, popupElement, position) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderTop = "1px solid #dcdcdc";
+                ele.style.borderRight = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
+            const differ = this.jigsawFloatOptions.showBorder ? 5 : 3;
+            ele.style.top = popupElement.offsetHeight - differ + 'px';
+            if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
+                popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
+            }
+            ele.style.left = this._getLeft(host, popupElement, position) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderLeft = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
+            ele.style.left = '-4px';
+            if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
+                popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
+            }
+            ele.style.top = this._getTop(host, popupElement, position) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderTop = "1px solid #dcdcdc";
+                ele.style.borderLeft = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
+            ele.style.left = popupElement.offsetWidth - 3 + 'px';
+            if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
+                popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
+            }
+            ele.style.top = this._getTop(host, popupElement, position) + 'px';
+            if (this.jigsawFloatOptions.showBorder) {
+                ele.style.borderRight = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        }
+        popupElement.appendChild(ele);
+    }
+
+    private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
+        if (delta < 4) {
+            delta = 4;
+        } else if (delta > popupElement.offsetWidth - 13) {
+            delta = popupElement.offsetWidth - 13;
+        }
+        return delta;
+    }
+
+    private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 5;
+        if (delta < 4) {
+            delta = 4;
+        } else if (delta > popupElement.offsetHeight - 13) {
+            delta = popupElement.offsetHeight - 13;
+        }
+        return delta;
+    }
+
     /**
      * 计算弹层区域的位置，当指定的方向位置不够，且反向弹位置足够时，那么反向弹层
      */
@@ -467,17 +564,18 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
         const point = this._getHostElementPos();
+        const differ = this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
             this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
-            const upDelta = offsetHeight + popupElement.offsetHeight;
+            const upDelta = offsetHeight + popupElement.offsetHeight + differ;
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         } else {
             const upDelta = popupElement.offsetHeight;
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
-            const leftDelta = popupElement.offsetWidth + offsetWidth;
+            const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         }
         return pos;
