@@ -1,23 +1,9 @@
-import {
-    Directive,
-    Input,
-} from "@angular/core";
-
-import {SimpleTreeData} from "../../core/data/tree-data";
-import {JigsawFloat} from "../float";
-import {MenuComponent} from "./menu";
+import {Directive, EventEmitter, Input, Output} from "@angular/core";
+import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupOptions} from "../../service/popup.service";
+import {JigsawFloat} from "../float";
+import {JigsawMenuComponent} from "./menu";
 
-
-export  type menuListSettings = {
-    width?: number;
-    height?: number;
-    maxHeight?: number;
-    disabled?: boolean;
-    valid?: boolean;
-    basicClass?: string;
-    selectedItemsChange?: any
-}
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -28,49 +14,24 @@ export  type menuListSettings = {
     }
 })
 export class JigsawCascadingMenu extends JigsawFloat {
-
     @Input()
-    public get menuData(): SimpleTreeData {
-        return this.jigsawFloatInitData.menuData;
-    }
-
-    public set menuData(value: SimpleTreeData) {
-        if (!this.jigsawFloatInitData) {
-            this.jigsawFloatInitData = {} as any;
-        }
-        this.jigsawFloatInitData.menuData = value;
-    }
-
-    /*
-    * menuListSettings表示菜单栏中对list的设置，包含list的输入和输出属性
-    * */
+    public jigsawCascadingMenuData: SimpleTreeData;
     @Input()
-    get menuListSettings(): menuListSettings {
-        return this.jigsawFloatInitData.menuListSettings;
-    }
-
-    set menuListSettings(value: menuListSettings) {
-        if (!this.jigsawFloatInitData) {
-            this.jigsawFloatInitData = {} as any;
-        }
-        this.jigsawFloatInitData.menuListSettings = value;
-    }
-
+    public jigsawCascadingMenuWidth: string | number = 200;
     @Input()
-    get jigsawCascadingMenuOptions(): PopupOptions {
-        return this.jigsawFloatInitData.options;
-    }
+    public jigsawCascadingMenuHeight: string | number = 120;
+    @Input()
+    public jigsawCascadingMenuMaxHeight: string | number = 120;
+    @Input()
+    public jigsawCascadingMenuPopupOptions: PopupOptions;
+    @Output()
+    public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();
 
-    set jigsawCascadingMenuOptions(value: PopupOptions) {
-        if (!this.jigsawFloatInitData) {
-            this.jigsawFloatInitData = {} as any;
-        }
-        this.jigsawFloatInitData.options = value;
-    }
+    public jigsawFloatInitData: any;
 
     ngOnInit() {
         super.ngOnInit();
-        this.jigsawFloatTarget = MenuComponent as any;
+        this.jigsawFloatTarget = JigsawMenuComponent;
     }
 
 }

@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
-import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
-import {menuListSettings} from "../../../../../jigsaw/common/directive/cascading-menu";
+import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -14,17 +13,12 @@ import {menuListSettings} from "../../../../../jigsaw/common/directive/cascading
     `]
 })
 export class CascadingMenuDemo {
-
-
     public data: SimpleTreeData;
 
-    public settings: menuListSettings = {
+    public settings: MenuListSettings = {
         width: 200,
-        height: 120,
-        selectedItemsChange: ($event) => {
-            console.log($event);
-        }
-    }
+        height: 120
+    };
 
     constructor() {
         this.data = new SimpleTreeData();
@@ -41,9 +35,9 @@ export class CascadingMenuDemo {
                                 titleIcon: "fa fa-angle-right",
                                 subTitle: "cccc",
                                 subTitleIcon: "fa fa-angle-right",
-                                click: () => {
-                                    console.log("叶子节点111 被点击了！！！");
-                                }
+                                // click: () => {
+                                //     console.log("叶子节点111 被点击了！！！");
+                                // }
                             },
                             {label: "子菜单112"},
                             {label: "子菜单113"},
