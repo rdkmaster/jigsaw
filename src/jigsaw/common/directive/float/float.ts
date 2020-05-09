@@ -7,7 +7,8 @@ import {
     Output,
     Renderer2,
     TemplateRef,
-    Type
+    Type,
+    NgZone
 } from "@angular/core";
 import {
     IPopupable,
@@ -187,8 +188,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super();
+                private _popupService: PopupService,
+                protected _zone: NgZone) {
+        super(_zone);
     }
 
     public ngOnDestroy() {
@@ -329,7 +331,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
 
         if (option.borderType == 'pointer') {
-            setTimeout(() => this._setArrow(this._popupElement));
+            this.runAfterMicrotasks(() => this._setArrow(this._popupElement));
         }
 
         if (!this._removeMouseOverHandler) {
