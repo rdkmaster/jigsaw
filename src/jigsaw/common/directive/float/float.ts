@@ -365,13 +365,14 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     private _getPos(): PopupPoint {
         let point = this._getHostElementPos();
+        const differ = this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.y += this._elementRef.nativeElement.offsetHeight + differ;
                 break;
             case 'bottomRight':
                 point.x += this._elementRef.nativeElement.offsetWidth;
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.y += this._elementRef.nativeElement.offsetHeight + differ;
                 break;
             case 'topRight':
                 point.x += this._elementRef.nativeElement.offsetWidth;
@@ -380,10 +381,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
             case 'rightTop':
-                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.x += this._elementRef.nativeElement.offsetWidth + differ;
                 break;
             case 'rightBottom':
-                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.x += this._elementRef.nativeElement.offsetWidth + differ;
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
         }
@@ -473,7 +474,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     * 设置弹框是否有三角指向
     */
     private _setArrow(popupElement: HTMLElement) {
-        if (this.jigsawFloatOptions.borderType != 'pointer' || !popupElement) return;
+        if (this.jigsawFloatOptions.borderType != 'pointer' || !popupElement) {
+            return;
+        }
         const hostPosition = this._getHostElementPos();
         const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
         const host = this._elementRef.nativeElement;
@@ -496,8 +499,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 ele.style.borderRight = "1px solid #dcdcdc";
             }
         } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
-            const Differ = this.jigsawFloatOptions.showBorder ? 5 : 3;
-            ele.style.top = popupElement.offsetHeight - Differ + 'px';
+            const differ = this.jigsawFloatOptions.showBorder ? 5 : 3;
+            ele.style.top = popupElement.offsetHeight - differ + 'px';
             if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
                 popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
             }
@@ -557,17 +560,18 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
         const point = this._getHostElementPos();
+        const differ = this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
             this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
-            const upDelta = offsetHeight + popupElement.offsetHeight;
+            const upDelta = offsetHeight + popupElement.offsetHeight + differ;
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         } else {
             const upDelta = popupElement.offsetHeight;
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
-            const leftDelta = popupElement.offsetWidth + offsetWidth;
+            const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         }
         return pos;
