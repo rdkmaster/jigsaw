@@ -30,14 +30,14 @@ import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
         }
 
         .group {
-            width: 380px;
+            width: 420px;
             overflow: hidden;
             display: inline-block;
         }
-        
+
         .wrapper {
             display: flex;
-            height: 250px;
+            height: 400px;
         }
 
         label {
@@ -49,8 +49,10 @@ export class FloatOptionDemo implements OnInit {
     showHideEffect = "";
     selectedPositionType = "";
     offset: PopupPositionOffset = {};
+    arrowPosition: PopupPositionOffset = {};
     showBorder = true;
     showShadow = true;
+    showArrow = true;
     size: PopupSize = {};
     options: PopupOptions = {useCustomizedBackground: true};
     _$height = 'auto';
@@ -64,6 +66,7 @@ export class FloatOptionDemo implements OnInit {
         this.options.showBorder = this.showBorder;
         this.options.showShadow = this.showShadow;
         this.options.size = this.size;
+        this.options.borderType = this.showArrow ? 'pointer' : 'default';
     }
 
     get optionsString(): string {
