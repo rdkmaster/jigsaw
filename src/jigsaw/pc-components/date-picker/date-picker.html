@@ -1,0 +1,35 @@
+<div class="jigsaw-date-picker-header">
+    <div class="jigsaw-date-picker-gr-switch" *ngIf="grItems && grItems.length">
+        <j-button-bar [data]="grItems" (selectedItemsChange)="_$changeGranularity($event)" [height]="20"></j-button-bar>
+    </div>
+    <div class="jigsaw-date-picker-control">
+        <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar fa fa-angle-left" (click)="_$handleCtrlBar(-1)"></i>
+        <span class="jigsaw-date-picker-control-month">{{_$curMonth}}</span>
+        <span class="jigsaw-date-picker-control-year">{{_$curYear}}</span>
+        <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar fa fa-angle-right" (click)="_$handleCtrlBar(1)"></i>
+    </div>
+</div>
+<div class="jigsaw-date-picker-content">
+    <table class="jigsaw-date-picker-content-day">
+        <thead>
+            <tr>
+                <th *ngFor="let week of _$weekList"><div>{{week}}</div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of _$dayList">
+                <td  *ngFor="let day of row"><div class="jigsaw-date-picker-content-date"><span>{{day}}</span></div></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="jigsaw-date-picker-content-month">
+        <tbody>
+
+        </tbody>
+    </table>
+    <table class="jigsaw-date-picker-content-year">
+        <tbody>
+
+        </tbody>
+    </table>
+</div>

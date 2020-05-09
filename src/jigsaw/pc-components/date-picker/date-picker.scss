@@ -1,0 +1,106 @@
+@import "../../common/assets/scss/core/base";
+
+$date-prefix-cls: #{$jigsaw-prefix}-date-picker;
+
+.#{$date-prefix-cls} {
+    @include inline-block();
+    border-radius: 4px;
+    border: 1px solid $border-color-base;
+    width: 210px;
+    overflow: hidden;
+    user-select: none;
+    padding-bottom: 8px;
+    &-header {
+        background: $background-color-base;
+        padding: 0 14px;
+    }
+    &-gr-switch {
+        padding-top: 8px;
+    }
+    &-control {
+        height: 40px;
+        line-height: 40px;
+        position: relative;
+        font-size: 14px;
+        text-align: center;
+        .#{$date-prefix-cls}-control-bar {
+            position: absolute;
+            top: 50%;
+            @include prefixer(transform, translateY(-50%));
+            cursor: pointer;
+            font-size: 16px;
+            color: $text-color-secondary;
+            padding: 4px;
+            &:hover {
+                color: $primary-5;
+            }
+        }
+        .#{$date-prefix-cls}-previous-bar {
+            left: -4px;
+        }
+        .#{$date-prefix-cls}-next-bar {
+            right: -4px;
+        }
+        &-month, &-year {
+            cursor: pointer;
+            &:hover {
+                color: $primary-5;
+            }
+        }
+        &-month {
+            margin-right: 6px;
+        }
+    }
+    &-content {
+        text-align: center;
+        &-day {
+            width: 100%;
+            thead, tbody {
+                display: block;
+                width: 100%;
+            }
+            thead tr, tbody tr {
+                display: inline-block;
+                width: 100%;
+            }
+            th, td {
+                width: 14.28571%;
+                height: 100%;
+                display: block;
+                float: left;
+            }
+            thead {
+                padding: 0 8px;
+                height: 28px;
+                line-height: 24px;
+                background: $background-color-base;
+                th {
+                    text-align: center;
+                }
+            }
+            tbody {
+                padding: 8px 8px 0;
+                tr {
+                    height: 24px;
+                    line-height: 24px;
+                }
+            }
+        }
+        &-date {
+            width: 100%;
+            height: 100%;
+            span {
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                cursor: pointer;
+                &:hover {
+                    background: $primary-2;
+                }
+            }
+        }
+    }
+
+}
+

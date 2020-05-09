@@ -241,6 +241,18 @@ export class TimeService {
         console.warn('setWeekDayStart function has been abandoned, weekDayStart auto changed by locale language!');
     }
 
+    public static getWeekStart() {
+        return moment.localeData().firstDayOfWeek()
+    }
+
+    public static getWeekdaysMin() {
+        return moment.weekdaysMin();
+    }
+
+    public static getMonthShort() {
+        return moment.localeData().monthsShort();
+    }
+
     /**
      * 获取周数对应的年份
      *
@@ -297,6 +309,14 @@ export class TimeService {
 
     public static getDate(str: Time, gr: TimeGr): Moment {
         return moment(str, TimeService.getFormatter(gr));
+    }
+
+    public static getFirstDateOfMonth(date: Time): Moment {
+        return moment([this.getYear(date), 0, 1]).month(this.getMonth(date) - 1);
+    }
+
+    public static getLastDateOfMonth(date: Time): Moment {
+        return moment([this.getYear(date), 0, 31]).month(this.getMonth(date) - 1);
     }
 
     /**

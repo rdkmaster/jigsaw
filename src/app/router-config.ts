@@ -202,6 +202,10 @@ export const routerConfigPC = [
     {
         path: "pc/breadcrumb",
         loadChildren: () => import('./demo/pc/breadcrumb/demo-set.module').then(m => m.BreadcrumbDemoModule),
+    },
+    {
+        path: "pc/date-picker",
+        loadChildren: () => import('./demo/pc/date-picker/demo-set.module').then(m => m.DatePickerDemoModule),
     }
 ];
 export const routerConfigMobile = [
