@@ -5,7 +5,7 @@ import {TimeGr} from "../../../../../jigsaw/common/service/time.service";
     templateUrl: './demo.component.html'
 })
 export class DatePickerBasicDemoComponent {
-    date;
+    date = 'now-5d';
 
     grItems = [
         {label: "Day", value: TimeGr.date},
