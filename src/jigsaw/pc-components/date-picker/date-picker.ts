@@ -79,9 +79,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     private _DAY_CAL_COL = 7;
     private _DAY_CAL_ROW = 6;
-    private _FIRST_DAY_NUM = 1;
     private _MONTH_CAL_COL = 3;
     private _MONTH_CAL_ROW = 4;
+    private _YEAR_CAL_COL = 3;
+    private _YEAR_CAL_ROW = 4;
+    private _FIRST_DAY_NUM = 1;
+
 
     private _createCalendar(year?: number, month?: number) {
         if(!year || !month) {
@@ -90,18 +93,52 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
         this._updateHead(year, month);
         this._createMonthCal(month);
+        this._createYearCal(year);
         this._createDayCal(year, month);
-    }
-
-    private _createDayCal(year: number, month: number) {
-        this._weekPos = this._getWeekPos();
-        this._$weekList = this._createWeekList(this._weekPos);
-        this._$dayList = this._createDayList(this._weekPos, year, month);
     }
 
     private _updateHead(year: number, month: number) {
         this._$curMonth = {month: month, label: TimeService.getMonthShort()[month - 1]};
         this._$curYear = year;
+    }
+
+    private _createYearCal(year: number, startYear?: number) {
+        this._$yearList = this._createYearList(year, startYear);
+    }
+
+    private _createYearList(curYear: number, startYear?: number): YearCell[][] {
+        startYear = startYear ? startYear : curYear - 4;
+        let yearCount = startYear;
+        return Array.from(new Array(this._YEAR_CAL_ROW).keys()).map(row => {
+            let rowArr = [];
+            let index = 0;
+            while(index < this._YEAR_CAL_COL) {
+                rowArr[index] = {year: yearCount, isSelected: yearCount == curYear};
+                index++;
+                yearCount++;
+            }
+            return rowArr;
+        });
+    }
+
+    /**
+     * @internal
+     */
+    public _$showYearList() {
+        this._$selectMode = this._$selectMode != 'year' ? 'year' : 'day';
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectYear(yearCell: YearCell) {
+        if(this.date) {
+            let date = TimeService.getRealDateOfMonth(yearCell.year, this._$curMonth.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
+            this.date = TimeService.convertValue(date, <TimeGr>this.gr);
+        } else {
+            this._createCalendar(yearCell.year, this._$curMonth.month);
+        }
+        this._$selectMode = 'day';
     }
 
     private _createMonthCal(month: number) {
@@ -121,6 +158,32 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             }
             return rowArr;
         })
+    }
+
+    /**
+     * @internal
+     */
+    public _$showMonthList() {
+        this._$selectMode = this._$selectMode != 'month' ? 'month' : 'day';
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectMonth(monthCell: MonthCell) {
+        if(this.date) {
+            let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
+            this.date = TimeService.convertValue(date, <TimeGr>this.gr);
+        } else {
+            this._createCalendar(this._$curYear, monthCell.month);
+        }
+        this._$selectMode = 'day';
+    }
+
+    private _createDayCal(year: number, month: number) {
+        this._weekPos = this._getWeekPos();
+        this._$weekList = this._createWeekList(this._weekPos);
+        this._$dayList = this._createDayList(this._weekPos, year, month);
     }
 
     private _getWeekPos(): number[] {
@@ -190,31 +253,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     /**
      * @internal
      */
-    public _$handleCtrlBar(num: number) {
-        if(this._$selectMode == 'day') {
-            if(this.date) {
-                this.date = TimeService.convertValue(TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M), <TimeGr>this.gr);
-            } else {
-                let date = TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.month);
-                this._createCalendar(TimeService.getYear(date), TimeService.getMonth(date));
-            }
-        }
-        if(this._$selectMode == 'month') {
-            let curMonth: number =  TimeService.getMonthShort().findIndex(m => m == this._$curMonth.label) + 1;
-            let selectedMonth = curMonth + num;
-            selectedMonth = selectedMonth < 1 ? 12 : selectedMonth > 12 ? 1 : selectedMonth;
-            if(this.date) {
-                let date = TimeService.getRealDateOfMonth(this._$curYear, selectedMonth, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
-                this.date = TimeService.convertValue(date, <TimeGr>this.gr);
-            } else {
-                this._createCalendar(this._$curYear, selectedMonth);
-            }
-        }
-    }
-
-    /**
-     * @internal
-     */
     public _$selectDay(dayCell: DayCell) {
         let [year, month, day] = [this._$curYear, this._$curMonth.month, dayCell.day];
         if(dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth) {
@@ -227,21 +265,18 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     /**
      * @internal
      */
-    public _$showMonthList() {
-        this._$selectMode = this._$selectMode == 'day' ? 'month' : 'day';
-    }
-
-    /**
-     * @internal
-     */
-    public _$selectMonth(monthCell: MonthCell) {
-        if(this.date) {
-            let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(<Time>this.date));
-            this.date = TimeService.convertValue(date, <TimeGr>this.gr);
-        } else {
-            this._createCalendar(this._$curYear, monthCell.month);
+    public _$handleCtrlBar(num: number) {
+        if(this._$selectMode == 'day' || this._$selectMode == 'month') {
+            if(this.date) {
+                this.date = TimeService.convertValue(TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M), <TimeGr>this.gr);
+            } else {
+                let date = TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.month);
+                this._createCalendar(TimeService.getYear(date), TimeService.getMonth(date));
+            }
         }
-        this._$selectMode = 'day';
+        if(this._$selectMode == 'year') {
+            this._createYearCal(this._$curYear, this._$yearList[0][0].year + 12*num);
+        }
     }
 
     private _langChangeSubscriber: Subscription;

@@ -118,7 +118,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 }
             }
         }
-        &-month {
+        &-month, &-year {
             display: block;
             padding: 8px 8px 0;
             tbody {
@@ -136,7 +136,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 }
             }
         }
-        &-month-cell {
+        &-month-cell, &-year-cell {
             span {
                 display: inline-block;
                 width: 36px;

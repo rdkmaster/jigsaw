@@ -5,7 +5,7 @@
     <div class="jigsaw-date-picker-control">
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar fa fa-angle-left" (click)="_$handleCtrlBar(-1)"></i>
         <span class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
-        <span class="jigsaw-date-picker-control-year">{{_$curYear}}</span>
+        <span class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar fa fa-angle-right" (click)="_$handleCtrlBar(1)"></i>
     </div>
 </div>
@@ -39,9 +39,15 @@
             </tr>
         </tbody>
     </table>
-    <table class="jigsaw-date-picker-content-year">
+    <table class="jigsaw-date-picker-content-year" *ngIf="_$selectMode == 'year'">
         <tbody>
-
+            <tr *ngFor="let row of _$yearList">
+                <td  *ngFor="let yearCell of row" class="jigsaw-date-picker-content-year-cell"
+                     [class.jigsaw-date-picker-content-year-cell-selected]="yearCell.isSelected"
+                     (click)="_$selectYear(yearCell)">
+                    <span>{{yearCell.year}}</span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
