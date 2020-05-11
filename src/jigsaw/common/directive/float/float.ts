@@ -369,7 +369,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     private _getPos(): PopupPoint {
         let point = this._getHostElementPos();
-        const differ = this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
+        const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
                 point.y += this._elementRef.nativeElement.offsetHeight + differ;
@@ -478,7 +478,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     * 设置弹框是否有三角指向
     */
     private _setArrow(popupElement: HTMLElement) {
-        if (this.jigsawFloatOptions.borderType != 'pointer' || !popupElement) {
+        const options = this._getPopupOption();
+        if (options.borderType != 'pointer' || !popupElement) {
             return;
         }
         const hostPosition = this._getHostElementPos();
@@ -498,18 +499,18 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
             }
             ele.style.left = this._getLeft(host, popupElement, position) + 'px';
-            if (this.jigsawFloatOptions.showBorder) {
+            if (options.showBorder) {
                 ele.style.borderTop = "1px solid #dcdcdc";
                 ele.style.borderRight = "1px solid #dcdcdc";
             }
         } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
-            const differ = this.jigsawFloatOptions.showBorder ? 5 : 3;
+            const differ = options.showBorder ? 5 : 3;
             ele.style.top = popupElement.offsetHeight - differ + 'px';
             if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
                 popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
             }
             ele.style.left = this._getLeft(host, popupElement, position) + 'px';
-            if (this.jigsawFloatOptions.showBorder) {
+            if (options.showBorder) {
                 ele.style.borderLeft = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
@@ -519,7 +520,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
             }
             ele.style.top = this._getTop(host, popupElement, position) + 'px';
-            if (this.jigsawFloatOptions.showBorder) {
+            if (options.showBorder) {
                 ele.style.borderTop = "1px solid #dcdcdc";
                 ele.style.borderLeft = "1px solid #dcdcdc";
             }
@@ -529,7 +530,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
             }
             ele.style.top = this._getTop(host, popupElement, position) + 'px';
-            if (this.jigsawFloatOptions.showBorder) {
+            if (options.showBorder) {
                 ele.style.borderRight = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
@@ -564,7 +565,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
         const point = this._getHostElementPos();
-        const differ = this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
+        const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
             this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
