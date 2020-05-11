@@ -83,8 +83,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _MONTH_CAL_ROW = 4;
     private _YEAR_CAL_COL = 3;
     private _YEAR_CAL_ROW = 4;
-    private _FIRST_DAY_NUM = 1;
-
+    private _CUR_YEAR_POS = 4;
 
     private _createCalendar(year?: number, month?: number) {
         if(!year || !month) {
@@ -107,7 +106,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createYearList(curYear: number, startYear?: number): YearCell[][] {
-        startYear = startYear ? startYear : curYear - 4;
+        startYear = startYear ? startYear : curYear - this._CUR_YEAR_POS;
         let yearCount = startYear;
         return Array.from(new Array(this._YEAR_CAL_ROW).keys()).map(row => {
             let rowArr = [];
@@ -208,7 +207,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _createDayList(weekPos: number[], year: number, month: number): DayCell[][] {
         let [firstDate,lastDate] = [TimeService.convertValue(TimeService.getFirstDateOfMonth(year, month), TimeGr.date),
             TimeService.convertValue(TimeService.getLastDateOfMonth(year, month), TimeGr.date)];
-        let [countDayNum, maxDayNum, countNextMonthDayNum] = [this._FIRST_DAY_NUM, TimeService.getDay(TimeService.getLastDateOfMonth(year, month)), this._FIRST_DAY_NUM];
+        let [countDayNum, maxDayNum, countNextMonthDayNum] = [1, TimeService.getDay(TimeService.getLastDateOfMonth(year, month)), 1];
         let firstDayWeek = new Date(firstDate).getDay();
         let firstDayWeekPos = weekPos.findIndex(w => w === firstDayWeek);
         return Array.from(new Array(this._DAY_CAL_ROW).keys()).map(row => {
@@ -275,7 +274,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             }
         }
         if(this._$selectMode == 'year') {
-            this._createYearCal(this._$curYear, this._$yearList[0][0].year + 12*num);
+            this._createYearCal(this._$curYear, this._$yearList[0][0].year + this._YEAR_CAL_ROW*this._YEAR_CAL_COL*num);
         }
     }
 
