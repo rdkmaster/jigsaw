@@ -9,7 +9,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
     width: 210px;
     overflow: hidden;
     user-select: none;
-    padding-bottom: 8px;
     &-header {
         background: $background-color-base;
         padding: 0 14px;
@@ -81,14 +80,14 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 }
             }
             tbody {
-                padding: 8px 8px 0;
+                padding: 8px 8px;
                 tr {
                     height: 24px;
                     line-height: 24px;
                 }
             }
         }
-        &-date {
+        &-day-cell {
             position: relative;
             span {
                 display: inline-block;
@@ -109,8 +108,45 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 border-top: 4px solid $primary-8;
                 border-left: 4px solid transparent;
             }
-            &-no-current {
+            &-prev-next {
                 color: $text-color-secondary;
+            }
+            &-selected {
+                span, span:hover {
+                    background: $primary-color;
+                    color: $text-color-of-bg;
+                }
+            }
+        }
+        &-month {
+            display: block;
+            padding: 8px 8px 0;
+            tbody {
+                width: 100%;
+                display: block;
+                tr {
+                    width: 100%;
+                    display: block;
+                    height: 46px;
+                    td {
+                        width: 33.33%;
+                        height: 46px;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+        &-month-cell {
+            span {
+                display: inline-block;
+                width: 36px;
+                height: 36px;
+                line-height: 36px;
+                border-radius: 50%;
+                cursor: pointer;
+                &:hover {
+                    background: $primary-2
+                }
             }
             &-selected {
                 span, span:hover {

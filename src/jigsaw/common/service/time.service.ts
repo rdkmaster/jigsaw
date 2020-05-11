@@ -311,12 +311,16 @@ export class TimeService {
         return moment(str, TimeService.getFormatter(gr));
     }
 
-    public static getFirstDateOfMonth(date: Time): Moment {
-        return moment([this.getYear(date), 0, 1]).month(this.getMonth(date) - 1);
+    public static getFirstDateOfMonth(year: number, month: number): Moment {
+        return this.getRealDateOfMonth(year, month, 1);
     }
 
-    public static getLastDateOfMonth(date: Time): Moment {
-        return moment([this.getYear(date), 0, 31]).month(this.getMonth(date) - 1);
+    public static getLastDateOfMonth(year: number, month: number): Moment {
+        return this.getRealDateOfMonth(year, month, 31);
+    }
+
+    public static getRealDateOfMonth(year: number, month: number, day: number): Moment {
+        return moment([year, 0, day]).month(month - 1);
     }
 
     /**
