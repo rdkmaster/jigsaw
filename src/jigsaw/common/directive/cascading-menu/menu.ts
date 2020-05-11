@@ -8,12 +8,11 @@ import {AbstractJigsawComponent} from "../../common";
     template: `
         <j-list [width]="width" [height]="height" [maxHeight]="maxHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <j-list-option *ngFor="let node of data?.nodes" [value]="node" jigsawFloat
+            <j-list-option *ngFor="let node of _$realData?.nodes" [value]="node" jigsawFloat
                            [jigsawFloatTarget]="getTarget(node)"
                            [jigsawFloatPosition]="'rightTop'"
-                           [jigsawFloatOptions]="popupOptions"
                            [disabled]="node.disabled"
-                           (click)="select.emit(node)">
+                           (click)="select.emit(node); initData.select?.emit($event)">
                 <span j-title>
                     <i class="{{node.titleIcon}}"></i>
                     {{node.label}}
@@ -32,10 +31,12 @@ import {AbstractJigsawComponent} from "../../common";
 export class JigsawMenuComponent extends AbstractJigsawComponent implements IPopupable {
     public initData: any;
 
+    public _$realData(): SimpleTreeData {
+        return this.initData && this.initData.data ? this.initData.data : this.data;
+    }
+
     @Input()
     public data: SimpleTreeData;
-    @Input()
-    public popupOptions: PopupOptions = {useCustomizedBackground:true};
 
     @Output()
     public answer: EventEmitter<any> = new EventEmitter<any>();
