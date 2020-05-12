@@ -56,16 +56,20 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 private _changeDetectorRef: ChangeDetectorRef) {
         super();
         this._refreshInterval = 0;
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {});
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            moment.locale(langInfo.curLang);
+            if(this.initialized) {
+                this._createCalendar(this._$curYear, this._$curMonth.month);
+            }
+        });
         InternalUtils.initI18n(_translateService, 'time', {
             zh: {recommendedLabel: '推荐日期'},
             en: {recommendedLabel: 'Recommend'}
         });
-        _translateService.setDefaultLang(_translateService.getBrowserLang());
-
         this._defineLocale();
-        // defineLocale会使moment设置locale，需要重置为浏览器默认值
-        moment.locale(_translateService.getBrowserLang());
+        let browserLang = _translateService.getBrowserLang();
+        _translateService.setDefaultLang(browserLang);
+        moment.locale(browserLang);
     }
 
     public _$curMonth: MonthCell;
@@ -89,6 +93,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _createCalendar(year?: number, month?: number) {
         if(!year || !month) {
             let date = TimeService.convertValue(this.date, TimeGr.date);
+            // 没有date会生成当前时间
             [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         }
         this._updateHead(year, month);
