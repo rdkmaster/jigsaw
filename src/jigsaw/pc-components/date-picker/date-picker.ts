@@ -34,8 +34,8 @@ export type DayCell = {
     isDisabled?: boolean,
 };
 
-export type MonthCell = {month: number, label: string, isSelected?: boolean};
-export type YearCell = {year: number, isSelected: boolean};
+export type MonthCell = {month: number, label: string, isSelected?: boolean, isDisabled?: boolean,};
+export type YearCell = {year: number, isSelected: boolean, isDisabled?: boolean,};
 
 @Component({
     selector: 'jigsaw-date-picker, j-date-picker',
@@ -118,12 +118,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             let rowArr = [];
             let index = 0;
             while(index < this._YEAR_CAL_COL) {
-                rowArr[index] = {year: yearCount, isSelected: yearCount == curYear};
+                rowArr[index] = {year: yearCount, isSelected: yearCount == curYear, isDisabled: this._isYearDisabled(yearCount)};
                 index++;
                 yearCount++;
             }
             return rowArr;
         });
+    }
+
+    private _isYearDisabled(year: number) {
+        return year < TimeService.getYear(this.limitStart) || year > TimeService.getYear(this.limitEnd)
     }
 
     /**
@@ -137,6 +141,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$selectYear(yearCell: YearCell) {
+        if(yearCell.isDisabled) return;
         if(this.date) {
             let date = TimeService.getRealDateOfMonth(yearCell.year, this._$curMonth.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.date = TimeService.convertValue(date, <TimeGr>this.gr);
@@ -151,7 +156,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createMonthList(month: number): MonthCell[][] {
-        let monthList: MonthCell[] = TimeService.getMonthShort().map((m, i) => ({month: i + 1, label: m, isSelected: month == i + 1}));
+        let monthList: MonthCell[] = TimeService.getMonthShort().map((m, i) => ({
+            month: i + 1,
+            label: m,
+            isSelected: month == i + 1,
+            isDisabled: this._isMonthDisabled(i + 1)
+        }));
         let monthIndex = 0;
         return Array.from(new Array(this._MONTH_CAL_ROW).keys()).map(row => {
             let rowArr = [];
@@ -165,6 +175,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         })
     }
 
+    private _isMonthDisabled(month: number) {
+        return month < TimeService.getMonth(this.limitStart) || month > TimeService.getMonth(this.limitEnd);
+    }
+
     /**
      * @internal
      */
@@ -176,6 +190,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$selectMonth(monthCell: MonthCell) {
+        if(monthCell.isDisabled) return;
         if(this.date) {
             let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.date = TimeService.convertValue(date, <TimeGr>this.gr);

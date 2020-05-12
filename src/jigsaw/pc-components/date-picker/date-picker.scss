@@ -161,6 +161,13 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                     color: $text-color-of-bg;
                 }
             }
+            &-disabled {
+                span, span:hover {
+                    background: none;
+                    @include compatible(color, $disabled-color, $disabled-color-ie11);
+                    cursor:not-allowed;
+                }
+            }
         }
     }
 
