@@ -30,7 +30,8 @@ export type DayCell = {
     isToday?: boolean;
     isOwnPrevMonth?: boolean;
     isOwnNextMonth?: boolean;
-    isSelected?: boolean
+    isSelected?: boolean,
+    isDisabled?: boolean,
 };
 
 export type MonthCell = {month: number, label: string, isSelected?: boolean};
@@ -216,7 +217,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             let index = row == 0 ? firstDayWeekPos : 0;
             let rowArr: DayCell[] = Array.from(new Array(this._DAY_CAL_COL).keys()).map(num => ({day: -1}));
             while(index < rowArr.length && countDayNum <= maxDayNum) {
-                rowArr[index] = {day: countDayNum, isToday: this._isToday(year, month, countDayNum), isSelected: this._isDaySelected(year, month, countDayNum)};
+                rowArr[index] = {
+                    day: countDayNum,
+                    isToday: this._isToday(year, month, countDayNum),
+                    isSelected: this._isDaySelected(year, month, countDayNum),
+                    isDisabled: this._isDayDisabled(year, month, countDayNum)
+                };
                 index++;
                 countDayNum++;
             }
@@ -225,8 +231,13 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 let addDay = -1;
                 while(index >= 0) {
                     let date = TimeService.addDate(firstDate, addDay, TimeUnit.d);
-                    rowArr[index] = {day: TimeService.getDay(date), isOwnPrevMonth: true,
-                        isSelected: this._isDaySelected(TimeService.getYear(date), TimeService.getMonth(date), TimeService.getDay(date))};
+                    let [y, m, d] = [TimeService.getYear(date), TimeService.getMonth(date), TimeService.getDay(date)];
+                    rowArr[index] = {
+                        day: d,
+                        isOwnPrevMonth: true,
+                        isSelected: this._isDaySelected(y, m, d),
+                        isDisabled: this._isDayDisabled(y, m, d)
+                    };
                     addDay--;
                     index--;
                 }
@@ -234,8 +245,13 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             if(countDayNum > maxDayNum) {
                 while(index < rowArr.length) {
                     let date = TimeService.addDate(lastDate, countNextMonthDayNum, TimeUnit.d);
-                    rowArr[index] = {day: TimeService.getDay(date), isOwnNextMonth: true,
-                        isSelected: this._isDaySelected(TimeService.getYear(date), TimeService.getMonth(date), TimeService.getDay(date))};
+                    let [y, m, d] = [TimeService.getYear(date), TimeService.getMonth(date), TimeService.getDay(date)];
+                    rowArr[index] = {
+                        day: d,
+                        isOwnNextMonth: true,
+                        isSelected: this._isDaySelected(y, m, d),
+                        isDisabled: this._isDayDisabled(y, m, d)
+                    };
                     countNextMonthDayNum++;
                     index++;
                 }
@@ -260,10 +276,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    private _isDayDisabled(year: number, month: number, day: number) {
+        let date = TimeService.convertValue(`${year}-${month}-${day}`, <TimeGr>this.gr);
+        return (this.limitStart && date < this.limitStart) || (this.limitEnd && date > this.limitEnd)
+    }
+
     /**
      * @internal
      */
     public _$selectDay(dayCell: DayCell) {
+        if(dayCell.isDisabled) return;
         let [year, month, day] = [this._$curYear, this._$curMonth.month, dayCell.day];
         if(dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth) {
             let date = TimeService.addDate(`${year}-${month}`, dayCell.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
@@ -339,45 +361,48 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _limitEnd: Time;
 
     public get limitEnd(): Time {
-        return this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this.gr)
+        return this._limitEnd
     }
 
     @Input()
     public set limitEnd(value: Time) {
-        if (value) {
-            this._limitEnd = value;
-            this._checkMacro();
-            // if (this._timePicker) {
-            //     if (this._timePicker.minDate() && this._timePicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)) {
-            //         this._timePicker.minDate(this.limitEnd)
-            //     }
-            //     this._timePicker.maxDate(this.limitEnd);
-                this._weekHandle();
-                this._handleRecommended(this._el.nativeElement, this._popService);
-            }
-        //}
+        if(!value) return;
+        this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
+        if(this.initialized && this.date) {
+            this.writeValue(this.date);
+        }
+        //this._checkMacro();
+        // if (this._timePicker) {
+        //     if (this._timePicker.minDate() && this._timePicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)) {
+        //         this._timePicker.minDate(this.limitEnd)
+        //     }
+        //     this._timePicker.maxDate(this.limitEnd);
+        // this._weekHandle();
+        // this._handleRecommended(this._el.nativeElement, this._popService);
     }
 
     private _limitStart: Time;
 
     public get limitStart(): Time {
-        return this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this.gr);
+        return this._limitStart;
     }
 
     @Input()
     public set limitStart(value: Time) {
-        if (value) {
-            this._limitStart = value;
-            this._checkMacro();
-            // if (this._timePicker) {
-            //     if (this._timePicker.maxDate() && this._timePicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)) {
-            //         this._timePicker.maxDate(this.limitStart)
-            //     }
-            //     this._timePicker.minDate(this.limitStart);
-                this._weekHandle();
-                this._handleRecommended(this._el.nativeElement, this._popService);
-            //}
+        if (!value) return;
+        this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
+        if(this.initialized && this.date) {
+            this.writeValue(this.date);
         }
+        //this._checkMacro();
+        // if (this._timePicker) {
+        //     if (this._timePicker.maxDate() && this._timePicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)) {
+        //         this._timePicker.maxDate(this.limitStart)
+        //     }
+        //     this._timePicker.minDate(this.limitStart);
+            //this._weekHandle();
+           // this._handleRecommended(this._el.nativeElement, this._popService);
+        //}
     }
 
     private _refreshInterval: number;
@@ -592,27 +617,39 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return {year: TimeService.getWeekYear(date), week: TimeService.getWeekOfYear(date)};
     }
 
+    private _isValueChanged(newValue) {
+        let changed = true;
+        if(this.gr == TimeGr.week) {
+            if(this._date && this._isSameWeek(<TimeWeekDay>this._date, newValue)) {
+                changed = false
+            }
+        } else if (newValue == this._date) {
+            changed = false
+        }
+        return changed;
+    }
+
+    private _getValidDate(newValue) {
+        newValue = this._handleLimit(TimeService.convertValue(newValue, <TimeGr>this.gr));
+        newValue = this.gr == TimeGr.week ? this._getWeekDate(newValue) : newValue;
+        return newValue;
+    }
+
     public writeValue(newValue: any): void {
         if (!newValue) {
             return;
         }
-        newValue = this._handleLimit(TimeService.convertValue(newValue, <TimeGr>this.gr));
-        if(this.gr == TimeGr.week) {
-            newValue = this._getWeekDate(newValue);
-            if(this._date && this._isSameWeek(<TimeWeekDay>this._date, newValue)) {
-                return;
-            }
-        } else if (newValue == this._date) {
-            return;
+        newValue = this._getValidDate(newValue);
+        if(this._isValueChanged(newValue)) {
+            this._date = newValue;
+            this.runMicrotask(() => {
+                this.dateChange.emit(this._date);
+                this._propagateChange(this._date);
+                this._changeDetectorRef.markForCheck();
+            });
         }
-        this._date = newValue;
+        // 根据this.date创建日历
         this._createCalendar();
-        //this._handleRecommended(this._el.nativeElement, this._popService);
-        this.runMicrotask(() => {
-            this.dateChange.emit(this._date);
-            this._propagateChange(this._date);
-            this._changeDetectorRef.markForCheck();
-        });
     }
 
     private _propagateChange: any = () => {

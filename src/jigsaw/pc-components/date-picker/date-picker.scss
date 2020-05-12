@@ -103,10 +103,10 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 content: "";
                 display: block;
                 position: absolute;
-                right: 2px;
-                top: 2px;
-                border-top: 4px solid $primary-8;
-                border-left: 4px solid transparent;
+                right: 1px;
+                top: 1px;
+                border-top: 6px solid $primary-7;
+                border-left: 6px solid transparent;
             }
             &-prev-next {
                 color: $text-color-secondary;
@@ -115,6 +115,13 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 span, span:hover {
                     background: $primary-color;
                     color: $text-color-of-bg;
+                }
+            }
+            &-disabled {
+                span, span:hover {
+                    background: none;
+                    @include compatible(color, $disabled-color, $disabled-color-ie11);
+                    cursor:not-allowed;
                 }
             }
         }
