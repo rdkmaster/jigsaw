@@ -13,12 +13,8 @@ import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
     `]
 })
 export class CascadingMenuDemo {
-    public data: SimpleTreeData;
 
-    public settings: MenuListSettings = {
-        width: 200,
-        height: 120
-    };
+    public data: SimpleTreeData;
 
     constructor() {
         this.data = new SimpleTreeData();
@@ -33,11 +29,8 @@ export class CascadingMenuDemo {
                             {
                                 label: "子菜单111",
                                 titleIcon: "fa fa-angle-right",
-                                subTitle: "cccc",
+                                subTitle: "此处可点击",
                                 subTitleIcon: "fa fa-angle-right",
-                                // click: () => {
-                                //     console.log("叶子节点111 被点击了！！！");
-                                // }
                             },
                             {label: "子菜单112"},
                             {label: "子菜单113"},
@@ -53,7 +46,7 @@ export class CascadingMenuDemo {
                             {label: "子菜单124"}
                         ]
                     },
-                    {label: "子菜单13 - 没有子节点", isParent: true}
+                    {label: "子菜单13 - 没有子菜单", isParent: true}
                 ]
             },
             {
@@ -92,6 +85,10 @@ export class CascadingMenuDemo {
             {label: "Exit", isParent: true}
 
         ]);
+    }
+
+    menuSelect(node: SimpleTreeData) {
+        console.log(`${node.label} 被点击了!!!`);
     }
 
     // ====================================================================
