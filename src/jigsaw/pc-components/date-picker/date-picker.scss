@@ -151,6 +151,24 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                     cursor:not-allowed;
                 }
             }
+            &-recommend:after, &-warn:after, &-error:after {
+                content: "";
+                position: absolute;
+                right: 4px;
+                top: 4px;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+            }
+            &-recommend:after {
+                background: $success-color;
+            }
+            &-warn:after {
+                background: #f1f13e;
+            }
+            &-error:after {
+                background: $error-color;
+            }
         }
         &-month, &-year {
             display: block;

@@ -8,6 +8,8 @@ import {DatePickerLimitComponent} from "./limit/demo.component";
 import {DatePickerLimitDemoModule} from "./limit/demo.module";
 import {DatePickerGrItemDemoComponent} from "./gr-item/demo.component";
 import {DatePickerGrItemDemoModule} from "./gr-item/demo.module";
+import {DatePickerMarkDemoComponent} from "./mark/demo.component";
+import {DatePickerMarkDemoModule} from "./mark/demo.module";
 
 export const routerConfig = [
     {
@@ -22,6 +24,9 @@ export const routerConfig = [
     {
         path: 'gr-item', component: DatePickerGrItemDemoComponent
     },
+    {
+        path: 'mark', component: DatePickerMarkDemoComponent
+    },
 ];
 
 @NgModule({
@@ -31,6 +36,7 @@ export const routerConfig = [
         DatePickerGrDemoModule,
         DatePickerLimitDemoModule,
         DatePickerGrItemDemoModule,
+        DatePickerMarkDemoModule,
     ]
 })
 export class DatePickerDemoModule {

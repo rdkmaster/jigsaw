@@ -25,6 +25,9 @@
                      [class.jigsaw-date-picker-content-day-cell-today]="dayCell.isToday"
                      [class.jigsaw-date-picker-content-day-cell-selected]="dayCell.isSelected"
                      [class.jigsaw-date-picker-content-day-cell-disabled]="dayCell.isDisabled"
+                     [class.jigsaw-date-picker-content-day-cell-recommend]="dayCell.mark == 'recommend'"
+                     [class.jigsaw-date-picker-content-day-cell-warn]="dayCell.mark == 'warn'"
+                     [class.jigsaw-date-picker-content-day-cell-error]="dayCell.mark == 'error'"
                      (click)="_$selectDay(dayCell)">
                     <span>{{dayCell.day}}</span>
                 </td>
