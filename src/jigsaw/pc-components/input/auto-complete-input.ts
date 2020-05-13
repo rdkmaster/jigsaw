@@ -68,7 +68,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _$maxDropDownHeight: string = '300px';
-
+    /**
+     * @internal
+     */
     public _$propertyListOpen: boolean | null = null;
 
     @Input()
@@ -126,6 +128,19 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
 
     public select() {
         this._input.select();
+    }
+
+    public openDropdown(): void {
+        if (this._dropdownFloat) {
+            this._dropdownFloat.openFloat();
+            this.focus();
+        }
+    }
+
+    public closeDropdown(): void {
+        if (this._dropdownFloat) {
+            this._dropdownFloat.closeFloat();
+        }
     }
 
     /**
