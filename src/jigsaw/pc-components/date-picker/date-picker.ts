@@ -127,7 +127,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _isYearDisabled(year: number) {
-        return year < TimeService.getYear(this.limitStart) || year > TimeService.getYear(this.limitEnd)
+        return (this.limitStart && year < TimeService.getYear(this.limitStart)) || (this.limitEnd && year > TimeService.getYear(this.limitEnd))
     }
 
     /**
@@ -176,7 +176,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _isMonthDisabled(month: number) {
-        return month < TimeService.getMonth(this.limitStart) || month > TimeService.getMonth(this.limitEnd);
+        return (this.limitStart && month < TimeService.getMonth(this.limitStart)) || (this.limitEnd && month > TimeService.getMonth(this.limitEnd));
     }
 
     /**
@@ -353,8 +353,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (<TimeGr>value != this._$gr) {
             this._$gr = <TimeGr>value;
             this._$selectMode = TimeGr[this._$gr] == 'month' ? 'month' : 'day';
-            if(this.initialized && this.date) {
-                this.writeValue(this.date);
+            if(this.initialized) {
+                if(this.date) {
+                    this.writeValue(this.date);
+                } else {
+                    this._createCalendar();
+                }
             }
         }
     }
@@ -503,33 +507,80 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return value;
     }
 
-    // private _setDate(value: Time) {
-    //     // if (this._timePicker) {
-    //         this._handleValueChange(value, <TimeGr>this.gr);
-    //     //     this._timePicker.date(TimeService.getFormatDate(value, <TimeGr>this.gr));
-    //         this._weekHandle();
-    //         this._handleRecommended(this._el.nativeElement, this._popService);
-    //         this._changeDetectorRef.markForCheck();
-    //     //}
-    // }
-
-    // private _handleValueChange(changeValue: Time, gr: TimeGr, emit?: boolean) {
-    //     if (this.date != changeValue || emit) {
-    //         this._date = changeValue;
-    //         this.runMicrotask(() => {
-    //             const val = gr == TimeGr.week ? this._handleWeekSelect() : this._date;
-    //             this.dateChange.emit(val);
-    //             this._propagateChange(val);
-    //         });
-    //         this._handleRecommended(this._el.nativeElement, this._popService);
-    //     }
-    // }
-
-    public _$changeGranularity($event: GrItem[]) {
-        if(!($event instanceof Array)) return;
-        this.gr = $event[0].value;
-        this.grChange.emit(this.gr);
+    public _$changeGr($event: GrItem) {
+        if(!$event) return;
+        this.gr = $event.value;
+        this.grChange.emit(<TimeGr>this.gr);
         this._changeDetectorRef.markForCheck();
+    }
+
+    private _isSameWeek(date1: TimeWeekDay, date2: TimeWeekDay): boolean {
+        return date1.year == date2.year && date1.week == date2.week;
+    }
+
+    private _getWeekDate(date: Time) {
+        return {year: TimeService.getWeekYear(date), week: TimeService.getWeekOfYear(date)};
+    }
+
+    private _isValueChanged(newValue) {
+        let changed = true;
+        if(this.gr == TimeGr.week) {
+            if(this._date && this._isSameWeek(<TimeWeekDay>this._date, newValue)) {
+                changed = false
+            }
+        } else if (newValue == this._date) {
+            changed = false
+        }
+        return changed;
+    }
+
+    private _getValidDate(newValue) {
+        newValue = this._handleLimit(TimeService.convertValue(newValue, <TimeGr>this.gr));
+        newValue = this.gr == TimeGr.week ? this._getWeekDate(newValue) : newValue;
+        return newValue;
+    }
+
+    public writeValue(newValue: any): void {
+        if (!newValue) {
+            return;
+        }
+        newValue = this._getValidDate(newValue);
+        if(this._isValueChanged(newValue)) {
+            this._date = newValue;
+            this.runMicrotask(() => {
+                this.dateChange.emit(this._date);
+                this._propagateChange(this._date);
+                this._changeDetectorRef.markForCheck();
+            });
+        }
+        // 根据this.date创建日历
+        this._createCalendar();
+    }
+
+    private _propagateChange: any = () => {
+    };
+
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    public registerOnTouched(fn: any): void {
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if(this._dateInitBak) {
+            this.writeValue(this._dateInitBak);
+        } else {
+            this._createCalendar();
+        }
+    }
+
+    ngOnDestroy() {
+        window.clearInterval(this._intervalId);
+        super.ngOnDestroy();
+        //this._destroyPicker();
+        this._langChangeSubscriber.unsubscribe();
     }
 
     private _defineLocale() {
@@ -627,75 +678,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 doy: 4  // The week that contains Jan 4th is the first week of the year.
             }
         });
-    }
-
-    private _isSameWeek(date1: TimeWeekDay, date2: TimeWeekDay): boolean {
-        return date1.year == date2.year && date1.week == date2.week;
-    }
-
-    private _getWeekDate(date: Time) {
-        return {year: TimeService.getWeekYear(date), week: TimeService.getWeekOfYear(date)};
-    }
-
-    private _isValueChanged(newValue) {
-        let changed = true;
-        if(this.gr == TimeGr.week) {
-            if(this._date && this._isSameWeek(<TimeWeekDay>this._date, newValue)) {
-                changed = false
-            }
-        } else if (newValue == this._date) {
-            changed = false
-        }
-        return changed;
-    }
-
-    private _getValidDate(newValue) {
-        newValue = this._handleLimit(TimeService.convertValue(newValue, <TimeGr>this.gr));
-        newValue = this.gr == TimeGr.week ? this._getWeekDate(newValue) : newValue;
-        return newValue;
-    }
-
-    public writeValue(newValue: any): void {
-        if (!newValue) {
-            return;
-        }
-        newValue = this._getValidDate(newValue);
-        if(this._isValueChanged(newValue)) {
-            this._date = newValue;
-            this.runMicrotask(() => {
-                this.dateChange.emit(this._date);
-                this._propagateChange(this._date);
-                this._changeDetectorRef.markForCheck();
-            });
-        }
-        // 根据this.date创建日历
-        this._createCalendar();
-    }
-
-    private _propagateChange: any = () => {
-    };
-
-    public registerOnChange(fn: any): void {
-        this._propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any): void {
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        if(this._dateInitBak) {
-            this.writeValue(this._dateInitBak);
-        } else {
-            this._createCalendar();
-        }
-    }
-
-    ngOnDestroy() {
-        window.clearInterval(this._intervalId);
-        super.ngOnDestroy();
-        //this._destroyPicker();
-        this._langChangeSubscriber.unsubscribe();
     }
 }
 

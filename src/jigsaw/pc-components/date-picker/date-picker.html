@@ -1,6 +1,8 @@
 <div class="jigsaw-date-picker-header">
     <div class="jigsaw-date-picker-gr-switch" *ngIf="grItems && grItems.length">
-        <j-button-bar [data]="grItems" (selectedItemsChange)="_$changeGranularity($event)" [height]="20"></j-button-bar>
+        <span *ngFor="let item of grItems" (click)="_$changeGr(item)" [class.active]="item.value==_$gr">
+            {{item.label}}
+        </span>
     </div>
     <div class="jigsaw-date-picker-control">
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar fa fa-angle-left" (click)="_$handleCtrlBar(-1)"></i>

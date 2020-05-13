@@ -4,6 +4,6 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-date-picker [(date)]="date"></jigsaw-date-picker>
+<jigsaw-date-picker [(date)]="date" [grItems]="grItems"></jigsaw-date-picker>
 <br>
-选择的时间是：{{date}}
+选择的时间是：{{date | json}}
