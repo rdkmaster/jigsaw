@@ -5,8 +5,13 @@
 
 <!-- start to learn the demo from here -->
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-      [jigsawCascadingMenuMenuListSettings]="settings"
-      [jigsawCascadingMenuPopupOptions]="{useCustomizedBackground:true}">
+      [jigsawCascadingMenuPopupOptions]="{useCustomizedBackground:true}"
+      jigsawCascadingMenuMaxHeight="100"
+      jigsawCascadingMenuMaxHeight="120"
+      jigsawCascadingMenuWidth="200"
+      jigsawCascadingMenuBackgroundColor="orange"
+      jigsawCascadingMenuSelectedColor="red"
+      (jigsawCascadingMenuSelect)="menuSelect($event)">
 菜单 hover
 </span>
 
