@@ -442,13 +442,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             this.writeValue(this.date);
         }
         //this._checkMacro();
-        // if (this._timePicker) {
-        //     if (this._timePicker.minDate() && this._timePicker.minDate() > TimeService.getDate(this.limitEnd, <TimeGr>this.gr)) {
-        //         this._timePicker.minDate(this.limitEnd)
-        //     }
-        //     this._timePicker.maxDate(this.limitEnd);
-        // this._weekHandle();
-        // this._handleRecommended(this._el.nativeElement, this._popService);
     }
 
     private _limitStart: Time;
@@ -467,14 +460,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             this.writeValue(this.date);
         }
         //this._checkMacro();
-        // if (this._timePicker) {
-        //     if (this._timePicker.maxDate() && this._timePicker.maxDate() < TimeService.getDate(this.limitStart, <TimeGr>this.gr)) {
-        //         this._timePicker.maxDate(this.limitStart)
-        //     }
-        //     this._timePicker.minDate(this.limitStart);
-        //this._weekHandle();
-        // this._handleRecommended(this._el.nativeElement, this._popService);
-        //}
     }
 
     private _refreshInterval: number;
@@ -505,38 +490,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
         if ((TimeService.isMacro(<string>this._limitStart) || TimeService.isMacro(<string>this._limitEnd)) && this._refreshInterval != 0) {
             this._intervalId = window.setInterval(() => {
-                this._handleLimitStartAndEnd();
+                this._handleRefresh();
             }, this._refreshInterval);
         }
     }
 
-    private _handleLimitStartAndEnd() {
-        // if (this._timePicker) {
-        //     this._limitStart && this._timePicker.minDate(TimeService.addDate(<string>this.limitStart, -1, TimeUnit.s));
-        //     this._limitEnd && this._timePicker.maxDate(TimeService.addDate(<string>this.limitEnd, 1, TimeUnit.s));
-        this._weekHandle();
-        this._handleRecommended(this._el.nativeElement, this._popService);
-        //}
-    }
-
-    private _weekHandle() {
-        if (this.gr == TimeGr.week) {
-            this._handleWeekSelect();
-        }
-    }
-
-    private _handleWeekSelect() {
-        let weekNum = TimeService.getWeekOfYear(<string>this.date);
-        let year = TimeService.getWeekYear(<string>this.date);
-        // const tdActive = this._el.nativeElement.querySelector(".jigsaw-time-box .datepicker .datepicker-days>table>tbody>tr>td.active");
-        // if (tdActive) {
-        //     tdActive.parentNode.classList.add("active");
-        // }
-        this._changeDetectorRef.markForCheck();
-        return {year: year, week: weekNum};
-    }
-
-    private _handleRecommended(nativeElement: any, popService: PopupService) {
+    private _handleRefresh() {
 
     }
 
@@ -624,7 +583,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     ngOnDestroy() {
         window.clearInterval(this._intervalId);
         super.ngOnDestroy();
-        //this._destroyPicker();
         this._langChangeSubscriber.unsubscribe();
     }
 
