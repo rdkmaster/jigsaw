@@ -117,11 +117,10 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             // 初始化open，等待组件初始化后执行
             // 这里必须使用setTimeout来跳过第一次冒泡上来的window.click
             if (value) {
-                this._openFloat();
+                this.openFloat();
             } else {
-                this._closeFloat();
+                this.closeFloat();
             }
-            this.jigsawFloatOpenChange.emit(value);
         });
     }
 
@@ -191,6 +190,24 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 private _popupService: PopupService,
                 protected _zone: NgZone) {
         super(_zone);
+    }
+
+    public openFloat(): void {
+        if (this._disposePopup) {
+            return;
+        }
+        this._openFloat();
+        this._$opened = true;
+        this.jigsawFloatOpenChange.emit(this._$opened);
+    }
+
+    public closeFloat():void {
+        if (!this._disposePopup) {
+            return;
+        }
+        this._closeFloat();
+        this._$opened = false;
+        this.jigsawFloatOpenChange.emit(this._$opened);
     }
 
     public ngOnDestroy() {
@@ -361,7 +378,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             () => {
                 PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
                 if (option.borderType == 'pointer') {
-                    this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1])
+                    this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1]);
                     this._setArrow(this._popupElement);
                 }
             });
