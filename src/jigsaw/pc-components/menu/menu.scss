@@ -1,0 +1,234 @@
+$menu-prefix-cls: #{$jigsaw-prefix}-menu;
+
+.#{$menu-prefix-cls}-dark {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #102331;
+        border: #2e4657 1px solid;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            color: #cccccc;
+            line-height: 32px;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #015c91;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #027bc2;
+            }
+
+            hr {
+                border-top: 1px solid #666666;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #102331;
+
+                .#{$list-option-prefix-cls}-title {
+                    line-height: 32px;
+                    color: #666666;
+                }
+
+                .#{$list-option-prefix-cls}-sub-title {
+                    line-height: 32px;
+                    color: #666666;
+                }
+
+                @include compatible(color, #102331, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            &-title {
+                line-height: 32px;
+                color: #ccc;
+            }
+
+            &-sub-title {
+                line-height: 32px;
+                color: #ccc;
+            }
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-black {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #151518;
+        border: #2e2e33 1px solid;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            line-height: 32px;
+            color: #cccccc;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #015c91;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #027bc2;
+            }
+
+            hr {
+                border-top: 1px solid #666666;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #151518;
+
+                .#{$list-option-prefix-cls}-title {
+                    line-height: 32px;
+                    color: #666666;
+                }
+
+                .#{$list-option-prefix-cls}-sub-title {
+                    line-height: 32px;
+                    color: #666666;
+                }
+
+                @include compatible(color, #102331, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            &-title {
+                line-height: 32px;
+                color: #cccccc;
+            }
+
+            &-sub-title {
+                line-height: 32px;
+                color: #cccccc;
+            }
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-light {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #ffffff;
+        border: #cccccc 1px solid;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            color: #666666;
+            line-height: 32px;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #e6f5fe;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #ccebfc;
+            }
+
+            hr {
+                border-top: 1px solid #bbbbbb;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #ffffff;
+
+                .#{$list-option-prefix-cls}-title {
+                    line-height: 32px;
+                    color: #bbbbbb;
+                }
+
+                .#{$list-option-prefix-cls}-sub-title {
+                    line-height: 32px;
+                    color: #bbbbbb;
+                }
+
+                @include compatible(color, #bbbbbb, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            &-title {
+                line-height: 32px;
+                color: #666666;
+            }
+
+            &-sub-title {
+                line-height: 32px;
+                color: #666666;
+            }
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-navigation {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #32404e;
+        border: none;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            color: #ffffff;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #015c91;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #027bc2;
+            }
+
+            hr {
+                border-top: 1px solid #bbbbbb;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #32404e;
+
+                .#{$list-option-prefix-cls}-title {
+                    line-height: 40px;
+                    float: none;
+                    color: #bbbbbb;
+                }
+
+                .#{$list-option-prefix-cls}-sub-title {
+                    line-height: 40px;
+                    color: #bbbbbb;
+                }
+
+                @include compatible(color, #bbbbbb, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            &-title {
+                line-height: 40px;
+                float: none;
+                color: #ffffff;
+            }
+
+            &-sub-title {
+                line-height: 40px;
+                color: #ffffff;
+            }
+
+            .navigation-title {
+                line-height: 40px;
+                text-align: center;
+                vertical-align: center;
+            }
+        }
+    }
+}
+
+

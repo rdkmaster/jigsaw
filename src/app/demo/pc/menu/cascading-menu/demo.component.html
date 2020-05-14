@@ -1,0 +1,39 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<br><br><br>
+<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
+      [jigsawCascadingMenuHeight]="height"
+      [jigsawCascadingMenuMaxHeight]="maxHeight"
+      [jigsawCascadingMenuWidth]="width"
+      [jigsawCascadingMenuTheme]='theme[0]'
+      (jigsawCascadingMenuSelect)="menuSelect($event)"
+      (jigsawCascadingMenuOpenChange)="openChange($event)">
+菜单弹出
+</span>
+<span class="menu" (contextmenu)="contextMenu($event)">右击这里</span>
+<br><br><br>
+
+<p>可用配置项</p>
+<p>
+皮肤
+<jigsaw-button-bar [(selectedItems)]="theme" [multipleSelect]="false"
+                   [data]="['light', 'dark', 'black','navigation']">
+</jigsaw-button-bar>
+</p>
+<p>
+宽度
+<jigsaw-numeric-input [(value)]="width" [step]="10"></jigsaw-numeric-input>
+</p>
+<p>
+高度
+<jigsaw-numeric-input [(value)]="height" [step]="10"></jigsaw-numeric-input>
+</p>
+<p>
+最大高度
+<jigsaw-numeric-input [(value)]="maxHeight" [step]="10"></jigsaw-numeric-input>
+</p>
+

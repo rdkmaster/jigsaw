@@ -535,7 +535,9 @@ export class PopupService {
      * 设置弹框尺寸
      * */
     private _setSize(options: PopupOptions, element: HTMLElement) {
-        if (!options || !options.size) return;
+        if (!options || !options.size) {
+            return;
+        }
         let size = options.size;
 
         if (size.width) {
