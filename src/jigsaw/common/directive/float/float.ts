@@ -337,9 +337,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         });
 
         const option: PopupOptions = this._getPopupOption();
-        if (!this.jigsawFloatTarget) {
-            return;
-        }
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
