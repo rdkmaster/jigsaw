@@ -202,6 +202,10 @@ export const routerConfigPC = [
     {
         path: "pc/breadcrumb",
         loadChildren: () => import('./demo/pc/breadcrumb/demo-set.module').then(m => m.BreadcrumbDemoModule),
+    },
+    {
+        path: "pc/menu",
+        loadChildren: () => import('./demo/pc/menu/demo-set.module').then(m => m.MenuDemoModule),
     }
 ];
 export const routerConfigMobile = [
