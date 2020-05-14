@@ -63,6 +63,8 @@ export type SimpleNode = {
     [prop: string]: any;
 }
 
+const domParser = new DOMParser();
+
 /**
  * 对树形结构的json进行一个简单的包装，比如把ztree的数据包装成jigsaw认识的数据
  */
@@ -76,6 +78,10 @@ export class SimpleTreeData extends GeneralCollection<any> {
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的
      */
     nodes?: SimpleNode[];
+
+    public static parseXML(xml: string): XMLDocument {
+        return xml ? domParser.parseFromString(xml, 'text/xml') : null;
+    }
 
     public fromObject(data: any): SimpleTreeData {
         if (!data) {
@@ -97,5 +103,37 @@ export class SimpleTreeData extends GeneralCollection<any> {
         this.refresh();
         return this;
     }
+
+    public fromXML(xml: string | XMLDocument): SimpleTreeData {
+        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(xml) : xml;
+        if (xmlDoc && xmlDoc.childElementCount > 0) {
+            this.nodes = [];
+            this._toSimpleNode(xmlDoc.children[0], this);
+        }
+        return this;
+    }
+
+    private _toSimpleNode(xmlElement: Element, target?: SimpleTreeData): SimpleNode {
+        const node = target || {
+            // 如果属性里提供了label属性，可以会覆盖这个textContent，这是没有问题的
+            label: xmlElement.textContent,
+            nodes: []
+        };
+        const names: string[] = xmlElement.getAttributeNames();
+        names.forEach(name => {
+            node[name] = name == 'open' || name == 'isParent' ?
+                _isTruthy(xmlElement.getAttribute(name))
+                : xmlElement.getAttribute(name);
+        });
+        const children = xmlElement.children;
+        for (let i = 0; i < children.length; i++) {
+            node.nodes.push(this._toSimpleNode(children[i]));
+        }
+        return node;
+    }
+}
+
+function _isTruthy(value: any): boolean {
+    return value == undefined ? false : value !== 'false';
 }
 
