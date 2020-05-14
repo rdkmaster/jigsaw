@@ -106,11 +106,10 @@ export class SimpleTreeData extends GeneralCollection<any> {
 
     public fromXML(xml: string | XMLDocument): SimpleTreeData {
         const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(xml) : xml;
-        if (!xmlDoc || xmlDoc.childElementCount == 0) {
-            return this;
+        if (xmlDoc && xmlDoc.childElementCount > 0) {
+            this.nodes = [];
+            this._toSimpleNode(xmlDoc.children[0], this);
         }
-        this.nodes = [];
-        this._toSimpleNode(xmlDoc.children[0], this);
         return this;
     }
 
@@ -125,7 +124,6 @@ export class SimpleTreeData extends GeneralCollection<any> {
             node[name] = name == 'open' || name == 'isParent' ?
                 _isTruthy(xmlElement.getAttribute(name))
                 : xmlElement.getAttribute(name);
-            console.log(node[name], typeof node[name]);
         });
         const children = xmlElement.children;
         for (let i = 0; i < children.length; i++) {
