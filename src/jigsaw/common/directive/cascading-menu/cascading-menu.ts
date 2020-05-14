@@ -4,7 +4,6 @@ import {PopupOptions} from "../../service/popup.service";
 import {JigsawFloat} from "../float";
 import {JigsawMenuComponent} from "./menu";
 
-
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
     host: {
@@ -14,7 +13,6 @@ import {JigsawMenuComponent} from "./menu";
     }
 })
 export class JigsawCascadingMenu extends JigsawFloat implements OnInit {
-
     @Input()
     public jigsawCascadingMenuData: SimpleTreeData;
 
@@ -56,5 +54,4 @@ export class JigsawCascadingMenu extends JigsawFloat implements OnInit {
         this.jigsawFloatInitData.selectedColor = this.jigsawCascadingMenuSelectedColor;
         this.jigsawFloatInitData.select = this.jigsawCascadingMenuSelect;
     }
-
 }
