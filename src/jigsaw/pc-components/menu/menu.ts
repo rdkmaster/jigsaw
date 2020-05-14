@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
-import {IPopupable, PopupOptions} from "../../service/popup.service";
-import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
-import {AbstractJigsawComponent} from "../../common";
+import {IPopupable, PopupOptions} from "../../common/service/popup.service";
+import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
+import {AbstractJigsawComponent} from "../../common/common";
 import * as convert from "color-convert";
 
 @Component({
@@ -16,14 +16,15 @@ import * as convert from "color-convert";
                            [jigsawFloatOptions]="_$realOptions"
                            [jigsawFloatInitData]="_$getSubMenuData(node)"
                            [disabled]="node.disabled"
-                           (click)="select.emit(node); initData.select?.emit(node)"
-                           (mouseenter)="_$hover(index)">
+                           (click)="!node.disabled && select.emit(node); !node.disabled && initData?.initDataSelect?.emit(node); !node.disabled && initData?.select?.emit(node)"
+                           (mouseenter)="_$hover(index,node.disabled)">
                 <span j-title>
                     <i class="{{node.titleIcon}}"></i>
                     {{node.label}}
                 </span>
                 <div j-sub-title>{{node.subTitle}}
                     <i class="{{node.subTitleIcon}}"></i>
+                    <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
             </j-list-option>
         </j-list>`
@@ -95,9 +96,14 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
         subMenuInitData.options = this._$realOptions;
         subMenuInitData.backgroundColor = this._$realBackgroundColor;
         subMenuInitData.selectedColor = this._$realSelectColor;
-        if (this.initData.select) {
-            subMenuInitData.select = this.initData.select;
+        if (this.initData) {
+            if (this.initData.initDataSelect) {
+                subMenuInitData.initDataSelect = this.initData.initDataSelect;
+            } else {
+                subMenuInitData.initDataSelect = this.initData.select;
+            }
         }
+        subMenuInitData.select = this.select;
         return subMenuInitData;
     }
 
@@ -161,23 +167,23 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
         if (rgb && rgb.length == 3) {
             // 根据rgb值计算阈值，大于等于192就是浅色
             const level = rgb[0] * 0.299 + rgb[1] * 0.587 + rgb[2] * 0.114;
+            const optionElements = this._menuList.nativeElement.children;
             const titleElements = this._menuList.nativeElement.getElementsByClassName('jigsaw-list-option-title');
             const subTitleElements = this._menuList.nativeElement.getElementsByClassName('jigsaw-list-option-sub-title');
-            const titleElementsLength = titleElements.length;
-            const subTitleElementsLength = subTitleElements.length;
+            const length = titleElements.length;
             if (level < 192) {
-                for (let i = 0; i < titleElementsLength; i++) {
-                    this._renderer.setStyle(titleElements[i], 'color', "#fff");
-                }
-                for (let i = 0; i < subTitleElementsLength; i++) {
-                    this._renderer.setStyle(subTitleElements[i], 'color', "#fff");
+                for (let i = 0; i < length; i++) {
+                    if (!optionElements[i].classList.contains('jigsaw-list-option-disabled')) {
+                        this._renderer.setStyle(titleElements[i], 'color', "#fff");
+                        this._renderer.setStyle(subTitleElements[i], 'color', "#fff");
+                    }
                 }
             } else {
-                for (let i = 0; i < titleElementsLength; i++) {
-                    this._renderer.setStyle(titleElements[i], 'color', '#333');
-                }
-                for (let i = 0; i < subTitleElementsLength; i++) {
-                    this._renderer.setStyle(subTitleElements[i], 'color', '#999');
+                for (let i = 0; i < length; i++) {
+                    if (!optionElements[i].classList.contains('jigsaw-list-option-disabled')) {
+                        this._renderer.setStyle(titleElements[i], 'color', '#333');
+                        this._renderer.setStyle(subTitleElements[i], 'color', '#999');
+                    }
                 }
             }
         }
@@ -186,16 +192,21 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
     /**
      * @internal
      */
-    public _$hover(index) {
-        const length = this._menuList.nativeElement.children.length, bgColor = this._$realBackgroundColor;
+    public _$hover(index, disabled) {
+        const optionsElements = this._menuList.nativeElement.children, length = optionsElements.length,
+            bgColor = this._$realBackgroundColor;
         for (let i = 0; i < length; i++) {
             if (i != index) {
-                this._renderer.setStyle(this._menuList.nativeElement.children[i], "background", bgColor)
+                if (optionsElements[i].classList.contains('jigsaw-list-option-disabled')) {
+                    this._renderer.setStyle(optionsElements[i], "background", undefined);
+                } else {
+                    this._renderer.setStyle(optionsElements[i], "background", bgColor);
+                }
             }
         }
         const selectedColor = this._$realSelectColor;
-        if (!!selectedColor) {
-            this._renderer.setStyle(this._menuList.nativeElement.children[index], "background", selectedColor);
+        if (!!selectedColor && !disabled) {
+            this._renderer.setStyle(optionsElements[index], "background", selectedColor);
         }
     }
 }

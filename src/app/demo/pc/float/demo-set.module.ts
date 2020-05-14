@@ -18,8 +18,6 @@ import {FloatOverlappingDemo} from "./overlapping/demo.component";
 import {FloatOverlappingDemoModule} from "./overlapping/demo.module";
 import {FloatInitDataDemo} from "./init-data/demo.component";
 import {FloatInitDataDemoModule} from "./init-data/demo.module";
-import {CascadingMenuDemo} from "./cascade-menu/demo.component";
-import {CascadingMenuModule} from "./cascade-menu/demo.module";
 
 export const routerConfig = [
     {
@@ -48,17 +46,14 @@ export const routerConfig = [
     },
     {
         path: 'init-data', component: FloatInitDataDemo
-    },
-    {
-        path: 'cascade-menu', component: CascadingMenuDemo
-    },
+    }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), FloatPosReviserModule, FloatMultiLevelModule, FloatOverlappingDemoModule,
         FloatBasicModule, FloatTriggerDemoModule, FloatPositionDemoModule, FloatTargetDemoModule, FloatOptionDemoModule,
-        FloatInitDataDemoModule, CascadingMenuModule
+        FloatInitDataDemoModule
     ]
 })
 export class FloatDemoModule {

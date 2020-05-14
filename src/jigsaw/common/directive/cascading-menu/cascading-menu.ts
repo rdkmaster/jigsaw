@@ -1,8 +1,8 @@
-import {Directive, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Directive, EventEmitter, Input, OnInit, Output, AfterViewInit, OnDestroy} from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupOptions} from "../../service/popup.service";
 import {JigsawFloat} from "../float";
-import {JigsawMenuComponent} from "./menu";
+import {JigsawMenuComponent} from "../../../pc-components/menu/menu";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -12,7 +12,7 @@ import {JigsawMenuComponent} from "./menu";
         '(click)': "_$onHostClick()"
     }
 })
-export class JigsawCascadingMenu extends JigsawFloat implements OnInit {
+export class JigsawCascadingMenu extends JigsawFloat implements OnInit, AfterViewInit, OnDestroy {
     @Input()
     public jigsawCascadingMenuData: SimpleTreeData;
 
@@ -52,6 +52,27 @@ export class JigsawCascadingMenu extends JigsawFloat implements OnInit {
         this.jigsawFloatInitData.options = this.jigsawCascadingMenuPopupOptions;
         this.jigsawFloatInitData.backgroundColor = this.jigsawCascadingMenuBackgroundColor;
         this.jigsawFloatInitData.selectedColor = this.jigsawCascadingMenuSelectedColor;
-        this.jigsawFloatInitData.select = this.jigsawCascadingMenuSelect;
+        this.jigsawFloatInitData.initDataSelect = this.jigsawCascadingMenuSelect;
+    }
+
+    private _removeClickHandler: any
+
+    ngAfterViewInit() {
+        if (!this._removeClickHandler) {
+            this._removeClickHandler = this.jigsawCascadingMenuSelect.subscribe(node => {
+                if (!node.nodes || node.nodes.length == 0) {
+                    const popups = this._popupService.popups;
+                    this._closeAll(popups);
+                }
+            })
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeClickHandler) {
+            this._removeClickHandler.unsubscribe();
+            this._removeClickHandler = null;
+        }
     }
 }

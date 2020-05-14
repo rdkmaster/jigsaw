@@ -4,9 +4,19 @@
 
 
 <!-- start to learn the demo from here -->
+<h2>Default</h2>
+<br><br><br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-      [jigsawCascadingMenuPopupOptions]="{useCustomizedBackground:true}"
-      jigsawCascadingMenuMaxHeight="100"
+      (jigsawCascadingMenuSelect)="menuSelect($event)">
+菜单 hover
+</span>
+
+<br><br><br><br><br><br><br><br>
+
+<h2>With Settings</h2>
+<br><br><br>
+<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
+      jigsawCascadingMenuHeight="100"
       jigsawCascadingMenuMaxHeight="120"
       jigsawCascadingMenuWidth="200"
       jigsawCascadingMenuBackgroundColor="orange"
