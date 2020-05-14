@@ -110,6 +110,8 @@ export class SimpleTreeData extends GeneralCollection<any> {
             this.nodes = [];
             this._toSimpleNode(xmlDoc.children[0], this);
         }
+
+        this.refresh();
         return this;
     }
 
