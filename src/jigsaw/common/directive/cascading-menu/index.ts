@@ -15,4 +15,3 @@ export class JigsawCascadingMenuModule {
 }
 
 export * from './cascading-menu';
-
