@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h2>Default</h2>
+<br><br><br>
+<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
+      (jigsawCascadingMenuSelect)="menuSelect($event)">
+菜单 hover
+</span>
+
+<br><br><br><br><br><br><br><br>
+
+<h2>With Settings</h2>
+<br><br><br>
+<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
+      jigsawCascadingMenuHeight="100"
+      jigsawCascadingMenuMaxHeight="120"
+      jigsawCascadingMenuWidth="200"
+      jigsawCascadingMenuBackgroundColor="orange"
+      jigsawCascadingMenuSelectedColor="red"
+      (jigsawCascadingMenuSelect)="menuSelect($event)">
+菜单 hover
+</span>

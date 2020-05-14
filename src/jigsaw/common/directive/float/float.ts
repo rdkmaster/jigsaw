@@ -12,6 +12,7 @@ import {
 import {
     IPopupable,
     PopupDisposer,
+    PopupInfo,
     PopupOptions,
     PopupPoint,
     PopupPositionType,
@@ -184,7 +185,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
+                protected _popupService: PopupService) {
         super();
     }
 
@@ -279,9 +280,24 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
-            this._rollOutDenouncesTimer = this.callLater(() => this.jigsawFloatOpen = false, 400);
+            this._rollOutDenouncesTimer = this.callLater(() => {
+                this.jigsawFloatOpen = false;
+                if (!popups.some(popup => this._mouseInPopup(event, popup.element))) {
+                    this._closeAll(popups);
+                }
+            }, 400);
         }
     }
+
+    protected _closeAll(popups: PopupInfo[]) {
+        popups.forEach(popup => (<any>popup).host.jigsawFloatOpen = false);
+    }
+
+    private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
+        return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX <= element.offsetLeft + element.offsetWidth
+            && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY <= element.offsetTop + element.offsetHeight;
+    }
+
 
     /**
      * @internal
@@ -329,13 +345,16 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             }
             this._removeWindowClickHandler();
             this._removeWindowClickHandler = null;
-            this._removeResizeHandler();
-            this._removeResizeHandler = null;
+            if (this._removeResizeHandler) {
+                this._removeResizeHandler();
+                this._removeResizeHandler = null;
+            }
             this.jigsawFloatOpen = false;
         });
 
         const option: PopupOptions = this._getPopupOption();
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
+        (<any>popupInfo).host = this;
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
         if (!this._popupElement) {

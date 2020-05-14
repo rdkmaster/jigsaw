@@ -52,6 +52,8 @@ import {JigsawTransferModule} from "./transfer/transfer";
 import {JigsawTextareaModule} from "./textarea/index";
 import {JigsawBreadcrumbModule} from "./breadcrumb/breadcrumb";
 import {JigsawRateModule} from "./rate/index";
+import {JigsawMenuModule} from "./menu";
+import {JigsawCascadingMenuModule} from "../common/directive/cascading-menu";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -106,7 +108,9 @@ const JIGSAW_MODULE = [
     JigsawTextareaModule,
     JigsawBreadcrumbModule,
     JigsawRateModule,
-    JigsawStepsMultilineModule
+    JigsawStepsMultilineModule,
+    JigsawMenuModule,
+    JigsawCascadingMenuModule
 ];
 
 @NgModule({
