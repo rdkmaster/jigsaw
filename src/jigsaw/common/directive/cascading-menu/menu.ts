@@ -8,12 +8,13 @@ import * as convert from "color-convert";
     selector: 'jigsaw-menu, j-menu',
     template: `
         <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
-                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}" [ngStyle]="{'background':_$realBackgroundColor}">
+                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
+                [ngStyle]="{'background':_$realBackgroundColor}">
             <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node" jigsawFloat
                            [jigsawFloatTarget]="_$getTarget(node)"
                            [jigsawFloatPosition]="'rightTop'"
                            [jigsawFloatOptions]="_$realOptions"
-                           [jigsawFloatInitData]="_$subMenuData(node)"
+                           [jigsawFloatInitData]="_$getSubMenuData(node)"
                            [disabled]="node.disabled"
                            (click)="select.emit(node); initData.select?.emit(node)"
                            (mouseenter)="_$hover(index)">
@@ -85,7 +86,7 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
     /**
      * @internal
      */
-    public _$subMenuData(node: any): any {
+    public _$getSubMenuData(node: any): any {
         const subMenuInitData: any = {};
         subMenuInitData.data = node;
         subMenuInitData.width = this._$realWidth;
@@ -135,12 +136,8 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
     /**
      * @internal
      */
-    public _$getTarget(item): Type<JigsawMenuComponent> {
-        if (item.nodes && item.nodes.length > 0 && !item.disabled) {
-            return JigsawMenuComponent;
-        } else {
-            return null;
-        }
+    public _$getTarget(item: SimpleNode): Type<JigsawMenuComponent> {
+        return item.nodes && item.nodes.length > 0 && !item.disabled ? JigsawMenuComponent : null;
     }
 
     private _setFontColor(backgroundColor: string): void {
@@ -149,7 +146,7 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
         }
         let rgb = [];
         const rgbMatch = backgroundColor.match(/^rgb\((\d+,\d+,\d+)\)$/i);
-        const hexMatch = backgroundColor.match(/^#[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?$/);
+        const hexMatch = backgroundColor.match(/^#a-f0-9]{3}([a-f0-9]{3})?$/i);
         const rgbaMatch = backgroundColor.match(/^rgba\((\d+,\d+,\d+),0?\.?[0-9]\d*\)$/i);
         if (rgbMatch) {
             rgb = rgbMatch[1].split(',');
@@ -190,14 +187,15 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
      * @internal
      */
     public _$hover(index) {
-        const length = this._menuList.nativeElement.children.length;
+        const length = this._menuList.nativeElement.children.length, bgColor = this._$realBackgroundColor;
         for (let i = 0; i < length; i++) {
             if (i != index) {
-                this._renderer.setStyle(this._menuList.nativeElement.children[i], "background", this._$realBackgroundColor)
+                this._renderer.setStyle(this._menuList.nativeElement.children[i], "background", bgColor)
             }
         }
-        if (!!this._$realSelectColor) {
-            this._renderer.setStyle(this._menuList.nativeElement.children[index], "background", this._$realSelectColor);
+        const selectedColor = this._$realSelectColor;
+        if (!!selectedColor) {
+            this._renderer.setStyle(this._menuList.nativeElement.children[index], "background", selectedColor);
         }
     }
 }

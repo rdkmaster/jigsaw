@@ -19,6 +19,7 @@ export * from "./common/core/theming/theme";
 export * from "./common/core/utils/common-utils";
 export * from "./common/core/utils/internal-utils";
 export * from "./common/core/utils/translate-helper";
+export * from "./common/directive/cascading-menu/index";
 export * from "./common/directive/dragdrop/index";
 export * from "./common/directive/dragdrop/types";
 export * from "./common/directive/float/index";

@@ -331,8 +331,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             this._removeWindowClickHandler = null;
             if (this._removeResizeHandler) {
                 this._removeResizeHandler();
+                this._removeResizeHandler = null;
             }
-            this._removeResizeHandler = null;
             this.jigsawFloatOpen = false;
         });
 
