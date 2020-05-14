@@ -292,6 +292,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
     private _openFloat(): void {
+        if (!this.jigsawFloatTarget) {
+            return;
+        }
         this._$opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
@@ -317,9 +320,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         });
 
         const option: PopupOptions = this._getPopupOption();
-        if (!this.jigsawFloatTarget) {
-            return;
-        }
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
