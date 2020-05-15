@@ -1,0 +1,21 @@
+<input #hour [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'" [(ngModel)]="_$hour"
+       (blur)="_$cancelSelect('hour')" (click)="_$handleSelectMode('hour')"
+       (keydown)="_$handleKeyDown($event, 'hour')"> :
+<input #minute [class.jigsaw-time-picker-input-selected]="_$selectMode == 'minute'" [(ngModel)]="_$minute"
+       (blur)="_$cancelSelect('minute')" (click)="_$handleSelectMode('minute')"
+       (keydown)="_$handleKeyDown($event, 'minute')"> :
+<input #second [class.jigsaw-time-picker-input-selected]="_$selectMode == 'second'" [(ngModel)]="_$second"
+       (blur)="_$cancelSelect('second')" (click)="_$handleSelectMode('second')"
+       (keydown)="_$handleKeyDown($event, 'second')">
+<div class="jigsaw-time-picker-ctrl">
+    <div *ngIf="_$selectMode != 'none'; else clock" class="jigsaw-time-picker-ctrl-bar">
+        <span class="fa fa-caret-up" (mousedown)="_$handleCtrlBarClick($event)"></span>
+        <span class="fa fa-caret-down" (mousedown)="_$handleCtrlBarClick($event)"></span>
+    </div>
+    <ng-template #clock>
+        <i class="fa fa-clock-o"></i>
+    </ng-template>
+</div>
+
+<!--<div class="xxx" j-float jigsawFloatOpenTrigger="click"-->
+<!--     jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="_$floatTarget">1111</div>-->

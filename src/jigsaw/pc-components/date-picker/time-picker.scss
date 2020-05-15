@@ -1,0 +1,93 @@
+@import "../../common/assets/scss/core/base";
+
+$time-prefix-cls: #{$jigsaw-prefix}-time-picker;
+
+.#{$time-prefix-cls}{
+    @include inline-block();
+    position: relative;
+    width: 135px;
+    height: $height-base;
+    font-size: $font-size-base;
+    border: 1px solid $border-color-base;
+    border-radius: 3px;
+    background: $component-background;
+    overflow: hidden;
+    padding: 4px 34px 4px 8px;
+
+    input {
+        @include inline-block();
+        padding: 3px 0;
+        border: 0;
+        margin: 0;
+        outline: none;
+        width: 22px;
+        height: 100%;
+        /*border-radius: 3px;*/
+        text-align: center;
+        &:hover {
+            background: $primary-2;
+        }
+        &.#{$time-prefix-cls}-input-selected {
+            /*background: $primary-color;*/
+            border-bottom: 1px solid $primary-color;
+        }
+    }
+
+    &-ctrl {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 34px;
+        height: 100%;
+        font-size: 14px;
+        color: $text-color-secondary;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &-bar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: 1px solid $border-color-base;
+            span {
+                display: flex;
+                flex: 1;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 1px solid $border-color-base;
+                cursor: pointer;
+                text-align: center;
+                width: 100%;
+
+                &:first-child {
+                    &:before {
+                        content: "\f106";
+                    }
+                }
+
+                &:last-child {
+                    border-bottom: none;
+                    &:before {
+                        content: "\f107";
+                    }
+                }
+
+                &:hover {
+                    color: $primary-5;
+                }
+
+                &:active {
+                    color: $primary-7;
+                }
+            }
+        }
+    }
+}

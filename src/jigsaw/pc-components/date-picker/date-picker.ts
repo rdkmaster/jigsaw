@@ -685,7 +685,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonBarModule],
+    imports: [CommonModule],
     declarations: [JigsawDatePicker],
     exports: [JigsawDatePicker]
 })

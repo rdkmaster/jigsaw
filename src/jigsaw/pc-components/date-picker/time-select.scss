@@ -1,0 +1,21 @@
+@import "../../common/assets/scss/core/base";
+
+$time-select-prefix-cls: #{$jigsaw-prefix}-time-select;
+
+.#{$time-select-prefix-cls} {
+    @include inline-block();
+
+    &-content {
+        display: flex;
+        width: 120px;
+        height: 160px;
+        &-hour, &-minute, &-second {
+            flex: 1;
+            li {
+                display: block;
+                height: 26px;
+                line-height: 26px;
+            }
+        }
+    }
+}
