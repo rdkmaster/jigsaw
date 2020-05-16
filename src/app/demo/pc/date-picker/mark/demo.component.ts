@@ -8,11 +8,11 @@ export class DatePickerMarkDemoComponent {
     date;
 
     markDates: MarkDate[] = [
-        {date: 'now-8d', mark: MarkDateType.error},
-        {date: {from: 'now-2d', to: 'now+2d'}, mark: MarkDateType.recommend},
-        {date: ['now-3d', 'now-5d'], mark: MarkDateType.warn},
-        {date: {from: 'now+30d', to: 'now+32d'}, mark: MarkDateType.error},
-        {date: {from: 'now-32d', to: 'now-30d'}, mark: MarkDateType.warn},
+        {date: 'now-8d', mark: MarkDateType.error, label: '警告日期'},
+        {date: {from: 'now-2d', to: 'now+2d'}, mark: MarkDateType.recommend, label: '推荐日期'},
+        {date: ['now-3d', 'now-5d'], mark: MarkDateType.warn, label: '提醒日期'},
+        {date: {from: 'now+30d', to: 'now+32d'}, mark: MarkDateType.error, label: '警告日期'},
+        {date: {from: 'now-32d', to: 'now-30d'}, mark: MarkDateType.warn, label: '提醒日期'},
     ];
 
     // ====================================================================

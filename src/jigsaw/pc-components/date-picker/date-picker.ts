@@ -11,7 +11,6 @@ import {
     Renderer2
 } from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
-import {JigsawButtonBarModule} from "../list-and-tile/button-bar";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
@@ -32,11 +31,11 @@ export type DayCell = {
     isOwnNextMonth?: boolean;
     isSelected?: boolean,
     isDisabled?: boolean,
-    mark?: string
+    mark?: {type: string, label?: string}
 };
 export type MonthCell = { month: number, label: string, isSelected?: boolean, isDisabled?: boolean, };
 export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean, };
-export type MarkDate = { date: Time | Time[] | MarkRange, mark: MarkDateType };
+export type MarkDate = { date: Time | Time[] | MarkRange, mark: MarkDateType, label?: string };
 export type MarkRange = { from: Time, to: Time };
 
 export enum MarkDateType {
@@ -317,12 +316,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return (this.limitStart && date < this.limitStart) || (this.limitEnd && date > this.limitEnd)
     }
 
-    private _getDayMark(year: number, month: number, day: number): string {
+    private _getDayMark(year: number, month: number, day: number): {type: string, label?: string} {
         if (!(this.markDates instanceof Array)) {
-            return MarkDateType[MarkDateType.none];
+            return {type: 'none'};
         }
         let compareDate = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
-        let mark = MarkDateType[MarkDateType.none];
+        let [mark, label] = [MarkDateType[MarkDateType.none], ''];
         this.markDates.find(markDate => {
             let date: any = markDate.date;
             let founded;
@@ -335,11 +334,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             }
             if (founded) {
                 mark = typeof markDate.mark == 'string' ? markDate.mark : MarkDateType[markDate.mark];
+                label = markDate.label;
                 return true;
             }
             return false;
         });
-        return mark;
+        return {type: mark, label:label};
     }
 
     /**
