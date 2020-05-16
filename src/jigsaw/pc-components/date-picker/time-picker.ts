@@ -6,7 +6,7 @@ import {
     EventEmitter,
     forwardRef,
     Input,
-    NgModule,
+    NgModule, NgZone,
     Output,
     ViewChild
 } from "@angular/core";
@@ -23,6 +23,7 @@ import {IPopupable} from "../../common/service/popup.service";
         '[class.jigsaw-time-picker]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '(keydown)': '_$handleKeyDown($event)'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTimePicker), multi: true},
@@ -30,8 +31,8 @@ import {IPopupable} from "../../common/service/popup.service";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTimePicker extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _cdr: ChangeDetectorRef) {
-        super();
+    constructor(private _cdr: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     private _value: string = '00:00:00';
@@ -66,7 +67,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('hour', this._hour);
         if(this.initialized && this._hour.length > 1) {
             this._updateValue();
-            this._minuteInput.nativeElement.focus();
+            this._minuteInput.nativeElement.select();
+            this._$selectMode = 'minute';
         }
     }
 
@@ -82,7 +84,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('minute', this._minute);
         if(this.initialized && this._minute.length > 1) {
             this._updateValue();
-            this._secondInput.nativeElement.focus();
+            this._secondInput.nativeElement.select();
+            this._$selectMode = 'second';
         }
     }
 
@@ -107,6 +110,13 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public _$handleSelectMode(mode: 'hour' | 'minute' | 'second') {
         this._$selectMode = mode;
+        if(mode == 'hour') {
+            this._hourInput.nativeElement.select();
+        } else if(mode == 'minute') {
+            this._minuteInput.nativeElement.select();
+        } else if(mode == 'second') {
+            this._secondInput.nativeElement.select();
+        }
     }
 
     public _$cancelSelect(mode: 'hour' | 'minute' | 'second') {
@@ -145,15 +155,28 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public _$handleKeyDown($event, mode: 'hour' | 'minute' | 'second') {
         if ($event.keyCode == 38) {
-            //this._$increase(event);
+            this._$handleCtrlBarClick($event, 1);
         } else if ($event.keyCode == 40) {
-            //this._$decrease(event);
+            this._$handleCtrlBarClick($event, -1);
         }
     }
 
-    public _$handleCtrlBarClick($event) {
+    public _$handleCtrlBarClick($event, add: number) {
         $event.preventDefault();
         $event.stopPropagation();
+        if(this._$selectMode == 'hour') {
+            let value = String(Number(this._$hour) + add);
+            this._hour = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 23 ? '23' : value;
+            this._updateInputValue('hour', this._hour);
+        } else if(this._$selectMode == 'minute') {
+            let value = String(Number(this._$minute) + add);
+            this._minute = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 59 ? '59' : value;
+            this._updateInputValue('minute', this._minute);
+        } else if (this._$selectMode == 'second') {
+            let value = String(Number(this._$second) + add);
+            this._second = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 59 ? '59' : value;
+            this._updateInputValue('second', this._second);
+        }
     }
 
     public writeValue(newValue: string): void {
