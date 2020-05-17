@@ -30,15 +30,7 @@ export enum DropDownTrigger {
     none,
 }
 
-@Directive({
-    selector: '[jigsaw-float],[j-float],[jigsawFloat]',
-    host: {
-        '(mouseenter)': "_$openByHover($event)",
-        '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)': "_$onHostClick()"
-    }
-})
-export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
+export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
     private _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
@@ -125,66 +117,12 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     @Output()
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
+    public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger;
 
-    /**
-     * 打开下拉触发方式，默认值是'mouseenter'
-     * $demo = float/trigger
-     */
-    @Input()
-    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
-        return this._openTrigger;
-    }
+    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
 
-    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none' | DropDownTrigger) {
-        // 从模板过来的值，不会受到类型的约束
-        switch (value as any) {
-            case DropDownTrigger.none:
-            case "none":
-                this._openTrigger = 'none';
-                break;
-            case DropDownTrigger.click:
-            case "click":
-                this._openTrigger = 'click';
-                break;
-            case DropDownTrigger.mouseenter:
-            case "mouseenter":
-                this._openTrigger = 'mouseenter';
-                break;
-        }
-    }
-
-    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
-
-    /**
-     * 打开下拉触发方式，默认值是'mouseleave'
-     * $demo = float/trigger
-     */
-    @Input()
-    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
-        return this._closeTrigger;
-    }
-
-    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
-        // 从模板过来的值，不会受到类型的约束
-        switch (value as any) {
-            case DropDownTrigger.none:
-            case "none":
-                this._closeTrigger = 'none';
-                break;
-            case DropDownTrigger.click:
-            case "click":
-                this._closeTrigger = 'click';
-                break;
-            case DropDownTrigger.mouseleave:
-            case "mouseleave":
-                this._closeTrigger = 'mouseleave';
-                break;
-        }
-    }
-
-    constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef,
+    constructor(protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
                 protected _popupService: PopupService) {
         super();
     }
@@ -198,7 +136,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         this.jigsawFloatOpenChange.emit(this._$opened);
     }
 
-    public closeFloat():void {
+    public closeFloat(): void {
         if (!this._disposePopup) {
             return;
         }
@@ -290,22 +228,12 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     protected _closeAll(popups: PopupInfo[]) {
-        popups.forEach(popup => (<any>popup).host.jigsawFloatOpen = false);
+        popups.forEach(popup => popup.invoker.jigsawFloatOpen = false);
     }
 
     private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX <= element.offsetLeft + element.offsetWidth
             && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY <= element.offsetTop + element.offsetHeight;
-    }
-
-
-    /**
-     * @internal
-     */
-    public _$onHostClick() {
-        if (this._openTrigger == 'click' && this.jigsawFloatOpen == false) {
-            this.jigsawFloatOpen = true;
-        }
     }
 
     private _isChildOf(child, parent): boolean {
@@ -354,7 +282,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
         const option: PopupOptions = this._getPopupOption();
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
-        (<any>popupInfo).host = this;
+        popupInfo.invoker = this;
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
         if (!this._popupElement) {
@@ -371,7 +299,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
                 this._popupElement, 'mouseenter',
                 () => this.clearCallLater(this._rollOutDenouncesTimer));
         }
-        if (this._closeTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
+        if (this.jigsawFloatCloseTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
             this._removeMouseOutHandler = this._renderer.listen(
                 this._popupElement, 'mouseleave', event => this._$closeByHover(event));
         }
@@ -518,7 +446,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
         const host = this._elementRef.nativeElement;
         let ele = document.createElement('div');
-        //根据tooltip尖角算出来大概在5√2，约为7px
+        // 根据tooltip尖角算出来大概在5√2，约为7px
         ele.style.width = '7px';
         ele.style.height = '7px';
         ele.style.position = 'absolute';
@@ -620,7 +548,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             return pos;
         }
         const totalWidth = window.pageXOffset + document.body.clientWidth;
-        //宿主组件在可视范围外
+        // 宿主组件在可视范围外
         if (point.x < 0 && (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'bottomLeft') && leftDelta <= totalWidth - (offsetWidth + point.x)) {
             pos.left += offsetWidth;
         } else if (point.x + offsetWidth > totalWidth && (this.jigsawFloatPosition === 'topRight' || this.jigsawFloatPosition === 'bottomRight') && point.x >= leftDelta) {
@@ -643,7 +571,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         const totalHeight = window.pageYOffset + document.body.clientHeight;
 
-        //宿主组件在可视范围外
+        // 宿主组件在可视范围外
         if (point.y < 0 && (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop') && upDelta <= totalHeight - (offsetHeight + point.y)) {
             pos.top += offsetHeight;
         } else if (point.y + offsetHeight > totalHeight && (this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') && point.y >= upDelta) {
@@ -691,6 +619,89 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._removeMouseOutHandler) {
             this._removeMouseOutHandler();
             this._removeMouseOutHandler = null;
+        }
+    }
+}
+
+@Directive({
+    selector: '[jigsaw-float],[j-float],[jigsawFloat]',
+    host: {
+        '(mouseenter)': "_$openByHover($event)",
+        '(mouseleave)': "_$closeByHover($event, 1)",
+        '(click)': "_$onHostClick()"
+    }
+})
+export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
+    constructor(protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _popupService: PopupService) {
+        super(_renderer, _elementRef, _popupService);
+    }
+
+    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
+
+    /**
+     * 打开下拉触发方式，默认值是'mouseleave'
+     * $demo = float/trigger
+     */
+    @Input()
+    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
+        return this._closeTrigger;
+    }
+
+    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
+        // 从模板过来的值，不会受到类型的约束
+        switch (value as any) {
+            case DropDownTrigger.none:
+            case "none":
+                this._closeTrigger = 'none';
+                break;
+            case DropDownTrigger.click:
+            case "click":
+                this._closeTrigger = 'click';
+                break;
+            case DropDownTrigger.mouseleave:
+            case "mouseleave":
+                this._closeTrigger = 'mouseleave';
+                break;
+        }
+    }
+
+    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
+
+    /**
+     * 打开下拉触发方式，默认值是'mouseenter'
+     * $demo = float/trigger
+     */
+    @Input()
+    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
+        return this._openTrigger;
+    }
+
+    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none' | DropDownTrigger) {
+        // 从模板过来的值，不会受到类型的约束
+        switch (value as any) {
+            case DropDownTrigger.none:
+            case "none":
+                this._openTrigger = 'none';
+                break;
+            case DropDownTrigger.click:
+            case "click":
+                this._openTrigger = 'click';
+                break;
+            case DropDownTrigger.mouseenter:
+            case "mouseenter":
+                this._openTrigger = 'mouseenter';
+                break;
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$onHostClick() {
+        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
+            this.jigsawFloatOpen = true;
         }
     }
 }

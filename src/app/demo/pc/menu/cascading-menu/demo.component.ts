@@ -51,6 +51,14 @@ export class CascadingMenuDemo {
         console.log(`${node.label} 被点击了!!!`);
     }
 
+    openChange($event) {
+        if ($event) {
+            console.log(`menu is open!`);
+        } else {
+            console.log(`menu is closed!`);
+        }
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

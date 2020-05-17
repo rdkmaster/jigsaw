@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawCascadingMenuModule} from "jigsaw/common/directive/cascading-menu";
-import {CascadingMenuDemo} from  "./demo.component";
+import {JigsawMenuModule} from "jigsaw/pc-components/menu";
+import {CascadingMenuDemo} from "./demo.component";
 
 @NgModule({
     imports: [
-        CommonModule, JigsawDemoDescriptionModule, JigsawCascadingMenuModule
+        CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule
     ],
     declarations: [CascadingMenuDemo],
     exports: [CascadingMenuDemo]

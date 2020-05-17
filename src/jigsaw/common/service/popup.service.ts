@@ -190,6 +190,8 @@ export class PopupInfo {
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
     windowListener?: PopupDisposer;
+    // 调用popup-service的地方
+    invoker?: any
 }
 
 // @dynamic
@@ -535,7 +537,9 @@ export class PopupService {
      * 设置弹框尺寸
      * */
     private _setSize(options: PopupOptions, element: HTMLElement) {
-        if (!options || !options.size) return;
+        if (!options || !options.size) {
+            return;
+        }
         let size = options.size;
 
         if (size.width) {
