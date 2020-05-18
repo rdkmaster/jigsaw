@@ -14,13 +14,26 @@
 <br><br><br><br><br><br><br><br>
 
 <h2>With Settings</h2>
-<br><br><br>
+<br><br>
+背景色
+<jigsaw-auto-complete-input [(value)]="bkgColor" placeholder="支持CSS所有颜色格式" width="250"
+                            [data]="['red', 'blue', '#fff']">
+</jigsaw-auto-complete-input>
+<br><br>
+悬浮色
+<jigsaw-auto-complete-input [(value)]="hoverColor" placeholder="支持CSS所有颜色格式" width="250"
+                            [data]="['red', 'blue', '#fff']">
+</jigsaw-auto-complete-input>
+
+<br>
+<br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       jigsawCascadingMenuHeight="100"
       jigsawCascadingMenuMaxHeight="120"
       jigsawCascadingMenuWidth="200"
-      jigsawCascadingMenuBackgroundColor="orange"
-      jigsawCascadingMenuSelectedColor="red"
-      (jigsawCascadingMenuSelect)="menuSelect($event)" (jigsawCascadingMenuOpenChange)="openChange($event)">
+      [jigsawCascadingMenuBackgroundColor]="bkgColor"
+      [jigsawCascadingMenuSelectedColor]="hoverColor"
+      (jigsawCascadingMenuSelect)="menuSelect($event)"
+      (jigsawCascadingMenuOpenChange)="openChange($event)">
 菜单 hover
 </span>

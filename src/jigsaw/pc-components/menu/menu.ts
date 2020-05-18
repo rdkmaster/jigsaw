@@ -29,7 +29,7 @@ import * as convert from "color-convert";
             </j-list-option>
         </j-list>`
 })
-export class JigsawMenuComponent extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
+export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
     /**
      * @internal
      */
@@ -142,8 +142,8 @@ export class JigsawMenuComponent extends AbstractJigsawComponent implements IPop
     /**
      * @internal
      */
-    public _$getTarget(item: SimpleNode): Type<JigsawMenuComponent> {
-        return item.nodes && item.nodes.length > 0 && !item.disabled ? JigsawMenuComponent : null;
+    public _$getTarget(item: SimpleNode): Type<JigsawMenu> {
+        return item.nodes && item.nodes.length > 0 && !item.disabled ? JigsawMenu : null;
     }
 
     private _setFontColor(backgroundColor: string): void {

@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import { JigsawAutoCompleteInputModule, JigsawMenuModule } from 'jigsaw/public_api';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawMenuModule} from "jigsaw/pc-components/menu";
 import {CascadingMenuDemo} from "./demo.component";
 
 @NgModule({
     imports: [
-        CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule
+        CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule, JigsawAutoCompleteInputModule
     ],
     declarations: [CascadingMenuDemo],
     exports: [CascadingMenuDemo]

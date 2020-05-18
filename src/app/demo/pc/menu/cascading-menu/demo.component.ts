@@ -15,6 +15,8 @@ import {SimpleNode, SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 export class CascadingMenuDemo {
 
     public data: SimpleTreeData;
+    public bkgColor: string;
+    public hoverColor: string;
 
     constructor() {
         this.data = new SimpleTreeData();

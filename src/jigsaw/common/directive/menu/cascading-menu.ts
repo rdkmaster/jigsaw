@@ -11,10 +11,10 @@ import {
     Type,
     TemplateRef
 } from "@angular/core";
-import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
-import {IPopupable, PopupOptions, PopupService} from "../../common/service/popup.service";
-import {DropDownTrigger, JigsawFloatBase} from "../../common/directive/float/float";
-import {JigsawMenuComponent} from "./menu";
+import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
+import {IPopupable, PopupOptions, PopupService} from "../../service/popup.service";
+import {DropDownTrigger, JigsawFloatBase} from "../float/float";
+import {JigsawMenu} from "../../../pc-components/menu/menu";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -80,7 +80,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     ngOnInit() {
         super.ngOnInit();
-        this.jigsawFloatTarget = JigsawMenuComponent as any;
+        this.jigsawFloatTarget = JigsawMenu as any;
         this.jigsawFloatInitData.data = this.jigsawCascadingMenuData;
         this.jigsawFloatInitData.width = this.jigsawCascadingMenuWidth;
         this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;
