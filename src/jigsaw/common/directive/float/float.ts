@@ -48,13 +48,14 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return this._popupElement;
     }
 
-    @Input()
+    /**
+     * @internal
+     */
     public jigsawFloatInitData: any;
 
     /**
-     * $demo = float/target
+     * @internal
      */
-    @Input()
     public get jigsawFloatTarget(): Type<IPopupable> | TemplateRef<any> {
         return this._$target;
     }
@@ -72,18 +73,16 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     /**
-     * $demo = float/option
+     * @internal
      */
-    @Input()
     public jigsawFloatOptions: PopupOptions;
 
     // 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
     // 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
     // 避免视图超时浏览器边界的情况
     /**
-     * $demo = float/position
+     * @internal
      */
-    @Input()
     public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
         'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
 
@@ -92,7 +91,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     private _$opened: boolean = false;
 
-    @Input()
+    /**
+     * @internal
+     */
     public get jigsawFloatOpen(): boolean {
         return this._$opened;
     }
@@ -114,11 +115,19 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         });
     }
 
-    @Output()
+    /**
+     * @internal
+     */
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    /**
+     * @internal
+     */
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger;
 
+    /**
+     * @internal
+     */
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
 
     constructor(protected _renderer: Renderer2,
@@ -234,6 +243,15 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX <= element.offsetLeft + element.offsetWidth
             && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY <= element.offsetTop + element.offsetHeight;
+    }
+
+    /**
+     * @internal
+     */
+    public _$onHostClick() {
+        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
+            this.jigsawFloatOpen = true;
+        }
     }
 
     private _isChildOf(child, parent): boolean {
@@ -696,12 +714,32 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
         }
     }
 
+    @Input()
+    public jigsawFloatInitData: any;
+
+    @Input()
+    public jigsawFloatOpen:boolean;
+
     /**
-     * @internal
+     * $demo = float/option
      */
-    public _$onHostClick() {
-        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
-            this.jigsawFloatOpen = true;
-        }
-    }
+    @Input()
+    public jigsawFloatOptions:PopupOptions;
+
+    /**
+     * $demo = float/position
+     */
+    @Input()
+    public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+
+    /**
+     * $demo = float/target
+     */
+    @Input()
+    public jigsawFloatTarget : Type<IPopupable> | TemplateRef<any>;
+
+    @Output()
+    public jigsawFloatOpenChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+
 }

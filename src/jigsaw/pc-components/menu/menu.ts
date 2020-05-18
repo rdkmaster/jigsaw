@@ -1,8 +1,12 @@
-import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
+import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, RendererStyleFlags2} from "@angular/core";
 import {IPopupable, PopupOptions} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import * as convert from "color-convert";
+
+const rgbRegExp = '^rgb\((\d+,\d+,\d+)\)$/i';
+const rgbaRegExp = '^rgba\((\d+,\d+,\d+),0?\.?[0-9]\d*\)$/i';
+const hexRegExp = '^[#a-f0-9]{3}([a-f0-9]{3})?$/i';
 
 @Component({
     selector: 'jigsaw-menu, j-menu',
@@ -16,8 +20,9 @@ import * as convert from "color-convert";
                            [jigsawFloatOptions]="_$realOptions"
                            [jigsawFloatInitData]="_$getSubMenuData(node)"
                            [disabled]="node.disabled"
-                           (click)="!node.disabled && select.emit(node); !node.disabled && initData?.initDataSelect?.emit(node); !node.disabled && initData?.select?.emit(node)"
-                           (mouseenter)="_$hover(index,node.disabled)">
+                           (click)="!node.disabled && select.emit(node); !node.disabled && initData?.initDataSelect?.emit(node); !node.disabled && initData?.select?.emit(node);_$optionClick(index,node.disabled)"
+                           (mouseenter)="_$hover(index,node.disabled)"
+                           (mouseleave) = "_$mouseleave(index,node.disabled)">
                 <span j-title>
                     <i class="{{node.titleIcon}}"></i>
                     {{node.label}}
@@ -30,9 +35,7 @@ import * as convert from "color-convert";
         </j-list>`
 })
 export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
-    /**
-     * @internal
-     */
+
     public initData: any;
 
     /**
@@ -87,6 +90,13 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
+    public get _$realShowBorder(): string {
+        return this.initData && this.initData.hasOwnProperty('showBorder') ? this.initData.showBorder : this.showBorder;
+    }
+
+    /**
+     * @internal
+     */
     public _$getSubMenuData(node: any): any {
         const subMenuInitData: any = {};
         subMenuInitData.data = node;
@@ -119,6 +129,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @Input()
     public selectedColor: string;
 
+    @Input()
+    public showBorder: boolean = true;
+
     /**
      * @internal
      */
@@ -137,6 +150,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setFontColor(this._$realBackgroundColor);
+        this._setBorder();
     }
 
     /**
@@ -151,9 +165,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             return;
         }
         let rgb = [];
-        const rgbMatch = backgroundColor.match(/^rgb\((\d+,\d+,\d+)\)$/i);
-        const hexMatch = backgroundColor.match(/^#a-f0-9]{3}([a-f0-9]{3})?$/i);
-        const rgbaMatch = backgroundColor.match(/^rgba\((\d+,\d+,\d+),0?\.?[0-9]\d*\)$/i);
+        const rgbMatch = backgroundColor.match(rgbRegExp);
+        const hexMatch = backgroundColor.match(hexRegExp);
+        const rgbaMatch = backgroundColor.match(rgbaRegExp);
         if (rgbMatch) {
             rgb = rgbMatch[1].split(',');
         } else if (hexMatch) {
@@ -189,12 +203,18 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
+    private _setBorder(){
+        if(this._$realShowBorder){
+            this._menuList.nativeElement.style.border  = 'none';
+        }
+    }
+
     /**
      * @internal
      */
-    public _$hover(index, disabled) {
+    public _$hover(index: number, disabled: boolean) {
         const optionsElements = this._menuList.nativeElement.children, length = optionsElements.length,
-            bgColor = this._$realBackgroundColor;
+            bgColor = !!this._$realBackgroundColor? this._$realBackgroundColor : this._menuList.nativeElement.style.background;
         for (let i = 0; i < length; i++) {
             if (i != index) {
                 if (optionsElements[i].classList.contains('jigsaw-list-option-disabled')) {
@@ -207,6 +227,27 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         const selectedColor = this._$realSelectColor;
         if (!!selectedColor && !disabled) {
             this._renderer.setStyle(optionsElements[index], "background", selectedColor);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$mouseleave(index: number, disabled: boolean){
+        const optionsElement = this._menuList.nativeElement.children[index];
+        const classList = optionsElement.classList;
+        if(!disabled && classList.contains('jigsaw-list-option-active')){
+            classList.remove('jigsaw-list-option-active');
+        }
+    }
+
+    /**
+     * @internal
+     */
+    _$optionClick(index: number, disabled: boolean){
+        const selectedColor = this._$realSelectColor;
+        if (!!selectedColor && !disabled) {
+            this._renderer.setStyle(this._menuList.nativeElement.children[index], "background", selectedColor, RendererStyleFlags2.Important);
         }
     }
 }

@@ -1,0 +1,7 @@
+$menu-prefix-cls:#{$jigsaw-prefix}-menu;
+
+#{$menu-prefix-cls}{
+    .jigsaw-list-option .jigsaw-list-option-active {
+        background: $item-hover-bg;
+    }
+}
