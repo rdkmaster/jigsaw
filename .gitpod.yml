@@ -1,0 +1,31 @@
+tasks:
+  - init: npm install
+    command: echo " gs: git status"
+    command: alias gs='git status'
+    command: echo "gco: git checkout"
+    command: alias gco='git checkout'
+    command: echo " gc: git commit -m"
+    command: alias gc='git commit -m'
+    command: echo " ga: git add"
+    command: alias ga='git add'
+    command: echo "gps: git push"
+    command: alias gps='git push'
+    command: echo "gpl: git pull"
+    command: alias gpl='git pull'
+    command: echo " gb: git branch"
+    command: alias gb='git branch'
+    command: echo " gl: git log --pretty=oneline"
+    command: alias gl='git log --pretty=oneline'
+    command: echo " gd: git diff"
+    command: alias gd='git diff'
+    command: echo " gm: git merge"
+    command: alias gm='git merge'
+    command: echo "gca: git commit --amend"
+    command: alias gca='git commit --amend'
+    command: echo "gsh: git stash"
+    command: alias gsh='git stash'
+    command: echo "gshp: git stash pop"
+    command: alias gshp='git stash pop'
+    command: echo "gcp: git cherry-pick"
+    command: alias gcp='git cherry-pick'
+    command: npm run start
