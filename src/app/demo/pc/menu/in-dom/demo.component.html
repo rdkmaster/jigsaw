@@ -4,22 +4,34 @@
 
 
 <!-- start to learn the demo from here -->
-<h2>Default</h2>
-<br><br><br>
-<jigsaw-menu [data]="data"
-             (select)="menuSelect($event)">
-</jigsaw-menu>
+<jigsaw-collapse width="200px">
 
-<br><br><br><br><br><br><br><br>
+    <j-collapse-pane [isActive]="true">
+        <div j-title>
+            <span class="fa fa-user"></span> 功能组1
+        </div>
+        <div j-body>
+            <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%">
+            </jigsaw-menu>
+        </div>
+    </j-collapse-pane>
+    <j-collapse-pane [isActive]="false">
+        <div j-title>
+            <span class="fa fa-user"></span> 功能组2
+        </div>
+        <div j-body>
+            <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%">
+            </jigsaw-menu>
+        </div>
+    </j-collapse-pane>
+    <j-collapse-pane [isActive]="false">
+        <div j-title>
+            <span class="fa fa-user"></span> 功能组3
+        </div>
+        <div j-body>
+            <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%">
+            </jigsaw-menu>
+        </div>
+    </j-collapse-pane>
+</jigsaw-collapse>
 
-<h2>With Settings</h2>
-<br><br><br>
-
-<jigsaw-menu [data]="data"
-             height="100"
-             maxHeight="120"
-             width="200"
-             backgroundColor="orange"
-             selectedColor="red"
-             (select)="menuSelect($event)">
-</jigsaw-menu>

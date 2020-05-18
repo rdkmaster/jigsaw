@@ -12,29 +12,18 @@ export class MenuInDomDemo {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>
-                <node label="File">
-                    <node label="New">
-                        <node label="Project"></node>
-                        <node label="File"></node>
-                        <node label="Directory"></node>
-                    </node>
-                    <node label="Open"></node>
-                    <node label="Save As"></node>
+                <node label="功能1">
+                    <node label="功能11"></node>
+                    <node label="功能12"></node>
+                    <node label="功能13"></node>
                 </node>
-                <node label="Edit">
-                    <node label="Cut"></node>
-                    <node label="Copy">
-                        <node label="Copy Reference"></node>
-                        <node label="Copy Path"></node>
-                    </node>
-                    <node label="Paste" disabled="true"></node>
-                    <node label="Delete"></node>
+                <node label="功能2">
+                    <node label="功能21"></node>
+                    <node label="功能22"></node>
+                    <node label="功能23"></node>
                 </node>
-                <node label="Run" >
-                        <node label="Run" titleIcon="fa fa-play" subTitle="Shift+F10"></node>
-                        <node label="Debug" titleIcon="fa fa-bug" subTitle="Shift+F9"></node>
-                </node>
-                <node label="Exit"></node>
+                <node label="功能3"></node>
+                <node label="功能4"></node>
             </node>
         `);
     }
@@ -46,6 +35,6 @@ export class MenuInDomDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo演示了jigsaw-menu菜单组件，输入为一个simpleTree类型的菜单数据，实现菜单弹出和点击的功能';
+    summary: string = '可以在文档里里嵌入一个菜单组件，再配合其他组件（如Collapse）就可以形成一个一级导航栏的功能了';
     description: string = '';
 }
