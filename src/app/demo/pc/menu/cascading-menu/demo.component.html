@@ -14,25 +14,18 @@
 <br><br><br><br><br><br><br><br>
 
 <h2>With Settings</h2>
-<br><br>
-背景色
-<jigsaw-auto-complete-input [(value)]="bkgColor" placeholder="支持CSS所有颜色格式" width="250"
-                            [data]="['red', 'blue', '#fff']">
+<br>
+皮肤
+<jigsaw-auto-complete-input [(value)]="theme" placeholder="切换皮肤颜色" width="250"
+                            [data]="['default', 'dark']">
 </jigsaw-auto-complete-input>
-<br><br>
-悬浮色
-<jigsaw-auto-complete-input [(value)]="hoverColor" placeholder="支持CSS所有颜色格式" width="250"
-                            [data]="['red', 'blue', '#fff']">
-</jigsaw-auto-complete-input>
-
 <br>
 <br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       jigsawCascadingMenuHeight="100"
       jigsawCascadingMenuMaxHeight="120"
       jigsawCascadingMenuWidth="150"
-      [jigsawCascadingMenuBackgroundColor]="bkgColor"
-      [jigsawCascadingMenuSelectedColor]="hoverColor"
+      [jigsawCascadingMenuTheme]='theme'
       (jigsawCascadingMenuSelect)="menuSelect($event)"
       (jigsawCascadingMenuOpenChange)="openChange($event)">
 菜单弹出

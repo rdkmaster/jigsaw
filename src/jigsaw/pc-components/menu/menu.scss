@@ -1,7 +1,42 @@
-$menu-prefix-cls:#{$jigsaw-prefix}-menu;
+$menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
-#{$menu-prefix-cls}{
-    .jigsaw-list-option .jigsaw-list-option-active {
-        background: $item-hover-bg;
+
+.#{$menu-prefix-cls}-default {
+    .#{$list-option-prefix-cls} {
+        &.#{$list-option-prefix-cls}-active {
+            background: $item-hover-bg;
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-dark {
+    .jigsaw-list {
+        background: #32404d;
+
+        .#{$list-option-prefix-cls} {
+            color: #fff;
+
+            &:hover {
+                background: #475A6C;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #636b8b;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #62738b;
+                @include compatible(color, #62738b, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            &-title {
+                color: #fff;
+            }
+
+            &-sub-title {
+                color: #fff;
+            }
+        }
     }
 }

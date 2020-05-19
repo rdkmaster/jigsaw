@@ -1,19 +1,13 @@
-import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, RendererStyleFlags2} from "@angular/core";
+import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
 import {IPopupable, PopupOptions} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
-import * as convert from "color-convert";
-
-const rgbRegExp = '^rgb\((\d+,\d+,\d+)\)$/i';
-const rgbaRegExp = '^rgba\((\d+,\d+,\d+),0?\.?[0-9]\d*\)$/i';
-const hexRegExp = '^[#a-f0-9]{3}([a-f0-9]{3})?$/i';
 
 @Component({
     selector: 'jigsaw-menu, j-menu',
     template: `
         <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
-                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
-                [ngStyle]="{'background':_$realBackgroundColor}">
+                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
             <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node" jigsawFloat
                            [jigsawFloatTarget]="_$getTarget(node)"
                            [jigsawFloatPosition]="'rightTop'"
@@ -23,21 +17,23 @@ const hexRegExp = '^[#a-f0-9]{3}([a-f0-9]{3})?$/i';
                            (click)="
                                 !node.disabled && select.emit(node);
                                 !node.disabled && initData?.initDataSelect?.emit(node);
-                                !node.disabled && initData?.select?.emit(node);
-                                _$optionClick(index,node.disabled)
-                            "
-                           (mouseenter)="_$hover(index,node.disabled)"
+                                !node.disabled && initData?.select?.emit(node);"
                            (mouseleave)="_$mouseleave(index,node.disabled)">
-                <span j-title>
+                <span j-title *ngIf="!!node.label">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
                 </span>
+                <span *ngIf="!node.label"> —— </span>
                 <div j-sub-title>{{node.subTitle}}
                     <i class="{{node.subIcon}}"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
             </j-list-option>
-        </j-list>`
+        </j-list>`,
+    host: {
+        '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
+        '[class.jigsaw-menu-default]': "_$realTheme == 'default'"
+    },
 })
 export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
 
@@ -81,22 +77,15 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public get _$realBackgroundColor(): string {
-        return this.initData && this.initData.backgroundColor ? this.initData.backgroundColor : this.backgroundColor;
-    }
-
-    /**
-     * @internal
-     */
-    public get _$realSelectColor(): string {
-        return this.initData && this.initData.selectedColor ? this.initData.selectedColor : this.selectedColor;
-    }
-
-    /**
-     * @internal
-     */
-    public get _$realShowBorder(): string {
+    public get _$realShowBorder(): boolean {
         return this.initData && this.initData.hasOwnProperty('showBorder') ? this.initData.showBorder : this.showBorder;
+    }
+
+    /**
+     * @internal
+     */
+    public get _$realTheme(): 'default' | 'dark' {
+        return this.initData && this.initData.theme ? this.initData.theme : this.theme;
     }
 
     /**
@@ -109,8 +98,8 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         subMenuInitData.height = this._$realHeight;
         subMenuInitData.maxHeight = this._$realMaxHeight;
         subMenuInitData.options = this._$realOptions;
-        subMenuInitData.backgroundColor = this._$realBackgroundColor;
-        subMenuInitData.selectedColor = this._$realSelectColor;
+        subMenuInitData.showBorder = this._$realShowBorder;
+        subMenuInitData.theme = this._$realTheme;
         if (this.initData) {
             if (this.initData.initDataSelect) {
                 subMenuInitData.initDataSelect = this.initData.initDataSelect;
@@ -137,6 +126,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @Input()
     public showBorder: boolean = true;
 
+    @Input()
+    public theme: 'default' | 'dark' = 'default';
+
     /**
      * @internal
      */
@@ -154,7 +146,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     }
 
     ngAfterViewInit() {
-        this._setFontColor(this._$realBackgroundColor);
         this._setBorder();
     }
 
@@ -165,94 +156,20 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         return item.nodes && item.nodes.length > 0 && !item.disabled ? JigsawMenu : null;
     }
 
-    private _setFontColor(backgroundColor: string): void {
-        if (!backgroundColor) {
-            return;
-        }
-        let rgb = [];
-        const rgbMatch = backgroundColor.match(rgbRegExp);
-        const hexMatch = backgroundColor.match(hexRegExp);
-        const rgbaMatch = backgroundColor.match(rgbaRegExp);
-        if (rgbMatch) {
-            rgb = rgbMatch[1].split(',');
-        } else if (hexMatch) {
-            rgb = convert.hex.rgb(backgroundColor);
-        } else if (rgbaMatch) {
-            rgb = rgbaMatch[1].split(',');
-        } else {
-            rgb = convert.keyword.rgb(backgroundColor);
-        }
-
-        if (rgb && rgb.length == 3) {
-            // 根据rgb值计算阈值，大于等于192就是浅色
-            const level = rgb[0] * 0.299 + rgb[1] * 0.587 + rgb[2] * 0.114;
-            const optionElements = this._menuList.nativeElement.children;
-            const titleElements = this._menuList.nativeElement.getElementsByClassName('jigsaw-list-option-title');
-            const subTitleElements = this._menuList.nativeElement.getElementsByClassName('jigsaw-list-option-sub-title');
-            const length = titleElements.length;
-            if (level < 192) {
-                for (let i = 0; i < length; i++) {
-                    if (!optionElements[i].classList.contains('jigsaw-list-option-disabled')) {
-                        this._renderer.setStyle(titleElements[i], 'color', "#fff");
-                        this._renderer.setStyle(subTitleElements[i], 'color', "#fff");
-                    }
-                }
-            } else {
-                for (let i = 0; i < length; i++) {
-                    if (!optionElements[i].classList.contains('jigsaw-list-option-disabled')) {
-                        this._renderer.setStyle(titleElements[i], 'color', '#333');
-                        this._renderer.setStyle(subTitleElements[i], 'color', '#999');
-                    }
-                }
-            }
-        }
-    }
-
-    private _setBorder(){
-        if(this._$realShowBorder){
-            this._menuList.nativeElement.style.border  = 'none';
+    private _setBorder() {
+        if (!this._$realShowBorder) {
+            this._menuList.nativeElement.style.border = 'none';
         }
     }
 
     /**
      * @internal
      */
-    public _$hover(index: number, disabled: boolean) {
-        const optionsElements = this._menuList.nativeElement.children, length = optionsElements.length,
-            bgColor = !!this._$realBackgroundColor? this._$realBackgroundColor : this._menuList.nativeElement.style.background;
-        for (let i = 0; i < length; i++) {
-            if (i != index) {
-                if (optionsElements[i].classList.contains('jigsaw-list-option-disabled')) {
-                    this._renderer.setStyle(optionsElements[i], "background", undefined);
-                } else {
-                    this._renderer.setStyle(optionsElements[i], "background", bgColor);
-                }
-            }
-        }
-        const selectedColor = this._$realSelectColor;
-        if (!!selectedColor && !disabled) {
-            this._renderer.setStyle(optionsElements[index], "background", selectedColor);
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$mouseleave(index: number, disabled: boolean){
+    public _$mouseleave(index: number, disabled: boolean) {
         const optionsElement = this._menuList.nativeElement.children[index];
         const classList = optionsElement.classList;
-        if(!disabled && classList.contains('jigsaw-list-option-active')){
+        if (!disabled && classList.contains('jigsaw-list-option-active')) {
             classList.remove('jigsaw-list-option-active');
-        }
-    }
-
-    /**
-     * @internal
-     */
-    _$optionClick(index: number, disabled: boolean){
-        const selectedColor = this._$realSelectColor;
-        if (!!selectedColor && !disabled) {
-            this._renderer.setStyle(this._menuList.nativeElement.children[index], "background", selectedColor, RendererStyleFlags2.Important);
         }
     }
 }

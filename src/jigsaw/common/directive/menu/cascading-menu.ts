@@ -7,12 +7,10 @@ import {
     AfterViewInit,
     OnDestroy,
     Renderer2,
-    ElementRef,
-    Type,
-    TemplateRef
+    ElementRef
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
-import {IPopupable, PopupOptions, PopupService} from "../../service/popup.service";
+import {PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, JigsawFloatBase} from "../float/float";
 import {JigsawMenu} from "../../../pc-components/menu/menu";
 
@@ -21,7 +19,7 @@ import {JigsawMenu} from "../../../pc-components/menu/menu";
     host: {
         '(mouseenter)': "_$openByHover($event)",
         '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)':"_$onHostClick()"
+        '(click)': "_$onHostClick()"
     }
 })
 export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, AfterViewInit, OnDestroy {
@@ -31,9 +29,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuHeight: string | number;
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
-    private _jigsawCascadingMenuBackgroundColor: string;
-    private _jigsawCascadingMenuSelectedColor: string;
     private _jigsawCascadingMenuShowBorder: boolean;
+    private _jigsawCascadingMenuTheme: 'default' | 'dark';
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -58,7 +55,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             this.jigsawFloatInitData.data = value;
         }
     }
-
 
     @Input()
     get jigsawCascadingMenuWidth(): string | number {
@@ -97,29 +93,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input()
-    get jigsawCascadingMenuBackgroundColor(): string {
-        return this._jigsawCascadingMenuBackgroundColor;
-    }
-
-    set jigsawCascadingMenuBackgroundColor(value: string) {
-        if (this._jigsawCascadingMenuBackgroundColor != value) {
-            this._jigsawCascadingMenuBackgroundColor = value;
-            this.jigsawFloatInitData.backgroundColor = value;
-        }
-    }
-
-    @Input()
-    get jigsawCascadingMenuSelectedColor(): string {
-        return this._jigsawCascadingMenuSelectedColor;
-    }
-
-    set jigsawCascadingMenuSelectedColor(value: string) {
-        if (this._jigsawCascadingMenuSelectedColor != value) {
-            this._jigsawCascadingMenuSelectedColor = value;
-            this.jigsawFloatInitData.selectedColor = value;
-        }
-    }
-    @Input()
     get jigsawCascadingMenuShowBorder(): boolean {
         return this._jigsawCascadingMenuShowBorder;
     }
@@ -128,6 +101,18 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._jigsawCascadingMenuShowBorder != value) {
             this._jigsawCascadingMenuShowBorder = value;
             this.jigsawFloatInitData.showBorder = value;
+        }
+    }
+
+    @Input()
+    get jigsawCascadingMenuTheme(): 'default' | 'dark' {
+        return this._jigsawCascadingMenuTheme;
+    }
+
+    set jigsawCascadingMenuTheme(value: 'default' | 'dark') {
+        if (this._jigsawCascadingMenuTheme != value) {
+            this._jigsawCascadingMenuTheme = value;
+            this.jigsawFloatInitData.theme = value;
         }
     }
 
@@ -166,7 +151,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     ngAfterViewInit() {
         if (!this._removeClickHandler) {
-            this._removeClickHandler = this.jigsawCascadingMenuSelect.subscribe((node:SimpleNode) => {
+            this._removeClickHandler = this.jigsawCascadingMenuSelect.subscribe((node: SimpleNode) => {
                 if (!node.nodes || node.nodes.length == 0) {
                     const popups = this._popupService.popups;
                     this._closeAll(popups);

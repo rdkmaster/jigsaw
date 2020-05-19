@@ -15,8 +15,7 @@ import {SimpleNode, SimpleTreeData} from "jigsaw/common/core/data/tree-data";
 export class CascadingMenuDemo {
 
     public data: SimpleTreeData;
-    public bkgColor: string;
-    public hoverColor: string;
+    public theme: string;
 
     constructor() {
         this.data = new SimpleTreeData();
@@ -39,6 +38,7 @@ export class CascadingMenuDemo {
                     </node>
                     <node label="Paste" disabled="true"></node>
                     <node label="Delete"></node>
+                    <node></node>
                 </node>
                 <node label="Run" >
                     <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
