@@ -17,13 +17,13 @@
 <br>
 皮肤
 <jigsaw-auto-complete-input [(value)]="theme" placeholder="切换皮肤颜色" width="250"
-                            [data]="['default', 'dark']">
+                            [data]="['dark' ,'light','black','navigation']">
 </jigsaw-auto-complete-input>
 <br>
 <br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-      jigsawCascadingMenuHeight="100"
-      jigsawCascadingMenuMaxHeight="120"
+      jigsawCascadingMenuHeight="160"
+      jigsawCascadingMenuMaxHeight="200"
       jigsawCascadingMenuWidth="150"
       [jigsawCascadingMenuTheme]='theme'
       (jigsawCascadingMenuSelect)="menuSelect($event)"

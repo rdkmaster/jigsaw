@@ -30,7 +30,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
-    private _jigsawCascadingMenuTheme: 'default' | 'dark';
+    private _jigsawCascadingMenuTheme: 'light' | 'dark' | 'black' | 'navigation' = 'dark';
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -105,11 +105,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input()
-    get jigsawCascadingMenuTheme(): 'default' | 'dark' {
+    get jigsawCascadingMenuTheme(): 'light' | 'dark' | 'black' | 'navigation' {
         return this._jigsawCascadingMenuTheme;
     }
 
-    set jigsawCascadingMenuTheme(value: 'default' | 'dark') {
+    set jigsawCascadingMenuTheme(value: 'light' | 'dark' | 'black' | 'navigation') {
         if (this._jigsawCascadingMenuTheme != value) {
             this._jigsawCascadingMenuTheme = value;
             this.jigsawFloatInitData.theme = value;
@@ -145,6 +145,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         super.ngOnInit();
         this.jigsawFloatTarget = JigsawMenu as any;
         this.jigsawFloatInitData.initDataSelect = this.jigsawCascadingMenuSelect;
+        this.jigsawFloatInitData.theme = this.jigsawCascadingMenuTheme;
     }
 
     private _removeClickHandler: any;

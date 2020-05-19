@@ -19,20 +19,28 @@ import {AbstractJigsawComponent} from "../../common/common";
                                 !node.disabled && initData?.initDataSelect?.emit(node);
                                 !node.disabled && initData?.select?.emit(node);"
                            (mouseleave)="_$mouseleave(index,node.disabled)">
-                <span j-title *ngIf="!!node.label">
+                <span j-title *ngIf="!!node.label && _$realTheme != 'navigation'">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
                 </span>
-                <span *ngIf="!node.label"> —— </span>
-                <div j-sub-title>{{node.subTitle}}
+                <span *ngIf="!node.label && _$realTheme != 'navigation'"> —— </span>
+                <div j-sub-title *ngIf="_$realTheme != 'navigation'">{{node.subTitle}}
                     <i class="{{node.subIcon}}"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
+                </div>
+                <div class="navigation-title" *ngIf="_$realTheme == 'navigation'">
+                    {{node.label}}
+                    <span *ngIf="!node.label"> —— </span>
+                    <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"
+                       style="position: absolute;right: 10px;line-height: 40px"></i>
                 </div>
             </j-list-option>
         </j-list>`,
     host: {
         '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
-        '[class.jigsaw-menu-default]': "_$realTheme == 'default'"
+        '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
+        '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
+        '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
     },
 })
 export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
@@ -84,7 +92,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public get _$realTheme(): 'default' | 'dark' {
+    public get _$realTheme(): 'light' | 'dark' | 'black' | 'navigation' {
         return this.initData && this.initData.theme ? this.initData.theme : this.theme;
     }
 
@@ -127,7 +135,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     public showBorder: boolean = true;
 
     @Input()
-    public theme: 'default' | 'dark' = 'default';
+    public theme: 'light' | 'dark' | 'black' | 'navigation' = 'light';
 
     /**
      * @internal
