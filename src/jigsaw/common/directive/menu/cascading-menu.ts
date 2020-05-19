@@ -137,8 +137,17 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Output('jigsawCascadingMenuOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    /**
+     * @internal
+     */
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
+    /**
+     * @internal
+     */
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
+    /**
+     * @internal
+     */
     public jigsawFloatInitData: any = {};
 
     constructor(protected _renderer: Renderer2,

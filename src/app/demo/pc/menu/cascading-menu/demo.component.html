@@ -7,8 +7,8 @@
 <h2>Default</h2>
 <br><br><br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-      (jigsawCascadingMenuSelect)="menuSelect($event)">
-菜单 hover
+      jigsawCascadingMenuWidth="150" (jigsawCascadingMenuSelect)="menuSelect($event)">
+菜单弹出
 </span>
 
 <br><br><br><br><br><br><br><br>
@@ -30,10 +30,10 @@
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       jigsawCascadingMenuHeight="100"
       jigsawCascadingMenuMaxHeight="120"
-      jigsawCascadingMenuWidth="200"
+      jigsawCascadingMenuWidth="150"
       [jigsawCascadingMenuBackgroundColor]="bkgColor"
       [jigsawCascadingMenuSelectedColor]="hoverColor"
       (jigsawCascadingMenuSelect)="menuSelect($event)"
       (jigsawCascadingMenuOpenChange)="openChange($event)">
-菜单 hover
+菜单弹出
 </span>

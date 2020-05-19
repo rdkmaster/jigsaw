@@ -20,15 +20,20 @@ const hexRegExp = '^[#a-f0-9]{3}([a-f0-9]{3})?$/i';
                            [jigsawFloatOptions]="_$realOptions"
                            [jigsawFloatInitData]="_$getSubMenuData(node)"
                            [disabled]="node.disabled"
-                           (click)="!node.disabled && select.emit(node); !node.disabled && initData?.initDataSelect?.emit(node); !node.disabled && initData?.select?.emit(node);_$optionClick(index,node.disabled)"
+                           (click)="
+                                !node.disabled && select.emit(node);
+                                !node.disabled && initData?.initDataSelect?.emit(node);
+                                !node.disabled && initData?.select?.emit(node);
+                                _$optionClick(index,node.disabled)
+                            "
                            (mouseenter)="_$hover(index,node.disabled)"
-                           (mouseleave) = "_$mouseleave(index,node.disabled)">
+                           (mouseleave)="_$mouseleave(index,node.disabled)">
                 <span j-title>
-                    <i class="{{node.titleIcon}}"></i>
+                    <i class="{{node.icon}}"></i>
                     {{node.label}}
                 </span>
                 <div j-sub-title>{{node.subTitle}}
-                    <i class="{{node.subTitleIcon}}"></i>
+                    <i class="{{node.subIcon}}"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
             </j-list-option>

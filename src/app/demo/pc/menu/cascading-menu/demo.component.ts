@@ -41,8 +41,8 @@ export class CascadingMenuDemo {
                     <node label="Delete"></node>
                 </node>
                 <node label="Run" >
-                        <node label="Run" titleIcon="fa fa-play" subTitle="Shift+F10"></node>
-                        <node label="Debug" titleIcon="fa fa-bug" subTitle="Shift+F9"></node>
+                    <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
+                    <node label="Debug" icon="fa fa-bug" subTitle="Shift+F9"></node>
                 </node>
                 <node label="Exit"></node>
             </node>

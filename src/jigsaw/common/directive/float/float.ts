@@ -77,9 +77,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatOptions: PopupOptions;
 
-    // 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
-    // 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
-    // 避免视图超时浏览器边界的情况
     /**
      * @internal
      */
@@ -727,6 +724,9 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     public jigsawFloatOptions:PopupOptions;
 
     /**
+     * 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
+     * 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
+     * 避免视图超时浏览器边界的情况
      * $demo = float/position
      */
     @Input()
