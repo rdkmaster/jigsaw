@@ -10,8 +10,8 @@ import {
     ElementRef
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
-import {PopupOptions, PopupService} from "../../service/popup.service";
-import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
+import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
+import {DropDownTrigger, JigsawFloatBase,FloatPosition} from "../float/float";
 import {JigsawMenu} from "../../../pc-components/menu/menu";
 
 @Directive({
@@ -193,6 +193,12 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._removeClickHandler) {
             this._removeClickHandler.unsubscribe();
             this._removeClickHandler = null;
+        }
+    }
+
+    protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
+        if (popups.some(popup => this._mouseInPopup(event, popup.element))) {
+            this.jigsawFloatOpen = false;
         }
     }
 }
