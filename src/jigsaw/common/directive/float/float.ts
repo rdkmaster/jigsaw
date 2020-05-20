@@ -196,7 +196,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         this._rollInDenouncesTimer = this.callLater(() => {
             this.jigsawFloatOpen = true;
-        }, 100);
+        }, 400);
     }
 
     /**
@@ -227,11 +227,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
-                this.jigsawFloatOpen = false;
-                if (!popups.some(popup => this._mouseInPopup(event, popup.element))) {
-                    this._closeAll(popups);
-                }
-            }, 400);
+                this._closeJigsawFloat(event, popups);
+            }, 200);
         }
     }
 
@@ -239,9 +236,16 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         popups.forEach(popup => popup.dispose());
     }
 
-    private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
+    protected _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX <= element.offsetLeft + element.offsetWidth
             && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY <= element.offsetTop + element.offsetHeight;
+    }
+
+    protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
+        this.jigsawFloatOpen = false;
+        if (!popups.some(popup => this._mouseInPopup(event, popup.element))) {
+            this._closeAll(popups);
+        }
     }
 
     /**
