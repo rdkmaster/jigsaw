@@ -17,12 +17,12 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
                 text-align: center;
                 border-radius: 50%;
                 cursor: pointer;
+                &:hover {
+                    background: $primary-2;
+                }
                 &.#{$time-select-prefix-cls}-isSelected {
                     background: $primary-color;
                     color: $text-color-of-bg;
-                }
-                &:hover {
-                    background: $primary-2;
                 }
             }
         }

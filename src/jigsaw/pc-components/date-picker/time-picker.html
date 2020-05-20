@@ -1,18 +1,21 @@
-<input #hour [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'" [(ngModel)]="_$hour"
-    (blur)="_$cancelSelect('hour')" (click)="_$handleSelectMode('hour')" j-float jigsawFloatOpenTrigger="click"
-    jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="_$floatTarget" [jigsawFloatInitData]="{mode: 'hour', value: _$hour}"
-    (answer)="_$popupSelect($event)"> :
-<input #minute [class.jigsaw-time-picker-input-selected]="_$selectMode == 'minute'" [(ngModel)]="_$minute"
-    (blur)="_$cancelSelect('minute')" (click)="_$handleSelectMode('minute')"> :
-<input #second [class.jigsaw-time-picker-input-selected]="_$selectMode == 'second'" [(ngModel)]="_$second"
-    (blur)="_$cancelSelect('second')" (click)="_$handleSelectMode('second')">
-<div class="jigsaw-time-picker-ctrl">
-    <div *ngIf="_$selectMode != 'none'; else clock" class="jigsaw-time-picker-ctrl-bar">
-        <span class="fa fa-caret-up" (mousedown)="_$handleCtrlBarClick($event, 1)"></span>
-        <span class="fa fa-caret-down" (mousedown)="_$handleCtrlBarClick($event, -1)"></span>
+<div class="jigsaw-time-picker-wrapper" [jigsawFloat]="_$selectMode != 'none'" jigsawFloatOpenTrigger="click"
+    jigsawFloatCloseTrigger="click" [jigsawFloatTarget]="_$floatTarget" [jigsawFloatInitData]="_$floatInitData"
+    [jigsawFloatOptions]="{borderType: 'pointer'}" [(jigsawFloatOpen)]='_$floatOpen' (answer)="_$popupSelect($event)">
+    <input #hour [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'" [(ngModel)]="_$hour"
+        (blur)="_$cancelSelect('hour')" (click)="_$handleSelectMode('hour')"> :
+    <input #minute [class.jigsaw-time-picker-input-selected]="_$selectMode == 'minute'" [(ngModel)]="_$minute"
+        (blur)="_$cancelSelect('minute')" (click)="_$handleSelectMode('minute')"> :
+    <input #second [class.jigsaw-time-picker-input-selected]="_$selectMode == 'second'" [(ngModel)]="_$second"
+        (blur)="_$cancelSelect('second')" (click)="_$handleSelectMode('second')">
+    <div class="jigsaw-time-picker-ctrl">
+        <div *ngIf="_$selectMode != 'none'; else clock" class="jigsaw-time-picker-ctrl-bar">
+            <span class="fa fa-caret-up" (mousedown)="_$handleCtrlBarClick($event, 1)"></span>
+            <span class="fa fa-caret-down" (mousedown)="_$handleCtrlBarClick($event, -1)"></span>
+        </div>
+        <ng-template #clock>
+            <i class="fa fa-clock-o"></i>
+        </ng-template>
     </div>
-    <ng-template #clock>
-        <i class="fa fa-clock-o"></i>
-    </ng-template>
 </div>
+
 

@@ -8,7 +8,8 @@ import {
     Renderer2,
     TemplateRef,
     Type,
-    NgZone
+    NgZone,
+    ChangeDetectorRef
 } from "@angular/core";
 import {
     IPopupable,
@@ -58,7 +59,20 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     @Input()
-    public jigsawFloatInitData: any;
+    public jigsawFloat: boolean = true;
+
+    private _jigsawFloatInitData: any;
+    @Input()
+    public get jigsawFloatInitData(): any {
+        return this._jigsawFloatInitData;
+    }
+
+    public set jigsawFloatInitData(data: any) {
+        this._jigsawFloatInitData = data;
+        if(this._popupInstance && this.initialized) {
+            this._popupInstance.initData = data;
+        }
+    }
 
     /**
      * $demo = float/target
@@ -192,7 +206,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
                 private _popupService: PopupService,
-                protected _zone: NgZone) {
+                protected _zone: NgZone,
+                private _cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -235,6 +250,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             this._removeAnswerSubscriber.unsubscribe();
             this._removeAnswerSubscriber = null;
         }
+
+        this._popupInstance = null;
     }
 
     /**
@@ -319,12 +336,13 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     private _removeAnswerSubscriber: Subscription;
+    private _popupInstance: any;
 
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
     private _openFloat(): void {
-        if (!this.jigsawFloatTarget) {
+        if (!this.jigsawFloatTarget || !this.jigsawFloat) {
             return;
         }
         this._$opened = true;
@@ -353,13 +371,16 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
+        this._popupInstance = popupInfo.instance
         if(this._removeAnswerSubscriber) {
             this._removeAnswerSubscriber.unsubscribe();
             this._removeAnswerSubscriber = null;
         }
-        this._removeAnswerSubscriber = popupInfo.answer.subscribe(data => {
-            this.answer.emit(data);
-        });
+        if(popupInfo.answer) {
+            this._removeAnswerSubscriber = popupInfo.answer.subscribe(data => {
+                this.answer.emit(data);
+            });
+        }
         if (!this._popupElement) {
             console.error('unable to popup drop down, unknown error!');
             return;
