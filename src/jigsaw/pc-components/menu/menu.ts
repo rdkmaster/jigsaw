@@ -8,31 +8,36 @@ import {AbstractJigsawComponent} from "../../common/common";
     template: `
         <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node" jigsawFloat
-                           [jigsawFloatTarget]="_$getTarget(node)"
-                           [jigsawFloatPosition]="'rightTop'"
-                           [jigsawFloatOptions]="_$realOptions"
-                           [jigsawFloatInitData]="_$getSubMenuData(node)"
+            <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node" jigsawCascadingMenu
+                           [jigsawCascadingMenuOptions]="_$realOptions"
+                           [jigsawCascadingMenuWidth]="_$realWidth"
+                           [jigsawCascadingMenuHeight]="_$realHeight"
+                           [jigsawCascadingMenuMaxHeight]="_$realMaxHeight"
+                           [jigsawCascadingMenuShowBorder]="_$realShowBorder"
+                           [jigsawCascadingMenuData]="node"
+                           [jigsawCascadingMenuTheme]="_$realTheme"
+                           [jigsawCascadingMenuPosition]="'rightTop'"
+                           [jigsawCascadingMenuOpenTrigger]="'mouseenter'"
+                           [jigsawCascadingMenuInitData]="{select:_$realSelect}"
                            [disabled]="node.disabled"
                            (click)="
-                                !node.disabled && select.emit(node);
-                                !node.disabled && initData?.initDataSelect?.emit(node);
-                                !node.disabled && initData?.select?.emit(node);"
+                                !node.disabled && !!node.label && select.emit(node);
+                                !node.disabled && !!node.label && initData?.select?.emit(node)"
                            (mouseleave)="_$mouseleave(index,node.disabled)">
                 <span j-title *ngIf="!!node.label && _$realTheme != 'navigation'">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
                 </span>
-                <span *ngIf="!node.label && _$realTheme != 'navigation'"> —— </span>
+                <hr *ngIf="!node.label && _$realTheme != 'navigation'">
                 <div j-sub-title *ngIf="_$realTheme != 'navigation'">{{node.subTitle}}
                     <i class="{{node.subIcon}}"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
                 <div class="navigation-title" *ngIf="_$realTheme == 'navigation'">
                     {{node.label}}
-                    <span *ngIf="!node.label"> —— </span>
-                    <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"
+                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="fa fa-angle-right"
                        style="position: absolute;right: 10px;line-height: 40px"></i>
+                    <hr *ngIf="!node.label">
                 </div>
             </j-list-option>
         </j-list>`,
@@ -99,24 +104,12 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public _$getSubMenuData(node: any): any {
-        const subMenuInitData: any = {};
-        subMenuInitData.data = node;
-        subMenuInitData.width = this._$realWidth;
-        subMenuInitData.height = this._$realHeight;
-        subMenuInitData.maxHeight = this._$realMaxHeight;
-        subMenuInitData.options = this._$realOptions;
-        subMenuInitData.showBorder = this._$realShowBorder;
-        subMenuInitData.theme = this._$realTheme;
-        if (this.initData) {
-            if (this.initData.initDataSelect) {
-                subMenuInitData.initDataSelect = this.initData.initDataSelect;
-            } else {
-                subMenuInitData.initDataSelect = this.initData.select;
-            }
+    public get _$realSelect(): any {
+        if (this.initData && this.initData.select) {
+            return this.initData.select;
+        } else {
+            return this.select;
         }
-        subMenuInitData.select = this.select;
-        return subMenuInitData;
     }
 
     @Input()
@@ -155,13 +148,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
-    }
-
-    /**
-     * @internal
-     */
-    public _$getTarget(item: SimpleNode): Type<JigsawMenu> {
-        return item.nodes && item.nodes.length > 0 && !item.disabled ? JigsawMenu : null;
     }
 
     private _setBorder() {
