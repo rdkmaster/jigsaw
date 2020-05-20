@@ -13,9 +13,31 @@ export class MenuInDomDemo {
         this.data.fromXML(`
             <node>
                 <node label="功能1">
-                    <node label="功能11"></node>
-                    <node label="功能12"></node>
-                    <node label="功能13"></node>
+                    <node label="功能11">
+                        <node label="功能11"></node>
+                        <node label="功能12"></node>
+                        <node label="功能13"></node>
+                        <node label="功能14"></node>
+                        <node label="功能15"></node>
+                        <node label="功能16"></node>
+                        <node label="功能16"></node>
+                    </node>
+                    <node label="功能12">
+                        <node label="功能21"></node>
+                        <node label="功能22"></node>
+                        <node label="功能23"></node>
+                        <node label="功能24"></node>
+                        <node label="功能25"></node>
+                        <node label="功能26"></node>
+                    </node>
+                    <node label="功能13">
+                        <node label="功能31"></node>
+                        <node label="功能32"></node>
+                        <node label="功能33"></node>
+                        <node label="功能34"></node>
+                        <node label="功能35"></node>
+                        <node label="功能36"></node>
+                    </node>
                 </node>
                 <node label="功能2">
                     <node label="功能21"></node>
