@@ -10,12 +10,18 @@ import {SimpleNode, SimpleTreeData} from "jigsaw/common/core/data/tree-data";
             padding: 2px 10px;
             border-radius: 3px;
         }
+        p {
+            margin-bottom: 8px;
+        }
     `]
 })
 export class CascadingMenuDemo {
 
     public data: SimpleTreeData;
-    public theme: string;
+    public theme: string[] = ['dark'];
+    public width: number = 150;
+    public height: number = 180;
+    public maxHeight: number = 250;
 
     constructor() {
         this.data = new SimpleTreeData();
@@ -37,13 +43,16 @@ export class CascadingMenuDemo {
                         <node label="Copy Path"></node>
                     </node>
                     <node label="Paste" disabled="true"></node>
-                    <node label="Delete"></node>
+                    <!-- 空node节点表示这是一个分隔符 -->
                     <node></node>
+                    <node label="Delete"></node>
                 </node>
                 <node label="Run" >
                     <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
                     <node label="Debug" icon="fa fa-bug" subTitle="Shift+F9"></node>
                 </node>
+                <!-- 空node节点表示这是一个分隔符 -->
+                <node></node>
                 <node label="Exit"></node>
             </node>
         `);

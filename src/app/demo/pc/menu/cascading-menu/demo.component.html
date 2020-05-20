@@ -4,29 +4,33 @@
 
 
 <!-- start to learn the demo from here -->
-<h2>Default</h2>
-<br><br><br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-      jigsawCascadingMenuWidth="150" (jigsawCascadingMenuSelect)="menuSelect($event)">
-菜单弹出
-</span>
-
-<br><br><br><br><br><br><br><br>
-
-<h2>With Settings</h2>
-<br>
-皮肤
-<jigsaw-auto-complete-input [(value)]="theme" placeholder="切换皮肤颜色" width="250"
-                            [data]="['dark' ,'light','black','navigation']">
-</jigsaw-auto-complete-input>
-<br>
-<br>
-<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-      jigsawCascadingMenuHeight="160"
-      jigsawCascadingMenuMaxHeight="200"
-      jigsawCascadingMenuWidth="150"
-      [jigsawCascadingMenuTheme]='theme'
+      [jigsawCascadingMenuHeight]="height"
+      [jigsawCascadingMenuMaxHeight]="maxHeight"
+      [jigsawCascadingMenuWidth]="width"
+      [jigsawCascadingMenuTheme]='theme[0]'
       (jigsawCascadingMenuSelect)="menuSelect($event)"
       (jigsawCascadingMenuOpenChange)="openChange($event)">
 菜单弹出
-</span>
+</span><br><br><br>
+
+<p>可用配置项</p>
+<p>
+皮肤
+<jigsaw-button-bar [(selectedItems)]="theme" [multipleSelect]="false"
+                   [data]="['light', 'dark', 'black','navigation']">
+</jigsaw-button-bar>
+</p>
+<p>
+宽度
+<jigsaw-numeric-input [(value)]="width" [step]="10"></jigsaw-numeric-input>
+</p>
+<p>
+高度
+<jigsaw-numeric-input [(value)]="height" [step]="10"></jigsaw-numeric-input>
+</p>
+<p>
+最大高度
+<jigsaw-numeric-input [(value)]="maxHeight" [step]="10"></jigsaw-numeric-input>
+</p>
+
