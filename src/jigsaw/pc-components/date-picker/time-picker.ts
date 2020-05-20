@@ -178,14 +178,17 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             let value = String(Number(this._$hour) + add);
             this._hour = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 23 ? '23' : value;
             this._updateInputValue('hour', this._hour);
+            this._$floatInitData = { mode: 'hour', value: this._$hour };
         } else if (this._$selectMode == 'minute') {
             let value = String(Number(this._$minute) + add);
             this._minute = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 59 ? '59' : value;
             this._updateInputValue('minute', this._minute);
+            this._$floatInitData = { mode: 'minute', value: this._$minute };
         } else if (this._$selectMode == 'second') {
             let value = String(Number(this._$second) + add);
             this._second = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 59 ? '59' : value;
             this._updateInputValue('second', this._second);
+            this._$floatInitData = { mode: 'second', value: this._$second };
         }
     }
 
