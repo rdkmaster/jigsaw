@@ -8,6 +8,8 @@ import {AutoCompleteInputGroupDemoModule} from "./with-group/demo.module";
 import {AutoCompleteInputNonGroupDemoModule} from "./non-group/demo.module";
 import {AutoCompleteInputSelectEventDemoComponent} from "./select-event/demo.component";
 import {AutoCompleteInputSelectEventDemoModule} from "./select-event/demo.module";
+import {AutoCompleteInputOpenDropdownDemoComponent} from "./open-dropdown/demo.component";
+import {AutoCompleteInputOpenDropdownDemoModule} from "./open-dropdown/demo.module";
 
 export const routerConfig = [
     {
@@ -21,6 +23,9 @@ export const routerConfig = [
     },
     {
         path: 'select-event', component: AutoCompleteInputSelectEventDemoComponent
+    },
+    {
+        path: 'open-dropdown', component: AutoCompleteInputOpenDropdownDemoComponent
     }
 ];
 
@@ -28,7 +33,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig), AutoCompleteInputBasicDemoModule,
         AutoCompleteInputGroupDemoModule, AutoCompleteInputNonGroupDemoModule,
-        AutoCompleteInputSelectEventDemoModule
+        AutoCompleteInputSelectEventDemoModule, AutoCompleteInputOpenDropdownDemoModule
     ]
 })
 export class AutoCompleteInputDemoModule {

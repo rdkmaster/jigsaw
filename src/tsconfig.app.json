@@ -5,8 +5,11 @@
         "baseUrl": "",
         "types": ["node"]
     },
-  "files": [
-    "main.ts",
-    "polyfills.ts"
-  ]
+    "files": [
+        "main.ts",
+        "polyfills.ts"
+    ],
+    "angularCompilerOptions": {
+        "preserveWhitespaces": true
+    }
 }

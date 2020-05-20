@@ -1,3 +1,4 @@
 <img [style.display]="_$dataValid ? 'none': 'block'" class="no-data" src="{{_$noDataSrc}}">
+<!-- class要是有改动，graph-download.directive.ts中_getChildren函数获取echarts实例的地方也需要改   -->
 <div class="jigsaw-graph" [style.display]="_$dataValid ? 'block': 'none'"></div>
 

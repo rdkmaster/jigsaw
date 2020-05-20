@@ -9,7 +9,7 @@ import {
 import {AbstractJigsawViewBase} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import * as FileSaver from 'file-saver';
-import * as JSZip from 'jszip/dist/jszip.min';
+import * as JSZip from 'jszip';
 
 import echarts from "echarts";
 
@@ -93,8 +93,12 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
             return;
         }
         if (element.localName == 'jigsaw-graph' && element.offsetWidth > 0 && element.offsetHeight > 0) {
-            this._graphsInDom.push(echarts.getInstanceByDom(element.children[1]));
-            return;
+            for (let i = 0; i < element.children.length; i++) {
+                if (element.children[i].className == "jigsaw-graph") {
+                    this._graphsInDom.push(echarts.getInstanceByDom(element.children[i]));
+                    return;
+                }
+            }
         }
         if (element.children && element.children.length > 0) {
             for (let i = 0; i < element.children.length; i++) {
