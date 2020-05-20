@@ -197,7 +197,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
-        if (popups.some(popup => this._mouseInPopup(event, popup.element))) {
+        // in-dom 状态下，第一级需要关闭
+        if ((popups.length == 1 && this._elementRef.nativeElement.localName == 'j-list-option') || popups.some(popup => this._mouseInPopup(event, popup.element))) {
             this.jigsawFloatOpen = false;
         }
     }
