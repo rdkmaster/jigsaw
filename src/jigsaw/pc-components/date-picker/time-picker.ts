@@ -104,7 +104,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
-    public _$floatTarget = JigsawTimeSelect;
+    public _$floatTarget = JigsawTimePopup;
 
     public _$selectMode: 'hour' | 'minute' | 'second' | 'none' = 'none';
 
@@ -179,6 +179,17 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    public _$popupSelect($event: {mode: string, value: string}) {
+        let {mode, value} = $event;
+        if(mode == 'hour') {
+            this._$hour = value;
+        } else if(mode == 'minute') {
+            this._$minute = value;
+        } else if (mode == 'second') {
+            this._$second = value;
+        }
+    }
+
     public writeValue(newValue: string): void {
         if(!newValue || newValue == this._value) return;
         this._value = newValue;
@@ -198,37 +209,46 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 }
 
 @Component({
-    selector: 'jigsaw-time-select, j-time-select',
-    templateUrl: 'time-select.html',
+    selector: 'jigsaw-time-popup, j-time-popup',
+    templateUrl: 'time-pop.html',
     host: {
-        '[class.jigsaw-time-select]': 'true'
+        '[class.jigsaw-time-popup]': 'true'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimeSelect implements IPopupable {
-    private _value: string;
+export class JigsawTimePopup implements IPopupable {
+    private _value: {mode: 'hour' | 'minute' | 'second', value: string};
 
-    public get initData(): string {
+    public get initData(): {mode: 'hour' | 'minute' | 'second', value: string} {
         return this._value
     }
 
-    public set initData(value: string) {
-        if (!value || value != this._value) {
+    public set initData(value: {mode: 'hour' | 'minute' | 'second', value: string}) {
+        if (!value) {
             return;
         }
         this._value = value;
-
-    }
-
-    private _createTimeSelect(hour?: number, minute?: number, second?: number) {
-        this._$hourList = Array.from(new Array(24).keys()).map(h => ({value: h++, isSelected: false}));
-        this._$minuteList = Array.from(new Array(60).keys()).map(m => ({value: m++, isSelected: false}));
-        this._$secondList = Array.from(new Array(60).keys()).map(s => ({value: s++, isSelected: false}));
+        console.log(this.initData);
+        this._updateList(this.initData);
     }
 
     public _$hourList = Array.from(new Array(24).keys()).map(h => ({value: h++, isSelected: false}));
     public _$minuteList = Array.from(new Array(60).keys()).map(m => ({value: m++, isSelected: false}));
     public _$secondList = Array.from(new Array(60).keys()).map(s => ({value: s++, isSelected: false}));
+
+    private _updateList(time: {mode: 'hour' | 'minute' | 'second', value: string}) {
+        let mode = time.mode;
+        let list = mode == 'hour' ? this._$hourList : mode == 'minute' ? this._$minuteList : mode == 'second' ? this._$secondList : null;
+        if(!list) return;
+        list.find(t => {
+            t.isSelected = Number(t.value) == Number(time.value);
+        })
+    }
+
+    public _$select(value: string) {
+        this._value.value = value;
+        this.answer.emit(this._value);
+    }
 
     @Output()
     public answer: EventEmitter<any> = new EventEmitter<any>();
@@ -236,8 +256,8 @@ export class JigsawTimeSelect implements IPopupable {
 
 @NgModule({
     imports: [CommonModule, FormsModule, JigsawFloatModule,],
-    declarations: [JigsawTimePicker, JigsawTimeSelect],
-    exports: [JigsawTimePicker, JigsawTimeSelect]
+    declarations: [JigsawTimePicker, JigsawTimePopup],
+    exports: [JigsawTimePicker, JigsawTimePopup]
 })
 export class JigsawTimePickerModule {
 

@@ -1,0 +1,14 @@
+<div class="jigsaw-time-popup-content">
+    <ul class="jigsaw-time-popup-content-hour" >
+        <li *ngFor="let hour of _$hourList" [class.jigsaw-time-popup-isSelected]="hour.isSelected" (click)="_$select(hour.value)">{{hour.value}}</li>
+    </ul>
+    <ul class="jigsaw-time-popup-content-minute" *ngIf="initData?.mode == 'minute'">
+        <li *ngFor="let minute of _$minuteList">{{minute.value}}</li>
+    </ul>
+    <ul class="jigsaw-time-popup-content-second" *ngIf="initData?.mode == 'second'">
+        <li *ngFor="let second of _$secondList">{{second.value}}</li>
+    </ul>
+</div>
+<div class="jigsaw-time-popup-control">
+
+</div>

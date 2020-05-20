@@ -21,6 +21,7 @@ import {
 import {AbstractJigsawViewBase} from "../../common";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import { Subscription } from 'rxjs';
 
 export enum DropDownTrigger {
     click,
@@ -185,6 +186,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
     }
 
+    @Output()
+    public answer = new EventEmitter<any>();
+
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
                 private _popupService: PopupService) {
@@ -206,6 +210,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (this._disposePopup) {
             this._disposePopup();
             this._disposePopup = null;
+        }
+
+        if(this._removeAnswerSubscriber) {
+            this._removeAnswerSubscriber.unsubscribe();
+            this._removeAnswerSubscriber = null;
         }
     }
 
@@ -290,6 +299,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return false;
     }
 
+    private _removeAnswerSubscriber: Subscription;
+
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
@@ -320,6 +331,13 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
+        if(this._removeAnswerSubscriber) {
+            this._removeAnswerSubscriber.unsubscribe();
+            this._removeAnswerSubscriber = null;
+        }
+        this._removeAnswerSubscriber = popupInfo.answer.subscribe(data => {
+            this.answer.emit(data);
+        });
         if (!this._popupElement) {
             console.error('unable to popup drop down, unknown error!');
             return;

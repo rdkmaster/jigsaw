@@ -1,0 +1,30 @@
+@import "../../common/assets/scss/core/base";
+
+$time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
+
+.#{$time-select-prefix-cls} {
+    @include inline-block();
+    padding: 10px 6px;
+
+    &-content {
+        &-hour, &-minute, &-second {
+            width: 250px;
+            li {
+                float: left;
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
+                text-align: center;
+                border-radius: 50%;
+                cursor: pointer;
+                &.#{$time-select-prefix-cls}-isSelected {
+                    background: $primary-color;
+                    color: $text-color-of-bg;
+                }
+                &:hover {
+                    background: $primary-2;
+                }
+            }
+        }
+    }
+}
