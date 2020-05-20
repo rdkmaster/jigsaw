@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {SimpleNode, SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import { JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -9,6 +9,7 @@ import {SimpleNode, SimpleTreeData} from "jigsaw/common/core/data/tree-data";
             border: 1px solid #999;
             padding: 2px 10px;
             border-radius: 3px;
+            cursor: pointer;
         }
         p {
             margin-bottom: 8px;
@@ -68,6 +69,18 @@ export class CascadingMenuDemo {
         } else {
             console.log(`menu is closed!`);
         }
+    }
+
+    contextMenu(event: MouseEvent) {
+        event.stopPropagation();
+        event.preventDefault();
+        JigsawMenu.show(event, {
+            data: this.data,
+            width: this.width,
+            height: this.height,
+            maxHeight: this.maxHeight,
+            theme: this.theme[0] as MenuTheme
+        });
     }
 
     // ====================================================================

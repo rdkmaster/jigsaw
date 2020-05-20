@@ -16,3 +16,4 @@ export class JigsawMenuModule {
 }
 
 export * from "../../common/directive/menu/cascading-menu";
+export * from "./menu";

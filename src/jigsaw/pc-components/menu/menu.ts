@@ -1,7 +1,20 @@
 import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
-import {IPopupable, PopupOptions} from "../../common/service/popup.service";
+import {IPopupable, PopupOptions, PopupService, PopupInfo} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
+
+export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
+
+export type MenuOptions = {
+    data?: SimpleTreeData,
+    width?: string | number,
+    height?: string | number,
+    maxHeight?: string | number,
+    theme?: MenuTheme,
+    options?: PopupOptions,
+    showBorder?: boolean,
+    select?: EventEmitter<SimpleNode>
+};
 
 @Component({
     selector: 'jigsaw-menu, j-menu',
@@ -50,7 +63,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 })
 export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
 
-    public initData: any;
+    public initData: MenuOptions;
 
     /**
      * @internal
@@ -97,7 +110,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public get _$realTheme(): 'light' | 'dark' | 'black' | 'navigation' {
+    public get _$realTheme(): MenuTheme {
         return this.initData && this.initData.theme ? this.initData.theme : this.theme;
     }
 
@@ -128,7 +141,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     public showBorder: boolean = true;
 
     @Input()
-    public theme: 'light' | 'dark' | 'black' | 'navigation' = 'light';
+    public theme: MenuTheme = 'light';
 
     /**
      * @internal
@@ -142,7 +155,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @ViewChild('menuList', {read: ElementRef, static: false})
     private _menuList: ElementRef;
 
-    constructor(private _renderer: Renderer2) {
+    constructor(private _renderer: Renderer2, private _popupService: PopupService) {
         super();
     }
 
@@ -165,5 +178,10 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         if (!disabled && classList.contains('jigsaw-list-option-active')) {
             classList.remove('jigsaw-list-option-active');
         }
+    }
+
+    public static show(event: MouseEvent, options?: MenuOptions | SimpleTreeData): PopupInfo {
+        options = options instanceof SimpleTreeData ? {data: options} : options;
+        return PopupService.instance.popup(JigsawMenu, {pos: {x: event.x, y: event.y}}, options);
     }
 }

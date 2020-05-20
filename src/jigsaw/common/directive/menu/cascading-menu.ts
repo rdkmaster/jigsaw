@@ -12,7 +12,7 @@ import {
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
-import {JigsawMenu} from "../../../pc-components/menu/menu";
+import {JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -30,7 +30,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
-    private _jigsawCascadingMenuTheme: 'light' | 'dark' | 'black' | 'navigation' = 'dark';
+    private _jigsawCascadingMenuTheme: MenuTheme = 'dark';
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')
@@ -106,11 +106,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input()
-    get jigsawCascadingMenuTheme(): 'light' | 'dark' | 'black' | 'navigation' {
+    get jigsawCascadingMenuTheme(): MenuTheme {
         return this._jigsawCascadingMenuTheme;
     }
 
-    set jigsawCascadingMenuTheme(value: 'light' | 'dark' | 'black' | 'navigation') {
+    set jigsawCascadingMenuTheme(value: MenuTheme) {
         if (this._jigsawCascadingMenuTheme != value) {
             this._jigsawCascadingMenuTheme = value;
             this.jigsawFloatInitData.theme = value;

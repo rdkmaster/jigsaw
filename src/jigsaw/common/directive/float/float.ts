@@ -236,7 +236,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     protected _closeAll(popups: PopupInfo[]) {
-        popups.forEach(popup => popup.invoker.jigsawFloatOpen = false);
+        popups.forEach(popup => popup.dispose());
     }
 
     private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
@@ -299,9 +299,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         const option: PopupOptions = this._getPopupOption();
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
-        popupInfo.invoker = this;
         this._popupElement = popupInfo.element;
         this._disposePopup = popupInfo.dispose;
+        popupInfo.dispose = this.closeFloat.bind(this);
         if (!this._popupElement) {
             console.error('unable to popup drop down, unknown error!');
             return;

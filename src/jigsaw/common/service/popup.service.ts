@@ -190,8 +190,6 @@ export class PopupInfo {
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
     windowListener?: PopupDisposer;
-    // 调用popup-service的地方
-    invoker?: any
 }
 
 // @dynamic

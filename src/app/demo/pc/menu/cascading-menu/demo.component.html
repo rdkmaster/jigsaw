@@ -4,6 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
+<br><br><br>
 <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       [jigsawCascadingMenuHeight]="height"
       [jigsawCascadingMenuMaxHeight]="maxHeight"
@@ -12,7 +13,9 @@
       (jigsawCascadingMenuSelect)="menuSelect($event)"
       (jigsawCascadingMenuOpenChange)="openChange($event)">
 菜单弹出
-</span><br><br><br>
+</span>
+<span class="menu" (contextmenu)="contextMenu($event)">右击这里</span>
+<br><br><br>
 
 <p>可用配置项</p>
 <p>
