@@ -31,6 +31,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
     private _jigsawCascadingMenuTheme: 'light' | 'dark' | 'black' | 'navigation' = 'dark';
+    private _jigsawCascadingMenuPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -116,6 +118,29 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         }
     }
 
+    @Input('jigsawCascadingMenuPosition')
+    public get jigsawFloatPosition(): 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' {
+        return this._jigsawCascadingMenuPosition;
+    };
+
+    public set jigsawFloatPosition(value: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom') {
+        if (this._jigsawCascadingMenuPosition != value) {
+            this._jigsawCascadingMenuPosition = value;
+            if (!this.jigsawFloatInitData) {
+                this.jigsawFloatInitData = {};
+            }
+            this.jigsawFloatInitData.position = value;
+        }
+    };
+
+    @Input('jigsawCascadingMenuOpenTrigger')
+    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
+
+    @Input('jigsawCascadingMenuInitData')
+    public jigsawFloatInitData: any;
+
     @Output()
     public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();
 
@@ -126,14 +151,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
      * @internal
      */
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
+
     /**
      * @internal
      */
-    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
-    /**
-     * @internal
-     */
-    public jigsawFloatInitData: any = {};
 
     constructor(protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
@@ -143,8 +164,17 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     ngOnInit() {
         super.ngOnInit();
-        this.jigsawFloatTarget = JigsawMenu as any;
-        this.jigsawFloatInitData.initDataSelect = this.jigsawCascadingMenuSelect;
+        this.jigsawFloatTarget = this.jigsawCascadingMenuData.nodes && this.jigsawCascadingMenuData.nodes.length > 0 ? JigsawMenu as any : null;
+        this.jigsawFloatInitData.data = this.jigsawCascadingMenuData;
+        this.jigsawFloatInitData.width = this.jigsawCascadingMenuWidth;
+        this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;
+        this.jigsawFloatInitData.maxHeight = this.jigsawCascadingMenuMaxHeight;
+        this.jigsawFloatInitData.options = this.jigsawFloatOptions;
+        if (!this.jigsawFloatInitData.select) {
+            this.jigsawFloatInitData.select = this.jigsawCascadingMenuSelect;
+        } else {
+            this.jigsawCascadingMenuSelect = this.jigsawFloatInitData.select;
+        }
         this.jigsawFloatInitData.theme = this.jigsawCascadingMenuTheme;
     }
 
@@ -157,7 +187,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
                     const popups = this._popupService.popups;
                     this._closeAll(popups);
                 }
-            })
+            });
         }
     }
 
