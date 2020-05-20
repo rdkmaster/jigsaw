@@ -30,6 +30,9 @@ export enum DropDownTrigger {
     none,
 }
 
+export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
     private _removeWindowClickHandler: Function;
@@ -80,8 +83,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * @internal
      */
-    public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+    public jigsawFloatPosition: FloatPosition = 'bottomLeft';
 
     /**
      * @internal
@@ -730,8 +732,7 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/position
      */
     @Input()
-    public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+    public jigsawFloatPosition: FloatPosition = 'bottomLeft';
 
     /**
      * $demo = float/target

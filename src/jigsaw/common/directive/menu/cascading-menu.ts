@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupOptions, PopupService} from "../../service/popup.service";
-import {DropDownTrigger, JigsawFloatBase} from "../float/float";
+import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
 import {JigsawMenu} from "../../../pc-components/menu/menu";
 
 @Directive({
@@ -31,8 +31,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
     private _jigsawCascadingMenuTheme: 'light' | 'dark' | 'black' | 'navigation' = 'dark';
-    private _jigsawCascadingMenuPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+    private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -119,13 +118,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input('jigsawCascadingMenuPosition')
-    public get jigsawFloatPosition(): 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' {
+    public get jigsawFloatPosition(): FloatPosition {
         return this._jigsawCascadingMenuPosition;
     };
 
-    public set jigsawFloatPosition(value: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom') {
+    public set jigsawFloatPosition(value: FloatPosition) {
         if (this._jigsawCascadingMenuPosition != value) {
             this._jigsawCascadingMenuPosition = value;
             if (!this.jigsawFloatInitData) {

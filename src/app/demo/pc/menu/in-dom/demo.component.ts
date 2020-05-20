@@ -20,7 +20,6 @@ export class MenuInDomDemo {
                         <node label="功能14"></node>
                         <node label="功能15"></node>
                         <node label="功能16"></node>
-                        <node label="功能16"></node>
                     </node>
                     <node label="功能12">
                         <node label="功能21"></node>

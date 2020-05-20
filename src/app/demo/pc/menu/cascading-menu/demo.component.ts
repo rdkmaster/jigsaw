@@ -20,7 +20,7 @@ export class CascadingMenuDemo {
     public data: SimpleTreeData;
     public theme: string[] = ['dark'];
     public width: number = 150;
-    public height: number = 180;
+    public height: number = 0;
     public maxHeight: number = 250;
 
     constructor() {
