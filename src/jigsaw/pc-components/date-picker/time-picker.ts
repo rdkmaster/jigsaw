@@ -131,6 +131,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._checkFormat(mode);
         if (this._$selectMode == mode) {
             this._$selectMode = 'none';
+            this._$floatOpen = false;
         }
         this._updateValue();
     }

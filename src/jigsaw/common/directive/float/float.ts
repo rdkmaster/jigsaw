@@ -58,9 +58,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return this._popupElement;
     }
 
-    @Input()
-    public jigsawFloat: boolean = true;
-
     private _jigsawFloatInitData: any;
     @Input()
     public get jigsawFloatInitData(): any {
@@ -71,6 +68,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         this._jigsawFloatInitData = data;
         if(this._popupInstance && this.initialized) {
             this._popupInstance.initData = data;
+            this._cdr
         }
     }
 
@@ -342,7 +340,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
     private _openFloat(): void {
-        if (!this.jigsawFloatTarget || !this.jigsawFloat) {
+        if (!this.jigsawFloatTarget) {
             return;
         }
         this._$opened = true;

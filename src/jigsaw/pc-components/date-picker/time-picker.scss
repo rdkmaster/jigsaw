@@ -22,13 +22,11 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
         outline: none;
         width: 22px;
         height: 100%;
-        /*border-radius: 3px;*/
         text-align: center;
         &:hover {
             background: $primary-2;
         }
         &.#{$time-prefix-cls}-input-selected {
-            /*background: $primary-color;*/
             border-bottom: 1px solid $primary-color;
         }
     }

@@ -8,6 +8,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
 
     &-content {
         &-hour, &-minute, &-second {
+            @include clearfix();
             width: 240px;
             li {
                 float: left;
