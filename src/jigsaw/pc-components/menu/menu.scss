@@ -1,6 +1,8 @@
 $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
 .#{$menu-prefix-cls}-dark {
+    background: none !important;
+
     .jigsaw-list {
         background: #102331;
         border: #2e4657 1px solid;
@@ -55,6 +57,8 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 }
 
 .#{$menu-prefix-cls}-black {
+    background: none !important;
+
     .jigsaw-list {
         background: #151518;
         border: #2e2e33 1px solid;
@@ -109,6 +113,8 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 }
 
 .#{$menu-prefix-cls}-light {
+    background: none !important;
+
     .jigsaw-list {
         background: #ffffff;
         border: #cccccc 1px solid;
@@ -163,6 +169,8 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 }
 
 .#{$menu-prefix-cls}-navigation {
+    background: none !important;
+
     .jigsaw-list {
         background: #32404e;
         border: none;
