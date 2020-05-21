@@ -132,9 +132,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('second', this._second);
         if (this.initialized && this._second.length > 1) {
             this._updateValue.emit();
-            if (this._$floatOpen && this._$selectMode == 'second') {
-                this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
-            }
+            this._$cancelSelect('second');
         }
     }
 
@@ -224,14 +222,16 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._$floatInitData = {mode: 'hour', value: this._$hour, step: this.step};
         } else if (this._$selectMode == 'minute') {
             add = add * this.step;
-            let value = String(Number(this._$minute) + add);
+            let value = parseInt(Number(this._$minute) / this.step + '') * this.step + '';
+            value = String(Number(value) + add);
             let max = parseInt(59 / this.step + '') * this.step;
             this._minute = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > max ? String(max) : value;
             this._updateInputValue('minute', this._minute);
             this._$floatInitData = {mode: 'minute', value: this._$minute, step: this.step};
         } else if (this._$selectMode == 'second') {
             add = add * this.step;
-            let value = String(Number(this._$second) + add);
+            let value = parseInt(Number(this._$second) / this.step + '') * this.step + '';
+            value = String(Number(value) + add);
             let max = parseInt(59 / this.step + '') * this.step;
             this._second = isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > max ? String(max) : value;
             this._updateInputValue('second', this._second);
