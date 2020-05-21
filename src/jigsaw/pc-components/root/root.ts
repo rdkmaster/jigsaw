@@ -10,7 +10,7 @@ import {
     JigsawLoadingModule
 } from "../../common/components/loading/loading";
 import {JigsawNotification, JigsawNotificationModule} from "../notification/notification";
-import { JigsawMenu, JigsawMenuModule } from '../menu';
+import { JigsawMenu, JigsawMenuModule } from '../menu/index';
 
 @Component({
     selector: 'jigsaw-root, j-root',
