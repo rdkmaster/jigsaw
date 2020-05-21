@@ -190,6 +190,8 @@ export class PopupInfo {
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
     windowListener?: PopupDisposer;
+    // 用于弹出方自行定制
+    extra?: any;
 }
 
 // @dynamic

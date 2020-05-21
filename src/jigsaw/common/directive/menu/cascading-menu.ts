@@ -23,6 +23,8 @@ import {JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
     }
 })
 export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, AfterViewInit, OnDestroy {
+    protected _floatOpenDelay = 300;
+    protected _floatCloseDelay = 200;
 
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
@@ -177,8 +179,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (!this._removeClickHandler) {
             this._removeClickHandler = this.jigsawCascadingMenuSelect.subscribe((node: SimpleNode) => {
                 if (!node.nodes || node.nodes.length == 0) {
-                    const popups = this._popupService.popups;
-                    this._closeAll(popups);
+                    // 叶子节点，点击了要关闭整个菜单
+                    this._closeAllFloats();
                 }
             });
         }
@@ -202,19 +204,36 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         super._$openByHover($event);
     }
 
-    /**
-     * window的click关闭所有的弹出的menu, demo中的右击
-     * $demo = menu/cascading-menu
-     */
-    protected _closeByWindowClick() {
-        this._popupService.popups.forEach((popup) => {
-            popup.dispose();
-        });
+    // protected _onWindowClick() {
+    //     this._popupService.popups.forEach((popup) => {
+    //         popup.dispose();
+    //     });
+    // }
+
+    protected _openFloat(): PopupInfo {
+        const popupInfo = super._openFloat();
+        if (!!popupInfo) {
+            // 将当前类作为此类弹出的一个标志，关闭所有弹出时，只关闭具有此标志的弹出
+            popupInfo.extra = JigsawCascadingMenu;
+        }
+        return popupInfo;
     }
 
-    protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
-        if (popups.some(popup => this._mouseInPopup(event, popup.element))) {
-            this.jigsawFloatOpen = false;
+    protected _closeFloat(event?: any) {
+        if (event && event.type == 'mouseleave') {
+            if (PopupService.instance.popups.some(popup => this._mouseInPopup(event, popup.element))) {
+                super._closeFloat(event);
+            }
+        } else if (event && event.type == 'click') {
+            this._closeAllFloats();
+        } else {
+            super._closeFloat(event);
         }
+    }
+
+    private _closeAllFloats(): void {
+        const popups = this._popupService.popups;
+        popups.filter(popup => popup.extra === JigsawCascadingMenu)
+            .forEach(popup => popup.dispose());
     }
 }

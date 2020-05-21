@@ -21,7 +21,8 @@ export type MenuOptions = {
     template: `
         <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node" jigsawCascadingMenu
+            <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node"
+                           jigsawCascadingMenu
                            [jigsawCascadingMenuOptions]="_$realOptions"
                            [jigsawCascadingMenuWidth]="_$realWidth"
                            [jigsawCascadingMenuHeight]="_$realHeight"

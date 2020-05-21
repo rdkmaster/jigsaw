@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {JigsawMenu, MenuTheme, PopupInfo, SimpleNode, SimpleTreeData} from 'jigsaw/public_api';
+import {Component, ViewChild} from "@angular/core";
+import {JigsawMenu, MenuTheme, PopupInfo, SimpleNode, SimpleTreeData, PopupService} from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -25,7 +25,7 @@ export class CascadingMenuDemo {
     public height: number = 0;
     public maxHeight: number = 250;
 
-    constructor() {
+    constructor( private ps: PopupService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>
@@ -87,6 +87,18 @@ export class CascadingMenuDemo {
             maxHeight: this.maxHeight,
             theme: this.theme[0] as MenuTheme
         });
+    }
+
+    @ViewChild('tpDialog1', {static: false})
+    dialog;
+
+    info;
+    openDialog() {
+        this.info = this.ps.popup(this.dialog);
+    }
+
+    closeDialog() {
+        this.info.dispose();
     }
 
     // ====================================================================

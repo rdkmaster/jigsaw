@@ -34,8 +34,11 @@ export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight
     'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
-    private _disposePopup: PopupDisposer;
     protected _removeWindowClickHandler: Function;
+    protected _floatOpenDelay = 100;
+    protected _floatCloseDelay = 400;
+
+    private _disposePopup: PopupDisposer;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
     private _removeMouseOutHandler: Function;
@@ -44,7 +47,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
     private _$target: Type<IPopupable> | TemplateRef<any>;
-
     private _popupElement: HTMLElement;
 
     public get popupElement(): HTMLElement {
@@ -66,7 +68,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     public set jigsawFloatTarget(value: Type<IPopupable> | TemplateRef<any>) {
         if (this._$target != value) {
             this._$target = value;
-            if (this._$opened == true) {
+            if (this._opened == true) {
                 this._closeFloat();
                 this.callLater(() => {
                     this._openFloat();
@@ -85,24 +87,21 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatPosition: FloatPosition = 'bottomLeft';
 
-    /**
-     * @internal
-     */
-    private _$opened: boolean = false;
+    private _opened: boolean = false;
 
     /**
      * @internal
      */
     public get jigsawFloatOpen(): boolean {
-        return this._$opened;
+        return this._opened;
     }
 
     public set jigsawFloatOpen(value: boolean) {
         value = !!value;
-        if (value == this._$opened) {
+        if (value == this._opened) {
             return;
         }
-        this._$opened = value;
+        this._opened = value;
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
@@ -140,8 +139,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return;
         }
         this._openFloat();
-        this._$opened = true;
-        this.jigsawFloatOpenChange.emit(this._$opened);
+        this._opened = true;
+        this.jigsawFloatOpenChange.emit(this._opened);
     }
 
     public closeFloat(): void {
@@ -149,8 +148,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return;
         }
         this._closeFloat();
-        this._$opened = false;
-        this.jigsawFloatOpenChange.emit(this._$opened);
+        this._opened = false;
+        this.jigsawFloatOpenChange.emit(this._opened);
     }
 
     public ngOnDestroy() {
@@ -196,7 +195,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         this._rollInDenouncesTimer = this.callLater(() => {
             this.jigsawFloatOpen = true;
-        }, 400);
+        }, this._floatOpenDelay);
     }
 
     /**
@@ -205,7 +204,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * @param offset 代表偏移，注册在float触发器上的mouseleave在计算element中的位置是要往前回退一个坐标，
      * 注册在弹出层上的mouseleave无需偏移
      */
-    public _$closeByHover(event, offset = 0) {
+    public _$closeByHover(event: any, offset: number = 0) {
         const popups = this._popupService.popups;
         this.clearCallLater(this._rollInDenouncesTimer);
         if (this.jigsawFloatCloseTrigger != 'mouseleave' || !popups || popups.length == 0) {
@@ -227,25 +226,14 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
-                this._closeJigsawFloat(event, popups);
-            }, 200);
+                this._closeFloat(event);
+            }, this._floatCloseDelay);
         }
-    }
-
-    protected _closeAll(popups: PopupInfo[]) {
-        popups.forEach(popup => popup.dispose());
     }
 
     protected _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
             && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
-    }
-
-    protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
-        this.jigsawFloatOpen = false;
-        if (!popups.some(popup => this._mouseInPopup(event, popup.element))) {
-            this._closeAll(popups);
-        }
     }
 
     /**
@@ -274,36 +262,38 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this.closeFloat();
     }
 
+    protected _onWindowClick(event: any): void {
+        if (this.jigsawFloatCloseTrigger == 'none') {
+            return;
+        }
+        if (event.target == this._elementRef.nativeElement) {
+            return;
+        }
+        if (this._isChildOf(event.target, this._elementRef.nativeElement)) {
+            return;
+        }
+        this._removeWindowClickHandler();
+        this._removeWindowClickHandler = null;
+        if (this._removeResizeHandler) {
+            this._removeResizeHandler();
+            this._removeResizeHandler = null;
+        }
+        this._closeFloat(event);
+    }
+
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
-    private _openFloat() {
+    protected _openFloat(): PopupInfo {
         if (!this.jigsawFloatTarget) {
             return;
         }
-        this._$opened = true;
+        this._opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
         // 点击window时，自动关闭,但当closeTrigger为none时无法关掉的
-        this._removeWindowClickHandler = this._renderer.listen('window', 'click', (event) => {
-            if (this.jigsawFloatCloseTrigger == 'none') {
-                return;
-            }
-            if (event.target == this._elementRef.nativeElement) {
-                return;
-            }
-            if (this._isChildOf(event.target, this._elementRef.nativeElement)) {
-                return;
-            }
-            this._removeWindowClickHandler();
-            this._removeWindowClickHandler = null;
-            if (this._removeResizeHandler) {
-                this._removeResizeHandler();
-                this._removeResizeHandler = null;
-            }
-            this._closeByWindowClick();
-        });
+        this._removeWindowClickHandler = this._renderer.listen('window', 'click', (event) => this._onWindowClick(event));
 
         const option: PopupOptions = this._getPopupOption();
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
@@ -312,7 +302,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         popupInfo.dispose = this.closeFloat.bind(this);
         if (!this._popupElement) {
             console.error('unable to popup drop down, unknown error!');
-            return;
+            return popupInfo;
         }
 
         if (option.borderType == 'pointer') {
@@ -342,14 +332,14 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (this._removeResizeHandler) {
             this._removeResizeHandler();
         }
-        this._removeResizeHandler = this._renderer.listen("window", "resize",
-            () => {
+        this._removeResizeHandler = this._renderer.listen("window", "resize", () => {
                 PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
                 if (option.borderType == 'pointer') {
                     this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1]);
                     this._setArrow(this._popupElement);
                 }
             });
+        return popupInfo;
     }
 
     private _getPos(): PopupPoint {
@@ -614,9 +604,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
     /**
      * 立即关闭下拉视图
+     * @event 子类有用到
      */
-    private _closeFloat(): void {
-        this._$opened = false;
+    protected _closeFloat(event?: any): void {
+        this._opened = false;
         if (this._disposePopup) {
             this._disposePopup();
             this._disposePopup = null;
