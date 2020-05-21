@@ -259,9 +259,21 @@ export class JigsawTimePopup implements IPopupable {
         })
     }
 
-    public _$hourList = Array.from(new Array(24).keys()).map(h => ({ value: h++, isSelected: false }));
-    public _$minuteList = Array.from(new Array(60).keys()).map(m => ({ value: m++, isSelected: false }));
-    public _$secondList = Array.from(new Array(60).keys()).map(s => ({ value: s++, isSelected: false }));
+    public _$hourList = Array.from(new Array(24).keys()).map(h => {
+        let time: any = h++;
+        time = (time < 10 ? '0' : '') + time
+        return { value: time, isSelected: false }
+    });
+    public _$minuteList = Array.from(new Array(60).keys()).map(m => {
+        let time: any = m++;
+        time = (time < 10 ? '0' : '') + time
+        return { value: time, isSelected: false }
+    })
+    public _$secondList = Array.from(new Array(60).keys()).map(s => {
+        let time: any = s++;
+        time = (time < 10 ? '0' : '') + time
+        return { value: time, isSelected: false }
+    })
 
     private _updateList(time: { mode: TimeSelectMode, value: string }) {
         let mode = time.mode;
