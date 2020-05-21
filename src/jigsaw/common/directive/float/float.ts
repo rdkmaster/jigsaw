@@ -270,18 +270,14 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return false;
     }
 
+    protected _closeByWindowClick() {
+        this.closeFloat();
+    }
+
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
-    protected _openFloat(): void {
-        this._openJigsawFloat();
-    }
-
-    protected _closeByWindowClick(){
-        this.jigsawFloatOpen = false;
-    }
-
-    private _openJigsawFloat() {
+    private _openFloat() {
         if (!this.jigsawFloatTarget) {
             return;
         }
