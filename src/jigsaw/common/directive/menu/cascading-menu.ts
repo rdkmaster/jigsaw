@@ -194,20 +194,19 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     public _$openByHover($event) {
         // 跟当前宿主平级或者以下的其他弹出需要先关闭
-        if (this._elementRef.nativeElement.localName == 'j-list-option') {
-            const index = this._popupService.popups.findIndex(popup => popup.element == this._elementRef.nativeElement.parentElement.parentElement);
-            this._popupService.popups.forEach((popup, ind) => {
-                if (ind > index) {
-                    popup.dispose();
-                }
-            });
+        if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
+            const target = this._elementRef.nativeElement.parentElement.parentElement;
+            const index = this._popupService.popups.findIndex(popup => popup.element == target);
+            this._popupService.popups.filter((_, idx) => idx > index).forEach(popup => popup.dispose());
         }
         super._$openByHover($event);
     }
 
+    /**
+     * window的click关闭所有的弹出的menu, demo中的右击
+     * $demo = menu/cascading-menu
+     */
     protected _closeByWindowClick() {
-        // window的click关闭所有的弹出的menu, demo中的右击
-        // $demo = menu/cascading-menu
         this._popupService.popups.forEach((popup) => {
             popup.dispose();
         });

@@ -155,7 +155,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @ViewChild('menuList', {read: ElementRef, static: false})
     private _menuList: ElementRef;
 
-    constructor(private _renderer: Renderer2, private _popupService: PopupService) {
+    constructor(private _renderer: Renderer2) {
         super();
     }
 
