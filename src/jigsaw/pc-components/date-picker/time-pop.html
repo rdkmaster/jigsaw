@@ -9,6 +9,6 @@
         <li *ngFor="let second of _$secondList" [class.jigsaw-time-popup-isSelected]="second.isSelected" (click)="_$select(second.value)">{{second.value}}</li>
     </ul>
 </div>
-<div class="jigsaw-time-popup-control">
-
+<div class="jigsaw-time-popup-control" *ngIf="initData?.mode == 'hour'">
+    <span (click)="_$select('now')">{{'timePicker.now' | translate}}</span>
 </div>

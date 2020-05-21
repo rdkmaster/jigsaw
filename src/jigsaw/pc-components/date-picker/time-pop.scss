@@ -5,6 +5,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
 .#{$time-select-prefix-cls} {
     @include inline-block();
     padding: 10px 6px;
+    position: relative;
 
     &-content {
         &-hour, &-minute, &-second {
@@ -25,6 +26,21 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
                     background: $primary-color;
                     color: $text-color-of-bg;
                 }
+            }
+        }
+    }
+
+    &-control {
+        @include clearfix();
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        span {
+            float: right;
+            color: $primary-color;
+            cursor: pointer;
+            &:hover {
+                color: $primary-8;
             }
         }
     }

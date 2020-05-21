@@ -6,6 +6,10 @@ import {Component} from "@angular/core";
 export class TimePickerBasicDemoComponent {
     time;
 
+    valueChange($event) {
+        console.log('time change to ', $event);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
