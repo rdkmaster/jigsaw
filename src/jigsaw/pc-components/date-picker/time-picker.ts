@@ -146,7 +146,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public _$floatArrowElement: HTMLElement;
 
-    public _$handleSelectMode(mode: TimeSelectMode | 'none') {
+    public _$handleSelectMode(mode: TimeSelectMode | 'none', isTabSwitch?: boolean) {
         this._$selectMode = mode;
         this._$floatOpen = mode == 'none' ? false : true;
         if (mode == 'hour') {
@@ -154,11 +154,15 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._$floatInitData = {mode: 'hour', value: this._$hour, step: this.step};
             this._$floatArrowElement = this._hourInput.nativeElement;
         } else if (mode == 'minute') {
-            this._minuteInput.nativeElement.select();
+            if(!isTabSwitch) {
+                this._minuteInput.nativeElement.select();
+            }
             this._$floatInitData = {mode: 'minute', value: this._$minute, step: this.step};
             this._$floatArrowElement = this._minuteInput.nativeElement;
         } else if (mode == 'second') {
-            this._secondInput.nativeElement.select();
+            if(!isTabSwitch) {
+                this._secondInput.nativeElement.select();
+            }
             this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
             this._$floatArrowElement = this._secondInput.nativeElement;
         }
@@ -209,6 +213,12 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._$handleCtrlBarClick($event, 1);
         } else if ($event.keyCode == 40) {
             this._$handleCtrlBarClick($event, -1);
+        } else if ($event.keyCode == 9) {
+            if(this._$selectMode == 'hour') {
+                this._$handleSelectMode('minute', true);
+            } else if(this._$selectMode == 'minute') {
+                this._$handleSelectMode('second', true);
+            }
         }
     }
 
