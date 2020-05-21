@@ -58,6 +58,17 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return this._popupElement;
     }
 
+    private _jigsawFloatArrowElement: HTMLElement;
+    @Input()
+    public get jigsawFloatArrowElement(): HTMLElement {
+        return this._jigsawFloatArrowElement;
+    }
+
+    public set jigsawFloatArrowElement(el: HTMLElement) {
+        this._jigsawFloatArrowElement = el;
+        this._setArrow(this._popupElement);
+    }
+
     private _jigsawFloatInitData: any;
     @Input()
     public get jigsawFloatInitData(): any {
@@ -68,7 +79,6 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         this._jigsawFloatInitData = data;
         if(this._popupInstance && this.initialized) {
             this._popupInstance.initData = data;
-            this._cdr
         }
     }
 
@@ -422,7 +432,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     private _getPos(): PopupPoint {
-        let point = this._getHostElementPos();
+        let point = this._getElementPos();
         const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
@@ -449,16 +459,17 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return point;
     }
 
-    private _getHostElementPos() {
+    private _getElementPos(element?: HTMLElement) {
+        element = element ? element : this._elementRef.nativeElement;
         let point = new PopupPoint();
         if (this.jigsawFloatOptions && this.jigsawFloatOptions.posType == PopupPositionType.fixed) {
             // 获取触发点相对于视窗的位置
-            const tempRect = this._elementRef.nativeElement.getBoundingClientRect();
+            const tempRect = element.getBoundingClientRect();
             point.y = tempRect.top;
             point.x = tempRect.left;
         } else {
-            point.y = AffixUtils.offset(this._elementRef.nativeElement).top;
-            point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
+            point.y = AffixUtils.offset(element).top;
+            point.x = AffixUtils.offset(element).left;
         }
         return point;
     }
@@ -536,10 +547,16 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         if (options.borderType != 'pointer' || !popupElement) {
             return;
         }
-        const hostPosition = this._getHostElementPos();
+        const hostPosition = this._getElementPos(this.jigsawFloatArrowElement);
         const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
-        const host = this._elementRef.nativeElement;
-        let ele = document.createElement('div');
+        const host = this.jigsawFloatArrowElement ? this.jigsawFloatArrowElement : this._elementRef.nativeElement;
+        let ele = <HTMLElement>this.popupElement.querySelector('.jigsaw-float-arrow');
+        if(ele) {
+            this.popupElement.removeChild(ele);
+        }
+        ele = document.createElement('div');
+        ele.setAttribute("class", "jigsaw-float-arrow");
+
         //根据tooltip尖角算出来大概在5√2，约为7px
         ele.style.width = '7px';
         ele.style.height = '7px';
@@ -618,7 +635,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
-        const point = this._getHostElementPos();
+        const point = this._getElementPos();
         const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||

@@ -112,18 +112,23 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public _$floatInitData: any = { mode: this._$selectMode, value: this._$hour };
 
+    public _$floatArrowElement: HTMLElement;
+
     public _$handleSelectMode(mode: TimeSelectMode) {
         this._$selectMode = mode;
         this._$floatOpen = true;
         if (mode == 'hour') {
             this._hourInput.nativeElement.select();
             this._$floatInitData = { mode: 'hour', value: this._$hour };
+            this._$floatArrowElement = this._hourInput.nativeElement;
         } else if (mode == 'minute') {
             this._minuteInput.nativeElement.select();
             this._$floatInitData = { mode: 'minute', value: this._$minute };
+            this._$floatArrowElement = this._minuteInput.nativeElement;
         } else if (mode == 'second') {
             this._secondInput.nativeElement.select();
             this._$floatInitData = { mode: 'second', value: this._$second };
+            this._$floatArrowElement = this._secondInput.nativeElement;
         }
     }
 
