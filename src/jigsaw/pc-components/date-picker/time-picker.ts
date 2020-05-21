@@ -101,6 +101,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('second', this._second);
         if (this.initialized && this._second.length > 1) {
             this._updateValue();
+            if(this._$floatOpen) {
+                this._$floatInitData = { mode: 'second', value: this._$second };
+            }
         }
     }
 
