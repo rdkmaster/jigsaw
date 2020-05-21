@@ -26,9 +26,13 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
 
     @Input()
     public disabled : boolean =false;
-    // 获取映射的子组件
+
+    /**
+     * 获取映射的子组件
+     * @internal
+     */
     @ContentChildren(forwardRef(() => JigsawListOption))
-    protected _items: QueryList<JigsawListOption>;
+    public _items: QueryList<JigsawListOption>;
 }
 
 @Component({

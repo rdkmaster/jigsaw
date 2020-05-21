@@ -190,6 +190,8 @@ export class PopupInfo {
     dispose: PopupDisposer;
     answer: EventEmitter<ButtonInfo>;
     windowListener?: PopupDisposer;
+    // 用于弹出方自行定制
+    extra?: any;
 }
 
 // @dynamic
@@ -202,10 +204,20 @@ export class PopupService {
         return PopupService._instance;
     }
 
-    private _popups: PopupInfo[] = [];
+    private static _popups: PopupInfo[] = [];
+
+    public static get allPopups(): PopupInfo[] {
+        return this._popups.concat();
+    }
 
     public get popups(): PopupInfo[] {
-        return this._popups.concat();
+        return PopupService.allPopups;
+    }
+
+    public static mouseInPopupElement(mouseEvent: MouseEvent, element: HTMLElement): boolean {
+        // 加1减1为了兼容有border的情况
+        return mouseEvent.clientX >= element.offsetLeft + 1 && mouseEvent.clientX < element.offsetLeft + element.offsetWidth - 1
+            && mouseEvent.clientY >= element.offsetTop + 1 && mouseEvent.clientY < element.offsetTop + element.offsetHeight - 1;
     }
 
     public elements: HTMLElement[] = [];
@@ -271,7 +283,7 @@ export class PopupService {
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
             disposer: PopupDisposer;
-
+        options = options || {};
         //popup block
         blockDisposer = this._popupBlocker(options);
         [popupInfo, popupRef] = this._popupFactory(what, options);
@@ -279,10 +291,10 @@ export class PopupService {
         popupDisposer = popupInfo.dispose;
         //set disposer
         disposer = () => {
-            const target: PopupInfo = this._popups.find(p => p.element === element);
-            const index = this._popups.indexOf(target);
+            const target: PopupInfo = PopupService._popups.find(p => p.element === element);
+            const index = PopupService._popups.indexOf(target);
             if (index >= 0) {
-                this._popups.splice(index, 1);
+                PopupService._popups.splice(index, 1);
             }
 
             if (popupDisposer) {
@@ -318,7 +330,7 @@ export class PopupService {
             instance: popupRef['instance'], element: element, dispose: disposer,
             answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
         };
-        this._popups.push(result);
+        PopupService._popups.push(result);
         return result;
     }
 
@@ -626,7 +638,7 @@ export class PopupService {
         this._setAbsolutePosition(position.left, position.top, options, element);
 
         // 注册窗口事件
-        const target: PopupInfo = this._popups.find(p => p.element === element);
+        const target: PopupInfo = PopupService._popups.find(p => p.element === element);
         if (!target) {
             return;
         }

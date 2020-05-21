@@ -4,20 +4,19 @@
 
 
 <!-- start to learn the demo from here -->
-<br><br><br>
-<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
+<p jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       [jigsawCascadingMenuHeight]="height"
-      [jigsawCascadingMenuMaxHeight]="maxHeight"
       [jigsawCascadingMenuWidth]="width"
       [jigsawCascadingMenuTheme]='theme[0]'
-      (jigsawCascadingMenuSelect)="menuSelect($event)"
-      (jigsawCascadingMenuOpenChange)="openChange($event)">
+      (jigsawCascadingMenuSelect)="menuSelect($event)">
 菜单弹出
-</span>
-<span class="menu" (contextmenu)="contextMenu($event)">右击这里</span>
-<br><br><br>
+</p>
+<div (contextmenu)="contextMenu($event)" class="context-menu">
+    <p>右击这里</p>
+</div>
+<br><br>
 
-<p>可用配置项</p>
+<h3 style="margin-bottom:8px;">可用配置项</h3>
 <p>
 皮肤
 <jigsaw-button-bar [(selectedItems)]="theme" [multipleSelect]="false"
@@ -32,8 +31,9 @@
 高度
 <jigsaw-numeric-input [(value)]="height" [step]="10"></jigsaw-numeric-input>
 </p>
-<p>
-最大高度
-<jigsaw-numeric-input [(value)]="maxHeight" [step]="10"></jigsaw-numeric-input>
-</p>
 
+<p style="width: 500px;">
+    关于高度说明：<br>
+    菜单高度默认是由菜单项自动撑出来的，一个层级下有多少菜单项，该级菜单就有多高。
+    当给定某个菜单高度值时，则所有菜单均保持此高度，菜单项少于此高度，则给出背景色填充，如果菜单项多于此高度，则给出滚动条
+</p>
