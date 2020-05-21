@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import { JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData } from 'jigsaw/public_api';
+import {JigsawMenu, MenuTheme, PopupInfo, SimpleNode, SimpleTreeData} from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,6 +11,7 @@ import { JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData } from 'jigsaw/public
             border-radius: 3px;
             cursor: pointer;
         }
+
         p {
             margin-bottom: 8px;
         }
@@ -71,10 +72,15 @@ export class CascadingMenuDemo {
         }
     }
 
+    private _context: PopupInfo;
+
     contextMenu(event: MouseEvent) {
         event.stopPropagation();
         event.preventDefault();
-        JigsawMenu.show(event, {
+        if (!!this._context) {
+            this._context.dispose();
+        }
+        this._context = JigsawMenu.show(event, {
             data: this.data,
             width: this.width,
             height: this.height,

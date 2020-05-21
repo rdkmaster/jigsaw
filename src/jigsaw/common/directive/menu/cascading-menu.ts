@@ -144,9 +144,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Output('jigsawCascadingMenuOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    /**
-     * @internal
-     */
+    @Input('jigsawCascadingMenuCloseTrigger')
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
 
     /**
@@ -196,9 +194,29 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         }
     }
 
+    public _$openByHover($event) {
+        // 跟当前宿主平级或者以下的其他弹出需要先关闭
+        if (this._elementRef.nativeElement.localName == 'j-list-option') {
+            const index = this._popupService.popups.findIndex(popup => popup.element == this._elementRef.nativeElement.parentElement.parentElement);
+            this._popupService.popups.forEach((popup, ind) => {
+                if (ind > index) {
+                    popup.dispose();
+                }
+            });
+        }
+        super._$openByHover($event);
+    }
+
+    protected _closeByWindowClick() {
+        // window的click关闭所有的弹出的menu, demo中的右击
+        // $demo = menu/cascading-menu
+        this._popupService.popups.forEach((popup) => {
+            popup.dispose();
+        });
+    }
+
     protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
-        // in-dom 状态下，第一级需要关闭
-        if ((popups.length == 1 && this._elementRef.nativeElement.localName == 'j-list-option') || popups.some(popup => this._mouseInPopup(event, popup.element))) {
+        if (popups.some(popup => this._mouseInPopup(event, popup.element))) {
             this.jigsawFloatOpen = false;
         }
     }

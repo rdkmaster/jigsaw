@@ -31,11 +31,11 @@ export enum DropDownTrigger {
 }
 
 export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+    'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     private _disposePopup: PopupDisposer;
-    private _removeWindowClickHandler: Function;
+    protected _removeWindowClickHandler: Function;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
     private _removeMouseOutHandler: Function;
@@ -237,8 +237,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     protected _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
-        return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX <= element.offsetLeft + element.offsetWidth
-            && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY <= element.offsetTop + element.offsetHeight;
+        return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
+            && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
     }
 
     protected _closeJigsawFloat(event: MouseEvent, popups: PopupInfo[]) {
@@ -273,7 +273,15 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
-    private _openFloat(): void {
+    protected _openFloat(): void {
+        this._openJigsawFloat();
+    }
+
+    protected _closeByWindowClick(){
+        this.jigsawFloatOpen = false;
+    }
+
+    private _openJigsawFloat() {
         if (!this.jigsawFloatTarget) {
             return;
         }
@@ -298,7 +306,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 this._removeResizeHandler();
                 this._removeResizeHandler = null;
             }
-            this.jigsawFloatOpen = false;
+            this._closeByWindowClick();
         });
 
         const option: PopupOptions = this._getPopupOption();
@@ -721,13 +729,13 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     public jigsawFloatInitData: any;
 
     @Input()
-    public jigsawFloatOpen:boolean;
+    public jigsawFloatOpen: boolean;
 
     /**
      * $demo = float/option
      */
     @Input()
-    public jigsawFloatOptions:PopupOptions;
+    public jigsawFloatOptions: PopupOptions;
 
     /**
      * 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
@@ -742,9 +750,9 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/target
      */
     @Input()
-    public jigsawFloatTarget : Type<IPopupable> | TemplateRef<any>;
+    public jigsawFloatTarget: Type<IPopupable> | TemplateRef<any>;
 
     @Output()
-    public jigsawFloatOpenChange : EventEmitter<boolean> = new EventEmitter<boolean>();
+    public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 }
