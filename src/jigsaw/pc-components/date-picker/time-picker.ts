@@ -94,7 +94,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('hour', this._hour);
         if (this.initialized && this._hour.length > 1) {
             this._updateValue.emit();
-            this._$handleSelectMode('minute');
+            if(this._$selectMode == 'hour') {
+                this._$handleSelectMode('minute');
+            }
         }
     }
 
@@ -111,7 +113,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('minute', this._minute);
         if (this.initialized && this._minute.length > 1) {
             this._updateValue.emit();
-            this._$handleSelectMode('second');
+            if(this._$selectMode == 'minute') {
+                this._$handleSelectMode('second');
+            }
         }
     }
 
@@ -128,7 +132,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('second', this._second);
         if (this.initialized && this._second.length > 1) {
             this._updateValue.emit();
-            if (this._$floatOpen) {
+            if (this._$floatOpen && this._$selectMode == 'second') {
                 this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
             }
         }
@@ -239,8 +243,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         let {mode, value} = $event;
         if (mode == 'hour') {
             if(value == 'now') {
+                this._$selectMode = 'none';
                 [this._$hour, this._$minute, this._$second] = TimeService.convertValue('now', TimeGr.second).split(' ')[1].split(':');
-                this._$cancelSelect('hour', true);
+                this._$cancelSelect(mode, true);
             } else {
                 this._$hour = value;
             }
