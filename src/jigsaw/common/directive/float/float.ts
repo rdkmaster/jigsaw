@@ -143,11 +143,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this.jigsawFloatOpenChange.emit(this._opened);
     }
 
-    public closeFloat(): void {
+    public closeFloat($event?: any): void {
         if (!this._disposePopup) {
             return;
         }
-        this._closeFloat();
+        this._closeFloat($event);
         this._opened = false;
         this.jigsawFloatOpenChange.emit(this._opened);
     }
@@ -226,7 +226,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
-                this._closeFloat(event);
+                this.closeFloat(event);
             }, this._floatCloseDelay);
         }
     }
@@ -258,10 +258,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return false;
     }
 
-    protected _closeByWindowClick() {
-        this.closeFloat();
-    }
-
     protected _onWindowClick(event: any): void {
         if (this.jigsawFloatCloseTrigger == 'none') {
             return;
@@ -278,7 +274,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             this._removeResizeHandler();
             this._removeResizeHandler = null;
         }
-        this._closeFloat(event);
+        this.closeFloat(event);
     }
 
     /**
@@ -333,12 +329,12 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             this._removeResizeHandler();
         }
         this._removeResizeHandler = this._renderer.listen("window", "resize", () => {
-                PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
-                if (option.borderType == 'pointer') {
-                    this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1]);
-                    this._setArrow(this._popupElement);
-                }
-            });
+            PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
+            if (option.borderType == 'pointer') {
+                this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1]);
+                this._setArrow(this._popupElement);
+            }
+        });
         return popupInfo;
     }
 

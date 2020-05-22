@@ -218,6 +218,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (event && event.type == 'click') {
             // 全局click
             closeAllContextMenu(this._popupService.popups);
+        } else if (event && event.type == 'mouseleave') {
+            if (PopupService.instance.popups.some(popup => this._mouseInPopup(event, popup.element))) {
+                super._closeFloat(event);
+            }
         } else {
             super._closeFloat(event);
         }
