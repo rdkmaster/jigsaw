@@ -46,7 +46,7 @@ export class CascadingMenuDemo {
                         <node label="Copy Path"></node>
                     </node>
                     <node label="Paste" disabled="true"></node>
-                    <!-- 空node节点表示这是一个分隔符 -->
+                    <!-- 无labe属性的node节点表示这是一个分隔符 -->
                     <node></node>
                     <node label="Delete"></node>
                 </node>
@@ -54,7 +54,7 @@ export class CascadingMenuDemo {
                     <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
                     <node label="Debug" icon="fa fa-bug" subTitle="Shift+F9"></node>
                 </node>
-                <!-- 空node节点表示这是一个分隔符 -->
+                <!-- 无labe属性的node节点表示这是一个分隔符 -->
                 <node></node>
                 <node label="Exit"></node>
             </node>

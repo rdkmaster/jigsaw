@@ -18,12 +18,21 @@ export class MenuOptions {
     select?: EventEmitter<SimpleNode>;
 };
 
+/**
+ * @internal
+ */
 export const contextMenuFlag = class ContextMenuFlag {};
+/**
+ * @internal
+ */
 export function closeAllContextMenu(popups: PopupInfo[]): void {
     popups.filter(popup => popup.extra === contextMenuFlag)
         .forEach(popup => popup.dispose());
 }
 
+/**
+ * @internal
+ */
 @Component({
     template: `
         <div style="width:0px; height:0px;" jigsawCascadingMenu
@@ -250,7 +259,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         if (!ctx.select) {
             ctx.select = new EventEmitter<SimpleNode>();
         }
-        const subscription = ctx.select.subscribe((node: SimpleNode) => {
+        const selectSubscription = ctx.select.subscribe((node: SimpleNode) => {
             CommonUtils.safeInvokeCallback(context, callback, [node]);
         });
         const popOpt = {
@@ -258,8 +267,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         };
         const info = PopupService.instance.popup(JigsawMenuHelper, popOpt, ctx);
         info.extra = contextMenuFlag;
-        info.answer.subscribe(() => {
-            subscription.unsubscribe();
+        const answerSubscription = info.answer.subscribe(() => {
+            selectSubscription.unsubscribe();
+            answerSubscription.unsubscribe();
         });
         return info;
     }
