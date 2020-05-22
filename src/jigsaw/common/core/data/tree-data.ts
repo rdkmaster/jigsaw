@@ -65,6 +65,7 @@ export type SimpleNode = {
     [prop: string]: any;
 }
 
+declare const DOMParser;
 let domParser: any;
 
 /**
@@ -83,6 +84,9 @@ export class SimpleTreeData extends GeneralCollection<any> {
     nodes?: SimpleNode[];
 
     public static parseXML(xml: string): XMLDocument {
+        if (CommonUtils.isUndefined(DOMParser)) {
+            throw new Error('DOMParser is not supported in current environment');
+        }
         if (CommonUtils.isUndefined(domParser)) {
             domParser = new DOMParser();
         }
