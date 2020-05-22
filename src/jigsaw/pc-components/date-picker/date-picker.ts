@@ -140,7 +140,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$showYearList() {
-        this._$selectMode = this._$selectMode != 'year' ? 'year' : this._$gr == TimeGr.month ? 'month' : 'day';
+        this._$selectMode = this._$selectMode != 'year' ? 'year' : this.gr == TimeGr.month ? 'month' : 'day';
     }
 
     /**
@@ -156,7 +156,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         } else {
             this._createCalendar(yearCell.year, this._$curMonth.month);
         }
-        this._$selectMode = this._$gr == TimeGr.month ? 'month' : 'day';
+        this._$selectMode = this.gr == TimeGr.month ? 'month' : 'day';
     }
 
     private _createMonthCal(month: number) {
@@ -191,7 +191,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$showMonthList() {
-        this._$selectMode = this._$selectMode != 'month' || this._$gr == TimeGr.month ? 'month' : 'day';
+        this._$selectMode = this._$selectMode != 'month' || this.gr == TimeGr.month ? 'month' : 'day';
     }
 
     /**
@@ -207,7 +207,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         } else {
             this._createCalendar(this._$curYear, monthCell.month);
         }
-        if (this._$gr != TimeGr.month) {
+        if (this.gr != TimeGr.month) {
             this._$selectMode = 'day';
         }
     }
@@ -383,20 +383,20 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     @Output()
     public grChange = new EventEmitter<TimeGr>();
 
-    public _$gr: TimeGr = TimeGr.date;
+    public _gr: TimeGr = TimeGr.date;
 
     @Input()
     public get gr(): TimeGr | string {
-        return this._$gr;
+        return this._gr;
     }
 
     public set gr(value: TimeGr | string) {
         if (typeof value === 'string') {
             value = TimeGr[value];
         }
-        if (<TimeGr>value != this._$gr) {
-            this._$gr = <TimeGr>value;
-            this._$selectMode = TimeGr[this._$gr] == 'month' ? 'month' : 'day';
+        if (<TimeGr>value != this._gr) {
+            this._gr = <TimeGr>value;
+            this._$selectMode = TimeGr[this._gr] == 'month' ? 'month' : 'day';
             if (this.initialized) {
                 if (this.date) {
                     this.writeValue(this.date);

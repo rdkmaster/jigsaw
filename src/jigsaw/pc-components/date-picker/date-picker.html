@@ -1,6 +1,6 @@
 <div class="jigsaw-date-picker-header">
     <div class="jigsaw-date-picker-gr-switch" *ngIf="grItems && grItems.length">
-        <span *ngFor="let item of grItems" (click)="_$changeGr(item)" [class.active]="item.value==_$gr">
+        <span *ngFor="let item of grItems" (click)="_$changeGr(item)" [class.active]="item.value==gr">
             {{item.label}}
         </span>
     </div>
