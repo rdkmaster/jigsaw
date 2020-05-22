@@ -1,4 +1,5 @@
 import {GeneralCollection} from "./general-collection";
+import {CommonUtils} from "../utils/common-utils";
 
 /**
  * 用于处理树状关系的数据，目前只实现了最基础的功能，后续会增加子级数据懒加载等功能。
@@ -9,6 +10,7 @@ import {GeneralCollection} from "./general-collection";
  */
 export class TreeData extends GeneralCollection<any> {
     [index: string]: any;
+
     /**
      * 此属性的值一般用于显示在界面上
      */
@@ -63,13 +65,15 @@ export type SimpleNode = {
     [prop: string]: any;
 }
 
-const domParser = new DOMParser();
+declare const DOMParser;
+let domParser: any;
 
 /**
  * 对树形结构的json进行一个简单的包装，比如把ztree的数据包装成jigsaw认识的数据
  */
 export class SimpleTreeData extends GeneralCollection<any> {
     [prop: string]: any;
+
     /**
      * 此属性的值一般用于显示在界面上
      */
@@ -80,6 +84,12 @@ export class SimpleTreeData extends GeneralCollection<any> {
     nodes?: SimpleNode[];
 
     public static parseXML(xml: string): XMLDocument {
+        if (CommonUtils.isUndefined(DOMParser)) {
+            throw new Error('DOMParser is not supported in current environment');
+        }
+        if (CommonUtils.isUndefined(domParser)) {
+            domParser = new DOMParser();
+        }
         return xml ? domParser.parseFromString(xml, 'text/xml') : null;
     }
 
