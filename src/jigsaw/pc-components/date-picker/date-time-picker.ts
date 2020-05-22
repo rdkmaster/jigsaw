@@ -39,6 +39,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         super();
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(300)).subscribe(updateParam => {
             if (updateParam) {
+                if (!this.date) return;
                 let date = TimeService.convertValue(this.date, this._$dateGr);
                 if (this._$date != date) {
                     this._$date = date;
@@ -94,7 +95,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     private _date: WeekTime;
     public _$time: string;
-    public _$date: WeekTime;
+    public _$date: string;
 
     @Input()
     public get date(): WeekTime {
@@ -189,9 +190,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     public writeValue(): void {
+        if(!this._$date) return;
         let date = this._$date;
         if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
-            if (!this._$time) return;
+            this._$time = this._$time ? this._$time : this.gr == TimeGr.second ? '00:00:00' : '00:00';
             date += ` ${this._$time}`
         }
         if (this._date == date) return;
@@ -212,9 +214,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.date) {
-            this._updateValue.emit(true);
-        }
+        this._updateValue.emit(true);
     }
 
     ngOnDestroy() {
