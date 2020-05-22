@@ -8,9 +8,10 @@ import {
     Input,
     NgModule,
     NgZone,
+    OnDestroy,
+    OnInit,
     Output,
-    ViewChild,
-    OnDestroy
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -20,13 +21,13 @@ import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {TimeGr, TimeService} from "../../common/service/time.service";
-import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import {Subscription} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10;
 export type TimePopupValue = { mode: TimeSelectMode, value: string, step: TimeStep };
-export type TimePopupItem = {value: string, isSelected: boolean};
+export type TimePopupItem = { value: string, isSelected: boolean };
 
 @Component({
     selector: 'jigsaw-time-picker, j-time-picker',
@@ -42,11 +43,19 @@ export type TimePopupItem = {value: string, isSelected: boolean};
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy {
+export class JigsawTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit {
     constructor(private _cdr: ChangeDetectorRef, protected _zone: NgZone) {
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(300)).subscribe(() => {
-            this.writeValue([this._$hour, this._$minute, this._$second].join(':'));
+            let value;
+            if (this.gr == TimeGr.time) {
+                value = [this._$hour, this._$minute, this._$second].join(':')
+            } else if (this.gr == TimeGr.time_hour_minute) {
+                value = [this._$hour, this._$minute].join(':')
+            } else if (this.gr == TimeGr.time_minute_second) {
+                value = [this._$minute, this._$second].join(':')
+            }
+            this.writeValue(value);
         })
     }
 
@@ -60,7 +69,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     public set value(value: string) {
         if (!value || value == this._value) return;
         this.writeValue(value);
-        [this._$hour, this._$minute, this._$second] = value.split(':');
+        if (this.initialized) {
+            this._createTime(value, this.gr);
+        }
     }
 
     private _step: TimeStep = 1;
@@ -73,6 +84,23 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (!step || step == this._step) return;
         step = step != 1 && step != 5 && step != 10 ? 1 : step;
         this._step = step;
+    }
+
+    private _gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second = TimeGr.time;
+    @Input()
+    public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | string {
+        return this._gr;
+    }
+
+    public set gr(gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | string) {
+        if (typeof gr === 'string') {
+            gr = TimeGr[gr];
+        }
+        if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second) return;
+        this._gr = gr;
+        if (this.initialized) {
+            this._createTime(this.value, gr);
+        }
     }
 
     @Output()
@@ -94,7 +122,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('hour', this._hour);
         if (this.initialized && this._hour.length > 1) {
             this._updateValue.emit();
-            if(this._$selectMode == 'hour') {
+            if (this._$selectMode == 'hour' && (this.gr == TimeGr.time || this.gr == TimeGr.time_hour_minute)) {
                 this._$handleSelectMode('minute');
             }
         }
@@ -113,7 +141,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._updateInputValue('minute', this._minute);
         if (this.initialized && this._minute.length > 1) {
             this._updateValue.emit();
-            if(this._$selectMode == 'minute') {
+            if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
                 this._$handleSelectMode('second');
             }
         }
@@ -136,6 +164,17 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    private _createTime(time: string, gr) {
+        let timeArr = time.split(':');
+        if (gr == TimeGr.time) {
+            [this._$hour, this._$minute, this._$second] = timeArr;
+        } else if (gr == TimeGr.time_hour_minute) {
+            [this._$hour, this._$minute] = timeArr;
+        } else if (gr == TimeGr.time_minute_second) {
+            [this._$minute, this._$second] = timeArr;
+        }
+    }
+
     public _$selectMode: TimeSelectMode | 'none' = 'none';
 
     public _$floatTarget = JigsawTimePopup;
@@ -154,13 +193,13 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._$floatInitData = {mode: 'hour', value: this._$hour, step: this.step};
             this._$floatArrowElement = this._hourInput.nativeElement;
         } else if (mode == 'minute') {
-            if(!isTabSwitch) {
+            if (!isTabSwitch) {
                 this._minuteInput.nativeElement.select();
             }
             this._$floatInitData = {mode: 'minute', value: this._$minute, step: this.step};
             this._$floatArrowElement = this._minuteInput.nativeElement;
         } else if (mode == 'second') {
-            if(!isTabSwitch) {
+            if (!isTabSwitch) {
                 this._secondInput.nativeElement.select();
             }
             this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
@@ -214,9 +253,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         } else if ($event.keyCode == 40) {
             this._$handleCtrlBarClick($event, -1);
         } else if ($event.keyCode == 9) {
-            if(this._$selectMode == 'hour') {
+            if (this._$selectMode == 'hour') {
                 this._$handleSelectMode('minute', true);
-            } else if(this._$selectMode == 'minute') {
+            } else if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
                 this._$handleSelectMode('second', true);
             }
         }
@@ -252,7 +291,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     public _$popupSelect($event: TimePopupValue) {
         let {mode, value} = $event;
         if (mode == 'hour') {
-            if(value == 'now') {
+            if (value == 'now') {
                 this._$selectMode = 'none';
                 [this._$hour, this._$minute, this._$second] = TimeService.convertValue('now', TimeGr.second).split(' ')[1].split(':');
                 this._$cancelSelect(mode, true);
@@ -284,9 +323,14 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     public registerOnTouched(fn: any): void {
     }
 
+    ngOnInit() {
+        super.ngOnInit();
+        this._createTime(this.value, this.gr);
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
-        if(this._removeUpdateValueSubscriber) {
+        if (this._removeUpdateValueSubscriber) {
             this._removeUpdateValueSubscriber.unsubscribe();
             this._removeUpdateValueSubscriber = null;
         }

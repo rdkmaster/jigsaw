@@ -1,12 +1,15 @@
 <div class="jigsaw-time-picker-wrapper" jigsawFloat jigsawFloatOpenTrigger="none"
-    jigsawFloatCloseTrigger="none" [jigsawFloatTarget]="_$floatTarget" [jigsawFloatInitData]="_$floatInitData"
-    [jigsawFloatOptions]="{borderType: 'pointer', showBorder: true}" [(jigsawFloatOpen)]='_$floatOpen' [jigsawFloatArrowElement]="_$floatArrowElement" (answer)="_$popupSelect($event)">
-    <input #hour [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'" [(ngModel)]="_$hour"
-        (blur)="_$cancelSelect('hour')" (click)="_$handleSelectMode('hour')"> :
+     jigsawFloatCloseTrigger="none" [jigsawFloatTarget]="_$floatTarget" [jigsawFloatInitData]="_$floatInitData"
+     [jigsawFloatOptions]="{borderType: 'pointer', showBorder: true}" [(jigsawFloatOpen)]='_$floatOpen'
+     [jigsawFloatArrowElement]="_$floatArrowElement" (answer)="_$popupSelect($event)">
+    <input #hour *ngIf="gr == 6 || gr == 7" [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'"
+           [(ngModel)]="_$hour" (blur)="_$cancelSelect('hour')" (click)="_$handleSelectMode('hour')">
+    <span *ngIf="gr == 6 || gr == 7" class="jigsaw-time-picker-colon">:</span>
     <input #minute [class.jigsaw-time-picker-input-selected]="_$selectMode == 'minute'" [(ngModel)]="_$minute"
-        (blur)="_$cancelSelect('minute')" (click)="_$handleSelectMode('minute')"> :
-    <input #second [class.jigsaw-time-picker-input-selected]="_$selectMode == 'second'" [(ngModel)]="_$second"
-        (blur)="_$cancelSelect('second')" (click)="_$handleSelectMode('second')">
+           (blur)="_$cancelSelect('minute')" (click)="_$handleSelectMode('minute')">
+    <span *ngIf="gr == 6 || gr == 8" class="jigsaw-time-picker-colon">:</span>
+    <input #second *ngIf="gr == 6 || gr == 8" [class.jigsaw-time-picker-input-selected]="_$selectMode == 'second'"
+           [(ngModel)]="_$second" (blur)="_$cancelSelect('second')" (click)="_$handleSelectMode('second')">
     <div class="jigsaw-time-picker-ctrl">
         <div *ngIf="_$selectMode != 'none'; else clock" class="jigsaw-time-picker-ctrl-bar">
             <span class="fa fa-caret-up" (mousedown)="_$handleCtrlBarClick($event, 1)"></span>

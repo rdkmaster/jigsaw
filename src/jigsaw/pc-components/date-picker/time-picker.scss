@@ -2,7 +2,7 @@
 
 $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
 
-.#{$time-prefix-cls}{
+.#{$time-prefix-cls} {
     @include inline-block();
     position: relative;
     width: 135px;
@@ -14,20 +14,31 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
     overflow: hidden;
     padding: 4px 34px 4px 8px;
 
-    input {
-        @include inline-block();
-        padding: 3px 0;
-        border: 0;
-        margin: 0;
-        outline: none;
-        width: 22px;
-        height: 100%;
-        text-align: center;
-        &:hover {
-            background: $primary-2;
+    &-wrapper {
+        display: flex;
+
+        input {
+            @include inline-block();
+            flex: 1;
+            padding: 3px 0;
+            border: 0;
+            margin: 0;
+            outline: none;
+            width: 22px;
+            height: 100%;
+            text-align: center;
+
+            &:hover {
+                background: $primary-2;
+            }
+
+            &.#{$time-prefix-cls}-input-selected {
+                border-bottom: 1px solid $primary-color;
+            }
         }
-        &.#{$time-prefix-cls}-input-selected {
-            border-bottom: 1px solid $primary-color;
+
+        .#{$time-prefix-cls}-colon {
+            margin: 0 4px;
         }
     }
 
@@ -55,6 +66,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
             justify-content: center;
             align-items: center;
             border-left: 1px solid $border-color-base;
+
             span {
                 display: flex;
                 flex: 1;
@@ -73,6 +85,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
 
                 &:last-child {
                     border-bottom: none;
+
                     &:before {
                         content: "\f107";
                     }
