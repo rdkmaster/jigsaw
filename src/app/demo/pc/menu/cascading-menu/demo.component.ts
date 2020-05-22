@@ -1,5 +1,6 @@
-import {Component, ViewChild} from "@angular/core";
-import {JigsawMenu, MenuTheme, PopupInfo, SimpleNode, SimpleTreeData, PopupService} from 'jigsaw/public_api';
+import {Component, ViewChild, EventEmitter} from "@angular/core";
+import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'jigsaw/public_api';
+
 
 @Component({
     templateUrl: './demo.component.html',
@@ -61,7 +62,7 @@ export class CascadingMenuDemo {
     }
 
     menuSelect(node: SimpleNode) {
-        console.log(`${node.label} 被点击了!!!`);
+        console.log("Dropdown menu selected, node =", node);
     }
 
     openChange($event) {
@@ -72,20 +73,15 @@ export class CascadingMenuDemo {
         }
     }
 
-    private _context: PopupInfo;
-
     contextMenu(event: MouseEvent) {
-        event.stopPropagation();
-        event.preventDefault();
-        if (!!this._context) {
-            this._context.dispose();
-        }
-        this._context = JigsawMenu.show(event, {
+        JigsawMenu.show(event, {
             data: this.data,
             width: this.width,
             height: this.height,
             maxHeight: this.maxHeight,
-            theme: this.theme[0] as MenuTheme
+            theme: this.theme[0] as MenuTheme,
+        }, node => {
+            console.log("Context menu selected, node =", node);
         });
     }
 

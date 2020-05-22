@@ -1,20 +1,72 @@
-import {Component, Output, EventEmitter, Type, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
-import {IPopupable, PopupOptions, PopupService, PopupInfo} from "../../common/service/popup.service";
+import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
+import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
+import { CommonUtils } from '../../common/core/utils/common-utils';
+import { JigsawCascadingMenu } from 'jigsaw/common/directive/menu/cascading-menu';
 
 export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
 
-export type MenuOptions = {
-    data?: SimpleTreeData,
-    width?: string | number,
-    height?: string | number,
-    maxHeight?: string | number,
-    theme?: MenuTheme,
-    options?: PopupOptions,
-    showBorder?: boolean,
-    select?: EventEmitter<SimpleNode>
+export class MenuOptions {
+    data?: SimpleTreeData;
+    width?: string | number;
+    height?: string | number;
+    maxHeight?: string | number;
+    theme?: MenuTheme;
+    options?: PopupOptions;
+    showBorder?: boolean;
+    select?: EventEmitter<SimpleNode>;
 };
+
+export const contextMenuFlag = class ContextMenuFlag {};
+export function closeAllContextMenu(popups: PopupInfo[]): void {
+    popups.filter(popup => popup.extra === contextMenuFlag)
+        .forEach(popup => popup.dispose());
+}
+
+@Component({
+    template: `
+        <div style="width:0px; height:0px;" jigsawCascadingMenu
+             [jigsawCascadingMenuOptions]="initData?.options"
+             [jigsawCascadingMenuWidth]="initData?.width"
+             [jigsawCascadingMenuHeight]="initData?.height"
+             [jigsawCascadingMenuMaxHeight]="initData?.maxHeight"
+             [jigsawCascadingMenuShowBorder]="initData?.showBorder"
+             [jigsawCascadingMenuData]="initData?.data"
+             [jigsawCascadingMenuTheme]="initData?.theme"
+             [jigsawCascadingMenuPosition]="'bottomLeft'"
+             [jigsawCascadingMenuOpenTrigger]="'none'"
+             [jigsawCascadingMenuCloseTrigger]="'click'"
+             (jigsawCascadingMenuSelect)="onSelect($event)"
+             (jigsawCascadingMenuOpenChange)="openChange($event)">
+        </div>
+    `
+})
+export class JigsawMenuHelper implements IPopupable, AfterViewInit {
+    public answer: EventEmitter<any> = new EventEmitter<any>();
+    public initData: MenuOptions;
+
+    @ViewChild(JigsawCascadingMenu, {static: false})
+    public cascadingMenu: JigsawCascadingMenu;
+
+    public onSelect(node: SimpleNode): void {
+        if (this.initData && this.initData.select) {
+            this.initData.select.emit(node);
+        }
+    }
+
+    public openChange(open: boolean) {
+        if (!open) {
+            this.answer.emit();
+        }
+    }
+
+    public ngAfterViewInit():void {
+        setTimeout(() => {
+            this.cascadingMenu.openFloat();
+        }, 0);
+    }
+}
 
 @Component({
     selector: 'jigsaw-menu, j-menu',
@@ -181,8 +233,34 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
-    public static show(event: MouseEvent, options?: MenuOptions | SimpleTreeData): PopupInfo {
-        options = options instanceof SimpleTreeData ? {data: options} : options;
-        return PopupService.instance.popup(JigsawMenu, {pos: {x: event.x, y: event.y}}, options);
+    public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
+                        callback?: (node: SimpleNode) => void, context?: any): PopupInfo {
+        if (!event) {
+            return;
+        }
+        event.stopPropagation();
+        event.preventDefault();
+        if (!options) {
+            return;
+        }
+
+        closeAllContextMenu(PopupService.instance.popups);
+
+        const ctx = options instanceof SimpleTreeData ? {data: options} : options;
+        if (!ctx.select) {
+            ctx.select = new EventEmitter<SimpleNode>();
+        }
+        const subscription = ctx.select.subscribe((node: SimpleNode) => {
+            CommonUtils.safeInvokeCallback(context, callback, [node]);
+        });
+        const popOpt = {
+            pos: {x: event.clientX, y: event.clientY}, posType: PopupPositionType.fixed
+        };
+        const info = PopupService.instance.popup(JigsawMenuHelper, popOpt, ctx);
+        info.extra = contextMenuFlag;
+        info.answer.subscribe(() => {
+            subscription.unsubscribe();
+        });
+        return info;
     }
 }
