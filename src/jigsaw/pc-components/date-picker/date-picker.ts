@@ -408,7 +408,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _date: WeekTime;
-    private _dateInitBak: WeekTime;
 
     @Input()
     public get date(): WeekTime {
@@ -419,7 +418,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.initialized) {
             this.writeValue(newValue);
         } else {
-            this._dateInitBak = newValue
+            this._date = newValue;
         }
     }
 
@@ -573,8 +572,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     ngOnInit() {
         super.ngOnInit();
-        if (this._dateInitBak) {
-            this.writeValue(this._dateInitBak);
+        if (this.date) {
+            this.writeValue(this.date);
         } else {
             this._createCalendar();
         }
