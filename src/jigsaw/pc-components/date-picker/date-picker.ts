@@ -318,7 +318,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     private _getDayMark(year: number, month: number, day: number): {type: string, label?: string} {
         if (!(this.markDates instanceof Array)) {
-            return {type: 'none'};
+            return {type: 'none', label: ''};
         }
         let compareDate = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
         let [mark, label] = [MarkDateType[MarkDateType.none], ''];
