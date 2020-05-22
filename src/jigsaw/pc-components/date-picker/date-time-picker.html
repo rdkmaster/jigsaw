@@ -1,5 +1,10 @@
-<jigsaw-date-picker [(date)]="date"></jigsaw-date-picker>
-<div class="jigsaw-date-time-picker-bottom">
-    <j-time-picker height="24" [(value)]="_$time"></j-time-picker>
+<div class="jigsaw-date-time-picker-gr-switch" *ngIf="grItems && grItems.length">
+    <span *ngFor="let item of grItems" (click)="_$changeGr(item)" [class.active]="item.value==gr">
+        {{item.label}}
+    </span>
+</div>
+<jigsaw-date-picker [(date)]="_$date" (dateChange)="_$handleDateChange($event)" [gr]="_$dateGr" [markDates]="markDates"></jigsaw-date-picker>
+<div class="jigsaw-date-time-picker-bottom" *ngIf="!!_$timeGr">
+    <j-time-picker height="24" [(value)]="_$time" (valueChange)="_$handleTimeChange($event)" [gr]="_$timeGr"></j-time-picker>
 </div>
 

@@ -24,8 +24,8 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         & > span {
             display: inline-block;
             flex: 1;
-            height: 26px;
-            line-height: 24px;
+            height: 24px;
+            line-height: 22px;
             background: $component-background;
             border: 1px solid $border-color-base;
             border-right: none;

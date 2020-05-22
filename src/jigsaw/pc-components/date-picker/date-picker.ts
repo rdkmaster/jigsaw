@@ -383,7 +383,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     @Output()
     public grChange = new EventEmitter<TimeGr>();
 
-    public _gr: TimeGr = TimeGr.date;
+    private _gr: TimeGr = TimeGr.date;
 
     @Input()
     public get gr(): TimeGr | string {
