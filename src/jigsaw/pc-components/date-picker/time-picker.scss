@@ -21,6 +21,9 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
 
     &-wrapper {
         display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
 
         input {
             @include inline-block();
