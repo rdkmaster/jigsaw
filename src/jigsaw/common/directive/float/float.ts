@@ -101,7 +101,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (value == this._opened) {
             return;
         }
-        this._opened = value;
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
@@ -268,8 +267,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (this._isChildOf(event.target, this._elementRef.nativeElement)) {
             return;
         }
-        this._removeWindowClickHandler();
-        this._removeWindowClickHandler = null;
+        if (this._removeWindowClickHandler) {
+            this._removeWindowClickHandler();
+            this._removeWindowClickHandler = null;
+        }
         if (this._removeResizeHandler) {
             this._removeResizeHandler();
             this._removeResizeHandler = null;
@@ -281,7 +282,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
     protected _openFloat(): PopupInfo {
-        if (!this.jigsawFloatTarget) {
+        if (!this.jigsawFloatTarget || this._opened) {
             return;
         }
         this._opened = true;

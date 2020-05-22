@@ -3,7 +3,7 @@ import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} fr
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import { CommonUtils } from '../../common/core/utils/common-utils';
-import { JigsawCascadingMenu } from 'jigsaw/common/directive/menu/cascading-menu';
+// import { JigsawCascadingMenu } from 'jigsaw/common/directive/menu/cascading-menu';
 
 export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
 
@@ -44,6 +44,7 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              [jigsawCascadingMenuData]="initData?.data"
              [jigsawCascadingMenuTheme]="initData?.theme"
              [jigsawCascadingMenuPosition]="'bottomLeft'"
+             [jigsawCascadingMenuOpen]="true"
              [jigsawCascadingMenuOpenTrigger]="'none'"
              [jigsawCascadingMenuCloseTrigger]="'click'"
              (jigsawCascadingMenuSelect)="onSelect($event)"
@@ -51,12 +52,9 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
         </div>
     `
 })
-export class JigsawMenuHelper implements IPopupable, AfterViewInit {
+export class JigsawMenuHelper implements IPopupable {
     public answer: EventEmitter<any> = new EventEmitter<any>();
     public initData: MenuOptions;
-
-    @ViewChild(JigsawCascadingMenu, {static: false})
-    public cascadingMenu: JigsawCascadingMenu;
 
     public onSelect(node: SimpleNode): void {
         if (this.initData && this.initData.select) {
@@ -68,12 +66,6 @@ export class JigsawMenuHelper implements IPopupable, AfterViewInit {
         if (!open) {
             this.answer.emit();
         }
-    }
-
-    public ngAfterViewInit():void {
-        setTimeout(() => {
-            this.cascadingMenu.openFloat();
-        }, 0);
     }
 }
 
@@ -253,7 +245,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             return;
         }
 
-        closeAllContextMenu(PopupService.instance.popups);
+        closeAllContextMenu(PopupService.allPopups);
 
         const ctx = options instanceof SimpleTreeData ? {data: options} : options;
         if (!ctx.select) {

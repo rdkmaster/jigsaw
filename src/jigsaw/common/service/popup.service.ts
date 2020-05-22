@@ -204,10 +204,14 @@ export class PopupService {
         return PopupService._instance;
     }
 
-    private _popups: PopupInfo[] = [];
+    private static _popups: PopupInfo[] = [];
+
+    public static get allPopups(): PopupInfo[] {
+        return this._popups.concat();
+    }
 
     public get popups(): PopupInfo[] {
-        return this._popups.concat();
+        return PopupService.allPopups;
     }
 
     public elements: HTMLElement[] = [];
@@ -281,10 +285,10 @@ export class PopupService {
         popupDisposer = popupInfo.dispose;
         //set disposer
         disposer = () => {
-            const target: PopupInfo = this._popups.find(p => p.element === element);
-            const index = this._popups.indexOf(target);
+            const target: PopupInfo = PopupService._popups.find(p => p.element === element);
+            const index = PopupService._popups.indexOf(target);
             if (index >= 0) {
-                this._popups.splice(index, 1);
+                PopupService._popups.splice(index, 1);
             }
 
             if (popupDisposer) {
@@ -320,7 +324,7 @@ export class PopupService {
             instance: popupRef['instance'], element: element, dispose: disposer,
             answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
         };
-        this._popups.push(result);
+        PopupService._popups.push(result);
         return result;
     }
 
@@ -628,7 +632,7 @@ export class PopupService {
         this._setAbsolutePosition(position.left, position.top, options, element);
 
         // 注册窗口事件
-        const target: PopupInfo = this._popups.find(p => p.element === element);
+        const target: PopupInfo = PopupService._popups.find(p => p.element === element);
         if (!target) {
             return;
         }
