@@ -52,6 +52,7 @@ import {routerConfig as transferConfig} from "./demo/pc/transfer/demo-set.module
 import {routerConfig as breadcrumbConfig} from "./demo/pc/breadcrumb/demo-set.module";
 import {routerConfig as datePickerConfig} from "./demo/pc/date-picker/demo-set.module";
 import {routerConfig as timePickerConfig} from "./demo/pc/time-picker/demo-set.module";
+import {routerConfig as dateTimePickerConfig} from "./demo/pc/date-time-picker/demo-set.module";
 import {routerConfigPC} from "./router-config";
 
 @Component({
@@ -148,7 +149,8 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
         this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
         this._addRouterConfig(routerConfig, 'date-picker', datePickerConfig);
-        this._addRouterConfig(routerConfig, '0time-picker', timePickerConfig);
+        this._addRouterConfig(routerConfig, 'time-picker', timePickerConfig);
+        this._addRouterConfig(routerConfig, '0date-time-picker', dateTimePickerConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

@@ -1,0 +1,21 @@
+@import "../../common/assets/scss/core/base";
+
+$date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
+
+.#{$date-time-prefix-cls} {
+    @include inline-block();
+    border-radius: 4px;
+    border: 1px solid $border-color-base;
+    overflow: hidden;
+    user-select: none;
+    jigsaw-date-picker {
+        border: none;
+    }
+
+    &-bottom {
+        padding: 0 10px 10px;
+
+    }
+
+
+}

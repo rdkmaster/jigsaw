@@ -208,8 +208,12 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/date-picker/demo-set.module').then(m => m.DatePickerDemoModule),
     },
     {
-        path: "pc/0time-picker",
+        path: "pc/time-picker",
         loadChildren: () => import('./demo/pc/time-picker/demo-set.module').then(m => m.TimePickerDemoModule),
+    },
+    {
+        path: "pc/0date-time-picker",
+        loadChildren: () => import('./demo/pc/date-time-picker/demo-set.module').then(m => m.DateTimePickerDemoModule),
     }
 ];
 export const routerConfigMobile = [

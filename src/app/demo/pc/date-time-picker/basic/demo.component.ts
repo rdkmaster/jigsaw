@@ -3,7 +3,7 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class DatePickerBasicDemoComponent {
+export class DateTimePickerBasicDemoComponent {
     date;
 
     // ====================================================================
