@@ -10,8 +10,8 @@ import {
     ElementRef
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
-import {PopupInfo, PopupOptions, PopupService, PopupSize} from "../../service/popup.service";
-import {DropDownTrigger, JigsawFloatBase, FloatPosition, FloatMessage} from "../float/float";
+import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
+import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
 import {JigsawMenu, MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "../../../pc-components/menu/menu";
 
 @Directive({
@@ -202,6 +202,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             this._removeParentClickHandler();
             this._removeParentClickHandler = null;
         }
+        if (this._removeBodyNodeRemovedHandler) {
+            this._removeBodyNodeRemovedHandler();
+            this._removeBodyNodeRemovedHandler = null;
+        }
     }
 
     public _$openByHover($event) {
@@ -217,6 +221,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     private _removeParentClickHandler: any;
+    private _removeBodyNodeRemovedHandler: any;
 
     private _onParentEvents(): void {
         const parent = this._popupService.popups.reverse().find(p => p.extra != cascadingMenuFlag);
@@ -235,15 +240,14 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         });
 
         // 多级弹出时，上一级弹出视图关闭时，要关闭上下文菜单
-        if (parent.answer) {
-            const subscription = parent.answer.subscribe((msg: FloatMessage) => {
-                subscription.unsubscribe();
-                if (msg.message !== 'disposed') {
-                    return;
-                }
-                closeAllContextMenu(this._popupService.popups);
-            });
-        }
+        this._removeBodyNodeRemovedHandler = this._renderer.listen(document.body, 'DOMNodeRemoved', element => {
+            if (element.target !== parent.element) {
+                return;
+            }
+            this._removeBodyNodeRemovedHandler();
+            this._removeBodyNodeRemovedHandler = null;
+            closeAllContextMenu(this._popupService.popups);
+        });
     }
 
     protected _openFloat(): PopupInfo {

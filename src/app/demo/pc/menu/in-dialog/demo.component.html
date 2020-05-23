@@ -11,12 +11,12 @@
 <p style="margin: 32px;"><a (click)="popup(dialog)">弹出对话框</a></p>
 
 <ng-template #dialog>
-    <jigsaw-dialog width="50%" (close)="dispose()">
+    <jigsaw-dialog width="50%" minWidth="400" minHeight="300" (close)="dispose()">
         <div jigsaw-title>
             <span class="fa fa-thumbs-up"></span>对话框里的菜单
         </div>
         <div jigsaw-body style="padding: 8px">
-            <!-- <jigsaw-collapse width="200px">
+            <jigsaw-collapse width="200px">
                 <j-collapse-pane [isActive]="true">
                     <div j-title>
                         <span class="fa fa-user"></span> 功能组1
@@ -44,7 +44,7 @@
                         </jigsaw-menu>
                     </div>
                 </j-collapse-pane>
-            </jigsaw-collapse> -->
+            </jigsaw-collapse>
             <div class="content">
                 <p style="margin-bottom: 8px;">
                     <a jigsawCascadingMenu

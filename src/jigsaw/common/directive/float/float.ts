@@ -17,11 +17,10 @@ import {
     PopupPoint,
     PopupPositionType,
     PopupPositionValue,
-    PopupService,
-    ButtonInfo
+    PopupService
 } from "../../service/popup.service";
 import {AbstractJigsawViewBase} from "../../common";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
 export enum DropDownTrigger {
@@ -33,10 +32,6 @@ export enum DropDownTrigger {
 
 export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
     'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
-
-export class FloatMessage extends ButtonInfo {
-    message: string;
-}
 
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     protected _removeWindowClickHandler: Function;
@@ -280,10 +275,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (!this._popupInfo || !this._originDisposer) {
             return;
         }
-        const msg = new FloatMessage();
-        msg.message = 'disposed';
         this._originDisposer();
-        this._popupInfo.answer.emit(msg);
         this._originDisposer = null;
         this._popupInfo = null;
     }
@@ -309,9 +301,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return popupInfo;
         }
         this._popupInfo = popupInfo;
-        if (!popupInfo.answer) {
-            popupInfo.answer = new EventEmitter<FloatMessage>();
-        }
         this._originDisposer = popupInfo.dispose;
         popupInfo.dispose = this.closeFloat.bind(this);
 

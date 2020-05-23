@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, OnDestroy} from "@angular/core";
+import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
 import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -52,7 +52,7 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
         </div>
     `
 })
-export class JigsawMenuHelper implements IPopupable, OnDestroy {
+export class JigsawMenuHelper implements IPopupable {
     public answer: EventEmitter<any> = new EventEmitter<any>();
     public initData: MenuOptions;
     public close = new EventEmitter<void>();
@@ -61,10 +61,6 @@ export class JigsawMenuHelper implements IPopupable, OnDestroy {
         if (this.initData && this.initData.select) {
             this.initData.select.emit(node);
         }
-    }
-
-    ngOnDestroy() {
-        console.log('xxxxxxxxxx')
     }
 }
 
