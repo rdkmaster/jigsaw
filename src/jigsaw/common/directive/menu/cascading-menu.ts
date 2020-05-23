@@ -12,7 +12,7 @@ import {
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService, PopupSize} from "../../service/popup.service";
 import {DropDownTrigger, JigsawFloatBase, FloatPosition, FloatMessage} from "../float/float";
-import {JigsawMenu, MenuTheme, contextMenuFlag, closeAllContextMenu} from "../../../pc-components/menu/menu";
+import {JigsawMenu, MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "../../../pc-components/menu/menu";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -154,6 +154,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Output()
     public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();
 
+    @Output()
+    public jigsawCascadingMenuClose = new EventEmitter<void>();
+
     constructor(protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _popupService: PopupService) {
@@ -207,7 +210,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             const target = this._elementRef.nativeElement.parentElement.parentElement;
             const index = this._popupService.popups.findIndex(popup => popup.element == target);
             this._popupService.popups
-                .filter((popup, idx) => idx > index && popup.extra === contextMenuFlag)
+                .filter((popup, idx) => idx > index && popup.extra === cascadingMenuFlag)
                 .forEach(popup => popup.dispose());
         }
         super._$openByHover($event);
@@ -216,7 +219,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _removeParentClickHandler: any;
 
     private _onParentEvents(): void {
-        const parent = this._popupService.popups.reverse().find(p => p.extra != contextMenuFlag);
+        const parent = this._popupService.popups.reverse().find(p => p.extra != cascadingMenuFlag);
         if (!parent) {
             return;
         }
@@ -248,7 +251,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         const popupInfo = super._openFloat();
         if (!!popupInfo) {
             // 将当前类作为此类弹出的一个标志，关闭所有弹出时，只关闭具有此标志的弹出
-            popupInfo.extra = contextMenuFlag;
+            popupInfo.extra = cascadingMenuFlag;
         }
         return popupInfo;
     }
@@ -258,7 +261,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             // 全局click
             closeAllContextMenu(this._popupService.popups);
         } else if (event && event.type == 'mouseleave' && event.target == this.popupElement
-                && PopupService.allPopups.some(popup => popup.extra === contextMenuFlag && this._mouseInPopup(event, popup.element))) {
+                && PopupService.allPopups.some(popup => popup.extra === cascadingMenuFlag && this._mouseInPopup(event, popup.element))) {
             super._closeFloat(event);
         } else if (!event) {
             super._closeFloat(event);
@@ -268,5 +271,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
             && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
+    }
+
+
+    protected _disposePopup() {
+        super._disposePopup();
+        this.jigsawCascadingMenuClose.emit();
     }
 }

@@ -18,7 +18,7 @@ import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'j
         }
     `]
 })
-export class CascadingMenuDemo {
+export class CascadingMenuOptionsDemo {
 
     public data: SimpleTreeData;
     public theme: string[] = ['dark'];
@@ -83,9 +83,9 @@ export class CascadingMenuDemo {
     info;
     openDialog() {
         this.info = this.ps.popup(this.dialog);
-        setTimeout(() => {
-            this.closeDialog()
-        }, 3000);
+        // setTimeout(() => {
+        //     this.closeDialog()
+        // }, 3000);
     }
 
     closeDialog() {

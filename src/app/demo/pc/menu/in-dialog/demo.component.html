@@ -1,0 +1,69 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+
+<!-- start to learn the demo from here -->
+
+<span>对话框3秒后自动关闭</span> <jigsaw-switch [(checked)]="autoDispose"></jigsaw-switch>
+<span style="color:#ccc">测试上下文菜单能否自动关闭</span>
+<p style="margin: 32px;"><a (click)="popup(dialog)">弹出对话框</a></p>
+
+<ng-template #dialog>
+    <jigsaw-dialog width="50%" (close)="dispose()">
+        <div jigsaw-title>
+            <span class="fa fa-thumbs-up"></span>对话框里的菜单
+        </div>
+        <div jigsaw-body style="padding: 8px">
+            <!-- <jigsaw-collapse width="200px">
+                <j-collapse-pane [isActive]="true">
+                    <div j-title>
+                        <span class="fa fa-user"></span> 功能组1
+                    </div>
+                    <div j-body>
+                        <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
+                        </jigsaw-menu>
+                    </div>
+                </j-collapse-pane>
+                <j-collapse-pane [isActive]="false">
+                    <div j-title>
+                        <span class="fa fa-user"></span> 功能组2
+                    </div>
+                    <div j-body>
+                        <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
+                        </jigsaw-menu>
+                    </div>
+                </j-collapse-pane>
+                <j-collapse-pane [isActive]="false">
+                    <div j-title>
+                        <span class="fa fa-user"></span> 功能组3
+                    </div>
+                    <div j-body>
+                        <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
+                        </jigsaw-menu>
+                    </div>
+                </j-collapse-pane>
+            </jigsaw-collapse> -->
+            <div class="content">
+                <p style="margin-bottom: 8px;">
+                    <a jigsawCascadingMenu
+                       [jigsawCascadingMenuWidth]="150"
+                       [jigsawCascadingMenuData]="data"
+                       (jigsawCascadingMenuSelect)="menuSelect($event)">
+                       打开下拉菜单
+                    </a>
+                </p>
+                <div (contextmenu)="showContext($event)" class="context-menu">
+                    <p>右击这里</p>
+                </div>
+            </div>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary" (click)="dispose()">OK</jigsaw-button>
+            <jigsaw-button (click)="dispose()">Cancel</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
+
+

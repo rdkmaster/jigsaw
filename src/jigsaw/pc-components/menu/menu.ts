@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
+import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, OnDestroy} from "@angular/core";
 import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -21,12 +21,12 @@ export class MenuOptions {
 /**
  * @internal
  */
-export const contextMenuFlag = class ContextMenuFlag {};
+export const cascadingMenuFlag = class CascadingMenuFlag {};
 /**
  * @internal
  */
 export function closeAllContextMenu(popups: PopupInfo[]): void {
-    popups.filter(popup => popup.extra === contextMenuFlag)
+    popups.filter(popup => popup.extra === cascadingMenuFlag)
         .forEach(popup => popup.dispose());
 }
 
@@ -48,13 +48,14 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              [jigsawCascadingMenuOpenTrigger]="'none'"
              [jigsawCascadingMenuCloseTrigger]="'click'"
              (jigsawCascadingMenuSelect)="onSelect($event)"
-             (jigsawCascadingMenuOpenChange)="openChange($event)">
+             (jigsawCascadingMenuClose)="close.emit()">
         </div>
     `
 })
-export class JigsawMenuHelper implements IPopupable {
+export class JigsawMenuHelper implements IPopupable, OnDestroy {
     public answer: EventEmitter<any> = new EventEmitter<any>();
     public initData: MenuOptions;
+    public close = new EventEmitter<void>();
 
     public onSelect(node: SimpleNode): void {
         if (this.initData && this.initData.select) {
@@ -62,10 +63,8 @@ export class JigsawMenuHelper implements IPopupable {
         }
     }
 
-    public openChange(open: boolean) {
-        if (!open) {
-            this.answer.emit();
-        }
+    ngOnDestroy() {
+        console.log('xxxxxxxxxx')
     }
 }
 
@@ -91,7 +90,7 @@ export class JigsawMenuHelper implements IPopupable {
                                 !node.disabled && !!node.label && select.emit(node);
                                 !node.disabled && !!node.label && initData?.select?.emit(node);
                             "
-                           (mouseenter)="_$mouseenter(index,node)">
+                           (mouseenter)="_$mouseenter(index, node)">
                 <span j-title *ngIf="!!node.label && _$realTheme != 'navigation'">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
@@ -209,7 +208,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
     @ViewChild('menuList', {read: ElementRef, static: false})
-    private _menuList: ElementRef;
+    private _menuListElement: ElementRef;
 
     @ViewChild('menuList', {static: false})
     private _menuListInstance: JigsawList;
@@ -229,7 +228,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     private _setBorder() {
         if (!this._$realShowBorder) {
-            this._menuList.nativeElement.style.border = 'none';
+            this._menuListElement.nativeElement.style.border = 'none';
         }
     }
 
@@ -238,17 +237,14 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      */
     public _$mouseenter(index: number, node: SimpleNode) {
         const disabled = node.disabled;
-        const optionsArray = this._menuListInstance._items.toArray();
-        if (!disabled && node.label) {
-            optionsArray.forEach((option, ind) => {
-                if (ind != index) {
-                    if (option.selected) {
-                        option.selected = false;
-                    }
-                }
-            });
-            optionsArray[index].selected = true;
+        if (disabled || !node.label) {
+            return;
         }
+        const listItems = this._menuListInstance._items.toArray();
+        listItems.forEach(listItem => {
+            listItem.selected = false;
+        });
+        listItems[index].selected = true;
     }
 
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
@@ -275,10 +271,10 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             pos: {x: event.clientX, y: event.clientY}, posType: PopupPositionType.fixed
         };
         const info = PopupService.instance.popup(JigsawMenuHelper, popOpt, ctx);
-        info.extra = contextMenuFlag;
-        const answerSubscription = info.answer.subscribe(() => {
+        info.extra = cascadingMenuFlag;
+        const closeSubscription = info.instance.close.subscribe(() => {
             selectSubscription.unsubscribe();
-            answerSubscription.unsubscribe();
+            closeSubscription.unsubscribe();
         });
         return info;
     }

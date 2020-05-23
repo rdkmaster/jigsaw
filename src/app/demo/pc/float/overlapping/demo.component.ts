@@ -16,7 +16,7 @@ import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService, JigsawMen
             padding-left: 32px;
         }
 
-        .context-menu-trigger {
+        .context-menu {
             width: 80px;
             height: 149px;
             background-color: #ddd;
@@ -25,7 +25,7 @@ import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService, JigsawMen
             top: 16px;
         }
 
-        .context-menu-trigger p {
+        .context-menu p {
             text-align: center;
             margin-top: 56px;
         }

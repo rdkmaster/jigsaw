@@ -277,7 +277,7 @@ export class PopupService {
             popupDisposer: PopupDisposer,
             blockDisposer: PopupDisposer,
             disposer: PopupDisposer;
-
+        options = options || {};
         //popup block
         blockDisposer = this._popupBlocker(options);
         [popupInfo, popupRef] = this._popupFactory(what, options);

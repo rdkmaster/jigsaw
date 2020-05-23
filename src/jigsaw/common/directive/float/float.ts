@@ -276,7 +276,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         event.preventDefault();
     }
 
-    private _disposePopup() {
+    protected _disposePopup() {
         if (!this._popupInfo || !this._originDisposer) {
             return;
         }
