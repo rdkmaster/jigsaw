@@ -154,9 +154,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Output()
     public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();
 
-    @Output('jigsawCascadingMenuOpenChange')
-    public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
     constructor(protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _popupService: PopupService) {
@@ -205,7 +202,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
             const target = this._elementRef.nativeElement.parentElement.parentElement;
             const index = this._popupService.popups.findIndex(popup => popup.element == target);
-            this._popupService.popups.filter((_, idx) => idx > index).forEach(popup => popup.dispose());
+            this._popupService.popups.filter((popup, idx) => idx > index &&  popup.extra === contextMenuFlag ).forEach(popup => popup.dispose());
         }
         super._$openByHover($event);
     }
