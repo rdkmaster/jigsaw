@@ -83,6 +83,9 @@ export class CascadingMenuDemo {
     info;
     openDialog() {
         this.info = this.ps.popup(this.dialog);
+        setTimeout(() => {
+            this.closeDialog()
+        }, 3000);
     }
 
     closeDialog() {

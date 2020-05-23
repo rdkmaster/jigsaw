@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService } from 'jigsaw/public_api';
+import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService, JigsawMenu } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -14,6 +14,20 @@ import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService } from 'ji
             padding-top: 30px;
             background: #e4d7c0;
             padding-left: 32px;
+        }
+
+        .context-menu-trigger {
+            width: 80px;
+            height: 149px;
+            background-color: #ddd;
+            position: absolute;
+            right: 16px;
+            top: 16px;
+        }
+
+        .context-menu-trigger p {
+            text-align: center;
+            margin-top: 56px;
         }
     `]
 })
@@ -66,6 +80,10 @@ export class FloatOverlappingDemo {
                 <node label="Exit"></node>
             </node>
         `);
+    }
+
+    public showContext(event) {
+        JigsawMenu.show(event, {data: this.menuData, width: 150});
     }
 
     popupGlobalLoading(event) {

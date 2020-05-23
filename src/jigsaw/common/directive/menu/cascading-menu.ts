@@ -10,8 +10,8 @@ import {
     ElementRef
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
-import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
-import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
+import {PopupInfo, PopupOptions, PopupService, PopupSize} from "../../service/popup.service";
+import {DropDownTrigger, JigsawFloatBase, FloatPosition, FloatMessage} from "../float/float";
 import {JigsawMenu, MenuTheme, contextMenuFlag, closeAllContextMenu} from "../../../pc-components/menu/menu";
 
 @Directive({
@@ -176,11 +176,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         this.jigsawFloatInitData.theme = this.jigsawCascadingMenuTheme;
     }
 
-    private _removeClickHandler: any;
+    private _menuSelectSubscriber: any;
 
     ngAfterViewInit() {
-        if (!this._removeClickHandler) {
-            this._removeClickHandler = this.jigsawCascadingMenuSelect.subscribe((node: SimpleNode) => {
+        if (!this._menuSelectSubscriber) {
+            this._menuSelectSubscriber = this.jigsawCascadingMenuSelect.subscribe((node: SimpleNode) => {
                 if (!node.nodes || node.nodes.length == 0) {
                     // 叶子节点，点击了要关闭整个菜单
                     closeAllContextMenu(this._popupService.popups);
@@ -191,9 +191,13 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this._removeClickHandler) {
-            this._removeClickHandler.unsubscribe();
-            this._removeClickHandler = null;
+        if (this._menuSelectSubscriber) {
+            this._menuSelectSubscriber.unsubscribe();
+            this._menuSelectSubscriber = null;
+        }
+        if (this._removeParentClickHandler) {
+            this._removeParentClickHandler();
+            this._removeParentClickHandler = null;
         }
     }
 
@@ -202,17 +206,47 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
             const target = this._elementRef.nativeElement.parentElement.parentElement;
             const index = this._popupService.popups.findIndex(popup => popup.element == target);
-            if (index == -1) {
-                return;
+            if (index != -1) {
+                this._popupService.popups
+                    .filter((popup, idx) => idx > index && popup.extra === contextMenuFlag)
+                    .forEach(popup => popup.dispose());
             }
-            this._popupService.popups
-                .filter((popup, idx) => idx > index && popup.extra === contextMenuFlag)
-                .forEach(popup => popup.dispose());
         }
         super._$openByHover($event);
     }
 
+    private _removeParentClickHandler: any;
+
+    private _onParentEvents(): void {
+        const parent = this._popupService.popups.reverse().find(p => p.extra != contextMenuFlag);
+        if (!parent) {
+            return;
+        }
+
+        // 多级弹出时，单击上一级弹出视图时，要关闭上下文菜单
+        if (this._removeParentClickHandler) {
+            this._removeParentClickHandler();
+        }
+        this._removeParentClickHandler = this._renderer.listen(parent.element, 'click', () => {
+            this._removeParentClickHandler();
+            this._removeParentClickHandler = null;
+            closeAllContextMenu(this._popupService.popups);
+        });
+
+        // 多级弹出时，上一级弹出视图关闭时，要关闭上下文菜单
+        if (parent.answer) {
+            const subscription = parent.answer.subscribe((msg: FloatMessage) => {
+                subscription.unsubscribe();
+                if (msg.message !== 'disposed') {
+                    return;
+                }
+                closeAllContextMenu(this._popupService.popups);
+            });
+        }
+    }
+
     protected _openFloat(): PopupInfo {
+        this._onParentEvents();
         const popupInfo = super._openFloat();
         if (!!popupInfo) {
             // 将当前类作为此类弹出的一个标志，关闭所有弹出时，只关闭具有此标志的弹出
@@ -225,7 +259,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (event && event.type == 'click') {
             // 全局click
             closeAllContextMenu(this._popupService.popups);
-        } else if (event && event.type == 'mouseleave' && event.target == this._popupElement
+        } else if (event && event.type == 'mouseleave' && event.target == this.popupElement
                 && PopupService.allPopups.some(popup => popup.extra === contextMenuFlag && this._mouseInPopup(event, popup.element))) {
             super._closeFloat(event);
         } else if (!event) {

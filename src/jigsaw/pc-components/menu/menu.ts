@@ -73,7 +73,7 @@ export class JigsawMenuHelper implements IPopupable {
     template: `
         <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <j-list-option *ngFor="let node of _$realData?.nodes;index as index" [value]="node"
+            <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
                            jigsawCascadingMenu
                            [jigsawCascadingMenuOptions]="_$realOptions"
                            [jigsawCascadingMenuWidth]="_$realWidth"
@@ -88,7 +88,8 @@ export class JigsawMenuHelper implements IPopupable {
                            [disabled]="node.disabled"
                            (click)="
                                 !node.disabled && !!node.label && select.emit(node);
-                                !node.disabled && !!node.label && initData?.select?.emit(node)"
+                                !node.disabled && !!node.label && initData?.select?.emit(node);
+                            "
                            (mouseleave)="_$mouseleave(index,node.disabled)">
                 <span j-title *ngIf="!!node.label && _$realTheme != 'navigation'">
                     <i class="{{node.icon}}"></i>
@@ -108,6 +109,7 @@ export class JigsawMenuHelper implements IPopupable {
             </j-list-option>
         </j-list>`,
     host: {
+        '(click)': "_$onClick($event)",
         '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
         '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
         '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
@@ -210,6 +212,11 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     constructor(private _renderer: Renderer2) {
         super();
+    }
+
+    public _$onClick(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
     }
 
     ngAfterViewInit() {
