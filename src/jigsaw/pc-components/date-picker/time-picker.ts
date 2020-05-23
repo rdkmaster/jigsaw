@@ -16,7 +16,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {JigsawFloatModule} from "../../common/directive/float";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float";
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
@@ -104,12 +104,17 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    @Input()
+    public floatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+    'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+
     @Output()
     public valueChange = new EventEmitter<string>();
 
     @ViewChild('hour') private _hourInput: ElementRef;
     @ViewChild('minute') private _minuteInput: ElementRef;
     @ViewChild('second') private _secondInput: ElementRef;
+    @ViewChild(JigsawFloat) private _float: JigsawFloat;
 
     private _hour: string = '00';
 
@@ -205,6 +210,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             }
             this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
             this._$floatArrowElement = this._secondInput.nativeElement;
+        }
+        if(mode != 'none') {
+            this.runAfterMicrotasks(() => {
+                this._float.reposition();
+            })
         }
     }
 

@@ -6,6 +6,10 @@ import {TimePickerStepDemoComponent} from "./step/demo.component";
 import {TimePickerStepDemoModule} from "./step/demo.module";
 import {TimePickerGrDemoComponent} from "./gr/demo.component";
 import {TimePickerGrDemoModule} from "./gr/demo.module";
+import {TimePickerSizeDemoComponent} from "./size/demo.component";
+import {TimePickerSizeDemoModule} from "./size/demo.module";
+import {TimePickerFloatPositionDemoComponent} from "./floatPosition/demo.component";
+import {TimePickerFloatPositionDemoModule} from "./floatPosition/demo.module";
 
 export const routerConfig = [
     {
@@ -17,6 +21,12 @@ export const routerConfig = [
     {
         path: 'gr', component: TimePickerGrDemoComponent
     },
+    {
+        path: 'size', component: TimePickerSizeDemoComponent
+    },
+    {
+        path: 'floatPosition', component: TimePickerFloatPositionDemoComponent
+    },
 ];
 
 @NgModule({
@@ -25,6 +35,8 @@ export const routerConfig = [
         TimePickerBasicDemoModule,
         TimePickerStepDemoModule,
         TimePickerGrDemoModule,
+        TimePickerSizeDemoModule,
+        TimePickerFloatPositionDemoModule,
     ]
 })
 export class TimePickerDemoModule {

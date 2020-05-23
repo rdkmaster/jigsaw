@@ -6,6 +6,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
     @include inline-block();
     padding: 10px 6px;
     position: relative;
+    border-radius: 4px;
 
     &-content {
         &-hour, &-minute, &-second {
