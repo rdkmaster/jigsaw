@@ -2,7 +2,8 @@ import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2
 import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
-import { CommonUtils } from '../../common/core/utils/common-utils';
+import {CommonUtils} from '../../common/core/utils/common-utils';
+import {JigsawList} from "../list-and-tile/list";
 
 export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
 
@@ -90,7 +91,7 @@ export class JigsawMenuHelper implements IPopupable {
                                 !node.disabled && !!node.label && select.emit(node);
                                 !node.disabled && !!node.label && initData?.select?.emit(node);
                             "
-                           (mouseleave)="_$mouseleave(index,node.disabled)">
+                           (mouseenter)="_$mouseenter(index,node)">
                 <span j-title *ngIf="!!node.label && _$realTheme != 'navigation'">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
@@ -210,6 +211,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @ViewChild('menuList', {read: ElementRef, static: false})
     private _menuList: ElementRef;
 
+    @ViewChild('menuList', {static: false})
+    private _menuListInstance: JigsawList;
+
     constructor(private _renderer: Renderer2) {
         super();
     }
@@ -232,11 +236,18 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public _$mouseleave(index: number, disabled: boolean) {
-        const optionsElement = this._menuList.nativeElement.children[index];
-        const classList = optionsElement.classList;
-        if (!disabled && classList.contains('jigsaw-list-option-active')) {
-            classList.remove('jigsaw-list-option-active');
+    public _$mouseenter(index: number, node: SimpleNode) {
+        const disabled = node.disabled;
+        const optionsArray = this._menuListInstance._items.toArray();
+        if (!disabled && node.label) {
+            optionsArray.forEach((option, ind) => {
+                if (ind != index) {
+                    if (option.selected) {
+                        option.selected = false;
+                    }
+                }
+            });
+            optionsArray[index].selected = true;
         }
     }
 

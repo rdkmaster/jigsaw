@@ -206,11 +206,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
             const target = this._elementRef.nativeElement.parentElement.parentElement;
             const index = this._popupService.popups.findIndex(popup => popup.element == target);
-            if (index != -1) {
-                this._popupService.popups
-                    .filter((popup, idx) => idx > index && popup.extra === contextMenuFlag)
-                    .forEach(popup => popup.dispose());
-            }
+            this._popupService.popups
+                .filter((popup, idx) => idx > index && popup.extra === contextMenuFlag)
+                .forEach(popup => popup.dispose());
         }
         super._$openByHover($event);
     }
@@ -269,6 +267,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
         return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
-        && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
+            && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
     }
 }
