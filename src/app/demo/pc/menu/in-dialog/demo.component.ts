@@ -26,6 +26,7 @@ import { PopupService, PopupInfo, JigsawMenu } from 'jigsaw/public_api';
 export class MenuInDialogDemo {
     public data: SimpleTreeData;
     public autoDispose: boolean = false;
+    public timeout: number = 3000;
 
     constructor(private ps: PopupService) {
         this.data = new SimpleTreeData();
@@ -72,7 +73,7 @@ export class MenuInDialogDemo {
         if (this.autoDispose) {
             setTimeout(() => {
                 this.dispose();
-            }, 3000);
+            }, this.timeout);
         }
     }
 
@@ -83,6 +84,6 @@ export class MenuInDialogDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '可以在文档里里嵌入一个菜单组件，再配合其他组件（如Collapse）就可以形成一个一级导航栏的功能了';
+    summary: string = '本demo主要用于测试上下文菜单在各种弹出场景下自动关闭的效果';
     description: string = '';
 }

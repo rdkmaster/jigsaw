@@ -3,15 +3,23 @@
 </jigsaw-demo-description>
 
 
-
 <!-- start to learn the demo from here -->
 
-<span>对话框3秒后自动关闭</span> <jigsaw-switch [(checked)]="autoDispose"></jigsaw-switch>
-<span style="color:#ccc">测试上下文菜单能否自动关闭</span>
+<div style="margin-bottom: 6px">
+    <span>对话框自动关闭</span>
+    <jigsaw-switch [(checked)]="autoDispose"></jigsaw-switch>
+</div>
+<div *ngIf="autoDispose">
+    <span>关闭倒计时(ms)</span>
+    <jigsaw-numeric-input [(value)]="timeout" [step]="1000" width="70px">
+    </jigsaw-numeric-input>
+</div>
+
+
 <p style="margin: 32px;"><a (click)="popup(dialog)">弹出对话框</a></p>
 
 <ng-template #dialog>
-    <jigsaw-dialog width="50%" minWidth="400" minHeight="300" (close)="dispose()">
+    <jigsaw-dialog width="600" height="400" (close)="dispose()">
         <div jigsaw-title>
             <span class="fa fa-thumbs-up"></span>对话框里的菜单
         </div>
@@ -47,11 +55,14 @@
             </jigsaw-collapse>
             <div class="content">
                 <p style="margin-bottom: 8px;">
-                    <a jigsawCascadingMenu
+                    <a jigsawCascadingMenu style="margin-right: 8px"
                        [jigsawCascadingMenuWidth]="150"
                        [jigsawCascadingMenuData]="data"
                        (jigsawCascadingMenuSelect)="menuSelect($event)">
-                       打开下拉菜单
+                        打开下拉菜单
+                    </a>
+                    <a jigsawFloat [jigsawFloatTarget]="float">
+                        打开下拉视图
                     </a>
                 </p>
                 <div (contextmenu)="showContext($event)" class="context-menu">
@@ -66,4 +77,20 @@
     </jigsaw-dialog>
 </ng-template>
 
+<ng-template #float>
+    <div style="width:250px;height:200px;padding:8px 16px">
+        <a jigsawCascadingMenu style="margin-right: 8px"
+           [jigsawCascadingMenuWidth]="150"
+           [jigsawCascadingMenuData]="data"
+           (jigsawCascadingMenuSelect)="menuSelect($event)">
+            打开下拉菜单
+        </a>
+        <a jigsawFloat [jigsawFloatTarget]="float">
+            打开下拉视图
+        </a>
+        <div (contextmenu)="showContext($event)" class="context-menu">
+            <p>右击这里</p>
+        </div>
+    </div>
+</ng-template>
 

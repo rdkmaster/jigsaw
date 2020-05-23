@@ -4,19 +4,20 @@
 
 
 <!-- start to learn the demo from here -->
-<br><br><br>
-<span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
+<p jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       [jigsawCascadingMenuHeight]="height"
       [jigsawCascadingMenuMaxHeight]="maxHeight"
       [jigsawCascadingMenuWidth]="width"
       [jigsawCascadingMenuTheme]='theme[0]'
       (jigsawCascadingMenuSelect)="menuSelect($event)">
 菜单弹出
-</span>
-<span class="menu" (contextmenu)="contextMenu($event)">右击这里</span>
-<br><br><br>
+</p>
+<div (contextmenu)="contextMenu($event)" class="context-menu">
+    <p>右击这里</p>
+</div>
+<br><br>
 
-<p>可用配置项</p>
+<h3 style="margin-bottom:8px;">可用配置项</h3>
 <p>
 皮肤
 <jigsaw-button-bar [(selectedItems)]="theme" [multipleSelect]="false"
@@ -35,23 +36,3 @@
 最大高度
 <jigsaw-numeric-input [(value)]="maxHeight" [step]="10"></jigsaw-numeric-input>
 </p>
-
-
-<p>==============</p>
-
-<a (click)="openDialog()">openDialog</a>
-
-<ng-template #tpDialog1>
-    <div style="width: 400px; height:300px">
-        <br><br><br><br>
-        <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
-            [jigsawCascadingMenuHeight]="height"
-            [jigsawCascadingMenuMaxHeight]="maxHeight"
-            [jigsawCascadingMenuWidth]="width"
-            [jigsawCascadingMenuTheme]='theme[0]'
-            (jigsawCascadingMenuSelect)="menuSelect($event)">
-        菜单弹出
-        </span>
-        <p><a (click)="closeDialog()">closeDialog</a></p>
-    </div>
-</ng-template>

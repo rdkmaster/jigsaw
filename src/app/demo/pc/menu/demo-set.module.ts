@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {CascadingMenuOptionsDemo as MenuOptionsDemo} from "./options/demo.component";
-import {CascadingMenuOptionsModule as MenuOptionsModule} from "./options/demo.module";
+import {MenuOptionsDemo} from "./options/demo.component";
+import {MenuOptionsModule} from "./options/demo.module";
 import {MenuInDomDemo} from "./in-dom/demo.component";
 import {MenuInDomDemoModule} from "./in-dom/demo.module";
 import { MenuInDialogDemo } from './in-dialog/demo.component';

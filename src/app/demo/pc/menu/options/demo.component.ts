@@ -1,4 +1,4 @@
-import {Component, ViewChild, EventEmitter} from "@angular/core";
+import {Component} from "@angular/core";
 import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'jigsaw/public_api';
 
 
@@ -6,11 +6,23 @@ import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'j
     templateUrl: './demo.component.html',
     styles: [`
         .menu {
-            margin: 100px;
+            margin: 16px 0 8px 32px;
             border: 1px solid #999;
             padding: 2px 10px;
             border-radius: 3px;
             cursor: pointer;
+            display: inline-block;
+        }
+        
+        .context-menu {
+            width: 160px;
+            height: 100px;
+            background-color: #ddd;
+        }
+
+        .context-menu p {
+            text-align: center;
+            padding-top: 40px;
         }
 
         p {
@@ -18,7 +30,7 @@ import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'j
         }
     `]
 })
-export class CascadingMenuOptionsDemo {
+export class MenuOptionsDemo {
 
     public data: SimpleTreeData;
     public theme: string[] = ['dark'];
@@ -77,24 +89,9 @@ export class CascadingMenuOptionsDemo {
         });
     }
 
-    @ViewChild('tpDialog1', {static: false})
-    dialog;
-
-    info;
-    openDialog() {
-        this.info = this.ps.popup(this.dialog);
-        // setTimeout(() => {
-        //     this.closeDialog()
-        // }, 3000);
-    }
-
-    closeDialog() {
-        this.info.dispose();
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo演示了jigsaw-cascading-menu指令实现多级菜单，输入为一个simpleTree类型的菜单数据，实现多级菜单弹出和点击的功能';
+    summary: string = '本demo演示了jigsaw-cascading-menu指令实现多级菜单，展示了各个可用配置项及其效果，事件回调效果请查看控制台';
     description: string = '';
 }

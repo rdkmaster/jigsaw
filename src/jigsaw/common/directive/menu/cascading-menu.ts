@@ -147,6 +147,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     public get jigsawCascadingMenuOpen(): boolean {
         return this.jigsawFloatOpen;
     }
+
     public set jigsawCascadingMenuOpen(value: boolean) {
         this.jigsawFloatOpen = value;
     }
