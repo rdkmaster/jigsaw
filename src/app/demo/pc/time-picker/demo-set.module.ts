@@ -10,6 +10,8 @@ import {TimePickerSizeDemoComponent} from "./size/demo.component";
 import {TimePickerSizeDemoModule} from "./size/demo.module";
 import {TimePickerFloatPositionDemoComponent} from "./floatPosition/demo.component";
 import {TimePickerFloatPositionDemoModule} from "./floatPosition/demo.module";
+import {TimePickerLimitDemoComponent} from "./limit/demo.component";
+import {TimePickerLimitDemoModule} from "./limit/demo.module";
 
 export const routerConfig = [
     {
@@ -27,6 +29,9 @@ export const routerConfig = [
     {
         path: 'floatPosition', component: TimePickerFloatPositionDemoComponent
     },
+    {
+        path: 'limit', component: TimePickerLimitDemoComponent
+    },
 ];
 
 @NgModule({
@@ -37,6 +42,7 @@ export const routerConfig = [
         TimePickerGrDemoModule,
         TimePickerSizeDemoModule,
         TimePickerFloatPositionDemoModule,
+        TimePickerLimitDemoModule,
     ]
 })
 export class TimePickerDemoModule {
