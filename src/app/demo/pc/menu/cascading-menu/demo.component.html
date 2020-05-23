@@ -10,8 +10,7 @@
       [jigsawCascadingMenuMaxHeight]="maxHeight"
       [jigsawCascadingMenuWidth]="width"
       [jigsawCascadingMenuTheme]='theme[0]'
-      (jigsawCascadingMenuSelect)="menuSelect($event)"
-      (jigsawCascadingMenuOpenChange)="openChange($event)">
+      (jigsawCascadingMenuSelect)="menuSelect($event)">
 菜单弹出
 </span>
 <span class="menu" (contextmenu)="contextMenu($event)">右击这里</span>
@@ -44,13 +43,13 @@
 
 <ng-template #tpDialog1>
     <div style="width: 400px; height:300px">
+        <br><br><br><br>
         <span jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
             [jigsawCascadingMenuHeight]="height"
             [jigsawCascadingMenuMaxHeight]="maxHeight"
             [jigsawCascadingMenuWidth]="width"
             [jigsawCascadingMenuTheme]='theme[0]'
-            (jigsawCascadingMenuSelect)="menuSelect($event)"
-            (jigsawCascadingMenuOpenChange)="openChange($event)">
+            (jigsawCascadingMenuSelect)="menuSelect($event)">
         菜单弹出
         </span>
         <p><a (click)="closeDialog()">closeDialog</a></p>

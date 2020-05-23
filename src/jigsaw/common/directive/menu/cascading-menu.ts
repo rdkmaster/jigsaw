@@ -202,7 +202,12 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
             const target = this._elementRef.nativeElement.parentElement.parentElement;
             const index = this._popupService.popups.findIndex(popup => popup.element == target);
-            this._popupService.popups.filter((popup, idx) => idx > index &&  popup.extra === contextMenuFlag ).forEach(popup => popup.dispose());
+            if (index == -1) {
+                return;
+            }
+            this._popupService.popups
+                .filter((popup, idx) => idx > index && popup.extra === contextMenuFlag)
+                .forEach(popup => popup.dispose());
         }
         super._$openByHover($event);
     }
@@ -220,12 +225,16 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (event && event.type == 'click') {
             // 全局click
             closeAllContextMenu(this._popupService.popups);
-        } else if (event && event.type == 'mouseleave') {
-            if (PopupService.instance.popups.some(popup => this._mouseInPopup(event, popup.element))) {
-                super._closeFloat(event);
-            }
-        } else {
+        } else if (event && event.type == 'mouseleave' && event.target == this._popupElement
+                && PopupService.allPopups.some(popup => popup.extra === contextMenuFlag && this._mouseInPopup(event, popup.element))) {
+            super._closeFloat(event);
+        } else if (!event) {
             super._closeFloat(event);
         }
+    }
+
+    private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
+        return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
+        && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
     }
 }

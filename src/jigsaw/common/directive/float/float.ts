@@ -37,6 +37,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     protected _removeWindowClickHandler: Function;
     protected _floatOpenDelay = 100;
     protected _floatCloseDelay = 400;
+    protected _popupElement: HTMLElement;
 
     private _disposePopup: PopupDisposer;
     private _removePopupClickHandler: Function;
@@ -47,7 +48,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
     private _$target: Type<IPopupable> | TemplateRef<any>;
-    private _popupElement: HTMLElement;
 
     public get popupElement(): HTMLElement {
         return this._popupElement;
@@ -133,13 +133,17 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         super();
     }
 
+    protected _emitOpenChange(open: boolean): void {
+        this._opened = open;
+        this.jigsawFloatOpenChange.emit(open);
+    }
+
     public openFloat(): void {
         if (this._disposePopup) {
             return;
         }
         this._openFloat();
-        this._opened = true;
-        this.jigsawFloatOpenChange.emit(this._opened);
+        this._emitOpenChange(true);
     }
 
     public closeFloat($event?: any): void {
@@ -147,8 +151,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return;
         }
         this._closeFloat($event);
-        this._opened = false;
-        this.jigsawFloatOpenChange.emit(this._opened);
+        this._emitOpenChange(false);
     }
 
     public ngOnDestroy() {
@@ -228,11 +231,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 this.closeFloat(event);
             }, this._floatCloseDelay);
         }
-    }
-
-    protected _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
-        return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
-            && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
     }
 
     /**

@@ -3,7 +3,6 @@ import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} fr
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import { CommonUtils } from '../../common/core/utils/common-utils';
-// import { JigsawCascadingMenu } from 'jigsaw/common/directive/menu/cascading-menu';
 
 export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
 

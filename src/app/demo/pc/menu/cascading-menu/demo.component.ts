@@ -65,14 +65,6 @@ export class CascadingMenuDemo {
         console.log("Dropdown menu selected, node =", node);
     }
 
-    openChange($event) {
-        if ($event) {
-            console.log(`menu is open!`);
-        } else {
-            console.log(`menu is closed!`);
-        }
-    }
-
     contextMenu(event: MouseEvent) {
         JigsawMenu.show(event, {
             data: this.data,
