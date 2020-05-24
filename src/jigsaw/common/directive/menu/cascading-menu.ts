@@ -166,8 +166,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     ngOnInit() {
         super.ngOnInit();
-        this.jigsawFloatTarget = this.jigsawCascadingMenuData.nodes && this.jigsawCascadingMenuData.nodes.length > 0 ? JigsawMenu as any : null;
-        this.jigsawFloatInitData.data = this.jigsawCascadingMenuData;
+        const data = this.jigsawCascadingMenuData;
+        this.jigsawFloatTarget = data && data.nodes && data.nodes.length > 0 ? JigsawMenu as any : null;
+        this.jigsawFloatInitData.data = data;
         this.jigsawFloatInitData.width = this.jigsawCascadingMenuWidth;
         this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;
         this.jigsawFloatInitData.maxHeight = this.jigsawCascadingMenuMaxHeight;

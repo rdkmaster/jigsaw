@@ -37,7 +37,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
                 .#{$list-option-prefix-cls}-sub-title {
                     line-height: 32px;
-                    color: #666666;
+                    color: #999;
                 }
 
                 @include compatible(color, #102331, #bfbfbf);
@@ -51,7 +51,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
             &-sub-title {
                 line-height: 32px;
-                color: #ccc;
+                color: #999;
             }
         }
     }
@@ -94,7 +94,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
                 .#{$list-option-prefix-cls}-sub-title {
                     line-height: 32px;
-                    color: #666666;
+                    color: #999;
                 }
 
                 @include compatible(color, #102331, #bfbfbf);
@@ -108,7 +108,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
             &-sub-title {
                 line-height: 32px;
-                color: #cccccc;
+                color: #999;
             }
         }
     }
@@ -151,7 +151,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
                 .#{$list-option-prefix-cls}-sub-title {
                     line-height: 32px;
-                    color: #bbbbbb;
+                    color: #ccc;
                 }
 
                 @include compatible(color, #bbbbbb, #bfbfbf);
@@ -165,7 +165,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
             &-sub-title {
                 line-height: 32px;
-                color: #666666;
+                color: #ccc;
             }
         }
     }
@@ -223,7 +223,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
             &-sub-title {
                 line-height: 40px;
-                color: #ffffff;
+                color: #ccc;
             }
 
             .navigation-title {
