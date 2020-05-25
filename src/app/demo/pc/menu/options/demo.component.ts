@@ -6,16 +6,16 @@ import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'j
     templateUrl: './demo.component.html',
     styles: [`
         .menu {
-            margin: 16px 0 8px 32px;
+            margin: 16px 0 16px 216px;
             border: 1px solid #999;
             padding: 2px 10px;
             border-radius: 3px;
             cursor: pointer;
             display: inline-block;
         }
-        
+
         .context-menu {
-            width: 160px;
+            width: 500px;
             height: 100px;
             background-color: #ddd;
         }
