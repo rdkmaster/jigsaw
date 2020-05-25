@@ -95,7 +95,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     private _date: WeekTime;
     public _$time: string;
-    public _$date: string;
+    private __date: string;
+    public get _$date(): string {
+        return this.__date;
+    }
+    public set _$date(d: string) {
+        this.__date = d;
+        this._updateTimeLimit();
+    }
 
     @Input()
     public get date(): WeekTime {
@@ -115,6 +122,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public dateChange = new EventEmitter<WeekTime>();
 
     private _limitStart: Time;
+    public _$dateLimitStart: string;
+    private _timeLimitStart: string;
+    public _$timeLimitStartCur: string = '00:00:00';
 
     public get limitStart(): Time {
         return this._limitStart;
@@ -126,13 +136,15 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
             return;
         }
         this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
-        if (this.initialized && this.date) {
-            //this.writeValue(this.date);
-        }
+        [this._$dateLimitStart, this._timeLimitStart] = this._limitStart.split(' ');
+        this._updateTimeLimit();
         //this._checkMacro();
     }
 
     private _limitEnd: Time;
+    public _$dateLimitEnd: string;
+    private _timeLimitEnd: string;
+    public _$timeLimitEndCur: string="23:59:59";
 
     public get limitEnd(): Time {
         return this._limitEnd
@@ -144,9 +156,8 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
             return;
         }
         this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
-        if (this.initialized && this.date) {
-            //this.writeValue();
-        }
+        [this._$dateLimitEnd, this._timeLimitEnd] = this._limitEnd.split(' ');
+        this._updateTimeLimit();
         //this._checkMacro();
     }
 
@@ -171,6 +182,11 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     private _updateValue = new EventEmitter();
     private _removeUpdateValueSubscriber: Subscription;
+
+    private _updateTimeLimit() {
+        this._$timeLimitStartCur = this._$date == this._$dateLimitStart ? this._timeLimitStart : '00:00:00';
+        this._$timeLimitEndCur = this._$date == this._$dateLimitEnd ? this._timeLimitEnd : '23:59:59';
+    }
 
     public _$changeGr($event: GrItem) {
         if (!$event) {

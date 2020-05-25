@@ -20,7 +20,7 @@
                     <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
                 </j-radios>
             </div>
-            <j-date-time-picker [(date)]="date1" gr="date" [limitStart]="limitStart" [limitEnd]="limitEnd"></j-date-time-picker>
+            <j-date-time-picker [(date)]="date1" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"></j-date-time-picker>
             <p class="message">Selected Time: <span>{{date1}}</span></p>
         </div>
     </div>

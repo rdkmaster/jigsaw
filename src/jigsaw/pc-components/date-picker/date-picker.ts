@@ -42,7 +42,6 @@ export enum MarkDateType {
     'none', 'recommend', 'warn', 'error'
 }
 
-
 @Component({
     selector: 'jigsaw-date-picker, j-date-picker',
     templateUrl: './date-picker.html',
@@ -167,7 +166,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         let monthList: MonthCell[] = TimeService.getMonthShort().map((m, i) => ({
             month: i + 1,
             label: m,
-            isSelected: month == i + 1,
+            isSelected: month == i + 1 && this.date,
             isDisabled: this._isMonthDisabled(i + 1)
         }));
         let monthIndex = 0;
@@ -201,7 +200,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
-        if (this.date) {
+        if (this.date || this.gr == TimeGr.month) {
             let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.writeValue(date);
         } else {
@@ -425,24 +424,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
 
-    private _limitEnd: Time;
-
-    public get limitEnd(): Time {
-        return this._limitEnd
-    }
-
-    @Input()
-    public set limitEnd(value: Time) {
-        if (!value) {
-            return;
-        }
-        this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
-        if (this.initialized && this.date) {
-            this.writeValue(this.date);
-        }
-        //this._checkMacro();
-    }
-
     private _limitStart: Time;
 
     public get limitStart(): Time {
@@ -455,6 +436,24 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return;
         }
         this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
+        if (this.initialized && this.date) {
+            this.writeValue(this.date);
+        }
+        //this._checkMacro();
+    }
+
+    private _limitEnd: Time;
+
+    public get limitEnd(): Time {
+        return this._limitEnd
+    }
+
+    @Input()
+    public set limitEnd(value: Time) {
+        if (!value) {
+            return;
+        }
+        this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
         if (this.initialized && this.date) {
             this.writeValue(this.date);
         }
