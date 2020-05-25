@@ -96,9 +96,11 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     private _date: WeekTime;
     public _$time: string;
     private __date: string;
+
     public get _$date(): string {
         return this.__date;
     }
+
     public set _$date(d: string) {
         this.__date = d;
         this._updateTimeLimit();
@@ -144,7 +146,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     private _limitEnd: Time;
     public _$dateLimitEnd: string;
     private _timeLimitEnd: string;
-    public _$timeLimitEndCur: string="23:59:59";
+    public _$timeLimitEndCur: string = "23:59:59";
 
     public get limitEnd(): Time {
         return this._limitEnd
@@ -206,7 +208,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     public writeValue(): void {
-        if(!this._$date) return;
+        if (!this._$date) return;
         let date = this._$date;
         if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
             this._$time = this._$time ? this._$time : this.gr == TimeGr.second ? '00:00:00' : '00:00';

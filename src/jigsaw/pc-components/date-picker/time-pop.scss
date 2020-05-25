@@ -12,6 +12,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
         &-hour, &-minute, &-second {
             @include clearfix();
             width: 240px;
+
             li {
                 float: left;
                 width: 24px;
@@ -20,13 +21,16 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
                 text-align: center;
                 border-radius: 50%;
                 cursor: pointer;
+
                 &:hover {
                     background: $primary-2;
                 }
+
                 &.#{$time-select-prefix-cls}-isSelected {
                     background: $primary-color;
                     color: $text-color-of-bg;
                 }
+
                 &.#{$time-select-prefix-cls}-disabled {
                     &, &:hover {
                         background: none;
@@ -43,10 +47,12 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
         position: absolute;
         bottom: 12px;
         right: 12px;
+
         span {
             float: right;
             color: $primary-color;
             cursor: pointer;
+
             &:hover {
                 color: $primary-8;
             }

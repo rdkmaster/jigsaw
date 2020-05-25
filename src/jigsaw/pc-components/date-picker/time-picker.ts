@@ -99,17 +99,18 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     @Input()
     public floatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-    'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
 
     private _limitStart: string;
     @Input()
     public get limitStart(): string {
         return this._limitStart;
     }
+
     public set limitStart(value: string) {
-        if(value == this._limitStart || !this._checkLimitValid(value)) return;
+        if (value == this._limitStart || !this._checkLimitValid(value)) return;
         this._limitStart = value;
-        if(this.initialized) {
+        if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
         }
     }
@@ -119,10 +120,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     public get limitEnd(): string {
         return this._limitEnd;
     }
+
     public set limitEnd(value: string) {
-        if(value == this._limitEnd || !this._checkLimitValid(value)) return;
+        if (value == this._limitEnd || !this._checkLimitValid(value)) return;
         this._limitEnd = value;
-        if(this.initialized) {
+        if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
         }
     }
@@ -222,7 +224,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._$floatInitData = this._getFloatInitData(mode, this._$second, this.step);
             this._$floatArrowElement = this._secondInput.nativeElement;
         }
-        if(mode != 'none') {
+        if (mode != 'none') {
             this.runAfterMicrotasks(() => {
                 this._float.reposition();
             })
@@ -303,19 +305,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         $event.stopPropagation();
         if (this._$selectMode == 'hour') {
             let value = String(Number(this._$hour) + add);
-            if(this._updateHour(value)) {
+            if (this._updateHour(value)) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
             }
         } else if (this._$selectMode == 'minute') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$minute)) + add;
-            if(this._updateMinute(value)) {
+            if (this._updateMinute(value)) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$minute, this.step);
             }
         } else if (this._$selectMode == 'second') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$second)) + add;
-            if(this._updateSecond(value)) {
+            if (this._updateSecond(value)) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$second, this.step);
             }
         }
@@ -323,7 +325,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     private _updateHour(value: any): boolean {
         value = this._getHourRangeValue(value);
-        if(this._isValueOutOfLimit(value, 'hour')) {
+        if (this._isValueOutOfLimit(value, 'hour')) {
             this._updateInputValue('hour', this._hour);
             return false;
         }
@@ -334,7 +336,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     private _updateMinute(value: any): boolean {
         value = this._getStepRangeValue(value);
-        if(this._isValueOutOfLimit(value, 'minute')) {
+        if (this._isValueOutOfLimit(value, 'minute')) {
             this._updateInputValue('minute', this._minute);
             return false;
         }
@@ -345,7 +347,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     private _updateSecond(value: any): boolean {
         value = this._getStepRangeValue(value);
-        if(this._isValueOutOfLimit(value, 'second')) {
+        if (this._isValueOutOfLimit(value, 'second')) {
             this._updateInputValue('second', this._second);
             return false;
         }
@@ -385,19 +387,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _calValueByLimit(value: string): string {
-        if(this.limitStart && value < this.limitStart) {
+        if (this.limitStart && value < this.limitStart) {
             value = this.limitStart;
         }
-        if(this.limitEnd && value > this.limitEnd) {
+        if (this.limitEnd && value > this.limitEnd) {
             value = this.limitEnd;
         }
         return value
     }
 
     private _checkLimitValid(limit: string): boolean {
-        if(!limit) return false;
+        if (!limit) return false;
         let timeArr = limit.split(':');
-        if(this.gr == TimeGr.time) {
+        if (this.gr == TimeGr.time) {
             return timeArr.length == 3
         } else {
             return timeArr.length == 2
@@ -407,11 +409,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     private _isValueOutOfLimit(value: string, mode?: TimeSelectMode): boolean {
         value = mode ? this._autoZero(value) : value;
         let time;
-        if(mode == 'hour') {
+        if (mode == 'hour') {
             time = this._calValueByGr(value, this._$minute, this._$second);
-        } else if(mode == 'minute') {
+        } else if (mode == 'minute') {
             time = this._calValueByGr(this._$hour, value, this._$second);
-        } else if(mode == 'second') {
+        } else if (mode == 'second') {
             time = this._calValueByGr(this._$hour, this._$minute, value);
         } else {
             time = value;
@@ -421,7 +423,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     private _getFloatInitData(mode, value, step): TimePopupValue {
         let list;
-        if(mode == 'hour') {
+        if (mode == 'hour') {
             list = Array.from(new Array(24).keys()).map((h: any) => {
                 h = (h < 10 ? '0' : '') + h;
                 return {value: h, isSelected: Number(h) == Number(value), disabled: this._isValueOutOfLimit(h, mode)}
@@ -455,7 +457,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     ngOnInit() {
         super.ngOnInit();
-        if(this._isValueOutOfLimit(this.value)) {
+        if (this._isValueOutOfLimit(this.value)) {
             this.runMicrotask(() => {
                 this.value = this._calValueByLimit(this.value);
             });
@@ -510,9 +512,9 @@ export class JigsawTimePopup implements IPopupable {
 
     private _updateList(popupValue: TimePopupValue) {
         let {mode, list} = popupValue;
-        if(mode == 'hour') {
+        if (mode == 'hour') {
             this._$hourList = list;
-        } else if(mode == 'minute') {
+        } else if (mode == 'minute') {
             this._$minuteList = list;
         } else if (mode == 'second') {
             this._$secondList = list;
@@ -521,7 +523,7 @@ export class JigsawTimePopup implements IPopupable {
     }
 
     public _$select(item: TimePopupItem) {
-        if(item.disabled) return;
+        if (item.disabled) return;
         this._value.value = String(item.value);
         this.answer.emit(this._value);
     }

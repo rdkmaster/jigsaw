@@ -13,6 +13,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
     background: $component-background;
     overflow: hidden;
     padding: 4px 34px 4px 8px;
+
     &:hover, &-active {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border: 1px solid $primary-color;

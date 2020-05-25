@@ -31,7 +31,7 @@ export type DayCell = {
     isOwnNextMonth?: boolean;
     isSelected?: boolean,
     isDisabled?: boolean,
-    mark?: {type: string, label?: string}
+    mark?: { type: string, label?: string }
 };
 export type MonthCell = { month: number, label: string, isSelected?: boolean, isDisabled?: boolean, };
 export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean, };
@@ -315,7 +315,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return (this.limitStart && date < this.limitStart) || (this.limitEnd && date > this.limitEnd)
     }
 
-    private _getDayMark(year: number, month: number, day: number): {type: string, label?: string} {
+    private _getDayMark(year: number, month: number, day: number): { type: string, label?: string } {
         if (!(this.markDates instanceof Array)) {
             return {type: 'none', label: ''};
         }
@@ -338,7 +338,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             }
             return false;
         });
-        return {type: mark, label:label};
+        return {type: mark, label: label};
     }
 
     /**
