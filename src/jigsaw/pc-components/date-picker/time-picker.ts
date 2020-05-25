@@ -26,8 +26,8 @@ import {debounceTime} from 'rxjs/operators';
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10;
-export type TimePopupValue = { mode: TimeSelectMode, value: string, step: TimeStep };
-export type TimePopupItem = { value: string, isSelected: boolean };
+export type TimePopupValue = { mode: TimeSelectMode, value: string, list: TimePopupItem[] };
+export type TimePopupItem = { value: string, isSelected: boolean, disabled: boolean };
 
 @Component({
     selector: 'jigsaw-time-picker, j-time-picker',
@@ -198,7 +198,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public _$floatOpen: boolean;
 
-    public _$floatInitData: any = {mode: this._$selectMode, value: this._$hour, step: this.step};
+    public _$floatInitData: any = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
 
     public _$floatArrowElement: HTMLElement;
 
@@ -207,19 +207,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._$floatOpen = mode == 'none' ? false : true;
         if (mode == 'hour') {
             this._hourInput.nativeElement.select();
-            this._$floatInitData = {mode: 'hour', value: this._$hour, step: this.step};
+            this._$floatInitData = this._getFloatInitData(mode, this._$hour, this.step);
             this._$floatArrowElement = this._hourInput.nativeElement;
         } else if (mode == 'minute') {
             if (!isTabSwitch) {
                 this._minuteInput.nativeElement.select();
             }
-            this._$floatInitData = {mode: 'minute', value: this._$minute, step: this.step};
+            this._$floatInitData = this._getFloatInitData(mode, this._$minute, this.step);
             this._$floatArrowElement = this._minuteInput.nativeElement;
         } else if (mode == 'second') {
             if (!isTabSwitch) {
                 this._secondInput.nativeElement.select();
             }
-            this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
+            this._$floatInitData = this._getFloatInitData(mode, this._$second, this.step);
             this._$floatArrowElement = this._secondInput.nativeElement;
         }
         if(mode != 'none') {
@@ -304,19 +304,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (this._$selectMode == 'hour') {
             let value = String(Number(this._$hour) + add);
             if(this._updateHour(value)) {
-                this._$floatInitData = {mode: 'hour', value: this._$hour, step: this.step};
+                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
             }
         } else if (this._$selectMode == 'minute') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$minute)) + add;
             if(this._updateMinute(value)) {
-                this._$floatInitData = {mode: 'minute', value: this._$minute, step: this.step};
+                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$minute, this.step);
             }
         } else if (this._$selectMode == 'second') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$second)) + add;
             if(this._updateSecond(value)) {
-                this._$floatInitData = {mode: 'second', value: this._$second, step: this.step};
+                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$second, this.step);
             }
         }
     }
@@ -419,6 +419,23 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return (this.limitStart && time < this.limitStart) || (this.limitEnd && time > this.limitEnd)
     }
 
+    private _getFloatInitData(mode, value, step): TimePopupValue {
+        let list;
+        if(mode == 'hour') {
+            list = Array.from(new Array(24).keys()).map((h: any) => {
+                h = (h < 10 ? '0' : '') + h;
+                return {value: h, isSelected: Number(h) == Number(value), disabled: this._isValueOutOfLimit(h, mode)}
+            });
+        } else if (mode == 'minute' || mode == 'second') {
+            list = Array.from(new Array(60 / step).keys()).map((m: any) => {
+                m = m * step;
+                m = (m < 10 ? '0' : '') + m;
+                return {value: m, isSelected: Number(m) == Number(value), disabled: this._isValueOutOfLimit(m, mode)}
+            });
+        }
+        return {mode: mode, value: value, list: list}
+    }
+
     public writeValue(newValue: string): void {
         if (!newValue || newValue == this._value) return;
         this._value = newValue;
@@ -492,31 +509,20 @@ export class JigsawTimePopup implements IPopupable {
     public _$secondList: TimePopupItem[];
 
     private _updateList(popupValue: TimePopupValue) {
-        let {mode, value, step} = popupValue;
-        this._$hourList = Array.from(new Array(24).keys()).map((h: any) => {
-            h = (h < 10 ? '0' : '') + h;
-            return {value: h, isSelected: false}
-        });
-        this._$minuteList = Array.from(new Array(60 / step).keys()).map((m: any) => {
-            m = m * step;
-            m = (m < 10 ? '0' : '') + m;
-            return {value: m, isSelected: false}
-        });
-        this._$secondList = Array.from(new Array(60 / step).keys()).map((s: any) => {
-            s = s * step;
-            s = (s < 10 ? '0' : '') + s;
-            return {value: s, isSelected: false}
-        });
-        let list = mode == 'hour' ? this._$hourList : mode == 'minute' ? this._$minuteList : mode == 'second' ? this._$secondList : null;
-        if (!list) return;
-        list.forEach(t => {
-            t.isSelected = Number(t.value) == Number(value);
-        });
+        let {mode, list} = popupValue;
+        if(mode == 'hour') {
+            this._$hourList = list;
+        } else if(mode == 'minute') {
+            this._$minuteList = list;
+        } else if (mode == 'second') {
+            this._$secondList = list;
+        }
         this._cdr.markForCheck();
     }
 
-    public _$select(value: string) {
-        this._value.value = String(value);
+    public _$select(item: TimePopupItem) {
+        if(item.disabled) return;
+        this._value.value = String(item.value);
         this.answer.emit(this._value);
     }
 

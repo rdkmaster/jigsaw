@@ -27,6 +27,13 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
                     background: $primary-color;
                     color: $text-color-of-bg;
                 }
+                &.#{$time-select-prefix-cls}-disabled {
+                    &, &:hover {
+                        background: none;
+                        @include compatible(color, $disabled-color, $disabled-color-ie11);
+                        cursor: not-allowed;
+                    }
+                }
             }
         }
     }
