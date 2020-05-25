@@ -9,7 +9,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
         font-size: 14px;
 
         .#{$list-option-prefix-cls} {
-            color: #cccccc;
+            color: #eee;
             line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
@@ -23,35 +23,43 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             hr {
-                border-top: 1px solid #666666;
+                border-top: 1px solid #ffffff;
                 margin: 1px 0;
+                opacity: 85%;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
                 background: #102331;
 
-                .#{$list-option-prefix-cls}-title {
+                .menu-list-title {
+                    float: left;
                     line-height: 32px;
                     color: #666666;
-                }
-
-                .#{$list-option-prefix-cls}-sub-title {
-                    line-height: 32px;
-                    color: #999;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
 
                 @include compatible(color, #102331, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            &-title {
+            .menu-list-title {
+                float: left;
                 line-height: 32px;
-                color: #ccc;
+                color: #eee;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
-            &-sub-title {
+            .menu-list-sub-title {
+                float: right;
                 line-height: 32px;
                 color: #999;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
@@ -67,7 +75,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 
         .#{$list-option-prefix-cls} {
             line-height: 32px;
-            color: #cccccc;
+            color: #eee;
             padding: 0px 8px;
             min-height: 1px;
 
@@ -80,35 +88,43 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             hr {
-                border-top: 1px solid #666666;
+                border-top: 1px solid #ffffff;
                 margin: 1px 0;
+                opacity: 85%;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
                 background: #151518;
 
-                .#{$list-option-prefix-cls}-title {
+                .menu-list-title {
+                    float: left;
                     line-height: 32px;
                     color: #666666;
-                }
-
-                .#{$list-option-prefix-cls}-sub-title {
-                    line-height: 32px;
-                    color: #999;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
 
                 @include compatible(color, #102331, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            &-title {
+            .menu-list-title {
+                float: left;
                 line-height: 32px;
-                color: #cccccc;
+                color: #eee;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
-            &-sub-title {
+            .menu-list-sub-title {
+                float: right;
                 line-height: 32px;
                 color: #999;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
@@ -137,35 +153,47 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             hr {
-                border-top: 1px solid #bbbbbb;
+                border-top: 1px solid #dddddd;
                 margin: 1px 0;
+                opacity: 85%;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
                 background: #ffffff;
 
-                .#{$list-option-prefix-cls}-title {
+                .menu-list-title {
+                    float: left;
                     line-height: 32px;
                     color: #bbbbbb;
-                }
-
-                .#{$list-option-prefix-cls}-sub-title {
-                    line-height: 32px;
-                    color: #ccc;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
 
                 @include compatible(color, #bbbbbb, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            &-title {
+            .menu-list-title {
+                float: left;
                 line-height: 32px;
                 color: #666666;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                i {
+                    color: #888888;
+                }
             }
 
-            &-sub-title {
+            .menu-list-sub-title {
+                float: right;
                 line-height: 32px;
-                color: #ccc;
+                color: #cccccc;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
@@ -193,43 +221,40 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             hr {
-                border-top: 1px solid #bbbbbb;
+                border-top: 1px solid #ffffff;
                 margin: 1px 0;
+                opacity: 85%;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
                 background: #32404e;
 
-                .#{$list-option-prefix-cls}-title {
-                    line-height: 40px;
-                    float: none;
+                .navigation-title {
                     color: #bbbbbb;
-                }
-
-                .#{$list-option-prefix-cls}-sub-title {
                     line-height: 40px;
-                    color: #bbbbbb;
+                    text-align: center;
+                    vertical-align: center;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
 
                 @include compatible(color, #bbbbbb, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            &-title {
-                line-height: 40px;
-                float: none;
-                color: #ffffff;
-            }
-
-            &-sub-title {
-                line-height: 40px;
-                color: #ccc;
-            }
-
             .navigation-title {
+                color: #ffffff;
                 line-height: 40px;
                 text-align: center;
                 vertical-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                i {
+                    color: #cccccc;
+                }
             }
         }
     }

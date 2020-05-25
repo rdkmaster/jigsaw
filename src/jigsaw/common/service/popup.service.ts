@@ -214,6 +214,12 @@ export class PopupService {
         return PopupService.allPopups;
     }
 
+    public static mouseInPopupElement(mouseEvent: MouseEvent, element: HTMLElement): boolean {
+        // 加1减1为了兼容有border的情况
+        return mouseEvent.clientX >= element.offsetLeft + 1 && mouseEvent.clientX < element.offsetLeft + element.offsetWidth - 1
+            && mouseEvent.clientY >= element.offsetTop + 1 && mouseEvent.clientY < element.offsetTop + element.offsetHeight - 1;
+    }
+
     public elements: HTMLElement[] = [];
     /**
      * 全局插入点

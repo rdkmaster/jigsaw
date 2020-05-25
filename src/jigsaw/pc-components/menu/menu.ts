@@ -22,6 +22,7 @@ export class MenuOptions {
  * @internal
  */
 export const cascadingMenuFlag = class CascadingMenuFlag {};
+
 /**
  * @internal
  */
@@ -68,7 +69,7 @@ export class JigsawMenuHelper implements IPopupable {
     selector: 'jigsaw-menu, j-menu',
     template: `
         <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
-                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
+                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
             <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
                            jigsawCascadingMenu
                            [jigsawCascadingMenuOptions]="_$realOptions"
@@ -86,13 +87,18 @@ export class JigsawMenuHelper implements IPopupable {
                                 !node.disabled && !!node.label && select.emit(node);
                                 !node.disabled && !!node.label && initData?.select?.emit(node);
                             "
-                           (mouseenter)="_$mouseenter(index, node)">
-                <span j-title *ngIf="!!node.label && _$realTheme != 'navigation'">
+                           (mouseenter)="_$mouseenter(index, node)"
+                           (mouseleave)="_$mouseleave($event,index, node)"
+                           [style.minHeight]="_$getMinHeight(node)">
+                <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'" [title]="node.label"
+                     [style.width]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
-                </span>
+                </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
-                <div j-sub-title *ngIf="_$realTheme != 'navigation'">{{node.subTitle}}
+                <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'" [title]="node.subTitle"
+                     [style.width]="_$getSubTitleWidth(node)">
+                    {{node.subTitle}}
                     <i class="{{node.subIcon}}"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
@@ -232,19 +238,56 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public _$mouseenter(index: number, node: SimpleNode) {
-        const disabled = node.disabled;
-        if (disabled || !node.label) {
-            return;
-        }
         const listItems = this._menuListInstance._items.toArray();
         listItems.forEach(listItem => {
             listItem.selected = false;
         });
+        if (!node.label || node.disabled) {
+            return;
+        }
         listItems[index].selected = true;
     }
 
+    /**
+     * @internal
+     */
+    _$mouseleave(event, index, node) {
+        if (!PopupService.instance.popups.filter(popup => popup.extra === cascadingMenuFlag).some(popup => PopupService.mouseInPopupElement(event, popup.element))) {
+            if (!node.nodes || node.nodes.length == 0) {
+                const listItems = this._menuListInstance._items.toArray();
+                listItems[index].selected = false;
+            }
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$getMinHeight(node) {
+        if (!node.label) {
+            return "1px";
+        } else {
+            return "32px";
+        }
+    }
+
+    public _$getTitleWidth(node) {
+        return `calc(100% - ${this._$getSubTitleWidth(node)})`;
+    }
+
+    public _$getSubTitleWidth(node) {
+        let subTitleWidth = 0;
+        if (node.nodes && node.nodes.length > 0) {
+            subTitleWidth += 5;
+        }
+        if (node.subIcon || node.subTitle) {
+            subTitleWidth += 70;
+        }
+        return subTitleWidth + 'px';
+    }
+
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
-                        callback?: (node: SimpleNode) => void, context?: any): PopupInfo {
+                         callback?: (node: SimpleNode) => void, context?: any): PopupInfo {
         if (!event) {
             return;
         }

@@ -267,18 +267,12 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             // 全局click
             closeAllContextMenu(this._popupService.popups);
         } else if (event && event.type == 'mouseleave' && event.target == this.popupElement
-                && PopupService.allPopups.some(popup => popup.extra === cascadingMenuFlag && this._mouseInPopup(event, popup.element))) {
+            && PopupService.allPopups.some(popup => popup.extra === cascadingMenuFlag && PopupService.mouseInPopupElement(event, popup.element))) {
             super._closeFloat(event);
         } else if (!event) {
             super._closeFloat(event);
         }
     }
-
-    private _mouseInPopup(mouseEvent: MouseEvent, element: HTMLElement): boolean {
-        return mouseEvent.clientX >= element.offsetLeft && mouseEvent.clientX < element.offsetLeft + element.offsetWidth
-            && mouseEvent.clientY >= element.offsetTop && mouseEvent.clientY < element.offsetTop + element.offsetHeight;
-    }
-
 
     protected _disposePopup() {
         super._disposePopup();
