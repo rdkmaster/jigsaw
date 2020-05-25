@@ -34,5 +34,13 @@
 </p>
 <p>
 最大高度
-<jigsaw-numeric-input [(value)]="maxHeight" [step]="10"></jigsaw-numeric-input>
+<jigsaw-numeric-input [(value)]="maxHeight" [step]="10" width="96"></jigsaw-numeric-input>
+</p>
+<p style="width: 500px;">
+    关于高度与最大高度的说明：<br>
+    菜单高度默认是由菜单项自动撑出来的，一个层级下有多少菜单项，该级菜单就有多高。
+    如果菜单项很多，则菜单会高于屏幕可视区域，撑出滚动条。为了避免这样的情况发生，可以给菜单设置一个最大高度，
+    当菜单超过最大高度后，自动出滚动条。<br>
+    如果给定某个菜单高度值，则所有菜单均保持此高度，
+    如果菜单项少于此高度，则给出背景色填充，如果菜单项多于此高度，则给出滚动条
 </p>
