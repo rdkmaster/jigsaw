@@ -27,7 +27,7 @@ import {debounceTime} from 'rxjs/operators';
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10;
 export type TimePopupValue = { mode: TimeSelectMode, value: string, list: TimePopupItem[] };
-export type TimePopupItem = { value: string, isSelected: boolean, disabled: boolean };
+export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: boolean };
 
 @Component({
     selector: 'jigsaw-time-picker, j-time-picker',
