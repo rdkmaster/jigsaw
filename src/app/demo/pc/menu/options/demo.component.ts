@@ -36,7 +36,6 @@ export class MenuOptionsDemo {
     public theme: string[] = ['dark'];
     public width: number = 150;
     public height: number = 0;
-    public maxHeight: number = 250;
 
     constructor( private ps: PopupService) {
         this.data = new SimpleTreeData();
@@ -58,7 +57,7 @@ export class MenuOptionsDemo {
                         <node label="Copy Path"></node>
                     </node>
                     <node label="Paste" disabled="true"></node>
-                    <!-- 无labe属性的node节点表示这是一个分隔符 -->
+                    <!-- 无label属性的node节点表示这是一个分隔符 -->
                     <node></node>
                     <node label="Delete"></node>
                 </node>
@@ -66,7 +65,7 @@ export class MenuOptionsDemo {
                     <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
                     <node label="Debug" icon="fa fa-bug" subTitle="Shift+F9"></node>
                 </node>
-                <!-- 无labe属性的node节点表示这是一个分隔符 -->
+                <!-- 无label属性的node节点表示这是一个分隔符 -->
                 <node></node>
                 <node label="Exit"></node>
             </node>
@@ -82,7 +81,6 @@ export class MenuOptionsDemo {
             data: this.data,
             width: this.width,
             height: this.height,
-            maxHeight: this.maxHeight,
             theme: this.theme[0] as MenuTheme,
         }, node => {
             console.log("Context menu selected, node =", node);

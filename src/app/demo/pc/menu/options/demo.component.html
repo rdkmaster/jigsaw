@@ -6,7 +6,6 @@
 <!-- start to learn the demo from here -->
 <p jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu"
       [jigsawCascadingMenuHeight]="height"
-      [jigsawCascadingMenuMaxHeight]="maxHeight"
       [jigsawCascadingMenuWidth]="width"
       [jigsawCascadingMenuTheme]='theme[0]'
       (jigsawCascadingMenuSelect)="menuSelect($event)">
@@ -32,10 +31,7 @@
 高度
 <jigsaw-numeric-input [(value)]="height" [step]="10"></jigsaw-numeric-input>
 </p>
-<p>
-最大高度
-<jigsaw-numeric-input [(value)]="maxHeight" [step]="10" width="96"></jigsaw-numeric-input>
-</p>
+
 <p style="width: 500px;">
     关于高度与最大高度的说明：<br>
     菜单高度默认是由菜单项自动撑出来的，一个层级下有多少菜单项，该级菜单就有多高。

@@ -11,7 +11,6 @@ export class MenuOptions {
     data?: SimpleTreeData;
     width?: string | number;
     height?: string | number;
-    maxHeight?: string | number;
     theme?: MenuTheme;
     options?: PopupOptions;
     showBorder?: boolean;
@@ -21,7 +20,8 @@ export class MenuOptions {
 /**
  * @internal
  */
-export const cascadingMenuFlag = class CascadingMenuFlag {};
+export const cascadingMenuFlag = class CascadingMenuFlag {
+};
 
 /**
  * @internal
@@ -40,7 +40,6 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              [jigsawCascadingMenuOptions]="initData?.options"
              [jigsawCascadingMenuWidth]="initData?.width"
              [jigsawCascadingMenuHeight]="initData?.height"
-             [jigsawCascadingMenuMaxHeight]="initData?.maxHeight"
              [jigsawCascadingMenuShowBorder]="initData?.showBorder"
              [jigsawCascadingMenuData]="initData?.data"
              [jigsawCascadingMenuTheme]="initData?.theme"
@@ -68,14 +67,13 @@ export class JigsawMenuHelper implements IPopupable {
 @Component({
     selector: 'jigsaw-menu, j-menu',
     template: `
-        <j-list #menuList [width]="_$realWidth" [height]="_$realHeight" [maxHeight]="_$realMaxHeight"
+        <j-list #menuList [width]="_$realWidth" [height]="_$realHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
             <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
                            jigsawCascadingMenu
                            [jigsawCascadingMenuOptions]="_$realOptions"
                            [jigsawCascadingMenuWidth]="_$realWidth"
                            [jigsawCascadingMenuHeight]="_$realHeight"
-                           [jigsawCascadingMenuMaxHeight]="_$realMaxHeight"
                            [jigsawCascadingMenuShowBorder]="_$realShowBorder"
                            [jigsawCascadingMenuData]="node"
                            [jigsawCascadingMenuTheme]="_$realTheme"
@@ -91,13 +89,13 @@ export class JigsawMenuHelper implements IPopupable {
                            (mouseleave)="_$mouseleave($event,index, node)"
                            [style.minHeight]="_$getMinHeight(node)">
                 <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'" [title]="node.label"
-                     [style.width]="_$getTitleWidth(node)">
+                     [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
                 </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
                 <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'" [title]="node.subTitle"
-                     [style.width]="_$getSubTitleWidth(node)">
+                     [ngStyle]="_$getSubTitleWidth(node, index)">
                     {{node.subTitle}}
                     <i class="{{node.subIcon}}"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
@@ -148,13 +146,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      */
     public get _$realHeight(): number | string {
         return this.initData && this.initData.height ? this.initData.height : this.height;
-    }
-
-    /**
-     * @internal
-     */
-    public get _$realMaxHeight(): number | string {
-        return this.initData && this.initData.maxHeight ? this.initData.maxHeight : this.maxHeight;
     }
 
     /**
@@ -271,23 +262,33 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
-    public _$getTitleWidth(node) {
-        return `calc(100% - ${this._$getSubTitleWidth(node)})`;
+    public _$getTitleWidth(node): any {
+        if (!node.nodes || node.nodes.length == 0) {
+            return {maxWidth: '100%'};
+        } else {
+            // 5是给有子节点时，留下的箭头；2是给标题和箭头之间留点距离
+            return {maxWidth: 'calc(100% - 7px)'};
+        }
     }
 
-    public _$getSubTitleWidth(node) {
-        let subTitleWidth = 0;
-        if (node.nodes && node.nodes.length > 0) {
-            subTitleWidth += 5;
+    public _$getSubTitleWidth(node, index) {
+        if (!this._menuListElement || node.disabled || !node.label) {
+            return {maxWidth: 'auto'};
         }
-        if (node.subIcon || node.subTitle) {
-            subTitleWidth += 70;
+        const listOptionElements = this._menuListElement.nativeElement.children;
+        const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
+        const wrapElement = titleElement.parentElement;
+        // 5是给有子节点时，留下的箭头；2是给标题和副标题之间留点距离
+        const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
+        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 2) {
+            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 2}px`};
+        } else {
+            return {width: `${minWidth}px`};
         }
-        return subTitleWidth + 'px';
     }
 
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
-                         callback?: (node: SimpleNode) => void, context?: any): PopupInfo {
+                       callback?: (node: SimpleNode) => void, context?: any): PopupInfo {
         if (!event) {
             return;
         }
