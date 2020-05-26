@@ -1,4 +1,14 @@
-import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef} from "@angular/core";
+import {
+    Component,
+    Output,
+    EventEmitter,
+    Input,
+    ViewChild,
+    ElementRef,
+    Renderer2,
+    AfterViewInit,
+    ChangeDetectorRef
+} from "@angular/core";
 import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -15,7 +25,7 @@ export class MenuOptions {
     options?: PopupOptions;
     showBorder?: boolean;
     select?: EventEmitter<SimpleNode>;
-};
+}
 
 /**
  * @internal
@@ -245,11 +255,11 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public _$mouseleave(index: number){
-        const menuPops = PopupService.instance.popups.filter(popup => popup.extra === cascadingMenuFlag);
-        const length = menuPops.length;
-        const ind = menuPops.findIndex(pop => pop.element == this._elementRef.nativeElement);
-        if (length - ind <= 1) {
+    public _$mouseleave(index: number) {
+        const popups = PopupService.instance.popups;
+        const realIndex = popups.findIndex(pop => pop.element == this._elementRef.nativeElement);
+        const popupInfo = popups[realIndex + 1];
+        if (!popupInfo || popupInfo.extra !== cascadingMenuFlag) {
             const listItems = this._menuListInstance._items.toArray();
             listItems[index].selected = false;
         }
@@ -288,7 +298,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         const listOptionElements = this._menuListElement.nativeElement.children;
         const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
         const wrapElement = titleElement.parentElement;
-        // 5是给有子节点时，留下的箭头；2是给标题和副标题之间留点距离
+        // 5是给有子节点时，留下的箭头；
         const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
         if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 2) {
             return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 2}px`};
