@@ -86,7 +86,7 @@ export class JigsawMenuHelper implements IPopupable {
                                 !node.disabled && !!node.label && initData?.select?.emit(node);
                             "
                            (mouseenter)="_$mouseenter(index, node)"
-                           (mouseleave)="_$mouseleave($event,index)"
+                           (mouseleave)="_$mouseleave(index)"
                            [style.minHeight]="_$getMinHeight(node.label)">
                 <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
                      [title]="_$getTitle(node.label,index,'menu-list-title')"
