@@ -43,6 +43,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
                 if (!this.date) return;
                 newDate = TimeService.convertValue(this.date, this._gr);
                 [this._$date, this._$time] = newDate.split(' ');
+                this._cdr.markForCheck();
             } else if(mode == 'combine') {
                 if (!this._$date) return;
                 newDate = this._$date;

@@ -10,6 +10,8 @@ import {DateTimePickerLimitDemoModule} from "./limit/demo.module";
 import {DateTimePickerMarkDemoModule} from "./mark/demo.module";
 import {DateTimePickerMarkDemoComponent} from "./mark/demo.component";
 import {DateTimePickerLimitComponent} from "./limit/demo.component";
+import {WithComboSelectDemoComponent} from "./with-combo-select/demo.component";
+import {WithComboSelectDemoModule} from "./with-combo-select/demo.module";
 
 export const routerConfig = [
     {
@@ -27,6 +29,9 @@ export const routerConfig = [
     {
         path: 'mark', component: DateTimePickerMarkDemoComponent
     },
+    {
+        path: 'with-combo-select', component: WithComboSelectDemoComponent
+    },
 ];
 
 @NgModule({
@@ -36,7 +41,8 @@ export const routerConfig = [
         DateTimePickerGrDemoModule,
         DateTimePickerGrItemDemoModule,
         DateTimePickerLimitDemoModule,
-        DateTimePickerMarkDemoModule
+        DateTimePickerMarkDemoModule,
+        WithComboSelectDemoModule
     ]
 })
 export class DateTimePickerDemoModule {
