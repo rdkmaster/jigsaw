@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
+import {Component, Output, EventEmitter, Input, ViewChild, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef} from "@angular/core";
 import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -86,15 +86,17 @@ export class JigsawMenuHelper implements IPopupable {
                                 !node.disabled && !!node.label && initData?.select?.emit(node);
                             "
                            (mouseenter)="_$mouseenter(index, node)"
-                           (mouseleave)="_$mouseleave($event,index, node)"
-                           [style.minHeight]="_$getMinHeight(node)">
-                <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'" [title]="node.label"
+                           (mouseleave)="_$mouseleave($event,index)"
+                           [style.minHeight]="_$getMinHeight(node.label)">
+                <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.label,index,'menu-list-title')"
                      [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
                     {{node.label}}
                 </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
-                <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'" [title]="node.subTitle"
+                <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.subTitle,index,'menu-list-sub-title')"
                      [ngStyle]="_$getSubTitleWidth(node, index)">
                     {{node.subTitle}}
                     <i class="{{node.subIcon}}"></i>
@@ -206,7 +208,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @ViewChild('menuList', {static: false})
     private _menuListInstance: JigsawList;
 
-    constructor(private _renderer: Renderer2) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -217,6 +219,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
+        this._changeDetectorRef.detectChanges();
     }
 
     private _setBorder() {
@@ -242,36 +245,43 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    _$mouseleave(event, index, node) {
-        if (!PopupService.instance.popups.filter(popup => popup.extra === cascadingMenuFlag).some(popup => PopupService.mouseInPopupElement(event, popup.element))) {
-            if (!node.nodes || node.nodes.length == 0) {
-                const listItems = this._menuListInstance._items.toArray();
-                listItems[index].selected = false;
-            }
+    public _$mouseleave(index: number){
+        const menuPops = PopupService.instance.popups.filter(popup => popup.extra === cascadingMenuFlag);
+        const length = menuPops.length;
+        const ind = menuPops.findIndex(pop => pop.element == this._elementRef.nativeElement);
+        if (length - ind <= 1) {
+            const listItems = this._menuListInstance._items.toArray();
+            listItems[index].selected = false;
         }
     }
 
     /**
      * @internal
      */
-    public _$getMinHeight(node) {
-        if (!node.label) {
+    public _$getMinHeight(label: string): string {
+        if (!label) {
             return "1px";
         } else {
             return "32px";
         }
     }
 
-    public _$getTitleWidth(node): any {
+    /**
+     * @internal
+     */
+    public _$getTitleWidth(node: SimpleNode): any {
         if (!node.nodes || node.nodes.length == 0) {
             return {maxWidth: '100%'};
         } else {
-            // 5是给有子节点时，留下的箭头；2是给标题和箭头之间留点距离
+            // 5是给有子节点时，留下的箭头；2是给标题和箭头之间留点距离；一共为7px
             return {maxWidth: 'calc(100% - 7px)'};
         }
     }
 
-    public _$getSubTitleWidth(node, index) {
+    /**
+     * @internal
+     */
+    public _$getSubTitleWidth(node: SimpleNode, index: number): any {
         if (!this._menuListElement || node.disabled || !node.label) {
             return {maxWidth: 'auto'};
         }
@@ -285,6 +295,22 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         } else {
             return {width: `${minWidth}px`};
         }
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTitle(label: string, index: number, titleClass: string): string {
+        let title = '';
+        if (!this._menuListElement || !label) {
+            return title;
+        }
+        const listOptionElements = this._menuListElement.nativeElement.children;
+        const titleElement = listOptionElements[index].getElementsByClassName(titleClass)[0];
+        if (titleElement.scrollWidth > titleElement.offsetWidth) {
+            title = label;
+        }
+        return title;
     }
 
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
