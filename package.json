@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "s": "echo ",
     "s": "ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
     "start": "ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
     "build": "gulp build:jigsaw:clean",
