@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 
-<jigsaw-button-bar [data]="['time','time_hour_minute','time_minute_second']" [(selectedItems)]="gr">
+<jigsaw-button-bar [data]="['time','time_hour_minute','time_minute_second','time_hour']" [(selectedItems)]="gr">
 </jigsaw-button-bar>
 <br><br>
 <j-time-picker [(value)]="time" [gr]="gr[0]" (valueChange)="valueChange($event)"></j-time-picker>

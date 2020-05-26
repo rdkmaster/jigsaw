@@ -80,17 +80,17 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._step = step;
     }
 
-    private _gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second = TimeGr.time;
+    private _gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour = TimeGr.time;
     @Input()
-    public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | string {
+    public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string {
         return this._gr;
     }
 
-    public set gr(gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | string) {
+    public set gr(gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string) {
         if (typeof gr === 'string') {
             gr = TimeGr[gr];
         }
-        if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second) return;
+        if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second && gr != TimeGr.time_hour) return;
         this._gr = gr;
         if (this.initialized) {
             this._createTime(this.value, gr);
@@ -149,6 +149,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateValue.emit();
             if (this._$selectMode == 'hour' && (this.gr == TimeGr.time || this.gr == TimeGr.time_hour_minute)) {
                 this._$handleSelectMode('minute');
+            } else if (this.gr == TimeGr.time_hour) {
+                this._$cancelSelect('hour');
             }
         }
     }
@@ -165,6 +167,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateValue.emit();
             if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
                 this._$handleSelectMode('second');
+            } else if (this.gr == TimeGr.time_hour_minute) {
+                this._$cancelSelect('minute');
             }
         }
     }
@@ -191,6 +195,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             [this._hour, this._minute] = timeArr;
         } else if (gr == TimeGr.time_minute_second) {
             [this._minute, this._second] = timeArr;
+        } else if (gr == TimeGr.time_hour) {
+            [this._hour] = timeArr;
         }
     }
 
@@ -382,6 +388,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             value = [hour, minute].join(':')
         } else if (this.gr == TimeGr.time_minute_second) {
             value = [minute, second].join(':')
+        } else if (this.gr == TimeGr.time_hour) {
+            value = hour
         }
         return value;
     }
@@ -401,6 +409,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         let timeArr = limit.split(':');
         if (this.gr == TimeGr.time) {
             return timeArr.length == 3
+        } else if (this.gr == TimeGr.time_hour) {
+            return timeArr.length == 1
         } else {
             return timeArr.length == 2
         }

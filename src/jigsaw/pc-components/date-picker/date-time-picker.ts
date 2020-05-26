@@ -61,7 +61,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     @Output()
     public grChange = new EventEmitter<TimeGr>();
 
-    public _$timeGr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second;
+    public _$timeGr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour;
     public _$dateGr: TimeGr.date | TimeGr.month | TimeGr.week;
     private _gr: TimeGr = TimeGr.date;
 
@@ -76,7 +76,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
         if (value == this._gr) return;
         this._gr = <TimeGr>value;
-        if (value == TimeGr.hour || value == TimeGr.minute) {
+        if (value == TimeGr.hour) {
+            this._$timeGr = TimeGr.time_hour;
+        } else if (value == TimeGr.minute) {
             this._$timeGr = TimeGr.time_hour_minute
         } else if (value == TimeGr.second) {
             this._$timeGr = TimeGr.time
@@ -211,7 +213,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         if (!this._$date) return;
         let date = this._$date;
         if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
-            this._$time = this._$time ? this._$time : this.gr == TimeGr.second ? '00:00:00' : '00:00';
+            this._$time = this._$time ? this._$time : this.gr == TimeGr.second ? '00:00:00' : this.gr == TimeGr.hour ? '00' : '00:00';
             date += ` ${this._$time}`
         }
         if (this._date == date) return;

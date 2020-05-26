@@ -7,7 +7,7 @@ declare const moment: any;
  * 时间粒度值
  */
 export enum TimeGr {
-    second, minute, hour, date, week, month, time, time_hour_minute, time_minute_second
+    second, minute, hour, date, week, month, time, time_hour_minute, time_minute_second, time_hour
 }
 
 /**
