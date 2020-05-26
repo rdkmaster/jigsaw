@@ -48,6 +48,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     constructor(private _cdr: ChangeDetectorRef, protected _zone: NgZone) {
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(300)).subscribe(() => {
+            this._hour = this._hour ? this._hour : '00';
+            this._minute = this._minute ? this._minute : '00';
+            this._second = this._second ? this._second : '00';
             let value = this._calValueByGr(this._$hour, this._$minute, this._$second);
             this.writeValue(value);
         })
@@ -93,7 +96,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second && gr != TimeGr.time_hour) return;
         this._gr = gr;
         if (this.initialized) {
-            this._createTime(this.value, gr);
+            this._updateValue.emit();
         }
     }
 
