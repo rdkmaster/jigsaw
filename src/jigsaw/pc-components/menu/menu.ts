@@ -13,7 +13,7 @@ import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} fr
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
-import {JigsawList} from "../list-and-tile/list";
+import {JigsawList, JigsawListOption} from "../list-and-tile/list";
 
 export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
 
@@ -238,14 +238,19 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
-    /**
-     * @internal
-     */
-    public _$mouseenter(index: number, node: SimpleNode) {
+    private _resetListItems(): JigsawListOption[] {
         const listItems = this._menuListInstance._items.toArray();
         listItems.forEach(listItem => {
             listItem.selected = false;
         });
+        return listItems;
+    }
+
+    /**
+     * @internal
+     */
+    public _$mouseenter(index: number, node: SimpleNode) {
+        const listItems = this._resetListItems();
         if (!node.label || node.disabled) {
             return;
         }
@@ -311,16 +316,12 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public _$getTitle(label: string, index: number, titleClass: string): string {
-        let title = '';
         if (!this._menuListElement || !label) {
-            return title;
+            return '';
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
         const titleElement = listOptionElements[index].getElementsByClassName(titleClass)[0];
-        if (titleElement.scrollWidth > titleElement.offsetWidth) {
-            title = label;
-        }
-        return title;
+        return titleElement.scrollWidth > titleElement.offsetWidth ? label : '';
     }
 
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
