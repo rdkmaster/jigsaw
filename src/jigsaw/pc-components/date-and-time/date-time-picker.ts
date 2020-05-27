@@ -80,7 +80,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._calTimeGr(this._gr);
         this._calDateGr(this._gr);
         if (this.initialized && this.date) {
-            let newDate = TimeService.convertValue(this.date, this._gr);
+            let newDate = TimeService.handleWeekDateToDate(this.date, this._gr);
             [this._$date, this._$time] = newDate.split(' ');
             this._updateValue.emit('separate');
         }

@@ -307,6 +307,21 @@ export class TimeService {
         return moment().weekYear(year).week(week)
     }
 
+    public static handleWeekDateToDate(date: WeekTime, gr: TimeGr) {
+        if (gr == TimeGr.week || !date || typeof date['week'] != 'number') {
+            return TimeService.convertValue(date, gr);
+        }
+        date = TimeService.getDateFromYearAndWeek(date["year"], date["week"]);
+        let dateMonth = TimeService.getMonth(date);
+        let weekLastDate = TimeService.addDate(date, 6, TimeUnit.d);
+        let weekLastDateMonth = TimeService.getMonth(weekLastDate);
+        if (dateMonth == weekLastDateMonth) {
+            return TimeService.convertValue(date, gr);
+        }
+        let weekLastDateYear = TimeService.getYear(weekLastDate);
+        return TimeService.convertValue(`${weekLastDateYear}-${weekLastDateMonth}-01`, gr);
+    }
+
     public static getDate(str: Time, gr: TimeGr): Moment {
         return moment(str, TimeService.getFormatter(gr));
     }
