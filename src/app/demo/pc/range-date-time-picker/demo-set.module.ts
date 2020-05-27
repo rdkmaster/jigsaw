@@ -8,12 +8,10 @@ import {RangeDateTimeGrItemsModule} from "./gr-items/demo.module";
 import {RangeDateTimeGrComponent} from "./gr/demo.component";
 import {RangeDateTimeLimitComponent} from "./limit/demo.component";
 import {RangeDateTimeLimitModule} from "./limit/demo.module";
+import {RangeDateTimeComboSelectDemoComponent} from "./with-combo-select/demo.component";
+import {RangeDateTimeComboDemoModule} from "./with-combo-select/demo.module";
 
 export const routerConfig: any = [
-    /*
-    {
-        url: '/pc/time/with-combo-select', desc: 'with-combo-select', path: ''
-    },*/
     {
         path: 'basic', component: RangeDateTimeBasicDemoComponent
     },
@@ -25,6 +23,9 @@ export const routerConfig: any = [
     },
     {
         path: 'limit', component: RangeDateTimeLimitComponent
+    },
+    {
+        path: 'with-combo-select', component: RangeDateTimeComboSelectDemoComponent
     },
     /*
     {
@@ -39,6 +40,7 @@ export const routerConfig: any = [
         RangeDateTimeGrModule,
         RangeDateTimeGrItemsModule,
         RangeDateTimeLimitModule,
+        RangeDateTimeComboDemoModule,
         /*
        RangeTimeWeekSelectDemoModule,*/
     ]
