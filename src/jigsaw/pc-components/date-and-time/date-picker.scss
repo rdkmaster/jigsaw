@@ -180,6 +180,12 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                     @include compatible(color, $disabled-color, $disabled-color-ie11);
                     cursor: not-allowed;
                 }
+                &.#{$date-prefix-cls}-content-day-cell-selected {
+                    span, span:hover {
+                        background: $primary-color;
+                        color: $text-color-of-bg;
+                    }
+                }
             }
 
             &-recommend:after, &-warn:after, &-error:after {
@@ -206,7 +212,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
             &-inRange {
                 background: $primary-1;
-                .#{$date-prefix-cls}-content-day-cell-selected {
+                &.#{$date-prefix-cls}-content-day-cell-selected {
                     background: none;
                 }
             }
