@@ -139,6 +139,11 @@ export class SimpleTreeData extends GeneralCollection<any> {
         });
         const children = xmlElement.children;
         for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            if (/^parsererror$/.test(child.nodeName)) {
+                console.error('XML node parse error, detail:', (child.children[1] || child).textContent);
+                continue;
+            }
             node.nodes.push(this._toSimpleNode(children[i]));
         }
         return node;

@@ -1,0 +1,263 @@
+$menu-prefix-cls: #{$jigsaw-prefix}-menu;
+
+.#{$menu-prefix-cls}-dark {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #102331;
+        border: #2e4657 1px solid;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            color: #eee;
+            line-height: 32px;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #015c91;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #027bc2;
+            }
+
+            hr {
+                border-top: 1px solid #ffffff;
+                margin: 1px 0;
+                opacity: 85%;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #102331;
+
+                .menu-list-title {
+                    float: left;
+                    line-height: 32px;
+                    color: #666666;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                @include compatible(color, #102331, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            .menu-list-title {
+                float: left;
+                line-height: 32px;
+                color: #eee;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .menu-list-sub-title {
+                float: right;
+                line-height: 32px;
+                color: #999;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-black {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #151518;
+        border: #2e2e33 1px solid;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            line-height: 32px;
+            color: #eee;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #015c91;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #027bc2;
+            }
+
+            hr {
+                border-top: 1px solid #ffffff;
+                margin: 1px 0;
+                opacity: 85%;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #151518;
+
+                .menu-list-title {
+                    float: left;
+                    line-height: 32px;
+                    color: #666666;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                @include compatible(color, #102331, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            .menu-list-title {
+                float: left;
+                line-height: 32px;
+                color: #eee;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .menu-list-sub-title {
+                float: right;
+                line-height: 32px;
+                color: #999;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-light {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #ffffff;
+        border: #cccccc 1px solid;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            color: #666666;
+            line-height: 32px;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #e6f5fe;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #ccebfc;
+            }
+
+            hr {
+                border-top: 1px solid #dddddd;
+                margin: 1px 0;
+                opacity: 85%;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #ffffff;
+
+                .menu-list-title {
+                    float: left;
+                    line-height: 32px;
+                    color: #bbbbbb;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                @include compatible(color, #bbbbbb, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            .menu-list-title {
+                float: left;
+                line-height: 32px;
+                color: #666666;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                i {
+                    color: #888888;
+                }
+            }
+
+            .menu-list-sub-title {
+                float: right;
+                line-height: 32px;
+                color: #cccccc;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+.#{$menu-prefix-cls}-navigation {
+    background: none !important;
+
+    .jigsaw-list {
+        background: #32404e;
+        border: none;
+        font-size: 14px;
+
+        .#{$list-option-prefix-cls} {
+            color: #ffffff;
+            padding: 0px 8px;
+            min-height: 1px;
+
+            &:hover {
+                background: #015c91;
+            }
+
+            &.#{$list-option-prefix-cls}-active {
+                background: #027bc2;
+            }
+
+            hr {
+                border-top: 1px solid #ffffff;
+                margin: 1px 0;
+                opacity: 85%;
+            }
+
+            &.#{$list-option-prefix-cls}-disabled {
+                background: #32404e;
+
+                .navigation-title {
+                    color: #bbbbbb;
+                    line-height: 40px;
+                    text-align: center;
+                    vertical-align: center;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                @include compatible(color, #bbbbbb, #bfbfbf);
+                cursor: not-allowed;
+            }
+
+            .navigation-title {
+                color: #ffffff;
+                line-height: 40px;
+                text-align: center;
+                vertical-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                i {
+                    color: #cccccc;
+                }
+            }
+        }
+    }
+}
+
+

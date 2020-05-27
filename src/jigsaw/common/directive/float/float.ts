@@ -12,6 +12,7 @@ import {
 import {
     IPopupable,
     PopupDisposer,
+    PopupInfo,
     PopupOptions,
     PopupPoint,
     PopupPositionType,
@@ -19,7 +20,7 @@ import {
     PopupService
 } from "../../service/popup.service";
 import {AbstractJigsawViewBase} from "../../common";
-import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
+import {CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
 
 export enum DropDownTrigger {
@@ -29,47 +30,45 @@ export enum DropDownTrigger {
     none,
 }
 
-@Directive({
-    selector: '[jigsaw-float],[j-float],[jigsawFloat]',
-    host: {
-        '(mouseenter)': "_$openByHover($event)",
-        '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)': "_$onHostClick()"
-    }
-})
-export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
-    private _disposePopup: PopupDisposer;
-    private _removeWindowClickHandler: Function;
+export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
+    'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+
+export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
+    protected _removeWindowClickHandler: Function;
+    protected _floatOpenDelay = 100;
+    protected _floatCloseDelay = 400;
+
+    private _popupInfo: PopupInfo;
+    private _originDisposer: PopupDisposer;
     private _removePopupClickHandler: Function;
     private _removeMouseOverHandler: Function;
     private _removeMouseOutHandler: Function;
     private _removeResizeHandler: Function;
-    private _removeRefreshCallback: CallbackRemoval;
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
-    private _$target: Type<IPopupable> | TemplateRef<any>;
-
-    private _popupElement: HTMLElement;
 
     public get popupElement(): HTMLElement {
-        return this._popupElement;
+        return this._popupInfo ? this._popupInfo.element : null;
     }
 
-    @Input()
+    /**
+     * @internal
+     */
     public jigsawFloatInitData: any;
 
+    private _floatTarget: Type<IPopupable> | TemplateRef<any>;
+
     /**
-     * $demo = float/target
+     * @internal
      */
-    @Input()
     public get jigsawFloatTarget(): Type<IPopupable> | TemplateRef<any> {
-        return this._$target;
+        return this._floatTarget;
     }
 
     public set jigsawFloatTarget(value: Type<IPopupable> | TemplateRef<any>) {
-        if (this._$target != value) {
-            this._$target = value;
-            if (this._$opened == true) {
+        if (this._floatTarget != value) {
+            this._floatTarget = value;
+            if (this._opened == true) {
                 this._closeFloat();
                 this.callLater(() => {
                     this._openFloat();
@@ -79,37 +78,29 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     /**
-     * $demo = float/option
+     * @internal
      */
-    @Input()
     public jigsawFloatOptions: PopupOptions;
-
-    // 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
-    // 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
-    // 避免视图超时浏览器边界的情况
-    /**
-     * $demo = float/position
-     */
-    @Input()
-    public jigsawFloatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
 
     /**
      * @internal
      */
-    private _$opened: boolean = false;
+    public jigsawFloatPosition: FloatPosition = 'bottomLeft';
 
-    @Input()
+    private _opened: boolean = false;
+
+    /**
+     * @internal
+     */
     public get jigsawFloatOpen(): boolean {
-        return this._$opened;
+        return this._opened;
     }
 
     public set jigsawFloatOpen(value: boolean) {
         value = !!value;
-        if (value == this._$opened) {
+        if (value == this._opened) {
             return;
         }
-        this._$opened = value;
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
@@ -121,107 +112,54 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         });
     }
 
-    @Output()
+    /**
+     * @internal
+     */
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
+    /**
+     * @internal
+     */
+    public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger;
 
     /**
-     * 打开下拉触发方式，默认值是'mouseenter'
-     * $demo = float/trigger
+     * @internal
      */
-    @Input()
-    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
-        return this._openTrigger;
-    }
+    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
 
-    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none' | DropDownTrigger) {
-        // 从模板过来的值，不会受到类型的约束
-        switch (value as any) {
-            case DropDownTrigger.none:
-            case "none":
-                this._openTrigger = 'none';
-                break;
-            case DropDownTrigger.click:
-            case "click":
-                this._openTrigger = 'click';
-                break;
-            case DropDownTrigger.mouseenter:
-            case "mouseenter":
-                this._openTrigger = 'mouseenter';
-                break;
-        }
-    }
-
-    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
-
-    /**
-     * 打开下拉触发方式，默认值是'mouseleave'
-     * $demo = float/trigger
-     */
-    @Input()
-    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
-        return this._closeTrigger;
-    }
-
-    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
-        // 从模板过来的值，不会受到类型的约束
-        switch (value as any) {
-            case DropDownTrigger.none:
-            case "none":
-                this._closeTrigger = 'none';
-                break;
-            case DropDownTrigger.click:
-            case "click":
-                this._closeTrigger = 'click';
-                break;
-            case DropDownTrigger.mouseleave:
-            case "mouseleave":
-                this._closeTrigger = 'mouseleave';
-                break;
-        }
-    }
-
-    constructor(private _renderer: Renderer2,
-                private _elementRef: ElementRef,
-                private _popupService: PopupService) {
+    constructor(protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _popupService: PopupService) {
         super();
     }
 
+    protected _emitOpenChange(open: boolean): void {
+        this._opened = open;
+        this.jigsawFloatOpenChange.emit(open);
+    }
+
     public openFloat(): void {
-        if (this._disposePopup) {
+        if (this._popupInfo) {
             return;
         }
         this._openFloat();
-        this._$opened = true;
-        this.jigsawFloatOpenChange.emit(this._$opened);
+        this._emitOpenChange(true);
     }
 
-    public closeFloat():void {
-        if (!this._disposePopup) {
+    public closeFloat($event?: any): void {
+        if (!this._popupInfo) {
             return;
         }
-        this._closeFloat();
-        this._$opened = false;
-        this.jigsawFloatOpenChange.emit(this._$opened);
+        this._closeFloat($event);
+        this._emitOpenChange(false);
     }
 
     public ngOnDestroy() {
         super.ngOnDestroy();
         this.jigsawFloatOpen = false;
-        this._$target = null;
+        this._floatTarget = null;
         this._clearAllListeners();
-
-        if (this._removeRefreshCallback) {
-            this._removeRefreshCallback();
-            this._removeRefreshCallback = null;
-        }
-
-        this._popupElement = null;
-        if (this._disposePopup) {
-            this._disposePopup();
-            this._disposePopup = null;
-        }
+        this._disposePopup();
     }
 
     /**
@@ -229,8 +167,8 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * 此时通过调用这个方法可以重新定位弹出视图的位置
      */
     public reposition(): void {
-        if (this._popupElement) {
-            this._popupService.setPosition(this._getPopupOption(), this._popupElement);
+        if (this.popupElement) {
+            this._popupService.setPosition(this._getPopupOption(), this.popupElement);
         }
     }
 
@@ -249,7 +187,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
         this._rollInDenouncesTimer = this.callLater(() => {
             this.jigsawFloatOpen = true;
-        }, 100);
+        }, this._floatOpenDelay);
     }
 
     /**
@@ -258,7 +196,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * @param offset 代表偏移，注册在float触发器上的mouseleave在计算element中的位置是要往前回退一个坐标，
      * 注册在弹出层上的mouseleave无需偏移
      */
-    public _$closeByHover(event, offset = 0) {
+    public _$closeByHover(event: any, offset: number = 0) {
         const popups = this._popupService.popups;
         this.clearCallLater(this._rollInDenouncesTimer);
         if (this.jigsawFloatCloseTrigger != 'mouseleave' || !popups || popups.length == 0) {
@@ -268,7 +206,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         event.stopPropagation();
         let canClose = true;
         // currentIndex之后的弹层导致触发mouseleave不应关闭float
-        const currentIndex = popups.indexOf(popups.find(p => p.element === this._popupElement));
+        const currentIndex = popups.indexOf(popups.find(p => p.element === this.popupElement));
         for (let i = popups.length - 1; i > currentIndex - offset && i >= 0; i--) {
             if (canClose == false) {
                 break;
@@ -279,7 +217,9 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
-            this._rollOutDenouncesTimer = this.callLater(() => this.jigsawFloatOpen = false, 400);
+            this._rollOutDenouncesTimer = this.callLater(() => {
+                this.closeFloat(event);
+            }, this._floatCloseDelay);
         }
     }
 
@@ -287,7 +227,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
      * @internal
      */
     public _$onHostClick() {
-        if (this._openTrigger == 'click' && this.jigsawFloatOpen == false) {
+        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
             this.jigsawFloatOpen = true;
         }
     }
@@ -305,79 +245,98 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         return false;
     }
 
+    protected _onWindowClick(event: any): void {
+        if (this.jigsawFloatCloseTrigger == 'none') {
+            return;
+        }
+        if (event.target == this._elementRef.nativeElement) {
+            return;
+        }
+        if (this._isChildOf(event.target, this._elementRef.nativeElement)) {
+            return;
+        }
+        if (this._removeWindowClickHandler) {
+            this._removeWindowClickHandler();
+            this._removeWindowClickHandler = null;
+        }
+        if (this._removeResizeHandler) {
+            this._removeResizeHandler();
+            this._removeResizeHandler = null;
+        }
+        this.closeFloat(event);
+    }
+
+    protected _onPopupElementClick(event: any): void {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    protected _disposePopup() {
+        if (!this._popupInfo || !this._originDisposer) {
+            return;
+        }
+        this._originDisposer();
+        this._originDisposer = null;
+        this._popupInfo = null;
+    }
+
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
-    private _openFloat(): void {
-        if (!this.jigsawFloatTarget) {
+    protected _openFloat(): PopupInfo {
+        if (!this.jigsawFloatTarget || this._opened) {
             return;
         }
-        this._$opened = true;
+        this._opened = true;
         if (this._removeWindowClickHandler) {
             this._removeWindowClickHandler();
         }
         // 点击window时，自动关闭,但当closeTrigger为none时无法关掉的
-        this._removeWindowClickHandler = this._renderer.listen('window', 'click', (event) => {
-            if (this.jigsawFloatCloseTrigger == 'none') {
-                return;
-            }
-            if (event.target == this._elementRef.nativeElement) {
-                return;
-            }
-            if (this._isChildOf(event.target, this._elementRef.nativeElement)) {
-                return;
-            }
-            this._removeWindowClickHandler();
-            this._removeWindowClickHandler = null;
-            this._removeResizeHandler();
-            this._removeResizeHandler = null;
-            this.jigsawFloatOpen = false;
-        });
+        this._removeWindowClickHandler = this._renderer.listen('window', 'click', event => this._onWindowClick(event));
 
         const option: PopupOptions = this._getPopupOption();
         const popupInfo = this._popupService.popup(this.jigsawFloatTarget as any, option, this.jigsawFloatInitData);
-        this._popupElement = popupInfo.element;
-        this._disposePopup = popupInfo.dispose;
-        if (!this._popupElement) {
+        if (!popupInfo.element) {
             console.error('unable to popup drop down, unknown error!');
-            return;
+            return popupInfo;
         }
+        this._popupInfo = popupInfo;
+        this._originDisposer = popupInfo.dispose;
+        popupInfo.dispose = this.closeFloat.bind(this);
 
         if (option.borderType == 'pointer') {
-            setTimeout(() => this._setArrow(this._popupElement));
+            setTimeout(() => this._setArrow(popupInfo.element));
         }
 
         if (!this._removeMouseOverHandler) {
             this._removeMouseOverHandler = this._renderer.listen(
-                this._popupElement, 'mouseenter',
+                popupInfo.element, 'mouseenter',
                 () => this.clearCallLater(this._rollOutDenouncesTimer));
         }
-        if (this._closeTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
+        if (this.jigsawFloatCloseTrigger == 'mouseleave' && !this._removeMouseOutHandler) {
             this._removeMouseOutHandler = this._renderer.listen(
-                this._popupElement, 'mouseleave', event => this._$closeByHover(event));
+                popupInfo.element, 'mouseleave', event => this._$closeByHover(event));
         }
 
         // 阻止点击行为冒泡到window
         if (this._removePopupClickHandler) {
             this._removePopupClickHandler();
         }
-        this._removePopupClickHandler = this._renderer.listen(this._popupElement, 'click', event => {
-            event.stopPropagation();
-            event.preventDefault();
-        });
+        this._removePopupClickHandler = this._renderer.listen(
+            popupInfo.element, 'click', event => this._onPopupElementClick(event));
 
         // 监听window的resize事件，自动更新位置
         if (this._removeResizeHandler) {
             this._removeResizeHandler();
         }
-        this._removeResizeHandler = this._renderer.listen("window", "resize",
-            () => {
-                PopupService.instance.setPosition(this._getPopupOption(), this._popupElement);
-                if (option.borderType == 'pointer') {
-                    this._popupElement.removeChild(this._popupElement.children[this._popupElement.children.length - 1]);
-                    this._setArrow(this._popupElement);
-                }
-            });
+        this._removeResizeHandler = this._renderer.listen("window", "resize", () => {
+            PopupService.instance.setPosition(this._getPopupOption(), popupInfo.element);
+            if (option.borderType == 'pointer') {
+                popupInfo.element.removeChild(popupInfo.element.children[popupInfo.element.children.length - 1]);
+                this._setArrow(popupInfo.element);
+            }
+        });
+        return popupInfo;
     }
 
     private _getPos(): PopupPoint {
@@ -499,7 +458,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
         const host = this._elementRef.nativeElement;
         let ele = document.createElement('div');
-        //根据tooltip尖角算出来大概在5√2，约为7px
+        // 根据tooltip尖角算出来大概在5√2，约为7px
         ele.style.width = '7px';
         ele.style.height = '7px';
         ele.style.position = 'absolute';
@@ -601,7 +560,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             return pos;
         }
         const totalWidth = window.pageXOffset + document.body.clientWidth;
-        //宿主组件在可视范围外
+        // 宿主组件在可视范围外
         if (point.x < 0 && (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'bottomLeft') && leftDelta <= totalWidth - (offsetWidth + point.x)) {
             pos.left += offsetWidth;
         } else if (point.x + offsetWidth > totalWidth && (this.jigsawFloatPosition === 'topRight' || this.jigsawFloatPosition === 'bottomRight') && point.x >= leftDelta) {
@@ -624,7 +583,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         const totalHeight = window.pageYOffset + document.body.clientHeight;
 
-        //宿主组件在可视范围外
+        // 宿主组件在可视范围外
         if (point.y < 0 && (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop') && upDelta <= totalHeight - (offsetHeight + point.y)) {
             pos.top += offsetHeight;
         } else if (point.y + offsetHeight > totalHeight && (this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') && point.y >= upDelta) {
@@ -642,13 +601,11 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
 
     /**
      * 立即关闭下拉视图
+     * @event 子类有用到
      */
-    private _closeFloat(): void {
-        this._$opened = false;
-        if (this._disposePopup) {
-            this._disposePopup();
-            this._disposePopup = null;
-        }
+    protected _closeFloat(event?: any): void {
+        this._opened = false;
+        this._disposePopup();
         this._clearAllListeners();
     }
 
@@ -674,4 +631,109 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
             this._removeMouseOutHandler = null;
         }
     }
+}
+
+@Directive({
+    selector: '[jigsaw-float],[j-float],[jigsawFloat]',
+    host: {
+        '(mouseenter)': "_$openByHover($event)",
+        '(mouseleave)': "_$closeByHover($event, 1)",
+        '(click)': "_$onHostClick()"
+    }
+})
+export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
+    constructor(protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _popupService: PopupService) {
+        super(_renderer, _elementRef, _popupService);
+    }
+
+    private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
+
+    /**
+     * 打开下拉触发方式，默认值是'mouseleave'
+     * $demo = float/trigger
+     */
+    @Input()
+    public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
+        return this._closeTrigger;
+    }
+
+    public set jigsawFloatCloseTrigger(value: 'click' | 'mouseleave' | 'none' | DropDownTrigger) {
+        // 从模板过来的值，不会受到类型的约束
+        switch (value as any) {
+            case DropDownTrigger.none:
+            case "none":
+                this._closeTrigger = 'none';
+                break;
+            case DropDownTrigger.click:
+            case "click":
+                this._closeTrigger = 'click';
+                break;
+            case DropDownTrigger.mouseleave:
+            case "mouseleave":
+                this._closeTrigger = 'mouseleave';
+                break;
+        }
+    }
+
+    private _openTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
+
+    /**
+     * 打开下拉触发方式，默认值是'mouseenter'
+     * $demo = float/trigger
+     */
+    @Input()
+    public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
+        return this._openTrigger;
+    }
+
+    public set jigsawFloatOpenTrigger(value: 'click' | 'mouseenter' | 'none' | DropDownTrigger) {
+        // 从模板过来的值，不会受到类型的约束
+        switch (value as any) {
+            case DropDownTrigger.none:
+            case "none":
+                this._openTrigger = 'none';
+                break;
+            case DropDownTrigger.click:
+            case "click":
+                this._openTrigger = 'click';
+                break;
+            case DropDownTrigger.mouseenter:
+            case "mouseenter":
+                this._openTrigger = 'mouseenter';
+                break;
+        }
+    }
+
+    @Input()
+    public jigsawFloatInitData: any;
+
+    @Input()
+    public jigsawFloatOpen: boolean;
+
+    /**
+     * $demo = float/option
+     */
+    @Input()
+    public jigsawFloatOptions: PopupOptions;
+
+    /**
+     * 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
+     * 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
+     * 避免视图超时浏览器边界的情况
+     * $demo = float/position
+     */
+    @Input()
+    public jigsawFloatPosition: FloatPosition = 'bottomLeft';
+
+    /**
+     * $demo = float/target
+     */
+    @Input()
+    public jigsawFloatTarget: Type<IPopupable> | TemplateRef<any>;
+
+    @Output()
+    public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 }

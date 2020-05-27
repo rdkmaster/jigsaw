@@ -10,6 +10,7 @@ import {
     JigsawLoadingModule
 } from "../../common/components/loading/loading";
 import {JigsawNotification, JigsawNotificationModule} from "../notification/notification";
+import { JigsawMenuHelper, JigsawMenuModule } from '../menu/index';
 
 @Component({
     selector: 'jigsaw-root, j-root',
@@ -29,13 +30,13 @@ export class JigsawRoot {
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
     imports: [
-        JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawNotificationModule
+        JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawNotificationModule, JigsawMenuModule
     ],
     providers: [PopupService],
     entryComponents: [
         JigsawBlock, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert,
         JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-        JigsawNotification
+        JigsawNotification, JigsawMenuHelper
     ]
 })
 export class JigsawRootModule {
