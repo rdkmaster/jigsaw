@@ -146,12 +146,15 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     @Input()
     public set limitStart(value: Time) {
-        if (!value) {
-            return;
+        if (value) {
+            this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
+            [this._$dateLimitStart, this._timeLimitStart] = this._limitStart.split(' ');
+            this._updateTimeLimit();
+        } else {
+            this._limitStart = null;
+            this._$dateLimitStart = null;
+            this._timeLimitStart = null;
         }
-        this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
-        [this._$dateLimitStart, this._timeLimitStart] = this._limitStart.split(' ');
-        this._updateTimeLimit();
         //this._checkMacro();
     }
 
@@ -166,12 +169,15 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     @Input()
     public set limitEnd(value: Time) {
-        if (!value) {
-            return;
+        if (value) {
+            this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
+            [this._$dateLimitEnd, this._timeLimitEnd] = this._limitEnd.split(' ');
+            this._updateTimeLimit();
+        } else {
+            this._limitEnd = null;
+            this._$dateLimitEnd = null;
+            this._timeLimitEnd = null;
         }
-        this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
-        [this._$dateLimitEnd, this._timeLimitEnd] = this._limitEnd.split(' ');
-        this._updateTimeLimit();
         //this._checkMacro();
     }
 

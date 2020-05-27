@@ -442,10 +442,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     @Input()
     public set limitStart(value: Time) {
-        if (!value) {
-            return;
-        }
-        this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
+        this._limitStart = value ? TimeService.convertValue(value, <TimeGr>this.gr) : null;
         if (this.initialized && this.date) {
             this.writeValue(this.date);
         }
@@ -460,10 +457,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     @Input()
     public set limitEnd(value: Time) {
-        if (!value) {
-            return;
-        }
-        this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
+        this._limitEnd = value ? TimeService.convertValue(value, <TimeGr>this.gr) : null;
         if (this.initialized && this.date) {
             this.writeValue(this.date);
         }

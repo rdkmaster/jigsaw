@@ -111,7 +111,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set limitStart(value: string) {
-        if (value == this._limitStart || !this._checkLimitValid(value)) return;
+        if (value == this._limitStart || (value &&!this._checkLimitValid(value))) return;
         this._limitStart = value;
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
@@ -125,7 +125,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set limitEnd(value: string) {
-        if (value == this._limitEnd || !this._checkLimitValid(value)) return;
+        if (value == this._limitEnd || (value && !this._checkLimitValid(value))) return;
         this._limitEnd = value;
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
