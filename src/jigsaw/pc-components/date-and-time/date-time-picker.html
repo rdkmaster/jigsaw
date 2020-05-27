@@ -4,7 +4,7 @@
     </span>
 </div>
 <jigsaw-date-picker [(date)]="_$date" (dateChange)="_$handleDateChange($event)" [gr]="_$dateGr" [markDates]="markDates"
-                    [limitStart]="_$dateLimitStart" [limitEnd]="_$dateLimitEnd"></jigsaw-date-picker>
+                    [limitStart]="_$dateLimitStart" [limitEnd]="_$dateLimitEnd" [rangeDate]="rangeDate"></jigsaw-date-picker>
 <div class="jigsaw-date-time-picker-bottom" *ngIf="!!_$timeGr">
     <j-time-picker height="24" [(value)]="_$time" (valueChange)="_$handleTimeChange($event)" [gr]="_$timeGr"
                    floatPosition="topLeft"

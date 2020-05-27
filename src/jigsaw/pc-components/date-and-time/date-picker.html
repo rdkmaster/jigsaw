@@ -32,6 +32,7 @@
                 [class.jigsaw-date-picker-content-day-cell-recommend]="dayCell.mark?.type == 'recommend'"
                 [class.jigsaw-date-picker-content-day-cell-warn]="dayCell.mark?.type == 'warn'"
                 [class.jigsaw-date-picker-content-day-cell-error]="dayCell.mark?.type == 'error'"
+                [class.jigsaw-date-picker-content-day-cell-inRange]="dayCell.isInRange"
                 (click)="_$selectDay(dayCell)">
                 <span [title]="dayCell.mark?.label">{{dayCell.day}}</span>
             </td>

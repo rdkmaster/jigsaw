@@ -192,7 +192,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public grItems: GrItem[];
 
     @Input()
-    markDates: MarkDate[];
+    public markDates: MarkDate[];
+
+    @Input()
+    public rangeDate: string;
 
     private _updateValue = new EventEmitter();
     private _removeUpdateValueSubscriber: Subscription;

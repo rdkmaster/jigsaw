@@ -203,6 +203,13 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             &-error:after {
                 background: $error-color;
             }
+
+            &-inRange {
+                background: $primary-1;
+                .#{$date-prefix-cls}-content-day-cell-selected {
+                    background: none;
+                }
+            }
         }
 
         &-month, &-year {

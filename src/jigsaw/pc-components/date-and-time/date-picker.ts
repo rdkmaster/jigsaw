@@ -31,7 +31,8 @@ export type DayCell = {
     isOwnNextMonth?: boolean;
     isSelected?: boolean,
     isDisabled?: boolean,
-    mark?: { type: string, label?: string }
+    mark?: { type: string, label?: string },
+    isInRange?: boolean
 };
 export type MonthCell = { month: number, label: string, isSelected?: boolean, isDisabled?: boolean, };
 export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean, };
@@ -251,7 +252,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                     isToday: this._isToday(year, month, countDayNum),
                     isSelected: this._isDaySelected(year, month, countDayNum),
                     isDisabled: this._isDayDisabled(year, month, countDayNum),
-                    mark: this._getDayMark(year, month, countDayNum)
+                    mark: this._getDayMark(year, month, countDayNum),
+                    isInRange: this._isDayInRange(year, month, countDayNum)
                 };
                 index++;
                 countDayNum++;
@@ -339,6 +341,14 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return false;
         });
         return {type: mark, label: label};
+    }
+
+    private _isDayInRange(year: number, month: number, day: number): boolean {
+        if(!this.date || !this.rangeDate) return false;
+        let date = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
+        let selectDate = TimeService.convertValue(this.date, TimeGr.date);
+        let rangeDate = TimeService.convertValue(this.rangeDate, TimeGr.date);
+        return (date > selectDate && date <= rangeDate) || (date >= rangeDate && date < selectDate)
     }
 
     /**
@@ -479,6 +489,18 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     @Input()
     markDates: MarkDate[];
+
+    private _rangeDate: string;
+    @Input()
+    public get rangeDate(): string {
+        return this._rangeDate
+    }
+
+    public set rangeDate(date: string) {
+        if(date == this._rangeDate) return;
+        this._rangeDate = date;
+        this._createCalendar();
+    }
 
     private _intervalId: number;
 
