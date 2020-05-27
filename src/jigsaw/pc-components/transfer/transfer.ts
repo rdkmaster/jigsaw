@@ -286,12 +286,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._removeSelectedArrayCallbackListener();
             this._removeSelectedArrayCallbackListener = null;
         }
-        if (this.data) {
-            (<ArrayCollection<any>>this.data).destroy();
-        }
-        if (this.selectedItems instanceof ArrayCollection) {
-            this.selectedItems.destroy();
-        }
     }
 }
 
@@ -503,12 +497,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._removeArrayCallbackListener) {
             this._removeArrayCallbackListener();
             this._removeArrayCallbackListener = null;
-        }
-        if (this.data) {
-            this.data.destroy();
-        }
-        if (this.selectedItems instanceof ArrayCollection) {
-            this.selectedItems.destroy();
         }
     }
 }
