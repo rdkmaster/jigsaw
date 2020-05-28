@@ -1,0 +1,35 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Progress</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo">
+            <h3>进度条</h3>
+            <p class="comment">默认</p>
+            <j-progress value="68%"></j-progress>
+            <br><br>
+            <p class="comment">类型</p>
+            <j-progress value="68%" colorType="primary"></j-progress>
+            <j-progress value="68%" colorType="warning"></j-progress>
+            <j-progress value="68%" colorType="error"></j-progress>
+            <br><br>
+            <p class="comment">文字在顶部</p>
+            <j-progress value="68%" width="100%" labelPosition="top" [split]="true"></j-progress>
+            <br><br>
+            <p class="comment">大尺寸，文字跟随进度条</p>
+            <j-progress value="68%" width="100%" preSize="large" labelPosition="followRight" [split]="true"></j-progress>
+            <br><br>
+            <j-progress value="68%" width="100%" preSize="large" labelPosition="followLeft" [split]="true"></j-progress><br>
+            <br><br>
+            <p class="comment">小尺寸</p>
+            <j-progress value="68%" preSize="small" colorType="primary"></j-progress>
+            <j-progress value="68%" preSize="small" colorType="warning"></j-progress>
+            <j-progress value="68%" preSize="small" colorType="error"></j-progress>
+        </div>
+
+    </div>
+</div>

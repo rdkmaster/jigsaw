@@ -1,0 +1,17 @@
+<div class="jigsaw-progress-label-top" *ngIf="labelPosition == 'top'">{{value}}</div>
+<div class="jigsaw-progress-bar">
+    <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'left'">{{value}}</div>
+    <div class="jigsaw-progress-bar-track">
+        <div class="jigsaw-progress-bar-track-value" [style.width]="value">
+            <div class="jigsaw-progress-bar-track-label" [class.jigsaw-progress-bar-track-label-left]="labelPosition == 'followLeft'"
+                 [class.jigsaw-progress-bar-track-label-right]="labelPosition == 'followRight'"
+                 *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">{{value}}</div>
+        </div>
+    </div>
+    <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'right'">{{value}}</div>
+
+</div>
+<ul class="jigsaw-progress-split" *ngIf="split">
+    <li *ngFor="let num of [0, 20, 40, 60, 80, 100]">{{num + '%'}}</li>
+</ul>
+
