@@ -47,6 +47,8 @@ export class JigsawProgress extends AbstractJigsawComponent {
 
     @Input() public preSize: 'default' | 'small' | 'large' = 'default';
 
+    @Input() public processing: boolean;
+
     public _$labelPositionBak: 'followLeft' | 'followRight' = 'followRight';
     private _autoLabelPosition() {
         if(this.labelPosition != 'followLeft' && this.labelPosition != 'followRight') return;

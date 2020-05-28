@@ -7,6 +7,7 @@
                  [class.jigsaw-progress-bar-track-label-left]="_$labelPositionBak == 'followLeft'"
                  [class.jigsaw-progress-bar-track-label-right]="_$labelPositionBak == 'followRight'"
                  *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">{{value}}</div>
+            <i *ngIf="status == 'processing' && processing" class="jigsaw-am-processing"></i>
         </div>
     </div>
     <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'right' && status == 'processing'">{{value}}</div>

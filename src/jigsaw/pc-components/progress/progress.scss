@@ -38,6 +38,13 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                 background: $primary-color;
                 position: relative;
 
+                i {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background: $primary-7;
+                }
+
                 .#{$progress-prefix-cls}-processing & {
                     background: $primary-color;
                 }
