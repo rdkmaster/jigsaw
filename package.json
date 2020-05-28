@@ -26,6 +26,7 @@
     "@ngx-translate/core": "~11.0.1",
     "@rdkmaster/icon-font": "^1.0.6",
     "@types/marked": "~0.3.0",
+    "codemirror": "^5.54.0",
     "core-js": "~3.0.1",
     "echarts": "~4.7.0",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",

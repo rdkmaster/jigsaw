@@ -35,14 +35,14 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
                 <span *ngIf="!!content">|</span>
                 <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
                 |
-                <a (click)="gotoStackblitz()">查看本DEMO源码</a>
+                <a (click)="openDemoCode()">查看本DEMO源码</a>
             </span>
             <br *ngIf="showDetail">
             <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown>
             <br>
             <span class="links" *ngIf="showDetail && !!content">
                 <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
-                <a (click)="gotoStackblitz()">查看本DEMO源码</a>
+                <a (click)="openDemoCode()">查看本DEMO源码</a>
             </span>
             <hr>
         </div>
@@ -65,6 +65,13 @@ export class JigsawDemoDescription implements OnInit {
             '请将你的疑问<a href="https://github.com/rdkmaster/jigsaw" target="_blank">填写</a>在issue里，' +
             '我们会尽快协助你解决问题';
         this._summary = value.replace(/`(.*?)`/g, '<code>$1</code>');
+    }
+
+    openDemoCode() {
+        const win: any = window.open(location.pathname + '#/demo-code', 'jigsaw-demo-code');
+        win.getJigsawDemoCode = () => {
+            return {code: 'here'}
+        }
     }
 
     gotoStackblitz() {
