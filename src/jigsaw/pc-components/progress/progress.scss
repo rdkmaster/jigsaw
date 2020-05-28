@@ -59,17 +59,17 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
             &-label {
                 position: absolute;
                 top: 50%;
+                right: 0;
                 transform: translateY(-50%);
                 font-size: 24px;
+                padding: 0 8px;
             }
 
             &-label-left {
-                right: 8px;
                 color: $text-color-of-bg;
             }
 
             &-label-right {
-                right: -8px;
                 transform: translate(100%, -50%);
                 color: $primary-color;
 

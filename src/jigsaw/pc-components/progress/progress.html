@@ -3,8 +3,9 @@
     <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'left'">{{value}}</div>
     <div class="jigsaw-progress-bar-track">
         <div class="jigsaw-progress-bar-track-value" [style.width]="value">
-            <div class="jigsaw-progress-bar-track-label" [class.jigsaw-progress-bar-track-label-left]="labelPosition == 'followLeft'"
-                 [class.jigsaw-progress-bar-track-label-right]="labelPosition == 'followRight'"
+            <div class="jigsaw-progress-bar-track-label"
+                 [class.jigsaw-progress-bar-track-label-left]="_$labelPositionBak == 'followLeft'"
+                 [class.jigsaw-progress-bar-track-label-right]="_$labelPositionBak == 'followRight'"
                  *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">{{value}}</div>
         </div>
     </div>
