@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
 import {routerConfig as autoCompleteInputConfig} from "./demo/pc/auto-complete-input/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/pc/data-encapsulation/demo-set.module";
@@ -52,19 +52,42 @@ import {routerConfig as transferConfig} from "./demo/pc/transfer/demo-set.module
 import {routerConfig as breadcrumbConfig} from "./demo/pc/breadcrumb/demo-set.module";
 import {routerConfig as menuConfig} from "./demo/pc/menu/demo-set.module";
 import {routerConfigPC} from "./router-config";
+import {PopupPositionType} from "../jigsaw/common/service/popup.service";
+import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
 
 @Component({
     template: `
+        <p jigsaw-float class="select-demo" [jigsawFloatTarget]="list" jigsawFloatPosition="bottomRight"
+           [jigsawFloatOptions]="floatOptions">
+            显示隐藏Demo集
+            <ng-template #list>
+                <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
+                                  [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
+                </jigsaw-list-lite>
+            </ng-template>
+        </p>
         <div *ngFor="let router of routes">
-            <h3>{{router.path.replace('pc/','')}}</h3>
-            <hr>
-            <a *ngFor="let childRouter of router.childRouters"
-               routerLink="{{getUrl(router, childRouter)}}">
-                {{getDesc(childRouter)}}
-            </a>
+            <div *ngIf="!router.hidden">
+                <h3>{{router.path.replace('pc/', '')}}</h3>
+                <hr>
+                <a *ngFor="let childRouter of router.childRouters"
+                   routerLink="{{getUrl(router, childRouter)}}">
+                    {{getDesc(childRouter)}}
+                </a>
+            </div>
         </div>
     `,
     styles: [`
+        .select-demo {
+            color: white;
+            position: fixed;
+            right: 16px;
+            background-color: #3b9cc6;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         a {
             margin-right: 12px;
         }
@@ -74,8 +97,16 @@ import {routerConfigPC} from "./router-config";
         }
     `]
 })
-export class PCDemoListComponent {
+export class PCDemoListComponent implements OnInit {
+    floatOptions = {
+        posType: PopupPositionType.fixed
+    };
     routes: any[] = DemoListManager.fullRouterConfig;
+    selectedItems: any[];
+
+    showHideDemos(selectedItems): void {
+        this.routes.forEach(item => item.hidden = selectedItems.length > 0 && selectedItems.indexOf(item) == -1);
+    }
 
     getUrl(router, childRouter): string {
         return childRouter.hasOwnProperty('url') ? childRouter.url : `/${router.path}/${childRouter.path}`;
@@ -83,6 +114,14 @@ export class PCDemoListComponent {
 
     getDesc(childRouter): string {
         return childRouter.hasOwnProperty('desc') ? childRouter.desc : childRouter.path;
+    }
+
+    ngOnInit(): void {
+        this.selectedItems = this.routes.filter(item => !item.hidden);
+        if (this.selectedItems.length == this.routes.length) {
+            // 全显示表示这是第一次打开此页面
+            this.selectedItems = null;
+        }
     }
 }
 
