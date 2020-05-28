@@ -1,5 +1,15 @@
 import {
-    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild, NgZone, ChangeDetectionStrategy,ChangeDetectorRef
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    Input,
+    NgModule,
+    NgZone,
+    OnInit,
+    Output,
+    ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -34,8 +44,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(protected _zone: NgZone,private _changeDetector: ChangeDetectorRef) {
+export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -185,10 +195,14 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public set value(newValue: any) {
-        if (this._value != newValue) {
-            this._propagateChange(newValue);
+        if (this._value == newValue) {
+            return;
         }
-        this.writeValue(newValue);
+        this._propagateChange(newValue);
+        this._value = newValue;
+        if (this.initialized) {
+            this.writeValue(newValue);
+        }
     }
 
     /**
@@ -246,10 +260,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     };
 
     public writeValue(value: any): void {
-        if (this._value == value) {
-            return;
-        }
-        this._value = value;
         if (CommonUtils.isDefined(value)) {
             this._$selectedItems = this.multipleSelect ? value : [value];
         } else {
@@ -265,6 +275,14 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public registerOnTouched(fn: any): void {
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        // 设置默认选中的初始值
+        if (CommonUtils.isDefined(this.value)) {
+            this.writeValue(this.value);
+        }
     }
 }
 
