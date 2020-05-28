@@ -1,15 +1,4 @@
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type,
-    NgZone
-} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -34,6 +23,7 @@ export enum DropDownTrigger {
 export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
     'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 
+@Directive()
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     protected _removeWindowClickHandler: Function;
     protected _floatOpenDelay = 100;
