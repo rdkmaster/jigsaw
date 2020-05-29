@@ -221,7 +221,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._$selectMode = mode;
         this._switchPopup.emit(mode != 'none');
         if (mode == 'hour') {
-            this._hourInput.nativeElement.select();
+            if (!isTabSwitch) {
+                this._hourInput.nativeElement.select();
+            }
             this._$floatInitData = this._getFloatInitData(mode, this._$hour, this.step);
             this._$floatArrowElement = this._hourInput.nativeElement;
         } else if (mode == 'minute') {
@@ -308,10 +310,18 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         } else if ($event.keyCode == 40) {
             this._$handleCtrlBarClick($event, -1);
         } else if ($event.keyCode == 9) {
-            if (this._$selectMode == 'hour' && (this.gr != TimeGr.time_hour)) {
-                this._$handleSelectMode('minute', true);
-            } else if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
-                this._$handleSelectMode('second', true);
+            if($event.shiftKey) {
+                if (this._$selectMode == 'second') {
+                    this._$handleSelectMode('minute', true);
+                } else if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_hour_minute)) {
+                    this._$handleSelectMode('hour', true);
+                }
+            } else {
+                if (this._$selectMode == 'hour' && this.gr != TimeGr.time_hour) {
+                    this._$handleSelectMode('minute', true);
+                } else if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
+                    this._$handleSelectMode('second', true);
+                }
             }
         }
     }
