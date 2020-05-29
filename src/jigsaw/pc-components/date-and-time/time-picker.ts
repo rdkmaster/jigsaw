@@ -391,6 +391,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _calValueByGr(hour: string, minute: string, second: string): string {
+        [hour, minute, second] = [this._autoZero(hour), this._autoZero(minute), this._autoZero(second)];
         let value;
         if (this.gr == TimeGr.time) {
             value = [hour, minute, second].join(':')
