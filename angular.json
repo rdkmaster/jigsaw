@@ -33,7 +33,7 @@
                             "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
                             "node_modules/@rdkmaster/icon-font/css/iconfont.css",
                             "node_modules/codemirror/lib/codemirror.css",
-                            "node_modules/codemirror/theme/lucario.css",
+                            "node_modules/codemirror/theme/mbo.css",
                             "src/styles.scss"
                         ],
                         "scripts": [

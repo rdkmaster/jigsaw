@@ -93,30 +93,6 @@ export class JigsawDemoDescription implements OnInit {
         }
         if (!hasFile) {
             // alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
-            project.files = {
-                'src/app/demo.module.ts': 'src/app/demo.module.ts111111',
-                'src/app/demo.component.ts': 'src/app/demo.module.ts1111111111122222222',
-                'src/app/demo.component.html': '<div class="ssss">ssssssssss</div>',
-                'src/app/demo.component.css': `
-.aa {
-    background: #ddd;
-}
-`,
-                'src/app/demo.component.scss': `
-.aa {
-    background: #ddd;
-}
-`,
-                'src/aaa/demo.module.ts': `
-class AA exnteds bb {
-    private aa: string = 'xxxxxxxxxxx';
-}
-                `,
-                'src/bbb/demo.module.ts': 'src/app/demo.module.ts44444444',
-                'src/bbb/demo111.module.ts': 'src/app/demo.module.ts55555555555555',
-                'aaaa': 'src/app/demo.module.ts55555555555555',
-                'bbbb': 'src/app/demo.module.ts55555555555555',
-            };
             return project;
         }
         const moduleCode = project.files[`src/app/demo.module.ts`];

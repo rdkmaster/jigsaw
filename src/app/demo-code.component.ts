@@ -201,7 +201,7 @@ export class DemoCodeComponent implements AfterViewInit, OnDestroy {
             value: `loading ...`,
             mode: "xml"
         });
-        this.editor.setOption("theme", 'lucario');
+        this.editor.setOption("theme", 'mbo');
         this.editor.setOption("lineNumbers", true);
         this.editor.setOption("styleActiveLine", true);
         this.editor.setOption("matchBrackets", true);
