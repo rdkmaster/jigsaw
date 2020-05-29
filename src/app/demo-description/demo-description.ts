@@ -68,19 +68,13 @@ export class JigsawDemoDescription implements OnInit {
     }
 
     openDemoCode() {
-        const win: any = window.open(location.pathname + '#/demo-code', 'jigsaw-demo-code');
-        win.getJigsawDemoCode = () => {
-            return {code: 'here'}
-        }
+        window.name = 'jigsaw-demo-main';
+        const url = location.href.replace(/#/, '#/demo-code');
+        const win: any = window.open(url, 'jigsaw-demo-code');
+        win.getJigsawDemoCode = () => this.createProjectData();
     }
 
-    gotoStackblitz() {
-        const platform = location.href.match(/\/mobile\/.+?\/.+?/) ? 'mobile' : 'pc';
-        if (platform == 'mobile') {
-            alert('暂未支持移动端的Demo代码演示。');
-            return;
-        }
-
+    createProjectData(): any {
         const project: any = {files: {}};
         let hasFile = false;
         for (let file in this.codes) {
@@ -98,8 +92,32 @@ export class JigsawDemoDescription implements OnInit {
             project.files[`src/app/${file}`] = code;
         }
         if (!hasFile) {
-            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
-            return;
+            // alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
+            project.files = {
+                'src/app/demo.module.ts': 'src/app/demo.module.ts111111',
+                'src/app/demo.component.ts': 'src/app/demo.module.ts1111111111122222222',
+                'src/app/demo.component.html': '<div class="ssss">ssssssssss</div>',
+                'src/app/demo.component.css': `
+.aa {
+    background: #ddd;
+}
+`,
+                'src/app/demo.component.scss': `
+.aa {
+    background: #ddd;
+}
+`,
+                'src/aaa/demo.module.ts': `
+class AA exnteds bb {
+    private aa: string = 'xxxxxxxxxxx';
+}
+                `,
+                'src/bbb/demo.module.ts': 'src/app/demo.module.ts44444444',
+                'src/bbb/demo111.module.ts': 'src/app/demo.module.ts55555555555555',
+                'aaaa': 'src/app/demo.module.ts55555555555555',
+                'bbbb': 'src/app/demo.module.ts55555555555555',
+            };
+            return project;
         }
         const moduleCode = project.files[`src/app/demo.module.ts`];
         project.files[`src/app/demo.module.ts`] = fixDemoModuleTs(moduleCode);
@@ -125,8 +143,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
-
-        sdk.openProject(project, {openFile: 'src/app/demo.component.html'});
+        return project;
     }
 
     toggleDesc() {
@@ -457,7 +474,7 @@ function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
     }
 
     cmpCode = cmpCode
-        // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
+    // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
         .replace(/@Component\s*\(\s*{([\s\S]*?)}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
             (found, props, className) => {
                 if (className != mainComp) {

@@ -26,7 +26,9 @@ import {DemoCodeComponent} from "./demo-code.component";
             {path: '', component: SwitchDemoComponent},
             {path: 'pc', component: PCDemoListComponent},
             {path: 'mobile', component: MobileDemoListComponent},
-            {path: 'demo-code', component: DemoCodeComponent},
+            {path: 'demo-code', component: DemoCodeComponent, children: [
+                    {path: '**', component: DemoCodeComponent}
+                ]},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawBoxModule, JigsawTreeExtModule
