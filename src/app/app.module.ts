@@ -4,24 +4,30 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {JigsawRootModule} from "jigsaw/component/root/root";
+import {
+    JigsawBoxModule, JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
+} from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {DemoListComponent} from "./demo-list.component";
 import {routerConfig} from "./router-config";
+import {DemoCodeComponent} from "./demo-code.component";
 
 @NgModule({
     declarations: [
-        AppComponent, DemoListComponent
+        AppComponent, DemoListComponent, DemoCodeComponent
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: DemoListComponent},
-            {path: '**', redirectTo: ''}
+            {path: 'demo-code', component: DemoCodeComponent, children: [
+                    {path: '**', component: DemoCodeComponent}
+                ]},
+            {path: '**', redirectTo: ''},
         ], {useHash: true}),
-        JigsawRootModule
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawBoxModule, JigsawTreeExtModule
     ],
     providers: [
         {
