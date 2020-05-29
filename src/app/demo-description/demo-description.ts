@@ -92,7 +92,7 @@ export class JigsawDemoDescription implements OnInit {
             project.files[`src/app/${file}`] = code;
         }
         if (!hasFile) {
-            // alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
+            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
             return project;
         }
         const moduleCode = project.files[`src/app/demo.module.ts`];
