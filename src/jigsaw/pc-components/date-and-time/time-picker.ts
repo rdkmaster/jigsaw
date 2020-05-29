@@ -151,14 +151,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$hour(value: string) {
-        if (value == this._hour) return;
-        if (this._updateHour(value) && this.initialized && this._hour.length > 1) {
+        if (value == this._hour) {
+            this._switchWhenHour();
+        } else if (this._updateHour(value) && this.initialized && this._hour.length > 1) {
             this._updateValue.emit();
-            if (this._$selectMode == 'hour' && (this.gr == TimeGr.time || this.gr == TimeGr.time_hour_minute)) {
-                this._$handleSelectMode('minute');
-            } else if (this.gr == TimeGr.time_hour) {
-                this._$cancelSelect('hour');
-            }
+            this._switchWhenHour();
+        }
+    }
+
+    private _switchWhenHour() {
+        if (this._$selectMode == 'hour' && (this.gr == TimeGr.time || this.gr == TimeGr.time_hour_minute)) {
+            this._$handleSelectMode('minute');
+        } else if (this.gr == TimeGr.time_hour) {
+            this._$cancelSelect('hour');
         }
     }
 
@@ -169,14 +174,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$minute(value: string) {
-        if (value == this._minute) return;
-        if (this._updateMinute(value) && this.initialized && this._minute.length > 1) {
+        if (value == this._minute) {
+            this._switchWhenMinute();
+        } else if (this._updateMinute(value) && this.initialized && this._minute.length > 1) {
             this._updateValue.emit();
-            if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
-                this._$handleSelectMode('second');
-            } else if (this.gr == TimeGr.time_hour_minute) {
-                this._$cancelSelect('minute');
-            }
+            this._switchWhenMinute();
+        }
+    }
+
+    private _switchWhenMinute() {
+        if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
+            this._$handleSelectMode('second');
+        } else if (this.gr == TimeGr.time_hour_minute) {
+            this._$cancelSelect('minute');
         }
     }
 
