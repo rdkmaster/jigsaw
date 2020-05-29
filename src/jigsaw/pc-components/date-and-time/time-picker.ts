@@ -305,10 +305,14 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     private _removeSwitchPopupSubscriber: Subscription;
 
     public _$handleKeyDown($event, mode: TimeSelectMode) {
-        if ($event.keyCode == 38) {
+        if ($event.keyCode == 39) {
             this._$handleCtrlBarClick($event, 1);
-        } else if ($event.keyCode == 40) {
+        } else if ($event.keyCode == 37) {
             this._$handleCtrlBarClick($event, -1);
+        } else if ($event.keyCode == 40) {
+            this._$handleCtrlBarClick($event, this.step == 1 ? 10 : 1);
+        } else if ($event.keyCode == 38) {
+            this._$handleCtrlBarClick($event, this.step == 1 ? -10 : -1);
         } else if ($event.keyCode == 9) {
             if($event.shiftKey) {
                 if (this._$selectMode == 'second') {
@@ -326,23 +330,32 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    private _getValidNumberInRange(num: number| string, min: number, max: number): number {
+        num = Math.max(min, Number(num));
+        num = Math.min(num, max);
+        return num;
+    }
+
     public _$handleCtrlBarClick($event, add: number) {
         $event.preventDefault();
         $event.stopPropagation();
         if (this._$selectMode == 'hour') {
-            let value = String(Number(this._$hour) + add);
+            let value = Number(this._$hour) + add;
+            value = this._getValidNumberInRange(value, 0, 23);
             if (this._updateHour(value)) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
             }
         } else if (this._$selectMode == 'minute') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$minute)) + add;
+            value = this._getValidNumberInRange(value, 0, 59);
             if (this._updateMinute(value)) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$minute, this.step);
             }
         } else if (this._$selectMode == 'second') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$second)) + add;
+            value = this._getValidNumberInRange(value, 0, 59);
             if (this._updateSecond(value)) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$second, this.step);
             }
