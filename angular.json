@@ -34,6 +34,8 @@
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/@rdkmaster/icon-font/css/iconfont.css",
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/theme/mbo.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -42,7 +44,13 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/ztree/js/jquery.ztree.all.js",
               "node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
-              "node_modules/peity/jquery.peity.min.js"
+              "node_modules/peity/jquery.peity.min.js",
+              "node_modules/codemirror/lib/codemirror.js",
+              "node_modules/codemirror/mode/javascript/javascript.js",
+              "node_modules/codemirror/mode/css/css.js",
+              "node_modules/codemirror/mode/sass/sass.js",
+              "node_modules/codemirror/mode/xml/xml.js",
+              "node_modules/codemirror/addon/edit/matchbrackets.js"
             ]
           },
           "configurations": {
