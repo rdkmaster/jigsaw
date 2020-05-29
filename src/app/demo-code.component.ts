@@ -111,9 +111,9 @@ const defaultOpen = 'src/app/demo.component.html';
     encapsulation: ViewEncapsulation.None
 })
 export class DemoCodeComponent implements AfterViewInit, OnDestroy {
-    @ViewChild('source', {read: ElementRef, static: false})
+    @ViewChild('source', {read: ElementRef})
     sourceBox: ElementRef;
-    @ViewChild('tree', {static: false})
+    @ViewChild('tree')
     tree: JigsawTreeExt;
 
     editor: any;
