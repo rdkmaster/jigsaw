@@ -68,10 +68,15 @@ export class JigsawDemoDescription implements OnInit {
     }
 
     openDemoCode() {
+        const projectData = this.createProjectData();
+        if (!projectData) {
+            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
+            return;
+        }
         window.name = 'jigsaw-demo-main';
         const url = location.href.replace(/#/, '#/demo-code');
         const win: any = window.open(url, 'jigsaw-demo-code');
-        win.getJigsawDemoCode = () => this.createProjectData();
+        win.getJigsawDemoCode = () => (projectData);
     }
 
     createProjectData(): any {
@@ -92,8 +97,7 @@ export class JigsawDemoDescription implements OnInit {
             project.files[`src/app/${file}`] = code;
         }
         if (!hasFile) {
-            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
-            return project;
+            return;
         }
         const moduleCode = project.files[`src/app/demo.module.ts`];
         project.files[`src/app/demo.module.ts`] = fixDemoModuleTs(moduleCode);

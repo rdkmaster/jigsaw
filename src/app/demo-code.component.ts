@@ -1,5 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild, ViewEncapsulation} from "@angular/core";
-import {JigsawConfirmAlert, JigsawTreeExt, SimpleNode, SimpleTreeData, ZTreeSettingSetting} from "../jigsaw/public_api";
+import {
+    JigsawConfirmAlert,
+    JigsawErrorAlert,
+    JigsawTreeExt,
+    SimpleNode,
+    SimpleTreeData,
+    ZTreeSettingSetting
+} from "../jigsaw/public_api";
 import sdk from "@stackblitz/sdk";
 
 declare const CodeMirror;
@@ -142,18 +149,20 @@ export class DemoCodeComponent implements AfterViewInit, OnDestroy {
 
     goBack() {
         if (window.opener) {
-            window.open('', window.opener.name);
+            return window.open('', window.opener.name);
         } else {
             // 原窗口被关闭了
-            window.open(location.href.replace(/\/demo-code/, ''), 'jigsaw-demo-main');
+            return window.open(location.href.replace(/\/demo-code/, ''), 'jigsaw-demo-main');
         }
     }
 
     initProject() {
         if (!project) {
-            JigsawConfirmAlert.show('数据无效！请点击Demo页面上的查看源码链接跳转过来才可以正常阅读源码。是否立即转到到本Demo页面？',
-                button => {
-                    console.log(button);
+            JigsawErrorAlert.show('数据无效！请点击Demo页面上的查看源码链接跳转过来才可以正常阅读源码。',
+                () => {
+                    location.href = location.href.replace(/\/demo-code/, '');
+                    // 背景色被修改了，刷新一下重置
+                    location.reload();
                 });
             return;
         }
