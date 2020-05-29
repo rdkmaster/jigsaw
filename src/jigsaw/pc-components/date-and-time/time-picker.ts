@@ -53,6 +53,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._second = this._second ? this._second : '00';
             let value = this._calValueByGr(this._$hour, this._$minute, this._$second);
             this.writeValue(value);
+        });
+        this._removeSwitchPopupSubscriber = this._switchPopup.pipe(debounceTime(150)).subscribe((open: boolean) => {
+            this._$floatOpen = open;
+            this._cdr.markForCheck();
         })
     }
 
@@ -215,7 +219,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public _$handleSelectMode(mode: TimeSelectMode | 'none', isTabSwitch?: boolean) {
         this._$selectMode = mode;
-        this._$floatOpen = mode == 'none' ? false : true;
+        this._switchPopup.emit(mode != 'none');
         if (mode == 'hour') {
             this._hourInput.nativeElement.select();
             this._$floatInitData = this._getFloatInitData(mode, this._$hour, this.step);
@@ -244,7 +248,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._checkFormat(mode, checkAll);
         if (this._$selectMode == mode || checkAll) {
             this._$selectMode = 'none';
-            this._$floatOpen = false;
+            this._switchPopup.emit(false);
         }
         this._updateValue.emit();
     }
@@ -295,13 +299,16 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     private _updateValue = new EventEmitter();
     private _removeUpdateValueSubscriber: Subscription;
 
+    private _switchPopup = new EventEmitter<boolean>();
+    private _removeSwitchPopupSubscriber: Subscription;
+
     public _$handleKeyDown($event, mode: TimeSelectMode) {
         if ($event.keyCode == 38) {
             this._$handleCtrlBarClick($event, 1);
         } else if ($event.keyCode == 40) {
             this._$handleCtrlBarClick($event, -1);
         } else if ($event.keyCode == 9) {
-            if (this._$selectMode == 'hour') {
+            if (this._$selectMode == 'hour' && (this.gr != TimeGr.time_hour)) {
                 this._$handleSelectMode('minute', true);
             } else if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_minute_second)) {
                 this._$handleSelectMode('second', true);
@@ -484,6 +491,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (this._removeUpdateValueSubscriber) {
             this._removeUpdateValueSubscriber.unsubscribe();
             this._removeUpdateValueSubscriber = null;
+        }
+        if(this._removeSwitchPopupSubscriber) {
+            this._removeSwitchPopupSubscriber.unsubscribe();
+            this._removeSwitchPopupSubscriber = null;
         }
     }
 }
