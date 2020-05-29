@@ -35,14 +35,14 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
                 <span *ngIf="!!content">|</span>
                 <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
                 |
-                <a (click)="gotoStackblitz()">查看本DEMO源码</a>
+                <a (click)="openDemoCode()">查看本DEMO源码</a>
             </span>
             <br *ngIf="showDetail">
             <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown>
             <br>
             <span class="links" *ngIf="showDetail && !!content">
                 <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
-                <a (click)="gotoStackblitz()">查看本DEMO源码</a>
+                <a (click)="openDemoCode()">查看本DEMO源码</a>
             </span>
             <hr>
         </div>
@@ -67,13 +67,19 @@ export class JigsawDemoDescription implements OnInit {
         this._summary = value.replace(/`(.*?)`/g, '<code>$1</code>');
     }
 
-    gotoStackblitz() {
-        const platform = location.href.match(/\/mobile\/.+?\/.+?/) ? 'mobile' : 'pc';
-        if (platform == 'mobile') {
-            alert('暂未支持移动端的Demo代码演示。');
+    openDemoCode() {
+        const projectData = this.createProjectData();
+        if (!projectData) {
+            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
             return;
         }
+        window.name = 'jigsaw-demo-main';
+        const url = location.href.replace(/#/, '#/demo-code');
+        const win: any = window.open(url, 'jigsaw-demo-code');
+        win.getJigsawDemoCode = () => (projectData);
+    }
 
+    createProjectData(): any {
         const project: any = {files: {}};
         let hasFile = false;
         for (let file in this.codes) {
@@ -91,7 +97,6 @@ export class JigsawDemoDescription implements OnInit {
             project.files[`src/app/${file}`] = code;
         }
         if (!hasFile) {
-            alert('如需使用这个功能，请执行patch-demos.js对这些demo打补丁，打补丁过程会修改demo的源码，请备份demo的修改，避免丢失。');
             return;
         }
         const moduleCode = project.files[`src/app/demo.module.ts`];
@@ -118,8 +123,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
         project.files['src/index.html'] = getIndexHtml(project.title, styles);
-
-        sdk.openProject(project, {openFile: 'src/app/demo.component.html'});
+        return project;
     }
 
     toggleDesc() {
@@ -450,7 +454,7 @@ function fixDemoComponentTs(cmpCode: string, moduleCode: string): string {
     }
 
     cmpCode = cmpCode
-        // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
+    // 给组件加上jigsaw-demo的selector，这个在index.html里会用到
         .replace(/@Component\s*\(\s*{([\s\S]*?)}\s*\)[\s\S]*?export\s+class\s+(\w+?)\b/g,
             (found, props, className) => {
                 if (className != mainComp) {
