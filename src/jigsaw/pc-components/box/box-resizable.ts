@@ -14,10 +14,10 @@ export class JigsawBoxResizable {
     }
 
     @Input()
-    public parentBox: HTMLElement;
+    public parentBox: any;
 
     @Input()
-    public effectBox: HTMLElement;
+    public effectBox: any;
 
     @Input()
     public effectDirection: string;

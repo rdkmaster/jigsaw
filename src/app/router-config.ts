@@ -204,6 +204,11 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/breadcrumb/demo-set.module').then(m => m.BreadcrumbDemoModule),
     },
     {
+        path: "pc/menu",
+        loadChildren: () => import('./demo/pc/menu/demo-set.module').then(m => m.MenuDemoModule),
+    },
+    {
+
         path: "pc/date-picker",
         loadChildren: () => import('./demo/pc/date-picker/demo-set.module').then(m => m.DatePickerDemoModule),
     },
@@ -218,7 +223,7 @@ export const routerConfigPC = [
     {
         path: "pc/0range-date-time-picker",
         loadChildren: () => import('./demo/pc/range-date-time-picker/demo-set.module').then(m => m.RangeDateTimeDemoModule),
-    }
+    },
 ];
 export const routerConfigMobile = [
     {

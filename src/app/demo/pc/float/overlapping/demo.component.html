@@ -29,6 +29,24 @@
 </span>
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
+        <a (click)="popupGlobalLoading($event)" style="margin-right: 12px">
+            触发loading
+        </a>
+        <a style="margin-right: 12px" jigsaw-float
+              [jigsawFloatOpenTrigger]="openTrigger"
+              [jigsawFloatCloseTrigger]="closeTrigger"
+              [jigsawFloatTarget]="jigsawFloatArea">
+            次级下拉
+        </a>
+        <a style="margin-right: 12px" jigsaw-cascading-menu
+            [jigsawCascadingMenuData]="menuData"
+            [jigsawCascadingMenuWidth]="150">
+            下拉菜单
+        </a>
+        <div (contextmenu)="showContext($event)" class="context-menu">
+            <p>右击这里弹出上下文菜单</p>
+        </div>
+        <br><br>
         <jigsaw-auto-complete-input placeholder="click here..." width="200"
                                     [data]="[
                                         '点击发送事件', '滚动页面', '发送事件到事件总线',
@@ -40,24 +58,33 @@
         <jigsaw-combo-select width="200" placeholder="move mouse here...">
             <ng-template>
                 <div class="jigsawFloatArea" style="background: rgb(195,205,185);">
-                    <a (click)="popupGlobalLoading($event)">点击触发loading</a>&nbsp;&nbsp;&nbsp;
-                    <a jigsaw-float
+                    <a style="margin-right: 12px" (click)="popupGlobalLoading($event)">
+                        触发loading
+                    </a>
+                    <a style="margin-right: 12px" jigsaw-float
                        [jigsawFloatOpenTrigger]="openTrigger"
                        [jigsawFloatCloseTrigger]="closeTrigger"
                        [jigsawFloatTarget]="jigsawFloatArea">
-                        触发次级下拉
+                        次级下拉
                     </a>
+                    <a style="margin-right: 12px" jigsaw-cascading-menu
+                        [jigsawCascadingMenuData]="menuData"
+                        [jigsawCascadingMenuWidth]="150">
+                        下拉菜单
+                    </a>
+                    <div (contextmenu)="showContext($event)" class="context-menu">
+                        <p>右击这里弹出上下文菜单</p>
+                    </div>
+                    <br><br>
+                    <jigsaw-auto-complete-input placeholder="click here..." width="200"
+                                                [data]="[
+                                                    '点击发送事件', '滚动页面', '发送事件到事件总线',
+                                                    '更新变量', '等待弹出关闭', '自定义代码块'
+                                                ]">
+                    </jigsaw-auto-complete-input>
                 </div>
             </ng-template>
         </jigsaw-combo-select>
-        <br><br>
-        <a (click)="popupGlobalLoading($event)">点击触发loading</a>&nbsp;&nbsp;&nbsp;
-        <a jigsaw-float
-              [jigsawFloatOpenTrigger]="openTrigger"
-              [jigsawFloatCloseTrigger]="closeTrigger"
-              [jigsawFloatTarget]="jigsawFloatArea">
-            触发次级下拉
-        </a>
     </div>
 </ng-template>
 

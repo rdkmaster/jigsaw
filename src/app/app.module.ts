@@ -4,7 +4,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {JigsawRootModule} from "jigsaw/pc-components/root/root";
+import {JigsawFloatModule, JigsawListLiteModule, JigsawRootModule} from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {routerConfig} from "./router-config";
@@ -25,7 +25,7 @@ import {SwitchDemoComponent} from "./switch-demo.component";
             {path: 'mobile', component: MobileDemoListComponent},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
-        JigsawRootModule
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule
     ],
     providers: [
         {
