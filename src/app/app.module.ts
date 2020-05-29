@@ -22,10 +22,10 @@ import {DemoCodeComponent} from "./demo-code.component";
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: DemoListComponent},
-            {path: '**', redirectTo: ''},
             {path: 'demo-code', component: DemoCodeComponent, children: [
                     {path: '**', component: DemoCodeComponent}
                 ]},
+            {path: '**', redirectTo: ''},
         ], {useHash: true}),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawBoxModule, JigsawTreeExtModule
     ],
