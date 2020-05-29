@@ -209,7 +209,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
     }
 
     @Output()
-    public answer = new EventEmitter<any>();
+    public jigsawFloatAnswer = new EventEmitter<any>();
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
@@ -387,7 +387,7 @@ export class JigsawFloat extends AbstractJigsawViewBase implements OnDestroy {
         }
         if(popupInfo.answer) {
             this._removeAnswerSubscriber = popupInfo.answer.subscribe(data => {
-                this.answer.emit(data);
+                this.jigsawFloatAnswer.emit(data);
             });
         }
         if (!this._popupElement) {
