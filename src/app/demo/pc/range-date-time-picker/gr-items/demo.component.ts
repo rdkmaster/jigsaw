@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
 import {TimeGr} from "jigsaw/common/service/time.service";
-import {RangeTimeDataRanges} from "jigsaw/pc-components/range-time/shortcut-dateranges";
-import {GrItem, Shortcut} from "../../../../../jigsaw/pc-components/date-and-time/date-picker";
+import {GrItem, Shortcut} from "jigsaw/pc-components/date-and-time/date-picker";
+import {RangeTimeDataRanges} from "jigsaw/pc-components/date-and-time/shortcut-dateranges";
 
 
 @Component({
