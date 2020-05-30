@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawRangeTimeModule} from "jigsaw/pc-components/range-time/index";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RangeDateTimeBasicDemoComponent} from "./demo.component";
 import {JigsawRangeDateTimePickerModule} from "jigsaw/pc-components/date-and-time/range-date-time-picker";
@@ -8,7 +7,7 @@ import {JigsawRangeDateTimePickerModule} from "jigsaw/pc-components/date-and-tim
 @NgModule({
     declarations: [RangeDateTimeBasicDemoComponent],
     exports: [RangeDateTimeBasicDemoComponent],
-    imports: [JigsawRangeTimeModule, CommonModule, JigsawDemoDescriptionModule, JigsawRangeDateTimePickerModule]
+    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawRangeDateTimePickerModule]
 })
 export class RangeDateTimeBasicDemoModule{
 

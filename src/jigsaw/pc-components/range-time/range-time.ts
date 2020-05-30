@@ -13,8 +13,9 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
-import {GrItem, JigsawTime, Shortcut} from "../time/time";
+import {JigsawTime} from "../time/time";
 import {TimeWeekDay, WeekTime} from "../../common/service/time.types";
+import {GrItem, Shortcut} from "../date-and-time/date-picker";
 
 declare const moment: any;
 

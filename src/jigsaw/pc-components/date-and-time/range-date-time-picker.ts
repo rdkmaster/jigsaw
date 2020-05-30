@@ -14,17 +14,16 @@ import {
     NgModule
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule} from '@angular/forms';
-import {MarkDate} from "./date-picker";
+import {GrItem, MarkDate, Shortcut} from "./date-picker";
 import {CommonModule} from '@angular/common';
-import {GrItem, JigsawTime, Shortcut} from "../time";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
 import {WeekTime} from "../../common/service/time.types";
-import {JigsawDateTimePickerModule} from "./date-time-picker";
+import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
 
 declare const moment: any;
 
 @Component({
-    selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker',
+    selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker, jigsaw-range-time, j-range-time',
     templateUrl: './range-date-time-picker.html',
     host: {
         '[class.jigsaw-range-date-time-picker-host]': 'true',
@@ -43,7 +42,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Input()
     public valid: boolean = true;
 
-    @ViewChild("timeStart", {static: true}) private _timeStart: JigsawTime;
+    @ViewChild("timeStart", {static: true}) private _timeStart: JigsawDateTimePicker;
 
     /**
      * @internal

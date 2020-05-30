@@ -14,7 +14,6 @@ import {JigsawLoadingModule} from '../common/components/loading/loading';
 import {JigsawNotificationModule} from './notification/notification';
 import {JigsawPaginationModule} from './pagination/pagination';
 import {JigsawRadioModule} from './radio/radio';
-import {JigsawRangeTimeModule} from './range-time/index';
 import {JigsawScrollbarModule} from '../common/components/scrollbar/index';
 import {JigsawSelectModule} from './select/select';
 import {JigsawSliderModule} from './slider/index';
@@ -26,7 +25,6 @@ import {JigsawTableRendererModule} from "./table/table-renderer";
 import {JigsawTabsModule} from './tabs/index';
 import {JigsawTagModule} from './tag/tag';
 import {JigsawTileSelectModule} from './list-and-tile/tile';
-import {JigsawTimeModule} from './time/index';
 import {JigsawTooltipModule} from './tooltip/tooltip';
 import {JigsawTreeExtModule} from './tree/tree-ext';
 import {JigsawMovableModule} from "../common/directive/movable/index";
@@ -53,6 +51,10 @@ import {JigsawTextareaModule} from "./textarea/index";
 import {JigsawBreadcrumbModule} from "./breadcrumb/breadcrumb";
 import {JigsawRateModule} from "./rate/index";
 import {JigsawMenuModule} from "./menu/index";
+import {JigsawDatePickerModule} from "./date-and-time/date-picker";
+import {JigsawTimePickerModule} from "./date-and-time/time-picker";
+import {JigsawDateTimePickerModule} from "./date-and-time/date-time-picker";
+import {JigsawRangeDateTimePickerModule} from "./date-and-time/range-date-time-picker";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -83,7 +85,6 @@ const JIGSAW_MODULE = [
     JigsawPaginationModule,
     JigsawRadioModule,
     JigsawRadioLiteModule,
-    JigsawRangeTimeModule,
     JigsawRootModule,
     JigsawScrollbarModule,
     JigsawSelectModule,
@@ -96,7 +97,6 @@ const JIGSAW_MODULE = [
     JigsawTagModule,
     JigsawTileSelectModule,
     JigsawTileLiteModule,
-    JigsawTimeModule,
     JigsawTooltipModule,
     JigsawTreeExtModule,
     JigsawTrustedHtmlModule,
@@ -108,7 +108,11 @@ const JIGSAW_MODULE = [
     JigsawBreadcrumbModule,
     JigsawRateModule,
     JigsawStepsMultilineModule,
-    JigsawMenuModule
+    JigsawMenuModule,
+    JigsawDatePickerModule,
+    JigsawTimePickerModule,
+    JigsawDateTimePickerModule,
+    JigsawRangeDateTimePickerModule,
 ];
 
 @NgModule({

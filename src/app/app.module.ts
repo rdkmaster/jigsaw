@@ -11,6 +11,7 @@ import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import {SwitchDemoComponent} from "./switch-demo.component";
             {path: 'mobile', component: MobileDemoListComponent},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
-        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule,
+        TranslateModule.forRoot()
     ],
     providers: [
         {
@@ -33,6 +35,7 @@ import {SwitchDemoComponent} from "./switch-demo.component";
             useClass: AjaxInterceptor,
             multi: true,
         },
+        TranslateService
     ],
     bootstrap: [AppComponent]
 })

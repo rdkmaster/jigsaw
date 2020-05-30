@@ -13,16 +13,15 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {JigsawDatePickerModule, MarkDate} from "./date-picker";
+import {GrItem, JigsawDatePickerModule, MarkDate} from "./date-picker";
 import {JigsawTimePickerModule} from "./time-picker";
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
-import {GrItem} from "../time";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 
 @Component({
-    selector: 'jigsaw-date-time-picker, j-date-time-picker',
+    selector: 'jigsaw-date-time-picker, j-date-time-picker, jigsaw-time, j-time',
     templateUrl: './date-time-picker.html',
     host: {
         '[class.jigsaw-date-time-picker]': 'true',

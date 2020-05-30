@@ -15,7 +15,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
-import {GrItem} from "../time";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -41,6 +40,64 @@ export type MarkRange = { from: Time, to: Time };
 
 export enum MarkDateType {
     'none', 'recommend', 'warn', 'error'
+}
+
+/**
+ * 时间范围生成函数，用于生成自定义的时间范围
+ *
+ * $demo = range-time/gr-items
+ */
+export type TimeShortcutFunction = () => [WeekTime, WeekTime]
+
+/**
+ * 表示一个自定义的时间范围，一般用于配合`JigsawRangeTime.grItems`属性使用，用于设置某个粒度下快速时间范围选择。
+ */
+export class Shortcut {
+    /**
+     * 国际化提示信息，将被直接显示在界面上
+     * $demo = range-time/gr-items
+     */
+    label: string;
+    /**
+     * 时间范围的起止时间点，可以给出固定值，也可以给一个产生起止时间点的函数
+     * $demo = range-time/gr-items
+     */
+    dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
+}
+
+/**
+ * 一个时间粒度
+ */
+export class GrItem {
+    /**
+     * 国际化提示信息，将被直接显示在界面上
+     */
+    label: string;
+    /**
+     * 粒度值
+     *
+     * $demo = range-time/gr-items
+     * $demo = time/gr
+     */
+    value: TimeGr;
+    /**
+     * 配置当前粒度下，用户能够选择的最大时间跨度。当某些查询请求必须约束用户选择某个范围内的时间时，这个配置项将非常有用。
+     * 例如查询银行流水时，我们常常被约束最长只能查询3个月的流水等。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = range-time/gr-items
+     */
+    span?: string;
+    /**
+     * 给出一组预定义的时间范围，这样用户可以通过这些值快速的设置好待选的时间范围，提高易用性。
+     * 只在和`JigsawRangeTime`配合使用时才有效
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = range-time/gr-items
+     */
+    shortcuts?: Shortcut[];
 }
 
 @Component({

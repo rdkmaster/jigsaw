@@ -15,3 +15,6 @@ export class JigsawTimeModule {
 }
 
 export * from './time';
+export {GrItem} from "../date-and-time/date-picker";
+export {Shortcut} from "../date-and-time/date-picker";
+export {TimeShortcutFunction} from "../date-and-time/date-picker";
