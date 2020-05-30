@@ -20,7 +20,6 @@
     "homepage": "http://rdk.zte.com.cn/components",
     "peerDependencies": {
         "@ngx-translate/core": "~11.0.1",
-        "eonasdan-bootstrap-datetimepicker": "~4.17.47",
         "echarts": "~4.1.0",
         "jquery": "~3.4.1",
         "ztree": "~3.5.24",
