@@ -128,7 +128,7 @@ export class PCDemoListComponent implements OnInit {
 
     ngOnInit(): void {
         const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list'));
-        this.selectedItems = this.routes.filter(item => !item.hidden && stored.indexOf(item.path) != -1);
+        this.selectedItems = this.routes.filter(item => !item.hidden && stored && stored.indexOf(item.path) != -1);
         if (this.selectedItems.length == this.routes.length) {
             // 全显示表示这是第一次打开此页面
             this.selectedItems = null;
