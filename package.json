@@ -34,6 +34,7 @@
     "jquery": "~3.5.0",
     "jszip": "~3.3.0",
     "marked": "~0.7.0",
+    "moment": "~2.22.2",
     "ngx-perfect-scrollbar": "~8.0.0",
     "peity": "~3.2.1",
     "rxjs": "~6.5.4",
