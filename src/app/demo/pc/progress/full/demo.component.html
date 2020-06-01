@@ -8,32 +8,32 @@
     <h2>Progress</h2>
     <div class="clearfix">
         <div class="demo-1 live-demo">
-            <h3>进度条</h3>
+            <h3>进度条 <j-numeric-input min="0" max="100" [value]="68" (valueChange)="valueChange($event)"></j-numeric-input> </h3>
             <p class="comment">默认</p>
-            <j-progress value="68%"></j-progress>
+            <j-progress [value]="progressValue"></j-progress>
             <br><br>
             <p class="comment">状态</p>
-            <j-progress value="68%" status="processing"></j-progress>
-            <j-progress value="68%" status="block"></j-progress>
-            <j-progress value="68%" status="error"></j-progress>
-            <j-progress value="68%" status="success"></j-progress>
+            <j-progress [value]="progressValue" status="processing"></j-progress>
+            <j-progress [value]="progressValue" status="block"></j-progress>
+            <j-progress [value]="progressValue" status="error"></j-progress>
+            <j-progress [value]="progressValue" status="success"></j-progress>
             <br><br>
             <p class="comment">文字在顶部</p>
-            <j-progress value="68%" width="100%" labelPosition="top" [split]="true"></j-progress>
+            <j-progress [value]="progressValue" width="100%" labelPosition="top" [split]="true"></j-progress>
             <br><br>
             <p class="comment">大尺寸，文字跟随进度条</p>
-            <j-progress value="68%" width="100%" preSize="large" labelPosition="followRight" [split]="true"></j-progress>
+            <j-progress [value]="progressValue" width="100%" preSize="large" labelPosition="followRight" [split]="true"></j-progress>
             <br><br>
-            <j-progress value="68%" width="100%" preSize="large" labelPosition="followLeft" [split]="true"></j-progress><br>
+            <j-progress [value]="progressValue" width="100%" preSize="large" labelPosition="followLeft" [split]="true"></j-progress><br>
             <br><br>
             <p class="comment">小尺寸</p>
-            <j-progress value="68%" preSize="small" status="processing"></j-progress>
-            <j-progress value="68%" preSize="small" status="block"></j-progress>
-            <j-progress value="68%" preSize="small" status="error"></j-progress>
-            <j-progress value="68%" preSize="small" status="success"></j-progress>
+            <j-progress [value]="progressValue" preSize="small" status="processing"></j-progress>
+            <j-progress [value]="progressValue" preSize="small" status="block"></j-progress>
+            <j-progress [value]="progressValue" preSize="small" status="error"></j-progress>
+            <j-progress [value]="progressValue" preSize="small" status="success"></j-progress>
             <br><br>
             <p class="comment">processing</p>
-            <j-progress value="68%" status="processing" [processing]="true"></j-progress>
+            <j-progress [value]="progressValue" status="processing" [processing]="true"></j-progress>
         </div>
 
     </div>
