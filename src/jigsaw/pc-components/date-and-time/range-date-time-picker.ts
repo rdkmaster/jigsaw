@@ -19,6 +19,7 @@ import {CommonModule} from '@angular/common';
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
 import {WeekTime} from "../../common/service/time.types";
 import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
+import {TimeStep} from "./time-picker";
 
 declare const moment: any;
 
@@ -206,7 +207,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public refreshInterval: number;
 
     @Input()
-    markDates: MarkDate[];
+    public markDates: MarkDate[];
+
+    @Input()
+    public step: TimeStep;
 
     /**
      * 当用户选择时间时，Jigsaw发出此事件。

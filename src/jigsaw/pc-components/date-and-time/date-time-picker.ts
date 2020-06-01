@@ -14,7 +14,7 @@ import {
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {GrItem, JigsawDatePickerModule, MarkDate} from "./date-picker";
-import {JigsawTimePickerModule} from "./time-picker";
+import {JigsawTimePickerModule, TimeStep} from "./time-picker";
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
 import {Subscription} from 'rxjs';
@@ -201,6 +201,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     @Input()
     public rangeDate: string;
+
+    @Input()
+    public step: TimeStep;
 
     private _updateValue = new EventEmitter();
     private _removeUpdateValueSubscriber: Subscription;
