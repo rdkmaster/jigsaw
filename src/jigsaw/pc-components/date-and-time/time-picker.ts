@@ -151,9 +151,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$hour(value: string) {
-        if (value == this._hour) {
-            this._switchWhenHour();
-        } else if (this._updateHour(value) && this.initialized && this._hour.length > 1) {
+        if (value == this._hour) return;
+        if (this._updateHour(value) && this.initialized && this._hour.length > 1) {
             this._updateValue.emit();
             this._switchWhenHour();
         }
@@ -174,9 +173,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$minute(value: string) {
-        if (value == this._minute) {
-            this._switchWhenMinute();
-        } else if (this._updateMinute(value) && this.initialized && this._minute.length > 1) {
+        if (value == this._minute) return;
+        if (this._updateMinute(value) && this.initialized && this._minute.length > 1) {
             this._updateValue.emit();
             this._switchWhenMinute();
         }
@@ -413,10 +411,20 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
                 [this._$hour, this._$minute, this._$second] = TimeService.convertValue('now', TimeGr.second).split(' ')[1].split(':');
                 this._$cancelSelect(mode, true);
             } else {
-                this._$hour = value;
+                if(this._$hour == value) {
+                    // 选择原来的值也会切换
+                    this._switchWhenHour();
+                } else {
+                    this._$hour = value;
+                }
             }
         } else if (mode == 'minute') {
-            this._$minute = value;
+            if(this._$minute == value) {
+                // 选择原来的值也会切换
+                this._switchWhenMinute();
+            } else {
+                this._$minute = value;
+            }
         } else if (mode == 'second') {
             this._$second = value;
             this._$floatOpen = false;
