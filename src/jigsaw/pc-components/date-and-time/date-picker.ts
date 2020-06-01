@@ -163,6 +163,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         this._createMonthCal(month);
         this._createYearCal(year);
         this._createDayCal(year, month);
+        this._changeDetectorRef.markForCheck();
     }
 
     private _updateHead(year: number, month: number) {
