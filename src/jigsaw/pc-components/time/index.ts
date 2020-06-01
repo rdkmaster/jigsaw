@@ -6,7 +6,7 @@ import {PopupService} from "../../common/service/popup.service";
 import {JigsawTime} from "./time";
 
 @NgModule({
-    imports: [CommonModule, JigsawTooltipModule, TranslateModule.forRoot()],
+    imports: [CommonModule, JigsawTooltipModule, TranslateModule.forChild()],
     declarations: [JigsawTime],
     exports: [JigsawTime],
     providers: [PopupService, TranslateService],

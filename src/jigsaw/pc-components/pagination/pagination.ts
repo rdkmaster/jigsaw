@@ -528,7 +528,7 @@ export class JigsawPagingItem {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forRoot()],
+    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forChild()],
     declarations: [JigsawPagination, JigsawPagingItem],
     exports: [JigsawPagination],
     providers: [TranslateService],
