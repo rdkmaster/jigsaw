@@ -186,8 +186,6 @@ kbd kbd {
 }
 pre {
     display: block;
-    padding: 9.5px;
-    margin: 0 0 10px;
     font-size: 13px;
     line-height: 1.42857143;
     color: #333333;
@@ -294,10 +292,6 @@ svg:not(:root) {
     overflow: hidden;
 }
 
-figure {
-    margin: 1em 40px;
-}
-
 hr {
     box-sizing: content-box;
     height: 0;
@@ -359,41 +353,18 @@ mark {
 
 ul, ol {
     list-style: none;
-    margin-top: 0;
-    margin-bottom: 10px;
 }
 
-ul ul,
-ol ul,
-ul ol,
-ol ol {
-    margin-bottom: 0;
-}
-
-dl {
-    margin-top: 0;
-    margin-bottom: 20px;
-}
 dt, dd {
     line-height: 1.42857143;
 }
 dt {
     font-weight: 700;
 }
-dd {
-    margin-left: 0;
-}
 
 blockquote {
-    padding: 10px 20px;
-    margin: 0 0 20px;
     font-size: 17.5px;
     border-left: 5px solid #eeeeee;
-}
-blockquote p:last-child,
-blockquote ul:last-child,
-blockquote ol:last-child {
-    margin-bottom: 0;
 }
 blockquote footer,
 blockquote small {
@@ -408,7 +379,6 @@ blockquote small:before {
 }
 
 address {
-    margin-bottom: 20px;
     font-style: normal;
     line-height: 1.42857143;
 }
