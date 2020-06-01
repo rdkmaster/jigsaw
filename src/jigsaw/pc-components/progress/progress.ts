@@ -1,6 +1,16 @@
-import {ChangeDetectionStrategy, Component, NgModule, Input, ElementRef, ChangeDetectorRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgModule, Input, ElementRef, ChangeDetectorRef, OnInit} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from '@angular/common';
+
+export class EstimateInfo {
+    // 假进度更新的间隔，比如人家给定3000ms，那么我们可以在±300ms范围内随机更新进度
+    interval: number = 3000;
+    // 每个周期更新的进度增量值
+    increment: number = 15;
+    minProgress: number = 0;
+    maxProgress: number = 80;
+    curProgress: number;
+}
 
 @Component({
     selector: 'jigsaw-progress, j-progress',
@@ -18,7 +28,7 @@ import {CommonModule} from '@angular/common';
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawProgress extends AbstractJigsawComponent {
+export class JigsawProgress extends AbstractJigsawComponent implements OnInit {
     constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef) {
         super()
     }
@@ -49,6 +59,10 @@ export class JigsawProgress extends AbstractJigsawComponent {
 
     @Input() public processing: boolean;
 
+    @Input() public estimate: boolean;
+
+    @Input() public estimateInfo: EstimateInfo = new EstimateInfo();
+
     public _$labelPositionBak: 'followLeft' | 'followRight' = 'followRight';
     private _autoLabelPosition() {
         if(this.labelPosition != 'followLeft' && this.labelPosition != 'followRight') return;
@@ -63,6 +77,33 @@ export class JigsawProgress extends AbstractJigsawComponent {
             this._$labelPositionBak = labelEl.offsetWidth + valueEl.offsetWidth < trackEl.offsetWidth ? 'followRight' : 'followLeft';
         }
         this._cdr.markForCheck();
+    }
+
+    private _random(min, max) {
+        return Math.round(Math.random() * (max - min)) + min;
+    }
+
+    public estimateProgress(es: EstimateInfo = new EstimateInfo()) {
+        es.curProgress = es.curProgress ? es.curProgress : es.minProgress;
+        this.value = es.curProgress + '%';
+        this._cdr.markForCheck();
+        this.callLater(() => {
+            es.curProgress += es.increment;
+            if(es.curProgress > es.maxProgress) {
+                es.curProgress = es.maxProgress;
+                this.value = es.curProgress + '%';
+                this._cdr.markForCheck();
+            } else {
+                this.estimateProgress(es);
+            }
+        }, this._random(es.interval - 300, es.interval + 300))
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if(this.estimate) {
+            this.estimateProgress(this.estimateInfo)
+        }
     }
 }
 

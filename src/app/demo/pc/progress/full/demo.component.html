@@ -34,6 +34,9 @@
             <br><br>
             <p class="comment">processing</p>
             <j-progress [value]="progressValue" status="processing" [processing]="true"></j-progress>
+            <br><br>
+            <p class="comment">estimateProgress <span class="fa fa-refresh" style="cursor: pointer" (click)="refreshProgress()"></span></p>
+            <j-progress #estimateProgress [estimate]="true" [processing]="true"></j-progress>
         </div>
 
     </div>

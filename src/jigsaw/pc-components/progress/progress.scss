@@ -37,6 +37,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                 height: 100%;
                 background: $primary-color;
                 position: relative;
+                transition: width .3s linear;
 
                 i {
                     position: absolute;
