@@ -296,7 +296,7 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileButtonModule, CommonModule, TranslateModule.forRoot()],
+    imports: [JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileButtonModule, CommonModule, TranslateModule.forChild()],
     declarations: [JigsawMobileAlert, JigsawMobileInfoAlert, JigsawMobileWarningAlert, JigsawMobileErrorAlert, JigsawMobileConfirmAlert],
     exports: [
         JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileAlert, JigsawMobileInfoAlert, JigsawMobileWarningAlert,
