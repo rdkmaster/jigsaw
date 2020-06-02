@@ -8,7 +8,7 @@ import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
-import {TableData} from "../../common/core/data/table-data";
+import {TableData, TreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
@@ -431,33 +431,33 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 }
 
-export type TreeTableCell = {level: number, open: boolean, isParent: boolean, data: string};
+export type TreeTableCell = {level: string, open: boolean, isParent: boolean, data: string};
 
 @Component({
     template: `
-        <span *ngFor="let x of _$level" style="margin-left: 20px"></span>
-        <span *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
-            <span *ngIf="cellData.open; else close" class="fa fa-minus-square-o"></span>
-            <ng-template #close>
-                <span class="fa fa-plus-square-o"></span>
-            </ng-template>
-        </span>
-        {{cellData.level}}{{cellData.data}}
-    `
+        <div class="jigsaw-table-tree-cell">
+            <span *ngFor="let x of cellData.level.split('')" class="jigsaw-table-tree-indent"></span>
+            <span class="jigsaw-table-tree-bar" *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
+                <span *ngIf="cellData.open; else close" class="fa fa-minus-square-o"></span>
+                <ng-template #close>
+                    <span class="fa fa-plus-square-o"></span>
+                </ng-template>
+            </span>
+            {{cellData.level}}{{cellData.data}}
+        </div>
+    `,
+    styles: [
+        `
+            
+        `
+    ]
 })
 export class TableCellTreeNodeRenderer extends TableCellRendererBase {
-    public _$level: number[];
-    private _cellData: TreeTableCell;
-    public get cellData(): TreeTableCell {
-        return this._cellData;
-    }
-    public set cellData(data: TreeTableCell) {
-        this._cellData = data;
-        this._$level = Array.from(new Array(data.level - 1 >= 0 ? data.level - 1 : 0).keys())
-    }
-
+    cellData:TreeTableCell;
+    tableData: TreeTableData;
     public _$toggleOpenNode() {
-
+        let indexes = this.cellData.level.split('');
+        this.tableData.toggleOpenNode(indexes, !this.cellData.open);
     }
 }
 

@@ -1266,10 +1266,11 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
 
 export class TreeTableData extends TableData {
     treeData: SimpleTreeData = new SimpleTreeData();
+    treeField: number;
 
-    public static _getData(node: SimpleNode, field: number, level: number = 0,data = []): any[] {
-        if(!node || field == -1) return data;
-        if(node.data) {
+    public static _getData(node: SimpleNode, field: number, level: string = '', data = []): any[] {
+        if (!node || field == -1) return data;
+        if (node.data) {
             let row = node.data.concat();
             row[field] = {
                 level: level,
@@ -1280,10 +1281,9 @@ export class TreeTableData extends TableData {
             data.push(row);
         }
         // !node.data这种情况是为了加入自动创建的根节点
-        if(node.nodes && node.nodes.length && (node.open || !node.data)) {
-            level++;
-            node.nodes.forEach(childNode => {
-                TreeTableData._getData(childNode, field, level,data);
+        if (node.nodes && node.nodes.length && (node.open || !node.data)) {
+            node.nodes.forEach((childNode, i) => {
+                TreeTableData._getData(childNode, field, level + i, data);
             })
         }
         return data;
@@ -1301,7 +1301,7 @@ export class TreeTableData extends TableData {
     }
 
     private _getTreeField(field: string | number): number {
-        if(typeof field == 'number') return field;
+        if (typeof field == 'number') return field;
         return this.field.findIndex(f => f == field);
     }
 
@@ -1313,13 +1313,28 @@ export class TreeTableData extends TableData {
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
         this.treeData.fromObject(data.treeData);
-        TableDataBase.arrayAppend(this.data, TreeTableData._getData(this.treeData, this._getTreeField(data.treeField)));
+        this.treeField = this._getTreeField(data.treeField);
+        TableDataBase.arrayAppend(this.data, TreeTableData._getData(this.treeData, this.treeField));
         this.refreshData();
         this.invokeChangeCallback();
         return this;
     }
 
-    public toggleOpenNode() {
+    public static getNodeByIndexes(treeData: SimpleNode, indexes: (number | string)[]): SimpleNode {
+        let node: SimpleNode = treeData;
+        indexes.forEach(index => {
+            if (!node.nodes) return null;
+            node = node.nodes[index];
+        });
+        return node
+    }
 
+    public toggleOpenNode(indexes: (number | string)[], open: boolean) {
+        let node = TreeTableData.getNodeByIndexes(this.treeData, indexes);
+        node.open = open;
+        this.data.splice(0, this.data.length);
+        TableDataBase.arrayAppend(this.data, TreeTableData._getData(this.treeData, this.treeField));
+        this.refreshData();
+        this.invokeChangeCallback();
     }
 }
