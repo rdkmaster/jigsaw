@@ -7,7 +7,8 @@
                     [limitStart]="_$dateLimitStart" [limitEnd]="_$dateLimitEnd" [rangeDate]="rangeDate"></jigsaw-date-picker>
 <div class="jigsaw-date-time-picker-bottom" *ngIf="!!_$timeGr">
     <j-time-picker height="24" [(value)]="_$time" (valueChange)="_$handleTimeChange($event)" [gr]="_$timeGr"
-                   floatPosition="topLeft"
-                   [limitStart]="_$timeLimitStartCur" [limitEnd]="_$timeLimitEndCur" [step]="step"></j-time-picker>
+                   floatPosition="topLeft" [limitStart]="_$timeLimitStartCur" [limitEnd]="_$timeLimitEndCur"
+                   [step]="step">
+    </j-time-picker>
 </div>
 

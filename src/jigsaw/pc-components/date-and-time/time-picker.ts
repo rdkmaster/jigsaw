@@ -14,15 +14,15 @@ import {
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float";
-import {IPopupable} from "../../common/service/popup.service";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {TimeGr, TimeService} from "../../common/service/time.service";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {AbstractJigsawComponent} from "../../common/common";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
+import {IPopupable} from "../../common/service/popup.service";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {TimeGr, TimeService} from "../../common/service/time.service";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10;
@@ -45,7 +45,7 @@ export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: bo
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit {
-    constructor(private _cdr: ChangeDetectorRef, protected _zone: NgZone) {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone) {
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(300)).subscribe(() => {
             this._hour = this._hour ? this._hour : '00';

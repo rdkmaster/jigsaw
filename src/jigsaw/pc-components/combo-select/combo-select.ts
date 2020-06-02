@@ -24,7 +24,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
-import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
+import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/index";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
 
 

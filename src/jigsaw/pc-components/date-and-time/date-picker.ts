@@ -13,13 +13,13 @@ import {
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
+import {Subscription} from 'rxjs';
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TranslateService} from '@ngx-translate/core';
-import {Subscription} from 'rxjs';
 
 declare const moment: any;
 
