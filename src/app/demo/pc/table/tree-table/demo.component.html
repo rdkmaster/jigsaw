@@ -4,5 +4,22 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="treeTableData" [columnDefines]="columns" ></jigsaw-table>
+<div class="live-demo-wrap">
+    <h2>树形表格</h2>
+    <div class="clearfix">
+        <div class="demo-1 live-demo">
+            <h3>基本用法</h3>
+            <jigsaw-table [data]="treeTableData" [columnDefines]="columns" ></jigsaw-table>
+        </div>
+        <div class="demo-2 live-demo">
+            <h3>分页</h3>
+            <jigsaw-table [data]="localPageableTreeTableData" [columnDefines]="columns" ></jigsaw-table>
+            <jigsaw-pagination
+                [data]="localPageableTreeTableData"
+                [pageSizeOptions]="[5, 10, 20]"
+                [showQuickJumper]="true"
+            ></jigsaw-pagination>
+        </div>
+    </div>
+</div>
 

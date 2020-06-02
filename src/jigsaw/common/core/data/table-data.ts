@@ -1264,11 +1264,11 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 }
 
-export class TreeTableData extends TableData {
+export class LocalPageableTreeTableData extends LocalPageableTableData {
     treeData: SimpleTreeData = new SimpleTreeData();
     treeField: number;
 
-    public static _getData(node: SimpleNode, field: number, level: string = '', data = []): any[] {
+    private static _getData(node: SimpleNode, field: number, level: string = '', data = []): any[] {
         if (!node || field == -1) return data;
         if (node.data) {
             let row = node.data.concat();
@@ -1283,13 +1283,13 @@ export class TreeTableData extends TableData {
         // !node.data这种情况是为了加入自动创建的根节点
         if (node.nodes && node.nodes.length && (node.open || !node.data)) {
             node.nodes.forEach((childNode, i) => {
-                TreeTableData._getData(childNode, field, level + i, data);
+                LocalPageableTreeTableData._getData(childNode, field, level + i, data);
             })
         }
         return data;
     }
 
-    public isTreeTableData(data: any): boolean {
+    public static isTreeTableData(data: any): boolean {
         return data && data.hasOwnProperty('treeData') && data.hasOwnProperty('treeField') &&
             data.hasOwnProperty('header') && data.header instanceof Array &&
             data.hasOwnProperty('field') && data.field instanceof Array;
@@ -1306,7 +1306,7 @@ export class TreeTableData extends TableData {
     }
 
     protected _fromObject(data: any): TableDataBase {
-        if (!this.isTreeTableData(data)) {
+        if (!LocalPageableTreeTableData.isTreeTableData(data)) {
             throw new Error('invalid raw TreeTableData object!');
         }
         this.clear();
@@ -1314,13 +1314,13 @@ export class TreeTableData extends TableData {
         TableDataBase.arrayAppend(this.header, data.header);
         this.treeData.fromObject(data.treeData);
         this.treeField = this._getTreeField(data.treeField);
-        TableDataBase.arrayAppend(this.data, TreeTableData._getData(this.treeData, this.treeField));
+        TableDataBase.arrayAppend(this.data, LocalPageableTreeTableData._getData(this.treeData, this.treeField));
         this.refreshData();
         this.invokeChangeCallback();
         return this;
     }
 
-    public static getNodeByIndexes(treeData: SimpleNode, indexes: (number | string)[]): SimpleNode {
+    private static _getNodeByIndexes(treeData: SimpleNode, indexes: (number | string)[]): SimpleNode {
         let node: SimpleNode = treeData;
         indexes.forEach(index => {
             if (!node.nodes) return null;
@@ -1330,11 +1330,21 @@ export class TreeTableData extends TableData {
     }
 
     public toggleOpenNode(indexes: (number | string)[], open: boolean) {
-        let node = TreeTableData.getNodeByIndexes(this.treeData, indexes);
+        let node = LocalPageableTreeTableData._getNodeByIndexes(this.treeData, indexes);
         node.open = open;
         this.data.splice(0, this.data.length);
-        TableDataBase.arrayAppend(this.data, TreeTableData._getData(this.treeData, this.treeField));
+        TableDataBase.arrayAppend(this.data, LocalPageableTreeTableData._getData(this.treeData, this.treeField));
+        let currentPage = this.pagingInfo.currentPage;
         this.refreshData();
+        // 保持原来所在页
+        this.changePage(currentPage);
         this.invokeChangeCallback();
+    }
+}
+
+export class TreeTableData extends LocalPageableTreeTableData {
+    constructor() {
+        super();
+        this.pagingInfo.pageSize = Infinity;
     }
 }

@@ -8,7 +8,7 @@ import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
-import {TableData, TreeTableData} from "../../common/core/data/table-data";
+import {TableData, LocalPageableTreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
@@ -454,7 +454,7 @@ export type TreeTableCell = {level: string, open: boolean, isParent: boolean, da
 })
 export class TableCellTreeNodeRenderer extends TableCellRendererBase {
     cellData:TreeTableCell;
-    tableData: TreeTableData;
+    tableData: LocalPageableTreeTableData;
     public _$toggleOpenNode() {
         let indexes = this.cellData.level.split('');
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);
