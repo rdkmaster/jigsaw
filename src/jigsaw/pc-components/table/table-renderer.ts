@@ -431,11 +431,41 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 }
 
+export type TreeTableCell = {level: number, open: boolean, isParent: boolean, data: string};
+
+@Component({
+    template: `
+        <span *ngFor="let x of _$level" style="margin-left: 20px"></span>
+        <span *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
+            <span *ngIf="cellData.open; else close" class="fa fa-minus-square-o"></span>
+            <ng-template #close>
+                <span class="fa fa-plus-square-o"></span>
+            </ng-template>
+        </span>
+        {{cellData.level}}{{cellData.data}}
+    `
+})
+export class TableCellTreeNodeRenderer extends TableCellRendererBase {
+    public _$level: number[];
+    private _cellData: TreeTableCell;
+    public get cellData(): TreeTableCell {
+        return this._cellData;
+    }
+    public set cellData(data: TreeTableCell) {
+        this._cellData = data;
+        this._$level = Array.from(new Array(data.level - 1 >= 0 ? data.level - 1 : 0).keys())
+    }
+
+    public _$toggleOpenNode() {
+
+    }
+}
+
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer
+        TableCellAutoCompleteEditorRenderer, TableCellTreeNodeRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,

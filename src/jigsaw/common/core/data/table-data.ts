@@ -21,6 +21,7 @@ import {
     ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
+import {SimpleNode, SimpleTreeData} from "./tree-data";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -1260,5 +1261,65 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.sortInfo = null;
         this.filteredData = null;
         this.originalData = null;
+    }
+}
+
+export class TreeTableData extends TableData {
+    treeData: SimpleTreeData = new SimpleTreeData();
+
+    public static _getData(node: SimpleNode, field: number, level: number = 0,data = []): any[] {
+        if(!node || field == -1) return data;
+        if(node.data) {
+            let row = node.data.concat();
+            row[field] = {
+                level: level,
+                open: node.open,
+                isParent: node.isParent || (node.nodes && node.nodes.length),
+                data: row[field]
+            };
+            data.push(row);
+        }
+        // !node.data这种情况是为了加入自动创建的根节点
+        if(node.nodes && node.nodes.length && (node.open || !node.data)) {
+            level++;
+            node.nodes.forEach(childNode => {
+                TreeTableData._getData(childNode, field, level,data);
+            })
+        }
+        return data;
+    }
+
+    public isTreeTableData(data: any): boolean {
+        return data && data.hasOwnProperty('treeData') && data.hasOwnProperty('treeField') &&
+            data.hasOwnProperty('header') && data.header instanceof Array &&
+            data.hasOwnProperty('field') && data.field instanceof Array;
+    }
+
+    public clear(): void {
+        super.clear();
+        this.treeData = new SimpleTreeData();
+    }
+
+    private _getTreeField(field: string | number): number {
+        if(typeof field == 'number') return field;
+        return this.field.findIndex(f => f == field);
+    }
+
+    protected _fromObject(data: any): TableDataBase {
+        if (!this.isTreeTableData(data)) {
+            throw new Error('invalid raw TreeTableData object!');
+        }
+        this.clear();
+        TableDataBase.arrayAppend(this.field, data.field);
+        TableDataBase.arrayAppend(this.header, data.header);
+        this.treeData.fromObject(data.treeData);
+        TableDataBase.arrayAppend(this.data, TreeTableData._getData(this.treeData, this._getTreeField(data.treeField)));
+        this.refreshData();
+        this.invokeChangeCallback();
+        return this;
+    }
+
+    public toggleOpenNode() {
+
     }
 }
