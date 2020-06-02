@@ -443,14 +443,9 @@ export type TreeTableCell = {level: string, open: boolean, isParent: boolean, da
                     <span class="fa fa-plus-square-o"></span>
                 </ng-template>
             </span>
-            {{cellData.level}}{{cellData.data}}
+            {{cellData.data}}
         </div>
-    `,
-    styles: [
-        `
-            
-        `
-    ]
+    `
 })
 export class TableCellTreeNodeRenderer extends TableCellRendererBase {
     cellData:TreeTableCell;
