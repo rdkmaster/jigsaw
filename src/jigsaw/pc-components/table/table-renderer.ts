@@ -8,7 +8,7 @@ import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
-import {TableData, LocalPageableTreeTableData} from "../../common/core/data/table-data";
+import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
@@ -351,12 +351,16 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     private _hostCellEl: HTMLElement;
 
     private _onKeyDown($event) {
-        if($event.type == 'click' && $event.path.find(el => el == this._hostCellEl)) return;
+        if ($event.type == 'click' && $event.path.find(el => el == this._hostCellEl)) {
+            return;
+        }
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
     }
 
     public _$handleValueChange($event) {
-        if(!$event || $event.label == this.cellData) return;
+        if (!$event || $event.label == this.cellData) {
+            return;
+        }
         this.dispatchChangeEvent($event.label)
     }
 
@@ -431,7 +435,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 }
 
-export type TreeTableCell = {level: string, open: boolean, isParent: boolean, data: string};
+export type TreeTableCell = { level: string, open: boolean, isParent: boolean, data: string };
 
 @Component({
     template: `
@@ -447,9 +451,10 @@ export type TreeTableCell = {level: string, open: boolean, isParent: boolean, da
         </div>
     `
 })
-export class TableCellTreeNodeRenderer extends TableCellRendererBase {
-    cellData:TreeTableCell;
-    tableData: LocalPageableTreeTableData;
+export class TreeTableCellRenderer extends TableCellRendererBase {
+    cellData: TreeTableCell;
+    tableData: PageableTreeTableData;
+
     public _$toggleOpenNode() {
         let indexes = this.cellData.level.split('');
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);
@@ -460,7 +465,7 @@ export class TableCellTreeNodeRenderer extends TableCellRendererBase {
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TableCellTreeNodeRenderer
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,

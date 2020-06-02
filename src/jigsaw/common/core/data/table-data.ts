@@ -1,8 +1,6 @@
 import {debounceTime, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
-
-
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
@@ -1264,12 +1262,37 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 }
 
-export class LocalPageableTreeTableData extends LocalPageableTableData {
-    treeData: SimpleTreeData = new SimpleTreeData();
-    treeField: number;
+/**
+ * 这是一个支持浏览器内部分页的树表数据对象，树表可以实现展开后关闭某些行，从而在衣蛾表格里展示具有层次结构的数据
+ */
+export class PageableTreeTableData extends LocalPageableTableData {
+    /**
+     * 这是一个内部对象，在了解树表的实现原理之前，请勿对其进行操作
+     *
+     * @internal
+     */
+    public data: TableDataMatrix = [];
+    /**
+     * 树表的数据，这是一个有层次化结构的`SimpleTreeData`类型数据，必须包含这些属性：
+     * - data：一个字符串数组，这是表格里的一行数据，数组的个数必须与表格的列数严格一致
+     * - open：一个布尔值，表示当前节点是否打开
+     * - isParent：一个布尔值，表示当前节点是否为一个可展开的节点，一般不需要主动设置这个值，Jigsaw会自行根据数据层次关系自动推断，
+     * 但是在某些情况下，一个层级没有下级节点，但是业务上必须渲染为可展开的节点时，则必须将这个属性设置为true
+     *
+     * $demo = pc/table/tree-table
+     */
+    public treeData: SimpleTreeData = new SimpleTreeData();
+    /**
+     * 这是一个非常重要的标志，用于告诉Jigsaw当前表格的哪一列用于渲染成树节点，一般来说都是第一列，但是也可根据业务需要随意修改
+     *
+     * $demo = pc/table/tree-table
+     */
+    public treeField: number = 0;
 
     private static _getData(node: SimpleNode, field: number, level: string = '', data = []): any[] {
-        if (!node || field == -1) return data;
+        if (!node || field == -1) {
+            return data;
+        }
         if (node.data) {
             let row = node.data.concat();
             row[field] = {
@@ -1283,12 +1306,16 @@ export class LocalPageableTreeTableData extends LocalPageableTableData {
         // !node.data这种情况是为了加入自动创建的根节点
         if (node.nodes && node.nodes.length && (node.open || !node.data)) {
             node.nodes.forEach((childNode, i) => {
-                LocalPageableTreeTableData._getData(childNode, field, level + i, data);
-            })
+                PageableTreeTableData._getData(childNode, field, level + i, data);
+            });
         }
         return data;
     }
 
+    /**
+     * 从数据结构推断此数据是否是一个树表数据对象
+     * @param data
+     */
     public static isTreeTableData(data: any): boolean {
         return data && data.hasOwnProperty('treeData') && data.hasOwnProperty('treeField') &&
             data.hasOwnProperty('header') && data.header instanceof Array &&
@@ -1301,12 +1328,12 @@ export class LocalPageableTreeTableData extends LocalPageableTableData {
     }
 
     private _getTreeField(field: string | number): number {
-        if (typeof field == 'number') return field;
-        return this.field.findIndex(f => f == field);
+        const index = typeof field == 'number' ? field : this.field.findIndex(f => f == field);
+        return isNaN(index) || index < 0 ? 0 : index;
     }
 
     protected _fromObject(data: any): TableDataBase {
-        if (!LocalPageableTreeTableData.isTreeTableData(data)) {
+        if (!PageableTreeTableData.isTreeTableData(data)) {
             throw new Error('invalid raw TreeTableData object!');
         }
         this.clear();
@@ -1314,7 +1341,7 @@ export class LocalPageableTreeTableData extends LocalPageableTableData {
         TableDataBase.arrayAppend(this.header, data.header);
         this.treeData.fromObject(data.treeData);
         this.treeField = this._getTreeField(data.treeField);
-        TableDataBase.arrayAppend(this.data, LocalPageableTreeTableData._getData(this.treeData, this.treeField));
+        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.treeData, this.treeField));
         this.refreshData();
         this.invokeChangeCallback();
         return this;
@@ -1323,17 +1350,25 @@ export class LocalPageableTreeTableData extends LocalPageableTableData {
     private static _getNodeByIndexes(treeData: SimpleNode, indexes: (number | string)[]): SimpleNode {
         let node: SimpleNode = treeData;
         indexes.forEach(index => {
-            if (!node.nodes) return null;
+            if (!node.nodes) {
+                return null;
+            }
             node = node.nodes[index];
         });
         return node
     }
 
+    /**
+     * 调用这个方法可以通过编程方式展开或者关闭某一个层级
+     *
+     * @param indexes
+     * @param open
+     */
     public toggleOpenNode(indexes: (number | string)[], open: boolean) {
-        let node = LocalPageableTreeTableData._getNodeByIndexes(this.treeData, indexes);
+        let node = PageableTreeTableData._getNodeByIndexes(this.treeData, indexes);
         node.open = open;
         this.data.splice(0, this.data.length);
-        TableDataBase.arrayAppend(this.data, LocalPageableTreeTableData._getData(this.treeData, this.treeField));
+        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.treeData, this.treeField));
         let currentPage = this.pagingInfo.currentPage;
         this.refreshData();
         // 保持原来所在页
@@ -1342,7 +1377,7 @@ export class LocalPageableTreeTableData extends LocalPageableTableData {
     }
 }
 
-export class TreeTableData extends LocalPageableTreeTableData {
+export class TreeTableData extends PageableTreeTableData {
     constructor() {
         super();
         this.pagingInfo.pageSize = Infinity;
