@@ -198,7 +198,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
         this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
         this._addRouterConfig(routerConfig, 'menu', menuConfig);
-        this._addRouterConfig(routerConfig, '0progress', progressConfig);
+        this._addRouterConfig(routerConfig, 'progress', progressConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

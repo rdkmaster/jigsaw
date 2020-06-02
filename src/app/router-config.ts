@@ -208,7 +208,7 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/menu/demo-set.module').then(m => m.MenuDemoModule),
     },
     {
-        path: "pc/0progress",
+        path: "pc/progress",
         loadChildren: () => import('./demo/pc/progress/demo-set.module').then(m => m.ProgressDemoModule),
     }
 ];
