@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 import {
     JigsawBoxModule, JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
@@ -32,7 +33,8 @@ import {DemoCodeComponent} from "./demo-code.component";
                 ]},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
-        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawBoxModule, JigsawTreeExtModule, TranslateModule.forRoot()
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawBoxModule, JigsawTreeExtModule,
+        TranslateModule.forRoot()
     ],
     providers: [
         {
