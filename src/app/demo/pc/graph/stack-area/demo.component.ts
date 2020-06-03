@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {StackedAreaGraphData} from "jigsaw/common/core/data/graph-data";
-import {AjaxInterceptor} from "../../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {StackedAreaGraphData} from "jigsaw/public_api";
+import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'

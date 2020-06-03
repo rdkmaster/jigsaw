@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnInit} from "@angular/core";
-import {IPopupable} from "jigsaw/common/service/popup.service";
-import {JigsawWarningAlert} from "jigsaw/pc-components/alert/alert";
+import {IPopupable, JigsawWarningAlert} from "jigsaw/public_api";
 
 @Component({
     template: `

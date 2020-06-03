@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {LineGraphData, PieGraphData} from "jigsaw/common/core/data/graph-data";
+import {TableData, LineGraphData, PieGraphData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -60,4 +59,3 @@ export class CollapseFullComponent {
     summary: string = '演示了`JigsawCollapse`的效果';
     description: string = '';
 }
-

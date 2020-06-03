@@ -1,10 +1,8 @@
 import {NgModule} from '@angular/core';
-import {JigsawSwitchModule} from "jigsaw/pc-components/switch";
-import {JigsawTabsModule} from "jigsaw/pc-components/tabs/index";
-import {JigsawButtonBarModule} from "jigsaw/pc-components/list-and-tile/button-bar";
-import {JigsawInputModule} from "jigsaw/pc-components/input/input";
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
-import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
+import {
+    JigsawSwitchModule, JigsawTabsModule, JigsawButtonBarModule, JigsawInputModule,
+    JigsawTableModule, JigsawGraphModule
+} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TabHeadlessDemoComponent} from './demo.component';
 

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TimeFormatters, TimeGr, TimeService, TimeUnit} from "jigsaw/common/service/time.service";
+import {TimeFormatters, TimeGr, TimeService, TimeUnit} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -36,4 +36,3 @@ export class TimeBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

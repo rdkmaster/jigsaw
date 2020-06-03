@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawMobileInputModule} from "jigsaw/mobile-components/input/input";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
+import {JigsawMobileInputModule, JigsawMobileButtonModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {InputFullComponent} from "./demo.component";
 

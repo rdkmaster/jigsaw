@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawCascadeModule} from "jigsaw/pc-components/cascade/cascade";
+import {JigsawCascadeModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CascadeTrackItemByDemoComponent} from "./demo.component";
 

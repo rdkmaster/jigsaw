@@ -1,10 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {TimeGr, TimeService} from "jigsaw/common/service/time.service";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
-import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/service/popup.service";
-import {LoadingService} from "jigsaw/common/service/loading.service";
-import {JigsawWarningAlert} from "jigsaw/pc-components/alert/alert";
-import {JigsawNotification} from "jigsaw/pc-components/notification/notification";
+import {
+    TimeGr, TimeService, ArrayCollection, PopupEffect,
+    PopupInfo, PopupOptions, PopupService,
+    LoadingService, JigsawWarningAlert, JigsawNotification
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -109,4 +108,3 @@ export class PopupZIndexDemoComponent implements OnInit {
     summary: string = '';
     description: string = '';
 }
-

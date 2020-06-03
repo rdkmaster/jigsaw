@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
-import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+import {
+    ArrayCollection, LocalPageableArray, PageableArray, GroupOptionValue,
+    TableData, CommonUtils
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -104,4 +104,3 @@ export class SelectSearchableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

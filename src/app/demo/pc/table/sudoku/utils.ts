@@ -1,4 +1,3 @@
-
 export const CLOSE_ALL_PAD = 'CLOSE_ALL_PAD';
 export const CHECK_PUZZLE_STATUS = 'CHECK_PUZZLE_STATUS';
 export const PUZZLE_SOLVED = 'PUZZLE_SOLVED';

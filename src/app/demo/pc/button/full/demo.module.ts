@@ -1,7 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
-import {JigsawCheckBoxModule} from "jigsaw/pc-components/checkbox/index";
-import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
+import {JigsawButtonModule, JigsawCheckBoxModule, JigsawLoadingModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ButtonFullComponent} from "./demo.component";
 

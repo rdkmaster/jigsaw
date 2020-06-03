@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawTimeModule} from "jigsaw/pc-components/time/index";
-import {JigsawTileSelectModule} from "jigsaw/pc-components/list-and-tile/tile";
+import {JigsawTimeModule, JigsawTileSelectModule} from "jigsaw/public_api";
 import {TimeLimitEndComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

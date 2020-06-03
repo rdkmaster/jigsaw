@@ -16,4 +16,3 @@ export class InputValueChangeDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

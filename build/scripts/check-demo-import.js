@@ -2,8 +2,13 @@ const fs = require('fs');
 const path = require('path');
 
 const reg = /^\s*import\s*{([\s\S]*?)}\s*from\s*['"](.+)['"]\s*;?\s*/gm;
+let jigsawApi = 'jigsaw/public_api';
 processAllComponents('pc');
+jigsawApi = 'jigsaw/mobile_public_api';
 processAllComponents('mobile');
+console.error(`All demo's imports are fine!`);
+
+process.exit(1)
 
 function processAllComponents(platform) {
     const demoHome = path.resolve(`${__dirname}/../../src/app/demo/${platform}`);
@@ -36,8 +41,8 @@ function checkDemo(demoPath) {
         if (stat.isDirectory()) {
             checkDemo(pathname)
         } else {
-            fixDemoSource(pathname);
-            // checkDemoSource(pathname);
+            // fixDemoSource(pathname);
+            checkDemoSource(pathname);
         }
     });
 }
@@ -47,13 +52,12 @@ function checkDemoSource(srcPath) {
         return;
     }
     console.log(`Checking ${srcPath} ...`);
-    const source = fs.readFileSync(srcPath).toString().replace(reg, (found, imports, from) => {
-        if (!from.match(/jigsaw\/.+/)) {
-            return found;
+    fs.readFileSync(srcPath).toString().replace(reg, (found, imports, from) => {
+        if (from.match(/jigsaw\/.+/) && from !== jigsawApi) {
+            console.error(`Error: invalid import from path, import jigsaw's api from '${jigsawApi}' instead!`);
+            console.error(" path:", srcPath);
+            process.exit(1);
         }
-        console.error("Error: invalid import from path, import jigsaw's api from 'jigsaw/public_api' instead!");
-        console.error(" path:", srcPath);
-        process.exit(1);
     });
 }
 
@@ -61,37 +65,48 @@ function fixDemoSource(srcPath) {
     if (!srcPath.match(/.+\.ts$/i)) {
         return;
     }
-    console.log(`Checking ${srcPath} ...`);
+    console.log(`Fixing ${srcPath} ...`);
     const jigsawImports = [], thirdPartyImports = [], demoImports = [];
-    let source = fs.readFileSync(srcPath).toString().replace(reg, (found, rawImports, from) => {
-        if (from.match(/jigsaw\/.+/)) {
-            jigsawImports.push(...rawImports.split(/,/).map(i => i.trim()));
-        } else if (from.match(/\.\/|app\//)) {
-            demoImports.push(found.trim());
-        } else {
-            thirdPartyImports.push(found.trim());
-        }
-        return '';
-    });
-    if (demoImports.length === 0) {
-        demoImports.push('\n\n');
-    }
+    const source = fs.readFileSync(srcPath).toString()
+        .replace(reg, (found, rawImports, from) => {
+            if (from.match(/jigsaw\/.+/)) {
+                jigsawImports.push(...rawImports.split(/,/).map(i => i.trim()).filter(i => !!i));
+            } else if (from.match(/\.\/|app\//)) {
+                demoImports.push(found.trim());
+            } else {
+                thirdPartyImports.push(found.trim());
+            }
+            return '';
+        })
+        .trim();
 
     let importStr = '';
-    jigsawImports.forEach((imp, idx) => {
-        importStr += imp + ', ';
-        if (idx > 0 && idx % 5 === 0) {
-            importStr = importStr.trim() + '\n    ';
-        }
-    });
-    importStr = importStr.substr(0, importStr.length - 2);
-    if (jigsawImports.length > 5) {
-        importStr = `\n    ${importStr}\n`;
+    if (thirdPartyImports.length > 0) {
+        importStr = thirdPartyImports.join('\n');
     }
-    source = thirdPartyImports.join('\n') + '\n' +
-        `import {${importStr}} from "jigsaw/public_api";\n` +
-        demoImports.join('\n') + '\n'+ source;
-    fs.writeFileSync(srcPath, source);
-    process.exit(0)
+    if (jigsawImports.length > 0) {
+        let str = '';
+        jigsawImports.forEach((imp, idx) => {
+            str += imp + ', ';
+            if (idx > 0 && idx % 3 === 0) {
+                str = str.trim() + '\n    ';
+            }
+        });
+        str = str.replace(/,\s*$/, '');
+        if (jigsawImports.length > 4) {
+            str = `\n    ${str}\n`;
+        }
+        importStr += `\nimport {${str}} from "${jigsawApi}";`;
+    }
+    if (demoImports.length > 0) {
+        importStr += '\n' + demoImports.join('\n');
+    }
+
+    if (importStr) {
+        importStr += '\n\n';
+    }
+
+    fs.writeFileSync(srcPath, importStr + source + '\n');
+    // process.exit(0)
 }
 

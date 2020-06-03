@@ -1,13 +1,8 @@
 import {NgModule} from "@angular/core";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {JigsawMobileAlertModule} from "jigsaw/mobile-components/alert/alert";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
-import {PopupService} from "jigsaw/common/service/popup.service";
-import {JigsawMobileDialogModule} from "jigsaw/mobile-components/dialog/dialog";
-
+import {JigsawMobileAlertModule, JigsawMobileButtonModule, PopupService, JigsawMobileDialogModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
-
 
 @NgModule({
     declarations: [I18nFullDemoComponent],

@@ -34,7 +34,7 @@ script:
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
   - gulp build:jigsaw
-  - #gulp build:jigsaw-mobile-library
+  - node build/scripts/check-demo-import.js
   - ng test jigsaw  --code-coverage false --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/

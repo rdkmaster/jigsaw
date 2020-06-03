@@ -1,8 +1,7 @@
 import {NgModule} from "@angular/core";
+import {JigsawCascadeModule, JigsawComboSelectModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CascadeWithComboDemoComponent} from "./demo.component";
-import {JigsawCascadeModule} from "jigsaw/pc-components/cascade/cascade";
-import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
 
 @NgModule({
     declarations: [CascadeWithComboDemoComponent],

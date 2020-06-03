@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -36,4 +36,3 @@ export class CascadeShowAllDemoComponent {
     summary: string = '本demo演示了如何在某一级上添加一个“全选”按钮';
     description: string = '';
 }
-

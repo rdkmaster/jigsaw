@@ -18,4 +18,3 @@ export class ButtonWithLoadingComponent {
     summary: string = '演示了按钮和Loading组件的无缝配合使用';
     description: string = '';
 }
-

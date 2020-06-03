@@ -1,8 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {AdditionalColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableData, AdditionalColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
 
 /*
  * 操作列头
@@ -61,6 +59,3 @@ export class TableAddColumnDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-
