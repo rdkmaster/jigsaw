@@ -111,3 +111,17 @@
     }
 }
 /*rotation end*/
+
+/* processing start */
+@keyframes processing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%
+    }
+}
+.jigsaw-am-processing {
+    animation: processing .8s linear infinite;
+}
+/* processing end */
