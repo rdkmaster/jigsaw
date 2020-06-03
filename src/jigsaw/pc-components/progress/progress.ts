@@ -14,7 +14,6 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
-import {CommonUtils} from "../../common/core/utils/common-utils";
 
 class EstimationInfo {
     duration: number = 10000;
