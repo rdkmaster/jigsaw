@@ -1,8 +1,6 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {PageableTableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {PageableTableData, ColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -54,6 +52,3 @@ export class JobCellRender extends TableCellRendererBase {
         console.log(this.tableData);
     }
 }
-
-
-

@@ -1,14 +1,6 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {debounceTime} from "rxjs/operators";
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
-import {combineLatest} from "rxjs";
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
-import {JigsawInput} from "jigsaw/pc-components/input/input";
+import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -198,4 +190,3 @@ export class GraphDataDemo extends AbstractGraphData {
         return obj;
     }
 }
-

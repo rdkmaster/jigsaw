@@ -1,7 +1,5 @@
 import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {JigsawTable} from "jigsaw/pc-components/table/table";
+import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 import {TableSwimLaneCell} from "./table-renderer";
 
 @Component({
@@ -200,4 +198,3 @@ export class SwimLaneDiagramDemoComponent {
     summary: string = '这个demo展示了表格应对事先未知多少列，并且需要动态调整这些列定义的方法。';
     description: string = require('!!raw-loader!./readme.md').default;
 }
-

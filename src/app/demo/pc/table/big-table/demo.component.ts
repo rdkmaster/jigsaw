@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {BigTableData} from "jigsaw/common/core/data/table-data";
-import {ViewportScrollEvent} from "jigsaw/pc-components/viewport/viewport";
-import {AdditionalColumnDefine, ColumnDefine, TableValueGenerators} from "jigsaw/pc-components/table/table-typings";
+import {
+    BigTableData, ViewportScrollEvent, AdditionalColumnDefine, ColumnDefine,
+    TableValueGenerators
+} from "jigsaw/public_api";
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
 
 @Component({
@@ -69,4 +70,3 @@ export class BigTableDataDemoComponent {
     summary: string = '这个demo展示了表格呈现海量数据时的一个解决方案，它能够以常数时间处理任何量级的数据。';
     description: string = require('!!raw-loader!./readme.md').default;
 }
-

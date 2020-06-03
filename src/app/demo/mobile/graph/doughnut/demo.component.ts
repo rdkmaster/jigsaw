@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/common/core/data/graph-data";
-import {AjaxInterceptor} from "../../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/mobile_public_api";
+import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'

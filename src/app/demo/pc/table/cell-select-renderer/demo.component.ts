@@ -1,8 +1,6 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellSelectRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
@@ -80,6 +78,3 @@ function dealAreaRequest(req: HttpRequest<any>): any {
 }
 
 /* 模拟请求代码 end */
-
-
-

@@ -1,8 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {PopupDisposer, PopupInfo, PopupService} from "jigsaw/common/service/popup.service";
-
+import {TableData, PopupDisposer, PopupInfo, PopupService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -34,4 +32,3 @@ export class TableDataWithPopupDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

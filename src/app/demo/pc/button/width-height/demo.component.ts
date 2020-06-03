@@ -10,4 +10,3 @@ export class ButtonWidthHeightDemoComponent {
     summary: string = '演示了如何约束按钮的宽度';
     description: string = '';
 }
-

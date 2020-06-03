@@ -1,8 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData} from "jigsaw/pc-components/cascade/cascade";
+import {CascadeData, ArrayCollection} from "jigsaw/public_api";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -83,4 +82,3 @@ function dealAreaRequest(req: HttpRequest<any>): any {
 }
 
 /* 模拟请求代码 end */
-

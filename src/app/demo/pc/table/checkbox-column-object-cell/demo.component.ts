@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {AdditionalColumnDefine, AdditionalTableData, ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellCheckboxRenderer, TableCellRendererBase, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {
+    TableData, AdditionalColumnDefine, AdditionalTableData, ColumnDefine,
+    TableCellCheckboxRenderer, TableCellRendererBase, TableHeadCheckboxRenderer
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -85,4 +86,3 @@ export class TableCheckboxColumnObjectCellDemoComponent {
 export class TableCellObjectRenderer extends TableCellRendererBase implements OnInit {
 
 }
-

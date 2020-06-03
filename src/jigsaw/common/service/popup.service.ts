@@ -230,6 +230,10 @@ export class PopupService {
      * @internal
      */
     public static _renderer: Renderer2;
+    /**
+     * @internal
+     */
+    public static _zone: NgZone;
 
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 

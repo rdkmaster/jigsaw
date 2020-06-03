@@ -1,6 +1,5 @@
 import {AfterContentInit, Component} from "@angular/core";
 
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
@@ -32,4 +31,3 @@ export class TimeLimitEndComponent implements AfterContentInit {
     summary: string = '';
     description: string = '';
 }
-

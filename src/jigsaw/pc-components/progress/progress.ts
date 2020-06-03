@@ -104,7 +104,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     public preSize: PreSize = 'default';
 
     @Input()
-    public animate: boolean = true;
+    public animate: boolean = false;
 
     @Output()
     public estimationStopped = new EventEmitter<number>();

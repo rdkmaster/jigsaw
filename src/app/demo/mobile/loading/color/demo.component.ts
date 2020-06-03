@@ -1,6 +1,3 @@
-/**
- * Created by 10184437 on 2017/5/22.
- */
 import {
     Component, ElementRef, Renderer2
 } from '@angular/core';

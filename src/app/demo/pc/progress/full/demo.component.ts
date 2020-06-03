@@ -1,12 +1,11 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawProgress} from "jigsaw/pc-components/progress/progress";
-import {PopupInfo} from "jigsaw/common/service/popup.service";
+import {JigsawProgress, PopupInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
 })
 export class ProgressFullComponent {
-    @ViewChild('estimateProgress', {static: false})
+    @ViewChild('estimateProgress')
     estimateProgress: JigsawProgress;
     progressValue: number = 32;
     estimationInfo: string = '';
@@ -49,4 +48,3 @@ export class ProgressFullComponent {
     summary: string = '本Demo集中展示了进度条的各种功能，请仔细浏览、尝试各个功能';
     description: string = '';
 }
-

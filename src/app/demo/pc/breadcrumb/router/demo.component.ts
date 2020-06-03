@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
+import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/public_api";
 import {ProductService} from "./product.service";
-import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/pc-components/breadcrumb/breadcrumb";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -96,4 +96,3 @@ Angular的路由非常强大且灵活，当url的某段是由变量组成时，�
 从而可以生成一个更加具体、生动的面包屑节点。
     `;
 }
-

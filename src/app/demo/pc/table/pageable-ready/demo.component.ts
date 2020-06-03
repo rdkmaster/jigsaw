@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {PageableTableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {PageableTableData, ColumnDefine} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -46,4 +45,3 @@ export class TablePageableReadyDemoComponent {
     summary: string = 'ready为true时，在设置pagingInfo的pageSize，或者currentPage属性，会触发查询；ready为false时，pagingInfo的pageSize，或者currentPage属性则不会触发查询';
     description: string = '';
 }
-

@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {PageableTableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {DataSortInfo, SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
+import {
+    PageableTableData, ColumnDefine, DataSortInfo, SortAs,
+    SortOrder
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -60,4 +61,3 @@ export class TablePageableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
