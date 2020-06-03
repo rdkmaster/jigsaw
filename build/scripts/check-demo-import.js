@@ -8,8 +8,6 @@ jigsawApi = 'jigsaw/mobile_public_api';
 processAllComponents('mobile');
 console.error(`All demo's imports are fine!`);
 
-process.exit(1)
-
 function processAllComponents(platform) {
     const demoHome = path.resolve(`${__dirname}/../../src/app/demo/${platform}`);
     const demoSetFolders = fs.readdirSync(demoHome);
