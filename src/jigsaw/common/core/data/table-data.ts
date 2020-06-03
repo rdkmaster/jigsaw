@@ -1289,14 +1289,14 @@ export class PageableTreeTableData extends LocalPageableTableData {
      */
     public treeField: number = 0;
 
-    private static _getData(node: SimpleNode, field: number, level: string = '', data = []): any[] {
+    private static _getData(node: SimpleNode, field: number, id: string = '', data = []): any[] {
         if (!node || field == -1) {
             return data;
         }
         if (node.data) {
             let row = node.data.concat();
             row[field] = {
-                level: level,
+                id: id,
                 open: node.open,
                 isParent: node.isParent || (node.nodes && node.nodes.length),
                 data: row[field]
@@ -1305,8 +1305,9 @@ export class PageableTreeTableData extends LocalPageableTableData {
         }
         // !node.data这种情况是为了加入自动创建的根节点
         if (node.nodes && node.nodes.length && (node.open || !node.data)) {
-            node.nodes.forEach((childNode, i) => {
-                PageableTreeTableData._getData(childNode, field, level + i, data);
+            node.nodes.forEach((childNode, idx) => {
+                // 这样定义id值，在树层级超过10级时，会有bug
+                PageableTreeTableData._getData(childNode, field, id + idx, data);
             });
         }
         return data;
@@ -1351,7 +1352,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
         let node: SimpleNode = treeData;
         indexes.forEach(index => {
             if (!node.nodes) {
-                return null;
+                return;
             }
             node = node.nodes[index];
         });

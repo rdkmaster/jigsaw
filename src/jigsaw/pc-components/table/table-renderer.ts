@@ -3,7 +3,7 @@ import {
     ViewChild, ElementRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -420,7 +420,6 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     ngOnInit() {
         super.ngOnInit();
-
         // 使用此方法使其他单元格退出编辑状态
         this._hostCellEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, 'td');
         this._removeClickHandler = this._renderer.listen('document', 'click', this._onKeyDown.bind(this));
@@ -435,12 +434,12 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 }
 
-export type TreeTableCell = { level: string, open: boolean, isParent: boolean, data: string };
+export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, data: string };
 
 @Component({
     template: `
         <div class="jigsaw-table-tree-cell">
-            <span *ngFor="let x of cellData.level.split('')" class="jigsaw-table-tree-indent"></span>
+            <span [style.margin-left]="indent"></span>
             <span class="jigsaw-table-tree-bar" *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
                 <span *ngIf="cellData.open; else close" class="fa fa-minus-square-o"></span>
                 <ng-template #close>
@@ -452,11 +451,15 @@ export type TreeTableCell = { level: string, open: boolean, isParent: boolean, d
     `
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
-    cellData: TreeTableCell;
-    tableData: PageableTreeTableData;
+    public cellData: TreeTableCellData;
+    public tableData: PageableTreeTableData;
+
+    public get indent(): string {
+        return (this.cellData.id.length - 1) * 20 + 'px';
+    }
 
     public _$toggleOpenNode() {
-        let indexes = this.cellData.level.split('');
+        const indexes = this.cellData.id.split('');
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);
     }
 }

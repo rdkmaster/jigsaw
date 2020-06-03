@@ -115,12 +115,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls} {
-    &-tree-cell &-tree-indent {
-        margin-left: 20px;
-        &:first-child {
-            margin-left: 0;
-        }
-    }
     &-tree-bar {
         cursor: pointer;
         font-size: 14px;
