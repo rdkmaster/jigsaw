@@ -294,14 +294,6 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * @internal
      */
-    public static _zone: NgZone;
-    /**
-     * @internal
-     */
-    public static _renderer: Renderer2;
-    /**
-     * @internal
-     */
     public static _removeResizeListener;
 
     private static _positionReviser(position: NotificationPosition, element: HTMLElement): PopupPositionValue {
@@ -413,8 +405,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         Promise.resolve().then(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
-            this._zone.runOutsideAngular(() => {
-                this._removeResizeListener = this._renderer.listen(window, 'resize', () => this.reposition());
+            PopupService._zone.runOutsideAngular(() => {
+                this._removeResizeListener = PopupService._renderer.listen(window, 'resize', () => this.reposition());
             });
         }
 
