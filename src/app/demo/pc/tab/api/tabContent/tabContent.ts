@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {IDynamicInstantiatable} from "jigsaw/common/common";
+import {IDynamicInstantiatable} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'tabContent.html',

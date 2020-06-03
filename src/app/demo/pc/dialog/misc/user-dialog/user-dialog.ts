@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {DialogBase, JigsawDialog} from "jigsaw/pc-components/dialog/dialog";
+import {DialogBase, JigsawDialog} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'user-dialog.html',
@@ -17,4 +17,3 @@ export class UserDialogComponent extends DialogBase implements AfterViewInit {
         console.log(`input data is: ${this.initData.inputData}`);
     }
 }
-

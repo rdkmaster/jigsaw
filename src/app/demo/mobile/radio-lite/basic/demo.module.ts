@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawMobileRadioLiteModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RadioLiteBasicDemoComponent} from "./demo.component";
-import {JigsawMobileRadioLiteModule} from "jigsaw/mobile-components/radio/radio-lite";
 
 @NgModule({
     declarations: [RadioLiteBasicDemoComponent],

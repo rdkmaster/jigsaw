@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {StepsCustomIconsComponent} from "./demo.component";
 import {CommonModule} from "@angular/common";
-import {JigsawStepsModule} from "jigsaw/pc-components/steps";
+import {JigsawStepsModule} from "jigsaw/public_api";
+import {StepsCustomIconsComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "../../../../demo-description/demo-description";
 
 @NgModule({

@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/pc-components/collapse/collapse";
+import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

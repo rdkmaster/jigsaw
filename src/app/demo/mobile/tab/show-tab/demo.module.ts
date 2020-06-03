@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
-import {JigsawMobileTabsModule} from "jigsaw/mobile-components/tabs/index";
+import {JigsawMobileButtonModule, JigsawMobileTabsModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawShowTabComponent} from './demo.component';
 

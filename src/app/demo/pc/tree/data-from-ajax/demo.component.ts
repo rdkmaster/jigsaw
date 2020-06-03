@@ -1,9 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-
-
-import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types"
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import {ZTreeSettingSetting, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -32,4 +29,3 @@ export class ZtreeDemoDataFromAjaxComponent {
     summary: string = '';
     description: string = '';
 }
-

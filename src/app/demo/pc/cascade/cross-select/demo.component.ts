@@ -22,4 +22,3 @@ export class CascadeCrossSelectDemoComponent {
     summary: string = '本demo演示了如何实现在级联组件上跨分支多选条目';
     description: string = '';
 }
-

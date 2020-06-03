@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {JigsawTab} from "jigsaw/pc-components/tabs/tab";
+import {JigsawTab} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html"

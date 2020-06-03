@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -35,4 +34,3 @@ export class CascadeMultipleDemoComponent {
     summary: string = '本demo演示了如何通过multipleSelect属性设置级联组件最后一级支持多选的方法';
     description: string = '';
 }
-

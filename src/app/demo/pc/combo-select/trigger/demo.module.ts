@@ -1,11 +1,8 @@
 import {NgModule} from "@angular/core";
-import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
-
-import {ComboSelectTriggerDemo} from "./demo.component";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 import {CommonModule} from "@angular/common";
+import {JigsawComboSelectModule, JigsawRadioModule, JigsawButtonModule} from "jigsaw/public_api";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {ComboSelectTriggerDemo} from "./demo.component";
 
 @NgModule({
     declarations: [ComboSelectTriggerDemo],

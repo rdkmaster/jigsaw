@@ -1,7 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
+import {AbstractGraphData, EchartOptions, JigsawMobileGraph} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -115,4 +113,3 @@ export class GraphDataDemo extends AbstractGraphData {
         };
     }
 }
-

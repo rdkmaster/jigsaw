@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {JigsawMobileTab} from "jigsaw/mobile-components/tabs/tab";
+import {JigsawMobileTab} from "jigsaw/mobile_public_api";
 import {TabContentDefine} from "./tabContent/tabContent";
 
 @Component({

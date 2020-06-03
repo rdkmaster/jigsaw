@@ -1,11 +1,11 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, PageableArray, LocalPageableArray} from "jigsaw/common/core/data/array-collection";
-import {IPageable, SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
-import {GeneralCollection} from "jigsaw/common/core/data/general-collection";
-import {BigTableData, LocalPageableTableData, PageableTableData, TableData} from "jigsaw/common/core/data/table-data";
-import {GraphData} from "jigsaw/common/core/data/graph-data";
-
+import {
+    ArrayCollection, PageableArray, LocalPageableArray, IPageable,
+    SortAs, SortOrder, GeneralCollection,
+    BigTableData, LocalPageableTableData, PageableTableData,
+    TableData, GraphData
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html', styles: ['a {padding-right: 24px} h3 {margin: 24px 0 12px 0}']

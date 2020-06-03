@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {DialogBase, JigsawMobileDialog} from "jigsaw/mobile-components/dialog/dialog";
-
+import {DialogBase, JigsawMobileDialog} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: 'user-dialog.html',
@@ -24,4 +23,3 @@ export class UserDialog2Component extends DialogBase implements AfterViewInit {
         console.log(`input data is: ${this.initData.inputData}`);
     }
 }
-

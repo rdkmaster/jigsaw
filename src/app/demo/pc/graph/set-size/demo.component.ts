@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
+import {AbstractGraphData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html"
@@ -108,4 +108,3 @@ export class GraphDataSetSize extends AbstractGraphData {
         };
     }
 }
-

@@ -1,10 +1,8 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawUploadModule, JigsawInputModule, JigsawButtonModule} from "jigsaw/public_api";
 import {UploadContentFieldDemoComponent} from "./demo.component";
-import {JigsawUploadModule} from "jigsaw/pc-components/upload/index";
-import {JigsawInputModule} from "jigsaw/pc-components/input/input";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
 
 @NgModule({
     declarations: [UploadContentFieldDemoComponent],
