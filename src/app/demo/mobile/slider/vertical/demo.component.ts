@@ -1,6 +1,3 @@
-/**
- * Created by 10177553 on 2017/5/17.
- */
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
 

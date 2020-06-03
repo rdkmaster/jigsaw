@@ -1,7 +1,3 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {debounceTime} from "rxjs/operators";
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {combineLatest} from "rxjs";

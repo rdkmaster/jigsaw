@@ -1,7 +1,3 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
 import {EchartOptions} from "jigsaw/common/core/data/echart-types";
