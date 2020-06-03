@@ -1,17 +1,20 @@
 import {
     ChangeDetectionStrategy,
-    Component,
-    NgModule,
-    Input,
-    ElementRef,
     ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
     OnDestroy,
-    Output,
-    EventEmitter
+    OnInit,
+    Output
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 class EstimationInfo {
     duration: number = 10000;
@@ -19,6 +22,14 @@ class EstimationInfo {
     timer: any;
     increment: number;
 }
+
+export type LabelPosition = 'left' | 'right' | 'top' | 'followLeft' | 'followRight' | 'none';
+export type Status = 'processing' | 'block' | 'error' | 'success';
+export type PreSize = 'default' | 'small' | 'large';
+export type ProgressInitData = {
+    value?: number, showMarker?: boolean, status?: Status, animate?: boolean,
+    labelPosition?: LabelPosition, preSize?: PreSize
+};
 
 @Component({
     selector: 'jigsaw-progress, j-progress',
@@ -36,10 +47,13 @@ class EstimationInfo {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy {
+export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy, OnInit, IPopupable {
     constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef) {
         super()
     }
+
+    public answer: EventEmitter<any>;
+    public initData: ProgressInitData;
 
     private _value: number = 0;
 
@@ -56,26 +70,39 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     private _updateProgress(value: number): void {
         // 留小1位数点
         value = isNaN(value) ? 0 : Math.round(value * 10) / 10;
+        if (value > 100) {
+            value = 100;
+        } else if (value < 0) {
+            value = 0;
+        }
         if (value == this._value) {
             return;
         }
         this._value = value;
-        Promise.resolve().then(() => {
-            this._autoLabelPosition();
-        });
+        this._autoLabelPosition();
+        this._cdr.markForCheck();
     }
 
     @Input()
-    public split: boolean;
+    public showMarker: boolean;
+
+    private _labelPosition: LabelPosition = 'right';
 
     @Input()
-    public labelPosition: 'left' | 'right' | 'top' | 'followLeft' | 'followRight' = 'right';
+    public get labelPosition(): LabelPosition {
+        return this._labelPosition;
+    }
+
+    public set labelPosition(value: LabelPosition) {
+        this._labelPosition = value;
+        this._autoLabelPosition();
+    }
 
     @Input()
-    public status: 'processing' | 'block' | 'error' | 'success' = 'processing';
+    public status: Status = 'processing';
 
     @Input()
-    public preSize: 'default' | 'small' | 'large' = 'default';
+    public preSize: PreSize = 'default';
 
     @Input()
     public animate: boolean = true;
@@ -83,23 +110,31 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     @Output()
     public estimationStopped = new EventEmitter<number>();
 
-    public _$labelPositionBak: 'followLeft' | 'followRight' = 'followRight';
+    public _$followingLabelPosition: 'followLeft' | 'followRight' = 'followRight';
 
     private _autoLabelPosition() {
-        if (this.labelPosition != 'followLeft' && this.labelPosition != 'followRight') {
+        if (this._labelPosition != 'followLeft' && this._labelPosition != 'followRight') {
             return;
         }
-        let hostEl = this._hostElRef.nativeElement;
-        let [trackEl, valueEl, labelEl] = [hostEl.querySelector('.jigsaw-progress-bar-track'),
-            hostEl.querySelector('.jigsaw-progress-bar-track-value'),
-            hostEl.querySelector('.jigsaw-progress-bar-track-label')];
-        if (!trackEl || !valueEl || !labelEl) {
+        const hostEl = this._hostElRef.nativeElement;
+        if (!hostEl) {
             return;
         }
-        if (this.labelPosition == 'followLeft') {
-            this._$labelPositionBak = labelEl.offsetWidth < valueEl.offsetWidth ? 'followLeft' : 'followRight';
-        } else if (this.labelPosition == 'followRight' && labelEl.offsetWidth + valueEl.offsetWidth >= trackEl.offsetWidth) {
-            this._$labelPositionBak = labelEl.offsetWidth + valueEl.offsetWidth < trackEl.offsetWidth ? 'followRight' : 'followLeft';
+        const trackEl = hostEl.querySelector('.jigsaw-progress-bar-track');
+        if (!trackEl) {
+            return;
+        }
+        // 滑动的过程有动画，导致这里读取到的元素尺寸错误，这里只能估算了，无法获得精确值。
+        // 此时，99%这个label的尺寸大约是67px，0%大约是52px，value的宽度则可以通过进度值按比例计算到
+        const valueWidth = trackEl.offsetWidth * this.value / 100;
+        const maxLabelWidth = 67, minLabelWidth = 52;
+
+        if (maxLabelWidth + valueWidth >= trackEl.offsetWidth) {
+            this._$followingLabelPosition = 'followLeft';
+        } else if (minLabelWidth > valueWidth) {
+            this._$followingLabelPosition = 'followRight';
+        } else {
+            this._$followingLabelPosition = this._labelPosition;
         }
         this._cdr.markForCheck();
     }
@@ -149,9 +184,33 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         }
     }
 
+    public static showDockingBar(value: number):PopupInfo {
+        const initData: ProgressInitData = {value};
+        initData.preSize = 'small';
+        initData.labelPosition = 'none';
+        initData.showMarker = false;
+        initData.status = 'processing';
+        initData.animate = false;
+        return PopupService.instance.popup(JigsawProgress, {
+            modal: false, pos: document.body, posType: PopupPositionType.fixed, size: {width: '100%'}
+        }, initData);
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
         this.stopEstimating(true);
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.initData) {
+            this.value = this.initData.value;
+            this.showMarker = this.initData.showMarker;
+            this.labelPosition = this.initData.labelPosition;
+            this.status = this.initData.status;
+            this.preSize = this.initData.preSize;
+            this.animate = this.initData.animate;
+        }
     }
 }
 
