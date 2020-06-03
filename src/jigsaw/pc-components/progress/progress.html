@@ -1,18 +1,19 @@
-<div class="jigsaw-progress-label-top" *ngIf="labelPosition == 'top'">{{value}}</div>
+<div class="jigsaw-progress-label-top" *ngIf="labelPosition == 'top'">{{value}}%</div>
 <div class="jigsaw-progress-bar">
-    <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'left'">{{value}}</div>
+    <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'left'">{{value}}%</div>
     <div class="jigsaw-progress-bar-track">
-        <div class="jigsaw-progress-bar-track-value" [style.width]="value">
+        <div class="jigsaw-progress-bar-track-value" [style.width]="value + '%'">
             <div class="jigsaw-progress-bar-track-label"
                  [class.jigsaw-progress-bar-track-label-left]="_$labelPositionBak == 'followLeft'"
                  [class.jigsaw-progress-bar-track-label-right]="_$labelPositionBak == 'followRight'"
-                 *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">{{value}}</div>
-            <i *ngIf="status == 'processing' && processing" class="jigsaw-am-processing"></i>
+                 *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">{{value}}%</div>
+            <i *ngIf="status == 'processing' && animate" class="jigsaw-am-processing"></i>
         </div>
     </div>
-    <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'right' && status == 'processing'">{{value}}</div>
+    <div class="jigsaw-progress-bar-label" *ngIf="labelPosition == 'right' && status == 'processing'">{{value}}%</div>
     <div *ngIf="status != 'processing'" class="jigsaw-progress-bar-icon fa"
-         [class.fa-info-circle]="status == 'block'" [class.fa-times-circle]="status == 'error'" [class.fa-check-circle]="status == 'success'"></div>
+         [class.fa-info-circle]="status == 'block'" [class.fa-times-circle]="status == 'error'"
+         [class.fa-check-circle]="status == 'success'"></div>
 </div>
 <ul class="jigsaw-progress-split" *ngIf="split">
     <li *ngFor="let num of [0, 20, 40, 60, 80, 100]">{{num + '%'}}</li>

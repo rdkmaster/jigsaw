@@ -1,15 +1,23 @@
-import {ChangeDetectionStrategy, Component, NgModule, Input, ElementRef, ChangeDetectorRef, OnInit} from '@angular/core';
-import {AbstractJigsawComponent} from "../../common/common";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    NgModule,
+    Input,
+    ElementRef,
+    ChangeDetectorRef,
+    OnDestroy,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {AbstractJigsawComponent} from "../../common/common";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
 
-export class EstimateInfo {
-    // 假进度更新的间隔，比如人家给定3000ms，那么我们可以在±300ms范围内随机更新进度
-    interval: number = 3000;
-    // 每个周期更新的进度增量值
-    increment: number = 15;
-    minProgress: number = 0;
+class EstimationInfo {
+    duration: number = 10000;
     maxProgress: number = 80;
-    curProgress: number;
+    timer: any;
+    increment: number;
 }
 
 @Component({
@@ -28,50 +36,67 @@ export class EstimateInfo {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawProgress extends AbstractJigsawComponent implements OnInit {
+export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy {
     constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef) {
         super()
     }
 
-    private _value: string = '0%';
+    private _value: number = 0;
+
     @Input()
-    public get value(): string {
+    public get value(): number {
         return this._value;
     }
 
-    public set value(value) {
-        if(value == this._value) return;
+    public set value(value: number) {
+        this.stopEstimating();
+        this._updateProgress(value);
+    }
+
+    private _updateProgress(value: number): void {
+        // 留小1位数点
+        value = isNaN(value) ? 0 : Math.round(value * 10) / 10;
+        if (value == this._value) {
+            return;
+        }
         this._value = value;
         Promise.resolve().then(() => {
             this._autoLabelPosition();
-        })
+        });
     }
 
     @Input()
     public split: boolean;
 
     @Input()
-    public labelPosition: 'left' | 'right' | 'top' |'followLeft' | 'followRight' = 'right';
+    public labelPosition: 'left' | 'right' | 'top' | 'followLeft' | 'followRight' = 'right';
 
-    @Input() public status: 'processing' | 'block' | 'error' | 'success' = 'processing';
+    @Input()
+    public status: 'processing' | 'block' | 'error' | 'success' = 'processing';
 
-    @Input() public preSize: 'default' | 'small' | 'large' = 'default';
+    @Input()
+    public preSize: 'default' | 'small' | 'large' = 'default';
 
-    @Input() public processing: boolean;
+    @Input()
+    public animate: boolean = true;
 
-    @Input() public estimate: boolean;
-
-    @Input() public estimateInfo: EstimateInfo = new EstimateInfo();
+    @Output()
+    public estimationStopped = new EventEmitter<number>();
 
     public _$labelPositionBak: 'followLeft' | 'followRight' = 'followRight';
+
     private _autoLabelPosition() {
-        if(this.labelPosition != 'followLeft' && this.labelPosition != 'followRight') return;
+        if (this.labelPosition != 'followLeft' && this.labelPosition != 'followRight') {
+            return;
+        }
         let hostEl = this._hostElRef.nativeElement;
         let [trackEl, valueEl, labelEl] = [hostEl.querySelector('.jigsaw-progress-bar-track'),
             hostEl.querySelector('.jigsaw-progress-bar-track-value'),
             hostEl.querySelector('.jigsaw-progress-bar-track-label')];
-        if(!trackEl || !valueEl || !labelEl) return;
-        if(this.labelPosition == 'followLeft') {
+        if (!trackEl || !valueEl || !labelEl) {
+            return;
+        }
+        if (this.labelPosition == 'followLeft') {
             this._$labelPositionBak = labelEl.offsetWidth < valueEl.offsetWidth ? 'followLeft' : 'followRight';
         } else if (this.labelPosition == 'followRight' && labelEl.offsetWidth + valueEl.offsetWidth >= trackEl.offsetWidth) {
             this._$labelPositionBak = labelEl.offsetWidth + valueEl.offsetWidth < trackEl.offsetWidth ? 'followRight' : 'followLeft';
@@ -79,31 +104,54 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnInit {
         this._cdr.markForCheck();
     }
 
-    private _random(min, max) {
-        return Math.round(Math.random() * (max - min)) + min;
-    }
+    private _estimationInfo: EstimationInfo;
 
-    public estimateProgress(es: EstimateInfo = new EstimateInfo()) {
-        es.curProgress = es.curProgress ? es.curProgress : es.minProgress;
-        this.value = es.curProgress + '%';
-        this._cdr.markForCheck();
-        this.callLater(() => {
-            es.curProgress += es.increment;
-            if(es.curProgress > es.maxProgress) {
-                es.curProgress = es.maxProgress;
-                this.value = es.curProgress + '%';
-                this._cdr.markForCheck();
-            } else {
-                this.estimateProgress(es);
-            }
-        }, this._random(es.interval - 300, es.interval + 300))
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        if(this.estimate) {
-            this.estimateProgress(this.estimateInfo)
+    /**
+     * 不是所有任何情况下都可以给定精确的进度值的，但一个事务大约需要花掉的时间，是相对容易预估出来的。
+     * 此时，可以调用此方法来让进度条继续往前走，给用户一个假象，这样比卡着不动的体验会好许多。
+     *
+     * @param duration 从当前进度到`maxProgress`估计需要持续的时长，单位：毫秒数
+     * @param maxProgress 在估计进度值的过程中，进度条的值将随机递增，最大到达这个值后终止
+     * @param interval 更新进度的间隔，单位：毫秒数
+     */
+    public startEstimating(duration: number = 10000, maxProgress: number = 80, interval: number = 800): void {
+        if (this.value >= maxProgress) {
+            return;
         }
+        this.stopEstimating();
+        this._estimationInfo = new EstimationInfo();
+        this._estimationInfo.maxProgress = maxProgress;
+        this._estimationInfo.duration = duration;
+        this._estimationInfo.increment = (maxProgress - this.value) / (duration / interval);
+        this._updateProgress(this.value + this._estimationInfo.increment);
+        this._estimationInfo.timer = setInterval(() => {
+            if (this.value >= maxProgress) {
+                this.stopEstimating();
+                return;
+            }
+            const increment = InternalUtils.randomNumber(this._estimationInfo.increment * .9, this._estimationInfo.increment * 1.1);
+            this._updateProgress(Math.min(this.value + increment, this._estimationInfo.maxProgress));
+            this._cdr.markForCheck();
+        }, interval);
+    }
+
+    /**
+     * 提前终止`startEstimating`方法启动的进度估计过程
+     */
+    public stopEstimating(suppressEvent: boolean = false): void {
+        if (!this._estimationInfo) {
+            return;
+        }
+        this.clearCallLater(this._estimationInfo.timer);
+        this._estimationInfo = null;
+        if (!suppressEvent) {
+            this.estimationStopped.emit(this.value);
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this.stopEstimating(true);
     }
 }
 
