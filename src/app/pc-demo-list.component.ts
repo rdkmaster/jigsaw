@@ -51,6 +51,7 @@ import {routerConfig as iconConfig} from "./demo/pc/icon/demo-set.module";
 import {routerConfig as transferConfig} from "./demo/pc/transfer/demo-set.module";
 import {routerConfig as breadcrumbConfig} from "./demo/pc/breadcrumb/demo-set.module";
 import {routerConfig as menuConfig} from "./demo/pc/menu/demo-set.module";
+import {routerConfig as progressConfig} from "./demo/pc/progress/demo-set.module";
 import {routerConfigPC} from "./router-config";
 import {PopupPositionType} from "../jigsaw/common/service/popup.service";
 import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
@@ -197,6 +198,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
         this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
         this._addRouterConfig(routerConfig, 'menu', menuConfig);
+        this._addRouterConfig(routerConfig, 'progress', progressConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

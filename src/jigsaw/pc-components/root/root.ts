@@ -11,6 +11,7 @@ import {
 } from "../../common/components/loading/loading";
 import {JigsawNotification, JigsawNotificationModule} from "../notification/notification";
 import { JigsawMenuHelper, JigsawMenuModule } from '../menu/index';
+import {JigsawProgress, JigsawProgressModule} from "../progress/progress";
 
 @Component({
     selector: 'jigsaw-root, j-root',
@@ -30,13 +31,14 @@ export class JigsawRoot {
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
     imports: [
-        JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawNotificationModule, JigsawMenuModule
+        JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawNotificationModule, JigsawMenuModule,
+        JigsawProgressModule
     ],
     providers: [PopupService],
     entryComponents: [
         JigsawBlock, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert,
         JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-        JigsawNotification, JigsawMenuHelper
+        JigsawNotification, JigsawMenuHelper, JigsawProgress
     ]
 })
 export class JigsawRootModule {
