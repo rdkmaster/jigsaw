@@ -68,7 +68,7 @@ function fixDemoSource(srcPath) {
     const source = fs.readFileSync(srcPath).toString()
         .replace(reg, (found, rawImports, from) => {
             if (from.match(/jigsaw\/.+/)) {
-                jigsawImports.push(...rawImports.split(/,/).map(i => i.trim()));
+                jigsawImports.push(...rawImports.split(/,/).map(i => i.trim()).filter(i => !!i));
             } else if (from.match(/\.\/|app\//)) {
                 demoImports.push(found.trim());
             } else {
