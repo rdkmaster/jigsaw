@@ -1279,7 +1279,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
      * - isParent：一个布尔值，表示当前节点是否为一个可展开的节点，一般不需要主动设置这个值，Jigsaw会自行根据数据层次关系自动推断，
      * 但是在某些情况下，一个层级没有下级节点，但是业务上必须渲染为可展开的节点时，则必须将这个属性设置为true
      *
-     * $demo = pc/table/tree-table
+     * $demo = table/tree-table
      */
     public treeData: SimpleTreeData = new SimpleTreeData();
     /**
