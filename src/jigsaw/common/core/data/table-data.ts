@@ -1285,7 +1285,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
     /**
      * 这是一个非常重要的标志，用于告诉Jigsaw当前表格的哪一列用于渲染成树节点，一般来说都是第一列，但是也可根据业务需要随意修改
      *
-     * $demo = pc/table/tree-table
+     * $demo = table/tree-table
      */
     public treeField: number = 0;
 
