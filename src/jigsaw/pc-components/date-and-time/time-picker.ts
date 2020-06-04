@@ -312,7 +312,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     private _switchPopup = new EventEmitter<boolean>();
     private _removeSwitchPopupSubscriber: Subscription;
 
-    public _$handleKeyDown($event, mode: TimeSelectMode) {
+    public _$handleKeyDown($event) {
         if ($event.keyCode == 39) {
             this._$handleCtrlBarClick($event, 1);
         } else if ($event.keyCode == 37) {
