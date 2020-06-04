@@ -118,7 +118,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 private _popService: PopupService, private _translateService: TranslateService,
                 private _changeDetectorRef: ChangeDetectorRef) {
         super();
-        this._refreshInterval = 0;
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             moment.locale(langInfo.curLang);
             if (this.initialized) {
@@ -504,7 +503,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.initialized && this.date) {
             this.writeValue(this.date);
         }
-        //this._checkMacro();
     }
 
     private _limitEnd: Time;
@@ -518,21 +516,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         this._limitEnd = value ? TimeService.convertValue(value, <TimeGr>this.gr) : null;
         if (this.initialized && this.date) {
             this.writeValue(this.date);
-        }
-        //this._checkMacro();
-    }
-
-    private _refreshInterval: number;
-
-    @Input()
-    public get refreshInterval(): number {
-        return this._refreshInterval;
-    }
-
-    public set refreshInterval(value: number) {
-        if (value || value == 0) {
-            this._refreshInterval = value;
-            this._checkMacro();
         }
     }
 
@@ -552,23 +535,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if(date == this._rangeDate) return;
         this._rangeDate = date;
         this._createCalendar();
-    }
-
-    private _intervalId: number;
-
-    private _checkMacro() {
-        if (this._intervalId) {
-            window.clearInterval(this._intervalId);
-        }
-        if ((TimeService.isMacro(<string>this._limitStart) || TimeService.isMacro(<string>this._limitEnd)) && this._refreshInterval != 0) {
-            this._intervalId = window.setInterval(() => {
-                this._handleRefresh();
-            }, this._refreshInterval);
-        }
-    }
-
-    private _handleRefresh() {
-
     }
 
     private _handleLimit(value: Time): Time {
@@ -653,7 +619,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     ngOnDestroy() {
-        window.clearInterval(this._intervalId);
         super.ngOnDestroy();
         this._langChangeSubscriber.unsubscribe();
     }

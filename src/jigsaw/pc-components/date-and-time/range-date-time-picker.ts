@@ -17,7 +17,7 @@ import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule} from '@angular/for
 import {GrItem, MarkDate, Shortcut} from "./date-picker";
 import {CommonModule} from '@angular/common';
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
-import {WeekTime} from "../../common/service/time.types";
+import {Time, WeekTime} from "../../common/service/time.types";
 import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
 import {TimeStep} from "./time-picker";
 
@@ -197,9 +197,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public grItems: GrItem[];
 
     @Input()
-    public refreshInterval: number;
-
-    @Input()
     public markDates: MarkDate[];
 
     @Input()
@@ -256,7 +253,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         let item: GrItem = this.grItems && this.grItems.find(item => item.value == this._timeStart.gr);
         let endTime: WeekTime = null;
         if (this._$limitEnd) {
-            endTime = TimeService.getDate(TimeService.convertValue(
+            endTime = TimeService.isMacro(<Time>this._$limitEnd) ? this._$limitEnd : TimeService.getDate(TimeService.convertValue(
                 this._$limitEnd, <TimeGr>this._timeStart.gr), <TimeGr>this._timeStart.gr);
         }
         if (item && item.span) {
