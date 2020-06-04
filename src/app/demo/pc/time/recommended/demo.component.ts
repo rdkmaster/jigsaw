@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
@@ -24,4 +23,3 @@ export class TimeRecommendedComponent {
     summary: string = '';
     description: string = '';
 }
-

@@ -1,8 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {Subscription} from "rxjs";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {DropDownTrigger} from "jigsaw/common/directive/float";
+import {TableCellRendererBase, TableData, DropDownTrigger} from "jigsaw/public_api";
 
 export class OfficeRendererBase extends TableCellRendererBase {
     officeList = [

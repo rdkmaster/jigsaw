@@ -1,6 +1,5 @@
 import {AfterContentInit, ChangeDetectorRef, Component} from "@angular/core";
 
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
@@ -41,4 +40,3 @@ export class RangeTimeGrComponent implements AfterContentInit {
     summary: string = '';
     description: string = '';
 }
-

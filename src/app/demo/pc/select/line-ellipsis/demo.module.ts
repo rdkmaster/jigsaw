@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {JigsawSelectModule} from "jigsaw/pc-components/select/select";
+import {JigsawSelectModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SelectLineEllipsisDemoComponent} from './demo.component';
 

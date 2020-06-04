@@ -1,8 +1,5 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
 import {Component, ViewChild} from '@angular/core';
-import {JigsawTab} from "jigsaw/pc-components/tabs/tab";
+import {JigsawTab} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html"

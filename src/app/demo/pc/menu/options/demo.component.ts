@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
-import {JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData, PopupService} from 'jigsaw/public_api';
-
+import {
+    JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData,
+    PopupService
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

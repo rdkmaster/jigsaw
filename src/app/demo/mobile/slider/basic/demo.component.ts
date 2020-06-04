@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {SliderMark} from "jigsaw/mobile-components/slider/slider";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {SliderMark, ArrayCollection} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',

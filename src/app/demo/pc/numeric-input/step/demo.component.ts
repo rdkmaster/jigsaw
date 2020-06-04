@@ -11,4 +11,3 @@ export class NumericInputStepDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

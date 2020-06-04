@@ -1,5 +1,5 @@
 import {Component, ElementRef, Renderer2} from "@angular/core";
-import {JigsawLoadingBase} from "jigsaw/common/components/loading/loading";
+import {JigsawLoadingBase} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'definedLoading.html',

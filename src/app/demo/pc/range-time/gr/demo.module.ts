@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawRangeTimeModule} from "jigsaw/pc-components/range-time/index";
-import {JigsawButtonBarModule} from "jigsaw/pc-components/list-and-tile/button-bar";
+import {JigsawRangeTimeModule, JigsawButtonBarModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RangeTimeGrComponent} from "./demo.component";
 

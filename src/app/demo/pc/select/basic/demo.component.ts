@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -36,4 +36,3 @@ export class SelectBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

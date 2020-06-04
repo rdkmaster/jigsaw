@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {PieGraphData, PieGraphDataByRow} from "jigsaw/common/core/data/graph-data";
+import {PieGraphData, PieGraphDataByRow} from "jigsaw/mobile_public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({

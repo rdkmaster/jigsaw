@@ -12,4 +12,3 @@ export class InputClearableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
-import {JigsawTabsModule} from "jigsaw/pc-components/tabs/index";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
-import {JigsawInputModule} from "jigsaw/pc-components/input/input";
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
-import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {
+    JigsawTabsModule, JigsawButtonModule, JigsawInputModule, JigsawTableModule,
+    JigsawGraphModule, TranslateHelper
+} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TabsUpdateTitleDemoComponent} from './demo.component';
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {TranslateHelper} from "jigsaw/common/core/utils/translate-helper";
 
 @NgModule({
     imports: [

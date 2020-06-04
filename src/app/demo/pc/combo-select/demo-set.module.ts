@@ -1,7 +1,3 @@
-/**
- * Created by 10177553 on 2017/4/10.
- */
-
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {ComboSelectAutoWidthDemoModule} from "./auto-width/demo.module";

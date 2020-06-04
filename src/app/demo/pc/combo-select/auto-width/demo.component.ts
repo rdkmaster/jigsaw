@@ -1,9 +1,5 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
-
 import {Component} from '@angular/core';
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'

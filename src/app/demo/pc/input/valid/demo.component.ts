@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {JigsawInput} from "jigsaw/pc-components/input/input";
+import {JigsawInput} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -13,4 +13,3 @@ export class InputValidComponent {
     summary: string = '';
     description: string = '';
 }
-

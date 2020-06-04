@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
+import {JigsawMobileInput} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -24,4 +24,3 @@ export class InputFocusDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

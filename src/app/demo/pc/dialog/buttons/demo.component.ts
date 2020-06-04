@@ -1,9 +1,5 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
-
 import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {ButtonInfo, PopupInfo, PopupService} from "jigsaw/common/service/popup.service";
+import {ButtonInfo, PopupInfo, PopupService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

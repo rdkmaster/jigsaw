@@ -1,6 +1,5 @@
 import {Component, ViewChild, ViewEncapsulation} from "@angular/core";
-import {DialogBase, JigsawDialog} from "jigsaw/pc-components/dialog/dialog";
-import {JigsawAlert} from "jigsaw/pc-components/alert/alert";
+import {DialogBase, JigsawDialog, JigsawAlert} from "jigsaw/public_api";
 
 @Component({
     selector: 'my-alert',
@@ -17,4 +16,3 @@ export class CustomizedAlert extends DialogBase {
     }
 
 }
-

@@ -1,12 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
-    PopupInfo,
-    PopupOptions,
-    PopupPoint,
-    PopupPositionOffset,
-    PopupPositionType,
-    PopupService
-} from "jigsaw/common/service/popup.service";
+    PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
+    PopupPositionType, PopupService
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

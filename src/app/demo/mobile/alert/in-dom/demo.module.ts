@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawMobileAlertModule} from "jigsaw/mobile-components/alert/alert";
+import {JigsawMobileAlertModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {AlertInDomDemoComponent} from "./demo.component";
 

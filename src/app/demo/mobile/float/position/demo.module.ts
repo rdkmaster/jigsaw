@@ -1,9 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawMobileRadioModule, JigsawMobileButtonModule, JigsawFloatModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawMobileRadioModule} from "jigsaw/mobile-components/radio/radio";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
-import {JigsawFloatModule} from "jigsaw/common/directive/float";
 import {FloatPositionDemo} from "./demo.component";
 
 @NgModule({

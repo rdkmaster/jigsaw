@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import { JigsawMenuModule } from 'jigsaw/public_api';
+import {JigsawMenuModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {FloatMultiLevelDemo} from "./demo.component";
 

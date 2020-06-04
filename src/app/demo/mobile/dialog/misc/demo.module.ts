@@ -1,7 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
-import {JigsawMobileDialogModule} from "jigsaw/mobile-components/dialog/dialog";
-import {PopupService} from "jigsaw/common/service/popup.service";
+import {JigsawMobileButtonModule, JigsawMobileDialogModule, PopupService} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DialogMiscDemoComponent} from "./demo.component";
 import {UserDialogComponent} from "./user-dialog/user-dialog";

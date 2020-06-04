@@ -1,9 +1,6 @@
 import {Component, ElementRef, Renderer2, ViewEncapsulation} from "@angular/core";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {AdditionalColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {DragDropInfo} from "jigsaw/common/directive/dragdrop/types";
+import {TableData, AdditionalColumnDefine, DragDropInfo} from "jigsaw/public_api";
 import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
-
 
 @Component({
     templateUrl: 'demo.component.html',

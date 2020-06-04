@@ -1,7 +1,10 @@
 import {Component, ViewEncapsulation} from "@angular/core";
+import {
+    PopupEffect, PopupInfo, PopupOptions, PopupPositionType,
+    PopupService
+} from "jigsaw/mobile_public_api";
 import {UserDialogComponent} from "./user-dialog/user-dialog";
 import {UserDialog2Component} from "./user-dialog2/user-dialog";
-import {PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "jigsaw/common/service/popup.service";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -106,4 +109,3 @@ export class DialogMiscDemoComponent {
     summary: string = '这个demo介绍了弹出对话框的3种主要方式：组件、模板、自定义';
     description: string = '[这里详细介绍了`PopupService`，请仔细阅读](#/pc/popup/introduce)。';
 }
-
