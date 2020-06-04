@@ -50,7 +50,7 @@ export enum MarkDateType {
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
 /**
- * 表示一个自定义的时间范围，一般用于配合`JigsawRangeTime.grItems`属性使用，用于设置某个粒度下快速时间范围选择。
+ * 表示一个自定义的时间范围，一般用于配合`JigsawRangeDateTimePicker.grItems`属性使用，用于设置某个粒度下快速时间范围选择。
  */
 export class Shortcut {
     /**
@@ -91,7 +91,7 @@ export class GrItem {
     span?: string;
     /**
      * 给出一组预定义的时间范围，这样用户可以通过这些值快速的设置好待选的时间范围，提高易用性。
-     * 只在和`JigsawRangeTime`配合使用时才有效
+     * 只在和`JigsawRangeDateTimePicker`配合使用时才有效
      *
      * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
      *
@@ -143,15 +143,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     public _$weekList: string[] = [];
     public _$selectMode: 'day' | 'month' | 'year' = 'day';
 
+    private _langChangeSubscriber: Subscription;
     private _weekPos: number[];
 
-    private _DAY_CAL_COL = 7;
-    private _DAY_CAL_ROW = 6;
-    private _MONTH_CAL_COL = 3;
-    private _MONTH_CAL_ROW = 4;
-    private _YEAR_CAL_COL = 3;
-    private _YEAR_CAL_ROW = 4;
-    private _CUR_YEAR_POS = 4;
+    private readonly _DAY_CAL_COL = 7;
+    private readonly _DAY_CAL_ROW = 6;
+    private readonly _MONTH_CAL_COL = 3;
+    private readonly _MONTH_CAL_ROW = 4;
+    private readonly _YEAR_CAL_COL = 3;
+    private readonly _YEAR_CAL_ROW = 4;
+    private readonly _CUR_YEAR_POS = 4;
 
     private _createCalendar(year?: number, month?: number) {
         if (!year || !month) {
@@ -178,7 +179,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _createYearList(curYear: number, startYear?: number): YearCell[][] {
         startYear = startYear ? startYear : curYear - this._CUR_YEAR_POS;
         let yearCount = startYear;
-        return Array.from(new Array(this._YEAR_CAL_ROW).keys()).map(row => {
+        return Array.from(new Array(this._YEAR_CAL_ROW).keys()).map(() => {
             let rowArr = [];
             let index = 0;
             while (index < this._YEAR_CAL_COL) {
@@ -229,7 +230,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             isDisabled: this._isMonthDisabled(i + 1)
         }));
         let monthIndex = 0;
-        return Array.from(new Array(this._MONTH_CAL_ROW).keys()).map(row => {
+        return Array.from(new Array(this._MONTH_CAL_ROW).keys()).map(() => {
             let rowArr = [];
             let index = 0;
             while (index < this._MONTH_CAL_COL) {
@@ -277,7 +278,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _getWeekPos(): number[] {
-        let weekStart = TimeService.getWeekStart();
+        const weekStart = TimeService.getWeekStart();
         let week;
         return Array.from(new Array(this._DAY_CAL_COL).keys()).map(num => {
             week = num == 0 ? weekStart : week;
@@ -291,16 +292,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createWeekList(weekPos: number[]): string[] {
-        let weekdays = TimeService.getWeekdaysMin();
+        const weekdays = TimeService.getWeekdaysMin();
         return weekPos.map(pos => weekdays[pos]);
     }
 
     private _createDayList(weekPos: number[], year: number, month: number): DayCell[][] {
-        let [firstDate, lastDate] = [TimeService.convertValue(TimeService.getFirstDateOfMonth(year, month), TimeGr.date),
+        const [firstDate, lastDate] = [TimeService.convertValue(TimeService.getFirstDateOfMonth(year, month), TimeGr.date),
             TimeService.convertValue(TimeService.getLastDateOfMonth(year, month), TimeGr.date)];
         let [countDayNum, maxDayNum, countNextMonthDayNum] = [1, TimeService.getDay(TimeService.getLastDateOfMonth(year, month)), 1];
-        let firstDayWeek = new Date(firstDate).getDay();
-        let firstDayWeekPos = weekPos.findIndex(w => w === firstDayWeek);
+        const firstDayWeek = new Date(firstDate).getDay();
+        const firstDayWeekPos = weekPos.findIndex(w => w === firstDayWeek);
         return Array.from(new Array(this._DAY_CAL_ROW).keys()).map(row => {
             let index = row == 0 ? firstDayWeekPos : 0;
             let rowArr: DayCell[] = Array.from(new Array(this._DAY_CAL_COL).keys()).map(num => ({day: -1}));
@@ -349,12 +350,13 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 }
             }
             return rowArr;
-        })
+        });
     }
 
     private _isToday(year: number, month: number, day: number) {
-        let today = TimeService.convertValue('now', TimeGr.date);
-        return TimeService.getYear(today) == year && TimeService.getMonth(today) == month && TimeService.getDay(today) == day
+        const date = new Date(`${year}/${month}/${day} 00:00:00`);
+        const ts1 = +date, ts2 = +new Date;
+        return ts1 < ts2 && ts2 - ts1 < 86400000;
     }
 
     private _isDaySelected(year: number, month: number, day: number): boolean {
@@ -362,16 +364,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return false;
         }
         if (this.gr == TimeGr.week) {
-            let date = this._getWeekDate(`${year}-${month}-${day}`);
+            const date = this._getWeekDate(`${year}-${month}-${day}`);
             return this._isSameWeek(<TimeWeekDay>this.date, date);
         } else {
-            let date = TimeService.convertValue(this.date, TimeGr.date);
+            const date = TimeService.convertValue(this.date, TimeGr.date);
             return TimeService.getYear(date) == year && TimeService.getMonth(date) == month && TimeService.getDay(date) == day
         }
     }
 
     private _isDayDisabled(year: number, month: number, day: number) {
-        let date = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
+        const date = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
         return (this.limitStart && date < this.limitStart) || (this.limitEnd && date > this.limitEnd)
     }
 
@@ -379,7 +381,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (!(this.markDates instanceof Array)) {
             return {type: 'none', label: ''};
         }
-        let compareDate = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
+        const compareDate = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
         let [mark, label] = [MarkDateType[MarkDateType.none], ''];
         this.markDates.find(markDate => {
             let date: any = markDate.date;
@@ -402,10 +404,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _isDayInRange(year: number, month: number, day: number): boolean {
-        if(!this.date || !this.rangeDate) return false;
-        let date = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
-        let selectDate = TimeService.convertValue(this.date, TimeGr.date);
-        let rangeDate = TimeService.convertValue(this.rangeDate, TimeGr.date);
+        if (!this.date || !this.rangeDate) return false;
+        const date = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
+        const selectDate = TimeService.convertValue(this.date, TimeGr.date);
+        const rangeDate = TimeService.convertValue(this.rangeDate, TimeGr.date);
         return (date > selectDate && date <= rangeDate) || (date >= rangeDate && date < selectDate)
     }
 
@@ -430,10 +432,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     public _$handleCtrlBar(num: number) {
         if (this._$selectMode == 'day' || this._$selectMode == 'month') {
             if (this.date) {
-                let date = TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M);
+                const date = TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M);
                 this.writeValue(date);
             } else {
-                let date = TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.month);
+                const date = TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.month);
                 this._createCalendar(TimeService.getYear(date), TimeService.getMonth(date));
             }
         }
@@ -442,16 +444,26 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
-    private _langChangeSubscriber: Subscription;
-
+    /**
+     * 参考`JigsawDateTimePicker.valid`
+     * $demo = date-time-picker/valid
+     */
     @Input()
     public valid: boolean = true;
 
+    /**
+     * 当前日期控件的粒度发生变化时，发出此事件
+     * $demo = date-picker/gr
+     */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
 
     private _gr: TimeGr = TimeGr.date;
 
+    /**
+     * 获取或者设置当前日期控件的粒度粒度
+     * $demo = date-picker/gr
+     */
     @Input()
     public get gr(): TimeGr | string {
         return this._gr;
@@ -476,6 +488,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     private _date: WeekTime;
 
+    /**
+     * 获取或者设置当前日期控件的值
+     * $demo = date-picker/basic
+     */
     @Input()
     public get date(): WeekTime {
         return this._date;
@@ -489,11 +505,19 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * 当前日期控件的值发生变化时，发出此事件
+     * $demo = date-picker/basic
+     */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
 
     private _limitStart: Time;
 
+    /**
+     * `limitStart` 和 `limitEnd` 用于设定起止可选时间
+     * $demo = date-picker/limit
+     */
     public get limitStart(): Time {
         return this._limitStart;
     }
@@ -509,6 +533,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     private _limitEnd: Time;
 
+    /**
+     * 参考 `limitStart`
+     * $demo = date-picker/limit
+     */
     public get limitEnd(): Time {
         return this._limitEnd
     }
@@ -536,13 +564,27 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
+     *
+     * $demo = date-picker/gr
+     */
     @Input()
     public grItems: GrItem[];
 
+    /**
+     * 对选定的日期做标记，用于提示用户这些日期具有特定含义
+     *
+     * $demo = date-picker/mark
+     */
     @Input()
-    markDates: MarkDate[];
+    public markDates: MarkDate[];
 
     private _rangeDate: string;
+
+    /**
+     * @internal
+     */
     @Input()
     public get rangeDate(): string {
         return this._rangeDate

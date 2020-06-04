@@ -4,5 +4,9 @@
 
 
 <!-- start to learn the demo from here -->
-<j-time-picker [(value)]="time" [step]="5" (valueChange)="valueChange($event)"></j-time-picker>
+<p style="margin-bottom: 12px">
+    可选值
+    <jigsaw-button-bar [data]="[1,5,10]" [(selectedItems)]="step"></jigsaw-button-bar>
+</p>
+<j-time-picker [(value)]="time" [step]="step[0]" (valueChange)="valueChange($event)"></j-time-picker>
 {{time}}

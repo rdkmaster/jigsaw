@@ -40,10 +40,15 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         super(_zone);
     }
 
+    /**
+     * 参考`JigsawDateTimePicker.valid`
+     * $demo = date-time-picker/valid
+     */
     @Input()
     public valid: boolean = true;
 
-    @ViewChild("timeStart", {static: true}) private _timeStart: JigsawDateTimePicker;
+    @ViewChild("timeStart", {static: true})
+    private _timeStart: JigsawDateTimePicker;
 
     /**
      * @internal
@@ -51,11 +56,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public _$gr: TimeGr = TimeGr.date;
 
     /**
-     * 参考`JigsawTime.gr`
-     *
+     * 参考`JigsawDateTimePicker.gr`
      * $demo = range-date-time-picker/gr
-     *
-     *
      */
     @Input("gr")
     public get gr(): TimeGr | string {
@@ -73,10 +75,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     /**
-     * 参考`JigsawTime.grChange`
-     *
+     * 参考`JigsawDateTimePicker.grChange`
      * $demo = range-date-time-picker/gr
-     *
      */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
@@ -97,7 +97,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 时间段的开始时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
-     *
      * $demo = range-date-time-picker/basic
      */
     @Input()
@@ -114,10 +113,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 时间段的结束时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
-     *
      * $demo = range-date-time-picker/basic
-     *
-     *
      */
     @Input()
     public get endDate(): WeekTime {
@@ -135,11 +131,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public _$limitStart: WeekTime;
 
     /**
-     * 参考`JigsawTime.limitStart`
-     *
+     * 参考`JigsawDateTimePicker.limitStart`
      * $demo = range-date-time-picker/limit
-     *
-     *
      */
     @Input()
     public get limitStart(): WeekTime {
@@ -158,11 +151,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public _$limitEnd: WeekTime;
 
     /**
-     * 参考`JigsawTime.limitEnd`
-     *
+     * 参考`JigsawDateTimePicker.limitEnd`
      * $demo = range-date-time-picker/limit
-     *
-     *
      */
     @Input()
     public get limitEnd(): WeekTime {
@@ -189,8 +179,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public weekDayStart: TimeWeekDayStart | string;
 
     /**
-     * 参考`JigsawTime.grItems`
-     *
+     * 参考`JigsawDateTimePicker.grItems`
      * $demo = range-date-time-picker/gr-items
      */
     @Input()
@@ -199,35 +188,37 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Input()
     public refreshInterval: number;
 
+    /**
+     * 对选定的日期做标记，用于提示用户这些日期具有特定含义
+     * $demo = range-date-time-picker/mark
+     */
     @Input()
     public markDates: MarkDate[];
 
+    /**
+     * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
+     * $demo = range-date-time-picker/step
+     */
     @Input()
     public step: TimeStep;
 
     /**
      * 当用户选择时间时，Jigsaw发出此事件。
-     *
      * $demo = date-time-picker/with-combo-select
-     *
      */
     @Output()
     public change = new EventEmitter<any>();
 
     /**
      * 当开始时间被用户切换之后，Jigsaw会发出此事件。
-     *
      * $demo = range-date-time-picker/basic
-     *
      */
     @Output()
     public beginDateChange = new EventEmitter<WeekTime>();
 
     /**
      * 当结束时间被用户切换之后，Jigsaw会发出此事件。
-     *
      * $demo = range-date-time-picker/basic
-     *
      */
     @Output()
     public endDateChange = new EventEmitter<WeekTime>();

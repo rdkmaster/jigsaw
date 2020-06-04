@@ -55,16 +55,40 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         })
     }
 
+    /**
+     * 标记当前日期值是否有效，无效时，呈现一个红色框框，常用于表单中配合表单是否有效
+     * $demo = date-time-picker/valid
+     */
     @Input()
     public valid: boolean = true;
 
+    /**
+     * 当时间粒度被用户切换之后，Jigsaw会发出此事件。
+     * $demo = date-time-picker/gr
+     */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
 
+    /**
+     * @internal
+     */
+    public _$time: string;
+    /**
+     * @internal
+     */
     public _$timeGr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour;
+    /**
+     * @internal
+     */
     public _$dateGr: TimeGr.date | TimeGr.month | TimeGr.week;
+    private __date: string;
+    private _date: WeekTime;
     private _gr: TimeGr = TimeGr.date;
 
+    /**
+     * 用于控制时间粒度，支持 这些选项 second, minute, hour, date, week, month, time, time_hour_minute, time_minute_second, time_hour
+     * $demo = date-time-picker/gr
+     */
     @Input()
     public get gr(): TimeGr | string {
         return this._gr;
@@ -105,10 +129,6 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
     }
 
-    private _date: WeekTime;
-    public _$time: string;
-    private __date: string;
-
     public get _$date(): string {
         return this.__date;
     }
@@ -118,6 +138,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._updateTimeLimit();
     }
 
+    /**
+     * 当前所选中的时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = date-time-picker/basic
+     * $demo = date-time-picker/mark
+     */
     @Input()
     public get date(): WeekTime {
         return this._date;
@@ -131,14 +159,31 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
     }
 
+    /**
+     * 当时间被用户切换之后，Jigsaw会发出此事件。
+     * $demo = date-time-picker/basic
+     */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
 
     private _limitStart: Time;
-    public _$dateLimitStart: string;
     private _timeLimitStart: string;
+    /**
+     * @internal
+     */
+    public _$dateLimitStart: string;
+    /**
+     * @internal
+     */
     public _$timeLimitStartCur: string = '00:00:00';
 
+    /**
+     * 时间控件允许选择的时间开始时刻，默认是无限制的过去。这个约束对所有的粒度都生效。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = date-time-picker/limit
+     */
     public get limitStart(): Time {
         return this._limitStart;
     }
@@ -157,11 +202,25 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         //this._checkMacro();
     }
 
-    private _limitEnd: Time;
+    /**
+     * @internal
+     */
     public _$dateLimitEnd: string;
-    private _timeLimitEnd: string;
+    /**
+     * @internal
+     */
     public _$timeLimitEndCur: string = "23:59:59";
 
+    private _timeLimitEnd: string;
+    private _limitEnd: Time;
+
+    /**
+     * 时间控件允许选择的时间截止时刻，默认是无限制的未来。这个约束对所有的粒度都生效。
+     *
+     * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
+     *
+     * $demo = date-time-picker/limit
+     */
     public get limitEnd(): Time {
         return this._limitEnd
     }
@@ -193,15 +252,31 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
     }
 
+    /**
+     * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
+     *
+     * $demo = date-time-picker/gr-items
+     */
     @Input()
     public grItems: GrItem[];
 
+    /**
+     * 对选定的日期做标记，用于提示用户这些日期具有特定含义
+     * $demo = date-time-picker/mark
+     */
     @Input()
     public markDates: MarkDate[];
 
+    /**
+     * @internal
+     */
     @Input()
     public rangeDate: string;
 
+    /**
+     * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
+     * $demo = date-time-picker/step
+     */
     @Input()
     public step: TimeStep;
 
@@ -279,5 +354,4 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     exports: [JigsawDateTimePicker],
 })
 export class JigsawDateTimePickerModule {
-
 }

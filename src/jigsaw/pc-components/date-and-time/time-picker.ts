@@ -60,8 +60,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         });
     }
 
+    /**
+     * 参考`JigsawDateTimePicker.valid`
+     * $demo = date-time-picker/valid
+     */
+    @Input()
+    public valid: boolean = true;
+
     private _value: string = '00:00:00';
 
+    /**
+     * 时间选择器的当前值，可以界面选择，也可以双绑修改
+     * $demo = time-picker/basic
+     */
     @Input()
     public get value(): string {
         return this._value;
@@ -76,6 +87,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _step: TimeStep = 1;
+
+    /**
+     * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
+     * $demo = time-picker/step
+     */
     @Input()
     public get step(): TimeStep {
         return this._step;
@@ -88,6 +104,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour = TimeGr.time;
+
+    /**
+     * 当前时间选择器的粒度，支持：仅小时、时分、分秒、时分秒这几种用法
+     * $demo = time-picker/gr
+     */
     @Input()
     public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string {
         return this._gr;
@@ -104,10 +125,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * 时间选择面板的弹出位置，支持向上弹出，向下弹出
+     * $demo = time-picker/pop-up-down
+     */
     @Input()
     public popDirection: 'up' | 'down' = 'down';
 
     private _limitStart: string;
+
+    /**
+     * `limitStart` 和 `limitEnd` 用于设定起止可选时间
+     * $demo = time-picker/limit
+     */
     @Input()
     public get limitStart(): string {
         return this._limitStart;
@@ -122,6 +152,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _limitEnd: string;
+
+    /**
+     * 参考 `limitStart`
+     * $demo = time-picker/limit
+     */
     @Input()
     public get limitEnd(): string {
         return this._limitEnd;
@@ -135,13 +170,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * 当用户选择了时间之后，发出此事件
+     * $demo = time-picker/basic
+     */
     @Output()
     public valueChange = new EventEmitter<string>();
 
-    @ViewChild('hour') private _hourInput: ElementRef;
-    @ViewChild('minute') private _minuteInput: ElementRef;
-    @ViewChild('second') private _secondInput: ElementRef;
-    @ViewChild(JigsawFloat) private _float: JigsawFloat;
+    @ViewChild('hour')
+    private _hourInput: ElementRef;
+    @ViewChild('minute')
+    private _minuteInput: ElementRef;
+    @ViewChild('second')
+    private _secondInput: ElementRef;
+    @ViewChild(JigsawFloat)
+    private _float: JigsawFloat;
 
     private _hour: string = '00';
 
@@ -215,13 +258,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public _$selectMode: TimeSelectMode | 'none' = 'none';
-
     public _$floatTarget = JigsawTimePopup;
-
     public _$floatOpen: boolean;
-
     public _$floatInitData: any = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
-
     public _$floatArrowElement: HTMLElement;
 
     public _$handleSelectMode(mode: TimeSelectMode | 'none', isTabSwitch?: boolean) {
@@ -249,7 +288,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (mode != 'none') {
             this.runAfterMicrotasks(() => {
                 this._float.reposition();
-            })
+            });
         }
     }
 
@@ -277,7 +316,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _autoZero(value: any): string {
-        return (Number(value) < 10 ? '0' : '') + Number(value);
+        const numValue = Number(value);
+        return (numValue < 10 ? '0' : '') + numValue;
     }
 
     private _getStepValue(value: any): string {
@@ -285,12 +325,14 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _getStepRangeValue(value: any): string {
-        let max = parseInt(59 / this.step + '') * this.step;
-        return isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > max ? String(max) : String(value);
+        const max = parseInt(59 / this.step + '') * this.step;
+        const numValue = Number(value);
+        return isNaN(numValue) || numValue < 0 ? '00' : numValue > max ? String(max) : String(value);
     }
 
     private _getHourRangeValue(value: any): string {
-        return isNaN(Number(value)) || Number(value) < 0 ? '00' : Number(value) > 23 ? '23' : String(value);
+        const numValue = Number(value);
+        return isNaN(numValue) || numValue < 0 ? '00' : numValue > 23 ? '23' : String(value);
     }
 
     private _updateInputValue(mode: TimeSelectMode, value) {
@@ -307,7 +349,6 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     private _updateValue = new EventEmitter();
     private _removeUpdateValueSubscriber: Subscription;
-
     private _switchPopup = new EventEmitter<boolean>();
     private _removeSwitchPopupSubscriber: Subscription;
 

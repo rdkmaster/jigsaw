@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>是否有效 Valid</h4>
+
+<jigsaw-button-bar [data]="['valid','invalid']" [(selectedItems)]="selected">
+</jigsaw-button-bar>
+<br><br>
+
+<jigsaw-time-picker [valid]="valid"></jigsaw-time-picker>
+<br><br>
+<jigsaw-date-picker [valid]="valid"></jigsaw-date-picker>
+<jigsaw-date-time-picker gr="second" [valid]="valid"></jigsaw-date-time-picker>
+<br><br>
+<jigsaw-range-date-time-picker [valid]="valid"></jigsaw-range-date-time-picker>

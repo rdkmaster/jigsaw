@@ -5,6 +5,7 @@ import {Component} from "@angular/core";
 })
 export class TimePickerStepDemoComponent {
     time;
+    step = [5];
 
     valueChange($event) {
         console.log('time change to ',$event);
