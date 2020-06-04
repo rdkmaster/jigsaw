@@ -115,13 +115,14 @@
 /* processing start */
 @keyframes processing {
     0% {
-        width: 0;
+        transform: scaleX(0);
     }
     100% {
-        width: 100%
+        transform: scaleX(1);
     }
 }
 .jigsaw-am-processing {
     animation: processing .8s linear infinite;
+    transform-origin: left;
 }
 /* processing end */
