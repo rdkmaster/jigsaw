@@ -187,7 +187,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 对选定的日期做标记，用于提示用户这些日期具有特定含义
-     * $demo = range-date-time-picker/mark
+     * $demo = date-time-picker/mark
      */
     @Input()
     public markDates: MarkDate[];

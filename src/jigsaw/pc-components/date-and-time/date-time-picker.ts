@@ -288,11 +288,11 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._cdr.markForCheck();
     }
 
-    public _$handleDateChange($event) {
+    public _$handleDateChange() {
         this._updateValue.emit('combine');
     }
 
-    public _$handleTimeChange($event) {
+    public _$handleTimeChange() {
         this._updateValue.emit('combine');
     }
 
