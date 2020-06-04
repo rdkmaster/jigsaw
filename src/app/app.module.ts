@@ -4,7 +4,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-
 import {
     JigsawBoxModule, JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
 } from "jigsaw/public_api";
@@ -14,7 +13,6 @@ import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
 import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {DemoCodeComponent} from "./demo-code.component";
 
 @NgModule({

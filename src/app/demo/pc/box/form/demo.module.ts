@@ -3,8 +3,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
     JigsawButtonModule, JigsawInputModule, JigsawRadioModule, JigsawComboSelectModule,
-    JigsawTimeModule, JigsawTileSelectModule, JigsawRangeTimeModule,
-    JigsawCheckBoxModule, JigsawSliderModule, JigsawSwitchModule,
+    JigsawTileSelectModule, JigsawCheckBoxModule, JigsawSliderModule, JigsawSwitchModule,
     JigsawBoxModule, JigsawDateTimePickerModule, JigsawRangeDateTimePickerModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";

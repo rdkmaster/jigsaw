@@ -1,9 +1,9 @@
 import {NgModule} from "@angular/core";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
-    JigsawAlertModule, JigsawButtonModule, PopupService, JigsawTimeModule,
-    JigsawRangeTimeModule, JigsawDialogModule, JigsawPaginationModule,
-    JigsawComboSelectModule
+    JigsawAlertModule, JigsawButtonModule, PopupService, JigsawDialogModule,
+    JigsawPaginationModule, JigsawComboSelectModule, JigsawDateTimePickerModule,
+    JigsawRangeDateTimePickerModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
