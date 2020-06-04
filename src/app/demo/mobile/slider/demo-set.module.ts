@@ -1,6 +1,3 @@
-/**
- * Created by 10177553 on 2017/4/13.
- */
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {SliderVerticalDemoModule} from "./vertical/demo.module";

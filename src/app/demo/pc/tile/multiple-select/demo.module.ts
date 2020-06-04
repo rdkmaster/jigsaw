@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
-import {JigsawTileSelectModule} from "jigsaw/pc-components/list-and-tile/tile";
-import {TileSelectMultipleSelectDemoComponent} from './demo.component';
 import {CommonModule} from "@angular/common";
+import {JigsawTileSelectModule} from "jigsaw/public_api";
+import {TileSelectMultipleSelectDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({

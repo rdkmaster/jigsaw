@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/mobile-components/list-and-tile/group-common";
+import {GroupOptionValue} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',

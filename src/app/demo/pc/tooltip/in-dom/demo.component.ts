@@ -34,4 +34,3 @@ export class TooltipInDomDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

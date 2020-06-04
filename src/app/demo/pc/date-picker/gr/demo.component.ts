@@ -29,4 +29,3 @@ export class DatePickerGrComponent {
     summary: string = '';
     description: string = '';
 }
-

@@ -29,4 +29,3 @@ export class DateTimePickerGrComponent {
     summary: string = '';
     description: string = '';
 }
-

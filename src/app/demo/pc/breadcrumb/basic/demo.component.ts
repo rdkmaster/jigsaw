@@ -36,4 +36,3 @@ export class BreadcrumbBasicDemoComponent {
         '参考<a href="/breadcrumb/router">这个demo</a>使用自动控制的面包屑。';
     description: string = '';
 }
-

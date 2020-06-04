@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
+import {JigsawLoadingModule, JigsawMobileButtonModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ColorfulLoadingDemoComponent} from "./demo.component";
 

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {CheckBoxStatus} from "jigsaw/mobile-components/checkbox/typings";
+import {CheckBoxStatus} from "jigsaw/mobile_public_api";
 
 @Component({
   templateUrl: './demo.component.html'
@@ -14,4 +14,3 @@ export class CheckBoxDisableDemoComponent {
     summary: string = '演示了如何使用`JigsawCheckBox`的disabled属性';
     description: string = '';
 }
-

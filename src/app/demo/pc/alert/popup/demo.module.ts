@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawAlertModule} from "jigsaw/pc-components/alert/alert";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
+import {JigsawAlertModule, JigsawButtonModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {AlertPopupDemoComponent} from "./demo.component";
 

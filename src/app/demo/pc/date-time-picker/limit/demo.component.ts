@@ -27,4 +27,3 @@ export class DateTimePickerLimitComponent {
     summary: string = '';
     description: string = '';
 }
-

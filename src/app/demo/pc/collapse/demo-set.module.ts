@@ -1,6 +1,3 @@
-/**
- * Created by 10177553 on 2017/4/26.
- */
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {ngForDemoModule} from "./with-ngfor/demo.module";

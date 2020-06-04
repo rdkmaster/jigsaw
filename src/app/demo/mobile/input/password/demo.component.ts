@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
+import {JigsawMobileInput} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -13,4 +13,3 @@ export class InputPasswordComponent {
     summary: string = '';
     description: string = '';
 }
-

@@ -16,4 +16,3 @@ export class TextareaValueChangeDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

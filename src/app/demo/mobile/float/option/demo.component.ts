@@ -1,12 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {
-    PopupEffect,
-    PopupOptions,
-    PopupPositionOffset,
-    PopupPositionType,
-    PopupSize
-} from "jigsaw/common/service/popup.service";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+    PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
+    PopupSize, CommonUtils
+} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',

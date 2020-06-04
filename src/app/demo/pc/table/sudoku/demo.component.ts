@@ -1,10 +1,8 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
+import {TableData, JigsawInfoAlert} from "jigsaw/public_api";
 import {NumberRenderer} from "./number-renderer";
 import {CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
-import {JigsawInfoAlert} from "jigsaw/pc-components/alert/alert";
-
 
 @Component({
     templateUrl: './demo.component.html'

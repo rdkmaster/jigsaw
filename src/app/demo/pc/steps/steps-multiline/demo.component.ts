@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {InternalUtils} from "jigsaw/common/core/utils/internal-utils";
+import {InternalUtils} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

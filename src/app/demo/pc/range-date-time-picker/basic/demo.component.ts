@@ -37,4 +37,3 @@ export class RangeDateTimeBasicDemoComponent implements AfterViewInit {
     summary: string = '';
     description: string = '';
 }
-

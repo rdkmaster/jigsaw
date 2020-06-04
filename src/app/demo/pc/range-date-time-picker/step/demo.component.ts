@@ -1,6 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
 
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
@@ -37,4 +36,3 @@ export class RangeDateTimeStepDemoComponent implements AfterViewInit {
     summary: string = '';
     description: string = '';
 }
-

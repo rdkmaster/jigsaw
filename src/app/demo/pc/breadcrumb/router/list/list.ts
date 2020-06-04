@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {map} from "rxjs/operators";
-import {ProductService} from "../product.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ProductService} from "../product.service";
 
 @Component({
     template: `

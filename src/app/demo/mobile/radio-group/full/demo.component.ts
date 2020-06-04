@@ -66,4 +66,3 @@ export class RadioFullComponent {
     summary: string = '';
     description: string = '';
 }
-
