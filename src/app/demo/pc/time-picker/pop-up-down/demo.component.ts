@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class TimePickerFloatPositionDemoComponent {
-    floatPosition = ['topLeft'];
+    popDirection = ['up'];
 
     valueChange($event) {
         console.log('time change to ', $event);

@@ -98,7 +98,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 时间段的开始时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
      *
-     * $demo = range-time/basic
+     * $demo = range-date-time-picker/basic
      */
     @Input()
     public get beginDate(): WeekTime {
@@ -115,7 +115,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 时间段的结束时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
      *
-     * $demo = range-time/basic
+     * $demo = range-date-time-picker/basic
      *
      *
      */
@@ -224,7 +224,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 当开始时间被用户切换之后，Jigsaw会发出此事件。
      *
-     * $demo = range-time/basic
+     * $demo = range-date-time-picker/basic
      *
      */
     @Output()
@@ -233,7 +233,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 当结束时间被用户切换之后，Jigsaw会发出此事件。
      *
-     * $demo = range-time/basic
+     * $demo = range-date-time-picker/basic
      *
      */
     @Output()

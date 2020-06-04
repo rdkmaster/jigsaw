@@ -105,8 +105,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     @Input()
-    public floatPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-        'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom' = 'bottomLeft';
+    public popDirection: 'up' | 'down' = 'down';
 
     private _limitStart: string;
     @Input()
@@ -552,7 +551,6 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 })
 export class JigsawTimePopup implements IPopupable {
     constructor(private _cdr: ChangeDetectorRef) {
-
     }
 
     public _value: TimePopupValue;
@@ -569,9 +567,10 @@ export class JigsawTimePopup implements IPopupable {
             this._value = value;
             this._updateList(this.initData);
             this._cdr.markForCheck();
-        })
+        });
     }
 
+    public answer: EventEmitter<any> = new EventEmitter<any>();
     public _$hourList: TimePopupItem[];
     public _$minuteList: TimePopupItem[];
     public _$secondList: TimePopupItem[];
@@ -598,28 +597,18 @@ export class JigsawTimePopup implements IPopupable {
         $event.preventDefault();
         $event.stopPropagation()
     }
-
-    @Output()
-    public answer: EventEmitter<any> = new EventEmitter<any>();
 }
 
 @NgModule({
     imports: [CommonModule, FormsModule, JigsawFloatModule, TranslateModule.forRoot()],
     declarations: [JigsawTimePicker, JigsawTimePopup],
-    exports: [JigsawTimePicker, JigsawTimePopup],
+    exports: [JigsawTimePicker],
     providers: [TranslateService],
 })
 export class JigsawTimePickerModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, 'timePicker', {
-            zh: {
-                now: "此刻",
-                default: '默认时间'
-            },
-            en: {
-                now: 'this time',
-                default: 'default time'
-            }
+            zh: { now: "此刻" }, en: { now: 'Now' }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
     }
