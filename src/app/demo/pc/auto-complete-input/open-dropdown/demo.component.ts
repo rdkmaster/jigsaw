@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {DropDownValue, JigsawAutoCompleteInput} from "jigsaw/pc-components/input/auto-complete-input";
+import {DropDownValue, JigsawAutoCompleteInput} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'

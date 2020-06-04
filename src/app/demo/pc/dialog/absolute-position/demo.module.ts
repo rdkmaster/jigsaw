@@ -1,13 +1,11 @@
 import {NgModule} from "@angular/core";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
-import {JigsawDialogModule} from "jigsaw/pc-components/dialog/dialog";
-import {PopupService} from "jigsaw/common/service/popup.service";
+import {CommonModule} from "@angular/common";
+import {
+    JigsawButtonModule, JigsawDialogModule, PopupService, JigsawNumericInputModule,
+    JigsawSwitchModule, JigsawRadioModule
+} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DialogAbsolutePositionDemoComponent} from "./demo.component";
-import {JigsawNumericInputModule} from "jigsaw/pc-components/input/numeric-input";
-import {JigsawSwitchModule} from "jigsaw/pc-components/switch";
-import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
-import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [DialogAbsolutePositionDemoComponent],

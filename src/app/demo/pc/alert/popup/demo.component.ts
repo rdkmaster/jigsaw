@@ -1,8 +1,5 @@
 import {Component} from "@angular/core";
-import {
-    JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
-    JigsawWarningAlert
-} from "jigsaw/pc-components/alert/alert";
+import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -47,4 +44,3 @@ export class AlertPopupDemoComponent {
     summary: string = '演示了如何弹出一个Alert组件';
     description: string = '';
 }
-

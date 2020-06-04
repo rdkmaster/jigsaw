@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {JigsawTableModule, TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/public_api";
 import {TableAddCheckboxColumnDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

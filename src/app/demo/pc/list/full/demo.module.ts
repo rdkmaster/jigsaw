@@ -1,8 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawListModule} from "jigsaw/pc-components/list-and-tile/list";
-import {JigsawCheckBoxModule} from "jigsaw/pc-components/checkbox/index";
-import {JigsawComboSelectModule} from "jigsaw/pc-components/combo-select/index";
+import {JigsawListModule, JigsawCheckBoxModule, JigsawComboSelectModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ListFullDemoComponent} from "./demo.component";
 

@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawBreadcrumbModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BreadcrumbBasicDemoComponent} from "./demo.component";
-import {JigsawBreadcrumbModule} from "jigsaw/pc-components/breadcrumb/breadcrumb";
 
 @NgModule({
     declarations: [BreadcrumbBasicDemoComponent],

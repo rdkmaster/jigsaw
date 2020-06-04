@@ -1,10 +1,9 @@
 import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
-import {JigsawListLite} from "jigsaw/pc-components/list-and-tile/list-lite";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+import {
+    GroupOptionValue, JigsawListLite, ArrayCollection, LocalPageableArray,
+    PageableArray, TableData, CommonUtils
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

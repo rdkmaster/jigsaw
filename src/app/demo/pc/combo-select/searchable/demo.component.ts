@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
-import {ComboSelectValue} from "jigsaw/pc-components/combo-select/combo-select";
-import {TableData} from "jigsaw/common/core/data/table-data";
+import {
+    ArrayCollection, LocalPageableArray, PageableArray, ComboSelectValue,
+    TableData
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

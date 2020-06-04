@@ -11,4 +11,3 @@ export class SwitchBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

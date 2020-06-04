@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {LocalPageableTableData} from "jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
+import {LocalPageableTableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -44,4 +44,3 @@ export class PaginationBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

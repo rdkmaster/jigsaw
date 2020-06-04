@@ -12,4 +12,3 @@ export class NumericInputSizeDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

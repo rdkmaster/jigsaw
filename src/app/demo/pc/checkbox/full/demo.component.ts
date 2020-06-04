@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {CheckBoxStatus} from "jigsaw/pc-components/checkbox/typings";
+import {CheckBoxStatus} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -23,4 +23,3 @@ export class CheckBoxFullComponent {
     summary: string = '演示了`JigsawCheckBox`的效果';
     description: string = '';
 }
-

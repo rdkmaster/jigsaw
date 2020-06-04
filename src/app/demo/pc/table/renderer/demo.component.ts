@@ -1,13 +1,9 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData} from "jigsaw/common/core/data/table-data";
 import {
-    AdditionalColumnDefine,
-    AdditionalTableData,
-    ColumnDefine,
-    TableValueGenerators,
-} from "jigsaw/pc-components/table/table-typings";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
+    LocalPageableTableData, AdditionalColumnDefine, AdditionalTableData, ColumnDefine,
+    TableValueGenerators, TableCellCheckboxRenderer, TableHeadCheckboxRenderer
+} from "jigsaw/public_api";
 import {
     filterData,
     OfficeCellEditorRenderer,
@@ -184,4 +180,3 @@ export class TableRendererDemoComponent {
     summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
     description: string = require('!!raw-loader!./readme.md').default;
 }
-

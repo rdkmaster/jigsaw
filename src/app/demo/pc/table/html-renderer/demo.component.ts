@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RawTableData, TableData} from "jigsaw/common/core/data/table-data";
-import {AdditionalColumnDefine, ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
-import {SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
+import {
+    RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
+    CommonUtils, SortAs, SortOrder
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -89,6 +89,3 @@ export class TableHtmlRendererDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-

@@ -1,8 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawDraggableModule, JigsawDroppableModule} from "jigsaw/common/directive/dragdrop/index";
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
-import {JigsawTagModule} from "jigsaw/pc-components/tag/tag";
+import {JigsawDraggableModule, JigsawDroppableModule, JigsawTableModule, JigsawTagModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TableDragDemoComponent} from "./demo.component";
 import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";

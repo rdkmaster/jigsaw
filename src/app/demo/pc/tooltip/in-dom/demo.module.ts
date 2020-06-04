@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {JigsawTooltipModule} from "jigsaw/pc-components/tooltip/tooltip";
+import {JigsawTooltipModule} from "jigsaw/public_api";
 import {TooltipInDomDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 

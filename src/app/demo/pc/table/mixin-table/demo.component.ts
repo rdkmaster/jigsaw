@@ -1,8 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableData, ColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -75,4 +73,3 @@ export class MixinTable extends TableCellRendererBase{
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 }
-

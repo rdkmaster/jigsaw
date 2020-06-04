@@ -1,5 +1,5 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawTag} from "jigsaw/pc-components/tag/tag";
+import {JigsawTag} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -22,4 +22,3 @@ export class TagBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
