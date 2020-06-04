@@ -1,6 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
 
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`

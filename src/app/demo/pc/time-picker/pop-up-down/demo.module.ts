@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
+import {JigsawTimePickerModule, JigsawButtonBarModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TimePickerFloatPositionDemoComponent} from "./demo.component";
-import {JigsawTimePickerModule} from "jigsaw/pc-components/date-and-time/time-picker";
 
 @NgModule({
     declarations: [TimePickerFloatPositionDemoComponent],
     exports: [ TimePickerFloatPositionDemoComponent ],
-    imports: [JigsawTimePickerModule, JigsawDemoDescriptionModule]
+    imports: [JigsawTimePickerModule, JigsawDemoDescriptionModule, JigsawButtonBarModule]
 })
 export class TimePickerFloatPositionDemoModule{
 

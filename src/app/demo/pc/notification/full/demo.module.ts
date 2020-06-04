@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {
     JigsawButtonModule, JigsawNotificationModule, PopupService, JigsawInputModule,
-    JigsawRadioModule, JigsawSliderModule,
+    JigsawRadioModule, JigsawSliderModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {NotificationFullDemoComponent} from "./demo.component";

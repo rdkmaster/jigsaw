@@ -57,7 +57,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._removeSwitchPopupSubscriber = this._switchPopup.pipe(debounceTime(150)).subscribe((open: boolean) => {
             this._$floatOpen = open;
             this._cdr.markForCheck();
-        })
+        });
     }
 
     private _value: string = '00:00:00';

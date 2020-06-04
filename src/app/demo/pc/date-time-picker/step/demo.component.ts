@@ -12,4 +12,3 @@ export class DateTimePickerStepDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

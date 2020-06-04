@@ -12,4 +12,3 @@ export class DateTimePickerBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

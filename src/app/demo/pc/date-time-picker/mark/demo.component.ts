@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {MarkDate, MarkDateType} from "jigsaw/pc-components/date-and-time/date-picker";
+import {MarkDate, MarkDateType} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -21,4 +21,3 @@ export class DateTimePickerMarkDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

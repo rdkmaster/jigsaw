@@ -18,4 +18,3 @@ export class TimePickerGrDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

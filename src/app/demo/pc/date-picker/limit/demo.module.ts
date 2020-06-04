@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {JigsawDatePickerModule, JigsawRadioModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DatePickerLimitComponent} from './demo.component';
-import {JigsawDatePickerModule} from "jigsaw/pc-components/date-and-time/date-picker";
-import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
 
 @NgModule({
     imports: [CommonModule, JigsawDatePickerModule, JigsawDemoDescriptionModule, JigsawRadioModule],

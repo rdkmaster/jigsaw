@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
-import {TimeGr} from "jigsaw/common/service/time.service";
-import {GrItem} from "jigsaw/pc-components/date-and-time/date-picker";
+import {TimeGr, GrItem} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -20,4 +19,3 @@ export class DatePickerGrItemDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

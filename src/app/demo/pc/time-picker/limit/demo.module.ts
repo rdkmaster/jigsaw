@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
+import {JigsawTimePickerModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TimePickerLimitDemoComponent} from "./demo.component";
-import {JigsawTimePickerModule} from "jigsaw/pc-components/date-and-time/time-picker";
 
 @NgModule({
     declarations: [TimePickerLimitDemoComponent],

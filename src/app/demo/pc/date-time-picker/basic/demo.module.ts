@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
+import {JigsawDateTimePickerModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DateTimePickerBasicDemoComponent} from "./demo.component";
-import {JigsawDateTimePickerModule} from "jigsaw/pc-components/date-and-time/date-time-picker";
 
 @NgModule({
     declarations: [DateTimePickerBasicDemoComponent],

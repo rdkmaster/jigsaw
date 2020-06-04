@@ -16,4 +16,3 @@ export class TimePickerSizeDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

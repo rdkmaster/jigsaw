@@ -16,4 +16,3 @@ export class TimePickerStepDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

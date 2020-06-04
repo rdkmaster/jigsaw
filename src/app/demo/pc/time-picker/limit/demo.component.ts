@@ -20,4 +20,3 @@ export class TimePickerLimitDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
