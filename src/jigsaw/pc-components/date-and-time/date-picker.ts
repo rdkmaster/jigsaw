@@ -45,7 +45,7 @@ export enum MarkDateType {
 /**
  * 时间范围生成函数，用于生成自定义的时间范围
  *
- * $demo = range-date-time-picker/gr-items
+ * $demo = date-time-picker/gr-items
  */
 export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 
@@ -55,12 +55,12 @@ export type TimeShortcutFunction = () => [WeekTime, WeekTime]
 export class Shortcut {
     /**
      * 国际化提示信息，将被直接显示在界面上
-     * $demo = range-date-time-picker/gr-items
+     * $demo = date-time-picker/gr-items
      */
     label: string;
     /**
      * 时间范围的起止时间点，可以给出固定值，也可以给一个产生起止时间点的函数
-     * $demo = range-date-time-picker/gr-items
+     * $demo = date-time-picker/gr-items
      */
     dateRange: [WeekTime, WeekTime] | TimeShortcutFunction;
 }
@@ -76,7 +76,7 @@ export class GrItem {
     /**
      * 粒度值
      *
-     * $demo = range-date-time-picker/gr-items
+     * $demo = date-time-picker/gr-items
      * $demo = date-time-picker/gr
      */
     value: TimeGr;
@@ -86,7 +86,7 @@ export class GrItem {
      *
      * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
      *
-     * $demo = range-date-time-picker/gr-items
+     * $demo = date-time-picker/gr-items
      */
     span?: string;
     /**
@@ -95,7 +95,7 @@ export class GrItem {
      *
      * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
      *
-     * $demo = range-date-time-picker/gr-items
+     * $demo = date-time-picker/gr-items
      */
     shortcuts?: Shortcut[];
 }

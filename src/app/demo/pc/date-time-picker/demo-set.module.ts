@@ -4,8 +4,8 @@ import {DateTimePickerBasicDemoComponent} from "./basic/demo.component";
 import {DateTimePickerBasicDemoModule} from "./basic/demo.module";
 import {DateTimePickerGrComponent} from "./gr/demo.component";
 import {DateTimePickerGrDemoModule} from "./gr/demo.module";
-import {DateTimePickerGrItemDemoComponent} from "./gr-item/demo.component";
-import {DateTimePickerGrItemDemoModule} from "./gr-item/demo.module";
+import {DateTimePickerGrItemDemoComponent} from "./gr-items/demo.component";
+import {DateTimePickerGrItemDemoModule} from "./gr-items/demo.module";
 import {DateTimePickerLimitDemoModule} from "./limit/demo.module";
 import {DateTimePickerMarkDemoModule} from "./mark/demo.module";
 import {DateTimePickerMarkDemoComponent} from "./mark/demo.component";
@@ -28,7 +28,7 @@ export const routerConfig = [
         path: 'limit', component: DateTimePickerLimitComponent
     },
     {
-        path: 'gr-item', component: DateTimePickerGrItemDemoComponent
+        path: 'gr-items', component: DateTimePickerGrItemDemoComponent
     },
     {
         path: 'mark', component: DateTimePickerMarkDemoComponent
