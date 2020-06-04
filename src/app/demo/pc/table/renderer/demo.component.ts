@@ -2,8 +2,7 @@ import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/cor
 import {HttpClient} from "@angular/common/http";
 import {
     LocalPageableTableData, AdditionalColumnDefine, AdditionalTableData, ColumnDefine,
-    TableValueGenerators, TableCellCheckboxRenderer,
-    TableHeadCheckboxRenderer
+    TableValueGenerators, TableCellCheckboxRenderer, TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
 import {
     filterData,

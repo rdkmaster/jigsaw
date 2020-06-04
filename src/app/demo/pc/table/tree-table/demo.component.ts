@@ -1,7 +1,5 @@
 import {Component} from "@angular/core";
-import {PageableTreeTableData, TreeTableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TreeTableCellRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {PageableTreeTableData, TreeTableData, ColumnDefine, TreeTableCellRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -179,7 +177,3 @@ export class TreeTableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-
-
