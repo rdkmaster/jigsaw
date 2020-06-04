@@ -12,9 +12,11 @@ import {PopupZIndexDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [PopupZIndexDemoComponent],
     exports: [PopupZIndexDemoComponent],
-    imports: [JigsawTimeModule, JigsawRangeTimeModule, JigsawComboSelectModule, JigsawDialogModule,
+    imports: [
+        JigsawTimeModule, JigsawRangeTimeModule, JigsawComboSelectModule, JigsawDialogModule,
         JigsawSelectModule, JigsawLoadingModule, JigsawButtonModule, JigsawDemoDescriptionModule,
-        JigsawTooltipModule, JigsawNotificationModule, JigsawDrawerModule, CommonModule],
+        JigsawTooltipModule, JigsawNotificationModule, JigsawDrawerModule, CommonModule
+    ],
     providers: [LoadingService]
 })
 export class PopupZIndexDemoModule {
