@@ -53,7 +53,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 参考`JigsawTime.gr`
      *
-     * $demo = range-time/gr
+     * $demo = range-date-time-picker/gr
      *
      *
      */
@@ -75,7 +75,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 参考`JigsawTime.grChange`
      *
-     * $demo = range-time/gr
+     * $demo = range-date-time-picker/gr
      *
      */
     @Output()
@@ -137,8 +137,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 参考`JigsawTime.limitStart`
      *
-     * $demo = range-time/limit-start
-     * $demo = range-time/limit-end
+     * $demo = range-date-time-picker/limit
      *
      *
      */
@@ -161,8 +160,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 参考`JigsawTime.limitEnd`
      *
-     * $demo = range-time/limit-start
-     * $demo = range-time/limit-end
+     * $demo = range-date-time-picker/limit
      *
      *
      */
@@ -193,16 +191,11 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 参考`JigsawTime.grItems`
      *
-     * $demo = range-time/gr-items
+     * $demo = range-date-time-picker/gr-items
      */
     @Input()
     public grItems: GrItem[];
 
-    /**
-     * 参考`JigsawTime.refreshInterval`
-     *
-     * $demo = range-time/refresh-interval
-     */
     @Input()
     public refreshInterval: number;
 
@@ -215,7 +208,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * 当用户选择时间时，Jigsaw发出此事件。
      *
-     * $demo = time/with-combo-select
+     * $demo = date-time-picker/with-combo-select
      *
      */
     @Output()
