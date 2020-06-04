@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {BoxPlotGraphData} from "jigsaw/common/core/data/graph-data";
-import {AjaxInterceptor} from "../../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {BoxPlotGraphData} from "jigsaw/public_api";
+import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'

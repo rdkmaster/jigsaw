@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {LineGraphData, LineGraphDataByRow} from "jigsaw/common/core/data/graph-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {LineGraphData, LineGraphDataByRow} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
@@ -88,4 +88,3 @@ function dealAreaRequest(req: HttpRequest<any>) {
 }
 
 /* 模拟请求代码 end */
-

@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {JigsawMobileSwitchModule} from "jigsaw/mobile-components/switch/index";
+import {JigsawMobileSwitchModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SwitchBasicDemoComponent} from './demo.component';
 

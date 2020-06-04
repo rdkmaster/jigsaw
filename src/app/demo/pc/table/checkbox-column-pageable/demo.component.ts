@@ -1,8 +1,9 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData, PageableTableData} from "jigsaw/common/core/data/table-data";
-import {AdditionalColumnDefine, AdditionalTableData} from "jigsaw/pc-components/table/table-typings";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {
+    LocalPageableTableData, PageableTableData, AdditionalColumnDefine, AdditionalTableData,
+    TableCellCheckboxRenderer, TableHeadCheckboxRenderer
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -100,4 +101,3 @@ export class TableAddCheckboxColumnPageableDemoComponent {
     summary: string = '这demo介绍table中使用内置checkbox渲染器';
     description: string = require('!!raw-loader!../checkbox-column/readme.md');
 }
-

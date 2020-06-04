@@ -1,8 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
-import {TimeGr} from "jigsaw/common/service/time.service";
-import {GrItem, Shortcut} from "jigsaw/pc-components/time/time";
-import {RangeTimeDataRanges} from "jigsaw/pc-components/range-time/shortcut-dateranges";
-
+import {TimeGr, GrItem, Shortcut, RangeTimeDataRanges} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -50,4 +47,3 @@ export class RangeTimeGrItemsComponent implements AfterViewInit {
     summary: string = '';
     description: string = '';
 }
-

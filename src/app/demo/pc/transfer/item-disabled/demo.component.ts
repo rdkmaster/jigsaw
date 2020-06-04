@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
-import {TableData} from "jigsaw/common/core/data/table-data";
+import {ArrayCollection, TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -27,4 +26,3 @@ export class TransferItemDisabledDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

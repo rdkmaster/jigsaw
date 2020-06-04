@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
-import {LocalPageableTableData, PageableTableData} from "jigsaw/common/core/data/table-data";
-import {PagingInfo} from "jigsaw/common/core/data/component-data";
 import {HttpClient} from "@angular/common/http";
+import {LocalPageableTableData, PageableTableData, PagingInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -31,4 +30,3 @@ export class WithPagingInfoDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

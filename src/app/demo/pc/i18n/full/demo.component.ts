@@ -1,11 +1,10 @@
 import {Component} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
-import {TranslateHelper} from "jigsaw/common/core/utils/translate-helper";
-import {ButtonInfo} from "jigsaw/common/service/popup.service";
-import {LocalPageableTableData} from "jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
-import {TimeGr, TimeService} from "jigsaw/common/service/time.service";
+import {
+    TranslateHelper, ButtonInfo, LocalPageableTableData, ArrayCollection,
+    TimeGr, TimeService
+} from "jigsaw/public_api";
 
 /**
  * 覆盖控件内部的国际化词条
@@ -133,4 +132,3 @@ export class I18nFullDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawTextarea} from "jigsaw/pc-components/textarea";
+import {JigsawTextarea} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -14,4 +14,3 @@ export class TextareaSelectDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

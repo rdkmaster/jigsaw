@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'

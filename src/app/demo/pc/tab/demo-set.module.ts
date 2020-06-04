@@ -1,7 +1,3 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
-
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 import {TabsBasicDemoModule} from './basic/demo.module';

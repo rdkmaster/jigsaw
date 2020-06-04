@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
-import { JigsawButtonModule } from "jigsaw/pc-components/button/button";
-import { JigsawInputModule } from "jigsaw/pc-components/input/input";
+import {JigsawButtonModule, JigsawInputModule} from "jigsaw/public_api";
 import { TabContentComponent, TabContentDefine } from "./tabContent";
 
 const routes=[

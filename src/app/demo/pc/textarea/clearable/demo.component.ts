@@ -12,4 +12,3 @@ export class TextareaClearableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

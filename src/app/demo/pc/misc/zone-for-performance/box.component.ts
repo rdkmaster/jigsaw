@@ -18,4 +18,3 @@ export class BoxComponent {
     @Input() box;
     @Input() selected;
 }
-

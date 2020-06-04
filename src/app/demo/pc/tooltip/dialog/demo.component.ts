@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
-import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/common/service/popup.service";
+import {PopupEffect, PopupInfo, PopupPositionType, PopupService} from "jigsaw/public_api";
 import {UserTooltipDialogComponent} from "./user-defined-tooltip-dialog";
 
 @Component({
@@ -37,4 +37,3 @@ export class TooltipDialogDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

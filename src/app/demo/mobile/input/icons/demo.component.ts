@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
+import {JigsawMobileInput} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -18,4 +18,3 @@ export class InputPrefixIconDemoComponent {
     summary: string = '左右侧可以有多个图标，并且有交互';
     description: string = '';
 }
-

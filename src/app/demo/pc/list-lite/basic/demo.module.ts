@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
+import {JigsawListLiteModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ListLiteBasicDemoComponent} from "./demo.component";
-import {JigsawListLiteModule} from "jigsaw/pc-components/list-and-tile/list-lite";
 
 @NgModule({
     imports: [

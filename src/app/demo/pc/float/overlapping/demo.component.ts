@@ -1,5 +1,8 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import { SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService, JigsawMenu } from 'jigsaw/public_api';
+import {
+    SimpleTreeData, PopupInfo, JigsawBallLoading, LoadingService,
+    JigsawMenu
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TableData} from "jigsaw/common/core/data/table-data";
+import {TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -173,4 +173,3 @@ export class TableBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
