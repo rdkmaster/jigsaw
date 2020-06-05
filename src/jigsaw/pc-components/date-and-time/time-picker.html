@@ -4,13 +4,13 @@
      [jigsawFloatArrowElement]="_$floatArrowElement" [jigsawFloatPosition]="popDirection == 'up' ? 'topLeft' : 'bottomLeft'"
      (jigsawFloatAnswer)="_$popupSelect($event)">
     <input #hour *ngIf="gr == 6 || gr == 7 || gr == 9" [class.jigsaw-time-picker-input-selected]="_$selectMode == 'hour'"
-           [(ngModel)]="_$hour" (blur)="_$cancelSelect('hour')" (click)="_$handleSelectMode('hour')">
+           [(ngModel)]="_$hour" (blur)="_$cancelSelect('hour')" (focus)="_$handleSelectMode('hour')">
     <span *ngIf="gr == 6 || gr == 7" class="jigsaw-time-picker-colon">:</span>
     <input #minute *ngIf="gr == 6 || gr == 7 || gr == 8" [class.jigsaw-time-picker-input-selected]="_$selectMode == 'minute'"
-           [(ngModel)]="_$minute" (blur)="_$cancelSelect('minute')" (click)="_$handleSelectMode('minute')">
+           [(ngModel)]="_$minute" (blur)="_$cancelSelect('minute')" (focus)="_$handleSelectMode('minute')">
     <span *ngIf="gr == 6 || gr == 8" class="jigsaw-time-picker-colon">:</span>
     <input #second *ngIf="gr == 6 || gr == 8" [class.jigsaw-time-picker-input-selected]="_$selectMode == 'second'"
-           [(ngModel)]="_$second" (blur)="_$cancelSelect('second')" (click)="_$handleSelectMode('second')">
+           [(ngModel)]="_$second" (blur)="_$cancelSelect('second')" (focus)="_$handleSelectMode('second')">
     <div class="jigsaw-time-picker-ctrl">
         <div *ngIf="_$selectMode != 'none'; else clock" class="jigsaw-time-picker-ctrl-bar">
             <span class="fa fa-caret-up" (mousedown)="_$handleCtrlBarClick($event, 1)"></span>
