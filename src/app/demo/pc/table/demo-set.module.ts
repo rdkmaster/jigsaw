@@ -87,6 +87,8 @@ import {TableMixinTableDemoComponent} from "./mixin-table/demo.component";
 import {TableMixinTableDemoModule} from "./mixin-table/demo.module";
 import {TableChangeDataDemoModule} from "./change-data/demo.module"
 import {TableChangeDataDemoComponent} from "./change-data/demo.component";
+import {TreeTableDemoComponent} from "./tree-table/demo.component";
+import {TreeTableDemoModule} from "./tree-table/demo.module";
 
 export const routerConfig = [
     {
@@ -218,6 +220,9 @@ export const routerConfig = [
     {
         path: 'change-data', component: TableChangeDataDemoComponent
     },
+    {
+        path: 'tree-table', component: TreeTableDemoComponent
+    },
 ];
 
 @NgModule({
@@ -232,7 +237,8 @@ export const routerConfig = [
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule, TableChangeDataDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
-        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule
+        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
+        TreeTableDemoModule
     ]
 })
 export class TableDemoModule {

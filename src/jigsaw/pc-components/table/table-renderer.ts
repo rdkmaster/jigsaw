@@ -3,12 +3,12 @@ import {
     OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
-import {TableData} from "../../common/core/data/table-data";
+import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
@@ -371,12 +371,16 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     private _hostCellEl: HTMLElement;
 
     private _onKeyDown($event) {
-        if($event.type == 'click' && $event.path.find(el => el == this._hostCellEl)) return;
+        if ($event.type == 'click' && $event.path.find(el => el == this._hostCellEl)) {
+            return;
+        }
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
     }
 
     public _$handleValueChange($event) {
-        if(!$event || $event.label == this.cellData) return;
+        if (!$event || $event.label == this.cellData) {
+            return;
+        }
         this.dispatchChangeEvent($event.label)
     }
 
@@ -437,7 +441,6 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     ngOnInit() {
         super.ngOnInit();
-
         // 使用此方法使其他单元格退出编辑状态
         this._hostCellEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, 'td');
         this._removeClickHandler = this._renderer.listen('document', 'click', this._onKeyDown.bind(this));
@@ -452,11 +455,41 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 }
 
+export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, data: string };
+
+@Component({
+    template: `
+        <div class="jigsaw-table-tree-cell">
+            <span [style.margin-left]="indent"></span>
+            <span class="jigsaw-table-tree-bar" *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
+                <span *ngIf="cellData.open; else close" class="fa fa-minus-square-o"></span>
+                <ng-template #close>
+                    <span class="fa fa-plus-square-o"></span>
+                </ng-template>
+            </span>
+            {{cellData.data}}
+        </div>
+    `
+})
+export class TreeTableCellRenderer extends TableCellRendererBase {
+    public cellData: TreeTableCellData;
+    public tableData: PageableTreeTableData;
+
+    public get indent(): string {
+        return (this.cellData.id.length - 1) * 20 + 'px';
+    }
+
+    public _$toggleOpenNode() {
+        const indexes = this.cellData.id.split('');
+        this.tableData.toggleOpenNode(indexes, !this.cellData.open);
+    }
+}
+
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
