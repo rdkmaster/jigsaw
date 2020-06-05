@@ -1,3 +1,54 @@
+## v9.1.0 (2020-06-5)
+
+### 新特性 / New Features
+- [新增] jigsaw-menu菜单组件和jigsaw-cascading-menu级联菜单指令
+- [新增] 增加进度条组件
+- [新增] 增加树形表格渲染器，用于模拟出树型表格的效果，表格支持展示级联关系数据
+- [新增] cascade增加对内部tile option宽度的配置
+- [新建] 上传组件和指令支持file-verify字段以及其他自定义字段，服务端可通过这些字段做安全相关校验
+- [新增] 增加表格的编辑单元格jigsaw-auto-complete-input渲染器，jigsaw-auto-complete-input组件交互过程优化
+- [新增] 增加switch组件的只读模式，优化表格渲染初始值的更新过程
+- [新增] float指令增加reposition方法，优化下拉打开逻辑，单击宿主不关闭下拉
+- [新增] 分页组件的简单模式增加选择分页记录数功能
+- [新增] PopupOptions添加一个新属性showShadow用于控制是否自动添加阴影
+- [新增] float下拉视图指令支持添加三角形指向宿主
+- [新增] float指令暴露openFloat和closeFloat方法，auto-complete-input支持编程方式开关提示列表
+- [新增] SimpleTreeData支持xml作为数据源格式
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] tile-lite / tile 组件添加showBoder属性，用于控制是否显示边框，默认为true
+- [优化] 升级echarts到4.7.0
+- [优化] 调整graph颜色，增加不同系列的对比，fixes #1109
+- [优化] 在把Jigsaw与服务端一起编译时，直接使用window对象，会导致后端编译失败
+- [优化] table header使用html渲染器同时也可以设置排序功能
+- [优化] PopupService.setPosition中增加参数非空保护，避免报错
+- [优化] 表格select渲染器退出编辑优化，支持通过ESC和鼠标点击其他区域退出
+- [优化] 去掉data.refresh的setTimeout，优化鱼骨图的异步操作，组件剩余setTimeout改造
+- [优化] 编辑表格更新优化
+- [优化] auto-complete-input组件下拉列表优化，在条目过滤后，自动调整下拉到正确的位置
+- [优化] 使用en/decodeURIComponent对HTTP的GET请求参数做编解码器，避免angular原生编解码未能处理=+等几个字符，导致服务端处理数据失败的问题
+- [优化] 使用正常模式引入jszip，避免APP在编译时ng报warn日志
+- [优化] 解决node环境下引用lib.dom中类型时报undefined问题
+- [优化] 优化float和cascading-menu指令的实现，菜单功能支持更多的场景
+- [优化] 当xml格式存在错误的时候，在控制台上打印出错误的位置
+- [优化] 去掉root组件对notification的引用，提升aot摇树成功率
+- [优化] 进度条动画优化，提升动画性能
+
+### 修复 / Fixes
+- [修复] 修复window获取不到echarts对象的破坏性，fixes #1111
+- [修复] 上传组件和指令在additionalFields属性值未初始化时报错的问题
+- [修复] 修复auto-complete的没有下拉数据时会报错
+- [故障] 解决在某些情况下下拉视图意外弹出的问题
+- [故障] 修复Demo元素之间默认边距消失的问题
+- [故障] 修复由于ng9组件继承元数据导致autoCompleteInput样式出现问题
+- [故障] 修复float指令在不设置option的时候弹出报错的问题
+- [故障] 修改图形下载指令获取jigsaw-graph节点的方式，以解决在一些情况下无法获取echarts实例的问题
+- [故障] select设置多选和初始值时，页面首次加载显示异常的问题
+- [故障] 修改tab-pane的title属性实现方式，解决cascade组件无法及时更新标题显示的问题
+
 ## v9.0.5-beta1 (2020-3-17)
 
 ### 新特性 / New Features
