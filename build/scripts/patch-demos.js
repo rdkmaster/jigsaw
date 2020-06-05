@@ -75,8 +75,8 @@ function patchDemoTs(demoPath) {
 
     const allFiles = [];
     readAllFiles(demoPath);
-    const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}'),`).join('\n');
 
+    const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}'),`).join('\n');
     const part1 = cmpCode.substring(0, end);
     const part2 = cmpCode.substring(end).replace(/^\s*;?/, '');
     cmpCode = `${part1}\n    __codes: any = {\n${entries}\n    };\n` +
