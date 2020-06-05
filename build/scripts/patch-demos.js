@@ -59,8 +59,13 @@ function patchDemoTs(demoPath) {
     let end = match ? findQuoteEnd(match[2]) : -1;
     if (end === -1) {
         // 有可能是下面的方式引入的文本
+<<<<<<< HEAD
         // description: string = require('!!raw-loader!./readme.md').default;
         const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\)\.default;?/);
+=======
+        // description: string = require('!!raw-loader!./readme.md');
+        const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\);?/);
+>>>>>>> master
         if (rMatch) {
             end = rMatch[0].length;
         } else {
@@ -75,7 +80,11 @@ function patchDemoTs(demoPath) {
 
     const allFiles = [];
     readAllFiles(demoPath);
+<<<<<<< HEAD
     const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}').default,`).join('\n');
+=======
+    const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}'),`).join('\n');
+>>>>>>> master
 
     const part1 = cmpCode.substring(0, end);
     const part2 = cmpCode.substring(end).replace(/^\s*;?/, '');
