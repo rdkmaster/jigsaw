@@ -1323,6 +1323,10 @@ export class PageableTreeTableData extends LocalPageableTableData {
             data.hasOwnProperty('field') && data.field instanceof Array;
     }
 
+    protected isDataValid(data): boolean {
+        return PageableTreeTableData.isTreeTableData(data);
+    }
+
     public clear(): void {
         super.clear();
         this.treeData = new SimpleTreeData();
