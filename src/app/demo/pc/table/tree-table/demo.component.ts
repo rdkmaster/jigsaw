@@ -1,10 +1,12 @@
 import {Component} from "@angular/core";
 import {
-    PageableTreeTableData,
-    TreeTableData,
+    AdditionalColumnDefine,
     ColumnDefine,
+    PageableTreeTableData,
+    TableCellCheckboxRenderer,
+    TableHeadCheckboxRenderer,
     TreeTableCellRenderer,
-    AdditionalColumnDefine, TableHeadCheckboxRenderer, TableCellCheckboxRenderer
+    TreeTableData
 } from "jigsaw/public_api";
 
 @Component({
