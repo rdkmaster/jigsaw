@@ -1,6 +1,6 @@
 {
     "name": "@rdkmaster/jigsaw",
-    "version": "9.0.5-beta1",
+    "version": "9.1.0",
     "description": "Jigsaw, the next generation component set for RDK",
     "repository": {
         "type": "git",
@@ -9,6 +9,7 @@
     "keywords": [
         "jigsaw",
         "rdk",
+        "zte",
         "angular",
         "components",
         "typescript"
@@ -17,24 +18,23 @@
     "bugs": {
         "url": "https://github.com/rdkmaster/jigsaw/issues"
     },
-    "homepage": "http://rdk.zte.com.cn/components",
+    "homepage": "https://jigsaw-zte.gitee.io",
     "peerDependencies": {
         "@ngx-translate/core": "~11.0.1",
-        "eonasdan-bootstrap-datetimepicker": "~4.17.47",
-        "echarts": "~4.1.0",
-        "jquery": "~3.4.1",
+        "echarts": "~4.7.0",
+        "jquery": "~3.5.1",
         "ztree": "~3.5.24",
         "font-awesome": "~4.7.0",
         "ngx-perfect-scrollbar": "~8.0.0",
-        "@rdkmaster/icon-font": "^1.0.4",
-        "@angular/animations": "~9.0.0-rc.7",
-        "@angular/common": "~9.0.0-rc.7",
-        "@angular/compiler": "~9.0.0-rc.7",
-        "@angular/core": "~9.0.0-rc.7",
-        "@angular/forms": "~9.0.0-rc.7",
-        "@angular/platform-browser": "~9.0.0-rc.7",
-        "@angular/platform-browser-dynamic": "~9.0.0-rc.7",
-        "@angular/router": "~9.0.0-rc.7",
+        "@rdkmaster/icon-font": "^1.0.6",
+        "@angular/animations": "~9.1.9",
+        "@angular/common": "~9.1.9",
+        "@angular/compiler": "~9.1.9",
+        "@angular/core": "~9.1.9",
+        "@angular/forms": "~9.1.9",
+        "@angular/platform-browser": "~9.1.9",
+        "@angular/platform-browser-dynamic": "~9.1.9",
+        "@angular/router": "~9.1.9",
         "rxjs": "~6.5.3",
         "zone.js": "~0.10.2",
         "core-js": "~3.0.1",

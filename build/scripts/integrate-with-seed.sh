@@ -6,7 +6,6 @@ rm -fr $seedDir
 mkdir -p $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git $seedDir
 cd $seedDir
-git checkout v9.0
 npm install
 
 #update jigsaw npm package
