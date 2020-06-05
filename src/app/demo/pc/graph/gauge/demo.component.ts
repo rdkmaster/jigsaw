@@ -28,7 +28,7 @@ export class GaugeGraphComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用仪表盘';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 

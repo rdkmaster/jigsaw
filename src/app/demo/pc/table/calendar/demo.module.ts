@@ -7,8 +7,7 @@ import {CalendarDateRenderer, TableCalendarDemoComponent} from './demo.component
 @NgModule({
     imports: [CommonModule, JigsawTableModule, JigsawDemoDescriptionModule],
     declarations: [TableCalendarDemoComponent, CalendarDateRenderer],
-    exports: [TableCalendarDemoComponent],
-    entryComponents: [CalendarDateRenderer]
+    exports: [TableCalendarDemoComponent]
 })
 export class TableCalendarDemoModule {
 }

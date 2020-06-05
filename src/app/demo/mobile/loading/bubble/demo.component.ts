@@ -6,7 +6,7 @@ import {LoadingService, PopupInfo, JigsawBubbleLoading} from "jigsaw/mobile_publ
     styleUrls: ['./demo.component.css']
 })
 export class BubbleLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
     }

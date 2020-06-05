@@ -16,8 +16,7 @@ import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "
     declarations: [
         BigTableDataDemoComponent, PositionHeaderRenderer, OfficeHeaderRenderer, OfficeCellRenderer
     ],
-    exports: [BigTableDataDemoComponent],
-    entryComponents: [PositionHeaderRenderer, OfficeHeaderRenderer, OfficeCellRenderer]
+    exports: [BigTableDataDemoComponent]
 })
 export class BigTableDataDemoModule {
 }

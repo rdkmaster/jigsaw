@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Renderer2, Input, ElementRef, NgZone
+    NgModule, Component, Renderer2, Input, ElementRef, NgZone,ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
@@ -109,14 +109,12 @@ const notificationInstances = {
         '[class.jigsaw-notification-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super();
-
-        this.renderer = renderer;
-        this.elementRef = elementRef;
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
+        super(renderer, elementRef, _zone);
     }
 
     protected getPopupElement(): HTMLElement {
@@ -296,14 +294,6 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * @internal
      */
-    public static _zone: NgZone;
-    /**
-     * @internal
-     */
-    public static _renderer: Renderer2;
-    /**
-     * @internal
-     */
     public static _removeResizeListener;
 
     private static _positionReviser(position: NotificationPosition, element: HTMLElement): PopupPositionValue {
@@ -412,11 +402,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        setTimeout(() => this.reposition(opt.position));
+        Promise.resolve().then(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
-            this._zone.runOutsideAngular(() => {
-                this._removeResizeListener = this._renderer.listen(window, 'resize', () => this.reposition());
+            PopupService._zone.runOutsideAngular(() => {
+                this._removeResizeListener = PopupService._renderer.listen(window, 'resize', () => this.reposition());
             });
         }
 
@@ -427,8 +417,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule],
     declarations: [JigsawNotification],
-    exports: [JigsawNotification],
-    entryComponents: [JigsawNotification]
+    exports: [JigsawNotification]
 })
 export class JigsawNotificationModule {
 }

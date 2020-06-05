@@ -7,6 +7,7 @@ import {
     ElementRef,
     Renderer2,
     AfterViewInit,
+    AfterContentInit,
     ChangeDetectorRef
 } from "@angular/core";
 import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
@@ -126,9 +127,9 @@ export class JigsawMenuHelper implements IPopupable {
         '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
         '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
         '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
-    },
+    }
 })
-export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
+export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit, AfterContentInit {
 
     public initData: MenuOptions;
 
@@ -212,10 +213,10 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @Output()
     public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
-    @ViewChild('menuList', {read: ElementRef, static: false})
+    @ViewChild('menuList', {read: ElementRef})
     private _menuListElement: ElementRef;
 
-    @ViewChild('menuList', {static: false})
+    @ViewChild('menuList')
     private _menuListInstance: JigsawList;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {
@@ -229,6 +230,10 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
+        this._changeDetectorRef.detectChanges();
+    }
+
+    ngAfterContentInit() {
         this._changeDetectorRef.detectChanges();
     }
 

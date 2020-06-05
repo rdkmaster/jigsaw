@@ -11,8 +11,7 @@ import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
         CommonModule, JigsawDemoDescriptionModule
     ],
     declarations: [TableDragDemoComponent, TableDragReplaceRow, TableDragDeleteRow],
-    exports: [TableDragDemoComponent],
-    entryComponents: [TableDragReplaceRow, TableDragDeleteRow]
+    exports: [TableDragDemoComponent]
 })
 export class TableDragDemoModule {
 

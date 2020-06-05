@@ -1,14 +1,4 @@
-import {
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type
-} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -33,6 +23,7 @@ export enum DropDownTrigger {
 export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
     'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
 
+@Directive()
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     protected _removeWindowClickHandler: Function;
     protected _floatOpenDelay = 100;
@@ -71,6 +62,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             if (this._opened == true) {
                 this._closeFloat();
                 this.callLater(() => {
+                    // 这里必须使用setTimeout来跳过第一次冒泡上来的window.click
                     this._openFloat();
                 });
             }
@@ -104,6 +96,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this.callLater(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
+            // 这里必须使用setTimeout来跳过第一次冒泡上来的window.click
             if (value) {
                 this.openFloat();
             } else {
@@ -129,8 +122,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
     constructor(protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
-                protected _popupService: PopupService) {
-        super();
+                protected _popupService: PopupService,
+                protected _zone: NgZone) {
+        super(_zone);
     }
 
     protected _emitOpenChange(open: boolean): void {
@@ -305,7 +299,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         popupInfo.dispose = this.closeFloat.bind(this);
 
         if (option.borderType == 'pointer') {
-            setTimeout(() => this._setArrow(popupInfo.element));
+            this.runAfterMicrotasks(() => this._setArrow(this.popupElement));
         }
 
         if (!this._removeMouseOverHandler) {
@@ -642,11 +636,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 })
 export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
-    constructor(protected _renderer: Renderer2,
-                protected _elementRef: ElementRef,
-                protected _popupService: PopupService) {
-        super(_renderer, _elementRef, _popupService);
-    }
 
     private _closeTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
 

@@ -12,7 +12,9 @@ import {
     QueryList,
     Renderer2,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -32,7 +34,8 @@ export class SliderMark {
 @Component({
     selector: 'jigsaw-slider-handle',
     templateUrl: './slider-handle.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSliderHandle implements OnInit {
 
@@ -67,7 +70,9 @@ export class JigsawSliderHandle implements OnInit {
     public _$handleStyle = {};
 
     private setHandleStyle() {
-        if (isNaN(this._offset)) return;
+        if (isNaN(this._offset)) {
+            return;
+        }
         this._zone.runOutsideAngular(() => {
             if (this._slider.vertical) { // 兼容垂直滑动条;
                 this._$handleStyle = {
@@ -157,7 +162,7 @@ export class JigsawSliderHandle implements OnInit {
 
     private _slider: JigsawSlider; // 父组件;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any, private _zone: NgZone) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any, protected _zone: NgZone) {
         this._slider = slider;
     }
 
@@ -166,7 +171,9 @@ export class JigsawSliderHandle implements OnInit {
      * @internal
      */
     public _$updateValuePosition(event?) {
-        if (!this._dragging || this._slider.disabled) return;
+        if (!this._dragging || this._slider.disabled) {
+            return;
+        }
 
         // 防止产生选中其他文本，造成鼠标放开后还可以拖拽的奇怪现象;
         event.stopPropagation();
@@ -179,7 +186,9 @@ export class JigsawSliderHandle implements OnInit {
 
         let newValue = this.transformPosToValue(pos);
 
-        if (this.value === newValue) return;
+        if (this.value === newValue) {
+            return;
+        }
 
         this.value = newValue;
 
@@ -210,11 +219,13 @@ export class JigsawSliderHandle implements OnInit {
     encapsulation: ViewEncapsulation.None,
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSlider), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
-    constructor(private _element: ElementRef, private _render: Renderer2, private _zone: NgZone) {
+    constructor(private _element: ElementRef, private _render: Renderer2,
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -256,6 +267,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public _updateValue(index: number, value: number) {
         this._$value.set(index, value);
         this._$value.refresh();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -265,6 +277,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      */
     public _refresh() {
         this._dimensions = this._element.nativeElement.getBoundingClientRect();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -366,8 +379,11 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             let min: number = this._$value[0];
 
             this._$value.map(item => {
-                if (max - item < 0) max = item;
-                else if (item - min < 0) min = item;
+                if (max - item < 0) {
+                    max = item;
+                } else if (item - min < 0) {
+                    min = item;
+                }
             });
 
             startPos = this._transformValueToPos(min);
@@ -407,7 +423,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     private _calcMarks() {
-        if (!this._marks || !this.initialized) return;
+        if (!this._marks || !this.initialized) {
+            return;
+        }
 
         this._$marks.splice(0, this._$marks.length);
         let size = Math.round(100 / this._marks.length);
@@ -497,6 +515,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             this._zone.runOutsideAngular(() => this._setTrackStyle(this.value));
             this.valueChange.emit(this.value);
             this._propagateChange(this.value);
+            this._changeDetectorRef.markForCheck();
         });
     }
 
@@ -505,7 +524,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     // ngModel触发的writeValue方法，只会在ngOnInit,ngAfterContentInit,ngAfterViewInit这些生命周期之后才调用
     public writeValue(value: any): void {
-        if(value instanceof Array) {
+        if (value instanceof Array) {
             value = new ArrayCollection(value);
         }
         if (value instanceof ArrayCollection) {
@@ -523,6 +542,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
         // refresh的回调是异步的
         this._$value.refresh();
+        this._changeDetectorRef.markForCheck();
     }
 
     public registerOnChange(fn: any): void {

@@ -17,7 +17,7 @@ export class TableResizeDemoComponent implements OnInit {
 
     tableWidth: any = '100%';
 
-    @ViewChild('tableCmp', {static: false}) tableCmp: JigsawTable;
+    @ViewChild('tableCmp') tableCmp: JigsawTable;
 
     changeTableWidth() {
         // 修改table的width，table会自动resize
@@ -41,5 +41,5 @@ export class TableResizeDemoComponent implements OnInit {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这是一个如何动态改变table宽高的demo';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }

@@ -18,8 +18,7 @@ import {JigsawFloatModule} from "../../common/directive/float/index";
     imports: [CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule, JigsawFloatModule],
     exports: [JigsawTab, JigsawTabPane, JigsawEditableTabTitleRenderer],
     declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer],
-    providers: [],
-    entryComponents: [JigsawTabPane]
+    providers: []
 })
 export class JigsawTabsModule { }
 

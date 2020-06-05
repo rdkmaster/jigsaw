@@ -7,7 +7,8 @@ import {
     AfterViewInit,
     OnDestroy,
     Renderer2,
-    ElementRef
+    ElementRef,
+    NgZone
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
@@ -144,12 +145,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     @Output()
     public jigsawCascadingMenuClose = new EventEmitter<void>();
-
-    constructor(protected _renderer: Renderer2,
-                protected _elementRef: ElementRef,
-                protected _popupService: PopupService) {
-        super(_renderer, _elementRef, _popupService);
-    }
 
     ngOnInit() {
         super.ngOnInit();

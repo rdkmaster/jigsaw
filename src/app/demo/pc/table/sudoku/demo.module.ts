@@ -12,8 +12,7 @@ import {NumberSelectPad} from "./number-select-pad";
         JigsawAlertModule, JigsawTileSelectModule, JigsawButtonModule
     ],
     declarations: [SudokuGameComponent, NumberRenderer, NumberSelectPad],
-    exports: [SudokuGameComponent],
-    entryComponents: [NumberRenderer, NumberSelectPad]
+    exports: [SudokuGameComponent]
 })
 export class SodokuGameModule {
 }

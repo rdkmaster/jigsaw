@@ -5,7 +5,7 @@ import {SimpleTreeData, JigsawTreeExt, ZTreeSettingSetting} from "jigsaw/public_
     templateUrl: './demo.component.html'
 })
 export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
     setting: ZTreeSettingSetting = {

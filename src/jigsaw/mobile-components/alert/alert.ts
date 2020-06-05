@@ -1,16 +1,4 @@
-import {
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    Renderer2,
-    Type,
-    ViewChild,
-} from "@angular/core";
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, Type, ViewChild, Directive } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
@@ -143,6 +131,7 @@ export class JigsawMobileAlert extends AbstractMobileDialogComponentBase {
     }
 }
 
+@Directive()
 export abstract class JigsawMobileCommonAlert extends DialogBase {
     @Input()
     public set initData(value: any) {
@@ -215,7 +204,7 @@ export class JigsawMobileInfoAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.info;
@@ -240,7 +229,7 @@ export class JigsawMobileWarningAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.warning;
@@ -265,7 +254,7 @@ export class JigsawMobileErrorAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.error;
@@ -290,7 +279,7 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
         super(_renderer, _elementRef);
     }
 
-    @ViewChild(JigsawMobileAlert, {static: false}) dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.confirm;
@@ -307,14 +296,13 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileButtonModule, CommonModule, TranslateModule.forRoot()],
+    imports: [JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileButtonModule, CommonModule, TranslateModule.forChild()],
     declarations: [JigsawMobileAlert, JigsawMobileInfoAlert, JigsawMobileWarningAlert, JigsawMobileErrorAlert, JigsawMobileConfirmAlert],
     exports: [
         JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileAlert, JigsawMobileInfoAlert, JigsawMobileWarningAlert,
         JigsawMobileErrorAlert, JigsawMobileConfirmAlert
     ],
-    providers: [TranslateService],
-    entryComponents: [JigsawMobileInfoAlert, JigsawMobileWarningAlert, JigsawMobileErrorAlert, JigsawBlock]
+    providers: [TranslateService]
 })
 export class JigsawMobileAlertModule {
     constructor(translateService: TranslateService) {

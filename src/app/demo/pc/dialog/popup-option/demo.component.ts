@@ -26,9 +26,9 @@ export class DialogPopOptionDemo implements OnInit, AfterViewInit {
 
     offset: PopupPositionOffset;
 
-    @ViewChild("left", {static: false}) left: ElementRef;
-    @ViewChild("middle", {static: false}) middle: ElementRef;
-    @ViewChild("right", {static: false}) right: ElementRef;
+    @ViewChild("left") left: ElementRef;
+    @ViewChild("middle") middle: ElementRef;
+    @ViewChild("right") right: ElementRef;
 
     constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef) {
     }

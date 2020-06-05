@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef} from '@angular/core';
+import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
 
@@ -17,6 +17,7 @@ import {AbstractJigsawComponent} from "../../common/common";
             multi: true
         }
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
     /**

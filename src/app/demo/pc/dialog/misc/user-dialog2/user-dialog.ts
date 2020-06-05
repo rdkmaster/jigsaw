@@ -7,7 +7,7 @@ import {DialogBase, JigsawDialog} from "jigsaw/public_api";
 })
 export class UserDialog2Component extends DialogBase implements AfterViewInit {
     // 这个变量是父类所需，就照着这么写就行啦
-    @ViewChild(JigsawDialog, {static: false}) dialog: JigsawDialog;
+    @ViewChild(JigsawDialog) dialog: JigsawDialog;
 
     // 将数据传给对话框外部
     emitMessage(msg) {

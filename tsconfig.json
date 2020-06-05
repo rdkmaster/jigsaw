@@ -2,7 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "importHelpers": true,
-        "module": "esNext",
+        "module": "esnext",
         "outDir": "./dist/out-tsc",
         "baseUrl": "src",
         "sourceMap": true,

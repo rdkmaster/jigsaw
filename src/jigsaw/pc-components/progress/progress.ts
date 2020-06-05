@@ -141,8 +141,8 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     private _estimationInfo: EstimationInfo;
 
     /**
-     * 不是所有任何情况下都可以给定精确的进度值的，但一个事务大约需要花掉的时间，是相对容易预估出来的。
-     * 此时，可以调用此方法来让进度条继续往前走，给用户一个假象，这样比卡着不动的体验会好许多。
+     * 不是所有情况下都可以给定精确的进度值，但虽然这样的事务无法精确计算进度，但其大约需要花掉的时间，是相对容易预估出来的。
+     * 此时，可以调用此方法来让进度条继续往前走，给用户一个假象，这样比进度条卡着不动的体验会好许多，能有效缓解用户的焦虑感。
      *
      * @param duration 从当前进度到`maxProgress`估计需要持续的时长，单位：毫秒数
      * @param maxProgress 在估计进度值的过程中，进度条的值将随机递增，最大到达这个值后终止

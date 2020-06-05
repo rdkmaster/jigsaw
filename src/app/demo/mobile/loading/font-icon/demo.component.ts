@@ -6,7 +6,7 @@ import {LoadingService, PopupInfo, JigsawFontLoading} from "jigsaw/mobile_public
     styleUrls: ['./demo.component.css']
 })
 export class FontLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;

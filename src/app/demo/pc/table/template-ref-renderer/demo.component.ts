@@ -8,10 +8,10 @@ import {TableData, AdditionalColumnDefine, ColumnDefine} from "jigsaw/public_api
     encapsulation: ViewEncapsulation.None
 })
 export class TableRendererOfTemplateRefDemoComponent {
-    @ViewChild('headIcon', {static: false}) headIcon: TemplateRef<any>;
-    @ViewChild('checkboxRenderer', {static: false}) checkboxRenderer: TemplateRef<any>;
-    @ViewChild('cellOption', {static: false}) cellOption: TemplateRef<any>;
-    @ViewChild('cellName', {static: false}) cellName: TemplateRef<any>;
+    @ViewChild('headIcon') headIcon: TemplateRef<any>;
+    @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
+    @ViewChild('cellOption') cellOption: TemplateRef<any>;
+    @ViewChild('cellName') cellName: TemplateRef<any>;
 
     tableData: TableData;
     nativeValue: string = ' - native';

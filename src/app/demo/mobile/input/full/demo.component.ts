@@ -23,7 +23,7 @@ export class InputFullComponent {
 
     // demo-4
     focusMessage: string;
-    @ViewChild('myInput', {static: false}) myInput:JigsawMobileInput;
+    @ViewChild('myInput') myInput:JigsawMobileInput;
     focusInput() {
         this.myInput.focus();
     }

@@ -10,7 +10,8 @@ import {
     NgModule,
     Output,
     QueryList,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -26,7 +27,8 @@ export enum CollapseMode {
 @Component({
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html',
-    animations: [collapseMotion]
+    animations: [collapseMotion],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
 

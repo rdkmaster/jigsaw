@@ -1,6 +1,6 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
-    ViewChildren, OnDestroy, Output, EventEmitter
+    ViewChildren, OnDestroy, Output, EventEmitter, NgZone
 } from "@angular/core";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {CommonModule} from "@angular/common";
@@ -50,7 +50,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     ]
 })
 export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
         super();
     }
 
@@ -113,11 +113,11 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input() public optionCount: number;
 
-    @ViewChild(JigsawList, {static: false}) private _listInst: JigsawList;
+    @ViewChild(JigsawList) private _listInst: JigsawList;
 
     @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
 
-    @ViewChild(PerfectScrollbarDirective, {static: false}) private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * 搜索的时候，如果重新创建data为LocalPageableArray，这个时候检查selectItems，会误删选中值
@@ -127,8 +127,10 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     public removeInvalidSelectedItems() {
         if(this._listInst) {
             // 等待ngFor渲染
-            this.callLater(() => {
-                this._listInst._removeInvalidSelectedItems();
+            this.runAfterMicrotasks(() => {
+                this._zone.run(() => {
+                    this._listInst._removeInvalidSelectedItems();
+                })
             })
         }
     }

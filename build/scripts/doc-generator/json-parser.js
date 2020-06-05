@@ -102,7 +102,7 @@ if (!checkUnknownTypes()) {
 
 function findExtends(ci) {
     var extensions = [], originType = ci.name;
-    while (ci.extends) {
+    while (ci && ci.extends) {
         extensions.push(ci.extends);
         ci = findTypeMetaInfo(ci.extends);
     }
@@ -119,6 +119,9 @@ function findImplements(ci) {
     var implements = (ci.implements || []).filter(i => !isAngularLifeCircle(i));
     while (ci.extends) {
         ci = findTypeMetaInfo(ci.extends);
+        if (!ci) {
+            break;
+        }
         (ci.implements || []).filter(i => !isAngularLifeCircle(i)).forEach(i => implements.push(i));
     }
     implements = implements.sort((i1, i2) => i1.localeCompare(i2)).map(i => addTypeLink(i));
@@ -245,8 +248,10 @@ function findInheritedProperties(ci, properties) {
     while (ci && ci.extends) {
         ci = findTypeMetaInfo(ci.extends);
         if (!ci) {
-            console.warn('no meta info for: ' + ci.extends);
+            console.warn('no meta info found! findInheritedProperties');
             continue;
+        } else {
+            console.warn('no meta info found! findInheritedProperties', ci.extends);
         }
         mergeProperties(ci).forEach(p => {
             if (properties.find(pp => pp.name === p.name)) {
@@ -367,7 +372,7 @@ function findInheritedMethods(ci, methods) {
     while (ci && ci.extends) {
         ci = findTypeMetaInfo(ci.extends);
         if (!ci) {
-            console.warn('no meta info for: ' + ci.extends);
+            console.warn('no meta info found! findInheritedMethods');
             continue;
         }
         (ci.methodsClass || ci.methods).forEach(m => {

@@ -5,7 +5,7 @@ import {JigsawTab} from "jigsaw/public_api";
     templateUrl: "./demo.component.html"
 })
 export class JigsawDestoryTabComponent {
-    @ViewChild('myTab', {static: false}) myTab: JigsawTab;
+    @ViewChild('myTab') myTab: JigsawTab;
 
     destroyTab() {
         this.myTab.removeTab(0);

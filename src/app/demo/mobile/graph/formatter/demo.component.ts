@@ -8,7 +8,7 @@ import {AbstractGraphData, EchartOptions, JigsawMobileGraph} from "jigsaw/mobile
 
 export class GraphFormatterComponent implements OnInit, AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
+    @ViewChild("graph") graph: JigsawMobileGraph;
 
 
     ngOnInit() {

@@ -40,7 +40,7 @@ export class RelationalGraphComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用K线图';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 

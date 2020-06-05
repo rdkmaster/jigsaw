@@ -2,11 +2,14 @@ import {debounceTime} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     forwardRef,
     Input,
     NgModule,
+    NgZone,
     OnDestroy,
     Output,
     TemplateRef,
@@ -15,7 +18,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawInput, JigsawInputModule} from "./input";
+import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
 
@@ -50,10 +53,11 @@ export class DropDownValue {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
-    @ViewChild(JigsawFloat, {static: false})
+export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
+    @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
     /**
@@ -105,9 +109,6 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         [...this._bakData] = this._$data;
     }
 
-    @Input()
-    public valid: boolean = true;
-
     /**
      * 用于控制在输入框获得焦点后是否自动执行过滤
      *
@@ -116,10 +117,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Input()
     public filterOnFocus: boolean = true;
 
-    @ViewChild('dropDownTemp', {static: false})
+    @ViewChild('dropDownTemp')
     private _dropDownTemp: TemplateRef<any>;
 
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     private _input: JigsawInput;
 
     public focus() {
@@ -154,6 +155,10 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_cdr, _zone);
+    }
+
     ngAfterViewInit() {
         this._subscribeInputValueChange();
     }
@@ -161,8 +166,8 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     private _inputValueChangeSubscription: Subscription;
 
     private _subscribeInputValueChange(): void {
-        if(this._inputValueChangeSubscription) {
-        	return;
+        if (this._inputValueChangeSubscription) {
+            return;
         }
 
         this._inputValueChangeSubscription = this._input.valueChange
@@ -200,8 +205,11 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
             this._$propertyListOpen = data.length > 0;
         }
         if (this._$propertyListOpen) {
-            this.callLater(() => {
-                this._dropdownFloat.reposition();
+            this.runAfterMicrotasks(() => {
+                this._zone.run(() => {
+                    this._dropdownFloat.reposition();
+                    this._cdr.markForCheck();
+                })
             });
         }
     }

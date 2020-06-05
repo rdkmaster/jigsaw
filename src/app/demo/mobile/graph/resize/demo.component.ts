@@ -12,11 +12,11 @@ export class GraphResizeComponent implements OnInit {
     graphWidth: string = '100%';
     graphHeight: string = '300';
 
-    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
+    @ViewChild("graph") graph: JigsawMobileGraph;
 
-    @ViewChild("widthInput", {static: false}) widthInput: JigsawMobileInput;
+    @ViewChild("widthInput") widthInput: JigsawMobileInput;
 
-    @ViewChild("heightInput", {static: false}) heightInput: JigsawMobileInput;
+    @ViewChild("heightInput") heightInput: JigsawMobileInput;
 
     resizeGraph() {
         this.graph.resize();

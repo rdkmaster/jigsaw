@@ -24,7 +24,7 @@ export class MyTableCell extends TableCellRendererBase {
 })
 export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit {
 
-    @ViewChild(JigsawInput, {static: false}) input: JigsawInput;
+    @ViewChild(JigsawInput) input: JigsawInput;
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';

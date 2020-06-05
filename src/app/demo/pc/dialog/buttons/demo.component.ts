@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {ButtonInfo, PopupInfo, PopupService} from "jigsaw/public_api";
+import {PopupInfo, PopupService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

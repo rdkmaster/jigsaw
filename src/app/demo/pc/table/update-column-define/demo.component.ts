@@ -7,7 +7,7 @@ import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 })
 export class TableColumnSetWidthDemoComponent {
     tableData: TableData;
-    @ViewChild('table', {static: false}) table: JigsawTable;
+    @ViewChild('table') table: JigsawTable;
 
     changeWidth(value) {
         this.columns[0].width = value;

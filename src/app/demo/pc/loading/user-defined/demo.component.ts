@@ -7,7 +7,7 @@ import {DefinedLoading} from "./definedLoading/definedLoading";
     styleUrls: ['./demo.component.css']
 })
 export class DefinedLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
     }

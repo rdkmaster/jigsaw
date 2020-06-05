@@ -1,37 +1,17 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy,
+    Directive, NgZone, ChangeDetectorRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-/**
- * 单行输入框组件，常常用于接收用户的文本输入。
- *
- * 支持前后置图标，且每个图标都可交互，[参考demo]($demo=pc/input/icons)。
- *
- * 这是一个表单友好组件。
- *
- * $demo = input/full
- */
-@Component({
-    selector: 'jigsaw-input, j-input',
-    templateUrl: 'input.html',
-    host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-        '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-input]': 'true',
-        '[class.jigsaw-input-error]': '!valid',
-        '[class.jigsaw-input-focused]': 'focused',
-        '[class.jigsaw-input-disabled]': 'disabled'
-    },
-    providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
-    ]
-})
-export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
+@Directive()
+export abstract class JigsawInputBase extends AbstractJigsawComponent  implements IJigsawFormControl, ControlValueAccessor {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+        super(_zone);
+    }
 
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
@@ -55,19 +35,6 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
      */
     @Input() public valid: boolean = true;
 
-
-    /**
-     * 当用户设置类型为password时，输入内容隐藏为特殊字符。
-     *
-     * $demo = input/password
-     */
-    @Input() public password: boolean = false;
-
-    @Input()
-    public get type(): string {
-        return this.password ? "password" : "text";
-    }
-
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
@@ -82,6 +49,7 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
             return;
         }
         this._value = value.toString();
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -110,6 +78,7 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
         this._value = newValue;
         this.valueChange.emit(this._value);
         this._propagateChange(this._value);
+        this._cdr.markForCheck();
     }
 
     /**
@@ -136,40 +105,7 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
         return this._placeholder;
     }
 
-
-    @ViewChild('input', {static: false})
-    private _inputElement: ElementRef;
-
-    /**
-     * 调用此方法可以通过编程方式使得文本获得焦点。
-     * 当确信用户需要在文本框中输入时，自动让文本框获得焦点可以提升体验。
-     *
-     * $demo = input/focus
-     */
-    public focus() {
-        this._focused = true;
-        this._inputElement.nativeElement.focus();
-    }
-
-    /**
-     * 调用此方法可以通过编程方式选中文本框中的所有文本。
-     * 当确信用户需要修改文本框里的文本时，自动选中所有文本可以提升体验。
-     *
-     * $demo = input/select
-     */
-    public select() {
-        this._inputElement.nativeElement.select();
-    }
-
-    /**
-     * @internal
-     */
-    public _$clearValue(): void {
-        this.value = '';
-        this.focus();
-    }
-
-    private _focused: boolean = false;
+    protected _focused: boolean = false;
 
     /**
      * 获取文本框是否有焦点
@@ -213,6 +149,82 @@ export class JigsawInput extends AbstractJigsawComponent implements IJigsawFormC
                 }
             }, 150);
         }
+    }
+}
+
+/**
+ * 单行输入框组件，常常用于接收用户的文本输入。
+ *
+ * 支持前后置图标，且每个图标都可交互，[参考demo]($demo=pc/input/icons)。
+ *
+ * 这是一个表单友好组件。
+ *
+ * $demo = input/full
+ */
+@Component({
+    selector: 'jigsaw-input, j-input',
+    templateUrl: 'input.html',
+    host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '(click)': '_$stopPropagation($event)',
+        '[class.jigsaw-input]': 'true',
+        '[class.jigsaw-input-error]': '!valid',
+        '[class.jigsaw-input-focused]': 'focused',
+        '[class.jigsaw-input-disabled]': 'disabled'
+    },
+    providers: [
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawInput extends JigsawInputBase {
+    constructor(protected _cdr: ChangeDetectorRef) {
+        super(_cdr);
+    }
+
+    /**
+     * 当用户设置类型为password时，输入内容隐藏为特殊字符。
+     *
+     * $demo = input/password
+     */
+    @Input() public password: boolean = false;
+
+    @Input()
+    public get type(): string {
+        return this.password ? "password" : "text";
+    }
+
+    @ViewChild('input')
+    private _inputElement: ElementRef;
+
+    /**
+     * 调用此方法可以通过编程方式使得文本获得焦点。
+     * 当确信用户需要在文本框中输入时，自动让文本框获得焦点可以提升体验。
+     *
+     * $demo = input/focus
+     */
+    public focus() {
+        this._focused = true;
+        this._inputElement.nativeElement.focus();
+    }
+
+    /**
+     * 调用此方法可以通过编程方式选中文本框中的所有文本。
+     * 当确信用户需要修改文本框里的文本时，自动选中所有文本可以提升体验。
+     *
+     * $demo = input/select
+     */
+    public select() {
+        this._inputElement.nativeElement.select();
+    }
+
+    /**
+     * @internal
+     */
+    public _$clearValue(): void {
+        this.value = '';
+        this.focus();
     }
 
     /**

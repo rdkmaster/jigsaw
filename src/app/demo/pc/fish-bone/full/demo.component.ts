@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
+import {AfterViewInit, Component, ViewEncapsulation, NgZone} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {take} from 'rxjs/operators';
 import {ChartIconFactory, ChartType, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
@@ -9,7 +10,7 @@ import {ChartIconFactory, ChartType, SimpleTreeData} from "jigsaw/public_api";
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public _zone: NgZone) {
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
@@ -299,13 +300,15 @@ export class FishBoneFullComponent implements AfterViewInit {
                 nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
                 node.nodes = [nodesItem];
             });
-            // 等待TreeData里的html字符串在鱼骨图中渲染
-            setTimeout(() => {
-                this.data3.nodes.forEach((node, index) => {
-                    const legendData = this.getLegendData(node);
-                    const pieData = this.getPieData(node);
-                    this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
-                });
+            // 等待TreeData里的html字符串在鱼骨图中渲染，此处的异步必须使用zone.onStable
+            this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+                this._zone.run(() => {
+                    this.data3.nodes.forEach((node, index) => {
+                        const legendData = this.getLegendData(node);
+                        const pieData = this.getPieData(node);
+                        this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
+                    });
+                })
             });
         })
     }
@@ -430,5 +433,5 @@ export class FishBoneFullComponent implements AfterViewInit {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = 'FishBone的使用说明';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }

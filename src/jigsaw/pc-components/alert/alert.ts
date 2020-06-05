@@ -1,16 +1,4 @@
-import {
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    Renderer2,
-    Type,
-    ViewChild,
-} from "@angular/core";
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, Type, ViewChild, Directive, NgZone } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
@@ -26,7 +14,6 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawBlock} from "../../common/components/block/block";
 
 export enum AlertLevel {
     info, warning, error, confirm
@@ -40,10 +27,8 @@ export enum AlertLevel {
     }
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super();
-        this.renderer = renderer;
-        this.elementRef = elementRef;
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
+        super(renderer, elementRef, _zone);
     }
 
     @Output()
@@ -52,7 +37,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     /**
      * @internal
      */
-    @ContentChildren(JigsawButton)
+    @ContentChildren(JigsawButton, {descendants: true})
     public _$inlineButtons: QueryList<JigsawButton>;
 
     /**
@@ -143,6 +128,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
     }
 }
 
+@Directive()
 export abstract class JigsawCommonAlert extends DialogBase {
     @Input()
     public set initData(value: any) {
@@ -260,6 +246,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-error-alert, j-error-alert',
 })
+
 export class JigsawErrorAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
@@ -307,14 +294,13 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forRoot()],
+    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forChild()],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert],
     exports: [
         JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,
         JigsawErrorAlert, JigsawConfirmAlert
     ],
-    providers: [TranslateService],
-    entryComponents: [JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawBlock]
+    providers: [TranslateService]
 })
 export class JigsawAlertModule {
     constructor(translateService: TranslateService) {

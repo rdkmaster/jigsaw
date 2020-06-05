@@ -24,10 +24,7 @@ export class JigsawRoot {
     imports: [
         JigsawBlockModule, JigsawLoadingModule
     ],
-    providers: [PopupService],
-    entryComponents: [
-        JigsawBlock, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-    ]
+    providers: [PopupService]
 })
 export class JigsawMobileRootModule {
 }

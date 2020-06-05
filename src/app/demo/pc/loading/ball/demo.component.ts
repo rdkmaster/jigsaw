@@ -6,7 +6,7 @@ import {LoadingService, PopupInfo, JigsawBallLoading} from "jigsaw/public_api";
     styleUrls: ['./demo.component.css']
 })
 export class BallLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;

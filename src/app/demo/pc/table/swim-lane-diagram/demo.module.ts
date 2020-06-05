@@ -8,12 +8,11 @@ import {TableSwimLaneCell} from "./table-renderer";
 
 @NgModule({
     imports: [
-        JigsawTableModule, CommonModule, TranslateModule.forRoot(),
+        JigsawTableModule, CommonModule, TranslateModule.forChild(),
         JigsawDemoDescriptionModule, JigsawSliderModule
     ],
     declarations: [SwimLaneDiagramDemoComponent, TableSwimLaneCell],
-    exports: [SwimLaneDiagramDemoComponent],
-    entryComponents: [TableSwimLaneCell]
+    exports: [SwimLaneDiagramDemoComponent]
 })
 export class SwimLaneDiagramDemoModule {
     constructor(translateService: TranslateService) {

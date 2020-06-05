@@ -13,7 +13,9 @@ import {
     Renderer2,
     TemplateRef,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    NgZone,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -42,15 +44,16 @@ export class ComboSelectValue {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit, AfterViewInit {
     private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super();
+                private _popupService: PopupService, protected _zone: NgZone) {
+        super(_zone);
     }
 
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
@@ -124,10 +127,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    @ContentChild(TemplateRef, {static: false})
+    @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
-    @ViewChild(JigsawFloat, {static: false})
+    @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
     /**
      * @internal
@@ -145,7 +148,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 控件disabled，并且想打开下拉
             return;
         }
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
@@ -201,10 +204,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public clearable: boolean = false;
 
-    @ViewChild('editor', {static: false})
+    @ViewChild('editor')
     private _editor: JigsawInput;
 
-    @ViewChild('editor', {read: ElementRef, static: false})
+    @ViewChild('editor', { read: ElementRef })
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
@@ -266,10 +269,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoWidth() {
-        if (!this.autoWidth || !this._jigsawFloat.popupElement) {
+        if (!this.autoWidth || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
             return;
         }
-        this.callLater(() => {
+        this.runAfterMicrotasks(() => {
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
         });
     }
@@ -361,7 +364,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             return;
         }
         this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.callLater(() => this.valueChange.emit(this._value));
+        this.runMicrotask(() => this.valueChange.emit(this._value));
         this._autoWidth();
         this._autoClose();
 

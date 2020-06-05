@@ -8,7 +8,7 @@ import {OfficeHeaderRenderer} from "./renderers";
 })
 export class TableSetCellRenderDemoComponent {
 
-    @ViewChild("jobCellRender", {static: false}) jobCellRender: TemplateRef<any>;
+    @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
 

@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef
+    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -31,7 +31,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
     @Input()
@@ -149,7 +150,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             console.error('value property must be a number, please input a number or number string');
         }
 
-        if(<any>value === "" || <any>value === "-" || Number(value) < this.min) {
+        if (<any>value === "" || <any>value === "-" || Number(value) < this.min) {
             // 正在输入的数值会在blur的时候处理
             this._value = value;
             return;
@@ -193,7 +194,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     private _inputElement: ElementRef;
 
     public _$upDisabled: boolean;
@@ -244,9 +245,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         } else {
             let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
                 this._precisionFactor * this._step) / this._precisionFactor);
-            if(tempValue < this.min) {
+            if (tempValue < this.min) {
                 this.value = this.min;
-            }else {
+            } else {
                 this.value = tempValue;
             }
         }
@@ -296,7 +297,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
-        if(this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+        if (this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
         }

@@ -7,8 +7,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 @NgModule({
     imports: [JigsawTableModule, JigsawPaginationModule, CommonModule, JigsawDemoDescriptionModule],
     declarations: [RebuildTableDataDemoComponent, JobCellRender],
-    exports: [RebuildTableDataDemoComponent],
-    entryComponents: [JobCellRender]
+    exports: [RebuildTableDataDemoComponent]
 })
 export class RebuildTableDataDemoModule {
 }

@@ -1,5 +1,5 @@
 import {
-    Component, Input, NgModule, EventEmitter, Output, ViewChild, ElementRef, HostListener
+    Component, Input, NgModule, EventEmitter, Output, ViewChild, ElementRef, HostListener,ChangeDetectionStrategy,ChangeDetectorRef
 } from "@angular/core";
 
 import {CommonModule} from "@angular/common";
@@ -58,10 +58,12 @@ export type StepsData = {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawStepsMultiline extends AbstractJigsawComponent {
-    constructor(public _elementRef: ElementRef) {
+    constructor(public _elementRef: ElementRef,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -187,7 +189,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._setWidth();
     }
 
-    @ViewChild('step', {static: false})
+    @ViewChild('step')
     private _step: ElementRef;
 
     private _initData() {
@@ -206,7 +208,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         this._$rowIndexes = [];
         for (let i = 0; i < row; i++) {
             this._$rowIndexes.push(i);
-        }
+        };
+        this._changeDetectorRef.markForCheck();
     }
 
     @HostListener('window:resize')
@@ -245,7 +248,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                 overflow = false;
             }
 
-            setTimeout(() => {
+            this.runMicrotask(() => {
                 let oddStepsSpaces = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd .jigsaw-steps-container .jigsaw-step-left-space");
                 let evenStepsSpaces = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-left-space");
                 let oddSteps = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd");
@@ -305,6 +308,7 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
                 }
             });
         }
+        this._changeDetectorRef.markForCheck();
     }
 }
 

@@ -36,7 +36,7 @@ import {
 })
 export class FloatOverlappingDemo {
     globalLoading: PopupInfo;
-    @ViewChild('jigsawFloatArea2', {static: false}) block: TemplateRef<any>;
+    @ViewChild('jigsawFloatArea2') block: TemplateRef<any>;
     openTrigger = "mouseenter";
     closeTrigger = "mouseleave";
     public open: boolean = false;

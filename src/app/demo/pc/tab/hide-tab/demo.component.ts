@@ -6,7 +6,7 @@ import {JigsawTab} from "jigsaw/public_api";
 })
 export class JigsawHideTabComponent {
 
-    @ViewChild('myTab', {static: false}) myTab: JigsawTab;
+    @ViewChild('myTab') myTab: JigsawTab;
 
     hideTab() {
         this.myTab.hideTab(0);

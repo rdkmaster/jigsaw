@@ -118,7 +118,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/app/app.component.ts'] = getAppComponentTS();
         project.files['src/app/app.component.html'] = getAppComponentHtml();
         project.files['src/app/app.interceptor.ts'] = getAjaxInterceptor(project.files);
-        project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
+        project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css').default;
         project.files['src/main.ts'] = getMainTs(scripts);
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
@@ -286,7 +286,7 @@ export class AppModule {
 }
 
 function getAjaxInterceptor(files: any) {
-    let code = require('!!raw-loader!../../../src/app/app.interceptor.ts');
+    let code = require('!!raw-loader!../../../src/app/app.interceptor.ts').default;
     code = fixImport(code);
 
     // 不能位于在replace之后

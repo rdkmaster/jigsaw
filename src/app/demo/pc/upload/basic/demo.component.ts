@@ -30,7 +30,7 @@ export class UploadBasicDemoComponent {
 
     @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
     uploadDirectives: QueryList<JigsawUploadDirective>;
-    @ViewChild('upload', {static: false})
+    @ViewChild('upload')
     upload: JigsawUpload;
 
     getUploadFile(fileInfo: UploadFileInfo) {

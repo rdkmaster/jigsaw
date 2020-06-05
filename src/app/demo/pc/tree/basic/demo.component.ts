@@ -5,7 +5,7 @@ import {SimpleTreeData, JigsawTreeExt} from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
 

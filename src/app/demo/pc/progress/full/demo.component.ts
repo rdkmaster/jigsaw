@@ -5,7 +5,7 @@ import {JigsawProgress, PopupInfo} from "jigsaw/public_api";
     templateUrl: './demo.component.html',
 })
 export class ProgressFullComponent {
-    @ViewChild('estimateProgress', {static: false})
+    @ViewChild('estimateProgress')
     estimateProgress: JigsawProgress;
     progressValue: number = 32;
     estimationInfo: string = '';

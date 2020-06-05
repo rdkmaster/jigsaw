@@ -1,5 +1,15 @@
 import {
-    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnInit
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    Input,
+    NgModule,
+    NgZone,
+    OnInit,
+    Output,
+    ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -31,9 +41,13 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef) {
+        super(_zone);
+    }
 
     @Input()
     public valid: boolean = true;
@@ -47,11 +61,13 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.callLater(() => {
-            if (this.multipleSelect) {
-                this.minWidth = CommonUtils.getCssValue(value);
-                this.maxWidth = CommonUtils.getCssValue(value);
-            }
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                if (this.multipleSelect) {
+                    this.minWidth = CommonUtils.getCssValue(value);
+                    this.maxWidth = CommonUtils.getCssValue(value);
+                }
+            })
         })
     }
 
@@ -203,7 +219,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     @Output() public remove: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild(JigsawListLite, {static: false}) private _listCmp: JigsawListLite;
+    @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
 
     /**
      * @internal
@@ -215,6 +231,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 
     public _$handleClearable(selectedItems: any[]) {
@@ -223,6 +240,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         }
         if (!selectedItems || selectedItems.length == 0) {
             this.value = [];
+            this._changeDetector.markForCheck();
         }
     }
 
@@ -235,6 +253,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
         this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 
     private _propagateChange: any = () => {

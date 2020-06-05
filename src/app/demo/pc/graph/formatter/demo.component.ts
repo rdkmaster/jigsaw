@@ -1,7 +1,6 @@
 import {debounceTime} from "rxjs/operators";
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
-import {combineLatest} from "rxjs";
-import {AbstractGraphData, EchartOptions, JigsawGraph, JigsawInput} from "jigsaw/public_api";
+import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -9,7 +8,7 @@ import {AbstractGraphData, EchartOptions, JigsawGraph, JigsawInput} from "jigsaw
 
 export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph", {static: false}) graph: JigsawGraph;
+    @ViewChild("graph") graph: JigsawGraph;
 
 
     ngOnInit() {

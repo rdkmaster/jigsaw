@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {
-    JigsawTableModule, TableCellSelectRenderer, JigsawComboSelectModule, JigsawButtonModule,
-    JigsawCheckBoxModule, JigsawListModule
+    JigsawTableModule, JigsawComboSelectModule, JigsawButtonModule, JigsawCheckBoxModule,
+    JigsawListModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TableSetCellRenderDemoComponent} from './demo.component';
@@ -14,10 +14,7 @@ import {OfficeHeaderRenderer} from "./renderers";
         JigsawButtonModule, JigsawCheckBoxModule
     ],
     declarations: [TableSetCellRenderDemoComponent, OfficeHeaderRenderer],
-    exports: [TableSetCellRenderDemoComponent],
-    entryComponents: [
-        TableCellSelectRenderer, OfficeHeaderRenderer
-    ]
+    exports: [TableSetCellRenderDemoComponent]
 })
 export class TableSetCellRenderDemoModule {
 }

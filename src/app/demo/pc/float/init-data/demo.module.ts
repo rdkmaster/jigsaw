@@ -10,8 +10,7 @@ import {FloatInitDataDemo} from "./demo.component";
     exports: [FloatInitDataDemo],
     imports: [
         JigsawFloatModule, JigsawDemoDescriptionModule, CommonModule
-    ],
-    entryComponents: [UserComponent]
+    ]
 })
 export class FloatInitDataDemoModule {
 }

@@ -8,8 +8,7 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
     imports: [JigsawButtonModule, JigsawTooltipModule, JigsawDemoDescriptionModule],
     declarations: [TooltipDialogDemoComponent, UserTooltipDialogComponent],
     exports: [TooltipDialogDemoComponent],
-    providers: [PopupService],
-    entryComponents: [UserTooltipDialogComponent]
+    providers: [PopupService]
 })
 export class TooltipDialogDemoModule {
 }

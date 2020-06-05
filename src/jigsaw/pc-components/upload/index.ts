@@ -14,11 +14,10 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 @NgModule({
     imports: [
         JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, TranslateModule.forRoot()
+        JigsawDroppableModule, CommonModule, FormsModule, TranslateModule.forChild()
     ],
     declarations: [JigsawUpload, JigsawUploadDirective, JigsawUploadFileInfoList],
     exports: [JigsawUpload, JigsawUploadDirective],
-    entryComponents: [JigsawUploadFileInfoList],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {

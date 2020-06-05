@@ -7,7 +7,7 @@ import {AbstractGraphData, EchartOptions, JigsawMobileGraph} from "jigsaw/mobile
 export class BasicGraphComponent implements OnInit {
     data: AbstractGraphData;
 
-    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
+    @ViewChild("graph") graph: JigsawMobileGraph;
 
     patchOption = {
         title: {

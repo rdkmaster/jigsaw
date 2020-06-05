@@ -13,7 +13,8 @@
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
@@ -37,13 +38,7 @@ import {SortOrder} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
-    TableCellCheckboxRenderer,
-    TableCellSelectRenderer,
-    TableCellSwitchRenderer,
-    TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer,
-    TableCellAutoCompleteEditorRenderer,
-    TableCellNumericEditorRenderer, TreeTableCellRenderer
+    TableCellTextEditorRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -59,11 +54,12 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser'
     },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -79,7 +75,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.callLater(this.resize, this);
+        this.runMicrotask(this.resize, this);
     }
 
     @Output()
@@ -335,7 +331,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
 
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
@@ -576,10 +572,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -724,7 +720,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _initVerticalScroll() {
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
             const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
@@ -828,9 +824,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer, TableCellCheckboxRenderer,
-        TableCellSwitchRenderer, TableCellSelectRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer,
-        TreeTableCellRenderer]
 })
 export class JigsawTableModule {
 }

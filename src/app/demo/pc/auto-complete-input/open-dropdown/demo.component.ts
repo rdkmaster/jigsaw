@@ -6,7 +6,7 @@ import {DropDownValue, JigsawAutoCompleteInput} from "jigsaw/public_api";
 })
 
 export class AutoCompleteInputOpenDropdownDemoComponent {
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     public autoInput: JigsawAutoCompleteInput;
 
     public _$dropdownData: string[] | DropDownValue[] = [{

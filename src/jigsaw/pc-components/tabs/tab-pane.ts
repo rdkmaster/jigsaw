@@ -1,4 +1,4 @@
-import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
 import {IDynamicInstantiatable} from "../../common/common";
 
 @Component({
@@ -8,11 +8,27 @@ import {IDynamicInstantiatable} from "../../common/common";
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
         </ng-template>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTabPane {
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+    }
+
+    private _title: string = '';
+
     @Input()
-    public title: string;
+    public get title(): string {
+        return this._title;
+    }
+
+    public set title(newValue: string) {
+        if (this._title === newValue) {
+            return;
+        }
+        this._title = newValue;
+        this._changeDetectorRef.markForCheck();
+    }
 
     @Input()
     public disabled: boolean = false;

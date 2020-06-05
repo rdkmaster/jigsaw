@@ -7,7 +7,7 @@ import {TableData, ColumnDefine} from "jigsaw/public_api";
 })
 export class TableSetHeaderRenderDemoComponent {
 
-    @ViewChild("headerRender", {static: false}) headerRender: TemplateRef<any>;
+    @ViewChild("headerRender") headerRender: TemplateRef<any>;
 
     tableData: TableData;
 

@@ -1,7 +1,7 @@
 import {
     AfterContentInit, Component, ComponentRef, Directive, ElementRef, EventEmitter, Input, NgModule, OnChanges,
     OnDestroy, OnInit,
-    Output, Renderer2, ViewChild
+    Output, Renderer2, ViewChild, ChangeDetectionStrategy
 } from "@angular/core";
 
 import {IPopupable, PopupEffect, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
@@ -12,6 +12,7 @@ export interface ITooltip extends IPopupable {
     tooltip: JigsawTooltipDialog;
 }
 
+@Directive()
 export abstract class TooltipBase implements ITooltip {
 
     public initData: any;
@@ -35,7 +36,8 @@ export abstract class TooltipBase implements ITooltip {
     templateUrl: 'tooltip.html',
     animations: [
         bubbleIn
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
     public initData: any;
@@ -65,14 +67,15 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
  * @internal
  */
 @Component({
-    template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltipMessage"></span></jigsaw-tooltip-dialog>'
+    template: '<jigsaw-tooltip-dialog><span [innerHtml]="tooltipMessage"></span></jigsaw-tooltip-dialog>',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSimpleTooltipComponent extends TooltipBase {
-    @ViewChild(JigsawTooltipDialog, {static: false}) public tooltip: JigsawTooltipDialog;
+    @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
 
-    public tooltipMessage:string = '';
+    public tooltipMessage: string = '';
 
-    private _initData:any;
+    private _initData: any;
 
     public get initData(): any {
         return this._initData;
@@ -90,20 +93,20 @@ export class JigsawSimpleTooltipComponent extends TooltipBase {
     selector: '[jigsaw-tooltip], [jigsawTooltip], [j-tooltip]'
 })
 export class JigsawTooltip implements OnDestroy {
-    @Input() public jigsawTooltip:string;
-    private _tooltipInfo:PopupInfo;
-    private _removeMouseLeave:Function;
-    private _removeMouseEnter:Function;
+    @Input() public jigsawTooltip: string;
+    private _tooltipInfo: PopupInfo;
+    private _removeMouseLeave: Function;
+    private _removeMouseEnter: Function;
 
-    constructor(private _popupService:PopupService, private _elementRef:ElementRef, renderer:Renderer2) {
-        const onEnter:(event: any) => boolean | void = () => {
+    constructor(private _popupService: PopupService, private _elementRef: ElementRef, renderer: Renderer2) {
+        const onEnter: (event: any) => boolean | void = () => {
             if (this._removeMouseLeave) {
                 this._removeMouseLeave();
             }
             this._removeMouseLeave = renderer.listen(_elementRef.nativeElement, 'mouseleave', onLeave);
             this._popupTooltip();
         };
-        const onLeave:(event: any) => boolean | void = () => {
+        const onLeave: (event: any) => boolean | void = () => {
             if (this._removeMouseEnter) {
                 this._removeMouseEnter();
             }
@@ -113,7 +116,7 @@ export class JigsawTooltip implements OnDestroy {
         this._removeMouseEnter = renderer.listen(_elementRef.nativeElement, 'mouseenter', onEnter);
     }
 
-    private _popupTooltip():void {
+    private _popupTooltip(): void {
         if (!this.jigsawTooltip) {
             return;
         }
@@ -132,7 +135,7 @@ export class JigsawTooltip implements OnDestroy {
         });
     }
 
-    private _closeTooltip():void {
+    private _closeTooltip(): void {
         if (this._tooltipInfo && this._tooltipInfo.dispose) {
             this._tooltipInfo.dispose();
         }
@@ -152,8 +155,7 @@ export class JigsawTooltip implements OnDestroy {
 @NgModule({
     imports: [CommonModule],
     declarations: [JigsawTooltipDialog, JigsawTooltip, JigsawSimpleTooltipComponent],
-    exports: [JigsawTooltipDialog, JigsawTooltip],
-    entryComponents: [JigsawSimpleTooltipComponent]
+    exports: [JigsawTooltipDialog, JigsawTooltip]
 })
 export class JigsawTooltipModule {
 }
