@@ -53,6 +53,7 @@ import {JigsawTextareaModule} from "./textarea/index";
 import {JigsawBreadcrumbModule} from "./breadcrumb/breadcrumb";
 import {JigsawRateModule} from "./rate/index";
 import {JigsawMenuModule} from "./menu/index";
+import {JigsawProgressModule} from "./progress/progress";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -108,7 +109,8 @@ const JIGSAW_MODULE = [
     JigsawBreadcrumbModule,
     JigsawRateModule,
     JigsawStepsMultilineModule,
-    JigsawMenuModule
+    JigsawMenuModule,
+    JigsawProgressModule
 ];
 
 @NgModule({
