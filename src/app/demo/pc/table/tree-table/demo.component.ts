@@ -1,5 +1,11 @@
 import {Component} from "@angular/core";
-import {PageableTreeTableData, TreeTableData, ColumnDefine, TreeTableCellRenderer} from "jigsaw/public_api";
+import {
+    PageableTreeTableData,
+    TreeTableData,
+    ColumnDefine,
+    TreeTableCellRenderer,
+    AdditionalColumnDefine, TableHeadCheckboxRenderer, TableCellCheckboxRenderer
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -170,6 +176,18 @@ export class TreeTableDemoComponent {
             }
         }
     ];
+
+    additionalColumns: AdditionalColumnDefine[] = [{
+        pos: 0,
+        width: '60px',
+        header: {
+            renderer: TableHeadCheckboxRenderer
+        },
+        cell: {
+            renderer: TableCellCheckboxRenderer,
+            data: (td, row) => td.data[row][0].data.endsWith('1-0')
+        }
+    }];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
