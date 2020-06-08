@@ -739,11 +739,11 @@ function findPropertyMetaInfo(type, property) {
     if (!type) {
         return;
     }
+    let context;
     if (typeof type === 'string') {
-        const context = findTypeMetaInfo(type);
+        context = findTypeMetaInfo(type);
     } else {
-        const context = type;
-        type = type.name;
+        context = type;
     }
     if (!context) {
         return;
