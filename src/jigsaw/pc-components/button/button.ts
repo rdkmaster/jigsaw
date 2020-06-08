@@ -35,6 +35,7 @@ import {AbstractJigsawComponent} from '../../common/common';
 })
 export class JigsawButton extends AbstractJigsawComponent {
     constructor(public element: ElementRef, protected _zone: NgZone) {
+        super();
     }
 
     /**
