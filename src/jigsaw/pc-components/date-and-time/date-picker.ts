@@ -235,16 +235,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createMonthCal(year: number) {
-        this._$monthList = this._createMonthList();
+        this._$monthList = this._createMonthList(year);
         this._$curYear = year;
     }
 
-    private _createMonthList(): MonthCell[][] {
+    private _createMonthList(year: number): MonthCell[][] {
         let monthList: MonthCell[] = TimeService.getMonthShort().map((m, i) => ({
             month: i + 1,
             label: m,
-            isSelected: this._isMonthSelected(i + 1),
-            isDisabled: this._isMonthDisabled(i + 1)
+            isSelected: this._isMonthSelected(i + 1, year),
+            isDisabled: this._isMonthDisabled(i + 1, year)
         }));
         let monthIndex = 0;
         return Array.from(new Array(this._MONTH_CAL_ROW).keys()).map(() => {
@@ -259,14 +259,15 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         })
     }
 
-    private _isMonthSelected(month: number): boolean {
+    private _isMonthSelected(month: number, year: number): boolean {
         if (!this.date) return false;
         let date = TimeService.convertValue(this.date, this._gr);
-        return TimeService.getYear(date) == this._$curYear && TimeService.getMonth(date) == month;
+        return TimeService.getYear(date) == year && TimeService.getMonth(date) == month;
     }
 
-    private _isMonthDisabled(month: number) {
-        return (this.limitStart && month < TimeService.getMonth(this.limitStart)) || (this.limitEnd && month > TimeService.getMonth(this.limitEnd));
+    private _isMonthDisabled(month: number, year: number) {
+        return (this.limitStart && (year < TimeService.getYear(this.limitStart) || (year == TimeService.getYear(this.limitStart) && month < TimeService.getMonth(this.limitStart)))) ||
+            (this.limitEnd && (year > TimeService.getYear(this.limitEnd) || (year == TimeService.getYear(this.limitEnd) && month > TimeService.getMonth(this.limitEnd))));
     }
 
     /**
