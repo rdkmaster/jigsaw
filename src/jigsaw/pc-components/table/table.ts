@@ -66,6 +66,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    /**
+     * @internal
+     */
     public _$isFFBrowser;
 
     @Input()

@@ -377,6 +377,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
     }
 
+    /**
+     * @internal
+     */
     public _$handleValueChange($event) {
         if (!$event || $event.label == this.cellData) {
             return;
@@ -479,6 +482,9 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
         return (this.cellData.id.length - 1) * 20 + 'px';
     }
 
+    /**
+     * @internal
+     */
     public _$toggleOpenNode() {
         const indexes = this.cellData.id.split('');
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);

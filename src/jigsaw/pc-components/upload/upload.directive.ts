@@ -187,6 +187,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
         this._recalculatePopupPosition();
     }
 
+    /**
+     * @internal
+     */
     public _$removeFile(file) {
         super._$removeFile(file);
         this._recalculatePopupPosition();

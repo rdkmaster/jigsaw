@@ -1,49 +1,49 @@
-var PROTECTED = 113;
-var PUBLIC = 114;
-var STATIC = 115;
-var READ_ONLY = 131;
+const PROTECTED = 113;
+const PUBLIC = 114;
+const STATIC = 115;
+const READ_ONLY = 131;
 
-var fs = require('fs');
-var angularApis = require(__dirname + '/angular-api-list.json');
+const fs = require('fs');
+let angularApis = require(__dirname + '/angular-api-list.json');
 if (!angularApis) {
     console.warn('angular api list not found!');
     angularApis = [];
 }
 
-var workDir = process.argv[2];
+let workDir = process.argv[2];
 if (!workDir) {
     console.error("ERROR: need an workDir dir");
     process.exit(1);
 }
-workDir = workDir[workDir.length - 1] == '/' ? workDir.substring(0, workDir.length - 1) : workDir;
-var output = `${workDir}/fragments`;
+workDir = workDir[workDir.length - 1] === '/' ? workDir.substring(0, workDir.length - 1) : workDir;
+const output = `${workDir}/fragments`;
 if (fs.existsSync(output)) {
     console.error("ERROR: output dir already exists, remove it and try again: " + output);
     process.exit(1);
 }
-var input = `${workDir}/documentation.json`;
+const input = `${workDir}/documentation.json`;
 if (!fs.existsSync(input)) {
     console.log(`need an input json file located at ${input}`);
     process.exit(1);
 }
-var docInfo = require(input);
+const docInfo = require(input);
 if (!docInfo) {
     console.log(`input json file is invalid! path=${input}`);
     process.exit(1);
 }
 
-var processingAPI;
-var unknownTypes = [];
-var apiList = [];
+let processingAPI;
+const unknownTypes = [];
+const apiList = [];
 fs.mkdirSync(`${output}`, 755);
 
 console.log('processing components / directives...');
 docInfo.components.concat(docInfo.directives).forEach(ci => {
     processingAPI = ci;
     fixDescription(ci);
-    var html = getComponentTemplate();
+    let html = getComponentTemplate();
     html = processCommon(ci, html);
-    html = processSelector(ci, html)
+    html = processSelector(ci, html);
     html = processInputs(ci, html);
     html = processOutputs(ci, html);
     html = processProperties(ci, html);
@@ -55,7 +55,7 @@ console.log('processing classes / injectables / interfaces...');
 docInfo.classes.concat(docInfo.injectables).concat(docInfo.interfaces).forEach(ci => {
     processingAPI = ci;
     fixDescription(ci);
-    var html = getClassesTemplate();
+    let html = getClassesTemplate();
     html = processCommon(ci, html);
     html = processProperties(ci, html);
     html = processConstructor(ci, html);
@@ -67,7 +67,7 @@ console.log('processing typealiases...');
 docInfo.miscellaneous.typealiases.forEach(ci => {
     processingAPI = ci;
     fixDescription(ci);
-    var html = getTypeAliasesTemplate();
+    let html = getTypeAliasesTemplate();
     html = html.replace('$title', ci.name);
     html = html.replace('$name', '类型别名：' + ci.name);
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
@@ -81,10 +81,10 @@ console.log('processing enumerations...');
 docInfo.miscellaneous.enumerations.forEach(ci => {
     processingAPI = ci;
     fixDescription(ci);
-    var html = getTypeEnumTemplate();
+    let html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
     html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
-    var items = [];
+    const items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
     html = html.replace('$description', ci.description);
@@ -101,7 +101,7 @@ if (!checkUnknownTypes()) {
 }
 
 function findExtends(ci) {
-    var extensions = [], originType = ci.name;
+    let extensions = [], originType = ci.name;
     while (ci && ci.extends) {
         extensions.push(ci.extends);
         ci = findTypeMetaInfo(ci.extends);
@@ -116,7 +116,7 @@ function findExtends(ci) {
 }
 
 function findImplements(ci) {
-    var implements = (ci.implements || []).filter(i => !isAngularLifeCircle(i));
+    let implements = (ci.implements || []).filter(i => !isAngularLifeCircle(i));
     while (ci.extends) {
         ci = findTypeMetaInfo(ci.extends);
         if (!ci) {
@@ -129,17 +129,17 @@ function findImplements(ci) {
 }
 
 function findChildren(ci) {
-    var allTypes = docInfo.interfaces
+    const allTypes = docInfo.interfaces
                     .concat(docInfo.injectables)
                     .concat(docInfo.classes)
                     .concat(docInfo.directives)
                     .concat(docInfo.components)
                     .concat(docInfo.modules);
-    var children = [];
+    let children = [];
     allTypes.forEach(t => {
-        var info = findTypeMetaInfo(t.extends);
+        let info = findTypeMetaInfo(t.extends);
         while (info) {
-            if (info.name == ci.name && children.indexOf(t) == -1) children.push(t.name);
+            if (info.name === ci.name && children.indexOf(t) === -1) children.push(t.name);
             info = findTypeMetaInfo(info.extends);
         }
     });
@@ -159,13 +159,13 @@ function processCommon(ci, html) {
 }
 
 function processSelector(ci, html) {
-    var matchSelector = ci.sourceCode.match(/selector\s*:\s*['"](.*?)['"]/);
-    var selectors = matchSelector ? matchSelector[1].split(/\s*,\s*/g) : ['unknown'];
+    const matchSelector = ci.sourceCode.match(/selector\s*:\s*['"](.*?)['"]/);
+    const selectors = matchSelector ? matchSelector[1].split(/\s*,\s*/g) : ['unknown'];
     return html.replace('$selectors', `<ul><li>${selectors.join('</li><li>')}</li></ul>`);
 }
 
 function processInputs(ci, html) {
-    var inputs = [];
+    const inputs = [];
     if (ci.inputsClass.length) {
         html = html.replace(`$inputsTable`,
             `<table style="width:100%">
@@ -178,10 +178,10 @@ function processInputs(ci, html) {
     ci.inputsClass.forEach(input => {
         fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
-        var dualBinding = ci.outputsClass.find(i => i.name == input.name + 'Change') ?
+        const dualBinding = ci.outputsClass.find(i => i.name === input.name + 'Change') ?
             '<span class="fa fa-retweet" style="margin-right:4px" title="本属性支持双向绑定"></span>' : '';
-        var description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
-        var inputName = `${anchor(input.name)}${dualBinding}${getRichName(input)}`
+        const description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
+        const inputName = `${anchor(input.name)}${dualBinding}${getRichName(input)}`;
         inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
             <td>${description}</td><td>${getDemoList(input)}</td></tr>`);
     });
@@ -189,7 +189,7 @@ function processInputs(ci, html) {
 }
 
 function processOutputs(ci, html) {
-    var outputs = [];
+    const outputs = [];
     if (ci.outputsClass.length) {
         html = html.replace(`$outputsTable`,
             `<table style="width:100%">
@@ -202,13 +202,13 @@ function processOutputs(ci, html) {
     ci.outputsClass.forEach(output => {
         fixDescription(output);
         output.defaultValue = output.defaultValue ? output.defaultValue : '';
-        var match = output.defaultValue.match(/<(.*)>/);
-        var type = 'any';
+        const match = output.defaultValue.match(/<(.*)>/);
+        let type = 'any';
         if (match) {
             type = match[1];
         }
-        var description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
-        var outputName = `${anchor(output.name)}${getRichName(output)}`;
+        const description = output.description + (output.since ? `<p>起始版本：${output.since}</p>` : '');
+        const outputName = `${anchor(output.name)}${getRichName(output)}`;
         outputs.push(`<tr><td>${outputName}</td><td>${addTypeLink(type)}</td>
             <td>${description}</td><td>${getDemoList(output)}</td></tr>`);
     });
@@ -218,17 +218,17 @@ function processOutputs(ci, html) {
 // 这块有点绕，当一个属性被拆开为getter/setter后，ci.propertiesClass就找不到他了
 // 但是会出现在ci.accessors里，而ci.accessors里还有一部分同时出现在inputsClass里的，需要剔除
 function mergeProperties(ci) {
-    var propertiesClass = [].concat(ci.propertiesClass || ci.properties || []);
+    const propertiesClass = [].concat(ci.propertiesClass || ci.properties || []);
     if (ci.hasOwnProperty('accessors')) {
-        for (var prop in ci.accessors) {
-            if (ci.inputsClass && ci.inputsClass.find(i => i.name == prop)) {
+        for (const prop in ci.accessors) {
+            if (ci.inputsClass && ci.inputsClass.find(i => i.name === prop)) {
                 // 同时出现在inputsClass里的，需要剔除
                 continue;
             }
-            var info = ci.accessors[prop];
-            var desc = info.getSignature && info.getSignature.description ? info.getSignature.description : '';
+            const info = ci.accessors[prop];
+            let desc = info.getSignature && info.getSignature.description ? info.getSignature.description : '';
             desc += info.setSignature && info.setSignature.description ? info.setSignature.description : '';
-            var type = info.getSignature ? (info.getSignature.returnType || info.getSignature.type) :
+            const type = info.getSignature ? (info.getSignature.returnType || info.getSignature.type) :
                 info.setSignature ? info.setSignature.args[0].type : '';
             propertiesClass.push({
                 name: info.name, description: desc, type: type,
@@ -277,17 +277,17 @@ function findPropertyWithValidDescription(type, propertyName) {
     if (!type) {
         return '';
     }
-    var property = mergeProperties(type).find(p => p.name === propertyName && !!p.description);
+    const property = mergeProperties(type).find(p => p.name === propertyName && !!p.description);
     if (property) {
         return property.description;
     }
 
-    var parents = (type.implements || []).concat();
+    const parents = (type.implements || []).concat();
     if (type.extends) {
         parents.push(type.extends);
     }
-    for (var i = 0; i < parents.length; i++) {
-        var propertyDesc = findPropertyWithValidDescription(parents[i], propertyName);
+    for (let i = 0; i < parents.length; i++) {
+        const propertyDesc = findPropertyWithValidDescription(parents[i], propertyName);
         if (propertyDesc) {
             return propertyDesc;
         }
@@ -296,48 +296,48 @@ function findPropertyWithValidDescription(type, propertyName) {
 }
 
 function processProperties(ci, html) {
-    var allProperties = mergeProperties(ci).filter(p => !p.hasOwnProperty('inheritance'));
+    const allProperties = mergeProperties(ci).filter(p => !p.hasOwnProperty('inheritance'));
     findInheritedProperties(ci, allProperties);
 
-    var properties = [];
-    var shownAttributeCount = 0;
+    const properties = [];
+    let shownAttributeCount = 0;
     allProperties.sort((p1, p2) => p1.name.localeCompare(p2.name)).forEach(property => {
         // 尝试从当前属性描述及其父类、接口中读取描述信息
-        var description = findPropertyWithValidDescription(ci, property.name);
+        let description = findPropertyWithValidDescription(ci, property.name);
         property.description = description;
         fixDescription(property);
 
-        var isHidden = property.inheritInfo || (property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1);
+        const isHidden = property.inheritInfo || (property.modifierKind && property.modifierKind.indexOf(PROTECTED) !== -1);
         if (!isHidden) {
             shownAttributeCount++;
         }
 
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
-        var readOnly = property.readOnly ?
+        const readOnly = property.readOnly ?
             '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
-        var modifier = getModifierInfo(property.modifierKind);
-        var description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
-        var inheritance = getInheritanceInfo(property);
-        var propertyName = `${anchor(property.name)}${inheritance}${modifier}${readOnly}${getRichName(property)}`;
-        var trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
+        const modifier = getModifierInfo(property.modifierKind);
+        description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
+        const inheritance = getInheritanceInfo(property);
+        const propertyName = `${anchor(property.name)}${inheritance}${modifier}${readOnly}${getRichName(property)}`;
+        const trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
-        var display = isHidden ? 'none' : 'table-row';
-        var bgColor = shownAttributeCount % 2 == 1 ? '#fff' : '#f8f8f8';
+        const display = isHidden ? 'none' : 'table-row';
+        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
         properties.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
 
-    var hiddenAttributeCount = allProperties.length - shownAttributeCount;
-    var propertiesTable;
+    const hiddenAttributeCount = allProperties.length - shownAttributeCount;
+    let propertiesTable;
     if (allProperties.length > 0) {
         propertiesTable =
-            `<table id="dynamicProperties" style="width:100%; display:${shownAttributeCount == 0 ? 'none' : 'table'}">
+            `<table id="dynamicProperties" style="width:100%; display:${shownAttributeCount === 0 ? 'none' : 'table'}">
                  <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
                 <tbody>$properties</tbody>
             </table>`;
         propertiesTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下属性：\n1. 所有从父类继承过来的属性;\n2. 当前类中受保护的属性;"
             onclick="document.getElementById('dynamicProperties').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
             });this.style.display='none';document.getElementById('dynamicProperties').style.display='table'">
             列出所有可用属性</a>` : '';
     } else {
@@ -348,15 +348,15 @@ function processProperties(ci, html) {
 }
 
 function processConstructor(ci, html) {
-    if (ci.constructorObj && ci.type == 'class') {
+    if (ci.constructorObj && ci.type === 'class') {
         html = html.replace('$constractor', `<h3>构造函数 / Constractor</h3>
             <p>${ci.constructorObj.description}</p><p>输入参数</p><ul>$parameters</ul>`);
-        var parameters = [];
+        const parameters = [];
         (ci.constructorObj.jsdoctags || []).forEach(param => {
-            if (param.tagName.text != 'param') {
+            if (param.tagName.text !== 'param') {
                 return;
             }
-            var description = param.comment ? addDescLink(param.comment) : '';
+            const description = param.comment ? addDescLink(param.comment) : '';
             parameters.push(`<li><span style="white-space: nowrap;">${param.name.text || param.name}:
                             <a>${addTypeLink(param.type)}</a></span>${description}</li>`)
         });
@@ -376,7 +376,7 @@ function findInheritedMethods(ci, methods) {
             continue;
         }
         (ci.methodsClass || ci.methods).forEach(m => {
-            if (methods.find(mm => mm.name === m.name && getArgumentsString(mm) == getArgumentsString(m))) {
+            if (methods.find(mm => mm.name === m.name && getArgumentsString(mm) === getArgumentsString(m))) {
                 return;
             }
             if (m.inheritance || isAngularLifeCircle(m.name)) {
@@ -392,17 +392,17 @@ function findInheritedMethods(ci, methods) {
 }
 
 function processMethods(ci, html) {
-    var allMethods = (ci.methodsClass || ci.methods)
+    const allMethods = (ci.methodsClass || ci.methods)
         .filter(m => !m.hasOwnProperty('inheritance') && !isAngularLifeCircle(m.name));
     findInheritedMethods(ci, allMethods);
 
-    var methods = [];
-    var shownAttributeCount = 0;
+    const methods = [];
+    let shownAttributeCount = 0;
     allMethods.sort((m1, m2) => m1.name.localeCompare(m2.name)).forEach(method => {
         //如果当前方法没有描述，则往上找他的父类里要描述
         //先用严格模式找一遍
-        var parentMethod = findMethodWithValidDescription(ci, method.name,
-            m => !!m.description && getArgumentsString(m) == getArgumentsString(method));
+        let parentMethod = findMethodWithValidDescription(ci, method.name,
+            m => !!m.description && getArgumentsString(m) === getArgumentsString(method));
         if (!parentMethod) {
             //使用非严格模式再找一遍
             parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
@@ -410,77 +410,77 @@ function processMethods(ci, html) {
         method.description = parentMethod ? parentMethod.description : '';
         fixDescription(method);
 
-        var isHidden = method.inheritInfo || (method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1);
+        const isHidden = method.inheritInfo || (method.modifierKind && method.modifierKind.indexOf(PROTECTED) !== -1);
         if (!isHidden) {
             shownAttributeCount++;
         }
 
-        var returns = `<p style="white-space: nowrap;">返回类型 ${addTypeLink(method.returnType)}</p>`;
-        var parentMethod = findMethodWithValidDescription(ci, method.name,
-            m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
-        var returnComment = '';
+        let returns = `<p style="white-space: nowrap;">返回类型 ${addTypeLink(method.returnType)}</p>`;
+        parentMethod = findMethodWithValidDescription(ci, method.name,
+            m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text === 'returns' && !!t.comment));
+        let returnComment = '';
         if (parentMethod) {
             returnComment = parentMethod.jsdoctags
-                .find(t => t.tagName.text == 'returns' && !!t.comment).comment;
+                .find(t => t.tagName.text === 'returns' && !!t.comment).comment;
         }
         returns += addDescLink(returnComment);
 
-        var args = [];
-        var jsdoctags = method.jsdoctags ? method.jsdoctags : [];
-        jsdoctags.forEach((argument, index) => {
+        let args = [];
+        const jsDocTags = method.jsdoctags ? method.jsdoctags : [];
+        jsDocTags.forEach((argument, index) => {
             if (argument.tagName.text !== 'param') {
                 return;
             }
-            var type = argument.type ? `: ${addTypeLink(argument.type)}` : '';
+            let type = argument.type ? `: ${addTypeLink(argument.type)}` : '';
             type += argument.defaultValue ? ' = ' + argument.defaultValue : '';
-            var matchCondition = parentArgument => {
+            const matchCondition = parentArgument => {
                 if (parentArgument.tagName.text !== 'param') {
                     return false;
                 }
-                var paName = parentArgument.name.text || parentArgument.name;
-                var name = argument.name.text || argument.name;
+                const paName = parentArgument.name.text || parentArgument.name;
+                const name = argument.name.text || argument.name;
                 return paName === name && !!parentArgument.comment;
-            }
-            var parentMethod = findMethodWithValidDescription(ci, method.name,
+            };
+            const parentMethod = findMethodWithValidDescription(ci, method.name,
                 m => m.jsdoctags && m.jsdoctags.find(matchCondition));
-            var comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
+            let comment = parentMethod ? parentMethod.jsdoctags.find(matchCondition).comment : '';
             comment = addDescLink(comment);
-            var name = argument.name.text || argument.name;
-            var optional = argument.optional ? '<span style="margin:0 2px 0 2px; color:#009688" ' +
+            const name = argument.name.text || argument.name;
+            const optional = argument.optional ? '<span style="margin:0 2px 0 2px; color:#009688" ' +
                 'title="Optional" class="fa fa-question"></span>' : '';
-            var arg = `<span style="white-space: nowrap;">${name}${optional}${type}</span>${comment}`;
+            const arg = `<span style="white-space: nowrap;">${name}${optional}${type}</span>${comment}`;
             args.push(arg);
         });
-        if (args.length == 0) {
+        if (args.length === 0) {
             args = '--';
         } else {
             args = `<ul><li>${args.join('</li><li>')}</li></ul>`;
         }
 
-        var modifier = getModifierInfo(method.modifierKind);
-        var description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
-        var inheritance = getInheritanceInfo(method);
-        var methodName = `${anchor(method.name)}${inheritance}${modifier}${getRichName(method)}`;
-        var trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
+        const modifier = getModifierInfo(method.modifierKind);
+        const description = method.description + (method.since ? `<p>起始版本：${method.since}</p>` : '');
+        const inheritance = getInheritanceInfo(method);
+        const methodName = `${anchor(method.name)}${inheritance}${modifier}${getRichName(method)}`;
+        const trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
             <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
-        var display = isHidden ? 'none' : 'table-row';
-        var bgColor = shownAttributeCount % 2 == 1 ? '#fff' : '#f8f8f8';
+        const display = isHidden ? 'none' : 'table-row';
+        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
 
         methods.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
 
-    var methodsTable;
-    var hiddenAttributeCount = allMethods.length - shownAttributeCount;
+    let methodsTable;
+    const hiddenAttributeCount = allMethods.length - shownAttributeCount;
     if (allMethods.length > 0) {
         methodsTable =
-            `<table id="dynamicMethods" style="width:100%; display:${shownAttributeCount == 0 ? 'none' : 'table'}">
+            `<table id="dynamicMethods" style="width:100%; display:${shownAttributeCount === 0 ? 'none' : 'table'}">
                 <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
                 <tbody>$methods</tbody>
             </table>`;
         methodsTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下方法：\n1. 所有从父类继承过来的方法;\n2. 当前类中受保护的方法;"
             onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
             });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
             列出所有可用方法</a>` : '';
     } else {
@@ -502,17 +502,17 @@ function findMethodWithValidDescription(type, methodName, condition) {
     if (!type) {
         return;
     }
-    var methods = type.methodsClass || type.methods || [];
-    var method = methods.find(m => m.name === methodName && condition(m));
+    const methods = type.methodsClass || type.methods || [];
+    let method = methods.find(m => m.name === methodName && condition(m));
     if (method) {
         return method;
     }
 
-    var parents = (type.implements || []).concat();
+    const parents = (type.implements || []).concat();
     if (type.extends) {
         parents.push(type.extends);
     }
-    for (var i = 0; i < parents.length; i++) {
+    for (let i = 0; i < parents.length; i++) {
         method = findMethodWithValidDescription(parents[i], methodName, condition);
         if (method) {
             return method;
@@ -526,17 +526,22 @@ function fixDescription(metaInfo) {
     }
     metaInfo.description = metaInfo.description
         .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+            const demoPath = comp[0] === '?' ? demoName : `pc/${comp}/${demoName}`;
+            if (!fs.existsSync(`${__dirname}/../../../src/app/demo/${demoPath}/demo.component.ts`)) {
+                console.error("Error: demo not found:", demoPath);
+                process.exit(1);
+            }
             extra = extra || '';
-            var script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
+            const script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
             return `<a onclick="${script}"`;
         })
         .replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g, function (found, prop, value, suffix) {
-            var values = metaInfo[prop];
+            let values = metaInfo[prop];
             if (!metaInfo[prop]) {
                 values = [];
                 metaInfo[prop] = values;
             }
-            if (values.indexOf(value) == -1) {
+            if (values.indexOf(value) === -1) {
                 values.push(value);
             }
             // remove these messages
@@ -546,14 +551,14 @@ function fixDescription(metaInfo) {
 }
 
 function getInheritanceInfo(metaInfo) {
-    var inherited = metaInfo.inheritInfo;
+    const inherited = metaInfo.inheritInfo;
     return !inherited ? '' :
         `<a href="#/components/api/${inherited.type}/${inherited.from}#${metaInfo.name}">
         <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
 }
 
 function getModifierInfo(modifier) {
-    var clazz, title, color;
+    let clazz, title, color;
     if (modifier && modifier.indexOf(STATIC) !== -1) {
         clazz = 'cube';
         title = 'Static';
@@ -571,10 +576,10 @@ function getModifierInfo(modifier) {
 }
 
 function addTypeLink(type) {
-    type = type == 'literal type' ? '' : type;
+    type = type === 'literal type' ? '' : type;
     return (type || '').replace(/['"]?\w+['"]?/g, subType => {
-        var url = getTypeUrl(subType);
-        var target = url.match(/^https?:/) ? '_blank' : '_self';
+        const url = getTypeUrl(subType);
+        const target = url.match(/^https?:/) ? '_blank' : '_self';
         return url ? `<a href="${url}" target="${target}">${subType}</a>` : subType;
     });
 }
@@ -591,13 +596,13 @@ function addDescLink(desc) {
                 console.warn('WARN: bad format found while adding description links: ' + found);
                 return found;
             }
-            var url = getPropertyUrl(clazz, property, processingAPI);
-            var target = url.match(/^https?:/) ? '_blank' : '_self';
+            const url = getPropertyUrl(clazz, property, processingAPI);
+            const target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
         .replace(/<code>\s*(\w+?)\s*[()]*\s*<\/code>/g, (found, type) => {
-            var url = getPropertyUrl(type, processingAPI);
-            var target = url.match(/^https?:/) ? '_blank' : '_self';
+            const url = getPropertyUrl(type, processingAPI);
+            const target = url.match(/^https?:/) ? '_blank' : '_self';
             return url ? `<a href="${url}" target="${target}">${found}</a>` : found;
         })
         .replace(/([^\ba-zA-z0-9])Jigsaw([^\ba-zA-z0-9])/g, '$1<a href="https://github.com/rdkmaster/jigsaw" ' +
@@ -605,10 +610,10 @@ function addDescLink(desc) {
 }
 
 function getOpenPopupScript(url) {
-    url = url[0] == '/' ? url : '/' + url;
+    url = url[0] === '/' ? url : '/' + url;
     url = 'jigsaw-demo/#/pc' + url;
     return `document.getElementById('panel').style.display = 'block';
-            var evalator = document.getElementById('evalator');
+            const evalator = document.getElementById('evalator');
             if (evalator.src != location.host + '${url}') evalator.src = '${url}';`;
 }
 
@@ -619,7 +624,7 @@ function getTypeUrl(type, allowUnknown) {
     type = type.trim();
 
     // try native types
-    var info = findTypeMetaInfo(type);
+    let info = findTypeMetaInfo(type);
     if (info) {
         return `#/components/api/${info.subtype || info.type}/${type}`;
     }
@@ -631,46 +636,46 @@ function getTypeUrl(type, allowUnknown) {
     }
 
     // try basic types
-    var lcType = type.toLowerCase();
-    var tsTypes = ['any', 'void', 'array'];
-    var jsTypes = ["number", "boolean", "string", "object", "date", "function", "json"];
+    let lcType = type.toLowerCase();
+    const tsTypes = ['any', 'void', 'array'];
+    const jsTypes = ["number", "boolean", "string", "object", "date", "function", "json"];
     lcType = lcType.toLowerCase();
-    if (tsTypes.indexOf(lcType) != -1) {
+    if (tsTypes.indexOf(lcType) !== -1) {
         return 'https://www.tslang.cn/docs/handbook/basic-types.html'
-    } else if (jsTypes.indexOf(lcType) != -1) {
+    } else if (jsTypes.indexOf(lcType) !== -1) {
         return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/${type}`;
     }
 
     // try more js types
-    if (type == 'Element') {
+    if (type === 'Element') {
         return `https://developer.mozilla.org/zh-CN/docs/Glossary/${type}`;
     }
-    if (type == 'HTMLElement' || type == 'FocusEvent' || type == 'DragEvent') {
+    if (type === 'HTMLElement' || type === 'FocusEvent' || type === 'DragEvent') {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/${type}`;
     }
-    if (type == 'IterableIterator') {
+    if (type === 'IterableIterator') {
         return `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols`;
     }
-    if (type == 'NodeListOf') {
+    if (type === 'NodeListOf') {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList`;
     }
-    if (type == 'setTimeout') {
+    if (type === 'setTimeout') {
         return `https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/${type}`;
     }
 
     // try rxjs types
-    if (type == 'Subscription' || type == 'Subscriber') {
+    if (type === 'Subscription' || type === 'Subscriber') {
         return `http://cn.rx.js.org/class/es6/${type}.js~${type}.html`;
     }
 
     // try third party apis
-    if (type == 'Moment') {
+    if (type === 'Moment') {
         return `https://momentjs.com/docs/#/parsing/`;
     }
-    if (type == 'TranslateService') {
+    if (type === 'TranslateService') {
         return `https://github.com/ngx-translate/core#api`;
     }
-    if (type == 'PerfectScrollbarDirective') {
+    if (type === 'PerfectScrollbarDirective') {
         return `https://github.com/utatti/perfect-scrollbar#options`;
     }
 
@@ -678,25 +683,25 @@ function getTypeUrl(type, allowUnknown) {
     // - 字符串常量类型
     // - 纯数字常量类型
     // - T 一般用于泛型类型定义
-    if (!type.match(/['"]/) && !type.match(/\d+/) && type != 'T'
-        && !allowUnknown && unknownTypes.indexOf(type) == -1) {
+    if (!type.match(/['"]/) && !type.match(/\d+/) && type !== 'T'
+        && !allowUnknown && unknownTypes.indexOf(type) === -1) {
         unknownTypes.push(type);
     }
     return '';
 }
 
 function getPropertyUrl(type, property, context) {
-    if (arguments.length == 2) {
+    if (arguments.length === 2) {
         context = property;
 
-        var info = findPropertyMetaInfo(context, type);
+        let info = findPropertyMetaInfo(context, type);
         if (info) {
             // 此时的type是一个属性，这里的info里包含的可能是该属性在其父类里的信息
-            var name = info.type.name;
-            var subtype = info.type.subtype || info.type.type;
+            const name = info.type.name;
+            const subtype = info.type.subtype || info.type.type;
             return `#/components/api/${subtype}/${name}#${type}`;
         }
-        var info = findTypeMetaInfo(type);
+        info = findTypeMetaInfo(type);
         if (info) {
             // 此时的type是一个类
             return `#/components/api/${info.subtype || info.type}/${info.name}`;
@@ -704,11 +709,11 @@ function getPropertyUrl(type, property, context) {
         // 试一下是不是angular、ts等其他的类型
         return getTypeUrl(type, true);
     } else {
-        var info = findPropertyMetaInfo(type, property);
+        const info = findPropertyMetaInfo(type, property);
         if (info) {
             // 这里的info里包含的可能是该属性在其父类里的信息
-            var name = info.type.name;
-            var subtype = info.type.subtype || info.type.type;
+            const name = info.type.name;
+            const subtype = info.type.subtype || info.type.type;
             return `#/components/api/${subtype}/${name}#${property}`;
         }
     }
@@ -734,20 +739,20 @@ function findPropertyMetaInfo(type, property) {
     if (!type) {
         return;
     }
+    let context;
     if (typeof type === 'string') {
-        var context = findTypeMetaInfo(type);
+        context = findTypeMetaInfo(type);
     } else {
-        var context = type;
-        type = type.name;
+        context = type;
     }
     if (!context) {
         return;
     }
 
-    var info = (context.inputsClass || []).find(i => i.name == property) ||
-        (context.outputsClass || []).find(i => i.name == property) ||
-        mergeProperties(context).find(i => i.name == property) ||
-        (context.methodsClass || context.methods || []).find(i => i.name == property);
+    const info = (context.inputsClass || []).find(i => i.name === property) ||
+        (context.outputsClass || []).find(i => i.name === property) ||
+        mergeProperties(context).find(i => i.name === property) ||
+        (context.methodsClass || context.methods || []).find(i => i.name === property);
     if (info) {
         return {type: context, property: info};
     }
@@ -759,7 +764,7 @@ function isDefined(x) {
 }
 
 function saveFile(type, fileName, html) {
-    var path = `${output}/${type}`;
+    const path = `${output}/${type}`;
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, 755);
     }
@@ -771,8 +776,8 @@ function saveFile(type, fileName, html) {
 }
 
 function getFooter(name) {
-    var info = findTypeMetaInfo(name);
-    var type = '';
+    const info = findTypeMetaInfo(name);
+    let type = '';
     switch (info.subtype || info.type) {
         case 'component':
         case 'directive':
@@ -790,11 +795,11 @@ function getFooter(name) {
             type = 'enum';
             break;
     }
-    var reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
-    var source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
-    var idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
-    var hash = idx != -1 ? '#L' + (idx + 1) : '';
-    var url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
+    const reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
+    const source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
+    const idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
+    const hash = idx !== -1 ? '#L' + (idx + 1) : '';
+    const url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
     return getFooterTemplate()
         .replace('$editThisDoc', url)
         .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
@@ -802,7 +807,7 @@ function getFooter(name) {
 }
 
 function checkUnknownTypes() {
-    if (unknownTypes.length == 0) {
+    if (unknownTypes.length === 0) {
         return true;
     }
     unknownTypes.forEach(t => console.log('Unknown type found: ' + t));
@@ -810,24 +815,24 @@ function checkUnknownTypes() {
 }
 
 function getDemoList(metaInfo) {
-    var demos = metaInfo.demo || [];
-    var list = [];
+    const demos = metaInfo.demo || [];
+    const list = [];
     demos.forEach(url => {
-        var match = url.match(/^\/?(.+?)\/(.+?)(#|\?.*?)?$/);
+        const match = url.match(/^\/?(.+?)\/(.+?)(#|\?.*?)?$/);
         if (!match) {
             console.error('ERROR: invalid demo url! url=' + url);
             process.exit(1);
         }
-        var comp = match[1], demoName = match[2], extra = match[3] || '';
+        const comp = match[1], demoName = match[2], extra = match[3] || '';
         list.push(`<li title="${getDemoSummary(comp, demoName)}"><a onclick="${getOpenPopupScript(url)}">${demoName}</a></li>`);
     });
     return list.length > 0 ? `<ul>${list.join('')}</li></ul>` : '';
 }
 
 function getDemoSummary(comp, demoName) {
-    var demoPath = `${__dirname}/../../../src/app/demo/pc/${comp}/${demoName}/demo.component.ts`;
-    var code = fs.readFileSync(demoPath).toString();
-    var summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
+    const demoPath = `${__dirname}/../../../src/app/demo/pc/${comp}/${demoName}/demo.component.ts`;
+    const code = fs.readFileSync(demoPath).toString();
+    const summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
     if (!summaryMatch) {
         console.log(`ERROR: can not summary info for demo: ${comp}/${demoName}`);
         console.log('hint: the value of summary should write in a single line!');
@@ -837,7 +842,7 @@ function getDemoSummary(comp, demoName) {
 }
 
 function getDemoListWithHeader(metaInfo) {
-    var demos = getDemoList(metaInfo);
+    const demos = getDemoList(metaInfo);
     return demos ? '<a name="demos"></a><h3>相关示例</h3>' + demos : '';
 }
 
@@ -845,7 +850,7 @@ function isAngularLifeCircle(type) {
     return [
         'OnChaes', 'OnInit', 'DoCheck', 'AfterContentInit', 'AfterContentChecked',
         'AfterViewInit', 'AfterViewChecked', 'OnDestroy'
-    ].find(i => i === type || 'ng' + i == type);
+    ].find(i => i === type || 'ng' + i === type);
 }
 
 function getComponentTemplate() {

@@ -158,6 +158,9 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
         return stepsItemData;
     }
 
+    /**
+     * @internal
+     */
     public _$getColor(rowIndex): string {
         if (this.data && rowIndex < this._$rowIndexes.length - 1) {
             switch (this.data[this._$numInlineActual * rowIndex + this._$numInlineActual - 1].status) {

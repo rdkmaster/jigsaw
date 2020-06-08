@@ -60,7 +60,7 @@ export class PopupOptions {
      *   中的某一个值，用来控制弹出视图的绝对位置，
      * 配合posOffset属性中的top/right/left/bottom，可以指定绝对位置的偏移量
      *
-     * 请参考 [这个demo]($demo=pc/dialog/popup-option) 和[这个demo]($demo=pc/dialog/absolute-position)。
+     * 请参考 [这个demo]($demo=dialog/popup-option) 和[这个demo]($demo=dialog/absolute-position)。
      */
     pos?: PopupPosition;
 
@@ -68,14 +68,14 @@ export class PopupOptions {
      * 弹出位置的偏移量，注意left属性是以弹出组件的左侧为基准，top属性是以弹出组件的上方为基准，
      * right属性是以弹出组件的右侧为基准，bottom是以弹出组件的下方为基准点。
      *
-     * 请参考[这个demo]($demo=pc/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      */
     posOffset?: PopupPositionOffset;
 
     /**
      * 弹出的组件的定位方式，和css的 absolute/fixed 含义类似。
      *
-     * 请参考[这个demo]($demo=pc/dialog/popup-option)。
+     * 请参考[这个demo]($demo=dialog/popup-option)。
      */
     posType?: PopupPositionType;
 

@@ -22,6 +22,9 @@ const defaultHrefValue = 'javascript:void(0);';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawIcon extends AbstractJigsawComponent {
+    /**
+     * @internal
+     */
     public _$secureUrl;
     private _href: string = defaultHrefValue;
     private _target: string = '_blank';
