@@ -87,14 +87,23 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
      */
     public update = new EventEmitter<UploadFileInfo[]>();
 
+    /**
+     * @internal
+     */
     public _$uploadMode: 'select' | 'selectAndList' = 'select';
 
     protected _fileInputEl: Element;
 
     private _removeFileChangeEvent: Function;
 
+    /**
+     * @internal
+     */
     public _$validFiles: UploadFileInfo[] = [];
 
+    /**
+     * @internal
+     */
     public _$invalidFiles: UploadFileInfo[] = [];
 
     public get _$allFiles(): UploadFileInfo[] {
@@ -272,6 +281,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         }
     }
 
+    /**
+     * @internal
+     */
     public _$removeFile(file) {
         this.remove.emit(file);
         let fileIndex = this._$validFiles.findIndex(f => f == file);

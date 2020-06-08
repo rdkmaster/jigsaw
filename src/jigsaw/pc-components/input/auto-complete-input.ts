@@ -263,6 +263,9 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this.selectEvent.emit(item);
     }
 
+    /**
+     * @internal
+     */
     public _$onKeyDown(event) {
         if (!this._inputValueChangeSubscription) {
             this._subscribeInputValueChange();
@@ -272,6 +275,9 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         }
     }
 
+    /**
+     * @internal
+     */
     public _$preventInputBlur(event) {
         if (this.closeDropDownOnSelect) {
             return;

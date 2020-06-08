@@ -117,6 +117,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     @Input()
     public editable: boolean;
 
+    /**
+     * @internal
+     */
     public _$headless: boolean = false;
 
     /**

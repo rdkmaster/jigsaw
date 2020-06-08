@@ -197,7 +197,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @ViewChild('input')
     private _inputElement: ElementRef;
 
+    /**
+     * @internal
+     */
     public _$upDisabled: boolean;
+    /**
+     * @internal
+     */
     public _$downDisabled: boolean;
 
     private _updateValue() {

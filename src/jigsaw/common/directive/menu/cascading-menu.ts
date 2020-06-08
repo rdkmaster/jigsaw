@@ -194,6 +194,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         }
     }
 
+    /**
+     * @internal
+     */
     public _$openByHover($event) {
         // 跟当前宿主平级或者以下的其他弹出需要先关闭
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {

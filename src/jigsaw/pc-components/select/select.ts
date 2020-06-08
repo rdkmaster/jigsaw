@@ -226,6 +226,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     public _$selectedItems: ArrayCollection<any> | any[];
 
+    /**
+     * @internal
+     */
     public _$handleSelectChange(selectedItems: any[]) {
         if (!selectedItems) return;
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
@@ -234,6 +237,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this._changeDetector.markForCheck();
     }
 
+    /**
+     * @internal
+     */
     public _$handleClearable(selectedItems: any[]) {
         if (!this.clearable) {
             return;
@@ -244,12 +250,18 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         }
     }
 
+    /**
+     * @internal
+     */
     public _$onComboOpenChange(optionState: boolean) {
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._listCmp && this._listCmp._$handleSearching();
     }
 
+    /**
+     * @internal
+     */
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
         this.valueChange.emit(this.value);
