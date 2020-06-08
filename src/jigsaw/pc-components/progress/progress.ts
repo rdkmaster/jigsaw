@@ -109,6 +109,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     @Output()
     public estimationStopped = new EventEmitter<number>();
 
+    /**
+     * @internal
+     */
     public _$followingLabelPosition: 'followLeft' | 'followRight' = 'followRight';
 
     private _autoLabelPosition() {

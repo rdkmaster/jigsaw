@@ -255,6 +255,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         this.selectEvent.emit(item);
     }
 
+    /**
+     * @internal
+     */
     public _$onKeyDown(event) {
         if (!this._inputValueChangeSubscription) {
             this._subscribeInputValueChange();
@@ -264,6 +267,9 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         }
     }
 
+    /**
+     * @internal
+     */
     public _$preventInputBlur(event) {
         if (this.closeDropDownOnSelect) {
             return;
