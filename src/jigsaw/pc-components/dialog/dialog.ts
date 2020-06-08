@@ -3,10 +3,12 @@ import {
     AfterViewInit,
     Component,
     ContentChildren,
+    Directive,
     ElementRef,
     EventEmitter,
     Input,
     NgModule,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -18,7 +20,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawBlock, JigsawBlockModule} from "../../common/components/block/block";
+import {JigsawBlockModule} from "../../common/components/block/block";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 
 export interface IDialog extends IPopupable {
@@ -152,7 +154,7 @@ export abstract class AbstractDialogComponentBase
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
 
-        if(this.height) {
+        if (this.height) {
             this.renderer.setStyle(this.popupElement, 'height', this.height);
             this.renderer.addClass(this.popupElement, 'jigsaw-dialog-fixed-height');
         }
@@ -178,7 +180,7 @@ export abstract class AbstractDialogComponentBase
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',
 })
-export class JigsawDialog extends AbstractDialogComponentBase {
+export class JigsawDialog extends AbstractDialogComponentBase implements AfterContentInit {
     @Output()
     public close: EventEmitter<any> = new EventEmitter<any>();
     @Input()
@@ -189,6 +191,7 @@ export class JigsawDialog extends AbstractDialogComponentBase {
      */
     @ContentChildren(JigsawButton)
     public _$inlineButtons:QueryList<JigsawButton>;
+    public _$hasInlineButtons: boolean = false;
 
     constructor(renderer: Renderer2, elementRef: ElementRef) {
         super();
@@ -199,6 +202,16 @@ export class JigsawDialog extends AbstractDialogComponentBase {
 
     protected getPopupElement(): HTMLElement {
         return this.elementRef.nativeElement;
+    }
+
+    ngAfterContentInit(): void {
+        super.ngAfterContentInit();
+        this._$hasInlineButtons = this._$inlineButtons.toArray().some(btn => {
+            // 只有通过 "[jigsaw-button], [jigsaw-button-bar]" 投影进来的button，才算 button-group 里面的
+            return btn.element.nativeElement.hasAttribute('jigsaw-button') ||
+                (btn.element.nativeElement.parentElement && btn.element.nativeElement.parentElement.hasAttribute('jigsaw-button-bar'));
+
+        });
     }
 }
 
