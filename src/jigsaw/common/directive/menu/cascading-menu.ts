@@ -128,6 +128,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Input('jigsawCascadingMenuCloseTrigger')
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
 
+    /**
+     * @internal
+     */
     @Input('jigsawCascadingMenuInitData')
     public jigsawFloatInitData: any;
 
