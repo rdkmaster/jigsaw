@@ -114,4 +114,10 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
-
+.#{$table-prefix-cls} {
+    &-tree-bar {
+        cursor: pointer;
+        font-size: 14px;
+        color: $primary-color;
+    }
+}
