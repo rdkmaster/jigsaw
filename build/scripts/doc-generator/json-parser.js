@@ -322,7 +322,7 @@ function processProperties(ci, html) {
         const trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
         const display = isHidden ? 'none' : 'table-row';
-        const bgColor = shownAttributeCount % 2 == 1 ? '#fff' : '#f8f8f8';
+        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
         properties.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
 
@@ -330,14 +330,14 @@ function processProperties(ci, html) {
     let propertiesTable;
     if (allProperties.length > 0) {
         propertiesTable =
-            `<table id="dynamicProperties" style="width:100%; display:${shownAttributeCount == 0 ? 'none' : 'table'}">
+            `<table id="dynamicProperties" style="width:100%; display:${shownAttributeCount === 0 ? 'none' : 'table'}">
                  <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
                 <tbody>$properties</tbody>
             </table>`;
         propertiesTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下属性：\n1. 所有从父类继承过来的属性;\n2. 当前类中受保护的属性;"
             onclick="document.getElementById('dynamicProperties').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
             });this.style.display='none';document.getElementById('dynamicProperties').style.display='table'">
             列出所有可用属性</a>` : '';
     } else {
@@ -402,7 +402,7 @@ function processMethods(ci, html) {
         //如果当前方法没有描述，则往上找他的父类里要描述
         //先用严格模式找一遍
         let parentMethod = findMethodWithValidDescription(ci, method.name,
-            m => !!m.description && getArgumentsString(m) == getArgumentsString(method));
+            m => !!m.description && getArgumentsString(m) === getArgumentsString(method));
         if (!parentMethod) {
             //使用非严格模式再找一遍
             parentMethod = findMethodWithValidDescription(ci, method.name, m => !!m.description);
@@ -417,11 +417,11 @@ function processMethods(ci, html) {
 
         let returns = `<p style="white-space: nowrap;">返回类型 ${addTypeLink(method.returnType)}</p>`;
         parentMethod = findMethodWithValidDescription(ci, method.name,
-            m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text == 'returns' && !!t.comment));
+            m => m.jsdoctags && m.jsdoctags.find(t => t.tagName.text === 'returns' && !!t.comment));
         let returnComment = '';
         if (parentMethod) {
             returnComment = parentMethod.jsdoctags
-                .find(t => t.tagName.text == 'returns' && !!t.comment).comment;
+                .find(t => t.tagName.text === 'returns' && !!t.comment).comment;
         }
         returns += addDescLink(returnComment);
 
@@ -464,7 +464,7 @@ function processMethods(ci, html) {
         const trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
             <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
         const display = isHidden ? 'none' : 'table-row';
-        const bgColor = shownAttributeCount % 2 == 1 ? '#fff' : '#f8f8f8';
+        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
 
         methods.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
@@ -473,14 +473,14 @@ function processMethods(ci, html) {
     const hiddenAttributeCount = allMethods.length - shownAttributeCount;
     if (allMethods.length > 0) {
         methodsTable =
-            `<table id="dynamicMethods" style="width:100%; display:${shownAttributeCount == 0 ? 'none' : 'table'}">
+            `<table id="dynamicMethods" style="width:100%; display:${shownAttributeCount === 0 ? 'none' : 'table'}">
                 <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
                 <tbody>$methods</tbody>
             </table>`;
         methodsTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下方法：\n1. 所有从父类继承过来的方法;\n2. 当前类中受保护的方法;"
             onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 == 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
             });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
             列出所有可用方法</a>` : '';
     } else {
@@ -541,7 +541,7 @@ function fixDescription(metaInfo) {
                 values = [];
                 metaInfo[prop] = values;
             }
-            if (values.indexOf(value) == -1) {
+            if (values.indexOf(value) === -1) {
                 values.push(value);
             }
             // remove these messages
