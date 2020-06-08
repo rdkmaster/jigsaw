@@ -34,7 +34,7 @@ export type DayCell = {
     isInRange?: boolean
 };
 export type MonthCell = { month: number, label: string, isSelected?: boolean, isDisabled?: boolean, };
-export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean, };
+export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean, isOwnPrevOrNext?: boolean };
 export type MarkDate = { date: Time | Time[] | MarkRange, mark: MarkDateType, label?: string };
 export type MarkRange = { from: Time, to: Time };
 
@@ -137,6 +137,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     public _$curMonth: MonthCell;
     public _$monthList: MonthCell[][] = [];
     public _$curYear: number;
+    public _$rangeYear: string;
     public _$yearList: YearCell[][] = [];
     public _$dayList: DayCell[][] = [];
     public _$weekList: string[] = [];
@@ -160,7 +161,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         }
         this._updateHead(year, month);
-        this._createMonthCal(month);
+        this._createMonthCal(year);
         this._createYearCal(year);
         this._createDayCal(year, month);
         this._changeDetectorRef.markForCheck();
@@ -171,18 +172,25 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         this._$curYear = year;
     }
 
-    private _createYearCal(year: number, startYear?: number) {
-        this._$yearList = this._createYearList(year, startYear);
+    private _createYearCal(year: number) {
+        let startYear = year - year % 10 - 1;
+        let endYear = startYear + (this._YEAR_CAL_COL * this._YEAR_CAL_ROW - 1);
+        this._$yearList = this._createYearList(startYear, endYear);
+        this._$rangeYear = `${startYear + 1} - ${endYear - 1}`
     }
 
-    private _createYearList(curYear: number, startYear?: number): YearCell[][] {
-        startYear = startYear ? startYear : curYear - this._CUR_YEAR_POS;
+    private _createYearList(startYear: number, endYear: number): YearCell[][] {
         let yearCount = startYear;
         return Array.from(new Array(this._YEAR_CAL_ROW).keys()).map(() => {
             let rowArr = [];
             let index = 0;
             while (index < this._YEAR_CAL_COL) {
-                rowArr[index] = {year: yearCount, isSelected: yearCount == curYear, isDisabled: this._isYearDisabled(yearCount)};
+                rowArr[index] = {
+                    year: yearCount,
+                    isSelected: this._isYearSelected(yearCount),
+                    isDisabled: this._isYearDisabled(yearCount),
+                    isOwnPrevOrNext: this._isOwnPrevOrNext(yearCount, startYear, endYear)
+                };
                 index++;
                 yearCount++;
             }
@@ -190,9 +198,18 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         });
     }
 
+    private _isYearSelected(year: number) {
+        return this.date && TimeService.getYear(TimeService.convertValue(this.date, this._gr)) == year;
+    }
+
     private _isYearDisabled(year: number) {
         return (this.limitStart && year < TimeService.getYear(this.limitStart)) || (this.limitEnd && year > TimeService.getYear(this.limitEnd))
     }
+
+    private _isOwnPrevOrNext(year: number, startYear: number, endYear: number): boolean {
+        return year <= startYear || year >= endYear
+    }
+
 
     /**
      * @internal
@@ -217,15 +234,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         this._$selectMode = this.gr == TimeGr.month ? 'month' : 'day';
     }
 
-    private _createMonthCal(month: number) {
-        this._$monthList = this._createMonthList(month);
+    private _createMonthCal(year: number) {
+        this._$monthList = this._createMonthList();
+        this._$curYear = year;
     }
 
-    private _createMonthList(month: number): MonthCell[][] {
+    private _createMonthList(): MonthCell[][] {
         let monthList: MonthCell[] = TimeService.getMonthShort().map((m, i) => ({
             month: i + 1,
             label: m,
-            isSelected: month == i + 1 && this.date,
+            isSelected: this._isMonthSelected(i + 1),
             isDisabled: this._isMonthDisabled(i + 1)
         }));
         let monthIndex = 0;
@@ -239,6 +257,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             }
             return rowArr;
         })
+    }
+
+    private _isMonthSelected(month: number): boolean {
+        if (!this.date) return false;
+        let date = TimeService.convertValue(this.date, this._gr);
+        return TimeService.getYear(date) == this._$curYear && TimeService.getMonth(date) == month;
     }
 
     private _isMonthDisabled(month: number) {
@@ -429,17 +453,16 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$handleCtrlBar(num: number) {
-        if (this._$selectMode == 'day' || this._$selectMode == 'month') {
-            if (this.date) {
-                const date = TimeService.addDate(TimeService.convertValue(this.date, TimeGr.date), num, TimeUnit.M);
-                this.writeValue(date);
-            } else {
-                const date = TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.month);
-                this._createCalendar(TimeService.getYear(date), TimeService.getMonth(date));
-            }
-        }
-        if (this._$selectMode == 'year') {
-            this._createYearCal(this._$curYear, this._$yearList[0][0].year + this._YEAR_CAL_ROW * this._YEAR_CAL_COL * num);
+        if (this._$selectMode == 'day') {
+            const date = TimeService.convertValue(TimeService.addDate(`${this._$curYear}-${this._$curMonth.month}`, num, TimeUnit.M), TimeGr.month);
+            this._createCalendar(TimeService.getYear(date), TimeService.getMonth(date));
+        } else if (this._$selectMode == 'month') {
+            this._$curYear = this._$curYear + num;
+            this._createMonthCal(this._$curYear);
+            this._createYearCal(this._$curYear);
+        } else if (this._$selectMode == 'year') {
+            this._$curYear = this._$curYear + 10 * num;
+            this._createYearCal(this._$curYear);
         }
     }
 
@@ -574,7 +597,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     public set rangeDate(date: string) {
-        if(date == this._rangeDate) return;
+        if (date == this._rangeDate) return;
         this._rangeDate = date;
         this._createCalendar();
     }

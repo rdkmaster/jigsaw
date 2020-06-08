@@ -7,8 +7,9 @@
     <div class="jigsaw-date-picker-control">
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar fa fa-angle-left"
            (click)="_$handleCtrlBar(-1)"></i>
-        <span class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
-        <span class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
+        <span *ngIf="_$selectMode == 'day'"  class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
+        <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
+        <span *ngIf="_$selectMode == 'year'">{{_$rangeYear}}</span>
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar fa fa-angle-right"
            (click)="_$handleCtrlBar(1)"></i>
     </div>
@@ -57,6 +58,7 @@
             <td *ngFor="let yearCell of row" class="jigsaw-date-picker-content-year-cell"
                 [class.jigsaw-date-picker-content-year-cell-selected]="yearCell.isSelected"
                 [class.jigsaw-date-picker-content-year-cell-disabled]="yearCell.isDisabled"
+                [class.jigsaw-date-picker-content-year-cell-prev-next]="yearCell.isOwnPrevOrNext"
                 (click)="_$selectYear(yearCell)">
                 <span>{{yearCell.year}}</span>
             </td>
