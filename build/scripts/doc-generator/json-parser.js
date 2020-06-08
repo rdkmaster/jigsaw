@@ -43,7 +43,7 @@ docInfo.components.concat(docInfo.directives).forEach(ci => {
     fixDescription(ci);
     var html = getComponentTemplate();
     html = processCommon(ci, html);
-    html = processSelector(ci, html)
+    html = processSelector(ci, html);
     html = processInputs(ci, html);
     html = processOutputs(ci, html);
     html = processProperties(ci, html);
@@ -528,6 +528,10 @@ function fixDescription(metaInfo) {
         .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
             extra = extra || '';
             var script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
+            if (!fs.existsSync(`${__dirname}/../../../src/app/demo/pc/${comp}/${demoName}/demo.component.ts`)) {
+                console.error("Error: demo not found:", `pc/${comp}/${demoName}`);
+                process.exit(1);
+            }
             return `<a onclick="${script}"`;
         })
         .replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g, function (found, prop, value, suffix) {
