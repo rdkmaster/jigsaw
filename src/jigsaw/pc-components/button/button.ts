@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, NgModule} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, NgModule, NgZone} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 
@@ -32,9 +32,12 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
     },
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawButton extends AbstractJigsawComponent {
+    constructor(public element: ElementRef, protected _zone: NgZone) {
+        super(_zone);
+    }
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
