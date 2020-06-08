@@ -1,4 +1,4 @@
-import {NgModule, Component, Input} from '@angular/core';
+import {NgModule, Component, Input, ElementRef, NgZone} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 
@@ -34,6 +34,9 @@ import {AbstractJigsawComponent} from '../../common/common';
     }
 })
 export class JigsawButton extends AbstractJigsawComponent {
+    constructor(public element: ElementRef, protected _zone: NgZone) {
+        super();
+    }
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
