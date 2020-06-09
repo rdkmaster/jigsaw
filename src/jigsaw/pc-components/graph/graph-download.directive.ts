@@ -137,6 +137,9 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         return codes;
     }
 
+    /**
+     * @internal
+     */
     public _$download() {
         let zip = new JSZip();
         const base64Codes = this._getGraphBase64Codes();

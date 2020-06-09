@@ -222,6 +222,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         super();
     }
 
+    /**
+     * @internal
+     */
     public _$onClick(event: any) {
         event.stopPropagation();
         event.preventDefault();

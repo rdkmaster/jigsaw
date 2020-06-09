@@ -419,7 +419,12 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     `
 })
 export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit, OnDestroy {
-    constructor(@Optional() public _$cascade: JigsawCascade) {
+    constructor(
+        /**
+         * @internal
+         */
+        @Optional() public _$cascade: JigsawCascade
+    ) {
         super();
     }
 
