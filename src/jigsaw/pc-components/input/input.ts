@@ -9,7 +9,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 /**
  * 单行输入框组件，常常用于接收用户的文本输入。
  *
- * 支持前后置图标，且每个图标都可交互，[参考demo]($demo=pc/input/icons)。
+ * 支持前后置图标，且每个图标都可交互，[参考demo]($demo=input/icons)。
  *
  * 这是一个表单友好组件。
  *
