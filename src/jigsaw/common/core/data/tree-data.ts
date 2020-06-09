@@ -125,6 +125,16 @@ export class SimpleTreeData extends GeneralCollection<any> {
         return this;
     }
 
+    protected ajaxSuccessHandler(data: string | XMLDocument | any): void {
+        if (data instanceof XMLDocument || Object.prototype.toString.call(data) == "[object String]") {
+            this.fromXML(data)
+        } else {
+            this.fromObject(data);
+        }
+        this._busy = false;
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
+    }
+
     private _toSimpleNode(xmlElement: Element, target?: SimpleTreeData): SimpleNode {
         const node = target || {
             // 如果属性里提供了label属性，可以会覆盖这个textContent，这是没有问题的
