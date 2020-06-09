@@ -30,6 +30,7 @@ export type ProgressInitData = {
     labelPosition?: LabelPosition, preSize?: PreSize
 };
 
+// @dynamic
 @Component({
     selector: 'jigsaw-progress, j-progress',
     templateUrl: './progress.html',
@@ -97,8 +98,18 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         this._autoLabelPosition();
     }
 
+    private _status: Status = 'processing';
+
     @Input()
-    public status: Status = 'processing';
+    public get status(): Status {
+        return this._status
+    }
+
+    public set status(status: Status) {
+        if (!status || this._status == status) return;
+        this._status = status;
+        this._cdr.markForCheck();
+    }
 
     @Input()
     public preSize: PreSize = 'default';
@@ -186,16 +197,23 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         }
     }
 
-    public static showDockingBar(value: number):PopupInfo {
+    public static topProgressBar: PopupInfo;
+
+    public static showDockingBar(value: number): PopupInfo {
+        if (this.topProgressBar) {
+            this.topProgressBar.dispose();
+            this.topProgressBar = null;
+        }
         const initData: ProgressInitData = {value};
         initData.preSize = 'small';
         initData.labelPosition = 'none';
         initData.showMarker = false;
         initData.status = 'processing';
         initData.animate = false;
-        return PopupService.instance.popup(JigsawProgress, {
+        this.topProgressBar = PopupService.instance.popup(JigsawProgress, {
             modal: false, pos: document.body, posType: PopupPositionType.fixed, size: {width: '100%'}
         }, initData);
+        return this.topProgressBar;
     }
 
     ngOnDestroy() {
