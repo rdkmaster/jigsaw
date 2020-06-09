@@ -355,6 +355,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
     }
 
+    /**
+     * @internal
+     */
     public _$handleValueChange($event) {
         if(!$event || $event.label == this.cellData) return;
         this.dispatchChangeEvent($event.label)

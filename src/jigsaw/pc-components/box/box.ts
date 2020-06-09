@@ -28,6 +28,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     @Input()
     public resizable: boolean;
 
+    /**
+     * @internal
+     */
     public _$isFlicker: boolean = true;
 
     /**
