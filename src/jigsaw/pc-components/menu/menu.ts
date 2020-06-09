@@ -192,12 +192,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     public options: PopupOptions;
 
     @Input()
-    public backgroundColor: string;
-
-    @Input()
-    public selectedColor: string;
-
-    @Input()
     public showBorder: boolean = true;
 
     @Input()
@@ -305,6 +299,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
         const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
+        if (!titleElement) {
+            return {maxWidth: 'auto'} ;
+        }
         const wrapElement = titleElement.parentElement;
         // 5是给有子节点时，留下的箭头；
         const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
@@ -324,7 +321,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
         const titleElement = listOptionElements[index].getElementsByClassName(titleClass)[0];
-        return titleElement.scrollWidth > titleElement.offsetWidth ? label : '';
+        return titleElement && titleElement.scrollWidth > titleElement.offsetWidth ? label : '';
     }
 
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
