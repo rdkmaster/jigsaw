@@ -78,6 +78,9 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
     private _items: QueryList<JigsawBreadcrumbItem>;
 
+    /**
+     * @internal
+     */
     public _$breadcrumbNodes: BreadcrumbNode[] = [];
 
     private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
@@ -152,8 +155,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     }
 })
 export class JigsawBreadcrumbItem {
-    constructor(@Optional() public _$breadcrumbHost: JigsawBreadcrumb) {
-    }
+    constructor(
+        /**
+         * @internal
+         */
+        @Optional() public _$breadcrumbHost: JigsawBreadcrumb
+    ) { }
 
     @Input()
     public isLast: boolean;

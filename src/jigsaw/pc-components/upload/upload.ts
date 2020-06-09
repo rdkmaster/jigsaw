@@ -34,6 +34,9 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
         this._fileInputEl = this._fileInput ? this._fileInput.nativeElement : undefined;
     }
 
+    /**
+     * @internal
+     */
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'all';
         if (dragInfo.event.dataTransfer.effectAllowed == 'all') {
@@ -41,6 +44,9 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
         }
     }
 
+    /**
+     * @internal
+     */
     public _$fileDragOverHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = 'all';
         if (dragInfo.event.dataTransfer.effectAllowed == 'all') {
@@ -48,10 +54,16 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
         }
     }
 
+    /**
+     * @internal
+     */
     public _$fileDragLeaveHandle(dragInfo: DragDropInfo) {
         this._renderer.removeClass(this._elementRef.nativeElement, 'jigsaw-upload-drag-over');
     }
 
+    /**
+     * @internal
+     */
     public _$fileDropHandle(dragInfo: DragDropInfo) {
         this._renderer.removeClass(this._elementRef.nativeElement, 'jigsaw-upload-drag-over');
         this._upload(dragInfo.event.dataTransfer.files);

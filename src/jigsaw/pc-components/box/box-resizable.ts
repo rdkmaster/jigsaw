@@ -31,14 +31,19 @@ export class JigsawBoxResizable {
     @Output()
     public resizeEnd = new EventEmitter<number>();
 
-    private _effectOffset: number;
-
+    /**
+     * @internal
+     */
     public _$moving: boolean = false;
-    private _position: number[];
 
     private _removeWindowMouseMoveListener: CallbackRemoval;
     private _removeWindowMouseUpListener: CallbackRemoval;
+    private _effectOffset: number;
+    private _position: number[];
 
+    /**
+     * @internal
+     */
     public _$dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
