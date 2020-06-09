@@ -272,7 +272,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             return;
         }
         this.callLater(() => {
-            if (!this._jigsawFloat.popupElement) {
+            if (!this._jigsawFloat || !this._jigsawFloat.popupElement) {
                 return;
             }
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
