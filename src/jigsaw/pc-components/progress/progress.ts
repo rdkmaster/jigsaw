@@ -197,12 +197,12 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         }
     }
 
-    public static topProgressInfo: PopupInfo;
+    public static topProgressBar: PopupInfo;
 
     public static showDockingBar(value: number): PopupInfo {
-        if (this.topProgressInfo) {
-            this.topProgressInfo.dispose();
-            this.topProgressInfo = null;
+        if (this.topProgressBar) {
+            this.topProgressBar.dispose();
+            this.topProgressBar = null;
         }
         const initData: ProgressInitData = {value};
         initData.preSize = 'small';
@@ -210,10 +210,10 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         initData.showMarker = false;
         initData.status = 'processing';
         initData.animate = false;
-        this.topProgressInfo = PopupService.instance.popup(JigsawProgress, {
+        this.topProgressBar = PopupService.instance.popup(JigsawProgress, {
             modal: false, pos: document.body, posType: PopupPositionType.fixed, size: {width: '100%'}
         }, initData);
-        return this.topProgressInfo;
+        return this.topProgressBar;
     }
 
     ngOnDestroy() {
