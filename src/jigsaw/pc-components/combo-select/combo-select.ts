@@ -149,7 +149,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
-                if (this._editor) this._editor.focus();
+                if (this._editor) {
+                    this._editor.focus();
+                }
             } else {
                 this.searchKeyword = '';
             }
@@ -270,6 +272,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             return;
         }
         this.callLater(() => {
+            if (!this._jigsawFloat.popupElement) {
+                return;
+            }
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
         });
     }
@@ -281,7 +286,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoEditorWidth() {
-        if (!this.searchable || !this._editorElementRef) return;
+        if (!this.searchable || !this._editorElementRef) {
+            return;
+        }
 
         // 组件的空白长度 + 图标宽度
         const hostPaddingGap = 36;
@@ -312,7 +319,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this.select.emit(tagItem);
 
         // 控制下拉状态;(如果没有打开下拉内容，下拉，如果已经下拉保持不变;)
-        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled) return;
+        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled) {
+            return;
+        }
 
         this.open = true;
     }
@@ -322,7 +331,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$handleSearchBoxChange() {
-        if (this.searchKeyword) this.open = true;
+        if (this.searchKeyword) {
+            this.open = true;
+        }
         this.searchKeywordChange.emit(this.searchKeyword);
     }
 
