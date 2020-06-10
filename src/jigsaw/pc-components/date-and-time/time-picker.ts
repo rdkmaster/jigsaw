@@ -285,11 +285,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             if (!isTabSwitch) {
                 this._minuteInput.nativeElement.select();
             }
+            let minute = this._getStepValue(this._$minute);
+            if (Number(minute) != Number(this._minute)) {
+                this._minute = minute;
+                this._updateValue.emit();
+            }
             this._$floatInitData = this._getFloatInitData(mode, this._$minute, this.step);
             this._$floatArrowElement = this._minuteInput.nativeElement;
         } else if (mode == 'second') {
             if (!isTabSwitch) {
                 this._secondInput.nativeElement.select();
+            }
+            let second = this._getStepValue(this._$second);
+            if (Number(second) != Number(this._second)) {
+                this._second = second;
+                this._updateValue.emit();
             }
             this._$floatInitData = this._getFloatInitData(mode, this._$second, this.step);
             this._$floatArrowElement = this._secondInput.nativeElement;
