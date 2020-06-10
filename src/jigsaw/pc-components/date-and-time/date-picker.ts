@@ -37,10 +37,7 @@ export type MonthCell = { month: number, label: string, isSelected?: boolean, is
 export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean, isOwnPrevOrNext?: boolean };
 export type MarkDate = { date: Time | Time[] | MarkRange, mark: MarkDateType, label?: string };
 export type MarkRange = { from: Time, to: Time };
-
-export enum MarkDateType {
-    'none', 'recommend', 'warn', 'error'
-}
+export type MarkDateType = 'none' | 'recommend' | 'warn' | 'error';
 
 /**
  * 时间范围生成函数，用于生成自定义的时间范围
@@ -152,7 +149,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private readonly _MONTH_CAL_ROW = 4;
     private readonly _YEAR_CAL_COL = 3;
     private readonly _YEAR_CAL_ROW = 4;
-    private readonly _CUR_YEAR_POS = 4;
 
     private _createCalendar(year?: number, month?: number) {
         if (!year || !month) {
@@ -189,7 +185,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                     year: yearCount,
                     isSelected: this._isYearSelected(yearCount),
                     isDisabled: this._isYearDisabled(yearCount),
-                    isOwnPrevOrNext: this._isOwnPrevOrNext(yearCount, startYear, endYear)
+                    isOwnPrevOrNext: this._isYearOwnPrevOrNext(yearCount, startYear, endYear)
                 };
                 index++;
                 yearCount++;
@@ -206,10 +202,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return (this.limitStart && year < TimeService.getYear(this.limitStart)) || (this.limitEnd && year > TimeService.getYear(this.limitEnd))
     }
 
-    private _isOwnPrevOrNext(year: number, startYear: number, endYear: number): boolean {
+    private _isYearOwnPrevOrNext(year: number, startYear: number, endYear: number): boolean {
         return year <= startYear || year >= endYear
     }
-
 
     /**
      * @internal
@@ -406,7 +401,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return {type: 'none', label: ''};
         }
         const compareDate = TimeService.convertValue(`${year}-${month}-${day}`, TimeGr.date);
-        let [mark, label] = [MarkDateType[MarkDateType.none], ''];
+        let [mark, label] = ['none', ''];
         this.markDates.find(markDate => {
             let date: any = markDate.date;
             let founded;
@@ -418,7 +413,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 founded = !!date.find(d => TimeService.convertValue(d, TimeGr.date) == compareDate);
             }
             if (founded) {
-                mark = typeof markDate.mark == 'string' ? markDate.mark : MarkDateType[markDate.mark];
+                mark = markDate.mark;
                 label = markDate.label;
                 return true;
             }
