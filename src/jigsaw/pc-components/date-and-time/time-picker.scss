@@ -110,4 +110,8 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
             }
         }
     }
+
+    &-error {
+        border-color: $error-color;
+    }
 }

@@ -275,5 +275,8 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         }
     }
 
+    &-error {
+        border-color: $error-color;
+    }
 }
 

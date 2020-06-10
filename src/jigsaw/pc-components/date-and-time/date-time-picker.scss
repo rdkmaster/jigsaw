@@ -55,4 +55,7 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
         }
     }
 
+    &-error {
+        border-color: $error-color;
+    }
 }

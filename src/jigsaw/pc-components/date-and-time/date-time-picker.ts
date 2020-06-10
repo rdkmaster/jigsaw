@@ -25,6 +25,7 @@ import {debounceTime} from 'rxjs/operators';
     templateUrl: './date-time-picker.html',
     host: {
         '[class.jigsaw-date-time-picker]': 'true',
+        '[class.jigsaw-date-time-picker-error]': '!valid',
         '[style.width]': 'width',
         '[style.height]': 'height',
     },

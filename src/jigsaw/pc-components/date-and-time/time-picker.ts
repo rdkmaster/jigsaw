@@ -35,6 +35,7 @@ export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: bo
     host: {
         '[class.jigsaw-time-picker]': 'true',
         '[class.jigsaw-time-picker-active]': '_$selectMode != "none"',
+        '[class.jigsaw-time-picker-error]': '!valid',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '(keydown)': '_$handleKeyDown($event)'

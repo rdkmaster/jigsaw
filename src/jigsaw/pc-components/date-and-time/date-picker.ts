@@ -101,6 +101,7 @@ export class GrItem {
     templateUrl: './date-picker.html',
     host: {
         '[class.jigsaw-date-picker]': 'true',
+        '[class.jigsaw-date-picker-error]': '!valid',
         '[style.width]': 'width',
         '[style.height]': 'height',
     },
