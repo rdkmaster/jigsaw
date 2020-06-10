@@ -217,7 +217,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             'display': 'block',
             'transform': 'translate3d(' + (labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
-        }
+        };
     }
 
     // 将有纵向切换的封装.
@@ -296,12 +296,15 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
         const tabElem = this._tabsInkBar.nativeElement;
         if (tabElem.offsetWidth != labelPos.width) {
-            this._asyncSetStyle(this.selectedIndex)
+            this._asyncSetStyle(this.selectedIndex);
         } else {
             const match = (tabElem.style.transform + '').match(/\btranslate3d\s*\((\d+)px\s*,/);
-            const offset = match ? match[1] : -1;
-            if (offset != labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) {
-                this._asyncSetStyle(this.selectedIndex)
+            const styleOffset = match ? match[1] : -1;
+            const labelOffset = labelPos.offSet + this._tabLeftMap.get(this.selectedIndex);
+            // 当tab的宽度缩放到小于标题头的宽度时，这里会出现两个负值的偏移量，且不相等
+            // 这里会一直重复计算，从而导致页面卡死
+            if ((styleOffset >= 0 || labelOffset >= 0) && styleOffset != labelOffset) {
+                this._asyncSetStyle(this.selectedIndex);
             }
         }
     }
