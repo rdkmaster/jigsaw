@@ -121,10 +121,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 this._createCalendar(this._$curYear, this._$curMonth.month);
             }
         });
-        InternalUtils.initI18n(_translateService, 'time', {
-            zh: {recommendedLabel: '推荐日期'},
-            en: {recommendedLabel: 'Recommend'}
-        });
         this._defineLocale();
         let browserLang = _translateService.getBrowserLang();
         _translateService.setDefaultLang(browserLang);
