@@ -19,7 +19,6 @@ import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 
 declare const moment: any;
 
@@ -321,14 +320,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             let index = row == 0 ? firstDayWeekPos : 0;
             let rowArr: DayCell[] = Array.from(new Array(this._DAY_CAL_COL).keys()).map(num => ({day: -1}));
             while (index < rowArr.length && countDayNum <= maxDayNum) {
-                rowArr[index] = {
-                    day: countDayNum,
-                    isToday: this._isToday(year, month, countDayNum),
-                    isSelected: this._isDaySelected(year, month, countDayNum),
-                    isDisabled: this._isDayDisabled(year, month, countDayNum),
-                    mark: this._getDayMark(year, month, countDayNum),
-                    isInRange: this._isDayInRange(year, month, countDayNum)
-                };
+                rowArr[index] = this._getDayCell(year, month, countDayNum, 'cur');
                 index++;
                 countDayNum++;
             }
@@ -338,13 +330,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 while (index >= 0) {
                     let date = TimeService.addDate(firstDate, addDay, TimeUnit.d);
                     let [y, m, d] = [TimeService.getYear(date), TimeService.getMonth(date), TimeService.getDay(date)];
-                    rowArr[index] = {
-                        day: d,
-                        isOwnPrevMonth: true,
-                        isSelected: this._isDaySelected(y, m, d),
-                        isDisabled: this._isDayDisabled(y, m, d),
-                        mark: this._getDayMark(y, m, d)
-                    };
+                    rowArr[index] = this._getDayCell(y, m, d, 'prev');
                     addDay--;
                     index--;
                 }
@@ -353,19 +339,31 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 while (index < rowArr.length) {
                     let date = TimeService.addDate(lastDate, countNextMonthDayNum, TimeUnit.d);
                     let [y, m, d] = [TimeService.getYear(date), TimeService.getMonth(date), TimeService.getDay(date)];
-                    rowArr[index] = {
-                        day: d,
-                        isOwnNextMonth: true,
-                        isSelected: this._isDaySelected(y, m, d),
-                        isDisabled: this._isDayDisabled(y, m, d),
-                        mark: this._getDayMark(y, m, d)
-                    };
+                    rowArr[index] = this._getDayCell(y, m, d, 'next');
                     countNextMonthDayNum++;
                     index++;
                 }
             }
             return rowArr;
         });
+    }
+
+    private _getDayCell(year: number, month: number, day: number, type: 'cur' | 'prev' | 'next'): DayCell {
+        let dayCell: DayCell = {
+            day: day,
+            isSelected: this._isDaySelected(year, month, day),
+            isDisabled: this._isDayDisabled(year, month, day),
+            mark: this._getDayMark(year, month, day),
+        };
+        if (type == 'cur') {
+            dayCell.isToday = this._isToday(year, month, day);
+            dayCell.isInRange = this._isDayInRange(year, month, day);
+        } else if (type == 'prev') {
+            dayCell.isOwnPrevMonth = true;
+        } else if (type == 'next') {
+            dayCell.isOwnNextMonth = true;
+        }
+        return dayCell;
     }
 
     private _isToday(year: number, month: number, day: number) {
