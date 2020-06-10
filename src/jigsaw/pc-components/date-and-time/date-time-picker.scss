@@ -58,4 +58,20 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
     &-error {
         border-color: $error-color;
     }
+
+    &-disabled {
+        position: relative;
+        &:before {
+            content: ' ';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: $disabled-bg;
+            opacity: 0.7;
+            z-index: $zindex-level-1;
+            cursor: not-allowed;
+        }
+    }
 }

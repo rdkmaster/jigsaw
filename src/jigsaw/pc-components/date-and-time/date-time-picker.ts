@@ -26,6 +26,7 @@ import {debounceTime} from 'rxjs/operators';
     host: {
         '[class.jigsaw-date-time-picker]': 'true',
         '[class.jigsaw-date-time-picker-error]': '!valid',
+        '[class.jigsaw-date-time-picker-disabled]': 'disabled',
         '[style.width]': 'width',
         '[style.height]': 'height',
     },
@@ -55,6 +56,13 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
             this.writeValue(newDate);
         })
     }
+
+    /**
+     * 参考`JigsawDateTimePicker.disabled`
+     * $demo = date-time-picker/disabled
+     */
+    @Input()
+    public disabled: boolean;
 
     /**
      * 标记当前日期值是否有效，无效时，呈现一个红色框框，常用于表单中配合表单是否有效

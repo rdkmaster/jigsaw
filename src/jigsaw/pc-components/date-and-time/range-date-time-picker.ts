@@ -28,7 +28,8 @@ declare const moment: any;
     templateUrl: './range-date-time-picker.html',
     host: {
         '[class.jigsaw-range-date-time-picker-host]': 'true',
-        '[class.jigsaw-range-date-time-picker-error]': '!valid'
+        '[class.jigsaw-range-date-time-picker-error]': '!valid',
+        '[class.jigsaw-range-date-time-picker-disabled]': 'disabled'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeDateTimePicker), multi: true},
@@ -39,6 +40,13 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
         super(_zone);
     }
+
+    /**
+     * 参考`JigsawDateTimePicker.disabled`
+     * $demo = date-time-picker/disabled
+     */
+    @Input()
+    public disabled: boolean;
 
     /**
      * 参考`JigsawDateTimePicker.valid`

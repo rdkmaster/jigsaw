@@ -102,6 +102,7 @@ export class GrItem {
     host: {
         '[class.jigsaw-date-picker]': 'true',
         '[class.jigsaw-date-picker-error]': '!valid',
+        '[class.jigsaw-date-picker-disabled]': 'disabled',
         '[style.width]': 'width',
         '[style.height]': 'height',
     },
@@ -456,6 +457,13 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             this._createYearCal(this._$curYear);
         }
     }
+
+    /**
+     * 参考`JigsawDateTimePicker.disabled`
+     * $demo = date-time-picker/disabled
+     */
+    @Input()
+    public disabled: boolean;
 
     /**
      * 参考`JigsawDateTimePicker.valid`

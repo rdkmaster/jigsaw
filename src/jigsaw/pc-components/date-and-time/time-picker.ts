@@ -36,6 +36,7 @@ export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: bo
         '[class.jigsaw-time-picker]': 'true',
         '[class.jigsaw-time-picker-active]': '_$selectMode != "none"',
         '[class.jigsaw-time-picker-error]': '!valid',
+        '[class.jigsaw-time-picker-disabled]': 'disabled',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '(keydown)': '_$handleKeyDown($event)'
@@ -60,6 +61,13 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._cdr.markForCheck();
         });
     }
+
+    /**
+     * 参考`JigsawDateTimePicker.disabled`
+     * $demo = date-time-picker/disabled
+     */
+    @Input()
+    public disabled: boolean;
 
     /**
      * 参考`JigsawDateTimePicker.valid`
