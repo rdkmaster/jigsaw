@@ -20,6 +20,8 @@ import {WithFloatDemoComponent} from "./with-float/demo.component";
 import {WithFloatDemoModule} from "./with-float/demo.module";
 import {DateTimePickerDisabledDemoComponent} from "./disabled/demo.component";
 import {DateTimePickerDisabledDemoModule} from "./disabled/demo.module";
+import {DateTimeSelectDemoComponent} from "./date-time-select/demo.component";
+import {DateTimeSelectDemoModule} from "./date-time-select/demo.module";
 
 export const routerConfig = [
     {
@@ -52,6 +54,9 @@ export const routerConfig = [
     {
         path: 'disabled', component: DateTimePickerDisabledDemoComponent
     },
+    {
+        path: 'date-time-select', component: DateTimeSelectDemoComponent
+    },
 ];
 
 @NgModule({
@@ -67,6 +72,7 @@ export const routerConfig = [
         DateTimePickerValidDemoModule,
         WithFloatDemoModule,
         DateTimePickerDisabledDemoModule,
+        DateTimeSelectDemoModule
     ]
 })
 export class DateTimePickerDemoModule {

@@ -56,6 +56,7 @@ import {JigsawDatePickerModule} from "./date-and-time/date-picker";
 import {JigsawTimePickerModule} from "./date-and-time/time-picker";
 import {JigsawDateTimePickerModule} from "./date-and-time/date-time-picker";
 import {JigsawRangeDateTimePickerModule} from "./date-and-time/range-date-time-picker";
+import {JigsawDateTimeSelectModule} from "./date-and-time";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -114,7 +115,8 @@ const JIGSAW_MODULE = [
     JigsawDatePickerModule,
     JigsawTimePickerModule,
     JigsawDateTimePickerModule,
-    JigsawRangeDateTimePickerModule
+    JigsawRangeDateTimePickerModule,
+    JigsawDateTimeSelectModule
 ];
 
 @NgModule({

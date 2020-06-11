@@ -1,0 +1,75 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Date Time Select</h2>
+    <div class="demo-1 live-demo">
+        <h3>gr</h3>
+        <p class="comment"></p>
+        <p>如下粒度（Gr）值支持日期和时间同时选择：</p>
+        <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']" [(selectedItems)]="gr"></jigsaw-button-bar><br><br>
+        <jigsaw-date-time-select [(date)]="date1" [gr]="gr[0]" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date1 | json}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>gr-items</h3>
+        <jigsaw-date-time-select [(date)]="date2" [grItems]="grItems" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date2 | json}}</p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <h3>limit</h3>
+        <div class="toggle up">
+            <label>limitStart: </label>
+            <j-radios [(value)]="limitStart">
+                <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+            <br>
+            <label>limitEnd: </label>
+            <j-radios [(value)]="limitEnd">
+                <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+        </div>
+        <jigsaw-date-time-select [(date)]="date3" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date3 | json}}</p>
+    </div>
+
+    <div class="demo-4 live-demo">
+        <h3>mark</h3>
+        <jigsaw-date-time-select [(date)]="date4" [markDates]="markDates"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date4 | json}}</p>
+    </div>
+
+    <div class="demo-5 live-demo">
+        <h3>step</h3>
+        <jigsaw-date-time-select [(date)]="date5" gr="second" [step]="5" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date5 | json}}</p>
+    </div>
+
+    <div class="demo-6 live-demo">
+        <h3>disabled</h3>
+        <jigsaw-switch [(checked)]="disabled" onLabel="disable" offLabel="enable"></jigsaw-switch>
+        <br><br>
+        <jigsaw-date-time-select [disabled]="disabled"></jigsaw-date-time-select>
+    </div>
+
+    <div class="demo-7 live-demo">
+        <h3>valid</h3>
+        <jigsaw-switch [(checked)]="valid" onLabel="valid" offLabel="inValid"></jigsaw-switch>
+        <br><br>
+        <jigsaw-date-time-select [valid]="valid"></jigsaw-date-time-select>
+    </div>
+</div>
+
+
+
+
