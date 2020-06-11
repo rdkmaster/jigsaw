@@ -271,13 +271,13 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     private _propagateChange: any = () => {
     };
 
-    public writeValue(value: any): void {
+    public writeValue(value: any, emit = true): void {
         if (CommonUtils.isDefined(value)) {
             this._$selectedItems = this.multipleSelect ? value : [value];
         } else {
             this._$selectedItems = [];
         }
-        if (this.initialized) {
+        if (this.initialized && emit) {
             this.valueChange.emit(this.value);
         }
     }
@@ -293,7 +293,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         super.ngOnInit();
         // 设置默认选中的初始值
         if (CommonUtils.isDefined(this.value)) {
-            this.writeValue(this.value);
+            this.writeValue(this.value, false);
         }
     }
 }
