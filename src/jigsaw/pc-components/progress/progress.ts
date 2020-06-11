@@ -79,7 +79,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
             return;
         }
         this._value = value;
-        this._autoLabelPosition();
+        if(this.initialized) {
+            this._autoLabelPosition();
+        }
         this._cdr.markForCheck();
     }
 
@@ -95,7 +97,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     public set labelPosition(value: LabelPosition) {
         this._labelPosition = value;
-        this._autoLabelPosition();
+        if(this.initialized) {
+            this._autoLabelPosition();
+        }
     }
 
     private _status: Status = 'processing';
@@ -231,6 +235,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
             this.preSize = this.initData.preSize;
             this.animate = this.initData.animate;
         }
+        Promise.resolve().then(() => {
+            this._autoLabelPosition();
+        });
     }
 }
 

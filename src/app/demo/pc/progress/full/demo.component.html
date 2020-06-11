@@ -48,9 +48,14 @@
             <j-progress [value]="progressValue" status="success"></j-progress>
             <br><br>
 
+            <p class="comment">文字在左边</p>
+            <j-progress [value]="progressValue" labelPosition="left"></j-progress>
+            <j-progress [value]="progressValue" labelPosition="left" status="block"></j-progress>
+            <br><br>
+
             <p class="comment">文字在顶部</p>
-            <j-progress [value]="progressValue" width="100%" labelPosition="top" [showMarker]="true">
-            </j-progress>
+            <j-progress [value]="progressValue"  width="100%" labelPosition="top" [showMarker]="true"></j-progress><br><br>
+            <j-progress [value]="progressValue"  width="100%" labelPosition="top" [showMarker]="true" status="block"></j-progress>
             <br><br>
 
             <p class="comment">大尺寸，文字跟随进度条</p>
