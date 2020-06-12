@@ -15,10 +15,15 @@
     </div>
     <div class="jigsaw-progress-bar-track">
         <div class="jigsaw-progress-bar-track-value" [style.width]="value + '%'">
-            <div class="jigsaw-progress-bar-track-label"
+            <div class="jigsaw-progress-bar-track-label-wrapper"
                  [class.jigsaw-progress-bar-track-label-left]="_$followingLabelPosition == 'followLeft'"
                  [class.jigsaw-progress-bar-track-label-right]="_$followingLabelPosition == 'followRight'"
-                 *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">{{value}}%
+                 *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">
+                <div *ngIf="status == 'processing'; else iconStatus" class="jigsaw-progress-bar-track-label">{{value}}%</div>
+                <ng-template #iconStatus>
+                    <div class="jigsaw-progress-bar-icon fa" [class.fa-info-circle]="status == 'block'"
+                         [class.fa-times-circle]="status == 'error'" [class.fa-check-circle]="status == 'success'"></div>
+                </ng-template>
             </div>
             <i *ngIf="status == 'processing' && animate" class="jigsaw-am-processing"></i>
         </div>

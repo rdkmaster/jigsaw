@@ -65,7 +65,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
 
             }
 
-            &-label {
+            &-label-wrapper {
                 position: absolute;
                 top: 50%;
                 right: 0;
@@ -73,10 +73,16 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                 font-size: 24px;
                 padding: 0 8px;
                 z-index: $zindex-level-2;
+                .#{$progress-prefix-cls}-bar-icon {
+                    font-size: inherit;
+                }
             }
 
             &-label-left {
                 color: $text-color-of-bg;
+                .#{$progress-prefix-cls}-bar-icon {
+                    color: inherit !important;
+                }
             }
 
             &-label-right {
