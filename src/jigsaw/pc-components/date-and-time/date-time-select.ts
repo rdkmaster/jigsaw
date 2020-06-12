@@ -127,8 +127,17 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         return typeof date == 'string' ? date : `${date.year}-${date.week}`;
     }
 
+    private _isDateSame(date1, date2) {
+        if(!date1 || !date2) return false;
+        if(this.gr == TimeGr.week) {
+            return date1.year == date2.year && date1.week == date2.week
+        } else {
+            return date1 == date2
+        }
+    }
+
     public writeValue(date: WeekTime): void {
-        if (this._date == date) return;
+        if (this._isDateSame(date, this._date)) return;
         this._date = date;
         this.dateChange.emit(date);
         this._$setComboValue(<string | TimeWeekDay>date);

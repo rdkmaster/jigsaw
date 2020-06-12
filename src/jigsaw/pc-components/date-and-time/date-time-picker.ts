@@ -44,6 +44,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
                 if (!this.date) return;
                 newDate = TimeService.convertValue(this.date, this._gr);
                 [this._$date, this._$time] = newDate.split(' ');
+                newDate = this.gr == TimeGr.week ? TimeService.getWeekDate(newDate) : newDate;
                 this._cdr.markForCheck();
             } else if(mode == 'combine') {
                 if (!this._$date) return;
@@ -317,8 +318,17 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         return this.gr == TimeGr.hour ? '00' : this.gr == TimeGr.time_hour_minute ? '00:00' : '00:00:00';
     }
 
+    private _isDateSame(date1, date2) {
+        if(!date1 || !date2) return false;
+        if(this.gr == TimeGr.week) {
+            return date1.year == date2.year && date1.week == date2.week
+        } else {
+            return date1 == date2
+        }
+    }
+
     public writeValue(date: string): void {
-        if (this._date == date) return;
+        if (this._isDateSame(date, this._date)) return;
         this._date = date;
         this.dateChange.emit(date);
         this._propagateChange();
