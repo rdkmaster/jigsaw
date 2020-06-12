@@ -50,6 +50,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
         pane.isActiveChange.emit(value);
+        pane._changeDetector.markForCheck();
     }
 
     @Output()
