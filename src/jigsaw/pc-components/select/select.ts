@@ -1,5 +1,5 @@
 import {
-    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild, OnInit
+    NgModule, Component, Input, forwardRef, Output, EventEmitter, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -33,7 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true},
     ]
 })
-export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor {
 
     @Input()
     public valid: boolean = true;
@@ -179,14 +179,10 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public set value(newValue: any) {
-        if (this._value == newValue) {
-            return;
+        if (this._value != newValue) {
+            this._propagateChange(newValue);
         }
-        this._propagateChange(newValue);
-        this._value = newValue;
-        if (this.initialized) {
-            this.writeValue(newValue);
-        }
+        this.writeValue(newValue);
     }
 
     /**
@@ -253,6 +249,10 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     };
 
     public writeValue(value: any): void {
+        if (this._value == value) {
+            return;
+        }
+        this._value = value;
         if (CommonUtils.isDefined(value)) {
             this._$selectedItems = this.multipleSelect ? value : [value];
         } else {
@@ -268,14 +268,6 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public registerOnTouched(fn: any): void {
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        // 设置默认选中的初始值
-        if (CommonUtils.isDefined(this.value)) {
-            this.writeValue(this.value);
-        }
     }
 }
 
