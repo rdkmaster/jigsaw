@@ -43,21 +43,22 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         if (this._isActive != value) {
             this._changeActive(this, value);
             this._updateCollapsePaneStatus();
-            this.changeDetector.detectChanges();
+            this._changeDetector.detectChanges();
         }
     }
 
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
         pane.isActiveChange.emit(value);
-        pane.changeDetector.markForCheck();
+        pane._changeDetector.markForCheck();
+        console.log("aaa");
     }
 
     @Output()
     public isActiveChange = new EventEmitter<boolean>();
 
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                public changeDetector: ChangeDetectorRef) {
+                private _changeDetector: ChangeDetectorRef) {
         super();
     }
 
