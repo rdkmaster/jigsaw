@@ -12,6 +12,8 @@ import {RangeDateTimeComboSelectDemoComponent} from "./with-combo-select/demo.co
 import {RangeDateTimeComboDemoModule} from "./with-combo-select/demo.module";
 import {RangeDateTimeStepDemoComponent} from "./step/demo.component";
 import {RangeDateTimeStepDemoModule} from "./step/demo.module";
+import {RangeDateTimeSelectComponent} from "./range-date-time-select/demo.component";
+import {RangeDateTimeSelectModule} from "./range-date-time-select/demo.module";
 
 export const routerConfig: any = [
     {
@@ -32,6 +34,9 @@ export const routerConfig: any = [
     {
         path: 'step', component: RangeDateTimeStepDemoComponent
     },
+    {
+        path: 'range-date-time-select', component: RangeDateTimeSelectComponent
+    },
 ];
 
 @NgModule({
@@ -42,7 +47,8 @@ export const routerConfig: any = [
         RangeDateTimeGrItemsModule,
         RangeDateTimeLimitModule,
         RangeDateTimeComboDemoModule,
-        RangeDateTimeStepDemoModule
+        RangeDateTimeStepDemoModule,
+        RangeDateTimeSelectModule
     ]
 })
 export class RangeDateTimeDemoModule {

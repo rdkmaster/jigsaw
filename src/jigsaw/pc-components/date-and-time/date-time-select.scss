@@ -1,10 +1,12 @@
 @import "../../common/assets/scss/core/base";
 
 $date-time-select-prefix-cls: #{$jigsaw-prefix}-date-time-select;
+$range-date-time-select-prefix-cls: #{$jigsaw-prefix}-range-date-time-select;
 
-.#{$date-time-select-prefix-cls} {
+.#{$date-time-select-prefix-cls}, .#{$range-date-time-select-prefix-cls} {
     .jigsaw-combo-select-selection-rendered .jigsaw-tag-host {
         border: none;
+        max-width: none;
     }
     .jigsaw-combo-select-down:before {
         content: "\f073";
