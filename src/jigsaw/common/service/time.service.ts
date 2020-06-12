@@ -273,6 +273,11 @@ export class TimeService {
         return moment(date).week();
     }
 
+
+    public static getWeekDate(date: Time) {
+        return {year: this.getWeekYear(date), week: this.getWeekOfYear(date)};
+    }
+
     /**
      * 获取给定时间的年数值
      *

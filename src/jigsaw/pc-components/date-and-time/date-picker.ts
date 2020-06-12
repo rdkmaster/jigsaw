@@ -379,7 +379,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return false;
         }
         if (this.gr == TimeGr.week) {
-            const date = this._getWeekDate(`${year}-${month}-${day}`);
+            const date = TimeService.getWeekDate(`${year}-${month}-${day}`);
             return this._isSameWeek(<TimeWeekDay>this.date, date);
         } else {
             const date = TimeService.convertValue(this.date, TimeGr.date);
@@ -624,10 +624,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return date1.year == date2.year && date1.week == date2.week;
     }
 
-    private _getWeekDate(date: Time) {
-        return {year: TimeService.getWeekYear(date), week: TimeService.getWeekOfYear(date)};
-    }
-
     private _isValueChanged(newValue) {
         let changed = true;
         if (this.gr == TimeGr.week) {
@@ -642,7 +638,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     private _getValidDate(newValue) {
         newValue = this._handleLimit(TimeService.convertValue(newValue, <TimeGr>this.gr));
-        newValue = this.gr == TimeGr.week ? this._getWeekDate(newValue) : newValue;
+        newValue = this.gr == TimeGr.week ? TimeService.getWeekDate(newValue) : newValue;
         return newValue;
     }
 

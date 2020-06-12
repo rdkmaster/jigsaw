@@ -27,7 +27,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150">
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="writeValue($event)" [(gr)]="gr" (grChange)="grChange.emit($event)"
-                                         [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step">
+                                         [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
+                                         [step]="step">
                 </jigsaw-date-time-picker>
             </ng-template>
         </jigsaw-combo-select>
@@ -60,18 +61,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         }
         if (value == this._gr) return;
         this._gr = <TimeGr>value;
-        if(this.initialized && this.date) {
-            let convertDate = this._gr == TimeGr.week ? this._getWeekDate(<Time>this.date) : TimeService.convertValue(this.date, this._gr);
-            if(convertDate != this.date) {
-                this.runMicrotask(() => {
-                    this.writeValue(convertDate);
-                })
-            }
+        if (this.initialized && this.date) {
+            this._changeDateByGr();
         }
-    }
-
-    private _getWeekDate(date: Time) {
-        return {year: TimeService.getWeekYear(date), week: TimeService.getWeekOfYear(date)};
     }
 
     @Output()
@@ -82,6 +74,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public get date(): WeekTime {
         return this._date;
     }
+
     public set date(date: WeekTime) {
         this.writeValue(date);
     }
@@ -118,27 +111,43 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
 
-    public _$setDateComboValue(date: string | TimeWeekDay) {
-        if(typeof date == 'string' && date.includes('now')) return;
-        date = typeof date == 'string' ? date : !!date ? `${date.year}-${date.week}` : '';
-        this._$dateComboValue =  new ArrayCollection([{
+    public _$setComboValue(date: string | TimeWeekDay) {
+        date = this._getDateStr(date);
+        if (!date) return;
+        this._$dateComboValue = new ArrayCollection([{
             label: date,
             closable: false
         }]);
         this._cdr.markForCheck();
     }
 
-    public _$onDateChange(date: string | TimeWeekDay) {
-        this._$setDateComboValue(date);
-        this.dateChange.emit(date);
+    private _getDateStr(date: string | TimeWeekDay) {
+        if(!((typeof date == 'string' && !date.includes('now')) ||
+            (date && date.hasOwnProperty('year') && date.hasOwnProperty('week')))) return null;
+        return typeof date == 'string' ? date : `${date.year}-${date.week}`;
     }
 
     public writeValue(date: WeekTime): void {
         if (this._date == date) return;
         this._date = date;
         this.dateChange.emit(date);
-        this._$setDateComboValue(<string | TimeWeekDay>date);
+        this._$setComboValue(<string | TimeWeekDay>date);
         this._propagateChange();
+    }
+
+    private _changeDateByGr() {
+        if(!this.date) return;
+        let convertDate = this._gr == TimeGr.week ? TimeService.getWeekDate(<Time>this.date) : TimeService.convertValue(this.date, this._gr);
+        if (convertDate != this.date) {
+            this.runMicrotask(() => {
+                this.writeValue(convertDate);
+            })
+        }
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._changeDateByGr();
     }
 
     private _propagateChange: any = () => {
@@ -149,16 +158,6 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     public registerOnTouched(fn: any): void {
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        let convertDate = this.date ? TimeService.convertValue(this.date, <TimeGr>this.gr) : this.date;
-        if(convertDate != this.date) {
-            this.runMicrotask(() => {
-                this.writeValue(convertDate);
-            })
-        }
     }
 
 }
