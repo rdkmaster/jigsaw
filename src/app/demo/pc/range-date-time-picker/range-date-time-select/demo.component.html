@@ -9,16 +9,20 @@
     <div class="demo-1 live-demo">
         <h3>gr</h3>
         <p class="comment">如下粒度（Gr）值支持日期和时间同时选择：</p>
-        <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']" [(selectedItems)]="gr"></jigsaw-button-bar><br><br>
-        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]"></jigsaw-range-date-time-select><br>
-        <p class="message">beginDate： {{date.beginDate | json}}   endDate：{{date.endDate | json}}</p>
+        <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']"
+                           [(selectedItems)]="gr"></jigsaw-button-bar>
+        <br><br>
+        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date | json}}</p>
     </div>
 
     <div class="demo-2 live-demo">
         <h3>grItem</h3>
         <p class="comment"></p>
-        <jigsaw-range-date-time-select [(date)]="date2"  [grItems]="grItems" ></jigsaw-range-date-time-select><br>
-        <p class="message">beginDate： {{date2.beginDate | json}}   endDate：{{date2.endDate | json}}</p>
+        <jigsaw-range-date-time-select [(date)]="date2" [grItems]="grItems"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date2 | json}}</p>
     </div>
 
     <div class="demo-3 live-demo">
@@ -34,15 +38,17 @@
                 <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
             </j-radios>
         </div>
-        <j-range-date-time-select [(date)]="date3" [limitStart]="limitStart" [limitEnd]="limitEnd" gr="second"></j-range-date-time-select>
-        <p class="message">beginDate： {{date3.beginDate | json}}   endDate：{{date3.endDate | json}}</p>
+        <j-range-date-time-select [(date)]="date3" [limitStart]="limitStart" [limitEnd]="limitEnd"
+                                  gr="second"></j-range-date-time-select>
+        <p class="message">{{date3 | json}}</p>
     </div>
 
     <div class="demo-4 live-demo">
         <h3>step</h3>
         <p class="comment"></p>
-        <jigsaw-range-date-time-select [(date)]="date4" gr="second" [step]="5"></jigsaw-range-date-time-select><br>
-        <p class="message">beginDate： {{date4.beginDate | json}}   endDate：{{date4.endDate | json}}</p>
+        <jigsaw-range-date-time-select [(date)]="date4" gr="second" [step]="5"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date4 | json}}</p>
     </div>
 
 </div>

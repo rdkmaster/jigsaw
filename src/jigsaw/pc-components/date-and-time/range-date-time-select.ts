@@ -23,7 +23,7 @@ import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 
-export type RangeDate = {beginDate: WeekTime, endDate: WeekTime}
+export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
@@ -31,10 +31,10 @@ export type RangeDate = {beginDate: WeekTime, endDate: WeekTime}
         <jigsaw-combo-select [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200">
             <ng-template>
-                <jigsaw-range-date-time-picker [beginDate]="_$beginDate" [endDate]="_$endDate" (beginDateChange)="_$onDateChange($event, 'begin')"
-                                               (endDateChange)="_$onDateChange($event, 'end')" [(gr)]="gr" (grChange)="grChange.emit($event)"
-                                               [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
-                                               [step]="step">
+                <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [(gr)]="gr" [limitStart]="limitStart"
+                                               [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
+                                               (beginDateChange)="_$dateItemChange.emit()" (endDateChange)="_$dateItemChange.emit()"
+                                               (grChange)="grChange.emit($event)">
                 </jigsaw-range-date-time-picker>
             </ng-template>
         </jigsaw-combo-select>
@@ -50,7 +50,7 @@ export type RangeDate = {beginDate: WeekTime, endDate: WeekTime}
 export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
     constructor(private _cdr: ChangeDetectorRef) {
         super();
-        this._removeDateItemChangeSubscriber = this._dateItemChange.pipe(debounceTime(100)).subscribe(() => {
+        this._removeDateItemChangeSubscriber = this._$dateItemChange.pipe(debounceTime(100)).subscribe(() => {
             this.writeValue({beginDate: this._$beginDate, endDate: this._$endDate})
         })
     }
@@ -70,7 +70,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         }
         if (value == this._gr) return;
         this._gr = <TimeGr>value;
-        if(this.initialized && this.date) {
+        if (this.initialized && this.date) {
             this._changeRangeDateByGr();
         }
     }
@@ -95,7 +95,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public set date(date: RangeDate) {
-        if(!date || !date.hasOwnProperty('beginDate') || !date.hasOwnProperty('endDate')) return;
+        if (!date || !date.hasOwnProperty('beginDate') || !date.hasOwnProperty('endDate')) return;
         this._$beginDate = date.beginDate;
         this._$endDate = date.endDate;
         this.writeValue(date);
@@ -131,13 +131,16 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     @Input()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
+    public _$dateItemChange = new EventEmitter();
+    private _removeDateItemChangeSubscriber: Subscription;
+
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
 
     public _$setComboValue(date: RangeDate) {
-        if(!date) return;
+        if (!date) return;
         let [beginDate, endDate] = [this._getDateStr(<string | TimeWeekDay>date.beginDate), this._getDateStr(<string | TimeWeekDay>date.endDate)];
-        if(!beginDate || !endDate) return;
-        this._$dateComboValue =  new ArrayCollection([{
+        if (!beginDate || !endDate) return;
+        this._$dateComboValue = new ArrayCollection([{
             label: `${beginDate} - ${endDate}`,
             closable: false
         }]);
@@ -145,20 +148,9 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     private _getDateStr(date: string | TimeWeekDay) {
-        if(!((typeof date == 'string' && !date.includes('now')) ||
+        if (!((typeof date == 'string' && !date.includes('now')) ||
             (date && date.hasOwnProperty('year') && date.hasOwnProperty('week')))) return null;
         return typeof date == 'string' ? date : `${date.year}-${date.week}`;
-    }
-
-    private _dateItemChange = new EventEmitter();
-    private _removeDateItemChangeSubscriber: Subscription;
-    public _$onDateChange($event, type: 'begin' | 'end') {
-        if(type == 'begin') {
-            this._$beginDate = $event;
-        } else if(type == 'end') {
-            this._$endDate = $event;
-        }
-        this._dateItemChange.emit();
     }
 
     public writeValue(date: RangeDate): void {
@@ -170,9 +162,12 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     private _changeRangeDateByGr() {
-        if(!this._isRangeDate(this.date)) return;
-        let convertDate = {beginDate: this._getDateByGr(this.date.beginDate, this._gr), endDate: this._getDateByGr(this.date.endDate, this._gr)};
-        if(this._isDateChanged(convertDate, this.date)) {
+        if (!this._isRangeDate(this.date)) return;
+        let convertDate = {
+            beginDate: this._getDateByGr(this.date.beginDate, this._gr),
+            endDate: this._getDateByGr(this.date.endDate, this._gr)
+        };
+        if (this._isDateChanged(convertDate, this.date)) {
             this.runMicrotask(() => {
                 this.writeValue(convertDate);
             })
@@ -193,14 +188,14 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     ngOnInit() {
         super.ngOnInit();
-        if(this.date) {
+        if (this.date) {
             this._changeRangeDateByGr()
         }
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if(this._removeDateItemChangeSubscriber) {
+        if (this._removeDateItemChangeSubscriber) {
             this._removeDateItemChangeSubscriber.unsubscribe();
             this._removeDateItemChangeSubscriber = null
         }

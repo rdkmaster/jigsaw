@@ -122,14 +122,14 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     private _getDateStr(date: string | TimeWeekDay) {
-        if(!((typeof date == 'string' && !date.includes('now')) ||
+        if (!((typeof date == 'string' && !date.includes('now')) ||
             (date && date.hasOwnProperty('year') && date.hasOwnProperty('week')))) return null;
         return typeof date == 'string' ? date : `${date.year}-${date.week}`;
     }
 
     private _isDateSame(date1, date2) {
-        if(!date1 || !date2) return false;
-        if(this.gr == TimeGr.week) {
+        if (!date1 || !date2) return false;
+        if (this.gr == TimeGr.week) {
             return date1.year == date2.year && date1.week == date2.week
         } else {
             return date1 == date2
@@ -145,7 +145,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     private _changeDateByGr() {
-        if(!this.date) return;
+        if (!this.date) return;
         let convertDate = this._gr == TimeGr.week ? TimeService.getWeekDate(<Time>this.date) : TimeService.convertValue(this.date, this._gr);
         if (convertDate != this.date) {
             this.runMicrotask(() => {

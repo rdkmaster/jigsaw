@@ -375,8 +375,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
                 this._startTimeLimitEnd = this._beginDate;
                 this.beginDateChange.emit(this._beginDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
-                // 这里给this._beginDate赋的值（为了避免循环调用writeValue），所有要加detectChanges执行子组件的变更检查
-                this._cdr.detectChanges();
+                this._cdr.markForCheck();
             });
         }
         if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
@@ -391,8 +390,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
                 }
                 this.endDateChange.emit(this._endDate);
                 this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
-                // 这里给this._beginDate赋的值（为了避免循环调用writeValue），所有要加detectChanges执行子组件的变更检查
-                this._cdr.detectChanges();
+                this._cdr.markForCheck();
             });
         }
         this._propagateChange();
