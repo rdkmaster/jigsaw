@@ -51,7 +51,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         pane._isActive = value;
         pane.isActiveChange.emit(value);
         pane._changeDetector.markForCheck();
-        console.log("aaa");
     }
 
     @Output()
