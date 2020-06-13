@@ -142,9 +142,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
             return;
         }
         // 滑动的过程有动画，导致这里读取到的元素尺寸错误，这里只能估算了，无法获得精确值。
-        // 此时，99%这个label的尺寸大约是67px，0%大约是52px，value的宽度则可以通过进度值按比例计算到
+        // 此时，99.1%这个label的尺寸大约是77px，0%大约是52px，value的宽度则可以通过进度值按比例计算到
         const valueWidth = trackEl.offsetWidth * this.value / 100;
-        const maxLabelWidth = 70, minLabelWidth = 52;
+        const maxLabelWidth = 77, minLabelWidth = 52;
 
         if (maxLabelWidth + valueWidth >= trackEl.offsetWidth) {
             this._$followingLabelPosition = 'followLeft';
