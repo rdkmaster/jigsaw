@@ -286,10 +286,11 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
                 endTime.setDate(31);
                 break;
             default:
+                startDate = TimeService.convertValue(startDate, gr);
                 let spanReg: RegExp = /([\d]+)([a-z]+)?/i;
                 span = span.replace(/\s+/g, "");
                 let gapArr: string[] = spanReg.exec(span);
-                let endTimeFormat = TimeService.format(TimeService.addDate(endTime, gapArr[1], TimeUnit[gapArr[2].toLowerCase()]), 'YYYY-MM-DD,HH:mm:ss');
+                let endTimeFormat = TimeService.format(TimeService.addDate(startDate, gapArr[1], TimeUnit[gapArr[2].toLowerCase()]), 'YYYY-MM-DD,HH:mm:ss');
                 let endTimeParse = moment(endTimeFormat, "YYYY-MM-DD HH:mm:ss");
                 endTime = new Date(endTimeParse);
                 switch (gapArr[2]) {
