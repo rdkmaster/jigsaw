@@ -41,6 +41,10 @@ export class RangeDateTimeGrItemsComponent implements AfterViewInit {
         this.changeDetectorRef.detectChanges();
     }
 
+    onChange($event) {
+        console.log($event)
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -314,17 +314,19 @@ export class TimeService {
 
     public static handleWeekDateToDate(date: WeekTime, gr: TimeGr) {
         if (gr == TimeGr.week || !date || typeof date['week'] != 'number') {
-            return TimeService.convertValue(date, gr);
+            return this.convertValue(date, gr);
         }
-        date = TimeService.getDateFromYearAndWeek(date["year"], date["week"]);
-        let dateMonth = TimeService.getMonth(date);
-        let weekLastDate = TimeService.addDate(date, 6, TimeUnit.d);
-        let weekLastDateMonth = TimeService.getMonth(weekLastDate);
-        if (dateMonth == weekLastDateMonth) {
-            return TimeService.convertValue(date, gr);
+        date = this.getDateFromYearAndWeek(date["year"], date["week"]);
+        let [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
+        let dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
+        let [weekStartDate, weekEndDate] = [this.addDate(date, - dateIndex, TimeUnit.d),
+            this.addDate(date, 6 - dateIndex, TimeUnit.d)];
+        let [weekStartMonth, weekEndMonth] = [this.getMonth(weekStartDate), this.getMonth(weekEndDate)];
+        if (weekStartMonth == weekEndMonth || this.getMonth(date) == weekEndMonth) {
+            return this.convertValue(date, gr);
+        } else {
+            return this.convertValue(`${this.getYear(weekEndDate)}-${weekEndMonth}-01`, gr);
         }
-        let weekLastDateYear = TimeService.getYear(weekLastDate);
-        return TimeService.convertValue(`${weekLastDateYear}-${weekLastDateMonth}-01`, gr);
     }
 
     public static getDate(str: Time, gr: TimeGr): Moment {

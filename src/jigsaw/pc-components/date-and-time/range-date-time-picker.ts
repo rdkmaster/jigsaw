@@ -20,6 +20,8 @@ import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "..
 import {Time, WeekTime} from "../../common/service/time.types";
 import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
 import {TimeStep} from "./time-picker";
+import { Subscription } from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 declare const moment: any;
 
@@ -39,6 +41,12 @@ declare const moment: any;
 export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
     constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
         super(_zone);
+        this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(100)).subscribe(() => {
+            if(!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
+                this.endDate > TimeService.convertValue(this._$endTimeLimitEnd, this._$gr)) return;
+            this.writeValue({beginDate: this.beginDate, endDate: this.endDate});
+            this._propagateChange({beginDate: this.beginDate, endDate: this.endDate});
+        })
     }
 
     /**
@@ -93,11 +101,13 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      * @internal
      */
     public _$dateChange(key: string, value: WeekTime) {
-        // 标记beginDate,endDate从time控件来
-        const val = {fromTimeComponent: true};
-        val[key] = value;
-        this.writeValue(val);
-        this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+        if(key == 'beginDate') {
+            this._beginDate = value;
+            this._$endTimeLimitEnd = this._calculateLimitEnd();
+        } else if(key == 'endDate') {
+            this._endDate = value;
+        }
+        this._updateValue.emit();
         this._cdr.markForCheck();
     }
 
@@ -113,8 +123,16 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set beginDate(value: WeekTime) {
-        this.writeValue({beginDate: value});
-        this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+        if(!value || value == this._beginDate) return;
+        if(this.initialized) {
+            let date = this._getDateByGr(value, this._$gr);
+            if(date == this._beginDate) return;
+            this._beginDate = date;
+            this._$endTimeLimitEnd = this._calculateLimitEnd();
+            this._updateValue.emit();
+        } else {
+            this._beginDate = value;
+        }
     }
 
     private _endDate: WeekTime;
@@ -129,8 +147,20 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set endDate(value: WeekTime) {
-        this.writeValue({endDate: value});
-        this._propagateChange({"beginDate": this._beginDate, "endDate": this._endDate});
+        if(!value || value == this._endDate) return;
+        if(this.initialized) {
+            let date = this._getDateByGr(value, this._$gr);
+            if(date == this._endDate) return;
+            this._endDate = date;
+            this._updateValue.emit();
+        } else {
+            this._endDate = value;
+        }
+    }
+
+    private _getDateByGr(date: WeekTime, gr: TimeGr) {
+        date = TimeService.convertValue(date, gr);
+        return gr == TimeGr.week ? TimeService.getWeekDate(date) : date;
     }
 
     /**
@@ -228,6 +258,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Output()
     public endDateChange = new EventEmitter<WeekTime>();
 
+    private _updateValue = new EventEmitter();
+    private _removeUpdateValueSubscriber: Subscription;
+
     /**
      * @internal
      */
@@ -238,12 +271,24 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      */
     public _$endTimeLimitEnd: WeekTime;
 
-    private _startTimeLimitEnd: WeekTime;
-
     private _init() {
-        this._cdr.markForCheck();
+        if(this._beginDate) {
+            let date = this._getDateByGr(this._beginDate, this._$gr);
+            if(date != this._beginDate) {
+                this._beginDate = date;
+                this._updateValue.emit();
+            }
+        }
+        if(this._endDate) {
+            let date = this._getDateByGr(this._endDate, this._$gr);
+            if(date != this._endDate) {
+                this._endDate = date;
+                this._updateValue.emit();
+            }
+        }
         this._$shortcuts = this._getShortcuts();
         this._$endTimeLimitEnd = this._calculateLimitEnd();
+        this._cdr.markForCheck();
     }
 
     private _calculateLimitEnd(): WeekTime {
@@ -261,7 +306,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
                 endTime = calculateTime;
             }
         }
-        this._cdr.markForCheck();
         return endTime;
     }
 
@@ -339,21 +383,19 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      */
     public _changeShortcut(selectedShortcut: Shortcut) {
         if (selectedShortcut.dateRange) {
-            let [beginDate, endDate] = typeof selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
-
-            beginDate = TimeService.convertValue(beginDate, <TimeGr>this._timeStart.gr);
-            let limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, <TimeGr>this._timeStart.gr);
-            let limitEnd = this._$limitEnd && TimeService.convertValue(this._$limitEnd, <TimeGr>this._timeStart.gr);
+            let [beginDate, endDate] = typeof selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) :
+                selectedShortcut.dateRange;
+            beginDate = TimeService.convertValue(beginDate, this._$gr);
+            let limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, this._$gr);
+            let limitEnd = this._$limitEnd && TimeService.convertValue(this._$limitEnd, this._$gr);
             if (!((limitStart && beginDate < limitStart) || (limitEnd && beginDate > limitEnd))) {
                 this._beginDate = beginDate;
             } else {
                 this._beginDate = limitStart;
             }
-
             this._$endTimeLimitEnd = this._calculateLimitEnd();
-
-            //先设置好limit，再设置date
-            this.runMicrotask(() => this._endDate = endDate);
+            this._endDate = TimeService.convertValue(endDate, this._$gr);
+            this._updateValue.emit();
             this._cdr.markForCheck();
         }
     }
@@ -362,39 +404,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         if (!value) {
             return;
         }
-        if (value.hasOwnProperty('beginDate') && this._beginDate != value.beginDate) {
-            this.runMicrotask(() => {
-                if (value.fromTimeComponent) {
-                    // 从time控件来时，直接使用
-                    this._beginDate = value.beginDate;
-                } else {
-                    // 从外部来需要转换
-                    let timeStr = TimeService.convertValue(value.beginDate, <TimeGr>this.gr);
-                    this._beginDate = this.gr == TimeGr.week ? TimeService.getWeekDate(timeStr) : timeStr;
-                }
-                this._$endTimeLimitEnd = this._calculateLimitEnd();
-                this._startTimeLimitEnd = this._beginDate;
-                this.beginDateChange.emit(this._beginDate);
-                this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
-                this._cdr.markForCheck();
-            });
-        }
-        if (value.hasOwnProperty('endDate') && this._endDate != value.endDate) {
-            this.runMicrotask(() => {
-                if (value.fromTimeComponent) {
-                    // 从time控件来时，直接使用
-                    this._endDate = value.endDate;
-                } else {
-                    // 从外部来需要转换
-                    let timeStr = TimeService.convertValue(value.endDate, <TimeGr>this.gr);
-                    this._endDate = this.gr == TimeGr.week ? TimeService.getWeekDate(timeStr) : timeStr;
-                }
-                this.endDateChange.emit(this._endDate);
-                this.change.emit({"beginDate": this._beginDate, "endDate": this._endDate});
-                this._cdr.markForCheck();
-            });
-        }
-        this._propagateChange();
+        this.change.emit(value);
+        this.beginDateChange.emit(value.beginDate);
+        this.endDateChange.emit(value.endDate);
     }
 
     private _propagateChange: any = () => {
@@ -409,12 +421,15 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     ngOnInit() {
         super.ngOnInit();
-        this.runMicrotask(this._init, this);
+        this._init();
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-
+        if (this._removeUpdateValueSubscriber) {
+            this._removeUpdateValueSubscriber.unsubscribe();
+            this._removeUpdateValueSubscriber = null;
+        }
     }
 }
 

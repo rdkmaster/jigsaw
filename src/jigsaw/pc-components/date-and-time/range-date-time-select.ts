@@ -179,7 +179,8 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     private _getDateByGr(date: WeekTime, gr: TimeGr) {
-        return gr == TimeGr.week ? TimeService.getWeekDate(<Time>date) : TimeService.convertValue(date, gr)
+        date = TimeService.convertValue(date, gr);
+        return gr == TimeGr.week ? TimeService.getWeekDate(date) : date
     }
 
     private _isRangeDate(date: any) {
