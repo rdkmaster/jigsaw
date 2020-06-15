@@ -14,7 +14,8 @@
     Renderer2,
     ViewChild,
     ViewChildren,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
@@ -44,6 +45,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -59,7 +61,7 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, private _injector: Injector) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -96,6 +98,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     @Input()
+    @GenerateGetterSetter()
     public hideHeader: boolean = false;
 
     private _selectedRow: number;

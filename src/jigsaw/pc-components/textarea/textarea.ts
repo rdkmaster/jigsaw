@@ -8,11 +8,13 @@ import {
     Output,
     Renderer2,
     ViewChild,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 /**
  * @description 多行输入框组件，常常用于接收用户的文本输入
@@ -43,6 +45,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      *
      * $demo = textarea/clearable
      */
+    @GenerateGetterSetter()
     @Input() public clearable: boolean = true;
 
     /**
@@ -67,7 +70,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef,
-                private _changeDetectorRef: ChangeDetectorRef) {
+                private _changeDetectorRef: ChangeDetectorRef,
+                private _injector: Injector) {
         super();
     }
 
@@ -127,6 +131,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @Input()
     public set placeholder(txt: string) {
         this._placeholder = txt;
+        this._changeDetectorRef.markForCheck();
     }
 
     public get placeholder() {

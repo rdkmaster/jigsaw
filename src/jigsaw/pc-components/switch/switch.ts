@@ -1,5 +1,16 @@
-import {Component, Input, Output, EventEmitter, OnInit, forwardRef, ChangeDetectionStrategy} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
+    OnInit,
+    Output
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 /**
  * @description 开关组件
@@ -21,6 +32,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 })
 
 export class JigsawSwitch implements ControlValueAccessor, OnInit {
+    constructor(private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
+    }
+
     @Input()
     public valid: boolean = true;
 
@@ -32,20 +46,53 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     /**
      * 开关状态打开时的文本.(只支持字符串)
      */
+    private _onLabel: any;
     @Input()
-    public onLabel: any;
+    public get onLabel(): any {
+        return this._onLabel;
+    }
+
+    public set onLabel(value: any) {
+        if (this._onLabel == value) {
+            return;
+        }
+        this._onLabel = value;
+        this._setInnerValue();
+    }
 
     /**
      * 开关状态关闭时显示的文本(只支持字符串)
      */
+    private _offLabel: any;
     @Input()
-    public offLabel: any;
+    public get offLabel(): any {
+        return this._offLabel;
+    }
+
+    public set offLabel(value: any) {
+        if (this._offLabel == value) {
+            return;
+        }
+        this._offLabel = value;
+        this._setInnerValue();
+    }
 
     /**
      * size 默认 'default' 可选值 ‘small’
      */
+    private _size: string = 'default';
     @Input()
-    public size: string = 'default';
+    public get size(): string {
+        return this._size;
+    }
+
+    public set size(value: string) {
+        if (this._size == value) {
+            return;
+        }
+        this._size = value;
+        this._setSwitchClass();
+    }
 
     private _checked: boolean = false;
 
@@ -96,7 +143,10 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      *
      */
     @Input()
-    public get readonly(): boolean { return this._readonly; };
+    public get readonly(): boolean {
+        return this._readonly;
+    };
+
     public set readonly(value: boolean) {
         this._readonly = value;
         this._setSwitchClass();
@@ -106,7 +156,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      * @internal
      */
     public _$switchClick() {
-        if(!this.disabled && !this.readonly) {
+        if (!this.disabled && !this.readonly) {
             this.checked = !this.checked;
 
             // 发出事件
@@ -130,7 +180,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
             'jigsaw-switch-checked': this.checked,
             'jigsaw-switch-disabled': this.disabled,
             'jigsaw-switch-readonly': this.readonly
-        }
+        };
+        this._changeDetector.markForCheck();
     }
 
     /**
@@ -138,6 +189,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      */
     private _setInnerValue() {
         this._$content = this.checked ? this.onLabel : this.offLabel;
+        this._changeDetector.markForCheck();
     }
 
     public ngOnInit() {
@@ -145,7 +197,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this._setInnerValue();
     }
 
-    private _propagateChange: any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public writeValue(value: any): void {
         this._checked = !!value;

@@ -1,15 +1,16 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy,
-    Directive, NgZone, ChangeDetectorRef
+    Directive, NgZone, ChangeDetectorRef, Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent  implements IJigsawFormControl, ControlValueAccessor {
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -18,6 +19,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      *
      * $demo = input/clearable
      */
+    @GenerateGetterSetter()
     @Input() public clearable: boolean = true;
 
     /**
@@ -25,6 +27,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      *
      * $demo = input/disabled
      */
+    @GenerateGetterSetter()
     @Input() public disabled: boolean = false;
 
     /**
@@ -33,6 +36,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = input/valid
      * $demo = form/template-driven
      */
+    @GenerateGetterSetter()
     @Input() public valid: boolean = true;
 
     @Output('focus')
@@ -89,21 +93,14 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
     @Output()
     public valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    private _placeholder: string = '';
-
     /**
      * 当文本框内无文本时，显示这些文本以提示用户如何输入。
      *
      * $demo = input/valid
      */
     @Input()
-    public set placeholder(txt: string) {
-        this._placeholder = txt;
-    }
-
-    public get placeholder() {
-        return this._placeholder;
-    }
+    @GenerateGetterSetter()
+    public placeholder: string = '';
 
     protected _focused: boolean = false;
 
@@ -179,8 +176,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInput extends JigsawInputBase {
-    constructor(protected _cdr: ChangeDetectorRef) {
-        super(_cdr);
+    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector) {
+        super(_cdr, _injector);
     }
 
     /**
@@ -188,6 +185,7 @@ export class JigsawInput extends JigsawInputBase {
      *
      * $demo = input/password
      */
+    @GenerateGetterSetter()
     @Input() public password: boolean = false;
 
     @Input()

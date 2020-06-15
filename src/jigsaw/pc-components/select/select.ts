@@ -9,7 +9,8 @@ import {
     NgZone,
     OnInit,
     Output,
-    ViewChild
+    ViewChild,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -17,6 +18,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 /**
  * 选择控件
@@ -45,11 +47,12 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
-    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef) {
+    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
         super(_zone);
     }
 
     @Input()
+    @GenerateGetterSetter()
     public valid: boolean = true;
 
     protected _width: string = '120px';
@@ -114,12 +117,14 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * placeholder文本
      */
+    @GenerateGetterSetter()
     @Input() public placeholder: string;
 
     /**
      * 不可用属性
      * $demo = select/disabled
      */
+    @GenerateGetterSetter()
     @Input() public disabled: boolean;
 
     @Input() public optionWidth: string;
@@ -148,6 +153,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      */
+    @GenerateGetterSetter()
     @Input() public clearable: boolean;
 
     /**
@@ -155,6 +161,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      *
      * $demo = select/trigger
      */
+    @GenerateGetterSetter()
     @Input() public openTrigger: 'click' | 'mouseenter' = 'mouseenter';
 
     /**
@@ -277,6 +284,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         } else {
             this._$selectedItems = [];
         }
+        this._changeDetector.markForCheck();
         if (this.initialized) {
             this.valueChange.emit(this.value);
         }

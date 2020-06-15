@@ -14,13 +14,15 @@ import {
     ViewChildren,
     ViewEncapsulation,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Injector
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 export class SliderMark {
     value: number;
@@ -225,7 +227,7 @@ export class JigsawSliderHandle implements OnInit {
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     constructor(private _element: ElementRef, private _render: Renderer2,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, private _injector: Injector) {
         super();
     }
 
@@ -362,6 +364,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * 是否禁用. 数据类型 boolean, 默认false;
      */
     @Input()
+    @GenerateGetterSetter()
     public disabled: boolean = false;
 
     /**
@@ -420,6 +423,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public set marks(value: SliderMark[]) {
         this._marks = value;
         this._calcMarks();
+        this._changeDetectorRef.markForCheck();
     }
 
     private _calcMarks() {

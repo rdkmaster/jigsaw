@@ -1,4 +1,15 @@
-import {Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Output, Renderer2, ChangeDetectionStrategy} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
+    OnInit,
+    Output,
+    Renderer2
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -37,6 +48,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     public set closable(value: boolean) {
         this._closable = CommonUtils.isDefined(value) ? value : true;
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -52,7 +64,8 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public _state: string;
 
     constructor(private _renderer: Renderer2,
-                public _elementRef: ElementRef) {
+                public _elementRef: ElementRef,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 

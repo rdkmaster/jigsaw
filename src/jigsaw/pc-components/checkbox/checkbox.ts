@@ -13,7 +13,8 @@ import {
     ElementRef,
     forwardRef,
     ChangeDetectionStrategy,
-    NgZone
+    NgZone,
+    ChangeDetectorRef
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -84,7 +85,11 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public set checked(value: CheckBoxValue) {
+        if (this._checked == value) {
+            return;
+        }
         this.writeValue(value);
+        this._changeDetector.markForCheck();
     }
 
     /**
@@ -114,14 +119,18 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public set disabled(value: boolean) {
+        if (this._disabled == value) {
+            return;
+        }
         this._disabled = value;
         this._setCheckBoxClass();
+        this._changeDetector.markForCheck();
     }
 
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _changeDetector: ChangeDetectorRef) {
         super(_zone);
     }
 

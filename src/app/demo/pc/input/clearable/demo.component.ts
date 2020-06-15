@@ -5,6 +5,7 @@ import {Component} from "@angular/core";
 })
 export class InputClearableDemoComponent {
     inputValue: any;
+    enabled: boolean;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

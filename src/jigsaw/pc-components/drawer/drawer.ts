@@ -8,7 +8,8 @@ import {
     ElementRef,
     ViewChild,
     HostBinding,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
@@ -29,7 +30,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
-    constructor(private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef,
+                private _changeDetector: ChangeDetectorRef) {
         super();
         this._width = 'auto';
         this._height = 'auto';
@@ -372,10 +374,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
         this._setStyle();
         this._setClass();
+        this._changeDetector.markForCheck();
         this.runMicrotask(() => {
             // 等待抽屉的尺寸渲染完毕
             this._setHostSize();
-        })
+        });
     }
 
     ngOnInit() {

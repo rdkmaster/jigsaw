@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ContentChildren,
@@ -6,16 +7,17 @@ import {
     forwardRef,
     Host,
     Inject,
+    Injector,
     Input,
     NgModule,
     Output,
     QueryList,
-    ViewEncapsulation,
-    ChangeDetectionStrategy
+    ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
+import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 /**
  * 组件模式.
@@ -57,11 +59,12 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     public isActiveChange = new EventEmitter<boolean>();
 
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                private _changeDetector: ChangeDetectorRef) {
+                private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
         super();
     }
 
     @Input('header')
+    @GenerateGetterSetter()
     public title: string;
 
     /**

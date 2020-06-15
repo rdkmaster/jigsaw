@@ -124,12 +124,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     /**
      * 控制tab头部是否显示
-     *
      * $demo = tab/headless
-     *
-     *
      */
-
     @Input()
     public get headless(): boolean {
         return this._$headless;
@@ -140,6 +136,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             return;
         }
         this._$headless = value;
+        this._changeDetector.markForCheck();
     }
 
     @Input()

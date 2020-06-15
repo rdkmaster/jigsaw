@@ -13,7 +13,8 @@ import {
     OnDestroy,
     Output,
     TemplateRef,
-    ViewChild
+    ViewChild,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -155,8 +156,8 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone) {
-        super(_cdr, _zone);
+    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone: NgZone) {
+        super(_cdr, _injector, _zone);
     }
 
     ngAfterViewInit() {
