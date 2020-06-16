@@ -164,8 +164,8 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     private _changeRangeDateByGr() {
         if (!this._isRangeDate(this.date)) return;
         let convertDate = {
-            beginDate: this._getDateByGr(this.date.beginDate, this._gr),
-            endDate: this._getDateByGr(this.date.endDate, this._gr)
+            beginDate: TimeService.getDateByGr(this.date.beginDate, this._gr),
+            endDate: TimeService.getDateByGr(this.date.endDate, this._gr)
         };
         if (this._isDateChanged(convertDate, this.date)) {
             this.runMicrotask(() => {
@@ -176,11 +176,6 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     private _isDateChanged(date1: RangeDate, date2: RangeDate): boolean {
         return !date1 || !date2 || date1.beginDate != date2.beginDate || date1.endDate != date2.endDate;
-    }
-
-    private _getDateByGr(date: WeekTime, gr: TimeGr) {
-        date = TimeService.convertValue(date, gr);
-        return gr == TimeGr.week ? TimeService.getWeekDate(date) : date
     }
 
     private _isRangeDate(date: any) {

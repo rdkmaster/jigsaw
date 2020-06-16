@@ -38,22 +38,22 @@ import {debounceTime} from 'rxjs/operators';
 export class JigsawDateTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
     constructor(private _cdr: ChangeDetectorRef) {
         super();
-        this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(300)).subscribe((mode: 'combine' | 'separate') => {
-            let newDate;
-            if (mode == 'separate') {
-                if (!this.date) return;
-                newDate = TimeService.convertValue(this.date, this._gr);
-                [this._$date, this._$time] = newDate.split(' ');
-                newDate = this.gr == TimeGr.week ? TimeService.getWeekDate(newDate) : newDate;
-                this._cdr.markForCheck();
-            } else if(mode == 'combine') {
-                if (!this._$date) return;
-                newDate = this._$date;
-                if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
-                    this._$time = this._$time ? this._$time : this._getDefaultTime();
-                    newDate += ` ${this._$time}`
-                }
+        this._removeUpdateValueCombineSubscriber = this._updateValueCombine.pipe(debounceTime(300)).subscribe((mode: 'combine' | 'separate') => {
+            if (!this._$date) return;
+            let newDate: WeekTime = TimeService.isWeekDate(this._$date) ? TimeService.convertValue(this._$date, this._gr).split(' ')[0] : this._$date;
+            if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
+                this._$time = this._$time ? this._$time : this._getDefaultTime();
+                newDate += ` ${this._$time}`
             }
+            newDate = this.gr == TimeGr.week ? TimeService.getWeekDate(newDate) : newDate;
+            this.writeValue(newDate);
+        });
+        this._removeUpdateValueSeparateSubscriber = this._updateValueSeparate.pipe(debounceTime(300)).subscribe(() => {
+            if (!this.date) return;
+            let newDate: WeekTime = TimeService.convertValue(this.date, this._gr);
+            [this._$date, this._$time] = newDate.split(' ');
+            newDate = this.gr == TimeGr.week ? TimeService.getWeekDate(newDate) : newDate;
+            this._cdr.markForCheck();
             this.writeValue(newDate);
         })
     }
@@ -113,9 +113,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._calTimeGr(this._gr);
         this._calDateGr(this._gr);
         if (this.initialized && this.date) {
-            let newDate = TimeService.handleWeekDateToDate(this.date, this._gr);
+            let newDate = TimeService.convertValue(this.date, this._gr);
             [this._$date, this._$time] = newDate.split(' ');
-            this._updateValue.emit('separate');
+            this._updateValueSeparate.emit();
         }
     }
 
@@ -165,7 +165,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         if (!newValue || newValue == this._date) return;
         this._date = newValue;
         if (this.initialized) {
-            this._updateValue.emit('separate');
+            this._updateValueSeparate.emit();
         }
     }
 
@@ -203,7 +203,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         if (value) {
             this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
             [this._$dateLimitStart, this._timeLimitStart] = this._limitStart.split(' ');
-            if(TimeService.isMacro(value)) {
+            if (TimeService.isMacro(value)) {
                 this._timeLimitStart = <string>value;
             }
             this._updateTimeLimit();
@@ -242,7 +242,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         if (value) {
             this._limitEnd = TimeService.convertValue(value, <TimeGr>this.gr);
             [this._$dateLimitEnd, this._timeLimitEnd] = this._limitEnd.split(' ');
-            if(TimeService.isMacro(value)) {
+            if (TimeService.isMacro(value)) {
                 this._timeLimitEnd = <string>value;
             }
             this._updateTimeLimit();
@@ -281,8 +281,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     @Input()
     public step: TimeStep;
 
-    private _updateValue = new EventEmitter();
-    private _removeUpdateValueSubscriber: Subscription;
+    private _updateValueCombine = new EventEmitter();
+    private _removeUpdateValueCombineSubscriber: Subscription;
+    private _updateValueSeparate = new EventEmitter();
+    private _removeUpdateValueSeparateSubscriber: Subscription;
 
     private _updateTimeLimit() {
         this._$timeLimitStartCur = this._$date == this._$dateLimitStart ? this._timeLimitStart : this._getDefaultLimitStart();
@@ -299,11 +301,11 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     public _$handleDateChange() {
-        this._updateValue.emit('combine');
+        this._updateValueCombine.emit();
     }
 
     public _$handleTimeChange() {
-        this._updateValue.emit('combine');
+        this._updateValueCombine.emit();
     }
 
     private _getDefaultLimitStart() {
@@ -311,7 +313,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     private _getDefaultLimitEnd() {
-        return  this.gr == TimeGr.hour ? '23' : this.gr == TimeGr.time_hour_minute ? '23:59' : '23:59:59';
+        return this.gr == TimeGr.hour ? '23' : this.gr == TimeGr.time_hour_minute ? '23:59' : '23:59:59';
     }
 
     private _getDefaultTime() {
@@ -319,15 +321,15 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     private _isDateSame(date1, date2) {
-        if(!date1 || !date2) return false;
-        if(this.gr == TimeGr.week) {
+        if (!date1 || !date2) return false;
+        if (this.gr == TimeGr.week) {
             return date1.year == date2.year && date1.week == date2.week
         } else {
             return date1 == date2
         }
     }
 
-    public writeValue(date: string): void {
+    public writeValue(date: WeekTime): void {
         if (this._isDateSame(date, this._date)) return;
         this._date = date;
         this.dateChange.emit(date);
@@ -346,14 +348,18 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     ngOnInit() {
         super.ngOnInit();
-        this._updateValue.emit('separate');
+        this._updateValueSeparate.emit();
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this._removeUpdateValueSubscriber) {
-            this._removeUpdateValueSubscriber.unsubscribe();
-            this._removeUpdateValueSubscriber = null;
+        if (this._removeUpdateValueCombineSubscriber) {
+            this._removeUpdateValueCombineSubscriber.unsubscribe();
+            this._removeUpdateValueCombineSubscriber = null;
+        }
+        if (this._removeUpdateValueSeparateSubscriber) {
+            this._removeUpdateValueSeparateSubscriber.unsubscribe();
+            this._removeUpdateValueSeparateSubscriber = null;
         }
     }
 }

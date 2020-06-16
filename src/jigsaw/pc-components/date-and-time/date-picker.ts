@@ -499,7 +499,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             this._$selectMode = TimeGr[this._gr] == 'month' ? 'month' : 'day';
             if (this.initialized) {
                 if (this.date) {
-                    this.writeValue(TimeService.handleWeekDateToDate(this.date, this._gr));
+                    this.writeValue(TimeService.convertValue(this.date, this._gr));
                 } else {
                     this._createCalendar();
                 }

@@ -20,7 +20,7 @@ import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "..
 import {Time, WeekTime} from "../../common/service/time.types";
 import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
 import {TimeStep} from "./time-picker";
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 
 declare const moment: any;
@@ -42,7 +42,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(100)).subscribe(() => {
-            if(!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
+            if (!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
                 this.endDate > TimeService.convertValue(this._$endTimeLimitEnd, this._$gr)) return;
             this.writeValue({beginDate: this.beginDate, endDate: this.endDate});
             this._propagateChange({beginDate: this.beginDate, endDate: this.endDate});
@@ -101,10 +101,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      * @internal
      */
     public _$dateChange(key: string, value: WeekTime) {
-        if(key == 'beginDate') {
+        if (key == 'beginDate') {
             this._beginDate = value;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
-        } else if(key == 'endDate') {
+        } else if (key == 'endDate') {
             this._endDate = value;
         }
         this._updateValue.emit();
@@ -123,10 +123,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set beginDate(value: WeekTime) {
-        if(!value || value == this._beginDate) return;
-        if(this.initialized) {
-            let date = this._getDateByGr(value, this._$gr);
-            if(date == this._beginDate) return;
+        if (!value || value == this._beginDate) return;
+        if (this.initialized) {
+            let date = TimeService.getDateByGr(value, this._$gr);
+            if (date == this._beginDate) return;
             this._beginDate = date;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
             this._updateValue.emit();
@@ -147,20 +147,15 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set endDate(value: WeekTime) {
-        if(!value || value == this._endDate) return;
-        if(this.initialized) {
-            let date = this._getDateByGr(value, this._$gr);
-            if(date == this._endDate) return;
+        if (!value || value == this._endDate) return;
+        if (this.initialized) {
+            let date = TimeService.getDateByGr(value, this._$gr);
+            if (date == this._endDate) return;
             this._endDate = date;
             this._updateValue.emit();
         } else {
             this._endDate = value;
         }
-    }
-
-    private _getDateByGr(date: WeekTime, gr: TimeGr) {
-        date = TimeService.convertValue(date, gr);
-        return gr == TimeGr.week ? TimeService.getWeekDate(date) : date;
     }
 
     /**
@@ -272,22 +267,37 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public _$endTimeLimitEnd: WeekTime;
 
     private _init() {
-        if(this._beginDate) {
-            let date = this._getDateByGr(this._beginDate, this._$gr);
-            if(date != this._beginDate) {
+        let isUpdate = false;
+        if (this._beginDate) {
+            let date = TimeService.getDateByGr(this._beginDate, this._$gr);
+            if (date != this._beginDate) {
                 this._beginDate = date;
-                this._updateValue.emit();
+                isUpdate = true;
             }
         }
-        if(this._endDate) {
-            let date = this._getDateByGr(this._endDate, this._$gr);
-            if(date != this._endDate) {
+        if (this._endDate) {
+            let date = TimeService.getDateByGr(this._endDate, this._$gr);
+            if (date != this._endDate) {
                 this._endDate = date;
-                this._updateValue.emit();
+                isUpdate = true;
             }
         }
         this._$shortcuts = this._getShortcuts();
         this._$endTimeLimitEnd = this._calculateLimitEnd();
+
+        if (this._endDate < this._beginDate) {
+            this._endDate = this._beginDate;
+            isUpdate = true;
+        }
+        if (this._endDate > TimeService.getDateByGr(this._$endTimeLimitEnd, this._$gr)) {
+            this._endDate = TimeService.getDateByGr(this._$endTimeLimitEnd, this._$gr);
+            isUpdate = true;
+        }
+
+        if (isUpdate) {
+            this._updateValue.emit();
+        }
+
         this._cdr.markForCheck();
     }
 

@@ -1,4 +1,4 @@
-import {Time, Moment, WeekTime} from "./time.types";
+import {Time, Moment, WeekTime, TimeWeekDay} from "./time.types";
 import {CommonUtils} from "../core/utils/common-utils";
 
 declare const moment: any;
@@ -68,16 +68,38 @@ export class TimeService {
      * @return 符合粒度格式的时刻
      */
     public static convertValue(value: WeekTime, gr: TimeGr): string {
-        value = TimeService._handleWeekValue(value);
-        value = TimeService.getFormatDate(<Time>value, gr);
+        if (this.isWeekDate(value)) {
+            value = this._handleWeekDateToDate(value, gr);
+        } else {
+            value = this.getFormatDate(<Time>value, gr);
+        }
         return <string>value;
     }
 
-    private static _handleWeekValue(newValue: WeekTime): Time {
-        if (newValue && typeof newValue["week"] === 'number') {
-            return TimeService.getDateFromYearAndWeek(newValue["year"], newValue["week"])
+    public static getDateByGr(date: WeekTime, gr: TimeGr): string | TimeWeekDay {
+        date = this.convertValue(date, gr);
+        return gr == TimeGr.week ? this.getWeekDate(date) : date;
+    }
+
+    public static isWeekDate(date: WeekTime) {
+        return date && !!date['week'] && !!date['year'];
+    }
+
+    private static _handleWeekDateToDate(date: WeekTime, gr: TimeGr) {
+        if (!date || typeof date['week'] != 'number') {
+            return this.getFormatDate(<Time>date, gr);
         }
-        return <Time>newValue;
+        date = this.getDateFromYearAndWeek(date["year"], date["week"]);
+        let [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
+        let dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
+        let [weekStartDate, weekEndDate] = [this.addDate(date, -dateIndex, TimeUnit.d),
+            this.addDate(date, 6 - dateIndex, TimeUnit.d)];
+        let [weekStartMonth, weekEndMonth] = [this.getMonth(weekStartDate), this.getMonth(weekEndDate)];
+        if (weekStartMonth == weekEndMonth || this.getMonth(date) == weekEndMonth) {
+            return this.getFormatDate(date, gr);
+        } else {
+            return this.getFormatDate(`${this.getYear(weekEndDate)}-${weekEndMonth}-01`, gr);
+        }
     }
 
     private static _timeFormatterConvert(formatter: TimeFormatters): string {
@@ -310,23 +332,6 @@ export class TimeService {
 
     public static getDateFromYearAndWeek(year: number, week: number): Date {
         return moment().weekYear(year).week(week)
-    }
-
-    public static handleWeekDateToDate(date: WeekTime, gr: TimeGr) {
-        if (gr == TimeGr.week || !date || typeof date['week'] != 'number') {
-            return this.convertValue(date, gr);
-        }
-        date = this.getDateFromYearAndWeek(date["year"], date["week"]);
-        let [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
-        let dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
-        let [weekStartDate, weekEndDate] = [this.addDate(date, - dateIndex, TimeUnit.d),
-            this.addDate(date, 6 - dateIndex, TimeUnit.d)];
-        let [weekStartMonth, weekEndMonth] = [this.getMonth(weekStartDate), this.getMonth(weekEndDate)];
-        if (weekStartMonth == weekEndMonth || this.getMonth(date) == weekEndMonth) {
-            return this.convertValue(date, gr);
-        } else {
-            return this.convertValue(`${this.getYear(weekEndDate)}-${weekEndMonth}-01`, gr);
-        }
     }
 
     public static getDate(str: Time, gr: TimeGr): Moment {
