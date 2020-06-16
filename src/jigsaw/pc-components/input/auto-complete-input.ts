@@ -75,6 +75,10 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     /**
      * @internal
      */
+    public _$maxDropDownWidth: string = this.width;
+    /**
+     * @internal
+     */
     public _$propertyListOpen: boolean | null = null;
 
     @Input()
@@ -86,6 +90,14 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
             return;
         }
         this._$maxDropDownHeight = CommonUtils.getCssValue(value);
+    }
+
+    @Input()
+    public set maxDropDownWidth(value: string) {
+        if (value == this._$maxDropDownWidth || !value) {
+            return;
+        }
+        this._$maxDropDownWidth = CommonUtils.getCssValue(value);
     }
 
     @Input()
