@@ -261,6 +261,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this.value = item;
 
         this.selectEvent.emit(item);
+        this.valueChange.emit(item);
     }
 
     /**
@@ -291,6 +292,13 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         super.ngOnDestroy();
         this._$propertyListOpen = false;
         this._unsubscribeInputValueChange();
+    }
+
+    /**
+     * @internal
+     */
+    public _$valueChange(event: string) {
+        this.valueChange.emit(event);
     }
 }
 

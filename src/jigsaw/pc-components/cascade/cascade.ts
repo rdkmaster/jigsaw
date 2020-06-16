@@ -351,7 +351,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             // 这里需要清除掉多余的tab页
             this._removeCascadingTabs(level);
             // 更新选中的数据
-            this.selectedItemsChange.emit(this._selectedItems);
+            if (this._cascadeDataList.length > 0) {
+                this.selectedItemsChange.emit(this._selectedItems);
+            }
             return;
         }
         this._cascadeDataList.splice(level, this._cascadeDataList.length - level, levelData);
