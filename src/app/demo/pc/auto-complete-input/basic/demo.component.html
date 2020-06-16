@@ -39,8 +39,15 @@
     <p class="notes">最大高度：
         <jigsaw-input [(value)]="maxDropDownHeight"></jigsaw-input>
     </p>
+    <p class="notes">最大宽度：
+        <jigsaw-input [(value)]="maxDropDownWidth"></jigsaw-input>
+    </p>
+
+    <br><br>
+
     <jigsaw-auto-complete-input placeholder="auto complete input demo" [data]="_$dropdownData" [width]="width"
                                 height="32" [maxDropDownHeight]="maxDropDownHeight" [filterOnFocus]="filterOnFocus"
-                                [closeDropDownOnSelect]="closeDropDownOnSelect">
+                                [closeDropDownOnSelect]="closeDropDownOnSelect" [maxDropDownWidth]="maxDropDownWidth" >
     </jigsaw-auto-complete-input>
 </div>
+
