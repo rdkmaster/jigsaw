@@ -63,9 +63,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Input()
     public valid: boolean = true;
 
-    @ViewChild("timeStart", {static: true})
-    private _timeStart: JigsawDateTimePicker;
-
     /**
      * @internal
      */
@@ -302,16 +299,16 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     private _calculateLimitEnd(): WeekTime {
-        let item: GrItem = this.grItems && this.grItems.find(item => item.value == this._timeStart.gr);
+        let item: GrItem = this.grItems && this.grItems.find(item => item.value == this._$gr);
         let endTime: WeekTime = null;
         if (this._$limitEnd) {
             endTime = TimeService.isMacro(<Time>this._$limitEnd) ? this._$limitEnd : TimeService.getDate(TimeService.convertValue(
-                this._$limitEnd, <TimeGr>this._timeStart.gr), <TimeGr>this._timeStart.gr);
+                this._$limitEnd, this._$gr), this._$gr);
         }
         if (item && item.span) {
             let calculateTime: WeekTime = JigsawRangeDateTimePicker._calculateLimitEnd(TimeService.convertValue(this._beginDate,
-                <TimeGr>this._timeStart.gr), item.span, <TimeGr>this._timeStart.gr);
-            calculateTime = TimeService.getDate(calculateTime, <TimeGr>this._timeStart.gr);
+                this._$gr), item.span, this._$gr);
+            calculateTime = TimeService.getDate(calculateTime, this._$gr);
             if (!endTime || endTime > calculateTime) {
                 endTime = calculateTime;
             }
@@ -372,7 +369,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     private _getShortcuts(): Shortcut[] {
-        let item: GrItem = this.grItems && this.grItems.find(item => item.value == this._timeStart.gr);
+        let item: GrItem = this.grItems && this.grItems.find(item => item.value == this._$gr);
         if (item && item.shortcuts && item.shortcuts.length != 0) {
             return item.shortcuts;
         }
