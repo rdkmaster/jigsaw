@@ -13,7 +13,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {IPageable, PagingInfo} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 export class PageSizeData {
     value: number;
@@ -100,22 +100,22 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * 搜索功能开关
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public searchable: boolean = false;
     /**
      * 是否可以快速跳转至某页
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public showQuickJumper: boolean = false;
     /**
      * 当为「small」时，是小尺寸分页
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public mode: 'complex' | 'simple' = 'complex';
     /**
      * 搜索框的提示信息
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public placeholder: string = '';
 
     @Output() public search = new EventEmitter<string>();

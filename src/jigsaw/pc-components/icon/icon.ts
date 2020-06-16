@@ -1,9 +1,9 @@
-import {Component, Input, NgModule,ChangeDetectionStrategy, ChangeDetectorRef, Injector} from '@angular/core';
+import {Component, Input, NgModule,ChangeDetectionStrategy, Injector} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 const defaultHrefValue = 'javascript:void(0);';
 
@@ -40,45 +40,50 @@ export class JigsawIcon extends AbstractJigsawComponent {
      * 图标类型 fa fa-xxx
      */
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public icon: string;
 
     /**
      * 图标字号，单位是px
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public iconSize: number | 'inherit' = 'inherit';
+
     /**
      * 图标颜色
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public iconColor: string = 'inherit';
 
     /**
      * 图标的文本
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public text: string = '';
+
     /**
      * 文字的字号，单位是px
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public textSize: number | 'inherit' = 'inherit';
+
     /**
      * 文字的颜色
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public textColor: string = 'inherit';
+
     /**
      * 图标相对于文字的位置，left为左侧，默认值：top为上方
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public iconPosition: 'left' | 'top' = 'left';
 
     /**
      * 超链接 href
      */
     @Input()
+    @AutoMarkForCheck()
     public set href(value: any) {
         if (this._href == value || CommonUtils.isUndefined(value)) {
             if (CommonUtils.isUndefined(this._$secureUrl)) {
@@ -88,28 +93,28 @@ export class JigsawIcon extends AbstractJigsawComponent {
         }
         this._href = value;
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
-        this._changeDetector.markForCheck();
     }
 
     /**
      * 规定在何处打开超链
      */
     @Input()
+    @AutoMarkForCheck()
     public get target(): string {
         return (this._href == defaultHrefValue || CommonUtils.isUndefined(this._$secureUrl)) ? '_self' : this._target;
     }
 
     public set target(value: string) {
-        if (this._target != value) {
-            this._target = value;
-            this._changeDetector.markForCheck();
+        if (this._target == value) {
+            return;
         }
+        this._target = value;
     }
 
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public title: string = '';
 
-    constructor(private _sanitizer: DomSanitizer, private _injector: Injector, private _changeDetector: ChangeDetectorRef) {
+    constructor(private _sanitizer: DomSanitizer, private _injector: Injector) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }

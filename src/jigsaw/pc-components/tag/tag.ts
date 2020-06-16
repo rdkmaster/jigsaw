@@ -1,6 +1,6 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
+    Injector,
     Component,
     ElementRef,
     EventEmitter,
@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 @Component({
     selector: 'jigsaw-tag, j-tag',
@@ -41,14 +42,15 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input() public color: string;
 
     private _closable: boolean;
+
     @Input()
+    @AutoMarkForCheck()
     public get closable(): boolean {
         return this._closable;
     };
 
     public set closable(value: boolean) {
         this._closable = CommonUtils.isDefined(value) ? value : true;
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -65,7 +67,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     constructor(private _renderer: Renderer2,
                 public _elementRef: ElementRef,
-                private _changeDetectorRef: ChangeDetectorRef) {
+                private _injector: Injector) {
         super();
     }
 

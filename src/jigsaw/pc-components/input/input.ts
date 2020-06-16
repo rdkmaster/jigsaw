@@ -6,7 +6,7 @@ import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent  implements IJigsawFormControl, ControlValueAccessor {
@@ -19,7 +19,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      *
      * $demo = input/clearable
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public clearable: boolean = true;
 
     /**
@@ -27,7 +27,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      *
      * $demo = input/disabled
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public disabled: boolean = false;
 
     /**
@@ -36,7 +36,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = input/valid
      * $demo = form/template-driven
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public valid: boolean = true;
 
     @Output('focus')
@@ -99,7 +99,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = input/valid
      */
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public placeholder: string = '';
 
     protected _focused: boolean = false;
@@ -185,7 +185,7 @@ export class JigsawInput extends JigsawInputBase {
      *
      * $demo = input/password
      */
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     @Input() public password: boolean = false;
 
     @Input()

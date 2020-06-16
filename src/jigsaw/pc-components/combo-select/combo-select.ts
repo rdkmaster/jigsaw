@@ -16,8 +16,7 @@ import {
     ViewChildren,
     NgZone,
     ChangeDetectionStrategy,
-    Injector,
-    ChangeDetectorRef
+    Injector
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -28,7 +27,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 export class ComboSelectValue {
     [index: string]: any;
@@ -56,8 +55,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 private _elementRef: ElementRef,
                 private _popupService: PopupService,
                 protected _zone: NgZone,
-                private _injector: Injector,
-                private _changeDetector: ChangeDetectorRef) {
+                private _injector: Injector) {
         super(_zone);
     }
 
@@ -86,12 +84,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public remove = new EventEmitter<any>();
 
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public placeholder: string = '';
 
     private _disabled: boolean;
 
     @Input()
+    @AutoMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -101,12 +100,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (value) {
             this.open = false;
         }
-        this._changeDetector.markForCheck();
     }
 
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
+    @AutoMarkForCheck()
     public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
@@ -114,12 +113,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public set openTrigger(value: 'mouseenter' | 'click' | 'none' | DropDownTrigger) {
         //从模板过来的值，不会受到类型的约束
         this._openTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
-        this._changeDetector.markForCheck();
     }
 
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
 
     @Input()
+    @AutoMarkForCheck()
     public get closeTrigger(): 'mouseleave' | 'click' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
@@ -127,7 +126,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public set closeTrigger(value: 'mouseleave' | 'click' | 'none' | DropDownTrigger) {
         //从模板过来的值，不会受到类型的约束
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
-        this._changeDetector.markForCheck();
     }
 
     @Input()
@@ -147,6 +145,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public _$opened: boolean = false;
 
     @Input()
+    @AutoMarkForCheck()
     public get open(): boolean {
         return this._$opened;
     }
@@ -169,7 +168,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             }
         });
         this._$opened = value;
-        this._changeDetector.markForCheck();
     }
 
     /**
@@ -226,7 +224,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _tags: QueryList<JigsawTag>;
 
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public searchable: boolean = false;
 
     @Input()
@@ -245,7 +243,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * 是否显示tag的边框和删除按钮，默认显示
      */
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public showValueBorder: boolean = true;
 
     /**

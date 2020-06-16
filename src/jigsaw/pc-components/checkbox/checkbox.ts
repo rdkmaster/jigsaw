@@ -14,13 +14,14 @@ import {
     forwardRef,
     ChangeDetectionStrategy,
     NgZone,
-    ChangeDetectorRef
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from '../../common/common';
 import {CheckBoxStatus} from "./typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
@@ -80,6 +81,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * $demo = checkbox/basic
      */
     @Input()
+    @AutoMarkForCheck()
     public get checked(): CheckBoxValue {
         return this._checked
     }
@@ -89,7 +91,6 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
             return;
         }
         this.writeValue(value);
-        this._changeDetector.markForCheck();
     }
 
     /**
@@ -114,6 +115,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * $demo = checkbox/disabled
      */
     @Input()
+    @AutoMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -124,13 +126,12 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         }
         this._disabled = value;
         this._setCheckBoxClass();
-        this._changeDetector.markForCheck();
     }
 
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _changeDetector: ChangeDetectorRef) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _injector: Injector) {
         super(_zone);
     }
 

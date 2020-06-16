@@ -22,7 +22,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 export class SliderMark {
     value: number;
@@ -364,7 +364,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * 是否禁用. 数据类型 boolean, 默认false;
      */
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public disabled: boolean = false;
 
     /**
@@ -416,6 +416,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * marks 标签 使用格式为  [Object] 其中 Object 必须包含value 及label 可以有style 属性 例如:  marks = [{value: 20, label: '20 ℃'},
      */
     @Input()
+    @AutoMarkForCheck()
     public get marks(): SliderMark[] {
         return this._marks;
     }
@@ -423,7 +424,6 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public set marks(value: SliderMark[]) {
         this._marks = value;
         this._calcMarks();
-        this._changeDetectorRef.markForCheck();
     }
 
     private _calcMarks() {

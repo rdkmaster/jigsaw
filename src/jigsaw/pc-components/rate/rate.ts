@@ -1,7 +1,7 @@
-import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy, ChangeDetectorRef, Injector} from '@angular/core';
+import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy, Injector} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 @Component({
     selector: 'jigsaw-rate, j-rate',
@@ -21,7 +21,7 @@ import {GenerateGetterSetter} from "../../common/decorator/input.setters";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
-    constructor(private _cdr: ChangeDetectorRef, private _injector: Injector) {
+    constructor(private _injector: Injector) {
         super()
     }
     /**
@@ -47,12 +47,13 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     };
 
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public icon: string = 'fa fa-star';
 
     private _max: number = 5;
 
     @Input()
+    @AutoMarkForCheck()
     public get max(): number {
         return this._max;
     }
@@ -60,7 +61,6 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     public set max(value: number) {
         this._max = value;
         this._initStars();
-        this._cdr.markForCheck();
     }
 
     private _allowHalf: boolean = false;

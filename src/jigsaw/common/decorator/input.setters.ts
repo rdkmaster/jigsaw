@@ -1,10 +1,24 @@
 import {ChangeDetectorRef} from '@angular/core';
 
 /**
+ * 检查装饰器所装饰的属性，是否本身就是 getter/setter
+ */
+const checkDescriptor = (target: Object, propertyName: string) => {
+    const descriptor = Object.getOwnPropertyDescriptor(target, propertyName);
+    if (descriptor && !descriptor.configurable) {
+        throw new TypeError(`property ${propertyName} is not configurable`);
+    }
+    return {
+        originalGetter: descriptor && descriptor.get,
+        originalSetter: descriptor && descriptor.set,
+    };
+};
+
+/**
  * 属性装饰器，用于将input属性，自动改造为getter/setter方式，并在setter中，增加 ChangeDetectorRef.markForCheck() 的调用
  * 以确保视图可以得到及时更新
  */
-export function GenerateGetterSetter(): PropertyDecorator {
+export function AutoMarkForCheck(): PropertyDecorator {
 
     return (target: Object, propertyName: string) => {
         const className = target.constructor?.name;
@@ -12,18 +26,29 @@ export function GenerateGetterSetter(): PropertyDecorator {
         const privatePropName = `_${propertyName}`;
         // 判断是否设置过该值，防止重复操作
         if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
-            console.warn(`The property "${privatePropName}" in ${className} is already exist, it will be overwrote by GenerateGetterSetter decorator.`);
+            console.warn(`The property "${privatePropName}" in ${className} is already exist, it will be overwrote by AutoMarkForCheck decorator.`);
         }
 
+        const {originalGetter, originalSetter} = checkDescriptor(target, propertyName);
         return {
             get(): any {
+                if (originalGetter) {
+                    //  如果本身就有getter，直接调用
+                    return originalGetter.call(this);
+                }
                 return this[privatePropName];
             },
             set(value: any): void {
-                if (this[privatePropName] == value) {
-                    return;
+                if (originalSetter) {
+                    // 调用原有的setter
+                    originalSetter.call(this, value);
+                } else {
+                    if (this[privatePropName] == value) {
+                        return;
+                    }
+                    this[privatePropName] = value;
                 }
-                this[privatePropName] = value;
+                // 无论是原来就有的setter，还是装饰器生成的，都追加 MarkForCheck 的调用
                 if (!this._injector) {
                     console.warn(`There has no DI for 'Injector' in ${className}.`);
                     return;

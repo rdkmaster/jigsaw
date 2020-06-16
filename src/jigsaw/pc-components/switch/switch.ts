@@ -10,7 +10,6 @@ import {
     Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
 
 /**
  * @description 开关组件

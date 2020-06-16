@@ -17,12 +17,14 @@ import {
     ViewChild,
     ViewChildren,
     ViewContainerRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Injector
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {Subscription} from "rxjs";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -51,7 +53,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
-                private _elementRef: ElementRef) {
+                private _elementRef: ElementRef,
+                private _injector: Injector) {
         super();
     }
 
@@ -127,6 +130,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      * $demo = tab/headless
      */
     @Input()
+    @AutoMarkForCheck()
     public get headless(): boolean {
         return this._$headless;
     }
@@ -136,7 +140,6 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             return;
         }
         this._$headless = value;
-        this._changeDetector.markForCheck();
     }
 
     @Input()

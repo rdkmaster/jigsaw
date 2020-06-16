@@ -45,7 +45,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
-import {GenerateGetterSetter} from "../../common/decorator/input.setters";
+import {AutoMarkForCheck} from "../../common/decorator/input.setters";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -98,7 +98,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     @Input()
-    @GenerateGetterSetter()
+    @AutoMarkForCheck()
     public hideHeader: boolean = false;
 
     private _selectedRow: number;
