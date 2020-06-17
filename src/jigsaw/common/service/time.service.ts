@@ -225,11 +225,19 @@ export class TimeService {
 
     /**
      * 设置默认周开始，设置之后会影响之后的所有计算结果
-     *
+     * https://momentjs.com/docs/#/customization/dow-doy/
      * @param weekStart
      */
     public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
-        console.warn('setWeekStart function has been abandoned, weekStart auto changed by locale language!');
+        let locale = moment.locale();
+        let weekSet = moment.localeData()._week;
+        let janX = 7 + weekSet.dow - weekSet.doy;
+        moment.updateLocale(locale, {
+            week: {
+                dow: weekStart,
+                doy: 7 + weekStart - janX
+            }
+        });
     }
 
     /**

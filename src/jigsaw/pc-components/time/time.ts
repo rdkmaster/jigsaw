@@ -274,7 +274,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _weekStart: TimeWeekStart;
 
     /**
-     * @internal
+     * 设置周开始日期，可选值 sun mon tue wed thu fri sat，默认值是sun。
+     *
+     * $demo = time/week-select
      */
     @Input()
     public get weekStart(): string | TimeWeekStart {
@@ -282,7 +284,17 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        console.warn('WeekStart setter has been abandoned, weekStart auto changed by locale language!');
+        if (value) {
+            if (typeof value === 'string') {
+                this._weekStart = TimeWeekStart[value];
+            } else {
+                this._weekStart = value;
+            }
+            if (this._timePicker) {
+                this._initDatePicker();
+                this._handleRecommended(this._el.nativeElement, this._popService);
+            }
+        }
     }
 
     private _weekDayStart: TimeWeekDayStart;
@@ -473,6 +485,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     private _initDatePicker() {
+        TimeService.setWeekStart(this._weekStart);
         const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
         let [result, isChange] = this._handleValue(<Time>this.date);
         if (isChange) {

@@ -15,16 +15,9 @@ import {TimeGr, TimeService, ArrayCollection} from "jigsaw/public_api";
         }
     `]
 })
-export class TimeWeekSelectComponent implements AfterContentInit {
+export class TimeWeekSelectComponent {
     date = "now";
-
-    weekStartList = [{label: "sun"}, {label: "mon"}, {label: "tue"},
-        {label: "wed"}, {label: "thu"}, {label: "fri"}, {label: "sat"}];
-
-    weekDayStartList = [{label: "doy4"}, {label: "doy6"}, {label: "doy7"}, {label: "doy12"}];
-
-    weekStart;
-    weekDayStart;
+    weekStart = ['sun'];
 
     date2: any = 'now';
     singleTimeComboValue: any = new ArrayCollection([{
@@ -41,11 +34,6 @@ export class TimeWeekSelectComponent implements AfterContentInit {
         let timeStr = TimeService.convertValue(this.singleTimeComboValue.label, TimeGr.week);
         timeStr = TimeService.getWeekYear(timeStr) + '-' + TimeService.getWeekOfYear(timeStr);
         this.singleTimeComboValue = [{label: timeStr, closable: false}];
-    }
-
-    ngAfterContentInit() {
-        this.weekStart = [this.weekStartList[0]];
-        this.weekDayStart = [this.weekDayStartList[1]];
     }
 
     // ====================================================================

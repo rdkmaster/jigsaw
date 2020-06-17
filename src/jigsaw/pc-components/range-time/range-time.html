@@ -2,13 +2,13 @@
     <jigsaw-time [date]="beginDate" [(gr)]="_$gr" [limitStart]="_$limitStart" [limitEnd]="_$limitEnd"
                  (dateChange)="_$dateChange('beginDate',$event)" [refreshInterval]="refreshInterval"
                  [recommendedBegin]="recommendedBegin" [recommendedEnd]="recommendedEnd"
-                 [recommendedLabel]="recommendedLabel" [grItems]="grItems" #timeStart
+                 [recommendedLabel]="recommendedLabel" [grItems]="grItems" [weekStart]="weekStart" #timeStart
                  class.jigsaw-range-time-startTime="false" (grChange)="_$grChange($event)">
     </jigsaw-time>
     <jigsaw-time [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate" [limitEnd]="_$endTimeLimitEnd"
                  (dateChange)="_$dateChange('endDate',$event)" [refreshInterval]="refreshInterval"
                  [recommendedBegin]="recommendedBegin" [recommendedEnd]="recommendedEnd"
-                 [recommendedLabel]="recommendedLabel" #timeEnd
+                 [recommendedLabel]="recommendedLabel" [weekStart]="weekStart" #timeEnd
                  [class.jigsaw-range-time-endTime]="(grItems && grItems.length!=0)">
     </jigsaw-time>
     <div *ngIf="_$shortcuts && _$shortcuts.length" class="jigsaw-range-time-shortcuts">
