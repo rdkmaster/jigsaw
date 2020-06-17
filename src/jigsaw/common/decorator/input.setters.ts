@@ -38,7 +38,11 @@ export function AutoMarkForCheck(): PropertyDecorator {
                 if (originalSetter) {
                     // 调用原有的setter
                     originalSetter.call(this, value);
-                } else if (this[privatePropName] !== value) {
+                } else {
+                    if (this[privatePropName] == value) {
+                        // 当前值跟设置的值相同，直接返回，不需要调用 MarkForCheck
+                        return;
+                    }
                     this[privatePropName] = value;
                 }
                 // 无论是原来就有的setter，还是装饰器生成的，都追加 MarkForCheck 的调用
