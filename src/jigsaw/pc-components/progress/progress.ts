@@ -15,7 +15,7 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 class EstimationInfo {
     duration: number = 10000;
@@ -88,7 +88,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     }
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public showMarker: boolean;
 
     private _labelPosition: LabelPosition = 'right';
@@ -108,7 +108,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     private _status: Status = 'processing';
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get status(): Status {
         return this._status
     }
@@ -122,7 +122,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     public preSize: PreSize = 'default';
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public animate: boolean = true;
 
     @Output()

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 const defaultHrefValue = 'javascript:void(0);';
 
@@ -40,50 +40,50 @@ export class JigsawIcon extends AbstractJigsawComponent {
      * 图标类型 fa fa-xxx
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public icon: string;
 
     /**
      * 图标字号，单位是px
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public iconSize: number | 'inherit' = 'inherit';
 
     /**
      * 图标颜色
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public iconColor: string = 'inherit';
 
     /**
      * 图标的文本
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public text: string = '';
 
     /**
      * 文字的字号，单位是px
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public textSize: number | 'inherit' = 'inherit';
 
     /**
      * 文字的颜色
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public textColor: string = 'inherit';
 
     /**
      * 图标相对于文字的位置，left为左侧，默认值：top为上方
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public iconPosition: 'left' | 'top' = 'left';
 
     /**
      * 超链接 href
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public set href(value: any) {
         if (this._href == value || CommonUtils.isUndefined(value)) {
             if (CommonUtils.isUndefined(this._$secureUrl)) {
@@ -99,7 +99,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
      * 规定在何处打开超链
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get target(): string {
         return (this._href == defaultHrefValue || CommonUtils.isUndefined(this._$secureUrl)) ? '_self' : this._target;
     }
@@ -111,7 +111,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
         this._target = value;
     }
 
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public title: string = '';
 
     constructor(private _sanitizer: DomSanitizer, private _injector: Injector) {

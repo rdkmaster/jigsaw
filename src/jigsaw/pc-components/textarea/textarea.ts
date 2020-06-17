@@ -13,7 +13,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 /**
  * @description 多行输入框组件，常常用于接收用户的文本输入
@@ -44,7 +44,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      *
      * $demo = textarea/clearable
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public clearable: boolean = true;
 
     /**
@@ -127,7 +127,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = textarea/valid
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public set placeholder(txt: string) {
         this._placeholder = txt;
     }

@@ -35,6 +35,7 @@ script:
   - gulp generate-demo-info
   - gulp build:jigsaw
   - node build/scripts/check-demo-import.js
+  - node build/scripts/check-mark-for-check.js
   - ng test jigsaw  --code-coverage false --watch false
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/

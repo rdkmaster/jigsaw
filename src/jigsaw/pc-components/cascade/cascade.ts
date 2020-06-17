@@ -235,7 +235,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * $demo = cascade/cross-select
      * $demo = cascade/preset-multi-dimensional-data
      */
-        // @Input()
+    // @Input()
     public allowCrossSelect: boolean = false;
 
     /**

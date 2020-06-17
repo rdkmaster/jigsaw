@@ -24,7 +24,7 @@ import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {Subscription} from "rxjs";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -130,7 +130,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      * $demo = tab/headless
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get headless(): boolean {
         return this._$headless;
     }

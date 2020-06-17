@@ -18,7 +18,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 /**
  * 选择控件
@@ -52,7 +52,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public valid: boolean = true;
 
     protected _width: string = '120px';
@@ -117,14 +117,14 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * placeholder文本
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public placeholder: string;
 
     /**
      * 不可用属性
      * $demo = select/disabled
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public disabled: boolean;
 
     @Input() public optionWidth: string;
@@ -153,7 +153,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public clearable: boolean;
 
     /**
@@ -161,7 +161,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      *
      * $demo = select/trigger
      */
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     @Input() public openTrigger: 'click' | 'mouseenter' = 'mouseenter';
 
     /**

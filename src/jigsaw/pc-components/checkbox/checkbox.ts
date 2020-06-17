@@ -13,15 +13,14 @@ import {
     ElementRef,
     forwardRef,
     ChangeDetectionStrategy,
-    NgZone,
-    Injector
+    NgZone
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from '../../common/common';
 import {CheckBoxStatus} from "./typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
@@ -81,7 +80,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * $demo = checkbox/basic
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get checked(): CheckBoxValue {
         return this._checked
     }
@@ -115,7 +114,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * $demo = checkbox/disabled
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -128,10 +127,14 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         this._setCheckBoxClass();
     }
 
+    /**
+     * 控件的值是否有效，常常用于表单中，配合表单状态使用
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _injector: Injector) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
         super(_zone);
     }
 

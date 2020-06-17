@@ -18,7 +18,7 @@ const checkDescriptor = (target: Object, propertyName: string) => {
  * 属性装饰器，用于将input属性，自动改造为getter/setter方式，并在setter中，增加 ChangeDetectorRef.markForCheck() 的调用
  * 以确保视图可以得到及时更新
  */
-export function AutoMarkForCheck(): PropertyDecorator {
+export function RequireMarkForCheck(): PropertyDecorator {
 
     return (target: Object, propertyName: string) => {
         const className = target.constructor?.name;

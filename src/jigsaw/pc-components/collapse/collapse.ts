@@ -17,7 +17,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 /**
  * 组件模式.
@@ -64,7 +64,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     }
 
     @Input('header')
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public title: string;
 
     /**

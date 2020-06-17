@@ -14,7 +14,7 @@ import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 @Component({
     selector: 'jigsaw-tag, j-tag',
@@ -44,7 +44,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     private _closable: boolean;
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get closable(): boolean {
         return this._closable;
     };

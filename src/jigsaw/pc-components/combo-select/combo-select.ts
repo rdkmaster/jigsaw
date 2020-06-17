@@ -27,7 +27,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
-import {AutoMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 
 export class ComboSelectValue {
     [index: string]: any;
@@ -84,13 +84,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public remove = new EventEmitter<any>();
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public placeholder: string = '';
 
     private _disabled: boolean;
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -105,7 +105,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
@@ -118,7 +118,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get closeTrigger(): 'mouseleave' | 'click' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
@@ -145,7 +145,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public _$opened: boolean = false;
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public get open(): boolean {
         return this._$opened;
     }
@@ -224,7 +224,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _tags: QueryList<JigsawTag>;
 
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public searchable: boolean = false;
 
     @Input()
@@ -243,7 +243,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * 是否显示tag的边框和删除按钮，默认显示
      */
     @Input()
-    @AutoMarkForCheck()
+    @RequireMarkForCheck()
     public showValueBorder: boolean = true;
 
     /**
