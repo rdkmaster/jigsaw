@@ -15,7 +15,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {CommonModule} from '@angular/common';
 import {GrItem, JigsawDatePickerModule, MarkDate} from "./date-picker";
 import {JigsawTimePickerModule, TimeStep} from "./time-picker";
-import {TimeGr, TimeService} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
@@ -280,6 +280,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      */
     @Input()
     public step: TimeStep;
+
+    /**
+     * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
+     *
+     * $demo = date-time-picker/week-start
+     */
+    @Input()
+    public weekStart: string | TimeWeekStart;
 
     private _updateValueCombine = new EventEmitter();
     private _removeUpdateValueCombineSubscriber: Subscription;

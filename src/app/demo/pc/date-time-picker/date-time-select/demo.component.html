@@ -68,6 +68,15 @@
         <br><br>
         <jigsaw-date-time-select [valid]="valid"></jigsaw-date-time-select>
     </div>
+
+    <div class="demo-8 live-demo">
+        <h3>weekStart</h3>
+        <p class="comment"></p>
+        <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']" [(selectedItems)]="weekStart"></jigsaw-button-bar><br><br>
+        <jigsaw-date-time-select [(date)]="date8" [weekStart]="weekStart[0]" gr="week" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date8 | json}}</p>
+    </div>
 </div>
 
 

@@ -18,14 +18,6 @@ export enum TimeWeekStart {
 }
 
 /**
- * 用于在周粒度下配置第一周包含日期，结合weekStart配置
- * 详情请查看 https://momentjs.com/docs/#/customization/dow-doy/
- */
-export enum TimeWeekDayStart {
-    doy6 = 6, doy4 = 4, doy12 = 12, doy7 = 7
-}
-
-/**
  * 关于时间宏：
  *
  * 它通过一些数字，以及语义化的单词作为单位来表示一个时刻，时间宏是一个普通的字符串。
@@ -244,23 +236,21 @@ export class TimeService {
         return moment(date).format(format);
     }
 
-
     /**
      * 设置默认周开始，设置之后会影响之后的所有计算结果
-     *
+     *  https://momentjs.com/docs/#/customization/dow-doy/
      * @param weekStart
      */
     public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
-        console.warn('setWeekStart function has been abandoned, weekStart auto changed by locale language!');
-    }
-
-    /**
-     * 设置第一周包含日期
-     * https://momentjs.com/docs/#/customization/dow-doy/
-     * @param dayStart
-     */
-    public static setWeekDayStart(dayStart: TimeWeekDayStart = TimeWeekDayStart.doy6): void {
-        console.warn('setWeekDayStart function has been abandoned, weekDayStart auto changed by locale language!');
+        let locale = moment.locale();
+        let weekSet = moment.localeData()._week;
+        let janX = 7 + weekSet.dow - weekSet.doy;
+        moment.updateLocale(locale, {
+            week: {
+                dow: weekStart,
+                doy: 7 + weekStart - janX
+            }
+        });
     }
 
     public static getWeekStart() {

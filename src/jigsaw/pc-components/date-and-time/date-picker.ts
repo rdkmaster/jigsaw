@@ -15,7 +15,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
-import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
@@ -609,6 +609,30 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return this.limitEnd;
         }
         return value;
+    }
+
+    private _weekStart: TimeWeekStart;
+
+    /**
+     * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
+     *
+     * $demo = date-picker/week-start
+     */
+    @Input()
+    public get weekStart(): string | TimeWeekStart {
+        return this._weekStart;
+    }
+
+    public set weekStart(value: string | TimeWeekStart) {
+        if (value) {
+            if (typeof value === 'string') {
+                this._weekStart = TimeWeekStart[value];
+            } else {
+                this._weekStart = value;
+            }
+            TimeService.setWeekStart(this._weekStart);
+            this._createCalendar();
+        }
     }
 
     public _$changeGr($event: GrItem) {

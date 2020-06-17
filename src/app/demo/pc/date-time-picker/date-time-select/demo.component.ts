@@ -38,6 +38,9 @@ export class DateTimeSelectDemoComponent {
 
     date5 = '2020-06-11 16:50:30';
 
+    date8 = "now";
+    weekStart = ['mon'];
+
     onDateChange($event) {
         console.log($event);
     }

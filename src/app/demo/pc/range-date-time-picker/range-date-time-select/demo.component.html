@@ -51,5 +51,15 @@
         <p class="message">{{date4 | json}}</p>
     </div>
 
+    <div class="demo-5 live-demo">
+        <h3>weekStart</h3>
+        <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']"
+                           [(selectedItems)]="weekStart"></jigsaw-button-bar>
+        <br><br>
+        <jigsaw-range-date-time-select [(date)]="date5" [weekStart]="weekStart[0]" gr="week"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date5 | json}}</p>
+    </div>
+
 </div>
 

@@ -11,7 +11,7 @@ import {
     OnDestroy
 } from '@angular/core';
 import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select";
-import {TimeGr, TimeService} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
@@ -32,7 +32,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200">
             <ng-template>
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
-                                               [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
+                                               [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step" [weekStart]="weekStart"
                                                (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
                 </jigsaw-range-date-time-picker>
             </ng-template>
@@ -121,6 +121,9 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     @Input()
     public step: TimeStep;
+
+    @Input()
+    public weekStart: string | TimeWeekStart;
 
     @Input()
     public placeholder: string = '';

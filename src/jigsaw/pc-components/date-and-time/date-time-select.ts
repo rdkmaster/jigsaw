@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select";
-import {TimeGr, TimeService} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
@@ -28,7 +28,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="writeValue($event)" [(gr)]="gr" (grChange)="grChange.emit($event)"
                                          [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
-                                         [step]="step">
+                                         [step]="step" [weekStart]="weekStart">
                 </jigsaw-date-time-picker>
             </ng-template>
         </jigsaw-combo-select>
@@ -98,6 +98,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public step: TimeStep;
 
     @Input()
+    public weekStart: string | TimeWeekStart;
+
+    @Input()
     public placeholder: string = '';
 
     @Input()
@@ -146,7 +149,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     private _changeDateByGr() {
         if (!this.date) return;
-        let convertDate = this._gr == TimeGr.week ? TimeService.getWeekDate(<Time>this.date) : TimeService.convertValue(this.date, this._gr);
+        let convertDate = TimeService.getDateByGr(this.date, this._gr);
         if (convertDate != this.date) {
             this.runMicrotask(() => {
                 this.writeValue(convertDate);
