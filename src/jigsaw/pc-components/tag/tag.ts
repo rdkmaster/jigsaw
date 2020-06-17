@@ -39,7 +39,11 @@ import {RequireMarkForCheck} from "../../common/decorator/input.setters";
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
-    @Input() public color: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public color: string;
 
     private _closable: boolean;
 
@@ -56,6 +60,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     /**
      * 是否显示tag的边框和删除按钮，默认显示
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public showBorder: boolean = true;
@@ -71,7 +76,8 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         super();
     }
 
-    @Output() public close = new EventEmitter<JigsawTag>();
+    @Output()
+    public close = new EventEmitter<JigsawTag>();
 
     /**
      * @internal
@@ -82,7 +88,8 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         this._state = 'inactive';
     }
 
-    @Output() public select = new EventEmitter<JigsawTag>();
+    @Output()
+    public select = new EventEmitter<JigsawTag>();
 
     /**
      * @internal

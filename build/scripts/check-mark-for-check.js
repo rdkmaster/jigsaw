@@ -2,21 +2,25 @@ const fs = require('fs');
 const path = require('path');
 
 let hasError = false;
-processAllComponents();
+processAll('pc-components');
+processAll('common/components');
+processAll('common/directive');
 if (hasError) {
     process.exit(1);
 } else {
     console.error(`Everything's fine!`);
 }
 
-function processAllComponents() {
-    const cmpHome = path.resolve(`${__dirname}/../../src/jigsaw/pc-components/`);
+// checkInputProperty('D:\\Codes\\jigsaw\\src\\jigsaw\\pc-components\\icon\\icon.ts');
+
+function processAll(folder) {
+    const cmpHome = path.resolve(`${__dirname}/../../src/jigsaw/${folder}`);
     const cmpFolders = fs.readdirSync(cmpHome);
     cmpFolders.forEach(cmpFolder => {
         const pathname = path.join(cmpHome, cmpFolder);
         const stat = fs.lstatSync(pathname);
         if (stat.isDirectory()) {
-            processSourceFiles(pathname + '/');
+            processSourceFiles(pathname);
         }
     });
 }
@@ -86,9 +90,15 @@ function getPropertyBlock(source, index) {
         return '';
     }
     let start = index;
-    const annotationMatch = source.substring(0, index).match(/[\s\S]*(\/\*\*[\s\S]*?\*\/\s*)$/);
-    if (annotationMatch && annotationMatch[1]) {
-        start -= annotationMatch[1].length;
+    const heading = source.substring(0, index);
+    let headingMatch = heading.match(/[\s\S]*(\/\*\*[\s\S]*?\*\/\s*(@RequireMarkForCheck\s*\(\s*\))?\s*)$/);
+    if (headingMatch && headingMatch[1]) {
+        start -= headingMatch[1].length;
+    } else {
+        headingMatch = heading.match(/[\s\S]*(@RequireMarkForCheck\s*\(\s*\)\s*)$/);
+        if (headingMatch && headingMatch[1]) {
+            start -= headingMatch[1].length;
+        }
     }
     const end = index + nameMatch.index + nameMatch[0].length;
     return source.substring(start, end);

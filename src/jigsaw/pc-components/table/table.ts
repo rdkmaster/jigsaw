@@ -73,6 +73,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     public _$isFFBrowser;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -88,6 +91,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _contentWidth: string = 'auto';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get contentWidth(): string {
         return this._contentWidth;
@@ -103,6 +109,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _selectedRow: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get selectedRow(): number {
         return this._selectedRow;
@@ -349,6 +358,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _additionalData = new AdditionalTableData();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalData(): TableData {
         return this._additionalData;
@@ -363,6 +375,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _trackRowBy: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackRowBy(): string {
         return this._trackRowBy;
@@ -377,6 +392,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _removeAdditionalDataRefresh: CallbackRemoval;
     private _data: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): TableData {
         return this._data;
@@ -405,14 +423,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public columnDefineGeneratorContext: any;
 
     private _additionalColumnDefines: AdditionalColumnDefine[] = [];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalColumnDefines(): AdditionalColumnDefine[] {
         return this._additionalColumnDefines;
@@ -477,6 +504,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public floatingHeader: boolean = false;
 

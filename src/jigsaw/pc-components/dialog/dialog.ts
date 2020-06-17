@@ -43,6 +43,9 @@ export type DialogCallback = (button: ButtonInfo) => void;
 @Directive()
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: any;
 
@@ -51,6 +54,9 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     private _caption: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get caption(): string {
         return this._caption;
@@ -65,6 +71,9 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     private _buttons: ButtonInfo[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get buttons(): ButtonInfo[] {
         return this._buttons;
@@ -109,10 +118,19 @@ export abstract class AbstractDialogComponentBase
         super(_zone);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public buttons: ButtonInfo[];
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public caption: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: any;
 
@@ -120,7 +138,11 @@ export abstract class AbstractDialogComponentBase
 
     private _top: string;
 
-    //设置距离顶部高度
+    /**
+     * 设置距离顶部高度
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get top(): string {
         return this._top
@@ -186,6 +208,9 @@ export abstract class AbstractDialogComponentBase
 export class JigsawDialog extends AbstractDialogComponentBase implements AfterContentInit {
     @Output()
     public close: EventEmitter<any> = new EventEmitter<any>();
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public caption: string;
 

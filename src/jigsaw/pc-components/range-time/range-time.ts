@@ -14,7 +14,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
 import {GrItem, JigsawTime, Shortcut} from "../time/time";
-import {TimeWeekDay, WeekTime} from "../../common/service/time.types";
+import {WeekTime} from "../../common/service/time.types";
 
 declare const moment: any;
 
@@ -49,6 +49,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
         super(_zone);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
@@ -62,9 +65,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 参考`JigsawTime.gr`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/gr
-     *
-     *
      */
     @Input("gr")
     public get gr(): TimeGr | string {
@@ -85,7 +88,6 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
      * 参考`JigsawTime.grChange`
      *
      * $demo = range-time/gr
-     *
      */
     @Output()
     public grChange = new EventEmitter<TimeGr>();
@@ -107,6 +109,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 时间段的开始时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/basic
      */
     @Input()
@@ -124,9 +128,9 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 时间段的结束时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/basic
-     *
-     *
      */
     @Input()
     public get endDate(): WeekTime {
@@ -146,10 +150,10 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 参考`JigsawTime.limitStart`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/limit-start
      * $demo = range-time/limit-end
-     *
-     *
      */
     @Input()
     public get limitStart(): WeekTime {
@@ -170,10 +174,10 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 参考`JigsawTime.limitEnd`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/limit-start
      * $demo = range-time/limit-end
-     *
-     *
      */
     @Input()
     public get limitEnd(): WeekTime {
@@ -188,12 +192,14 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     }
 
     /**
+     * @NoMarkForCheckRequired
      * @internal
      */
     @Input()
     public weekStart: TimeWeekStart | string;
 
     /**
+     * @NoMarkForCheckRequired
      * @internal
      */
     @Input()
@@ -201,6 +207,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
     /**
      * 参考`JigsawTime.grItems`
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = range-time/gr-items
      */
@@ -210,6 +218,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 参考`JigsawTime.refreshInterval`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/refresh-interval
      */
     @Input()
@@ -217,6 +227,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
     /**
      * 参考`JigsawTime.recommendedBegin`
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = range-time/recommended
      */
@@ -226,6 +238,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
     /**
      * 参考`JigsawTime.recommendedEnd`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-time/recommended
      */
     @Input()
@@ -233,6 +247,8 @@ export class JigsawRangeTime extends AbstractJigsawComponent implements ControlV
 
     /**
      * 参考`JigsawTime.recommendedLabel`
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = range-time/recommended
      */

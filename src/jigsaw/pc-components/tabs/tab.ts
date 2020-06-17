@@ -113,9 +113,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * 控制tab显示添加和删除按钮
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = tab/editable
-     *
-     *
      */
     @Input()
     public editable: boolean;
@@ -127,6 +127,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
     /**
      * 控制tab头部是否显示
+     *
      * $demo = tab/headless
      */
     @Input()
@@ -142,6 +143,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this._$headless = value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public enableAnimation: boolean = true;
 
@@ -167,6 +171,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * 当前选中的tab页编号，在双绑模式下，改变这个值可以实现选中tab页的切换。
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get selectedIndex(): number {

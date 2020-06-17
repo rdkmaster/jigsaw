@@ -65,11 +65,17 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     private _allowHalf: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set allowHalf(value: boolean) {
         this._allowHalf = !!value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): number {
         return this._value;
@@ -92,6 +98,9 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     private _disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get disabled(): boolean {
         return this._disabled;

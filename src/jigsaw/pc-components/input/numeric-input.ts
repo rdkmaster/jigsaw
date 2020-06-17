@@ -35,30 +35,38 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
     /**
      * 设置不可用
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/disabled
      */
-    @Input() public disabled: boolean = false;
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 输入框的placeholder
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/basic
      */
-    @Input() public placeholder = '';
+    @Input()
+    public placeholder = '';
 
     private _min: number = -Infinity;
 
     /**
      * 最小值
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/basic
      */
@@ -80,6 +88,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * 最大值
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/basic
      */
@@ -104,6 +113,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * 步长，默认是1
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/step
      */
@@ -133,6 +143,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * 输入框的值，双绑
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/basic
      */
@@ -167,6 +178,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * 尺寸，默认是‘default’
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = numeric-input/size
      */
@@ -295,6 +307,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._focusEmitter.emit(event);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public blurOnClear: boolean = true;
 

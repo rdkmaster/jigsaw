@@ -61,6 +61,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): ArrayCollection<ComboSelectValue> | ComboSelectValue[] {
         return this._value;
@@ -75,7 +78,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     @Output() public valueChange = new EventEmitter<any[]>();
 
-    @Input() public labelField: string = 'label';
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = 'label';
 
     @Output()
     public select = new EventEmitter<any>();
@@ -128,6 +135,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public maxWidth: string;
 
@@ -195,6 +205,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _showBorder: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set showBorder(value: boolean) {
         this._showBorder = value;
@@ -205,12 +218,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return this._showBorder;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public autoClose: boolean; //自动关闭dropdown
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public clearable: boolean = false;
 
@@ -227,12 +249,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @RequireMarkForCheck()
     public searchable: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searching: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchKeyword: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchBoxMinWidth: number = 40;
 
@@ -248,6 +279,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = form/template-driven
      */

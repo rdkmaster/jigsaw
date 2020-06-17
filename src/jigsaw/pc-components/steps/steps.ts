@@ -28,14 +28,20 @@ export class JigsawSteps extends AbstractJigsawComponent {
     /**
      * 设置步骤条图标的预设尺寸
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/basic
      */
-    @Input() public preSize: 'small' | 'default' | 'large' = "default";
+    @Input()
+    public preSize: 'small' | 'default' | 'large' = "default";
 
     /**
      * 设置步骤条的方向，支持水平方向和垂直方向
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/vertical
      */
-    @Input() public direction: 'vertical' | 'horizontal' = "horizontal";
+    @Input()
+    public direction: 'vertical' | 'horizontal' = "horizontal";
 }

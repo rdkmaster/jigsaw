@@ -70,6 +70,9 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     private _data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[] {
         return this._data;
@@ -100,6 +103,8 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     /**
      * 设置是否可以检索数据
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = list-lite/searchable
      */
     @Input()
@@ -109,15 +114,21 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      * 显示的option个数，超出的会显示滚动条；
      * 不设置optionCount，则显示全部
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = list-lite/option-count
      */
-    @Input() public optionCount: number;
+    @Input()
+    public optionCount: number;
 
-    @ViewChild(JigsawList) private _listInst: JigsawList;
+    @ViewChild(JigsawList)
+    private _listInst: JigsawList;
 
-    @ViewChildren(JigsawListOption) private _listOptions: QueryList<JigsawListOption>;
+    @ViewChildren(JigsawListOption)
+    private _listOptions: QueryList<JigsawListOption>;
 
-    @ViewChild(PerfectScrollbarDirective) private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild(PerfectScrollbarDirective)
+    private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * 搜索的时候，如果重新创建data为LocalPageableArray，这个时候检查selectItems，会误删选中值

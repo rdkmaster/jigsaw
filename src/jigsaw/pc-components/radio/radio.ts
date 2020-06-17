@@ -27,6 +27,9 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 })
 export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): any {
         return this.selectedItems && this.selectedItems.length != 0 ? this.selectedItems[0] : null;
@@ -44,7 +47,11 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
     @ContentChildren(forwardRef(() => JigsawRadioOption))
     protected _items: QueryList<JigsawRadioOption>;
 
-    // 重写selectedItems
+    /**
+     * 选中的条目
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;

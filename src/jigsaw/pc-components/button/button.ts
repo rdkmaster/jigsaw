@@ -42,26 +42,35 @@ export class JigsawButton extends AbstractJigsawComponent {
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = button/disabled
      */
-    @Input() public disabled: boolean = false;
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 按钮颜色类型 `default` , `primary` , `warning` , `error|danger`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = button/full
      */
-    @Input() public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
+    @Input()
+    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
 
     /**
      * 按钮预设尺寸 `default` , `small` , `large`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = button/full
      */
-    @Input() public preSize: 'default' | 'small' | 'large' = 'default';
+    @Input()
+    public preSize: 'default' | 'small' | 'large' = 'default';
 
-    // 按钮动画执行状态
     /**
+     * 按钮动画执行状态
      * @internal
      */
     public _$clicked: boolean = false;

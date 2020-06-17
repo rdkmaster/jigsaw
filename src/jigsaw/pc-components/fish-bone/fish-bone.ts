@@ -44,6 +44,8 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      *     - 树根代表着目标；
      *     - 树的各支代表着为各个达成目标而必须完成的主要及次要任务；
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = fish-bone/full
      */
     @Input()
@@ -68,6 +70,8 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     /**
      * 鱼骨图鱼头的朝向，默认是朝左。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = fish-bone/full
      */
     @Input()
@@ -75,6 +79,8 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     /**
      * 鱼骨图的整体色调，默认是白色调
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = fish-bone/full
      */
@@ -262,24 +268,42 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         this.itemEl = elementRef.nativeElement;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: SimpleTreeData | TreeData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public childRotate: string;
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     public childBones: QueryList<JigsawFishBoneItem>;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public parentBone: JigsawFishBoneItem;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public level: number = 0;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public index: number = 0;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public firstLevelRotate: string;
 

@@ -42,6 +42,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     /**
      * 用于设置抽屉的位置，支持上下左右4个方向。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = drawer/basic
      */
     @Input()
@@ -62,6 +64,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 代表了抽屉的状态，`true`为打开状态，`false`为关闭状态。在双绑模式下，改变此属性的值可以打开或者关闭抽屉。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = drawer/basic
      */
@@ -88,6 +92,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
      * 向上寻找离抽屉最近的匹配节点作为抽屉的容器
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = drawer/with-div
      * $demo = drawer/with-scrollbar
      * $demo = drawer/with-tab
@@ -101,6 +107,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     private _offsetBottom: string;
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -114,6 +121,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -127,6 +135,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -140,6 +149,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -153,6 +163,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -166,6 +177,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -179,6 +191,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/in-dom
      */
     @Input()

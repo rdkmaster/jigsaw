@@ -78,9 +78,15 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      */
     public _$propertyListOpen: boolean | null = null;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public closeDropDownOnSelect: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set maxDropDownHeight(value: string) {
         if (value == this._$maxDropDownHeight || !value) {
@@ -89,6 +95,9 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this._$maxDropDownHeight = CommonUtils.getCssValue(value);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): string[] | DropDownValue[] {
         return this._$data;
@@ -112,6 +121,8 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     /**
      * 用于控制在输入框获得焦点后是否自动执行过滤
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = auto-complete-input/with-group
      */

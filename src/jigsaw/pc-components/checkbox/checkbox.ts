@@ -57,6 +57,8 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * 编程模式赋值复选框状态时，不受此开关的影响，即即使`enableIndeterminate`被设置为false，
      * 应用依然可以在代码中直接将组件的状态设置为`CheckBoxStatus.indeterminate`。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = checkbox/basic
      */
     @Input()
@@ -94,14 +96,12 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     /**
      * 选中状态变化时发出此事件，此事件可以简化为`change`
-     *
      */
     @Output()
     public checkedChange: EventEmitter<CheckBoxValue> = new EventEmitter();
 
     /**
      * 选中状态变化时发出此事件
-     *
      */
     @Output()
     public change = this.checkedChange;

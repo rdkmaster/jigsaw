@@ -57,6 +57,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     protected _width: string = '120px';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -79,6 +82,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 用于多选时设置最小宽度
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get minWidth(): string {
@@ -94,6 +98,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 用于多选时设置最大宽度
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get maxWidth(): string {
@@ -106,13 +111,19 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 设置对象的标识
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public trackItemBy: string | string[];
+    @Input()
+    public trackItemBy: string | string[];
 
     /**
      * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public labelField: string = 'label';
+    @Input()
+    public labelField: string = 'label';
 
     /**
      * placeholder文本
@@ -125,36 +136,58 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      * $demo = select/disabled
      */
     @RequireMarkForCheck()
-    @Input() public disabled: boolean;
+    @Input()
+    public disabled: boolean;
 
-    @Input() public optionWidth: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public optionWidth: string;
 
-    @Input() public optionHeight: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public optionHeight: string;
 
     /**
      * 显示的option个数，超出的会显示滚动条
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/option-count
      */
-    @Input() public optionCount: number;
+    @Input()
+    public optionCount: number;
 
     /**
      * 多选开关
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/multiple
      */
-    @Input() public multipleSelect: boolean;
+    @Input()
+    public multipleSelect: boolean;
 
     /**
      * 搜索开关
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/searchable
      */
-    @Input() public searchable: boolean;
+    @Input()
+    public searchable: boolean;
 
     /**
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      */
     @RequireMarkForCheck()
-    @Input() public clearable: boolean;
+    @Input()
+    public clearable: boolean;
 
     /**
      * 打开下拉的触发方式
@@ -167,15 +200,19 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 关闭下拉的触发方式
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/trigger
      */
-    @Input() public closeTrigger: 'click' | 'mouseleave' = 'mouseleave';
+    @Input()
+    public closeTrigger: 'click' | 'mouseleave' = 'mouseleave';
 
     private _data: ArrayCollection<object>;
 
     /**
      * 提供选择的数据集合
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get data(): ArrayCollection<object> | object[] {
@@ -191,6 +228,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = select/basic
      * $demo = select/multiple
@@ -217,16 +255,19 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      *
      * $demo = select/basic
      */
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     /**
      * 在多选时，用户点击被选中条目的叉叉时发出此事件
      *
      * $demo = select/multiple
      */
-    @Output() public remove: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public remove: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
+    @ViewChild(JigsawListLite)
+    private _listCmp: JigsawListLite;
 
     /**
      * @internal

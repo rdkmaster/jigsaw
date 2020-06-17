@@ -246,10 +246,19 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 })
 export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: UploadFileInfo[];
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public uploader: JigsawUploadDirective;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionCount: number = 5;
 

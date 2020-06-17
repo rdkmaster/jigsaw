@@ -45,22 +45,29 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = textarea/clearable
      */
     @RequireMarkForCheck()
-    @Input() public clearable: boolean = true;
+    @Input()
+    public clearable: boolean = true;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = textarea/disabled
      */
-    @Input() public disabled: boolean = false;
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = textarea/valid
      * $demo = form/template-driven
      */
-    @Input() public valid: boolean = true;
+    @Input()
+    public valid: boolean = true;
 
     @Output() public blur: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -94,6 +101,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     /**
      * 文本框中当前的文本
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = textarea/valid
      */

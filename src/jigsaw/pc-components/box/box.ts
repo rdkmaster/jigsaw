@@ -1,6 +1,6 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectorRef,ChangeDetectionStrategy
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectionStrategy
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
@@ -19,7 +19,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone, private _cdr: ChangeDetectorRef) {
+    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
         super(elementRef, renderer, zone);
     }
 
@@ -27,6 +27,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     public static resizeStart = new EventEmitter();
     public static viewInit = new EventEmitter();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public resizable: boolean;
 

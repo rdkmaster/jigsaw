@@ -20,7 +20,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = input/clearable
      */
     @RequireMarkForCheck()
-    @Input() public clearable: boolean = true;
+    @Input()
+    public clearable: boolean = true;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
@@ -28,7 +29,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = input/disabled
      */
     @RequireMarkForCheck()
-    @Input() public disabled: boolean = false;
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
@@ -37,7 +39,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = form/template-driven
      */
     @RequireMarkForCheck()
-    @Input() public valid: boolean = true;
+    @Input()
+    public valid: boolean = true;
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -67,6 +70,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
 
     /**
      * 文本框中当前的文本
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = input/valid
      */
@@ -127,6 +132,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * 按照`JigsawTable`的交互逻辑，单元格编辑器一旦失去焦点，就必须退回到单元格显示渲染器。
      * 在这个情况下，用户单击了清除文本按钮时就不能让输入框失去焦点。参考[这个demo]($demo=table/update-column-define)的职位列
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = table/update-column-define
      */
     @Input()
@@ -186,8 +193,12 @@ export class JigsawInput extends JigsawInputBase {
      * $demo = input/password
      */
     @RequireMarkForCheck()
-    @Input() public password: boolean = false;
+    @Input()
+    public password: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get type(): string {
         return this.password ? "password" : "text";

@@ -30,54 +30,67 @@ export class JigsawIcon extends AbstractJigsawComponent {
     private _href: string = defaultHrefValue;
     private _target: string = '_blank';
 
+    @RequireMarkForCheck()
+    @Input()
+    public title: string = '';
+
     /**
-     * 为true    生成的html是 <a class="fa fa-edit">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
-     * 为false   生成的html是 <span class="fa fa-edit">some text</span>
+     * 为true时：生成的html是 <a class="fa fa-edit">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
+     * 为false时：生成的html是 <span class="fa fa-edit">some text</span>
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public isLinkButton: boolean = false;
+    @Input()
+    public isLinkButton: boolean = false;
 
     /**
      * 图标类型 fa fa-xxx
      */
-    @Input()
     @RequireMarkForCheck()
+    @Input()
     public icon: string;
 
     /**
      * 图标字号，单位是px
      */
     @RequireMarkForCheck()
-    @Input() public iconSize: number | 'inherit' = 'inherit';
+    @Input()
+    public iconSize: number | 'inherit' = 'inherit';
 
     /**
      * 图标颜色
      */
     @RequireMarkForCheck()
-    @Input() public iconColor: string = 'inherit';
+    @Input()
+    public iconColor: string = 'inherit';
 
     /**
      * 图标的文本
      */
     @RequireMarkForCheck()
-    @Input() public text: string = '';
+    @Input()
+    public text: string = '';
 
     /**
      * 文字的字号，单位是px
      */
     @RequireMarkForCheck()
-    @Input() public textSize: number | 'inherit' = 'inherit';
+    @Input()
+    public textSize: number | 'inherit' = 'inherit';
 
     /**
      * 文字的颜色
      */
     @RequireMarkForCheck()
-    @Input() public textColor: string = 'inherit';
+    @Input()
+    public textColor: string = 'inherit';
 
     /**
      * 图标相对于文字的位置，left为左侧，默认值：top为上方
      */
     @RequireMarkForCheck()
-    @Input() public iconPosition: 'left' | 'top' = 'left';
+    @Input()
+    public iconPosition: 'left' | 'top' = 'left';
 
     /**
      * 超链接 href
@@ -111,9 +124,6 @@ export class JigsawIcon extends AbstractJigsawComponent {
         this._target = value;
     }
 
-    @RequireMarkForCheck()
-    @Input() public title: string = '';
-
     constructor(private _sanitizer: DomSanitizer, private _injector: Injector) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
@@ -126,5 +136,4 @@ export class JigsawIcon extends AbstractJigsawComponent {
     exports: [JigsawIcon]
 })
 export class JigsawIconModule {
-
 }

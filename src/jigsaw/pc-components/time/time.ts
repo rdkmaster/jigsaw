@@ -112,6 +112,9 @@ export class GrItem {
 })
 export class JigsawTime extends AbstractJigsawComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
@@ -140,7 +143,10 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         return this._$gr;
     }
 
-    //粒度
+    /**
+     * 粒度
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set gr(value: TimeGr | string) {
         if (typeof value === 'string') {
@@ -162,9 +168,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * 支持时间宏。关于时间宏，请参考这里`TimeUnit`的说明。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time/basic
-     *
-     *
      */
     @Input()
     public get date(): WeekTime {
@@ -182,7 +188,6 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      * 当时间被用户切换之后，Jigsaw会发出此事件。
      *
      * $demo = time/basic
-     *
      */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
@@ -203,6 +208,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         return this._limitEnd && TimeService.convertValue(this._limitEnd, <TimeGr>this.gr)
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set limitEnd(value: Time) {
         if (value) {
@@ -235,6 +243,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
         return this._limitStart && TimeService.convertValue(this._limitStart, <TimeGr>this.gr);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set limitStart(value: Time) {
         if (value) {
@@ -266,9 +277,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
      *
      * 这个场景下，只要设置一个大于0的数字给时间控件的这个属性即可解决。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time/refresh-interval
-     *
-     *
      */
     @Input()
     public get refreshInterval(): number {
@@ -285,6 +296,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _weekStart: TimeWeekStart;
 
     /**
+     * @NoMarkForCheckRequired
      * @internal
      */
     @Input()
@@ -299,6 +311,7 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     private _weekDayStart: TimeWeekDayStart;
 
     /**
+     * @NoMarkForCheckRequired
      * @internal
      */
     @Input()
@@ -313,6 +326,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     /**
      * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time/gr-items
      */
     @Input()
@@ -320,6 +335,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     /**
      * 有些时候我们需要提示用户选择那些时间是最佳的，可以通过`recommendedBegin`和`recommendedEnd`来设置。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = time/recommended
      */
@@ -329,6 +346,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     /**
      * 有些时候我们需要提示用户选择那些时间是最佳的，可以通过`recommendedBegin`和`recommendedEnd`来设置。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time/recommended
      */
     @Input()
@@ -336,6 +355,8 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
 
     /**
      * 推荐日期提示标签，默认值是`"推荐日期"`或`"Recommend"`
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public recommendedLabel: String;

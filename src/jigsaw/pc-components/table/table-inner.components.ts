@@ -20,6 +20,9 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     private _cellData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get cellData() {
         return this._cellData;
@@ -30,18 +33,32 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         this._updateDataInRenderer('cellData', value);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public row: number;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public field: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public renderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
 
     private _rendererInitData: any;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get rendererInitData() {
         return this._rendererInitData;
-    };
+    }
+
     public set rendererInitData(value: any) {
         this._rendererInitData = value;
         if(this.rendererRef instanceof ComponentRef) {
@@ -60,6 +77,9 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     private _tableData: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get tableData(): TableData {
         return this._tableData;
@@ -73,6 +93,9 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     private _additionalData: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalData(): TableData {
         return this._additionalData;
@@ -168,13 +191,29 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         super(resolver, changeDetector, _zone);
     }
 
-    @Input() public sortable: boolean;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sortable: boolean;
 
-    @Input() public sortAs: SortAs;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sortAs: SortAs;
 
-    @Input() public headerTrustedHtml: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public headerTrustedHtml: string;
 
-    @Input() public headerTrustedHtmlContext: any;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public headerTrustedHtmlContext: any;
 
     /**
      * @internal
@@ -191,6 +230,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     private _defaultSortOrder: SortOrder;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get defaultSortOrder(): SortOrder {
         return this._defaultSortOrder;
@@ -256,6 +298,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     private _editable: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get editable(): boolean {
         return this._editable;
@@ -278,14 +323,27 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public editorRenderer: Type<TableCellRendererBase>;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public editorRendererInitData: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public group: boolean;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public rowSpan: number;
 

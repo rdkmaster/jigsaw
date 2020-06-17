@@ -34,18 +34,25 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     constructor(private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
     /**
+     * 当前显示的内容.
      * @internal
      */
-    public _$content: any; // 当前显示的内容.
+    public _$content: any;
+
+    private _onLabel: any;
 
     /**
      * 开关状态打开时的文本.(只支持字符串)
+     *
+     * @NoMarkForCheckRequired
      */
-    private _onLabel: any;
     @Input()
     public get onLabel(): any {
         return this._onLabel;
@@ -58,11 +65,13 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this._onLabel = value;
         this._setInnerValue();
     }
+    private _offLabel: any;
 
     /**
      * 开关状态关闭时显示的文本(只支持字符串)
+     *
+     * @NoMarkForCheckRequired
      */
-    private _offLabel: any;
     @Input()
     public get offLabel(): any {
         return this._offLabel;
@@ -75,11 +84,13 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this._offLabel = value;
         this._setInnerValue();
     }
+    private _size: string = 'default';
 
     /**
      * size 默认 'default' 可选值 ‘small’
+     *
+     * @NoMarkForCheckRequired
      */
-    private _size: string = 'default';
     @Input()
     public get size(): string {
         return this._size;
@@ -98,6 +109,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     /**
      * 选中 默认值false;
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get checked(): boolean {
@@ -112,18 +124,21 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     /**
      * 可以忽略, 主要使checked 属性支持双向数据绑定.
      */
-    @Output() public checkedChange = new EventEmitter<boolean>();
+    @Output()
+    public checkedChange = new EventEmitter<boolean>();
 
     /**
      * 对外暴露事件,
      */
-    @Output() public change = this.checkedChange;
+    @Output()
+    public change = this.checkedChange;
 
     private _disabled: boolean = false;
 
     /**
      * 是否禁用 类型 boolean 默认值 false;
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get disabled(): boolean {
@@ -140,6 +155,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     /**
      * 是否只读 类型 boolean 默认值 false;
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get readonly(): boolean {

@@ -59,6 +59,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     private _value: number = 0;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): number {
         return this._value;
@@ -93,6 +96,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     private _labelPosition: LabelPosition = 'right';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get labelPosition(): LabelPosition {
         return this._labelPosition;
@@ -118,6 +124,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         this._status = status;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public preSize: PreSize = 'default';
 
