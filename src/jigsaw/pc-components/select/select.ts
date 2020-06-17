@@ -18,7 +18,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 选择控件

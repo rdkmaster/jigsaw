@@ -45,7 +45,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-table, j-table',

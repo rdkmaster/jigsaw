@@ -17,7 +17,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 组件模式.

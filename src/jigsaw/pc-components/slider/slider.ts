@@ -22,7 +22,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class SliderMark {
     value: number;

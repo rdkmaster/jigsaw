@@ -27,7 +27,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class ComboSelectValue {
     [index: string]: any;

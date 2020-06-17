@@ -14,7 +14,7 @@ import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-tag, j-tag',

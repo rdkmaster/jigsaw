@@ -13,7 +13,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {IPageable, PagingInfo} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class PageSizeData {
     value: number;

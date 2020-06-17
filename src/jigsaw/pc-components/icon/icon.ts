@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {RequireMarkForCheck} from "../../common/decorator/input.setters";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 const defaultHrefValue = 'javascript:void(0);';
 
