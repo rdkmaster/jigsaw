@@ -39,7 +39,7 @@ export function AutoMarkForCheck(): PropertyDecorator {
                     // 调用原有的setter
                     originalSetter.call(this, value);
                 } else {
-                    if (this[privatePropName] == value) {
+                    if (this[privatePropName] === value) {
                         // 当前值跟设置的值相同，直接返回，不需要调用 MarkForCheck
                         return;
                     }
