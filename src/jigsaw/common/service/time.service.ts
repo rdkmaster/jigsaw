@@ -95,8 +95,8 @@ export class TimeService {
         let [weekStartDate, weekEndDate] = [this.addDate(date, -dateIndex, TimeUnit.d),
             this.addDate(date, 6 - dateIndex, TimeUnit.d)];
         let [weekStartMonth, weekEndMonth] = [this.getMonth(weekStartDate), this.getMonth(weekEndDate)];
-        if (weekStartMonth == weekEndMonth || this.getMonth(date) == weekEndMonth) {
-            return this.getFormatDate(date, gr);
+        if (weekStartMonth == weekEndMonth) {
+            return this.getFormatDate(weekStartDate, gr);
         } else {
             return this.getFormatDate(`${this.getYear(weekEndDate)}-${weekEndMonth}-01`, gr);
         }
