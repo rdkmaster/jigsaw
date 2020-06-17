@@ -4,7 +4,6 @@ const path = require('path');
 let hasError = false;
 processAll('pc-components');
 processAll('common/components');
-processAll('common/directive');
 if (hasError) {
     process.exit(1);
 } else {

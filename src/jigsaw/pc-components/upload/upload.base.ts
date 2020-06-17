@@ -1,7 +1,7 @@
-import {AbstractJigsawComponent} from "../../common/common";
-import { ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2, Directive } from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
+import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type UploadFileInfo = {

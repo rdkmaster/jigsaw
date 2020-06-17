@@ -5,7 +5,7 @@ import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawButtonModule} from "../button/button";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
-import {JigsawUploadFileInfoList, JigsawUploadDirective} from "./upload.directive";
+import {JigsawUploadDirective, JigsawUploadFileInfoList} from "../../common/directive/upload/upload.directive";
 import {JigsawUpload} from "./upload";
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -151,4 +151,4 @@ export class JigsawUploadModule {
 
 export * from './upload';
 export * from './upload.base';
-export * from './upload.directive';
+export * from '../../common/directive/upload/upload.directive';

@@ -1,4 +1,16 @@
-import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgZone,
+    OnDestroy,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type
+} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
