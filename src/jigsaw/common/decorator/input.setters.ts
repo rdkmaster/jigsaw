@@ -23,7 +23,7 @@ export function AutoMarkForCheck(): PropertyDecorator {
     return (target: Object, propertyName: string) => {
         const className = target.constructor?.name;
         // 创建私有属性
-        const privatePropName = `_${propertyName}`;
+        const privatePropName = `__autoMFC_${propertyName}`;
         // 判断是否设置过该值，防止重复操作
         if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
             console.warn(`The property "${privatePropName}" in ${className} is already exist, it will be overwrote by AutoMarkForCheck decorator.`);
@@ -32,20 +32,13 @@ export function AutoMarkForCheck(): PropertyDecorator {
         const {originalGetter, originalSetter} = checkDescriptor(target, propertyName);
         return {
             get(): any {
-                if (originalGetter) {
-                    //  如果本身就有getter，直接调用
-                    return originalGetter.call(this);
-                }
-                return this[privatePropName];
+                return originalGetter ? originalGetter.call(this) : this[privatePropName];
             },
             set(value: any): void {
                 if (originalSetter) {
                     // 调用原有的setter
                     originalSetter.call(this, value);
-                } else {
-                    if (this[privatePropName] == value) {
-                        return;
-                    }
+                } else if (this[privatePropName] !== value) {
                     this[privatePropName] = value;
                 }
                 // 无论是原来就有的setter，还是装饰器生成的，都追加 MarkForCheck 的调用
