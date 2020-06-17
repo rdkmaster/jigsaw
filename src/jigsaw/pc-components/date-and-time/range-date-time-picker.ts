@@ -16,9 +16,9 @@ import {
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule} from '@angular/forms';
 import {GrItem, MarkDate, Shortcut} from "./date-picker";
 import {CommonModule} from '@angular/common';
-import {TimeGr, TimeService, TimeUnit, TimeWeekDayStart, TimeWeekStart} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
-import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
+import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {TimeStep} from "./time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
@@ -407,9 +407,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         if (!value) {
             return;
         }
-        this.change.emit(value);
         this.beginDateChange.emit(value.beginDate);
         this.endDateChange.emit(value.endDate);
+        this.change.emit(value);
     }
 
     private _propagateChange: any = () => {
