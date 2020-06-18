@@ -22,7 +22,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TimeGr, TimeService} from "../../common/service/time.service";
+import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10;
@@ -517,17 +517,18 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return value;
     }
 
-    private _getTimeLimit(limit: string): string {
+    private _getTimeLimit(limit: string, add: 1 | -1): string {
         if (!TimeService.isMacro(limit)) return limit;
-        return TimeService.convertValue(limit, <TimeGr>this.gr);
+        let limitDate = TimeService.convertValue(limit, TimeGr.second);
+        return TimeService.convertValue(TimeService.addDate(limitDate, add * 5, TimeUnit.m), this._gr);
     }
 
     private _calValueByLimit(value: string): string {
-        if (this.limitStart && value < this._getTimeLimit(this.limitStart)) {
-            value = this._getTimeLimit(this.limitStart);
+        if (this.limitStart && value < this._getTimeLimit(this.limitStart, -1)) {
+            value = this._getTimeLimit(this.limitStart, -1);
         }
-        if (this.limitEnd && value > this._getTimeLimit(this.limitEnd)) {
-            value = this._getTimeLimit(this.limitEnd);
+        if (this.limitEnd && value > this._getTimeLimit(this.limitEnd, 1)) {
+            value = this._getTimeLimit(this.limitEnd, 1);
         }
         return value
     }
@@ -556,7 +557,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         } else {
             time = value;
         }
-        return (this.limitStart && time < this._getTimeLimit(this.limitStart)) || (this.limitEnd && time > this._getTimeLimit(this.limitEnd))
+        return (this.limitStart && time < this._getTimeLimit(this.limitStart, -1)) || (this.limitEnd && time > this._getTimeLimit(this.limitEnd, 1))
     }
 
     private _getFloatInitData(mode, value, step): TimePopupValue {
