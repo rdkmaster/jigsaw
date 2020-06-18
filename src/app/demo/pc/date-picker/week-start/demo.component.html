@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>weekStart</h4>
+
+<jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']" [(selectedItems)]="weekStart">
+</jigsaw-button-bar>
+<br><br>
+
+<jigsaw-date-picker [(date)]="date" [weekStart]="weekStart[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-date-picker><br>
+
+<p>{{date | json}}</p>
