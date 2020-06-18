@@ -28,7 +28,7 @@ export enum PopupEffect {
  * 用于控制弹出视图的各种参数，包括是否模态、弹出位置、视图尺寸、弹出动画等等，`PopupService`能够覆盖所有弹出场景，
  * 很大程度上得益于这个参数的强大扩展性，熟悉这个参数的各个属性对是否能够用好`PopupService`有着决定性的影响。
  *
- * [这个demo](/components/dialog/demo#popup-option)详细的说明了如何使用这个对象。
+ * [这个demo]($demo=dialog/popup-option)详细的说明了如何使用这个对象。
  */
 export class PopupOptions {
     /**
