@@ -8,7 +8,6 @@ import {
     Output,
     EventEmitter,
     Input,
-    ViewChild,
     ChangeDetectorRef,
     NgZone,
     NgModule
@@ -26,17 +25,20 @@ import {debounceTime} from 'rxjs/operators';
 declare const moment: any;
 
 /**
- * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
+ * 用于在界面上提供一个时间范围选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，
+ * 通过切换不同的粒度，可以控制时刻选择器只能选到年月日时分秒中的任何一段
+ * 如下是关于时间的一些常见的场景及其建议：
  *
- * - 如果需要选择的是一个时刻，则请使用`JigsawTime`；
+ * - 如果需要选择的是一个时刻，则请使用`JigsawDateTimePicker`；
+ * - 如果需要选择的是一个时分秒，不带日期，则请使用`JigsawTimePicker`；
  * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=table/calendar)，通过表格+渲染器的方式来模拟；
- * - 时间选择器常常是收纳到下拉框中以解决视图空间，Jigsaw是通过`JigsawComboSelect`来组合使用的，
- * 参考[这个demo]($demo=time/with-combo-select)；
+ * - 时间选择器常常是收纳到下拉框中以解决视图空间，则请使用 `JigsawDateTimeSelect` 和 `JigsawRangeDateTimeSelect`，
+ * 参考[这个demo]($demo=range-date-time-picker/with-combo-select)；
  *
  * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
  *
- * $demo = range-time/full
- * $demo = range-time/basic
+ * $demo = range-date-time-picker/basic
+ * $demo = range-date-time-picker/range-date-time-select
  */
 @Component({
     selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker, jigsaw-range-time, j-range-time',
