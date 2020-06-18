@@ -198,6 +198,9 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     private _rawOffsets: number[];
 
+    /**
+     * @internal
+     */
     public _isFixedSize: boolean;
 
     protected removeElementScrollEvent: CallbackRemoval;

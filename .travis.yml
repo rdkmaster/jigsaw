@@ -33,6 +33,7 @@ before_script:
 script:
   - node build/scripts/check-demo-import.js
   - node build/scripts/check-mark-for-check.js
+  - node build/scripts/check-public-variables.js
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
   - gulp build:jigsaw

@@ -1,10 +1,5 @@
 import {Component, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {PopupService} from "../../common/service/popup.service";
-import {JigsawBlock, JigsawBlockModule} from "../../common/components/block/block";
-import {
-    JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-    JigsawLoadingModule
-} from "../../common/components/loading/loading";
 
 @Component({
     selector: 'jigsaw-mobile-root, jm-root',
@@ -21,9 +16,6 @@ export class JigsawRoot {
 @NgModule({
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
-    imports: [
-        JigsawBlockModule, JigsawLoadingModule
-    ],
     providers: [PopupService]
 })
 export class JigsawMobileRootModule {

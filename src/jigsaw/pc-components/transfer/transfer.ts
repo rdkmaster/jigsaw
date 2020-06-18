@@ -118,6 +118,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
 
+    /**
+     * @internal
+     */
     public _$data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
     /**
@@ -255,7 +258,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     /**
-     * @Internal
+     * @internal
      *
      * data和selectedItems不和list里数据双绑，list里面要做一些转换
      *

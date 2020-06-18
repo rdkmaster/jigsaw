@@ -19,6 +19,9 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     }
 })
 export class JigsawMobileIcon extends AbstractJigsawComponent {
+    /**
+     * @internal
+     */
     public _$secureUrl;
     private _href: string = 'javascript:void(0);';
 
