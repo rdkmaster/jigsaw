@@ -15,18 +15,11 @@ import {TimeGr, TimeService, ArrayCollection} from "jigsaw/public_api";
         }
     `]
 })
-export class RangeTimeWeekSelectComponent implements AfterContentInit {
+export class RangeTimeWeekSelectComponent {
     beginDate = "now-20d";
-
     endDate = "now";
 
-    weekStartList = [{label: "sun"}, {label: "mon"}, {label: "tue"},
-        {label: "wed"}, {label: "thu"}, {label: "fri"}, {label: "sat"}];
-
-    weekDayStartList = [{label: "doy4"}, {label: "doy6"}, {label: "doy7"}, {label: "doy12"}];
-
-    weekStart;
-    weekDayStart;
+    weekStart = ['sun'];
 
     beginDate2: any = 'now-20d';
     endDate2: any = 'now';
@@ -49,11 +42,6 @@ export class RangeTimeWeekSelectComponent implements AfterContentInit {
             tempRangeTime[index] = {label: timeStr, closable: false};
         });
         this.rangeTimeComboValue = tempRangeTime;
-    }
-
-    ngAfterContentInit() {
-        this.weekStart = [this.weekStartList[0]];
-        this.weekDayStart = [this.weekDayStartList[1]];
     }
 
     // ====================================================================

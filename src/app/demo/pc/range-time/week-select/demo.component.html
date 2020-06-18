@@ -7,12 +7,15 @@
 <div class="live-demo-wrap">
     <h2>RangeTime</h2>
 
+    <label>设置周开始：</label>
+    <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']" [(selectedItems)]="weekStart">
+    </jigsaw-button-bar><br><br>
+
     <div class="demo-1 live-demo">
         <h3>week select</h3>
-        <p class="commend">weekStart和weekDayStart根据语言环境自动更改，请参考(https://momentjs.com/docs/#/customization/dow-doy/)，请结合weekStart配置</p>
-        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" gr="week">
+        <jigsaw-range-time [(beginDate)]="beginDate" [(endDate)]="endDate" [weekStart]="weekStart[0]" gr="week">
         </jigsaw-range-time><br>
-        <p class="message">beginDate : {{beginDate | json}} ， end ： {{endDate | json}}</p>
+        <p class="message">beginDate: {{beginDate | json}} ， endDate: {{endDate | json}}</p>
     </div>
 
     <div class="demo-2 live-demo">
@@ -21,11 +24,12 @@
             <ng-template>
                 <jigsaw-range-time [(beginDate)]="beginDate2"
                                    [(endDate)]="endDate2"
+                                   [weekStart]="weekStart[0]"
                                    (change)="handleRangeDateChange()" gr="week">
                 </jigsaw-range-time>
             </ng-template>
         </jigsaw-combo-select>
-        <p class="message">beginDate : {{beginDate2 | json}} ， end ： {{endDate2 | json}}</p>
+        <p class="message">beginDate: {{beginDate2 | json}} ， endDate: {{endDate2 | json}}</p>
     </div>
 </div>
 
