@@ -128,5 +128,8 @@
 /* clearfix */
 .live-demo-wrap .clearfix:before, .live-demo-wrap .clearfix:after {
     display: table;
-    content: '';
+    content: ' ';
+}
+.live-demo-wrap .clearfix:after {
+    clear: both;
 }
