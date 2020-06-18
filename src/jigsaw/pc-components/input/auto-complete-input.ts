@@ -293,13 +293,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this._$propertyListOpen = false;
         this._unsubscribeInputValueChange();
     }
-
-    /**
-     * @internal
-     */
-    public _$valueChange(event: string) {
-        this.valueChange.emit(event);
-    }
 }
 
 @NgModule({

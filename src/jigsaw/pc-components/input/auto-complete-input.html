@@ -1,5 +1,5 @@
 <j-input #input [placeholder]="placeholder" [(value)]="value" [width]="width ? '100%' : null"
-         [height]="height ? '100%' : null" (keydown)="_$onKeyDown($event)" (valueChange)="_$valueChange($event)"
+         [height]="height ? '100%' : null" (keydown)="_$onKeyDown($event)" (valueChange)="valueChange.emit($event)"
          [blurOnClear]="blurOnClear" [clearable]="clearable" [disabled]="disabled" [valid]="valid"
          (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)"
          jigsaw-float [jigsawFloatTarget]="dropDownTemp"  [jigsawFloatOpen]="_$propertyListOpen"
