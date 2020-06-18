@@ -106,6 +106,9 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      */
     public _$maxDropDownWidth: string = this.width;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get maxDropDownWidth(): string {
         return this._$maxDropDownWidth;
