@@ -1,16 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-// let hasError = false;
-// processAll('pc-components');
-// processAll('common/components');
-// if (hasError) {
-//     process.exit(1);
-// } else {
-//     console.error(`Everything's fine!`);
-// }
+let hasError = false;
+processAll('pc-components');
+processAll('common/components');
+if (hasError) {
+    process.exit(1);
+} else {
+    console.error(`Everything's fine!`);
+}
 
-checkInputProperty('D:\\Codes\\jigsaw\\src\\jigsaw\\pc-components\\input\\auto-complete-input.ts');
+// checkInputProperty('D:\\Codes\\jigsaw\\src\\jigsaw\\pc-components\\input\\auto-complete-input.ts');
 
 function processAll(folder) {
     const cmpHome = path.resolve(`${__dirname}/../../src/jigsaw/${folder}`);
