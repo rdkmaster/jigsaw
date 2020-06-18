@@ -17,7 +17,7 @@ import {TimeGr, TimeService, ArrayCollection} from "jigsaw/public_api";
 })
 export class TimeWeekSelectComponent {
     date = "now";
-    weekStart = ['sun'];
+    weekStart = ['mon'];
 
     date2: any = 'now';
     singleTimeComboValue: any = new ArrayCollection([{

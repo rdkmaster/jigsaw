@@ -19,7 +19,7 @@ export class RangeTimeWeekSelectComponent {
     beginDate = "now-20d";
     endDate = "now";
 
-    weekStart = ['sun'];
+    weekStart = ['mon'];
 
     beginDate2: any = 'now-20d';
     endDate2: any = 'now';
