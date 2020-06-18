@@ -194,6 +194,9 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
      */
     @ContentChildren(JigsawButton, {descendants: true})
     public _$inlineButtons: QueryList<JigsawButton>;
+    /**
+     * @internal
+     */
     public _$hasInlineButtons: boolean = false;
 
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
