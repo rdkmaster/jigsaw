@@ -485,7 +485,9 @@ export class JigsawTime extends AbstractJigsawComponent implements ControlValueA
     }
 
     private _initDatePicker() {
-        TimeService.setWeekStart(this._weekStart);
+        if(CommonUtils.isDefined(this._weekStart)) {
+            TimeService.setWeekStart(this._weekStart);
+        }
         const insert = this._el.nativeElement.querySelector(".jigsaw-time-box");
         let [result, isChange] = this._handleValue(<Time>this.date);
         if (isChange) {
