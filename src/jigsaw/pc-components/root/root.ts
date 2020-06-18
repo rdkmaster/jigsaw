@@ -1,5 +1,6 @@
 import {Component, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {PopupService} from "../../common/service/popup.service";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-root, j-root',
@@ -8,9 +9,9 @@ import {PopupService} from "../../common/service/popup.service";
 export class JigsawRoot {
     constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone,
                 ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
-        PopupService._viewContainerRef = viewContainerRef;
-        PopupService._renderer = renderer;
-        PopupService._zone = zone;
+        InternalUtils.viewContainerRef = viewContainerRef;
+        InternalUtils.renderer = renderer;
+        InternalUtils.zone = zone;
     }
 }
 

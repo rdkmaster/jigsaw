@@ -1,3 +1,4 @@
+import {NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {CallbackRemoval, CommonUtils} from "./common-utils";
 import {TranslateHelper} from "./translate-helper";
@@ -11,6 +12,10 @@ export class InternalUtils {
 
     public static _uniqueIdIndex = 0;
     public static _defaultPrefix = '__unique_id__';
+
+    public static viewContainerRef: ViewContainerRef;
+    public static renderer: Renderer2;
+    public static zone: NgZone;
 
     /*
      * 初始化对象标识，转化为数组
