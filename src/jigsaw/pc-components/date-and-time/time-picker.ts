@@ -262,6 +262,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (this._updateSecond(value) && this.initialized && this._second.length > 1) {
             this._updateValue.emit();
             this._$cancelSelect('second');
+            this._secondInput.nativeElement.blur();
         }
     }
 
