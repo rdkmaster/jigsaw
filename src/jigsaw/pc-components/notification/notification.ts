@@ -14,6 +14,7 @@ import {
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html"
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -420,8 +421,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         Promise.resolve().then(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
-            PopupService._zone.runOutsideAngular(() => {
-                this._removeResizeListener = PopupService._renderer.listen(window, 'resize', () => this.reposition());
+            InternalUtils.zone.runOutsideAngular(() => {
+                this._removeResizeListener = InternalUtils.renderer.listen(window, 'resize', () => this.reposition());
             });
         }
 

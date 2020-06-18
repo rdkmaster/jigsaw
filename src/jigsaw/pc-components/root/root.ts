@@ -9,11 +9,9 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 export class JigsawRoot {
     constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone, injector: Injector,
                 ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
-        PopupService._viewContainerRef = viewContainerRef;
-        PopupService._renderer = renderer;
-        PopupService._zone = zone;
-
-        InternalUtils.injector = injector;
+        InternalUtils.viewContainerRef = viewContainerRef;
+        InternalUtils.renderer = renderer;
+        InternalUtils.zone = zone;
     }
 }
 

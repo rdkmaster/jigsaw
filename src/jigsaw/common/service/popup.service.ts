@@ -7,19 +7,16 @@ import {
     Injectable,
     NgZone,
     Optional,
-    Renderer2,
     TemplateRef,
     Type,
-    ViewContainerRef,
 } from "@angular/core";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {filter, map} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
 import {Subscription} from "rxjs";
 import {CommonUtils} from "../core/utils/common-utils";
-import {AffixUtils, ElementEventHelper} from "../core/utils/internal-utils";
+import {AffixUtils, ElementEventHelper, InternalUtils} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-import {take} from 'rxjs/operators';
 
 import {JigsawTheme} from "../core/theming/theme";
 
@@ -221,19 +218,6 @@ export class PopupService {
     }
 
     public elements: HTMLElement[] = [];
-    /**
-     * 全局插入点
-     * @internal
-     */
-    public static _viewContainerRef: ViewContainerRef;
-    /**
-     * @internal
-     */
-    public static _renderer: Renderer2;
-    /**
-     * @internal
-     */
-    public static _zone: NgZone;
 
     private _eventHelper: ElementEventHelper = new ElementEventHelper();
 
@@ -277,7 +261,7 @@ export class PopupService {
     public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        if (!PopupService._viewContainerRef || !PopupService._renderer) {
+        if (!InternalUtils.viewContainerRef || !InternalUtils.renderer) {
             console.error("please use 'jigsaw-root' or 'jigsaw-mobile-root' element as the root of your root component");
             return;
         }
@@ -326,7 +310,7 @@ export class PopupService {
             if ((!options || !options.useCustomizedBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
                 const backgroundColor = JigsawTheme.getPopupBackgroundColor();
                 if (backgroundColor) {
-                    PopupService._renderer.setStyle(element, 'background', backgroundColor);
+                    InternalUtils.renderer.setStyle(element, 'background', backgroundColor);
                 }
             }
         });
@@ -366,8 +350,8 @@ export class PopupService {
     }
 
     private _setStyle(options: PopupOptions, element: HTMLElement): void {
-        PopupService._renderer.setStyle(element, 'z-index', this._popupZIndex);
-        PopupService._renderer.setStyle(element, 'visibility', 'hidden');
+        InternalUtils.renderer.setStyle(element, 'z-index', this._popupZIndex);
+        InternalUtils.renderer.setStyle(element, 'visibility', 'hidden');
     }
 
     private _removeAnimation(options: PopupOptions, element: HTMLElement) {
@@ -375,10 +359,10 @@ export class PopupService {
 
         //删除可能有的动画class，确保能触发动画的animationend事件
         if (element.classList.contains(popupEffect.showEffect)) {
-            PopupService._renderer.removeClass(element, popupEffect.showEffect);
+            InternalUtils.renderer.removeClass(element, popupEffect.showEffect);
         }
         if (element.classList.contains(popupEffect.hideEffect)) {
-            PopupService._renderer.removeClass(element, popupEffect.hideEffect);
+            InternalUtils.renderer.removeClass(element, popupEffect.hideEffect);
         }
 
         //弹出EmbeddedViewRef时，防止同一个HtmlElement被反复弹出和销毁，使的弹出时监听到上次销毁时的animationend事件
@@ -395,18 +379,18 @@ export class PopupService {
         const ref: PopupRef = this._createPopup(what);
         const element: HTMLElement = this._getElement(ref);
         //一出来就插入到文档流的最后，这给后续计算尺寸造成麻烦，这里给设置fixed，就可以避免影响滚动条位置
-        PopupService._renderer.setStyle(element, 'position', 'fixed');
-        PopupService._renderer.setStyle(element, 'top', 0);
+        InternalUtils.renderer.setStyle(element, 'position', 'fixed');
+        InternalUtils.renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element);
         return [{element: element, dispose: disposer, answer: null, instance: null}, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
         if (what instanceof TemplateRef) {
-            return PopupService._viewContainerRef.createEmbeddedView(what);
+            return InternalUtils.viewContainerRef.createEmbeddedView(what);
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
-            return PopupService._viewContainerRef.createComponent(factory);
+            return InternalUtils.viewContainerRef.createComponent(factory);
         }
     }
 
@@ -473,7 +457,7 @@ export class PopupService {
         if (this._isGlobalPopup(options)) {
             this._zone.runOutsideAngular(() => {
                 // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
-                removeWindowListen = PopupService._renderer.listen('window', 'resize', () => {
+                removeWindowListen = InternalUtils.renderer.listen('window', 'resize', () => {
                     const documentBody = AffixUtils.getDocumentBody();
                     this._setAbsolutePosition((documentBody.clientWidth / 2 - element.offsetWidth / 2),
                         (documentBody.clientHeight / 2 - element.offsetHeight / 2), options, element);
@@ -492,58 +476,58 @@ export class PopupService {
         const pos = options ? options.pos : '';
         switch (pos) {
             case 'top':
-                PopupService._renderer.removeStyle(element, 'right');
-                PopupService._renderer.removeStyle(element, 'bottom');
-                PopupService._renderer.setStyle(element, 'left', left + 'px');
-                PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+                InternalUtils.renderer.removeStyle(element, 'right');
+                InternalUtils.renderer.removeStyle(element, 'bottom');
+                InternalUtils.renderer.setStyle(element, 'left', left + 'px');
+                InternalUtils.renderer.setStyle(element, 'top', options.posOffset.top + 'px');
                 break;
             case 'left':
-                PopupService._renderer.removeStyle(element, 'right');
-                PopupService._renderer.removeStyle(element, 'bottom');
-                PopupService._renderer.setStyle(element, 'top', top + 'px');
-                PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+                InternalUtils.renderer.removeStyle(element, 'right');
+                InternalUtils.renderer.removeStyle(element, 'bottom');
+                InternalUtils.renderer.setStyle(element, 'top', top + 'px');
+                InternalUtils.renderer.setStyle(element, 'left', options.posOffset.left + 'px');
                 break;
             case 'right':
-                PopupService._renderer.removeStyle(element, 'left');
-                PopupService._renderer.removeStyle(element, 'bottom');
-                PopupService._renderer.setStyle(element, 'top', top + 'px');
-                PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+                InternalUtils.renderer.removeStyle(element, 'left');
+                InternalUtils.renderer.removeStyle(element, 'bottom');
+                InternalUtils.renderer.setStyle(element, 'top', top + 'px');
+                InternalUtils.renderer.setStyle(element, 'right', options.posOffset.right + 'px');
                 break;
             case 'bottom':
-                PopupService._renderer.removeStyle(element, 'top');
-                PopupService._renderer.removeStyle(element, 'right');
-                PopupService._renderer.setStyle(element, 'left', left + 'px');
-                PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+                InternalUtils.renderer.removeStyle(element, 'top');
+                InternalUtils.renderer.removeStyle(element, 'right');
+                InternalUtils.renderer.setStyle(element, 'left', left + 'px');
+                InternalUtils.renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
                 break;
             case 'leftTop':
-                PopupService._renderer.removeStyle(element, 'right');
-                PopupService._renderer.removeStyle(element, 'bottom');
-                PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
-                PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+                InternalUtils.renderer.removeStyle(element, 'right');
+                InternalUtils.renderer.removeStyle(element, 'bottom');
+                InternalUtils.renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+                InternalUtils.renderer.setStyle(element, 'top', options.posOffset.top + 'px');
                 break;
             case 'leftBottom':
-                PopupService._renderer.removeStyle(element, 'right');
-                PopupService._renderer.removeStyle(element, 'top');
-                PopupService._renderer.setStyle(element, 'left', options.posOffset.left + 'px');
-                PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+                InternalUtils.renderer.removeStyle(element, 'right');
+                InternalUtils.renderer.removeStyle(element, 'top');
+                InternalUtils.renderer.setStyle(element, 'left', options.posOffset.left + 'px');
+                InternalUtils.renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
                 break;
             case 'rightTop':
-                PopupService._renderer.removeStyle(element, 'left');
-                PopupService._renderer.removeStyle(element, 'bottom');
-                PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
-                PopupService._renderer.setStyle(element, 'top', options.posOffset.top + 'px');
+                InternalUtils.renderer.removeStyle(element, 'left');
+                InternalUtils.renderer.removeStyle(element, 'bottom');
+                InternalUtils.renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+                InternalUtils.renderer.setStyle(element, 'top', options.posOffset.top + 'px');
                 break;
             case 'rightBottom':
-                PopupService._renderer.removeStyle(element, 'left');
-                PopupService._renderer.removeStyle(element, 'top');
-                PopupService._renderer.setStyle(element, 'right', options.posOffset.right + 'px');
-                PopupService._renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
+                InternalUtils.renderer.removeStyle(element, 'left');
+                InternalUtils.renderer.removeStyle(element, 'top');
+                InternalUtils.renderer.setStyle(element, 'right', options.posOffset.right + 'px');
+                InternalUtils.renderer.setStyle(element, 'bottom', options.posOffset.bottom + 'px');
                 break;
             default:
-                PopupService._renderer.removeStyle(element, 'right');
-                PopupService._renderer.removeStyle(element, 'bottom');
-                PopupService._renderer.setStyle(element, 'top', top + 'px');
-                PopupService._renderer.setStyle(element, 'left', left + 'px');
+                InternalUtils.renderer.removeStyle(element, 'right');
+                InternalUtils.renderer.removeStyle(element, 'bottom');
+                InternalUtils.renderer.setStyle(element, 'top', top + 'px');
+                InternalUtils.renderer.setStyle(element, 'left', left + 'px');
         }
     }
 
@@ -557,13 +541,13 @@ export class PopupService {
         let size = options.size;
 
         if (size.width) {
-            PopupService._renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
+            InternalUtils.renderer.setStyle(element, 'width', CommonUtils.getCssValue(size.width));
         }
         if (size.minWidth) {
-            PopupService._renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size.minWidth));
+            InternalUtils.renderer.setStyle(element, 'min-width', CommonUtils.getCssValue(size.minWidth));
         }
         if (size.height) {
-            PopupService._renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
+            InternalUtils.renderer.setStyle(element, 'height', CommonUtils.getCssValue(size.height));
         }
     }
 
@@ -573,19 +557,19 @@ export class PopupService {
     private _setBackground(options: PopupOptions, element: HTMLElement): void {
         // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
         if (!this._isModal(options) && this._isShowShadow(options)) {
-            PopupService._renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
+            InternalUtils.renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
         }
         if (options && options.showBorder) {
-            PopupService._renderer.setStyle(element, 'border', '1px solid #dcdcdc');
-            PopupService._renderer.setStyle(element, 'border-radius', '4px');
+            InternalUtils.renderer.setStyle(element, 'border', '1px solid #dcdcdc');
+            InternalUtils.renderer.setStyle(element, 'border-radius', '4px');
         }
     }
 
     private _setShowAnimate(options: PopupOptions, element: HTMLElement) {
-        PopupService._renderer.setStyle(element, 'visibility', 'visible');
-        PopupService._renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
+        InternalUtils.renderer.setStyle(element, 'visibility', 'visible');
+        InternalUtils.renderer.addClass(element, PopupService._getPopupEffect(options).showEffect);
 
-        const removeElementListen = PopupService._renderer.listen(element, 'animationend', () => {
+        const removeElementListen = InternalUtils.renderer.listen(element, 'animationend', () => {
             removeElementListen();
             this._eventHelper.del(element, 'animationend', removeElementListen);
         });
@@ -593,8 +577,8 @@ export class PopupService {
     }
 
     private _setHideAnimate(options: PopupOptions, element: HTMLElement, cb: () => void) {
-        PopupService._renderer.addClass(element, PopupService._getPopupEffect(options).hideEffect);
-        const removeElementListen = PopupService._renderer.listen(element, 'animationend', () => {
+        InternalUtils.renderer.addClass(element, PopupService._getPopupEffect(options).hideEffect);
+        const removeElementListen = InternalUtils.renderer.listen(element, 'animationend', () => {
             removeElementListen();
             this._eventHelper.del(element, 'animationend', removeElementListen);
             cb();
@@ -638,7 +622,7 @@ export class PopupService {
         }
         let posType: string = this._isGlobalPopup(options) ? 'fixed' : this._getPositionType(options.posType);
         let position = this._getPositionValue(options, element);
-        PopupService._renderer.setStyle(element, 'position', posType);
+        InternalUtils.renderer.setStyle(element, 'position', posType);
         this._setAbsolutePosition(position.left, position.top, options, element);
 
         // 注册窗口事件
