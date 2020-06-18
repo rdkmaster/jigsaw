@@ -278,12 +278,30 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * @internal
+     */
     public _$selectMode: TimeSelectMode | 'none' = 'none';
+    /**
+     * @internal
+     */
     public _$floatTarget = JigsawTimePopup;
+    /**
+     * @internal
+     */
     public _$floatOpen: boolean;
+    /**
+     * @internal
+     */
     public _$floatInitData: any = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
+    /**
+     * @internal
+     */
     public _$floatArrowElement: HTMLElement;
 
+    /**
+     * @internal
+     */
     public _$handleSelectMode(mode: TimeSelectMode | 'none', isTabSwitch?: boolean) {
         this._$selectMode = mode;
         this._switchPopup.emit(mode != 'none');
@@ -323,6 +341,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * @internal
+     */
     public _$cancelSelect(mode: TimeSelectMode, checkAll?: boolean) {
         this._checkFormat(mode, checkAll);
         if (this._$selectMode == mode || checkAll) {
@@ -383,6 +404,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     private _switchPopup = new EventEmitter<boolean>();
     private _removeSwitchPopupSubscriber: Subscription;
 
+    /**
+     * @internal
+     */
     public _$handleKeyDown($event) {
         if ($event.keyCode == 39) {
             this._$handleCtrlBarClick($event, 1);
@@ -415,6 +439,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return num;
     }
 
+    /**
+     * @internal
+     */
     public _$handleCtrlBarClick($event, add: number) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -474,6 +501,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return true;
     }
 
+    /**
+     * @internal
+     */
     public _$popupSelect($event: TimePopupValue) {
         let {mode, value} = $event;
         if (mode == 'hour') {
@@ -631,7 +661,7 @@ export class JigsawTimePopup implements IPopupable {
     constructor(private _cdr: ChangeDetectorRef) {
     }
 
-    public _value: TimePopupValue;
+    private _value: TimePopupValue;
 
     public get initData(): TimePopupValue {
         return this._value
@@ -649,8 +679,17 @@ export class JigsawTimePopup implements IPopupable {
     }
 
     public answer: EventEmitter<any> = new EventEmitter<any>();
+    /**
+     * @internal
+     */
     public _$hourList: TimePopupItem[];
+    /**
+     * @internal
+     */
     public _$minuteList: TimePopupItem[];
+    /**
+     * @internal
+     */
     public _$secondList: TimePopupItem[];
 
     private _updateList(popupValue: TimePopupValue) {
@@ -665,12 +704,20 @@ export class JigsawTimePopup implements IPopupable {
         this._cdr.markForCheck();
     }
 
+    /**
+     * @internal
+     * @param item
+     * @private
+     */
     public _$select(item: TimePopupItem) {
         if (item.disabled) return;
         this._value.value = String(item.value);
         this.answer.emit(this._value);
     }
 
+    /**
+     * @internal
+     */
     public _$stopBlur($event) {
         $event.preventDefault();
         $event.stopPropagation()

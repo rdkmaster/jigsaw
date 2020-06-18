@@ -128,13 +128,37 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         moment.locale(browserLang);
     }
 
+    /**
+     * @internal
+     */
     public _$curMonth: MonthCell;
+    /**
+     * @internal
+     */
     public _$monthList: MonthCell[][] = [];
+    /**
+     * @internal
+     */
     public _$curYear: number;
+    /**
+     * @internal
+     */
     public _$rangeYear: string;
+    /**
+     * @internal
+     */
     public _$yearList: YearCell[][] = [];
+    /**
+     * @internal
+     */
     public _$dayList: DayCell[][] = [];
+    /**
+     * @internal
+     */
     public _$weekList: string[] = [];
+    /**
+     * @internal
+     */
     public _$selectMode: 'day' | 'month' | 'year' = 'day';
 
     private _langChangeSubscriber: Subscription;
@@ -635,6 +659,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    /**
+     * @internal
+     */
     public _$changeGr($event: GrItem) {
         if (!$event) {
             return;

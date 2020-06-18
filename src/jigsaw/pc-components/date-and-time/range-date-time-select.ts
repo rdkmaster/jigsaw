@@ -137,16 +137,28 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     @Input()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
+    /**
+     * @internal
+     */
     public _$grChange($event) {
         this._gr = $event;
         this.grChange.emit($event)
     }
 
+    /**
+     * @internal
+     */
     public _$dateItemChange = new EventEmitter();
     private _removeDateItemChangeSubscriber: Subscription;
 
+    /**
+     * @internal
+     */
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
 
+    /**
+     * @internal
+     */
     public _$setComboValue(date: RangeDate) {
         if (!date) return;
         let [beginDate, endDate] = [this._getDateStr(<string | TimeWeekDay>date.beginDate), this._getDateStr(<string | TimeWeekDay>date.endDate)];

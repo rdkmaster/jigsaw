@@ -112,8 +112,14 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @Input()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
+    /**
+     * @internal
+     */
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
 
+    /**
+     * @internal
+     */
     public _$setComboValue(date: string | TimeWeekDay) {
         date = this._getDateStr(date);
         if (!date) return;

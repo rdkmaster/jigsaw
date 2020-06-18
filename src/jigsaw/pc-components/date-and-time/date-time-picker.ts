@@ -315,6 +315,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._$timeLimitEndCur = this._$date == this._$dateLimitEnd ? this._timeLimitEnd : this._getDefaultLimitEnd();
     }
 
+    /**
+     * @internal
+     */
     public _$changeGr($event: GrItem) {
         if (!$event) {
             return;
@@ -324,10 +327,16 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._cdr.markForCheck();
     }
 
+    /**
+     * @internal
+     */
     public _$handleDateChange() {
         this._updateValueCombine.emit();
     }
 
+    /**
+     * @internal
+     */
     public _$handleTimeChange() {
         this._updateValueCombine.emit();
     }
