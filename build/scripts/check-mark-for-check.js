@@ -68,6 +68,7 @@ function checkInputProperty(srcPath) {
             error(`Error: input property "${name}" must have one of the "@NoMarkForCheckRequired" (in annotation) or ` +
                         '"@RequireMarkForCheck" (in decorator), but none of these marks found!',
                 'Tips: check this link for more detail https://github.com/rdkmaster/jigsaw/blob/master/docs/mark-for-check-rule.md');
+            console.log('------------------------', block);
         } else if (hasNoMarkRequired && hasRequireMark) {
             error(`Error: input property "${name}" must have one of the "@NoMarkForCheckRequired" (in annotation) or ` +
                         '"@RequireMarkForCheck" (in decorator), but both of these marks found!',
