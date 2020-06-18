@@ -1,16 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-let hasError = false;
-processAll('pc-components');
-processAll('common/components');
-if (hasError) {
-    process.exit(1);
-} else {
-    console.error(`Everything's fine!`);
-}
+// let hasError = false;
+// processAll('pc-components');
+// processAll('common/components');
+// if (hasError) {
+//     process.exit(1);
+// } else {
+//     console.error(`Everything's fine!`);
+// }
 
-// checkInputProperty('D:\\Codes\\jigsaw\\src\\jigsaw\\pc-components\\icon\\icon.ts');
+checkInputProperty('D:\\Codes\\jigsaw\\src\\jigsaw\\pc-components\\input\\auto-complete-input.ts');
 
 function processAll(folder) {
     const cmpHome = path.resolve(`${__dirname}/../../src/jigsaw/${folder}`);
@@ -68,7 +68,7 @@ function checkInputProperty(srcPath) {
             error(`Error: input property "${name}" must have one of the "@NoMarkForCheckRequired" (in annotation) or ` +
                         '"@RequireMarkForCheck" (in decorator), but none of these marks found!',
                 'Tips: check this link for more detail https://github.com/rdkmaster/jigsaw/blob/master/docs/mark-for-check-rule.md');
-            console.log('------------------------', block);
+            console.log('------------------------', block, '====', source);
         } else if (hasNoMarkRequired && hasRequireMark) {
             error(`Error: input property "${name}" must have one of the "@NoMarkForCheckRequired" (in annotation) or ` +
                         '"@RequireMarkForCheck" (in decorator), but both of these marks found!',
