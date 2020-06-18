@@ -25,7 +25,6 @@ import {debounceTime} from 'rxjs/operators';
 
 declare const moment: any;
 
-<<<<<<< HEAD:src/jigsaw/pc-components/range-time/range-time.ts
 /**
  * 用于在界面上提供一个时间范围的选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，如下是一些常见的场景及其建议：
  *
@@ -39,8 +38,6 @@ declare const moment: any;
  * $demo = range-time/full
  * $demo = range-time/basic
  */
-=======
->>>>>>> 354f24901... [新增] [破坏性修改] 重新实现日期时间控件，无依赖，全新交互，全新UI:src/jigsaw/pc-components/date-and-time/range-date-time-picker.ts
 @Component({
     selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker, jigsaw-range-time, j-range-time',
     templateUrl: './range-date-time-picker.html',
