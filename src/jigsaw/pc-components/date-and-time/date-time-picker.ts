@@ -34,7 +34,7 @@ import {debounceTime} from 'rxjs/operators';
  * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
  *
  * $demo = date-time-picker/basic
- * $demo = date-time-picker/range-date-time-select
+ * $demo = date-time-picker/date-time-select
  */
 @Component({
     selector: 'jigsaw-date-time-picker, j-date-time-picker, jigsaw-time, j-time',
