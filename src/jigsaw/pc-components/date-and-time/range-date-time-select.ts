@@ -10,13 +10,13 @@ import {
     Output,
     OnDestroy
 } from '@angular/core';
-import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select";
+import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
-import {DropDownTrigger} from "../../common/directive/float";
+import {DropDownTrigger} from "../../common/directive/float/float";
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
