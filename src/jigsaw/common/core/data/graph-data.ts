@@ -123,6 +123,9 @@ export abstract class AbstractGraphData extends TableDataBase {
         return this._fromObject(data);
     }
 
+    /**
+     * @internal
+     */
     public _fromObject(data: any): AbstractGraphData {
         if (!AbstractGraphData.isGraphData(data)) {
             throw new Error('invalid graph data, need at least a "data" property which type is Array!');

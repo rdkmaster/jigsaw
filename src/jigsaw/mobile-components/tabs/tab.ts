@@ -120,6 +120,9 @@ export class JigsawMobileTab extends AbstractJigsawComponent implements AfterVie
     @Input()
     public editable: boolean;
 
+    /**
+     * @internal
+     */
     public _$headless: boolean = false;
 
     /**

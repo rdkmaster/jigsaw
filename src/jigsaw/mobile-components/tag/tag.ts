@@ -51,6 +51,9 @@ export class JigsawMobileTag extends AbstractJigsawComponent implements OnInit {
     public _state: string;
 
     constructor(private _renderer: Renderer2,
+                /**
+                 * @internal
+                 */
                 public _elementRef: ElementRef) {
         super();
     }
