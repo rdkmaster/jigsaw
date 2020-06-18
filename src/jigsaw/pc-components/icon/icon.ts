@@ -124,7 +124,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
         this._target = value;
     }
 
-    constructor(private _sanitizer: DomSanitizer, private _injector: Injector) {
+    constructor(private _sanitizer: DomSanitizer, protected _injector: Injector) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }

@@ -47,7 +47,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
-    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
+    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef, protected _injector: Injector) {
         super(_zone);
     }
 

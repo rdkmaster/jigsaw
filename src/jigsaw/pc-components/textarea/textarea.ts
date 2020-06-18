@@ -76,7 +76,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef,
-                private _injector: Injector) {
+                protected _injector: Injector) {
         super();
     }
 

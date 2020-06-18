@@ -54,7 +54,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 private _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
                 private _elementRef: ElementRef,
-                private _injector: Injector) {
+                protected _injector: Injector) {
         super();
     }
 

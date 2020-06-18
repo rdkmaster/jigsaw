@@ -13,7 +13,8 @@ import {
     ElementRef,
     forwardRef,
     ChangeDetectionStrategy,
-    NgZone
+    NgZone,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -134,7 +135,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, protected _injector: Injector) {
         super(_zone);
     }
 

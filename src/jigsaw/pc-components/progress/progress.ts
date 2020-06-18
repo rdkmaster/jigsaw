@@ -50,7 +50,7 @@ export type ProgressInitData = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy, OnInit, IPopupable {
-    constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef, private _injector: Injector) {
+    constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef, protected _injector: Injector) {
         super()
     }
 

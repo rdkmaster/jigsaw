@@ -1,4 +1,4 @@
-import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone, Injector} from "@angular/core";
 import {CommonUtils} from "./core/utils/common-utils";
 import {take} from 'rxjs/operators';
 
@@ -159,7 +159,12 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
  */
 @Directive()
 export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
-    constructor(protected _zone?: NgZone) {
+    constructor(protected _zone?: NgZone,
+                /**
+                 * 对于使用 @RequireMarkForCheck 装饰器的组件中，需要注入这个Injector服务。
+                 * 在装饰器中，需要通过这个注入器，获取 ChangeDetectorRef 的实例
+                 */
+                protected _injector?: Injector) {
         super(_zone);
     }
 

@@ -72,7 +72,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
 
     constructor(private _renderer: Renderer2,
                 public _elementRef: ElementRef,
-                private _injector: Injector) {
+                protected _injector: Injector) {
         super();
     }
 

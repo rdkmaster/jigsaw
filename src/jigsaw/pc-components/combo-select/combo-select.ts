@@ -55,7 +55,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 private _elementRef: ElementRef,
                 private _popupService: PopupService,
                 protected _zone: NgZone,
-                private _injector: Injector) {
+                protected _injector: Injector) {
         super(_zone);
     }
 
