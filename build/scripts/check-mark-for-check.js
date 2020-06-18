@@ -105,7 +105,7 @@ function getPropertyBlock(source, index) {
 }
 
 function findInputPropertyName(block) {
-    const match = block.match(/\s+(public\s*)?(get\s*)?(\w+)\s*[(:]/);
+    const match = block.match(/\s+(public\s*)?([sg]et\s*)?(\w+)\s*[(:]/);
     return match ? match[3] : null;
 }
 

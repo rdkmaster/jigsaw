@@ -72,10 +72,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     /**
      * @internal
      */
-    public _$maxDropDownHeight: string = '300px';
-    /**
-     * @internal
-     */
     public _$propertyListOpen: boolean | null = null;
 
     /**
@@ -85,9 +81,18 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     public closeDropDownOnSelect: boolean = true;
 
     /**
+     * @internal
+     */
+    public _$maxDropDownHeight: string = '300px';
+
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()
+    public get maxDropDownHeight(): string {
+        return this._$maxDropDownHeight;
+    }
+
     public set maxDropDownHeight(value: string) {
         if (value == this._$maxDropDownHeight || !value) {
             return;
