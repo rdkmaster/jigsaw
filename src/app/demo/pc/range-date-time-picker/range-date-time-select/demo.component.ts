@@ -1,6 +1,5 @@
-import {AfterContentInit, ChangeDetectorRef, Component} from "@angular/core";
-import {GrItem, RangeTimeDataRanges, Shortcut} from "../../../../../jigsaw/pc-components/date-and-time";
-import {TimeGr} from "../../../../../jigsaw/common/service/time.service";
+import {Component} from "@angular/core";
+import {GrItem, RangeTimeDataRanges, Shortcut, TimeGr} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
