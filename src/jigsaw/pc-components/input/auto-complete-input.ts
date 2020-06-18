@@ -69,6 +69,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      * @internal
      */
     public _bakData: any[];
+
     /**
      * @internal
      */
@@ -98,6 +99,23 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
             return;
         }
         this._$maxDropDownHeight = CommonUtils.getCssValue(value);
+    }
+
+    /**
+     * @internal
+     */
+    public _$maxDropDownWidth: string = this.width;
+
+    @Input()
+    public get maxDropDownWidth(): string {
+        return this._$maxDropDownWidth;
+    }
+
+    public set maxDropDownWidth(value: string) {
+        if (value == this._$maxDropDownWidth || !value) {
+            return;
+        }
+        this._$maxDropDownWidth = CommonUtils.getCssValue(value);
     }
 
     /**
