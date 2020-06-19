@@ -47,7 +47,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public valid: boolean = true;
@@ -55,7 +55,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     private _gr: TimeGr = TimeGr.date;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public get gr(): TimeGr | string {
@@ -79,7 +79,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     private _date: WeekTime;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public get date(): WeekTime {
@@ -94,61 +94,61 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public dateChange = new EventEmitter<WeekTime>();
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public limitStart: Time;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public limitEnd: Time;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public grItems: GrItem[];
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public markDates: MarkDate[];
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public step: TimeStep;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public weekStart: string | TimeWeekStart;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public placeholder: string = '';
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public disabled: boolean;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
 
     /**
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      */
     @Input()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;

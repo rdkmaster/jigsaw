@@ -228,6 +228,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * @NoMarkForCheckRequired
      */
+    @Input()
     public set limitStart(value: Time) {
         if (value) {
             this._limitStart = TimeService.convertValue(value, <TimeGr>this.gr);
@@ -288,7 +289,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
      *
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      *
      * $demo = date-time-picker/gr-items
      */
@@ -298,7 +299,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * 对选定的日期做标记，用于提示用户这些日期具有特定含义
      *
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      *
      * $demo = date-time-picker/mark
      */
@@ -306,9 +307,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public markDates: MarkDate[];
 
     /**
-     * @internal
+     *  @NoMarkForCheckRequired
      *
-     * @NoMarkForCheckRequired
+     * @internal
      */
     @Input()
     public rangeDate: string;
@@ -316,7 +317,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
      *
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      *
      * $demo = date-time-picker/step
      */
@@ -326,7 +327,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
      *
-     * @NoMarkForCheckRequired
+     *  @NoMarkForCheckRequired
      *
      * $demo = date-time-picker/week-start
      */
