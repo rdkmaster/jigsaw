@@ -21,7 +21,9 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
-    constructor(private _injector: Injector) {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super()
     }
     /**

@@ -52,13 +52,6 @@ public valid: boolean = true;
 也必须经过类似小心的评估来确认是否需要添加 `@RequireMarkForCheck` 装饰器，如果确认不需要添加 `@RequireMarkForCheck` 装饰器，
 则必须为这个输入属性添加一个文档注释，以通过CI的检测。
 
-另外，由于在 `RequireMarkForCheck` 装饰器中，使用了 `Injector` 服务，来获取 `ChangeDetectorRef` 的实例，
-所以，在需要使用 `RequireMarkForCheck` 装饰器的组件类中，请务必在构造器中，注入 `Injector` 服务：
-```
-constructor(protected _injector: Injector) {
-}
-```
-
 ## 如何评估
 
 评估一个输入属性是否需要添加 `@RequireMarkForCheck` 装饰器的方法是，在demo中通过 `@ViewChild` 获得其实例，并通过这个实例直接修改新增的输入属性的值，

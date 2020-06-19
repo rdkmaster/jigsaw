@@ -55,6 +55,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 private _elementRef: ElementRef,
                 private _popupService: PopupService,
                 protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super(_zone);
     }

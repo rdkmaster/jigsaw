@@ -195,7 +195,9 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone: NgZone) {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
         super(_cdr, _injector, _zone);
     }
 

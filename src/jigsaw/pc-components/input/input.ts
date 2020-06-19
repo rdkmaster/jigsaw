@@ -192,7 +192,9 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInput extends JigsawInputBase {
-    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector) {
+    constructor(protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
         super(_cdr, _injector);
     }
 

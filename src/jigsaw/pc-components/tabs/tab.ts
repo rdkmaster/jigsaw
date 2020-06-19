@@ -53,7 +53,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
-                private _elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
     }

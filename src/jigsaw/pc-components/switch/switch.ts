@@ -31,7 +31,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 })
 
 export class JigsawSwitch implements ControlValueAccessor, OnInit {
-    constructor(private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
+    constructor(private _changeDetector: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
     }
 
     /**

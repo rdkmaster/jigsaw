@@ -5,7 +5,6 @@ import {
     forwardRef,
     Input,
     Output,
-    Renderer2,
     ViewChild,
     ChangeDetectionStrategy,
     Injector
@@ -37,8 +36,6 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 })
 
 export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-
-
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
@@ -74,9 +71,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef,
-                private _injector: Injector) {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
     }
 

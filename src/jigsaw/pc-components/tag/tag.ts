@@ -75,6 +75,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
                  * @internal
                  */
                 public _elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
     }

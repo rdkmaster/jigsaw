@@ -56,8 +56,9 @@ function checkInputProperty(srcPath) {
         }
     });
     for (let className in result) {
-        if (result[className].hasMarkProperties && result[className].hasMarkProperties.length > 0 && !result[className].hasInjector) {
-            error(`Error: Properties "${result[className].hasMarkProperties.join(', ')}" in "${className}" has "@RequireMarkForCheck" (in decorator), but no DI of "Injector"!`,
+        const props = result[className].hasMarkProperties;
+        if (props && props.length > 0 && !result[className].hasInjector) {
+            error(`Error: Properties "${props.join(', ')}" in "${className}" has "@RequireMarkForCheck" (in decorator), but no DI of "Injector"!`,
                 'Tips: add DI named "_injector" and typed "Injector" in constructor to pass this check');
         }
     }
@@ -137,7 +138,9 @@ function transformConstructor(constructorNode, context, className) {
     const visit = (node) => {
         if (ts.isParameter(node)) {
             if (!result[className].hasInjector) {
-                result[className].hasInjector = node.getChildren().findIndex(item => ts.isIdentifier(item) && item.getText().trim() === '_injector') > -1;
+                result[className].hasInjector = node.getChildren()
+                    // 注意，这里的_injector必须与decorator/mark-for-check.ts里的保持一致
+                    .findIndex(item => ts.isIdentifier(item) && item.getText().trim() === '_injector') > -1;
             }
         }
         return ts.visitEachChild(node, (child) => visit(child), context);

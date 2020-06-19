@@ -32,7 +32,10 @@ export class PageSizeData {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
-    constructor(private _translateService: TranslateService, private _changeDetectorRef: ChangeDetectorRef, private _injector: Injector) {
+    constructor(private _translateService: TranslateService,
+                private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super()
     }
 
