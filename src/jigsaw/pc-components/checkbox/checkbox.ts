@@ -13,13 +13,15 @@ import {
     ElementRef,
     forwardRef,
     ChangeDetectionStrategy,
-    NgZone
+    NgZone,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {AbstractJigsawComponent} from '../../common/common';
 import {CheckBoxStatus} from "./typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type CheckBoxValue = boolean | CheckBoxStatus;
 
@@ -56,6 +58,8 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * 编程模式赋值复选框状态时，不受此开关的影响，即即使`enableIndeterminate`被设置为false，
      * 应用依然可以在代码中直接将组件的状态设置为`CheckBoxStatus.indeterminate`。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = checkbox/basic
      */
     @Input()
@@ -79,24 +83,26 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * $demo = checkbox/basic
      */
     @Input()
+    @RequireMarkForCheck()
     public get checked(): CheckBoxValue {
         return this._checked
     }
 
     public set checked(value: CheckBoxValue) {
+        if (this._checked == value) {
+            return;
+        }
         this.writeValue(value);
     }
 
     /**
      * 选中状态变化时发出此事件，此事件可以简化为`change`
-     *
      */
     @Output()
     public checkedChange: EventEmitter<CheckBoxValue> = new EventEmitter();
 
     /**
      * 选中状态变化时发出此事件
-     *
      */
     @Output()
     public change = this.checkedChange;
@@ -109,19 +115,29 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * $demo = checkbox/disabled
      */
     @Input()
+    @RequireMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
 
     public set disabled(value: boolean) {
+        if (this._disabled == value) {
+            return;
+        }
         this._disabled = value;
         this._setCheckBoxClass();
     }
 
+    /**
+     * 控件的值是否有效，常常用于表单中，配合表单状态使用
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super(_zone);
     }
 

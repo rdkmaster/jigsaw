@@ -21,6 +21,8 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
     /**
      * 用于设置当前步骤的状态
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/basic
      * $demo = steps/step-interactive
      */
@@ -43,6 +45,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
      * $demo = steps/custom-icons
      */
     private _waitingIcon: string = 'fa-file-text-o';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get waitingIcon(): string {
         return this._waitingIcon;
@@ -54,13 +60,15 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    private _doneIcon: string = 'fa-check-square-o';
+
     /**
      * 设置`done`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/custom-icons
      */
-
-    private _doneIcon: string = 'fa-check-square-o';
     @Input()
     public get doneIcon(): string {
         return this._doneIcon;
@@ -72,13 +80,15 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    private _processingIcon: string = 'fa-cog fa-spin fa-2x fa-fw';
+
     /**
      * 设置`processing`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/custom-icons
      */
-
-    private _processingIcon: string = 'fa-cog fa-spin fa-2x fa-fw';
     @Input()
     public get processingIcon(): string {
         return this._processingIcon;
@@ -90,13 +100,15 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    private _errorIcon: string = 'fa-times';
+
     /**
      * 设置`error`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/custom-icons
      */
-
-    private _errorIcon: string = 'fa-times';
     @Input()
     public get errorIcon(): string {
         return this._errorIcon;
@@ -108,13 +120,15 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    private _skippedIcon: string = 'fa-ban';
+
     /**
      * 设置`skipped`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/custom-icons
      */
-
-    private _skippedIcon: string = 'fa-ban';
     @Input()
     public get skippedIcon(): string {
         return this._waitingIcon;
@@ -125,13 +139,15 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
             this._skippedIcon = value;
         }
     }
+    private _warningIcon: string = 'fa-exclamation-triangle';
 
     /**
      * 设置`warning`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = steps/custom-icons
      */
-    private _warningIcon: string = 'fa-exclamation-triangle';
     @Input()
     public get warningIcon(): string {
         return this._warningIcon;

@@ -484,6 +484,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考`JigsawDateTimePicker.disabled`
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-time-picker/disabled
      */
     @Input()
@@ -491,6 +494,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考`JigsawDateTimePicker.valid`
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-time-picker/valid
      */
     @Input()
@@ -507,6 +513,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 获取或者设置当前日期控件的粒度粒度
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-picker/gr
      */
     @Input()
@@ -535,6 +544,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 获取或者设置当前日期控件的值
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-picker/basic
      */
     @Input()
@@ -567,6 +579,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return this._limitStart;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set limitStart(value: Time) {
         this._limitStart = value ? TimeService.convertValue(value, <TimeGr>this.gr) : null;
@@ -585,6 +600,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         return this._limitEnd
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set limitEnd(value: Time) {
         this._limitEnd = value ? TimeService.convertValue(value, <TimeGr>this.gr) : null;
@@ -596,6 +614,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     /**
      * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-picker/gr
      */
     @Input()
@@ -603,6 +623,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 对选定的日期做标记，用于提示用户这些日期具有特定含义
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = date-picker/mark
      */
@@ -612,6 +634,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _rangeDate: string;
 
     /**
+     * @NoMarkForCheckRequired
+     *
      * @internal
      */
     @Input()
@@ -639,6 +663,8 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = date-picker/week-start
      */

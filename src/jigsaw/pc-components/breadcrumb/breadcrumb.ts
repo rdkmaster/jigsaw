@@ -57,17 +57,29 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     private _removeRouterEventSubscriber: Subscription;
     private _removeItemChangeSubscriber: Subscription;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public separator: string = '/';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public generatorContext: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public theme: 'light' | 'dark' | 'inner' = 'light';
 
     private _routesConfig: BreadcrumbRouteConfig[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get routesConfig(): BreadcrumbRouteConfig[] {
         return this._routesConfig;
@@ -188,6 +200,9 @@ export class JigsawBreadcrumbItem {
         @Optional() public _$breadcrumbHost: JigsawBreadcrumb
     ) { }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public isLast: boolean;
 }
@@ -198,5 +213,4 @@ export class JigsawBreadcrumbItem {
     exports: [JigsawBreadcrumb, JigsawBreadcrumbItem]
 })
 export class JigsawBreadcrumbModule {
-
 }

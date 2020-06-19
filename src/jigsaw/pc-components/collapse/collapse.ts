@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ContentChildren,
@@ -6,16 +7,17 @@ import {
     forwardRef,
     Host,
     Inject,
+    Injector,
     Input,
     NgModule,
     Output,
     QueryList,
-    ViewEncapsulation,
-    ChangeDetectionStrategy
+    ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 组件模式.
@@ -34,6 +36,9 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     private _isActive: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get isActive(): boolean {
         return this._isActive;
@@ -57,11 +62,14 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     public isActiveChange = new EventEmitter<boolean>();
 
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                private _changeDetector: ChangeDetectorRef) {
+                private _changeDetector: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
     @Input('header')
+    @RequireMarkForCheck()
     public title: string;
 
     /**
@@ -109,9 +117,11 @@ export class JigsawCollapse extends AbstractJigsawComponent {
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
-    public mode: string | CollapseMode = 'default';  // accordion
+    public mode: string | CollapseMode = 'default';
 
     /**
      * @internal

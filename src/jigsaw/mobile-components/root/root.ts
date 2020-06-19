@@ -17,7 +17,6 @@ export class JigsawRoot {
 @NgModule({
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
-    imports: [],
     providers: [PopupService]
 })
 export class JigsawMobileRootModule {

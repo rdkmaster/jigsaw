@@ -36,9 +36,15 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
 
     private _addButton: HTMLElement;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public jigsawGraphDownloadExportFileName: string = "graphs.zip";
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public jigsawGraphDownloadTooltip: string = '';
 

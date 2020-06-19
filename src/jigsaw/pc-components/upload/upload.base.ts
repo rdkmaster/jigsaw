@@ -1,7 +1,7 @@
-import {AbstractJigsawComponent} from "../../common/common";
-import { ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2, Directive } from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
+import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type UploadFileInfo = {
@@ -18,29 +18,53 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         super();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public targetUrl: string = '/rdk/service/common/upload';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fileType: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public multiple: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public contentField: string = 'file';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fileNameField: string = 'filename';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fileVerify: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public additionalFields: {[prop: string]: string};
 
     private _minSize: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get minSize(): number {
         return this._minSize;
@@ -56,6 +80,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
     private _maxSize: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get maxSize(): number {
         return this._maxSize;

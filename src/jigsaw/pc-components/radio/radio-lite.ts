@@ -25,17 +25,29 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public value: any;
 
     private _trackItemBy: string | string[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackItemBy(): string | string[] {
         if (!this._trackItemBy && this.data && typeof this.data[0] !== 'string') {
@@ -51,6 +63,9 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
         this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public labelField: string = 'label';
 

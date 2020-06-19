@@ -71,7 +71,8 @@ export class JigsawTooltipDialog implements IPopupable, AfterContentInit {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSimpleTooltipComponent extends TooltipBase {
-    @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
+    @ViewChild(JigsawTooltipDialog)
+    public tooltip: JigsawTooltipDialog;
 
     public tooltipMessage: string = '';
 
@@ -93,7 +94,12 @@ export class JigsawSimpleTooltipComponent extends TooltipBase {
     selector: '[jigsaw-tooltip], [jigsawTooltip], [j-tooltip]'
 })
 export class JigsawTooltip implements OnDestroy {
-    @Input() public jigsawTooltip: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public jigsawTooltip: string;
+
     private _tooltipInfo: PopupInfo;
     private _removeMouseLeave: Function;
     private _removeMouseEnter: Function;

@@ -1,4 +1,4 @@
-import {Component, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, Injector, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 
@@ -7,7 +7,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
     template: '<ng-content></ng-content>'
 })
 export class JigsawRoot {
-    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone,
+    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone, injector: Injector,
                 ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
         InternalUtils.viewContainerRef = viewContainerRef;
         InternalUtils.renderer = renderer;

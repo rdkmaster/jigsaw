@@ -144,33 +144,48 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     /**
      * 需要提示给用户的消息，支持基础html标记，支持附加交互动作。必选。
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public message: string;
+    @Input()
+    public message: string;
 
     /**
      * 提示框的标题，默认不显示标题
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public caption: string;
+    @Input()
+    public caption: string;
 
     /**
      * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public icon: string;
+    @Input()
+    public icon: string;
 
     /**
      * 给提示框快速设置交互按钮
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = notification/full
      */
-    @Input() public buttons: ButtonInfo[];
+    @Input()
+    public buttons: ButtonInfo[];
 
     /**
      * 当`message`里包含html交互动作时，`JigsawNotification`在执行给定的回调函数时，会将这个对象作为函数的上下文。
      * 简单的说，这个属性值和回调函数里的`this`是同一个对象。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = notification/full
      */
-    @Input() public innerHtmlContext: any;
+    @Input()
+    public innerHtmlContext: any;
 
     private _timeout;
     private _timer;
@@ -181,7 +196,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
      *
-     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get position(): NotificationPosition | string {

@@ -25,6 +25,9 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
     @ContentChildren(forwardRef(() => JigsawTileOption))
     protected _items: QueryList<JigsawTileOption>;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showBorder: boolean = true;
 

@@ -76,6 +76,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考`JigsawDateTimePicker.disabled`
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-time-picker/disabled
      */
     @Input()
@@ -83,6 +86,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考`JigsawDateTimePicker.valid`
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = date-time-picker/valid
      */
     @Input()
@@ -92,6 +98,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 时间选择器的当前值，可以界面选择，也可以双绑修改
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time-picker/basic
      */
     @Input()
@@ -111,6 +120,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time-picker/step
      */
     @Input()
@@ -128,6 +140,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 当前时间选择器的粒度，支持：仅小时、时分、分秒、时分秒这几种用法
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time-picker/gr
      */
     @Input()
@@ -148,6 +163,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 时间选择面板的弹出位置，支持向上弹出，向下弹出
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time-picker/pop-up-down
      */
     @Input()
@@ -157,6 +175,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * `limitStart` 和 `limitEnd` 用于设定起止可选时间
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time-picker/limit
      */
     @Input()
@@ -176,6 +197,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考 `limitStart`
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = time-picker/limit
      */
     @Input()

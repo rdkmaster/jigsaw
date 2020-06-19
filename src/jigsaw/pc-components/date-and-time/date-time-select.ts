@@ -46,10 +46,17 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         super()
     }
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
     private _gr: TimeGr = TimeGr.date;
+
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public get gr(): TimeGr | string {
         return this._gr;
@@ -70,6 +77,10 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public grChange = new EventEmitter<TimeGr>();
 
     private _date: WeekTime;
+
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public get date(): WeekTime {
         return this._date;
@@ -82,33 +93,63 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public limitStart: Time;
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public limitEnd: Time;
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public grItems: GrItem[];
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public markDates: MarkDate[];
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public step: TimeStep;
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public weekStart: string | TimeWeekStart;
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public placeholder: string = '';
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public disabled: boolean;
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
 
+    /**
+     *  @NoMarkForCheckRequired
+     */
     @Input()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 

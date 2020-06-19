@@ -73,6 +73,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): AbstractGraphData {
         return this._data;
@@ -95,6 +98,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -109,6 +115,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get height(): string {
         return this._height;
@@ -125,6 +134,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _globalTheme: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get globalTheme() {
         if (!this._globalTheme) {
@@ -197,7 +209,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private _needListenWindowResize(): boolean {
-        return !!((this.width && this.width[this.width.length - 1] == '%') ||
+        return ((this.width && this.width[this.width.length - 1] == '%') ||
             (this.height && this.height[this.height.length - 1] == '%') || !this.width);
     }
 

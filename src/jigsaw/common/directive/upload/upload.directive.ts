@@ -1,22 +1,18 @@
-import {
-    Component,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnDestroy,
-    Optional,
-    Output,
-    Renderer2
-} from "@angular/core";
+import {Component, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {
-    ButtonInfo, IPopupable, PopupEffect, PopupInfo, PopupOptions, PopupPositionType, PopupPositionValue, PopupService
-} from "../../common/service/popup.service";
-import {JigsawUploadBase, UploadFileInfo} from "./upload.base";
-import {AbstractJigsawComponent} from "../../common/common";
 import {TranslateService} from "@ngx-translate/core";
+import {
+    ButtonInfo,
+    IPopupable,
+    PopupEffect,
+    PopupInfo,
+    PopupOptions,
+    PopupPositionType,
+    PopupPositionValue,
+    PopupService
+} from "../../service/popup.service";
+import {JigsawUploadBase, UploadFileInfo} from "../../../pc-components/upload/upload.base";
+import {AbstractJigsawComponent} from "../../common";
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
@@ -246,10 +242,19 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
 })
 export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: UploadFileInfo[];
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public uploader: JigsawUploadDirective;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionCount: number = 5;
 

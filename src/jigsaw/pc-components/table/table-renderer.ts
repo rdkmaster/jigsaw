@@ -18,10 +18,26 @@ import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/a
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
-    @Input() public cellData: any;
-    @Input() public row: number;
-    @Input() public field: string;
-    @Input() public initData: any;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public cellData: any;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public row: number;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public field: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public initData: any;
 
     @Output() public cellDataChange = new EventEmitter<any>();
 
@@ -44,6 +60,9 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 
     private _tableData: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get tableData(): TableData {
         return this._tableData;
@@ -60,6 +79,9 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 
     protected _additionalData: AdditionalTableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalData(): TableData {
         return this._additionalData;
@@ -430,6 +452,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     private _cellData: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     get cellData(): any {
         return this._cellData;

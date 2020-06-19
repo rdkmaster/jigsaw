@@ -14,13 +14,15 @@ import {
     ViewChildren,
     ViewEncapsulation,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Injector
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class SliderMark {
     value: number;
@@ -41,9 +43,15 @@ export class JigsawSliderHandle implements OnInit {
 
     private _value: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public key: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value() {
         return this._value;
@@ -225,10 +233,15 @@ export class JigsawSliderHandle implements OnInit {
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     constructor(private _element: ElementRef, private _render: Renderer2,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
@@ -242,8 +255,9 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     private _removeRefreshCallback: CallbackRemoval = this._getRemoveRefreshCallback();
 
     /**
-     * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点.
+     * slider的当前值, 类型 number | ArrayCollection<number> 支持多触点
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get value(): number | ArrayCollection<number> {
@@ -295,6 +309,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     /**
      * 可选范围的最小值
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get min() {
@@ -310,6 +325,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     /**
      * 输入范围的可选最大值.
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get max() {
@@ -325,6 +341,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     /**
      * 每次变化的最小值, 最小支持小数点后两位.
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get step() {
@@ -354,6 +371,8 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 垂直滑动条 默认 false
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public vertical: boolean = false;
@@ -362,6 +381,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * 是否禁用. 数据类型 boolean, 默认false;
      */
     @Input()
+    @RequireMarkForCheck()
     public disabled: boolean = false;
 
     /**
@@ -410,9 +430,11 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     private _marks: SliderMark[];
 
     /**
-     * marks 标签 使用格式为  [Object] 其中 Object 必须包含value 及label 可以有style 属性 例如:  marks = [{value: 20, label: '20 ℃'},
+     * marks 标签 使用格式为  [Object] 其中 Object 必须包含value 及label 可以有style 属性
+     * 例如:  marks = [{value: 20, label: '20 ℃'},
      */
     @Input()
+    @RequireMarkForCheck()
     public get marks(): SliderMark[] {
         return this._marks;
     }

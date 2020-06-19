@@ -27,12 +27,21 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     ]
 })
 export class JigsawTileLite extends AbstractJigsawGroupLiteComponent {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionWidth: number | string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionHeight: number | string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showBorder: boolean = true;
 }

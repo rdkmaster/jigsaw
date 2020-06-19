@@ -186,15 +186,27 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: SimpleTreeData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public options: PopupOptions;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showBorder: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public theme: MenuTheme = 'light';
 

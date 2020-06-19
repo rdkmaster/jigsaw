@@ -34,12 +34,21 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
         super()
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public key: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable>;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: Object;
 
@@ -101,6 +110,9 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
         super(_changeDetector, _componentFactory)
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public editable: boolean;
 
@@ -159,11 +171,17 @@ export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
         super(_changeDetector, _componentFactory)
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public lazy: boolean;
 
     private _isActive: boolean;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get isActive(): boolean {
         return this._isActive;

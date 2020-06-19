@@ -130,6 +130,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     private _disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -145,7 +148,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data() {
         return this._$data;
@@ -193,6 +198,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     private _selectedItems: ArrayCollection<any> | any[] = [];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get selectedItems() {
         return this._selectedItems;
@@ -213,9 +221,15 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public subLabelField: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchable: boolean;
 
@@ -307,15 +321,23 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         });
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public disabled: boolean = false;
 
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public isTarget: boolean;
 
     private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): LocalPageableArray<GroupOptionValue> | PageableArray {
         return this._data;
@@ -344,12 +366,21 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public subLabelField: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public trackItemBy: string | string[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchable: boolean;
 
