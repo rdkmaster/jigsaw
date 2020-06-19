@@ -1,0 +1,17 @@
+<div class="jigsaw-time-popup-content">
+    <ul class="jigsaw-time-popup-content-hour" *ngIf="initData?.mode == 'hour'">
+        <li *ngFor="let hour of _$hourList" [class.jigsaw-time-popup-isSelected]="hour.isSelected"
+            [class.jigsaw-time-popup-disabled]="hour.disabled" (click)="_$select(hour)">{{hour.value}}</li>
+    </ul>
+    <ul class="jigsaw-time-popup-content-minute" *ngIf="initData?.mode == 'minute'">
+        <li *ngFor="let minute of _$minuteList" [class.jigsaw-time-popup-isSelected]="minute.isSelected"
+            [class.jigsaw-time-popup-disabled]="minute.disabled" (click)="_$select(minute)">{{minute.value}}</li>
+    </ul>
+    <ul class="jigsaw-time-popup-content-second" *ngIf="initData?.mode == 'second'">
+        <li *ngFor="let second of _$secondList" [class.jigsaw-time-popup-isSelected]="second.isSelected"
+            [class.jigsaw-time-popup-disabled]="second.disabled" (click)="_$select(second)">{{second.value}}</li>
+    </ul>
+</div>
+<div class="jigsaw-time-popup-control" *ngIf="initData?.mode == 'hour'">
+    <span (click)="_$select({value: 'now'})">{{'timePicker.now' | translate}}</span>
+</div>

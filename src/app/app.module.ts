@@ -4,7 +4,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-
 import {
     JigsawBoxModule, JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
 } from "jigsaw/public_api";
