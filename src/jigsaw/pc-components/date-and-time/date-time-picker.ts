@@ -307,8 +307,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public markDates: MarkDate[];
 
     /**
-     *  @NoMarkForCheckRequired
-     *
+     * @NoMarkForCheckRequired
      * @internal
      */
     @Input()
@@ -317,7 +316,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
      *
-     *  @NoMarkForCheckRequired
+     * @NoMarkForCheckRequired
      *
      * $demo = date-time-picker/step
      */
@@ -327,7 +326,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
      *
-     *  @NoMarkForCheckRequired
+     * @NoMarkForCheckRequired
      *
      * $demo = date-time-picker/week-start
      */
