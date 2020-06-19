@@ -76,7 +76,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     constructor(private _render2: Renderer2,
                 private _elementRef: ElementRef,
-                protected _injector: Injector) {
+                private _injector: Injector) {
         super();
     }
 
@@ -116,8 +116,18 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             return;
         }
         this._value = newValue;
-        this.valueChange.emit(this._value);
         this._propagateChange(this._value);
+    }
+
+    /**
+     * @internal
+     */
+    public _$ngValueChange(event: string) {
+        if (this._value === event) {
+            return;
+        }
+        this._value = event;
+        this.valueChange.emit(this._value);
     }
 
     /**
@@ -174,7 +184,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * @internal
      */
     public _$clearValue(): void {
-        this.value = '';
+        this._$ngValueChange('');
         this.focus();
     }
 

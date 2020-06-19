@@ -44,7 +44,7 @@ function checkPublicVariables(srcPath) {
     console.log(`Checking ${srcPath} ...`);
     const source = fs.readFileSync(srcPath).toString();
 
-    const vars = source.match(/\spublic\s+_\$?\w+/g);
+    const vars = source.match(/\spublic\s+(static\s+)?_\$?\w+/g);
     if (!vars) {
         return;
     }
@@ -54,7 +54,7 @@ function checkPublicVariables(srcPath) {
         const reg = new RegExp(`[\\s\\S]*\\/\\*\\*([\\s\\S]*?)\\*\\/\\s*(@\\w+.*\\s*)?${fixed}\\b`);
         const match = source.match(reg);
         if (!match || match[1].indexOf('@internal') === -1) {
-            const name = variable.replace(/public\s*/, '').trim();
+            const name = variable.replace(/public\s*(static\s+)?/, '').trim();
             error(`Error: variable "${name}" has no @internal flag!`);
         }
     });

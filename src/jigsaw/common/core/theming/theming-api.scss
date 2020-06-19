@@ -391,13 +391,49 @@
 }
 
 @mixin setTimeTheme() {
-    .bootstrap-datetimepicker-widget table td.day:hover,
-    .bootstrap-datetimepicker-widget table td.hour:hover,
-    .bootstrap-datetimepicker-widget table td.minute:hover,
-    .bootstrap-datetimepicker-widget table td.second:hover,
-    .bootstrap-datetimepicker-widget table td span:hover{
-        background: $fill-color-2;
-        color: $text-color;
+    .#{$date-prefix-cls} {
+        &-header {
+            background: $component-background;
+            color: $text-color;
+        }
+        &-content {
+            &-day {
+                thead {
+                    background: $component-background;
+                    th {
+                        color: $text-color;
+                    }
+                }
+            }
+            &-day-cell {
+                & span:hover {
+                    background: $primary-8;
+                }
+            }
+        }
+    }
+
+    .#{$time-prefix-cls} {
+        &-wrapper {
+            input {
+                background: $component-background;
+                &:hover {
+                    background: $primary-8;
+                }
+            }
+        }
+    }
+
+    .#{$time-select-prefix-cls} {
+        &-content {
+            &-hour, &-minute, &-second {
+                li {
+                    &:hover {
+                        background: $primary-8;
+                    }
+                }
+            }
+        }
     }
 }
 

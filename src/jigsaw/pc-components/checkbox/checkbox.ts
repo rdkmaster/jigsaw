@@ -135,7 +135,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, protected _injector: Injector) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _injector: Injector) {
         super(_zone);
     }
 

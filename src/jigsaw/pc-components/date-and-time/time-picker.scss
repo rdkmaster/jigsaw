@@ -1,0 +1,133 @@
+@import "../../common/assets/scss/core/base";
+
+$time-prefix-cls: #{$jigsaw-prefix}-time-picker;
+
+.#{$time-prefix-cls} {
+    @include inline-block();
+    position: relative;
+    width: 135px;
+    height: $height-base;
+    font-size: $font-size-base;
+    border: 1px solid $border-color-base;
+    border-radius: 3px;
+    background: $component-background;
+    overflow: hidden;
+    padding: 4px 34px 4px 8px;
+
+    &:hover, &-active {
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
+        border: 1px solid $primary-color;
+        box-shadow: $box-focus-shadow;
+    }
+
+    &-wrapper {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+
+        input {
+            @include inline-block();
+            flex: 1;
+            padding: 3px 0;
+            border: 0;
+            margin: 0;
+            outline: none;
+            width: 22px;
+            height: 100%;
+            text-align: center;
+
+            &:hover {
+                background: $primary-2;
+            }
+
+            &.#{$time-prefix-cls}-input-selected {
+                border-bottom: 1px solid $primary-color;
+            }
+        }
+
+        .#{$time-prefix-cls}-colon {
+            margin: 0 4px;
+        }
+    }
+
+    &-ctrl {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 34px;
+        height: 100%;
+        font-size: 14px;
+        color: $text-color-secondary;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &-bar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: 1px solid $border-color-base;
+
+            span {
+                display: flex;
+                flex: 1;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 1px solid $border-color-base;
+                cursor: pointer;
+                text-align: center;
+                width: 100%;
+
+                &:first-child {
+                    &:before {
+                        content: "\f106";
+                    }
+                }
+
+                &:last-child {
+                    border-bottom: none;
+
+                    &:before {
+                        content: "\f107";
+                    }
+                }
+
+                &:hover {
+                    color: $primary-5;
+                }
+
+                &:active {
+                    color: $primary-7;
+                }
+            }
+        }
+    }
+
+    &-error {
+        border-color: $error-color;
+    }
+
+    &-disabled {
+        position: relative;
+        &:before {
+            content: ' ';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: $disabled-bg;
+            opacity: 0.7;
+            z-index: $zindex-level-1;
+            cursor: not-allowed;
+        }
+    }
+}

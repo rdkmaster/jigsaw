@@ -61,7 +61,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, protected _injector: Injector) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, private _injector: Injector) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;

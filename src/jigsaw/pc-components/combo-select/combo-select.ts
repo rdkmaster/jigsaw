@@ -25,7 +25,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
-import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
+import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/index";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
@@ -55,7 +55,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 private _elementRef: ElementRef,
                 private _popupService: PopupService,
                 protected _zone: NgZone,
-                protected _injector: Injector) {
+                private _injector: Injector) {
         super(_zone);
     }
 
@@ -70,9 +70,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public set value(value: ArrayCollection<ComboSelectValue> | ComboSelectValue[]) {
-        this.writeValue(value);
-        if (value && this._value != value) {
-            this._propagateChange(this._value);
+        if (!value || this._value === value) {
+            return;
+        }
+        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        this._propagateChange(this._value);
+        if (this.initialized) {
+            this.writeValue(value);
         }
     }
 
@@ -385,6 +389,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public ngOnInit() {
         super.ngOnInit();
+        // 设置初始值
+        if (CommonUtils.isDefined(this.value)) {
+            this.writeValue(this.value, false);
+        }
         let maxWidth: string | number = CommonUtils.getCssValue(this.maxWidth);
         if (maxWidth && !maxWidth.match(/%/)) {
             maxWidth = parseInt(maxWidth.replace('px', ''));
@@ -413,12 +421,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _propagateChange: any = () => {
     };
 
-    public writeValue(value: any): void {
-        if (!value || this._value === value) {
-            return;
+    public writeValue(value: any, emit = true): void {
+        if (emit) {
+            this.runMicrotask(() => this.valueChange.emit(this._value));
         }
-        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.runMicrotask(() => this.valueChange.emit(this._value));
         this._autoWidth();
         this._autoClose();
 

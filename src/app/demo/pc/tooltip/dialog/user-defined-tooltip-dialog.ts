@@ -10,5 +10,4 @@ import {JigsawTooltipDialog, TooltipBase} from "jigsaw/public_api";
 })
 export class UserTooltipDialogComponent extends TooltipBase{
     @ViewChild(JigsawTooltipDialog) public tooltip: JigsawTooltipDialog;
-
 }

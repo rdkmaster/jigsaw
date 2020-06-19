@@ -28,8 +28,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
@@ -41,9 +39,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/moment/min/moment.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/ztree/js/jquery.ztree.all.js",
-              "node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
               "node_modules/peity/jquery.peity.min.js",
               "node_modules/codemirror/lib/codemirror.js",
               "node_modules/codemirror/mode/javascript/javascript.js",

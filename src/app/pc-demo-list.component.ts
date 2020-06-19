@@ -30,7 +30,6 @@ import {routerConfig as popupConfig} from "./demo/pc/popup/demo-set.module";
 import {routerConfig as radioConfig} from "./demo/pc/radio-group/demo-set.module";
 import {routerConfig as radioLiteConfig} from "./demo/pc/radio-lite/demo-set.module";
 import {routerConfig as rateConfig} from "./demo/pc/rate/demo-set.module";
-import {routerConfig as rangeTimeConfig} from "./demo/pc/range-time/demo-set.module";
 import {routerConfig as scrollbarConfig} from "./demo/pc/scrollbar/demo-set.module";
 import {routerConfig as selectConfig} from "./demo/pc/select/demo-set.module";
 import {routerConfig as sliderConfig} from "./demo/pc/slider/demo-set.module";
@@ -42,7 +41,6 @@ import {routerConfig as tagConfig} from "./demo/pc/tag/demo-set.module";
 import {routerConfig as textareaConfig} from "./demo/pc/textarea/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/pc/tile/demo-set.module";
 import {routerConfig as tileLiteConfig} from "./demo/pc/tile-lite/demo-set.module";
-import {routerConfig as timeConfig} from "./demo/pc/time/demo-set.module";
 import {routerConfig as tooltipConfig} from "./demo/pc/tooltip/demo-set.module";
 import {routerConfig as treeConfig} from "./demo/pc/tree/demo-set.module";
 import {routerConfig as trustedHtmlConfig} from "./demo/pc/trusted-html/demo-set.module";
@@ -51,10 +49,13 @@ import {routerConfig as iconConfig} from "./demo/pc/icon/demo-set.module";
 import {routerConfig as transferConfig} from "./demo/pc/transfer/demo-set.module";
 import {routerConfig as breadcrumbConfig} from "./demo/pc/breadcrumb/demo-set.module";
 import {routerConfig as menuConfig} from "./demo/pc/menu/demo-set.module";
+import {routerConfig as datePickerConfig} from "./demo/pc/date-picker/demo-set.module";
+import {routerConfig as timePickerConfig} from "./demo/pc/time-picker/demo-set.module";
+import {routerConfig as dateTimePickerConfig} from "./demo/pc/date-time-picker/demo-set.module";
+import {routerConfig as rangeDateTimePickerConfig} from "./demo/pc/range-date-time-picker/demo-set.module";
 import {routerConfig as progressConfig} from "./demo/pc/progress/demo-set.module";
 import {routerConfigPC} from "./router-config";
 import {PopupPositionType} from "../jigsaw/common/service/popup.service";
-import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
 
 @Component({
     template: `
@@ -177,7 +178,6 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'radio-group', radioConfig);
         this._addRouterConfig(routerConfig, 'radio-lite', radioLiteConfig);
         this._addRouterConfig(routerConfig, 'rate', rateConfig);
-        this._addRouterConfig(routerConfig, 'range-time', rangeTimeConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
         this._addRouterConfig(routerConfig, 'slider', sliderConfig);
@@ -189,7 +189,6 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'textarea', textareaConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
         this._addRouterConfig(routerConfig, 'tile-lite', tileLiteConfig);
-        this._addRouterConfig(routerConfig, 'time', timeConfig);
         this._addRouterConfig(routerConfig, 'tooltip', tooltipConfig);
         this._addRouterConfig(routerConfig, 'tree', treeConfig);
         this._addRouterConfig(routerConfig, 'trusted-html', trustedHtmlConfig);
@@ -198,6 +197,10 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
         this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
         this._addRouterConfig(routerConfig, 'menu', menuConfig);
+        this._addRouterConfig(routerConfig, 'date-picker', datePickerConfig);
+        this._addRouterConfig(routerConfig, 'time-picker', timePickerConfig);
+        this._addRouterConfig(routerConfig, 'date-time-picker', dateTimePickerConfig);
+        this._addRouterConfig(routerConfig, 'range-date-time-picker', rangeDateTimePickerConfig);
         this._addRouterConfig(routerConfig, 'progress', progressConfig);
     }
 

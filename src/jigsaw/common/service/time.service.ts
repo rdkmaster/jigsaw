@@ -1,4 +1,4 @@
-import {Time, Moment, WeekTime} from "./time.types";
+import {Time, Moment, WeekTime, TimeWeekDay} from "./time.types";
 import {CommonUtils} from "../core/utils/common-utils";
 
 declare const moment: any;
@@ -7,7 +7,7 @@ declare const moment: any;
  * 时间粒度值
  */
 export enum TimeGr {
-    second, minute, hour, date, week, month, time, time_hour_minute, time_minute_second
+    second, minute, hour, date, week, month, time, time_hour_minute, time_minute_second, time_hour
 }
 
 /**
@@ -18,18 +18,10 @@ export enum TimeWeekStart {
 }
 
 /**
- * 用于在周粒度下配置第一周包含日期，结合weekStart配置
- * 详情请查看 https://momentjs.com/docs/#/customization/dow-doy/
- */
-export enum TimeWeekDayStart {
-    doy6 = 6, doy4 = 4, doy12 = 12, doy7 = 7
-}
-
-/**
  * 关于时间宏：
  *
  * 它通过一些数字，以及语义化的单词作为单位来表示一个时刻，时间宏是一个普通的字符串。
- * 例如`"now"`这个宏表示当前时刻，`JigsawTime`将会将其换算为其被初始化的时刻。
+ * 例如`"now"`这个宏表示当前时刻，`JigsawDateTimePicker`将会将其换算为其被初始化的时刻。
  *
  * 此外，时间宏还支持加减运算。例如`"now-1d"`的意思是昨天的这个时候，相应的，明天则是`"now+1d"`，上个月是`"now-1M"`等。
  * 时间宏目前可以支持的时刻是`"now"`，支持的所有单位在这个枚举类型中全部列出了。（注意大小写）
@@ -68,16 +60,38 @@ export class TimeService {
      * @return 符合粒度格式的时刻
      */
     public static convertValue(value: WeekTime, gr: TimeGr): string {
-        value = TimeService._handleWeekValue(value);
-        value = TimeService.getFormatDate(<Time>value, gr);
+        if (this.isWeekDate(value)) {
+            value = this._handleWeekDateToDate(value, gr);
+        } else {
+            value = this.getFormatDate(<Time>value, gr);
+        }
         return <string>value;
     }
 
-    private static _handleWeekValue(newValue: WeekTime): Time {
-        if (newValue && typeof newValue["week"] === 'number') {
-            return TimeService.getDateFromYearAndWeek(newValue["year"], newValue["week"])
+    public static getDateByGr(date: WeekTime, gr: TimeGr): string | TimeWeekDay {
+        date = this.convertValue(date, gr);
+        return gr == TimeGr.week ? this.getWeekDate(date) : date;
+    }
+
+    public static isWeekDate(date: WeekTime) {
+        return date && !!date['week'] && !!date['year'];
+    }
+
+    private static _handleWeekDateToDate(date: WeekTime, gr: TimeGr) {
+        if (!date || typeof date['week'] != 'number') {
+            return this.getFormatDate(<Time>date, gr);
         }
-        return <Time>newValue;
+        date = this.getDateFromYearAndWeek(date["year"], date["week"]);
+        let [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
+        let dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
+        let [weekStartDate, weekEndDate] = [this.addDate(date, -dateIndex, TimeUnit.d),
+            this.addDate(date, 6 - dateIndex, TimeUnit.d)];
+        let [weekStartMonth, weekEndMonth] = [this.getMonth(weekStartDate), this.getMonth(weekEndDate)];
+        if (weekStartMonth == weekEndMonth) {
+            return this.getFormatDate(weekStartDate, gr);
+        } else {
+            return this.getFormatDate(`${this.getYear(weekEndDate)}-${weekEndMonth}-01`, gr);
+        }
     }
 
     private static _timeFormatterConvert(formatter: TimeFormatters): string {
@@ -222,23 +236,33 @@ export class TimeService {
         return moment(date).format(format);
     }
 
-
     /**
      * 设置默认周开始，设置之后会影响之后的所有计算结果
-     *
+     *  https://momentjs.com/docs/#/customization/dow-doy/
      * @param weekStart
      */
     public static setWeekStart(weekStart: TimeWeekStart = TimeWeekStart.sun): void {
-        console.warn('setWeekStart function has been abandoned, weekStart auto changed by locale language!');
+        let locale = moment.locale();
+        let weekSet = moment.localeData()._week;
+        let janX = 7 + weekSet.dow - weekSet.doy;
+        moment.updateLocale(locale, {
+            week: {
+                dow: weekStart,
+                doy: 7 + weekStart - janX
+            }
+        });
     }
 
-    /**
-     * 设置第一周包含日期
-     * https://momentjs.com/docs/#/customization/dow-doy/
-     * @param dayStart
-     */
-    public static setWeekDayStart(dayStart: TimeWeekDayStart = TimeWeekDayStart.doy6): void {
-        console.warn('setWeekDayStart function has been abandoned, weekDayStart auto changed by locale language!');
+    public static getWeekStart() {
+        return moment.localeData().firstDayOfWeek()
+    }
+
+    public static getWeekdaysMin() {
+        return moment.weekdaysMin();
+    }
+
+    public static getMonthShort() {
+        return moment.localeData().monthsShort();
     }
 
     /**
@@ -259,6 +283,11 @@ export class TimeService {
      */
     public static getWeekOfYear(date: Time): number {
         return moment(date).week();
+    }
+
+
+    public static getWeekDate(date: Time) {
+        return {year: this.getWeekYear(date), week: this.getWeekOfYear(date)};
     }
 
     /**
@@ -297,6 +326,18 @@ export class TimeService {
 
     public static getDate(str: Time, gr: TimeGr): Moment {
         return moment(str, TimeService.getFormatter(gr));
+    }
+
+    public static getFirstDateOfMonth(year: number, month: number): Moment {
+        return this.getRealDateOfMonth(year, month, 1);
+    }
+
+    public static getLastDateOfMonth(year: number, month: number): Moment {
+        return this.getRealDateOfMonth(year, month, 31);
+    }
+
+    public static getRealDateOfMonth(year: number, month: number, day: number): Moment {
+        return moment([year, 0, day]).month(month - 1);
     }
 
     /**

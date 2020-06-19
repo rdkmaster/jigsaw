@@ -233,7 +233,7 @@ export class JigsawSliderHandle implements OnInit {
 export class JigsawSlider extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     constructor(private _element: ElementRef, private _render: Renderer2,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, protected _injector: Injector) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, private _injector: Injector) {
         super();
     }
 

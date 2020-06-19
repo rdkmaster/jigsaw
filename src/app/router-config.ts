@@ -120,10 +120,6 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/radio-lite/demo-set.module').then(m => m.RadioLiteDemoModule),
     },
     {
-        path: "pc/range-time",
-        loadChildren: () => import('./demo/pc/range-time/demo-set.module').then(m => m.RangeTimeDemoModule),
-    },
-    {
         path: "pc/rate",
         loadChildren: () => import('./demo/pc/rate/demo-set.module').then(m => m.RateDemoModule),
     },
@@ -172,10 +168,6 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/tile-lite/demo-set.module').then(m => m.TileLiteDemoModule),
     },
     {
-        path: "pc/time",
-        loadChildren: () => import('./demo/pc/time/demo-set.module').then(m => m.TimeDemoModule),
-    },
-    {
         path: "pc/tooltip",
         loadChildren: () => import('./demo/pc/tooltip/demo-set.module').then(m => m.TooltipDemoModule),
     },
@@ -206,6 +198,22 @@ export const routerConfigPC = [
     {
         path: "pc/menu",
         loadChildren: () => import('./demo/pc/menu/demo-set.module').then(m => m.MenuDemoModule),
+    },
+    {
+        path: "pc/date-picker",
+        loadChildren: () => import('./demo/pc/date-picker/demo-set.module').then(m => m.DatePickerDemoModule),
+    },
+    {
+        path: "pc/time-picker",
+        loadChildren: () => import('./demo/pc/time-picker/demo-set.module').then(m => m.TimePickerDemoModule),
+    },
+    {
+        path: "pc/date-time-picker",
+        loadChildren: () => import('./demo/pc/date-time-picker/demo-set.module').then(m => m.DateTimePickerDemoModule),
+    },
+    {
+        path: "pc/range-date-time-picker",
+        loadChildren: () => import('./demo/pc/range-date-time-picker/demo-set.module').then(m => m.RangeDateTimeDemoModule),
     },
     {
         path: "pc/progress",

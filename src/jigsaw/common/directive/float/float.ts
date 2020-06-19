@@ -24,6 +24,7 @@ import {
 import {AbstractJigsawViewBase} from "../../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
+import { Subscription } from 'rxjs';
 
 export enum DropDownTrigger {
     click,
@@ -54,10 +55,37 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return this._popupInfo ? this._popupInfo.element : null;
     }
 
+    public get popupInstance(): any {
+        return this._popupInfo ? this._popupInfo.instance : null;
+    }
+
+    private _jigsawFloatArrowElement: HTMLElement;
     /**
      * @internal
      */
-    public jigsawFloatInitData: any;
+    public get jigsawFloatArrowElement(): HTMLElement {
+        return this._jigsawFloatArrowElement;
+    }
+
+    public set jigsawFloatArrowElement(el: HTMLElement) {
+        this._jigsawFloatArrowElement = el;
+        this._setArrow(this.popupElement);
+    }
+
+    private _jigsawFloatInitData: any;
+    /**
+     * @internal
+     */
+    public get jigsawFloatInitData(): any {
+        return this._jigsawFloatInitData;
+    }
+
+    public set jigsawFloatInitData(data: any) {
+        this._jigsawFloatInitData = data;
+        if(this.popupInstance && this.initialized) {
+            this.popupInstance.initData = data;
+        }
+    }
 
     private _floatTarget: Type<IPopupable> | TemplateRef<any>;
 
@@ -132,6 +160,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
 
+    /**
+     * @internal
+     */
+    public jigsawFloatAnswer = new EventEmitter<any>();
+
     constructor(protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _popupService: PopupService,
@@ -166,6 +199,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._floatTarget = null;
         this._clearAllListeners();
         this._disposePopup();
+        if(this._removeAnswerSubscriber) {
+            this._removeAnswerSubscriber.unsubscribe();
+            this._removeAnswerSubscriber = null;
+        }
     }
 
     /**
@@ -175,6 +212,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     public reposition(): void {
         if (this.popupElement) {
             this._popupService.setPosition(this._getPopupOption(), this.popupElement);
+            this._setArrow(this.popupElement);
         }
     }
 
@@ -286,6 +324,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._popupInfo = null;
     }
 
+    private _removeAnswerSubscriber: Subscription;
+
     /**
      * 立即弹出下拉视图，请注意不要重复弹出，此方法没有做下拉重复弹出的保护
      */
@@ -309,6 +349,16 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._popupInfo = popupInfo;
         this._originDisposer = popupInfo.dispose;
         popupInfo.dispose = this.closeFloat.bind(this);
+
+        if(this._removeAnswerSubscriber) {
+            this._removeAnswerSubscriber.unsubscribe();
+            this._removeAnswerSubscriber = null;
+        }
+        if(popupInfo.answer) {
+            this._removeAnswerSubscriber = popupInfo.answer.subscribe(data => {
+                this.jigsawFloatAnswer.emit(data);
+            });
+        }
 
         if (option.borderType == 'pointer') {
             this.runAfterMicrotasks(() => this._setArrow(this.popupElement));
@@ -346,7 +396,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     private _getPos(): PopupPoint {
-        let point = this._getHostElementPos();
+        let point = this._getElementPos();
         const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
@@ -373,16 +423,17 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return point;
     }
 
-    private _getHostElementPos() {
+    private _getElementPos(element?: HTMLElement) {
+        element = element ? element : this._elementRef.nativeElement;
         let point = new PopupPoint();
         if (this.jigsawFloatOptions && this.jigsawFloatOptions.posType == PopupPositionType.fixed) {
             // 获取触发点相对于视窗的位置
-            const tempRect = this._elementRef.nativeElement.getBoundingClientRect();
+            const tempRect = element.getBoundingClientRect();
             point.y = tempRect.top;
             point.x = tempRect.left;
         } else {
-            point.y = AffixUtils.offset(this._elementRef.nativeElement).top;
-            point.x = AffixUtils.offset(this._elementRef.nativeElement).left;
+            point.y = AffixUtils.offset(element).top;
+            point.x = AffixUtils.offset(element).left;
         }
         return point;
     }
@@ -460,10 +511,17 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (options.borderType != 'pointer' || !popupElement) {
             return;
         }
-        const hostPosition = this._getHostElementPos();
-        const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)}
-        const host = this._elementRef.nativeElement;
-        let ele = document.createElement('div');
+        const hostPosition = this._getElementPos();
+        const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)};
+        const arrowPosition = this._getElementPos(this.jigsawFloatArrowElement);
+        const arrowPoint: PopupPoint = {x: Math.round(arrowPosition.x), y: Math.round(arrowPosition.y)};
+        const host = this.jigsawFloatArrowElement ? this.jigsawFloatArrowElement : this._elementRef.nativeElement;
+        let ele = <HTMLElement>this.popupElement.querySelector('.jigsaw-float-arrow');
+        if(ele) {
+            this.popupElement.removeChild(ele);
+        }
+        ele = document.createElement('div');
+        ele.setAttribute("class", "jigsaw-float-arrow");
         // 根据tooltip尖角算出来大概在5√2，约为7px
         ele.style.width = '7px';
         ele.style.height = '7px';
@@ -476,7 +534,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
                 popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
             }
-            ele.style.left = this._getLeft(host, popupElement, position) + 'px';
+            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = "1px solid #dcdcdc";
                 ele.style.borderRight = "1px solid #dcdcdc";
@@ -487,7 +545,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
                 popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
             }
-            ele.style.left = this._getLeft(host, popupElement, position) + 'px';
+            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderLeft = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
@@ -497,7 +555,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
                 popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
             }
-            ele.style.top = this._getTop(host, popupElement, position) + 'px';
+            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = "1px solid #dcdcdc";
                 ele.style.borderLeft = "1px solid #dcdcdc";
@@ -507,7 +565,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
                 popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
             }
-            ele.style.top = this._getTop(host, popupElement, position) + 'px';
+            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderRight = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
@@ -542,7 +600,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
         const offsetWidth = this._elementRef.nativeElement.offsetWidth;
         const offsetHeight = this._elementRef.nativeElement.offsetHeight;
-        const point = this._getHostElementPos();
+        const point = this._getElementPos();
         const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
@@ -708,6 +766,9 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     }
 
     @Input()
+    public jigsawFloatArrowElement: HTMLElement;
+
+    @Input()
     public jigsawFloatInitData: any;
 
     @Input()
@@ -736,5 +797,8 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
 
     @Output()
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    @Output()
+    public jigsawFloatAnswer = new EventEmitter<any>();
 
 }

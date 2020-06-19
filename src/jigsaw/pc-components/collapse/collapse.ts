@@ -62,7 +62,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     public isActiveChange = new EventEmitter<boolean>();
 
     constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                private _changeDetector: ChangeDetectorRef, protected _injector: Injector) {
+                private _changeDetector: ChangeDetectorRef, private _injector: Injector) {
         super();
     }
 
