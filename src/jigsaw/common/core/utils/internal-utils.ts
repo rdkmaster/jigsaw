@@ -8,10 +8,8 @@ import {TranslateHelper} from "./translate-helper";
  */
 // @dynamic
 export class InternalUtils {
-    public static uedSiteHost = 'http://rdk.zte.com.cn';
-
-    public static _uniqueIdIndex = 0;
-    public static _defaultPrefix = '__unique_id__';
+    private static _uniqueIdIndex = 0;
+    private static _defaultPrefix = '__unique_id__';
 
     public static viewContainerRef: ViewContainerRef;
     public static renderer: Renderer2;
