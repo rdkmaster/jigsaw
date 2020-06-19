@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<a style="padding: 24px" jigsaw-float [jigsawFloatTarget]="float">鼠标挪过来</a>
+
+<ng-template #float>
+    <div style="padding: 12px">
+        <jigsaw-time-picker ></jigsaw-time-picker>
+        <br><br>
+        <jigsaw-date-time-picker gr="second" ></jigsaw-date-time-picker>
+        <span style="margin-left: 12px"></span>
+        <jigsaw-range-date-time-picker gr="second"></jigsaw-range-date-time-picker>
+    </div>
+</ng-template>
