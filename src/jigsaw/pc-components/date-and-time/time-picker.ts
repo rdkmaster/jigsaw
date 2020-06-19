@@ -76,16 +76,20 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考`JigsawDateTimePicker.disabled`
-     * $demo = date-time-picker/disabled
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = date-time-picker/disabled
      */
     @Input()
     public disabled: boolean;
 
     /**
      * 参考`JigsawDateTimePicker.valid`
-     * $demo = date-time-picker/valid
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = date-time-picker/valid
      */
     @Input()
     public valid: boolean = true;
@@ -94,8 +98,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 时间选择器的当前值，可以界面选择，也可以双绑修改
-     * $demo = time-picker/basic
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = time-picker/basic
      */
     @Input()
     public get value(): string {
@@ -114,8 +120,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 分钟、秒钟选择面板的默认有60个数字可以挑选，显得比较凌乱，你可以设置此值为5/10来减少面板上的可选项
-     * $demo = time-picker/step
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = time-picker/step
      */
     @Input()
     public get step(): TimeStep {
@@ -132,8 +140,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 当前时间选择器的粒度，支持：仅小时、时分、分秒、时分秒这几种用法
-     * $demo = time-picker/gr
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = time-picker/gr
      */
     @Input()
     public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string {
@@ -153,8 +163,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 时间选择面板的弹出位置，支持向上弹出，向下弹出
-     * $demo = time-picker/pop-up-down
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = time-picker/pop-up-down
      */
     @Input()
     public popDirection: 'up' | 'down' = 'down';
@@ -163,8 +175,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * `limitStart` 和 `limitEnd` 用于设定起止可选时间
-     * $demo = time-picker/limit
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = time-picker/limit
      */
     @Input()
     public get limitStart(): string {
@@ -183,8 +197,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考 `limitStart`
-     * $demo = time-picker/limit
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = time-picker/limit
      */
     @Input()
     public get limitEnd(): string {

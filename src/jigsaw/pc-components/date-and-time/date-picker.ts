@@ -484,16 +484,20 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 参考`JigsawDateTimePicker.disabled`
-     * $demo = date-time-picker/disabled
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = date-time-picker/disabled
      */
     @Input()
     public disabled: boolean;
 
     /**
      * 参考`JigsawDateTimePicker.valid`
-     * $demo = date-time-picker/valid
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = date-time-picker/valid
      */
     @Input()
     public valid: boolean = true;
@@ -509,8 +513,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 获取或者设置当前日期控件的粒度粒度
-     * $demo = date-picker/gr
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = date-picker/gr
      */
     @Input()
     public get gr(): TimeGr | string {
@@ -538,8 +544,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 获取或者设置当前日期控件的值
-     * $demo = date-picker/basic
+     *
      * @NoMarkForCheckRequired
+     *
+     * $demo = date-picker/basic
      */
     @Input()
     public get date(): WeekTime {
@@ -627,6 +635,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * @NoMarkForCheckRequired
+     *
      * @internal
      */
     @Input()
