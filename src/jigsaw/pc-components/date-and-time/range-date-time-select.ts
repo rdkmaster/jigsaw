@@ -39,7 +39,8 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
         </jigsaw-combo-select>
     `,
     host: {
-        '[class.jigsaw-range-date-time-select]': 'true'
+        '[class.jigsaw-range-date-time-select]': 'true',
+        '[style.min-width]': 'width'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeDateTimeSelect), multi: true},

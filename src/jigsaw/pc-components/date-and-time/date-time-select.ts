@@ -34,7 +34,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
         </jigsaw-combo-select>
     `,
     host: {
-        '[class.jigsaw-date-time-select]': 'true'
+        '[class.jigsaw-date-time-select]': 'true',
+        '[style.min-width]': 'width'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimeSelect), multi: true},
