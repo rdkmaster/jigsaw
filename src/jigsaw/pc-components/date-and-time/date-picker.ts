@@ -636,8 +636,11 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     public set markDates(newValue: MarkDate[]) {
-        if (newValue) {
-            this._markDates = newValue;
+        if (!newValue) {
+            return;
+        }
+        this._markDates = newValue;
+        if (this.initialized) {
             this._createCalendar();
         }
     }
