@@ -9,6 +9,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
     width: 210px;
     overflow: hidden;
     user-select: none;
+    background: $component-background;
 
     &-header {
         background: $background-color-base;

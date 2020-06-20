@@ -12,7 +12,7 @@
         <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']"
                            [(selectedItems)]="gr"></jigsaw-button-bar>
         <br><br>
-        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]" width="205"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date | json}}</p>
     </div>
