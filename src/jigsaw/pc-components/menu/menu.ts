@@ -1,16 +1,17 @@
 import {
+    AfterContentInit,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    Output,
+    ElementRef,
     EventEmitter,
     Input,
-    ViewChild,
-    ElementRef,
+    Output,
     Renderer2,
-    AfterViewInit,
-    AfterContentInit,
-    ChangeDetectorRef
+    ViewChild
 } from "@angular/core";
-import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
+import {IPopupable, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
@@ -61,7 +62,8 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              (jigsawCascadingMenuSelect)="onSelect($event)"
              (jigsawCascadingMenuClose)="close.emit()">
         </div>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawMenuHelper implements IPopupable {
     public answer: EventEmitter<any> = new EventEmitter<any>();
@@ -127,7 +129,8 @@ export class JigsawMenuHelper implements IPopupable {
         '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
         '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
         '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit, AfterContentInit {
 
@@ -317,7 +320,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         const listOptionElements = this._menuListElement.nativeElement.children;
         const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
         if (!titleElement) {
-            return {maxWidth: 'auto'} ;
+            return {maxWidth: 'auto'};
         }
         const wrapElement = titleElement.parentElement;
         // 5是给有子节点时，留下的箭头；

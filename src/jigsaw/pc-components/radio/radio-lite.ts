@@ -1,4 +1,13 @@
-import {Component, EventEmitter, forwardRef, Input, NgModule, Output} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    Input,
+    NgModule,
+    Output
+} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {JigsawRadioModule} from "./radio";
@@ -6,6 +15,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
@@ -21,9 +31,15 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
-    ]
+    ],
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
+
+
+    constructor(public cdr:ChangeDetectorRef) {
+        super();
+    }
 
     /**
      * @NoMarkForCheckRequired

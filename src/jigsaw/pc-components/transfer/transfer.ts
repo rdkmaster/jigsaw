@@ -1,6 +1,15 @@
-import {Component, Input, NgModule, OnDestroy, Optional, ChangeDetectorRef} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    NgModule,
+    OnDestroy,
+    Optional,
+    ViewChild
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {trigger, style, transition, animate, keyframes} from "@angular/animations"
+import {animate, keyframes, style, transition, trigger} from "@angular/animations"
 import {Subscription} from "rxjs/internal/Subscription";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -15,7 +24,6 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -108,7 +116,8 @@ const transferServerFilterFunction = function (item) {
                     style({opacity: 0})
                 ]))
             ])
-        ])]
+        ])],
+    changeDetection:ChangeDetectionStrategy.OnPush
 
 })
 
@@ -148,9 +157,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+
     @Input()
     public get data() {
         return this._$data;
@@ -242,6 +249,12 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
+
+    constructor(private _cdr: ChangeDetectorRef) {
+        super();
+    }
+
+
     private _filterDataBySelectedItems() {
         if (this._$data.busy) {
             const removeAjaxCallback = this._$data.onAjaxComplete(() => {
@@ -311,10 +324,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     templateUrl: './transfer-list.html',
     host: {
         '[class.jigsaw-transfer-list-frame]': 'true'
-    }
+    },
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
+    constructor(@Optional() private _transfer: JigsawTransfer, public cdr: ChangeDetectorRef) {
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
@@ -352,6 +366,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
+                this.cdr.markForCheck();
             });
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
@@ -436,7 +451,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 }
             });
             this._data.refresh();
-            this._cdr.detectChanges();
+            this.cdr.detectChanges();
         })
     }
 
@@ -466,7 +481,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             keyword: filterKey,
             fields: [field]
         });
-        this._cdr.detectChanges();
+        this.cdr.detectChanges();
     }
 
     /**
@@ -488,6 +503,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
         }
         this.selectedItemsChange.emit(this.selectedItems);
+        this.cdr.markForCheck();
     }
 
     /**

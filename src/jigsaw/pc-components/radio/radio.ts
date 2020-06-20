@@ -1,6 +1,8 @@
 import {
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component, ContentChildren,
+    Component,
+    ContentChildren,
     EventEmitter,
     forwardRef,
     Input,
@@ -23,7 +25,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
-    ]
+    ],
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
@@ -85,10 +88,11 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
         '(click)': '_$handleClick()',
         '[class.jigsaw-radio-option]': 'true',
         '[class.jigsaw-radio-option-disabled]': 'disabled'
-    }
+    },
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadioOption extends AbstractJigsawOptionComponent {
-    constructor(public changeDetector: ChangeDetectorRef) {
+    constructor(public cdr: ChangeDetectorRef) {
         super();
     }
 

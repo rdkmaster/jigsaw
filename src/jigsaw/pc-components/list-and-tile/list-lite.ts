@@ -1,6 +1,6 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
-    ViewChildren, OnDestroy, Output, EventEmitter, NgZone
+    ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy
 } from "@angular/core";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {CommonModule} from "@angular/common";
@@ -47,7 +47,8 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
     constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
@@ -141,6 +142,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             this.runAfterMicrotasks(() => {
                 this._zone.run(() => {
                     this._listInst._removeInvalidSelectedItems();
+                    this._listInst.cdr.markForCheck();
                 })
             })
         }
