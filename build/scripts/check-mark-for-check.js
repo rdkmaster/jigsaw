@@ -96,7 +96,8 @@ function transformClass(node, context) {
 // 遍历 属性、getter/setter 这三种可能是 @Input 的节点
 function transformProperty(propertyNode, context, className) {
     const visit = (node) => {
-        if (ts.isDecorator(node) && node.getText().trim() === '@Input()') {
+        if (ts.isDecorator(node) && node.getChildAt(1) && node.getChildAt(1).getChildAt(0) &&
+            node.getChildAt(1).getChildAt(0).getText().trim() === 'Input') {
             const propertyCode = propertyNode.getText().trim();
             const propertyChildren = propertyNode.getChildren();
             const identifier = propertyChildren.find(item => ts.isIdentifier(item));

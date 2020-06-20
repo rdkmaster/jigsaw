@@ -8,7 +8,8 @@ import {
     Input,
     NgModule,
     Output,
-    Renderer2
+    Renderer2,
+    Injector
 } from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -19,6 +20,7 @@ import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 declare const moment: any;
 
@@ -114,7 +116,9 @@ export class GrItem {
 export class JigsawDatePicker extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(private _el: ElementRef, private _renderer: Renderer2,
                 private _popService: PopupService, private _translateService: TranslateService,
-                private _changeDetectorRef: ChangeDetectorRef) {
+                private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             moment.locale(langInfo.curLang);
@@ -613,23 +617,30 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = date-picker/gr
      */
     @Input()
+    @RequireMarkForCheck()
     public grItems: GrItem[];
+
+    private _markDates: MarkDate[];
 
     /**
      * 对选定的日期做标记，用于提示用户这些日期具有特定含义
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = date-picker/mark
      */
     @Input()
-    public markDates: MarkDate[];
+    @RequireMarkForCheck()
+    public get markDates(): MarkDate[] {
+        return this._markDates;
+    }
+
+    public set markDates(newValue: MarkDate[]) {
+        if (newValue) {
+            this._markDates = newValue;
+            this._createCalendar();
+        }
+    }
 
     private _rangeDate: string;
 

@@ -7,7 +7,8 @@ import {
     Input,
     NgModule,
     OnInit,
-    Output
+    Output,
+    Injector
 } from '@angular/core';
 import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select/index";
@@ -19,6 +20,7 @@ import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
@@ -42,14 +44,14 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDateTimeSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
-    constructor(private _cdr: ChangeDetectorRef) {
+    constructor(private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super()
     }
 
-    /**
-     *  @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public valid: boolean = true;
 
     private _gr: TimeGr = TimeGr.date;
@@ -129,28 +131,20 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @Input()
     public weekStart: string | TimeWeekStart;
 
-    /**
-     *  @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public placeholder: string = '';
 
-    /**
-     *  @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public disabled: boolean;
 
-    /**
-     *  @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
 
-    /**
-     *  @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
     /**

@@ -9,7 +9,8 @@ import {
     NgModule,
     OnDestroy,
     OnInit,
-    Output
+    Output,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -19,6 +20,7 @@ import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.serv
 import {Time, WeekTime} from "../../common/service/time.types";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 用于在界面上提供一个时刻选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，
@@ -52,7 +54,9 @@ import {debounceTime} from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDateTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
-    constructor(private _cdr: ChangeDetectorRef) {
+    constructor(private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._removeUpdateValueCombineSubscriber = this._updateValueCombine.pipe(debounceTime(300)).subscribe((mode: 'combine' | 'separate') => {
             if (!this._$date) return;
@@ -288,22 +292,18 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     /**
      * 设置时间控件所支持的粒度。如果你的场景只允许用户选择天、周，则设置了这2个粒度之后，用户无法选择其他的粒度。
-     *
-     *  @NoMarkForCheckRequired
-     *
      * $demo = date-time-picker/gr-items
      */
     @Input()
+    @RequireMarkForCheck()
     public grItems: GrItem[];
 
     /**
      * 对选定的日期做标记，用于提示用户这些日期具有特定含义
-     *
-     *  @NoMarkForCheckRequired
-     *
      * $demo = date-time-picker/mark
      */
     @Input()
+    @RequireMarkForCheck()
     public markDates: MarkDate[];
 
     /**
@@ -325,12 +325,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = date-time-picker/week-start
      */
     @Input()
+    @RequireMarkForCheck()
     public weekStart: string | TimeWeekStart;
 
     private _updateValueCombine = new EventEmitter();
