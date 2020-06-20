@@ -58,9 +58,8 @@ export class JigsawMarkdown extends AbstractJigsawComponent implements OnInit {
         markdown = marked(markdown.trim());
 
         // redirect internal doc link to the ued site
-        markdown = markdown.replace(/<a href="\/(components\/api\/\w+?\/.*?)">/g,
-            `<a href="${InternalUtils.uedSiteHost}/$1" target="_blank">`);
-        markdown = markdown.replace(/\$uedHost/g, InternalUtils.uedSiteHost);
+        markdown = markdown.replace(/<a\s+href="(\/components\/api\/.*?)"/g,
+            `<a href="javascript:top.location.hash='$1'" target="_self"`);
 
         // add class to raise the css priority
         markdown = markdown.replace(/<(\w+)(\s|>)/g, (found, tag, border) => {
