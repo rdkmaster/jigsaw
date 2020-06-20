@@ -1,0 +1,61 @@
+@import "../../common/assets/scss/core/base";
+
+$time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
+
+.#{$time-select-prefix-cls} {
+    @include inline-block();
+    padding: 10px 6px;
+    position: relative;
+    border-radius: 4px;
+
+    &-content {
+        &-hour, &-minute, &-second {
+            @include clearfix();
+            width: 240px;
+
+            li {
+                float: left;
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
+                text-align: center;
+                border-radius: 50%;
+                cursor: pointer;
+
+                &:hover {
+                    background: $primary-2;
+                }
+
+                &.#{$time-select-prefix-cls}-isSelected {
+                    background: $primary-color;
+                    color: $text-color-of-bg;
+                }
+
+                &.#{$time-select-prefix-cls}-disabled {
+                    &, &:hover {
+                        background: none;
+                        @include compatible(color, $disabled-color, $disabled-color-ie11);
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+
+    &-control {
+        @include clearfix();
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+
+        span {
+            float: right;
+            color: $primary-color;
+            cursor: pointer;
+
+            &:hover {
+                color: $primary-8;
+            }
+        }
+    }
+}

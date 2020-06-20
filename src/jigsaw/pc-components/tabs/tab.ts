@@ -17,12 +17,14 @@ import {
     ViewChild,
     ViewChildren,
     ViewContainerRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Injector
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {Subscription} from "rxjs";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
@@ -51,7 +53,8 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     constructor(private _cfr: ComponentFactoryResolver,
                 private _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
-                private _elementRef: ElementRef) {
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
@@ -110,9 +113,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * 控制tab显示添加和删除按钮
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = tab/editable
-     *
-     *
      */
     @Input()
     public editable: boolean;
@@ -126,11 +129,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
      * 控制tab头部是否显示
      *
      * $demo = tab/headless
-     *
-     *
      */
-
     @Input()
+    @RequireMarkForCheck()
     public get headless(): boolean {
         return this._$headless;
     }
@@ -142,6 +143,9 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
         this._$headless = value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public enableAnimation: boolean = true;
 
@@ -167,6 +171,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     /**
      * 当前选中的tab页编号，在双绑模式下，改变这个值可以实现选中tab页的切换。
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get selectedIndex(): number {

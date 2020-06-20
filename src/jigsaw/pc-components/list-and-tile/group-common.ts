@@ -17,12 +17,18 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     protected _removeRefreshCallback: CallbackRemoval;
     private _removeItemsChanges: Subscription;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
     //设置对象的标识
     private _trackItemBy: string[] = [];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackItemBy(): string | string[] {
         return this._trackItemBy;
@@ -32,13 +38,24 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
     }
 
-    //判断是否支持多选
-    @Input() public multipleSelect: boolean;
+    /**
+     * 判断是否支持多选
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public multipleSelect: boolean;
 
-    @Input() public autoRemoveInvalidValue: boolean = true;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public autoRemoveInvalidValue: boolean = true;
 
     protected _selectedItems = new ArrayCollection<any>();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
@@ -215,13 +232,24 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
 @Directive()
 export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
-    @Input() public value: any;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public value: any;
 
-    @Input() public disabled: boolean = false;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public disabled: boolean = false;
 
     @Output()
     public selectedChange = new EventEmitter<boolean>();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public selected: boolean = false; // 选中状态
 

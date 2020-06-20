@@ -1,5 +1,6 @@
 import {
-    Component, Input, NgModule, EventEmitter, Output, ViewChild, ElementRef, HostListener,ChangeDetectionStrategy,ChangeDetectorRef
+    Component, Input, NgModule, EventEmitter, Output, ViewChild, ElementRef, HostListener,
+    ChangeDetectionStrategy,ChangeDetectorRef
 } from "@angular/core";
 
 import {CommonModule} from "@angular/common";
@@ -74,6 +75,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     /**
      * 设置步骤条图标的预设尺寸
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get preSize(): 'small' | 'default' | 'large' {
@@ -89,6 +92,9 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     private _data: StepsData[] = [];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): StepsData[] {
         return this._data;
@@ -106,6 +112,8 @@ export class JigsawStepsMultiline extends AbstractJigsawComponent {
 
     /**
      * 设置一行放置几个item
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get numInline(): number {

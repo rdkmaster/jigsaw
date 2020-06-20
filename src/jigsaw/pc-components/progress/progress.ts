@@ -4,6 +4,7 @@ import {
     Component,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
     OnDestroy,
@@ -14,6 +15,7 @@ import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 class EstimationInfo {
     duration: number = 10000;
@@ -48,7 +50,9 @@ export type ProgressInitData = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy, OnInit, IPopupable {
-    constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef) {
+    constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super()
     }
 
@@ -57,6 +61,9 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     private _value: number = 0;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): number {
         return this._value;
@@ -79,17 +86,21 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
             return;
         }
         this._value = value;
-        if(this.initialized) {
+        if (this.initialized) {
             this._autoLabelPosition();
         }
         this._cdr.markForCheck();
     }
 
     @Input()
+    @RequireMarkForCheck()
     public showMarker: boolean;
 
     private _labelPosition: LabelPosition = 'right';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get labelPosition(): LabelPosition {
         return this._labelPosition;
@@ -97,7 +108,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     public set labelPosition(value: LabelPosition) {
         this._labelPosition = value;
-        if(this.initialized) {
+        if (this.initialized) {
             this._autoLabelPosition();
         }
     }
@@ -105,6 +116,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     private _status: Status = 'processing';
 
     @Input()
+    @RequireMarkForCheck()
     public get status(): Status {
         return this._status
     }
@@ -112,13 +124,16 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     public set status(status: Status) {
         if (!status || this._status == status) return;
         this._status = status;
-        this._cdr.markForCheck();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public preSize: PreSize = 'default';
 
     @Input()
+    @RequireMarkForCheck()
     public animate: boolean = true;
 
     @Output()
@@ -131,6 +146,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     private _autoLabelPosition() {
         if (this._labelPosition != 'followLeft' && this._labelPosition != 'followRight') {
+            this._cdr.markForCheck();
             return;
         }
         const hostEl = this._hostElRef.nativeElement;

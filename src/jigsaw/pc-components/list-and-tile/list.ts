@@ -30,9 +30,14 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
-    // 默认单选
+    /**
+     * 默认单选
+     */
     public multipleSelect: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public disabled : boolean =false;
 
@@ -67,6 +72,9 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
 
     private _selected: boolean = false; // 选中状态
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get selected(): boolean {
         return this._selected;

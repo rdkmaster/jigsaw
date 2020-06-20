@@ -13,15 +13,27 @@ export class JigsawBoxResizable {
     constructor(private _renderer: Renderer2, private _zone: NgZone) {
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public parentBox: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public effectBox: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public effectDirection: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public range: number[];
 
@@ -73,9 +85,9 @@ export class JigsawBoxResizable {
             rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0];
         let offset = event[eventProp] - rawPosition;
         if (offset < this.range[0]) {
-            offset = this.range[0] + 5
+            offset = this.range[0] + 5;
         } else if (offset > this.range[1]) {
-            offset = this.range[1] - 5
+            offset = this.range[1] - 5;
         }
         this._effectOffset = offset;
         this.resize.emit(offset);

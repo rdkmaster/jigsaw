@@ -1,18 +1,18 @@
 import {
-    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
     Input,
     Output,
-    Renderer2,
     ViewChild,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * @description 多行输入框组件，常常用于接收用户的文本输入
@@ -36,38 +36,44 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 })
 
 export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-
-
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
      * $demo = textarea/clearable
      */
-    @Input() public clearable: boolean = true;
+    @RequireMarkForCheck()
+    @Input()
+    public clearable: boolean = true;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = textarea/disabled
      */
-    @Input() public disabled: boolean = false;
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = textarea/valid
      * $demo = form/template-driven
      */
-    @Input() public valid: boolean = true;
+    @Input()
+    public valid: boolean = true;
 
     @Output() public blur: EventEmitter<Event> = new EventEmitter<Event>();
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    constructor(private _render2: Renderer2,
-                private _elementRef: ElementRef,
-                private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
     }
 
@@ -93,6 +99,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     /**
      * 文本框中当前的文本
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = textarea/valid
      */
     @Input()
@@ -105,8 +113,18 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             return;
         }
         this._value = newValue;
-        this.valueChange.emit(this._value);
         this._propagateChange(this._value);
+    }
+
+    /**
+     * @internal
+     */
+    public _$ngValueChange(event: string) {
+        if (this._value === event) {
+            return;
+        }
+        this._value = event;
+        this.valueChange.emit(this._value);
     }
 
     /**
@@ -125,6 +143,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = textarea/valid
      */
     @Input()
+    @RequireMarkForCheck()
     public set placeholder(txt: string) {
         this._placeholder = txt;
     }
@@ -162,7 +181,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * @internal
      */
     public _$clearValue(): void {
-        this.value = '';
+        this._$ngValueChange('');
         this.focus();
     }
 

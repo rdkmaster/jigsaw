@@ -25,6 +25,9 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
     protected _color: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get color(): string {
         return this._color;

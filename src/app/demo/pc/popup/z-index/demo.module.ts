@@ -1,10 +1,10 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {
-    JigsawTimeModule, JigsawComboSelectModule, JigsawDialogModule, JigsawButtonModule,
-    JigsawRangeTimeModule, JigsawLoadingModule, LoadingService,
-    JigsawSelectModule, JigsawTooltipModule, JigsawNotificationModule,
-    JigsawDrawerModule
+    JigsawComboSelectModule, JigsawDialogModule, JigsawButtonModule, JigsawLoadingModule,
+    LoadingService, JigsawDateTimePickerModule, JigsawSelectModule,
+    JigsawNotificationModule, JigsawRangeDateTimePickerModule, JigsawDrawerModule,
+    JigsawTooltipModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {PopupZIndexDemoComponent} from "./demo.component";
@@ -13,12 +13,12 @@ import {PopupZIndexDemoComponent} from "./demo.component";
     declarations: [PopupZIndexDemoComponent],
     exports: [PopupZIndexDemoComponent],
     imports: [
-        JigsawTimeModule, JigsawRangeTimeModule, JigsawComboSelectModule, JigsawDialogModule,
-        JigsawSelectModule, JigsawLoadingModule, JigsawButtonModule, JigsawDemoDescriptionModule,
-        JigsawTooltipModule, JigsawNotificationModule, JigsawDrawerModule, CommonModule
+        JigsawDateTimePickerModule, JigsawRangeDateTimePickerModule, JigsawComboSelectModule,
+        JigsawDialogModule, JigsawSelectModule, JigsawLoadingModule, JigsawButtonModule,
+        JigsawDemoDescriptionModule, JigsawNotificationModule, JigsawDrawerModule,
+        CommonModule, JigsawTooltipModule
     ],
     providers: [LoadingService]
 })
 export class PopupZIndexDemoModule {
-
 }

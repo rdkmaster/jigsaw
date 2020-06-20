@@ -1,6 +1,7 @@
-import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy} from '@angular/core';
+import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy, Injector} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-rate, j-rate',
@@ -20,6 +21,11 @@ import {AbstractJigsawComponent} from "../../common/common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super()
+    }
     /**
      * @internal
      */
@@ -42,20 +48,14 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     private _onTouched = () => {
     };
 
-    private _icon: string = 'fa fa-star';
-
     @Input()
-    public get icon(): string {
-        return this._icon;
-    }
-
-    public set icon(icon: string) {
-        this._icon = icon;
-    }
+    @RequireMarkForCheck()
+    public icon: string = 'fa fa-star';
 
     private _max: number = 5;
 
     @Input()
+    @RequireMarkForCheck()
     public get max(): number {
         return this._max;
     }
@@ -67,11 +67,17 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     private _allowHalf: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set allowHalf(value: boolean) {
         this._allowHalf = !!value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): number {
         return this._value;
@@ -94,6 +100,9 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     private _disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get disabled(): boolean {
         return this._disabled;

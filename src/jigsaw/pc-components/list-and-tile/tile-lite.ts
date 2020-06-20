@@ -28,12 +28,21 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTileLite extends AbstractJigsawGroupLiteComponent {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionWidth: number | string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionHeight: number | string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showBorder: boolean = true;
 }

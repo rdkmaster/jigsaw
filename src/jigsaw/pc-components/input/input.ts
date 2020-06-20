@@ -1,15 +1,16 @@
 import {
     NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy,
-    Directive, NgZone, ChangeDetectorRef
+    Directive, NgZone, ChangeDetectorRef, Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent  implements IJigsawFormControl, ControlValueAccessor {
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -18,14 +19,18 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      *
      * $demo = input/clearable
      */
-    @Input() public clearable: boolean = true;
+    @RequireMarkForCheck()
+    @Input()
+    public clearable: boolean = true;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
      * $demo = input/disabled
      */
-    @Input() public disabled: boolean = false;
+    @RequireMarkForCheck()
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
@@ -33,7 +38,9 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * $demo = input/valid
      * $demo = form/template-driven
      */
-    @Input() public valid: boolean = true;
+    @RequireMarkForCheck()
+    @Input()
+    public valid: boolean = true;
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -64,6 +71,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
     /**
      * 文本框中当前的文本
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = input/valid
      */
     @Input()
@@ -76,9 +85,18 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
             return;
         }
         this._value = newValue;
-        this.valueChange.emit(this._value);
         this._propagateChange(this._value);
-        this._cdr.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    public _$ngValueChange(event: string) {
+        if (this._value === event) {
+            return;
+        }
+        this._value = event;
+        this.valueChange.emit(this._value);
     }
 
     /**
@@ -89,21 +107,14 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
     @Output()
     public valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    private _placeholder: string = '';
-
     /**
      * 当文本框内无文本时，显示这些文本以提示用户如何输入。
      *
      * $demo = input/valid
      */
     @Input()
-    public set placeholder(txt: string) {
-        this._placeholder = txt;
-    }
-
-    public get placeholder() {
-        return this._placeholder;
-    }
+    @RequireMarkForCheck()
+    public placeholder: string = '';
 
     protected _focused: boolean = false;
 
@@ -129,6 +140,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
      * 一般来说，是否失去焦点关系不大，但是在一些特定场合，却有很大关系。`JigsawTable`的默认单元格编辑渲染就是`JigsawInput`组件，
      * 按照`JigsawTable`的交互逻辑，单元格编辑器一旦失去焦点，就必须退回到单元格显示渲染器。
      * 在这个情况下，用户单击了清除文本按钮时就不能让输入框失去焦点。参考[这个demo]($demo=table/update-column-define)的职位列
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = table/update-column-define
      */
@@ -179,8 +192,10 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInput extends JigsawInputBase {
-    constructor(protected _cdr: ChangeDetectorRef) {
-        super(_cdr);
+    constructor(protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_cdr, _injector);
     }
 
     /**
@@ -188,8 +203,13 @@ export class JigsawInput extends JigsawInputBase {
      *
      * $demo = input/password
      */
-    @Input() public password: boolean = false;
+    @RequireMarkForCheck()
+    @Input()
+    public password: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get type(): string {
         return this.password ? "password" : "text";
@@ -223,7 +243,7 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$clearValue(): void {
-        this.value = '';
+        this._$ngValueChange('');
         this.focus();
     }
 

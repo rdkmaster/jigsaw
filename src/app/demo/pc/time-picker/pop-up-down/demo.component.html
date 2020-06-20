@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div style="height: 200px">
+    <jigsaw-button-bar style="margin-top: 120px" [data]="['up', 'down']" [(selectedItems)]="popDirection">
+    </jigsaw-button-bar>
+</div>
+<j-time-picker [popDirection]="popDirection[0]" (valueChange)="valueChange($event)">
+</j-time-picker>

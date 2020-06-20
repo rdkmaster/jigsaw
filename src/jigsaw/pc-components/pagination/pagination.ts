@@ -1,6 +1,6 @@
 import {
     NgModule, Component, Input, Output, EventEmitter, OnInit,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef
+    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Injector
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -13,6 +13,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {IPageable, PagingInfo} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class PageSizeData {
     value: number;
@@ -31,7 +32,10 @@ export class PageSizeData {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
-    constructor(private _translateService: TranslateService, private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(private _translateService: TranslateService,
+                private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super()
     }
 
@@ -65,6 +69,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     private _data: IPageable;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): IPageable {
         return this._data;
@@ -82,6 +89,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     /**
      * 指定每页可以显示多少条
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get pageSizeOptions() {
@@ -99,40 +108,52 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * 搜索功能开关
      */
-    @Input() public searchable: boolean = false;
+    @RequireMarkForCheck()
+    @Input()
+    public searchable: boolean = false;
     /**
      * 是否可以快速跳转至某页
      */
-    @Input() public showQuickJumper: boolean = false;
+    @RequireMarkForCheck()
+    @Input()
+    public showQuickJumper: boolean = false;
     /**
      * 当为「small」时，是小尺寸分页
      */
-    @Input() public mode: 'complex' | 'simple' = 'complex';
+    @RequireMarkForCheck()
+    @Input()
+    public mode: 'complex' | 'simple' = 'complex';
     /**
      * 搜索框的提示信息
      */
-    @Input() public placeholder: string = '';
+    @RequireMarkForCheck()
+    @Input()
+    public placeholder: string = '';
 
-    @Output() public search = new EventEmitter<string>();
+    @Output()
+    public search = new EventEmitter<string>();
     /**
      * 页码改变的事件
      */
-    @Output() public currentChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public currentChange: EventEmitter<any> = new EventEmitter<any>();
     /**
      * pageSize 变化的事件
      */
-    @Output() public pageSizeChange: EventEmitter<number> = new EventEmitter<number>();
+    @Output()
+    public pageSizeChange: EventEmitter<number> = new EventEmitter<number>();
 
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
 
-    @ViewChildren(JigsawInput) inputs: QueryList<JigsawInput>;
+    @ViewChildren(JigsawInput)
+    public inputs: QueryList<JigsawInput>;
+
+    private _current: number;
 
     /**
      * 当前页
      */
-    private _current: number;
-
     public get current(): number {
         return this._current
     };
@@ -474,7 +495,11 @@ export class JigsawPagingItem {
     public _isShow: boolean = false;
     private _pagination: JigsawPagination;
 
-    @Input() public pageNumber: number;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public pageNumber: number;
 
     constructor(@Optional() pagination: JigsawPagination, private _changeDetectorRef: ChangeDetectorRef) {
         this._pagination = pagination;

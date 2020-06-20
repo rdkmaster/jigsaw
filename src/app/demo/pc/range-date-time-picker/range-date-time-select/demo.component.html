@@ -1,0 +1,66 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>Range Date Time Select</h2>
+    <div class="demo-1 live-demo">
+        <h3>gr</h3>
+        <p class="comment">如下粒度（Gr）值支持日期和时间同时选择：</p>
+        <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']"
+                           [(selectedItems)]="gr"></jigsaw-button-bar>
+        <br><br>
+        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date | json}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>grItem</h3>
+        <p class="comment"></p>
+        <jigsaw-range-date-time-select [(date)]="date2" [grItems]="grItems"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date2 | json}}</p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <h3>Limit</h3>
+        <p class="comment">limit采用宏的时候，会实时根据宏计算limit时间，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd</p>
+        <div class="toggle up">
+            <label>limitStart: </label>
+            <j-radios [(value)]="limitStart">
+                <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+            <br>
+            <label>limitEnd: </label>
+            <j-radios [(value)]="limitEnd">
+                <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
+            </j-radios>
+        </div>
+        <j-range-date-time-select [(date)]="date3" [limitStart]="limitStart" [limitEnd]="limitEnd"
+                                  gr="second"></j-range-date-time-select>
+        <p class="message">{{date3 | json}}</p>
+    </div>
+
+    <div class="demo-4 live-demo">
+        <h3>step</h3>
+        <p class="comment"></p>
+        <jigsaw-range-date-time-select [(date)]="date4" gr="second" [step]="5"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date4 | json}}</p>
+    </div>
+
+    <div class="demo-5 live-demo">
+        <h3>weekStart</h3>
+        <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']"
+                           [(selectedItems)]="weekStart"></jigsaw-button-bar>
+        <br><br>
+        <jigsaw-range-date-time-select [(date)]="date5" [weekStart]="weekStart[0]" gr="week"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date5 | json}}</p>
+    </div>
+
+</div>
+

@@ -3,9 +3,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
     JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule, JigsawRadioModule,
-    JigsawComboSelectModule, JigsawRangeTimeModule, JigsawTimeModule,
-    JigsawSelectModule, JigsawTableModule, JigsawSliderModule,
-    JigsawSwitchModule, JigsawTileSelectModule
+    JigsawComboSelectModule, JigsawSelectModule, JigsawTableModule,
+    JigsawSliderModule, JigsawSwitchModule, JigsawTileSelectModule,
+    JigsawDateTimePickerModule, JigsawRangeDateTimePickerModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TemplateDrivenDemoComponent} from "./demo.component";
@@ -14,8 +14,8 @@ import {TemplateDrivenDemoComponent} from "./demo.component";
     imports: [
         FormsModule, ReactiveFormsModule, CommonModule,
         JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule,
-        JigsawRadioModule, JigsawComboSelectModule, JigsawRangeTimeModule,
-        JigsawTimeModule, JigsawSelectModule, JigsawTableModule, JigsawSliderModule,
+        JigsawRadioModule, JigsawComboSelectModule, JigsawRangeDateTimePickerModule,
+        JigsawDateTimePickerModule, JigsawSelectModule, JigsawTableModule, JigsawSliderModule,
         JigsawSwitchModule, JigsawTileSelectModule, JigsawDemoDescriptionModule
     ],
     declarations: [TemplateDrivenDemoComponent],

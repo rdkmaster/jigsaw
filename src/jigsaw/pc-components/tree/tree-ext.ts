@@ -43,6 +43,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
      */
     private _setting: ZTreeSettingSetting = this._defaultSetting();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get setting(): ZTreeSettingSetting {
         return this._setting;
@@ -63,6 +66,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     private _data: SimpleTreeData | TreeData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): SimpleTreeData | TreeData {
         return this._data;

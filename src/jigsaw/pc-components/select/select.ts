@@ -9,7 +9,8 @@ import {
     NgZone,
     OnInit,
     Output,
-    ViewChild
+    ViewChild,
+    Injector
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
@@ -17,6 +18,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawComboSelectModule} from "../combo-select/index";
 import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 选择控件
@@ -45,15 +47,21 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
-    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef) {
+    constructor(protected _zone: NgZone, private _changeDetector: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super(_zone);
     }
 
     @Input()
+    @RequireMarkForCheck()
     public valid: boolean = true;
 
     protected _width: string = '120px';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -76,6 +84,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 用于多选时设置最小宽度
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get minWidth(): string {
@@ -91,6 +100,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 用于多选时设置最大宽度
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get maxWidth(): string {
@@ -103,72 +113,108 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 设置对象的标识
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public trackItemBy: string | string[];
+    @Input()
+    public trackItemBy: string | string[];
 
     /**
      * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public labelField: string = 'label';
+    @Input()
+    public labelField: string = 'label';
 
     /**
      * placeholder文本
      */
+    @RequireMarkForCheck()
     @Input() public placeholder: string;
 
     /**
      * 不可用属性
      * $demo = select/disabled
      */
-    @Input() public disabled: boolean;
+    @RequireMarkForCheck()
+    @Input()
+    public disabled: boolean;
 
-    @Input() public optionWidth: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public optionWidth: string;
 
-    @Input() public optionHeight: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public optionHeight: string;
 
     /**
      * 显示的option个数，超出的会显示滚动条
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/option-count
      */
-    @Input() public optionCount: number;
+    @Input()
+    public optionCount: number;
 
     /**
      * 多选开关
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/multiple
      */
-    @Input() public multipleSelect: boolean;
+    @Input()
+    public multipleSelect: boolean;
 
     /**
      * 搜索开关
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/searchable
      */
-    @Input() public searchable: boolean;
+    @Input()
+    public searchable: boolean;
 
     /**
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      */
-    @Input() public clearable: boolean;
+    @RequireMarkForCheck()
+    @Input()
+    public clearable: boolean;
 
     /**
      * 打开下拉的触发方式
      *
      * $demo = select/trigger
      */
+    @RequireMarkForCheck()
     @Input() public openTrigger: 'click' | 'mouseenter' = 'mouseenter';
 
     /**
      * 关闭下拉的触发方式
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = select/trigger
      */
-    @Input() public closeTrigger: 'click' | 'mouseleave' = 'mouseleave';
+    @Input()
+    public closeTrigger: 'click' | 'mouseleave' = 'mouseleave';
 
     private _data: ArrayCollection<object>;
 
     /**
      * 提供选择的数据集合
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get data(): ArrayCollection<object> | object[] {
@@ -184,6 +230,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
      *
+     * @NoMarkForCheckRequired
      *
      * $demo = select/basic
      * $demo = select/multiple
@@ -210,16 +257,19 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      *
      * $demo = select/basic
      */
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     /**
      * 在多选时，用户点击被选中条目的叉叉时发出此事件
      *
      * $demo = select/multiple
      */
-    @Output() public remove: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public remove: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild(JigsawListLite) private _listCmp: JigsawListLite;
+    @ViewChild(JigsawListLite)
+    private _listCmp: JigsawListLite;
 
     /**
      * @internal
@@ -271,13 +321,13 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     private _propagateChange: any = () => {
     };
 
-    public writeValue(value: any): void {
+    public writeValue(value: any, emit = true): void {
         if (CommonUtils.isDefined(value)) {
             this._$selectedItems = this.multipleSelect ? value : [value];
         } else {
             this._$selectedItems = [];
         }
-        if (this.initialized) {
+        if (this.initialized && emit) {
             this.valueChange.emit(this.value);
         }
     }
@@ -293,7 +343,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         super.ngOnInit();
         // 设置默认选中的初始值
         if (CommonUtils.isDefined(this.value)) {
-            this.writeValue(this.value);
+            this.writeValue(this.value, false);
         }
     }
 }

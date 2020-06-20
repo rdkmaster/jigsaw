@@ -88,7 +88,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * @internal
      */
-    @ViewChild(JigsawTab) public _tabs: JigsawTab;
+    @ViewChild(JigsawTab)
+    public _tabs: JigsawTab;
 
     /**
      * @internal
@@ -97,6 +98,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 生成级联数据的函数，一般用于需要异步加载的数据的生产
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
@@ -110,6 +113,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      *
      * 注意，如果`data`属性的值是一个函数，则该函数的执行上下文也是此属性指定的对象。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
      */
@@ -122,6 +127,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * 级联数据
      * - 可以是一个生产数据的函数，参考`dataGenerator`
      * - 也可以是一个有层级关系的静态数据，参考`SimpleTreeData`
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = cascade/basic
      * $demo = cascade/lazy-load
@@ -166,6 +173,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * 级联选择的数据
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/selected-items
      */
     @Input()
@@ -194,6 +203,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * 数据要显示的文本key
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
      */
@@ -204,6 +215,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 数据的标识，用于判断是否为同一个数据，默认是`labelField`的值
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = cascade/track-item-by
      */
@@ -222,6 +235,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * 配置叶子节点是否可多选
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/multiple-select
      */
     @Input()
@@ -235,21 +250,27 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * $demo = cascade/cross-select
      * $demo = cascade/preset-multi-dimensional-data
      */
-        // @Input()
     public allowCrossSelect: boolean = false;
 
     /**
      * 是否可搜索
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public searchable: boolean;
 
     /**
      * 设置数据分页存储数，默认不分页
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public pageSize: number = Infinity;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionWidth: number | string;
 
@@ -351,7 +372,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             // 这里需要清除掉多余的tab页
             this._removeCascadingTabs(level);
             // 更新选中的数据
-            this.selectedItemsChange.emit(this._selectedItems);
+            if (this._cascadeDataList.length > 0) {
+                this.selectedItemsChange.emit(this._selectedItems);
+            }
             return;
         }
         this._cascadeDataList.splice(level, this._cascadeDataList.length - level, levelData);

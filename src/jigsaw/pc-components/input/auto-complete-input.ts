@@ -13,7 +13,8 @@ import {
     OnDestroy,
     Output,
     TemplateRef,
-    ViewChild
+    ViewChild,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -68,23 +69,31 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      * @internal
      */
     public _bakData: any[];
-    /**
-     * @internal
-     */
-    public _$maxDropDownHeight: string = '300px';
-    /**
-     * @internal
-     */
-    public _$maxDropDownWidth: string = this.width;
+
     /**
      * @internal
      */
     public _$propertyListOpen: boolean | null = null;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public closeDropDownOnSelect: boolean = true;
 
+    /**
+     * @internal
+     */
+    public _$maxDropDownHeight: string = '300px';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
+    public get maxDropDownHeight(): string {
+        return this._$maxDropDownHeight;
+    }
+
     public set maxDropDownHeight(value: string) {
         if (value == this._$maxDropDownHeight || !value) {
             return;
@@ -92,7 +101,19 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this._$maxDropDownHeight = CommonUtils.getCssValue(value);
     }
 
+    /**
+     * @internal
+     */
+    public _$maxDropDownWidth: string = this.width;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
+    public get maxDropDownWidth(): string {
+        return this._$maxDropDownWidth;
+    }
+
     public set maxDropDownWidth(value: string) {
         if (value == this._$maxDropDownWidth || !value) {
             return;
@@ -100,6 +121,11 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this._$maxDropDownWidth = CommonUtils.getCssValue(value);
     }
 
+    /**
+     * 下拉提示数据，支持简单字符串列表，也可以支持带分类的结构数据
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): string[] | DropDownValue[] {
         return this._$data;
@@ -123,6 +149,8 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     /**
      * 用于控制在输入框获得焦点后是否自动执行过滤
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = auto-complete-input/with-group
      */
@@ -167,8 +195,10 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone) {
-        super(_cdr, _zone);
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_cdr, _injector, _zone);
     }
 
     ngAfterViewInit() {
@@ -273,6 +303,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this.value = item;
 
         this.selectEvent.emit(item);
+        this.valueChange.emit(item);
     }
 
     /**

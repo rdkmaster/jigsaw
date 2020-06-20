@@ -17,6 +17,9 @@ export class JigsawTabPane {
 
     private _title: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get title(): string {
         return this._title;
@@ -30,14 +33,22 @@ export class JigsawTabPane {
         this._changeDetectorRef.markForCheck();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public hidden: boolean = false;
 
     /**
      * @deprecated use `lazy` instead
+     *
+     * @NoMarkForCheckRequired
      *
      * @internal
      */
@@ -47,16 +58,21 @@ export class JigsawTabPane {
     /**
      * 为true时，Tab页的视图延将被迟到该Tab页被打开的时候才被初始化。
      *
-     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public lazy: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: Object;
 
-    @ViewChild('label', {static: true}) label: TemplateRef<any> | Type<IDynamicInstantiatable>;
-    @ContentChild(TemplateRef, {static: true}) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ViewChild('label', {static: true})
+    public label: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ContentChild(TemplateRef, {static: true})
+    public content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }
 
 

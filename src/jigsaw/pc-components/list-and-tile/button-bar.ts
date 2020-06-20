@@ -29,9 +29,15 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionWidth: number | string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'primary';
 }

@@ -15,7 +15,8 @@ import {
     ViewChild,
     ViewChildren,
     NgZone,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Injector
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -24,9 +25,9 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
-import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
+import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/index";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
-
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class ComboSelectValue {
     [index: string]: any;
@@ -52,27 +53,41 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService, protected _zone: NgZone) {
+                private _popupService: PopupService,
+                protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super(_zone);
     }
 
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): ArrayCollection<ComboSelectValue> | ComboSelectValue[] {
         return this._value;
     }
 
     public set value(value: ArrayCollection<ComboSelectValue> | ComboSelectValue[]) {
-        this.writeValue(value);
-        if (value && this._value != value) {
-            this._propagateChange(this._value);
+        if (!value || this._value === value) {
+            return;
+        }
+        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        this._propagateChange(this._value);
+        if (this.initialized) {
+            this.writeValue(value);
         }
     }
 
     @Output() public valueChange = new EventEmitter<any[]>();
 
-    @Input() public labelField: string = 'label';
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = 'label';
 
     @Output()
     public select = new EventEmitter<any>();
@@ -81,11 +96,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public remove = new EventEmitter<any>();
 
     @Input()
+    @RequireMarkForCheck()
     public placeholder: string = '';
 
     private _disabled: boolean;
 
     @Input()
+    @RequireMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -100,6 +117,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
+    @RequireMarkForCheck()
     public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
@@ -112,6 +130,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
 
     @Input()
+    @RequireMarkForCheck()
     public get closeTrigger(): 'mouseleave' | 'click' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
@@ -121,6 +140,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public maxWidth: string;
 
@@ -138,6 +160,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public _$opened: boolean = false;
 
     @Input()
+    @RequireMarkForCheck()
     public get open(): boolean {
         return this._$opened;
     }
@@ -187,6 +210,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _showBorder: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set showBorder(value: boolean) {
         this._showBorder = value;
@@ -197,12 +223,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return this._showBorder;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public autoClose: boolean; //自动关闭dropdown
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public clearable: boolean = false;
 
@@ -216,14 +251,24 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _tags: QueryList<JigsawTag>;
 
     @Input()
+    @RequireMarkForCheck()
     public searchable: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searching: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchKeyword: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchBoxMinWidth: number = 40;
 
@@ -234,10 +279,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * 是否显示tag的边框和删除按钮，默认显示
      */
     @Input()
+    @RequireMarkForCheck()
     public showValueBorder: boolean = true;
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = form/template-driven
      */
@@ -342,6 +390,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public ngOnInit() {
         super.ngOnInit();
+        // 设置初始值
+        if (CommonUtils.isDefined(this.value)) {
+            this.writeValue(this.value, false);
+        }
         let maxWidth: string | number = CommonUtils.getCssValue(this.maxWidth);
         if (maxWidth && !maxWidth.match(/%/)) {
             maxWidth = parseInt(maxWidth.replace('px', ''));
@@ -370,12 +422,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _propagateChange: any = () => {
     };
 
-    public writeValue(value: any): void {
-        if (!value || this._value === value) {
-            return;
+    public writeValue(value: any, emit = true): void {
+        if (emit) {
+            this.runMicrotask(() => this.valueChange.emit(this._value));
         }
-        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.runMicrotask(() => this.valueChange.emit(this._value));
         this._autoWidth();
         this._autoClose();
 

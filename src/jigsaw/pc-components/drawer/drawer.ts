@@ -8,7 +8,8 @@ import {
     ElementRef,
     ViewChild,
     HostBinding,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
@@ -29,7 +30,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
-    constructor(private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef,
+                private _changeDetector: ChangeDetectorRef) {
         super();
         this._width = 'auto';
         this._height = 'auto';
@@ -39,6 +41,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 用于设置抽屉的位置，支持上下左右4个方向。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = drawer/basic
      */
@@ -60,6 +64,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 代表了抽屉的状态，`true`为打开状态，`false`为关闭状态。在双绑模式下，改变此属性的值可以打开或者关闭抽屉。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = drawer/basic
      */
@@ -86,6 +92,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
      * 向上寻找离抽屉最近的匹配节点作为抽屉的容器
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = drawer/with-div
      * $demo = drawer/with-scrollbar
      * $demo = drawer/with-tab
@@ -99,6 +107,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     private _offsetBottom: string;
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -112,6 +121,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -125,6 +135,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -138,6 +149,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -151,6 +163,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -164,6 +177,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -177,6 +191,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/in-dom
      */
     @Input()
@@ -372,10 +387,11 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
         this._setStyle();
         this._setClass();
+        this._changeDetector.markForCheck();
         this.runMicrotask(() => {
             // 等待抽屉的尺寸渲染完毕
             this._setHostSize();
-        })
+        });
     }
 
     ngOnInit() {
