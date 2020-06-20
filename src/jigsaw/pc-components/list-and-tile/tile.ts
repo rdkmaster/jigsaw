@@ -1,8 +1,18 @@
-import {ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule, QueryList,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    forwardRef,
+    Input,
+    NgModule,
+    QueryList,
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
+import {ArrayCollection} from "../../common/core/data/array-collection";
 
 @Component({
     selector: 'jigsaw-tile, j-tile',
@@ -16,7 +26,8 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTile extends AbstractJigsawGroupComponent {
     // 默认多选
@@ -27,6 +38,24 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
 
     @Input()
     public showBorder: boolean = true;
+
+    @Input()
+    public get selectedItems(): ArrayCollection<any> | any[] {
+        return this._selectedItems;
+    }
+
+    public set selectedItems(newValue: ArrayCollection<any> | any[]) {
+        this.writeValue(newValue);
+        if (this._selectedItems === newValue) {
+            return;
+        }
+        this._propagateChange(newValue);
+        this._cdr.markForCheck();
+    }
+
+    constructor(private _cdr: ChangeDetectorRef) {
+        super();
+    }
 
 }
 
@@ -41,11 +70,12 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
         '[class.jigsaw-tile-option-active]': 'selected',
         '[class.jigsaw-tile-option-disabled]': 'disabled',
         '(click)': '_$handleClick()'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTileOption extends AbstractJigsawOptionComponent {
 
-    constructor(public changeDetector: ChangeDetectorRef) {
+    constructor(public cdr: ChangeDetectorRef) {
         super();
     }
 

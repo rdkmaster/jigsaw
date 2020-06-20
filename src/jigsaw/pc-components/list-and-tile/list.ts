@@ -1,5 +1,13 @@
 import {
-    AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, forwardRef, Input, NgModule,
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    ElementRef,
+    forwardRef,
+    Input,
+    NgModule,
     QueryList
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -18,7 +26,8 @@ import {AbstractJigsawGroupComponent} from "./group-common";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
     // 默认单选
@@ -26,6 +35,10 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
 
     @Input()
     public disabled : boolean =false;
+
+    constructor(public cdr:ChangeDetectorRef) {
+        super();
+    }
 
     /**
      * 获取映射的子组件
@@ -44,10 +57,11 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[class.jigsaw-list-option-disabled]': 'disabled',
         '[class.jigsaw-list-option-separator]': '!value',
         '(click)': '_$handleClick()'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
-    constructor(public changeDetector: ChangeDetectorRef, public elementRef: ElementRef) {
+    constructor(public cdr: ChangeDetectorRef, public elementRef: ElementRef) {
         super();
     }
 

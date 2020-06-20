@@ -1,6 +1,8 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChildren,
     Directive,
@@ -49,7 +51,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     abstract get dialog(): JigsawDialog;
     abstract set dialog(value: JigsawDialog);
 
-    private _caption: string = '';
+    protected _caption: string = '';
 
     @Input()
     public get caption(): string {
@@ -63,7 +65,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
-    private _buttons: ButtonInfo[];
+    protected _buttons: ButtonInfo[];
 
     @Input()
     public get buttons(): ButtonInfo[] {
@@ -196,7 +198,7 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
     public _$inlineButtons: QueryList<JigsawButton>;
     public _$hasInlineButtons: boolean = false;
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone , public cdr:ChangeDetectorRef) {
         super(renderer, elementRef, _zone);
         this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-dialog-host');
     }

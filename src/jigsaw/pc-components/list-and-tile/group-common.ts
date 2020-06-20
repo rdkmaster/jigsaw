@@ -122,6 +122,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
                 item.selected = hasSelected;
+                item.cdr.markForCheck();
             });
         });
     }
@@ -140,6 +141,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                         this._updateSelectItemsForForm(item.value, item.selected);
                     }
                 }
+                item.cdr.markForCheck();
             })
         });
     }
@@ -226,6 +228,5 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     @Output()
     public change = new EventEmitter<AbstractJigsawOptionComponent>();
 
-    public changeDetector: ChangeDetectorRef
-
+    public cdr: ChangeDetectorRef
 }
