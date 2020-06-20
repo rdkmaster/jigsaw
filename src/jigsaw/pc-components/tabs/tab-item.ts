@@ -163,7 +163,8 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     },
     template: `
         <ng-template #body></ng-template>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
 
