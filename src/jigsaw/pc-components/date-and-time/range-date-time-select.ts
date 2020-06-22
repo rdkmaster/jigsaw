@@ -4,11 +4,12 @@ import {
     Component,
     EventEmitter,
     forwardRef,
+    Injector,
     Input,
     NgModule,
+    OnDestroy,
     OnInit,
-    Output,
-    OnDestroy
+    Output
 } from '@angular/core';
 import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
@@ -22,6 +23,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
@@ -32,7 +34,8 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200">
             <ng-template>
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
-                                               [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step" [weekStart]="weekStart"
+                                               [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
+                                               [weekStart]="weekStart"
                                                (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
                 </jigsaw-range-date-time-picker>
             </ng-template>
@@ -48,7 +51,9 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
-    constructor(private _cdr: ChangeDetectorRef) {
+    constructor(private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._removeDateItemChangeSubscriber = this._$dateItemChange.pipe(debounceTime(100)).subscribe(() => {
             let value = {beginDate: this._$beginDate, endDate: this._$endDate};
@@ -57,10 +62,8 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         })
     }
 
-    /**
-     * @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public valid: boolean = true;
 
     private _gr: TimeGr = TimeGr.date;
@@ -109,10 +112,10 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     public set date(date: RangeDate) {
         if (!this._isDateChanged(date, this.date)) return;
+
+        this._date = date;
         if (this.initialized) {
             this._changeRangeDateByGr();
-        } else {
-            this._date = date;
         }
     }
 
@@ -155,28 +158,22 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     @Input()
     public weekStart: string | TimeWeekStart;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+
     @Input()
+    @RequireMarkForCheck()
     public placeholder: string = '';
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+
     @Input()
+    @RequireMarkForCheck()
     public disabled: boolean;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
     @Input()
+    @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
     /**
