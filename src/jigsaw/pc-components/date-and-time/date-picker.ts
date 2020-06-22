@@ -194,6 +194,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createYearCal(year: number) {
+        this._verifyLimit();
         let startYear = year - year % 10 - 1;
         let endYear = startYear + (this._YEAR_CAL_COL * this._YEAR_CAL_ROW - 1);
         this._$yearList = this._createYearList(startYear, endYear);
@@ -255,6 +256,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createMonthCal(year: number) {
+        this._verifyLimit();
         this._$monthList = this._createMonthList(year);
         this._$curYear = year;
     }
@@ -316,6 +318,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createDayCal(year: number, month: number) {
+        this._verifyLimit();
         this._weekPos = this._getWeekPos();
         this._$weekList = this._createWeekList(this._weekPos);
         this._$dayList = this._createDayList(this._weekPos, year, month);
@@ -664,6 +667,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _handleLimit(value: Time): Time {
+        this._verifyLimit();
         if (this._limitStart && value < this.limitStart) {
             return this.limitStart;
         }
@@ -671,6 +675,13 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return this.limitEnd;
         }
         return value;
+    }
+
+    private _verifyLimit() {
+        if(!this.limitStart || !this.limitEnd) return;
+        if(this.limitEnd < this.limitStart) {
+            this._limitEnd = this.limitStart;
+        }
     }
 
     private _weekStart: TimeWeekStart;
