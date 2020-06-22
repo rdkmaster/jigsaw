@@ -94,7 +94,9 @@ export class CascadeTabContentInitData {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCascade extends AbstractJigsawComponent implements AfterViewInit, OnInit {
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private _injector: Injector) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
@@ -439,7 +441,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                         <span jigsaw-prefix-icon class="fa fa-search"></span>
                     </j-input>
                 </div>
-                <j-tile #jTile [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$handleSelect()"
+                <j-tile [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$handleSelect()"
                         [trackItemBy]="_$cascade?.trackItemBy" [multipleSelect]="initData.multipleSelect">
                     <div *ngIf="initData?.showAll" class="jigsaw-cascade-show-all"
                          (click)="_$cascade?._selectAll(initData.level)">
@@ -465,15 +467,14 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
          * @internal
          */
         @Optional() public _$cascade: JigsawCascade,
-        private _cdr: ChangeDetectorRef
+        private _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector
     ) {
         super();
     }
 
     private _removeListRefreshListener: CallbackRemoval;
-
-    @ViewChild('jTile')
-    private _tile: JigsawTile;
 
     public initData: CascadeTabContentInitData;
 
@@ -504,6 +505,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     /**
      * @internal
      */
+    @RequireMarkForCheck()
     public get _$list() {
         return this._list;
     }
@@ -536,7 +538,6 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         } else {
             console.error('value type error, jigsaw-list supports Array and ArrayCollection');
         }
-        this._cdr.markForCheck();
     }
 
     /**
@@ -585,6 +586,9 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this._$list).filter(filterKey, [this._$cascade.labelField]);
+        (<LocalPageableArray<any> | PageableArray>this._$list).pagingInfo.subscribe(() => {
+            this._cdr.markForCheck();
+        });
     }
 
     private _updateSelectedItemsByCurrent() {

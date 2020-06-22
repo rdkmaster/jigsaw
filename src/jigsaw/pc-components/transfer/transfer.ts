@@ -157,7 +157,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data() {
         return this._$data;
@@ -249,12 +251,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
-
-    constructor(private _cdr: ChangeDetectorRef) {
-        super();
-    }
-
-
     private _filterDataBySelectedItems() {
         if (this._$data.busy) {
             const removeAjaxCallback = this._$data.onAjaxComplete(() => {
@@ -328,7 +324,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, public cdr: ChangeDetectorRef) {
+    constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
         super();
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
@@ -366,7 +362,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
-                this.cdr.markForCheck();
+                this._cdr.markForCheck();
             });
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
@@ -451,7 +447,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 }
             });
             this._data.refresh();
-            this.cdr.detectChanges();
+            this._cdr.detectChanges();
         })
     }
 
@@ -481,7 +477,9 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             keyword: filterKey,
             fields: [field]
         });
-        this.cdr.detectChanges();
+        this._data.pagingInfo.subscribe(() => {
+            this._cdr.markForCheck();
+        });
     }
 
     /**
@@ -503,7 +501,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
         }
         this.selectedItemsChange.emit(this.selectedItems);
-        this.cdr.markForCheck();
+        this._cdr.markForCheck();
     }
 
     /**

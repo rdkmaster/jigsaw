@@ -26,14 +26,17 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `
-        <j-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%" (valueChange)="_$handleSearching($event)">
+        <j-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
+                 (valueChange)="_$handleSearching($event)">
             <span jigsaw-prefix-icon class="fa fa-search"></span>
         </j-input>
-        <div class="jigsaw-list-lite-wrapper" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+        <div class="jigsaw-list-lite-wrapper"
+             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">
             <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
-                <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
+                <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+                               [disabled]="item?.disabled">
                     <p class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
                         {{item && item[labelField] ? item[labelField] : item}}</p>
                 </j-list-option>
@@ -80,18 +83,18 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public set data(data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[]) {
-        if(!data || this.data == data) return;
+        if (!data || this.data == data) return;
         this._data = data;
         this.dataChange.emit(this.data);
-        if(this._data instanceof ArrayCollection || this._data instanceof LocalPageableArray || this._data instanceof PageableArray) {
-            if(this._removeOnChange) {
+        if (this._data instanceof ArrayCollection || this._data instanceof LocalPageableArray || this._data instanceof PageableArray) {
+            if (this._removeOnChange) {
                 this._removeOnChange();
             }
             this._removeOnChange = this._data.onChange(() => {
                 this.removeInvalidSelectedItems();
             });
         }
-        if(this._needCheckSelectedItems) {
+        if (this._needCheckSelectedItems) {
             this.removeInvalidSelectedItems();
         } else {
             this._needCheckSelectedItems = true;
@@ -137,12 +140,11 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     private _needCheckSelectedItems: boolean = true;
 
     public removeInvalidSelectedItems() {
-        if(this._listInst) {
+        if (this._listInst) {
             // 等待ngFor渲染
             this.runAfterMicrotasks(() => {
                 this._zone.run(() => {
                     this._listInst._removeInvalidSelectedItems();
-                    this._listInst.cdr.markForCheck();
                 })
             })
         }
@@ -161,6 +163,9 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        (<LocalPageableArray<any> | PageableArray>this.data).pagingInfo.subscribe(() => {
+            this._changeDetectorRef.markForCheck();
+        });
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
@@ -179,7 +184,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if(this._removeOnChange) {
+        if (this._removeOnChange) {
             this._removeOnChange();
             this._removeOnChange = null;
         }

@@ -2,8 +2,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ContentChildren,
-    forwardRef,
+    ContentChildren, ElementRef,
+    forwardRef, Injector,
     Input,
     NgModule,
     QueryList,
@@ -13,6 +13,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-tile, j-tile',
@@ -42,6 +43,7 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
     @Input()
     public showBorder: boolean = true;
 
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
@@ -53,11 +55,12 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
             return;
         }
         this._propagateChange(newValue);
-        this._cdr.markForCheck();
     }
 
-    constructor(private _cdr: ChangeDetectorRef) {
-        super();
+    constructor(protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector:Injector) {
+        super(_cdr);
     }
 
 }
@@ -78,8 +81,10 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
 })
 export class JigsawTileOption extends AbstractJigsawOptionComponent {
 
-    constructor(public cdr: ChangeDetectorRef) {
-        super();
+    constructor(/*@Internal*/ public cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 
     /**

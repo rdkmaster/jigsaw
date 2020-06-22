@@ -4,7 +4,7 @@ import {
     Component,
     ContentChildren,
     EventEmitter,
-    forwardRef,
+    forwardRef, Injector,
     Input,
     NgModule,
     Output,
@@ -92,8 +92,10 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
     changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadioOption extends AbstractJigsawOptionComponent {
-    constructor(public cdr: ChangeDetectorRef) {
-        super();
+    constructor(/*@Internal*/public cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector:Injector) {
+        super(_injector);
     }
 
     /**

@@ -5,7 +5,7 @@ import {
     Component,
     ContentChildren,
     ElementRef,
-    forwardRef,
+    forwardRef, Injector,
     Input,
     NgModule,
     QueryList
@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-list, j-list',
@@ -39,10 +40,10 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
      * @NoMarkForCheckRequired
      */
     @Input()
-    public disabled : boolean =false;
+    public disabled: boolean = false;
 
-    constructor(public cdr:ChangeDetectorRef) {
-        super();
+    constructor(protected _cdr: ChangeDetectorRef) {
+        super(_cdr);
     }
 
     /**
@@ -66,15 +67,15 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
-    constructor(public cdr: ChangeDetectorRef, public elementRef: ElementRef) {
-        super();
+    constructor(/*@Internal*/public cdr: ChangeDetectorRef, public elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 
     private _selected: boolean = false; // 选中状态
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get selected(): boolean {
         return this._selected;
@@ -93,7 +94,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
      * @internal
      */
     public _$handleClick(): void {
-        if(this.disabled || !this.value) return;
+        if (this.disabled || !this.value) return;
         this.change.emit(this);
     }
 }

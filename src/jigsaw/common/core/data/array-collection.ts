@@ -875,7 +875,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     private _bakData: T[] = [];
 
-    public _filterSubject = new Subject<DataFilterInfo>();
+    private _filterSubject = new Subject<DataFilterInfo>();
     private _sortSubject = new Subject<DataSortInfo>();
 
     private _filteredData: T[];
@@ -943,9 +943,6 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
-            if(this['cdr']){
-                this['cdr']();
-            }
         });
 
         this._sortSubject.pipe(debounceTime(300)).subscribe((sortInfo: DataSortInfo) => {
