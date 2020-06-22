@@ -43,7 +43,7 @@ export enum AlertLevel {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,public cdr:ChangeDetectorRef) {
         super(renderer, elementRef, _zone);
     }
 
