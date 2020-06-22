@@ -114,7 +114,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * 生成级联数据的函数，一般用于需要异步加载的数据的生产
      *
-     * @NoMarkForCheckRequired
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
