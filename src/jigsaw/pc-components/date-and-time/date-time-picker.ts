@@ -368,15 +368,15 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     private _getDefaultLimitStart() {
-        return this.gr == TimeGr.hour ? '00' : this.gr == TimeGr.time_hour_minute ? '00:00' : '00:00:00';
+        return this.gr == TimeGr.hour ? '00' : this.gr == TimeGr.minute ? '00:00' : '00:00:00';
     }
 
     private _getDefaultLimitEnd() {
-        return this.gr == TimeGr.hour ? '23' : this.gr == TimeGr.time_hour_minute ? '23:59' : '23:59:59';
+        return this.gr == TimeGr.hour ? '23' : this.gr == TimeGr.minute ? '23:59' : '23:59:59';
     }
 
     private _getDefaultTime() {
-        return this.gr == TimeGr.hour ? '00' : this.gr == TimeGr.time_hour_minute ? '00:00' : '00:00:00';
+        return this.gr == TimeGr.hour ? '00' : this.gr == TimeGr.minute ? '00:00' : '00:00:00';
     }
 
     private _isDateSame(date1, date2) {
