@@ -688,13 +688,18 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if (value) {
-            if (typeof value === 'string') {
-                this._weekStart = TimeWeekStart[value];
-            } else {
-                this._weekStart = value;
+        if(!value) return;
+        if (typeof value === 'string') {
+            this._weekStart = TimeWeekStart[value];
+        } else {
+            this._weekStart = value;
+        }
+        TimeService.setWeekStart(this._weekStart);
+        if(this.initialized) {
+            if(this.date && this.gr == TimeGr.week) {
+                // weekStart改变时，在跨年时之前的weekDate可能会无效，需要重新计算
+                this.date = TimeService.getDateByGr(this.date, this.gr)
             }
-            TimeService.setWeekStart(this._weekStart);
             this._createCalendar();
         }
     }

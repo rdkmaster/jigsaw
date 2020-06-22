@@ -260,13 +260,28 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Input()
     public step: TimeStep;
 
+    private _weekStart: TimeWeekStart;
+
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
      * $demo = range-date-time-picker/week-start
      */
     @Input()
     @RequireMarkForCheck()
-    public weekStart: string | TimeWeekStart;
+    public get weekStart(): string | TimeWeekStart {
+        return this._weekStart;
+    }
+
+    public set weekStart(value: string | TimeWeekStart) {
+        if(!value) return;
+        if (typeof value === 'string') {
+            this._weekStart = TimeWeekStart[value];
+        } else {
+            this._weekStart = value;
+        }
+        // weekStart必须预先设置好，用于初始化之后的计算
+        TimeService.setWeekStart(this._weekStart);
+    }
 
     /**
      * 当用户选择时间时，Jigsaw发出此事件。
