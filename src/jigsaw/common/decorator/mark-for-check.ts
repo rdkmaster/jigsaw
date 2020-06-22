@@ -4,7 +4,20 @@ import {ChangeDetectorRef} from '@angular/core';
  * 检查装饰器所装饰的属性，是否本身就是 getter/setter
  */
 const checkDescriptor = (target: Object, propertyName: string) => {
-    const descriptor = Object.getOwnPropertyDescriptor(target, propertyName);
+    let descriptor = Object.getOwnPropertyDescriptor(target, propertyName);
+    if (!descriptor) {
+        // 当前类中的该属性没有getter/setter方法，需要检查他的父类中，该属性是否是getter/getter方法
+        let parentPrototype = Object.getPrototypeOf(target);
+        if (parentPrototype) {
+            descriptor = Object.getOwnPropertyDescriptor(parentPrototype, propertyName);
+        }
+        while (!descriptor && parentPrototype) {
+            parentPrototype = Object.getPrototypeOf(parentPrototype);
+            if (parentPrototype) {
+                descriptor = Object.getOwnPropertyDescriptor(parentPrototype, propertyName);
+            }
+        }
+    }
     if (descriptor && !descriptor.configurable) {
         throw new TypeError(`property ${propertyName} is not configurable`);
     }
