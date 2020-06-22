@@ -10,7 +10,8 @@ import {
     Input,
     ChangeDetectorRef,
     NgZone,
-    NgModule
+    NgModule,
+    Injector
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule} from '@angular/forms';
 import {GrItem, MarkDate, Shortcut} from "./date-picker";
@@ -21,6 +22,7 @@ import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {TimeStep} from "./time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 declare const moment: any;
 
@@ -54,7 +56,9 @@ declare const moment: any;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
-    constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
+    constructor(protected _zone: NgZone, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(100)).subscribe(() => {
             if (!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
@@ -94,6 +98,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      * $demo = range-date-time-picker/gr
      */
     @Input("gr")
+    @RequireMarkForCheck()
     public get gr(): TimeGr | string {
         return (this._$gr || this._$gr === 0) ? this._$gr : TimeGr.date;
     }
@@ -231,22 +236,18 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 参考`JigsawDateTimePicker.grItems`
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = range-date-time-picker/gr-items
      */
     @Input()
+    @RequireMarkForCheck()
     public grItems: GrItem[];
 
     /**
      * 对选定的日期做标记，用于提示用户这些日期具有特定含义
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = date-time-picker/mark
      */
     @Input()
+    @RequireMarkForCheck()
     public markDates: MarkDate[];
 
     /**
@@ -261,12 +262,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = range-date-time-picker/week-start
      */
     @Input()
+    @RequireMarkForCheck()
     public weekStart: string | TimeWeekStart;
 
     /**

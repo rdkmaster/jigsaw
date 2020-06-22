@@ -11,7 +11,8 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    ViewChild
+    ViewChild,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -59,7 +60,9 @@ export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: bo
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTimePicker extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit {
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone) {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(300)).subscribe(() => {
             this._hour = this._hour ? this._hour : '00';

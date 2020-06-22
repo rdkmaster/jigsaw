@@ -4,6 +4,7 @@ $date-time-select-prefix-cls: #{$jigsaw-prefix}-date-time-select;
 $range-date-time-select-prefix-cls: #{$jigsaw-prefix}-range-date-time-select;
 
 .#{$date-time-select-prefix-cls}, .#{$range-date-time-select-prefix-cls} {
+    @include inline-block();
     .jigsaw-combo-select-selection-rendered .jigsaw-tag-host {
         border: none;
         max-width: none;
