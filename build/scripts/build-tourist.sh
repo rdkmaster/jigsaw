@@ -5,6 +5,7 @@ touristDir=`pwd`/../jigsaw-tourist
 mkdir -p $touristDir
 git clone https://github.com/rdkmaster/jigsaw-tourist.git $touristDir
 cd $touristDir
+git checkout v1.1
 npm install
 
 #update jigsaw npm package
