@@ -23,6 +23,7 @@ import {TimeStep} from "./time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 declare const moment: any;
 
@@ -62,7 +63,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(100)).subscribe(() => {
             if (!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
-                this.endDate > TimeService.convertValue(this._$endTimeLimitEnd, this._$gr)) return;
+                this.endDate > TimeService.getDateByGr(this._$endTimeLimitEnd, this._$gr)) return;
             this.writeValue({beginDate: this.beginDate, endDate: this.endDate});
             this._propagateChange({beginDate: this.beginDate, endDate: this.endDate});
         })
@@ -273,7 +274,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if(!value) return;
+        if(CommonUtils.isUndefined(value)) return;
         if (typeof value === 'string') {
             this._weekStart = TimeWeekStart[value];
         } else {
