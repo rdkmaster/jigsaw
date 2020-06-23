@@ -42,27 +42,6 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
      */
     @Input()
     public showBorder: boolean = true;
-
-    @RequireMarkForCheck()
-    @Input()
-    public get selectedItems(): ArrayCollection<any> | any[] {
-        return this._selectedItems;
-    }
-
-    public set selectedItems(newValue: ArrayCollection<any> | any[]) {
-        this.writeValue(newValue);
-        if (this._selectedItems === newValue) {
-            return;
-        }
-        this._propagateChange(newValue);
-    }
-
-    constructor(protected _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector:Injector) {
-        super(_cdr);
-    }
-
 }
 
 @Component({
@@ -81,8 +60,7 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
 })
 export class JigsawTileOption extends AbstractJigsawOptionComponent {
 
-    constructor(/*@Internal*/ public cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
+    constructor(// @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_injector);
     }

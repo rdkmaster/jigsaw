@@ -14,7 +14,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {JigsawTabsModule} from "../tabs/index";
 import {JigsawTile, JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
@@ -573,6 +573,8 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         }
     }
 
+    private _removeFilterSubscribe: Subscription;
+
     /**
      * @internal
      */
@@ -585,7 +587,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this._$list).filter(filterKey, [this._$cascade.labelField]);
-        (<LocalPageableArray<any> | PageableArray>this._$list).pagingInfo.subscribe(() => {
+        this._removeFilterSubscribe = (<LocalPageableArray<any> | PageableArray>this._$list).pagingInfo.subscribe(() => {
             this._cdr.markForCheck();
         });
     }
@@ -676,6 +678,10 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         if (this._removeListRefreshListener) {
             this._removeListRefreshListener();
             this._removeListRefreshListener = null;
+        }
+        if (this._removeFilterSubscribe) {
+            this._removeFilterSubscribe.unsubscribe();
+            this._removeFilterSubscribe = null;
         }
     }
 }

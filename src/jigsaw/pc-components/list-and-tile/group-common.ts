@@ -65,9 +65,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     protected _selectedItems = new ArrayCollection<any>();
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
@@ -81,7 +79,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
-    constructor(protected _cdr: ChangeDetectorRef) {
+    constructor(protected _cdr: ChangeDetectorRef, private _injector: Injector) {
         super();
     }
 
@@ -89,15 +87,14 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
      * @internal
      */
     public _removeInvalidSelectedItems(): void {
+        this._cdr.markForCheck();
         if (!this._items || !this._selectedItems || !this._selectedItems.length) {
-            this._cdr.markForCheck();
             return;
         }
         let needRefresh = false;
         let selectedItems = this._selectedItems.concat();
         selectedItems.forEach(selectedItem => {
             if (this._items.find(item => CommonUtils.compareWithKeyProperty(item.value, selectedItem, this._trackItemBy))) {
-                this._cdr.markForCheck();
                 return;
             }
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
@@ -106,7 +103,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (needRefresh) {
             this.selectedItemsChange.emit(this.selectedItems);
         }
-        this._cdr.markForCheck();
     }
 
     @Output() public selectedItemsChange = new EventEmitter<any[]>();

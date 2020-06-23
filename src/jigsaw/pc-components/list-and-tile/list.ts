@@ -42,10 +42,6 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     @Input()
     public disabled: boolean = false;
 
-    constructor(protected _cdr: ChangeDetectorRef) {
-        super(_cdr);
-    }
-
     /**
      * 获取映射的子组件
      * @internal
@@ -67,7 +63,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
-    constructor(/*@Internal*/public cdr: ChangeDetectorRef, public elementRef: ElementRef,
+    constructor(public elementRef: ElementRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_injector);

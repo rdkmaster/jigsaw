@@ -117,7 +117,7 @@ const transferServerFilterFunction = function (item) {
                 ]))
             ])
         ])],
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 
@@ -263,7 +263,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     private _filterData() {
-        this._$data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
+        this._$data.filter(this._filterFunction, {
+            selectedItems: [].concat(...this.selectedItems),
+            trackItemBy: this.trackItemBy
+        });
     }
 
     /**
@@ -321,7 +324,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     host: {
         '[class.jigsaw-transfer-list-frame]': 'true'
     },
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
@@ -470,6 +473,8 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
     }
 
+    private _removeFilterSubscribe: Subscription;
+
     private _filterData(filterKey: string, field: string | number) {
         this._data.filter(this._filterFunction, {
             selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
@@ -477,7 +482,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             keyword: filterKey,
             fields: [field]
         });
-        this._data.pagingInfo.subscribe(() => {
+        this._removeFilterSubscribe = this._data.pagingInfo.subscribe(() => {
             this._cdr.markForCheck();
         });
     }
@@ -543,6 +548,10 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._removeArrayCallbackListener) {
             this._removeArrayCallbackListener();
             this._removeArrayCallbackListener = null;
+        }
+        if (this._removeFilterSubscribe) {
+            this._removeFilterSubscribe.unsubscribe();
+            this._removeFilterSubscribe = null;
         }
     }
 }

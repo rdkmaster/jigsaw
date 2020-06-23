@@ -56,7 +56,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     abstract get dialog(): JigsawDialog;
     abstract set dialog(value: JigsawDialog);
 
-    protected _caption: string = '';
+    private _caption: string = '';
 
     /**
      * @NoMarkForCheckRequired
@@ -73,7 +73,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
-    protected _buttons: ButtonInfo[];
+    private _buttons: ButtonInfo[];
 
     /**
      * @NoMarkForCheckRequired

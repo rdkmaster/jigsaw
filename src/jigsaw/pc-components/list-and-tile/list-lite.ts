@@ -11,6 +11,7 @@ import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scr
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
+import {Subscription} from "rxjs";
 
 /**
  * 一个轻量的list控件，是在list控件基础上做的封装，做了一些功能的拓展
@@ -150,6 +151,8 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         }
     }
 
+    private _removeFilterSubscribe: Subscription
+
     /**
      * @internal
      */
@@ -163,11 +166,12 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
-        (<LocalPageableArray<any> | PageableArray>this.data).pagingInfo.subscribe(() => {
+        this._removeFilterSubscribe = (<LocalPageableArray<any> | PageableArray>this.data).pagingInfo.subscribe(() => {
             this._changeDetectorRef.markForCheck();
         });
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
+
 
     private _setListWrapperHeight() {
         if (!this.optionCount || !this._listOptions.length) return;
@@ -187,6 +191,10 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         if (this._removeOnChange) {
             this._removeOnChange();
             this._removeOnChange = null;
+        }
+        if (this._removeFilterSubscribe) {
+            this._removeFilterSubscribe.unsubscribe();
+            this._removeFilterSubscribe = null;
         }
     }
 }

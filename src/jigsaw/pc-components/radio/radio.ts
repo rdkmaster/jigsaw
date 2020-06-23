@@ -26,7 +26,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
     ],
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
@@ -89,12 +89,11 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
         '[class.jigsaw-radio-option]': 'true',
         '[class.jigsaw-radio-option-disabled]': 'disabled'
     },
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadioOption extends AbstractJigsawOptionComponent {
-    constructor(/*@Internal*/public cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector:Injector) {
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_injector);
     }
 
