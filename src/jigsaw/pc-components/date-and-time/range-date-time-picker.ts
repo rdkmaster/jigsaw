@@ -62,7 +62,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(100)).subscribe(() => {
             if (!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
-                this.endDate > TimeService.convertValue(this._$endTimeLimitEnd, this._$gr)) return;
+                this.endDate > TimeService.getDateByGr(this._$endTimeLimitEnd, this._$gr)) return;
             this.writeValue({beginDate: this.beginDate, endDate: this.endDate});
             this._propagateChange({beginDate: this.beginDate, endDate: this.endDate});
         })
