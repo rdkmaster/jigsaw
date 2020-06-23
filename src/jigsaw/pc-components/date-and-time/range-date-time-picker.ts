@@ -23,6 +23,7 @@ import {TimeStep} from "./time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 declare const moment: any;
 
@@ -273,7 +274,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if(!value) return;
+        if(CommonUtils.isUndefined(value)) return;
         if (typeof value === 'string') {
             this._weekStart = TimeWeekStart[value];
         } else {

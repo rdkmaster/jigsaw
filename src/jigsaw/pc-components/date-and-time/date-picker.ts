@@ -21,6 +21,7 @@ import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 declare const moment: any;
 
@@ -699,7 +700,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if(!value) return;
+        if(CommonUtils.isUndefined(value)) return;
         if (typeof value === 'string') {
             this._weekStart = TimeWeekStart[value];
         } else {
