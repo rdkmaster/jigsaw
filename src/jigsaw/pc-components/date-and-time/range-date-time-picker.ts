@@ -23,6 +23,7 @@ import {TimeStep} from "./time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 declare const moment: any;
 
@@ -62,7 +63,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         super(_zone);
         this._removeUpdateValueSubscriber = this._updateValue.pipe(debounceTime(100)).subscribe(() => {
             if (!this.beginDate || !this.endDate || this.endDate < this.beginDate ||
-                this.endDate > TimeService.convertValue(this._$endTimeLimitEnd, this._$gr)) return;
+                this.endDate > TimeService.getDateByGr(this._$endTimeLimitEnd, this._$gr)) return;
             this.writeValue({beginDate: this.beginDate, endDate: this.endDate});
             this._propagateChange({beginDate: this.beginDate, endDate: this.endDate});
         })
@@ -260,13 +261,28 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Input()
     public step: TimeStep;
 
+    private _weekStart: TimeWeekStart;
+
     /**
      * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
      * $demo = range-date-time-picker/week-start
      */
     @Input()
     @RequireMarkForCheck()
-    public weekStart: string | TimeWeekStart;
+    public get weekStart(): string | TimeWeekStart {
+        return this._weekStart;
+    }
+
+    public set weekStart(value: string | TimeWeekStart) {
+        if(CommonUtils.isUndefined(value)) return;
+        if (typeof value === 'string') {
+            this._weekStart = TimeWeekStart[value];
+        } else {
+            this._weekStart = value;
+        }
+        // weekStart必须预先设置好，用于初始化之后的计算
+        TimeService.setWeekStart(this._weekStart);
+    }
 
     /**
      * 当用户选择时间时，Jigsaw发出此事件。

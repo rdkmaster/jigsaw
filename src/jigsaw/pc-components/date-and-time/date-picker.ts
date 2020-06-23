@@ -21,6 +21,7 @@ import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 declare const moment: any;
 
@@ -194,6 +195,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createYearCal(year: number) {
+        this._verifyLimit();
         let startYear = year - year % 10 - 1;
         let endYear = startYear + (this._YEAR_CAL_COL * this._YEAR_CAL_ROW - 1);
         this._$yearList = this._createYearList(startYear, endYear);
@@ -255,6 +257,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createMonthCal(year: number) {
+        this._verifyLimit();
         this._$monthList = this._createMonthList(year);
         this._$curYear = year;
     }
@@ -316,6 +319,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _createDayCal(year: number, month: number) {
+        this._verifyLimit();
         this._weekPos = this._getWeekPos();
         this._$weekList = this._createWeekList(this._weekPos);
         this._$dayList = this._createDayList(this._weekPos, year, month);
@@ -664,6 +668,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     private _handleLimit(value: Time): Time {
+        this._verifyLimit();
         if (this._limitStart && value < this.limitStart) {
             return this.limitStart;
         }
@@ -671,6 +676,13 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return this.limitEnd;
         }
         return value;
+    }
+
+    private _verifyLimit() {
+        if(!this.limitStart || !this.limitEnd) return;
+        if(this.limitEnd < this.limitStart) {
+            this._limitEnd = this.limitStart;
+        }
     }
 
     private _weekStart: TimeWeekStart;
@@ -688,13 +700,18 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if (value) {
-            if (typeof value === 'string') {
-                this._weekStart = TimeWeekStart[value];
-            } else {
-                this._weekStart = value;
+        if(CommonUtils.isUndefined(value)) return;
+        if (typeof value === 'string') {
+            this._weekStart = TimeWeekStart[value];
+        } else {
+            this._weekStart = value;
+        }
+        TimeService.setWeekStart(this._weekStart);
+        if(this.initialized) {
+            if(this.date && this.gr == TimeGr.week) {
+                // weekStart改变时，在跨年时之前的weekDate可能会无效，需要重新计算
+                this.date = TimeService.getDateByGr(this.date, this.gr)
             }
-            TimeService.setWeekStart(this._weekStart);
             this._createCalendar();
         }
     }
