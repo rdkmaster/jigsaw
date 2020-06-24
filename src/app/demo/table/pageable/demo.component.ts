@@ -44,6 +44,8 @@ export class TablePageableDemoComponent {
         this.pageable.filter(filter, context);
     }
 
+    enterSearch: boolean = false;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

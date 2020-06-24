@@ -143,10 +143,57 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @Input() public mode: 'complex' | 'simple' = 'complex'; // 当为「small」时，是小尺寸分页
     @Input() public placeholder: string = '';
 
+    @Input() public enterSearch: boolean;
+
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
 
     @ViewChildren(JigsawInput) inputs: QueryList<JigsawInput>;
+
+    /**
+     * @internal
+     */
+    public _$searchKeyChange($event) {
+        if (this.enterSearch) {
+            // 输入3000ms没有回车也会发一次事件
+            this._debounceSearch($event);
+        } else {
+            this.search.emit($event)
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$searchKey: string;
+
+    /**
+     * @internal
+     */
+    public _$enterSearch($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        if (this.enterSearch) {
+            this._clearSearchTimer();
+            this.search.emit(this._$searchKey);
+        }
+    }
+
+    private _searchTimer: number;
+
+    private _debounceSearch(key: string) {
+        this._clearSearchTimer();
+        this._searchTimer = this.callLater(() => {
+            this.search.emit(key);
+        }, 3000)
+    }
+
+    private _clearSearchTimer() {
+        if (this._searchTimer) {
+            clearTimeout(this._searchTimer);
+            this._searchTimer = null;
+        }
+    }
 
     /*
      * 根据current设置page按钮的显示，上一页，下一页，上五页，下五页的显示
