@@ -130,6 +130,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @Input()
     public placeholder: string = '';
 
+    /**
+     * 手动敲击回车键搜索
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public enterSearch: boolean;
+
     @Output()
     public search = new EventEmitter<string>();
     /**
@@ -148,6 +155,52 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     @ViewChildren(JigsawInput)
     public inputs: QueryList<JigsawInput>;
+
+    /**
+     * @internal
+     */
+    public _$searchKeyChange($event) {
+        if (this.enterSearch) {
+            // 输入3000ms没有回车也会发一次事件
+            this._debounceSearch($event);
+        } else {
+            this.search.emit($event)
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$searchKey: string;
+
+    /**
+     * @internal
+     */
+    public _$enterSearch($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        console.log($event.keyCode);
+        if (this.enterSearch) {
+            this._clearSearchTimer();
+            this.search.emit(this._$searchKey);
+        }
+    }
+
+    private _searchTimer: number;
+
+    private _debounceSearch(key: string) {
+        this._clearSearchTimer();
+        this._searchTimer = this.callLater(() => {
+            this.search.emit(key);
+        }, 3000)
+    }
+
+    private _clearSearchTimer() {
+        if (this._searchTimer) {
+            clearTimeout(this._searchTimer);
+            this._searchTimer = null;
+        }
+    }
 
     private _current: number;
 

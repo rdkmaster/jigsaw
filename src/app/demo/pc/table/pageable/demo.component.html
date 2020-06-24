@@ -11,5 +11,10 @@
     [searchable]="true"
     [showQuickJumper]="true"
     (search)="onSearch($event)"
+    [enterSearch]="enterSearch"
 ></jigsaw-pagination>
 <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
+<div  style="padding: 10px 0; line-height: 1.5">
+    设置回车搜索： <j-switch [(checked)]="enterSearch"></j-switch>
+    <p>分页的默认搜索是没有防抖功能的，但PageableTableData的filer功能是具备防抖的，但其时间是300ms。设置分页组件的enterSearch属性可以使搜索变成敲回车键搜索，并且3s内没有回车会自动搜索一次。</p>
+</div>
