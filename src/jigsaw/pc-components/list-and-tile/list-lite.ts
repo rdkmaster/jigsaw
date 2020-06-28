@@ -2,16 +2,16 @@ import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
     ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy
 } from "@angular/core";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {CommonModule} from "@angular/common";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {Subscription} from "rxjs";
+import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {JigsawList, JigsawListModule, JigsawListOption} from "./list";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
-import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
-import {Subscription} from "rxjs";
 
 /**
  * 一个轻量的list控件，是在list控件基础上做的封装，做了一些功能的拓展
@@ -21,7 +21,6 @@ import {Subscription} from "rxjs";
  * - 支持搜索功能
  * - 支持文本溢出显示省略号，鼠标移入会有提示信息
  * - 可以和combo结合起来使用
- *
  */
 // @dynamic
 @Component({
@@ -151,7 +150,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         }
     }
 
-    private _removeFilterSubscribe: Subscription
+    private _removeFilterSubscribe: Subscription;
 
     /**
      * @internal

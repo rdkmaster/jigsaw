@@ -16,7 +16,7 @@ import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {Observable, Subscription} from "rxjs";
 import {JigsawTabsModule} from "../tabs/index";
-import {JigsawTile, JigsawTileSelectModule} from "../list-and-tile/tile";
+import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawTab} from "../tabs/tab";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
@@ -113,7 +113,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 生成级联数据的函数，一般用于需要异步加载的数据的生产
-     *
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
@@ -465,7 +464,8 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         /**
          * @internal
          */
-        @Optional() public _$cascade: JigsawCascade,
+        @Optional()
+        public _$cascade: JigsawCascade,
         private _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector

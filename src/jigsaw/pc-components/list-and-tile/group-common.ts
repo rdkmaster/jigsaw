@@ -79,7 +79,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
-    constructor(protected _cdr: ChangeDetectorRef, private _injector: Injector) {
+    constructor(protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 

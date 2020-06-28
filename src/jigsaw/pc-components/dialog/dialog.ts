@@ -124,11 +124,9 @@ export abstract class AbstractDialogComponentBase
         super(_zone);
     }
 
-
     @RequireMarkForCheck()
     @Input()
     public buttons: ButtonInfo[];
-
 
     @RequireMarkForCheck()
     @Input()
@@ -231,7 +229,7 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
      */
     public _$hasInlineButtons: boolean = false;
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone, public cdr: ChangeDetectorRef,
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(renderer, elementRef, _zone, _injector);
@@ -248,7 +246,6 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
             // 只有通过 "[jigsaw-button], [jigsaw-button-bar]" 投影进来的button，才算 button-group 里面的
             return btn.element.nativeElement.hasAttribute('jigsaw-button') ||
                 (btn.element.nativeElement.parentElement && btn.element.nativeElement.parentElement.hasAttribute('jigsaw-button-bar'));
-
         });
     }
 }
