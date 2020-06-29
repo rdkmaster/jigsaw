@@ -143,7 +143,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @Input() public mode: 'complex' | 'simple' = 'complex'; // 当为「small」时，是小尺寸分页
     @Input() public placeholder: string = '';
 
-    @Input() public enterSearch: boolean;
+    /**
+     * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
+     * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
+     */
+    @Input()
+    public searchDebounce: number | 'none' = NaN;
 
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
@@ -154,12 +159,15 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$searchKeyChange($event) {
-        if (this.enterSearch) {
-            // 输入3000ms没有回车也会发一次事件
+        if (this._isSearchDebounce()) {
             this._debounceSearch($event);
         } else {
             this.search.emit($event)
         }
+    }
+
+    private _isSearchDebounce() {
+        return this.searchDebounce && this.searchDebounce != 'none' && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0
     }
 
     /**
@@ -173,7 +181,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public _$enterSearch($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        if (this.enterSearch) {
+        if (this._isSearchDebounce()) {
             this._clearSearchTimer();
             this.search.emit(this._$searchKey);
         }
@@ -185,7 +193,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._clearSearchTimer();
         this._searchTimer = this.callLater(() => {
             this.search.emit(key);
-        }, 3000)
+        }, this.searchDebounce)
     }
 
     private _clearSearchTimer() {

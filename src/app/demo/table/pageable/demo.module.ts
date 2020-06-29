@@ -3,10 +3,10 @@ import {JigsawTableModule} from "jigsaw/component/table/table";
 import {JigsawPaginationModule} from "jigsaw/component/pagination/pagination";
 import {TablePageableDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawSwitchModule} from "../../../../jigsaw/component/switch";
+import {JigsawButtonBarModule} from "jigsaw/component/list-and-tile/button-bar";
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule, JigsawSwitchModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule, JigsawButtonBarModule],
     declarations: [TablePageableDemoComponent],
     exports: [TablePageableDemoComponent]
 })
