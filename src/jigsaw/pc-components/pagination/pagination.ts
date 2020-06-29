@@ -131,11 +131,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public placeholder: string = '';
 
     /**
-     * 手动敲击回车键搜索
+     * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
+     * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
      */
     @RequireMarkForCheck()
     @Input()
-    public enterSearch: boolean;
+    public searchDebounce: number | 'none' = NaN;
 
     @Output()
     public search = new EventEmitter<string>();
@@ -160,12 +161,16 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$searchKeyChange($event) {
-        if (this.enterSearch) {
+        if (this._isSearchDebounce()) {
             // 输入3000ms没有回车也会发一次事件
             this._debounceSearch($event);
         } else {
             this.search.emit($event)
         }
+    }
+
+    private _isSearchDebounce() {
+        return this.searchDebounce && this.searchDebounce != 'none' && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0
     }
 
     /**
@@ -179,8 +184,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public _$enterSearch($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        console.log($event.keyCode);
-        if (this.enterSearch) {
+        if (this._isSearchDebounce()) {
             this._clearSearchTimer();
             this.search.emit(this._$searchKey);
         }
@@ -192,7 +196,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         this._clearSearchTimer();
         this._searchTimer = this.callLater(() => {
             this.search.emit(key);
-        }, 3000)
+        }, this.searchDebounce)
     }
 
     private _clearSearchTimer() {
