@@ -117,10 +117,7 @@ const notificationInstances = {
 export class JigsawNotification extends AbstractDialogComponentBase {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
         super(renderer, elementRef, _zone);
-        JigsawNotification._zone = _zone;
     }
-
-    private static _zone: NgZone;
 
     protected getPopupElement(): HTMLElement {
         return this.elementRef.nativeElement;
@@ -422,7 +419,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => this.reposition(opt.position));
+        InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => this.reposition(opt.position));
 
         if (!this._removeResizeListener) {
             InternalUtils.zone.runOutsideAngular(() => {
