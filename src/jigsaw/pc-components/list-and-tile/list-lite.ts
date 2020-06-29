@@ -1,14 +1,15 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
-    ViewChildren, OnDestroy, Output, EventEmitter, NgZone
+    ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy
 } from "@angular/core";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {CommonModule} from "@angular/common";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {Subscription} from "rxjs";
+import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {JigsawList, JigsawListModule, JigsawListOption} from "./list";
 import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
-import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 
@@ -20,20 +21,22 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
  * - 支持搜索功能
  * - 支持文本溢出显示省略号，鼠标移入会有提示信息
  * - 可以和combo结合起来使用
- *
  */
 // @dynamic
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `
-        <j-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%" (valueChange)="_$handleSearching($event)">
+        <j-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
+                 (valueChange)="_$handleSearching($event)">
             <span jigsaw-prefix-icon class="fa fa-search"></span>
         </j-input>
-        <div class="jigsaw-list-lite-wrapper" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+        <div class="jigsaw-list-lite-wrapper"
+             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">
             <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
-                <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
+                <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+                               [disabled]="item?.disabled">
                     <p class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
                         {{item && item[labelField] ? item[labelField] : item}}</p>
                 </j-list-option>
@@ -47,7 +50,8 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
     constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
@@ -79,18 +83,18 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public set data(data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[]) {
-        if(!data || this.data == data) return;
+        if (!data || this.data == data) return;
         this._data = data;
         this.dataChange.emit(this.data);
-        if(this._data instanceof ArrayCollection || this._data instanceof LocalPageableArray || this._data instanceof PageableArray) {
-            if(this._removeOnChange) {
+        if (this._data instanceof ArrayCollection || this._data instanceof LocalPageableArray || this._data instanceof PageableArray) {
+            if (this._removeOnChange) {
                 this._removeOnChange();
             }
             this._removeOnChange = this._data.onChange(() => {
                 this.removeInvalidSelectedItems();
             });
         }
-        if(this._needCheckSelectedItems) {
+        if (this._needCheckSelectedItems) {
             this.removeInvalidSelectedItems();
         } else {
             this._needCheckSelectedItems = true;
@@ -136,7 +140,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     private _needCheckSelectedItems: boolean = true;
 
     public removeInvalidSelectedItems() {
-        if(this._listInst) {
+        if (this._listInst) {
             // 等待ngFor渲染
             this.runAfterMicrotasks(() => {
                 this._zone.run(() => {
@@ -145,6 +149,8 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             })
         }
     }
+
+    private _removeFilterSubscribe: Subscription;
 
     /**
      * @internal
@@ -159,8 +165,12 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        this._removeFilterSubscribe = (<LocalPageableArray<any> | PageableArray>this.data).pagingInfo.subscribe(() => {
+            this._changeDetectorRef.markForCheck();
+        });
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
+
 
     private _setListWrapperHeight() {
         if (!this.optionCount || !this._listOptions.length) return;
@@ -177,9 +187,13 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if(this._removeOnChange) {
+        if (this._removeOnChange) {
             this._removeOnChange();
             this._removeOnChange = null;
+        }
+        if (this._removeFilterSubscribe) {
+            this._removeFilterSubscribe.unsubscribe();
+            this._removeFilterSubscribe = null;
         }
     }
 }

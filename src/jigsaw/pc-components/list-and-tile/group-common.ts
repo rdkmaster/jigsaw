@@ -1,9 +1,21 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor} from "@angular/forms";
-import { AfterContentInit, ChangeDetectorRef, EventEmitter, Input, OnDestroy, Output, QueryList, OnInit, Directive } from "@angular/core";
+import {
+    AfterContentInit,
+    ChangeDetectorRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    QueryList,
+    OnInit,
+    Directive,
+    Injector
+} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class GroupOptionValue {
     [index: string]: any;
@@ -53,9 +65,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     protected _selectedItems = new ArrayCollection<any>();
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
@@ -69,10 +79,17 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
+    constructor(protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
+        super();
+    }
+
     /**
      * @internal
      */
     public _removeInvalidSelectedItems(): void {
+        this._cdr.markForCheck();
         if (!this._items || !this._selectedItems || !this._selectedItems.length) {
             return;
         }
@@ -85,7 +102,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
             needRefresh = true;
         });
-        if(needRefresh) {
+        if (needRefresh) {
             this.selectedItemsChange.emit(this.selectedItems);
         }
     }
@@ -230,24 +247,25 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
 @Directive()
 export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
-    /**
-     * @NoMarkForCheckRequired
-     */
+
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super();
+    }
+
+    @RequireMarkForCheck()
     @Input()
     public value: any;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public disabled: boolean = false;
 
     @Output()
     public selectedChange = new EventEmitter<boolean>();
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public selected: boolean = false; // 选中状态
 
@@ -255,5 +273,4 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     public change = new EventEmitter<AbstractJigsawOptionComponent>();
 
     public changeDetector: ChangeDetectorRef
-
 }

@@ -1,4 +1,16 @@
-import {Component, Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    OnDestroy,
+    Optional,
+    Output,
+    Renderer2
+} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {
@@ -50,7 +62,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     public fileVerify: string;
 
     @Input('uploadAdditionalFields')
-    public additionalFields: {[prop: string]: string};
+    public additionalFields: { [prop: string]: string };
 
     @Input('uploadMinSize')
     public minSize: number;
@@ -235,10 +247,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                         </div>
                     </ng-container>
                 </div>
-                <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash" (click)="uploader?._$removeFile(file)"></span>
+                <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash"
+                      (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;

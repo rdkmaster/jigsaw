@@ -1,8 +1,19 @@
-import {ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, NgModule, QueryList,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren, ElementRef,
+    forwardRef, Injector,
+    Input,
+    NgModule,
+    QueryList,
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
+import {ArrayCollection} from "../../common/core/data/array-collection";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-tile, j-tile',
@@ -16,7 +27,8 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./gro
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTile extends AbstractJigsawGroupComponent {
     // 默认多选
@@ -30,7 +42,6 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
      */
     @Input()
     public showBorder: boolean = true;
-
 }
 
 @Component({
@@ -44,12 +55,14 @@ export class JigsawTile extends AbstractJigsawGroupComponent {
         '[class.jigsaw-tile-option-active]': 'selected',
         '[class.jigsaw-tile-option-disabled]': 'disabled',
         '(click)': '_$handleClick()'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTileOption extends AbstractJigsawOptionComponent {
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-        super();
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 
     /**

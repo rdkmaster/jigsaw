@@ -1,4 +1,20 @@
-import { Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, Type, ViewChild, Directive, NgZone } from "@angular/core";
+import {
+    Component,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
+    Output,
+    QueryList,
+    Renderer2,
+    Type,
+    ViewChild,
+    Directive,
+    NgZone,
+    ChangeDetectionStrategy,
+    Injector
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
@@ -24,11 +40,14 @@ export enum AlertLevel {
     templateUrl: 'alert.html',
     host: {
         '[class.jigsaw-alert-host]': 'true'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlert extends AbstractDialogComponentBase {
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
-        super(renderer, elementRef, _zone);
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected  _injector: Injector) {
+        super(renderer, elementRef, _zone, _injector);
     }
 
     @Output()
@@ -204,7 +223,8 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-info-alert, j-info-alert'
+    selector: 'jigsaw-info-alert, j-info-alert',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInfoAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
@@ -246,7 +266,8 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-warning-alert, j-warning-alert'
+    selector: 'jigsaw-warning-alert, j-warning-alert',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawWarningAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
@@ -289,6 +310,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-error-alert, j-error-alert',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class JigsawErrorAlert extends JigsawCommonAlert {
@@ -331,7 +353,8 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
 
 @Component({
     templateUrl: 'common-alert.html',
-    selector: 'jigsaw-confirm-alert, j-confirm-alert'
+    selector: 'jigsaw-confirm-alert, j-confirm-alert',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawConfirmAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {

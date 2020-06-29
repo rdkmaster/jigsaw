@@ -1,11 +1,14 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChildren,
     Directive,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
     NgZone,
@@ -22,6 +25,7 @@ import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBlockModule} from "../../common/components/block/block";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
@@ -114,20 +118,20 @@ export abstract class AbstractDialogComponentBase
     extends AbstractJigsawComponent
     implements IPopupable, AfterContentInit, OnDestroy {
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
         super(_zone);
     }
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public buttons: ButtonInfo[];
-    /**
-     * @NoMarkForCheckRequired
-     */
+
+    @RequireMarkForCheck()
     @Input()
     public caption: string;
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -204,6 +208,7 @@ export abstract class AbstractDialogComponentBase
 @Component({
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDialog extends AbstractDialogComponentBase implements AfterContentInit {
     @Output()
@@ -224,8 +229,10 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
      */
     public _$hasInlineButtons: boolean = false;
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone) {
-        super(renderer, elementRef, _zone);
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(renderer, elementRef, _zone, _injector);
         this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-dialog-host');
     }
 
@@ -239,7 +246,6 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
             // 只有通过 "[jigsaw-button], [jigsaw-button-bar]" 投影进来的button，才算 button-group 里面的
             return btn.element.nativeElement.hasAttribute('jigsaw-button') ||
                 (btn.element.nativeElement.parentElement && btn.element.nativeElement.parentElement.hasAttribute('jigsaw-button-bar'));
-
         });
     }
 }
