@@ -143,10 +143,65 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @Input() public mode: 'complex' | 'simple' = 'complex'; // 当为「small」时，是小尺寸分页
     @Input() public placeholder: string = '';
 
+    /**
+     * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
+     * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
+     */
+    @Input()
+    public searchDebounce: number | 'none' = NaN;
+
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
 
     @ViewChildren(JigsawInput) inputs: QueryList<JigsawInput>;
+
+    /**
+     * @internal
+     */
+    public _$searchKeyChange($event) {
+        if (this._isValidSearchDebounce()) {
+            this._debounceSearch($event);
+        } else {
+            this.search.emit($event)
+        }
+    }
+
+    private _isValidSearchDebounce() {
+        return this.searchDebounce && this.searchDebounce != 'none' && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0
+    }
+
+    /**
+     * @internal
+     */
+    public _$searchKey: string;
+
+    /**
+     * @internal
+     */
+    public _$enterSearch($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        if (this._isValidSearchDebounce()) {
+            this._clearSearchTimer();
+            this.search.emit(this._$searchKey);
+        }
+    }
+
+    private _searchTimer: number;
+
+    private _debounceSearch(key: string) {
+        this._clearSearchTimer();
+        this._searchTimer = this.callLater(() => {
+            this.search.emit(key);
+        }, this.searchDebounce)
+    }
+
+    private _clearSearchTimer() {
+        if (this._searchTimer) {
+            clearTimeout(this._searchTimer);
+            this._searchTimer = null;
+        }
+    }
 
     /*
      * 根据current设置page按钮的显示，上一页，下一页，上五页，下五页的显示
