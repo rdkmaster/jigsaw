@@ -161,7 +161,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$searchKeyChange($event) {
-        if (this._isSearchDebounce()) {
+        if (this._isValidSearchDebounce()) {
             // 输入3000ms没有回车也会发一次事件
             this._debounceSearch($event);
         } else {
@@ -169,7 +169,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         }
     }
 
-    private _isSearchDebounce() {
+    private _isValidSearchDebounce() {
         return this.searchDebounce && this.searchDebounce != 'none' && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0
     }
 
@@ -184,7 +184,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public _$enterSearch($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        if (this._isSearchDebounce()) {
+        if (this._isValidSearchDebounce()) {
             this._clearSearchTimer();
             this.search.emit(this._$searchKey);
         }
