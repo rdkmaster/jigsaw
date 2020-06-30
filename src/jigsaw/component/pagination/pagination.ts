@@ -315,7 +315,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         let pageNum = pageCur.pageNumber;
         pageNum = pageNum - 5;
         if (pageNum < 1) pageNum = 1;
-        this._pages.find(page => page.pageNumber == pag_isValidSearchDebounceeNum).setCurrent();
+        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
         this.current = pageNum;
     }
 
