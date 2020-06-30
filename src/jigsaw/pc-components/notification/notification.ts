@@ -15,6 +15,7 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {take} from 'rxjs/operators';
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -420,7 +421,10 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        Promise.resolve().then(() => this.reposition(opt.position));
+        let onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            onStableSubscription.unsubscribe();
+            this.reposition(opt.position);
+        });
 
         if (!this._removeResizeListener) {
             InternalUtils.zone.runOutsideAngular(() => {
