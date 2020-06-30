@@ -159,14 +159,14 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$searchKeyChange($event) {
-        if (this._isSearchDebounce()) {
+        if (this._isValidSearchDebounce()) {
             this._debounceSearch($event);
         } else {
             this.search.emit($event)
         }
     }
 
-    private _isSearchDebounce() {
+    private _isValidSearchDebounce() {
         return this.searchDebounce && this.searchDebounce != 'none' && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0
     }
 
@@ -181,7 +181,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public _$enterSearch($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        if (this._isSearchDebounce()) {
+        if (this._isValidSearchDebounce()) {
             this._clearSearchTimer();
             this.search.emit(this._$searchKey);
         }
@@ -315,7 +315,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         let pageNum = pageCur.pageNumber;
         pageNum = pageNum - 5;
         if (pageNum < 1) pageNum = 1;
-        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
+        this._pages.find(page => page.pageNumber == pag_isValidSearchDebounceeNum).setCurrent();
         this.current = pageNum;
     }
 
