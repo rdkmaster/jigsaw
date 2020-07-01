@@ -1,3 +1,17 @@
+## v1.1.38 (2020-7-1)
+
+### 新特性 / New Features
+- [新增] 分页组件增加searchDebounce，用于给搜索增加防抖和敲击回车键立刻搜索功能
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- 无
+
 ## v1.1.36 (2020-3-17)
 
 ### 新特性 / New Features
