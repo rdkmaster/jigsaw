@@ -1,3 +1,58 @@
+## v9.1.4 (2020-07-03)
+
+### 新特性 / New Features
+- [新增] autoinput组件添加maxDropDownWidth属性，可以设置弹出的最大宽度
+- [新增] 分页组件增加searchDebounce，用于给搜索增加防抖和敲击回车键立刻搜索功能
+- [新增] 时间选择器，用于只选择时间（不带日期），详见[这里](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo)
+- [新增] 内置下拉时间选择器和内置下拉时间范围选择器，由于下拉选择时间的场景实在太多，我们直接将时间选择与组合下拉集成好，详见[这里](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/date-time-select)和[这里](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/range-date-time-select)。
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] 控件在赋了初始值时，默认不触发change事件，**这个破坏性很轻微，基本上可无视**，涉及到的组件有级联选择、组合下拉选择、自动补齐输入框、单行输入框、多行输入框、数字输入框、下拉选择
+- [破坏性修改] [优化] 重新实现日期时间控件，无依赖，全新交互，全新UI。
+
+我们对日期时间组件进行了全新的改版，全新UI，全新交互，但是也引入了一些破坏性，全部列举如下：
+
+#### selector变更/新增
+
+我们给新组件设计了一套全新的selector：
+
+- 增加[jigsaw-time-picker](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo)用于选择时间（不带日期）；
+- 增加[jigsaw-date-time-select](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/date-time-select)和[jigsaw-range-date-time-select](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/range-date-time-select)控件用于下拉选择时间的场景；
+- 原[jigsaw-time](https://jigsaw-zte.gitee.io/v8.0/#/components/time/demo)控件改为[jigsaw-date-time-picker](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo)；
+- 原[jigsaw-range-time](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo)控件改为[jigsaw-range-date-time-picker](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo)；
+
+#### 输入属性变更
+
+> 这里的描述适用于时刻选择和时间范围选择两个组件。
+
+- 去掉了原组件的[`recommendedBegin`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/recommended)、[`recommendedEnd`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/recommended)、[`recommendedLabel`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/recommended)属性，请使用新增的[`markDates`](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/mark)属性替代；
+- 去掉了原组件`weekDayStart`属性，现在设置[weekStart](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/week-start)不需要`weekDayStart`属性配合了；
+- 去掉了原组件[`refreshInterval`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/refresh-interval)属性，现在通过宏实时更新limit不需要通过`refreshInterval`属性配合了，现在根据宏更新limit改为交互时实时计算，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd
+- [`gr`](https://jigsaw-zte.gitee.io/v8.0/#/components/time/demo/gr)属性去掉了`'time'|'time_hour_minute'|'time_minute_second'`选项，需要使用时间选择器的，请改用[`jigsaw-time-picker`](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo)；
+
+
+###  优化 / Modified
+- [优化] 对话框按钮栏显示机制，避免在对话框内部使用按钮时，按钮栏意外出现
+- [优化] 弹出顶部进度条现在会销毁之前的，修复组件实例给status赋值无法更新视图
+- [优化] 优化不同状态下进度条的布局，小问题修复
+- [优化] 时间控件通过实例操作输入属性方式的问题
+- [优化] @RequireMarkForCheck装饰器兼容多级父类中的getter/setter
+- [优化] 其余的组件变更检测策略改为onpush以提升组件性能
+
+### 修复 / Fixes
+- [故障] 修复TreeData无法通过ajax获取数据
+- [故障] 修复menu直接fromXML报错以及xml数据支持远程获取，以及select下拉框点击下拉选项报错的问题
+- [故障] tab宽度缩小到比title还窄时页面卡死问题
+- [故障] 解决折叠的手风琴模式不生效的问题
+- [故障] 新增输入属性装饰器，修复OnPush策略带来的部分视图未及时更新的问题
+- [故障] 修复部分日期时间组件没有白背景，date-select组件无法设置尺寸
+- [故障] 处理无效的weekDate，以及提前设置weekStart
+- [故障] 修复日期控件limitEnd小于limitEnd时页面卡死
+- [故障] 修复没有初始值gr为分钟或小时，选了日期后value值依旧为00:00:00
+- [故障] 修复没有初始值时，时间范围选择器显示limitStart&limitEnd不正确
+- [故障] 修复日期范围选择器limit和周粒度一起用时无法发送change事件
+- [故障] 连续弹出多个消息框时位置计算错误
+
 ## v9.1.0 (2020-06-5)
 
 ### 新特性 / New Features
