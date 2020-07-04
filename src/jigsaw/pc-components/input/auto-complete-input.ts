@@ -303,7 +303,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         this.value = item;
 
         this.selectEvent.emit(item);
-        this.valueChange.emit(item);
     }
 
     /**

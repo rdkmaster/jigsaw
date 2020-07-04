@@ -114,17 +114,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         }
         this._value = newValue;
         this._propagateChange(this._value);
-    }
-
-    /**
-     * @internal
-     */
-    public _$ngValueChange(event: string) {
-        if (this._value === event) {
-            return;
+        if (this.initialized) {
+            this.valueChange.emit(this._value);
         }
-        this._value = event;
-        this.valueChange.emit(this._value);
     }
 
     /**
@@ -181,7 +173,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * @internal
      */
     public _$clearValue(): void {
-        this._$ngValueChange('');
+        this.value = '';
         this.focus();
     }
 
