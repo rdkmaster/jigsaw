@@ -60,6 +60,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     private _jigsawFloatArrowElement: HTMLElement;
+
     /**
      * @internal
      */
@@ -766,7 +767,7 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     }
 
     @Input()
-    public jigsawFloatArrowElement: HTMLElement;
+    public jigsawFloatArrowElement: any;
 
     @Input()
     public jigsawFloatInitData: any;
