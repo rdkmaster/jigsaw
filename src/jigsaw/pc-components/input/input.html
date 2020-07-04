@@ -5,8 +5,7 @@
     <ng-content></ng-content>
     <input #input
            [placeholder]="placeholder"
-           [ngModel]="value"
-           (ngModelChange)="_$ngValueChange($event)"
+           [(ngModel)]="value"
            [disabled]="disabled"
            (blur)="_$handleBlur($event)"
            (focus)="_$handleFocus($event)"

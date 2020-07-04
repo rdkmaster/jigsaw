@@ -160,18 +160,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._updateValue();
     }
 
-    /**
-     * @internal
-     */
-    public _$ngValueChange(event: number) {
-        if (this._value === event) {
-            return;
-        }
-        this._checkValue(event);
-        this.valueChange.emit(this._value);
-        this._updateValue();
-    }
-
     private _checkValue(value: number) {
         if (isNaN(value) && <any>value !== "-") {
             value = this.min == -Infinity ? 0 : this.min;
@@ -235,6 +223,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$downDisabled: boolean;
 
     private _updateValue() {
+        if (this.initialized) {
+            this.valueChange.emit(this._value);
+        }
         this._propagateChange(this._value);
         this._checkDisabled();
         this._checkInputValue();
@@ -259,10 +250,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         event.stopPropagation();
         if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             // 非法的value取最小值
-            this._$ngValueChange(this.min == -Infinity ? 0 : this.min);
+            this.value = this.min == -Infinity ? 0 : this.min;
         } else {
-            this._$ngValueChange(this._toPrecisionAsStep((this._precisionFactor * this._value +
-                this._precisionFactor * this._step) / this._precisionFactor));
+            this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
+                this._precisionFactor * this._step) / this._precisionFactor);
         }
     }
 
@@ -274,14 +265,14 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         event.stopPropagation();
         if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             // 非法的value取最小值
-            this._$ngValueChange(this.min == -Infinity ? 0 : this.min);
+            this.value = this.min == -Infinity ? 0 : this.min;
         } else {
             let tempValue = this._toPrecisionAsStep((this._precisionFactor * this._value -
                 this._precisionFactor * this._step) / this._precisionFactor);
             if (tempValue < this.min) {
-                this._$ngValueChange(this.min);
+                this.value = this.min;
             } else {
-                this._$ngValueChange(tempValue);
+                this.value = tempValue;
             }
         }
     }
@@ -336,7 +327,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         if (this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
-            this.valueChange.emit(this._value);
         }
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
@@ -372,7 +362,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     };
 
     public writeValue(value: any): void {
-        this._$ngValueChange(value);
+        this.value = value;
     }
 
     public registerOnChange(fn: any): void {

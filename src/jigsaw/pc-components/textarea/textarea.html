@@ -1,7 +1,6 @@
 <textarea #textarea
           [placeholder]="placeholder"
-          [ngModel]="value"
-          (ngModelChange)="_$ngValueChange($event)"
+          [(ngModel)]="value"
           [disabled]="disabled"
           (focus)="_$handleFocus($event)"
           (blur)="blur.emit($event)">

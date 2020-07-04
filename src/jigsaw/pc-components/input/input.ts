@@ -86,17 +86,9 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
         }
         this._value = newValue;
         this._propagateChange(this._value);
-    }
-
-    /**
-     * @internal
-     */
-    public _$ngValueChange(event: string) {
-        if (this._value === event) {
-            return;
+        if (this.initialized) {
+            this.valueChange.emit(this._value);
         }
-        this._value = event;
-        this.valueChange.emit(this._value);
     }
 
     /**
@@ -243,7 +235,7 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$clearValue(): void {
-        this._$ngValueChange('');
+        this.value = '';
         this.focus();
     }
 
