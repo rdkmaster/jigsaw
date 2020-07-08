@@ -23,6 +23,17 @@ export class AutoCompleteInputBasicDemoComponent {
         alert('你输入的值是 ' + this.inputValue)
     }
 
+    public preIcons: string[] = ['fa fa-search', 'fa fa-save'];
+
+    public backIcon: string = 'fa fa-question';
+
+    public message: string = '';
+
+    public iconClick(event: string, position: string) {
+        console.log(event, position);
+        this.message = `${position} icon "${event}" is clicked.`;
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

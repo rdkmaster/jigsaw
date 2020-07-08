@@ -1,6 +1,7 @@
 <j-input #input [placeholder]="placeholder" [(value)]="value" [width]="width ? '100%' : null"
          [height]="height ? '100%' : null" (keydown)="_$onKeyDown($event)"
          [blurOnClear]="blurOnClear" [clearable]="clearable" [disabled]="disabled" [valid]="valid"
+         [preIcon]="_$preIcon" [icon]="_$icon" (preIconSelect)="preIconSelect.emit($event)" (iconSelect)="iconSelect.emit($event)"
          (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)"
          jigsaw-float [jigsawFloatTarget]="dropDownTemp"  [jigsawFloatOpen]="_$propertyListOpen"
          jigsawFloatOpenTrigger="none" jigsawFloatCloseTrigger="none">

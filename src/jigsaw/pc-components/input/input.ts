@@ -1,6 +1,17 @@
 import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy,
-    Directive, NgZone, ChangeDetectorRef, Injector
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
+    NgModule,
+    NgZone,
+    Output,
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -9,7 +20,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Directive()
-export abstract class JigsawInputBase extends AbstractJigsawComponent  implements IJigsawFormControl, ControlValueAccessor {
+export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
     constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
         super(_zone);
     }
@@ -155,6 +166,56 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent  implement
             }, 150);
         }
     }
+
+    /**
+     * @internal
+     */
+    public _$preIcon: string[];
+
+    /**
+     * @NoMarkForCheckRequired
+     *
+     * $demo = input/icons
+     */
+    @Input()
+    public set preIcon(value: string | string[]) {
+        if (typeof value == 'string') {
+            this._$preIcon = [value];
+            return;
+        }
+        this._$preIcon = value;
+    }
+
+    /**
+     * @internal
+     */
+    public _$icon: string[];
+
+    /**
+     * @NoMarkForCheckRequired
+     *
+     * $demo = input/icons
+     */
+    @Input()
+    public set icon(value: string | string[]) {
+        if (typeof value == 'string') {
+            this._$icon = [value];
+            return;
+        }
+        this._$icon = value;
+    }
+
+    /**
+     * $demo = input/icons
+     */
+    @Output()
+    public preIconSelect: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
+     * $demo = input/icons
+     */
+    @Output()
+    public iconSelect: EventEmitter<string> = new EventEmitter<string>();
 }
 
 /**
