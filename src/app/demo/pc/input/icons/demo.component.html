@@ -4,11 +4,38 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-input id="test-input" #myInput width="30%" placeholder="请输入姓名~">
-    <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-search"></span></a>
-    <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-save" style="margin-left: 10px;"></span></a>
-    <a jigsaw-icon (click)="click()"><span class="fa fa-question"></span></a>
-</jigsaw-input>
+<div class="live-demo-wrap">
+    <h2>Input</h2>
+
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>属性设置</h3>
+            <p class="comment">使用控件的输入输出属性，设定图标并监听点击事件</p>
+            <p class="comment">提示：这种方法设置图标简单便捷，推荐优先使用</p>
+            <jigsaw-input width="200" [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
+                          (iconSelect)="iconClick($event, 'back')"></jigsaw-input>
+            Click info: {{message}}
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>模板设置</h3>
+            <p class="comment">通过设置一段HTML模板来设定图标</p>
+            <p class="comment">提示：这种方法可以完全对图标实现自定义，但是较为繁琐，不推荐使用</p>
+            <jigsaw-input #myInput1 width="200" placeholder="请输入姓名~">
+                <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-search"></span></a>
+                <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-save" style="margin-left: 10px;"></span></a>
+                <a jigsaw-icon (click)="click()"><span class="fa fa-question"></span></a>
+            </jigsaw-input>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,9 @@
 <div class="jigsaw-input-wrapper">
     <div class="jigsaw-input-icon-front">
         <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
+        <ng-container *ngFor="let icon of _$preIcon;">
+            <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="preIconSelect.emit(icon)"></span>
+        </ng-container>
     </div>
     <ng-content></ng-content>
     <input #input
@@ -9,9 +12,12 @@
            [disabled]="disabled"
            (blur)="_$handleBlur($event)"
            (focus)="_$handleFocus($event)"
-           [type]="type" >
+           [type]="type">
     <div class="jigsaw-input-icon-end">
         <span *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
         <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
+        <ng-container *ngFor="let icon of _$icon;">
+            <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="iconSelect.emit(icon)"></span>
+        </ng-container>
     </div>
 </div>

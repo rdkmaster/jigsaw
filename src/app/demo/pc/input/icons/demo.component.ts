@@ -6,10 +6,21 @@ import {JigsawInput} from "jigsaw/public_api";
 })
 export class InputPrefixIconDemoComponent {
 
-    @ViewChild('myInput') myInput: JigsawInput;
+    @ViewChild('myInput1') myInput: JigsawInput;
 
     click() {
         alert('你输入的值是 ' + this.myInput.value)
+    }
+
+    public preIcons: string[] = ['fa fa-search', 'fa fa-save'];
+
+    public backIcon: string = 'fa fa-question';
+
+    public message: string = '';
+
+    public iconClick(event: string, position: string) {
+        console.log(event, position);
+        this.message = `${position} icon "${event}" is clicked.`;
     }
 
     // ====================================================================
