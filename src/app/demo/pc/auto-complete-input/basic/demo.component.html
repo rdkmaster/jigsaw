@@ -22,9 +22,10 @@
                                         (valueChange)="valueChanged($event)" [data]="_$dropdownData"
                                         [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
                                         [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
-                                        (iconSelect)="iconClick($event, 'back')"
-            ></jigsaw-auto-complete-input>
+                                        (iconSelect)="iconClick($event, 'back')">
+            </jigsaw-auto-complete-input>
             <span style="margin-left: 20px;">Click info: {{message}}</span>
+            <p style="color:#999">提示：这种方法设置图标简单便捷，推荐优先使用</p>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
@@ -35,6 +36,7 @@
                 <a jigsaw-prefix-icon (click)="click()"><span class="fa fa-search" style="font-size: 14px;"></span></a>
                 <a jigsaw-icon (click)="click()"><span class="fa fa-question" style="font-size: 14px;"></span></a>
             </jigsaw-auto-complete-input>
+            <p style="color:#999">提示：这种方法可以完全对图标实现自定义，但是较为繁琐，不推荐使用</p>
         </div>
     </div>
 
