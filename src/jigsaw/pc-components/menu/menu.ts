@@ -105,14 +105,15 @@ export class JigsawMenuHelper implements IPopupable {
                      [title]="_$getTitle(node.label,index,'menu-list-title')"
                      [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
-                    {{node.label}}
+                    <span>{{node.label}}</span>
                 </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
                 <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
                      [title]="_$getTitle(node.subTitle,index,'menu-list-sub-title')"
                      [ngStyle]="_$getSubTitleWidth(node, index)">
-                    {{node.subTitle}}
-                    <i class="{{node.subIcon}}"></i>
+                    <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
+                    <i class="{{node.subIcon}} subIcon"
+                       *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
                 <div class="navigation-title" *ngIf="_$realTheme == 'navigation'">
@@ -242,11 +243,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
-        this._changeDetectorRef.detectChanges();
     }
 
     ngAfterContentInit() {
-        this._changeDetectorRef.detectChanges();
     }
 
     private _setBorder() {
@@ -313,6 +312,18 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
+    _$isSubTitleOverflow(index: number): boolean {
+        if (!this._menuListElement) {
+            return false;
+        }
+        const listOptionElements = this._menuListElement.nativeElement.children;
+        const subTitleElement = listOptionElements[index].getElementsByClassName("menu-list-sub-title")[0].children[0];
+        return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
+    }
+
+    /**
+     * @internal
+     */
     public _$getSubTitleWidth(node: SimpleNode, index: number): any {
         if (!this._menuListElement || node.disabled || !node.label) {
             return {maxWidth: 'auto'};
@@ -325,8 +336,8 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         const wrapElement = titleElement.parentElement;
         // 5是给有子节点时，留下的箭头；
         const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
-        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 2) {
-            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 2}px`};
+        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
+            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
         } else {
             return {width: `${minWidth}px`};
         }

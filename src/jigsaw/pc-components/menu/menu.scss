@@ -44,6 +44,14 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
+            .jigsaw-list-option-title-box {
+                display: none;
+            }
+
+            .jigsaw-list-option-sub-title {
+                display: none;
+            }
+
             .menu-list-title {
                 float: left;
                 line-height: 32px;
@@ -51,6 +59,20 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+
+                i {
+                    margin-right: 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
 
             .menu-list-sub-title {
@@ -60,6 +82,22 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+                min-height: 32px;
+
+                .subIcon {
+                    overflow: hidden;
+                    margin: 0px 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
         }
     }
@@ -109,6 +147,14 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
+            .jigsaw-list-option-title-box {
+                display: none;
+            }
+
+            .jigsaw-list-option-sub-title {
+                display: none;
+            }
+
             .menu-list-title {
                 float: left;
                 line-height: 32px;
@@ -116,6 +162,20 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+
+                i {
+                    margin-right: 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
 
             .menu-list-sub-title {
@@ -125,6 +185,22 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+                min-height: 32px;
+
+                .subIcon {
+                    overflow: hidden;
+                    margin: 0px 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
         }
     }
@@ -174,6 +250,14 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
+            .jigsaw-list-option-title-box {
+                display: none;
+            }
+
+            .jigsaw-list-option-sub-title {
+                display: none;
+            }
+
             .menu-list-title {
                 float: left;
                 line-height: 32px;
@@ -181,9 +265,20 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
 
                 i {
                     color: #888888;
+                    margin-right: 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
 
@@ -191,9 +286,22 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 float: right;
                 line-height: 32px;
                 color: #cccccc;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+                min-height: 32px;
+
+                .subIcon {
+                    overflow: hidden;
+                    margin: 0px 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
         }
     }
