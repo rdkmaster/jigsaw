@@ -1,3 +1,55 @@
+## v9.1.7 (2020-07-15)
+
+### 新特性 / New Features
+- [新增] input、auto-complete-input新增输入属性preIcon和icon用于设置前后图标
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] 当select控件的trackItemBy属性有效时，根据trackItemBy所指的属性的值来判定value值是否有变更
+
+#### 破坏性说明
+
+select控件的`valueChange`事件触发时机有细微的变化，此前，通过select组件的`value`属性输入任何非空新对象都会触发`valueChange`事件，而不管当前控件是否给定了`trackItemBy`属性。这个做法导致了`trackItemBy`属性失去作用。比如下面的代码
+
+```
+html:
+// 注意，trackItemBy值为label，是有效的，这是关键
+<j-select [value]="value" trackItemBy="label" (valueChange)="onValueChange()">
+</j-select>
+
+ts:
+this.value = {label: 'xxx'}; // onValueChange将会被调用
+this.value = {label: 'xxx'}; // onValueChange也会被调用，因为前后两次给的value值不是同一个对象。
+```
+
+现在，控件在触发`valueChange`事件之前，增加了对`trackItemBy`值的判断，行为发生了变更：
+
+```
+html: 与前例一致
+
+ts:
+this.value = {label: 'xxx'}; // onValueChange将会被调用
+this.value = {label: 'xxx'}; // onValueChange不会被调用，因为label的值前后都是xxx，没有变化
+```
+
+但请注意，如果`trackItemBy`值为空，则select控件的行为与之前一致：
+
+```
+html:
+// 注意，trackItemBy没有配置，为非法值
+<j-select [value]="value" (valueChange)="onValueChange()">
+</j-select>
+
+ts:
+this.value = {label: 'xxx'}; // onValueChange将会被调用
+this.value = {label: 'xxx'}; // onValueChange也会被调用，不给trackItemBy时，select控件会按照引用来判定value是否发生变化
+```
+
+###  优化 / Modified
+- [优化] 将jigsawFloatArrowElement属性的类型改为any，避免在node运行时使用Jigsaw报错
+
+### 修复 / Fixes
+- [故障] 修复输入框在非键盘输入情况下改变时无法触发valueChange的问题
+
 ## v9.1.4 (2020-07-03)
 
 ### 新特性 / New Features
