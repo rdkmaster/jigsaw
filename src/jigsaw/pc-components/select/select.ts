@@ -247,7 +247,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         }
         let trackItemBy: string[];
         if (this.trackItemBy) {
-            trackItemBy = Object.prototype.toString.call(this.trackItemBy) == '[object Array]' ? Array.from(this.trackItemBy) : [this.trackItemBy.toString()];
+            trackItemBy = Object.prototype.toString.call(this.trackItemBy) == '[object Array]' ? <string[]>this.trackItemBy : [this.trackItemBy.toString()];
         }
         if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
             return;
