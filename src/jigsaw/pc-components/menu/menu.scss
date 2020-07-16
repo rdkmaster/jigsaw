@@ -3,7 +3,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-dark {
     background: none !important;
 
-    .jigsaw-list {
+    .#{$jigsaw-prefix}-list {
         background: #102331;
         border: #2e4657 1px solid;
         font-size: 14px;
@@ -44,15 +44,15 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
-            .jigsaw-list-option-title-box {
+            .#{$jigsaw-prefix}-list-option-title-box {
                 display: none;
             }
 
-            .jigsaw-list-option-sub-title {
+            .#{$jigsaw-prefix}-list-option-sub-title {
                 display: none;
             }
 
-            .menu-list-title {
+            .#{$menu-prefix-cls}-list-title {
                 float: left;
                 line-height: 32px;
                 color: #eee;
@@ -75,7 +75,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 }
             }
 
-            .menu-list-sub-title {
+            .#{$menu-prefix-cls}-list-sub-title {
                 float: right;
                 line-height: 32px;
                 color: #999;
@@ -88,7 +88,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 align-content: flex-start;
                 min-height: 32px;
 
-                .subIcon {
+                .#{$menu-prefix-cls}-subIcon {
                     overflow: hidden;
                     margin: 0px 4px;
                 }
@@ -106,7 +106,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-black {
     background: none !important;
 
-    .jigsaw-list {
+    .#{$jigsaw-prefix}-list {
         background: #151518;
         border: #2e2e33 1px solid;
         font-size: 14px;
@@ -134,7 +134,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             &.#{$list-option-prefix-cls}-disabled {
                 background: #151518;
 
-                .menu-list-title {
+                .#{$menu-prefix-cls}-list-title {
                     float: left;
                     line-height: 32px;
                     color: #666666;
@@ -147,15 +147,15 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
-            .jigsaw-list-option-title-box {
+            .#{$jigsaw-prefix}-list-option-title-box {
                 display: none;
             }
 
-            .jigsaw-list-option-sub-title {
+            .#{$jigsaw-prefix}-list-option-sub-title {
                 display: none;
             }
 
-            .menu-list-title {
+            .#{$menu-prefix-cls}-list-title {
                 float: left;
                 line-height: 32px;
                 color: #eee;
@@ -178,7 +178,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 }
             }
 
-            .menu-list-sub-title {
+            .#{$menu-prefix-cls}-list-sub-title {
                 float: right;
                 line-height: 32px;
                 color: #999;
@@ -191,7 +191,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 align-content: flex-start;
                 min-height: 32px;
 
-                .subIcon {
+                .#{$menu-prefix-cls}-subIcon {
                     overflow: hidden;
                     margin: 0px 4px;
                 }
@@ -209,7 +209,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-light {
     background: none !important;
 
-    .jigsaw-list {
+    .#{$jigsaw-prefix}-list {
         background: #ffffff;
         border: #cccccc 1px solid;
         font-size: 14px;
@@ -237,7 +237,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             &.#{$list-option-prefix-cls}-disabled {
                 background: #ffffff;
 
-                .menu-list-title {
+                .#{$menu-prefix-cls}-list-title {
                     float: left;
                     line-height: 32px;
                     color: #bbbbbb;
@@ -250,15 +250,15 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
-            .jigsaw-list-option-title-box {
+            .#{$jigsaw-prefix}-list-option-title-box {
                 display: none;
             }
 
-            .jigsaw-list-option-sub-title {
+            .#{$jigsaw-prefix}-list-option-sub-title {
                 display: none;
             }
 
-            .menu-list-title {
+            .#{$menu-prefix-cls}-list-title {
                 float: left;
                 line-height: 32px;
                 color: #666666;
@@ -282,7 +282,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 }
             }
 
-            .menu-list-sub-title {
+            .#{$menu-prefix-cls}-list-sub-title {
                 float: right;
                 line-height: 32px;
                 color: #cccccc;
@@ -292,7 +292,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 align-content: flex-start;
                 min-height: 32px;
 
-                .subIcon {
+                .#{$menu-prefix-cls}-subIcon {
                     overflow: hidden;
                     margin: 0px 4px;
                 }
@@ -310,7 +310,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-navigation {
     background: none !important;
 
-    .jigsaw-list {
+    .#{$jigsaw-prefix}-list {
         background: #32404e;
         border: none;
         font-size: 14px;
@@ -337,7 +337,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             &.#{$list-option-prefix-cls}-disabled {
                 background: #32404e;
 
-                .navigation-title {
+                .#{$menu-prefix-cls}-navigation-title {
                     color: #bbbbbb;
                     line-height: 40px;
                     text-align: center;
@@ -351,7 +351,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 cursor: not-allowed;
             }
 
-            .navigation-title {
+            .#{$menu-prefix-cls}-navigation-title {
                 color: #ffffff;
                 line-height: 40px;
                 text-align: center;

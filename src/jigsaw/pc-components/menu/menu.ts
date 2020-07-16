@@ -101,22 +101,22 @@ export class JigsawMenuHelper implements IPopupable {
                            (mouseenter)="_$mouseenter(index, node)"
                            (mouseleave)="_$mouseleave(index)"
                            [style.minHeight]="_$getMinHeight(node.label)">
-                <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.label,index,'menu-list-title')"
+                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')"
                      [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
                     <span>{{node.label}}</span>
                 </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
-                <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.subTitle,index,'menu-list-sub-title')"
+                <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')"
                      [ngStyle]="_$getSubTitleWidth(node, index)">
                     <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
-                    <i class="{{node.subIcon}} subIcon"
+                    <i class="{{node.subIcon}} jigsaw-menu-subIcon"
                        *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
-                <div class="navigation-title" *ngIf="_$realTheme == 'navigation'">
+                <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
                     {{node.label}}
                     <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="fa fa-angle-right"
                        style="position: absolute;right: 10px;line-height: 40px"></i>
@@ -317,7 +317,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             return false;
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
-        const subTitleElement = listOptionElements[index].getElementsByClassName("menu-list-sub-title")[0].children[0];
+        const subTitleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-sub-title")[0].children[0];
         return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
     }
 
@@ -329,7 +329,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             return {maxWidth: 'auto'};
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
-        const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
+        const titleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-title")[0];
         if (!titleElement) {
             return {maxWidth: 'auto'};
         }
