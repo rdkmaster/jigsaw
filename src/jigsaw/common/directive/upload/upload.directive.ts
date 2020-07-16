@@ -1,5 +1,6 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     Directive,
     ElementRef,
@@ -34,8 +35,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
                 private _popupService: PopupService,
-                @Optional() protected _translateService: TranslateService) {
-        super(_http, _renderer, _elementRef, _translateService);
+                @Optional() protected _translateService: TranslateService,
+                protected _cdr: ChangeDetectorRef) {
+        super(_http, _renderer, _elementRef, _translateService, _cdr);
     }
 
     private _removeMouseOverHandler: Function;
