@@ -101,21 +101,22 @@ export class JigsawMenuHelper implements IPopupable {
                            (mouseenter)="_$mouseenter(index, node)"
                            (mouseleave)="_$mouseleave(index)"
                            [style.minHeight]="_$getMinHeight(node.label)">
-                <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.label,index,'menu-list-title')"
+                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')"
                      [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
-                    {{node.label}}
+                    <span>{{node.label}}</span>
                 </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
-                <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.subTitle,index,'menu-list-sub-title')"
+                <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')"
                      [ngStyle]="_$getSubTitleWidth(node, index)">
-                    {{node.subTitle}}
-                    <i class="{{node.subIcon}}"></i>
+                    <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
+                    <i class="{{node.subIcon}} jigsaw-menu-subIcon"
+                       *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
                 </div>
-                <div class="navigation-title" *ngIf="_$realTheme == 'navigation'">
+                <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
                     {{node.label}}
                     <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="fa fa-angle-right"
                        style="position: absolute;right: 10px;line-height: 40px"></i>
@@ -242,11 +243,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
-        this._changeDetectorRef.detectChanges();
     }
 
     ngAfterContentInit() {
-        this._changeDetectorRef.detectChanges();
     }
 
     private _setBorder() {
@@ -313,20 +312,32 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
+    _$isSubTitleOverflow(index: number): boolean {
+        if (!this._menuListElement) {
+            return false;
+        }
+        const listOptionElements = this._menuListElement.nativeElement.children;
+        const subTitleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-sub-title")[0].children[0];
+        return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
+    }
+
+    /**
+     * @internal
+     */
     public _$getSubTitleWidth(node: SimpleNode, index: number): any {
         if (!this._menuListElement || node.disabled || !node.label) {
             return {maxWidth: 'auto'};
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
-        const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
+        const titleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-title")[0];
         if (!titleElement) {
             return {maxWidth: 'auto'};
         }
         const wrapElement = titleElement.parentElement;
         // 5是给有子节点时，留下的箭头；
         const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
-        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 2) {
-            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 2}px`};
+        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
+            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
         } else {
             return {width: `${minWidth}px`};
         }
