@@ -1,4 +1,14 @@
-import {Directive, ElementRef, EventEmitter, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
+import {
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Optional,
+    Output,
+    Renderer2,
+    ChangeDetectorRef
+} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -14,7 +24,8 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
-                @Optional() protected _translateService: TranslateService) {
+                @Optional() protected _translateService: TranslateService,
+                protected _cdr: ChangeDetectorRef) {
         super();
     }
 
@@ -58,7 +69,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public additionalFields: {[prop: string]: string};
+    public additionalFields: { [prop: string]: string };
 
     private _minSize: number;
 
@@ -249,7 +260,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
         files.forEach((file: File) => {
             this._$validFiles.push({
-                name: file.name, state: 'pause', url: '', file: file, reason:  ''
+                name: file.name, state: 'pause', url: '', file: file, reason: ''
             });
         });
     }
@@ -306,6 +317,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             this.complete.emit(this._$validFiles);
             this.update.emit(this._$validFiles)
         }
+        this._cdr.markForCheck();
     }
 
     /**

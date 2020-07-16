@@ -1,5 +1,7 @@
 import {
-    AfterViewInit, ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     Optional,
@@ -24,8 +26,9 @@ export class JigsawUpload extends JigsawUploadBase implements AfterViewInit {
     constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
-                @Optional() protected _translateService: TranslateService) {
-        super(_http, _renderer, _elementRef, _translateService);
+                @Optional() protected _translateService: TranslateService,
+                protected _cdr: ChangeDetectorRef) {
+        super(_http, _renderer, _elementRef, _translateService, _cdr);
     }
 
     @ViewChild('fileInput')
