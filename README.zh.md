@@ -5,6 +5,14 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rdkmaster/jigsaw) 
 
+## Jigsaw的优势
+
+Jigsaw是一套完整强大的Web组件集，当前的版本里包含了39个组件、6个容器、5个服务、5个指令，基本上覆盖了Web应用的方方面面。简单的说，其他组件集有的，Jigsaw都有，而且功能更强大性能更好。因此完全没有必要担心Jigsaw的功能缺失的问题。
+
+Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开发就能同时支持多种Ux规范**。
+
+这是业界首创！[点击这里](https://jigsaw-zte.gitee.io/latest/#/components/guide/supports-multiple-ux-specifications)了解更多。
+
 ## 可用清单
 
 ### 组件 / Components
