@@ -7,6 +7,13 @@
 
 [README中文版](README.zh.md)
 
+## Why Jigsaw?
+
+Jigsaw is a complete and powerful Web components set. The current version contains 39 components, 6 containers, 5 services, and 5 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
+
+Jigsaw has an ability that other component sets do not have: **Jigsaw’s application can support multiple Ux specifications at the same time in one development**. [Click here](https://jigsaw-zte.gitee.io/latest/#/components/guide/supports-multiple-ux-specifications) to learn more about it.
+
+
 ## List of Availables
 
 ### Components
