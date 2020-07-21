@@ -5,7 +5,8 @@
        [disabled]="disabled"
        (blur)="_$handleBlur($event)"
        (focus)="_$handleFocus($event)"
-       (keydown)="_handleKeyDown($event)">
+       (keydown)="_handleKeyDown($event)"
+       autocomplete="off">
 
 <div class="jigsaw-numeric-input-option-box">
     <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
