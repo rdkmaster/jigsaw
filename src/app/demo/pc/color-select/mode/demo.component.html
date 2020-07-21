@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>free 模式</h3>
+            <jigsaw-color-select mode="free"></jigsaw-color-select>
+        </div>
+
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>limited 模式</h3>
+            <jigsaw-color-select mode="limited" (colorChange)="_$colorChange($event)" [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']"></jigsaw-color-select>
+        </div>
+    </div>
+</div>

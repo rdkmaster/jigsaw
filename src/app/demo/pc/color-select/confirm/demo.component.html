@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-switch [(checked)]="_$showConfirm"></jigsaw-switch> <span>show confirm buttons</span>
+    <br>
+    <br>
+    <jigsaw-color-select [confirm]="_$showConfirm" (colorChange)="_$colorChange($event)"></jigsaw-color-select>
+</div>

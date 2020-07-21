@@ -1,0 +1,42 @@
+<div class="jigsaw-color-select-host"
+     [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}"
+     jigsaw-float [style.width]="width"
+     [jigsawFloatTarget]="mode == 'free' ? colorPickerElem : limitedElem" jigsawFloatOpenTrigger="click"
+     jigsawFloatCloseTrigger="click" [(jigsawFloatOpen)]="_$colorSelectOpen" (jigsawFloatOpenChange)="_$colorSelectOpenChange($event)"
+     jigsawFloatOpenTrigger="click" [jigsawFloatOptions]="mode == 'free' ? _$options :{}">
+    <div class="jigsaw-color-select-area"
+         [ngStyle]="{'background-color': color}"
+         [ngClass]="{'jigsaw-color-select-area-large':preSize=='large',
+                     'jigsaw-color-select-area-normal':preSize=='normal',
+                     'jigsaw-color-select-area-small': preSize=='small'}">
+        <span class="jigsaw-color-select-area-arrow" *ngIf="mode == 'limited'"></span>
+    </div>
+</div>
+<ng-template #colorPickerElem>
+    <div style="height: auto;max-width: 238px" [style.maxWidth]="'238px'">
+        <input style="display: none;"
+               [(colorPicker)]="color"
+               (colorPickerChange)="_$colorSelect($event)"
+               [cpToggle]="true"
+               [cpDialogDisplay]="'inline'"
+               [cpAlphaChannel]="enableOpacity"
+        />
+        <div *ngIf="confirm" class="jigsaw-color-select-confirm-buttons">
+            <j-button colorType="primary" preSize="small" (click)="_$confirm()">{{'color.confirm' | translate}}</j-button>
+            <j-button preSize="small" (click)="_$cancel()">{{'color.cancel' | translate}}</j-button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #limitedElem>
+    <div class="jigsaw-color-select-host jigsaw-color-select-host-limited"
+         [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}">
+        <div class="jigsaw-color-select-area" *ngFor="let item of limitedColors"
+             [ngStyle]="{'background-color': item}"
+             [ngClass]="{'jigsaw-color-select-area-large':preSize=='large',
+                     'jigsaw-color-select-area-normal':preSize=='normal',
+                     'jigsaw-color-select-area-small': preSize=='small'}"
+             (click)="_$colorSelect(item)">
+        </div>
+    </div>
+</ng-template>

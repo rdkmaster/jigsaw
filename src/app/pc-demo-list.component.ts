@@ -54,6 +54,7 @@ import {routerConfig as timePickerConfig} from "./demo/pc/time-picker/demo-set.m
 import {routerConfig as dateTimePickerConfig} from "./demo/pc/date-time-picker/demo-set.module";
 import {routerConfig as rangeDateTimePickerConfig} from "./demo/pc/range-date-time-picker/demo-set.module";
 import {routerConfig as progressConfig} from "./demo/pc/progress/demo-set.module";
+import {routerConfig as colorSelectConfig} from "./demo/pc/color-select/demo-set.module";
 import {routerConfigPC} from "./router-config";
 import {PopupPositionType} from "../jigsaw/common/service/popup.service";
 
@@ -202,6 +203,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'date-time-picker', dateTimePickerConfig);
         this._addRouterConfig(routerConfig, 'range-date-time-picker', rangeDateTimePickerConfig);
         this._addRouterConfig(routerConfig, 'progress', progressConfig);
+        this._addRouterConfig(routerConfig, 'color-select', colorSelectConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

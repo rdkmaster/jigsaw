@@ -1,0 +1,76 @@
+$color-prefix: #{$jigsaw-prefix}-color-select;
+
+.#{$color-prefix}-host {
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    padding: 3px;
+    margin-right: 8px;
+    position: relative;
+
+    .#{$color-prefix}-area {
+        width: 100%;
+        border: 1px solid #d9d9d9;
+        border-radius: 3px;
+        cursor: pointer;
+        flex: none;
+
+        .#{$color-prefix}-area-arrow {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 4px;
+            margin-top: -2px;
+            border-color: transparent;
+            border-top-color: #fff;
+        }
+    }
+
+    .#{$color-prefix}-area-large {
+        height: 24px;
+    }
+
+    .#{$color-prefix}-area-normal {
+        height: 20px;
+    }
+
+    .#{$color-prefix}-area-small {
+        height: 16px;
+    }
+}
+
+.#{$color-prefix}-host-limited {
+    .#{$color-prefix}-area {
+        border: 1px solid #fff;
+        height: 24px!important;
+    }
+}
+
+.#{$color-prefix}-host-large {
+    min-width: 80px;
+}
+
+.#{$color-prefix}-host-normal {
+    min-width: 60px;
+}
+
+.#{$color-prefix}-confirm-buttons {
+    width: 100%;
+    padding: 0 0 1rem 0;
+    text-align: center;
+}
+
+.color-picker {
+    border: none !important;
+
+    .button-area {
+        text-align: center !important;
+    }
+
+    .cursor {
+        border: #fff solid 1px !important;
+    }
+}

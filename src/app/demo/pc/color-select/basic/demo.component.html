@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-color-select (colorChange)="_$colorChange($event)" width="200" [(color)]="_$color"></jigsaw-color-select>
+
+    <jigsaw-color-select (colorChange)="_$colorChange($event)" width="200" [(color)]="_$colorDisabledOpacity"
+                         [enableOpacity]="'disabled'"></jigsaw-color-select>
+</div>
