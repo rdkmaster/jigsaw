@@ -12,7 +12,8 @@
            [disabled]="disabled"
            (blur)="_$handleBlur($event)"
            (focus)="_$handleFocus($event)"
-           [type]="type">
+           [type]="type"
+           autocomplete="off">
     <div class="jigsaw-input-icon-end">
         <span *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
         <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
