@@ -1,19 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {FormsModule} from '@angular/forms';
-import {JigsawButtonModule} from "../button/button";
-import {JigsawFloatModule} from "../../common/directive/float";
-import {ColorPickerModule} from "ngx-color-picker";
-import {JigsawColorSelect} from "./color-select";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {JigsawButtonModule} from "../button/button";
+import {JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawColorSelect} from "./color-select";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {ColorPickerModule} from "ngx-color-picker";
 
 @NgModule({
     imports: [
-        CommonModule, FormsModule, JigsawButtonModule, ColorPickerModule, JigsawFloatModule, TranslateModule
+        CommonModule, JigsawButtonModule, ColorPickerModule, JigsawFloatModule, TranslateModule
     ],
     declarations: [JigsawColorSelect],
-    exports: [JigsawColorSelect]
+    exports: [JigsawColorSelect],
+    providers:[TranslateService]
 })
 export class JigsawColorSelectModule {
     constructor(translateService: TranslateService) {

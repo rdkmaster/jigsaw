@@ -63,8 +63,6 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
 
     private _colorBak: string;
 
-    private _cancelButtonClicked: boolean;
-
     /*
     * @internal
     * */
@@ -95,10 +93,9 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
         if (this.mode == "free") {
             if ($event) {
                 this._colorBak = this.color;
-                this._cancelButtonClicked = false;
                 return;
             }
-            if (this.enableConfirm && !this._cancelButtonClicked) {
+            if (this.enableConfirm) {
                 this.color = this._colorBak;
             }
         }
@@ -121,7 +118,6 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     * */
     public _$cancel() {
         this.color = this._colorBak;
-        this._cancelButtonClicked = true;
         this._$colorSelectOpen = false;
         this._changeDetectorRef.markForCheck();
     }

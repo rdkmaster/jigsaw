@@ -7,6 +7,7 @@ $color-prefix: #{$jigsaw-prefix}-color-select;
     padding: 3px;
     margin-right: 8px;
     position: relative;
+    min-width: 24px;
 
     .#{$color-prefix}-area {
         width: 100%;
@@ -18,7 +19,7 @@ $color-prefix: #{$jigsaw-prefix}-color-select;
         .#{$color-prefix}-area-arrow {
             position: absolute;
             top: 50%;
-            right: 12px;
+            right: 7px;
             width: 0;
             height: 0;
             border-style: solid;
@@ -50,11 +51,11 @@ $color-prefix: #{$jigsaw-prefix}-color-select;
 }
 
 .#{$color-prefix}-host-large {
-    min-width: 80px;
+    width: 80px;
 }
 
 .#{$color-prefix}-host-normal {
-    min-width: 60px;
+    width: 60px;
 }
 
 .#{$color-prefix}-confirm-buttons {
