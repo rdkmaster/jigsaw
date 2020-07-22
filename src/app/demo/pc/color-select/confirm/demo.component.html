@@ -7,5 +7,6 @@
     <jigsaw-switch [(checked)]="_$showConfirm"></jigsaw-switch> <span>show confirm buttons</span>
     <br>
     <br>
-    <jigsaw-color-select [confirm]="_$showConfirm" (colorChange)="_$colorChange($event)"></jigsaw-color-select>
+    <jigsaw-color-select color="#e57409" [enableConfirm]="_$showConfirm" (colorChange)="_$colorChange($event)">
+    </jigsaw-color-select>
 </div>

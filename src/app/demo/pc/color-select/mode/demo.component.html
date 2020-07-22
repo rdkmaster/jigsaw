@@ -12,7 +12,9 @@
 
         <div class="demo-2 live-demo live-demo-block">
             <h3>limited 模式</h3>
-            <jigsaw-color-select mode="limited" (colorChange)="_$colorChange($event)" [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']"></jigsaw-color-select>
+            <jigsaw-color-select mode="limited" (colorChange)="_$colorChange($event)" color="#ba1621"
+                                 [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']">
+            </jigsaw-color-select>
         </div>
     </div>
 </div>

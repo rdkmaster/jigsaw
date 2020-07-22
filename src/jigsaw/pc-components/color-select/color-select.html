@@ -19,9 +19,9 @@
                (colorPickerChange)="_$colorSelect($event)"
                [cpToggle]="true"
                [cpDialogDisplay]="'inline'"
-               [cpAlphaChannel]="enableOpacity"
+               [cpAlphaChannel]="enableOpacity ? 'enabled' : 'disabled'"
         />
-        <div *ngIf="confirm" class="jigsaw-color-select-confirm-buttons">
+        <div *ngIf="enableConfirm" class="jigsaw-color-select-confirm-buttons">
             <j-button colorType="primary" preSize="small" (click)="_$confirm()">{{'color.confirm' | translate}}</j-button>
             <j-button preSize="small" (click)="_$cancel()">{{'color.cancel' | translate}}</j-button>
         </div>

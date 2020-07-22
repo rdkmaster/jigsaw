@@ -2,8 +2,8 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {ColorSelectBasicDemoComponent} from "./basic/demo.component";
 import {ColorSelectBasicDemoModule} from "./basic/demo.module";
-import {ColorSelectPreSizeDemoModule} from "./presize/demo.module";
-import {ColorSelectPreSizeDemoComponent} from "./presize/demo.component";
+import {ColorSelectPreSizeDemoModule} from "./pre-size/demo.module";
+import {ColorSelectPreSizeDemoComponent} from "./pre-size/demo.component";
 import {ColorSelectModeDemoComponent} from "./mode/demo.component";
 import {ColorSelectModeDemoModule} from "./mode/demo.module";
 import {ColorSelectConfirmDemoComponent} from "./confirm/demo.component";
@@ -17,7 +17,7 @@ export const routerConfig = [
     }, {
         path: 'mode', component: ColorSelectModeDemoComponent
     }, {
-        path: 'preSize', component: ColorSelectPreSizeDemoComponent
+        path: 'pre-size', component: ColorSelectPreSizeDemoComponent
     },
 
 ];

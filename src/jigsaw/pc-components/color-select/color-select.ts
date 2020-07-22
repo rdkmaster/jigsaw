@@ -21,13 +21,13 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public color: string = '#fff';
+    public color: string = '#10aeff';
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public enableOpacity: 'enabled'|'disabled' = 'enabled';
+    public enableOpacity: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
@@ -39,13 +39,13 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public confirm: boolean = true;
+    public enableConfirm: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public limitedColors: string[];
+    public limitedColors: string[] = ['#ba1621','#e43232','#e57409','#ffa940','#f7d216'];
 
     /**
      * @NoMarkForCheckRequired
@@ -83,7 +83,7 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
         if (this.mode == "limited") {
             this._$colorSelectOpen = false;
             this.colorChange.emit($event);
-        } else if (!this.confirm) {
+        } else if (!this.enableConfirm) {
             this.colorChange.emit($event);
         }
     }
@@ -98,7 +98,7 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
                 this._cancelButtonClicked = false;
                 return;
             }
-            if (this.confirm && !this._cancelButtonClicked) {
+            if (this.enableConfirm && !this._cancelButtonClicked) {
                 this.color = this._colorBak;
             }
         }
