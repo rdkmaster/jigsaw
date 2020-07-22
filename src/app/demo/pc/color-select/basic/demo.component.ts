@@ -5,13 +5,6 @@ import {Component} from '@angular/core';
 })
 
 export class ColorSelectBasicDemoComponent {
-    public _$color: string = "#dddddd"
-
-    public _$colorDisabledOpacity: string = "#e57409"
-
-    public _$colorChange($event) {
-        console.log($event);
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -12,6 +12,6 @@ export class ColorSelectModeDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个DEMO详细演示了`jigsaw-color-select`组件的各个参数的效果以及推荐的用法';
+    summary: string = '这个DEMO详细演示了`jigsaw-color-select`组件的两种不同选择颜色的模式';
     description: string = '';
 }

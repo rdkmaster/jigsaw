@@ -4,16 +4,16 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <p>支持透明度</p>
-    <jigsaw-color-select color="#e43232" (colorChange)="_$colorChange($event)" width="50">
-    </jigsaw-color-select>
+    <p>是否支持透明度</p>
+    <jigsaw-color-select [enableOpacity]="true" color="#e43232" width="40"></jigsaw-color-select>
+    <jigsaw-color-select [enableOpacity]="false" width="40"></jigsaw-color-select>
 
-    <p>不支持透明度</p>
-    <jigsaw-color-select (colorChange)="_$colorChange($event)" width="50" [enableOpacity]="false">
-    </jigsaw-color-select>
+    <p>是否需要确认</p>
+    <jigsaw-color-select [enableConfirm]="true" color="#e43232" width="40"></jigsaw-color-select>
+    <jigsaw-color-select [enableConfirm]="false" width="40"></jigsaw-color-select>
 
     <p>限定颜色</p>
-    <jigsaw-color-select mode="limited" color="#ba1621" width="80"
+    <jigsaw-color-select mode="limited" color="#ba1621" width="92"
                          [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']">
     </jigsaw-color-select>
 </div>
