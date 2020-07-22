@@ -89,15 +89,16 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     /*
     * @internal
     * */
-    public _$colorSelectOpenChange($event) {
-        if (this.mode == "free") {
-            if ($event) {
-                this._colorBak = this.color;
-                return;
-            }
-            if (this.enableConfirm) {
-                this.color = this._colorBak;
-            }
+    public _$colorSelectOpenChange(open: boolean) {
+        if (this.mode != "free") {
+            return;
+        }
+        if (open) {
+            this._colorBak = this.color;
+            return;
+        }
+        if (this.enableConfirm) {
+            this.color = this._colorBak;
         }
     }
 

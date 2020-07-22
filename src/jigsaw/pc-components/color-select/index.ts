@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {ColorPickerModule} from "ngx-color-picker";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {JigsawButtonModule} from "../button/button";
 import {JigsawFloatModule} from "../../common/directive/float/index";
 import {JigsawColorSelect} from "./color-select";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {ColorPickerModule} from "ngx-color-picker";
 
 @NgModule({
     imports: [

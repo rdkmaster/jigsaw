@@ -1,9 +1,8 @@
-<div class="jigsaw-color-select-host"
+<div class="jigsaw-color-select-host" jigsaw-float [style.width]="width"
      [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}"
-     jigsaw-float [style.width]="width"
      [jigsawFloatTarget]="mode == 'free' ? colorPickerElem : limitedElem" jigsawFloatOpenTrigger="click"
-     jigsawFloatCloseTrigger="click" [(jigsawFloatOpen)]="_$colorSelectOpen" (jigsawFloatOpenChange)="_$colorSelectOpenChange($event)"
-     jigsawFloatOpenTrigger="click" [jigsawFloatOptions]="mode == 'free' ? _$options :{}">
+     jigsawFloatCloseTrigger="click" [(jigsawFloatOpen)]="_$colorSelectOpen" [jigsawFloatOptions]="mode == 'free' ? _$options :{}"
+     (jigsawFloatOpenChange)="_$colorSelectOpenChange($event)">
     <div class="jigsaw-color-select-area"
          [ngStyle]="{'background-color': color}"
          [ngClass]="{'jigsaw-color-select-area-large':preSize=='large',
