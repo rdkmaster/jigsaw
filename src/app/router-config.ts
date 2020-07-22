@@ -218,6 +218,10 @@ export const routerConfigPC = [
     {
         path: "pc/progress",
         loadChildren: () => import('./demo/pc/progress/demo-set.module').then(m => m.ProgressDemoModule),
+    },
+    {
+        path: "pc/color-select",
+        loadChildren: () => import('./demo/pc/color-select/demo-set.module').then(m => m.ColorSelectDemoModule),
     }
 ];
 export const routerConfigMobile = [
