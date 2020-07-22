@@ -26,7 +26,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
-export type TimeStep = 1 | 5 | 10;
+export type TimeStep = 1 | 5 | 10 | 15 | 30;
 export type TimePopupValue = { mode: TimeSelectMode, value: string, list: TimePopupItem[] };
 export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: boolean };
 
@@ -135,7 +135,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public set step(step: TimeStep) {
         if (!step || step == this._step) return;
-        step = step != 1 && step != 5 && step != 10 ? 1 : step;
+        step = step != 1 && step != 5 && step != 10 && step != 15 && step!= 30 ? 1 : step;
         this._step = step;
     }
 
