@@ -1,0 +1,36 @@
+@import "../../common/assets/scss/core/base";
+
+$time-section-prefix-cls: #{$jigsaw-prefix}-time-section;
+
+.#{$time-section-prefix-cls} {
+    &-time-line {
+        margin-bottom: 6px;
+        ul {
+            @include inline-block();
+            @include clearfix();
+            margin-left: 24px;
+            li {
+                float: left;
+                width: 40px;
+                height: 12px;
+                margin-right: -1px;
+                border: 1px solid $border-color-base;
+                position: relative;
+                cursor: pointer;
+                &:hover {
+                    background: $primary-2;
+                }
+                &.#{$time-section-prefix-cls}-time-selected {
+                    border: 1px solid $primary-color;
+                    z-index: $zindex-level-1;
+                }
+            }
+        }
+    }
+    &-hour{
+        margin: -2px 0 0 26px;
+        span{
+            margin-right: 8px;
+        }
+    }
+}
