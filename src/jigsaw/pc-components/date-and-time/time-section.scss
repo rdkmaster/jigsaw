@@ -1,9 +1,12 @@
 @import "../../common/assets/scss/core/base";
 
 $time-section-prefix-cls: #{$jigsaw-prefix}-time-section;
+$time-section-picker-prefix-cls: #{$jigsaw-prefix}-time-section-picker;
+$week-section-picker-prefix-cls: #{$jigsaw-prefix}-week-section-picker;
 
-.#{$time-section-prefix-cls} {
-    &-time-line {
+.#{$time-section-picker-prefix-cls} {
+    @include inline-block();
+    &-line {
         margin-bottom: 6px;
         ul {
             @include inline-block();
@@ -20,8 +23,9 @@ $time-section-prefix-cls: #{$jigsaw-prefix}-time-section;
                 &:hover {
                     background: $primary-2;
                 }
-                &.#{$time-section-prefix-cls}-time-selected {
+                &.#{$time-section-picker-prefix-cls}-selected {
                     border: 1px solid $primary-color;
+                    background: $primary-2;
                     z-index: $zindex-level-1;
                 }
             }
@@ -31,6 +35,33 @@ $time-section-prefix-cls: #{$jigsaw-prefix}-time-section;
         margin: -2px 0 0 26px;
         span{
             margin-right: 8px;
+        }
+    }
+}
+
+.#{$week-section-picker-prefix-cls} {
+    @include inline-block();
+    ul {
+        @include inline-block();
+        @include clearfix();
+        margin-left: 6px;
+        li {
+            float: left;
+            width: 42px;
+            height: 24px;
+            line-height: 22px;
+            margin-right: 4px;
+            border: 1px solid $border-color-base;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                background: $primary-2;
+            }
+            &.#{$week-section-picker-prefix-cls}-selected {
+                border: 1px solid $primary-color;
+                background: $primary-2;
+            }
         }
     }
 }
