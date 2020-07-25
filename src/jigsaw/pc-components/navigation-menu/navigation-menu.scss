@@ -1,0 +1,258 @@
+@import "../../common/assets/scss/core/base";
+
+$nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
+
+.#{$nav-menu-prefix-cls} {
+    @include inline-block();
+    background: $component-background;
+
+    &-items {
+        background: $background-color-base;
+
+        .#{$nav-menu-prefix-cls}-item {
+            width: 200px;
+            color: $text-color;
+
+            .#{$nav-menu-prefix-cls}-item-top {
+                position: relative;
+                font-size: 14px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                height: 40px;
+                line-height: 40px;
+                cursor: pointer;
+                padding-left: 14px;
+
+                i {
+                    margin-right: 8px;
+                    width: 14px;
+                    text-align: center;
+                }
+
+                &:hover {
+                    background: $item-hover-bg;
+                }
+
+                .#{$nav-menu-prefix-cls}-item-arrow {
+                    position: absolute;
+                    right: 16px;
+                    top: 50%;
+                    margin-top: -7px;
+
+                    @include prefixer(transition, all .3s ease);
+                }
+            }
+
+            .#{$nav-menu-prefix-cls}-submenus {
+                overflow: hidden;
+
+                .#{$nav-menu-prefix-cls}-sub-item {
+                    position: relative;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 35px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    cursor: pointer;
+
+                    &:hover {
+                        background: $item-hover-bg;
+                    }
+                }
+            }
+
+            .#{$nav-menu-prefix-cls}-item-selected-top {
+                background-color: $default-color;
+            }
+
+            .#{$nav-menu-prefix-cls}-sub-item-selected {
+                background-color: $default-color;
+            }
+        }
+
+        .#{$nav-menu-prefix-cls}-item-collapsed {
+            width: 40px !important;
+
+            span {
+                display: none;
+            }
+
+            .#{$nav-menu-prefix-cls}-item-selected {
+                background-color: $default-color !important;
+            }
+        }
+    }
+
+    &-items-inline {
+        background: $component-background;
+
+        .#{$nav-menu-prefix-cls}-item {
+            width: 200px;
+            color: $text-color;
+
+            .#{$nav-menu-prefix-cls}-item-top {
+                position: relative;
+                font-size: 12px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                height: 32px;
+                line-height: 32px;
+                cursor: pointer;
+                padding-left: 16px;
+
+                i {
+                    margin-right: 8px;
+                    width: 12px;
+                    text-align: center;
+                }
+
+                &:hover {
+                    background: $item-hover-bg;
+                }
+
+                .#{$nav-menu-prefix-cls}-item-arrow {
+                    position: absolute;
+                    right: 16px;
+                    top: 50%;
+                    margin-top: -7px;
+
+                    @include prefixer(transition, all .3s ease);
+                }
+            }
+
+            .#{$nav-menu-prefix-cls}-submenus {
+                overflow: hidden;
+
+                .#{$nav-menu-prefix-cls}-sub-item {
+                    position: relative;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 35px;
+                    font-size: 12px;
+                    font-weight: 400;
+                    cursor: pointer;
+
+                    &:hover {
+                        background: $item-hover-bg;
+                    }
+                }
+            }
+
+            .#{$nav-menu-prefix-cls}-item-selected {
+                color: $primary-color;
+            }
+
+            .#{$nav-menu-prefix-cls}-item-selected-top {
+                background: $item-active-bg;
+            }
+
+            .#{$nav-menu-prefix-cls}-sub-item-selected {
+                background: $item-active-bg;
+            }
+        }
+    }
+
+    &-items &-item-inactive,
+    &-items-inline &-item-inactive {
+        > .#{$nav-menu-prefix-cls}-item-top {
+            .#{$nav-menu-prefix-cls}-item-arrow {
+                @include prefixer(transform, rotate(180deg));
+            }
+        }
+    }
+
+    &-items &-item &-item-selected-top:before,
+    &-items &-item &-sub-item-selected:before,
+    &-detail &-item-selected-before:before,
+    &-detail &-sub-item-selected:before {
+        height: 100%;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        background-color: $primary-color;
+    }
+
+    &-toggle-button {
+        cursor: pointer;
+        width: 200px;
+        height: 40px;
+        background: $background-color-base;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid $border-color-base;
+
+        &:hover {
+            color: $primary-color;
+        }
+    }
+
+    &-toggle-button &-toggle-button-arrow {
+        font-size: 16px;
+        @include prefixer(transition, all .3s ease);
+    }
+
+    &-toggle-button-collapsed {
+        width: 40px;
+
+        .#{$nav-menu-prefix-cls}-toggle-button-arrow {
+            @include prefixer(transform, rotate(180deg));
+        }
+    }
+
+    &-detail {
+        .#{$nav-menu-prefix-cls}-item {
+            position: relative;
+            width: 240px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            padding-left: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            background: $background-color-base;
+            cursor: pointer;
+            border: 1px solid $border-color-base;
+
+            i {
+                margin-right: 16px;
+            }
+        }
+
+        .#{$nav-menu-prefix-cls}-submenus {
+            overflow: hidden;
+            position: absolute;
+            left: 40px;
+            width: 200px;
+            background: $background-color-base;
+            font-size: 14px;
+            border: 1px solid #dcdcdc;
+            border-top: none;
+
+            .#{$nav-menu-prefix-cls}-sub-item {
+                position: relative;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                padding-left: 35px;
+                font-size: 14px;
+                font-weight: 400;
+                cursor: pointer;
+
+                &:hover {
+                    background: $item-hover-bg;
+                }
+            }
+
+            .#{$nav-menu-prefix-cls}-sub-item-selected {
+                background-color: $default-color;
+            }
+        }
+    }
+}

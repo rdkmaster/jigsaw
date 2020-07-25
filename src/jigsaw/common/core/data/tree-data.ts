@@ -143,7 +143,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
         };
         const names: string[] = xmlElement.getAttributeNames();
         names.forEach(name => {
-            node[name] = name == 'open' || name == 'isParent' ?
+            node[name] = name == 'open' || name == 'isParent' || name == 'isActive' || name == 'selected' ?
                 _isTruthy(xmlElement.getAttribute(name))
                 : xmlElement.getAttribute(name);
         });
