@@ -16,8 +16,8 @@ export type TimeSectionInfo = {
     isSelected: boolean
 }
 
-export type WeekSectionInfo = {
-    label: string,
+export type WeekAndDaySectionInfo = {
+    label: string | number,
     value: number
 }
 
@@ -202,10 +202,10 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
     }
 
     @Input()
-    public value: ArrayCollection<WeekSectionInfo> | WeekSectionInfo[];
+    public value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
 
     @Output()
-    public valueChange = new EventEmitter<ArrayCollection<WeekSectionInfo> | WeekSectionInfo[]>();
+    public valueChange = new EventEmitter<ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]>();
 
     private _langChangeSubscriber: Subscription;
     /**
@@ -215,7 +215,7 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public _$weekList: WeekSectionInfo[];
+    public _$weekList: WeekAndDaySectionInfo[];
 
     private _createWeekList() {
         return TimeService.getWeekdaysShort().map((week, index) => ({label: week, value: index}));
@@ -251,11 +251,70 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
 }
 
 @Component({
-    selector: 'jigsaw-month-section-picker, j-month-section-picker',
-    template: ``
+    selector: 'jigsaw-day-section-picker, j-day-section-picker',
+    template: `
+        <div class="jigsaw-day-section-picker-wrapper">
+            <div class="jigsaw-day-section-picker-checkbox">
+                <j-checkbox [(checked)]="_$selectState" (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
+            </div>
+            <div class="jigsaw-day-section-picker-tile">
+                <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
+                    <j-tile-option *ngFor="let week of _$dayList" [value]="week" width="32">
+                        {{week.label}}
+                    </j-tile-option>
+                </j-tile>
+            </div>
+        </div>
+        
+    `,
+    host: {
+        '[class.jigsaw-day-section-picker]': 'true',
+        '[style.width]': 'width'
+    }
 })
-export class JigsawMonthSectionPicker {
+export class JigsawDaySectionPicker extends AbstractJigsawComponent {
+    @Input()
+    public value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
 
+    @Output()
+    public valueChange = new EventEmitter<ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]>();
+
+    /**
+     * @internal
+     */
+    public _$selectState: CheckBoxStatus;
+    /**
+     * @internal
+     */
+    public _$dayList: WeekAndDaySectionInfo[] = Array.from(new Array(31)).map((item, index) => ({label: index + 1, value: index + 1}));
+
+    /**
+     * @internal
+     */
+    public _$toggleSelectAll($event) {
+        if ($event == CheckBoxStatus.checked) {
+            this.value = new ArrayCollection([...this._$dayList]);
+        } else if ($event == CheckBoxStatus.unchecked) {
+            this.value = new ArrayCollection([]);
+        }
+        this.valueChange.emit(this.value);
+    }
+
+    public _$selectChange($event) {
+        this.valueChange.emit($event);
+        this._setSelectState();
+    }
+
+    private _setSelectState() {
+        this._$selectState = this.value.length == this._$dayList.length ? CheckBoxStatus.checked : this.value.length == 0 ? CheckBoxStatus.unchecked : CheckBoxStatus.indeterminate;
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if(this.value) {
+            this._setSelectState();
+        }
+    }
 }
 
 @Component({
@@ -267,11 +326,11 @@ export class JigsawTimeSection {
 }
 
 @NgModule({
-    declarations: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawMonthSectionPicker],
+    declarations: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker],
     imports: [
         JigsawCheckBoxModule, JigsawTileSelectModule, TranslateModule.forChild()
     ],
-    exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawMonthSectionPicker]
+    exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker]
 })
 export class JigsawTimeSectionModule {
 
