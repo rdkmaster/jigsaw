@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawMenu, JigsawMenuHelper} from "./menu";
-import {JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawCascadingMenu} from "../../common/directive/menu/cascading-menu";
 
 @NgModule({

@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawFloatModule} from "../../common/directive/float";
+import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawNavigationMenu, PopupMenuItem} from "./navigation-menu";
 
 @NgModule({

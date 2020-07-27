@@ -4,7 +4,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ColorPickerModule} from "ngx-color-picker";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {JigsawButtonModule} from "../button/button";
-import {JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawColorSelect} from "./color-select";
 
 @NgModule({

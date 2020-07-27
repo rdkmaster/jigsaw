@@ -4,7 +4,7 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {IPopupable, PopupOptions, PopupPositionValue} from "../../common/service/popup.service";
-import {JigsawFloat} from "../../common/directive/float";
+import {JigsawFloat} from "../../common/directive/float/float";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 enum MenuLevel {top, sub}
