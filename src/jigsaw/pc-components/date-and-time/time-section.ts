@@ -5,16 +5,20 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateService, TranslateModule} from '@ngx-translate/core';
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TimeService} from "../../common/service/time.service";
-
-declare let moment: any;
+import {JigsawTileSelectModule} from "../list-and-tile/tile";
 
 export type TimeSectionInfo = {
     section: string,
     isSelected: boolean
+}
+
+export type WeekSectionInfo = {
+    label: string,
+    value: number
 }
 
 @Component({
@@ -47,17 +51,35 @@ export type TimeSectionInfo = {
     }
 })
 export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements OnDestroy {
+    /**
+     * @internal
+     */
     public _$amTimeline = Array.from(new Array(13)).map((item, i) => `${i < 10 ? '0' : ''}${i}:00`);
+    /**
+     * @internal
+     */
     public _$pmTimeline = Array.from(new Array(13)).map((item, i) => `${i + 12}:00`);
+    /**
+     * @internal
+     */
     public _$amTimeSection: TimeSectionInfo[] = Array.from(new Array(12)).map((item, i) => ({
         section: `${this._$amTimeline[i]}-${this._$amTimeline[i + 1]}`,
         isSelected: false
     }));
+    /**
+     * @internal
+     */
     public _$pmTimeSection: TimeSectionInfo[] = Array.from(new Array(12)).map((item, i) => ({
         section: `${this._$pmTimeline[i]}-${this._$pmTimeline[i + 1]}`,
         isSelected: false
     }));
+    /**
+     * @internal
+     */
     public _$amTimeCheck: CheckBoxStatus;
+    /**
+     * @internal
+     */
     public _$pmTimeCheck: CheckBoxStatus;
 
     private _value: ArrayCollection<string> = new ArrayCollection();
@@ -86,6 +108,9 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
     @Output()
     public valueChange = new EventEmitter();
 
+    /**
+     * @internal
+     */
     public _$timeSelect(sectionInfo: TimeSectionInfo) {
         sectionInfo.isSelected = !sectionInfo.isSelected;
         this._updateValueBySection(sectionInfo);
@@ -114,7 +139,10 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
         return sections.every(s => !!s.isSelected) ? CheckBoxStatus.checked : sections.some(s => !!s.isSelected) ? CheckBoxStatus.indeterminate : CheckBoxStatus.unchecked;
     }
 
-    private _$changeAmPmState($event, type: 'am' | 'pm') {
+    /**
+     * @internal
+     */
+    public _$changeAmPmState($event, type: 'am' | 'pm') {
         let timeSection = type == 'am' ? this._$amTimeSection : this._$pmTimeSection;
         timeSection.forEach(sectionInfo => {
             sectionInfo.isSelected = !!$event;
@@ -149,10 +177,12 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
 @Component({
     selector: 'jigsaw-week-section-picker, j-week-section-picker',
     template: `
-        <j-checkbox [checked]="_$toggleSelectAll">全选</j-checkbox>
-        <ul>
-            <li *ngFor="let week of _$weekList" [class.jigsaw-week-section-picker-selected]="week.isSelected">{{week.section}}</li>
-        </ul>
+        <j-checkbox [(checked)]="_$selectState" (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
+        <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
+            <j-tile-option *ngFor="let week of _$weekList" [value]="week">
+                {{week.label}}
+            </j-tile-option>
+        </j-tile>
     `,
     host: {
         '[class.jigsaw-week-section-picker]': 'true'
@@ -162,18 +192,61 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
     constructor(private _translateService: TranslateService) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            TimeService.setLocale(langInfo.curLang);
             this._$weekList = this._createWeekList();
         });
         let browserLang = _translateService.getBrowserLang();
         _translateService.setDefaultLang(browserLang);
+        TimeService.setLocale(browserLang);
         this._$weekList = this._createWeekList();
     }
+
+    @Input()
+    public value: ArrayCollection<WeekSectionInfo> | WeekSectionInfo[];
+
+    @Output()
+    public valueChange = new EventEmitter<ArrayCollection<WeekSectionInfo> | WeekSectionInfo[]>();
+
     private _langChangeSubscriber: Subscription;
-    public _$toggleSelectAll: CheckBoxStatus;
-    public _$weekList: TimeSectionInfo;
+    /**
+     * @internal
+     */
+    public _$selectState: CheckBoxStatus;
+    /**
+     * @internal
+     */
+    public _$weekList: WeekSectionInfo[];
 
     private _createWeekList() {
-        return moment.weekdaysShort().map((week, index) => ({section: week, isSelected: false, value: index}));
+        return TimeService.getWeekdaysShort().map((week, index) => ({label: week, value: index}));
+    }
+
+    /**
+     * @internal
+     */
+    public _$toggleSelectAll($event) {
+        if ($event == CheckBoxStatus.checked) {
+            this.value = new ArrayCollection([...this._$weekList]);
+        } else if ($event == CheckBoxStatus.unchecked) {
+            this.value = new ArrayCollection([]);
+        }
+        this.valueChange.emit(this.value);
+    }
+
+    public _$selectChange($event) {
+        this.valueChange.emit($event);
+        this._setSelectState();
+    }
+
+    private _setSelectState() {
+        this._$selectState = this.value.length == this._$weekList.length ? CheckBoxStatus.checked : this.value.length == 0 ? CheckBoxStatus.unchecked : CheckBoxStatus.indeterminate;
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if(this.value) {
+            this._setSelectState();
+        }
     }
 }
 
@@ -196,14 +269,14 @@ export class JigsawTimeSection {
 @NgModule({
     declarations: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawMonthSectionPicker],
     imports: [
-        JigsawCheckBoxModule
+        JigsawCheckBoxModule, JigsawTileSelectModule, TranslateModule.forChild()
     ],
     exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawMonthSectionPicker]
 })
 export class JigsawTimeSectionModule {
 
     constructor(translateService: TranslateService) {
-        TimeService.deFineLocaleZh();
+        TimeService.deFineZhLocale();
         InternalUtils.initI18n(translateService, 'timeSection', {
             zh: {
                 selectAll: "全选"

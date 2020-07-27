@@ -261,6 +261,10 @@ export class TimeService {
         return moment.weekdaysMin();
     }
 
+    public static getWeekdaysShort() {
+        return moment.weekdaysShort();
+    }
+
     public static getMonthShort() {
         return moment.localeData().monthsShort();
     }
@@ -377,7 +381,7 @@ export class TimeService {
         return result;
     }
 
-    public static deFineLocaleZh() {
+    public static deFineZhLocale() {
         moment.defineLocale('zh', {
             months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
             monthsShort: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
@@ -472,5 +476,9 @@ export class TimeService {
                 doy: 4  // The week that contains Jan 4th is the first week of the year.
             }
         });
+    }
+
+    public static setLocale(lang: string) {
+        moment.locale(lang);
     }
 }

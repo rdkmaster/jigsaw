@@ -4,7 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<j-time-section-picker [(value)]="timeSection" (valueChange)="valueChange($event)"></j-time-section-picker>
+<j-time-section-picker [(value)]="timeSection" (valueChange)="timeValueChange($event)"></j-time-section-picker>
 
-<j-week-section-picker></j-week-section-picker>
+<j-week-section-picker [(value)]="weekSection" (valueChange)="weekValueChange($event)"></j-week-section-picker>
 

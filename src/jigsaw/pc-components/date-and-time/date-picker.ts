@@ -122,14 +122,14 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 private _injector: Injector) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            moment.locale(langInfo.curLang);
+            TimeService.setLocale(langInfo.curLang);
             if (this.initialized) {
                 this._createCalendar(this._$curYear, this._$curMonth.month);
             }
         });
         let browserLang = _translateService.getBrowserLang();
         _translateService.setDefaultLang(browserLang);
-        moment.locale(browserLang);
+        TimeService.setLocale(browserLang);
     }
 
     /**
@@ -799,6 +799,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 })
 export class JigsawDatePickerModule {
     constructor() {
-        TimeService.deFineLocaleZh();
+        TimeService.deFineZhLocale();
     }
 }
