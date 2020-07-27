@@ -221,7 +221,6 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public writeValue(date: RangeDate): void {
-        if (!this._isDateChanged(date, this._date)) return;
         this._date = date;
         this.dateChange.emit(date);
         this._propagateChange();
@@ -236,9 +235,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             endDate: this._$endDate
         };
         this._$setComboValue(convertDate);
-        if (this._isDateChanged(convertDate, this.date)) {
-            this.writeValue(convertDate);
-        }
+        this.writeValue(convertDate);
         this._cdr.markForCheck();
     }
 
