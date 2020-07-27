@@ -24,6 +24,7 @@ export * from "./common/directive/dragdrop/types";
 export * from "./common/directive/float/index";
 export * from "./common/directive/movable/index";
 export * from "./common/directive/trusted-html/trusted-html";
+export * from "./common/directive/badge/index";
 export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
