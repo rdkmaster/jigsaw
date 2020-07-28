@@ -409,7 +409,22 @@
                 & span:hover {
                     background: $primary-8;
                 }
+                &-inRange {
+                    background: $primary-9;
+                }
             }
+        }
+    }
+
+    .#{$date-time-prefix-cls} {
+        &-gr-switch {
+            background: $component-background;
+        }
+    }
+
+    .#{$range-date-time-prefix-cls} {
+        &-shortcuts {
+            background: $component-background;
         }
     }
 
