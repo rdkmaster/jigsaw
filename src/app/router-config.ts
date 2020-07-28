@@ -222,10 +222,6 @@ export const routerConfigPC = [
     {
         path: "pc/color-select",
         loadChildren: () => import('./demo/pc/color-select/demo-set.module').then(m => m.ColorSelectDemoModule),
-    },
-    {
-        path: "pc/navigation-menu",
-        loadChildren: () => import('./demo/pc/navigation-menu/demo-set.module').then(m => m.NavigationMenuDemoModule),
     }
 ];
 export const routerConfigMobile = [

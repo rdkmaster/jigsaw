@@ -50,7 +50,7 @@ import {JigsawTransferModule} from "./transfer/transfer";
 import {JigsawTextareaModule} from "./textarea/index";
 import {JigsawBreadcrumbModule} from "./breadcrumb/breadcrumb";
 import {JigsawRateModule} from "./rate/index";
-import {JigsawMenuModule} from "./menu/index";
+import {JigsawMenuModule, JigsawNavigationMenuModule} from "./menu/index";
 import {JigsawProgressModule} from "./progress/progress";
 import {JigsawDatePickerModule} from "./date-and-time/date-picker";
 import {JigsawTimePickerModule} from "./date-and-time/time-picker";
@@ -59,7 +59,6 @@ import {JigsawRangeDateTimePickerModule} from "./date-and-time/range-date-time-p
 import {JigsawDateTimeSelectModule} from "./date-and-time/date-time-select";
 import {JigsawRangeDateTimeSelectModule} from "./date-and-time/range-date-time-select";
 import {JigsawColorSelectModule} from "./color-select/index";
-import {JigsawNavigationMenuModule} from "./navigation-menu/index";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,

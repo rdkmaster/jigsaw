@@ -4,7 +4,7 @@
     <div *ngFor="let menuItem of data?.nodes; let i = index" class="jigsaw-nav-menu-item"
          [ngClass]="{'jigsaw-nav-menu-item-inactive': !menuItem.isActive, 'jigsaw-nav-menu-item-collapsed': collapsed}"
          jigsaw-float [jigsawFloatTarget]="_$popupMenuItem" [jigsawFloatOptions]="_$popupMenuOptions"
-         (mouseenter)="_$openPopupMenu(i)" jigsawFloatOpenTrigger="none"
+         (mouseenter)="_$openPopupMenu(i)" jigsawFloatOpenTrigger="none" jigsawFloatCloseDelay="100"
          [jigsawFloatInitData]="menuItem" (jigsawFloatAnswer)="_$popupAnswerHandler($event)">
         <div class="jigsaw-nav-menu-item-top" (click)="_$menuSelect(menuItem)"
              [ngClass]="{'jigsaw-nav-menu-item-selected': menuItem.selected && menuItem?.nodes?.length > 0,

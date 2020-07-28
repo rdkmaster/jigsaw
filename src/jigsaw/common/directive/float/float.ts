@@ -27,8 +27,6 @@ export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight
 @Directive()
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     protected _removeWindowClickHandler: Function;
-    protected _floatOpenDelay = 100;
-    protected _floatCloseDelay = 400;
 
     private _popupInfo: PopupInfo;
     private _originDisposer: PopupDisposer;
@@ -38,6 +36,15 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _removeResizeHandler: Function;
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
+
+    /**
+     * @internal
+     */
+    public jigsawFloatOpenDelay: number = 100;
+    /**
+     * @internal
+     */
+    public jigsawFloatCloseDelay: number = 400;
 
     public get popupElement(): HTMLElement {
         return this._popupInfo ? this._popupInfo.element : null;
@@ -220,7 +227,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         this._rollInDenouncesTimer = this.callLater(() => {
             this.jigsawFloatOpen = true;
-        }, this._floatOpenDelay);
+        }, this.jigsawFloatOpenDelay);
     }
 
     /**
@@ -252,7 +259,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
                 this.closeFloat(event);
-            }, this._floatCloseDelay);
+            }, this.jigsawFloatCloseDelay);
         }
     }
 
@@ -762,6 +769,12 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
 
     @Input()
     public jigsawFloatOpen: boolean;
+
+    @Input()
+    public jigsawFloatOpenDelay: number = 100;
+
+    @Input()
+    public jigsawFloatCloseDelay: number = 400;
 
     /**
      * $demo = float/option

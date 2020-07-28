@@ -232,7 +232,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             width: 200px;
             background: $background-color-base;
             font-size: 14px;
-            border: 1px solid #dcdcdc;
+            border: 1px solid $border-color-base;
             border-top: none;
 
             .#{$nav-menu-prefix-cls}-sub-item {

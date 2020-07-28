@@ -8,6 +8,7 @@ import {JigsawFloat} from "../../common/directive/float/float";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 enum MenuLevel {top, sub}
+
 type PopupAnswer = {
     level: MenuLevel,
     menu: any
