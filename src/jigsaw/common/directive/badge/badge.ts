@@ -90,7 +90,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         const realBadge = this._getRealBadge();
         const classPre = this.jigsawBadge == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
         const position = this._calPosition();
-        const positionStr = `left: ${position.left};top: ${position.top};right:  ${position.right};bottom: ${position.bottom}`;
+        const positionStr = `left:${position.left}; top:${position.top}; right:${position.right}; bottom:${position.bottom}`;
         this._badge.innerHTML = this.jigsawBadge == 'dot' ?
             `<div style="${positionStr}"></div>` :
             `<div style="display: ${!!realBadge ? 'inline-block' : 'none'};${positionStr}">${realBadge}</div>`;
