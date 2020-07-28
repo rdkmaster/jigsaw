@@ -81,6 +81,9 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
     &-tile {
         flex: 1;
     }
+    &-tooltip {
+        padding: 6px;
+    }
 }
 
 .#{$week-section-picker-prefix-cls}, .#{$day-section-picker-prefix-cls} {

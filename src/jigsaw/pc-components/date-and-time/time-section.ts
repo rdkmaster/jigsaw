@@ -5,11 +5,12 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {TranslateService, TranslateModule} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {Subscription} from 'rxjs';
-import {TimeService} from "../../common/service/time.service";
+import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
+import {JigsawFloatModule} from "../../common/directive/float";
 
 export type TimeSectionInfo = {
     section: string,
@@ -18,7 +19,8 @@ export type TimeSectionInfo = {
 
 export type WeekAndDaySectionInfo = {
     label: string | number,
-    value: number
+    value: number,
+    isLast?: boolean
 }
 
 @Component({
@@ -259,13 +261,25 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
             </div>
             <div class="jigsaw-day-section-picker-tile">
                 <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
-                    <j-tile-option *ngFor="let week of _$dayList" [value]="week" width="32">
-                        {{week.label}}
-                    </j-tile-option>
+                    <ng-container *ngFor="let day of _$dayList">
+                        <j-tile-option *ngIf="!day.isLast; else lastDay"  [value]="day" width="32">
+                            {{day.label}}
+                        </j-tile-option>
+                        <ng-template #lastDay>
+                            <j-tile-option *ngIf="showLastDay" [value]="day" jigsaw-float [jigsawFloatTarget]="lastDayTooltip" jigsawFloatPosition="topLeft"
+                                           [jigsawFloatOptions]="{borderType: 'pointer'}">
+                                {{day.label}}
+                            </j-tile-option>
+                        </ng-template>
+                    </ng-container>
                 </j-tile>
             </div>
         </div>
-        
+        <ng-template #lastDayTooltip>
+            <div class="jigsaw-day-section-picker-tooltip">
+                {{'timeSection.lastDayTooltip' | translate}}
+            </div>
+        </ng-template>
     `,
     host: {
         '[class.jigsaw-day-section-picker]': 'true',
@@ -273,11 +287,26 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
     }
 })
 export class JigsawDaySectionPicker extends AbstractJigsawComponent {
+    constructor(private _translateService: TranslateService) {
+        super();
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            this._$dayList = this._createDayList();
+        });
+        let browserLang = _translateService.getBrowserLang();
+        _translateService.setDefaultLang(browserLang);
+        this._$dayList = this._createDayList();
+    }
+
+    private _langChangeSubscriber: Subscription;
+
     @Input()
     public value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
 
     @Output()
     public valueChange = new EventEmitter<ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]>();
+
+    @Input()
+    public showLastDay: boolean;
 
     /**
      * @internal
@@ -286,14 +315,31 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public _$dayList: WeekAndDaySectionInfo[] = Array.from(new Array(31)).map((item, index) => ({label: index + 1, value: index + 1}));
+    public _$dayList: WeekAndDaySectionInfo[];
+
+    private _createDayList() {
+        return Array.from(new Array(32)).map((item, index) => {
+            return index == 31 ? {
+                label: this._translateService.instant('timeSection.lastDay'),
+                value: this._getLastDayOfCurMonth(),
+                isLast: true
+            } : {label: index + 1, value: index + 1}
+        });
+    }
+
+    private _getLastDayOfCurMonth() {
+        let curDay = TimeService.convertValue('now', TimeGr.date);
+        let lastDate = TimeService.getLastDateOfMonth(TimeService.getYear(curDay), TimeService.getMonth(curDay));
+        return TimeService.getDay(lastDate);
+    }
 
     /**
      * @internal
      */
     public _$toggleSelectAll($event) {
         if ($event == CheckBoxStatus.checked) {
-            this.value = new ArrayCollection([...this._$dayList]);
+            let days = this._$dayList.slice(0, this._$dayList.length - (this.showLastDay ? 0 : 1));
+            this.value = new ArrayCollection([...days]);
         } else if ($event == CheckBoxStatus.unchecked) {
             this.value = new ArrayCollection([]);
         }
@@ -306,7 +352,8 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent {
     }
 
     private _setSelectState() {
-        this._$selectState = this.value.length == this._$dayList.length ? CheckBoxStatus.checked : this.value.length == 0 ? CheckBoxStatus.unchecked : CheckBoxStatus.indeterminate;
+        this._$selectState = this.value.length == (this.showLastDay ? this._$dayList.length : this._$dayList.length - 1) ? CheckBoxStatus.checked : this.value.length == 0 ?
+            CheckBoxStatus.unchecked : CheckBoxStatus.indeterminate;
     }
 
     ngOnInit() {
@@ -328,7 +375,7 @@ export class JigsawTimeSection {
 @NgModule({
     declarations: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker],
     imports: [
-        JigsawCheckBoxModule, JigsawTileSelectModule, TranslateModule.forChild()
+        JigsawCheckBoxModule, JigsawTileSelectModule, JigsawFloatModule, TranslateModule.forChild()
     ],
     exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker]
 })
@@ -338,10 +385,14 @@ export class JigsawTimeSectionModule {
         TimeService.deFineZhLocale();
         InternalUtils.initI18n(translateService, 'timeSection', {
             zh: {
-                selectAll: "全选"
+                selectAll: "全选",
+                lastDay: "最后一天",
+                lastDayTooltip: "当前月份的最后一天",
             },
             en: {
-                selectAll: 'Select All'
+                selectAll: 'Select All',
+                lastDay: "Last Day",
+                lastDayTooltip: "The last day of the current month"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

@@ -17,6 +17,7 @@ export class TimeSectionBasicDemoComponent {
     }
 
     daySection = [{label: 2, value: 2}, {label: 4, value: 4}];
+    showLastDay = true;
 
     dayValueChange($event) {
         console.log('day section change to ', $event);

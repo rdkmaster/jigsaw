@@ -7,6 +7,6 @@
 <j-time-section-picker [(value)]="timeSection" (valueChange)="timeValueChange($event)"></j-time-section-picker><br>
 
 <j-week-section-picker [(value)]="weekSection" (valueChange)="weekValueChange($event)"></j-week-section-picker><br>
-
-<j-day-section-picker [value]="daySection" (valueChange)="dayValueChange($event)" width="50%"></j-day-section-picker>
+<button (click)="showLastDay = !showLastDay">click</button>
+<j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" (valueChange)="dayValueChange($event)" width="50%"></j-day-section-picker>
 
