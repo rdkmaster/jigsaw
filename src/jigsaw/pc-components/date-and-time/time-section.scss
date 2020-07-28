@@ -6,6 +6,10 @@ $week-section-picker-prefix-cls: #{$jigsaw-prefix}-week-section-picker;
 $day-section-picker-prefix-cls: #{$jigsaw-prefix}-day-section-picker;
 $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
+.#{$time-section-prefix-cls} {
+    @include inline-block();
+}
+
 .#{$time-section-picker-prefix-cls} {
     @include inline-block();
     &-line {

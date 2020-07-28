@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Input, NgModule, OnDestroy, Output, OnInit} from '@angular/core';
 import {JigsawCheckBoxModule} from "../checkbox";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawFloatModule} from "../../common/directive/float";
+import {Time} from "../../common/service/time.types";
 
 export type TimeSectionInfo = {
     section: string,
@@ -21,6 +22,12 @@ export type WeekAndDaySectionInfo = {
     label: string | number,
     value: number,
     isLast?: boolean
+}
+
+export type TimeSection = {
+    time: string[],
+    week: WeekAndDaySectionInfo[],
+    date: WeekAndDaySectionInfo[]
 }
 
 @Component({
@@ -179,7 +186,8 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
 @Component({
     selector: 'jigsaw-week-section-picker, j-week-section-picker',
     template: `
-        <j-checkbox [(checked)]="_$selectState" (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
+        <j-checkbox [(checked)]="_$selectState"
+                    (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
         <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
             <j-tile-option *ngFor="let week of _$weekList" [value]="week">
                 {{week.label}}
@@ -190,7 +198,7 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
         '[class.jigsaw-week-section-picker]': 'true'
     }
 })
-export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
+export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements OnDestroy, OnInit {
     constructor(private _translateService: TranslateService) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
@@ -246,8 +254,16 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
 
     ngOnInit() {
         super.ngOnInit();
-        if(this.value) {
+        if (this.value) {
             this._setSelectState();
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._langChangeSubscriber) {
+            this._langChangeSubscriber.unsubscribe();
+            this._langChangeSubscriber = null;
         }
     }
 }
@@ -257,16 +273,18 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
     template: `
         <div class="jigsaw-day-section-picker-wrapper">
             <div class="jigsaw-day-section-picker-checkbox">
-                <j-checkbox [(checked)]="_$selectState" (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
+                <j-checkbox [(checked)]="_$selectState"
+                            (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
             </div>
             <div class="jigsaw-day-section-picker-tile">
                 <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
                     <ng-container *ngFor="let day of _$dayList">
-                        <j-tile-option *ngIf="!day.isLast; else lastDay"  [value]="day" width="32">
+                        <j-tile-option *ngIf="!day.isLast; else lastDay" [value]="day" width="32">
                             {{day.label}}
                         </j-tile-option>
                         <ng-template #lastDay>
-                            <j-tile-option *ngIf="showLastDay" [value]="day" jigsaw-float [jigsawFloatTarget]="lastDayTooltip" jigsawFloatPosition="topLeft"
+                            <j-tile-option *ngIf="showLastDay" [value]="day" jigsaw-float [jigsawFloatTarget]="lastDayTooltip"
+                                           jigsawFloatPosition="topLeft"
                                            [jigsawFloatOptions]="{borderType: 'pointer'}">
                                 {{day.label}}
                             </j-tile-option>
@@ -286,7 +304,7 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent {
         '[style.width]': 'width'
     }
 })
-export class JigsawDaySectionPicker extends AbstractJigsawComponent {
+export class JigsawDaySectionPicker extends AbstractJigsawComponent implements OnDestroy, OnInit {
     constructor(private _translateService: TranslateService) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
@@ -358,18 +376,112 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent {
 
     ngOnInit() {
         super.ngOnInit();
-        if(this.value) {
+        if (this.value) {
             this._setSelectState();
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._langChangeSubscriber) {
+            this._langChangeSubscriber.unsubscribe();
+            this._langChangeSubscriber = null;
         }
     }
 }
 
 @Component({
     selector: 'jigsaw-time-section, j-time-section',
-    templateUrl: 'time-section.html'
+    template: `
+        <div class="jigsaw-time-section-wrapper">
+            <div class="jigsaw-time-section-time">
+                <h3 class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</h3>
+                <j-time-section-picker [(value)]="_$timeValue" (valueChange)="_$selectChange($event, 'time')"></j-time-section-picker>
+            </div>
+            <div class="jigsaw-time-section-switch">
+                <jigsaw-radios-lite [(value)]="_$switchType" (valueChange)="_$switchSetType($event)" [data]="_$switchList"
+                                    trackItemBy="value">
+                </jigsaw-radios-lite>
+            </div>
+            <div class="jigsaw-time-section-month" *ngIf="_$switchType.value == 0">
+                <j-week-section-picker [(value)]="_$weekValue" (valueChange)="_$selectChange($event, 'week')"></j-week-section-picker>
+            </div>
+            <div class="jigsaw-time-section-week" *ngIf="_$switchType.value == 1">
+                <j-day-section-picker [(value)]="_$dayValue" [showLastDay]="showLastDay"
+                                      (valueChange)="_$selectChange($event, 'date')"></j-day-section-picker>
+            </div>
+        </div>
+    `,
+    host: {
+        'class.jigsaw-time-section': 'true'
+    }
 })
-export class JigsawTimeSection {
+export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy {
+    constructor(private _translateService: TranslateService) {
+        super();
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            this._createSwitchList();
+        });
+        let browserLang = _translateService.getBrowserLang();
+        _translateService.setDefaultLang(browserLang);
+        this._createSwitchList();
+    }
 
+    private _langChangeSubscriber: Subscription;
+
+    public _$switchList;
+    public _$switchType;
+    public _$timeValue;
+    public _$weekValue;
+    public _$dayValue;
+
+    private _value: TimeSection;
+    @Input()
+    public get value(): TimeSection {
+        return this._value;
+    }
+
+    public set value(value: TimeSection) {
+        if (!value || value == this._value) return;
+        this._$timeValue = value.time;
+        this._$weekValue = value.week;
+        this._$dayValue = value.date;
+    }
+
+    @Input()
+    public showLastDay: boolean;
+
+    private _createSwitchList() {
+        this._$switchList = [
+            {label: this._translateService.instant('timeSection.switchMonth'), value: 0},
+            {label: this._translateService.instant('timeSection.switchWeek'), value: 1}
+        ];
+        this._$switchType = this._$switchType ? this._$switchList.find(s => s.value == this._$switchType.value) : this._$switchList[0];
+    }
+
+    public _$switchSetType($event) {
+
+    }
+
+
+    public _$selectChange($event, type: 'time' | 'week' | 'date') {
+
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.value) {
+
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._langChangeSubscriber) {
+            this._langChangeSubscriber.unsubscribe();
+            this._langChangeSubscriber = null;
+        }
+    }
 }
 
 @NgModule({
@@ -388,11 +500,17 @@ export class JigsawTimeSectionModule {
                 selectAll: "全选",
                 lastDay: "最后一天",
                 lastDayTooltip: "当前月份的最后一天",
+                timeTitle: '时间',
+                switchMonth: '按月',
+                switchWeek: '按周'
             },
             en: {
                 selectAll: 'Select All',
                 lastDay: "Last Day",
-                lastDayTooltip: "The last day of the current month"
+                lastDayTooltip: "The last day of the current month",
+                timeTitle: 'Time',
+                switchMonth: 'Set Month',
+                switchWeek: 'Set Week'
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
