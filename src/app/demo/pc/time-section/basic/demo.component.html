@@ -4,9 +4,29 @@
 
 
 <!-- start to learn the demo from here -->
-<j-time-section-picker [(value)]="timeSection" (valueChange)="timeValueChange($event)"></j-time-section-picker><br>
+<div class="live-demo-wrap">
+    <h2>time-section</h2>
+    <div class="demo-1 live-demo">
+        <h3>time-section-picker</h3>
+        <j-time-section-picker [(value)]="timeSection" (valueChange)="timeValueChange($event)"></j-time-section-picker><br>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>week-section-picker</h3>
+        <j-week-section-picker [(value)]="weekSection" (valueChange)="weekValueChange($event)"></j-week-section-picker><br>
+    </div>
+    <div class="demo-3 live-demo">
+        <h3>day-section-picker</h3>
+        <button (click)="showLastDay = !showLastDay">toggle show last day</button><br>
+        <j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" (valueChange)="dayValueChange($event)" width="50%"></j-day-section-picker>
+    </div>
+    <div class="demo-4 live-demo">
+        <h3>time-section</h3>
+        <button style="margin-bottom: 10px" (click)="toggleLayout()">toggle layout</button><br>
+        <j-time-section [layout]="layout" [showDateOrWeek]="true" [showLastDay]="true" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+</div>
 
-<j-week-section-picker [(value)]="weekSection" (valueChange)="weekValueChange($event)"></j-week-section-picker><br>
-<button (click)="showLastDay = !showLastDay">click</button>
-<j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" (valueChange)="dayValueChange($event)" width="50%"></j-day-section-picker>
+
+
+
 

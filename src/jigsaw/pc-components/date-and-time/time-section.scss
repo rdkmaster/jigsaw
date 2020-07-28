@@ -8,16 +8,34 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
 .#{$time-section-prefix-cls} {
     @include inline-block();
+
+    &-time {
+        padding-right: 8px;
+
+        &-title {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+    }
+
+    &-horizontal {
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 .#{$time-section-picker-prefix-cls} {
     @include inline-block();
+
     &-line {
         margin-bottom: 6px;
+
         ul {
             @include inline-block();
             @include clearfix();
             margin-left: 24px;
+
             li {
                 float: left;
                 width: 40px;
@@ -26,9 +44,11 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
                 border: 1px solid $border-color-base;
                 position: relative;
                 cursor: pointer;
+
                 &:hover {
                     background: $primary-2;
                 }
+
                 &.#{$time-section-picker-prefix-cls}-selected {
                     border: 1px solid $primary-color;
                     background: $primary-2;
@@ -37,9 +57,11 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
             }
         }
     }
-    &-hour{
+
+    &-hour {
         margin: -2px 0 0 26px;
-        span{
+
+        span {
             margin-right: 8px;
         }
     }
@@ -47,10 +69,12 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
 .#{$week-section-picker-prefix-cls} {
     @include inline-block();
+
     ul {
         @include inline-block();
         @include clearfix();
         margin-left: 6px;
+
         li {
             float: left;
             width: 42px;
@@ -64,6 +88,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
             &:hover {
                 background: $primary-2;
             }
+
             &.#{$week-section-picker-prefix-cls}-selected {
                 border: 1px solid $primary-color;
                 background: $primary-2;
@@ -74,17 +99,21 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
 .#{$day-section-picker-prefix-cls} {
     @include inline-block();
+
     &-wrapper {
         display: flex;
         width: 100%;
     }
+
     &-checkbox {
         width: 60px;
         padding-top: 12px;
     }
+
     &-tile {
         flex: 1;
     }
+
     &-tooltip {
         padding: 6px;
     }

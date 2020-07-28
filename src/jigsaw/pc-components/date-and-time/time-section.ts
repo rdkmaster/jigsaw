@@ -12,6 +12,7 @@ import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {JigsawFloatModule} from "../../common/directive/float";
 import {Time} from "../../common/service/time.types";
+import {JigsawRadioLiteModule} from "../radio/radio-lite";
 
 export type TimeSectionInfo = {
     section: string,
@@ -25,9 +26,9 @@ export type WeekAndDaySectionInfo = {
 }
 
 export type TimeSection = {
-    time: string[],
-    week: WeekAndDaySectionInfo[],
-    date: WeekAndDaySectionInfo[]
+    time?: string[],
+    week?: WeekAndDaySectionInfo[],
+    date?: WeekAndDaySectionInfo[]
 }
 
 @Component({
@@ -393,27 +394,30 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
 @Component({
     selector: 'jigsaw-time-section, j-time-section',
     template: `
-        <div class="jigsaw-time-section-wrapper">
+        <div class="jigsaw-time-section-wrapper" [class.jigsaw-time-section-horizontal]="layout == 'horizontal'">
             <div class="jigsaw-time-section-time">
-                <h3 class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</h3>
-                <j-time-section-picker [(value)]="_$timeValue" (valueChange)="_$selectChange($event, 'time')"></j-time-section-picker>
+                <span class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</span>
+                <j-time-section-picker [(value)]="_$timeValue" (valueChange)="_$selectChange()"></j-time-section-picker>
             </div>
-            <div class="jigsaw-time-section-switch">
-                <jigsaw-radios-lite [(value)]="_$switchType" (valueChange)="_$switchSetType($event)" [data]="_$switchList"
-                                    trackItemBy="value">
-                </jigsaw-radios-lite>
-            </div>
-            <div class="jigsaw-time-section-month" *ngIf="_$switchType.value == 0">
-                <j-week-section-picker [(value)]="_$weekValue" (valueChange)="_$selectChange($event, 'week')"></j-week-section-picker>
-            </div>
-            <div class="jigsaw-time-section-week" *ngIf="_$switchType.value == 1">
-                <j-day-section-picker [(value)]="_$dayValue" [showLastDay]="showLastDay"
-                                      (valueChange)="_$selectChange($event, 'date')"></j-day-section-picker>
+            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showDateOrWeek">
+                <div class="jigsaw-time-section-switch">
+                    <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList"
+                                        trackItemBy="value">
+                    </jigsaw-radios-lite>
+                </div>
+                <div class="jigsaw-time-section-week" *ngIf="_$selectType.value == 0">
+                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay"
+                                          (valueChange)="_$selectChange()"></j-day-section-picker>
+                </div>
+                <div class="jigsaw-time-section-month" *ngIf="_$selectType.value == 1">
+                    <j-week-section-picker [(value)]="_$weekValue" (valueChange)="_$selectChange()"></j-week-section-picker>
+                </div>
             </div>
         </div>
     `,
     host: {
-        'class.jigsaw-time-section': 'true'
+        '[class.jigsaw-time-section]': 'true',
+        '[style.width]': 'width'
     }
 })
 export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy {
@@ -430,10 +434,10 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     private _langChangeSubscriber: Subscription;
 
     public _$switchList;
-    public _$switchType;
+    public _$selectType;
     public _$timeValue;
     public _$weekValue;
-    public _$dayValue;
+    public _$dateValue;
 
     private _value: TimeSection;
     @Input()
@@ -443,36 +447,42 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
 
     public set value(value: TimeSection) {
         if (!value || value == this._value) return;
+        this._value = value;
         this._$timeValue = value.time;
         this._$weekValue = value.week;
-        this._$dayValue = value.date;
+        this._$dateValue = value.date;
+        this._$selectType = this._$weekValue ? this._$switchList[1] : this._$switchList[0];
     }
 
     @Input()
+    public showDateOrWeek: boolean;
+
+    @Input()
     public showLastDay: boolean;
+
+    @Input()
+    public layout: 'horizontal' | 'vertical' = 'vertical';
+
+    @Output()
+    public valueChange = new EventEmitter<TimeSection>();
 
     private _createSwitchList() {
         this._$switchList = [
             {label: this._translateService.instant('timeSection.switchMonth'), value: 0},
             {label: this._translateService.instant('timeSection.switchWeek'), value: 1}
         ];
-        this._$switchType = this._$switchType ? this._$switchList.find(s => s.value == this._$switchType.value) : this._$switchList[0];
+        this._$selectType = this._$selectType ? this._$switchList.find(s => s.value == this._$selectType.value) : this._$switchList[0];
     }
 
-    public _$switchSetType($event) {
-
-    }
-
-
-    public _$selectChange($event, type: 'time' | 'week' | 'date') {
-
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        if (this.value) {
-
+    public _$selectChange() {
+        let value = {time: this._$timeValue};
+        if (this.showDateOrWeek && this._$selectType && this._$selectType.value == 0) {
+            Object.assign(value, {date: this._$dateValue});
+        } else if (this.showDateOrWeek && this._$selectType && this._$selectType.value == 1) {
+            Object.assign(value, {week: this._$weekValue})
         }
+        this._value = value;
+        this.valueChange.emit(value);
     }
 
     ngOnDestroy() {
@@ -487,7 +497,7 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
 @NgModule({
     declarations: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker],
     imports: [
-        JigsawCheckBoxModule, JigsawTileSelectModule, JigsawFloatModule, TranslateModule.forChild()
+        JigsawCheckBoxModule, JigsawTileSelectModule, JigsawFloatModule, JigsawRadioLiteModule, TranslateModule.forChild()
     ],
     exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker]
 })
