@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, NgModule, OnDestroy, Output, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, NgModule, OnDestroy, Output, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Injector} from '@angular/core';
 import {JigsawCheckBoxModule} from "../checkbox";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
@@ -58,9 +58,15 @@ export type TimeSection = {
     `,
     host: {
         '[class.jigsaw-time-section-picker]': 'true'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements OnDestroy {
+    constructor(private _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super();
+    }
     /**
      * @internal
      */
@@ -95,6 +101,9 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
     private _value: ArrayCollection<string> = new ArrayCollection();
     private _valueOnRefreshRemoval: CallbackRemoval;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): ArrayCollection<string> {
         return this._value;
@@ -126,12 +135,14 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
         this._updateValueBySection(sectionInfo);
         this._updateValue();
         this._checkAmPmSelect();
+        this._cdr.markForCheck();
     }
 
     private _changeSelectViewByValue() {
         this._updateSelectState(this._$amTimeSection);
         this._updateSelectState(this._$pmTimeSection);
         this._checkAmPmSelect();
+        this._cdr.markForCheck();
     }
 
     private _updateSelectState(timeSection: TimeSectionInfo[]) {
@@ -159,6 +170,7 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
             this._updateValueBySection(sectionInfo);
         });
         this._updateValue();
+        this._cdr.markForCheck();
     }
 
     private _updateValueBySection(sectionInfo: TimeSectionInfo) {
@@ -197,10 +209,13 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
     `,
     host: {
         '[class.jigsaw-week-section-picker]': 'true'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements OnDestroy, OnInit {
-    constructor(private _translateService: TranslateService) {
+    constructor(private _translateService: TranslateService, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             TimeService.setLocale(langInfo.curLang);
@@ -212,8 +227,19 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
         this._$weekList = this._createWeekList();
     }
 
+    private _value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
+    public get value(): ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[] {
+        return this._value;
+    }
+    public set value(value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]) {
+        this._value = value;
+        this._setSelectState();
+        this._cdr.markForCheck();
+    }
 
     @Output()
     public valueChange = new EventEmitter<ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]>();
@@ -245,12 +271,15 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
     }
 
     public _$selectChange($event) {
+        $event.sort((a, b) => a.value - b.value);
         this.valueChange.emit($event);
         this._setSelectState();
     }
 
     private _setSelectState() {
-        this._$selectState = this.value.length == this._$weekList.length ? CheckBoxStatus.checked : this.value.length == 0 ? CheckBoxStatus.unchecked : CheckBoxStatus.indeterminate;
+        this._$selectState = !this.value || this.value.length == 0 ? CheckBoxStatus.unchecked :
+            this.value.length == this._$weekList.length ? CheckBoxStatus.checked : CheckBoxStatus.indeterminate;
+        this._cdr.markForCheck();
     }
 
     ngOnInit() {
@@ -303,10 +332,13 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
     host: {
         '[class.jigsaw-day-section-picker]': 'true',
         '[style.width]': 'width'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDaySectionPicker extends AbstractJigsawComponent implements OnDestroy, OnInit {
-    constructor(private _translateService: TranslateService) {
+    constructor(private _translateService: TranslateService, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._$dayList = this._createDayList();
@@ -318,12 +350,26 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
 
     private _langChangeSubscriber: Subscription;
 
+    private _value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[];
+    public get value(): ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[] {
+        return this._value;
+    }
+    public set value(value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]) {
+        this._value = value;
+        this._setSelectState();
+        this._cdr.markForCheck();
+    }
 
     @Output()
     public valueChange = new EventEmitter<ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]>();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showLastDay: boolean;
 
@@ -366,13 +412,14 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     }
 
     public _$selectChange($event) {
+        $event.sort((a, b) => a.value - b.value);
         this.valueChange.emit($event);
         this._setSelectState();
     }
 
     private _setSelectState() {
-        this._$selectState = this.value.length == (this.showLastDay ? this._$dayList.length : this._$dayList.length - 1) ? CheckBoxStatus.checked : this.value.length == 0 ?
-            CheckBoxStatus.unchecked : CheckBoxStatus.indeterminate;
+        this._$selectState = !this.value || this.value.length == 0 ? CheckBoxStatus.unchecked :
+            this.value.length == (this.showLastDay ? this._$dayList.length : this._$dayList.length - 1) ? CheckBoxStatus.checked :  CheckBoxStatus.indeterminate;
     }
 
     ngOnInit() {
@@ -418,10 +465,13 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     host: {
         '[class.jigsaw-time-section]': 'true',
         '[style.width]': 'width'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy {
-    constructor(private _translateService: TranslateService) {
+    constructor(private _translateService: TranslateService, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._createSwitchList();
@@ -440,6 +490,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     public _$dateValue;
 
     private _value: TimeSection;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): TimeSection {
         return this._value;
@@ -452,11 +505,18 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         this._$weekValue = value.week;
         this._$dateValue = value.date;
         this._$selectType = this._$weekValue ? this._$switchList[1] : this._$switchList[0];
+        this._cdr.markForCheck();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showDateOrWeek: boolean;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showLastDay: boolean;
 
