@@ -35,7 +35,7 @@ export type TimeSectionInfo = {
 export type WeekAndDaySectionInfo = {
     label: string | number,
     value: number,
-    isLast?: boolean
+    lastDay?: boolean
 }
 
 export type TimeSection = {
@@ -325,9 +325,9 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
                             (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
             </div>
             <div class="jigsaw-day-section-picker-tile">
-                <j-tile trackItemBy="value,isLast" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
+                <j-tile trackItemBy="value,lastDay" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
                     <ng-container *ngFor="let day of _$dayList">
-                        <j-tile-option *ngIf="!day.isLast; else lastDay" [value]="day" width="32">
+                        <j-tile-option *ngIf="!day.lastDay; else lastDay" [value]="day" width="32">
                             {{day.label}}
                         </j-tile-option>
                         <ng-template #lastDay>
@@ -363,7 +363,6 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         });
         let browserLang = _translateService.getBrowserLang();
         _translateService.setDefaultLang(browserLang);
-        this._$dayList = this._createDayList();
     }
 
     private _langChangeSubscriber: Subscription;
@@ -379,8 +378,10 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
 
     public set value(value: ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]) {
         this._value = value;
-        this._setSelectState();
-        this._cdr.markForCheck();
+        if(this.initialized) {
+            this._setSelectState();
+            this._cdr.markForCheck();
+        }
     }
 
     @Output()
@@ -391,6 +392,12 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
      */
     @Input()
     public showLastDay: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public currentTime: Time;
 
     /**
      * @internal
@@ -406,13 +413,14 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
             return index == 31 ? {
                 label: this._translateService.instant('timeSection.lastDay'),
                 value: this._getLastDayOfCurMonth(),
-                isLast: true
+                lastDay: true
             } : {label: index + 1, value: index + 1}
         });
     }
 
     private _getLastDayOfCurMonth() {
-        let curDay = TimeService.convertValue('now', TimeGr.date);
+        let date = this.currentTime ? this.currentTime : 'now';
+        let curDay = TimeService.convertValue(date, TimeGr.date);
         let lastDate = TimeService.getLastDateOfMonth(TimeService.getYear(curDay), TimeService.getMonth(curDay));
         return TimeService.getDay(lastDate);
     }
@@ -446,6 +454,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
 
     ngOnInit() {
         super.ngOnInit();
+        this._$dayList = this._createDayList();
         if (this.value) {
             this._setSelectState();
         }
@@ -475,7 +484,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
                     </jigsaw-radios-lite>
                 </div>
                 <div class="jigsaw-time-section-week" *ngIf="_$selectType.value == 0">
-                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay"
+                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay" [currentTime]="currentTime"
                                           (valueChange)="_$selectChange()"></j-day-section-picker>
                 </div>
                 <div class="jigsaw-time-section-month" *ngIf="_$selectType.value == 1">
@@ -559,6 +568,12 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
      */
     @Input()
     public showLastDay: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public currentTime: Time;
 
     @Input()
     public layout: 'horizontal' | 'vertical' = 'vertical';
