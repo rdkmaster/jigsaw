@@ -22,7 +22,33 @@
     <div class="demo-4 live-demo">
         <h3>time-section</h3>
         <button style="margin-bottom: 10px" (click)="toggleLayout()">toggle layout</button><br>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDateOrWeek]="true" [showLastDay]="true"
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-5 live-demo">
+        <h3>time-section</h3>
+        <button style="margin-bottom: 10px" (click)="toggleLayout()">toggle layout</button><br>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showWeek]="false" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-6 live-demo">
+        <h3>time-section</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDate]="false" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-7 live-demo">
+        <h3>time-section</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDate]="false" [showWeek]="false" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-8 live-demo">
+        <h3>time-section</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showHour]="false" [showWeek]="false" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-9 live-demo">
+        <h3>time-section</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showHour]="false" [showDate]="false" [showLastDay]="true"
                         [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
     </div>
 </div>

@@ -473,21 +473,21 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     selector: 'jigsaw-time-section, j-time-section',
     template: `
         <div class="jigsaw-time-section-wrapper" [class.jigsaw-time-section-horizontal]="layout == 'horizontal'">
-            <div class="jigsaw-time-section-time">
+            <div class="jigsaw-time-section-time" *ngIf="showHour">
                 <span class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</span>
                 <j-time-section-picker [(value)]="_$timeValue" (valueChange)="_$selectChange()"></j-time-section-picker>
             </div>
-            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showDateOrWeek">
-                <div class="jigsaw-time-section-switch">
+            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate">
+                <div class="jigsaw-time-section-switch" *ngIf="showWeek && showDate">
                     <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList"
                                         trackItemBy="value">
                     </jigsaw-radios-lite>
                 </div>
-                <div class="jigsaw-time-section-week" *ngIf="_$selectType.value == 0">
+                <div class="jigsaw-time-section-week" *ngIf="showWeek && showDate && _$selectType.value == 0 || (showDate && !showWeek)">
                     <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay" [currentTime]="currentTime"
                                           (valueChange)="_$selectChange()"></j-day-section-picker>
                 </div>
-                <div class="jigsaw-time-section-month" *ngIf="_$selectType.value == 1">
+                <div class="jigsaw-time-section-month" *ngIf="showWeek && showDate && _$selectType.value == 1 || (showWeek && !showDate)">
                     <j-week-section-picker [(value)]="_$weekValue" (valueChange)="_$selectChange()"></j-week-section-picker>
                 </div>
             </div>
@@ -561,12 +561,6 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
      * @NoMarkForCheckRequired
      */
     @Input()
-    public showDateOrWeek: boolean;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
     public showLastDay: boolean;
 
     /**
@@ -575,8 +569,29 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     @Input()
     public currentTime: Time;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public layout: 'horizontal' | 'vertical' = 'vertical';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showHour: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showWeek: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showDate: boolean = true;
 
     @Output()
     public valueChange = new EventEmitter<TimeSection>();
@@ -593,10 +608,13 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
      * @internal
      */
     public _$selectChange() {
-        let value = {time: this._$timeValue};
-        if (this.showDateOrWeek && this._$selectType && this._$selectType.value == 0) {
+        let value = {};
+        if(this.showHour) {
+            Object.assign(value, {time: this._$timeValue});
+        }
+        if (this.showDate && this.showWeek && this._$selectType && this._$selectType.value == 0 || (this.showDate && !this.showWeek)) {
             Object.assign(value, {date: this._$dateValue});
-        } else if (this.showDateOrWeek && this._$selectType && this._$selectType.value == 1) {
+        } else if (this.showWeek && this.showDate && this._$selectType && this._$selectType.value == 1 || (this.showWeek && !this.showDate)) {
             Object.assign(value, {week: this._$weekValue})
         }
         this.writeValue(value);
