@@ -20,7 +20,7 @@ import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {AbstractJigsawComponent} from "../../common/common";
-import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";

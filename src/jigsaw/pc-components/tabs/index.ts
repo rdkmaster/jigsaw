@@ -12,7 +12,7 @@ import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawEditableTabTitleRenderer} from "./tab-renderer";
 import {JigsawInputModule} from "../input/input";
-import {JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloatModule} from "../../common/directive/float/float";
 
 @NgModule({
     imports: [CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule, JigsawFloatModule],

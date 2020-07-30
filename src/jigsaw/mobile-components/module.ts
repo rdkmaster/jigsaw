@@ -16,7 +16,7 @@ import {JigsawMobileTabsModule} from './tabs/index';
 import {JigsawMobileTagModule} from './tag/tag';
 import {JigsawMobileTileSelectModule} from './list-and-tile/tile';
 import {JigsawMovableModule} from "../common/directive/movable/index";
-import {JigsawFloatModule} from "../common/directive/float/index";
+import {JigsawFloatModule} from "../common/directive/float/float";
 import {JigsawDraggableModule, JigsawDroppableModule} from '../common/directive/dragdrop/index';
 import {JigsawMobileRootModule} from "./root/root";
 import {JigsawCommonModule} from "../common/common";
