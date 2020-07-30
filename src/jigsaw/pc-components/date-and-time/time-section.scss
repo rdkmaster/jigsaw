@@ -69,32 +69,6 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
 .#{$week-section-picker-prefix-cls} {
     @include inline-block();
-
-    ul {
-        @include inline-block();
-        @include clearfix();
-        margin-left: 6px;
-
-        li {
-            float: left;
-            width: 42px;
-            height: 24px;
-            line-height: 22px;
-            margin-right: 4px;
-            border: 1px solid $border-color-base;
-            cursor: pointer;
-            text-align: center;
-
-            &:hover {
-                background: $primary-2;
-            }
-
-            &.#{$week-section-picker-prefix-cls}-selected {
-                border: 1px solid $primary-color;
-                background: $primary-2;
-            }
-        }
-    }
 }
 
 .#{$day-section-picker-prefix-cls} {

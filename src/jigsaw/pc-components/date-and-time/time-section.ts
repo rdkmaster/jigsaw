@@ -216,7 +216,7 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
         <j-checkbox [(checked)]="_$selectState"
                     (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
         <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
-            <j-tile-option *ngFor="let week of _$weekList" [value]="week">
+            <j-tile-option *ngFor="let week of _$weekList" [value]="week" width="42" height="26">
                 {{week.label}}
             </j-tile-option>
         </j-tile>
@@ -327,12 +327,12 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
             <div class="jigsaw-day-section-picker-tile">
                 <j-tile trackItemBy="value,lastDay" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
                     <ng-container *ngFor="let day of _$dayList">
-                        <j-tile-option *ngIf="!day.lastDay; else lastDay" [value]="day" width="32">
+                        <j-tile-option *ngIf="!day.lastDay; else lastDay" [value]="day" width="26" height="26">
                             {{day.label}}
                         </j-tile-option>
                         <ng-template #lastDay>
                             <j-tile-option *ngIf="showLastDay" [value]="day" jigsaw-float [jigsawFloatTarget]="lastDayTooltip"
-                                           jigsawFloatPosition="topLeft"
+                                           jigsawFloatPosition="topLeft" height="26"
                                            [jigsawFloatOptions]="{borderType: 'pointer'}">
                                 {{day.label}}
                             </j-tile-option>
