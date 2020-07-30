@@ -18,7 +18,8 @@ type PopupAnswer = {
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',
     host: {
-        '[class.jigsaw-nav-menu]': 'true'
+        '[class.jigsaw-nav-menu]': 'true',
+        '[style.height]': 'height'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush

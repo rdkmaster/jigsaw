@@ -193,6 +193,11 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         }
     }
 
+    &-toggle-button-bottom {
+        position: relative;
+        bottom: 40px;
+    }
+
     &-toggle-button &-toggle-button-arrow {
         font-size: 16px;
         @include prefixer(transition, all .3s ease);
