@@ -3,6 +3,13 @@ import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
+    styles: [`
+        .block {
+            display: inline-block;
+            width: 300px;
+            vertical-align: top;
+        }
+    `]
 })
 export class NavigationMenuNavDemo {
 
