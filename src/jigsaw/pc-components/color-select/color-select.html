@@ -2,7 +2,7 @@
      [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}"
      [jigsawFloatTarget]="mode == 'free' ? colorPickerElem : limitedElem" jigsawFloatOpenTrigger="click"
      jigsawFloatCloseTrigger="click" [(jigsawFloatOpen)]="_$colorSelectOpen"
-     [jigsawFloatOptions]="mode == 'free' ? _$options :{}"
+     [jigsawFloatOptions]="mode == 'free' ? _$options : {}"
      (jigsawFloatOpenChange)="_$colorSelectOpenChange($event)">
     <div class="jigsaw-color-select-area"
          [ngStyle]="{'background-color': color}"
@@ -23,7 +23,8 @@
         />
         <div *ngIf="enableConfirm" class="jigsaw-color-select-confirm-buttons">
             <j-button colorType="primary" preSize="small"
-                      (click)="_$confirm()">{{'color.confirm' | translate}}</j-button>
+                      (click)="_$confirm()">{{'color.confirm' | translate}}
+            </j-button>
             <j-button preSize="small" (click)="_$cancel()">{{'color.cancel' | translate}}</j-button>
         </div>
     </div>
