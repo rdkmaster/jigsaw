@@ -22,7 +22,7 @@
     <div class="demo-4 live-demo">
         <h3>time-section</h3>
         <button style="margin-bottom: 10px" (click)="toggleLayout()">toggle layout</button><br>
-        <j-time-section [layout]="layout" [showDateOrWeek]="true" [showLastDay]="true" (valueChange)="sectionValueChange($event)"></j-time-section>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDateOrWeek]="true" [showLastDay]="true" (valueChange)="sectionValueChange($event)"></j-time-section>
     </div>
 </div>
 

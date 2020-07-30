@@ -325,7 +325,7 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
                             (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
             </div>
             <div class="jigsaw-day-section-picker-tile">
-                <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
+                <j-tile trackItemBy="value,isLast" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
                     <ng-container *ngFor="let day of _$dayList">
                         <j-tile-option *ngIf="!day.isLast; else lastDay" [value]="day" width="32">
                             {{day.label}}

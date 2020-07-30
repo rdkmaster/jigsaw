@@ -23,6 +23,7 @@ export class TimeSectionBasicDemoComponent {
         console.log('day section picker change to ', $event);
     }
 
+    timeSectionValue = {time: ['00:00-01:00','05:00-06:00', '18:00-19:00'], date: [{label: 2, value: 2}, {label: 4, value: 4}]};
     layout;
 
     toggleLayout() {
