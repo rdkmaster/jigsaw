@@ -7,38 +7,9 @@
 <div style="position: relative;">
 <div>
     <h4>用法1：垂直导航菜单</h4>
-    <jigsaw-collapse width="200px" style="margin:8px 0 0 16px">
-        <j-collapse-pane [isActive]="true">
-            <div j-title>
-                <span class="fa fa-user"></span> 功能组1
-            </div>
-            <div j-body>
-                <jigsaw-menu [data]="leftData" (select)="menuSelect($event)"
-                             width="100%" [showBorder]="false">
-                </jigsaw-menu>
-            </div>
-        </j-collapse-pane>
-        <j-collapse-pane [isActive]="true">
-            <div j-title>
-                <span class="fa fa-user"></span> 功能组2
-            </div>
-            <div j-body>
-                <jigsaw-menu [data]="leftData" (select)="menuSelect($event)"
-                             width="100%" [showBorder]="false">
-                </jigsaw-menu>
-            </div>
-        </j-collapse-pane>
-        <j-collapse-pane [isActive]="false">
-            <div j-title>
-                <span class="fa fa-user"></span> 功能组3
-            </div>
-            <div j-body>
-                <jigsaw-menu [data]="leftData" (select)="menuSelect($event)"
-                             width="100%" [showBorder]="false">
-                </jigsaw-menu>
-            </div>
-        </j-collapse-pane>
-    </jigsaw-collapse>
+    <jigsaw-navigation-menu [data]="navData" (select)="menuSelect($event)" height="100%"
+                            style="border: 1px solid #dcdcdc; margin-top: 8px">
+    </jigsaw-navigation-menu>
 </div>
 <div style="position:absolute; left:280px; top:0px;">
     <h4>用法2：软件菜单</h4>
@@ -55,7 +26,7 @@
     <h4>用法3：导航菜单</h4>
     <p>一般用于屏幕顶部，作为一级导航栏使用</p>
     <div class="content">
-        <label *ngFor="let menu of navData" class="nav-item"
+        <label *ngFor="let menu of topBarData" class="nav-item"
                jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
                jigsawCascadingMenuWidth="250" jigsawCascadingMenuTheme="navigation"
                (jigsawCascadingMenuSelect)="menuSelect($event)">

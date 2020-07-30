@@ -50,7 +50,7 @@ import {JigsawTransferModule} from "./transfer/transfer";
 import {JigsawTextareaModule} from "./textarea/index";
 import {JigsawBreadcrumbModule} from "./breadcrumb/breadcrumb";
 import {JigsawRateModule} from "./rate/index";
-import {JigsawMenuModule, JigsawNavigationMenuModule} from "./menu/index";
+import {JigsawMenuModule} from "./menu/index";
 import {JigsawProgressModule} from "./progress/progress";
 import {JigsawDatePickerModule} from "./date-and-time/date-picker";
 import {JigsawTimePickerModule} from "./date-and-time/time-picker";
@@ -121,7 +121,7 @@ const JIGSAW_MODULE = [
     JigsawDateTimeSelectModule,
     JigsawRangeDateTimeSelectModule,
     JigsawColorSelectModule,
-    JigsawNavigationMenuModule
+    JigsawMenuModule
 ];
 
 @NgModule({

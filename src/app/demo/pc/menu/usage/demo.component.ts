@@ -38,9 +38,9 @@ import {SimpleTreeData, JigsawMenu} from "jigsaw/public_api";
 })
 export class MenuUsageDemo {
     public menuData: any[] = this.initMenuData();
-    public navData: any[] = this.initNavData();
+    public topBarData: any[] = this.initTopBarData();
     public dropdownData: SimpleTreeData = this.initDropdownData();
-    public leftData: SimpleTreeData = this.initLeftData();
+    public navData: SimpleTreeData = this.initNavData();
 
     private initMenuData(): any[] {
         const data = [
@@ -125,7 +125,7 @@ export class MenuUsageDemo {
         return data;
     }
 
-    private initNavData(): any[] {
+    private initTopBarData(): any[] {
         const data = [
             {
                 "label": "首页", data: null
@@ -225,43 +225,24 @@ export class MenuUsageDemo {
         return data;
     }
 
-    private initLeftData():  SimpleTreeData {
+    private initNavData():  SimpleTreeData {
         const data = new SimpleTreeData();
         data.fromXML(`
             <node>
-                <node label="功能1">
-                    <node label="功能11">
-                        <node label="功能11"></node>
-                        <node label="功能12"></node>
-                        <node label="功能13"></node>
-                        <node label="功能14"></node>
-                        <node label="功能15"></node>
-                        <node label="功能16"></node>
-                    </node>
-                    <node label="功能12">
-                        <node label="功能21"></node>
-                        <node label="功能22"></node>
-                        <node label="功能23"></node>
-                        <node label="功能24"></node>
-                        <node label="功能25"></node>
-                        <node label="功能26"></node>
-                    </node>
-                    <node label="功能13">
-                        <node label="功能31"></node>
-                        <node label="功能32"></node>
-                        <node label="功能33"></node>
-                        <node label="功能34"></node>
-                        <node label="功能35"></node>
-                        <node label="功能36"></node>
-                    </node>
+                <node label="当前告警" icon="fa fa-bell-o" isActive="true" selected="true">
+                    <node label="告警监控" selected="true"></node>
+                    <node label="告警统计"></node>
+                    <node label="定时导出"></node>
+                    <node label="告警同步"></node>
+                    <node label="告警提示"></node>
                 </node>
-                <node label="功能2">
-                    <node label="功能21"></node>
-                    <node label="功能22"></node>
-                    <node label="功能23"></node>
+                <node label="历史告警" icon="fa fa-bell">
+                    <node label="告警查询"></node>
                 </node>
-                <node label="功能3"></node>
-                <node label="功能4"></node>
+                <node label="通知" icon="fa fa-bullhorn">
+                    <node label="通知监控"></node>
+                </node>
+                <node label="告警设置" icon="fa fa-cog"></node>
             </node>
         `);
         return data;

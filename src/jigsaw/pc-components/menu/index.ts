@@ -8,21 +8,11 @@ import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawCascadingMenu} from "../../common/directive/menu/cascading-menu";
 
 @NgModule({
-    declarations: [JigsawMenu, JigsawCascadingMenu, JigsawMenuHelper],
-    exports: [JigsawMenu, JigsawCascadingMenu],
-    imports: [JigsawListModule, JigsawFloatModule, CommonModule, PerfectScrollbarModule],
-    entryComponents: [JigsawMenu]
+    declarations: [JigsawMenu, JigsawCascadingMenu, JigsawMenuHelper, JigsawNavigationMenu, PopupMenuItem],
+    exports: [JigsawMenu, JigsawCascadingMenu, JigsawNavigationMenu],
+    imports: [JigsawListModule, JigsawFloatModule, CommonModule, PerfectScrollbarModule]
 })
 export class JigsawMenuModule {
-}
-
-@NgModule({
-    declarations: [JigsawNavigationMenu, PopupMenuItem],
-    exports: [JigsawNavigationMenu],
-    imports: [CommonModule, PerfectScrollbarModule, JigsawFloatModule],
-    entryComponents: [JigsawNavigationMenu]
-})
-export class JigsawNavigationMenuModule {
 }
 
 export * from "../../common/directive/menu/cascading-menu";
