@@ -1,8 +1,3 @@
-.box {
-    display: flex;
-    height: calc(100vh - 80px);
-}
-
 .block {
     display: inline-block;
     width: 230px;
@@ -11,9 +6,11 @@
 
 .vertical-rule {
     border-right: 2px dashed #aaa;
-    height: 100%;
     width: 2px;
-    margin: 0 20px;
+    height: 75vh;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 8px;
 }
 
 .content {
