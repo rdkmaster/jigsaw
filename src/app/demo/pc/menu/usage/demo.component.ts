@@ -1,40 +1,9 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component} from "@angular/core";
 import {SimpleTreeData, JigsawMenu} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .content {
-            margin: 24px;
-        }
-        .menu-item {
-            font-weight: normal;
-            padding: 2px;
-            margin-right: 8px;
-            border-radius: 4px;
-        }
-        .menu-item:hover {
-            background-color: #eee;
-            box-shadow: 0 0 1px 1px #aaa;
-        }
-        .nav-item {
-            font-weight: normal;
-            padding: 10px 16px;
-            background-color: #459df5;
-            color: #fff;
-            font-size: 15px;
-        }
-        .nav-item:hover {
-            background-color: #338ce6;
-            box-shadow: 0 0 3px 1px #338ce6;
-        }
-        .context-menu {
-            width: 230px;
-            height: 260px;
-            background-color: #ddd;
-            border-radius: 4px;
-        }
-    `]
+    styleUrls: [`./demo.component.css`]
 })
 export class MenuUsageDemo {
     public menuData: any[] = this.initMenuData();
@@ -128,7 +97,7 @@ export class MenuUsageDemo {
     private initTopBarData(): any[] {
         const data = [
             {
-                "label": "首页", data: null
+                "label": "首页", data: new SimpleTreeData()
             },
             {
                 "label": "分类", data: new SimpleTreeData()
@@ -140,6 +109,12 @@ export class MenuUsageDemo {
                 "label": "合作", data: new SimpleTreeData()
             }
         ];
+        data[0].data.fromXML(`
+            <node>
+                <node label="返回首页"></node>
+                <node label="关于"></node>
+            </node>
+        `);
         data[1].data.fromXML(`
             <node>
                 <node label="人文与自然">
@@ -225,7 +200,7 @@ export class MenuUsageDemo {
         return data;
     }
 
-    private initNavData():  SimpleTreeData {
+    private initNavData(): SimpleTreeData {
         const data = new SimpleTreeData();
         data.fromXML(`
             <node>
@@ -259,6 +234,6 @@ export class MenuUsageDemo {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '下拉菜单可以挂在任何dom节点上，与之组合使用，本demo主要用于展示菜单的各种典型用法，起到抛砖引玉的目的';
+    summary: string = '本demo主要用于展示菜单的各种典型用法，起到抛砖引玉的目的';
     description: string = '';
 }

@@ -4,15 +4,15 @@
 
 
 <!-- start to learn the demo from here -->
-<div style="position: relative;">
-<div>
-    <h4>用法1：垂直导航菜单</h4>
+<div class="block">
+    <h4 style="margin-bottom: 8px">用法1：垂直导航菜单</h4>
     <jigsaw-navigation-menu [data]="navData" (select)="menuSelect($event)" height="100%"
-                            style="border: 1px solid #dcdcdc; margin-top: 8px">
+                            style="border: 1px solid #dcdcdc;">
     </jigsaw-navigation-menu>
+    <div class="vertical-rule" style="margin-top: -27px;"></div>
 </div>
-<div style="position:absolute; left:280px; top:0px;">
-    <h4>用法2：软件菜单</h4>
+<div class="block" style="width: 380px">
+    <h4 style="margin-bottom: 8px">用法2：软件菜单</h4>
     <p>一般用于屏幕或者对话框顶部，作为功能菜单使用</p>
     <div class="content">
         <label *ngFor="let menu of menuData" class="menu-item"
@@ -23,8 +23,8 @@
         </label>
     </div>
 
-    <h4>用法3：导航菜单</h4>
-    <p>一般用于屏幕顶部，作为一级导航栏使用</p>
+    <h4 style="margin-bottom: 8px">用法3：水平导航菜单</h4>
+    <p>一般用于屏幕顶部，作为一级水平导航栏使用</p>
     <div class="content">
         <label *ngFor="let menu of topBarData" class="nav-item"
                jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
@@ -34,7 +34,7 @@
         </label>
     </div>
 
-    <h4>用法4：下拉菜单</h4>
+    <h4 style="margin-bottom: 8px">用法4：下拉菜单</h4>
     <p>一般用于视图内部</p>
     <div class="content">
         <a jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
@@ -44,7 +44,7 @@
         </a>
     </div>
 
-    <h4>用法5：与按钮组合</h4>
+    <h4 style="margin-bottom: 8px">用法5：与按钮组合</h4>
     <p style="margin-top: 8px">
         <jigsaw-button jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
                    jigsawCascadingMenuWidth="230" jigsawCascadingMenuTheme="dark"
@@ -65,9 +65,8 @@
         风格2：单击按钮直接执行操作，单击箭头出下拉菜单
     </p>
 </div>
-<div style="position:absolute; left:600px; top:0px;">
-    <h4>用法6：鼠标右击</h4>
-    <p style="margin-top: 8px" class="context-menu"
-       (contextmenu)="showContext($event)"></p>
-</div>
+<div class="vertical-rule"></div>
+<div class="block">
+    <h4 style="margin-bottom: 8px">用法6：鼠标右击</h4>
+    <p class="context-menu" (contextmenu)="showContext($event)"></p>
 </div>
