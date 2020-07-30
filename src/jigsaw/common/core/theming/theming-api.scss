@@ -435,6 +435,22 @@
             }
         }
     }
+
+    .#{$time-section-picker-prefix-cls} {
+        &-line {
+            ul {
+                li {
+                    &:hover {
+                        background: $primary-8;
+                    }
+
+                    &.#{$time-section-picker-prefix-cls}-selected {
+                        background: $primary-8;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @mixin setBodyBackground($bgColor) {
