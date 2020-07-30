@@ -30,3 +30,5 @@ export class JigsawColorSelectModule {
         translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }
+
+export * from "./color-select";

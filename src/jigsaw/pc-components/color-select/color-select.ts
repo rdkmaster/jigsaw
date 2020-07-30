@@ -14,6 +14,10 @@ import {PopupOptions} from "../../common/service/popup.service";
     selector: 'jigsaw-color-select',
     templateUrl: "./color-select.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[style.min-width]': 'width',
+        '[style.display]': "'inline-block'",
+    },
 })
 export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit {
 
