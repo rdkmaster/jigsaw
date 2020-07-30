@@ -6,11 +6,20 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
     @include inline-block();
     background: $component-background;
 
+    &-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
     &-items {
+        flex: 1;
         background: $background-color-base;
 
         .#{$nav-menu-prefix-cls}-item {
-            width: 200px;
+            width: 100%;
+            min-width: 40px;
             color: $text-color;
 
             .#{$nav-menu-prefix-cls}-item-top {
@@ -86,10 +95,12 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
     }
 
     &-items-inline {
+        flex: 1;
         background: $component-background;
 
         .#{$nav-menu-prefix-cls}-item {
-            width: 200px;
+            width: 100%;
+            min-width: 40px;
             color: $text-color;
 
             .#{$nav-menu-prefix-cls}-item-top {
@@ -180,7 +191,8 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
     &-toggle-button {
         cursor: pointer;
-        width: 200px;
+        width: 100%;
+        min-width: 40px;
         height: 40px;
         background: $background-color-base;
         display: flex;
@@ -191,11 +203,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         &:hover {
             color: $primary-color;
         }
-    }
-
-    &-toggle-button-bottom {
-        position: relative;
-        bottom: 40px;
     }
 
     &-toggle-button &-toggle-button-arrow {
@@ -234,7 +241,8 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             overflow: hidden;
             position: absolute;
             left: 40px;
-            width: 200px;
+            width: calc(100% - 40px);
+            min-width: 40px;
             background: $background-color-base;
             font-size: 14px;
             border: 1px solid $border-color-base;

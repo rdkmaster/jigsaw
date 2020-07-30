@@ -19,12 +19,15 @@ type PopupAnswer = {
     templateUrl: 'navigation-menu.html',
     host: {
         '[class.jigsaw-nav-menu]': 'true',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[style.width]': 'collapsed ? null : width'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNavigationMenu extends AbstractJigsawComponent {
+    protected _width: string = '200px';
+
     constructor(// @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
         super();
