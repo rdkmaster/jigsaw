@@ -23,7 +23,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {Subscription} from 'rxjs';
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
-import {JigsawFloatModule} from "../../common/directive/float";
+import {JigsawFloatModule} from "../../common/directive/float/float";
 import {Time} from "../../common/service/time.types";
 import {JigsawRadioLiteModule} from "../radio/radio-lite";
 
