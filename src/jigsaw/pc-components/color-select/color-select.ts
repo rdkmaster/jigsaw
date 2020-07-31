@@ -132,8 +132,7 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     }
 
     ngAfterViewInit() {
-        //limit模式下，需要保留三角箭头，最小为24px
-        if (this.mode == "limited" && this._elementRef.nativeElement.offsetWidth < 24) {
+        if (this._elementRef.nativeElement.offsetWidth < 24) {
             this._elementRef.nativeElement.style.minWidth = "24px";
         }
     }
