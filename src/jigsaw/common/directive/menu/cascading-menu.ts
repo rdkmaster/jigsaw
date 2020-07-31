@@ -1,19 +1,8 @@
-import {
-    Directive,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    AfterViewInit,
-    OnDestroy,
-    Renderer2,
-    ElementRef,
-    NgZone
-} from "@angular/core";
+import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
-import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
-import {JigsawMenu, MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "../../../pc-components/menu/menu";
+import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
+import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -24,9 +13,6 @@ import {JigsawMenu, MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "../
     }
 })
 export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, AfterViewInit, OnDestroy {
-    protected _floatOpenDelay = 300;
-    protected _floatCloseDelay = 200;
-
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
@@ -142,6 +128,12 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     public set jigsawCascadingMenuOpen(value: boolean) {
         this.jigsawFloatOpen = value;
     }
+
+    @Input()
+    public jigsawFloatOpenDelay: number = 300;
+
+    @Input()
+    public jigsawFloatCloseDelay: number = 200;
 
     @Output()
     public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();

@@ -409,7 +409,22 @@
                 & span:hover {
                     background: $primary-8;
                 }
+                &-inRange {
+                    background: $primary-9;
+                }
             }
+        }
+    }
+
+    .#{$date-time-prefix-cls} {
+        &-gr-switch {
+            background: $component-background;
+        }
+    }
+
+    .#{$range-date-time-prefix-cls} {
+        &-shortcuts {
+            background: $component-background;
         }
     }
 
@@ -459,4 +474,84 @@
     }
 }
 
+/**
+ * 设置内嵌菜单选中的字体颜色
+ */
+@mixin setNavMenuSelectColor() {
+    .#{$nav-menu-prefix-cls} {
+        &-items, &-items-inline {
+            .#{$nav-menu-prefix-cls}-item {
+                .#{$nav-menu-prefix-cls}-item-selected {
+                    color: $primary-color;
+                }
 
+                .#{$nav-menu-prefix-cls}-item-selected-top {
+                    color: $primary-color;
+                }
+
+                .#{$nav-menu-prefix-cls}-sub-item-selected {
+                    color: $primary-color;
+                }
+            }
+        }
+        &-detail {
+            .#{$nav-menu-prefix-cls}-item-selected {
+                color: $primary-color;
+            }
+
+            .#{$nav-menu-prefix-cls}-submenus {
+                .#{$nav-menu-prefix-cls}-sub-item-selected {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+/**
+ * 设置导航菜单背景色
+ */
+@mixin setNavMenuBgColor() {
+    .#{$nav-menu-prefix-cls} {
+        &-items {
+            background: $component-background;
+
+            .#{$nav-menu-prefix-cls}-item {
+                .#{$nav-menu-prefix-cls}-item-selected-top {
+                    background: $item-active-bg;
+                }
+
+                .#{$nav-menu-prefix-cls}-sub-item-selected {
+                    background: $item-active-bg;
+                }
+            }
+            .#{$nav-menu-prefix-cls}-item-collapsed {
+                .#{$nav-menu-prefix-cls}-item-selected {
+                    background: $item-active-bg !important;
+                }
+            }
+        }
+
+        &-toggle-button {
+            background: $component-background;
+        }
+        &-detail {
+            background: $component-background;
+
+            .#{$nav-menu-prefix-cls}-item {
+                background: $component-background;
+            }
+
+            .#{$nav-menu-prefix-cls}-item-selected {
+                background: $item-active-bg;
+            }
+
+            .#{$nav-menu-prefix-cls}-submenus {
+                background: $component-background;
+
+                .#{$nav-menu-prefix-cls}-sub-item-selected {
+                    background: $item-active-bg;
+                }
+            }
+        }
+    }
+}

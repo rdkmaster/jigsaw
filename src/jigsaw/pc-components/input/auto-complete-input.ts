@@ -21,7 +21,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 
 export class DropDownValue {
     constructor(data = null) {
