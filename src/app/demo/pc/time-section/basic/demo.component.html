@@ -8,21 +8,26 @@
     <h2>time-section</h2>
     <div class="demo-1 live-demo">
         <h3>time-section-picker</h3>
-        <j-time-section-picker [(value)]="timeSection" (valueChange)="timeValueChange($event)"></j-time-section-picker><br>
+        <button (click)="multipleSelect1 = !multipleSelect1">toggle multipleSelect</button><br>
+        <j-time-section-picker [(value)]="timeSection" [multipleSelect]="multipleSelect1" (valueChange)="timeValueChange($event)"></j-time-section-picker><br>
     </div>
     <div class="demo-2 live-demo">
         <h3>week-section-picker</h3>
-        <j-week-section-picker [(value)]="weekSection" (valueChange)="weekValueChange($event)"></j-week-section-picker><br>
+        <button (click)="multipleSelect2 = !multipleSelect2">toggle multipleSelect</button><br>
+        <j-week-section-picker [(value)]="weekSection" [multipleSelect]="multipleSelect2" (valueChange)="weekValueChange($event)"></j-week-section-picker><br>
     </div>
     <div class="demo-3 live-demo">
         <h3>day-section-picker</h3>
+        <button (click)="multipleSelect3 = !multipleSelect3">toggle multipleSelect</button>
         <button (click)="showLastDay = !showLastDay">toggle show last day</button><br>
-        <j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" [currentTime]="curTime" (valueChange)="dayValueChange($event)" width="50%"></j-day-section-picker>
+        <j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" [currentTime]="curTime" [multipleSelect]="multipleSelect3" (valueChange)="dayValueChange($event)" width="50%"></j-day-section-picker>
     </div>
     <div class="demo-4 live-demo">
         <h3>time-section</h3>
-        <button style="margin-bottom: 10px" (click)="toggleLayout()">toggle layout</button><br>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showLastDay]="true"
+        <button style="margin-bottom: 10px" (click)="toggleLayout()">toggle layout</button>
+        <button style="margin-bottom: 10px" (click)="isMultiHour = !isMultiHour">toggle isMultiHour</button>
+        <button style="margin-bottom: 10px" (click)="isMultiDateOrWeek = !isMultiDateOrWeek">toggle isMultiDateOrWeek</button><br>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showLastDay]="true" [isMultiHour]="isMultiHour" [isMultiDateOrWeek]="isMultiDateOrWeek"
                         [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
     </div>
     <div class="demo-5 live-demo">

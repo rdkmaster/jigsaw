@@ -30,11 +30,20 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
     &-line {
         margin-bottom: 6px;
+        &.#{$time-section-picker-prefix-cls}-multiple {
+            ul {
+                margin-left: 24px;
+            }
+            .#{$time-section-picker-prefix-cls}-hour {
+                margin-left: 26px;
+            }
+        }
 
         ul {
             @include inline-block();
             @include clearfix();
-            margin-left: 24px;
+            margin-left: 18px;
+
 
             li {
                 float: left;
@@ -59,7 +68,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
     }
 
     &-hour {
-        margin: -2px 0 0 26px;
+        margin-top: -2px;
 
         span {
             margin-right: 8px;

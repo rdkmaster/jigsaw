@@ -47,8 +47,8 @@ export type TimeSection = {
 @Component({
     selector: 'jigsaw-time-section-picker, j-time-section-picker',
     template: `
-        <div class="jigsaw-time-section-picker-line">
-            <j-checkbox [(checked)]="_$amTimeCheck" (checkedChange)="_$changeAmPmState($event, 'am')"></j-checkbox>
+        <div class="jigsaw-time-section-picker-line" [class.jigsaw-time-section-picker-multiple]="multipleSelect">
+            <j-checkbox *ngIf="multipleSelect" [(checked)]="_$amTimeCheck" (checkedChange)="_$changeAmPmState($event, 'am')"></j-checkbox>
             <ul>
                 <li *ngFor="let section of _$amTimeSection" (click)="_$timeSelect(section)"
                     [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
@@ -57,9 +57,9 @@ export type TimeSection = {
                 <span *ngFor="let time of _$amTimeline">{{time}}</span>
             </div>
         </div>
-        <div class="jigsaw-time-section-picker-line">
-            <j-checkbox [(checked)]="_$pmTimeCheck" (checkedChange)="_$changeAmPmState($event, 'pm')"></j-checkbox>
-            <ul>
+        <div class="jigsaw-time-section-picker-line" [class.jigsaw-time-section-picker-multiple]="multipleSelect">
+            <j-checkbox *ngIf="multipleSelect" [(checked)]="_$pmTimeCheck" (checkedChange)="_$changeAmPmState($event, 'pm')"></j-checkbox>
+            <ul [class.jigsaw-time-section-picker-multiple]="multipleSelect">
                 <li *ngFor="let section of _$pmTimeSection" (click)="_$timeSelect(section)"
                     [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
             </ul>
@@ -138,6 +138,12 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
         this._changeSelectViewByValue();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public multipleSelect: boolean = true;
+
     @Output()
     public valueChange = new EventEmitter();
 
@@ -145,10 +151,15 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
      * @internal
      */
     public _$timeSelect(sectionInfo: TimeSectionInfo) {
-        sectionInfo.isSelected = !sectionInfo.isSelected;
+        if(this.multipleSelect) {
+            sectionInfo.isSelected = !sectionInfo.isSelected;
+            this._checkAmPmSelect();
+        } else {
+            sectionInfo.isSelected = true;
+            this._changeAmPmSingleSelect(sectionInfo);
+        }
         this._updateValueBySection(sectionInfo);
         this._updateValue();
-        this._checkAmPmSelect();
         this._cdr.markForCheck();
     }
 
@@ -188,18 +199,35 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
     }
 
     private _updateValueBySection(sectionInfo: TimeSectionInfo) {
-        let found = this.value.find(v => v == sectionInfo.section);
-        if (sectionInfo.isSelected && !found) {
-            this.value.push(sectionInfo.section);
-        } else if (!sectionInfo.isSelected && found) {
-            let index = this.value.findIndex(v => v == sectionInfo.section);
-            this.value.splice(index, 1);
+        if(this.multipleSelect) {
+            let found = this.value.find(v => v == sectionInfo.section);
+            if (sectionInfo.isSelected && !found) {
+                this.value.push(sectionInfo.section);
+            } else if (!sectionInfo.isSelected && found) {
+                let index = this.value.findIndex(v => v == sectionInfo.section);
+                this.value.splice(index, 1);
+            }
+        } else {
+            this.value.splice(0, this.value.length, sectionInfo.section)
         }
     }
 
     private _updateValue() {
         this.value.sort();
         this.valueChange.emit(this.value);
+    }
+
+    private _changeAmPmSingleSelect(sectionInfo: TimeSectionInfo) {
+        this._singleSelectChange(sectionInfo, this._$amTimeSection);
+        this._singleSelectChange(sectionInfo, this._$pmTimeSection);
+    }
+
+    private _singleSelectChange(sectionInfo: TimeSectionInfo, sections: TimeSectionInfo[]) {
+        sections.forEach(s => {
+            if(s.section != sectionInfo.section) {
+                s.isSelected = false
+            }
+        })
     }
 
     ngOnDestroy(): void {
@@ -213,9 +241,9 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
 @Component({
     selector: 'jigsaw-week-section-picker, j-week-section-picker',
     template: `
-        <j-checkbox [(checked)]="_$selectState"
+        <j-checkbox *ngIf="multipleSelect" [(checked)]="_$selectState"
                     (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
-        <j-tile trackItemBy="value" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
+        <j-tile trackItemBy="value" [(selectedItems)]="value" [multipleSelect]="multipleSelect" (selectedItemsChange)="_$selectChange($event)">
             <j-tile-option *ngFor="let week of _$weekList" [value]="week" width="42" height="26">
                 {{week.label}}
             </j-tile-option>
@@ -255,6 +283,12 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
         this._setSelectState();
         this._cdr.markForCheck();
     }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public multipleSelect: boolean = true;
 
     @Output()
     public valueChange = new EventEmitter<ArrayCollection<WeekAndDaySectionInfo> | WeekAndDaySectionInfo[]>();
@@ -320,12 +354,12 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
     selector: 'jigsaw-day-section-picker, j-day-section-picker',
     template: `
         <div class="jigsaw-day-section-picker-wrapper">
-            <div class="jigsaw-day-section-picker-checkbox">
+            <div class="jigsaw-day-section-picker-checkbox" *ngIf="multipleSelect"k>
                 <j-checkbox [(checked)]="_$selectState"
                             (checkedChange)="_$toggleSelectAll($event)">{{'timeSection.selectAll' | translate}}</j-checkbox>
             </div>
             <div class="jigsaw-day-section-picker-tile">
-                <j-tile trackItemBy="value,lastDay" [(selectedItems)]="value" (selectedItemsChange)="_$selectChange($event)">
+                <j-tile trackItemBy="value,lastDay" [(selectedItems)]="value" [multipleSelect]="multipleSelect" (selectedItemsChange)="_$selectChange($event)">
                     <ng-container *ngFor="let day of _$dayList">
                         <j-tile-option *ngIf="!day.lastDay; else lastDay" [value]="day" width="26" height="26">
                             {{day.label}}
@@ -398,6 +432,12 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
      */
     @Input()
     public currentTime: Time;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public multipleSelect: boolean = true;
 
     /**
      * @internal
@@ -475,7 +515,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         <div class="jigsaw-time-section-wrapper" [class.jigsaw-time-section-horizontal]="layout == 'horizontal'">
             <div class="jigsaw-time-section-time" *ngIf="showHour">
                 <span class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</span>
-                <j-time-section-picker [(value)]="_$timeValue" (valueChange)="_$selectChange()"></j-time-section-picker>
+                <j-time-section-picker [(value)]="_$timeValue" [multipleSelect]="isMultiHour" (valueChange)="_$selectChange()"></j-time-section-picker>
             </div>
             <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate">
                 <div class="jigsaw-time-section-switch" *ngIf="showWeek && showDate">
@@ -484,11 +524,11 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
                     </jigsaw-radios-lite>
                 </div>
                 <div class="jigsaw-time-section-week" *ngIf="showWeek && showDate && _$selectType.value == 0 || (showDate && !showWeek)">
-                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay" [currentTime]="currentTime"
+                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay" [currentTime]="currentTime" [multipleSelect]="isMultiDateOrWeek"
                                           (valueChange)="_$selectChange()"></j-day-section-picker>
                 </div>
                 <div class="jigsaw-time-section-month" *ngIf="showWeek && showDate && _$selectType.value == 1 || (showWeek && !showDate)">
-                    <j-week-section-picker [(value)]="_$weekValue" (valueChange)="_$selectChange()"></j-week-section-picker>
+                    <j-week-section-picker [(value)]="_$weekValue" [multipleSelect]="isMultiDateOrWeek" (valueChange)="_$selectChange()"></j-week-section-picker>
                 </div>
             </div>
         </div>
@@ -592,6 +632,18 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
      */
     @Input()
     public showDate: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public isMultiHour: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public isMultiDateOrWeek: boolean = true;
 
     @Output()
     public valueChange = new EventEmitter<TimeSection>();
