@@ -20,7 +20,7 @@ type PopupAnswer = {
     host: {
         '[class.jigsaw-nav-menu]': 'true',
         '[style.height]': 'height',
-        '[style.width]': 'collapsed ? null : width'
+        '[style.width]': 'showToggleButton && collapsed ? null : width'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
