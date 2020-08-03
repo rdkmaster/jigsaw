@@ -59,13 +59,13 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeShowMask: boolean = false;
+    public jigsawBadgeMask: "none" | "dark" | "light" = "none";
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeDarkMask: boolean = false;
+    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid"
 
     /**
      * @NoMarkForCheckRequired
@@ -95,29 +95,34 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
 
     private _addBadge() {
+        if (!this.initialized) {
+            return;
+        }
         if (this._badge) {
             this._elementRef.nativeElement.removeChild(this._badge);
             this._badge = null;
         }
+
         this._badge = window.document.createElement('div');
         if (!this._elementRef.nativeElement.style.position) {
             this._elementRef.nativeElement.style.position = "relative";
         }
-        this._badge.style.borderRadius = "inherit";
+        this._badge.classList.add("jigsaw-badge-host");
         const realBadge = this._getRealBadge();
         const classPre = this.jigsawBadgeValue == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
         const position = this._calPosition();
         const positionStr = `left:${position.left}; top:${position.top}; right:${position.right}; bottom:${position.bottom}`;
+        const title = this.jigsawBadgeTitle? this.jigsawBadgeTitle : '';
         this._badge.innerHTML = this.jigsawBadgeValue == 'dot' ?
-            `<div style="${positionStr}"></div>` :
-            `<div style="display: ${!!realBadge ? 'inline-block' : 'none'};${positionStr}">${realBadge}</div>`;
+            `<div style="${positionStr}" title="${title}"></div>` :
+            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr};white-space: nowrap" title="${title}">${realBadge}</div>`;
         this._badge.children[0].classList.add(classPre);
         this._badge.children[0].classList.add(`${classPre}-size-${this.jigsawBadgeSize}`);
-
-        if (this.jigsawBadgeShowMask) {
+        const solid = this.jigsawBadgeStyle == 'solid' && this.jigsawBadgeValue != 'dot' ? "-solid" : "";
+        if (this.jigsawBadgeMask != "none") {
             this._badge.innerHTML += `<div></div>`;
             const classMaskPre = "jigsaw-badge-mask";
-            const backgroundClass = this.jigsawBadgeDarkMask ? `${classMaskPre}-dark` : `${classMaskPre}-light`;
+            const backgroundClass = `${classMaskPre}-${this.jigsawBadgeMask}`;
             let maskPos = <string>this.jigsawBadgePosition;
             if ((/(right.+)|(left.+)/).test(this.jigsawBadgePosition)) {
                 maskPos = this.jigsawBadgePosition.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
@@ -128,24 +133,28 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
             this._badge.children[1].classList.add(backgroundClass);
             this._badge.children[1].classList.add(positionClass);
             this._badge.children[1].classList.add(maskSizeClass);
-            if (!this.jigsawBadgeDarkMask) {
-                this._badge.children[0].classList.add('jigsaw-badge-font-light');
-            }
+
             if (this.jigsawBadgePosition == "right" || this.jigsawBadgePosition == "left") {
-                if (this.jigsawBadgeDarkMask) {
-                    this._badge.children[1].classList.add(`${classMaskPre}-background-dark`);
-                } else {
-                    this._badge.children[1].classList.add(`${classMaskPre}-background-light`);
-                }
+                this._badge.children[1].classList.add(`${classMaskPre}-background-${this.jigsawBadgeMask}`);
             }
             if (this.jigsawBadgeValue == "dot") {
                 this._badge.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
             }
         } else {
-            this._badge.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
+            this._badge.children[0].classList.add(`jigsaw-badge${solid}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
         }
+
+        if (this.jigsawBadgePointerCursor) {
+            this._badge.children[0].classList.add(`jigsaw-badge-cursor`);
+        }else{
+            this._badge.children[0].classList.add(`jigsaw-badge-cursor-default`);
+        }
+        this._badge.children[0].addEventListener('click', () => {
+            this.jigsawBadgeClick.emit(this.jigsawBadgeValue);
+        });
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
     }
+
 
     ngAfterViewInit() {
         this._addBadge();
@@ -165,7 +174,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
     }
 
     private _calPosition(): any {
-        if (this.jigsawBadgeShowMask) {
+        if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
         }
         const differ = this._getDiffer();

@@ -12,25 +12,49 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     z-index: 999;
 }
 
+.#{$badge-prefix-cls}-host {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-cursor {
+    cursor: pointer;
+}
+
+.#{$badge-prefix-cls}-cursor-default {
+    cursor: default;
+}
+
+
 .#{$badge-prefix-cls}-size-large {
     height: 24px;
     min-width: 24px;
-    line-height: 24px;
+    align-items: center;
     border-radius: 24px;
+    border-width: 2px !important;
+    font-weight: bold;
 }
 
 .#{$badge-prefix-cls}-size-normal {
     height: 20px;
     min-width: 20px;
-    line-height: 20px;
+    align-items: center;
     border-radius: 20px;
+    border-width: 2px !important;
+    font-weight: bold;
 }
 
 .#{$badge-prefix-cls}-size-small {
     height: 16px;
     min-width: 16px;
-    line-height: 16px;
+    align-items: center;
     border-radius: 16px;
+    border-width: 1px !important;
+    font-weight: lighter;
 }
 
 .#{$badge-prefix-cls}-normal {
@@ -47,6 +71,30 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
 
 .#{$badge-prefix-cls}-success {
     background-color: $success-color;
+}
+
+.#{$badge-prefix-cls}-solid-normal {
+    background: transparent;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+}
+
+.#{$badge-prefix-cls}-solid-warn {
+    background: transparent;
+    color: $warning-color;
+    border: 1px solid $warning-color;
+}
+
+.#{$badge-prefix-cls}-solid-success {
+    background: transparent;
+    color: $success-color;
+    border: 1px solid $success-color;
+}
+
+.#{$badge-prefix-cls}-solid-error {
+    background: transparent;
+    color: $error-color;
+    border: 1px solid $error-color;;
 }
 
 .#{$badge-prefix-cls}-dot {

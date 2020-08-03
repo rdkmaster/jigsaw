@@ -6,12 +6,25 @@
 <div class="live-demo-wrap">
     <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
                  [icon]="'fa fa-edit'" [iconSize]="100"
-                 title="编辑" jigsawBadgeSize="small">
+                 title="编辑" jigsawBadgeSize="normal">
     </jigsaw-icon>
 
     <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="rightBottom" jigsawBadgeMaxValue="50"
-                 [icon]="'fa fa-edit'" [iconSize]="100"
-                 title="编辑" jigsawBadgeSize="small">
+                 [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'" (jigsawBadgeClick)="select($event)"
+                 jigsawBadgeTitle="aaasds" title="编辑" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true">
+    </jigsaw-icon>
+
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="rightBottom" jigsawBadgeMaxValue="50"
+                 [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'"
+                 title="编辑" jigsawBadgeSize="normal">
+    </jigsaw-icon>
+
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="rightBottom" jigsawBadgeMaxValue="50"
+                 [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'"
+                 title="编辑" jigsawBadgeSize="large">
     </jigsaw-icon>
     <br>
+
+
+    <jigsaw-button jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">确定</jigsaw-button>
 </div>

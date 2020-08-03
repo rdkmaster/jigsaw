@@ -5,7 +5,9 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeBasicDemoComponent {
-
+    select($event){
+        console.log($event);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
