@@ -17,7 +17,7 @@ import {PopupOptions} from "../../common/service/popup.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '[class.jigsaw-color-select]': 'true',
-        '[style.min-width]': 'width',
+        '[style.width]': 'width',
         '[class.jigsaw-color-select-size-small]': "preSize === 'small'",
         '[class.jigsaw-color-select-size-large]': "preSize === 'large'",
         '[class.jigsaw-color-select-size-normal]': "preSize === 'normal'"
