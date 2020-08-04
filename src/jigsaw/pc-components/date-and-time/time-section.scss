@@ -43,7 +43,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
             @include inline-block();
             @include clearfix();
             margin-left: 18px;
-
+            padding: 5px 0;
 
             li {
                 float: left;
