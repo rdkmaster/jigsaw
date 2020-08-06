@@ -381,7 +381,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     private _isDateSame(date1, date2) {
         if (!date1 || !date2) return false;
-        if (this.gr == TimeGr.week) {
+        if (this.gr == TimeGr.week && typeof date1 == 'object' && typeof date2 == 'object') {
             return date1.year == date2.year && date1.week == date2.week
         } else {
             return date1 == date2
