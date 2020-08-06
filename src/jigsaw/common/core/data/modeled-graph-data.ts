@@ -17,6 +17,8 @@ import {lightGraphTheme, darkGraphTheme} from "../theming/echarts-theme";
 export abstract class AbstractModeledGraphTemplate {
     public abstract getInstance(): EchartOptions;
 
+    public templateBase?: EchartOptions;
+
     public themes? = [
         {name: '默认浅色系', theme: lightGraphTheme},
         {name: '默认深色系', theme: darkGraphTheme}
@@ -145,10 +147,15 @@ export abstract class ModeledRectangularTemplate extends AbstractModeledGraphTem
 
 export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
-        return {
-            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            xAxis: CommonUtils.extendObjects<EchartXAxis>({}, this.xAxis),
+            yAxis: [
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis2)
+            ]
         };
     }
 
@@ -273,17 +280,19 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         const options: EchartOptions = this.template.getInstance();
-        options.xAxis = [
-            CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
-        ];
-        options.yAxis = [
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis1, this.yAxis1),
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis2, this.yAxis2)
-        ];
+        options.xAxis = CommonUtils.extendObjects<EchartXAxis>(options.xAxis, this.xAxis.style, {data: xAxisItems});
+        if(options.yAxis instanceof Array) {
+            options.yAxis = [
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[0], this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[1], this.yAxis2)
+            ];
+        } else {
+            options.yAxis = CommonUtils.extendObjects<EchartYAxis>(options.yAxis, this.yAxis1);
+        }
+
         if (options.legend) {
             options.legend.data = dimensions.map(d => d.name);
         }
-        options.xAxis[0].data = xAxisItems;
 
         const dimIndex = this.getIndex(this.dimensionField);
         const pruned = this.pruneAllData(xAxisIndex, dimIndex, dimensions);
@@ -371,18 +380,19 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         const options: EchartOptions = this.template.getInstance();
-        options.xAxis = [
-            CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
-        ];
-        options.yAxis = [
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis1, this.yAxis1),
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis2, this.yAxis2)
-        ];
+        options.xAxis = CommonUtils.extendObjects<EchartXAxis>(options.xAxis, this.xAxis.style, {data: xAxisGroups._$groupItems});
+        if(options.yAxis instanceof Array) {
+            options.yAxis = [
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[0], this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[1], this.yAxis2)
+            ];
+        } else {
+            options.yAxis = CommonUtils.extendObjects<EchartYAxis>(options.yAxis, this.yAxis1);
+        }
 
         if (options.legend) {
             options.legend.data = this.indicators.map(kpi => this.header[kpi.index]);
         }
-        options.xAxis[0].data = xAxisGroups._$groupItems;
         options.series = this.indicators
             .map(kpi => ({name: this.header[kpi.index], field: this.field[kpi.index], data: getColumn(pruned, kpi.index)}))
             .map(seriesData => {
