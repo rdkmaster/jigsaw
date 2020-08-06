@@ -5,7 +5,8 @@ import {
     EventEmitter,
     Input,
     OnInit,
-    Output
+    Output,
+    ElementRef
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
@@ -15,8 +16,11 @@ import {PopupOptions} from "../../common/service/popup.service";
     templateUrl: "./color-select.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        '[style.min-width]': 'width',
-        '[style.display]': "'inline-block'",
+        '[class.jigsaw-color-select]': 'true',
+        '[style.width]': 'width',
+        '[class.jigsaw-color-select-size-small]': "preSize === 'small'",
+        '[class.jigsaw-color-select-size-large]': "preSize === 'large'",
+        '[class.jigsaw-color-select-size-normal]': "preSize === 'normal'"
     },
 })
 export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit {
@@ -37,7 +41,7 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public mode: 'free'|'limited' = 'free';
+    public mode: 'free' | 'limited' = 'free';
 
     /**
      * @NoMarkForCheckRequired
@@ -49,13 +53,13 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public limitedColors: string[] = ['#ba1621','#e43232','#e57409','#ffa940','#f7d216'];
+    public limitedColors: string[] = ['#ba1621', '#e43232', '#e57409', '#ffa940', '#f7d216'];
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public preSize: 'large'|'normal'|'small' = "large";
+    public preSize: 'large' | 'normal' | 'small' = "large";
 
     @Output()
     public colorChange: EventEmitter<any> = new EventEmitter<any>();
@@ -72,7 +76,7 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     * */
     public _$options: PopupOptions = {borderType: "pointer", showBorder: true, size: {minWidth: 232}};
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private _elementRef: ElementRef) {
         super();
     }
 
@@ -125,5 +129,11 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
         this.color = this._colorBak;
         this._$colorSelectOpen = false;
         this._changeDetectorRef.markForCheck();
+    }
+
+    ngAfterViewInit() {
+        if (this._elementRef.nativeElement.offsetWidth < 24) {
+            this._elementRef.nativeElement.style.minWidth = "24px";
+        }
     }
 }
