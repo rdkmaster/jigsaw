@@ -10,7 +10,7 @@ export class BadgePositionDemoComponent {
         {
             logo: 'bicycle',
             name: 'bicycle',
-        },
+         },
         {
             logo: 'camera',
             name: 'camera',
