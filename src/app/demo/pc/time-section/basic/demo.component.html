@@ -1,0 +1,96 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>time-section</h2>
+    <div class="demo-1 live-demo">
+        <h3>time-section-picker</h3>
+        <j-button-bar [data]="['单选', '多选']" [selectedItems]="['多选']"
+                      (selectedItemsChange)="multipleSelect1 = $event[0] == '多选'; timeSection = []">
+        </j-button-bar>
+        <br><br>
+        <j-time-section-picker [(value)]="timeSection" [multipleSelect]="multipleSelect1"
+                               (valueChange)="timeValueChange($event)"></j-time-section-picker>
+        <br>
+    </div>
+    <div class="demo-2 live-demo">
+        <h3>week-section-picker</h3>
+        <j-button-bar [data]="['单选', '多选']" [selectedItems]="['多选']"
+                      (selectedItemsChange)="multipleSelect2 = $event[0] == '多选'; weekSection = []">
+        </j-button-bar>
+        <br><br>
+        <j-week-section-picker [(value)]="weekSection" [multipleSelect]="multipleSelect2"
+                               (valueChange)="weekValueChange($event)">
+        </j-week-section-picker>
+        <br>
+    </div>
+    <div class="demo-3 live-demo">
+        <h3>day-section-picker</h3>
+        <j-button-bar [data]="['单选', '多选']" [selectedItems]="['多选']"
+                      (selectedItemsChange)="multipleSelect3 = $event[0] == '多选'; daySection = []">
+        </j-button-bar>
+        <j-checkbox style="margin-left: 16px" [(checked)]="showLastDay">显示最后一天</j-checkbox>
+        <br><br>
+        <j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" [currentTime]="curTime"
+                              [multipleSelect]="multipleSelect3" (valueChange)="dayValueChange($event)"
+                              width="50%"></j-day-section-picker>
+    </div>
+    <div class="demo-4 live-demo">
+        <h3>time-section</h3>
+        <j-button-bar [data]="['水平排列', '垂直排列']" [selectedItems]="['垂直排列']"
+                      (selectedItemsChange)="toggleLayout()">
+        </j-button-bar>
+        <j-button-bar style="margin-left: 16px" [data]="['时间单选', '时间多选']" [selectedItems]="['时间多选']"
+                      (selectedItemsChange)="
+                          multipleHour = $event[0] == '时间多选';
+                          timeSectionValue.time = [];
+                          dateTime.update()
+                      ">
+        </j-button-bar>
+        <j-button-bar style="margin-left: 16px" [data]="['日期单选', '日期多选']" [selectedItems]="['日期多选']"
+                      (selectedItemsChange)="
+                          multipleDate = $event[0] == '日期多选';
+                          timeSectionValue.date = [];
+                          timeSectionValue.week = [];
+                          dateTime.update()
+                      ">
+        </j-button-bar>
+        <br><br>
+        <j-time-section #dateTime [(value)]="timeSectionValue" [layout]="layout" [showLastDay]="true"
+                        [multipleHour]="multipleHour"
+                        [multipleDate]="multipleDate" [currentTime]="curTime"
+                        (valueChange)="sectionValueChange($event)">
+        </j-time-section>
+    </div>
+    <div class="demo-5 live-demo">
+        <h3>time-section - time & month date only</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showWeek]="false" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-6 live-demo">
+        <h3>time-section - time & week date only</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDate]="false" [showLastDay]="true"
+                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
+    </div>
+    <div class="demo-7 live-demo">
+        <h3>time-section</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDate]="false" [showWeek]="false"
+                        [showLastDay]="true" [currentTime]="curTime" (valueChange)="sectionValueChange($event)">
+        </j-time-section>
+    </div>
+    <div class="demo-8 live-demo">
+        <h3>time-section - month date only</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showHour]="false" [showWeek]="false"
+                        [showLastDay]="true" [currentTime]="curTime" (valueChange)="sectionValueChange($event)">
+        </j-time-section>
+    </div>
+    <div class="demo-9 live-demo">
+        <h3>time-section - week date only</h3>
+        <j-time-section [value]="timeSectionValue" [layout]="layout" [showHour]="false" [showDate]="false"
+                        [showLastDay]="true" [currentTime]="curTime" (valueChange)="sectionValueChange($event)">
+        </j-time-section>
+    </div>
+</div>

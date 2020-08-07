@@ -9,7 +9,7 @@
 }
 
 /* 大标题 */
-.live-demo-wrap h2 {
+.live-demo-wrap > h2 {
     margin-bottom: 40px;
     color: #333;
     /*color: #fff;*/
@@ -40,7 +40,7 @@
 }
 
 /* demo标题 */
-.live-demo h3 {
+.live-demo > h3 {
     margin: 0 0 10px -10px;
     color: #333;
     /*color: #ccc;*/
