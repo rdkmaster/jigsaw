@@ -447,10 +447,10 @@ export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
 
 export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
-        return {
+        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
-            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend)
         };
     }
 
@@ -612,7 +612,7 @@ export class GaugeSeries {
 
 export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
-        return {
+        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             toolbox: CommonUtils.extendObjects<EchartTitle>({}, this.toolbox),
         };
@@ -777,7 +777,7 @@ export abstract class ModeledRadarTemplate extends AbstractModeledGraphTemplate 
 
 export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
     getInstance(): EchartOptions {
-        return {
+        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
             title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
@@ -853,8 +853,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         if (options.legend) {
             options.legend.data = dimensions.map(d => d.name);
         }
-        let radarItem = this.template.radarItem;
-        radarItem.indicator = this.indicators.map((indicator: RadarIndicator) => {
+        let indicator = this.indicators.map((indicator: RadarIndicator) => {
             return {
                 name: indicator.name,
                 max: indicator.max,
@@ -862,7 +861,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
                 color: indicator.color
             }
         });
-        options.radar = radarItem;
+        options.radar = CommonUtils.extendObject(options.radar, {indicator: indicator});
 
         let series = this.template.seriesItem;
         series.data = dimensions.map((dimension: RadarDimension) => {
@@ -896,8 +895,8 @@ export abstract class ModeledScatterTemplate extends AbstractModeledGraphTemplat
 
 export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
     getInstance(): EchartOptions {
-        return {
-            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
         };
@@ -979,8 +978,8 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             options.legend.data = [];
         }
 
-        options.xAxis = this.xAxis;
-        options.yAxis = this.yAxis;
+        options.xAxis = CommonUtils.extendObject(options.xAxis, this.xAxis);
+        options.yAxis = CommonUtils.extendObject(options.yAxis, this.yAxis);
 
         const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         const dimIndex = this.getIndex(this.dimensionField);
@@ -1047,7 +1046,7 @@ export abstract class ModeledMapTemplate extends AbstractModeledGraphTemplate {
 
 export class BasicModeledMapTemplate extends ModeledMapTemplate {
     getInstance(): EchartOptions {
-        return {
+        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             visualMap: CommonUtils.extendObjects<EchartTooltip>({}, this.visualMap),
