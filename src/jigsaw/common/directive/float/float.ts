@@ -1,16 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnDestroy,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type
-} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, NgModule, NgZone, OnDestroy, Output, Renderer2, TemplateRef, Type} from "@angular/core";
 import {
     IPopupable,
     PopupDisposer,
@@ -24,7 +12,7 @@ import {
 import {AbstractJigsawViewBase} from "../../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AffixUtils} from "../../core/utils/internal-utils";
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 
 export enum DropDownTrigger {
     click,
@@ -39,8 +27,6 @@ export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight
 @Directive()
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
     protected _removeWindowClickHandler: Function;
-    protected _floatOpenDelay = 100;
-    protected _floatCloseDelay = 400;
 
     private _popupInfo: PopupInfo;
     private _originDisposer: PopupDisposer;
@@ -50,6 +36,15 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _removeResizeHandler: Function;
     private _rollOutDenouncesTimer: any = null;
     private _rollInDenouncesTimer: any = null;
+
+    /**
+     * @internal
+     */
+    public jigsawFloatOpenDelay: number = 100;
+    /**
+     * @internal
+     */
+    public jigsawFloatCloseDelay: number = 400;
 
     public get popupElement(): HTMLElement {
         return this._popupInfo ? this._popupInfo.element : null;
@@ -83,7 +78,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
     public set jigsawFloatInitData(data: any) {
         this._jigsawFloatInitData = data;
-        if(this.popupInstance && this.initialized) {
+        if (this.popupInstance && this.initialized) {
             this.popupInstance.initData = data;
         }
     }
@@ -200,7 +195,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._floatTarget = null;
         this._clearAllListeners();
         this._disposePopup();
-        if(this._removeAnswerSubscriber) {
+        if (this._removeAnswerSubscriber) {
             this._removeAnswerSubscriber.unsubscribe();
             this._removeAnswerSubscriber = null;
         }
@@ -232,7 +227,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         this._rollInDenouncesTimer = this.callLater(() => {
             this.jigsawFloatOpen = true;
-        }, this._floatOpenDelay);
+        }, this.jigsawFloatOpenDelay);
     }
 
     /**
@@ -264,7 +259,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
                 this.closeFloat(event);
-            }, this._floatCloseDelay);
+            }, this.jigsawFloatCloseDelay);
         }
     }
 
@@ -351,11 +346,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._originDisposer = popupInfo.dispose;
         popupInfo.dispose = this.closeFloat.bind(this);
 
-        if(this._removeAnswerSubscriber) {
+        if (this._removeAnswerSubscriber) {
             this._removeAnswerSubscriber.unsubscribe();
             this._removeAnswerSubscriber = null;
         }
-        if(popupInfo.answer) {
+        if (popupInfo.answer) {
             this._removeAnswerSubscriber = popupInfo.answer.subscribe(data => {
                 this.jigsawFloatAnswer.emit(data);
             });
@@ -518,7 +513,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         const arrowPoint: PopupPoint = {x: Math.round(arrowPosition.x), y: Math.round(arrowPosition.y)};
         const host = this.jigsawFloatArrowElement ? this.jigsawFloatArrowElement : this._elementRef.nativeElement;
         let ele = <HTMLElement>this.popupElement.querySelector('.jigsaw-float-arrow');
-        if(ele) {
+        if (ele) {
             this.popupElement.removeChild(ele);
         }
         ele = document.createElement('div');
@@ -775,6 +770,12 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     @Input()
     public jigsawFloatOpen: boolean;
 
+    @Input()
+    public jigsawFloatOpenDelay: number = 100;
+
+    @Input()
+    public jigsawFloatCloseDelay: number = 400;
+
     /**
      * $demo = float/option
      */
@@ -802,4 +803,12 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     @Output()
     public jigsawFloatAnswer = new EventEmitter<any>();
 
+}
+
+@NgModule({
+    declarations: [JigsawFloat],
+    exports: [JigsawFloat],
+    providers: [PopupService]
+})
+export class JigsawFloatModule {
 }

@@ -1,0 +1,27 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="live-demo-wrap">
+    <h2>导航菜单</h2>
+
+    <div class="clearfix">
+        <div class="demo-2 live-demo block" style="height: 420px">
+            <h3>二级子菜单</h3>
+            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" height="100%"
+                                    style="border: 1px solid #dcdcdc"></jigsaw-navigation-menu>
+        </div>
+
+        <div class="demo-1 live-demo block">
+            <h3>一级菜单</h3>
+            <jigsaw-navigation-menu [data]="data1" (select)="menuSelect($event)"
+                                    style="border: 1px solid #dcdcdc"></jigsaw-navigation-menu>
+        </div>
+
+        <div class="demo-2 live-demo block">
+            <h3>默认折叠的导航菜单</h3>
+            <jigsaw-navigation-menu [data]="data2" (select)="menuSelect($event)" collapsed="true"
+                                    style="border: 1px solid #dcdcdc"></jigsaw-navigation-menu>
+        </div>
+    </div>
+</div>

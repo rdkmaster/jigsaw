@@ -59,6 +59,9 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             let value = {beginDate: this._$beginDate, endDate: this._$endDate};
             this._$setComboValue(value);
             this.writeValue(value)
+        });
+        this._removeMulInputsChangeSubscriber = this._multipleInputsChange.pipe(debounceTime(100)).subscribe(() => {
+            this._changeRangeDateByGr();
         })
     }
 
@@ -83,7 +86,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         if (value == this._gr) return;
         this._gr = <TimeGr>value;
         if (this.initialized) {
-            this._changeRangeDateByGr();
+            this._multipleInputsChange.emit();
         }
     }
 
@@ -115,7 +118,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
         this._date = date;
         if (this.initialized) {
-            this._changeRangeDateByGr();
+            this._multipleInputsChange.emit();
         }
     }
 
@@ -189,6 +192,8 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
      */
     public _$dateItemChange = new EventEmitter();
     private _removeDateItemChangeSubscriber: Subscription;
+    private _multipleInputsChange = new EventEmitter();
+    private _removeMulInputsChangeSubscriber: Subscription;
 
     /**
      * @internal
@@ -216,7 +221,6 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public writeValue(date: RangeDate): void {
-        if (!this._isDateChanged(date, this._date)) return;
         this._date = date;
         this.dateChange.emit(date);
         this._propagateChange();
@@ -231,9 +235,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             endDate: this._$endDate
         };
         this._$setComboValue(convertDate);
-        if (this._isDateChanged(convertDate, this.date)) {
-            this.writeValue(convertDate);
-        }
+        this.writeValue(convertDate);
         this._cdr.markForCheck();
     }
 
@@ -255,6 +257,10 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         if (this._removeDateItemChangeSubscriber) {
             this._removeDateItemChangeSubscriber.unsubscribe();
             this._removeDateItemChangeSubscriber = null
+        }
+        if(this._removeMulInputsChangeSubscriber) {
+            this._removeMulInputsChangeSubscriber.unsubscribe();
+            this._removeMulInputsChangeSubscriber = null;
         }
     }
 

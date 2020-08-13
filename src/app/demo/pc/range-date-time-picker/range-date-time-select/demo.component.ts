@@ -43,6 +43,34 @@ export class RangeDateTimeSelectComponent {
     date5 = {beginDate: 'now-1M', endDate: 'now'};
     weekStart = ['mon'];
 
+    date6;
+    gr6;
+    limitEnd6;
+
+    changeProp($event) {
+        if($event == 'date') {
+            this.date6 = {beginDate: '2020-05-10', endDate: '2020-06-10'};
+            this.gr6 = 'date';
+            this.limitEnd6 = '2020-06-24';
+        }
+
+        if($event == 'week') {
+            this.date6 = {beginDate: '2020-03-10', endDate: '2020-04-10'};
+            this.gr6 = 'week';
+            this.limitEnd6 = '2020-04-24';
+        }
+
+        if($event == 'month') {
+            this.date6 = {beginDate: '2020-02-10', endDate: '2020-03-10'};
+            this.gr6 = 'month';
+            this.limitEnd6 = '2020-03-24';
+        }
+    }
+
+    dateChange($event) {
+        console.log($event)
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -14,6 +14,11 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
         overflow: hidden;
         > .#{$drawer-prefix-cls} {
             position: absolute;
+        }
+    }
+
+    &-in-dom.#{$drawer-prefix-cls}-auto-size {
+        > .#{$drawer-prefix-cls} {
             .#{$drawer-prefix-cls}-content {
                 width: auto;
                 height: auto;

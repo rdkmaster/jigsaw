@@ -177,7 +177,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
             &-disabled {
                 span, span:hover {
-                    background: none;
+                    background: none !important;
                     @include compatible(color, $disabled-color, $disabled-color-ie11);
                     cursor: not-allowed;
                 }

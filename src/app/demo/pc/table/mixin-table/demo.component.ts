@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, Injector} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
 
@@ -37,11 +37,11 @@ export class TableMixinTableDemoComponent {
         <j-table [data]="tableData1"></j-table>
     `
 })
-export class MixinTable extends TableCellRendererBase{
+export class MixinTable extends TableCellRendererBase {
     tableData1: TableData;
 
-    constructor() {
-        super();
+    constructor(protected _injector: Injector) {
+        super(_injector);
         this.tableData1 = new TableData(
             [
                 [

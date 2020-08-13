@@ -25,7 +25,8 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html',
     host: {
-        '[class.jigsaw-drawer-in-dom]': '!floating'
+        '[class.jigsaw-drawer-in-dom]': '!floating',
+        '[class.jigsaw-drawer-auto-size]': '!floating && autoSize'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -196,6 +197,15 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
     @Input()
     public floating: boolean = true;
+
+    /**
+     * 用于设置当抽屉是in-dom时，尺寸是否自动设为auto
+     *
+     * @NoMarkForCheckRequired
+     * $demo = drawer/in-dom
+     */
+    @Input()
+    public autoSize: boolean = true;
 
     @ViewChild('drawer')
     private _drawerEl: ElementRef;

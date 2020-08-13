@@ -12,7 +12,7 @@
         <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']"
                            [(selectedItems)]="gr"></jigsaw-button-bar>
         <br><br>
-        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]" width="205"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select [(date)]="date" [gr]="gr[0]" width="205" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date | json}}</p>
     </div>
@@ -20,7 +20,7 @@
     <div class="demo-2 live-demo">
         <h3>grItem</h3>
         <p class="comment"></p>
-        <jigsaw-range-date-time-select [(date)]="date2" [grItems]="grItems"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select [(date)]="date2" [grItems]="grItems" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date2 | json}}</p>
     </div>
@@ -39,7 +39,7 @@
                 <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
             </j-radios>
         </div>
-        <j-range-date-time-select [(date)]="date3" [limitStart]="limitStart" [limitEnd]="limitEnd"
+        <j-range-date-time-select [(date)]="date3" [limitStart]="limitStart" [limitEnd]="limitEnd" (dateChange)="dateChange($event)"
                                   gr="second"></j-range-date-time-select>
         <p class="message">{{date3 | json}}</p>
     </div>
@@ -47,7 +47,7 @@
     <div class="demo-4 live-demo">
         <h3>step</h3>
         <p class="comment"></p>
-        <jigsaw-range-date-time-select [(date)]="date4" gr="second" [step]="5"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select [(date)]="date4" gr="second" [step]="5" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date4 | json}}</p>
     </div>
@@ -57,9 +57,17 @@
         <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']"
                            [(selectedItems)]="weekStart"></jigsaw-button-bar>
         <br><br>
-        <jigsaw-range-date-time-select [(date)]="date5" [weekStart]="weekStart[0]" gr="week"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select [(date)]="date5" [weekStart]="weekStart[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date5 | json}}</p>
+    </div>
+
+    <div class="demo-6 live-demo">
+        <h3>同时修改多个属性</h3>
+        <j-select [data]="['date', 'week', 'month']" (valueChange)="changeProp($event)"></j-select>
+        <jigsaw-range-date-time-select [(date)]="date6" [gr]="gr6" [limitEnd]="limitEnd6" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date6 | json}}</p>
     </div>
 
 </div>

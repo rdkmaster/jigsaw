@@ -1,6 +1,6 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, Input, NgModule,
-    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy
+    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy, Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
@@ -15,12 +15,16 @@ import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
-    /**
-     * @NoMarkForCheckRequired
-     */
+
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+    }
+
+    @RequireMarkForCheck()
     @Input()
     public cellData: any;
     /**
@@ -241,10 +245,11 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
-
 
     public get checked(): CheckBoxStatus {
         return this._checked;
@@ -298,8 +303,10 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._updateTargetData();
     }
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 
     public checked: boolean;
@@ -359,6 +366,12 @@ export class TableCellSwitchRenderer extends TableCellRendererBase {
     public get _$readonly() {
         return this.initData && this.initData.readonly;
     }
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
+    }
 }
 
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
@@ -382,8 +395,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     public initData: InitDataGenerator | ArrayCollection<any> | any[];
     public data: ArrayCollection<any> | any[];
 
-    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super();
+    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
         this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
 
@@ -452,9 +467,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     private _cellData: any;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     get cellData(): any {
         return this._cellData;

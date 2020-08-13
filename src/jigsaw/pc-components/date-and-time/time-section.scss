@@ -1,0 +1,109 @@
+@import "../../common/assets/scss/core/base";
+
+$time-section-prefix-cls: #{$jigsaw-prefix}-time-section;
+$time-section-picker-prefix-cls: #{$jigsaw-prefix}-time-section-picker;
+$week-section-picker-prefix-cls: #{$jigsaw-prefix}-week-section-picker;
+$day-section-picker-prefix-cls: #{$jigsaw-prefix}-day-section-picker;
+$tile-prefix-cls: #{$jigsaw-prefix}-tile;
+
+.#{$time-section-prefix-cls} {
+    @include inline-block();
+
+    &-time {
+        padding-right: 8px;
+
+        &-title {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+    }
+
+    &-horizontal {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.#{$time-section-picker-prefix-cls} {
+    @include inline-block();
+
+    &-line {
+        margin-bottom: 6px;
+        &.#{$time-section-picker-prefix-cls}-multiple {
+            ul {
+                margin-left: 24px;
+            }
+            .#{$time-section-picker-prefix-cls}-hour {
+                margin-left: 26px;
+            }
+        }
+
+        ul {
+            @include inline-block();
+            @include clearfix();
+            margin-left: 18px;
+            padding: 5px 0;
+
+            li {
+                float: left;
+                width: 40px;
+                height: 12px;
+                margin-right: -1px;
+                border: 1px solid $border-color-base;
+                position: relative;
+                cursor: pointer;
+
+                &:hover {
+                    background: $primary-2;
+                }
+
+                &.#{$time-section-picker-prefix-cls}-selected {
+                    border: 1px solid $primary-color;
+                    background: $primary-2;
+                    z-index: $zindex-level-1;
+                }
+            }
+        }
+    }
+
+    &-hour {
+        margin-top: -2px;
+
+        span {
+            margin-right: 8px;
+        }
+    }
+}
+
+.#{$week-section-picker-prefix-cls} {
+    @include inline-block();
+}
+
+.#{$day-section-picker-prefix-cls} {
+    @include inline-block();
+
+    &-wrapper {
+        display: flex;
+        width: 100%;
+    }
+
+    &-checkbox {
+        width: 60px;
+        padding-top: 12px;
+    }
+
+    &-tile {
+        flex: 1;
+    }
+
+    &-tooltip {
+        padding: 6px;
+    }
+}
+
+.#{$week-section-picker-prefix-cls}, .#{$day-section-picker-prefix-cls} {
+    .#{$tile-prefix-cls} {
+        border: none;
+    }
+}

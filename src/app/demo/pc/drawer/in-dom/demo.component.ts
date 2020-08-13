@@ -6,8 +6,9 @@ import {Component} from "@angular/core";
 })
 export class DrawerInDomDemoComponent {
     selectedPosition = 'left';
-    width: string;
-    height: string;
+    autoSize = false;
+    width: string = '300';
+    height: string = '200';
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

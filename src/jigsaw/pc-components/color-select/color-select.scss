@@ -1,61 +1,55 @@
 $color-prefix: #{$jigsaw-prefix}-color-select;
 
-.#{$color-prefix}-host {
+#{$color-prefix} {
     display: inline-block;
     border-radius: 3px;
     border: 1px solid #d9d9d9;
     padding: 3px;
-    margin-right: 8px;
     position: relative;
     min-width: 24px;
+}
 
-    .#{$color-prefix}-area {
-        width: 100%;
-        border: 1px solid #d9d9d9;
-        border-radius: 3px;
-        cursor: pointer;
-        flex: none;
+.#{$color-prefix}-area {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    cursor: pointer;
 
-        .#{$color-prefix}-area-arrow {
-            position: absolute;
-            top: 50%;
-            right: 7px;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 4px;
-            margin-top: -2px;
-            border-color: transparent;
-            border-top-color: #fff;
-        }
-    }
-
-    .#{$color-prefix}-area-large {
-        height: 24px;
-    }
-
-    .#{$color-prefix}-area-normal {
-        height: 20px;
-    }
-
-    .#{$color-prefix}-area-small {
-        height: 16px;
+    .#{$color-prefix}-area-arrow {
+        position: absolute;
+        top: 50%;
+        right: 7px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 4px;
+        margin-top: -2px;
+        border-color: transparent;
+        border-top-color: #fff;
     }
 }
 
 .#{$color-prefix}-host-limited {
     .#{$color-prefix}-area {
         border: 1px solid #fff;
-        height: 24px!important;
+        height: 24px !important;
     }
 }
 
-.#{$color-prefix}-host-large {
+.#{$color-prefix}-size-large {
     width: 80px;
+    height: 32px;
 }
 
-.#{$color-prefix}-host-normal {
+.#{$color-prefix}-size-normal {
     width: 60px;
+    height: 28px;
+}
+
+.#{$color-prefix}-size-small {
+    width: 60px;
+    height: 24px;
 }
 
 .#{$color-prefix}-confirm-buttons {
@@ -66,6 +60,7 @@ $color-prefix: #{$jigsaw-prefix}-color-select;
 
 .color-picker {
     border: none !important;
+    background: inherit!important;;
 
     .button-area {
         text-align: center !important;
@@ -73,5 +68,11 @@ $color-prefix: #{$jigsaw-prefix}-color-select;
 
     .cursor {
         border: #fff solid 1px !important;
+    }
+
+    input{
+        color: inherit!important;;
+        background: inherit!important;
+        outline: inherit!important;
     }
 }

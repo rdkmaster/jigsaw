@@ -78,6 +78,22 @@
         <br>
         <p class="message">选择的时间是：{{date8 | json}}</p>
     </div>
+
+    <div class="demo-9 live-demo">
+        <h3>同时修改多个属性</h3>
+        <p class="comment"></p>
+        <j-select [data]="['date', 'week', 'month']" (valueChange)="changeProp($event)"></j-select>
+        <jigsaw-date-time-select [(date)]="date9" [gr]="gr9" [limitEnd]="limitEnd9" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date9 | json}}</p>
+    </div>
+
+    <div class="demo-10 live-demo">
+        <h3>异步设置数据</h3>
+        <jigsaw-date-time-select [(date)]="date10" [gr]="'week'" (dateChange)="onDateChange($event)" width="150"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date10 | json}}</p>
+    </div>
 </div>
 
 

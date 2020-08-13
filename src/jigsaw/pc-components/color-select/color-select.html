@@ -1,16 +1,11 @@
-<div class="jigsaw-color-select-host" jigsaw-float [style.width]="width"
-     [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}"
+<div class="jigsaw-color-select-area" [ngStyle]="{'background-color': color}" jigsaw-float
      [jigsawFloatTarget]="mode == 'free' ? colorPickerElem : limitedElem" jigsawFloatOpenTrigger="click"
-     jigsawFloatCloseTrigger="click" [(jigsawFloatOpen)]="_$colorSelectOpen" [jigsawFloatOptions]="mode == 'free' ? _$options :{}"
-     (jigsawFloatOpenChange)="_$colorSelectOpenChange($event)">
-    <div class="jigsaw-color-select-area"
-         [ngStyle]="{'background-color': color}"
-         [ngClass]="{'jigsaw-color-select-area-large':preSize=='large',
-                     'jigsaw-color-select-area-normal':preSize=='normal',
-                     'jigsaw-color-select-area-small': preSize=='small'}">
-        <span class="jigsaw-color-select-area-arrow" *ngIf="mode == 'limited'"></span>
-    </div>
+         jigsawFloatCloseTrigger="click" [(jigsawFloatOpen)]="_$colorSelectOpen"
+         [jigsawFloatOptions]="mode == 'free' ? _$options : {}"
+         (jigsawFloatOpenChange)="_$colorSelectOpenChange($event)">
+    <span class="jigsaw-color-select-area-arrow" *ngIf="mode == 'limited'"></span>
 </div>
+
 <ng-template #colorPickerElem>
     <div style="height: auto;max-width: 238px" [style.maxWidth]="'238px'">
         <input style="display: none;"
@@ -21,7 +16,9 @@
                [cpAlphaChannel]="enableOpacity ? 'enabled' : 'disabled'"
         />
         <div *ngIf="enableConfirm" class="jigsaw-color-select-confirm-buttons">
-            <j-button colorType="primary" preSize="small" (click)="_$confirm()">{{'color.confirm' | translate}}</j-button>
+            <j-button colorType="primary" preSize="small"
+                      (click)="_$confirm()">{{'color.confirm' | translate}}
+            </j-button>
             <j-button preSize="small" (click)="_$cancel()">{{'color.cancel' | translate}}</j-button>
         </div>
     </div>

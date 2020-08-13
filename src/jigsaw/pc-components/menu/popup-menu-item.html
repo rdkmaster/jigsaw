@@ -1,0 +1,14 @@
+<div class="jigsaw-nav-menu-detail">
+    <div class="jigsaw-nav-menu-item" (click)="_$menuSelect()"
+         [ngClass]="{'jigsaw-nav-menu-item-selected': initData?.selected,
+         'jigsaw-nav-menu-item-selected-before': initData?.selected && initData?.nodes?.length == 0}">
+        <i [ngClass]="initData?.icon"></i>
+        <span>{{initData?.label}}</span>
+    </div>
+    <div *ngIf="initData?.nodes && initData?.nodes.length > 0" class="jigsaw-nav-menu-submenus">
+        <div *ngFor="let subMenu of initData?.nodes" class="jigsaw-nav-menu-sub-item"
+             [ngClass]="{'jigsaw-nav-menu-sub-item-selected': subMenu.selected}" (click)="_$subMenuSelect(subMenu)">
+            <span>{{subMenu.label}}</span>
+        </div>
+    </div>
+</div>

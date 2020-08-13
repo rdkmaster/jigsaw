@@ -1,0 +1,39 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="live-demo-wrap">
+    <h2>页面内嵌菜单</h2>
+
+    <div class="clearfix">
+        <div class="demo-1 live-demo live-demo-block">
+            <h3>一级菜单</h3>
+            <jigsaw-navigation-menu #menu1 [data]="data1" (select)="menuSelect($event)" [showToggleButton]="false"
+                                    style="border: 1px solid #dcdcdc"></jigsaw-navigation-menu>
+        </div>
+        <div class="demo-2 live-demo live-demo-block">
+            <h3>抽屉中使用的一级菜单</h3>
+            <j-drawer [floating]="false" [open]="true" height="196" width="216">
+                <jigsaw-navigation-menu [data]="data2" (select)="menuSelect($event)" [showToggleButton]="false"></jigsaw-navigation-menu>
+            </j-drawer>
+        </div>
+    </div>
+
+    <div class="clearfix">
+
+        <div class="demo-3 live-demo live-demo-block">
+            <h3>二级子菜单</h3>
+            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" height="300" [showToggleButton]="false"
+                                    style="border: 1px solid #dcdcdc"></jigsaw-navigation-menu>
+        </div>
+
+        <div class="demo-4 live-demo live-demo-block">
+            <h3>抽屉中使用的二级子菜单</h3>
+            <j-drawer [floating]="false" [open]="true" height="302" width="216">
+                <jigsaw-navigation-menu [data]="data4" (select)="menuSelect($event)" [showToggleButton]="false"
+                                        height="300"></jigsaw-navigation-menu>
+            </j-drawer>
+        </div>
+    </div>
+
+</div>
