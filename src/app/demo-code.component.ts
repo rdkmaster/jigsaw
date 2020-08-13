@@ -22,10 +22,18 @@ const defaultOpen = 'src/app/demo.component.html';
     template: `
         <div class="container">
             <div class="tool-bar">
-                <p class="edit-button" title="注意此功能需要连接外网" (click)="gotoStackblitz()">
-                    <span class="live-icon">LIVE</span> 编辑源码并立即运行
+                <p class="go-back" (click)="goBack()">
+                    <span class="fa fa-angle-double-left"></span> 返回运行效果
                 </p>
-                <p class="demo-url" (click)="goBack()">查看运行效果</p>
+                <p class="page-title">
+                    查看 Jigsaw Demo 源码
+                </p>
+                <p class="edit-button" (click)="gotoStackblitz()"
+                   title="你可以修改Demo的代码并立即运行修改后的代码，注意此功能需要连接外网">
+                    <span class="live-icon">LIVE</span>
+                    修改Demo并立即查看效果
+                    <span class="fa fa-angle-double-right"></span>
+                </p>
             </div>
             <div class="source-content">
                 <j-box [resizable]="true" height="100%">
@@ -33,7 +41,8 @@ const defaultOpen = 'src/app/demo.component.html';
                         <jigsaw-tree-ext #tree [data]="fileTree" [setting]="setting">
                         </jigsaw-tree-ext>
                     </j-box>
-                    <j-box grow="3" #source class="box-content">
+                    <j-box grow="3" class="box-content">
+                        <div #source style="width:100%; height:100%"></div>
                     </j-box>
                 </j-box>
             </div>
@@ -62,14 +71,23 @@ const defaultOpen = 'src/app/demo.component.html';
             font-size: 15px;
             cursor: pointer;
             color: #ddd;
-        }
-
-        .demo-url {
             position: absolute;
             right: 16px;
+        }
+
+        .page-title {
+            font-size: 15px;
+            width: calc(100% - 477px);
+            text-align: center;
+            color: #fff;
+        }
+
+        .go-back {
             color: #ddd;
             top: 8px;
             cursor: pointer;
+            font-size: 15px;
+            width: 237px;
         }
 
         .live-icon {
