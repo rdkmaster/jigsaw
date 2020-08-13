@@ -40,7 +40,8 @@ const defaultOpen = 'src/app/demo.component.html';
                         <jigsaw-tree-ext #tree [data]="fileTree" [setting]="setting">
                         </jigsaw-tree-ext>
                     </j-box>
-                    <j-box grow="3" #source class="box-content">
+                    <j-box grow="3" class="box-content">
+                        <div #source style="width:100%; height:100%"></div>
                     </j-box>
                 </j-box>
             </div>
