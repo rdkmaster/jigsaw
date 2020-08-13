@@ -5,7 +5,7 @@ import {AffixUtils, InternalUtils} from "../../core/utils/internal-utils";
 
 
 @Directive({
-    selector: '[jigsawBadge], [jigsaw-badge]'
+    selector: '[jigsawBadge], [jigsaw-badge], [j-badge]'
 })
 export class JigsawBadgeDirective extends AbstractJigsawViewBase {
 

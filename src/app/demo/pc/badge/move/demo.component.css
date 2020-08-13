@@ -1,0 +1,7 @@
+.movable {
+    position: fixed;
+    cursor: move;
+    left: 100px;
+    top: 100px;
+    padding: 4px 12px;
+}
