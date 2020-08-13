@@ -329,7 +329,6 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
      * @param dimensions
      */
     protected pruneAllData(xAxisIndex: number, dimIndex: number, dimensions: Dimension[]): Grouped {
-        const aggregateBy = this.indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
         const groups = group(this.data, xAxisIndex);
         for (let xAxisItem in groups) {
             const records: string[][] = groups[xAxisItem];
