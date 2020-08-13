@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeMaxValueDemoComponent {
-    public count: number;
+    public count: number = 99;
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

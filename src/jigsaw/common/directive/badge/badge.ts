@@ -1,11 +1,4 @@
-import {
-    Directive,
-    ElementRef,
-    Input,
-    Output,
-    NgZone,
-    EventEmitter
-} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, NgZone, Output} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
 import {AffixUtils, InternalUtils} from "../../core/utils/internal-utils";
@@ -33,13 +26,17 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
 
     private _jigsawBadgeValue: string | number | 'dot';
 
-    constructor(protected _elementRef: ElementRef) {
-        super();
+    constructor(private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
-    private _badge: HTMLElement;
     private _badgeElement: Element;
     private _maskElement: Element;
+
+    private _windowLoadListener: Function;
+    private _windowResizeListener: Function;
+    private _windowLoadMaskListener: Function;
+    private _windowResizeMaskListener: Function;
 
     private _opacity: string;
     private _visibility: string;
@@ -62,23 +59,25 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
     }
 
     private _stylesChanged(): boolean {
+        const hostPosition = this._nativeElement.getBoundingClientRect();
         return this._computedStyles['opacity'] != this._opacity ||
             this._computedStyles['visibility'] != this._visibility ||
             this._computedStyles['display'] != this._display ||
             this._computedStyles['width'] != this._hostWidth ||
             this._computedStyles['height'] != this._hostHeight ||
-            this._computedStyles['top'] != this._hostTop ||
-            this._computedStyles['left'] != this._hostLeft
+            hostPosition.top != this._hostTop ||
+            hostPosition.left != this._hostLeft
     }
 
-    private _setStyles() {
+    private _cacheStyles() {
         this._opacity = this._computedStyles['opacity'];
         this._visibility = this._computedStyles['visibility'];
         this._display = this._computedStyles['display'];
         this._hostWidth = this._computedStyles['width'];
         this._hostHeight = this._computedStyles['height'];
-        this._hostTop = this._computedStyles['top'];
-        this._hostLeft = this._computedStyles['left'];
+        const hostPosition = this._nativeElement.getBoundingClientRect();
+        this._hostTop = hostPosition.top;
+        this._hostLeft = hostPosition.left;
     }
 
     private _resetBadgeStyles(element: Element, opacity = 1) {
@@ -157,7 +156,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid"
+    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid";
 
     /**
      * @NoMarkForCheckRequired
@@ -169,13 +168,13 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeTitle: string
+    public jigsawBadgeTitle: string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgePointerCursor: boolean
+    public jigsawBadgePointerCursor: boolean;
 
     /**
      * @NoMarkForCheckRequired
@@ -264,27 +263,50 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         if (this._maskElement) {
             AffixUtils.getDocumentBody().removeChild(this._maskElement);
             this._maskElement = null;
-            window.removeEventListener("load", this._setMaskPosition.bind(this));
         }
         if (this._badgeElement) {
             AffixUtils.getDocumentBody().removeChild(this._badgeElement);
             this._badgeElement = null;
-            window.removeEventListener("load", this._setPosition.bind(this));
         }
+        this._removeWindowListener();
     }
 
     ngAfterViewInit() {
         this._addBadge();
-        window.addEventListener("load",
-            this._setPosition.bind(this)
-        );
-        window.addEventListener("load",
-            this._setMaskPosition.bind(this)
-        );
+        this._addWindowListener();
         Promise.resolve().then(() => {
             this._setPosition();
             this._setMaskPosition();
         })
+    }
+
+    private _addWindowListener() {
+        this._removeWindowListener();
+        this._zone.runOutsideAngular(() => {
+            this._windowLoadListener = InternalUtils.renderer.listen('window', 'load', () => this._setPosition());
+            this._windowResizeListener = InternalUtils.renderer.listen('window', 'resize', () => this._setPosition());
+            this._windowLoadMaskListener = InternalUtils.renderer.listen('window', 'load', () => this._setMaskPosition());
+            this._windowResizeMaskListener = InternalUtils.renderer.listen('window', 'resize', () => this._setMaskPosition());
+        });
+    }
+
+    private _removeWindowListener() {
+        if (this._windowLoadListener) {
+            this._windowLoadListener();
+            this._windowLoadListener = null;
+        }
+        if (this._windowResizeListener) {
+            this._windowResizeListener();
+            this._windowResizeListener = null;
+        }
+        if (this._windowLoadMaskListener) {
+            this._windowLoadMaskListener();
+            this._windowLoadMaskListener = null;
+        }
+        if (this._windowResizeMaskListener) {
+            this._windowResizeMaskListener();
+            this._windowResizeMaskListener = null;
+        }
     }
 
     ngAfterViewChecked() {
@@ -295,7 +317,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
             this._setMaskPosition();
             this._resetMaskStyles();
         }
-        this._setStyles();
+        this._cacheStyles();
         this._setPosition();
         this._resetBadgeStyles(this._badgeElement);
     }
