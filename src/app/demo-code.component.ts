@@ -28,7 +28,8 @@ const defaultOpen = 'src/app/demo.component.html';
                 <p class="page-title">
                     查看 Jigsaw Demo 源码
                 </p>
-                <p class="edit-button" title="你可以修改Demo的代码并立即运行修改后的代码，注意此功能需要连接外网" (click)="gotoStackblitz()">
+                <p class="edit-button" (click)="gotoStackblitz()"
+                   title="你可以修改Demo的代码并立即运行修改后的代码，注意此功能需要连接外网">
                     <span class="live-icon">LIVE</span>
                     修改Demo并立即查看效果
                     <span class="fa fa-angle-double-right"></span>
