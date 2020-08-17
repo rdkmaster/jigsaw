@@ -21,6 +21,8 @@ import {InputValidComponent} from "./valid/demo.component";
 import {InputSelectDemoComponent} from "./select/demo.component";
 import {InputPasswordModule} from "./password/demo.module";
 import {InputPasswordComponent} from "./password/demo.component";
+import {InputReadOnlyDemoComponent} from "./read-only/demo.component";
+import {InputReadOnlyDemoModule} from "./read-only/demo.module";
 
 export const routerConfig = [
     {
@@ -52,6 +54,9 @@ export const routerConfig = [
     },
     {
         path: 'password', component: InputPasswordComponent
+    },
+    {
+        path: 'read-only', component: InputReadOnlyDemoComponent
     }
 ];
 
@@ -67,7 +72,8 @@ export const routerConfig = [
         InputDisabledModule,
         InputValidModule,
         InputSelectDemoModule,
-        InputPasswordModule
+        InputPasswordModule,
+        InputReadOnlyDemoModule
     ]
 })
 export class InputDemoModule {

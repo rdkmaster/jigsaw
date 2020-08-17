@@ -252,6 +252,16 @@ export class JigsawInput extends JigsawInputBase {
     }
 
     /**
+     * 设置input是否只读，为true则不可输入，为false则可输入。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/readOnly
+     */
+    @Input()
+    public readOnly: boolean = false;
+
+    /**
      * 当用户设置类型为password时，输入内容隐藏为特殊字符。
      *
      * $demo = input/password

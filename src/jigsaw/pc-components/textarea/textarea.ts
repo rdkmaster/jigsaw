@@ -56,6 +56,16 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public disabled: boolean = false;
 
     /**
+     * 设置textarea是否只读，为true则不可输入，为false则可输入。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/read-only
+     */
+    @Input()
+    public readOnly: boolean = false;
+
+    /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
      *
      * @NoMarkForCheckRequired

@@ -15,6 +15,8 @@ import {TextareaFocusDemoComponent} from "./focus/demo.component";
 import {TextareaDisabledComponent} from "./disabled/demo.component";
 import {TextareaValidComponent} from "./valid/demo.component";
 import {TextareaSelectDemoComponent} from "./select/demo.component";
+import {TextareaReadOnlyDemoComponent} from "./read-only/demo.component";
+import {TextareaReadOnlyDemoModule} from "./read-only/demo.module";
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     },
     {
         path: 'select', component: TextareaSelectDemoComponent
+    },
+    {
+        path: 'read-only', component: TextareaReadOnlyDemoComponent
     }
 ];
 
@@ -49,7 +54,8 @@ export const routerConfig = [
         TextareaFocusDemoModule,
         TextareaDisabledModule,
         TextareaValidModule,
-        TextareaSelectDemoModule
+        TextareaSelectDemoModule,
+        TextareaReadOnlyDemoModule
     ]
 })
 export class TextareaDemoModule {
