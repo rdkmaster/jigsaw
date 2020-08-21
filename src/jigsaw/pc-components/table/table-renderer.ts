@@ -138,7 +138,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
-                      [preIcon]="_$preIcon" [clearable]="_$clearable"  [valid]="_$valid">
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" [valid]="_$valid">
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -153,23 +153,23 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 
     public get _$icon() {
-        return this.initData && this.initData.icon ? this.initData.icon : '';
+        return this.initData && this.initData.icon ? this.initData.icon : undefined;
     }
 
     public get _$preIcon() {
-        return this.initData && this.initData.preIcon ? this.initData.preIcon : '';
+        return this.initData && this.initData.preIcon ? this.initData.preIcon : undefined;
     }
 
     public get _$password() {
-        return this.initData && this.initData.hasOwnProperty('password') ? this.initData.password : false;
+        return this.initData && this.initData.hasOwnProperty('password') ? !!this.initData.password : false;
     }
 
     public get _$clearable() {
-        return this.initData && this.initData.hasOwnProperty('clearable') ? this.initData.clearable : false;
+        return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
     public get _$valid() {
-        return this.initData && this.initData.hasOwnProperty('valid') ? this.initData.valid : false;
+        return this.initData && this.initData.hasOwnProperty('valid') ? !!this.initData.valid : true;
     }
 
     ngAfterViewInit() {
