@@ -43,7 +43,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSideUploadRequest(req: HttpRequest<any>): any {
-        return `upload_files/${new Date().getTime()}/${req.body.get('filename')}`;
+        return `upload_files/${new Date().getTime()}/${req.body['filename']}`;
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
