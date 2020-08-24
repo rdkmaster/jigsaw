@@ -85,7 +85,7 @@ export class TableCellEditablePropertyDemoComponent {
 
     columns: ColumnDefine[] = [
         {
-            target: 'desc',
+            target: ["user", "desc", "time"],
             width: '10%',
             cell: {
                 editable: true,
@@ -124,6 +124,6 @@ export class TableCellEditablePropertyDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '这个Demo主要演示了文本框编辑器的属性初始值如何配置，请点击任何列进入编辑态';
     description: string = '';
 }
