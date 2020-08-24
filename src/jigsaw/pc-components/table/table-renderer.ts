@@ -347,7 +347,6 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             this._zone.run(() => {
                 this.targetData.refresh();
-                this._changeDetectorRef.markForCheck();
             });
         })
     }
