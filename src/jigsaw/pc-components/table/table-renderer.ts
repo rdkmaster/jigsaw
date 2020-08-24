@@ -137,7 +137,8 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
-                      (blur)="dispatchChangeEvent(cellData)">
+                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -149,6 +150,22 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$icon() {
+        return this.initData && this.initData.icon ? this.initData.icon : undefined;
+    }
+
+    public get _$preIcon() {
+        return this.initData && this.initData.preIcon ? this.initData.preIcon : undefined;
+    }
+
+    public get _$password() {
+        return this.initData && this.initData.hasOwnProperty('password') ? !!this.initData.password : false;
+    }
+
+    public get _$clearable() {
+        return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
     ngAfterViewInit() {
@@ -203,7 +220,8 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+                              [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>
     `
