@@ -138,7 +138,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
-                      [preIcon]="_$preIcon" [clearable]="_$clearable" [valid]="_$valid">
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -166,10 +166,6 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     public get _$clearable() {
         return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
-    }
-
-    public get _$valid() {
-        return this.initData && this.initData.hasOwnProperty('valid') ? !!this.initData.valid : true;
     }
 
     ngAfterViewInit() {
