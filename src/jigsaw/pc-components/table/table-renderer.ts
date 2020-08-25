@@ -1,6 +1,7 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, Input, NgModule,
-    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy, Injector, ViewEncapsulation
+    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy,
+    Injector, ViewEncapsulation, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
@@ -16,6 +17,7 @@ import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {take} from 'rxjs/operators';
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -357,7 +359,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+                protected _injector: Injector, private _zone: NgZone) {
         super(_injector);
     }
 
@@ -395,7 +397,11 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._updateTargetData();
         this.dispatchChangeEvent(value);
         this._changeDetectorRef.markForCheck();
-        this.targetData.refresh();
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            });
+        })
     }
 
     ngOnInit() {
