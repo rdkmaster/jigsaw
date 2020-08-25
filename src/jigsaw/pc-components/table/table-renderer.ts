@@ -151,6 +151,10 @@ export class DefaultCellRenderer extends TableCellRendererBase {
         .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
             cursor: inherit;
         }
+        
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
+            color: #666;
+        }
 
         .table-cell-password-renderer.jigsaw-input:hover, .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
             border: none;
