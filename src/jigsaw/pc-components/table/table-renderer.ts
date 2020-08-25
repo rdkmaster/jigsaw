@@ -1,6 +1,7 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, Input, NgModule,
-    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy, Injector, NgZone
+    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy,
+    Injector, ViewEncapsulation, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
@@ -130,6 +131,44 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefaultCellRenderer extends TableCellRendererBase {
+}
+
+@Component({
+    template: `
+        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" [password]="true" [clearable]="false"
+            [disabled]="true">
+        </jigsaw-input>
+    `,
+    styles: [`
+        .table-cell-password-renderer.jigsaw-input {
+            border: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper {
+            background: transparent;
+        }
+
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
+            cursor: inherit;
+        }
+        
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
+            color: #666;
+        }
+
+        .table-cell-password-renderer.jigsaw-input:hover, .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+            border: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+            box-shadow: none;
+        }
+    `],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellPasswordRenderer extends TableCellRendererBase {
+
 }
 
 /**
@@ -556,7 +595,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
