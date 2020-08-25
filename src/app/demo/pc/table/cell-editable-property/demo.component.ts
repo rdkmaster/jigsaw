@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {
-    TableData, ColumnDefine, TableCellTextEditorRenderer,
+    TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellPasswordRenderer,
 } from "jigsaw/public_api";
 
 @Component({
@@ -14,67 +14,67 @@ export class TableCellEditablePropertyDemoComponent {
             [
                 [
                     "Tiger Nixon1",
-                    "......",
+                    "123456",
                     "2011/04/25",
                     ""
                 ],
                 [
                     "Garrett Winflters1",
-                    "......",
+                    "dfrt567",
                     "2011/07/25",
                     ""
                 ],
                 [
                     "Tiger Nixon2",
-                    "......",
+                    "rtyre456",
                     "2011/04/25",
                     ""
                 ],
                 [
                     "Garrett Winslters1",
-                    ".......",
+                    "bnhy6785",
                     "2011/07/25",
                     ""
                 ],
                 [
                     "Tiger Nixon2",
-                    "......",
+                    "gtyu543",
                     "2011/04/25",
                     ""
                 ],
                 [
                     "Garrett Winflters1",
-                    "........",
+                    "ghuyio78989",
                     "2011/07/25",
                     ""
                 ],
                 [
                     "Tiger Nixon2",
-                    "...",
+                    "deew345",
                     "2011/04/25",
                     ""
                 ],
                 [
                     "Garrett Winflters1",
-                    ".....",
+                    "weq2345",
                     "2011/07/25",
                     ""
                 ],
                 [
                     "Tiger Nixon2",
-                    ".......",
+                    "cdse456",
                     "2011/04/25",
                     ""
                 ],
                 [
                     "Garrett Wintsers2",
-                    "......",
+                    "jklo9876",
                     "2011/07/25",
                     ""
                 ],
                 [
                     "Tigser Nixon3",
-                    "",
+                    "hjkiu78996",
                     "2011/04/25",
                     ""
                 ]
@@ -101,6 +101,7 @@ export class TableCellEditablePropertyDemoComponent {
         {
             target: 'password',
             cell: {
+                renderer: TableCellPasswordRenderer,
                 editable: true,
                 editorRenderer: TableCellTextEditorRenderer,
                 editorRendererInitData:
@@ -112,12 +113,12 @@ export class TableCellEditablePropertyDemoComponent {
         }
     ];
 
-
+    changeMsg='';
     onCellChange(value) {
-        if (value.field == "password") {
-            console.log("new password: ",value.cellData);
-            this.tableData.data[value.row[0]][value.column] = value.cellData.replace(/./g, '.');
-            this.tableData.refresh();
+        this.changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
+        let rows = value.row instanceof Array ? value.row : [value.row];
+        for (let row of rows) {
+            console.log(this.tableData.data[row][value.column]);
         }
     }
 
