@@ -1,6 +1,7 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, Input, NgModule,
-    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy
+    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy,
+    Injector, ViewEncapsulation, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
@@ -15,12 +16,17 @@ import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {take} from 'rxjs/operators';
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
-    /**
-     * @NoMarkForCheckRequired
-     */
+
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+    }
+
+    @RequireMarkForCheck()
     @Input()
     public cellData: any;
     /**
@@ -127,13 +133,52 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
+@Component({
+    template: `
+        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" [password]="true" [clearable]="false"
+            [disabled]="true">
+        </jigsaw-input>
+    `,
+    styles: [`
+        .table-cell-password-renderer.jigsaw-input {
+            border: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper {
+            background: transparent;
+        }
+
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
+            cursor: inherit;
+        }
+        
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
+            color: #666;
+        }
+
+        .table-cell-password-renderer.jigsaw-input:hover, .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+            border: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+            box-shadow: none;
+        }
+    `],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellPasswordRenderer extends TableCellRendererBase {
+
+}
+
 /**
  * 编辑单元格渲染器
  */
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
-                      (blur)="dispatchChangeEvent(cellData)">
+                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -145,6 +190,22 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$icon() {
+        return this.initData && this.initData.icon ? this.initData.icon : undefined;
+    }
+
+    public get _$preIcon() {
+        return this.initData && this.initData.preIcon ? this.initData.preIcon : undefined;
+    }
+
+    public get _$password() {
+        return this.initData && this.initData.hasOwnProperty('password') ? !!this.initData.password : false;
+    }
+
+    public get _$clearable() {
+        return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
     ngAfterViewInit() {
@@ -199,7 +260,8 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+                              [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>
     `
@@ -241,10 +303,11 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
-
 
     public get checked(): CheckBoxStatus {
         return this._checked;
@@ -298,8 +361,10 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._updateTargetData();
     }
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, private _zone: NgZone) {
+        super(_injector);
     }
 
     public checked: boolean;
@@ -336,7 +401,11 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._updateTargetData();
         this.dispatchChangeEvent(value);
         this._changeDetectorRef.markForCheck();
-        this.targetData.refresh();
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            });
+        })
     }
 
     ngOnInit() {
@@ -358,6 +427,12 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 export class TableCellSwitchRenderer extends TableCellRendererBase {
     public get _$readonly() {
         return this.initData && this.initData.readonly;
+    }
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 }
 
@@ -382,8 +457,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     public initData: InitDataGenerator | ArrayCollection<any> | any[];
     public data: ArrayCollection<any> | any[];
 
-    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super();
+    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
         this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
 
@@ -452,9 +529,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     private _cellData: any;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     get cellData(): any {
         return this._cellData;
@@ -520,7 +595,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,

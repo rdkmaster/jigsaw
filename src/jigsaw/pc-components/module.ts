@@ -59,6 +59,7 @@ import {JigsawRangeDateTimePickerModule} from "./date-and-time/range-date-time-p
 import {JigsawDateTimeSelectModule} from "./date-and-time/date-time-select";
 import {JigsawRangeDateTimeSelectModule} from "./date-and-time/range-date-time-select";
 import {JigsawColorSelectModule} from "./color-select/index";
+import {JigsawTimeSectionModule} from "./date-and-time/time-section";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -121,7 +122,8 @@ const JIGSAW_MODULE = [
     JigsawDateTimeSelectModule,
     JigsawRangeDateTimeSelectModule,
     JigsawColorSelectModule,
-    JigsawMenuModule
+    JigsawMenuModule,
+    JigsawTimeSectionModule
 ];
 
 @NgModule({

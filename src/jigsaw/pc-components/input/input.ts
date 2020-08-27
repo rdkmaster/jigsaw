@@ -304,8 +304,10 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$stopPropagation(event) {
-        event.preventDefault();
-        event.stopPropagation();
+        if(!this.disabled) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     }
 }
 

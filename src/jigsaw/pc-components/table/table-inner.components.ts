@@ -367,10 +367,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             this.targetData.data[this.row + i][this.column] = cellData;
         }
 
-        if (this.targetData instanceof AdditionalTableData) {
-            this.targetData.change.emit();
-        }
-
         const change: TableDataChangeEvent = {
             field: this.field,
             row: rows,

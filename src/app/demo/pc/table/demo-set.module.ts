@@ -89,6 +89,8 @@ import {TableChangeDataDemoModule} from "./change-data/demo.module"
 import {TableChangeDataDemoComponent} from "./change-data/demo.component";
 import {TreeTableDemoComponent} from "./tree-table/demo.component";
 import {TreeTableDemoModule} from "./tree-table/demo.module";
+import {TableCellEditablePropertyDemoComponent} from "./cell-editable-property/demo.component";
+import {TableCellEditablePropertyDemoModule} from "./cell-editable-property/demo.module";
 
 export const routerConfig = [
     {
@@ -223,6 +225,9 @@ export const routerConfig = [
     {
         path: 'tree-table', component: TreeTableDemoComponent
     },
+    {
+        path: 'cell-editable-property', component: TableCellEditablePropertyDemoComponent
+    },
 ];
 
 @NgModule({
@@ -238,7 +243,7 @@ export const routerConfig = [
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
-        TreeTableDemoModule
+        TreeTableDemoModule, TableCellEditablePropertyDemoModule
     ]
 })
 export class TableDemoModule {
