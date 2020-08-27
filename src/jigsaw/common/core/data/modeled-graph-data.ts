@@ -17,8 +17,6 @@ import {lightGraphTheme, darkGraphTheme} from "../theming/echarts-theme";
 export abstract class AbstractModeledGraphTemplate {
     public abstract getInstance(): EchartOptions;
 
-    public templateBase?: EchartOptions;
-
     public themes? = [
         {name: '默认浅色系', theme: lightGraphTheme},
         {name: '默认深色系', theme: darkGraphTheme}
@@ -52,6 +50,15 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
      * 图形个关键配置项的模板
      */
     public template: AbstractModeledGraphTemplate;
+
+    /**
+     * 用户自定义模板
+     */
+    public customTemplate: EchartOptions;
+    /**
+     * 用户自定义公共系列配置
+     */
+    public customSeriesBase: EchartSeriesItem;
 
     protected constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, field, header);
@@ -147,7 +154,7 @@ export abstract class ModeledRectangularTemplate extends AbstractModeledGraphTem
 
 export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
-        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+        return {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
@@ -279,7 +286,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return undefined
         }
 
-        const options: EchartOptions = this.template.getInstance();
+        const options: EchartOptions = this.customTemplate ? CommonUtils.extendObjects<EchartOptions>({}, this.customTemplate) : this.template.getInstance();
         options.xAxis = CommonUtils.extendObjects<EchartXAxis>(options.xAxis, this.xAxis.style, {data: xAxisItems});
         if(options.yAxis instanceof Array) {
             options.yAxis = [
@@ -300,7 +307,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         options.series = groupedByDim._$groupItems
             .map(dimName => ({data: getColumn(groupedByDim[dimName], this.indicators[0].index), name: dimName}))
             .map(seriesData => {
-                CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
+                CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem);
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
                     if (dim.shade == 'area') {
@@ -378,7 +385,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             }
         }
 
-        const options: EchartOptions = this.template.getInstance();
+        const options: EchartOptions = this.customTemplate ? CommonUtils.extendObject({}, this.customTemplate) : this.template.getInstance();
         options.xAxis = CommonUtils.extendObjects<EchartXAxis>(options.xAxis, this.xAxis.style, {data: xAxisGroups._$groupItems});
         if(options.yAxis instanceof Array) {
             options.yAxis = [
@@ -396,7 +403,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             .map(kpi => ({name: this.header[kpi.index], field: this.field[kpi.index], data: getColumn(pruned, kpi.index)}))
             .map(seriesData => {
                 // 先取模板中的配置
-                CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
+                CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem);
                 // 再取用户配置
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
@@ -446,7 +453,7 @@ export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
 
 export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
-        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+        return {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend)
@@ -507,7 +514,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
         if (!this.series) {
             return undefined;
         }
-        const options = this.template.getInstance();
+        const options = this.customTemplate ? CommonUtils.extendObjects<EchartOptions>({}, this.customTemplate) : this.template.getInstance();
         if (options.legend) {
             options.legend.data = [];
         }
@@ -527,7 +534,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem);
                 if (dimensions.length > 1) {
                     // 多维度
                     this._mergeLegend(options.legend, dimensions);
@@ -611,7 +618,7 @@ export class GaugeSeries {
 
 export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
-        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+        return {
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             toolbox: CommonUtils.extendObjects<EchartTitle>({}, this.toolbox),
         };
@@ -665,7 +672,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
         if (!this.series || !this.field.length || !this.header.length || !this.data.length) {
             return undefined;
         }
-        const options = this.template.getInstance();
+        const options = this.customTemplate ? CommonUtils.extendObjects<EchartOptions>({}, this.customTemplate) : this.template.getInstance();
         options.series = this.series
             .filter(seriesData => {
                 if (!seriesData.dimensionField) {
@@ -682,7 +689,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem, seriesData);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem, seriesData);
 
                 if (dimensions.length > 1) {
                     // 多维度
@@ -776,7 +783,7 @@ export abstract class ModeledRadarTemplate extends AbstractModeledGraphTemplate 
 
 export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
     getInstance(): EchartOptions {
-        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+        return {
             title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
@@ -845,7 +852,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
             return undefined;
         }
 
-        const options = this.template.getInstance();
+        const options = this.customTemplate ? CommonUtils.extendObjects<EchartOptions>({}, this.customTemplate) : this.template.getInstance();
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
         const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
@@ -862,7 +869,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         });
         options.radar = CommonUtils.extendObject(options.radar, {indicator: indicator});
 
-        let series = this.template.seriesItem;
+        let series = this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem;
         series.data = dimensions.map((dimension: RadarDimension) => {
             const records = this.data.filter(row => row[dimIndex] == dimension.name);
             const pruned = this.pruneData(records, dimIndex, [dimension], this.indicators)[0];
@@ -894,7 +901,7 @@ export abstract class ModeledScatterTemplate extends AbstractModeledGraphTemplat
 
 export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
     getInstance(): EchartOptions {
-        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+        return {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
@@ -971,7 +978,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             return undefined;
         }
 
-        const options = this.template.getInstance();
+        const options = this.customTemplate ? CommonUtils.extendObjects<EchartOptions>({}, this.customTemplate) : this.template.getInstance();
 
         if (options.legend) {
             options.legend.data = [];
@@ -985,7 +992,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         this._mergeLegend(options.legend, dimensions);
 
         options.series = dimensions.map((dim, idx) => {
-            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
                 .map(row => {
                 return [
@@ -1045,7 +1052,7 @@ export abstract class ModeledMapTemplate extends AbstractModeledGraphTemplate {
 
 export class BasicModeledMapTemplate extends ModeledMapTemplate {
     getInstance(): EchartOptions {
-        return !!this.templateBase ?  CommonUtils.extendObjects<EchartOptions>({}, this.templateBase) : {
+        return {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             visualMap: CommonUtils.extendObjects<EchartTooltip>({}, this.visualMap),
@@ -1093,7 +1100,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
         if (!this.series) {
             return undefined;
         }
-        const options = this.template.getInstance();
+        const options = this.customTemplate ? CommonUtils.extendObjects<EchartOptions>({}, this.customTemplate) : this.template.getInstance();
 
         options.series = this.series
             .filter(seriesData => {
@@ -1111,7 +1118,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.customSeriesBase ? this.customSeriesBase : this.template.seriesItem);
                 if(!dimensions.length) return {};
 
                 // 多维度单指标
