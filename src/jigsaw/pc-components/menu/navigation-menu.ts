@@ -1,8 +1,19 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Injector, Input, Output, QueryList, ViewChildren} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Injector,
+    Input,
+    OnDestroy,
+    Output,
+    QueryList,
+    ViewChildren
+} from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
-import {CommonUtils} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPopupable, PopupOptions, PopupPositionValue} from "../../common/service/popup.service";
 import {JigsawFloat} from "../../common/directive/float/float";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -25,11 +36,11 @@ type PopupAnswer = {
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawNavigationMenu extends AbstractJigsawComponent {
+export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnDestroy {
     protected _width: string = '200px';
 
     constructor(// @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+        protected _injector: Injector, private _cdr: ChangeDetectorRef) {
         super();
     }
 
@@ -62,11 +73,14 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent {
         return this._data;
     }
 
+    private _removeDataRefresh: CallbackRemoval;
+
     public set data(value: SimpleTreeData) {
         if (CommonUtils.isUndefined(value) || CommonUtils.isUndefined(value.nodes)) {
             return;
         }
         this._data = value;
+        this._removeDataRefresh = value.onRefresh(() => this._cdr.markForCheck(), this);
     }
 
     /**
@@ -164,6 +178,14 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent {
         }
         if (event.level == MenuLevel.sub) {
             this._$subMenuSelect(event.menu);
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeDataRefresh) {
+            this._removeDataRefresh();
+            this._removeDataRefresh = null;
         }
     }
 }
