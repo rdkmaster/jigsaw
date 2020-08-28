@@ -110,7 +110,7 @@ export class CustomModeledGraphTemplate {
     public seriesItem?: EchartSeriesItem;
 
     public getInstance():EchartOptions {
-        return CommonUtils.extendObjects<EchartTitle>({}, this.option)
+        return CommonUtils.extendObjects<EchartOptions>({}, this.option)
     }
 }
 
