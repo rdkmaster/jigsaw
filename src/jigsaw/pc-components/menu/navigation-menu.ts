@@ -80,6 +80,9 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             return;
         }
         this._data = value;
+        if (this._removeDataRefresh) {
+            this._removeDataRefresh();
+        }
         this._removeDataRefresh = value.onRefresh(() => this._cdr.markForCheck(), this);
     }
 
