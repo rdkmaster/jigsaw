@@ -1,4 +1,10 @@
-import {Dimension, Indicator, ModeledRectangularGraphData, ModeledRectangularTemplate} from "./modeled-graph-data";
+import {
+    CustomModeledGraphTemplate,
+    Dimension,
+    Indicator,
+    ModeledRectangularGraphData,
+    ModeledRectangularTemplate
+} from "./modeled-graph-data";
 import {EchartLegend, EchartOptions, EchartToolbox, EchartTooltip} from "./echart-types";
 import {Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
@@ -25,12 +31,55 @@ class ModeledRectangularGraphDataSpec extends ModeledRectangularGraphData {
     }
 }
 
-class ModeledRectangularTemplateSpec extends ModeledRectangularTemplate {
+class CustomModeledRectangularTemplateSpec extends CustomModeledGraphTemplate {
     getInstance(): EchartOptions {
         return {
             tooltip: {},
             toolbox: {},
         };
+    }
+}
+
+function getDefaultRectangularTemplate() {
+    return {
+        title: {
+            x: 'center',
+            textStyle: {},
+            subtextStyle: {}
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            },
+            extraCssText: 'z-index: 999'
+        },
+        legend: {
+            data: null
+        },
+        xAxis: {
+            type: 'category',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        yAxis: [
+            {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            }
+        ]
     }
 }
 
@@ -40,6 +89,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         const header = ['a', 'b', 'c'];
         const field = ['f1', 'f2', 'f3'];
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.data = data;
         rd.header = header;
         rd.field = field;
@@ -56,6 +106,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('getRealDimensions - all', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         let realDims = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
         expect(JSON.stringify(realDims)).toEqual(JSON.stringify([]));
 
@@ -102,6 +153,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('pruneAllData - normal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -133,6 +185,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('pruneAllData - add item', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -159,6 +212,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('pruneAllData - aggregate item', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -186,6 +240,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createMultiDimensionOptions - normal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', 'h3', 'h4'];
         rd.data = [
@@ -205,7 +260,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         const dimensions = rd.getRealDimensions(rd.dimensionField, rd.dimensions, rd.usingAllDimensions);
         const options = rd.createMultiDimensionOptions(dimensions);
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['南京', '上海', '深圳']));
-        expect(JSON.stringify(options.xAxis[0].data)).toEqual(JSON.stringify(['a', 'b']));
+        expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(3);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['20', 240]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['22', 1122]));
@@ -213,6 +268,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createMultiDimensionOptions - abnormal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         let options;
         options = rd.createMultiDimensionOptions([]);
         expect(options).toEqual(undefined);
@@ -226,6 +282,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createMultiKPIOptions - normal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', '最高气温', '最低气温'];
         rd.data = [
@@ -245,20 +302,21 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 
         let options = rd.createMultiKPIOptions(new Dimension('上海'));
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['最高气温', '最低气温']));
-        expect(JSON.stringify(options.xAxis[0].data)).toEqual(JSON.stringify(['a', 'b']));
+        expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(2);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['22', 1122]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['12', 0]));
 
         options = rd.createMultiKPIOptions(new Dimension('南京'));
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['最高气温', '最低气温']));
-        expect(JSON.stringify(options.xAxis[0].data)).toEqual(JSON.stringify(['a', 'b']));
+        expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(2);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['20', 240]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['10', 220]));
     });
     it('createMultiKPIOptions - abnormal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         let options;
         options = rd.createMultiKPIOptions(null);
         expect(options).toEqual(undefined);
@@ -272,6 +330,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createChartOptions - normal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', '最高气温', '最低气温'];
         rd.data = [
@@ -290,7 +349,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 
         let options = rd.createChartOptions();
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['南京', '上海', '深圳']));
-        expect(JSON.stringify(options.xAxis[0].data)).toEqual(JSON.stringify(['a', 'b']));
+        expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(3);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['20', 240]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['22', 1122]));
@@ -303,7 +362,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 
         options = rd.createChartOptions();
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['最高气温', '最低气温']));
-        expect(JSON.stringify(options.xAxis[0].data)).toEqual(JSON.stringify(['a', 'b']));
+        expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(2);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['20', 240]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['10', 220]));
@@ -315,6 +374,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createChartOptions - abnormal', () => {
         const rd = new ModeledRectangularGraphDataSpec();
+        rd.template.option = getDefaultRectangularTemplate();
         let options;
         options = rd.createChartOptions();
         expect(options).toEqual(undefined);
@@ -342,7 +402,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createMultiDimensionOptions - invalid legend', function () {
         const rd = new ModeledRectangularGraphDataSpec();
-        rd.template = new ModeledRectangularTemplateSpec();
+        rd.template = new CustomModeledRectangularTemplateSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', '最高气温', '最低气温'];
         rd.data = [
@@ -364,7 +424,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
     });
     it('createMultiKPIOptions - invalid legend', function () {
         const rd = new ModeledRectangularGraphDataSpec();
-        rd.template = new ModeledRectangularTemplateSpec();
+        rd.template = new CustomModeledRectangularTemplateSpec();
         rd.field = ['f1', 'f2', 'f3', 'f4'];
         rd.header = ['h1', 'h2', '最高气温', '最低气温'];
         rd.data = [
