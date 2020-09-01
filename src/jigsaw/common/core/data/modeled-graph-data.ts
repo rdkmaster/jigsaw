@@ -320,11 +320,27 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['yAxisIndex'] = dim.yAxisIndex;
                     seriesData['stack'] = dim.stack;
                     seriesData['barWidth'] = dim.barWidth;
+                    // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
+                    this._correctDoubleYAxis(dim, options);
                 }
                 return seriesData;
             });
 
         return options;
+    }
+
+    private _correctDoubleYAxis(dimOrKpi: Dimension | Indicator, options: EchartOptions) {
+        if(dimOrKpi.yAxisIndex == 1 && !(options.yAxis instanceof Array)) {
+            options.yAxis = [
+                options.yAxis,
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis2 ? this.yAxis2 : {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                })
+            ]
+        }
     }
 
     /**
@@ -417,6 +433,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['yAxisIndex'] = indicator.yAxisIndex;
                     seriesData['stack'] = indicator.stack;
                     seriesData['barWidth'] = indicator.barWidth;
+                    // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
+                    this._correctDoubleYAxis(indicator, options);
                 }
                 return seriesData;
             });
