@@ -107,6 +107,7 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
 
 export class CustomModeledGraphTemplate {
     public option: EchartOptions;
+    public optionPatch?: EchartOptions;
     public seriesItem?: EchartSeriesItem;
 
     public getInstance():EchartOptions {
@@ -266,8 +267,10 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
         const dimensions = this.dimDisabled ? [] : this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
-        return dimensions.length > 1 ? this.createMultiDimensionOptions(dimensions) :
+        let options = dimensions.length > 1 ? this.createMultiDimensionOptions(dimensions) :
             this.createMultiKPIOptions(dimensions[0]);
+        CommonUtils.extendObject(options, this.template.optionPatch);
+        return options;
     }
 
     /**
@@ -582,7 +585,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesItem.center = seriesData.center.map(r => r + '%');
                 return seriesItem;
             });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -749,7 +752,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
 
                 return seriesItem;
             });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -898,7 +901,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
             };
         });
         options.series = [series];
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -1021,7 +1024,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             seriesItem.name = dim.name ? dim.name : 'series' + idx;
             return seriesItem;
         });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -1167,7 +1170,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
 
                 return seriesItem;
             });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
