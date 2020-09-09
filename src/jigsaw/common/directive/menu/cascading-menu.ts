@@ -42,6 +42,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._jigsawCascadingMenuData != value) {
             this._jigsawCascadingMenuData = value;
             this.jigsawFloatInitData.data = value;
+            // 异步设置数据时，这里要获取一下target
+            this.jigsawFloatTarget = value && value.nodes && value.nodes.length > 0 ? JigsawMenu as any : null;
         }
     }
 
