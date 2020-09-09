@@ -233,7 +233,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
-    public dimDisabled: boolean;
+    public legendSource: 'dim' | 'kpi';
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -256,7 +256,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return undefined;
         }
 
-        if(!this.dimDisabled) {
+        if(this.legendSource == 'dim') {
+            // 维度值作为图例却没有配置维度就返回
             if (!this.dimensionField) {
                 return undefined;
             }
@@ -266,8 +267,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
-        const dimensions = this.dimDisabled ? [] : this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
-        let options = dimensions.length > 1 ? this.createMultiDimensionOptions(dimensions) :
+        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        let options = this.legendSource == 'dim' ? this.createMultiDimensionOptions(dimensions) :
             this.createMultiKPIOptions(dimensions[0]);
         CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
@@ -369,17 +370,11 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     }
 
     protected createMultiKPIOptions(dim: Dimension): EchartOptions {
-        if (!this.dimDisabled && !dim) {
-            return undefined;
-        }
         const xAxisIndex = this.getIndex(this.xAxis.field);
         if (xAxisIndex == -1) {
             return undefined;
         }
         const dimIndex = this.getIndex(this.dimensionField);
-        if (!this.dimDisabled && dimIndex == -1) {
-            return undefined;
-        }
         const xAxisGroups = group(this.data, xAxisIndex);
         const pruned: string[][] = [];
         for (let xAxisItem in xAxisGroups) {
