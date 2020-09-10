@@ -16,7 +16,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     box-shadow: $btn-box-shadow;
     font-weight: $btn-font-weight;
     user-select: none;
-    @include prefixer(transition, all .3s $ease-in-out);
     background-color: $component-background;
     border: 1px solid $border-color-base;
     color: $text-color;
@@ -29,6 +28,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &:hover {
         color: $primary-5;
         border: 1px solid $primary-5;
+        @include prefixer(transition, all .3s $ease-in-out);
     }
 
     &:active {
