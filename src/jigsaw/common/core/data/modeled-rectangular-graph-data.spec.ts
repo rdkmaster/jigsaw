@@ -346,6 +346,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators = [new Indicator('f3')];
         rd.indicators[0].index = 2;
         rd.indicators[0].defaultValue = 1122;
+        rd.legendSource = 'dim';
 
         let options = rd.createChartOptions();
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['南京', '上海', '深圳']));
@@ -359,6 +360,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators.push(new Indicator('f4'));
         rd.indicators[1].index = 3;
         rd.dimensions = [new Dimension('南京')];
+        rd.legendSource = 'kpi';
 
         options = rd.createChartOptions();
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['最高气温', '最低气温']));

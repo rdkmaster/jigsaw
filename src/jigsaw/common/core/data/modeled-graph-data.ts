@@ -376,6 +376,9 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
         const dimIndex = this.getIndex(this.dimensionField);
         const xAxisGroups = group(this.data, xAxisIndex);
+        if(!xAxisGroups) {
+            return undefined;
+        }
         const pruned: string[][] = [];
         for (let xAxisItem in xAxisGroups) {
             const records: string[][] = xAxisGroups[xAxisItem];
