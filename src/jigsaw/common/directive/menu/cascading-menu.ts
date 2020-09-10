@@ -3,6 +3,7 @@ import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
 import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -42,8 +43,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._jigsawCascadingMenuData != value) {
             this._jigsawCascadingMenuData = value;
             this.jigsawFloatInitData.data = value;
-            // 异步设置数据时，这里要获取一下target
-            this.jigsawFloatTarget = value && value.nodes && value.nodes.length > 0 ? JigsawMenu as any : null;
+            if (this.initialized && CommonUtils.isUndefined(this.jigsawFloatTarget)) {
+                // 异步设置数据时，这里要获取一下target
+                this.jigsawFloatTarget = value && value.nodes && value.nodes.length > 0 ? JigsawMenu as any : null;
+            }
         }
     }
 
