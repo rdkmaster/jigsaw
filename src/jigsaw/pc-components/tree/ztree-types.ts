@@ -22,7 +22,7 @@ export class ZTreeSettingView {
     fontCss?: object;
     nameIsHTML?: boolean;
     selectedMulti?: boolean;
-    showIcon?: boolean;
+    showIcon?: object;
     showLine?: boolean;
     showTitle?: boolean;
     txtSelectedEnable?: boolean;
