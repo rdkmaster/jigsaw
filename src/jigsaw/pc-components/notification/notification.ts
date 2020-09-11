@@ -92,6 +92,7 @@ export class NotificationMessage {
      * $demo = notification/full
      */
     innerHtmlContext?: any;
+    iconType?: 'success' | 'error' | 'warning' | 'info'
 }
 
 /**
@@ -143,6 +144,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this._callback = value.callback;
         this._callbackContext = value._callbackContext;
         this._timeout = value.timeout;
+
+        this._$iconType = value.iconType;
     }
 
     /**
@@ -415,7 +418,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
             buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
             callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
-            innerHtmlContext: opt.innerHtmlContext
+            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType
         };
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
         popupInfo.instance._popupInfo = popupInfo;
@@ -434,6 +437,44 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
         return popupInfo;
     };
+
+    /**
+     * @internal
+     */
+    public _$iconType: 'success' | 'error' | 'warning' | 'info';
+
+    public static showSuccess(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        opt.caption = '成功';
+        opt.icon = 'iconfont iconfont-e8f8';
+        opt.iconType = 'success';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showError(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        opt.caption = '错误';
+        opt.icon = 'iconfont iconfont-e8f5';
+        opt.iconType = 'error';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        opt.caption = '警告';
+        opt.icon = 'iconfont iconfont-e8f7';
+        opt.iconType = 'warning';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        opt.caption = '消息';
+        opt.icon = 'fa fa-info-circle';
+        opt.iconType = 'info';
+        return JigsawNotification.show(message, opt);
+    };
+
 }
 
 @NgModule({
