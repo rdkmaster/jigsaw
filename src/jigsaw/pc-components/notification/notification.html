@@ -3,7 +3,13 @@
     <div class="jigsaw-notification-content">
         <div class="jigsaw-notification-icon" *ngIf="!!icon">
             <i class="jigsaw-notification-icon {{icon}}"
-               [ngClass]="{'jigsaw-notification-icon-success': _$iconType == 'success', 'jigsaw-notification-icon-error': _$iconType == 'error', 'jigsaw-notification-icon-warning': _$iconType == 'warning', 'jigsaw-notification-icon-info': _$iconType == 'info'}"></i>
+               [ngClass]="{
+                              'jigsaw-notification-icon-success': _$iconType == 'success',
+                              'jigsaw-notification-icon-error': _$iconType == 'error',
+                              'jigsaw-notification-icon-warning': _$iconType == 'warning',
+                              'jigsaw-notification-icon-info': _$iconType == 'info'
+                          }">
+            </i>
         </div>
 
         <div class="jigsaw-notification-text">
