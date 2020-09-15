@@ -10,12 +10,20 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
     selectedCityStr: string;
     selectedCity: any[];
     cities = new ArrayCollection([
-        {label: "北京", id: 1},
+        {label: "北京", id: 1, icon: 'fa fa-search'},
         {label: "上海-一个很长的地址", id: 2},
         {label: "南京", id: 3},
         {label: "深圳", id: 4},
         {label: "长沙", id: 5},
         {label: "西安", id: 6}
+    ]);
+    citiesWithIcon = new ArrayCollection([
+        {label: "北京", id: 1, icon: 'fa fa-home'},
+        {label: "上海", id: 2, icon: 'fa fa-building'},
+        {label: "南京", id: 3, icon: 'fa fa-hotel'},
+        {label: "深圳", id: 4, icon: 'fa fa-coffee'},
+        {label: "长沙", id: 5, icon: 'fa fa-shower'},
+        {label: "西安", id: 6, icon: 'fa fa-briefcase'}
     ]);
 
     basicSelectChange(cityArr: ArrayCollection<any>) {
