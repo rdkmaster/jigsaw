@@ -28,7 +28,6 @@ export class ZTreeSettingView {
     txtSelectedEnable?: boolean;
 }
 
-
 export class ZTreeSettingDataKey {
     children?: string;
     name?: string;
