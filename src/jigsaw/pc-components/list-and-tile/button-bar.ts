@@ -10,9 +10,11 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
         <j-tile [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
                 [multipleSelect]="multipleSelect" [height]="height" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
-            <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
+            <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+                           [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
                            [width]="optionWidth" [height]="height" [disabled]="item?.disabled"
                            title="{{item && item[labelField] ? item[labelField] : item}}">
+                <span *ngIf="item.icon" [class]="item.icon"></span>
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-tile-option>
         </j-tile>`,
