@@ -17,7 +17,7 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         {label: "长沙", id: 5},
         {label: "西安", id: 6}
     ]);
-    citiesWithIcon = new ArrayCollection([
+    types = new ArrayCollection([
         {label: "成功", id: 1, icon: 'iconfont iconfont-e8f8'},
         {label: "错误", id: 2, icon: 'iconfont iconfont-e8f5'},
         {label: "警告", id: 3, icon: 'iconfont iconfont-e8f7'},
