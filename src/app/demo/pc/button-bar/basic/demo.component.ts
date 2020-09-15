@@ -10,7 +10,7 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
     selectedCityStr: string;
     selectedCity: any[];
     cities = new ArrayCollection([
-        {label: "北京", id: 1, icon: 'fa fa-search'},
+        {label: "北京", id: 1},
         {label: "上海-一个很长的地址", id: 2},
         {label: "南京", id: 3},
         {label: "深圳", id: 4},
