@@ -19,10 +19,10 @@ export class ZTreeSettingView {
     autoCancelSelected?: boolean;
     dblClickExpand?: boolean;
     expandSpeed?: ZTreeSettingViewSpeedLevel;
-    fontCss?: object;
+    fontCss?: (id: string, node: any) => boolean | object;
     nameIsHTML?: boolean;
     selectedMulti?: boolean;
-    showIcon?: object;
+    showIcon?: (id: string, node: any) => boolean | boolean;
     showLine?: boolean;
     showTitle?: boolean;
     txtSelectedEnable?: boolean;
