@@ -1,21 +1,30 @@
 import {
-    NgModule, Component, Renderer2, Input, ElementRef, NgZone, ChangeDetectionStrategy, Injector
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Injector,
+    Input,
+    NgModule,
+    NgZone,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
     ButtonInfo,
-    PopupService,
     PopupEffect,
     PopupInfo,
     PopupPositionType,
-    PopupPositionValue
+    PopupPositionValue,
+    PopupService
 } from "../../common/service/popup.service";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html"
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {take} from 'rxjs/operators';
+import {TranslateService} from "@ngx-translate/core";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -39,7 +48,7 @@ export class NotificationMessage {
     /**
      * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向，默认右上角
      */
-    position?: NotificationPosition;
+    position?: NotificationPosition | string;
     /**
      * 提示信息超时自动关闭的毫秒数，为0则表示不关闭，默认8000ms
      */
@@ -92,6 +101,7 @@ export class NotificationMessage {
      * $demo = notification/full
      */
     innerHtmlContext?: any;
+    iconType?: 'success' | 'error' | 'warning' | 'info'
 }
 
 /**
@@ -117,7 +127,7 @@ const notificationInstances = {
 export class JigsawNotification extends AbstractDialogComponentBase {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+                protected _injector: Injector, private _translateService: TranslateService) {
         super(renderer, elementRef, _zone, _injector);
     }
 
@@ -131,10 +141,19 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      * @param value
      */
     public set initData(value: any) {
-        if (!value) return;
+        if (!value) {
+            return;
+        }
 
+        const iconType2Caption = {
+            success: 'notification.success',
+            error: 'notification.error',
+            warning: 'notification.warning',
+            info: 'notification.info'
+        };
+        this.caption = iconType2Caption.hasOwnProperty(value.iconType) ?
+            this._translateService.instant(iconType2Caption[value.iconType]) : value.caption;
         this.message = value.message || 'the "message" property in the initData goes here.';
-        this.caption = value.caption;
         this.icon = value.icon;
         this.buttons = value.buttons;
         this.position = value.position;
@@ -143,6 +162,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this._callback = value.callback;
         this._callbackContext = value._callbackContext;
         this._timeout = value.timeout;
+
+        this._$iconType = value.iconType;
     }
 
     /**
@@ -237,6 +258,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * @internal
      */
+    public _$iconType: 'success' | 'error' | 'warning' | 'info';
+
+    /**
+     * @internal
+     */
     public _$close(answer?: ButtonInfo) {
         if (this._popupInfoValue) {
             this._popupInfoValue.answer.unsubscribe();
@@ -315,7 +341,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      */
     public static _removeResizeListener;
 
-    private static _positionReviser(position: NotificationPosition, element: HTMLElement): PopupPositionValue {
+    private static _positionReviser(position: NotificationPosition | string, element: HTMLElement): PopupPositionValue {
         let left = 0;
         if (position == NotificationPosition.rightTop || position == NotificationPosition.rightBottom) {
             left += document.body.clientWidth - element.offsetWidth - 24;
@@ -345,7 +371,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      *
      * @param position 调整哪个方向上的提示框，可选，默认调试所有4个方向。
      */
-    public static reposition(position?: NotificationPosition) {
+    public static reposition(position?: NotificationPosition | string) {
         if (CommonUtils.isUndefined(position)) {
             this.reposition(NotificationPosition.leftTop);
             this.reposition(NotificationPosition.rightTop);
@@ -408,14 +434,14 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: false,
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
-            pos: {x: 0, y: 0}, // `pos` not null to tell PopupService don't add resize event listener
-            posType: PopupPositionType.fixed
+            // `pos` not null to tell PopupService don't add resize event listener
+            pos: {x: 0, y: 0}, posType: PopupPositionType.fixed
         };
         const initData = {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
             buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
             callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
-            innerHtmlContext: opt.innerHtmlContext
+            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType
         };
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
         popupInfo.instance._popupInfo = popupInfo;
@@ -434,12 +460,62 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
         return popupInfo;
     };
+
+    public static showSuccess(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e8f8';
+        opt.iconType = 'success';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showError(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e8f5';
+        opt.iconType = 'error';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e8f7';
+        opt.iconType = 'warning';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'fa fa-info-circle';
+        opt.iconType = 'info';
+        return JigsawNotification.show(message, opt);
+    };
+
 }
 
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule],
     declarations: [JigsawNotification],
-    exports: [JigsawNotification]
+    exports: [JigsawNotification],
+    providers: [TranslateService]
 })
 export class JigsawNotificationModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'notification', {
+            zh: {
+                success: '成功',
+                error: '错误',
+                warning: '警告',
+                info: '消息'
+            },
+            en: {
+                success: 'Success',
+                error: 'Error',
+                warning: 'Warning',
+                info: 'Information'
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            translateService.use(langInfo.curLang);
+        });
+    }
 }

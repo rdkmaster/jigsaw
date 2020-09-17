@@ -19,6 +19,26 @@
             flex-grow: 0;
             font-size: 44px;
             margin-right: 11px;
+
+            .jigsaw-notification-icon-success {
+                color: #87d068;
+                font-size: 26px;
+            }
+
+            .jigsaw-notification-icon-error {
+                color: #ec6d6d;
+                font-size: 26px;
+            }
+
+            .jigsaw-notification-icon-warning {
+                color: #e78f4e;
+                font-size: 26px;
+            }
+
+            .jigsaw-notification-icon-info {
+                color: #41addc;
+                font-size: 26px;
+            }
         }
 
         .jigsaw-notification-text {
