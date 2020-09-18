@@ -1124,7 +1124,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         })
     }
 
-    private _sortAndPaging() {
+    protected _sortAndPaging() {
         if (this.sortInfo) {
             super.sortData(this.filteredData, this.sortInfo);
         }
@@ -1281,7 +1281,8 @@ export class PageableTreeTableData extends LocalPageableTableData {
      *
      * $demo = table/tree-table
      */
-    public treeData: SimpleTreeData = new SimpleTreeData();
+    public originalTreeData: SimpleTreeData = new SimpleTreeData();
+    public filteredTreeData: SimpleTreeData = new SimpleTreeData();
     /**
      * 这是一个非常重要的标志，用于告诉Jigsaw当前表格的哪一列用于渲染成树节点，一般来说都是第一列，但是也可根据业务需要随意修改
      *
@@ -1329,7 +1330,8 @@ export class PageableTreeTableData extends LocalPageableTableData {
 
     public clear(): void {
         super.clear();
-        this.treeData = new SimpleTreeData();
+        this.originalTreeData = new SimpleTreeData();
+        this.filteredTreeData = new SimpleTreeData();
     }
 
     private _getTreeField(field: string | number): number {
@@ -1344,12 +1346,94 @@ export class PageableTreeTableData extends LocalPageableTableData {
         this.clear();
         TableDataBase.arrayAppend(this.field, data.field);
         TableDataBase.arrayAppend(this.header, data.header);
-        this.treeData.fromObject(data.treeData);
+        this.originalTreeData.fromObject(data.treeData);
+        this.filteredTreeData.fromObject(data.treeData);
         this.treeField = this._getTreeField(data.treeField);
-        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.treeData, this.treeField));
+        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.originalTreeData, this.treeField));
         this.refreshData();
         this.invokeChangeCallback();
         return this;
+    }
+
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: DataFilterInfo): void;
+    /**
+     * @internal
+     */
+    public filter(term, fields?: (string | number)[]): void {
+        let filterTerm: Function | string;
+        let numberFields: number[];
+        if (term instanceof Function) {
+            filterTerm = term;
+        } else {
+            if (term instanceof DataFilterInfo) {
+                filterTerm = term.key;
+                fields = term.field
+            } else {
+                filterTerm = term;
+            }
+            if (fields && fields.length != 0) {
+                if (typeof fields[0] === 'string') {
+                    numberFields = [];
+                    (<string[]>fields).forEach(field => {
+                            numberFields.push(this.field.findIndex(item => item == field))
+                        }
+                    )
+                } else {
+                    numberFields = <number[]>fields;
+                }
+            }
+        }
+        if(this.originalTreeData.nodes && this.originalTreeData.nodes.length) {
+            let curAllData = this.originalTreeData.nodes.map(node => node.data);
+            this.filteredTreeData.nodes = this.originalTreeData.nodes.map((node: SimpleNode, index) => {
+                return this._findRequiredNode(node, index, curAllData, filterTerm, numberFields)
+            }).filter(node => !!node);
+        } else {
+            this.filteredTreeData.nodes = [];
+        }
+        this._refreshTreeAndTable();
+        this._sortAndPaging();
+    }
+
+    private _findRequiredNode(node: SimpleNode, index: number, array: any[], filterTerm: Function | string, numberFields: number[]) {
+        let requiredNode;
+        if (filterTerm instanceof Function) {
+            if (filterTerm(node.data, index, array)) {
+                requiredNode = {...node};
+                delete requiredNode.nodes;
+            }
+        } else {
+            if (numberFields && numberFields.length) {
+                if (node.data && node.data.filter(
+                    (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
+                ).filter(
+                    item => (item + '').indexOf(filterTerm) != -1
+                ).length != 0) {
+                    requiredNode = {...node};
+                    delete requiredNode.nodes;
+                }
+            } else {
+                if (node.data && node.data.filter(
+                    item => (item + '').indexOf(filterTerm) != -1
+                ).length != 0) {
+                    requiredNode = {...node};
+                    delete requiredNode.nodes;
+                }
+            }
+        }
+        if (node.nodes && node.nodes.length) {
+            let curAllData = node.nodes.map(node => node.data);
+            let nodes = node.nodes.map((n: SimpleNode, i) => {
+                return this._findRequiredNode(n, i, curAllData, filterTerm, numberFields);
+            }).filter(node => !!node);
+            if(nodes.length) {
+                requiredNode = requiredNode ? requiredNode : {...node};
+                requiredNode.nodes = nodes;
+            }
+        }
+        return requiredNode;
     }
 
     private static _getNodeByIndexes(treeData: SimpleNode, indexes: (number | string)[]): SimpleNode {
@@ -1370,10 +1454,14 @@ export class PageableTreeTableData extends LocalPageableTableData {
      * @param open
      */
     public toggleOpenNode(indexes: (number | string)[], open: boolean) {
-        let node = PageableTreeTableData._getNodeByIndexes(this.treeData, indexes);
+        let node = PageableTreeTableData._getNodeByIndexes(this.filteredTreeData, indexes);
         node.open = open;
+        this._refreshTreeAndTable();
+    }
+
+    private _refreshTreeAndTable() {
         this.data.splice(0, this.data.length);
-        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.treeData, this.treeField));
+        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.filteredTreeData, this.treeField));
         let currentPage = this.pagingInfo.currentPage;
         this.refreshData();
         // 保持原来所在页
