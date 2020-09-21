@@ -1386,10 +1386,10 @@ export class PageableTreeTableData extends LocalPageableTableData {
             }
         }
         if(this.originalTreeData.nodes && this.originalTreeData.nodes.length) {
-            let curAllData = this.originalTreeData.nodes.map(node => node.data);
-            this.filteredTreeData.nodes = this.originalTreeData.nodes.map((node: SimpleNode, index) => {
-                return this._findRequiredNode(node, index, curAllData, filterTerm, numberFields)
-            }).filter(node => !!node);
+            const curAllData = this.originalTreeData.nodes.map(node => node.data);
+            this.filteredTreeData.nodes = this.originalTreeData.nodes
+                .map((node: SimpleNode, index) => this._findRequiredNode(node, index, curAllData, filterTerm, numberFields))
+                .filter(node => !!node);
         } else {
             this.filteredTreeData.nodes = [];
         }
@@ -1406,28 +1406,26 @@ export class PageableTreeTableData extends LocalPageableTableData {
             }
         } else {
             if (numberFields && numberFields.length) {
-                if (node.data && node.data.filter(
-                    (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-                ).filter(
-                    item => (item + '').indexOf(filterTerm) != -1
-                ).length != 0) {
+                const filtered = (node.data || [])
+                    .filter((item, index) => CommonUtils.isDefined(numberFields.find(num => num == index)))
+                    .filter(item => (item + '').indexOf(filterTerm) != -1);
+                if (filtered.length != 0) {
                     requiredNode = {...node};
                     delete requiredNode.nodes;
                 }
             } else {
-                if (node.data && node.data.filter(
-                    item => (item + '').indexOf(filterTerm) != -1
-                ).length != 0) {
+                const filtered = (node.data || []).filter(item => (item + '').indexOf(filterTerm) != -1);
+                if (filtered.length != 0) {
                     requiredNode = {...node};
                     delete requiredNode.nodes;
                 }
             }
         }
         if (node.nodes && node.nodes.length) {
-            let curAllData = node.nodes.map(node => node.data);
-            let nodes = node.nodes.map((n: SimpleNode, i) => {
-                return this._findRequiredNode(n, i, curAllData, filterTerm, numberFields);
-            }).filter(node => !!node);
+            const curAllData = node.nodes.map(node => node.data);
+            const nodes = node.nodes
+                .map((n: SimpleNode, i) => this._findRequiredNode(n, i, curAllData, filterTerm, numberFields))
+                .filter(node => !!node);
             if(nodes.length) {
                 requiredNode = requiredNode ? requiredNode : {...node};
                 requiredNode.nodes = nodes;
