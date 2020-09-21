@@ -70,6 +70,16 @@ export class JigsawButton extends AbstractJigsawComponent {
     public preSize: 'default' | 'small' | 'large' = 'default';
 
     /**
+     * 配置按钮图标
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = button/full
+     */
+    @Input()
+    public icon: string;
+
+    /**
      * 按钮动画执行状态
      * @internal
      */

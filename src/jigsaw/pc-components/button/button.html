@@ -1,1 +1,4 @@
-<div class="jigsaw-button-content"><ng-content></ng-content></div>
+<div class="jigsaw-button-content">
+    <span *ngIf="!!icon" class="{{icon}}"></span>
+    <ng-content></ng-content>
+</div>
