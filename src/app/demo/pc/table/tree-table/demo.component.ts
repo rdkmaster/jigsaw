@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {
     AdditionalColumnDefine,
-    ColumnDefine,
+    ColumnDefine, DataFilterInfo,
     PageableTreeTableData,
     TableCellCheckboxRenderer,
     TableHeadCheckboxRenderer,
@@ -190,6 +190,17 @@ export class TreeTableDemoComponent {
             data: (td, row) => td.data[row][0].data.endsWith('1-0')
         }
     }];
+
+    search($event) {
+        this.localPageableTreeTableData.filter($event, ['field1']);
+        //this.localPageableTreeTableData.filter(new DataFilterInfo($event, ['field1']));
+    }
+
+    searchForRequire() {
+        this.localPageableTreeTableData.filter((value, index, arr) => {
+            return parseInt(value[1].split('-')[0].replace('cell', '')) < 100
+        });
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
