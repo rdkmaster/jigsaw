@@ -111,7 +111,8 @@ export class CommonUtils {
                 if (sourceObject[i] instanceof Array) {
                     targetObject[i] = sourceObject[i];
                 } else if(this.isUndefined(targetObject[i])) {
-                    targetObject[i] = this.extendObject({}, sourceObject[i]);
+                    // typeof null is object
+                    targetObject[i] = this.isUndefined(sourceObject[i]) ? sourceObject[i] : this.extendObject({}, sourceObject[i]);
                 } else {
                     this.extendObject(targetObject[i], sourceObject[i]);
                 }
