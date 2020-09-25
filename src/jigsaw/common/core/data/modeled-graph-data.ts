@@ -269,7 +269,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
         const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         let options = this.legendSource == 'dim' ? this.createMultiDimensionOptions(dimensions) :
-            this.createMultiKPIOptions(dimensions[0]);
+            this.createMultiKPIOptions(dimensions);
         CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
@@ -369,7 +369,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         return groups;
     }
 
-    protected createMultiKPIOptions(dim: Dimension): EchartOptions {
+    protected createMultiKPIOptions(dims: Dimension[]): EchartOptions {
         const xAxisIndex = this.getIndex(this.xAxis.field);
         if (xAxisIndex == -1) {
             return undefined;
@@ -385,7 +385,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             if (records === xAxisGroups._$groupItems) {
                 continue;
             }
-            const prunedRecords = dim ? records.filter(r => r[dimIndex] == dim.name) : records;
+            const prunedRecords = (dimIndex == xAxisIndex || dimIndex == -1 || !dims || !dims.length) ? records : records.filter(r => !!dims.find(dim => dim.name == r[dimIndex]));
             if (prunedRecords.length == 1) {
                 pruned.push(prunedRecords[0]);
             } else if (prunedRecords.length > 1) {
@@ -394,8 +394,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             } else {
                 const row = [];
                 row[xAxisIndex] = xAxisItem;
-                if(dim) {
-                    row[dimIndex] = dim.name;
+                if(dimIndex != xAxisIndex && dimIndex != -1 && dims) {
+                    row[dimIndex] = dims[0].name;
                 }
                 this.indicators.forEach(i => row[i.index] = i.defaultValue);
                 pruned.push(row);
