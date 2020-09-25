@@ -22,8 +22,8 @@ class ModeledRectangularGraphDataSpec extends ModeledRectangularGraphData {
         return super.createMultiDimensionOptions(dimensions);
     }
 
-    public createMultiKPIOptions(dim: Dimension): EchartOptions {
-        return super.createMultiKPIOptions(dim);
+    public createMultiKPIOptions(dims: Dimension[]): EchartOptions {
+        return super.createMultiKPIOptions(dims);
     }
 
     public createChartOptions(): EchartOptions {
@@ -300,14 +300,14 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].index = 2;
         rd.indicators[0].defaultValue = 1122;
 
-        let options = rd.createMultiKPIOptions(new Dimension('上海'));
+        let options = rd.createMultiKPIOptions([new Dimension('上海')]);
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['最高气温', '最低气温']));
         expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(2);
         expect(JSON.stringify(options.series[0].data)).toEqual(JSON.stringify(['22', 1122]));
         expect(JSON.stringify(options.series[1].data)).toEqual(JSON.stringify(['12', 0]));
 
-        options = rd.createMultiKPIOptions(new Dimension('南京'));
+        options = rd.createMultiKPIOptions([new Dimension('南京')]);
         expect(JSON.stringify(options.legend.data)).toEqual(JSON.stringify(['最高气温', '最低气温']));
         expect(JSON.stringify(options.xAxis.data)).toEqual(JSON.stringify(['a', 'b']));
         expect(options.series.length).toEqual(2);
@@ -320,12 +320,12 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         let options;
         options = rd.createMultiKPIOptions(null);
         expect(options).toEqual(undefined);
-        options = rd.createMultiKPIOptions(new Dimension('上海'));
+        options = rd.createMultiKPIOptions([new Dimension('上海')]);
         expect(options).toEqual(undefined);
 
         rd.field = ['f'];
         rd.xAxis = {field: 'f'};
-        options = rd.createMultiKPIOptions(new Dimension('上海'));
+        options = rd.createMultiKPIOptions([new Dimension('上海')]);
         expect(options).toEqual(undefined);
     });
     it('createChartOptions - normal', () => {
@@ -444,7 +444,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         rd.indicators[0].index = 2;
         rd.indicators[0].defaultValue = 1122;
 
-        let options = rd.createMultiKPIOptions(new Dimension('上海'));
+        let options = rd.createMultiKPIOptions([new Dimension('上海')]);
         expect(options.legend).toBeUndefined();
     });
 });
