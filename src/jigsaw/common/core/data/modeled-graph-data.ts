@@ -385,7 +385,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             if (records === xAxisGroups._$groupItems) {
                 continue;
             }
-            const prunedRecords = (dimIndex == xAxisIndex || dimIndex == -1 || !dims || !dims.length) ? records : records.filter(r => !!dims.find(dim => dim.name == r[dimIndex]));
+            let filteredWithDim = dimIndex != xAxisIndex && dimIndex != -1 && dims && dims.length;
+            const prunedRecords = filteredWithDim ? records.filter(r => !!dims.find(dim => dim.name == r[dimIndex])) : records;
             if (prunedRecords.length == 1) {
                 pruned.push(prunedRecords[0]);
             } else if (prunedRecords.length > 1) {
@@ -394,7 +395,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             } else {
                 const row = [];
                 row[xAxisIndex] = xAxisItem;
-                if(dimIndex != xAxisIndex && dimIndex != -1 && dims) {
+                if(filteredWithDim) {
                     row[dimIndex] = dims[0].name;
                 }
                 this.indicators.forEach(i => row[i.index] = i.defaultValue);
