@@ -124,7 +124,7 @@ export class CommonUtils {
     }
 
     public static extendObjects<T = Object>(targetObject: T, ...sources): T {
-        sources.forEach(s => this.extendObject(targetObject, s));
+        sources.forEach(s => {targetObject = <T>this.extendObject(targetObject, s)});
         return targetObject;
     }
 
