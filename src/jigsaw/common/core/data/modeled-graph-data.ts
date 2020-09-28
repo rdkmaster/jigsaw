@@ -27,6 +27,8 @@ export abstract class AbstractModeledGraphTemplate {
     public legend?: EchartLegend;
 }
 
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map';
+
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
 
@@ -50,6 +52,8 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
      * 图形个关键配置项的模板
      */
     public template: CustomModeledGraphTemplate;
+
+    public type: GraphType;
 
     protected constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, field, header);
@@ -224,6 +228,7 @@ export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate 
 }
 
 export class ModeledRectangularGraphData extends AbstractModeledGraphData {
+    public type: GraphType = 'rectangular';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: { field?: string, style?: EchartXAxis } = {};
@@ -519,6 +524,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
+    public type: GraphType = 'pie';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: PieSeries[];
     private _options: EchartOptions;
@@ -676,6 +682,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
+    public type: GraphType = 'gauge';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: GaugeSeries[];
     public title: EchartTitle;
@@ -837,6 +844,7 @@ export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
 }
 
 export class ModeledRadarGraphData extends AbstractModeledGraphData {
+    public type: GraphType = 'radar';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public dimensionField: string;
@@ -964,6 +972,7 @@ export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
 }
 
 export class ModeledScatterGraphData extends AbstractModeledGraphData {
+    public type: GraphType = 'scatter';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: EchartXAxis = {};
@@ -1105,6 +1114,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
+    public type: GraphType = 'map';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: MapSeries[];
     private _options: EchartOptions;
