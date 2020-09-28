@@ -136,7 +136,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
             return;
         }
 
-        if (typeof value[0] == 'string') {
+        if (typeof value[0] == 'string' || typeof value[0] == 'number') {
             this._$data = [new DropDownValue({
                 category: '',
                 items: value
@@ -257,7 +257,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     }
 
     private _filter(category: DropDownValue, key): DropDownValue {
-        let items = category.items.filter(item => item.toLowerCase().includes(key.toLowerCase()));
+        let items = category.items.filter(item => String(item).toLowerCase().includes(key.toLowerCase()));
         if (items.length == 0) {
             return null;
         }

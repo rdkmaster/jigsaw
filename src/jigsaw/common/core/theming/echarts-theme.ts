@@ -4,7 +4,8 @@ export const lightGraphTheme = {
 
     // 默认色板
     // color:['#ff0000','#00ff00','#0000ff','#F8D282','#D2BC5A','#CEA67C','#429698','#57B8B0'],
-    color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
+    //color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
+    color: ['#1e7ffb', '#e67608', '#07bb74', '#516ae9', '#f1542e', '#5b92d6', '#30404f'],
     // color: ['#325bdb','#87cefa','#da70d6','#32cd32','#6495ed',
     //         '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
     //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
@@ -185,8 +186,8 @@ export const lightGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: '#ccc',
-                width: 2,
+                color: 'rgb(255,255,255,0.15)',
+                width: 1,
                 type: 'solid'
             }
         },
@@ -207,14 +208,14 @@ export const lightGraphTheme = {
             margin: 8,
             // formatter: null,
             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-            color: '#333'
+            color: '#666'
 
         },
         splitLine: { // 分隔线
             show: true, // 默认显示，属性show控制显示与否
             // onGap: null,
             lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ["#e5e5e5"],
+                color: ["#e9e9e9"],
                 width: 1,
                 type: 'solid'
             }
@@ -240,8 +241,8 @@ export const lightGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: '#ccc',
-                width: 2,
+                color: 'rgb(255,255,255,0.15)',
+                width: 1,
                 type: 'solid'
             }
         },
@@ -258,7 +259,7 @@ export const lightGraphTheme = {
             show: true,
             rotate: 0,
             margin: 8,
-            color: '#333',
+            color: '#666',
             formatter: null,
             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 
@@ -266,7 +267,7 @@ export const lightGraphTheme = {
         splitLine: { // 分隔线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ['#e5e5e5'],
+                color: ['#e9e9e9'],
                 width: 1,
                 type: 'solid'
             }
@@ -729,7 +730,8 @@ export const darkGraphTheme = {
 
     // 默认色板
     // color:['#ff0000','#00ff00','#0000ff','#F8D282','#D2BC5A','#CEA67C','#429698','#57B8B0'],
-    color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
+    //color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
+    color: ['#207ef8', '#ed8a2b', '#06ba74', '#f26c82', '#4ac6d7', '#c156f3', '#f5d23d', '#778cef', '#186bd2'],
     // color: ['#325bdb','#87cefa','#da70d6','#32cd32','#6495ed',
     //         '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
     //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
@@ -788,7 +790,7 @@ export const darkGraphTheme = {
         itemWidth: 20, // 图例图形宽度
         itemHeight: 14, // 图例图形高度
         textStyle: {
-            color: '#fff'
+            color: '#666'
         }
     },
 
@@ -914,8 +916,8 @@ export const darkGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: '#ccc',
-                width: 2,
+                color: '#30414c',
+                width: 1,
                 type: 'solid'
             }
         },
@@ -936,14 +938,14 @@ export const darkGraphTheme = {
             margin: 8,
             // formatter: null,
             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-            color: '#fff'
+            color: '#666'
 
         },
         splitLine: { // 分隔线
             show: true, // 默认显示，属性show控制显示与否
             // onGap: null,
             lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ["#e5e5e5"],
+                color: ["#30414c"],
                 width: 1,
                 type: 'solid'
             }
@@ -969,8 +971,8 @@ export const darkGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: '#ccc',
-                width: 2,
+                color: '#30414c',
+                width: 1,
                 type: 'solid'
             }
         },
@@ -987,7 +989,7 @@ export const darkGraphTheme = {
             show: true,
             rotate: 0,
             margin: 8,
-            color: '#fff',
+            color: '#666',
             formatter: null,
             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 
@@ -995,7 +997,7 @@ export const darkGraphTheme = {
         splitLine: { // 分隔线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ['#e5e5e5'],
+                color: ['#30414c'],
                 width: 1,
                 type: 'solid'
             }

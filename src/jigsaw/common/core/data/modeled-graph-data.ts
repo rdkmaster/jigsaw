@@ -27,6 +27,8 @@ export abstract class AbstractModeledGraphTemplate {
     public legend?: EchartLegend;
 }
 
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map';
+
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
 
@@ -49,7 +51,9 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
     /**
      * 图形个关键配置项的模板
      */
-    public template: AbstractModeledGraphTemplate;
+    public template: CustomModeledGraphTemplate;
+
+    public type: GraphType;
 
     protected constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, field, header);
@@ -105,6 +109,16 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
     }
 }
 
+export class CustomModeledGraphTemplate {
+    public option: EchartOptions;
+    public optionPatch?: EchartOptions;
+    public seriesItem?: EchartSeriesItem;
+
+    public getInstance():EchartOptions {
+        return CommonUtils.extendObjects<EchartOptions>({}, this.option)
+    }
+}
+
 export class Dimension {
     public name?: string;
     public yAxisIndex?: 0 | 1 = 0;
@@ -146,9 +160,14 @@ export abstract class ModeledRectangularTemplate extends AbstractModeledGraphTem
 export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate {
     getInstance(): EchartOptions {
         return {
-            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            xAxis: CommonUtils.extendObjects<EchartXAxis>({}, this.xAxis),
+            yAxis: [
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis2)
+            ]
         };
     }
 
@@ -209,7 +228,8 @@ export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate 
 }
 
 export class ModeledRectangularGraphData extends AbstractModeledGraphData {
-    public template: ModeledRectangularTemplate = new BasicModeledRectangularTemplate();
+    public type: GraphType = 'rectangular';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: { field?: string, style?: EchartXAxis } = {};
     public yAxis1: EchartYAxis = {position: 'left'};
@@ -218,7 +238,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
-    public dimDisabled: boolean;
+    public legendSource: 'dim' | 'kpi';
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -241,7 +261,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return undefined;
         }
 
-        if(!this.dimDisabled) {
+        if(this.legendSource == 'dim') {
+            // 维度值作为图例却没有配置维度就返回
             if (!this.dimensionField) {
                 return undefined;
             }
@@ -251,9 +272,11 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         this.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
-        const dimensions = this.dimDisabled ? [] : this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
-        return dimensions.length > 1 ? this.createMultiDimensionOptions(dimensions) :
-            this.createMultiKPIOptions(dimensions[0]);
+        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        let options = this.legendSource == 'dim' ? this.createMultiDimensionOptions(dimensions) :
+            this.createMultiKPIOptions(dimensions);
+        CommonUtils.extendObject(options, this.template.optionPatch);
+        return options;
     }
 
     /**
@@ -273,17 +296,19 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         const options: EchartOptions = this.template.getInstance();
-        options.xAxis = [
-            CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
-        ];
-        options.yAxis = [
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis1, this.yAxis1),
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis2, this.yAxis2)
-        ];
+        options.xAxis = CommonUtils.extendObjects<EchartXAxis>(options.xAxis, this.xAxis.style, {data: xAxisItems});
+        if(options.yAxis instanceof Array) {
+            options.yAxis = [
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[0], this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[1], this.yAxis2)
+            ];
+        } else {
+            options.yAxis = CommonUtils.extendObjects<EchartYAxis>(options.yAxis, this.yAxis1);
+        }
+
         if (options.legend) {
             options.legend.data = dimensions.map(d => d.name);
         }
-        options.xAxis[0].data = xAxisItems;
 
         const dimIndex = this.getIndex(this.dimensionField);
         const pruned = this.pruneAllData(xAxisIndex, dimIndex, dimensions);
@@ -304,11 +329,27 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['yAxisIndex'] = dim.yAxisIndex;
                     seriesData['stack'] = dim.stack;
                     seriesData['barWidth'] = dim.barWidth;
+                    // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
+                    this._correctDoubleYAxis(dim, options);
                 }
                 return seriesData;
             });
 
         return options;
+    }
+
+    private _correctDoubleYAxis(dimOrKpi: Dimension | Indicator, options: EchartOptions) {
+        if(dimOrKpi.yAxisIndex == 1 && !(options.yAxis instanceof Array)) {
+            options.yAxis = [
+                options.yAxis,
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis2 ? this.yAxis2 : {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                })
+            ]
+        }
     }
 
     /**
@@ -320,7 +361,6 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
      * @param dimensions
      */
     protected pruneAllData(xAxisIndex: number, dimIndex: number, dimensions: Dimension[]): Grouped {
-        const aggregateBy = this.indicators.map(kpi => ({index: kpi.index, algorithm: kpi.aggregateBy}));
         const groups = group(this.data, xAxisIndex);
         for (let xAxisItem in groups) {
             const records: string[][] = groups[xAxisItem];
@@ -334,26 +374,24 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         return groups;
     }
 
-    protected createMultiKPIOptions(dim: Dimension): EchartOptions {
-        if (!this.dimDisabled && !dim) {
-            return undefined;
-        }
+    protected createMultiKPIOptions(dims: Dimension[]): EchartOptions {
         const xAxisIndex = this.getIndex(this.xAxis.field);
         if (xAxisIndex == -1) {
             return undefined;
         }
         const dimIndex = this.getIndex(this.dimensionField);
-        if (!this.dimDisabled && dimIndex == -1) {
+        const xAxisGroups = group(this.data, xAxisIndex);
+        if(!xAxisGroups) {
             return undefined;
         }
-        const xAxisGroups = group(this.data, xAxisIndex);
         const pruned: string[][] = [];
         for (let xAxisItem in xAxisGroups) {
             const records: string[][] = xAxisGroups[xAxisItem];
             if (records === xAxisGroups._$groupItems) {
                 continue;
             }
-            const prunedRecords = dim ? records.filter(r => r[dimIndex] == dim.name) : records;
+            let filteredWithDim = dimIndex != xAxisIndex && dimIndex != -1 && dims && dims.length;
+            const prunedRecords = filteredWithDim ? records.filter(r => !!dims.find(dim => dim.name == r[dimIndex])) : records;
             if (prunedRecords.length == 1) {
                 pruned.push(prunedRecords[0]);
             } else if (prunedRecords.length > 1) {
@@ -362,8 +400,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             } else {
                 const row = [];
                 row[xAxisIndex] = xAxisItem;
-                if(dim) {
-                    row[dimIndex] = dim.name;
+                if(filteredWithDim) {
+                    row[dimIndex] = dims[0].name;
                 }
                 this.indicators.forEach(i => row[i.index] = i.defaultValue);
                 pruned.push(row);
@@ -371,18 +409,19 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
 
         const options: EchartOptions = this.template.getInstance();
-        options.xAxis = [
-            CommonUtils.extendObjects<EchartXAxis>({}, this.template.xAxis, this.xAxis.style)
-        ];
-        options.yAxis = [
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis1, this.yAxis1),
-            CommonUtils.extendObjects<EchartYAxis>({}, this.template.yAxis2, this.yAxis2)
-        ];
+        options.xAxis = CommonUtils.extendObjects<EchartXAxis>(options.xAxis, this.xAxis.style, {data: xAxisGroups._$groupItems});
+        if(options.yAxis instanceof Array) {
+            options.yAxis = [
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[0], this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>(options.yAxis[1], this.yAxis2)
+            ];
+        } else {
+            options.yAxis = CommonUtils.extendObjects<EchartYAxis>(options.yAxis, this.yAxis1);
+        }
 
         if (options.legend) {
             options.legend.data = this.indicators.map(kpi => this.header[kpi.index]);
         }
-        options.xAxis[0].data = xAxisGroups._$groupItems;
         options.series = this.indicators
             .map(kpi => ({name: this.header[kpi.index], field: this.field[kpi.index], data: getColumn(pruned, kpi.index)}))
             .map(seriesData => {
@@ -401,6 +440,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['yAxisIndex'] = indicator.yAxisIndex;
                     seriesData['stack'] = indicator.stack;
                     seriesData['barWidth'] = indicator.barWidth;
+                    // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
+                    this._correctDoubleYAxis(indicator, options);
                 }
                 return seriesData;
             });
@@ -440,7 +481,7 @@ export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
         return {
             title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
-            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend)
         };
     }
 
@@ -483,7 +524,8 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public template: ModeledPieTemplate = new BasicModeledPieTemplate();
+    public type: GraphType = 'pie';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: PieSeries[];
     private _options: EchartOptions;
 
@@ -518,7 +560,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'pie'}, this.template.seriesItem);
                 if (dimensions.length > 1) {
                     // 多维度
                     this._mergeLegend(options.legend, dimensions);
@@ -548,7 +590,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesItem.center = seriesData.center.map(r => r + '%');
                 return seriesItem;
             });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -640,7 +682,8 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public template: ModeledPieTemplate = new BasicModeledGaugeTemplate();
+    public type: GraphType = 'gauge';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: GaugeSeries[];
     public title: EchartTitle;
     private _options: EchartOptions;
@@ -673,7 +716,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem, seriesData);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'gauge'}, this.template.seriesItem, seriesData);
 
                 if (dimensions.length > 1) {
                     // 多维度
@@ -715,7 +758,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
 
                 return seriesItem;
             });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -801,7 +844,8 @@ export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
 }
 
 export class ModeledRadarGraphData extends AbstractModeledGraphData {
-    public template: ModeledRadarTemplate = new BasicModeledRadarTemplate();
+    public type: GraphType = 'radar';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public dimensionField: string;
     public usingAllDimensions: boolean = true;
@@ -843,8 +887,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         if (options.legend) {
             options.legend.data = dimensions.map(d => d.name);
         }
-        let radarItem = this.template.radarItem;
-        radarItem.indicator = this.indicators.map((indicator: RadarIndicator) => {
+        let indicator = this.indicators.map((indicator: RadarIndicator) => {
             return {
                 name: indicator.name,
                 max: indicator.max,
@@ -852,9 +895,9 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
                 color: indicator.color
             }
         });
-        options.radar = radarItem;
+        options.radar = CommonUtils.extendObject(options.radar, {indicator: indicator});
 
-        let series = this.template.seriesItem;
+        let series = CommonUtils.extendObjects<EchartSeriesItem>({type: 'radar'}, this.template.seriesItem);
         series.data = dimensions.map((dimension: RadarDimension) => {
             const records = this.data.filter(row => row[dimIndex] == dimension.name);
             const pruned = this.pruneData(records, dimIndex, [dimension], this.indicators)[0];
@@ -865,7 +908,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
             };
         });
         options.series = [series];
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -887,7 +930,7 @@ export abstract class ModeledScatterTemplate extends AbstractModeledGraphTemplat
 export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
     getInstance(): EchartOptions {
         return {
-            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
             tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
             legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
         };
@@ -929,7 +972,8 @@ export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
 }
 
 export class ModeledScatterGraphData extends AbstractModeledGraphData {
-    public template: ModeledRectangularTemplate = new BasicModeledScatterTemplate();
+    public type: GraphType = 'scatter';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: EchartXAxis = {};
     public yAxis: EchartYAxis = {};
@@ -969,15 +1013,15 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             options.legend.data = [];
         }
 
-        options.xAxis = this.xAxis;
-        options.yAxis = this.yAxis;
+        options.xAxis = CommonUtils.extendObject(options.xAxis, this.xAxis);
+        options.yAxis = CommonUtils.extendObject(options.yAxis, this.yAxis);
 
         const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         const dimIndex = this.getIndex(this.dimensionField);
         this._mergeLegend(options.legend, dimensions);
 
         options.series = dimensions.map((dim, idx) => {
-            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
                 .map(row => {
                 return [
@@ -988,7 +1032,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             seriesItem.name = dim.name ? dim.name : 'series' + idx;
             return seriesItem;
         });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
@@ -1070,7 +1114,8 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public template: BasicModeledMapTemplate = new BasicModeledMapTemplate();
+    public type: GraphType = 'map';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: MapSeries[];
     private _options: EchartOptions;
 
@@ -1103,7 +1148,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({}, this.template.seriesItem);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'map'}, this.template.seriesItem);
                 if(!dimensions.length) return {};
 
                 // 多维度单指标
@@ -1134,7 +1179,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
 
                 return seriesItem;
             });
-
+        CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
 
