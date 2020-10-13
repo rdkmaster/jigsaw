@@ -123,6 +123,7 @@ export class Dimension {
     public name?: string;
     public yAxisIndex?: 0 | 1 = 0;
     public stack?: string;
+    public color?: string;
     public shade?: 'bar' | 'line' | 'area' = 'bar';
     public barWidth?: any;
 
@@ -137,6 +138,7 @@ export class Indicator {
     public index?: number = -1;
     public yAxisIndex?: 0 | 1 = 0;
     public stack?: string = undefined;
+    public color?: string;
     public shade?: 'bar' | 'line' | 'area' = 'bar';
     public defaultValue?: number = 0;
     public aggregateBy?: AggregateAlgorithm = 'sum';
@@ -328,6 +330,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     }
                     seriesData['yAxisIndex'] = dim.yAxisIndex;
                     seriesData['stack'] = dim.stack;
+                    seriesData['color'] = dim.color;
                     seriesData['barWidth'] = dim.barWidth;
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
@@ -439,6 +442,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     }
                     seriesData['yAxisIndex'] = indicator.yAxisIndex;
                     seriesData['stack'] = indicator.stack;
+                    seriesData['color'] = indicator.color;
                     seriesData['barWidth'] = indicator.barWidth;
                     // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(indicator, options);

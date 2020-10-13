@@ -92,7 +92,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     }
 
     public set value(newValue: string) {
-        if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
+        newValue = CommonUtils.isUndefined(newValue) ? '' : newValue;
+        if (this._value === newValue) {
             return;
         }
         this._value = newValue;
