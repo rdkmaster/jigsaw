@@ -36,15 +36,15 @@ const defaultOpen = 'src/app/demo.component.html';
                 </p>
             </div>
             <div class="source-content">
-                <j-box [resizable]="true" height="100%">
-                    <j-box class="box-content">
+                <div style="overflow:hidden; height:100%">
+                    <div class="box-content" style="width: 300px;">
                         <jigsaw-tree-ext #tree [data]="fileTree" [setting]="setting">
                         </jigsaw-tree-ext>
-                    </j-box>
-                    <j-box grow="3" class="box-content">
+                    </div>
+                    <div grow="3" class="box-content" style="width: calc(100vw - 316px);">
                         <div #source style="width:100%; height:100%"></div>
-                    </j-box>
-                </j-box>
+                    </div>
+                </div>
             </div>
         </div>
     `,
@@ -103,8 +103,9 @@ const defaultOpen = 'src/app/demo.component.html';
         }
 
         .box-content {
-            /*这边的样式用来给resize line留位置，让resize line看上去像是在两个box中间*/
             height: 100%;
+            display: inline-block;
+            vertical-align: top;
         }
 
         .ztree li a {
