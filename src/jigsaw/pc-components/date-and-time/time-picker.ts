@@ -639,7 +639,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (!newValue || newValue == this._value) return;
         this._value = newValue;
         this.valueChange.emit(newValue);
-        this._propagateChange();
+        this._propagateChange(this._value);
     }
 
     private _propagateChange: any = () => {
