@@ -206,7 +206,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         this._date = date;
         this.dateChange.emit(date);
         this._$setComboValue(<string | TimeWeekDay>date);
-        this._propagateChange();
+        this._propagateChange(this._date);
     }
 
     private _changeDateByGr() {

@@ -392,7 +392,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         if (this._isDateSame(date, this._date)) return;
         this._date = date;
         this.dateChange.emit(date);
-        this._propagateChange();
+        this._propagateChange(this._date);
     }
 
     private _propagateChange: any = () => {

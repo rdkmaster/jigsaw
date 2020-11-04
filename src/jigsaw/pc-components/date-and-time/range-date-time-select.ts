@@ -223,7 +223,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     public writeValue(date: RangeDate): void {
         this._date = date;
         this.dateChange.emit(date);
-        this._propagateChange();
+        this._propagateChange(this._date);
     }
 
     private _changeRangeDateByGr() {

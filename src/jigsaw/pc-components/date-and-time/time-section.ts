@@ -696,6 +696,7 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     public writeValue(value: any): void {
         this._value = value;
         this.valueChange.emit(value);
+        this._propagateChange(this._value);
     }
 
     ngOnDestroy() {
