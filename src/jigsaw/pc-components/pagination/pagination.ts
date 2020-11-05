@@ -237,8 +237,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public set pageSize(newValue: number) {
         newValue = newValue ? newValue : 10;
         if (this.pageSize != newValue) {
-            this._$pageSize.value = newValue;
-            this._$pageSize.label = newValue + '/' + this._translateService.instant('pagination.page');
+            this._$pageSize = {
+                value: newValue,
+                label: newValue + '/' + this._translateService.instant('pagination.page')
+            };
             this.pageSizeChange.emit(newValue);
             if (this.data.pagingInfo.pageSize != newValue) {
                 // pagingInfo.pageSize采用的getter&setter，不可随便赋值
