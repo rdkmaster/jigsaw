@@ -2,8 +2,7 @@ import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class ListLiteWithIconDemoComponent {
     goodsList: GroupOptionValue[] = [
