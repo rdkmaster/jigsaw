@@ -4,6 +4,7 @@
  * Entry point for all public APIs of Jigsaw.
  */
 export * from "./common/common";
+export * from "./common/components/animations/index";
 export * from "./common/components/block/block";
 export * from "./common/components/loading/loading";
 export * from "./common/components/scrollbar/index";
