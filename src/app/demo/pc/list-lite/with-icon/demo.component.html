@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <h2>List lite</h2>
+
+    <div class="live-demo">
+        <h3>带有图标的选项</h3>
+        <span>显示主图标</span>
+        <jigsaw-switch #mainIcon [checked]="true" (checkedChange)="list.data = fixData(mainIcon.checked, suffixIcon.checked)">
+        </jigsaw-switch>
+        <br><br>
+        <span>显示副图标</span>
+        <jigsaw-switch #suffixIcon [checked]="true" (checkedChange)="list.data = fixData(mainIcon.checked, suffixIcon.checked)">
+        </jigsaw-switch>
+        <br><br>
+        <j-list-lite #list width="200" [data]="withIcon" labelField="name"></j-list-lite>
+    </div>
+
+</div>
+
