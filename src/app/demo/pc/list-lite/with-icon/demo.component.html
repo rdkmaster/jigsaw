@@ -9,7 +9,15 @@
 
     <div class="live-demo">
         <h3>带有图标的选项</h3>
-        <j-list-lite width="200" [data]="goodsList" labelField="name"></j-list-lite>
+        <span>显示主图标</span>
+        <jigsaw-switch #mainIcon [checked]="true" (checkedChange)="list.data = fixData(mainIcon.checked, suffixIcon.checked)">
+        </jigsaw-switch>
+        <br><br>
+        <span>显示副图标</span>
+        <jigsaw-switch #suffixIcon [checked]="true" (checkedChange)="list.data = fixData(mainIcon.checked, suffixIcon.checked)">
+        </jigsaw-switch>
+        <br><br>
+        <j-list-lite #list width="200" [data]="withIcon" labelField="name"></j-list-lite>
     </div>
 
 </div>

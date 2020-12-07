@@ -5,7 +5,7 @@ import {GroupOptionValue} from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class ListLiteWithIconDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    withIcon: GroupOptionValue[] = [
         {
             icon: 'fa fa-bicycle',
             name: 'bicycle',
@@ -37,6 +37,14 @@ export class ListLiteWithIconDemoComponent {
             suffixIcon: 'fa fa-search'
         },
     ];
+
+    public fixData(useIcon: boolean, useSuffixIcon: boolean): GroupOptionValue[] {
+        return this.withIcon.map(item => ({
+                name: item.name, icon: useIcon ? item.icon : null,
+                suffixIcon: useSuffixIcon ? item.suffixIcon : null
+            }
+        ));
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
