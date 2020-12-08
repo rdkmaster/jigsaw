@@ -246,6 +246,9 @@ export const lightGraphTheme = {
                 type: 'solid'
             }
         },
+        nameTextStyle: {
+            color: '#ccc'
+        },
         axisTick: { // 坐标轴小标记
             show: false, // 属性show控制显示与否，默认不显示
             inside: false, // 控制小标记是否在grid里
