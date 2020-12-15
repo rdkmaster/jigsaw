@@ -177,6 +177,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
      */
     public _$showOverflowButton: boolean = false;
 
+    @ViewChild('tabBar')
+    protected _tabBar: JigsawTabBar;
+
     protected _tabLeftMap: Map<number, number> = new Map<number, number>();
 
     @ViewChildren(JigsawTabLabel)
@@ -208,7 +211,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
 
     // 将有纵向切换的封装.
     protected _getLabelOffsetByKey(key: number): any {
-        let currentLabel = this._tabLabels.find(item => item.key === key);
+        let currentLabel = this.tabLabels.find(item => item.key === key);
 
         if (currentLabel) {
             return {
@@ -221,12 +224,12 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     protected _createTabList() {
-        if (this._$headless || !this._tabsNavWrap) {
+        if (this._$headless || !this.tabsNavWrap) {
             return;
         }
         this._$tabList = [];
         this._tabLeftMap.clear();
-        this._tabLabels.forEach((label: JigsawTabLabel, index) => {
+        this.tabLabels.forEach((label: JigsawTabLabel, index) => {
             let title = "";
             let rootNodes = label._tabItemRef ? (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes : null;
             if (rootNodes) {
@@ -241,7 +244,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
                 title = label.tabItem;
             }
             this._$tabList.push(title.trim());
-            let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
+            let distance = label.getOffsetLeft() + label.getOffsetWidth() - this.tabsNavWrap.nativeElement.offsetWidth;
             this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
         });
         this._updateOverflowButton();
@@ -259,7 +262,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     private _setInkBarStyle(index: number) {
-        if (!this._tabsInkBar || this._tabLabels.length == 0) return;
+        if (!this.tabsInkBar || this.tabLabels.length == 0) return;
 
         let labelPos = this._getLabelOffsetByKey(index);
         if (!labelPos) {
@@ -275,8 +278,8 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     private _updateOverflowButton() {
-        if (!this._tabsNav || !this._tabsNavWrap) return;
-        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth;
+        if (!this.tabsNav || !this.tabsNavWrap) return;
+        this._$showOverflowButton = this.tabsNavWrap.nativeElement.offsetWidth < this.tabsNav.nativeElement.offsetWidth;
         this._changeDetector.detectChanges();
     }
 
@@ -288,7 +291,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
 
     ngAfterViewInit() {
         this._createTabList();
-        this._tabLabelsChangeHandler = this._tabLabels.changes.subscribe(() => this._createTabList());
+        this._tabLabelsChangeHandler = this.tabLabels.changes.subscribe(() => this._createTabList());
         if (this.selectedIndex != null) {
             this._handleSelectChange(this.selectedIndex)
         } else {
@@ -306,14 +309,14 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
 
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
-        if (!this._tabsInkBar || this._tabLabels.length == 0) return;
+        if (!this.tabsInkBar || this.tabLabels.length == 0) return;
         this._createTabList();
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
         if (!labelPos) {
             return;
         }
 
-        const tabElem = this._tabsInkBar.nativeElement;
+        const tabElem = this.tabsInkBar.nativeElement;
         if (tabElem.offsetWidth != labelPos.width) {
             this._asyncSetStyle(this.selectedIndex);
         } else {
@@ -326,6 +329,23 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
                 this._asyncSetStyle(this.selectedIndex);
             }
         }
+    }
+
+    // 这几个属性，在tab里面是不存在的，只存在于tab-bar中，所以要根据tab-bar的实例来获取
+    private get tabsInkBar(): ElementRef {
+        return this._tabBar ? this._tabBar._tabsInkBar : this._tabsInkBar;
+    }
+
+    private get tabsNavWrap(): ElementRef {
+        return this._tabBar ? this._tabBar._tabsNavWrap : this._tabsNavWrap;
+    }
+
+    private get tabsNav(): ElementRef {
+        return this._tabBar ? this._tabBar._tabsNav : this._tabsNav;
+    }
+
+    protected get tabLabels(): QueryList<JigsawTabLabel> {
+        return this._tabBar ? this._tabBar._tabLabels : this._tabLabels;
     }
 
     @HostListener('window:resize')
@@ -531,7 +551,7 @@ export class JigsawTab extends JigsawTabBase {
 
         //router link
         this.runMicrotask(() => {
-            const label = this._tabLabels.find(item => item.key === this.selectedIndex);
+            const label = this.tabLabels.find(item => item.key === this.selectedIndex);
             if (!label) {
                 return;
             }

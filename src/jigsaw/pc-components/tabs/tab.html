@@ -1,5 +1,5 @@
 <div class="jigsaw-tabs" [class.jigsaw-tabs-vertical-response]="!!height">
-    <jigsaw-tab-bar *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless"
+    <jigsaw-tab-bar #tabBar *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless"
                     (remove)="_$handleRemove($event)" (add)="_$handleAdd()"
                     [(data)]="_$tabPanes" [editable]="editable" [(selectedIndex)]="selectedIndex"></jigsaw-tab-bar>
     <div class="jigsaw-tabs-content">
