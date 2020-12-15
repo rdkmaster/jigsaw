@@ -1,21 +1,21 @@
 import {
-    Component,
-    Input,
-    ViewContainerRef,
-    TemplateRef,
-    ViewChild,
-    ElementRef,
     AfterViewInit,
-    EmbeddedViewRef,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Type,
+    Component,
     ComponentFactoryResolver,
     ComponentRef,
+    Directive,
+    ElementRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    Input,
     OnDestroy,
     Output,
-    EventEmitter,
-    Directive,
-    ChangeDetectionStrategy
+    TemplateRef,
+    Type,
+    ViewChild,
+    ViewContainerRef
 } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 
@@ -28,7 +28,7 @@ export class TabTitleInfo {
 }
 
 @Directive()
-export abstract class JigsawTabBase extends AbstractJigsawComponent implements OnDestroy {
+export abstract class JigsawTabItemBase extends AbstractJigsawComponent implements OnDestroy {
 
     constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
         super()
@@ -97,12 +97,17 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
 @Component({
     selector: 'jigsaw-tab-label',
     template: `
+        <div *ngIf="_$isTabBar(); else body">
+            <span *ngIf="preIcon" [ngClass]="preIcon"></span>
+            <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
+            <span *ngIf="icon" [ngClass]="icon"></span>
+        </div>
         <ng-template #body></ng-template>
         <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">&times;</span>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
+export class JigsawTabLabel extends JigsawTabItemBase implements AfterViewInit {
 
     constructor(public elementRef: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
@@ -115,6 +120,24 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
      */
     @Input()
     public editable: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public preIcon: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public htmlContext: any;
 
     @Output()
     public remove = new EventEmitter<number>();
@@ -146,9 +169,14 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this._insert()
+        if (!this._$isTabBar()) {
+            this._insert();
+        }
     }
 
+    public _$isTabBar(): boolean {
+        return typeof this.tabItem == 'string';
+    }
 }
 
 /**
@@ -166,7 +194,7 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
+export class JigsawTabContent extends JigsawTabItemBase implements AfterViewInit {
 
     constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
         super(_changeDetector, _componentFactory)

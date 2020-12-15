@@ -1,14 +1,17 @@
 import {
     AfterViewChecked,
     AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
     ContentChildren,
+    Directive,
     ElementRef,
     EmbeddedViewRef,
     EventEmitter,
     HostListener,
+    Injector,
     Input,
     Output,
     QueryList,
@@ -16,9 +19,7 @@ import {
     Type,
     ViewChild,
     ViewChildren,
-    ViewContainerRef,
-    ChangeDetectionStrategy,
-    Injector
+    ViewContainerRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
@@ -26,141 +27,22 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/comm
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-/**
- * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
- * `JigsawTab`提供了多个api用于动态创建、销毁、隐藏tab页，
- * 这些是利用`JigsawTab`实现复杂、交互密集的视图的有力工具。
- *
- * 如果需要动态增减的视图内容形式比较单一，也可以通过`ng-for`来实现tab动态化，
- * 参考[这个demo]($demo=tab/with-ngfor)。
- *
- * $demo = tab/basic
- * $demo = tab/update-title
- * $demo = tab/with-input
- */
-@Component({
-    selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
-    templateUrl: 'tab.html',
-    host: {
-        '[class.jigsaw-tabs-host]': 'true',
-        '[style.width]': 'width',
-        '[style.height]': 'height'
-    },
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
+export type TabBarData = {
+    label?: string,      // 字符串标题
+    html?: string,       // 支持包含简单标签的HTML片段
+    htmlContext?: any,  // 当配置了HTML内容时，搭配该属性，可以指定HTML运行的上下文
+    disabled?: boolean,
+    hidden?: boolean,
+    icon?: string,
+    preIcon?: string,
+}
 
-    constructor(private _cfr: ComponentFactoryResolver,
-                private _changeDetector: ChangeDetectorRef,
-                private _viewContainer: ViewContainerRef,
+@Directive()
+export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
+    constructor(protected _changeDetector: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+                protected _injector: Injector) {
         super();
-    }
-
-    /**
-     * @internal
-     */
-    @ContentChildren(JigsawTabPane)
-    public _$tabPanes: QueryList<JigsawTabPane>;
-
-    @ViewChildren(JigsawTabLabel)
-    private _tabLabels: QueryList<JigsawTabLabel>;
-
-    /**
-     * @internal
-     */
-    @ViewChildren(JigsawTabContent)
-    public _tabContents: QueryList<JigsawTabContent>;
-
-    /**
-     * 当所选的tab页发生变化时发出此事件，事件携带的是被选中的tab页实例，
-     * 如果需要索引值，请使用`selectedIndexChange`事件。
-     *
-     */
-    @Output()
-    public selectChange = new EventEmitter<JigsawTabPane>();
-
-    /**
-     * 删除tab时，发出事件，携带删除的tab索引值
-     *
-     * $demo = tab/editable
-     *
-     */
-    @Output()
-    public remove = new EventEmitter<number>();
-
-    /**
-     * 发送add事件，携带tabs的实例
-     *
-     * $demo = tab/editable
-     *
-     */
-    @Output()
-    public add = new EventEmitter<JigsawTab>();
-
-    /**
-     * 改变tab标题时发送此事件，事件携带一个`TabTitleInfo`类型的数据。
-     *
-     *
-     */
-    @Output()
-    public titleChange = new EventEmitter<TabTitleInfo>();
-
-    @ViewChild('tabsInkBar')
-    private _tabsInkBar: ElementRef;
-
-    /**
-     * 控制tab显示添加和删除按钮
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = tab/editable
-     */
-    @Input()
-    public editable: boolean;
-
-    /**
-     * @internal
-     */
-    public _$headless: boolean = false;
-
-    /**
-     * 控制tab头部是否显示
-     *
-     * $demo = tab/headless
-     */
-    @Input()
-    @RequireMarkForCheck()
-    public get headless(): boolean {
-        return this._$headless;
-    }
-
-    public set headless(value: boolean) {
-        if (this._$headless == value) {
-            return;
-        }
-        this._$headless = value;
-    }
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public enableAnimation: boolean = true;
-
-    /**
-     * 当前的tab页数量，包含被隐藏的tab页
-     */
-    public length: number;
-
-    /**
-     * tab页点击
-     * @internal
-     */
-    public _$tabClick(index) {
-        this.selectedIndex = index;
-        this._updateTitlePosition(index);
     }
 
     /**
@@ -190,25 +72,191 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
     }
 
     /**
+     * @internal
+     */
+    public _$headless: boolean = false;
+
+    /**
+     * 控制tab头部是否显示
+     *
+     * $demo = tab/headless
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public get headless(): boolean {
+        return this._$headless;
+    }
+
+    public set headless(value: boolean) {
+        if (this._$headless == value) {
+            return;
+        }
+        this._$headless = value;
+    }
+
+    public _$tabPanes: TabBarData[] | QueryList<JigsawTabPane> = [];
+
+    @Input()
+    @RequireMarkForCheck()
+    public get data(): any[] {
+        return this._$tabPanes instanceof QueryList ? this._$tabPanes.toArray() : this._$tabPanes;
+    }
+
+    public set data(value: any[]) {
+        if (this._$tabPanes == value) {
+            return;
+        }
+        this._$tabPanes = value;
+    }
+
+    /**
+     * 控制tab显示添加和删除按钮
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = tab/editable
+     */
+    @Input()
+    public editable: boolean;
+
+    /**
+     * 当所选的tab页发生变化时发出此事件，事件携带的是被选中的tab页实例，
+     * 如果需要索引值，请使用`selectedIndexChange`事件。
+     */
+    @Output()
+    public selectChange = new EventEmitter<JigsawTabPane | TabBarData>();
+
+    /**
      * 当前选中的tab页编号发生变化时，发出此事件。
      * 事件携带的是索引值，如果需要获取更多信息，请参考`selectChange`事件。
-     *
-     *
      */
     @Output()
     public selectedIndexChange = new EventEmitter<number>();
 
-    private _handleSelectChange(index) {
+    /**
+     * 删除tab时，发出事件，携带删除的tab索引值
+     *
+     * $demo = tab/editable
+     *
+     */
+    @Output()
+    public remove = new EventEmitter<number>();
+
+    /**
+     * 发送add事件，携带tabs的实例
+     *
+     * $demo = tab/editable
+     *
+     */
+    @Output()
+    public add = new EventEmitter<JigsawTab>();
+
+    /**
+     * 改变tab标题时发送此事件，事件携带一个`TabTitleInfo`类型的数据。
+     */
+    @Output()
+    public titleChange = new EventEmitter<TabTitleInfo>();
+
+    /**
+     * @internal
+     */
+    public _$selectTabStyle: object = {};
+
+    /**
+     * @internal
+     */
+    public _$inkBarStyle: object = {};
+
+    /**
+     * @internal
+     */
+    public _$tabList = [];
+
+    /**
+     * @internal
+     */
+    public _$showOverflowButton: boolean = false;
+
+    protected _tabLeftMap: Map<number, number> = new Map<number, number>();
+
+    @ViewChildren(JigsawTabLabel)
+    protected _tabLabels: QueryList<JigsawTabLabel>;
+
+    @ViewChild('tabsInkBar')
+    protected _tabsInkBar: ElementRef;
+
+    @ViewChild('tabsNavWrap')
+    private _tabsNavWrap: ElementRef;
+
+    @ViewChild('tabsNav')
+    private _tabsNav: ElementRef;
+
+    protected _handleSelectChange(index) {
         this.selectChange.emit(this._getTabPaneByIndex(index));
         this.selectedIndexChange.emit(index);
 
         this._asyncSetStyle(index);
     }
 
-    /**
-     * @internal
-     */
-    public _$inkBarStyle: object = {};
+    protected _getTabPaneByIndex(key): JigsawTabPane | TabBarData {
+        return this._$tabPanes.find((item, index) => index === key);
+    }
+
+    protected _asyncSetStyle(index: number): void {
+        this.runMicrotask(() => this._setInkBarStyle(index));
+    }
+
+    // 将有纵向切换的封装.
+    protected _getLabelOffsetByKey(key: number): any {
+        let currentLabel = this._tabLabels.find(item => item.key === key);
+
+        if (currentLabel) {
+            return {
+                offSet: currentLabel.getOffsetLeft(),
+                width: currentLabel.getOffsetWidth()
+            }
+        } else {
+            return null;
+        }
+    }
+
+    protected _createTabList() {
+        if (this._$headless || !this._tabsNavWrap) {
+            return;
+        }
+        this._$tabList = [];
+        this._tabLeftMap.clear();
+        this._tabLabels.forEach((label: JigsawTabLabel, index) => {
+            let title = "";
+            let rootNodes = label._tabItemRef ? (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes : null;
+            if (rootNodes) {
+                for (let i = 0; i < rootNodes.length; i++) {
+                    if (rootNodes[i] instanceof HTMLElement) {
+                        title += " " + rootNodes[i].outerHTML;
+                    } else {
+                        title += " " + rootNodes[i].textContent.trim();
+                    }
+                }
+            } else if (typeof label.tabItem == 'string') {
+                title = label.tabItem;
+            }
+            this._$tabList.push(title.trim());
+            let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
+            this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
+        });
+        this._updateOverflowButton();
+        this._updateTitlePosition(this.selectedIndex);
+    }
+
+    protected _updateTitlePosition(index) {
+        this._$selectTabStyle = {
+            "left": this._tabLeftMap.get(index) + "px"
+        };
+    }
+
+    protected _autoSelect() {
+        this.selectedIndex = this.data.findIndex(tabPane => !tabPane.disabled && !tabPane.hidden);
+    }
 
     private _setInkBarStyle(index: number) {
         if (!this._tabsInkBar || this._tabLabels.length == 0) return;
@@ -223,53 +271,19 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             'transform': 'translate3d(' + (labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
         };
+        this._changeDetector.markForCheck();
     }
 
-    // 将有纵向切换的封装.
-    private _getLabelOffsetByKey(key: number): any {
-        let currentLabel = this._tabLabels.find(item => item.key === key);
-
-        if (currentLabel) {
-            return {
-                offSet: currentLabel.getOffsetLeft(),
-                width: currentLabel.getOffsetWidth()
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private _getTabPaneByIndex(key): JigsawTabPane {
-        return this._$tabPanes.find((item, index) => index === key);
-    }
-
-    private _autoSelect() {
-        this.selectedIndex = this._$tabPanes.toArray().findIndex(tabPane => !tabPane.disabled && !tabPane.hidden);
-    }
-
-    private _asyncSetStyle(index: number): void {
-        this.runMicrotask(() => this._setInkBarStyle(index));
+    private _updateOverflowButton() {
+        if (!this._tabsNav || !this._tabsNavWrap) return;
+        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth;
+        this._changeDetector.detectChanges();
     }
 
     /**
-     * @internal
+     * 当前的tab页数量，包含被隐藏的tab页
      */
-    public _$handleAdd() {
-        this.add.emit(this);
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleRemove(index) {
-        this.removeTab(index);
-        this.remove.emit(index);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-    }
-
+    public length: number;
     private _tabLabelsChangeHandler: Subscription;
 
     ngAfterViewInit() {
@@ -312,6 +326,81 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
                 this._asyncSetStyle(this.selectedIndex);
             }
         }
+    }
+
+    @HostListener('window:resize')
+    onResize() {
+        this._createTabList();
+    }
+}
+
+/**
+ * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
+ * `JigsawTab`提供了多个api用于动态创建、销毁、隐藏tab页，
+ * 这些是利用`JigsawTab`实现复杂、交互密集的视图的有力工具。
+ *
+ * 如果需要动态增减的视图内容形式比较单一，也可以通过`ng-for`来实现tab动态化，
+ * 参考[这个demo]($demo=tab/with-ngfor)。
+ *
+ * $demo = tab/basic
+ * $demo = tab/update-title
+ * $demo = tab/with-input
+ */
+@Component({
+    selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
+    templateUrl: 'tab.html',
+    host: {
+        '[class.jigsaw-tabs-host]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawTab extends JigsawTabBase {
+
+    constructor(private _cfr: ComponentFactoryResolver,
+                protected _changeDetector: ChangeDetectorRef,
+                private _viewContainer: ViewContainerRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_changeDetector, _injector);
+    }
+
+    /**
+     * @internal
+     */
+    @ContentChildren(JigsawTabPane)
+    public _$tabPanes: QueryList<JigsawTabPane>;
+
+    /**
+     * @internal
+     */
+    @ViewChildren(JigsawTabContent)
+    public _tabContents: QueryList<JigsawTabContent>;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public enableAnimation: boolean = true;
+
+    /**
+     * @internal
+     */
+    public _$handleAdd() {
+        this.add.emit(this);
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleRemove(index) {
+        this.removeTab(index);
+        this.remove.emit(index);
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
     }
 
     /**
@@ -473,6 +562,7 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
 
         // 重新修改queryList. 不确定这么做有没有什么隐患.
         this._$tabPanes.reset(tabTemp);
+        this._changeDetector.markForCheck();
         this.length = this._$tabPanes.length;
         if (this.selectedIndex == index) {
             this._handleSelect()
@@ -499,79 +589,57 @@ export class JigsawTab extends AbstractJigsawComponent implements AfterViewInit,
             this._asyncSetStyle(this.selectedIndex);
         }
     }
+}
+
+@Component({
+    selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
+    templateUrl: 'tab-bar.html',
+    host: {
+        '[class.jigsaw-tabs]': 'true',
+        '[class.jigsaw-tabs-host]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawTabBar extends JigsawTabBase {
+
+    constructor(private _cfr: ComponentFactoryResolver,
+                protected _changeDetector: ChangeDetectorRef,
+                private _viewContainer: ViewContainerRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_changeDetector, _injector);
+    }
+
+    /**
+     * tab页点击
+     * @internal
+     */
+    public _$tabClick(index) {
+        this.selectedIndex = index;
+        this._updateTitlePosition(index);
+    }
 
     /**
      * @internal
      */
-    public _$showOverflowButton: boolean = false;
+    public _$handleAdd() {
+        this.add.emit();
+    }
 
     /**
      * @internal
      */
-    public _$selectTabStyle: object = {};
+    public _$handleRemove(index) {
+        this.remove.emit(index);
+    }
 
     /**
      * @internal
      */
     public _$listOptionClick(index) {
-        if (this._$tabPanes.toArray()[index].disabled) return;
+        if (this.data[index].disabled) return;
         this.selectedIndex = index;
-    }
-
-
-    /**
-     * @internal
-     */
-    public _$tabList = [];
-
-    private _tabLeftMap: Map<number, number> = new Map<number, number>();
-
-    private _createTabList() {
-        if (this._$headless || !this._tabsNavWrap) {
-            return;
-        }
-        this._$tabList = [];
-        this._tabLeftMap.clear();
-        this._tabLabels.forEach((label: JigsawTabLabel, index) => {
-            let title = "";
-            let rootNodes = (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes;
-            if (rootNodes) {
-                for (let i = 0; i < rootNodes.length; i++) {
-                    if (rootNodes[i] instanceof HTMLElement) {
-                        title += " " + rootNodes[i].outerHTML;
-                    } else {
-                        title += " " + rootNodes[i].textContent.trim();
-                    }
-                }
-            }
-            this._$tabList.push(title.trim());
-            let distance = label.getOffsetLeft() + label.getOffsetWidth() - this._tabsNavWrap.nativeElement.offsetWidth;
-            this._tabLeftMap.set(index, distance > 0 ? (0 - distance) : 0);
-        });
-        this._updateOverflowButton();
-        this._updateTitlePosition(this.selectedIndex);
-    }
-
-    private _updateTitlePosition(index) {
-        this._$selectTabStyle = {
-            "left": this._tabLeftMap.get(index) + "px"
-        };
-    }
-
-    @ViewChild('tabsNavWrap')
-    private _tabsNavWrap: ElementRef;
-
-    @ViewChild('tabsNav')
-    private _tabsNav: ElementRef;
-
-    private _updateOverflowButton() {
-        if (!this._tabsNav || !this._tabsNavWrap) return;
-        this._$showOverflowButton = this._tabsNavWrap.nativeElement.offsetWidth < this._tabsNav.nativeElement.offsetWidth;
-        this._changeDetector.detectChanges();
-    }
-
-    @HostListener('window:resize')
-    onResize() {
-        this._createTabList();
     }
 }
