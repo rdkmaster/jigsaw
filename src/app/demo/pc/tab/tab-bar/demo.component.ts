@@ -7,8 +7,8 @@ import {JigsawMenu, LineGraphData, SimpleTreeData, TabBarData, TableData} from "
     styleUrls: ['./demo.component.css']
 })
 export class JigsawTabBarComponent implements OnInit {
-    tabBarDatas: Array<string>;
-    tabBarDatas2: TabBarData[];
+    tabBarData: Array<string>;
+    tabBarData2: TabBarData[];
     headless: boolean = true;
     selectedIndex = 0;
 
@@ -44,25 +44,31 @@ export class JigsawTabBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.tabBarDatas = ["Tab 1", "Tab 2", `<div><span class="fa fa-bicycle"></span>Tab 3</div>`, "Tab 4"];
-        this.tabBarDatas2 = [{
-            label: "Tab 1",
-            icon: 'fa fa-edit'
-        }, {
-            label: "Tab 2",
-            disabled: true
-        }, {
-            html: `<div><span class="fa fa-bicycle"></span>Tab 3</div>`
-        }, {
-            html: `
-                <span>更多</span>
-                <span (click)="_$more()" class="tab-icon-more fa fa-ellipsis-v"></span>
-            `,
-            htmlContext: this
-        }, {
-            label: "Tab 5",
-            hidden: true
-        }]
+        this.tabBarData = ["Tab 1", "Tab 2", `<div><span class="fa fa-bicycle"></span>Tab 3</div>`, "Tab 4"];
+        this.tabBarData2 = [
+            {
+                label: "Tab 1",
+                icon: 'fa fa-edit'
+            },
+            {
+                label: "Tab 2",
+                disabled: true
+            },
+            {
+                html: `<div><span class="fa fa-bicycle"></span>Tab 3</div>`
+            },
+            {
+                html: `
+                    <span>更多</span>
+                    <span (click)="_$more()" class="tab-icon-more fa fa-ellipsis-v"></span>
+                `,
+                htmlContext: this
+            },
+            {
+                label: "Tab 5",
+                hidden: true
+            }
+        ];
     }
 
     public _$more() {
@@ -72,12 +78,12 @@ export class JigsawTabBarComponent implements OnInit {
     }
 
     menuSelect(node: SimpleTreeData) {
-        console.log(`${node.label} 被点击了!!!`);
+        alert(`${node.label} 被点击了!!!`);
     }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = 'Jigsaw的Tab页签可以脱离tab容器，独立出来使用，这个demo演示了这个功能。';
     description: string = '';
 }

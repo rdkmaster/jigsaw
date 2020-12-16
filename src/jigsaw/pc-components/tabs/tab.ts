@@ -39,9 +39,9 @@ export type TabBarData = {
 
 @Directive()
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
-    constructor(protected _changeDetector: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+    protected constructor(protected _changeDetector: ChangeDetectorRef,
+                          // @RequireMarkForCheck 需要用到，勿删
+                          protected _injector: Injector) {
         super();
     }
 

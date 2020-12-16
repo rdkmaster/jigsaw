@@ -6,17 +6,13 @@
     <div class="items">
         <span>tab bar 简单数组</span>
     </div>
-    <div class="tabs-box">
-        <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarDatas"></jigsaw-tabs-bar>
-    </div>
+    <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData"></jigsaw-tabs-bar>
 </div>
 <div class="container">
     <div class="items">
         <span>tab bar 对象数组</span>
     </div>
-    <div class="tabs-box">
-        <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarDatas2"></jigsaw-tabs-bar>
-    </div>
+    <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData2"></jigsaw-tabs-bar>
 </div>
 
 <div class="container">
@@ -27,20 +23,20 @@
     <div class="tabs-box">
         <jigsaw-tabs [headless]="headless" [(selectedIndex)]="selectedIndex">
             <jigsaw-tab-pane title="Tab 1">
-                <ng-template>This is the body of the first tab</ng-template>
+                <ng-template>
+                    <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
+                </ng-template>
             </jigsaw-tab-pane>
             <jigsaw-tab-pane title="Tab 2">
                 <ng-template>This is the body of the second tab</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="Tab 3">
+                <ng-template>This is the body of the third tab</ng-template>
             </jigsaw-tab-pane>
             <jigsaw-tab-pane>
                 <div jigsaw-title><span class="fa fa-bicycle"></span>Tab 3</div>
                 <ng-template>
                     <jigsaw-table [data]="fruitList"></jigsaw-table>
-                </ng-template>
-            </jigsaw-tab-pane>
-            <jigsaw-tab-pane title="Tab 4">
-                <ng-template>
-                    <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
                 </ng-template>
             </jigsaw-tab-pane>
         </jigsaw-tabs>
