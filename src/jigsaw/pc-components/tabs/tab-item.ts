@@ -98,9 +98,8 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
     selector: 'jigsaw-tab-label',
     template: `
         <div *ngIf="_$isTabBar(); else body">
-            <span *ngIf="preIcon" [ngClass]="preIcon"></span>
-            <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
             <span *ngIf="icon" [ngClass]="icon"></span>
+            <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
         </div>
         <ng-template #body></ng-template>
         <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">&times;</span>
@@ -126,12 +125,6 @@ export class JigsawTabLabel extends JigsawTabItemBase implements AfterViewInit {
      */
     @Input()
     public icon: string;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public preIcon: string;
 
     /**
      * @NoMarkForCheckRequired

@@ -28,13 +28,24 @@ import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type TabBarData = {
-    label?: string,      // 字符串标题
-    html?: string,       // 支持包含简单标签的HTML片段
-    htmlContext?: any,  // 当配置了HTML内容时，搭配该属性，可以指定HTML运行的上下文
+    /**
+     * 字符串类型的标题
+     */
+    label?: string,
+    /**
+     * 支持包含简单标签的HTML片段
+     */
+    html?: string,
+    /**
+     * 当配置了HTML内容时，搭配该属性，可以指定HTML运行的上下文
+     */
+    htmlContext?: any,
     disabled?: boolean,
     hidden?: boolean,
+    /**
+     * 显示在文本前面的图标
+     */
     icon?: string,
-    preIcon?: string,
 }
 
 @Directive()
@@ -177,22 +188,43 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
      */
     public _$showOverflowButton: boolean = false;
 
-    @ViewChild('tabBar')
-    protected _tabBar: JigsawTabBar;
-
     protected _tabLeftMap: Map<number, number> = new Map<number, number>();
 
+    /**
+     * 在tab中需要通过tab-bar实例获取，这里要定义成public
+     * @internal
+     */
     @ViewChildren(JigsawTabLabel)
-    protected _tabLabels: QueryList<JigsawTabLabel>;
+    public _tabLabels: QueryList<JigsawTabLabel>;
 
+    /**
+     * 在tab中需要通过tab-bar实例获取，这里要定义成public
+     * @internal
+     */
     @ViewChild('tabsInkBar')
-    protected _tabsInkBar: ElementRef;
+    public _tabsInkBar: ElementRef;
 
+    /**
+     * 在tab中需要通过tab-bar实例获取，这里要定义成public
+     * @internal
+     */
     @ViewChild('tabsNavWrap')
-    private _tabsNavWrap: ElementRef;
+    public _tabsNavWrap: ElementRef;
 
+    /**
+     * 在tab中需要通过tab-bar实例获取，这里要定义成public
+     * @internal
+     */
     @ViewChild('tabsNav')
-    private _tabsNav: ElementRef;
+    public _tabsNav: ElementRef;
+
+    protected abstract get tabsInkBar(): ElementRef;
+
+    protected abstract get tabsNavWrap(): ElementRef;
+
+    protected abstract get tabsNav(): ElementRef;
+
+    protected abstract get tabLabels(): QueryList<JigsawTabLabel>;
 
     protected _handleSelectChange(index) {
         this.selectChange.emit(this._getTabPaneByIndex(index));
@@ -202,7 +234,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     protected _getTabPaneByIndex(key): JigsawTabPane | TabBarData {
-        return this._$tabPanes.find((item, index) => index === key);
+        return this._$tabPanes ? this._$tabPanes.find((item, index) => index === key) : undefined;
     }
 
     protected _asyncSetStyle(index: number): void {
@@ -331,23 +363,6 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         }
     }
 
-    // 这几个属性，在tab里面是不存在的，只存在于tab-bar中，所以要根据tab-bar的实例来获取
-    private get tabsInkBar(): ElementRef {
-        return this._tabBar ? this._tabBar._tabsInkBar : this._tabsInkBar;
-    }
-
-    private get tabsNavWrap(): ElementRef {
-        return this._tabBar ? this._tabBar._tabsNavWrap : this._tabsNavWrap;
-    }
-
-    private get tabsNav(): ElementRef {
-        return this._tabBar ? this._tabBar._tabsNav : this._tabsNav;
-    }
-
-    protected get tabLabels(): QueryList<JigsawTabLabel> {
-        return this._tabBar ? this._tabBar._tabLabels : this._tabLabels;
-    }
-
     @HostListener('window:resize')
     onResize() {
         this._createTabList();
@@ -397,6 +412,9 @@ export class JigsawTab extends JigsawTabBase {
      */
     @ViewChildren(JigsawTabContent)
     public _tabContents: QueryList<JigsawTabContent>;
+
+    @ViewChild('tabBar')
+    private _tabBar: JigsawTabBar;
 
     /**
      * @NoMarkForCheckRequired
@@ -609,6 +627,22 @@ export class JigsawTab extends JigsawTabBase {
             this._asyncSetStyle(this.selectedIndex);
         }
     }
+
+    protected get tabsInkBar(): ElementRef {
+        return this._tabBar ? this._tabBar._tabsInkBar : this._tabsInkBar;
+    }
+
+    protected get tabsNavWrap(): ElementRef {
+        return this._tabBar ? this._tabBar._tabsNavWrap : this._tabsNavWrap;
+    }
+
+    protected get tabsNav(): ElementRef {
+        return this._tabBar ? this._tabBar._tabsNav : this._tabsNav;
+    }
+
+    protected get tabLabels(): QueryList<JigsawTabLabel> {
+        return this._tabBar ? this._tabBar._tabLabels : this._tabLabels;
+    }
 }
 
 @Component({
@@ -661,5 +695,21 @@ export class JigsawTabBar extends JigsawTabBase {
     public _$listOptionClick(index) {
         if (this.data[index].disabled) return;
         this.selectedIndex = index;
+    }
+
+    protected get tabsInkBar(): ElementRef {
+        return this._tabsInkBar;
+    }
+
+    protected get tabsNavWrap(): ElementRef {
+        return this._tabsNavWrap;
+    }
+
+    protected get tabsNav(): ElementRef {
+        return this._tabsNav;
+    }
+
+    protected get tabLabels(): QueryList<JigsawTabLabel> {
+        return this._tabLabels;
     }
 }
