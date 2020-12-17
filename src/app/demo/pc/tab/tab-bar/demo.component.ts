@@ -51,46 +51,6 @@ export class JigsawTabBarComponent implements OnInit {
                 icon: 'fa fa-edit'
             },
             {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
-                label: "Tab 1",
-                icon: 'fa fa-edit'
-            },
-            {
                 label: "Tab 2",
                 disabled: true
             },
