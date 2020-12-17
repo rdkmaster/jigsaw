@@ -41,10 +41,12 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
     public key: number;
 
     /**
+     * string类型是在直接使用tab-bar时传入的
+     * 而模板类型，是在tab中使用tab-bar，自动传入的TemplateRef实例
      * @NoMarkForCheckRequired
      */
     @Input()
-    public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable> | string;
 
     /**
      * @NoMarkForCheckRequired
@@ -62,7 +64,8 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
 
     protected _insert(): void {
         if (!this._tabItemRef) {
-            this._tabItemRef = this._createTab(this.tabItem, this.initData);
+            // 动态渲染只在传入模板类型时发生，不会出现传入string的情况，这里直接强转让编译器不报错
+            this._tabItemRef = this._createTab(<TemplateRef<any> | Type<IDynamicInstantiatable>>this.tabItem, this.initData);
             this._changeDetector.detectChanges()
         }
     }
