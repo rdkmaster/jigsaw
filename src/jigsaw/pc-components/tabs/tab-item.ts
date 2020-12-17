@@ -30,7 +30,7 @@ export class TabTitleInfo {
 @Directive()
 export abstract class JigsawTabItemBase extends AbstractJigsawComponent implements OnDestroy {
 
-    constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
+    protected constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
         super()
     }
 
@@ -63,30 +63,43 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
     public _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
 
     protected _insert(): void {
-        if (!this._tabItemRef) {
-            // 动态渲染只在传入模板类型时发生，不会出现传入string的情况，这里直接强转让编译器不报错
-            this._tabItemRef = this._createTab(<TemplateRef<any> | Type<IDynamicInstantiatable>>this.tabItem, this.initData);
-            this._changeDetector.detectChanges()
+        if (this._$isSimpleTabItem || !!this._tabItemRef) {
+            return;
         }
+        // 这里tabItem不可能是字符串
+        const tabItem = <TemplateRef<any> | Type<IDynamicInstantiatable>>this.tabItem;
+        this._tabItemRef = this._createTab(tabItem, this.initData);
+        this._changeDetector.detectChanges();
     }
 
     protected _destroy(): void {
         if (this._tabItemRef) {
             this._tabItemRef.destroy();
-            this._tabItemRef = null
+            this._tabItemRef = null;
         }
     }
 
     protected _createTab(what: Type<IDynamicInstantiatable> | TemplateRef<any>,
                          initData: Object): EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable> {
+        if (this._$isSimpleTabItem) {
+            return undefined;
+        }
         if (what instanceof TemplateRef) {
             return this._body.createEmbeddedView(what, initData);
-        } else if (what) {
+        }
+        if (what) {
             const factory = this._componentFactory.resolveComponentFactory(what);
             const componentRef = this._body.createComponent(factory);
             componentRef.instance.initData = initData;
             return componentRef;
         }
+    }
+
+    /**
+     * @internal
+     */
+    public get _$isSimpleTabItem(): boolean {
+        return typeof this.tabItem == 'string';
     }
 
     ngOnDestroy() {
@@ -100,7 +113,7 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
 @Component({
     selector: 'jigsaw-tab-label',
     template: `
-        <div *ngIf="_$isTabBar(); else body">
+        <div *ngIf="_$isSimpleTabItem; else body">
             <span *ngIf="icon" [ngClass]="icon"></span>
             <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
         </div>
@@ -165,13 +178,9 @@ export class JigsawTabLabel extends JigsawTabItemBase implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (!this._$isTabBar()) {
+        if (!this._$isSimpleTabItem) {
             this._insert();
         }
-    }
-
-    public _$isTabBar(): boolean {
-        return typeof this.tabItem == 'string';
     }
 }
 
@@ -225,5 +234,4 @@ export class JigsawTabContent extends JigsawTabItemBase implements AfterViewInit
             this._insert();
         }
     }
-
 }
