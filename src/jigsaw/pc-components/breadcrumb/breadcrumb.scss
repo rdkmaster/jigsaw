@@ -4,20 +4,20 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
 .#{$bc-prefix-cls} {
     display: block;
-    font-size: 16px;
     height: 54px;
-    background: $background-color-base;
     padding: 0 12px;
+    background: $background-color-base;
+    font-size: $font-size-base;
     &:after {
         height: 100%;
-        content: '';
+        content: "";
         display: inline-block;
         vertical-align: middle;
     }
     &-item {
         @include inline-block;
         color: $text-color-secondary;
-        &:hover, &.#{$bc-prefix-cls}-current {
+        &.#{$bc-prefix-cls}-current {
             color: $heading-color;
         }
         .#{$bc-prefix-cls}-link {
@@ -34,42 +34,46 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     &.#{$bc-prefix-cls}-light {
         background: $background-color-base;
         .#{$bc-prefix-cls}-item {
-            color: $text-color-secondary;
-            &:hover, &.#{$bc-prefix-cls}-current {
-                color: $heading-color;
+            color: $font-color-button;
+            &.#{$bc-prefix-cls}-current {
+                @extend %title-bold-lv1;
             }
         }
     }
     &.#{$bc-prefix-cls}-dark {
         background: $background-color-dark;
         .#{$bc-prefix-cls}-item {
-            color: $text-color-secondary;
-            &:hover, &.#{$bc-prefix-cls}-current {
-                color: $text-color-of-bg;
+            color: $font-color-white;
+            &.#{$bc-prefix-cls}-current {
+                font-size: $font-title-lg;
+                color: $font-color-white;
             }
         }
     }
     &.#{$bc-prefix-cls}-inner {
         height: 44px;
         padding: 0 8px;
-        font-size: 14px;
+        font-size: $font-size-base;
         background: $component-background;
         .#{$bc-prefix-cls}-item {
             .#{$bc-prefix-cls}-icon {
-                color: $primary-color;
+                color: $font-color-button;
             }
             .#{$bc-prefix-cls}-label {
-                color: $heading-color;
+                color: $font-color-button;
                 &:hover {
-                    color: $primary-color;
+                    color: $font-color-button-hover;
                 }
             }
             &.#{$bc-prefix-cls}-current {
+                @extend %title-bold-lv1;
+                .#{$bc-prefix-cls}-icon {
+                    color: $font-color-heading-bold;
+                }
                 .#{$bc-prefix-cls}-label {
-                    color: $primary-color;
+                    color: $font-color-heading-bold;
                 }
             }
         }
     }
 }
-

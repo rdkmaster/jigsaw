@@ -7,33 +7,33 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
     &.#{$checkbox-prefix-cls}-error .#{$checkbox-prefix-cls}-wrapper {
         &:hover {
             > .#{$checkbox-prefix-cls} {
-                border-color: $error-color;
+                border-color: $error-hover;
             }
         }
         .#{$checkbox-prefix-cls} {
-            border-color: $error-color;
+            border-color: $error-default;
         }
     }
 }
 
 .#{$checkbox-prefix-cls}-wrapper {
     position: relative;
-    cursor: pointer;
-    font-size: $font-size-base;
-    display: inline-block;
-    outline: none;
-    line-height: 18px;
-    vertical-align: text-bottom;
-    user-select: none;
     left: 0;
     margin: 0;
+    display: inline-block;
+    vertical-align: text-bottom;
+    outline: none;
+    font-size: $font-size-base;
+    line-height: 18px;
+    user-select: none;
+    cursor: pointer;
     &:not(:last-child) {
         margin-right: 8px;
     }
 
     &:hover {
         > .#{$checkbox-prefix-cls} {
-            border-color: $primary-color;
+            border-color: $brand-default;
         }
     }
 
@@ -47,7 +47,7 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
         border: $border-width-base $border-style-base $border-color-base;
         border-radius: $border-radius-sm;
         background-color: $component-background;
-        transition: all .3s;
+        transition: all 0.3s;
 
         &:after {
             transform: rotate(45deg) scale(0);
@@ -59,13 +59,18 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
             border: 2px solid #fff;
             border-top: 0;
             border-left: 0;
-            content: ' ';
-            transition: all .1s $ease-in-back;
+            content: " ";
+            transition: all 0.1s $ease-in-back;
         }
 
-        &-checked, &-indeterminate {
-            background-color: $primary-color;
-            border-color: $primary-color;
+        &-checked {
+            background-color: $brand-default;
+            border-color: $brand-default;
+        }
+
+        &-indeterminate {
+            border-color: $border-color;
+            background-color: $component-background;
         }
 
         // 选中状态
@@ -79,18 +84,20 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
             border: 2px solid #fff;
             border-top: 0;
             border-left: 0;
-            content: ' ';
-            transition: all .2s $ease-out-back .1s;
+            content: " ";
+            transition: all 0.2s $ease-out-back 0.1s;
         }
 
         &-indeterminate:after {
-            transform: scale(1);
+            transform: rotate(0) scale(1);
             position: absolute;
             left: 2px;
-            top: 5px;
-            width: 8px;
-            height: 1px;
-            content: ' ';
+            top: 2px;
+            width: 0px;
+            height: 0px;
+            border: 4px solid $brand-default;
+            border-radius: $border-radius-sm;
+            content: " ";
         }
 
         &-disabled {
