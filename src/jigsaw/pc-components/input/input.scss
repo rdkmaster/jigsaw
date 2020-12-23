@@ -7,12 +7,16 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     width: 120px;
     height: $height-base;
     font-size: $font-size-base;
-    border: 1px solid $border-color-base;
-    border-radius: 3px;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-base;
     overflow: hidden;
-    &:hover, &.#{$input-prefix-cls}-focused {
-        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-        border: 1px solid $primary-color;
+    &:hover,
+    &.#{$input-prefix-cls}-focused {
+        @include prefixer(
+            transition,
+            (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
+        );
+        border: 1px solid $brand-default;
     }
     &.#{$input-prefix-cls}-focused {
         box-shadow: $box-focus-shadow;
@@ -33,7 +37,8 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         overflow: hidden;
         background: $component-background;
     }
-    &-icon-front, &-icon-end {
+    &-icon-front,
+    &-icon-end {
         display: flex;
         align-items: center;
         flex: none;
@@ -55,13 +60,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
     }
     input::-webkit-input-placeholder {
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
     input:-ms-input-placeholder {
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
     input:-moz-placeholder {
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
     &-clear-bar {
         cursor: pointer;
@@ -80,6 +85,3 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         cursor: pointer;
     }
 }
-
-
-

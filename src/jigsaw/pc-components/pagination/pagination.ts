@@ -623,7 +623,7 @@ export class JigsawPaginationModule {
         InternalUtils.initI18n(translateService, 'pagination', {
             zh: {
                 page: "页",
-                goto: '跳转'
+                goto: '前往'
             },
             en: {
                 page: 'Page',

@@ -33,24 +33,25 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     line-height: $height-base;
     font-size: $font-size-base;
     text-align: center;
-    color: $text-color;
+    color: $font-color;
     margin: {
         right: 8px;
         bottom: 8px;
     }
     padding: 0 4px;
     cursor: pointer;
-    border: 1px solid $border-color-base;
-    border-radius: 4px;
+    border: 1px solid $border-color;
+    border-radius: 3px;
     @include line-ellipsis-style();
-    @include prefixer(transition, color .3s $ease-in-out);
+    @include prefixer(transition, color 0.3s $ease-in-out);
 
-    &:hover, &.#{$tile-option-prefix-cls}-active {
-        color: $primary-color;
+    &:hover,
+    &.#{$tile-option-prefix-cls}-active {
+        color: $primary-default;
     }
 
     &.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $primary-color;
+        border: 1px solid $primary-default;
     }
 
     &.#{$tile-option-prefix-cls}-disabled {
@@ -60,7 +61,8 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     }
 }
 
-.#{$tile-lite-prefix-cls}, .#{$button-bar-prefix-cls} {
+.#{$tile-lite-prefix-cls},
+.#{$button-bar-prefix-cls} {
     @include inline-block;
 }
 
@@ -72,7 +74,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         border: none;
 
         &.#{$tile-prefix-cls}-error {
-            border: 1px solid $error-color;
+            border: 1px solid $error-default;
         }
     }
 
@@ -84,11 +86,11 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         border-radius: 0;
 
         &:first-child {
-            border-radius: 4px 0 0 4px;
+            border-radius: 3px 0 0 3px;
         }
 
         &:last-child {
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 3px 3px 0;
         }
 
         &:not(:first-child) {
@@ -101,21 +103,21 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     }
 
     &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $primary-color;
-        background-color: $primary-color;
-        color: $text-color-of-bg;
+        border: 1px solid $primary-default;
+        background-color: $primary-default;
+        color: $font-color-white;
     }
 
     &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $warning-color;
-        background-color: $warning-color;
-        color: $text-color-of-bg;
+        border: 1px solid $warning-default;
+        background-color: $warning-default;
+        color: $font-color-white;
     }
 
     &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $error-color;
-        background-color: $error-color;
-        color: $text-color-of-bg;
+        border: 1px solid $error-default;
+        background-color: $error-default;
+        color: $font-color-white;
     }
 
     &-one-option {

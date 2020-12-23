@@ -1,7 +1,7 @@
 // Palette
-$blue-1: hsl(204, 100%, 95%);
-$blue-2: hsl(205, 100%, 87%);
-$blue-3: hsl(205, 100%, 79%);
+$blue-1: hsl(204, 100%, 95%); //#e6f5ff
+$blue-2: hsl(205, 100%, 87%); //#bde4ff
+$blue-3: hsl(205, 100%, 79%); //#94d2ff
 $blue-4: hsl(206, 100%, 71%);
 $blue-5: hsl(207, 100%, 63%);
 $blue-6: hsl(208, 100%, 55%); //#1993FF
@@ -9,7 +9,7 @@ $blue-7: hsl(209, 85%, 46%); //#1178D9
 $blue-8: hsl(210, 88%, 37%); //#0B5FB3
 $blue-9: hsl(211, 92%, 29%);
 $blue-10: hsl(212, 96%, 20%);
-$blue-test: hsl(209, 85%, 46%);
+// $blue-test: hsl(204, 100%, 95%);
 
 $cyan-1: hsl(174, 100%, 94%);
 $cyan-2: hsl(176, 78%, 83%);
@@ -146,11 +146,24 @@ $sur-navy: $navy-5;
 $sur-lime: $lime-4;
 $sur-magenta: $magenta-5;
 
+// 面透明
+// $sur-trans-blue: hsla(207, 100%, 63%, 0.2);
+$sur-green: $green-4;
+$sur-uellow: $yellow-5;
+$sur-red: $red-5;
+$sur-cyan: $cyan-4;
+$sur-purple: $purple-4;
+$sur-orange: $orange-5;
+$sur-navy: $navy-5;
+$sur-lime: $lime-4;
+$sur-magenta: $magenta-5;
+
 /* 品牌色 */
 $brand-default: $blue-6;
 $brand-hover: $blue-7;
 $brand-click: $blue-8;
 $brand-disabled: $blue-2;
+$brand-light: $blue-1; //pagination,navi-menu
 
 /* 功能色 */
 //primary
@@ -176,13 +189,16 @@ $status-warning: $yellow-6;
 $status-danger: $orange-6;
 $status-error: $red-6;
 
-// 中性色
-$background: $gray-1; //背景
-$background-1: $gray-2; //不影响功能的背景 侧边栏、白色卡片
-$background-disabled: $gray-3; //禁用组件背景
-$background-table-heading: $gray-3; //表头
-$bg-body: #fff;
-$bg-component: #fff;
+// 背景色
+$bg-body: $gray-1; //背景
+$bg-component: $gray-1;
+$bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片
+$bg-disabled: $gray-3; //禁用组件背景
+$bg-table-heading: $gray-3; //表头
+
+
+$body-background: #fff;
+$component-background: #fff;
 
 // font
 $font-color: $gray-9; //正文
@@ -232,17 +248,18 @@ $height-base: 32px;
 $height-sm: 24px;
 $height-med: 28px;
 $height-lg: 36px;
+
 $height-header: 40px;
+$height-menu: 40px;
 
 $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-lg: $font-size-base + 2px;
+
 $font-title-lg: 16px;
 $font-title-med: 14px;
 $font-title-sm: 12px;
 
-$body-background: #fff;
-$component-background: #fff;
 
 /* ******************************************************** */
 // 代码块，后期分文件
@@ -274,6 +291,14 @@ $component-background: #fff;
 %title-bold-lv3 {
     font-size: $font-title-sm;
     color: $font-color-heading-bold;
+}
+
+%test-1 {
+    outline: 1px dashed red;
+}
+
+%test-2 {
+    outline-color: cyan;
 }
 /* **************************************************** */
 // Color

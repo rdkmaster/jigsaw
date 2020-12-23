@@ -24,9 +24,9 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         }
     }
     &.#{$page-prefix-cls}-current span{
-        background: $primary-color;
-        border: 1px solid $primary-color;
-        color: $text-color-of-bg;
+        background: $brand-light;
+        border: 1px solid $brand-default;
+        color: $brand-default;
     }
     &.#{$page-prefix-cls}-hidden{
         display: none;

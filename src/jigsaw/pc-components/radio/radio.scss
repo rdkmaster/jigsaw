@@ -3,10 +3,11 @@
 $radio-prefix-cls: #{$jigsaw-prefix}-radios;
 $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
 
-.#{$radio-prefix-cls}, .#{$radio-prefix-cls}-lite{
+.#{$radio-prefix-cls},
+.#{$radio-prefix-cls}-lite {
     @include inline-block();
     &.#{$radio-prefix-cls}-error {
-        border: 1px solid $error-color;
+        border: 1px solid $error-default;
     }
 }
 
@@ -20,14 +21,14 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $disabled-bg;
-            &:after {
-                background-color: $disabled-color;
-            }
+            // &:after {
+            //     background-color: $disabled-color;
+            // }
             &.#{$radio-option-prefix-cls}-checked {
-                border-color: $border-color-base;
+                border-color: $border-color-disabled;
             }
             &:hover {
-                border-color: $border-color-base;
+                border-color: $border-color-disabled;
             }
         }
     }
@@ -38,34 +39,37 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         left: 0;
         width: 14px;
         height: 14px;
-        border: 1px solid $border-color-base;
-        border-radius: 14px;
-        background-color: $component-background;
-        margin-right: 5px;
-        @include prefixer(transition, all 0.3s);
-        &:after {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            left: 3px;
-            top: 3px;
-            border-radius: 4px;
-            display: table;
-            border-top: 0;
-            border-left: 0;
-            content: ' ';
-            background-color: $primary-color;
-            opacity: 0;
-            @include prefixer(transfrom, scale(0));
-            @include prefixer(transition, all 0.3s $ease-in-out-circ);
-        }
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color;
+        border-radius: 50%;
+        background-color: $bg-component;
+        margin-right: 8px;
+        // @include prefixer(transition, all 0.3s);
+        // &:after {
+        //     position: absolute;
+        //     width: 6px;
+        //     height: 6px;
+        //     left: 3px;
+        //     top: 3px;
+        //     border-radius: 4px;
+        //     display: table;
+        //     border-top: 0;
+        //     border-left: 0;
+        //     content: " ";
+        //     background-color: $primary-color;
+        //     opacity: 0;
+        //     @include prefixer(transfrom, scale(0));
+        //     @include prefixer(transition, all 0.3s $ease-in-out-circ);
+        // }
         &.#{$radio-option-prefix-cls}-checked {
-            border-color: $primary-color;
-            &:after {
-                @include prefixer(transform, scale(1));
-                @include prefixer(transition, all 0.3s $ease-in-out-circ);
-                opacity: 1;
-            }
+            border-width: 4px;
+            border-color: $brand-default;
+            // &:after {
+            //     @include prefixer(transform, scale(1));
+            //     @include prefixer(transition, all 0.3s $ease-in-out-circ);
+            //     opacity: 1;
+            // }
         }
         &:hover {
             border-color: $primary-color;
@@ -75,8 +79,3 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         @include inline-block();
     }
 }
-
-
-
-
-

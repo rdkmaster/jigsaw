@@ -20,9 +20,9 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     display: block;
     position: relative;
     height: 4px;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
     cursor: pointer;
-    background-color: $border-color-split;
+    background-color: $border-color;
     user-select: none;
 
     transition: background-color 0.3s ease;
@@ -36,7 +36,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         left: 0px;
         height: 4px;
         border-radius: $border-radius-base;
-        background-color: mix($primary-color, #fff, 40%);
+        background-color: $brand-default;
         z-index: $zindex-level-1;
         transition: background-color 0.3s ease;
     }
@@ -50,7 +50,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
 
     &:hover {
         .#{$jigsaw-slider}-track {
-            background-color: mix($primary-color, #fff, 80%);
+            background-color: $brand-default;
         }
     }
 
@@ -61,20 +61,21 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         width: 14px;
         height: 14px;
         border-radius: 50%;
-        border: 2px solid mix($primary-color, #fff, 50%);
+        border: 2px solid $brand-default;
         background-color: $default-color;
         z-index: $zindex-level-2;
 
-        transition: border-color 0.3s ease, transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        transition: border-color 0.3s ease,
+            transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
         &:hover {
-            border-color: $primary-color;
-            transform: scale(1.2);
+            border-color: $brand-default;
+            // transform: scale(1.2);
             transform-origin: center center;
         }
 
         &:active {
-            box-shadow: 0 0 0 2px rgba($primary-color, .2);
+            box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
         }
     }
 
@@ -134,12 +135,12 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         background-color: $border-color-split !important;
 
         .#{$jigsaw-slider}-track {
-            background-color: $disabled-color !important;
+            background-color: $brand-disabled !important;
         }
 
         .#{$jigsaw-slider}-handle,
         .#{$jigsaw-slider}-dot {
-            border-color: $disabled-color !important;
+            border-color: $brand-disabled !important;
             background-color: $default-color;
             cursor: not-allowed;
             box-shadow: none;
@@ -193,7 +194,4 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             }
         }
     }
-
 }
-
-
