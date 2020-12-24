@@ -7,7 +7,9 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     width: 120px;
     height: $height-base;
     font-size: $font-size-base;
-    border: 1px solid $border-color;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
     border-radius: $border-radius-base;
     overflow: hidden;
     &:hover,
@@ -22,12 +24,12 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         box-shadow: $box-focus-shadow;
     }
     &.#{$input-prefix-cls}-error {
-        border: 1px solid $error-color;
+        border-color: $error-default;
         &:hover {
-            border: 1px solid $error-color;
+            border-color: $error-color;
         }
         &.#{$input-prefix-cls}-focused {
-            border: 1px solid $error-color;
+            border-color: $error-color;
             box-shadow: none;
         }
     }
@@ -35,7 +37,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         display: flex;
         height: 100%;
         overflow: hidden;
-        background: $component-background;
+        background: $bg-component;
     }
     &-icon-front,
     &-icon-end {
@@ -54,7 +56,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         background: transparent;
     }
     &.#{$input-prefix-cls}-disabled &-wrapper {
-        background-color: $disabled-bg;
+        background-color: $bg-disabled;
         input {
             @include compatible(color, $disabled-color, $disabled-color-ie11);
         }
@@ -73,7 +75,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         font-size: 16px;
         line-height: 1;
         &:hover {
-            color: $text-color-dark;
+            color: $font-color-default;
         }
         &[hidden] {
             display: none !important;

@@ -22,7 +22,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     height: 4px;
     border-radius: $border-radius-base;
     cursor: pointer;
-    background-color: $border-color;
+    background-color: $border-color-default;
     user-select: none;
 
     transition: background-color 0.3s ease;

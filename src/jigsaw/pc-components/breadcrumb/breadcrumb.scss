@@ -34,7 +34,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     &.#{$bc-prefix-cls}-light {
         background: $background-color-base;
         .#{$bc-prefix-cls}-item {
-            color: $font-color-button;
+            color: $brand-default;
             &.#{$bc-prefix-cls}-current {
                 @extend %title-bold-lv1;
             }
@@ -51,22 +51,25 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         }
     }
     &.#{$bc-prefix-cls}-inner {
-        height: 44px;
+        outline: 1px solid red;
+        height: $height-base;
         padding: 0 8px;
         font-size: $font-size-base;
-        background: $component-background;
+        background: $bg-body;
         .#{$bc-prefix-cls}-item {
             .#{$bc-prefix-cls}-icon {
-                color: $font-color-button;
+                color: $brand-default;
             }
             .#{$bc-prefix-cls}-label {
-                color: $font-color-button;
+                color: $brand-default;
                 &:hover {
-                    color: $font-color-button-hover;
+                    color: $brand-hover;
                 }
             }
             &.#{$bc-prefix-cls}-current {
-                @extend %title-bold-lv1;
+                font-size: $font-title-lg;
+                font-weight: bold;
+                color: $font-color-heading-bold;
                 .#{$bc-prefix-cls}-icon {
                     color: $font-color-heading-bold;
                 }

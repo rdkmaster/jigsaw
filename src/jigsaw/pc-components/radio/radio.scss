@@ -20,7 +20,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
-            background: $disabled-bg;
+            background: $bg-disabled;
             // &:after {
             //     background-color: $disabled-color;
             // }
@@ -41,7 +41,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         height: 14px;
         border-width: 1px;
         border-style: solid;
-        border-color: $border-color;
+        border-color: $border-color-default;
         border-radius: 50%;
         background-color: $bg-component;
         margin-right: 8px;

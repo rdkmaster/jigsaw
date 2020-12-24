@@ -7,7 +7,9 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
 }
 
 .#{$collapse-prefix} {
-    border: $border-width-base $border-style-base $border-color-base;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
     border-bottom: none;
     border-radius: 4px;
 
@@ -38,7 +40,7 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         top: 50%;
         margin-top: -7px;
 
-        @include prefixer(transition, all .3s ease);
+        @include prefixer(transition, all 0.3s ease);
     }
 
     &-item &-content {
@@ -49,4 +51,3 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         }
     }
 }
-

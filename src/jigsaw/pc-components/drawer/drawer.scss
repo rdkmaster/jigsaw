@@ -3,10 +3,9 @@
 $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 
 .#{$drawer-prefix-cls} {
-    border: 1px solid $border-color-base;
-    background: $component-background;
-    box-shadow: $box-shadow-base;
-    z-index: $zindex-popover-level-0;
+    background: $bg-component;
+    box-shadow: $box-shadow-lv2;
+    @include z-index(popover);
     &-in-dom {
         position: relative;
         display: inline-block;

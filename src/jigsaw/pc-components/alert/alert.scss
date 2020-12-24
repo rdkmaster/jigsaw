@@ -3,6 +3,7 @@
 $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 
 .#{$alert-prefix-cls}-host {
+    // outline: 1px solid red;
     @include inline-block;
     width: 100%;
 }
@@ -11,19 +12,18 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: $component-background;
-    border-radius: 4px;
     position: relative;
     min-width: 480px;
     min-height: 240px;
-    // border: 1px solid $border-color-base;
-    box-shadow: $box-shadow-lv3;
+    background: $bg-component;
+    border-radius: $border-radius-base;
+    box-shadow: $box-shadow-alert;
 
     &-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: $height-header;
+        height: $height-huge;
         padding: 0 16px;
         border-bottom: 1px solid $splitline-color;
         cursor: move;
@@ -39,14 +39,14 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     &-head &-title {
         @extend %title-bold-lv1;
     }
-    /* MARK 等UX出icon图标的设计方案 */
+
     &-head &-close {
         text-align: right;
-        font-size: 24px;
-        color: $icon-color;
+        font-size: $icon-size-med;
+        color: $icon-color-default;
         cursor: pointer;
         &:hover {
-            color: $text-color-dark;
+            color: $brand-hover;
         }
     }
 
@@ -79,6 +79,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         justify-content: center;
         height: $height-base + 24px;
         jigsaw-button {
+            // outline: 1px solid red;
             margin-right: 8px;
             &:last-child {
                 margin-right: 0;

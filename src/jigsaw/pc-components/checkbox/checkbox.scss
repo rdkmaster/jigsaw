@@ -44,9 +44,11 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
         width: 14px;
         height: 14px;
         overflow: hidden;
-        border: $border-width-base $border-style-base $border-color-base;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
         border-radius: $border-radius-sm;
-        background-color: $component-background;
+        background-color: $bg-component;
         transition: all 0.3s;
 
         &:after {
@@ -69,8 +71,8 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
         }
 
         &-indeterminate {
-            border-color: $border-color;
-            background-color: $component-background;
+            border-color: $border-color-default;
+            background-color: $bg-component;
         }
 
         // 选中状态
@@ -103,8 +105,8 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
         &-disabled {
             cursor: not-allowed;
 
-            border-color: $border-color-base !important;
-            background-color: $disabled-bg;
+            border-color: $border-color-disabled !important;
+            background-color: $bg-disabled;
 
             & + span {
                 color: #ccc;

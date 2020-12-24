@@ -10,22 +10,21 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 }
 
 .#{$btn-prefix-cls} {
-    // outline: 1px solid red;
-    @extend %inline-block;
+    // @extend %inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     padding: 0 16px;
     min-width: 80px;
     height: $height-base;
-    line-height: 1;
     border-radius: $border-radius-base;
-    // box-shadow: $btn-box-shadow;
     background-color: transparent;
     border-width: 1px;
     border-style: solid;
-    border-color: $border-color;
-    color: $font-color-button;
+    border-color: $border-color-default;
+    color: $brand-default;
     font-size: $font-size-base;
-    // font-weight: $btn-font-weight;
     text-align: center;
     user-select: none;
     cursor: pointer;
@@ -36,14 +35,14 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         vertical-align: middle;
     }
     &:hover {
-        color: $font-color-button-hover;
-        border-color: $border-color-hover;
+        color: $brand-hover;
+        border-color: $brand-default;
         @include prefixer(transition, all 0.3s $ease-in-out);
     }
 
     &:active {
-        color: $font-color-button-click;
-        border-color: $blue-7;
+        color: $brand-click;
+        border-color: $brand-click;
     }
 
     &#{&}-clicked:after {
@@ -54,7 +53,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid $primary-7;
+        border: 1px solid $brand-click;
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
@@ -77,13 +76,13 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         color: $font-color-white;
         border-color: $primary-default;
         &:hover {
-            background: $blue-7;
+            background: $primary-hover;
         }
         &:active {
-            background: $blue-8;
+            background: $primary-click;
         }
         &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid $primary-7;
+            border-color: $primary-default;
         }
     }
 
@@ -98,7 +97,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
             background: $warning-click;
         }
         &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid mix(#000, $warning-color, 10%);
+            border-color: $warning-default;
         }
     }
 
@@ -113,7 +112,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
             background: $error-click;
         }
         &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid mix(#000, $error-color, 10%);
+            border-color: $error-default;
         }
     }
 

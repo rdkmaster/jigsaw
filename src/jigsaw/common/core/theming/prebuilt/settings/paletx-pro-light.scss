@@ -1,4 +1,4 @@
-// Palette
+/* paletx-pro-light */
 $blue-1: hsl(204, 100%, 95%); //#e6f5ff
 $blue-2: hsl(205, 100%, 87%); //#bde4ff
 $blue-3: hsl(205, 100%, 79%); //#94d2ff
@@ -135,28 +135,67 @@ $line-lime: $lime-5;
 $line-magenta: $magenta-6;
 
 // 面型色
-$sur-blue: $blue-5;
-$sur-green: $green-4;
-$sur-uellow: $yellow-5;
-$sur-red: $red-5;
-$sur-cyan: $cyan-4;
-$sur-purple: $purple-4;
-$sur-orange: $orange-5;
-$sur-navy: $navy-5;
-$sur-lime: $lime-4;
-$sur-magenta: $magenta-5;
+$surf-blue: $blue-5;
+$surf-green: $green-4;
+$surf-yellow: $yellow-5;
+$surf-red: $red-5;
+$surf-cyan: $cyan-4;
+$surf-purple: $purple-4;
+$surf-orange: $orange-5;
+$surf-navy: $navy-5;
+$surf-lime: $lime-4;
+$surf-magenta: $magenta-5;
 
-// 面透明
-// $sur-trans-blue: hsla(207, 100%, 63%, 0.2);
-$sur-green: $green-4;
-$sur-uellow: $yellow-5;
-$sur-red: $red-5;
-$sur-cyan: $cyan-4;
-$sur-purple: $purple-4;
-$sur-orange: $orange-5;
-$sur-navy: $navy-5;
-$sur-lime: $lime-4;
-$sur-magenta: $magenta-5;
+// 面透明,基本用于hover
+$surf-tp-blue: $blue-1;
+$surf-tp-green: $green-1;
+$surf-tp-uellow: $yellow-1;
+$surf-tp-red: $red-1;
+$surf-tp-cyan: $cyan-1;
+$surf-tp-purple: $purple-1;
+$surf-tp-orange: $orange-1;
+$surf-tp-navy: $navy-1;
+$surf-tp-lime: $lime-1;
+$surf-tp-magenta: $magenta-1;
+
+// 功能色-基础
+$status-primary: $blue-6;
+$status-success: $green-6;
+$status-warning: $yellow-6;
+$status-danger: $orange-6;
+$status-error: $red-6;
+
+/* ******************************************************************* */
+
+// 功能色-primary
+$primary-default: $blue-6;
+$primary-hover: $blue-7;
+$primary-click: $blue-8;
+$primary-disabled: $blue-2;
+
+// 功能色-success
+$success-default: $green-6;
+$success-hover: $green-7;
+$success-click: $green-8;
+$success-disabled: $green-2;
+
+// 功能色-warning
+$warning-default: $yellow-6;
+$warning-hover: $yellow-7;
+$warning-click: $yellow-8;
+$warning-disabled: $yellow-2;
+
+// 功能色-error
+$error-default: $red-6;
+$error-hover: $red-7;
+$error-click: $red-8;
+$error-disabled: $red-2;
+
+// 功能色-danger
+$danger-default: $orange-6;
+$danger-hover: $orange-7;
+$danger-click: $orange-8;
+$danger-disabled: $orange-2;
 
 /* 品牌色 */
 $brand-default: $blue-6;
@@ -165,30 +204,6 @@ $brand-click: $blue-8;
 $brand-disabled: $blue-2;
 $brand-light: $blue-1; //pagination,navi-menu
 
-/* 功能色 */
-//primary
-$primary-default: $blue-6;
-$primary-hover: $blue-7;
-$primary-click: $blue-8;
-$primary-disabled: $blue-2;
-// warning
-$warning-default: $yellow-6;
-$warning-hover: $yellow-7;
-$warning-click: $yellow-8;
-$warning-disabled: $yellow-2;
-// error
-$error-default: $red-6;
-$error-hover: $red-7;
-$error-click: $red-8;
-$error-disabled: $red-2;
-
-// 功能色
-$status-primary: $blue-6;
-$status-success: $green-6;
-$status-warning: $yellow-6;
-$status-danger: $orange-6;
-$status-error: $red-6;
-
 // 背景色
 $bg-body: $gray-1; //背景
 $bg-component: $gray-1;
@@ -196,12 +211,11 @@ $bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片
 $bg-disabled: $gray-3; //禁用组件背景
 $bg-table-heading: $gray-3; //表头
 
-
 $body-background: #fff;
 $component-background: #fff;
 
 // font
-$font-color: $gray-9; //正文
+$font-color-default: $gray-9; //正文
 $font-color-disabled: $gray-6; //禁用文字
 $font-color-hint: $gray-7; //提示
 $font-color-watermark: $gray-7; //水印文字
@@ -209,19 +223,23 @@ $font-color-heading: $gray-10; //非加粗标题
 $font-color-heading-bold: $gray-9; //加粗标题
 $font-color-tag: $gray-8; //标签文字
 $font-color-white: hsl(0, 0%, 100%); //深底白字
-$font-color-button: $blue-6;
-$font-color-button-hover: $blue-6;
-$font-color-button-click: $blue-8;
 
 // border
-$border-color: $gray-5;
-$border-color-hover: $blue-6;
-$border-color-click: $blue-7;
+$border-color-default: $gray-5;
 $border-color-disabled: $gray-4;
 
 $splitline-color: $gray-4; //分隔线
 
-$icon-color: $gray-6; //图标
+$icon-color-default: $gray-6; //图标
+$icon-color-disabled: $gray-4;
+
+// box-shadow-altitude
+// 阴影
+$box-shadow-lv0: none; //背景
+$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%); // 页内卡片
+$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框
+$box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%); // 及时消息，模态弹框
+$box-shadow-alert: $box-shadow-lv3;
 
 /* ******************************************************** */
 // 皮肤结构参数，后期分文件
@@ -230,28 +248,19 @@ $line-width-base: 1px;
 $line-width-med: 2px;
 $line-width-lg: 4px;
 
-// box-shadow-altitude
-$box-shadow-lv0: none; //背景
-$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%); // 页内卡片
-$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框
-$box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%); // 及时消息，模态弹框
-
-$border-radius-base: 3px; // tab,button,button bar,input,notification,card
+// border-radius
+$border-radius-base: 3px; // tab,button,button bar,input,notification,card,alert
 $border-radius-sm: $border-radius-base - 1px; // checkbox,colorpick,pagination,timepicker,tag,datepicker
 $border-radius-lg: $border-radius-base + 1px; // switch,badge
 
-$height-base: 32px; // button
-$height-sm: $height-base - 8px;
-$height-lg: $height-base + 4px;
-
-$height-base: 32px;
+// height
+$height-base: 32px; // button基础
 $height-sm: 24px;
 $height-med: 28px;
 $height-lg: 36px;
+$height-huge: 40px;
 
-$height-header: 40px;
-$height-menu: 40px;
-
+// font size
 $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-lg: $font-size-base + 2px;
@@ -260,36 +269,46 @@ $font-title-lg: 16px;
 $font-title-med: 14px;
 $font-title-sm: 12px;
 
+//icon size
+$icon-size-lg: 48px;
+$icon-size-med: 20px;
+$icon-size-sm: 16px;
 
 /* ******************************************************** */
+
 // 代码块，后期分文件
+
+// 一级标题
 %title-lv1 {
     font-size: $font-title-lg;
     color: $font-color-heading;
 }
-
+// 二级标题
 %title-lv2 {
     font-size: $font-title-med;
     color: $font-color-heading;
 }
-
+// 三级标题
 %title-lv3 {
     font-size: $font-title-sm;
     color: $font-color-heading;
 }
-
+// 一级标题加粗
 %title-bold-lv1 {
     font-size: $font-title-lg;
+    font-weight: bold;
     color: $font-color-heading-bold;
 }
-
+// 二级标题加粗
 %title-bold-lv2 {
     font-size: $font-title-med;
+    font-weight: bold;
     color: $font-color-heading-bold;
 }
-
+// 三级标题加粗
 %title-bold-lv3 {
     font-size: $font-title-sm;
+    font-weight: bold;
     color: $font-color-heading-bold;
 }
 
@@ -550,4 +569,17 @@ $form-item-margin-bottom: 24px;
     @keyframes #{$name} {
         @content;
     }
+}
+
+$z-index: (
+    popover: 1000,
+    lv2: 2,
+);
+
+@function z-index($key) {
+    @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+    z-index: z-index($key);
 }

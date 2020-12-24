@@ -3,6 +3,7 @@
 $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
 .#{$date-prefix-cls} {
+    outline: 1px solid red;
     @include inline-block();
     border-radius: 4px;
     border: 1px solid $border-color-base;
