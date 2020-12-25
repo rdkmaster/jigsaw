@@ -477,14 +477,14 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f7';
+        opt.icon = 'iconfont iconfont-e037';
         opt.iconType = 'warning';
         return JigsawNotification.show(message, opt);
     };
 
     public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'fa fa-info-circle';
+        opt.icon = 'iconfont iconfont-e90c';
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };

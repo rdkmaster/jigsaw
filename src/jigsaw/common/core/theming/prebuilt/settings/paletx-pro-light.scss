@@ -9,7 +9,7 @@ $blue-7: hsl(209, 85%, 46%); //#1178D9
 $blue-8: hsl(210, 88%, 37%); //#0B5FB3
 $blue-9: hsl(211, 92%, 29%);
 $blue-10: hsl(212, 96%, 20%);
-// $blue-test: hsl(204, 100%, 95%);
+$blue-test: hsl(200, 100%, 92%);
 
 $cyan-1: hsl(174, 100%, 94%);
 $cyan-2: hsl(176, 78%, 83%);
@@ -65,6 +65,7 @@ $orange-7: hsl(29, 87%, 43%);
 $orange-8: hsl(28, 91%, 35%);
 $orange-9: hsl(27, 94%, 27%);
 $orange-10: hsl(26, 98%, 19%);
+$orange-test: hsl(30, 88%, 51%);
 
 $red-1: hsl(4, 100%, 95%);
 $red-2: hsl(4, 100%, 88%);
@@ -112,7 +113,7 @@ $navy-10: hsl(237, 79%, 21%);
 
 $gray-1: hsl(0, 0%, 100%);
 $gray-2: hsl(0, 0%, 96%);
-$gray-3: hsl(0, 0%, 93%);
+$gray-3: hsl(0, 0%, 93%); //#EEEEEE
 $gray-4: hsl(0, 0%, 90%);
 $gray-5: hsl(0, 0%, 85%); //#D9D9D9
 $gray-6: hsl(0, 0%, 75%);
@@ -120,7 +121,7 @@ $gray-7: hsl(0, 0%, 60%); //#BFBFBF
 $gray-8: hsl(0, 0%, 45%); //#737373
 $gray-9: hsl(0, 0%, 30%); //#4D4D4D
 $gray-10: hsl(0, 0%, 20%); //#333333
-$test-gray: hsl(0, 0%, 90%) 5;
+$test-gray: hsl(0, 0%, 28%);
 
 // 线型色
 $line-blue: $blue-6;
@@ -210,6 +211,7 @@ $bg-component: $gray-1;
 $bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片
 $bg-disabled: $gray-3; //禁用组件背景
 $bg-table-heading: $gray-3; //表头
+$bg-gray: $gray-3;
 
 $body-background: #fff;
 $component-background: #fff;
@@ -251,7 +253,7 @@ $line-width-lg: 4px;
 // border-radius
 $border-radius-base: 3px; // tab,button,button bar,input,notification,card,alert
 $border-radius-sm: $border-radius-base - 1px; // checkbox,colorpick,pagination,timepicker,tag,datepicker
-$border-radius-lg: $border-radius-base + 1px; // switch,badge
+$border-radius-lg: 6px; // switch,badge
 
 // height
 $height-base: 32px; // button基础
@@ -573,7 +575,11 @@ $form-item-margin-bottom: 24px;
 
 $z-index: (
     popover: 1000,
-    lv2: 2,
+    notification: 1001,
+    progress: 2,
+    slider-mark: 3,
+    slider-handle: 2,
+    slider-track: 1,
 );
 
 @function z-index($key) {

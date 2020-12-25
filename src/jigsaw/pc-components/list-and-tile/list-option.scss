@@ -8,13 +8,13 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     box-sizing: border-box;
     position: relative;
     &:hover {
-        background: $item-hover-bg;
+        background: $brand-light;
     }
     &.#{$list-option-prefix-cls}-active {
         background: $item-active-bg;
     }
     &.#{$list-option-prefix-cls}-disabled {
-        background: $disabled-bg;
+        background: $bg-disabled;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
     }

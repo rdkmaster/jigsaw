@@ -35,9 +35,9 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
 
             &-value {
                 height: 100%;
-                background: $primary-color;
+                background: $brand-default;
                 position: relative;
-                transition: width .3s linear;
+                transition: width 0.3s linear;
 
                 i {
                     position: absolute;
@@ -48,21 +48,20 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                 }
 
                 .#{$progress-prefix-cls}-processing & {
-                    background: $primary-color;
+                    background: $primary-default;
                 }
 
                 .#{$progress-prefix-cls}-block & {
-                    background: $warning-color;
+                    background: $warning-default;
                 }
 
                 .#{$progress-prefix-cls}-error & {
-                    background: $error-color;
+                    background: $error-default;
                 }
 
                 .#{$progress-prefix-cls}-success & {
-                    background: $success-color;
+                    background: $success-default;
                 }
-
             }
 
             &-label-wrapper {
@@ -72,14 +71,14 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                 transform: translateY(-50%);
                 font-size: 24px;
                 padding: 0 8px;
-                z-index: $zindex-level-2;
+                @include z-index(progress);
                 .#{$progress-prefix-cls}-bar-icon {
                     font-size: inherit;
                 }
             }
 
             &-label-left {
-                color: $text-color-of-bg;
+                color: $font-color-white;
                 .#{$progress-prefix-cls}-bar-icon {
                     color: inherit !important;
                 }
@@ -87,22 +86,22 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
 
             &-label-right {
                 transform: translate(100%, -50%);
-                color: $primary-color;
+                color: $primary-default;
 
                 .#{$progress-prefix-cls}-processing & {
-                    color: $primary-color;
+                    color: $primary-default;
                 }
 
                 .#{$progress-prefix-cls}-block & {
-                    color: $warning-color;
+                    color: $warning-default;
                 }
 
                 .#{$progress-prefix-cls}-error & {
-                    color: $error-color;
+                    color: $error-default;
                 }
 
                 .#{$progress-prefix-cls}-success & {
-                    color: $success-color;
+                    color: $success-default;
                 }
             }
         }
@@ -114,26 +113,26 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
 
         &-label {
             padding: 2px 0;
-            color: $text-color-dark;
+            color: $font-color-default;
         }
 
         &-icon {
             font-size: 16px;
 
             .#{$progress-prefix-cls}-processing & {
-                color: $primary-color;
+                color: $primary-default;
             }
 
             .#{$progress-prefix-cls}-block & {
-                color: $warning-color;
+                color: $warning-default;
             }
 
             .#{$progress-prefix-cls}-error & {
-                color: $error-color;
+                color: $error-default;
             }
 
             .#{$progress-prefix-cls}-success & {
-                color: $success-color;
+                color: $success-default;
             }
         }
     }
@@ -143,19 +142,19 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
         padding-bottom: 4px;
 
         .#{$progress-prefix-cls}-processing & {
-            color: $primary-color;
+            color: $primary-default;
         }
 
         .#{$progress-prefix-cls}-block & {
-            color: $warning-color;
+            color: $warning-default;
         }
 
         .#{$progress-prefix-cls}-error & {
-            color: $error-color;
+            color: $error-default;
         }
 
         .#{$progress-prefix-cls}-success & {
-            color: $success-color;
+            color: $success-default;
         }
     }
 
@@ -173,6 +172,6 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
         padding-top: 4px;
         display: flex;
         justify-content: space-between;
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
 }

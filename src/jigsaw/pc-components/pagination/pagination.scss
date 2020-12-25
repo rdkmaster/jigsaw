@@ -14,8 +14,10 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         height: $height-base;
         line-height: $height-base;
         text-align: center;
-        border: 1px solid $border-color-base;
-        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-sm;
         margin-right: 8px;
         cursor: pointer;
         vertical-align: top;
@@ -23,21 +25,12 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
 
         &.#{$paging-prefix-cls}-disabled {
             cursor: not-allowed;
-            border: 1px solid $border-color-base;
+            border-color: $border-color-disabled;
             @include compatible(color, $disabled-color, $disabled-color-ie11);
-
-            &:hover {
-                border: 1px solid $border-color-base;
-                @include compatible(
-                    color,
-                    $disabled-color,
-                    $disabled-color-ie11
-                );
-            }
         }
 
         &:hover {
-            border: 1px solid $brand-hover;
+            border-color: $brand-hover;
             color: $brand-default;
         }
     }
