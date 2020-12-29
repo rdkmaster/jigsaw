@@ -6,35 +6,43 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
     @include inline-block();
     padding: 10px 6px;
     position: relative;
-    border-radius: 4px;
+    border-radius: $border-radius-base;
 
     &-content {
-        &-hour, &-minute, &-second {
+        &-hour,
+        &-minute,
+        &-second {
             @include clearfix();
-            width: 240px;
+            width: 314px;
 
             li {
                 float: left;
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
+                width: 26px;
+                height: 26px;
+                margin-right: 8px;
+                border-radius: $border-radius-base;
+                line-height: 26px;
                 text-align: center;
-                border-radius: 50%;
                 cursor: pointer;
 
                 &:hover {
-                    background: $primary-2;
+                    background: $brand-light;
                 }
 
                 &.#{$time-select-prefix-cls}-isSelected {
-                    background: $primary-color;
-                    color: $text-color-of-bg;
+                    background: $brand-default;
+                    color: $font-color-white;
                 }
 
                 &.#{$time-select-prefix-cls}-disabled {
-                    &, &:hover {
+                    &,
+                    &:hover {
                         background: none;
-                        @include compatible(color, $disabled-color, $disabled-color-ie11);
+                        @include compatible(
+                            color,
+                            $disabled-color,
+                            $disabled-color-ie11
+                        );
                         cursor: not-allowed;
                     }
                 }
@@ -50,11 +58,11 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
 
         span {
             float: right;
-            color: $primary-color;
+            color: $primary-default;
             cursor: pointer;
 
             &:hover {
-                color: $primary-8;
+                color: $primary-click;
             }
         }
     }

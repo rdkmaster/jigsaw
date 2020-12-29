@@ -121,7 +121,7 @@ $gray-7: hsl(0, 0%, 60%); //#BFBFBF
 $gray-8: hsl(0, 0%, 45%); //#737373
 $gray-9: hsl(0, 0%, 30%); //#4D4D4D
 $gray-10: hsl(0, 0%, 20%); //#333333
-$test-gray: hsl(0, 0%, 28%);
+$test-gray: hsl(0, 0%, 96%);
 
 // 线型色
 $line-blue: $blue-6;
@@ -208,7 +208,7 @@ $brand-light: $blue-1; //pagination,navi-menu
 // 背景色
 $bg-body: $gray-1; //背景
 $bg-component: $gray-1;
-$bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片
+$bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片、datepicker
 $bg-disabled: $gray-3; //禁用组件背景
 $bg-table-heading: $gray-3; //表头
 $bg-gray: $gray-3;
@@ -239,7 +239,7 @@ $icon-color-disabled: $gray-4;
 // 阴影
 $box-shadow-lv0: none; //背景
 $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%); // 页内卡片
-$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框
+$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框 ,datepicker
 $box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%); // 及时消息，模态弹框
 $box-shadow-alert: $box-shadow-lv3;
 
@@ -322,6 +322,25 @@ $icon-size-sm: 16px;
     outline-color: cyan;
 }
 /* **************************************************** */
+$z-index: (
+    popover: 1000,
+    notification: 1001,
+    progress: 2,
+    slider-mark: 3,
+    slider-handle: 2,
+    slider-track: 1,
+    list-disabled: 2,
+    input-disabled: 1,
+);
+
+@function z-index($key) {
+    @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+    z-index: z-index($key);
+}
+/* ******************************************************************* */
 // Color
 $primary-color: #41addc;
 $info-color: #41addc;
@@ -571,21 +590,4 @@ $form-item-margin-bottom: 24px;
     @keyframes #{$name} {
         @content;
     }
-}
-
-$z-index: (
-    popover: 1000,
-    notification: 1001,
-    progress: 2,
-    slider-mark: 3,
-    slider-handle: 2,
-    slider-track: 1,
-);
-
-@function z-index($key) {
-    @return map-get($z-index, $key);
-}
-
-@mixin z-index($key) {
-    z-index: z-index($key);
 }
