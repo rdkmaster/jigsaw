@@ -207,7 +207,7 @@ $bg-body: $gray-1; //背景
 $bg-component: $gray-1;
 $bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片、datepicker
 $bg-disabled: $gray-3; //禁用组件背景
-$bg-table-heading: $gray-3; //表头
+$bg-table-heading: $gray-4; //表头
 $bg-gray: $gray-3;
 
 $body-background: #fff;
@@ -235,7 +235,7 @@ $icon-color-disabled: $gray-4;
 // box-shadow-altitude
 // 阴影
 $box-shadow-lv0: none; //背景
-$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%); // 页内卡片
+$box-shadow-lv1: none;
 $box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框 ,datepicker
 $box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%); // 及时消息，模态弹框
 $box-shadow-alert: $box-shadow-lv3;
