@@ -34,7 +34,11 @@
 
     <div class="demo-2 live-demo">
         <h3>Icons</h3>
+        <p>Icon + Label</p>
         <jigsaw-button-bar [data]="types" [(selectedItems)]="selectedTypes" [multipleSelect]="multiple" trackItemBy="id">
+        </jigsaw-button-bar>
+        <p>Icon Only</p>
+        <jigsaw-button-bar [data]="unlabeledTypes" [multipleSelect]="multiple" trackItemBy="id">
         </jigsaw-button-bar>
     </div>
 
