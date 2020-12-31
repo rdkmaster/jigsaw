@@ -229,13 +229,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = select/basic
      * $demo = select/multiple
      * $demo = select/async
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): any {
         return this._value;
