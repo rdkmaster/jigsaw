@@ -23,6 +23,7 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         {label: "警告", id: 3, icon: 'iconfont iconfont-e8f7'},
         {label: "信息", id: 4, icon: 'fa fa-info-circle'}
     ]);
+    unlabeledTypes = this.types.map(t => ({id: t.id, icon: t.icon, label: ''}));
     selectedTypes = [{id: 4}];
 
     basicSelectChange(cityArr: ArrayCollection<any>) {
