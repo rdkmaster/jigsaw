@@ -66,7 +66,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     z-index: $zindex-level-1;
 }
 
-.#{$table-prefix-cls}-range{
+.#{$table-prefix-cls}-range {
     height: 100%;
     padding-top: 40px;
     &.#{$table-prefix-cls}-hide-head {
@@ -74,7 +74,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
-.#{$table-prefix-cls}-body-range{
+.#{$table-prefix-cls}-body-range {
     height: 100%;
     &.#{$table-prefix-cls}-no-data {
         height: 160px;
@@ -88,7 +88,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls}-auto-width {
-    .#{$table-prefix-cls}-cell-content, jigsaw-table-header {
+    .#{$table-prefix-cls}-cell-content,
+    jigsaw-table-header {
         white-space: nowrap;
     }
 }
@@ -101,7 +102,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls}-body {
-    > thead td{
+    > thead td {
         height: 0 !important;
         border: none;
     }
@@ -119,5 +120,42 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         cursor: pointer;
         font-size: 14px;
         color: $primary-color;
+    }
+}
+
+.#{$table-prefix-cls}-host {
+    table tbody tr {
+        .option-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 30px;
+            color: #108ee9;
+            box-sizing: border-box;
+            // background: #000;
+            cursor: move;
+
+            .drop-mid {
+                height: 18px;
+                padding: 0px 8px;
+            }
+
+            .drop-top,
+            .drop-bottom {
+                height: 6px;
+                // background: cyan;
+            }
+        }
+
+        &.drop-active-top {
+            background: linear-gradient(to bottom, green 6px, transparent 6px, transparent) !important;
+        }
+        &.drop-active-mid {
+            background:linear-gradient(to bottom, transparent 6px, cyan 6px, cyan 24px, transparent 24px, transparent) !important;
+        }
+        &.drop-active-bottom {
+            background: linear-gradient(to top, orange 6px, transparent 6px, transparent) !important;
+        }
     }
 }
