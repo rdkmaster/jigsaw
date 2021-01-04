@@ -8,8 +8,11 @@
 /*@import "jigsaw/pc-components/theming/prebuilt/zte-blue";*/
 /*@import "jigsaw/pc-components/theming/prebuilt/zte-red";*/
 // @import "jigsaw/pc-components/theming/prebuilt/zte-paletx";
-/* @import "jigsaw/pc-components/theming/prebuilt/paletx-pro-dark.scss"; */
-@import "jigsaw/pc-components/theming/prebuilt/paletx-pro-light.scss";
+@import "jigsaw/pc-components/theming/prebuilt/paletx-pro-dark.scss";
+// @import "jigsaw/pc-components/theming/prebuilt/paletx-pro-light.scss";
 @import "jigsaw/common/core/theming/theming-api";
 
 //@include setTableBody(#333, 12px , red, blue );
+body {
+    background: #000;
+}
