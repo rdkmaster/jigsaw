@@ -597,26 +597,30 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
  * 换行
  * */
 @Component({
-    template: `
-        <div class="option-box"
-             jigsaw-draggable jigsaw-droppable
-             (jigsawDragStart)="dragStartHandle($event)"
-             (jigsawDragEnd)="dragEndHandle($event)"
-             (jigsawDragEnter)="dragEnterHandle($event)"
-             (jigsawDragOver)="dragOverHandle($event)"
-             (jigsawDragLeave)="dragLeaveHandle($event)"
-             (jigsawDrop)="dropHandle($event)">
-            <span class="fa fa-arrows-alt"></span>
-            <span>test</span>
-        </div>`,
-    styles: [`.option-box {
-        color: #108ee9;
-        cursor: move;
-        width: 100%;
-    }`]
+    template: ` <div
+        class="option-box"
+        jigsaw-draggable
+        jigsaw-droppable
+        (jigsawDragStart)="dragStartHandle($event)"
+        (jigsawDragEnd)="dragEndHandle($event)"
+        (jigsawDragOver)="dragOverHandle($event)"
+        (jigsawDragLeave)="dragLeaveHandle($event)"
+        (jigsawDrop)="dropHandle($event)"
+    >
+        <span class="fa fa-arrows-alt"></span>
+        <span class="drop-top" jigsaw-droppable (jigsawDragEnter)="dragEnterHandle($event)">test</span>
+    </div>`,
+    styles: [
+        `
+            .option-box {
+                color: #108ee9;
+                cursor: move;
+                width: 100%;
+            }
+        `
+    ]
 })
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
-
     private allRows: any;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _injector: Injector) {
@@ -624,50 +628,65 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     resetSelectedRow() {
+        console.log("reset");
+        console.log(this._renderer);
         for (let i = 0; i < this.allRows.length; ++i) {
-            this._renderer.setStyle(this.allRows[i], 'background-color', i % 2 == 0 ? '#fff' : '#f8f8f8')
+            this._renderer.setStyle(this.allRows[i], "background-color", i % 2 == 0 ? "#fff" : "#f8f8f8");
+            // this._renderer.removeClass("1");
         }
     }
 
     dragStartHandle(dragInfo: DragDropInfo) {
-        console.log('drag start');
+        console.log("drag start");
+        // console.log(this);
         dragInfo.dragDropData = this.row;
-        dragInfo.event.dataTransfer.effectAllowed = 'link';
+        dragInfo.event.dataTransfer.effectAllowed = "link";
         if (!CommonUtils.isIE()) {
-            const img = CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr');
+            const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
         }
     }
 
     dragEndHandle(dragInfo: DragDropInfo) {
-        console.log('drag end');
+        console.log("drag end");
     }
 
     dragEnterHandle(dragInfo: DragDropInfo) {
-        console.log('drag enter');
-        dragInfo.event.dataTransfer.dropEffect = 'link';
+        console.log("drag enter");
+        console.log(dragInfo);
+        console.log(dragInfo.element.className.indexOf("drop-top") !== -1);
+        dragInfo.event.dataTransfer.dropEffect = "link";
         this.resetSelectedRow();
-        if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
-            this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-                'background-color', '#ffd54b')
+        if (dragInfo.event.dataTransfer.effectAllowed == "link") {
+            this._renderer.setStyle(
+                CommonUtils.getParentNodeBySelector(dragInfo.element, "tr"),
+                "background-color",
+                "red"
+            );
+            this._renderer.addClass(CommonUtils.getParentNodeBySelector(dragInfo.element, "tr"), "drop-active-top");
+            dragInfo.element.classList.add("drop-active");
+            dragInfo.element.style.background = "red";
         }
     }
 
     dragOverHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = 'link';
-        if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
-            this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-                'background-color', 'ffbf13')
+        dragInfo.event.dataTransfer.dropEffect = "link";
+        if (dragInfo.event.dataTransfer.effectAllowed == "link") {
+            this._renderer.setStyle(
+                CommonUtils.getParentNodeBySelector(dragInfo.element, "tr"),
+                "background-color",
+                "ffbf13"
+            );
         }
     }
 
     dragLeaveHandle(dragInfo: DragDropInfo) {
-        console.log('drag leave');
+        console.log("drag leave");
         this.resetSelectedRow();
     }
 
     dropHandle(dragInfo: DragDropInfo) {
-        console.log('drop');
+        console.log("drop");
         const draggingRowIndex = +dragInfo.dragDropData;
         if (this.row == draggingRowIndex) {
             return;
@@ -688,10 +707,9 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     ngAfterViewInit() {
-        this.allRows = CommonUtils
-            .getParentNodeBySelector(this._elementRef.nativeElement, 'table')
-            .querySelectorAll('tr');
-
+        this.allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll(
+            "tr"
+        );
     }
 }
 

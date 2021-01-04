@@ -64,7 +64,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         dragInfo.event.dataTransfer.dropEffect = 'link';
         if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
             this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-                'background-color', 'ffbf13')
+                'background-color', '#ffbf13')
         }
     }
 
