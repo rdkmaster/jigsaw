@@ -25,7 +25,9 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         align-items: center;
         height: $height-huge;
         padding: 0 16px;
-        border-bottom: 1px solid $splitline-color;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: $splitline-color;
         cursor: move;
     }
 
@@ -37,7 +39,9 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     }
 
     &-head &-title {
-        @extend %title-bold-lv1;
+        font-size: $font-title-lg;
+        font-weight: bold;
+        color: $font-color-heading-bold;
     }
 
     &-head &-close {

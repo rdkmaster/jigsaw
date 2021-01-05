@@ -80,7 +80,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
             color: $font-color-white;
         }
         &:active {
-            background: $brand-click;
+            background: $brand-active;
             color: $font-color-white;
         }
     }

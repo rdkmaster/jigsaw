@@ -12,10 +12,11 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
     &.#{$list-option-prefix-cls}-active {
         background: $item-active-bg;
+        background: $brand-active-light;
     }
     &.#{$list-option-prefix-cls}-disabled {
         background: $bg-disabled;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
         cursor: not-allowed;
     }
     &-title-box {
@@ -23,11 +24,11 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
     &-title {
         float: left;
-        color: #333;
+        color: $font-color-heading;
     }
     &-sub-title {
         float: right;
-        color: #999;
+        color: $font-color-hint;
     }
     &-block {
         position: absolute;
@@ -48,6 +49,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         display: block;
         width: 100%;
         height: 0;
-        border-top: 1px dotted $border-color-split;
+        border-top: 1px dotted $splitline-color;
     }
 }

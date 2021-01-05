@@ -8,9 +8,11 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         display: block;
     }
     &-wrapper {
-        border: 1px solid $border-color-base;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
         border-radius: $border-radius-base;
-        background: $component-background;
+        background: $bg-component;
         .#{$list-prefix-cls} {
             border: none;
         }
@@ -23,9 +25,9 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
     &-text {
         @include line-ellipsis(100%);
-        font-size: 12px;
+        font-size: $font-size-base;
     }
     &-error {
-        border: 1px solid $error-color;
+        border-color: $error-default;
     }
 }

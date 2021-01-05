@@ -25,7 +25,7 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
             left: 0;
             background: $bg-disabled;
             opacity: 0.7;
-            @include z-index(input-disabled);
+            z-index: $zindex-level-1;
             cursor: not-allowed;
         }
     }

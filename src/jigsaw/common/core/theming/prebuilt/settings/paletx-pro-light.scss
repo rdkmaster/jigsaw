@@ -116,12 +116,13 @@ $gray-2: hsl(0, 0%, 96%);
 $gray-3: hsl(0, 0%, 93%); //#EEEEEE
 $gray-4: hsl(0, 0%, 90%);
 $gray-5: hsl(0, 0%, 85%); //#D9D9D9
-$gray-6: hsl(0, 0%, 75%);
-$gray-7: hsl(0, 0%, 60%); //#BFBFBF
+$gray-6: hsl(0, 0%, 75%); //#BFBFBF
+$gray-7: hsl(0, 0%, 60%); //#999999
 $gray-8: hsl(0, 0%, 45%); //#737373
 $gray-9: hsl(0, 0%, 30%); //#4D4D4D
 $gray-10: hsl(0, 0%, 20%); //#333333
-$test-gray: hsl(0, 0%, 96%);
+$test-gray: hsl(0, 0%, 60%);
+$test-gray1: hsl(0, 0%, 75%);
 
 // 线型色
 $line-blue: $blue-6;
@@ -171,46 +172,47 @@ $status-error: $red-6;
 // 功能色-primary
 $primary-default: $blue-6;
 $primary-hover: $blue-7;
-$primary-click: $blue-8;
+$primary-active: $blue-8;
 $primary-disabled: $blue-2;
 
 // 功能色-success
 $success-default: $green-6;
 $success-hover: $green-7;
-$success-click: $green-8;
+$success-active: $green-8;
 $success-disabled: $green-2;
 
 // 功能色-warning
 $warning-default: $yellow-6;
 $warning-hover: $yellow-7;
-$warning-click: $yellow-8;
+$warning-active: $yellow-8;
 $warning-disabled: $yellow-2;
 
 // 功能色-error
 $error-default: $red-6;
 $error-hover: $red-7;
-$error-click: $red-8;
+$error-active: $red-8;
 $error-disabled: $red-2;
 
 // 功能色-danger
 $danger-default: $orange-6;
 $danger-hover: $orange-7;
-$danger-click: $orange-8;
+$danger-active: $orange-8;
 $danger-disabled: $orange-2;
 
 /* 品牌色 */
 $brand-default: $blue-6;
 $brand-hover: $blue-7;
-$brand-click: $blue-8;
+$brand-active: $blue-8;
 $brand-disabled: $blue-2;
 $brand-light: $blue-1; //pagination,navi-menu
+$brand-active-light: $blue-2;
 
 // 背景色
 $bg-body: $gray-1; //背景
 $bg-component: $gray-1;
 $bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片、datepicker
 $bg-disabled: $gray-3; //禁用组件背景
-$bg-table-heading: $gray-3; //表头
+$bg-header: $gray-3; //表头
 $bg-gray: $gray-3;
 
 $body-background: #fff;
@@ -234,6 +236,7 @@ $splitline-color: $gray-4; //分隔线
 
 $icon-color-default: $gray-6; //图标
 $icon-color-disabled: $gray-4;
+$icon-color-stress: $gray-8;
 
 // box-shadow-altitude
 // 阴影
@@ -276,71 +279,21 @@ $icon-size-lg: 48px;
 $icon-size-med: 20px;
 $icon-size-sm: 16px;
 
+// z-index list
+// 地面部分分成4层：null,1,2,3
+$zindex-level-1: 1;
+$zindex-level-2: 2;
+$zindex-level-3: 3;
+// 空中部分采用后来居上的策略，所以高度设成1000
+$zindex-popover-level-0: 1000;
+$zindex-popover-level-1: 1001;
+// ui设计器box部分
+$zindex-ui-level-0: 100;
+$zindex-ui-level-1: 101;
+$zindex-ui-level-2: 102;
+$zindex-ui-level-3: 103;
+
 /* ******************************************************** */
-
-// 代码块，后期分文件
-
-// 一级标题
-%title-lv1 {
-    font-size: $font-title-lg;
-    color: $font-color-heading;
-}
-// 二级标题
-%title-lv2 {
-    font-size: $font-title-med;
-    color: $font-color-heading;
-}
-// 三级标题
-%title-lv3 {
-    font-size: $font-title-sm;
-    color: $font-color-heading;
-}
-// 一级标题加粗
-%title-bold-lv1 {
-    font-size: $font-title-lg;
-    font-weight: bold;
-    color: $font-color-heading-bold;
-}
-// 二级标题加粗
-%title-bold-lv2 {
-    font-size: $font-title-med;
-    font-weight: bold;
-    color: $font-color-heading-bold;
-}
-// 三级标题加粗
-%title-bold-lv3 {
-    font-size: $font-title-sm;
-    font-weight: bold;
-    color: $font-color-heading-bold;
-}
-
-%test-1 {
-    outline: 1px dashed red;
-}
-
-%test-2 {
-    outline-color: cyan;
-}
-/* **************************************************** */
-$z-index: (
-    popover: 1000,
-    notification: 1001,
-    progress: 2,
-    slider-mark: 3,
-    slider-handle: 2,
-    slider-track: 1,
-    list-disabled: 2,
-    input-disabled: 1,
-);
-
-@function z-index($key) {
-    @return map-get($z-index, $key);
-}
-
-@mixin z-index($key) {
-    z-index: z-index($key);
-}
-/* ******************************************************************* */
 // Color
 $primary-color: #41addc;
 $info-color: #41addc;
@@ -474,20 +427,6 @@ $screen-lg-max: ($screen-lg-min - 1);
 // Layout and Grid system
 $grid-columns: 24;
 $grid-gutter-width: 0;
-
-// z-index list
-// 地面部分分成4层：null,1,2,3
-$zindex-level-1: 1;
-$zindex-level-2: 2;
-$zindex-level-3: 3;
-// 空中部分采用后来居上的策略，所以高度设成1000
-$zindex-popover-level-0: 1000;
-$zindex-popover-level-1: 1001;
-// ui设计器box部分
-$zindex-ui-level-0: 100;
-$zindex-ui-level-1: 101;
-$zindex-ui-level-2: 102;
-$zindex-ui-level-3: 103;
 
 // Form
 // ---

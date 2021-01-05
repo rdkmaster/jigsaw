@@ -62,7 +62,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
             cursor: pointer;
 
             &:hover {
-                color: $primary-click;
+                color: $primary-active;
             }
         }
     }

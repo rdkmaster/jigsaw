@@ -5,12 +5,11 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 .#{$drawer-prefix-cls} {
     background: $bg-component;
     box-shadow: $box-shadow-lv2;
-    @include z-index(popover);
+    z-index: $zindex-popover-level-0;
     &-in-dom {
         position: relative;
         display: inline-block;
-        transition: height $animation-duration-slow $ease-in-circ,
-            width $animation-duration-slow $ease-in-circ;
+        transition: height $animation-duration-slow $ease-in-circ, width $animation-duration-slow $ease-in-circ;
         overflow: hidden;
         > .#{$drawer-prefix-cls} {
             position: absolute;
@@ -48,7 +47,7 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
             background: $brand-hover;
         }
         &:active {
-            background: $brand-click;
+            background: $brand-active;
         }
     }
     &-left > &-bar {

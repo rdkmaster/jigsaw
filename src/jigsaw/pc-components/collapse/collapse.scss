@@ -7,18 +7,11 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
 }
 
 .#{$collapse-prefix} {
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color-default;
-    border-bottom: none;
-    border-radius: 4px;
-
     &-item {
-        border-bottom: $border-width-base $border-style-base $border-color-base;
         &.#{$collapse-prefix}-item-inactive {
             > .#{$collapse-prefix}-header {
                 .#{$collapse-prefix}-arrow {
-                    @include prefixer(transform, rotate(90deg));
+                    @include prefixer(transform, rotate(180deg));
                 }
             }
         }
@@ -29,9 +22,8 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         height: 38px;
         line-height: 38px;
         cursor: pointer;
-        color: $heading-color;
+        color: $font-color-heading;
         padding-left: 16px;
-        background: $background-color-base;
     }
 
     &-header &-arrow {
@@ -44,8 +36,8 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
     }
 
     &-item &-content {
+        color: $font-color-default;
         overflow: hidden;
-        background-color: $default-color;
         .#{$collapse-prefix}-padding {
             padding: 16px;
         }

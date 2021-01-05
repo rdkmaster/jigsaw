@@ -18,10 +18,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
 
     &:hover,
     &-active {
-        @include prefixer(
-            transition,
-            (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
-        );
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-color: $primary-default;
         // box-shadow: $box-focus-shadow;
     }
@@ -113,7 +110,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
                 }
 
                 &:active {
-                    color: $brand-click;
+                    color: $brand-active;
                 }
             }
         }
@@ -134,7 +131,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
             left: 0;
             background: $bg-disabled;
             opacity: 0.7;
-            @include z-index(input-disabled);
+            z-index: $zindex-level-1;
             cursor: not-allowed;
         }
     }

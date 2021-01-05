@@ -10,27 +10,28 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
 .#{$jigsaw-combo-select} {
     position: relative;
-    color: $text-color;
+    color: $icon-color-default;
     font-size: $font-size-base;
     cursor: pointer;
 
     &-selection {
         min-height: $height-base;
-        border-radius: $border-radius-base;
-        border: $border-width-base $border-style-base $border-color-base;
-        background: $component-background;
-        transition: all .3s $ease-in-out;
-        user-select: none;
         padding: 0 30px 0 7px;
+        background: $bg-component;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
+        transition: all 0.3s $ease-in-out;
+        user-select: none;
+    
         &:hover {
-            border-color: $primary-color;
-            box-shadow: $box-focus-shadow;
+            border-color: $brand-default;
         }
         .#{$jigsaw-combo-select}-error & {
-            border: 1px solid $error-color;
+            border-color: $error-default;
             &:hover {
-                border: 1px solid $error-color;
-                box-shadow: none;
+                border-color: $error-default;
             }
         }
     }
@@ -49,7 +50,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             height: $height-base - 8;
             line-height: $height-base - 8;
             border: none;
-            &.jigsaw-input-focused, &:hover {
+            &.jigsaw-input-focused,
+            &:hover {
                 box-shadow: none;
                 border: none;
             }
@@ -63,27 +65,29 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     &-placeholder {
         @include inline-block();
         font-size: $font-size-base;
-        color: $text-color-secondary;
+        color: $font-color-hint;
         padding-bottom: 3px;
         height: $height-base - 6;
         line-height: $height-base - 9;
     }
 
     &-disabled {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
         pointer-events: none;
     }
 
     &-disabled &-placeholder {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
     }
 
     &-disabled &-selection {
-        background-color: $disabled-bg;
+        background-color: $bg-disabled;
         cursor: not-allowed;
 
-        &:hover, &:active, &:focus {
-            border-color: $disabled-bg;
+        &:hover,
+        &:active,
+        &:focus {
+            border-color: $bg-disabled;
             box-shadow: none;
         }
     }
@@ -101,8 +105,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         transition: transform 0.3s $ease-in-out;
     }
 
-    &-down{
-        &:before{
+    &-down {
+        &:before {
             content: "\f107";
         }
     }
@@ -113,11 +117,11 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         right: 18px;
         width: 12px;
         transform: translateY(-50%);
-        color: $text-color-secondary;
+        font-size: $font-size-base;
+        color: $icon-color-default;
     }
 
     &-disabled &-clear {
-        color: darken($disabled-bg, 8%);
+        color: $icon-color-disabled;
     }
-
 }

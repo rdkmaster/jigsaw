@@ -18,7 +18,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         background-color: $bg-disabled;
         border-color: $border-color-base !important;
         opacity: 0.6;
-        @include z-index(list-disabled);
+        z-index: $zindex-level-2;
         cursor: not-allowed;
     }
 }

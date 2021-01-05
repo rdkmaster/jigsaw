@@ -36,7 +36,9 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         .#{$bc-prefix-cls}-item {
             color: $brand-default;
             &.#{$bc-prefix-cls}-current {
-                @extend %title-bold-lv1;
+                font-size: $font-title-lg;
+                font-weight: bold;
+                color: $font-color-heading-bold;
             }
         }
     }

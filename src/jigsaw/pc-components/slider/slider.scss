@@ -37,7 +37,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         height: 4px;
         border-radius: $border-radius-base;
         background-color: $brand-default;
-        @include z-index(slider-track);
+        z-index: $zindex-level-1;
         transition: background-color 0.3s ease;
     }
 
@@ -62,10 +62,9 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         border-radius: 50%;
         border: 2px solid $brand-default;
         background-color: $default-color;
-        @include z-index(slider-handle);
+        z-index: $zindex-level-2;
 
-        transition: border-color 0.3s ease,
-            transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
         &:hover {
             border-color: $brand-default;
@@ -85,7 +84,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         width: 100%;
         height: 100%;
         font-size: $font-size-base;
-        @include z-index(slider-mark);
+        z-index: $zindex-level-3;
 
         .#{$jigsaw-slider}-mark-text {
             position: absolute;

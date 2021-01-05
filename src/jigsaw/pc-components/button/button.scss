@@ -2,15 +2,7 @@
 
 $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
-%inline-block {
-    display: inline-block;
-    *zoom: 1;
-    *display: inline;
-    vertical-align: middle;
-}
-
 .#{$btn-prefix-cls} {
-    // @extend %inline-block;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -41,8 +33,8 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &:active {
-        color: $brand-click;
-        border-color: $brand-click;
+        color: $brand-active;
+        border-color: $brand-active;
     }
 
     &#{&}-clicked:after {
@@ -53,7 +45,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid $brand-click;
+        border: 1px solid $brand-active;
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
@@ -79,7 +71,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
             background: $primary-hover;
         }
         &:active {
-            background: $primary-click;
+            background: $primary-active;
         }
         &.#{$btn-prefix-cls}-clicked:after {
             border-color: $primary-default;
@@ -94,7 +86,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
             background: $warning-hover;
         }
         &:active {
-            background: $warning-click;
+            background: $warning-active;
         }
         &.#{$btn-prefix-cls}-clicked:after {
             border-color: $warning-default;
@@ -109,7 +101,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
             background: $error-hover;
         }
         &:active {
-            background: $error-click;
+            background: $error-active;
         }
         &.#{$btn-prefix-cls}-clicked:after {
             border-color: $error-default;

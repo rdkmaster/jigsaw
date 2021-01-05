@@ -15,7 +15,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
             flex: 1;
             height: 6px;
             border-radius: 2px;
-            background: $border-color-split;
+            background: $splitline-color;
             overflow: hidden;
 
             .#{$progress-prefix-cls}-default & {
@@ -71,7 +71,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                 transform: translateY(-50%);
                 font-size: 24px;
                 padding: 0 8px;
-                @include z-index(progress);
+                z-index: $zindex-level-2;
                 .#{$progress-prefix-cls}-bar-icon {
                     font-size: inherit;
                 }

@@ -24,9 +24,9 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         @include prefixer(transition, all 0.3s ease);
 
         &.#{$paging-prefix-cls}-disabled {
-            cursor: not-allowed;
             border-color: $border-color-disabled;
-            @include compatible(color, $disabled-color, $disabled-color-ie11);
+            color: $font-color-disabled;
+            cursor: not-allowed;
         }
 
         &:hover {
