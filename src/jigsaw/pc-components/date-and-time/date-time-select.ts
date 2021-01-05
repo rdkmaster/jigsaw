@@ -98,9 +98,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     private _date: WeekTime;
 
-    /**
-     *  @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get date(): WeekTime {
         return this._date;

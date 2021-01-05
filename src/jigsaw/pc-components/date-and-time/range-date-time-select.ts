@@ -105,9 +105,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     private _date: RangeDate;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get date(): RangeDate {
         return this._date;
