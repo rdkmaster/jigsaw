@@ -3,18 +3,17 @@ import {DragDropInfo} from "./types";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({
-    selector: '[jigsaw-draggable], [jigsawDraggable], [j-draggable]',
+    selector: "[jigsaw-draggable], [jigsawDraggable], [j-draggable]",
     host: {
-        '[attr.draggable]': 'true',
-        '(selectstart)': '_selectStartHandle($event)',
-        '(dragstart)': '_dragStartHandle($event)',
-        '(dragend)': '_dragEndHandle($event)',
-        '(mousedown)': '_mouseDownHandle($event)'
+        "[attr.draggable]": "true",
+        "(selectstart)": "_$selectStartHandle($event)",
+        "(dragstart)": "_$dragStartHandle($event)",
+        "(dragend)": "_$dragEndHandle($event)",
+        "(mousedown)": "_$mouseDownHandle($event)"
     }
 })
 export class JigsawDraggable implements OnInit, OnDestroy {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
-    }
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {}
 
     @Output()
     public jigsawDragStart: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
@@ -25,7 +24,10 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     @Output()
     public jigsawDrag: EventEmitter<DragDropInfo> = new EventEmitter<DragDropInfo>();
 
-    private _selectStartHandle(event) {
+    /**
+     * @internal
+     */
+    public _$selectStartHandle(event) {
         return false;
     }
 
@@ -35,18 +37,22 @@ export class JigsawDraggable implements OnInit, OnDestroy {
     /**
      * dragstart给的事件的offsetX和offsetY不准确，通过mousedown事件来弥补
      * @param event
-     *
+     * @internal
      */
-    private _mouseDownHandle(event) {
+
+    public _$mouseDownHandle(event) {
         this._offsetX = event.offsetY;
         this._offsetY = event.offsetY;
     }
 
-    private _dragStartHandle(event) {
+    /**
+     * @internal
+     */
+    public _$dragStartHandle(event) {
         /*拖拽开始*/
         //拖拽效果
         event.stopPropagation();
-        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.effectAllowed = "move";
         if (!CommonUtils.isIE()) {
             event.dataTransfer.setDragImage(event.target, this._offsetX, this._offsetY);
         }
@@ -54,15 +60,18 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         return true;
     }
 
-    private _dragEndHandle(event) {
+    /**
+     * @internal
+     */
+    public _$dragEndHandle(event) {
         /*拖拽结束*/
         //event.dataTransfer.clearData("text");
         event.stopPropagation();
         this.jigsawDragEnd.emit(new DragDropInfo(event, this._elementRef.nativeElement));
-        return false
+        return false;
     }
 
-    private _dragHandle = (event) => {
+    private _dragHandle = event => {
         /*拖拽元素的时候*/
         event.stopPropagation();
         this.jigsawDrag.emit(new DragDropInfo(event, this._elementRef.nativeElement));
@@ -72,9 +81,8 @@ export class JigsawDraggable implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._zone.runOutsideAngular(() => {
-            this._removeDragHandler = this._renderer.listen(
-                this._elementRef.nativeElement, 'drag', this._dragHandle);
-        })
+            this._removeDragHandler = this._renderer.listen(this._elementRef.nativeElement, "drag", this._dragHandle);
+        });
     }
 
     ngOnDestroy() {
@@ -82,6 +90,5 @@ export class JigsawDraggable implements OnInit, OnDestroy {
             this._removeDragHandler();
         }
     }
-
 }
 

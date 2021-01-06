@@ -5,9 +5,9 @@ import {CallbackRemoval} from "../../core/utils/common-utils";
 @Directive({
     selector: '[jigsaw-droppable], [jigsawDroppable], [j-droppable]',
     host: {
-        '(dragenter)': '_dragEnterHandle($event)',
-        '(dragleave)': '_dragLeaveHandle($event)',
-        '(drop)': '_dropHandle($event)'
+        '(dragenter)': '_$dragEnterHandle($event)',
+        '(dragleave)': '_$dragLeaveHandle($event)',
+        '(drop)': '_$dropHandle($event)'
     }
 })
 export class JigsawDroppable implements OnInit, OnDestroy {
@@ -36,7 +36,7 @@ export class JigsawDroppable implements OnInit, OnDestroy {
     /**
      * @internal
      */
-    public _dragEnterHandle(event) {
+    public _$dragEnterHandle(event) {
         /*拖拽元素进入目标元素头上的时候*/
         event.stopPropagation();
         this.jigsawDragEnter.emit(new DragDropInfo(event, this._elementRef.nativeElement));
@@ -46,7 +46,7 @@ export class JigsawDroppable implements OnInit, OnDestroy {
     /**
      * @internal
      */
-    public _dragLeaveHandle(event) {
+    public _$dragLeaveHandle(event) {
         /*拖拽元素离开目标元素头上的时候*/
         event.stopPropagation();
         this.jigsawDragLeave.emit(new DragDropInfo(event, this._elementRef.nativeElement));
@@ -64,7 +64,7 @@ export class JigsawDroppable implements OnInit, OnDestroy {
     /**
      * @internal
      */
-    public _dropHandle(event) {
+    public _$dropHandle(event) {
         /*拖拽元素进入目标元素头上，同时鼠标松开的时候*/
         event.stopPropagation();
         this.jigsawDrop.emit(new DragDropInfo(event, this._elementRef.nativeElement));

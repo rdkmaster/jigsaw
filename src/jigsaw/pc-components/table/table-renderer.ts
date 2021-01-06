@@ -625,6 +625,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
         ></span>
     </div>`
 })
+
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
     private _allRows: NodeListOf<any>;
 
