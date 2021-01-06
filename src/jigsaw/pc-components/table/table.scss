@@ -51,7 +51,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                     }
                 }
                 td[rowspan] {
-                    background: $default-color;
+                    background: $bg-component;
                 }
             }
         }
@@ -80,12 +80,12 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     height: 100%;
     &.#{$table-prefix-cls}-no-data {
         height: 160px;
-        border: 1px solid $border-color-base;
+        border: 1px solid $border-color-default;
     }
 
     .#{$table-prefix-cls}-ff & {
-        border-left: 1px solid $border-color-base;
-        border-right: 1px solid $border-color-base;
+        border-left: 1px solid $border-color-default;
+        border-right: 1px solid $border-color-default;
     }
 }
 
@@ -121,6 +121,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     &-tree-bar {
         cursor: pointer;
         font-size: 14px;
-        color: $primary-color;
+        color: $primary-default;
     }
 }
