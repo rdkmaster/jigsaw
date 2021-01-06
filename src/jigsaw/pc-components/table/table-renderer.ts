@@ -19,7 +19,7 @@ import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/a
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {take} from 'rxjs/operators';
 import { DragDropInfo } from "jigsaw/common/directive/dragdrop/types";
-import { JigsawDraggableModule, JigsawDroppableModule } from "jigsaw/common/directive/dragdrop";
+import { JigsawDraggableModule, JigsawDroppableModule } from "jigsaw/common/directive/dragdrop/index";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
