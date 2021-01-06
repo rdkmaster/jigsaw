@@ -598,56 +598,44 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
  * */
 @Component({
     template: ` <div
-        class="option-box"
+        class="jigsaw-table-option-box"
         jigsaw-draggable
         jigsaw-droppable
-        (jigsawDragStart)="dragStartHandle($event)"
-        (jigsawDragEnd)="dragEndHandle($event)"
+        (jigsawDragStart)="_$dragStartHandle($event)"
+        (jigsawDragEnd)="_$dragEndHandle($event)"
     >
         <span
             class="drop-top"
             jigsaw-droppable
-            (jigsawDragEnter)="dragEnterHandle($event)"
-            (jigsawDragLeave)="dragLeaveHandle($event)"
-            (jigsawDrop)="dropHandle($event)"
+            (jigsawDragEnter)="_$dragEnterHandle($event)"
+            (jigsawDrop)="_$dropHandle($event)"
         ></span>
         <span
             class="drop-mid"
             jigsaw-droppable
-            (jigsawDragEnter)="dragEnterHandle($event)"
-            (jigsawDragLeave)="dragLeaveHandle($event)"
-            (jigsawDrop)="dropHandle($event)"
+            (jigsawDragEnter)="_$dragEnterHandle($event)"
+            (jigsawDrop)="_$dropHandle($event)"
             ><i class="fa fa-arrows-alt"></i
         ></span>
         <span
             class="drop-bottom"
             jigsaw-droppable
-            (jigsawDragEnter)="dragEnterHandle($event)"
-            (jigsawDragLeave)="dragLeaveHandle($event)"
-            (jigsawDrop)="dropHandle($event)"
+            (jigsawDragEnter)="_$dragEnterHandle($event)"
+            (jigsawDrop)="_$dropHandle($event)"
         ></span>
     </div>`
 })
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
-    private allRows: any;
+    private _allRows: NodeListOf<any>;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _injector: Injector) {
         super(_injector);
     }
 
-    resetSelectedRow() {
-        console.log("reset");
-        console.log(this._renderer);
-        for (let i = 0; i < this.allRows.length; ++i) {
-            this._renderer.removeClass(this.allRows[i], "drop-active-top");
-            this._renderer.removeClass(this.allRows[i], "drop-active-mid");
-            this._renderer.removeClass(this.allRows[i], "drop-active-bottom");
-            this._renderer.removeClass(this.allRows[i], "jigsaw-table-row-selected");
-        }
-    }
-
-    dragStartHandle(dragInfo: DragDropInfo) {
-        console.log("drag start");
+    /**
+     * @interval
+     */
+    _$dragStartHandle(dragInfo: DragDropInfo) {
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = "link";
         if (!CommonUtils.isIE()) {
@@ -656,15 +644,19 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         }
     }
 
-    dragEndHandle(dragInfo: DragDropInfo) {
-        console.log("drag end");
-        this.resetSelectedRow();
+    /**
+     * @interval
+     */
+    _$dragEndHandle(dragInfo: DragDropInfo) {
+        this._resetSelectedRow();
     }
 
-    dragEnterHandle(dragInfo: DragDropInfo) {
-        console.log("drag enter");
+    /**
+     * @interval
+     */
+    _$dragEnterHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = "link";
-        this.resetSelectedRow();
+        this._resetSelectedRow();
         if (dragInfo.event.dataTransfer.effectAllowed == "link") {
             let _dropClass = "";
             if (dragInfo.element.className.indexOf("drop-top") !== -1) {
@@ -678,28 +670,22 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         }
     }
 
-    dragOverHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = "link";
-        if (dragInfo.event.dataTransfer.effectAllowed === "link") {
-        }
-    }
-
-    dragLeaveHandle(dragInfo: DragDropInfo) {
-        console.log("drag leave");
-    }
-
-    dropHandle(dragInfo: DragDropInfo) {
-        console.log("drop");
+    /**
+     * @interval
+     */
+    _$dropHandle(dragInfo: DragDropInfo) {
         const draggingRowIndex = +dragInfo.dragDropData;
-        const draggingRow = this.tableData.data[draggingRowIndex];
-        if (draggingRowIndex === this.row) return;
+        if (draggingRowIndex === this.row) {
+            return;
+        }
         if (dragInfo.element.className.indexOf("drop-top") !== -1) {
             if (draggingRowIndex < this.row) {
-                CommonUtils.array_move(this.tableData.data, draggingRowIndex, this.row - 1);
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
             } else {
-                CommonUtils.array_move(this.tableData.data, draggingRowIndex, this.row);
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
             }
         } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
+            const draggingRow = this.tableData.data[draggingRowIndex];
             if (!draggingRow) {
                 return;
             }
@@ -708,9 +694,9 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             this.tableData.data[draggingRowIndex] = thisRow;
         } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
             if (draggingRowIndex < this.row) {
-                CommonUtils.array_move(this.tableData.data, draggingRowIndex, this.row);
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
             } else {
-                CommonUtils.array_move(this.tableData.data, draggingRowIndex, this.row + 1);
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row + 1);
             }
         }
 
@@ -718,10 +704,27 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         this.tableData.refresh();
     }
 
+    private _resetSelectedRow() {
+        for (let i = 0; i < this._allRows.length; ++i) {
+            this._renderer.removeClass(this._allRows[i], "drop-active-top");
+            this._renderer.removeClass(this._allRows[i], "drop-active-mid");
+            this._renderer.removeClass(this._allRows[i], "drop-active-bottom");
+            this._renderer.removeClass(this._allRows[i], "jigsaw-table-row-selected");
+        }
+    }
+
+    private _arrayMove(arr: any[], oldIndex: number, newIndex: number) {
+        if (newIndex >= arr.length) {
+            var k = newIndex - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
+    }
+
     ngAfterViewInit() {
-        this.allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll(
-            "tr"
-        );
+        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "tr" );
         this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
     }
 }
