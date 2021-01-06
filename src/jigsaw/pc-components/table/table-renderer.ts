@@ -18,8 +18,8 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {take} from 'rxjs/operators';
-import { DragDropInfo } from "jigsaw/common/directive/dragdrop/types";
-import { JigsawDraggableModule, JigsawDroppableModule } from "jigsaw/common/directive/dragdrop/index";
+import { DragDropInfo } from "../../common/directive/dragdrop/types";
+import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
