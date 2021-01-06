@@ -633,9 +633,9 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     /**
-     * @interval
+     * @internal
      */
-    _$dragStartHandle(dragInfo: DragDropInfo) {
+    public _$dragStartHandle(dragInfo: DragDropInfo) {
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = "link";
         if (!CommonUtils.isIE()) {
@@ -645,16 +645,16 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     /**
-     * @interval
+     * @internal
      */
-    _$dragEndHandle(dragInfo: DragDropInfo) {
+    public _$dragEndHandle(dragInfo: DragDropInfo) {
         this._resetSelectedRow();
     }
 
     /**
-     * @interval
+     * @internal
      */
-    _$dragEnterHandle(dragInfo: DragDropInfo) {
+    public _$dragEnterHandle(dragInfo: DragDropInfo) {
         dragInfo.event.dataTransfer.dropEffect = "link";
         this._resetSelectedRow();
         if (dragInfo.event.dataTransfer.effectAllowed == "link") {
@@ -671,9 +671,9 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     /**
-     * @interval
+     * @internal
      */
-    _$dropHandle(dragInfo: DragDropInfo) {
+    public _$dropHandle(dragInfo: DragDropInfo) {
         const draggingRowIndex = +dragInfo.dragDropData;
         if (draggingRowIndex === this.row) {
             return;
