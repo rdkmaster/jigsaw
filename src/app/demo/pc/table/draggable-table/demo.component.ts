@@ -25,8 +25,8 @@ export class TableDraggableDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    public summary = "拖拽表格Demo";
-    public description = "1";
+    summary: string = "";
+    description: string = "";
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
         this.tableData = new TableData(
             [
