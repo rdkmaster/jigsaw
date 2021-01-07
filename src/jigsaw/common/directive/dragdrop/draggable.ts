@@ -71,11 +71,11 @@ export class JigsawDraggable implements OnInit, OnDestroy {
         return false;
     }
 
-    private _dragHandle = event => {
+    private _dragHandle(event: any): void {
         /*拖拽元素的时候*/
         event.stopPropagation();
         this.jigsawDrag.emit(new DragDropInfo(event, this._elementRef.nativeElement));
-    };
+    }
 
     private _removeDragHandler: CallbackRemoval;
 
