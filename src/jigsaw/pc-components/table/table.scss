@@ -11,15 +11,17 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         text-align: center;
         table-layout: fixed;
         td {
+            color: $font-color-default;
             border-width: 1px;
             border-style: solid;
             border-color: $border-color-base;
         }
         thead {
-            color: $heading-color;
+            color: $font-color-heading-bold;
+            font-weight: bold;
             tr {
                 td {
-                    height: 30px;
+                    height: 40px;
                     background: $bg-header;
                 }
             }
