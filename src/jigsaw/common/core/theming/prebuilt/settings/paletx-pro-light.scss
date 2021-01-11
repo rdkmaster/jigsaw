@@ -9,7 +9,6 @@ $blue-7: hsl(209, 85%, 46%); //#1178D9
 $blue-8: hsl(210, 88%, 37%); //#0B5FB3
 $blue-9: hsl(211, 92%, 29%);
 $blue-10: hsl(212, 96%, 20%);
-$blue-test: hsl(200, 100%, 92%);
 
 $cyan-1: hsl(174, 100%, 94%);
 $cyan-2: hsl(176, 78%, 83%);
@@ -65,7 +64,6 @@ $orange-7: hsl(29, 87%, 43%);
 $orange-8: hsl(28, 91%, 35%);
 $orange-9: hsl(27, 94%, 27%);
 $orange-10: hsl(26, 98%, 19%);
-$orange-test: hsl(30, 88%, 51%);
 
 $red-1: hsl(4, 100%, 95%);
 $red-2: hsl(4, 100%, 88%);
@@ -121,10 +119,8 @@ $gray-7: hsl(0, 0%, 60%); //#999999
 $gray-8: hsl(0, 0%, 45%); //#737373
 $gray-9: hsl(0, 0%, 30%); //#4D4D4D
 $gray-10: hsl(0, 0%, 20%); //#333333
-$test-gray: hsl(0, 0%, 60%);
-$test-gray1: hsl(0, 0%, 75%);
 
-// 线型色
+/* 线型色 */
 $line-blue: $blue-6;
 $line-green: $green-5;
 $line-yellow: $yellow-6;
@@ -136,7 +132,7 @@ $line-navy: $navy-6;
 $line-lime: $lime-5;
 $line-magenta: $magenta-6;
 
-// 面型色
+/* 面型色 */
 $surf-blue: $blue-5;
 $surf-green: $green-4;
 $surf-yellow: $yellow-5;
@@ -148,7 +144,7 @@ $surf-navy: $navy-5;
 $surf-lime: $lime-4;
 $surf-magenta: $magenta-5;
 
-// 面透明,基本用于hover
+/* 面透明（基本用于hover） */
 $surf-tp-blue: $blue-1;
 $surf-tp-green: $green-1;
 $surf-tp-uellow: $yellow-1;
@@ -160,7 +156,7 @@ $surf-tp-navy: $navy-1;
 $surf-tp-lime: $lime-1;
 $surf-tp-magenta: $magenta-1;
 
-// 功能色-基础
+/* 功能色-基础 */
 $status-primary: $blue-6;
 $status-success: $green-6;
 $status-warning: $yellow-6;
@@ -169,103 +165,125 @@ $status-error: $red-6;
 
 /* ******************************************************************* */
 
-// 功能色-primary
+/* 功能色-primary */
 $primary-default: $blue-6;
 $primary-hover: $blue-7;
 $primary-active: $blue-8;
 $primary-disabled: $blue-2;
 
-// 功能色-success
+/* 功能色-success */
 $success-default: $green-6;
 $success-hover: $green-7;
 $success-active: $green-8;
 $success-disabled: $green-2;
 
-// 功能色-warning
+/* 功能色-warning */
 $warning-default: $yellow-6;
 $warning-hover: $yellow-7;
 $warning-active: $yellow-8;
 $warning-disabled: $yellow-2;
 
-// 功能色-error
+/* 功能色-error */
 $error-default: $red-6;
 $error-hover: $red-7;
 $error-active: $red-8;
 $error-disabled: $red-2;
 
-// 功能色-danger
+/* 功能色-danger */
 $danger-default: $orange-6;
 $danger-hover: $orange-7;
 $danger-active: $orange-8;
 $danger-disabled: $orange-2;
 
-/* 品牌色 */
+/* brand 品牌色 */
 $brand-default: $blue-6;
 $brand-hover: $blue-7;
 $brand-active: $blue-8;
 $brand-disabled: $blue-2;
-$brand-light: $blue-1; //pagination,navi-menu
+$brand-light: $blue-1;
 $brand-active-light: $blue-2;
 
-// 背景色
-$bg-body: $gray-1; //背景
+/* background 背景色
+    $bg-body => 背景、页面背景
+    $bg-component => 组件背景
+    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
+    $bg-disabled => 组件禁用背景
+    $bg-header => 表头
+    $bg-gray => tag
+*/
+$bg-body: $gray-1;
 $bg-component: $gray-1;
-$bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片、datepicker
-$bg-disabled: $gray-3; //禁用组件背景
-$bg-header: $gray-3; //表头
+$bg-container: $gray-2;
+$bg-disabled: $gray-3;
+$bg-header: $gray-3;
 $bg-gray: $gray-3;
 
-$body-background: #fff;
-$component-background: #fff;
+/* font 字体颜色
+    $font-color-default => 正文
+    $font-color-disabled => 禁用文字
+    $font-color-hint => 提示
+    $font-color-watermark => 水印文字
+    $font-color-heading => 非加粗标题
+    $font-color-heading-bold => 加粗标题
+    $font-color-tag => 标签文字
+    $font-color-white => 深底白字
+*/
+$font-color-default: $gray-9;
+$font-color-disabled: $gray-6;
+$font-color-hint: $gray-7;
+$font-color-watermark: $gray-7;
+$font-color-heading: $gray-10;
+$font-color-heading-bold: $gray-9;
+$font-color-tag: $gray-8;
+$font-color-white: hsl(0, 0%, 100%);
 
-// font
-$font-color-default: $gray-9; //正文
-$font-color-disabled: $gray-6; //禁用文字
-$font-color-hint: $gray-7; //提示
-$font-color-watermark: $gray-7; //水印文字
-$font-color-heading: $gray-10; //非加粗标题
-$font-color-heading-bold: $gray-9; //加粗标题
-$font-color-tag: $gray-8; //标签文字
-$font-color-white: hsl(0, 0%, 100%); //深底白字
-
-// border
+/* border 边框 */
 $border-color-default: $gray-5;
 $border-color-disabled: $gray-4;
 
-$splitline-color: $gray-4; //分隔线
+/* split line 分割线 */
+$splitline-color: $gray-4;
 
-$icon-color-default: $gray-6; //图标
+/* icon 图标 */
+$icon-color-default: $gray-6;
 $icon-color-disabled: $gray-4;
 $icon-color-stress: $gray-8;
 
-// box-shadow-altitude
-// 阴影
-$box-shadow-lv0: none; //背景
-$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%); // 页内卡片
-$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框 ,datepicker
-$box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%); // 及时消息，模态弹框
-$box-shadow-alert: $box-shadow-lv3;
+/* box-shadow 阴影（基于altitude）
+    $box-shadow-lv0 => 背景
+    $box-shadow-lv1 => 页内卡片
+    $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
+    $box-shadow-lv3 => 及时消息、模态弹框、alert
+*/
+$box-shadow-lv0: none;
+$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%);
+$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%);
+$box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%);
 
 /* ******************************************************** */
 // 皮肤结构参数，后期分文件
-// line-width
+/* line-width */
 $line-width-base: 1px;
 $line-width-med: 2px;
 $line-width-lg: 4px;
 
-// border-radius
-$border-radius-base: 3px; // tab,button,button bar,input,notification,card,alert
-$border-radius-sm: $border-radius-base - 1px; // checkbox,colorpick,pagination,timepicker,tag,datepicker
-$border-radius-lg: 6px; // switch,badge
+/* border-radius 
+    $border-radius-base => tab,button,button bar,input,notification,card,alert
+    $border-radius-sm => checkbox,colorpick,pagination,timepicker,tag,datepicker
+    $border-radius-lg => switch,badge
+*/
+$border-radius-base: 3px;
+$border-radius-sm: $border-radius-base - 1px;
+$border-radius-lg: 6px;
 
-// height
-$height-base: 32px; // button基础
+/* height */
+$height-base: 32px;
 $height-sm: 24px;
 $height-med: 28px;
 $height-lg: 36px;
 $height-huge: 40px;
 
-// font size
+/* font size */
 $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-lg: $font-size-base + 2px;
@@ -274,12 +292,12 @@ $font-title-lg: 16px;
 $font-title-med: 14px;
 $font-title-sm: 12px;
 
-//icon size
+/* icon size */
 $icon-size-lg: 48px;
 $icon-size-med: 20px;
 $icon-size-sm: 16px;
 
-// z-index list
+/* z-index list */
 // 地面部分分成4层：null,1,2,3
 $zindex-level-1: 1;
 $zindex-level-2: 2;
@@ -294,6 +312,30 @@ $zindex-ui-level-2: 102;
 $zindex-ui-level-3: 103;
 
 /* ******************************************************** */
+// 色阶生成工具
+$color-base: hsl(233, 71%, 60%);
+$color-light-1: hsl(227, 100%, 95%);
+$color-light-2: hsl(229, 100%, 90%);
+$color-light-3: hsl(230, 89%, 83%);
+$color-light-4: hsl(231, 80%, 75%);
+$color-light-5: hsl(232, 76%, 68%);
+$color-light-6: hsl(233, 71%, 60%);
+$color-light-7: hsl(234, 54%, 49%);
+$color-light-8: hsl(235, 61%, 39%);
+$color-light-9: hsl(236, 70%, 30%);
+$color-light-10: hsl(237, 79%, 21%);
+
+$color-dark-1: hsl(237, 17%, 20%);
+$color-dark-2: hsl(238, 25%, 30%);
+$color-dark-3: hsl(236, 33%, 38%);
+$color-dark-4: hsl(235, 39%, 45%);
+$color-dark-5: hsl(234, 49%, 53%);
+$color-dark-6: hsl(233, 71%, 60%);
+$color-dark-7: hsl(232, 76%, 68%);
+$color-dark-8: hsl(231, 80%, 75%);
+$color-dark-9: hsl(230, 89%, 83%);
+$color-dark-10: hsl(229, 100%, 90%);
+
 // Color
 $primary-color: #41addc;
 $info-color: #41addc;
@@ -327,6 +369,9 @@ $text-color-secondary: #999;
 $text-color-dark: #444;
 $text-color-secondary-dark: #777;
 $text-color-of-bg: #fff;
+
+$body-background: #fff;
+$component-background: #fff;
 
 $line-height-base: 1.5;
 

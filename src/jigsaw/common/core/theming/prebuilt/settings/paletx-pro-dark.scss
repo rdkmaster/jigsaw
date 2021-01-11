@@ -120,7 +120,7 @@ $gray-8: #a4a7b3;
 $gray-9: #d9d9d9;
 $gray-10: #e5e5e5;
 
-// 线型色
+/* 线型色 */
 $line-blue: $blue-6;
 $line-green: $green-5;
 $line-yellow: $yellow-6;
@@ -132,7 +132,7 @@ $line-navy: $navy-6;
 $line-lime: $lime-5;
 $line-magenta: $magenta-6;
 
-// 面型色
+/* 面型色 */
 $surf-blue: $blue-5;
 $surf-green: $green-4;
 $surf-yellow: $yellow-5;
@@ -144,7 +144,7 @@ $surf-navy: $navy-5;
 $surf-lime: $lime-4;
 $surf-magenta: $magenta-5;
 
-// 面透明,基本用于hover
+/* 面透明（基本用于hover） */
 $surf-tp-blue: $blue-1;
 $surf-tp-green: $green-1;
 $surf-tp-uellow: $yellow-1;
@@ -156,7 +156,7 @@ $surf-tp-navy: $navy-1;
 $surf-tp-lime: $lime-1;
 $surf-tp-magenta: $magenta-1;
 
-// 功能色-基础
+/* 功能色-基础 */
 $status-primary: $blue-6;
 $status-success: $green-6;
 $status-warning: $yellow-6;
@@ -165,101 +165,125 @@ $status-error: $red-6;
 
 /* ******************************************************************* */
 
-// 功能色-primary
+/* 功能色-primary */
 $primary-default: $blue-6;
 $primary-hover: $blue-7;
 $primary-active: $blue-8;
 $primary-disabled: $blue-2;
 
-// 功能色-success
+/* 功能色-success */
 $success-default: $green-6;
 $success-hover: $green-7;
 $success-active: $green-8;
 $success-disabled: $green-2;
 
-// 功能色-warning
+/* 功能色-warning */
 $warning-default: $yellow-6;
 $warning-hover: $yellow-7;
 $warning-active: $yellow-8;
 $warning-disabled: $yellow-2;
 
-// 功能色-error
+/* 功能色-error */
 $error-default: $red-6;
 $error-hover: $red-7;
 $error-active: $red-8;
 $error-disabled: $red-2;
 
-// 功能色-danger
+/* 功能色-danger */
 $danger-default: $orange-6;
 $danger-hover: $orange-7;
 $danger-active: $orange-8;
 $danger-disabled: $orange-2;
 
-/* 品牌色 */
+/* brand 品牌色 */
 $brand-default: $blue-6;
 $brand-hover: $blue-7;
 $brand-active: $blue-8;
 $brand-disabled: $blue-2;
-$brand-light: $blue-1; //pagination,navi-menu
+$brand-light: $blue-1;
+$brand-active-light: $blue-2;
 
-// 背景色
-$bg-body: $gray-1; //背景
-$bg-component: $gray-1;
-$bg-container: $gray-2; //不影响功能的背景 侧边栏、白色卡片、datepicker
-$bg-disabled: $gray-3; //禁用组件背景
-$bg-table-heading: $gray-4; //表头
+/* background 背景色
+    $bg-body => 背景、页面背景
+    $bg-component => 组件背景
+    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
+    $bg-disabled => 组件禁用背景
+    $bg-header => 表头
+    $bg-gray => tag
+*/
+$bg-body: $gray-1;
+$bg-component: $gray-2;
+$bg-container: $gray-2;
+$bg-disabled: $gray-3;
+$bg-header: $gray-4;
 $bg-gray: $gray-3;
 
-$body-background: #fff;
-$component-background: #fff;
+/* font 字体颜色
+    $font-color-default => 正文
+    $font-color-disabled => 禁用文字
+    $font-color-hint => 提示
+    $font-color-watermark => 水印文字
+    $font-color-heading => 非加粗标题
+    $font-color-heading-bold => 加粗标题
+    $font-color-tag => 标签文字
+    $font-color-white => 深底白字
+*/
+$font-color-default: $gray-9;
+$font-color-disabled: $gray-6;
+$font-color-hint: $gray-7;
+$font-color-watermark: $gray-7;
+$font-color-heading: $gray-10;
+$font-color-heading-bold: $gray-9;
+$font-color-tag: $gray-8;
+$font-color-white: hsl(0, 0%, 100%);
 
-// font
-$font-color-default: $gray-9; //正文
-$font-color-disabled: $gray-6; //禁用文字
-$font-color-hint: $gray-7; //提示
-$font-color-watermark: $gray-7; //水印文字
-$font-color-heading: $gray-10; //非加粗标题
-$font-color-heading-bold: $gray-9; //加粗标题
-$font-color-tag: $gray-8; //标签文字
-$font-color-white: hsl(0, 0%, 100%); //深底白字
-
-// border
+/* border 边框 */
 $border-color-default: $gray-6;
 $border-color-disabled: $gray-4;
 
-$splitline-color: $gray-5; //分隔线
+/* split line 分割线 */
+$splitline-color: $gray-4;
 
-$icon-color-default: $gray-8; //图标
+/* icon 图标 */
+$icon-color-default: $gray-7;
 $icon-color-disabled: $gray-4;
+$icon-color-stress: $gray-10;
 
-// box-shadow-altitude
-// 阴影
-$box-shadow-lv0: none; //背景
-$box-shadow-lv1: none;
-$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%); // Tooltip,浮动按钮，卡片hover，popover，抽屉，下拉框，级联框 ,datepicker
-$box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%); // 及时消息，模态弹框
-$box-shadow-alert: $box-shadow-lv3;
+/* box-shadow 阴影（基于altitude）
+    $box-shadow-lv0 => 背景
+    $box-shadow-lv1 => 页内卡片
+    $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
+    $box-shadow-lv3 => 及时消息、模态弹框、alert
+*/
+$box-shadow-lv0: none;
+$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 20%);
+$box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 15%);
+$box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 12%);
 
 /* ******************************************************** */
 // 皮肤结构参数，后期分文件
-// line-width
+/* line-width */
 $line-width-base: 1px;
 $line-width-med: 2px;
 $line-width-lg: 4px;
 
-// border-radius
-$border-radius-base: 3px; // tab,button,button bar,input,notification,card,alert
-$border-radius-sm: $border-radius-base - 1px; // checkbox,colorpick,pagination,timepicker,tag,datepicker
-$border-radius-lg: 6px; // switch,badge
+/* border-radius 
+    $border-radius-base => tab,button,button bar,input,notification,card,alert
+    $border-radius-sm => checkbox,colorpick,pagination,timepicker,tag,datepicker
+    $border-radius-lg => switch,badge
+*/
+$border-radius-base: 3px;
+$border-radius-sm: $border-radius-base - 1px;
+$border-radius-lg: 6px;
 
-// height
-$height-base: 32px; // button基础
+/* height */
+$height-base: 32px;
 $height-sm: 24px;
 $height-med: 28px;
 $height-lg: 36px;
 $height-huge: 40px;
 
-// font size
+/* font size */
 $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-lg: $font-size-base + 2px;
@@ -268,57 +292,26 @@ $font-title-lg: 16px;
 $font-title-med: 14px;
 $font-title-sm: 12px;
 
-//icon size
+/* icon size */
 $icon-size-lg: 48px;
 $icon-size-med: 20px;
 $icon-size-sm: 16px;
 
+/* z-index list */
+// 地面部分分成4层：null,1,2,3
+$zindex-level-1: 1;
+$zindex-level-2: 2;
+$zindex-level-3: 3;
+// 空中部分采用后来居上的策略，所以高度设成1000
+$zindex-popover-level-0: 1000;
+$zindex-popover-level-1: 1001;
+// ui设计器box部分
+$zindex-ui-level-0: 100;
+$zindex-ui-level-1: 101;
+$zindex-ui-level-2: 102;
+$zindex-ui-level-3: 103;
+
 /* ******************************************************** */
-
-// 代码块，后期分文件
-
-// 一级标题
-%title-lv1 {
-    font-size: $font-title-lg;
-    color: $font-color-heading;
-}
-// 二级标题
-%title-lv2 {
-    font-size: $font-title-med;
-    color: $font-color-heading;
-}
-// 三级标题
-%title-lv3 {
-    font-size: $font-title-sm;
-    color: $font-color-heading;
-}
-// 一级标题加粗
-%title-bold-lv1 {
-    font-size: $font-title-lg;
-    font-weight: bold;
-    color: $font-color-heading-bold;
-}
-// 二级标题加粗
-%title-bold-lv2 {
-    font-size: $font-title-med;
-    font-weight: bold;
-    color: $font-color-heading-bold;
-}
-// 三级标题加粗
-%title-bold-lv3 {
-    font-size: $font-title-sm;
-    font-weight: bold;
-    color: $font-color-heading-bold;
-}
-
-%test-1 {
-    outline: 1px dashed red;
-}
-
-%test-2 {
-    outline-color: cyan;
-}
-/* **************************************************** */
 // Color
 $primary-color: #41addc;
 $info-color: #41addc;
@@ -352,6 +345,9 @@ $text-color-secondary: #999;
 $text-color-dark: #444;
 $text-color-secondary-dark: #777;
 $text-color-of-bg: #fff;
+
+$body-background: #fff;
+$component-background: #fff;
 
 $line-height-base: 1.5;
 
@@ -452,20 +448,6 @@ $screen-lg-max: ($screen-lg-min - 1);
 // Layout and Grid system
 $grid-columns: 24;
 $grid-gutter-width: 0;
-
-// z-index list
-// 地面部分分成4层：null,1,2,3
-$zindex-level-1: 1;
-$zindex-level-2: 2;
-$zindex-level-3: 3;
-// 空中部分采用后来居上的策略，所以高度设成1000
-$zindex-popover-level-0: 1000;
-$zindex-popover-level-1: 1001;
-// ui设计器box部分
-$zindex-ui-level-0: 100;
-$zindex-ui-level-1: 101;
-$zindex-ui-level-2: 102;
-$zindex-ui-level-3: 103;
 
 // Form
 // ---
@@ -568,23 +550,4 @@ $form-item-margin-bottom: 24px;
     @keyframes #{$name} {
         @content;
     }
-}
-
-$z-index: (
-    popover: 1000,
-    notification: 1001,
-    progress: 2,
-    slider-mark: 3,
-    slider-handle: 2,
-    slider-track: 1,
-    list-disabled: 2,
-    input-disabled: 1,
-);
-
-@function z-index($key) {
-    @return map-get($z-index, $key);
-}
-
-@mixin z-index($key) {
-    z-index: z-index($key);
 }
