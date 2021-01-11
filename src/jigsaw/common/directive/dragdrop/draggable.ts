@@ -81,7 +81,7 @@ export class JigsawDraggable implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._zone.runOutsideAngular(() => {
-            this._removeDragHandler = this._renderer.listen(this._elementRef.nativeElement, "drag", this._dragHandle);
+            this._removeDragHandler = this._renderer.listen(this._elementRef.nativeElement, "drag", this._dragHandle.bind(this));
         });
     }
 

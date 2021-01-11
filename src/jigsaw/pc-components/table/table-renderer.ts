@@ -153,7 +153,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
         .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
             cursor: inherit;
         }
-        
+
         .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
             color: #666;
         }
@@ -597,33 +597,34 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
  * 换行
  * */
 @Component({
-    template: ` <div
-        class="jigsaw-table-option-box"
-        jigsaw-draggable
-        jigsaw-droppable
-        (jigsawDragStart)="_$dragStartHandle($event)"
-        (jigsawDragEnd)="_$dragEndHandle($event)"
-    >
-        <span
-            class="drop-top"
+    template: `
+        <div class="jigsaw-table-option-box"
+            jigsaw-draggable
             jigsaw-droppable
-            (jigsawDragEnter)="_$dragEnterHandle($event)"
-            (jigsawDrop)="_$dropHandle($event)"
-        ></span>
-        <span
-            class="drop-mid"
-            jigsaw-droppable
-            (jigsawDragEnter)="_$dragEnterHandle($event)"
-            (jigsawDrop)="_$dropHandle($event)"
-            ><i class="fa fa-arrows-alt"></i
-        ></span>
-        <span
-            class="drop-bottom"
-            jigsaw-droppable
-            (jigsawDragEnter)="_$dragEnterHandle($event)"
-            (jigsawDrop)="_$dropHandle($event)"
-        ></span>
-    </div>`
+            (jigsawDragStart)="_$dragStartHandle($event)"
+            (jigsawDragEnd)="_$dragEndHandle($event)">
+            <span
+                class="drop-top"
+                jigsaw-droppable
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)"
+            ></span>
+            <span
+                class="drop-mid"
+                jigsaw-droppable
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)"
+                ><i class="fa fa-arrows-alt"></i
+            ></span>
+            <span
+                class="drop-bottom"
+                jigsaw-droppable
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)"
+            ></span>
+        </div>
+    `,
+    styleUrls: ['./draggable.scss']
 })
 
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
