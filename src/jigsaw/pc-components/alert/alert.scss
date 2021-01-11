@@ -15,7 +15,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     position: relative;
     min-width: 480px;
     min-height: 240px;
-    background: red;
+    background: $bg-component;
     border-radius: $border-radius-base;
     box-shadow: $box-shadow-lv3;
 
