@@ -82,10 +82,9 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     /**
      * 文本框中当前的文本
      *
-     * @NoMarkForCheckRequired
-     *
      * $demo = input/valid
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): string {
         return this._value;
@@ -269,6 +268,9 @@ export class JigsawInput extends JigsawInputBase {
         return this.password ? "password" : "text";
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get autocomplete():string{
         return this.password ? "new-password" : "off" ;
