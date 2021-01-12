@@ -627,6 +627,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
         </div>
     `
 })
+
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
     private _allRows: NodeListOf<any>;
 
@@ -726,9 +727,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     ngAfterViewInit() {
-        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll(
-            "tr"
-        );
+        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "tr" );
         this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
     }
 }

@@ -1,26 +1,19 @@
 @import "../../common/assets/scss/core/base";
 
-$jigsaw-prefix: jigsaw;
 $table-prefix-cls: #{$jigsaw-prefix}-table;
+$table-drag-active-height: 30%;
 
 .#{$table-prefix-cls}-host {
     table tbody tr {
         // draggable tr bg
         &.drop-active-top {
-            background: linear-gradient(to bottom, #e0f2b3 20%, transparent 20%, transparent) !important;
+            background: linear-gradient(to bottom, #bde4ff $table-drag-active-height, transparent $table-drag-active-height, transparent) !important;
         }
         &.drop-active-mid {
-            background: linear-gradient(
-                to bottom,
-                transparent 20%,
-                #bde4ff 20%,
-                #bde4ff 80%,
-                transparent 80%,
-                transparent
-            ) !important;
+            background: linear-gradient(to bottom, transparent $table-drag-active-height, #bde4ff $table-drag-active-height, #bde4ff (100% - $table-drag-active-height), transparent (100% - $table-drag-active-height), transparent) !important;
         }
         &.drop-active-bottom {
-            background: linear-gradient(to top, #ffe1ba 20%, transparent 20%, transparent) !important;
+            background: linear-gradient(to top, #bde4ff $table-drag-active-height, transparent $table-drag-active-height, transparent) !important;
         }
     }
 }
@@ -36,12 +29,12 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     cursor: move;
 
     .drop-mid {
-        height: 60%;
+        height: (100% - $table-drag-active-height - $table-drag-active-height);
         padding: 0px 8px;
     }
 
     .drop-top,
     .drop-bottom {
-        height: 20%;
+        height: $table-drag-active-height;
     }
 }
