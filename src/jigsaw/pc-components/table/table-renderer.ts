@@ -598,11 +598,13 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        <div class="jigsaw-table-option-box"
+        <div
+            class="jigsaw-table-option-box"
             jigsaw-draggable
             jigsaw-droppable
             (jigsawDragStart)="_$dragStartHandle($event)"
-            (jigsawDragEnd)="_$dragEndHandle($event)">
+            (jigsawDragEnd)="_$dragEndHandle($event)"
+        >
             <span
                 class="drop-top"
                 jigsaw-droppable
@@ -623,10 +625,8 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
                 (jigsawDrop)="_$dropHandle($event)"
             ></span>
         </div>
-    `,
-    styleUrls: ['./draggable.scss']
+    `
 })
-
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
     private _allRows: NodeListOf<any>;
 
@@ -726,7 +726,9 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     ngAfterViewInit() {
-        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "tr" );
+        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll(
+            "tr"
+        );
         this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
     }
 }
