@@ -2,4 +2,6 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="tableData" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+<jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
+</jigsaw-table>
+<span>选中行 {{selectedRow}}</span>

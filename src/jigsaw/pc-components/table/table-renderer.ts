@@ -28,6 +28,11 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         protected _injector: Injector) {
     }
 
+    /**
+     * 宿主表格实例
+     */
+    public hostInstance: any;
+
     @RequireMarkForCheck()
     @Input()
     public cellData: any;
@@ -47,12 +52,13 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     @Input()
     public initData: any;
 
-    @Output() public cellDataChange = new EventEmitter<any>();
+    @Output()
+    public cellDataChange = new EventEmitter<any>();
 
     protected targetData: TableData;
+
     private _removeTableDataRefresh: Function;
     private _removeAdditionalDataRefresh: Function;
-
     private _column: number = -1;
 
     public get column(): number {

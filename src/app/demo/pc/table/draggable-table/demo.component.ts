@@ -7,17 +7,20 @@ import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/p
 })
 export class TableDraggableDemoComponent {
     public tableData: TableData;
+    public selectedRow: number;
 
     public additionalColumns: AdditionalColumnDefine[] = [
         {
             pos: 0,
-            width: "5%",
+            width: "40px",
             header: {
                 text: "拖拽换行",
-                clazz: "red-text"
             },
             cell: {
-                renderer: TableDragReplaceRow
+                renderer: TableDragReplaceRow,
+                rendererInitData: {
+                    icon: 'fa fa-xxxx', label: ''
+                }
             }
         }
     ];
