@@ -29,8 +29,15 @@ $table-drag-active-height: 30%;
     cursor: move;
 
     .drop-mid {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
         height: (100% - $table-drag-active-height - $table-drag-active-height);
         padding: 0px 8px;
+
+        p {
+            margin-left: 10px;
+        }
     }
 
     .drop-top,

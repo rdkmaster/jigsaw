@@ -609,7 +609,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
             jigsaw-draggable
             jigsaw-droppable
             (jigsawDragStart)="_$dragStartHandle($event)"
-            (jigsawDragEnd)="_$dragEndHandle($event)"
+            (jigsawDragEnd)="_$dragEndHandle()"
         >
             <span
                 class="drop-top"
@@ -622,8 +622,10 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
                 jigsaw-droppable
                 (jigsawDragEnter)="_$dragEnterHandle($event)"
                 (jigsawDrop)="_$dropHandle($event)"
-                ><i class="fa fa-arrows-alt"></i
-            ></span>
+            >
+                <i [class]="_$icon"></i>
+                <p [innerHtml]="_$label"></p>
+            </span>
             <span
                 class="drop-bottom"
                 jigsaw-droppable
@@ -641,6 +643,14 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         super(_injector);
     }
 
+    public get _$icon() {
+        return this.initData && this.initData.icon ? this.initData.icon : "fa fa-arrows-alt";
+    }
+ 
+    public get _$label() {
+        return this.initData && this.initData.label ? this.initData.label : '';
+    }
+
     /**
      * @internal
      */
@@ -650,13 +660,13 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         if (!CommonUtils.isIE()) {
             const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
-        }
+        };
     }
 
     /**
      * @internal
      */
-    public _$dragEndHandle(dragInfo: DragDropInfo) {
+    public _$dragEndHandle() {
         this._resetSelectedRow();
     }
 
@@ -690,8 +700,10 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         if (dragInfo.element.className.indexOf("drop-top") !== -1) {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
+                this.hostInstance._selectedRow = this.row - 1;
             } else {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
+                this.hostInstance._selectedRow = this.row;
             }
         } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
             const draggingRow = this.tableData.data[draggingRowIndex];
@@ -701,14 +713,16 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             const thisRow = this.tableData.data[this.row];
             this.tableData.data[this.row] = draggingRow;
             this.tableData.data[draggingRowIndex] = thisRow;
+            this.hostInstance._selectedRow = this.row;
         } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
+                this.hostInstance._selectedRow = this.row;
             } else {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row + 1);
+                this.hostInstance._selectedRow = this.row + 1;
             }
         }
-
         // inform jigsaw-table to update view
         this.tableData.refresh();
     }
@@ -718,13 +732,12 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             this._renderer.removeClass(this._allRows[i], "drop-active-top");
             this._renderer.removeClass(this._allRows[i], "drop-active-mid");
             this._renderer.removeClass(this._allRows[i], "drop-active-bottom");
-            this._renderer.removeClass(this._allRows[i], "jigsaw-table-row-selected");
         }
     }
 
     private _arrayMove(arr: any[], oldIndex: number, newIndex: number) {
         if (newIndex >= arr.length) {
-            var k = newIndex - arr.length + 1;
+            let k = newIndex - arr.length + 1;
             while (k--) {
                 arr.push(undefined);
             }

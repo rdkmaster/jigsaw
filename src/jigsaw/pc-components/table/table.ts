@@ -109,7 +109,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @RequireMarkForCheck()
     public hideHeader: boolean = false;
 
-    private _selectedRow: number;
+    public _selectedRow: number;
 
     /**
      * @NoMarkForCheckRequired

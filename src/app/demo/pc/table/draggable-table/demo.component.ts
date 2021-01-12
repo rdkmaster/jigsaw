@@ -19,7 +19,7 @@ export class TableDraggableDemoComponent {
             cell: {
                 renderer: TableDragReplaceRow,
                 rendererInitData: {
-                    icon: 'fa fa-xxxx', label: ''
+                    icon: 'fa fa-arrows-alt', label: 'test'
                 }
             }
         }
