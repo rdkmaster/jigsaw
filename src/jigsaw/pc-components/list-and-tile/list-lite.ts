@@ -37,6 +37,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
                 <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                                [disabled]="item?.disabled">
+                    <span *ngIf="data.icon" class="{{data.icon}}"></span>
                     <p j-title class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
                         {{item && item[labelField] ? item[labelField] : item}}</p>
