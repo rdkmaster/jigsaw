@@ -30,11 +30,11 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     }
     & > div {
         transition-duration: 300ms;
-        border: 1px solid rgba(236, 109, 109, 0);
+        border: 1px solid $border-color-default;
     }
     &.#{$transfer-prefix-cls}-error > div {
         transition-duration: 300ms;
-        border: 1px solid rgba(236, 109, 109, 1);
+        border: 1px solid $error-default;
     }
     &-wrapper {
         display: flex;

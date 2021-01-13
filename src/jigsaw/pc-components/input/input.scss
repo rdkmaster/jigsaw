@@ -20,9 +20,6 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         );
         border: 1px solid $brand-default;
     }
-    // &.#{$input-prefix-cls}-focused {
-    //     box-shadow: $box-focus-shadow;
-    // }
     &.#{$input-prefix-cls}-error {
         border-color: $error-default;
         &:hover {

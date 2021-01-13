@@ -171,16 +171,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 background: $brand-light;
             }
 
-            // &-today:before {
-            //     content: "";
-            //     display: block;
-            //     position: absolute;
-            //     right: 1px;
-            //     top: 1px;
-            //     border-top: 6px solid $primary-7;
-            //     border-left: 6px solid transparent;
-            // }
-
             &-today span:before {
                 content: "";
                 position: absolute;

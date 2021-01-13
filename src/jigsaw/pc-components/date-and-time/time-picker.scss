@@ -20,7 +20,6 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
     &-active {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-color: $primary-default;
-        // box-shadow: $box-focus-shadow;
     }
 
     &-wrapper {
@@ -47,7 +46,6 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
 
             &.#{$time-prefix-cls}-input-selected {
                 background: $brand-default;
-                // border-bottom: 1px solid $primary-color;
             }
         }
 
