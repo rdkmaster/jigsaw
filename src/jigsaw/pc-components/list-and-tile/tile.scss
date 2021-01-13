@@ -7,7 +7,6 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
 .#{$tile-prefix-cls} {
     @include inline-block();
-    // outline: 1px solid red;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color-default;

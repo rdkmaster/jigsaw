@@ -34,7 +34,6 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         }
         &:focus {
             border-color: $brand-default;
-            // box-shadow: $box-focus-shadow;
         }
     }
     &.#{$textarea-prefix-cls}-error textarea {

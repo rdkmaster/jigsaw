@@ -21,9 +21,6 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $bg-disabled;
-            // &:after {
-            //     background-color: $disabled-color;
-            // }
             &.#{$radio-option-prefix-cls}-checked {
                 border-color: $border-color-disabled;
             }
@@ -45,31 +42,9 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         border-radius: 50%;
         background-color: $bg-component;
         margin-right: 8px;
-        // @include prefixer(transition, all 0.3s);
-        // &:after {
-        //     position: absolute;
-        //     width: 6px;
-        //     height: 6px;
-        //     left: 3px;
-        //     top: 3px;
-        //     border-radius: 4px;
-        //     display: table;
-        //     border-top: 0;
-        //     border-left: 0;
-        //     content: " ";
-        //     background-color: $primary-color;
-        //     opacity: 0;
-        //     @include prefixer(transfrom, scale(0));
-        //     @include prefixer(transition, all 0.3s $ease-in-out-circ);
-        // }
         &.#{$radio-option-prefix-cls}-checked {
             border-width: 4px;
             border-color: $brand-default;
-            // &:after {
-            //     @include prefixer(transform, scale(1));
-            //     @include prefixer(transition, all 0.3s $ease-in-out-circ);
-            //     opacity: 1;
-            // }
         }
         &:hover {
             border-color: $primary-color;

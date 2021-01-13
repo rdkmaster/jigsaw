@@ -4,7 +4,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
 .#{$nav-menu-prefix-cls} {
     @include inline-block();
-    // background: $component-background;
 
     &-container {
         height: 100%;
@@ -108,7 +107,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             .#{$nav-menu-prefix-cls}-item-top {
                 position: relative;
                 font-size: 12px;
-                // font-weight: 700;
                 display: flex;
                 align-items: center;
                 height: 32px;
@@ -233,7 +231,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             align-items: center;
             padding-left: 14px;
             font-size: 14px;
-            // font-weight: 700;
             background: $bg-container;
             cursor: pointer;
             border: 1px solid $border-color-default;

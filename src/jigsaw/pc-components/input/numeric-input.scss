@@ -20,10 +20,6 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         border-color: $brand-default;
     }
 
-    // &.#{$numeric-input-prefix-cls}-focused {
-    //     box-shadow: $box-focus-shadow;
-    // }
-
     &.#{$numeric-input-prefix-cls}-error {
         border-color: $error-default;
 
