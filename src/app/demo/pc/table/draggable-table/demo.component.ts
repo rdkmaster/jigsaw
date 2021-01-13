@@ -3,11 +3,19 @@ import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/p
 
 @Component({
     templateUrl: "demo.component.html",
+    styles: [`
+        p {
+            margin-top: 8px
+        }
+    `],
     encapsulation: ViewEncapsulation.None
 })
 export class TableDraggableDemoComponent {
     public tableData: TableData;
-    public selectedRow: number;
+    public selectedRow: number = -1;
+    public rendererInitData = {
+        icon: 'fa fa-arrows-alt', title: '拖拽换行', label: ''
+    };
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
         this.tableData = new TableData(
@@ -39,9 +47,7 @@ export class TableDraggableDemoComponent {
             },
             cell: {
                 renderer: TableDragReplaceRow,
-                rendererInitData: {
-                    icon: 'fa fa-arrows-alt', title: '拖拽换行'
-                }
+                rendererInitData: this.rendererInitData
             }
         }
     ];

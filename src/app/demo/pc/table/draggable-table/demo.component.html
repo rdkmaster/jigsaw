@@ -4,4 +4,16 @@
 <!-- start to learn the demo from here -->
 <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
 </jigsaw-table>
-<span>选中行 {{selectedRow}}</span>
+<p>选中行 {{selectedRow}}</p>
+<p>图标
+    <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.icon" [filterOnFocus]="false"
+                                [data]="['fa fa-search', 'fa fa-times', 'fa fa-arrows-alt']">
+    </jigsaw-auto-complete-input>
+</p>
+<p>提示
+    <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.title"></jigsaw-auto-complete-input>
+</p>
+<p>文本
+    <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.label"></jigsaw-auto-complete-input>
+</p>
+<a (click)="tableData.refresh()">更新</a>

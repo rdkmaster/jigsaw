@@ -1,14 +1,15 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {
     JigsawTableModule,
     JigsawDraggableModule,
     JigsawDroppableModule,
     JigsawTagModule,
-    JigsawTableRendererModule
+    JigsawTableRendererModule,
+    JigsawAutoCompleteInputModule
 } from "jigsaw/public_api";
-import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
-import { TableDraggableDemoComponent } from "./demo.component";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {TableDraggableDemoComponent} from "./demo.component";
 
 @NgModule({
     imports: [
@@ -18,9 +19,11 @@ import { TableDraggableDemoComponent } from "./demo.component";
         JigsawTagModule,
         CommonModule,
         JigsawDemoDescriptionModule,
-        JigsawTableRendererModule
+        JigsawTableRendererModule,
+        JigsawAutoCompleteInputModule
     ],
     declarations: [TableDraggableDemoComponent],
     exports: [TableDraggableDemoComponent]
 })
-export class TableDraggableDemoModule {}
+export class TableDraggableDemoModule {
+}
