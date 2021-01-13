@@ -66,7 +66,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     z-index: $zindex-level-1;
 }
 
-.#{$table-prefix-cls}-range{
+.#{$table-prefix-cls}-range {
     height: 100%;
     padding-top: 40px;
     &.#{$table-prefix-cls}-hide-head {
@@ -74,7 +74,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
-.#{$table-prefix-cls}-body-range{
+.#{$table-prefix-cls}-body-range {
     height: 100%;
     &.#{$table-prefix-cls}-no-data {
         height: 160px;
@@ -88,7 +88,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls}-auto-width {
-    .#{$table-prefix-cls}-cell-content, jigsaw-table-header {
+    .#{$table-prefix-cls}-cell-content,
+    jigsaw-table-header {
         white-space: nowrap;
     }
 }
@@ -101,7 +102,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls}-body {
-    > thead td{
+    > thead td {
         height: 0 !important;
         border: none;
     }

@@ -1,17 +1,20 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {DragToReplaceDemoModule} from "./drag-to-replace/demo.module";
-import {TableDragDemoModule} from "./table-drag/demo.module";
+import {TableDragDemoModule} from "./simple-table-dragdrop/demo.module";
 
 import {DragToReplaceDemoComponent} from "./drag-to-replace/demo.component";
-import {TableDragDemoComponent} from "./table-drag/demo.component";
+import {TableDragDemoComponent} from "./simple-table-dragdrop/demo.component";
 
 export const routerConfig = [
     {
-        path: 'table-drag', component: TableDragDemoComponent
+        path: 'simple-table-dragdrop', component: TableDragDemoComponent
     },
     {
         path: 'drag-to-replace', component: DragToReplaceDemoComponent
+    },
+    {
+        desc: 'draggable-table', url: '/pc/table/draggable-table', path: ''
     },
 ];
 

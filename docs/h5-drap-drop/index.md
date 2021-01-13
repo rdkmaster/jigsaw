@@ -200,4 +200,4 @@ dragLeaveHandle(dragInfo){
 ## 地址
 代码地址(<https://github.com/rdkmaster/jigsaw/tree/drag-doc/src/jigsaw/directive/dragdrop>)
 
-在线演示地址(<http://rdk.zte.com.cn/component/dragdrop/table-drag>)
+在线演示地址(<http://rdk.zte.com.cn/component/dragdrop/simple-table-dragdrop>)
