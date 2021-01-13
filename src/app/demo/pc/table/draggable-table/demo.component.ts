@@ -9,27 +9,6 @@ export class TableDraggableDemoComponent {
     public tableData: TableData;
     public selectedRow: number;
 
-    public additionalColumns: AdditionalColumnDefine[] = [
-        {
-            pos: 0,
-            width: "40px",
-            header: {
-                text: "拖拽换行",
-            },
-            cell: {
-                renderer: TableDragReplaceRow,
-                rendererInitData: {
-                    icon: 'fa fa-arrows-alt', label: 'test'
-                }
-            }
-        }
-    ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
         this.tableData = new TableData(
             [
@@ -50,4 +29,26 @@ export class TableDraggableDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]
         );
     }
+
+    public additionalColumns: AdditionalColumnDefine[] = [
+        {
+            pos: 0,
+            width: "40px",
+            header: {
+                text: "拖拽换行",
+            },
+            cell: {
+                renderer: TableDragReplaceRow,
+                rendererInitData: {
+                    icon: 'fa fa-arrows-alt', title: '拖拽换行'
+                }
+            }
+        }
+    ];
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = "将可拖动的单元格拖到另一行中间时松开鼠标可实现两行交换，在某一行的上方或者下方松开鼠标可实现目标行移动";
+    description: string = "";
 }

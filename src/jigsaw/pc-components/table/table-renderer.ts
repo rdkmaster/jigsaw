@@ -604,38 +604,31 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        <div
-            class="jigsaw-table-option-box"
+        <div class="jigsaw-table-option-box"
             jigsaw-draggable
             jigsaw-droppable
             (jigsawDragStart)="_$dragStartHandle($event)"
-            (jigsawDragEnd)="_$dragEndHandle()"
-        >
-            <span
-                class="drop-top"
+            (jigsawDragEnd)="_$dragEndHandle()">
+            <span class="drop-top"
                 jigsaw-droppable
                 (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)"
-            ></span>
-            <span
-                class="drop-mid"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)"
-            >
-                <i [class]="_$icon"></i>
-                <p [innerHtml]="_$label"></p>
+                (jigsawDrop)="_$dropHandle($event)">
             </span>
-            <span
-                class="drop-bottom"
+            <span class="drop-mid"
+                jigsaw-droppable [title]="_$title"
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)">
+                <i [class]="_$icon"></i>
+                <p>{{_$label}}</p>
+            </span>
+            <span class="drop-bottom"
                 jigsaw-droppable
                 (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)"
-            ></span>
+                (jigsawDrop)="_$dropHandle($event)">
+            </span>
         </div>
     `
 })
-
 export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
     private _allRows: NodeListOf<any>;
 
@@ -646,9 +639,13 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     public get _$icon() {
         return this.initData && this.initData.icon ? this.initData.icon : "fa fa-arrows-alt";
     }
- 
+
     public get _$label() {
         return this.initData && this.initData.label ? this.initData.label : '';
+    }
+
+    public get _$title() {
+        return this.initData && this.initData.title ? this.initData.title : '';
     }
 
     /**
@@ -660,7 +657,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         if (!CommonUtils.isIE()) {
             const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
-        };
+        }
     }
 
     /**
