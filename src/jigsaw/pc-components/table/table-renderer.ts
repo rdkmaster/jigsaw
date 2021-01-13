@@ -700,10 +700,10 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         if (dragInfo.element.className.indexOf("drop-top") !== -1) {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
-                this.hostInstance._selectedRow = this.row - 1;
+                this.hostInstance.selectedRow = this.row - 1;
             } else {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
-                this.hostInstance._selectedRow = this.row;
+                this.hostInstance.selectedRow = this.row;
             }
         } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
             const draggingRow = this.tableData.data[draggingRowIndex];
@@ -713,14 +713,14 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             const thisRow = this.tableData.data[this.row];
             this.tableData.data[this.row] = draggingRow;
             this.tableData.data[draggingRowIndex] = thisRow;
-            this.hostInstance._selectedRow = this.row;
+            this.hostInstance.selectedRow = this.row;
         } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
-                this.hostInstance._selectedRow = this.row;
+                this.hostInstance.selectedRow = this.row;
             } else {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row + 1);
-                this.hostInstance._selectedRow = this.row + 1;
+                this.hostInstance.selectedRow = this.row + 1;
             }
         }
         // inform jigsaw-table to update view
