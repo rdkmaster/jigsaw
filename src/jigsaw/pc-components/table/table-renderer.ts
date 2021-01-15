@@ -619,7 +619,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
                 (jigsawDragEnter)="_$dragEnterHandle($event)"
                 (jigsawDrop)="_$dropHandle($event)">
                 <i [class]="_$icon"></i>
-                <p style="margin-bottom: 8px">{{_$label}}</p>
+                <p>{{_$label}}</p>
             </span>
             <span class="drop-bottom"
                 jigsaw-droppable
