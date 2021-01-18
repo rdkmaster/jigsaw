@@ -6,7 +6,8 @@ import {
     forwardRef,
     Input,
     NgModule,
-    Output
+    Output,
+    Injector
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -35,6 +36,11 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super()
+    }
 
     /**
      * @NoMarkForCheckRequired

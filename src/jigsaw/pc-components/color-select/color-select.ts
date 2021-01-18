@@ -6,7 +6,8 @@ import {
     Input,
     OnInit,
     Output,
-    ElementRef
+    ElementRef,
+    Injector
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
@@ -75,7 +76,9 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     * */
     public _$options: PopupOptions = {borderType: "pointer", showBorder: true, size: {minWidth: 232}};
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, private _elementRef: ElementRef) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef, private _elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
