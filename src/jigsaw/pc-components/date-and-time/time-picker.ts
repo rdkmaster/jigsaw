@@ -190,7 +190,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public set limitStart(value: string) {
         if (value == this._limitStart || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) return;
-        this._limitStart = value;
+        this._limitStart = this._timeFormatter(value);
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
         }
@@ -212,7 +212,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     public set limitEnd(value: string) {
         if (value == this._limitEnd || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) return;
-        this._limitEnd = value;
+        this._limitEnd = this._timeFormatter(value);
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
         }
@@ -398,6 +398,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     private _autoZero(value: any): string {
         const numValue = Number(value);
         return (numValue < 10 ? '0' : '') + numValue;
+    }
+
+    private _timeFormatter(value: any): string{
+        let timeArr = value.split(':');
+        let time = '';
+        timeArr.forEach((num, i) => {
+            if (i === 0) {
+                time += this._autoZero(num);
+            } else {
+                time = time + ":" + this._autoZero(num);
+            }
+        });
+        return time;
     }
 
     private _getStepValue(value: any): string {
