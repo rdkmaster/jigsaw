@@ -98,11 +98,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     /**
      * 文本框中当前的文本
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = textarea/valid
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): string {
         return this._value;

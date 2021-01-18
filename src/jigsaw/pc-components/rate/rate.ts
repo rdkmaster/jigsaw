@@ -75,9 +75,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         this._allowHalf = !!value;
     }
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get value(): number {
         return this._value;

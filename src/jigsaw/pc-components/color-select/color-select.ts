@@ -10,6 +10,7 @@ import {
 } from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-color-select',
@@ -25,9 +26,7 @@ import {PopupOptions} from "../../common/service/popup.service";
 })
 export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit {
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public color: string = '#10aeff';
 

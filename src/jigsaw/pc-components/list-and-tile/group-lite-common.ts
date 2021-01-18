@@ -4,6 +4,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Directive()
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
@@ -58,9 +59,8 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     /**
      * 选择的结果集
-     *
-     * @NoMarkForCheckRequired
      */
+    @RequireMarkForCheck()
     @Input()
     public selectedItems: ArrayCollection<any> | any[];
 

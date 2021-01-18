@@ -139,11 +139,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 时间段的开始时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = range-date-time-picker/basic
      */
+    @RequireMarkForCheck()
     @Input()
     public get beginDate(): WeekTime {
         return this._beginDate;
@@ -166,11 +164,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 时间段的结束时刻，在双绑模式下，更新这个值可以让时间控件选中对应的时刻。
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = range-date-time-picker/basic
      */
+    @RequireMarkForCheck()
     @Input()
     public get endDate(): WeekTime {
         return this._endDate;

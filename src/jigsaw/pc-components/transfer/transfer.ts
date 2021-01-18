@@ -24,6 +24,7 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -207,9 +208,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     private _selectedItems: ArrayCollection<any> | any[] = [];
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems() {
         return this._selectedItems;

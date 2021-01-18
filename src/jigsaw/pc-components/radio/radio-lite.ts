@@ -15,6 +15,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
@@ -47,9 +48,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public value: any;
 
