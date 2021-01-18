@@ -4,7 +4,7 @@ import {FieldWrapper} from '@ngx-formly/core';
 @Component({
     selector: 'formly-wrapper-form-field',
     template: `
-        <div style="margin-bottom: 10px;">
+        <div [ngStyle]="{'margin-bottom': to.marginBottom ? to.marginBottom : '16px'}">
             <div *ngIf="to.label && to.hideLabel !== true" [attr.for]="id">
                 <label>{{ to.label }}</label>
                 <span *ngIf="to.required && to.hideRequiredMarker !== true">*</span>
@@ -12,7 +12,7 @@ import {FieldWrapper} from '@ngx-formly/core';
 
             <ng-template #fieldComponent></ng-template>
 
-            <div *ngIf="showError" [style.display]="'block'">
+            <div *ngIf="showError" [style.display]="'block'" style="color: red; font-size: 12px;">
                 <formly-validation-message [field]="field"></formly-validation-message>
             </div>
 

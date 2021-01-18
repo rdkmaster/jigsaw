@@ -12,6 +12,8 @@ import {FormlyJigsawTileLiteModule} from "@ngx-formly/jigsaw/tile-lite";
 import {FormlyJigsawSliderModule} from '@ngx-formly/jigsaw/slider';
 import {FormlyJigsawCascadeModule} from "@ngx-formly/jigsaw/cascade";
 import {FormlyJigsawDateTimeModule} from "@ngx-formly/jigsaw/time";
+import {FormlyJigsawButtonModule} from "@ngx-formly/jigsaw/button";
+import {FormlyJigsawIconModule} from "@ngx-formly/jigsaw/icon";
 
 @NgModule({
     imports: [
@@ -28,6 +30,8 @@ import {FormlyJigsawDateTimeModule} from "@ngx-formly/jigsaw/time";
         FormlyJigsawSliderModule,
         FormlyJigsawCascadeModule,
         FormlyJigsawDateTimeModule,
+        FormlyJigsawButtonModule,
+        FormlyJigsawIconModule,
     ]
 })
 export class FormlyJigsawModule {

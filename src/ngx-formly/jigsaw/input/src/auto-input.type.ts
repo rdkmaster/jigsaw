@@ -19,9 +19,13 @@ import {FieldType} from '@ngx-formly/core';
             [maxDropDownHeight]="to.maxDropDownHeight"
             [maxDropDownWidth]="to.maxDropDownWidth"
             [filterOnFocus]="to.filterOnFocus"
+            [preIcon]="to.preIcon"
+            [icon]="to.icon"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (select)="to.select && to.select($event)"
             (textSelect)="to.textSelect && to.textSelect($event)"
+            (iconSelect)="to.iconSelect && to.iconSelect($event)"
+            (preIconSelect)="to.preIconSelect && to.preIconSelect($event)"
         ></jigsaw-auto-complete-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,

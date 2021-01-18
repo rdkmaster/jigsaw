@@ -13,7 +13,7 @@ import {FieldType} from '@ngx-formly/core';
             [valid]="to.valid"
             (change)="to.change && to.change($event)"
         >
-            {{to.label}}
+            {{to.content}}
         </jigsaw-checkbox>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
