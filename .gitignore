@@ -35,5 +35,7 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+#vscode configs
 .eslintrc.js
 prettier.config.js

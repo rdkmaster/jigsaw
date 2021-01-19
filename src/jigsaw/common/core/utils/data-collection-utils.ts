@@ -79,6 +79,10 @@ export function aggregate(matrix: string[][], by: { index: number, algorithm: Ag
     if (!matrix || matrix.length == 0 || !by) {
         return [];
     }
+    by = by.filter(b => b.index != -1);
+    if (by.length == 0) {
+        return [];
+    }
     const result: string[] = matrix[0].concat();
     by.forEach(item => {
         const [func, initial] = aggregateAlgorithms2Function(item.algorithm);

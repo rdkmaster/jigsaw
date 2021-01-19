@@ -149,6 +149,18 @@ export class Indicator {
     }
 }
 
+export class SeriesBase {
+    public dimensionField: string;
+    public dimensions: Dimension[] = [];
+    public usingAllDimensions: boolean = true;
+    public indicators: Indicator[] = [];
+    public name?: string;
+
+    constructor(name?: string) {
+        this.name = name;
+    }
+}
+
 // ------------------------------------------------------------------------------------------------
 // 直角系图相关数据对象
 
@@ -263,7 +275,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return undefined;
         }
 
-        if(this.legendSource == 'dim') {
+        if (this.legendSource == 'dim') {
             // 维度值作为图例却没有配置维度就返回
             if (!this.dimensionField) {
                 return undefined;
@@ -462,18 +474,9 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 饼图相关数据对象
 
-export class PieSeries {
-    public dimensionField: string;
-    public dimensions: Dimension[] = [];
-    public usingAllDimensions: boolean = true;
-    public indicators: Indicator[] = [];
+export class PieSeries extends SeriesBase {
     public radius: number[];
     public center: number[];
-    public name?: string;
-
-    constructor(name?: string) {
-        this.name = name;
-    }
 }
 
 export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
@@ -580,13 +583,15 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                     indicator.index = 1;
                     seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
                         .map(row => ({name: row[0], value: row[1]}));
-                } else {
+                } else if (dimensions.length == 1) {
                     // 多指标
                     this._mergeLegend(options.legend, seriesData.indicators);
                     const dim = dimensions[0].name;
                     const records = this.data.filter(row => row[dimIndex] == dim);
                     const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+                } else {
+                    console.warn('No valid dimension found, this graph will not be rendered!');
                 }
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
@@ -616,15 +621,13 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 仪表盘相关数据对象
 
-export class GaugeSeries {
-    public dimensionField: string;
+export class GaugeSeries extends SeriesBase {
     public dimensions: Dimension[] = [new Dimension('')];
     public usingAllDimensions: boolean = false;
-    public indicators: Indicator[] = [];
+
     public model?: any[];
     public more?: any;
 
-    public name?: string;
     public center?: number[] = [50, 50];
     public radius?: number = 75;
     public startAngle?: number = 225;
@@ -640,10 +643,6 @@ export class GaugeSeries {
     public splitLine?: any;
     public pointer?: any;
     public title?: any;
-
-    constructor(name?: string) {
-        this.name = name;
-    }
 }
 
 export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
@@ -1058,25 +1057,15 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
 
 // ------------------------------------------------------------------------------------------------
 // 轮廓图相关数据对象
-export class MapSeries {
-    public dimensionField: string;
-    public dimensions: Dimension[] = [];
-    public usingAllDimensions: boolean = true;
-    public indicators: Indicator[] = [];
+export class MapSeries extends SeriesBase {
     public model?: any[];
     public more?: any;
-
-    public name?: string;
 
     public mapType?: string = '';
     public label?: string;
     public itemStyle?: string;
     public animation?: string;
     public roam?: boolean;
-
-    constructor(name?: string) {
-        this.name = name;
-    }
 }
 
 export abstract class ModeledMapTemplate extends AbstractModeledGraphTemplate {
