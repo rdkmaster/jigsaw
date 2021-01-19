@@ -400,7 +400,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return (numValue < 10 ? '0' : '') + numValue;
     }
 
-    private _timeFormatter(value: any): string{
+    private _timeFormatter(value: string): string{
         let timeArr = value.split(':');
         let time = '';
         timeArr.forEach((num, i) => {
