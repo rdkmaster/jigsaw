@@ -186,11 +186,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 级联选择的数据
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = cascade/selected-items
      */
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems(): any[] {
         return this._selectedItems;

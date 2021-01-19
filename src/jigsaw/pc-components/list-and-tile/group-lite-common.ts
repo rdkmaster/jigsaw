@@ -1,12 +1,19 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import { EventEmitter, Input, Output, Directive } from "@angular/core";
+import { EventEmitter, Input, Output, Directive, Injector } from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Directive()
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super()
+    }
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -58,9 +65,8 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     /**
      * 选择的结果集
-     *
-     * @NoMarkForCheckRequired
      */
+    @RequireMarkForCheck()
     @Input()
     public selectedItems: ArrayCollection<any> | any[];
 

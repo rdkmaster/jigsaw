@@ -6,7 +6,8 @@ import {
     NgModule,
     OnDestroy,
     Optional,
-    ViewChild
+    ViewChild,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {animate, keyframes, style, transition, trigger} from "@angular/animations"
@@ -24,6 +25,7 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -122,6 +124,12 @@ const transferServerFilterFunction = function (item) {
 })
 
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super(_injector);
+    }
+
     private _removePageableCallbackListener: CallbackRemoval;
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
@@ -207,9 +215,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     private _selectedItems: ArrayCollection<any> | any[] = [];
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems() {
         return this._selectedItems;
@@ -327,8 +333,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef) {
-        super();
+    constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });

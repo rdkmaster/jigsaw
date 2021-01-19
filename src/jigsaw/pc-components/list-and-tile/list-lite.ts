@@ -1,6 +1,6 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
-    ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy
+    ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy, Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -56,8 +56,10 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
-    constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 
     /**
