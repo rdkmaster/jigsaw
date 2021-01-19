@@ -6,7 +6,8 @@ import {
     forwardRef,
     Input,
     NgModule,
-    Output
+    Output,
+    Injector
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -15,6 +16,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
@@ -34,6 +36,11 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super()
+    }
 
     /**
      * @NoMarkForCheckRequired
@@ -47,9 +54,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     public value: any;
 

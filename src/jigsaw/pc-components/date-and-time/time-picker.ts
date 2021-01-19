@@ -24,6 +24,7 @@ import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10 | 15 | 30;
@@ -101,11 +102,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * 时间选择器的当前值，可以界面选择，也可以双绑修改
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = time-picker/basic
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): string {
         return this._value;
