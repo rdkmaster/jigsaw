@@ -5,7 +5,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 .#{$switch-prefix}-host {
     @include inline-block;
     &.#{$switch-prefix}-error .#{$switch-prefix} {
-        border-color: $error-color;
+        border-color: $error-default;
     }
 }
 
@@ -50,7 +50,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     }
 
     &:focus {
-        box-shadow: 0 0 0 2px rgba($primary-color, .2);
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
         outline: 0;
     }
 
@@ -59,8 +59,8 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     }
 
     &-checked {
-        border-color: $primary-color;
-        background-color: $primary-color;
+        border-color: $primary-default;
+        background-color: $primary-default;
 
         .#{$switch-prefix}-inner {
             margin-left: 6px;
@@ -78,8 +78,8 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 
     &-disabled {
         cursor: not-allowed;
-        background-color: $disabled-bg-dark;
-        border-color: $disabled-bg-dark;
+        background-color: $bg-disabled;
+        border-color: $border-color-disabled;
 
         &:after {
             background-color: $disabled-color;
@@ -106,7 +106,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 
         .#{$switch-prefix}-inner {
             margin-left: 18px;
-            margin-right: 3px;;
+            margin-right: 3px;
         }
 
         &:after {

@@ -6,7 +6,7 @@ $icon-prefix-cls: #{$jigsaw-prefix}-icon;
     @include inline-block();
     a:link, a:visited, a:hover, a:active {
         text-decoration: none;
-        color: #008fd4;
+        color: $brand-default;
     }
 }
 

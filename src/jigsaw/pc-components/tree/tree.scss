@@ -1,0 +1,21 @@
+.ztree li span {
+    color: $font-color-default;
+}
+.ztree li a {
+    &:hover {
+        background: $brand-light;
+        .node_name {
+            text-decoration: none;
+        }
+    }
+    &.curSelectedNode {
+        background: $brand-light;
+        border-color: $brand-light;
+        color: $brand-default;
+        opacity: 1;
+
+        .node_name {
+            color: $brand-default;
+        }
+    }
+}

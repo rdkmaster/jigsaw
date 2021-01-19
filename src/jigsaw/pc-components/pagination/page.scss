@@ -2,7 +2,7 @@
 
 $page-prefix-cls: #{$jigsaw-prefix}-page;
 
-.#{$page-prefix-cls}-item{
+.#{$page-prefix-cls}-item {
     @include inline-block();
     margin-right: 8px;
     vertical-align: top;
@@ -13,57 +13,55 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         line-height: $height-base;
         font-size: $font-size-base;
         text-align: center;
-        border: 1px solid $border-color-base;
-        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-sm;
         cursor: pointer;
         vertical-align: top;
-        @include prefixer(transition, all .3s ease);
-        &:hover{
-            border: 1px solid $primary-color;
-            color: $primary-color;
+        @include prefixer(transition, all 0.3s ease);
+        &:hover {
+            border-color: $brand-default;
+            color: $brand-default;
         }
     }
-    &.#{$page-prefix-cls}-current span{
-        background: $primary-color;
-        border: 1px solid $primary-color;
-        color: $text-color-of-bg;
+    &.#{$page-prefix-cls}-current span {
+        background: $brand-light;
+        border: 1px solid $brand-default;
+        color: $brand-default;
     }
-    &.#{$page-prefix-cls}-hidden{
+    &.#{$page-prefix-cls}-hidden {
         display: none;
     }
-    i{
+    i {
         @include inline-block();
         width: $height-base;
         height: $height-base;
         cursor: pointer;
-        &:after{
+        &:after {
             display: block;
-            content: '. . .';
+            content: ". . .";
             font-weight: 700;
             font-size: 14px;
             color: #bbbbbb;
             line-height: 21px;
             text-align: center;
         }
-        &.#{$page-prefix-cls}-prevs{
+        &.#{$page-prefix-cls}-prevs {
             margin-left: 8px;
         }
-        &.#{$page-prefix-cls}-nexts{
+        &.#{$page-prefix-cls}-nexts {
             margin-right: 8px;
         }
-        &:hover{
-            &.#{$page-prefix-cls}-prevs:after{
-                content: '<<';
+        &:hover {
+            &.#{$page-prefix-cls}-prevs:after {
+                content: "<<";
                 line-height: $height-base;
             }
-            &.#{$page-prefix-cls}-nexts:after{
-                content: '>>';
+            &.#{$page-prefix-cls}-nexts:after {
+                content: ">>";
                 line-height: $height-base;
             }
         }
     }
-
 }
-
-
-

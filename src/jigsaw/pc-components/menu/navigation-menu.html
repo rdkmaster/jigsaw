@@ -25,5 +25,6 @@
     <div *ngIf="showToggleButton" class="jigsaw-nav-menu-toggle-button" (click)="collapsed = !collapsed"
          [ngClass]="{'jigsaw-nav-menu-toggle-button-collapsed': collapsed}">
         <i class="fa fa-angle-double-left jigsaw-nav-menu-toggle-button-arrow"></i>
+        <span *ngIf="!collapsed">收起</span>
     </div>
 </div>

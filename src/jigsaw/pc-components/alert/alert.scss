@@ -3,42 +3,54 @@
 $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 
 .#{$alert-prefix-cls}-host {
+    // outline: 1px solid red;
     @include inline-block;
     width: 100%;
 }
 
 .#{$alert-prefix-cls} {
-    background: $component-background;
-    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
-    padding: 0 10px 10px;
-    border: 1px solid $border-color-base;
+    min-width: 480px;
+    min-height: 240px;
+    background: $bg-component;
+    border-radius: $border-radius-base;
+    box-shadow: $box-shadow-lv3;
 
     &-head {
-        @include clearfix;
-        margin: 0 -10px;
-        padding-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $height-huge;
+        padding: 0 16px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: $splitline-color;
         cursor: move;
-        line-height: 36px;
     }
 
     &-head &-icon {
+        display: none;
         vertical-align: middle;
         font-size: 36px;
         margin: 0 16px 0 20px;
     }
+
     &-head &-title {
-        font-size: 20px;
-        vertical-align: middle;
+        font-size: $font-title-lg;
+        font-weight: bold;
+        color: $font-color-heading-bold;
     }
+
     &-head &-close {
-        float: right;
-        font-size: 24px;
-        color: $text-color;
+        text-align: right;
+        font-size: $icon-size-med;
+        color: $icon-color-default;
         cursor: pointer;
-        margin-right: 20px;
         &:hover {
-            color: $text-color-dark;
+            color: $brand-hover;
         }
     }
 
@@ -46,27 +58,32 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         padding: 16px 0 0 56px;
     }
 
-    &-info &-icon, &-info &-title {
+    &-info &-icon,
+    &-info &-title {
         color: $primary-color;
     }
 
-    &-warning &-icon, &-warning &-title {
+    &-warning &-icon,
+    &-warning &-title {
         color: $warning-color;
     }
 
-    &-error &-icon, &-error &-title {
+    &-error &-icon,
+    &-error &-title {
         color: $error-color;
     }
 
-    &-confirm &-icon, &-confirm &-title {
+    &-confirm &-icon,
+    &-confirm &-title {
         color: $primary-color;
     }
 
     &-button-group {
-        text-align: center;
-        height: 50px;
-        line-height: 50px;
+        display: flex;
+        justify-content: center;
+        height: $height-base + 24px;
         jigsaw-button {
+            // outline: 1px solid red;
             margin-right: 8px;
             &:last-child {
                 margin-right: 0;
@@ -77,6 +94,3 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         }
     }
 }
-
-
-

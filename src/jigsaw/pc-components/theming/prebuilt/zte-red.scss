@@ -1,7 +1,0 @@
-@import "../../../common/core/theming/prebuilt/settings/zte-red";
-@import "../all-theme";
-@import "../../../common/core/theming/theming-api";
-
-// ------ Custom for zte by theming-api ------
-@include setTableHead(#F5F7FA, #666666, 15px, transparent, 1px);
-@include setTableBody(#666666, 15px, #ffffff, #F5F7FA);

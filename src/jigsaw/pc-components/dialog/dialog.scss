@@ -11,7 +11,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
             display: flex;
             flex-direction: column;
             height: 100%;
-            .#{$dialog-prefix-cls}-content{
+            .#{$dialog-prefix-cls}-content {
                 display: flex;
                 flex-grow: 1;
                 overflow: hidden;
@@ -26,40 +26,43 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
 
 .#{$dialog-prefix-cls} {
     position: relative;
-    border: 1px solid $border-color-base;
+    background: $bg-component;
     border-radius: $border-radius-base;
-    background: $component-background;
+    box-shadow: $box-shadow-lv3;
     &-head {
         @include clearfix;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        height: $height-huge;
+        background: $bg-component;
+        padding: 0 18px;
         line-height: 20px;
-        padding: 14px 16px;
         color: $heading-color;
         font-size: 14px;
-        background: $component-background;
         border-bottom: 1px solid $border-color-base;
         cursor: move;
-        [jigsaw-title] {
-            float: left;
-        }
     }
 
     &-head &-close {
-        float: right;
+        position: absolute;
+        right: 18px;
         font-size: 24px;
-        color: $text-color;
+        color: $icon-color-default;
         cursor: pointer;
         &:hover {
-            color: $text-color-dark;
+            color: $brand-hover;
         }
     }
 
     &-content {
-        background: $component-background;
+        padding: 18px;
+        background: $bg-component;
     }
 
     &-button-group {
-        background: $component-background;
-        border-top: 1px solid $border-color-base;
+        background: $bg-component;
         text-align: center;
         height: 50px;
         line-height: 50px;
@@ -71,6 +74,3 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         }
     }
 }
-
-
-

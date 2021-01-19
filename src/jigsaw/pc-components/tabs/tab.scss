@@ -12,8 +12,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     position: relative;
     overflow: hidden;
     @include clearfix;
-    color: $text-color;
-    background: $component-background;
+    color: $font-color-default;
+    background: $bg-component;
 
     &.#{$tab-prefix}-vertical-response {
         display: flex;
@@ -27,7 +27,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-bar {
-        border-bottom: $border-width-base $border-style-base $border-color-base;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: $splitline-color;
         margin-bottom: 6px;
         outline: none;
     }
@@ -37,21 +39,21 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         right: 6px;
         top: -2px;
         font-size: 18px;
-        color: $text-color-secondary;
+        color: $icon-color-default;
 
         &:hover {
-            color: $text-color-dark;
+            color: $brand-default;
         }
     }
 
     &-add-bar {
-        cursor: pointer;
         font-size: 24px;
         vertical-align: middle;
-        color: $text-color-secondary;
+        color: $icon-color-default;
+        cursor: pointer;
 
         &:hover {
-            color: $text-color-dark;
+            color: $brand-default;
         }
     }
 
@@ -59,16 +61,16 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         position: absolute;
         top: 0;
         right: 0;
-        cursor: pointer;
-        font-size: 24px;
-        color: $text-color-secondary;
         width: 40px;
         height: 100%;
+        font-size: 24px;
+        color: $icon-color-default;
         text-align: center;
+        cursor: pointer;
 
         &:hover {
-            background-color: $primary-color;
-            color: $primary-1;
+            background-color: $brand-default;
+            color: $font-color-white;
         }
     }
 
@@ -83,7 +85,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             display: flex;
 
             .#{$tab-prefix}-bar-list-content {
-                display: inline-block
+                display: inline-block;
             }
         }
 
@@ -95,9 +97,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             }
 
             &-selected {
-                color: $primary-color;
                 display: flex;
                 align-items: center;
+                color: $brand-default;
 
                 .check-icon {
                     margin-right: 5px;
@@ -111,11 +113,11 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-nav-container {
-        font-size: $font-size-lg;
-        line-height: $line-height-base;
-        box-sizing: border-box;
         position: relative;
+        font-size: $font-size-lg;
+        line-height: 1.5;
         white-space: nowrap;
+        box-sizing: border-box;
 
         .#{$tab-prefix}-ink-bar {
             position: absolute;
@@ -123,7 +125,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             left: 0;
             bottom: -1px;
             height: 2px;
-            background-color: $primary-color;
+            background-color: $brand-default;
             transition: transform 0.3s $ease-in-out;
             transform-origin: 0 0;
 
@@ -137,9 +139,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 border: {
                     width: 4px 4px;
                     style: solid;
-                    color: $primary-color transparent transparent transparent;
+                    color: $brand-default transparent transparent transparent;
                 }
-                content: '';
+                content: "";
                 display: none;
             }
         }
@@ -163,7 +165,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 jigsaw-tab-label {
                     a:hover {
                         text-decoration: none;
-                        color: $primary-color;
+                        color: $brand-default;
                     }
 
                     * {
@@ -183,11 +185,11 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     text-decoration: none;
 
                     &:hover {
-                        color: $primary-5;
+                        color: $brand-hover;
                     }
 
                     &:active {
-                        color: $primary-7;
+                        color: $brand-active;
                     }
 
                     &-hidden {
@@ -200,7 +202,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
                     a:hover {
                         text-decoration: none;
-                        color: $primary-color;
+                        color: $brand-default;
                     }
 
                     * {
@@ -209,7 +211,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 }
 
                 .#{$tab-prefix}-tab-active {
-                    color: $primary-color;
+                    color: $brand-default;
                 }
             }
         }

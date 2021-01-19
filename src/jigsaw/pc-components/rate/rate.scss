@@ -1,5 +1,6 @@
 @import "../../common/assets/scss/core/base";
 
+// vars need check
 .#{$jigsaw-prefix}-rate {
     margin: 0;
     padding: 0;
@@ -17,14 +18,14 @@
         display: inline-block;
         margin: 0 8px 0 0;
         position: relative;
-        transition: all .3s;
-        color: #e9e9e9;
+        transition: all 0.3s;
+        color: $border-color-default;
         cursor: pointer;
 
         &-first,
         &-second {
             user-select: none;
-            transition: all .3s;
+            transition: all 0.3s;
         }
 
         &:hover {
@@ -48,13 +49,12 @@
 
         &-half &-first,
         &-full &-second {
-            color: #f5a623;
+            color: $danger-default;
         }
 
         &-half:hover &-first,
         &-full:hover &-second {
-            color: #f5a623;
+            color: $danger-default;
         }
     }
 }
-

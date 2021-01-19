@@ -3,48 +3,49 @@
 $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
 .#{$btn-prefix-cls} {
-    @include inline-block();
-    padding: 0 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0 16px;
     min-width: 80px;
     height: $height-base;
-    font-size: $font-size-base;
-    line-height: 1;
-    text-align: center;
-    position: relative;
     border-radius: $border-radius-base;
-    cursor: pointer;
-    box-shadow: $btn-box-shadow;
-    font-weight: $btn-font-weight;
+    background-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    color: $brand-default;
+    font-size: $font-size-base;
+    text-align: center;
     user-select: none;
-    background-color: $component-background;
-    border: 1px solid $border-color-base;
-    color: $text-color;
+    cursor: pointer;
     &:before {
-        content: '';
+        content: "";
         display: inline-block;
         height: 100%;
         vertical-align: middle;
     }
     &:hover {
-        color: $primary-5;
-        border: 1px solid $primary-5;
-        @include prefixer(transition, all .3s $ease-in-out);
+        color: $brand-hover;
+        border-color: $brand-default;
+        @include prefixer(transition, all 0.3s $ease-in-out);
     }
 
     &:active {
-        color: $primary-7;
-        border: 1px solid $primary-7;
+        color: $brand-active;
+        border-color: $brand-active;
     }
 
     &#{&}-clicked:after {
-        content: '';
+        content: "";
         position: absolute;
         top: -1px;
         left: -1px;
         bottom: -1px;
         right: -1px;
         border-radius: inherit;
-        border: 1px solid $primary-7;
+        border: 1px solid $brand-active;
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
@@ -63,47 +64,47 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &#{&}-color-primary {
-        background-color: $primary-color;
-        color: $text-color-of-bg;
-        border: 1px solid $primary-color;
+        background-color: $primary-default;
+        color: $font-color-white;
+        border-color: $primary-default;
         &:hover {
-            background: $primary-7;
+            background: $primary-hover;
         }
         &:active {
-            background: $primary-8;
+            background: $primary-active;
         }
         &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid $primary-7;
+            border-color: $primary-default;
         }
     }
 
     &#{&}-color-warning {
-        background-color: $warning-color;
-        color: $text-color-of-bg;
-        border: 1px solid $warning-color;
+        background-color: $warning-default;
+        color: $font-color-white;
+        border-color: $warning-default;
         &:hover {
-            background: mix(#000, $warning-color, 10%);
+            background: $warning-hover;
         }
         &:active {
-            background: mix(#000, $warning-color, 20%);
+            background: $warning-active;
         }
         &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid mix(#000, $warning-color, 10%);
+            border-color: $warning-default;
         }
     }
 
     &#{&}-color-error {
-        background-color: $error-color;
-        color: $text-color-of-bg;
-        border: 1px solid $error-color;
+        background-color: $error-default;
+        color: $font-color-white;
+        border-color: $error-default;
         &:hover {
-            background: mix(#000, $error-color, 10%);
+            background: $error-hover;
         }
         &:active {
-            background: mix(#000, $error-color, 20%);
+            background: $error-active;
         }
         &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid mix(#000, $error-color, 10%);
+            border-color: $error-default;
         }
     }
 
@@ -125,7 +126,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         border-color: $border-color-base;
     }
 }
-
+/* mark */
 a[#{$btn-prefix-cls}] {
     padding: 0 10px;
     outline: none;

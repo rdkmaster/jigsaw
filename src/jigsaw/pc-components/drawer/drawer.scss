@@ -3,9 +3,8 @@
 $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 
 .#{$drawer-prefix-cls} {
-    border: 1px solid $border-color-base;
-    background: $component-background;
-    box-shadow: $box-shadow-base;
+    background: $bg-component;
+    box-shadow: $box-shadow-lv2;
     z-index: $zindex-popover-level-0;
     &-in-dom {
         position: relative;
@@ -39,16 +38,16 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
         height: 50px;
         line-height: 50px;
         text-align: center;
-        color: $text-color-of-bg;
-        background: $primary-color;
+        color: $font-color-white;
+        background: $brand-default;
         cursor: pointer;
-        border-radius: 0 4px 4px 0;
-        box-shadow: $box-shadow-base;
+        border-radius: 0 $border-radius-base $border-radius-base 0;
+        box-shadow: $box-shadow-lv2;
         &:hover {
-            background: $primary-7;
+            background: $brand-hover;
         }
         &:active {
-            background: $primary-8;
+            background: $brand-active;
         }
     }
     &-left > &-bar {
@@ -117,9 +116,9 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 }
 
 @mixin setPosition() {
-    @each $direction in 'left', 'top', 'right', 'bottom' {
+    @each $direction in "left", "top", "right", "bottom" {
         .#{$drawer-prefix-cls}-#{$direction} {
-            #{$direction}: 0
+            #{$direction}: 0;
         }
     }
 }
