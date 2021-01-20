@@ -400,17 +400,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return (numValue < 10 ? '0' : '') + numValue;
     }
 
+    /* limitStart & limitEnd 自动补0 */
     private _timeFormatter(value: string): string{
-        let timeArr = value.split(':');
-        let time = '';
-        timeArr.forEach((num, i) => {
-            if (i === 0) {
-                time += this._autoZero(num);
-            } else {
-                time = time + ":" + this._autoZero(num);
-            }
-        });
-        return time;
+        let formattedTime =  value.replace(/(\d{1,2})(:|$)/g, (found, digit, splitter) => (digit.length == 1 ? `0${digit}` : digit) + splitter)
+        return formattedTime;
     }
 
     private _getStepValue(value: any): string {
