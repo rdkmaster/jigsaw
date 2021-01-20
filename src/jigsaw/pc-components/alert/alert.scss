@@ -6,6 +6,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     // outline: 1px solid red;
     @include inline-block;
     width: 100%;
+    user-select: none;
 }
 
 .#{$alert-prefix-cls} {
@@ -31,13 +32,6 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         cursor: move;
     }
 
-    &-head &-icon {
-        display: none;
-        vertical-align: middle;
-        font-size: 36px;
-        margin: 0 16px 0 20px;
-    }
-
     &-head &-title {
         font-size: $font-title-lg;
         font-weight: bold;
@@ -55,26 +49,50 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     }
 
     &-content {
-        padding: 16px 0 0 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+
+        .content-main {
+            position: relative;
+            i {
+                position: absolute;
+                top: 0;
+                left: (0 - $height-sm);
+                width: $height-sm;
+                height: $height-sm;
+                font-size: $icon-size-med;
+            }
+            p {
+                font-size: $font-size-lg;
+                line-height: $height-sm;
+                color: $font-color-heading-bold;
+            }
+        }
+
+        .content-sub {
+            p {
+                font-size: $font-size-base;
+                color: $font-color-hint;
+            }
+        }
     }
 
-    &-info &-icon,
-    &-info &-title {
+    &-info &-icon {
         color: $primary-color;
     }
 
-    &-warning &-icon,
-    &-warning &-title {
+    &-warning &-icon {
         color: $warning-color;
     }
 
-    &-error &-icon,
-    &-error &-title {
+    &-error &-icon{
         color: $error-color;
     }
 
-    &-confirm &-icon,
-    &-confirm &-title {
+    &-confirm &-icon {
         color: $primary-color;
     }
 
