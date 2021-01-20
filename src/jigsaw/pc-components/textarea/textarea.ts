@@ -1,13 +1,14 @@
 import {
+    ChangeDetectionStrategy,
     Component,
+    Directive,
     ElementRef,
     EventEmitter,
     forwardRef,
+    Injector,
     Input,
     Output,
-    ViewChild,
-    ChangeDetectionStrategy,
-    Injector
+    ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
@@ -110,6 +111,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
         }
+        this._calcLength(newValue);
         this._value = newValue;
         this._propagateChange(this._value);
         if (this.initialized) {
@@ -142,6 +144,58 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         return this._placeholder;
     }
 
+    /**
+     * 设置多行文本框字数，是否包含回车换行符
+     * true：表示字数包含换行符
+     * false：表示字数不包含换行符。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/max-length
+     */
+    @Input()
+    public isCalculateCrlf: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$currentLength: number = 0;
+
+    private _maxLength: number = 0;
+
+    /**
+     * 最大字数
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/max-length
+     */
+    @Input()
+    public get maxLength(): number {
+        return this._maxLength;
+    }
+
+    public set maxLength(value: number) {
+        if (isNaN(value)) {
+            console.error('maxLength property must be a number, please input a number or number string');
+            return;
+        }
+        this._maxLength = Number(value);
+    }
+
+    private _calcLength(value: string): void {
+        if (CommonUtils.isUndefined(this.maxLength) || this.maxLength <= 0) {
+            // 非正整数则认为无限制
+            return;
+        }
+        let newLines = value.match(/(\r\n|\n|\r)/g);
+        if (newLines && !this.isCalculateCrlf) {
+            // 换行符和回车符不计入字符数
+            this._$currentLength = value.length - newLines.length;
+        } else {
+            this._$currentLength = value.length;
+        }
+    }
 
     @ViewChild('textarea')
     private _textareaElement: ElementRef;
@@ -192,5 +246,91 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public _$handleFocus(event: FocusEvent) {
         this._focused = true;
         this._focusEmitter.emit(event);
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleBlur($event: FocusEvent) {
+        this._focused = false;
+        this.blur.emit($event)
+    }
+}
+
+@Directive({
+    selector: '[textareaMaxlength]',
+    host: {
+        '(input)': 'updateValue($event.target.value)'
+    }
+})
+export class MaxlengthDirective {
+    @Input('textareaMaxlength')
+    public maxlength: number;
+
+    @Input()
+    public isCalculateCrlf: boolean = false;
+
+    @Output() public contentChange = new EventEmitter<string>();
+
+    constructor(public elementRef: ElementRef) {
+    }
+
+    @Input()
+    set content(value: string) {
+        this.updateValue(value);
+    }
+
+    public updateValue(value: string): void {
+        if (value) {
+            if (!this.maxlength) {
+                this.elementRef.nativeElement.value = value;
+                this.contentChange.emit(value);
+                return;
+            }
+            if (this.isCalculateCrlf) {
+                value = value.substring(0, this.maxlength);
+            } else {
+                // 换行符和回车符不计入字符数
+                let newLines = value.match(/(\r\n|\n|\r)/g);
+                let textLength;
+                if (newLines) {
+                    textLength = value.length - newLines.length;
+                } else {
+                    textLength = value.length;
+                }
+                if (textLength > this.maxlength) {
+                    value = this.getValue(value);
+                }
+            }
+        } else {
+            value = '';
+        }
+        this.elementRef.nativeElement.value = value;
+        this.contentChange.emit(value);
+    }
+
+    private getValue(value: string): string {
+        let pos = this.getPos(value);
+        if (pos > -1) {
+            let tmp = value.substring(0, pos);
+            let newLines = tmp.match(/(\r\n|\n|\r)/g);
+            let lineLen = newLines ? newLines.length : 0;
+            if (tmp.length - lineLen > this.maxlength) {
+                return this.getValue(tmp);
+            }
+            return value.substring(0, this.maxlength + lineLen + 1);
+        }
+        return value.substring(0, this.maxlength);
+    }
+
+    private getPos(value: string): number {
+        let pos = value.lastIndexOf('\n');
+        if (pos <= -1) {
+            pos = value.lastIndexOf('\r');
+            if (pos <= -1) {
+                pos = value.lastIndexOf('\r\n');
+            }
+        }
+        return pos;
     }
 }
