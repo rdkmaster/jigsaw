@@ -36,6 +36,14 @@ export type BreadcrumbNode = {
     routeLink?: string;
 }
 
+export type BreadcrumbSeparator = {
+    /**
+     * Type => icon / text 
+     */
+    type: string;
+    content: string;
+};
+
 export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode | BreadcrumbNode[];
 
 @Component({
@@ -61,7 +69,10 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public separator: string = '/';
+    public separator: BreadcrumbSeparator = {
+        type:"icon",
+        content:"fa fa-angle-right"
+    };
 
     /**
      * @NoMarkForCheckRequired
@@ -185,7 +196,16 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     selector: 'jigsaw-breadcrumb-item, j-breadcrumb-item',
     template: `
         <ng-content></ng-content>
-        <span class="jigsaw-breadcrumb-separator" *ngIf="!isLast">{{_$breadcrumbHost?.separator}}</span>`,
+        <span 
+            class="jigsaw-breadcrumb-separator" 
+            *ngIf="!getLast && (_$breadcrumbHost?.separator.type === 'text')">{{_$breadcrumbHost?.separator.content}}
+        </span>
+        <span 
+            class="jigsaw-breadcrumb-separator" 
+            *ngIf="!isLast && (_$breadcrumbHost?.separator.type === 'icon')">
+            <i class="{{_$breadcrumbHost?.separator.content}}"></i>
+        </span>
+        `,
     host: {
         '[class.jigsaw-breadcrumb-item]': 'true',
         '[class.jigsaw-breadcrumb-current]': 'isLast'
@@ -205,6 +225,11 @@ export class JigsawBreadcrumbItem {
      */
     @Input()
     public isLast: boolean;
+
+    public get getLast(){
+        console.log(this.isLast,this)
+        return this.isLast;
+    }
 }
 
 @NgModule({

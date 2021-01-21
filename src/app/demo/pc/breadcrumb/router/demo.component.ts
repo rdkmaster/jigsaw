@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/public_api";
+import {BreadcrumbNode, BreadcrumbRouteConfig, BreadcrumbSeparator} from "jigsaw/public_api";
 import {ProductService} from "./product.service";
 
 @Component({
@@ -30,6 +30,11 @@ export class BreadcrumbRouterDemoComponent {
         {'pc/breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
         {'pc/breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
     ];
+
+    separator: BreadcrumbSeparator = {
+        type: "text",
+        content: "/"
+    }
 
     listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
         return this.getListNode(parseInt(routeNode));
