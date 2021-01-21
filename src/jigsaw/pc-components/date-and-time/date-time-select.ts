@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs';
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr" (grChange)="grChange.emit($event)"
                                          [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
-                                         [step]="step" [weekStart]="weekStart">
+                                         [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains">
                 </jigsaw-date-time-picker>
             </ng-template>
         </jigsaw-combo-select>
@@ -150,6 +150,12 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      */
     @Input()
     public weekStart: string | TimeWeekStart;
+
+    /**
+     *  @NoMarkForCheckRequired
+     */
+    @Input()
+    public firstWeekMustContains: number;
 
     @Input()
     @RequireMarkForCheck()
