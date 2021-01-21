@@ -14,13 +14,17 @@
             <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
         </jigsaw-radios>
     </div>
+    <div class="position-box">
+        <label>内容是否自适应尺寸：</label>
+        <jigsaw-switch [(checked)]="autoSize">Auto Size</jigsaw-switch>
+    </div>
     <div class="size-box">
         宽度：<j-input [(value)]="width"></j-input>
         高度：<j-input [(value)]="height"></j-input>
     </div>
 </div>
 <section>Page Content</section>
-<j-drawer [floating]="false" [position]="selectedPosition" [width]="width" [height]="height">
+<j-drawer [floating]="false" [position]="selectedPosition" [width]="width" [height]="height" [autoSize]="autoSize">
     <div class="drawer-content">
         这是一个展示内容的box
     </div>

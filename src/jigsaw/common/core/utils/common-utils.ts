@@ -111,7 +111,8 @@ export class CommonUtils {
                 if (sourceObject[i] instanceof Array) {
                     targetObject[i] = sourceObject[i];
                 } else if(this.isUndefined(targetObject[i])) {
-                    targetObject[i] = this.extendObject({}, sourceObject[i]);
+                    // typeof null is object
+                    targetObject[i] = this.isUndefined(sourceObject[i]) ? sourceObject[i] : this.extendObject({}, sourceObject[i]);
                 } else {
                     this.extendObject(targetObject[i], sourceObject[i]);
                 }
@@ -123,7 +124,9 @@ export class CommonUtils {
     }
 
     public static extendObjects<T = Object>(targetObject: T, ...sources): T {
-        sources.forEach(s => this.extendObject(targetObject, s));
+        sources.forEach(s => {
+            targetObject = <T>this.extendObject(targetObject, s);
+        });
         return targetObject;
     }
 
@@ -340,3 +343,4 @@ export class CommonUtils {
 }
 
 export type CallbackRemoval = () => void;
+

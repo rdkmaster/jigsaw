@@ -28,7 +28,7 @@ import {JigsawTileSelectModule} from './list-and-tile/tile';
 import {JigsawTooltipModule} from './tooltip/tooltip';
 import {JigsawTreeExtModule} from './tree/tree-ext';
 import {JigsawMovableModule} from "../common/directive/movable/index";
-import {JigsawFloatModule} from "../common/directive/float/index";
+import {JigsawFloatModule} from "../common/directive/float/float";
 import {JigsawDraggableModule, JigsawDroppableModule} from '../common/directive/dragdrop/index';
 import {JigsawRootModule} from "./root/root";
 import {JigsawFishBoneModule} from "./fish-bone/fish-bone";
@@ -60,6 +60,7 @@ import {JigsawDateTimeSelectModule} from "./date-and-time/date-time-select";
 import {JigsawRangeDateTimeSelectModule} from "./date-and-time/range-date-time-select";
 import {JigsawColorSelectModule} from "./color-select/index";
 import {JigsawBadgeModule} from "../common/directive/badge/index";
+import {JigsawTimeSectionModule} from "./date-and-time/time-section";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -122,7 +123,9 @@ const JIGSAW_MODULE = [
     JigsawDateTimeSelectModule,
     JigsawRangeDateTimeSelectModule,
     JigsawColorSelectModule,
-    JigsawBadgeModule
+    JigsawBadgeModule,
+    JigsawMenuModule,
+    JigsawTimeSectionModule,
 ];
 
 @NgModule({

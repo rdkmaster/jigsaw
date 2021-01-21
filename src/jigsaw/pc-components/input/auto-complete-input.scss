@@ -4,6 +4,8 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
 .#{$jigsaw-auto-complete-input} {
     @include inline-block();
+    width: 120px;
+    height: $height-base;
 
     &-list-box{
         background-color: #fff;

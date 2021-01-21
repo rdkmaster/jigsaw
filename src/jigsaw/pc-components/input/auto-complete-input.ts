@@ -21,7 +21,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -136,7 +136,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
             return;
         }
 
-        if (typeof value[0] == 'string') {
+        if (typeof value[0] == 'string' || typeof value[0] == 'number') {
             this._$data = [new DropDownValue({
                 category: '',
                 items: value
@@ -202,29 +202,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     }
 
     ngAfterViewInit() {
-        this._subscribeInputValueChange();
-    }
-
-    private _inputValueChangeSubscription: Subscription;
-
-    private _subscribeInputValueChange(): void {
-        if (this._inputValueChangeSubscription) {
-            return;
-        }
-
-        this._inputValueChangeSubscription = this._input.valueChange
-            .pipe(debounceTime(300))
-            .subscribe(() => {
-                this._getFilteredDropDownData(true);
-            });
-    }
-
-    private _unsubscribeInputValueChange(): void {
-        if (!this._inputValueChangeSubscription) {
-            return;
-        }
-        this._inputValueChangeSubscription.unsubscribe();
-        this._inputValueChangeSubscription = null;
+        this._subscribeKeydownEvent();
     }
 
     /**
@@ -257,7 +235,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     }
 
     private _filter(category: DropDownValue, key): DropDownValue {
-        let items = category.items.filter(item => item.toLowerCase().includes(key.toLowerCase()));
+        let items = category.items.filter(item => String(item).toLowerCase().includes(key.toLowerCase()));
         if (items.length == 0) {
             return null;
         }
@@ -299,22 +277,49 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         event.preventDefault();
         event.stopPropagation();
 
-        this._unsubscribeInputValueChange();
+        this._unsubscribeKeydownEvent();
         this.value = item;
 
         this.selectEvent.emit(item);
+    }
+
+    private _keydownEvent = new EventEmitter();
+    private _keydownSubscription: Subscription;
+
+    private _subscribeKeydownEvent(): void {
+        if (this._keydownSubscription) {
+            return;
+        }
+
+        this._keydownSubscription = this._keydownEvent
+            .pipe(debounceTime(300))
+            .subscribe(() => {
+                this._getFilteredDropDownData(true);
+            });
+    }
+
+    private _unsubscribeKeydownEvent(): void {
+        if (!this._keydownSubscription) {
+            return;
+        }
+        this._keydownSubscription.unsubscribe();
+        this._keydownSubscription = null;
     }
 
     /**
      * @internal
      */
     public _$onKeyDown(event) {
-        if (!this._inputValueChangeSubscription) {
-            this._subscribeInputValueChange();
-        }
         if (event.keyCode == 27) {
             this._$propertyListOpen = false;
+            this._unsubscribeKeydownEvent();
+            return;
         }
+
+        if (!this._keydownSubscription) {
+            this._subscribeKeydownEvent();
+        }
+        this._keydownEvent.emit(event);
     }
 
     /**
@@ -332,7 +337,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     public ngOnDestroy() {
         super.ngOnDestroy();
         this._$propertyListOpen = false;
-        this._unsubscribeInputValueChange();
+        this._unsubscribeKeydownEvent();
     }
 }
 

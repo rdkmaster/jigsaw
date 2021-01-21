@@ -33,6 +33,8 @@ import {TableDataFromAjaxDemoComponent} from "./data-from-ajax/demo.component";
 import {TableDataFromAjaxDemoModule} from "./data-from-ajax/demo.module";
 import {TableDataWithPopupDemoComponent} from "./with-popup/demo.component";
 import {TableDataWithPopupDemoModule} from "./with-popup/demo.module";
+import {TableDraggableDemoComponent} from "./draggable-table/demo.component";
+import {TableDraggableDemoModule} from "./draggable-table/demo.module";
 import {TableCalendarDemoComponent} from "./calendar/demo.component";
 import {TableCalendarDemoModule} from "./calendar/demo.module";
 import {TableFixedHeadDemoComponent} from "./fixed-header/demo.component";
@@ -89,6 +91,8 @@ import {TableChangeDataDemoModule} from "./change-data/demo.module"
 import {TableChangeDataDemoComponent} from "./change-data/demo.component";
 import {TreeTableDemoComponent} from "./tree-table/demo.component";
 import {TreeTableDemoModule} from "./tree-table/demo.module";
+import {TableCellEditablePropertyDemoComponent} from "./cell-editable-property/demo.component";
+import {TableCellEditablePropertyDemoModule} from "./cell-editable-property/demo.module";
 
 export const routerConfig = [
     {
@@ -223,6 +227,10 @@ export const routerConfig = [
     {
         path: 'tree-table', component: TreeTableDemoComponent
     },
+    {
+        path: 'cell-editable-property', component: TableCellEditablePropertyDemoComponent
+    },
+    {path:"draggable-table",component:TableDraggableDemoComponent}
 ];
 
 @NgModule({
@@ -238,7 +246,7 @@ export const routerConfig = [
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
-        TreeTableDemoModule
+        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule
     ]
 })
 export class TableDemoModule {

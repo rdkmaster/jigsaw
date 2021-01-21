@@ -1,6 +1,7 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, Directive, EventEmitter, Input, NgModule,
-    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy
+    OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy,
+    Injector, ViewEncapsulation, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
@@ -15,12 +16,24 @@ import {JigsawSwitchModule} from "../switch/index";
 import {JigsawSelectModule} from "../select/select";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {take} from 'rxjs/operators';
+import { DragDropInfo } from "../../common/directive/dragdrop/types";
+import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
+
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+    }
+
     /**
-     * @NoMarkForCheckRequired
+     * 宿主表格实例
      */
+    public hostInstance: any;
+
+    @RequireMarkForCheck()
     @Input()
     public cellData: any;
     /**
@@ -39,12 +52,13 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     @Input()
     public initData: any;
 
-    @Output() public cellDataChange = new EventEmitter<any>();
+    @Output()
+    public cellDataChange = new EventEmitter<any>();
 
     protected targetData: TableData;
+
     private _removeTableDataRefresh: Function;
     private _removeAdditionalDataRefresh: Function;
-
     private _column: number = -1;
 
     public get column(): number {
@@ -127,13 +141,52 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
+@Component({
+    template: `
+        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" [password]="true" [clearable]="false"
+            [disabled]="true">
+        </jigsaw-input>
+    `,
+    styles: [`
+        .table-cell-password-renderer.jigsaw-input {
+            border: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper {
+            background: transparent;
+        }
+
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
+            cursor: inherit;
+        }
+
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
+            color: #666;
+        }
+
+        .table-cell-password-renderer.jigsaw-input:hover, .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+            border: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+            box-shadow: none;
+        }
+    `],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellPasswordRenderer extends TableCellRendererBase {
+
+}
+
 /**
  * 编辑单元格渲染器
  */
 @Component({
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
-                      (blur)="dispatchChangeEvent(cellData)">
+                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -145,6 +198,22 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
+    }
+
+    public get _$icon() {
+        return this.initData && this.initData.icon ? this.initData.icon : undefined;
+    }
+
+    public get _$preIcon() {
+        return this.initData && this.initData.preIcon ? this.initData.preIcon : undefined;
+    }
+
+    public get _$password() {
+        return this.initData && this.initData.hasOwnProperty('password') ? !!this.initData.password : false;
+    }
+
+    public get _$clearable() {
+        return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
     ngAfterViewInit() {
@@ -199,7 +268,8 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+                              [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>
     `
@@ -241,10 +311,11 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
-
 
     public get checked(): CheckBoxStatus {
         return this._checked;
@@ -298,8 +369,10 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._updateTargetData();
     }
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, private _zone: NgZone) {
+        super(_injector);
     }
 
     public checked: boolean;
@@ -336,7 +409,11 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
         this._updateTargetData();
         this.dispatchChangeEvent(value);
         this._changeDetectorRef.markForCheck();
-        this.targetData.refresh();
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            });
+        })
     }
 
     ngOnInit() {
@@ -358,6 +435,12 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 export class TableCellSwitchRenderer extends TableCellRendererBase {
     public get _$readonly() {
         return this.initData && this.initData.readonly;
+    }
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 }
 
@@ -382,8 +465,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     public initData: InitDataGenerator | ArrayCollection<any> | any[];
     public data: ArrayCollection<any> | any[];
 
-    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super();
+    constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
         this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
 
@@ -452,9 +537,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     private _cellData: any;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    @RequireMarkForCheck()
     @Input()
     get cellData(): any {
         return this._cellData;
@@ -516,18 +599,165 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     }
 }
 
+/*
+ * 换行
+ * */
+@Component({
+    template: `
+        <div class="jigsaw-table-option-box"
+            jigsaw-draggable
+            jigsaw-droppable
+            (jigsawDragStart)="_$dragStartHandle($event)"
+            (jigsawDragEnd)="_$dragEndHandle()">
+            <span class="drop-top"
+                jigsaw-droppable
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)">
+            </span>
+            <span class="drop-mid"
+                jigsaw-droppable
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)">
+                <i [class]="_$icon"></i>
+                <p>{{_$label}}</p>
+            </span>
+            <span class="drop-bottom"
+                jigsaw-droppable
+                (jigsawDragEnter)="_$dragEnterHandle($event)"
+                (jigsawDrop)="_$dropHandle($event)">
+            </span>
+        </div>
+    `
+})
+export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
+    private _allRows: NodeListOf<any>;
+
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _injector: Injector) {
+        super(_injector);
+    }
+
+    public get _$icon() {
+        return this.initData && this.initData.icon ? this.initData.icon : "fa fa-arrows-alt";
+    }
+
+    public get _$label() {
+        return this.initData && this.initData.label ? this.initData.label : '';
+    }
+
+    public get _$title() {
+        return this.initData && this.initData.title ? this.initData.title : '';
+    }
+
+    /**
+     * @internal
+     */
+    public _$dragStartHandle(dragInfo: DragDropInfo) {
+        dragInfo.dragDropData = this.row;
+        dragInfo.event.dataTransfer.effectAllowed = "link";
+        if (!CommonUtils.isIE()) {
+            const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
+            dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$dragEndHandle() {
+        this._resetSelectedRow();
+    }
+
+    /**
+     * @internal
+     */
+    public _$dragEnterHandle(dragInfo: DragDropInfo) {
+        dragInfo.event.dataTransfer.dropEffect = "link";
+        this._resetSelectedRow();
+        if (dragInfo.event.dataTransfer.effectAllowed == "link") {
+            let _dropClass = "";
+            if (dragInfo.element.className.indexOf("drop-top") !== -1) {
+                _dropClass = "drop-active-top";
+            } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
+                _dropClass = "drop-active-mid";
+            } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
+                _dropClass = "drop-active-bottom";
+            }
+            this._renderer.addClass(CommonUtils.getParentNodeBySelector(dragInfo.element, "tr"), _dropClass);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$dropHandle(dragInfo: DragDropInfo) {
+        const draggingRowIndex = +dragInfo.dragDropData;
+        if (draggingRowIndex === this.row) {
+            return;
+        }
+        if (dragInfo.element.className.indexOf("drop-top") !== -1) {
+            if (draggingRowIndex < this.row) {
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
+                this.hostInstance.selectedRow = this.row - 1;
+            } else {
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
+                this.hostInstance.selectedRow = this.row;
+            }
+        } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
+            const draggingRow = this.tableData.data[draggingRowIndex];
+            if (!draggingRow) {
+                return;
+            }
+            const thisRow = this.tableData.data[this.row];
+            this.tableData.data[this.row] = draggingRow;
+            this.tableData.data[draggingRowIndex] = thisRow;
+            this.hostInstance.selectedRow = this.row;
+        } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
+            if (draggingRowIndex < this.row) {
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
+                this.hostInstance.selectedRow = this.row;
+            } else {
+                this._arrayMove(this.tableData.data, draggingRowIndex, this.row + 1);
+                this.hostInstance.selectedRow = this.row + 1;
+            }
+        }
+        // inform jigsaw-table to update view
+        this.tableData.refresh();
+    }
+
+    private _resetSelectedRow() {
+        for (let i = 0; i < this._allRows.length; ++i) {
+            this._renderer.removeClass(this._allRows[i], "drop-active-top");
+            this._renderer.removeClass(this._allRows[i], "drop-active-mid");
+            this._renderer.removeClass(this._allRows[i], "drop-active-bottom");
+        }
+    }
+
+    private _arrayMove(arr: any[], oldIndex: number, newIndex: number) {
+        if (newIndex >= arr.length) {
+            let k = newIndex - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
+    }
+
+    ngAfterViewInit() {
+        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "tr" );
+        this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
+    }
+}
+
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
-        JigsawAutoCompleteInputModule
+        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule
     ]
 })
 export class JigsawTableRendererModule {
 }
-
-

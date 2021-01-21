@@ -14,6 +14,8 @@ import {ListLiteFullDemoComponent} from "./full/demo.component";
 import {ListLiteFullDemoModule} from "./full/demo.module";
 import {ListLiteLineEllipsisDemoComponent} from "./line-ellipsis/demo.component";
 import {ListLiteLineEllipsisDemoModule} from "./line-ellipsis/demo.module";
+import {ListLiteWithIconDemoComponent} from "./with-icon/demo.component";
+import {ListLiteWithIconDemoModule} from "./with-icon/demo.module";
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     {
         path: 'line-ellipsis', component: ListLiteLineEllipsisDemoComponent
     },
+    {
+        path: 'with-icon', component: ListLiteWithIconDemoComponent
+    },
 ];
 
 @NgModule({
@@ -48,7 +53,8 @@ export const routerConfig = [
         ListLiteSearchableDemoModule,
         ListLiteWithComboDemoModule,
         ListLiteFullDemoModule,
-        ListLiteLineEllipsisDemoModule
+        ListLiteLineEllipsisDemoModule,
+        ListLiteWithIconDemoModule
     ]
 })
 export class ListLiteDemoModule{

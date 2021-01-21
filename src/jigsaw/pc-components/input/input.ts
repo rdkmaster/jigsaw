@@ -82,17 +82,17 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     /**
      * 文本框中当前的文本
      *
-     * @NoMarkForCheckRequired
-     *
      * $demo = input/valid
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): string {
         return this._value;
     }
 
     public set value(newValue: string) {
-        if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
+        newValue = CommonUtils.isUndefined(newValue) ? '' : newValue;
+        if (this._value === newValue) {
             return;
         }
         this._value = newValue;
@@ -268,6 +268,14 @@ export class JigsawInput extends JigsawInputBase {
         return this.password ? "password" : "text";
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get autocomplete():string{
+        return this.password ? "new-password" : "off" ;
+    }
+
     @ViewChild('input')
     private _inputElement: ElementRef;
 
@@ -304,8 +312,10 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$stopPropagation(event) {
-        event.preventDefault();
-        event.stopPropagation();
+        if(!this.disabled) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     }
 }
 

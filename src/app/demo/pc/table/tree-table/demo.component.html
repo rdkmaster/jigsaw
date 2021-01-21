@@ -14,11 +14,14 @@
         </div>
         <div class="demo-2 live-demo">
             <h3>分页</h3>
+            <button (click)="searchForRequire()">search for require</button>
             <jigsaw-table [data]="localPageableTreeTableData" [columnDefines]="columns"
                           [additionalColumnDefines]="additionalColumns"></jigsaw-table>
             <jigsaw-pagination [data]="localPageableTreeTableData"
                                [pageSizeOptions]="[5, 10, 20]"
-                               [showQuickJumper]="true"></jigsaw-pagination>
+                               [showQuickJumper]="true"
+                               [searchable]="true"
+                               (search)="search($event)"></jigsaw-pagination>
         </div>
     </div>
 </div>

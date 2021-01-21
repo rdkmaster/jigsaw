@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Renderer2} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, Renderer2, Injector} from "@angular/core";
 import {TableCellRendererBase, DragDropInfo, CommonUtils} from "jigsaw/public_api";
 
 /*
@@ -26,13 +26,13 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
 
     private allRows: any;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super();
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _injector: Injector) {
+        super(_injector);
     }
 
     resetSelectedRow() {
         for (let i = 0; i < this.allRows.length; ++i) {
-            this._renderer.setStyle(this.allRows[i], 'background-color', i % 2 == 0 ? '#fff': '#f8f8f8')
+            this._renderer.setStyle(this.allRows[i], 'background-color', i % 2 == 0 ? '#fff' : '#f8f8f8')
         }
     }
 
@@ -64,7 +64,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         dragInfo.event.dataTransfer.dropEffect = 'link';
         if (dragInfo.event.dataTransfer.effectAllowed == 'link') {
             this._renderer.setStyle(CommonUtils.getParentNodeBySelector(dragInfo.element, 'tr'),
-                'background-color', 'ffbf13')
+                'background-color', '#ffbf13')
         }
     }
 

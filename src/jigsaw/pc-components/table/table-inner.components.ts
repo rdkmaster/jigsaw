@@ -122,9 +122,16 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         [this._column, this.targetData] = _getColumnIndex(this._tableData, this._additionalData, this.field);
     }
 
-    /*
+    /**
+     * 宿主表格实例
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public hostInstance: any;
+
+    /**
      * 渲染器制造工厂
-     * */
+     */
     protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>, initData: any): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
@@ -141,6 +148,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             componentRef.instance.tableData = this.tableData;
             componentRef.instance.additionalData = this.additionalData;
             componentRef.instance.cellData = this.cellData;
+            componentRef.instance.hostInstance = this.hostInstance;
             componentRef.instance.initData = initData;
             return componentRef;
         }
@@ -365,10 +373,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             rows.push(this.row + i);
             // update tableData directly, therefor table.ts need not to do this.
             this.targetData.data[this.row + i][this.column] = cellData;
-        }
-
-        if (this.targetData instanceof AdditionalTableData) {
-            this.targetData.change.emit();
         }
 
         const change: TableDataChangeEvent = {

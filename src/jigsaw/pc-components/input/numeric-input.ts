@@ -153,7 +153,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     public set value(value: number) {
-        if (CommonUtils.isUndefined(value) || this._value == value) {
+        if (CommonUtils.isUndefined(value) || this._value === value) {
             return;
         }
         this._checkValue(value);

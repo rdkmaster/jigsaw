@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit, Injector} from "@angular/core";
 import {TableCellRendererBase, PopupService} from "jigsaw/public_api";
 import {NumberSelectPad} from "./number-select-pad";
 import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, PUZZLE_RESET} from "./utils";
@@ -22,8 +22,8 @@ import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, P
     `]
 })
 export class NumberRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
-    constructor(public popupService: PopupService) {
-        super();
+    constructor(public popupService: PopupService, protected _injector: Injector) {
+        super(_injector);
     }
 
     bgColor = '#ddd';
@@ -47,8 +47,8 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
             posReviser: (pos) => {
                 // 单击右上角的时候，出现数字盘超出屏幕之外的问题，通过这个函数来修正
                 // `pos`是自动计算出来的值，有可能存在错误
-                pos.top = pos.top > 0 ? pos.top: 0;
-                pos.left = pos.left > 0 ? pos.left: 0;
+                pos.top = pos.top > 0 ? pos.top : 0;
+                pos.left = pos.left > 0 ? pos.left : 0;
                 return pos;
             }
         };

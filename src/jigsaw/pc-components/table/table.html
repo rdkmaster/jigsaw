@@ -52,7 +52,8 @@
                             <span class="jigsaw-table-cell-text" title="{{cell.tooltip ? cell.tooltip : ''}}">{{cell.cellData}}</span>
                         </div>
                         <div *ngSwitchCase="'html'" class="jigsaw-table-cell-content"
-                             [trustedHtml]="cell.cellData" [trustedHtmlContext]="cell.innerHtmlContext"></div>
+                             [trustedHtml]="cell.cellData" [trustedHtmlContext]="cell.innerHtmlContext">
+                        </div>
                         <jigsaw-table-cell *ngSwitchDefault class="jigsaw-table-cell-content"
                                            title="{{cell.tooltip ? cell.tooltip : ''}}"
                                            [tableData]="data"
@@ -67,6 +68,7 @@
                                            [editorRendererInitData]="cell.editorRendererInitData"
                                            [group]="cell.group"
                                            [rowSpan]="cell.rowSpan"
+                                           [hostInstance]="this"
                                            (edit)="edit.emit($event)">
                         </jigsaw-table-cell>
                     </ng-container>

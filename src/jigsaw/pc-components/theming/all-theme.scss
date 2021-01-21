@@ -28,6 +28,7 @@
 @import "../switch/switch";
 @import "../table/table";
 @import "../table/table-head";
+@import "../table/renderer.scss";
 @import "../tabs/tab";
 @import "../tag/tag";
 @import "../list-and-tile/tile";
@@ -59,3 +60,5 @@
 @import "../progress/progress";
 @import "../color-select/color-select";
 @import "../../common/directive/badge/badge";
+@import "../menu/navigation-menu";
+@import "../date-and-time/time-section";

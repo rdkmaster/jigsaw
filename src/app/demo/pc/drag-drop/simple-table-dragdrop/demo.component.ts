@@ -122,6 +122,6 @@ export class TableDragDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo演示了如何自定义一个简单的单元格拖拽渲染器，Jigsaw已经实现了一个内置的单元格拖拽渲染器，建议优先使用。';
     description: string = '';
 }

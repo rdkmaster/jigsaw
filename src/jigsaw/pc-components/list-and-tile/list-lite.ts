@@ -1,6 +1,6 @@
 import {
     AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, NgModule, QueryList, ViewChild,
-    ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy
+    ViewChildren, OnDestroy, Output, EventEmitter, NgZone, ChangeDetectionStrategy, Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -37,8 +37,10 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
                 <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                                [disabled]="item?.disabled">
-                    <p class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
+                    <p j-title class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
+                        <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
                         {{item && item[labelField] ? item[labelField] : item}}</p>
+                    <span j-sub-title *ngIf="item?.suffixIcon" class="{{item?.suffixIcon}}" style="font-size:12px; margin-top:3px"></span>
                 </j-list-option>
             </j-list>
         </div>
@@ -54,8 +56,10 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
-    constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
-        super();
+    constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_injector);
     }
 
     /**
