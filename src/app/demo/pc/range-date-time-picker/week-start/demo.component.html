@@ -4,13 +4,17 @@
 
 
 <!-- start to learn the demo from here -->
-<h4>weekStart</h4>
+<h4>First Day of Week and First Week of Year</h4>
 
+<p>First Day of Week: </p>
 <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']" [(selectedItems)]="weekStart">
 </jigsaw-button-bar>
-
+<br><br>
+<p>First Week of Year: </p>
+<jigsaw-button-bar [data]="[1, 2, 3, 4, 5, 6]" [(selectedItems)]="janX">
+</jigsaw-button-bar>
 <br><br>
 
-<jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" [weekStart]="weekStart[0]" gr="week"></jigsaw-range-date-time-picker><br>
+<jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" [weekStart]="weekStart[0]" [janXOfFirstWeek]="janX[0]" gr="week"></jigsaw-range-date-time-picker><br>
 
 <div>beginDate ： {{beginDate | json}}   endDate：{{endDate | json}}</div>

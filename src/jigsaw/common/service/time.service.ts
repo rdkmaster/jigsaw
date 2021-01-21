@@ -253,6 +253,22 @@ export class TimeService {
         });
     }
 
+    /**
+     * 设置一年的第一周要包含一月几号
+     *  https://momentjs.com/docs/#/customization/dow-doy/
+     * @param janX
+     */
+    public static setFirstWeekOfYear(janX: number): void {
+        let locale = moment.locale();
+        let weekSet = moment.localeData()._week;
+        moment.updateLocale(locale, {
+            week: {
+                dow: weekSet.dow,
+                doy: 7 + weekSet.dow - janX
+            }
+        });
+    }
+
     public static getWeekStart() {
         return moment.localeData().firstDayOfWeek()
     }
