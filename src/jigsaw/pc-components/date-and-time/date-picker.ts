@@ -730,6 +730,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
 
     public set janXOfFirstWeek(value: number) {
         if(CommonUtils.isUndefined(value)) return;
+        value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
         this._janXOfFirstWeek = value;
         TimeService.setFirstWeekOfYear(this._janXOfFirstWeek);
         if(this.initialized) {

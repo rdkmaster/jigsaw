@@ -294,6 +294,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     public set janXOfFirstWeek(value: number) {
         if(CommonUtils.isUndefined(value)) return;
+        value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
         this._janXOfFirstWeek = value;
         // weekStart/janX必须预先设置好，用于初始化之后的计算
         TimeService.setFirstWeekOfYear(this._janXOfFirstWeek);
