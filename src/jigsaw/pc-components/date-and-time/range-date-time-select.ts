@@ -35,7 +35,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
             <ng-template>
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
                                                [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
-                                               [weekStart]="weekStart" [janXOfFirstWeek]="janXOfFirstWeek"
+                                               [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
                                                (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
                 </jigsaw-range-date-time-picker>
             </ng-template>
@@ -163,7 +163,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
      *  @NoMarkForCheckRequired
      */
     @Input()
-    public janXOfFirstWeek: number;
+    public firstWeekMustContains: number;
 
 
     @Input()

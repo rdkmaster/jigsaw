@@ -15,6 +15,6 @@
 </jigsaw-button-bar>
 <br><br>
 
-<jigsaw-date-time-picker [(date)]="date" [weekStart]="weekStart[0]" [janXOfFirstWeek]="janX[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-date-time-picker><br>
+<jigsaw-date-time-picker [(date)]="date" [weekStart]="weekStart[0]" [firstWeekMustContains]="janX[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-date-time-picker><br>
 
 <p>{{date | json}}</p>

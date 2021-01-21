@@ -63,7 +63,7 @@
         <jigsaw-button-bar [data]="[1, 2, 3, 4, 5, 6]" [(selectedItems)]="janX">
         </jigsaw-button-bar>
         <br><br>
-        <jigsaw-range-date-time-select [(date)]="date5" [weekStart]="weekStart[0]" [janXOfFirstWeek]="janX[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select [(date)]="date5" [weekStart]="weekStart[0]" [firstWeekMustContains]="janX[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date5 | json}}</p>
     </div>

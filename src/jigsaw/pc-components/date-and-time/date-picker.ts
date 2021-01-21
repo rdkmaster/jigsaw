@@ -724,11 +724,11 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * $demo = date-picker/week-start
      */
     @Input()
-    public get janXOfFirstWeek(): number {
+    public get firstWeekMustContains(): number {
         return this._janXOfFirstWeek;
     }
 
-    public set janXOfFirstWeek(value: number) {
+    public set firstWeekMustContains(value: number) {
         if(CommonUtils.isUndefined(value)) return;
         value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
         this._janXOfFirstWeek = value;

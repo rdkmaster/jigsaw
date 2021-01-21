@@ -337,7 +337,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      */
     @Input()
     @RequireMarkForCheck()
-    public janXOfFirstWeek: number;
+    public firstWeekMustContains: number;
 
     private _updateValueCombine = new EventEmitter();
     private _removeUpdateValueCombineSubscriber: Subscription;
