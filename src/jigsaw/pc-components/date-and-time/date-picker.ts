@@ -715,7 +715,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
-    private _janXOfFirstWeek: number;
+    private _firstWeekMustContains: number;
     /**
      * 设置一年的第一周要包含一月几号
      *
@@ -725,14 +725,14 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      */
     @Input()
     public get firstWeekMustContains(): number {
-        return this._janXOfFirstWeek;
+        return this._firstWeekMustContains;
     }
 
     public set firstWeekMustContains(value: number) {
         if(CommonUtils.isUndefined(value)) return;
         value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
-        this._janXOfFirstWeek = value;
-        TimeService.setFirstWeekOfYear(this._janXOfFirstWeek);
+        this._firstWeekMustContains = value;
+        TimeService.setFirstWeekOfYear(this._firstWeekMustContains);
         if(this.initialized) {
             if(this.date && this.gr == TimeGr.week) {
                 // weekStart/janX改变时，在跨年时之前的weekDate可能会无效，需要重新计算

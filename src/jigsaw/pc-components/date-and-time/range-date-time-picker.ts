@@ -280,7 +280,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         TimeService.setWeekStart(this._weekStart);
     }
 
-    private _janXOfFirstWeek: number;
+    private _firstWeekMustContains: number;
 
     /**
      * 设置一年的第一周要包含一月几号
@@ -289,15 +289,15 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     @Input()
     @RequireMarkForCheck()
     public get firstWeekMustContains(): number {
-        return this._janXOfFirstWeek;
+        return this._firstWeekMustContains;
     }
 
     public set firstWeekMustContains(value: number) {
         if(CommonUtils.isUndefined(value)) return;
         value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
-        this._janXOfFirstWeek = value;
+        this._firstWeekMustContains = value;
         // weekStart/janX必须预先设置好，用于初始化之后的计算
-        TimeService.setFirstWeekOfYear(this._janXOfFirstWeek);
+        TimeService.setFirstWeekOfYear(this._firstWeekMustContains);
     }
 
     /**
