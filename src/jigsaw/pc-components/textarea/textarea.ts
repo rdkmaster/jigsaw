@@ -1,15 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Injector,
-    Input,
-    Output,
-    ViewChild
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Injector, Input, Output, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -111,8 +100,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
         }
-        this._calcLength(newValue);
-        this._value = newValue;
+
+        if (!isNaN(this.maxLength) && this.maxLength > 0) {
+            // 只有合法的正整数才计算限制字符数
+            this._value = this._updateValue(newValue);
+            this._calcLength(this._value);
+        } else {
+            this._value = newValue;
+        }
+
         this._propagateChange(this._value);
         if (this.initialized) {
             this.valueChange.emit(this._value);
@@ -154,7 +150,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = textarea/max-length
      */
     @Input()
-    public isCalculateCrlf: boolean = false;
+    public includesCRLF: boolean = false;
 
     /**
      * @internal
@@ -176,25 +172,65 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     public set maxLength(value: number) {
-        if (isNaN(value)) {
-            console.error('maxLength property must be a number, please input a number or number string');
+        if (isNaN(value) || value < 0) {
+            console.error('maxLength property must be a non-negative number, please input a number or number string');
             return;
         }
         this._maxLength = Number(value);
     }
 
     private _calcLength(value: string): void {
-        if (CommonUtils.isUndefined(this.maxLength) || this.maxLength <= 0) {
-            // 非正整数则认为无限制
+        if (this.includesCRLF) {
+            this._$currentLength = value.length;
             return;
         }
-        let newLines = value.match(/(\r\n|\n|\r)/g);
-        if (newLines && !this.isCalculateCrlf) {
-            // 换行符和回车符不计入字符数
-            this._$currentLength = value.length - newLines.length;
+        // 换行符和回车符不计入字符数
+        this._$currentLength = this._getLengthWithoutCRLF(value);
+    }
+
+    private _updateValue(value: string): string {
+        if (this.includesCRLF) {
+            value = value.substring(0, this._maxLength);
         } else {
-            this._$currentLength = value.length;
+            // 换行符和回车符不计入字符数
+            const textLength = this._getLengthWithoutCRLF(value);
+            if (textLength > this._maxLength) {
+                value = this._getValue(value);
+            }
         }
+        this._textareaElement.nativeElement.value = value;
+        return value;
+    }
+
+    private _getLengthWithoutCRLF(value: string): number {
+        const newLines = value.match(/(\r\n|\n|\r)/g);
+        const lineLen = newLines ? newLines.length : 0;
+        return value.length - lineLen;
+    }
+
+    private _getValue(value: string): string {
+        const pos = this._getPos(value);
+        if (pos > -1) {
+            const tmp = value.substring(0, pos);
+            const newLines = tmp.match(/(\r\n|\n|\r)/g);
+            const lineLen = newLines ? newLines.length : 0;
+            if (tmp.length - lineLen > this._maxLength) {
+                return this._getValue(tmp);
+            }
+            return value.substring(0, this._maxLength + lineLen + 1);
+        }
+        return value.substring(0, this._maxLength);
+    }
+
+    private _getPos(value: string): number {
+        let pos = value.lastIndexOf('\n');
+        if (pos <= -1) {
+            pos = value.lastIndexOf('\r');
+            if (pos <= -1) {
+                pos = value.lastIndexOf('\r\n');
+            }
+        }
+        return pos;
     }
 
     @ViewChild('textarea')
@@ -254,83 +290,5 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public _$handleBlur($event: FocusEvent) {
         this._focused = false;
         this.blur.emit($event)
-    }
-}
-
-@Directive({
-    selector: '[textareaMaxlength]',
-    host: {
-        '(input)': 'updateValue($event.target.value)'
-    }
-})
-export class MaxlengthDirective {
-    @Input('textareaMaxlength')
-    public maxlength: number;
-
-    @Input()
-    public isCalculateCrlf: boolean = false;
-
-    @Output() public contentChange = new EventEmitter<string>();
-
-    constructor(public elementRef: ElementRef) {
-    }
-
-    @Input()
-    set content(value: string) {
-        this.updateValue(value);
-    }
-
-    public updateValue(value: string): void {
-        if (value) {
-            if (!this.maxlength) {
-                this.elementRef.nativeElement.value = value;
-                this.contentChange.emit(value);
-                return;
-            }
-            if (this.isCalculateCrlf) {
-                value = value.substring(0, this.maxlength);
-            } else {
-                // 换行符和回车符不计入字符数
-                let newLines = value.match(/(\r\n|\n|\r)/g);
-                let textLength;
-                if (newLines) {
-                    textLength = value.length - newLines.length;
-                } else {
-                    textLength = value.length;
-                }
-                if (textLength > this.maxlength) {
-                    value = this.getValue(value);
-                }
-            }
-        } else {
-            value = '';
-        }
-        this.elementRef.nativeElement.value = value;
-        this.contentChange.emit(value);
-    }
-
-    private getValue(value: string): string {
-        let pos = this.getPos(value);
-        if (pos > -1) {
-            let tmp = value.substring(0, pos);
-            let newLines = tmp.match(/(\r\n|\n|\r)/g);
-            let lineLen = newLines ? newLines.length : 0;
-            if (tmp.length - lineLen > this.maxlength) {
-                return this.getValue(tmp);
-            }
-            return value.substring(0, this.maxlength + lineLen + 1);
-        }
-        return value.substring(0, this.maxlength);
-    }
-
-    private getPos(value: string): number {
-        let pos = value.lastIndexOf('\n');
-        if (pos <= -1) {
-            pos = value.lastIndexOf('\r');
-            if (pos <= -1) {
-                pos = value.lastIndexOf('\r\n');
-            }
-        }
-        return pos;
     }
 }

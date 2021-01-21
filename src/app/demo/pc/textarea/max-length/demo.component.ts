@@ -4,7 +4,11 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class TextareaMaxLengthDemoComponent {
-    public _$isCalculateCrlf: boolean = true;
+    public _$includesCRLF: boolean = true;
+
+    public _$valueChange($event: string):void {
+        console.log(' input value: ', $event)
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

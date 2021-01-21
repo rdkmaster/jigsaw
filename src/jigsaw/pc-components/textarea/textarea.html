@@ -5,10 +5,7 @@
               [(ngModel)]="value"
               [disabled]="disabled"
               (focus)="_$handleFocus($event)"
-              (blur)="_$handleBlur($event)"
-              [textareaMaxlength]="maxLength"
-              [isCalculateCrlf]="isCalculateCrlf"
-              [(content)]="value">
+              (blur)="_$handleBlur($event)">
     </textarea>
     <div class="jigsaw-textarea-icon-end">
         <span *ngIf="clearable && !disabled && !!value" (click)="_$clearValue()" class="jigsaw-textarea-clear-bar">&times;</span>
