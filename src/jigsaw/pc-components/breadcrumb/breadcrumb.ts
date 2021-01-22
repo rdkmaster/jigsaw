@@ -131,11 +131,17 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @Input()
     public _$breadcrumbNodes: BreadcrumbNode[] = [];
 
-    /**
-     * @NoMarkForCheckRequired
-     */
+    /* 超过这个值的时候面包屑会折叠中间的部分 */
+    public _foldMin = 99;
+    
     @Input()
-    public foldMin = 99;
+    public get foldMin(){
+        return this._foldMin
+    }
+    
+    public set foldMin(v){
+        this._foldMin = v;
+    }
 
     private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
         breadcrumbNodes = breadcrumbNodes ? breadcrumbNodes : [];
