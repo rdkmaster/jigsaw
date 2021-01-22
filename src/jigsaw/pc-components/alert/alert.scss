@@ -52,11 +52,13 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        padding: 0;
+        align-items: flex-start;
+        padding: 0 32px 0 32 + $height-sm;
+        outline: red;
 
         .content-main {
             position: relative;
+            margin-bottom: 8px;
             i {
                 position: absolute;
                 top: 0;
@@ -67,6 +69,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
             }
             p {
                 font-size: $font-size-lg;
+                font-weight: bold;
                 line-height: $height-sm;
                 color: $font-color-heading-bold;
             }
@@ -88,7 +91,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         color: $warning-color;
     }
 
-    &-error &-icon{
+    &-error &-icon {
         color: $error-color;
     }
 
