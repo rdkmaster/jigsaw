@@ -107,12 +107,13 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             this._$currentLength = this.includesCRLF ? newValue.length : this._getLengthWithoutCRLF(newValue);
         }
 
-        this._propagateChange(newValue);
-        if (this.initialized && (this.maxLength === 0 || (this.maxLength !== 0 && this._value !== newValue))) {
-            // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
-            this.valueChange.emit(newValue);
-        }
+        const currentValue = this._value;
         this._value = newValue;
+        this._propagateChange(newValue);
+        if (this.initialized && (this.maxLength === 0 || (this.maxLength !== 0 && this._value !== currentValue))) {
+            // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
+            this.valueChange.emit(this._value);
+        }
     }
 
     /**
@@ -205,13 +206,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (newLines) {
             // 存在换行符
             let position = this._maxLength;
-            for (let i = 0; i < newLines.length; i++) {
+            let i = 0;
+            while (i < newLines.length) {
                 const char = value.charAt(position + i);
                 tempValue += char;
                 if (char.match(/(\r\n|\n|\r)/g)) {
                     // 换行符，不算个数
-                    i--;
                     position++
+                } else {
+                    i++;
                 }
             }
         }
