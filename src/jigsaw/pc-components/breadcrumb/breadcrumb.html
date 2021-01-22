@@ -1,7 +1,11 @@
 <ng-content></ng-content>
-<j-breadcrumb-item *ngFor="let item of _$breadcrumbNodes; let isLast = last" [isLast]="isLast">
-    <a class="jigsaw-breadcrumb-link" [routerLink]="item?.routeLink">
+<j-breadcrumb-item *ngFor="let item of _$breadcrumbNodes; let isLast = last; let i = index; let len = count" [isLast]="isLast" [ngClass]="!(len > foldMin && 0 < i && i < len - 2) ?'':'fold'">
+    <a class="jigsaw-breadcrumb-link" [routerLink]="item?.routeLink" *ngIf="!(len > foldMin && i == 1)">
         <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
         <span class="jigsaw-breadcrumb-label">{{item?.label}}</span>
+        <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911" title="{{item?.hint}}"><i></i></span>
+    </a>
+    <a class="jigsaw-breadcrumb-link" *ngIf="len > foldMin && i == 1">
+        <span>···</span>
     </a>
 </j-breadcrumb-item>

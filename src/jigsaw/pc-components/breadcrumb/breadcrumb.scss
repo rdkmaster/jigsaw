@@ -6,10 +6,9 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     display: flex;
     align-items: center;
     height: 54px;
-    padding: 0 12px;
     background: $background-color-base;
     font-size: $font-size-base;
-    
+
     &:after {
         height: 100%;
         content: "";
@@ -18,12 +17,17 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     }
 
     &-item {
+        display: flex;
+        align-items: center;
         color: $text-color-secondary;
         &.#{$bc-prefix-cls}-current {
             color: $heading-color;
         }
         .#{$bc-prefix-cls}-link {
             color: inherit;
+        }
+        &.fold:not(:nth-of-type(2)) {
+            display: none;
         }
     }
 
@@ -39,9 +43,19 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         margin-right: 4px;
     }
 
+    &-hint {
+        display: inline-flex;
+        align-items: center;
+        font-size: $font-size-sm;
+        font-weight: 400;
+        color: inherit;
+        color: red;
+    }
+
     &.#{$bc-prefix-cls}-light {
         background: $background-color-base;
         .#{$bc-prefix-cls}-item {
+            height: $height-sm;
             color: $brand-default;
             &.#{$bc-prefix-cls}-current {
                 font-size: $font-title-lg;

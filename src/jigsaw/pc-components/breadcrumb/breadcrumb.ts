@@ -34,6 +34,10 @@ export type BreadcrumbNode = {
      * 节点链接，一般不填的会自动生成
      */
     routeLink?: string;
+    /**
+     * 注释链接
+     */
+    hint?: string;
 }
 
 export type BreadcrumbSeparator = {
@@ -122,9 +126,16 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     private _items: QueryList<JigsawBreadcrumbItem>;
 
     /**
-     * @internal
+     * @NoMarkForCheckRequired
      */
+    @Input()
     public _$breadcrumbNodes: BreadcrumbNode[] = [];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public foldMin = 99;
 
     private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
         breadcrumbNodes = breadcrumbNodes ? breadcrumbNodes : [];
