@@ -103,16 +103,16 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
         if (!isNaN(this.maxLength) && this.maxLength > 0) {
             // 只有合法的正整数才计算限制字符数
-            this._value = this._updateValue(newValue);
-            this._calcLength(this._value);
-        } else {
-            this._value = newValue;
+            newValue = this._updateValue(newValue);
+            this._$currentLength = this.includesCRLF ? newValue.length : this._getLengthWithoutCRLF(newValue);
         }
 
-        this._propagateChange(this._value);
-        if (this.initialized) {
-            this.valueChange.emit(this._value);
+        this._propagateChange(newValue);
+        if (this.initialized && (this.maxLength === 0 || (this.maxLength !== 0 && this._value !== newValue))) {
+            // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
+            this.valueChange.emit(newValue);
         }
+        this._value = newValue;
     }
 
     /**
@@ -179,15 +179,6 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         this._maxLength = Number(value);
     }
 
-    private _calcLength(value: string): void {
-        if (this.includesCRLF) {
-            this._$currentLength = value.length;
-            return;
-        }
-        // 换行符和回车符不计入字符数
-        this._$currentLength = this._getLengthWithoutCRLF(value);
-    }
-
     private _updateValue(value: string): string {
         if (this.includesCRLF) {
             value = value.substring(0, this._maxLength);
@@ -209,28 +200,22 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     private _getValue(value: string): string {
-        const pos = this._getPos(value);
-        if (pos > -1) {
-            const tmp = value.substring(0, pos);
-            const newLines = tmp.match(/(\r\n|\n|\r)/g);
-            const lineLen = newLines ? newLines.length : 0;
-            if (tmp.length - lineLen > this._maxLength) {
-                return this._getValue(tmp);
-            }
-            return value.substring(0, this._maxLength + lineLen + 1);
-        }
-        return value.substring(0, this._maxLength);
-    }
-
-    private _getPos(value: string): number {
-        let pos = value.lastIndexOf('\n');
-        if (pos <= -1) {
-            pos = value.lastIndexOf('\r');
-            if (pos <= -1) {
-                pos = value.lastIndexOf('\r\n');
+        let tempValue = value.substring(0, this._maxLength);
+        const newLines = tempValue.match(/(\r\n|\n|\r)/g);
+        if (newLines) {
+            // 存在换行符
+            let position = this._maxLength;
+            for (let i = 0; i < newLines.length; i++) {
+                const char = value.charAt(position + i);
+                tempValue += char;
+                if (char.match(/(\r\n|\n|\r)/g)) {
+                    // 换行符，不算个数
+                    i--;
+                    position++
+                }
             }
         }
-        return pos;
+        return tempValue;
     }
 
     @ViewChild('textarea')
