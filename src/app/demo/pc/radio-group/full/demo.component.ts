@@ -25,7 +25,7 @@ export class RadioFullComponent {
     selectedCity2 = "西安";
 
     // demo3
-    selectedGoods = {name: 'camera'};
+    selectedGoods = {name: 'car'};
     goodsList = [
         {
             logo: 'bicycle',

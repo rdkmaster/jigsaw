@@ -15,20 +15,25 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
     @include inline-block();
     font-size: $font-size-base;
     margin-right: 10px;
+    background: $bg-component;
     cursor: pointer;
     &.#{$radio-option-prefix-cls}-disabled {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $bg-disabled;
             &.#{$radio-option-prefix-cls}-checked {
-                border-color: $border-color-disabled;
+                border-color: $brand-disabled;
+                background: $bg-component;
+                &:hover {
+                    border-color: $brand-disabled;
+                }
             }
             &:hover {
                 border-color: $border-color-disabled;
             }
         }
     }
+
     .#{$radio-option-prefix-cls}-inner {
         @include inline-block();
         position: relative;
@@ -50,6 +55,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
             border-color: $primary-color;
         }
     }
+
     .#{$radio-option-prefix-cls}-content {
         @include inline-block();
     }
