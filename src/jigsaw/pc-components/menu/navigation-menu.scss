@@ -65,6 +65,12 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     font-weight: 400;
                     cursor: pointer;
 
+                    i {
+                        margin-right: 8px;
+                        width: 14px;
+                        text-align: center;
+                    }
+
                     &:hover {
                         background: $brand-light;
                     }
