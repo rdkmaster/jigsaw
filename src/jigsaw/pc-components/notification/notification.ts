@@ -463,28 +463,28 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     public static showSuccess(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f8';
+        opt.icon = 'iconfont iconfont-e142';
         opt.iconType = 'success';
         return JigsawNotification.show(message, opt);
     };
 
     public static showError(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f5';
+        opt.icon = 'iconfont iconfont-e132';
         opt.iconType = 'error';
         return JigsawNotification.show(message, opt);
     };
 
     public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e037';
+        opt.icon = 'iconfont iconfont-e1a5';
         opt.iconType = 'warning';
         return JigsawNotification.show(message, opt);
     };
 
     public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e90c';
+        opt.icon = 'iconfont iconfont-e23e';
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };

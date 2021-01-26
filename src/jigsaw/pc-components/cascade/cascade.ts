@@ -428,7 +428,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     template: `
         <div class="jigsaw-cascade-tile-wrapper">
             <div *ngIf="_$showLoading; else tile" class="jigsaw-cascade-loading">
-                <span class="iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+                <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
             </div>
             <ng-template #tile>
                 <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
