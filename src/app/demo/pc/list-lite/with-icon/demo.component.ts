@@ -12,27 +12,27 @@ export class ListLiteWithIconDemoComponent {
             suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-camera',
+            icon: 'iconfont iconfont-e12e',
             name: 'camera',
             suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-car',
+            icon: 'iconfont iconfont-e0bc',
             name: 'car',
             suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-futbol-o',
+            icon: 'iconfont iconfont-e534',
             name: 'football',
             suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-book',
+            icon: 'iconfont iconfont-e565',
             name: 'book',
             suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-puzzle-piece',
+            icon: 'iconfont iconfont-ea1e',
             name: 'puzzle-piece',
             suffixIcon: 'iconfont iconfont-ea03'
         },

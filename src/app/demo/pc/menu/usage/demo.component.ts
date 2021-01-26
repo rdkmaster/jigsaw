@@ -37,7 +37,7 @@ export class MenuUsageDemo {
                     <node></node>
                     <node label="退出"></node>
                 </node>
-                <node label="打开..." icon="fa fa-folder-open-o"></node>
+                <node label="打开..." icon="iconfont iconfont-e1ee-open-o"></node>
                 <node label="打开" subTitle="最近文件">
                     <node label="project1" icon="fa fa-television"></node>
                     <node label="project2" icon="fa fa-television"></node>
@@ -181,7 +181,7 @@ export class MenuUsageDemo {
                     <node></node>
                     <node label="退出"></node>
                 </node>
-                <node label="打开..." icon="fa fa-folder-open-o"></node>
+                <node label="打开..." icon="iconfont iconfont-e1ee-open-o"></node>
                 <node label="打开" subTitle="最近文件">
                     <node label="project1" icon="fa fa-television"></node>
                     <node label="project2" icon="fa fa-television"></node>

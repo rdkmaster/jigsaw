@@ -60,7 +60,7 @@ export class JigsawTabBarComponent implements OnInit {
             {
                 html: `
                     <span>更多</span>
-                    <span (click)="_$more()" class="tab-icon-more fa fa-ellipsis-v"></span>
+                    <span (click)="_$more()" class="tab-icon-more iconfont iconfont-e2b7"></span>
                 `,
                 htmlContext: this
             },

@@ -94,7 +94,7 @@ export class TableCellEditablePropertyDemoComponent {
                     placeholder: "Type to edit...",
                     clearable: true,
                     icon: "iconfont iconfont-e105",
-                    preIcon: "fa fa-save"
+                    preIcon: "iconfont iconfont-ea2a"
                 }
             }
         },

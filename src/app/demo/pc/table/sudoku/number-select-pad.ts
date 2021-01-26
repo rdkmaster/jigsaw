@@ -5,8 +5,8 @@ import {IPopupable, JigsawWarningAlert} from "jigsaw/public_api";
     template: `
         <div>
             <div class="toolbar">
-                <span (click)="onClick('eraser')" class="fa fa-eraser"></span>
-                <span (click)="onClick('pencil')" class="fa fa-pencil"></span>
+                <span (click)="onClick('eraser')" class="iconfont iconfont-e9b6"></span>
+                <span (click)="onClick('pencil')" class="iconfont iconfont-e166"></span>
                 <span (click)="onClick('close')" class="iconfont iconfont-e9b8"></span>
             </div>
             <j-tile trackItemBy="label" width="214px" [multipleSelect]="false"

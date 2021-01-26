@@ -19,7 +19,7 @@ export class NavigationMenuInlineDemo {
                 <node label="数据库" icon="fa fa-database"></node>
                 <node label="计算" icon="fa fa-calculator"></node>
                 <node label="预测" icon="fa fa-lightbulb-o"></node>
-                <node label="监控" icon="fa fa-line-chart"></node>
+                <node label="监控" icon="iconfont iconfont-e67a"></node>
             </node>
         `;
         const xmlData2 = `
@@ -36,7 +36,7 @@ export class NavigationMenuInlineDemo {
                     <node label="性能预测"></node>
                     <node label="自定义预测"></node>
                 </node>
-                <node label="监控" icon="fa fa-line-chart"></node>
+                <node label="监控" icon="iconfont iconfont-e67a"></node>
             </node>
         `;
         this.data1.fromXML(xmlData1);
