@@ -166,12 +166,10 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if(CommonUtils.isUndefined(value)) return;
-        if (typeof value === 'string') {
-            this._weekStart = TimeWeekStart[value];
-        } else {
-            this._weekStart = value;
+        if(CommonUtils.isUndefined(value)) {
+            return;
         }
+        this._weekStart = typeof value === 'string' ? TimeWeekStart[value] : value;
         // weekStart/janX必须预先设置好，用于初始化之后的计算
         TimeService.setWeekStart(this._weekStart);
     }
@@ -188,7 +186,9 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public set firstWeekMustContains(value: number) {
-        if(CommonUtils.isUndefined(value)) return;
+        if(CommonUtils.isUndefined(value)) {
+            return;
+        }
         value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
         this._firstWeekMustContains = value;
         // weekStart/janX必须预先设置好，用于初始化之后的计算
