@@ -6,10 +6,14 @@
         </jigsaw-input>
 
         <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
+        [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)"></div>
+        <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02e"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
         <jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></jigsaw-paging-item>
-        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02e"
+        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02f"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
+        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
+             [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(data?.pagingInfo?.totalPage)"></div>
 
         <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
                        [value]="_$pageSize"
@@ -31,17 +35,17 @@
                       [placeholder]="placeholder" (valueChange)="search.emit($event)">
             <span jigsaw-prefix-icon class="fa fa-search"></span>
         </jigsaw-input>
-        <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02f"
+        <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)"></div>
-        <div class="jigsaw-paging-prev jigsaw-paging-page fa fa-angle-left"
+        <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02e"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
         <jigsaw-input class="jigsaw-paging-current-page" #input [value]="current" (keyup.enter)="_goto(input.value)"
                       width="50" height="22" (blur)="_goto(input.value)"
                       [clearable]="false"></jigsaw-input>
         <span class="jigsaw-paging-total-page-number">&nbsp;/&nbsp;&nbsp;{{data?.pagingInfo?.totalPage}}</span>
-        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
+        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02f"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
-        <div class="jigsaw-paging-next jigsaw-paging-page fa fa-angle-double-right"
+        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(data?.pagingInfo?.totalPage)"></div>
         <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
                        class="jigsaw-paging-page-size"
