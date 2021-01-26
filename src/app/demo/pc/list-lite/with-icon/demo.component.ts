@@ -9,32 +9,32 @@ export class ListLiteWithIconDemoComponent {
         {
             icon: 'fa fa-bicycle',
             name: 'bicycle',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
             icon: 'fa fa-camera',
             name: 'camera',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
             icon: 'fa fa-car',
             name: 'car',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
             icon: 'fa fa-futbol-o',
             name: 'football',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
             icon: 'fa fa-book',
             name: 'book',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
             icon: 'fa fa-puzzle-piece',
             name: 'puzzle-piece',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
     ];
 

@@ -109,7 +109,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         <div class="option-box"
              jigsaw-draggable
              (jigsawDragStart)="dragStartHandle($event)">
-            <span class="fa fa-trash"></span>
+            <span class="iconfont iconfont-e179"></span>
         </div>`,
     styles: [`.option-box {
         color: #108ee9;

@@ -249,7 +249,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                         </div>
                     </ng-container>
                 </div>
-                <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash"
+                <span *ngIf="removable" class="jigsaw-upload-file-remove iconfont iconfont-e179"
                       (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>

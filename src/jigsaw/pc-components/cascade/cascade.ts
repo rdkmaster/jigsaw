@@ -434,7 +434,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                 <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
                     <j-input class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
                              (valueChange)="_$handleSearching($event)">
-                        <span jigsaw-prefix-icon class="fa fa-search"></span>
+                        <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
                     </j-input>
                 </div>
                 <j-tile [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$handleSelect()"

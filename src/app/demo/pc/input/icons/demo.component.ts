@@ -12,7 +12,7 @@ export class InputPrefixIconDemoComponent {
         alert('你输入的值是 ' + this.myInput.value)
     }
 
-    public preIcons: string[] = ['fa fa-search', 'fa fa-save'];
+    public preIcons: string[] = ['iconfont iconfont-ea03', 'fa fa-save'];
 
     public backIcon: string = 'fa fa-question';
 

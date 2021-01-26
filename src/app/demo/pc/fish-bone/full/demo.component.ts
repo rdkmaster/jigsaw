@@ -66,7 +66,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                                 label: '子节点211',
                                 nodes: [
                                     {
-                                        label: '<span class="fa fa-bar-chart"></span>end'
+                                        label: '<span class="iconfont iconfont-e547"></span>end'
                                     },
                                     {
                                         label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
@@ -113,7 +113,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                         label: '父节点31',
                         nodes: [
                             {
-                                label: '<span class="fa fa-bar-chart"></span>end'
+                                label: '<span class="iconfont iconfont-e547"></span>end'
                             }
                         ]
                     }
