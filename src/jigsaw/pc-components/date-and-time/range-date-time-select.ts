@@ -24,6 +24,7 @@ import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import { CommonUtils } from '../../common/core/utils/common-utils';
 
 export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
@@ -153,18 +154,46 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     @Input()
     public step: TimeStep;
 
+    private _weekStart: TimeWeekStart;
+
     /**
      * @NoMarkForCheckRequired
+     * 设置周开始日期，可选值 sun mon tue wed thu fri sat。
      */
     @Input()
-    public weekStart: string | TimeWeekStart;
+    public get weekStart(): string | TimeWeekStart {
+        return this._weekStart;
+    }
+
+    public set weekStart(value: string | TimeWeekStart) {
+        if(CommonUtils.isUndefined(value)) {
+            return;
+        }
+        this._weekStart = typeof value === 'string' ? TimeWeekStart[value] : value;
+        // weekStart/janX必须预先设置好，用于初始化之后的计算
+        TimeService.setWeekStart(this._weekStart);
+    }
+
+    private _firstWeekMustContains: number;
 
     /**
-     *  @NoMarkForCheckRequired
+     * @NoMarkForCheckRequired
+     * 设置一年的第一周要包含一月几号
      */
     @Input()
-    public firstWeekMustContains: number;
+    public get firstWeekMustContains(): number {
+        return this._firstWeekMustContains;
+    }
 
+    public set firstWeekMustContains(value: number) {
+        if(CommonUtils.isUndefined(value)) {
+            return;
+        }
+        value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
+        this._firstWeekMustContains = value;
+        // weekStart/janX必须预先设置好，用于初始化之后的计算
+        TimeService.setFirstWeekOfYear(this._firstWeekMustContains);
+    }
 
     @Input()
     @RequireMarkForCheck()
