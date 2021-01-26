@@ -50,7 +50,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     @Input()
     @RequireMarkForCheck()
-    public icon: string = 'fa fa-star';
+    public icon: string = 'iconfont iconfont-e47b';
 
     private _max: number = 5;
 

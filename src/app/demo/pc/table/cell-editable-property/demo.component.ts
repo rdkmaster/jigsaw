@@ -93,7 +93,7 @@ export class TableCellEditablePropertyDemoComponent {
                 editorRendererInitData: {
                     placeholder: "Type to edit...",
                     clearable: true,
-                    icon: "fa fa-edit",
+                    icon: "iconfont iconfont-e105",
                     preIcon: "fa fa-save"
                 }
             }

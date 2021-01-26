@@ -114,11 +114,11 @@ export class JigsawMenuHelper implements IPopupable {
                     <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
                     <i class="{{node.subIcon}} jigsaw-menu-subIcon"
                        *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
-                    <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
+                    <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
                 </div>
                 <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
                     {{node.label}}
-                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="fa fa-angle-right"
+                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="iconfont iconfont-e144"
                        style="position: absolute;right: 10px;line-height: 40px"></i>
                     <hr *ngIf="!node.label">
                 </div>

@@ -7,7 +7,7 @@ import {GroupOptionValue} from "jigsaw/public_api";
 export class ListLiteWithIconDemoComponent {
     withIcon: GroupOptionValue[] = [
         {
-            icon: 'fa fa-bicycle',
+            icon: 'iconfont iconfont-e187',
             name: 'bicycle',
             suffixIcon: 'iconfont iconfont-ea03'
         },

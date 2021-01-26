@@ -105,7 +105,7 @@ export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnIn
 
 @Component({
     template: `
-        <span class="fa fa-edit"></span> {{cellData}}
+        <span class="iconfont iconfont-e105"></span> {{cellData}}
     `
 })
 export class OfficeCellRenderer extends TableCellRendererBase {

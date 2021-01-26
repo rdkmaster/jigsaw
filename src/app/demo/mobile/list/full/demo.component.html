@@ -22,7 +22,7 @@
             <jm-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
                 <jm-list-option *ngFor="let title of titles" [value]="title">
                     <span jm-title>{{title.title}}</span>
-                    <div jm-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="fa fa-angle-right"></span>
+                    <div jm-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="iconfont iconfont-e144"></span>
                     </div>
                 </jm-list-option>
             </jm-list>

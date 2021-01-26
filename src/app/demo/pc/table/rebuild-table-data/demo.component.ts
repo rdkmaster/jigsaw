@@ -43,7 +43,7 @@ export class RebuildTableDataDemoComponent {
         <div [ngSwitch]="cellData" style="font-size: 16px;" (click)="showData()">
             <span *ngSwitchCase="'Test Engineer'" class="fa fa-money"></span>
             <span *ngSwitchCase="'System Architect'" class="fa fa-universal-access"></span>
-            <span *ngSwitchCase="'Developer'" class="fa fa-file-code-o"></span>
+            <span *ngSwitchCase="'Developer'" class="iconfont iconfont-e4f0-code-o"></span>
         </div>
     `
 })

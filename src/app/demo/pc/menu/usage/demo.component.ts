@@ -28,7 +28,7 @@ export class MenuUsageDemo {
         ];
         data[0].data.fromXML(`
             <node>
-                <node label="新建" icon="fa fa-file-o">
+                <node label="新建" icon="iconfont iconfont-e4f0-o">
                     <node label="工程..." subTitle="Ctrl+Shift+P"></node>
                     <node></node>
                     <node label="HTML文件" icon="fa fa-html5" subTitle="Ctrl+Shift+H"></node>
@@ -59,7 +59,7 @@ export class MenuUsageDemo {
                 <node label="重做" icno="fa fa-repeat"></node>
                 <node></node>
                 <node label="剪切" icon="fa fa-scissors" subTitle="Ctrl+X"></node>
-                <node label="拷贝" icon="fa fa-files-o" subTitle="Ctrl+C"></node>
+                <node label="拷贝" icon="iconfont iconfont-e4f0s-o" subTitle="Ctrl+C"></node>
                 <node label="粘贴" subTitle="Ctrl+V"></node>
                 <node></node>
                 <node label="搜索" icon="fa fa-binoculars"></node>
@@ -69,12 +69,12 @@ export class MenuUsageDemo {
         data[2].data.fromXML(`
             <node>
                 <node label="窗口">
-                    <node label="工程" icon="fa fa-check-square-o"></node>
+                    <node label="工程" icon="iconfont iconfont-e13f-square-o"></node>
                     <node label="最爱"></node>
-                    <node label="Debug" icon="fa fa-check-square-o"></node>
+                    <node label="Debug" icon="iconfont iconfont-e13f-square-o"></node>
                 </node>
                 <node></node>
-                <node label="工具栏" icon="fa fa-check-square-o"></node>
+                <node label="工具栏" icon="iconfont iconfont-e13f-square-o"></node>
                 <node label="状态栏"></node>
             </node>
         `);
@@ -172,7 +172,7 @@ export class MenuUsageDemo {
         const data = new SimpleTreeData();
         data.fromXML(`
             <node>
-                <node label="新建" icon="fa fa-file-o">
+                <node label="新建" icon="iconfont iconfont-e4f0-o">
                     <node label="工程..." subTitle="Ctrl+Shift+P"></node>
                     <node></node>
                     <node label="HTML文件" icon="fa fa-html5" subTitle="Ctrl+Shift+H"></node>

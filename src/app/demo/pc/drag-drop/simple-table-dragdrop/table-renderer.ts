@@ -14,7 +14,7 @@ import {TableCellRendererBase, DragDropInfo, CommonUtils} from "jigsaw/public_ap
              (jigsawDragOver)="dragOverHandle($event)"
              (jigsawDragLeave)="dragLeaveHandle($event)"
              (jigsawDrop)="dropHandle($event)">
-            <span class="fa fa-arrows-alt"></span>
+            <span class="iconfont iconfont-e515"></span>
         </div>`,
     styles: [`.option-box {
         color: #108ee9;
