@@ -51,6 +51,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 align-items: center;
 
                 .#{$jigsaw-prefix}-step-status-logo {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     width: 26px;
                     height: 26px;
                     min-width: 26px;
@@ -60,9 +63,11 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     color: #fff;
                     font-size: $font-size-base;
                     overflow: hidden;
+                    
                     i{
                         width: 26px;
                         height: 26px;
+                        font-size: $icon-size-sm;
                         text-align: center;
                         line-height: 26px;
                     }

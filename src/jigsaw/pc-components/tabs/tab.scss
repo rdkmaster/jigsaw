@@ -174,7 +174,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 }
 
                 .#{$tab-prefix}-tab {
-                    display: inline-block;
+                    display: inline-flex;
+                    align-items: center;
                     height: 100%;
                     margin-right: 24px;
                     position: relative;
@@ -196,7 +197,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                         display: none;
                     }
 
-                    span.fa {
+                    span.iconfont {
                         margin-right: 6px;
                     }
 
