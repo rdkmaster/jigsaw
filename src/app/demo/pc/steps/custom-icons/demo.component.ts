@@ -70,6 +70,6 @@ export class StepsCustomIconsComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo演示了jigsaw-steps组件自定义状态ICON图的方法，注意仅支持font-awesome和Jigsaw自研的iconfont图标';
+    summary: string = '本demo演示了jigsaw-steps组件自定义状态ICON图的方法，注意支持Jigsaw自研的iconfont图标';
     description: string = '';
 }

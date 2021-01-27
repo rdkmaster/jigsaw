@@ -8,7 +8,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 const defaultHrefValue = 'javascript:void(0);';
 
 /**
- * 图标控件，支持输入fontawesome的图标
+ * 图标控件，支持输入@rdkmaster/icon-font等符号图标
  *
  * $demo = button/basic
  */

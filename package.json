@@ -29,7 +29,6 @@
         "core-js": "~3.0.1",
         "echarts": "~4.7.0",
         "file-saver": "~2.0.1",
-        "font-awesome": "~4.7.0",
         "jquery": "~3.5.0",
         "jszip": "~3.3.0",
         "marked": "~0.7.0",

@@ -27,7 +27,7 @@ export type BreadcrumbNode = {
      */
     label: string | BreadcrumbGenerator,
     /**
-     * 字体的class，支持font-awesome，icon-font
+     * 字体的class，支持icon-font符号图标
      */
     icon?: string | BreadcrumbGenerator,
     /**
