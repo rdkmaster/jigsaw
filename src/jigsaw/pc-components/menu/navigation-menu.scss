@@ -45,9 +45,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 .#{$nav-menu-prefix-cls}-item-arrow {
                     position: absolute;
                     right: 16px;
-                    top: 50%;
-                    margin-top: -7px;
-
                     @include prefixer(transition, all 0.3s ease);
                 }
             }
