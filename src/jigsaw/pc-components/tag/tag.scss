@@ -3,8 +3,10 @@
 $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
 .#{$tag-prefix-cls}-host {
-    @include inline-block;
     @include line-ellipsis-style;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     max-width: 200px;
     padding: 2px 8px;
@@ -15,12 +17,77 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     color: $font-color-tag;
     background: $bg-gray;
     cursor: pointer;
-    &.#{$tag-prefix-cls}-closable {
-        padding-right: 20px;
-    }
+
     &.#{$tag-prefix-cls}-color {
         color: $font-color-white;
     }
+
+    &.#{$tag-prefix-cls}-without-border {
+        border: none;
+    }
+
+    &.color-blue {
+        color: $blue-7;
+        background: $blue-1;
+        border-color: $blue-1;
+    }
+
+    &.color-cyan {
+        color: $cyan-7;
+        background: $cyan-1;
+        border-color: $cyan-1;
+    }
+
+    &.color-green {
+        color: $green-7;
+        background: $green-1;
+        border-color: $green-1;
+    }
+
+    &.color-magenta {
+        color: $magenta-7;
+        background: $magenta-1;
+        border-color: $magenta-1;
+    }
+
+    &.color-orange {
+        color: $orange-7;
+        background: $orange-1;
+        border-color: $orange-1;
+    }
+
+    &.color-red {
+        color: $red-7;
+        background: $red-1;
+        border-color: $red-1;
+    }
+
+    &.color-purple {
+        color: $purple-7;
+        background: $purple-1;
+        border-color: $purple-1;
+    }
+
+    &.color-gray {
+        color: $gray-9;
+        background: $gray-3;
+        border-color: $gray-3;
+    }
+
+    &.size-med {
+        height: 22px;
+        padding: 0 8px;
+    }
+
+    &.size-sm {
+        height: 18px;
+        padding: 0 4px;
+    }
+
+    &.#{$tag-prefix-cls}-closable {
+        padding-right: 20px;
+    }
+
     .#{$tag-prefix-cls}-close-bar {
         position: absolute;
         right: 6px;
@@ -29,8 +96,5 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         &:hover {
             color: $brand-default;
         }
-    }
-    &.#{$tag-prefix-cls}-without-border {
-        border: none;
     }
 }

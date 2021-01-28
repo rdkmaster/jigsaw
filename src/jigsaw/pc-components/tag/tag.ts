@@ -29,6 +29,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-tag-closable]': 'closable && showBorder',
         '[class.jigsaw-tag-color]': '!!color',
         '[class.jigsaw-tag-host]': 'true',
+        '[class.jigsaw-tag-preset-blue]': 'checkPreset("blue")',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
     },
@@ -38,6 +39,23 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public preset: string;
+
+    /**
+     * @internal
+     */
+    public checkPreset(color:string){
+        console.log(this.preset)
+        console.log(color)
+        if (this.preset == color){
+            return true
+        }
+    }
 
     /**
      * @NoMarkForCheckRequired
