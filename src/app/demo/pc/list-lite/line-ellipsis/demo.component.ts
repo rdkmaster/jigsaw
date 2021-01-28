@@ -13,7 +13,7 @@ export class ListLiteLineEllipsisDemoComponent {
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
         },
         {
-            logo: 'camee2e7ra',
+            logo: 'e2e7',
             name: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.',
             desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
         },
