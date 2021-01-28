@@ -52,7 +52,8 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &-content {
-        @include inline-block;
+        display: inline-flex;
+        align-items: center;
     }
 
     &-icon {
