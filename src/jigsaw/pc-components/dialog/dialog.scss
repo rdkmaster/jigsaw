@@ -62,15 +62,19 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     }
 
     &-button-group {
-        background: $bg-component;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
         height: 50px;
-        line-height: 50px;
+        background: $bg-component;
+
+        & > div {
+            display: flex;
+            align-items: center;
+        }
+
         jigsaw-button {
             margin-right: 8px;
-        }
-        div {
-            display: inline-block;
         }
     }
 }
