@@ -58,18 +58,14 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     height: 26px;
                     min-width: 26px;
                     min-height: 26px;
-                    border-radius: 26px;
+                    border-radius: 50%;
                     background: #123;
                     color: #fff;
                     font-size: $font-size-base;
                     overflow: hidden;
                     
-                    i{
-                        width: 26px;
-                        height: 26px;
+                    i {
                         font-size: $icon-size-sm;
-                        text-align: center;
-                        line-height: 26px;
                     }
                 }
 
@@ -100,6 +96,10 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             .#{$step-item-prefix-cls}-processing {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #41ADDC;
+                    
+                    i {
+                        animation: rotating 2s linear infinite;
+                    }
                 }
                 .#{$jigsaw-prefix}-step-line {
                     background-color: #41ADDC;
@@ -323,3 +323,21 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 }
+
+@keyframes rotating {
+    from {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    
+    to {
+      -ms-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }

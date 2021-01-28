@@ -575,7 +575,7 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
             <span class="jigsaw-table-tree-bar" *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
                 <span *ngIf="cellData.open; else close" class="iconfont iconfont-ea1c"></span>
                 <ng-template #close>
-                    <span class="iconfont iconfont-ea1c"></span>
+                    <span class="iconfont iconfont-ea09"></span>
                 </ng-template>
             </span>
             <span>{{cellData.data}}</span>
