@@ -66,13 +66,13 @@ export class BreadcrumbRouterDemoComponent {
         let listNode;
         switch (typeId) {
             case 0:
-                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
+                listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
                 break;
             case 1:
                 listNode = {label: 'Digital', icon: 'iconfont iconfont-e12e'};
                 break;
             default:
-                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
+                listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
         }
         listNode.routeLink = '/pc/breadcrumb/router/list/' + typeId; // 请尽量使用绝对路径
         return listNode;

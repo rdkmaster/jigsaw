@@ -39,7 +39,7 @@
                     <div class="goods-box">
                         <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"
                                     (checkedChange)="listGroup.update(goods, $event)"></j-checkbox>
-                        <span class="logo fa fa-{{goods.logo}}"></span>
+                        <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                         <p>{{goods.desc}}</p>
                     </div>
                 </j-list-option>
@@ -55,7 +55,7 @@
                                        [disabled]="goods.disabled">
                             <div class="goods-box">
                                 <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"></j-checkbox>
-                                <span class="logo fa fa-{{goods.logo}}"></span>
+                                <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                                 <p>{{goods.desc}}</p>
                             </div>
                         </j-list-option>

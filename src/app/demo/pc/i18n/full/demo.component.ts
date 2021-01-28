@@ -23,14 +23,14 @@ TranslateHelper.alert.en = {
             padding: 30px;
         }
 
-        .dialog-content .fa {
+        .dialog-content .iconfont {
             font-size: 36px;
             color: #41addc;
             margin-right: 10px;
             vertical-align: middle;
         }
 
-        jigsaw-dialog .fa {
+        jigsaw-dialog .iconfont {
             margin-right: 5px
         }
 

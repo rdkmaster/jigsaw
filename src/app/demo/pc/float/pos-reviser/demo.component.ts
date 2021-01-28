@@ -4,7 +4,7 @@ import {PopupOptions, PopupPositionValue} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        .fa-bars {
+        .iconfont-e9d8 {
             margin: 40px
         }
 
