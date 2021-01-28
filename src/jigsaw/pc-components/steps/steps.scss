@@ -65,6 +65,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     overflow: hidden;
                     
                     i {
+                        display: flex;
+                        justify-content: center;
+                        align-self: center;
                         font-size: $icon-size-sm;
                     }
                 }

@@ -240,12 +240,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                     </ng-container>
                     <ng-container *ngSwitchCase="'success'">
                         <span>{{'upload.done' | translate}}</span>
-                        <span class="jigsaw-upload-success iconfont iconfont-e13f-circle"></span>
+                        <span class="jigsaw-upload-success iconfont iconfont-e13f"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'error'">
                         <div [title]="file.reason">
                             <span>{{'upload.failed' | translate}}</span>
-                            <span class="jigsaw-upload-error iconfont iconfont-e9b8-circle"></span>
+                            <span class="jigsaw-upload-error iconfont iconfont-e9b8"></span>
                         </div>
                     </ng-container>
                 </div>
