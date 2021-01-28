@@ -6,7 +6,7 @@ import {ArrayCollection, GroupOptionValue, JigsawListLite} from "jigsaw/public_a
     styleUrls: ['./demo.component.css']
 })
 export class ListLiteFullDemoComponent {
-    goodsStrList=['e187','e2e7','e18a','e534','e565','e6ca'];
+    goodsStrList=['bicycle','camera','car','football','book','puzzle-piece'];
 
     goodsList: GroupOptionValue[] = [
         {
