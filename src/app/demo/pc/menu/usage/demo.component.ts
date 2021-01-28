@@ -69,12 +69,12 @@ export class MenuUsageDemo {
         data[2].data.fromXML(`
             <node>
                 <node label="窗口">
-                    <node label="工程" icon="iconfont iconfont iconfont-e140"></node>
+                    <node label="工程" icon="iconfont iconfont-e140"></node>
                     <node label="最爱"></node>
-                    <node label="Debug" icon="iconfont iconfont iconfont-e140"></node>
+                    <node label="Debug" icon="iconfont iconfont-e140"></node>
                 </node>
                 <node></node>
-                <node label="工具栏" icon="iconfont iconfont iconfont-e140"></node>
+                <node label="工具栏" icon="iconfont iconfont-e140"></node>
                 <node label="状态栏"></node>
             </node>
         `);
