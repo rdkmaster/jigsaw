@@ -123,7 +123,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
                     this._icon = "iconfont-e9f9";
                     break;
                 case AlertLevel.warning:
-                    this._icon = "iconfont-ea50";
+                    this._icon = "iconfont-e437";
                     break;
                 case AlertLevel.error:
                     this._icon = "iconfont-e9b9";

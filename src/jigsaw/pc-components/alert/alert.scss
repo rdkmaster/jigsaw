@@ -28,7 +28,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         padding: 0 16px;
         border-bottom-width: 1px;
         border-bottom-style: solid;
-        border-bottom-color: $splitline-color;
+        border-bottom-color: $splitline-default;
         cursor: move;
     }
 
@@ -60,6 +60,9 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
             position: relative;
             margin-bottom: 8px;
             i {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 position: absolute;
                 top: 0;
                 left: (0 - $height-sm);
@@ -84,19 +87,19 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     }
 
     &-info &-icon {
-        color: $primary-color;
+        color: $primary-default;
     }
 
     &-warning &-icon {
-        color: $warning-color;
+        color: $warning-default;
     }
 
     &-error &-icon {
-        color: $error-color;
+        color: $error-default;
     }
 
     &-confirm &-icon {
-        color: $primary-color;
+        color: $primary-default;
     }
 
     &-button-group {
