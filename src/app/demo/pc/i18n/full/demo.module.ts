@@ -3,7 +3,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
     JigsawAlertModule, JigsawButtonModule, PopupService, JigsawDialogModule,
     JigsawPaginationModule, JigsawComboSelectModule, JigsawDateTimePickerModule,
-    JigsawRangeDateTimePickerModule
+    JigsawRangeDateTimePickerModule, TranslateHelper
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
@@ -19,4 +19,15 @@ import {I18nFullDemoComponent} from "./demo.component";
     providers: [PopupService, TranslateService]
 })
 export class I18nFullDemoModule {
+    constructor() {
+        /**
+         * 覆盖控件内部的国际化词条
+         */
+        TranslateHelper.alert.zh = {
+            button: {ok: '知道了'}
+        };
+        TranslateHelper.alert.en = {
+            button: {ok: 'Gotcha'}
+        };
+    }
 }

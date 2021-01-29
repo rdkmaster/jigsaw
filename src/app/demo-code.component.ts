@@ -177,7 +177,7 @@ export class DemoCodeComponent implements AfterViewInit, OnDestroy {
 
     initProject() {
         if (!project) {
-            JigsawErrorAlert.show('数据无效！请点击Demo页面上的查看源码链接跳转过来才可以正常阅读源码。即将跳转到对应的demo页面。', '',
+            JigsawErrorAlert.show('数据无效！请点击Demo页面上的查看源码链接跳转过来才可以正常阅读源码。即将跳转到对应的demo页面。',
                 () => {
                     location.href = location.href.replace(/\/demo-code/, '');
                     // 背景色被修改了，刷新一下重置
