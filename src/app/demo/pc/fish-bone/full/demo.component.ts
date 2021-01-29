@@ -15,10 +15,10 @@ export class FishBoneFullComponent implements AfterViewInit {
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
             {
-                label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
+                label: '<span class="orange"><span class="iconfont iconfont-e221"></span>父节点1</span>',
                 nodes: [
                     {
-                        label: '<span class="fa fa-line-chart"></span>父节点11',
+                        label: '<span class="iconfont iconfont-e67a"></span>父节点11',
                         nodes: [
                             {
                                 label: '子节点111',
@@ -57,16 +57,16 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             },
             {
-                label: '<span class="orange"><span class="fa fa-folder"></span>父节点2</span>',
+                label: '<span class="orange"><span class="iconfont iconfont-e1ee"></span>父节点2</span>',
                 nodes: [
                     {
-                        label: '<span class="fa fa-line-chart"></span>父节点21',
+                        label: '<span class="iconfont iconfont-e67a"></span>父节点21',
                         nodes: [
                             {
                                 label: '子节点211',
                                 nodes: [
                                     {
-                                        label: '<span class="fa fa-bar-chart"></span>end'
+                                        label: '<span class="iconfont iconfont-e547"></span>end'
                                     },
                                     {
                                         label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
@@ -107,13 +107,13 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             },
             {
-                label: '<span class="orange"><span class="fa fa-line-chart"></span>父节点3</span>',
+                label: '<span class="orange"><span class="iconfont iconfont-e67a"></span>父节点3</span>',
                 nodes: [
                     {
                         label: '父节点31',
                         nodes: [
                             {
-                                label: '<span class="fa fa-bar-chart"></span>end'
+                                label: '<span class="iconfont iconfont-e547"></span>end'
                             }
                         ]
                     }

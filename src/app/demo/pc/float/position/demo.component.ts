@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        .fa-bars {
+        .iconfont-e9d8 {
             margin: 60px 160px;
         }
 

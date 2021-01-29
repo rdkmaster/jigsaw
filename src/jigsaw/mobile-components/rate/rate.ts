@@ -41,7 +41,7 @@ export class JigsawMobileRateComponent extends AbstractJigsawComponent implement
     private _onTouched = () => {
     };
 
-    private _icon: string = 'fa fa-star';
+    private _icon: string = 'iconfont iconfont-e47b';
 
     @Input()
     public get icon(): string {

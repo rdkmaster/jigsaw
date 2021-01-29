@@ -18,6 +18,8 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
     }
 
     &-item &-header {
+        display: flex;
+        align-items: center;
         position: relative;
         height: 38px;
         line-height: 38px;
@@ -29,8 +31,10 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
     &-header &-arrow {
         position: absolute;
         right: 16px;
-        top: 50%;
-        margin-top: -7px;
+
+        &:hover {
+            color: $brand-default;
+        }
 
         @include prefixer(transition, all 0.3s ease);
     }
@@ -38,6 +42,7 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
     &-item &-content {
         color: $font-color-default;
         overflow: hidden;
+
         .#{$collapse-prefix}-padding {
             padding: 16px;
         }

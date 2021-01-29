@@ -26,7 +26,7 @@ import {AbstractJigsawMobileGroupLiteComponent} from "./group-lite-common";
     selector: 'jigsaw-mobile-list-lite, jm-list-lite',
     template: `
         <jm-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%" (valueChange)="_$handleSearching($event)">
-            <span jigsaw-prefix-icon class="fa fa-search"></span>
+            <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </jm-input>
         <div class="jigsaw-list-lite-wrapper" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">

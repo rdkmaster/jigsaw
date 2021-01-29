@@ -226,30 +226,30 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
             [style.width]="width" [style.maxHeight.px]="optionCount > 0 ? 40*optionCount : ''">
             <li *ngFor="let file of initData" class="jigsaw-upload-file">
                 <div class="jigsaw-upload-file-left">
-                    <span class="jigsaw-upload-file-icon fa fa-file"></span>
+                    <span class="jigsaw-upload-file-icon iconfont iconfont-e4f0"></span>
                     <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
                 </div>
                 <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
                     <ng-container *ngSwitchCase="'pause'">
                         <span>{{'upload.waiting' | translate}}</span>
-                        <span class="jigsaw-upload-pause fa fa-pause-circle"></span>
+                        <span class="jigsaw-upload-pause iconfont iconfont-e2e9"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'loading'">
                         <span>{{'upload.uploading' | translate}}</span>
-                        <span class="jigsaw-upload-loading iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+                        <span class="jigsaw-upload-loading iconfont iconfont-e67d jigsaw-am-rotation"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'success'">
                         <span>{{'upload.done' | translate}}</span>
-                        <span class="jigsaw-upload-success fa fa-check-circle"></span>
+                        <span class="jigsaw-upload-success iconfont iconfont-e13f"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'error'">
                         <div [title]="file.reason">
                             <span>{{'upload.failed' | translate}}</span>
-                            <span class="jigsaw-upload-error fa fa-times-circle"></span>
+                            <span class="jigsaw-upload-error iconfont iconfont-e9b8"></span>
                         </div>
                     </ng-container>
                 </div>
-                <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash"
+                <span *ngIf="removable" class="jigsaw-upload-file-remove iconfont iconfont-e179"
                       (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
