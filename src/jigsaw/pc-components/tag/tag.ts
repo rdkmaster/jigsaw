@@ -27,9 +27,20 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[style.border-color]': 'color',
         '[class.jigsaw-tag-without-border]': '!showBorder',
         '[class.jigsaw-tag-closable]': 'closable && showBorder',
+        '[class.jigsaw-tag-disabled]': 'disabled',
+        '[class.jigsaw-tag-add]': 'isAdd',
         '[class.jigsaw-tag-color]': '!!color',
         '[class.jigsaw-tag-host]': 'true',
-        '[class.jigsaw-tag-preset-blue]': 'checkPreset("blue")',
+        '[class.jigsaw-tag-preset-blue]': 'preset == "blue"',
+        '[class.jigsaw-tag-preset-cyan]': 'preset == "cyan"',
+        '[class.jigsaw-tag-preset-green]': 'preset == "green"',
+        '[class.jigsaw-tag-preset-magenta]': 'preset == "magenta"',
+        '[class.jigsaw-tag-preset-orange]': 'preset == "orange"',
+        '[class.jigsaw-tag-preset-red]': 'preset == "red"',
+        '[class.jigsaw-tag-preset-purple]': 'preset == "purple"',
+        '[class.jigsaw-tag-preset-gray]': 'preset == "gray"',
+        '[class.jigsaw-tag-size-med]': 'size == "medium"',
+        '[class.jigsaw-tag-size-sm]': 'size == "small"',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
     },
@@ -44,18 +55,25 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public preset: string;
+    public preset: string = "gray";
 
     /**
-     * @internal
+     * @NoMarkForCheckRequired
      */
-    public checkPreset(color:string){
-        console.log(this.preset)
-        console.log(color)
-        if (this.preset == color){
-            return true
-        }
-    }
+    @Input()
+    public size: string = "medium";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public isAdd:boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public disabled:boolean = false;
 
     /**
      * @NoMarkForCheckRequired

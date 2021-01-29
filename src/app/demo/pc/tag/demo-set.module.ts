@@ -5,6 +5,8 @@ import {TagBasicDemoModule} from "./basic/demo.module";
 import {TagBasicDemoComponent} from "./basic/demo.component";
 import { TagPresetColorDemoComponent } from './preset-color/demo.component';
 import { TagPresetColorDemoModule } from './preset-color/demo.module';
+import { TagAddDemoComponent } from './add-tag/demo.component';
+import { TagAddDemoModule } from './add-tag/demo.module';
 
 export const routerConfig = [
     {
@@ -13,13 +15,17 @@ export const routerConfig = [
     {
         path: 'preset-color', component: TagPresetColorDemoComponent
     },
+    {
+        path: 'add-tag', component: TagAddDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
         TagBasicDemoModule,
-        TagPresetColorDemoModule
+        TagPresetColorDemoModule,
+        TagAddDemoModule
     ]
 })
 
