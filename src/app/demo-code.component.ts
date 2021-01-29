@@ -23,7 +23,7 @@ const defaultOpen = 'src/app/demo.component.html';
         <div class="container">
             <div class="tool-bar">
                 <p class="go-back" (click)="goBack()">
-                    <span class="fa fa-angle-double-left"></span> 返回运行效果
+                    <span class="iconfont iconfont-e4c0"></span> 返回运行效果
                 </p>
                 <p class="page-title">
                     查看 Jigsaw Demo 源码
@@ -32,7 +32,7 @@ const defaultOpen = 'src/app/demo.component.html';
                    title="你可以修改Demo的代码并立即运行修改后的代码，注意此功能需要连接外网">
                     <span class="live-icon">LIVE</span>
                     修改Demo并立即查看效果
-                    <span class="fa fa-angle-double-right"></span>
+                    <span class="iconfont iconfont-e4c1"></span>
                 </p>
             </div>
             <div class="source-content">
