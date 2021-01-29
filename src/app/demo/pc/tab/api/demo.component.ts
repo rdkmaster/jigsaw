@@ -48,7 +48,14 @@ export class DynamicTabDemoComponent {
     }
 
     public addTabWithEditableTitle(tabContent) {
-        this.addTab(JigsawEditableTabTitleRenderer, tabContent);
+        this.addTab(JigsawEditableTabTitleRenderer, tabContent, {
+            userInfo: {
+                username: "EditableTabTitleRenderer",
+                email: "zzz@163.com",
+                phoneNumber: "1733994499",
+                address: "南京市雨花区花神大道6号"
+            }
+        });
     }
 
     public addComponentTab() {

@@ -5,14 +5,17 @@
 
 <!-- start to learn the demo from here -->
 <div class="container">
-    <jigsaw-tabs (selectChange)="testEvent($event)" (selectedIndexChange)="selectedIndexChange($event)" [selectedIndex]="2" height="200">
+    <jigsaw-tabs (selectChange)="testEvent($event)" (selectedIndexChange)="selectedIndexChange($event)" [selectedIndex]="2" height="400">
         <jigsaw-tab-pane [lazy]="false">
             <div jigsaw-title><span class="iconfont iconfont-e133"></span>tab 1</div>
             <ng-template>tab content 1</ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane>
             <div jigsaw-title>
-                <span>tab <jigsaw-button [preSize]="'small'">ok</jigsaw-button></span>
+                <span>
+                    <jigsaw-progress #progress value="32" (estimationStopped)="startEstimating()">
+                    </jigsaw-progress>
+                </span>
             </div>
             <ng-template>
                 <div class="content-box">
