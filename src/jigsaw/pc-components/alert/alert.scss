@@ -16,6 +16,9 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     min-width: 480px;
     min-height: 240px;
     background: $bg-component;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
     border-radius: $border-radius-base;
 
     &-head {
