@@ -90,18 +90,22 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     }
 
     &-info &-icon {
+        padding-right: 12px;
         color: $primary-default;
     }
 
     &-warning &-icon {
+        padding-right: 12px;
         color: $warning-default;
     }
 
     &-error &-icon {
+        padding-right: 12px;
         color: $error-default;
     }
 
     &-confirm &-icon {
+        padding-right: 12px;
         color: $primary-default;
     }
 

@@ -151,7 +151,9 @@ export class JigsawAlert extends AbstractDialogComponentBase {
 
     protected init() {
         const iconEl = this.elementRef.nativeElement.querySelector('.jigsaw-alert-icon');
-        this.renderer.addClass(iconEl, this.icon);
+        if (!!iconEl) {
+            this.renderer.addClass(iconEl, this.icon);
+        }
         super.init();
     }
 }
@@ -166,9 +168,9 @@ export abstract class JigsawCommonAlert extends DialogBase {
         if (!value) {
             return;
         }
-        this.header = value.header ? value.header : 'the "header" property in the initData goes here.';
-        this.message = value.message ? value.message : '';
         this.caption = value.title ? value.title : this._getDefaultTitle();
+        this.header = value.header ? value.header : this.caption;
+        this.message = value.message ? value.message : '';
         this.buttons = value.buttons ? value.buttons : this.buttons;
     }
 
@@ -220,7 +222,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
         }
     }
 
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    protected constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super();
         this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-common-alert');
     }

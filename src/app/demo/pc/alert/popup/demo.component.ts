@@ -11,7 +11,7 @@ export class AlertPopupDemoComponent {
 
     commonInfoAlert() {
         this.answer = 'waiting for an answer';
-        const info = {header: this.header || 'This is a great info alert!', message: this.message || ''};
+        const info = {header: this.header, message: this.message};
         JigsawInfoAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         });
@@ -19,7 +19,7 @@ export class AlertPopupDemoComponent {
 
     commonWarningAlert() {
         this.answer = 'waiting for an answer';
-        const info = {header: this.header || 'This is a great warning alert!', message: this.message || ''};
+        const info = {header: this.header, message: this.message};
         JigsawWarningAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         });
@@ -27,7 +27,7 @@ export class AlertPopupDemoComponent {
 
     commonErrorAlert() {
         this.answer = 'waiting for an answer';
-        const info = {header: this.header || 'This is a great error alert!', message: this.message || ''};
+        const info = {header: this.header, message: this.message};
         JigsawErrorAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         }, null, null, false);
@@ -35,7 +35,7 @@ export class AlertPopupDemoComponent {
 
     commonConfirmAlert() {
         this.answer = 'waiting for an answer';
-        const info = {header: this.header || 'Jigsaw is great, do you agree?', message: this.message || ''};
+        const info = {header: this.header, message: this.message};
         JigsawConfirmAlert.show(info, answer => {
                 this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
             },
