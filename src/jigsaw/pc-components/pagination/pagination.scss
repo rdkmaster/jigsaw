@@ -27,6 +27,11 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
             border-color: $border-color-disabled;
             color: $font-color-disabled;
             cursor: not-allowed;
+
+            &:hover {
+                border-color: $border-color-disabled;
+                color: $font-color-disabled;
+            }
         }
 
         &:hover {
