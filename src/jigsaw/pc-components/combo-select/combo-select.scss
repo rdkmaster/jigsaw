@@ -24,7 +24,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         border-radius: $border-radius-base;
         transition: all 0.3s $ease-in-out;
         user-select: none;
-    
+
         &:hover {
             border-color: $brand-default;
         }
@@ -99,29 +99,31 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     &-arrow {
         position: absolute;
         top: 50%;
-        right: 8px;
-        transform-origin: 50% 20%;
+        right: 5px;
+        font-size: $icon-size-med;
+        color: $icon-color-default;
         transform: translateY(-50%);
-        transition: transform 0.3s $ease-in-out;
-    }
-
-    &-down {
-        &:before {
-            content: "\f107";
+        &:hover {
+            color: $brand-default;
         }
     }
 
     &-clear {
         position: absolute;
         top: 50%;
-        right: 18px;
-        width: 12px;
+        right: 20px;
         transform: translateY(-50%);
-        font-size: $font-size-base;
+        font-size: $icon-size-sm;
         color: $icon-color-default;
+        &:hover {
+            color: $brand-default;
+        }
     }
 
     &-disabled &-clear {
         color: $icon-color-disabled;
+        &:hover {
+            color: $icon-color-disabled;
+        }
     }
 }

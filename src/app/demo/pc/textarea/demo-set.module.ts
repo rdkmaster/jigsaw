@@ -15,6 +15,8 @@ import {TextareaFocusDemoComponent} from "./focus/demo.component";
 import {TextareaDisabledComponent} from "./disabled/demo.component";
 import {TextareaValidComponent} from "./valid/demo.component";
 import {TextareaSelectDemoComponent} from "./select/demo.component";
+import {TextareaMaxLengthDemoModule} from "./max-length/demo.module";
+import {TextareaMaxLengthDemoComponent} from "./max-length/demo.component";
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     },
     {
         path: 'select', component: TextareaSelectDemoComponent
+    },
+    {
+        path: 'max-length', component: TextareaMaxLengthDemoComponent
     }
 ];
 
@@ -49,7 +54,8 @@ export const routerConfig = [
         TextareaFocusDemoModule,
         TextareaDisabledModule,
         TextareaValidModule,
-        TextareaSelectDemoModule
+        TextareaSelectDemoModule,
+        TextareaMaxLengthDemoModule,
     ]
 })
 export class TextareaDemoModule {

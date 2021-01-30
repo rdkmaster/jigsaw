@@ -9,6 +9,7 @@
         <jigsaw-button (click)="addTabWidthTemplateTitle(tabTitle, tabContent)">增加tab-模板标题</jigsaw-button>
         <jigsaw-button (click)="addTabWidthStringTitle(tabContent)">增加tab-字符串标题</jigsaw-button>
         <jigsaw-button (click)="addComponentTab()">增加component tab</jigsaw-button>
+        <jigsaw-button (click)="addTabWithEditableTitle(tabContent)">增加可编辑标题的tab</jigsaw-button>
         <jigsaw-button (click)="hideTab(0)">隐藏第一个Tab页</jigsaw-button>
         <jigsaw-button (click)="showTab(0)">显示第一个Tab页</jigsaw-button>
         <jigsaw-button (click)="removeTab(0)">删除第一个Tab页</jigsaw-button>
@@ -24,7 +25,7 @@
         <jigsaw-tab-pane title="Tab 3">
             <ng-template>
                 <jigsaw-input>
-                    <a jigsaw-prefix-icon><span class="fa fa-search"></span></a>
+                    <a jigsaw-prefix-icon><span class="iconfont iconfont-ea03"></span></a>
                 </jigsaw-input>
             </ng-template>
         </jigsaw-tab-pane>
@@ -36,7 +37,7 @@
 </div>
 
 <ng-template #tabTitle>
-    <span class="fa fa-gift"></span>template tab
+    <span class="iconfont iconfont-e133"></span>template tab
 </ng-template>
 <ng-template #tabContent let-userInfo="userInfo">
     <div class="content-box">
@@ -57,9 +58,3 @@
     </div>
 </ng-template>
 
-<!--<ng-template #routerTabTitle>
-    <span routerLink="tab-page" [skipLocationChange]="true">router link tab</span>
-</ng-template>
-<ng-template #routerTabContent>
-    <router-outlet></router-outlet>
-</ng-template>-->

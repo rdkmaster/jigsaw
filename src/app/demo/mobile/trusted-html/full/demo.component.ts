@@ -8,7 +8,7 @@ export class TrustedHtmlFullComponent {
     showDetail:boolean = false;
     html = this.stripPrefixSpaces(`
         <a onclick="hello('trustedHtml directive')">
-            <i class="fa fa-question"></i> say hello to trustedHtml
+            <i class="iconfont iconfont-e9ee"></i> say hello to trustedHtml
         </a><br><br>
         <input onblur="onBlur()" value="onblur....">
     `);

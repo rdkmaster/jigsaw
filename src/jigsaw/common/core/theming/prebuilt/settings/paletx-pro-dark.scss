@@ -267,7 +267,7 @@ $line-width-base: 1px;
 $line-width-med: 2px;
 $line-width-lg: 4px;
 
-/* border-radius 
+/* border-radius
     $border-radius-base => tab,button,button bar,input,notification,card,alert
     $border-radius-sm => checkbox,colorpick,pagination,timepicker,tag,datepicker
     $border-radius-lg => switch,badge
@@ -507,14 +507,6 @@ $form-item-margin-bottom: 24px;
     -ms-#{$property}: $value;
     -o-#{$property}: $value;
     #{$property}: $value;
-}
-
-@mixin font-awesome() {
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 @mixin compatible($property, $value, $compatibleValue) {

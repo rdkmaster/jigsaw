@@ -64,8 +64,8 @@ export class MenuOptionsDemo {
                     <node label="Delete"></node>
                 </node>
                 <node label="Run" >
-                    <node label="Run" icon="fa fa-play" subTitle="Shift+F10"></node>
-                    <node label="Debug" icon="fa fa-bug" subTitle="Shift+F9"></node>
+                    <node label="Run" icon="iconfont iconfont-e314" subTitle="Shift+F10"></node>
+                    <node label="Debug" icon="iconfont iconfont-e5e0" subTitle="Shift+F9"></node>
                 </node>
                 <!-- 无label属性的node节点表示这是一个分隔符 -->
                 <node></node>

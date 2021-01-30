@@ -15,7 +15,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
                            [width]="optionWidth" [height]="height" [disabled]="item?.disabled"
                            title="{{item && item[labelField] ? item[labelField] : item}}">
                 <span *ngIf="item.icon" [class]="item.icon"></span>
-                {{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}
+                <p>{{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}</p>
             </j-tile-option>
         </j-tile>`,
     host: {
