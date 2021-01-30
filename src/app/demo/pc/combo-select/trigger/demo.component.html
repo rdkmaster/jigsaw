@@ -22,6 +22,8 @@
 <jigsaw-button *ngIf="closeTrigger=='none'" (click)="closeCombo()">close</jigsaw-button>
 
 <br><br>
+由于 <code>open</code> 属性默认值为true，因此combo的下拉视图默认会直接打开
+<br><br>
 <jigsaw-combo-select [openTrigger]="openTrigger"
                      [closeTrigger]="closeTrigger"
                      [(open)]="open"

@@ -15,7 +15,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
             flex: 1;
             height: 6px;
             border-radius: 2px;
-            background: $splitline-color;
+            background: $splitline-default;
             overflow: hidden;
 
             .#{$progress-prefix-cls}-default & {
@@ -117,7 +117,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
         }
 
         &-icon {
-            font-size: 16px;
+            font-size: $icon-size-sm;
 
             .#{$progress-prefix-cls}-processing & {
                 color: $primary-default;

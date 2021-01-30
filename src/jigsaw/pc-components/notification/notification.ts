@@ -42,7 +42,7 @@ export class NotificationMessage {
      */
     caption?: string;
     /**
-     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
      */
     icon?: string;
     /**
@@ -183,7 +183,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     public caption: string;
 
     /**
-     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
      *
      * @NoMarkForCheckRequired
      */
@@ -463,28 +463,28 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     public static showSuccess(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f8';
+        opt.icon = 'iconfont iconfont-e142';
         opt.iconType = 'success';
         return JigsawNotification.show(message, opt);
     };
 
     public static showError(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f5';
+        opt.icon = 'iconfont iconfont-e132';
         opt.iconType = 'error';
         return JigsawNotification.show(message, opt);
     };
 
     public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e037';
+        opt.icon = 'iconfont iconfont-e1a5';
         opt.iconType = 'warning';
         return JigsawNotification.show(message, opt);
     };
 
     public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e90c';
+        opt.icon = 'iconfont iconfont-e23e';
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };

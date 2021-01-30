@@ -7,34 +7,34 @@ import {GroupOptionValue} from "jigsaw/public_api";
 export class ListLiteWithIconDemoComponent {
     withIcon: GroupOptionValue[] = [
         {
-            icon: 'fa fa-bicycle',
+            icon: 'iconfont iconfont-e187',
             name: 'bicycle',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-camera',
+            icon: 'iconfont iconfont-e12e',
             name: 'camera',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-car',
+            icon: 'iconfont iconfont-e0bc',
             name: 'car',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-futbol-o',
+            icon: 'iconfont iconfont-e534',
             name: 'football',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-book',
+            icon: 'iconfont iconfont-e565',
             name: 'book',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
         {
-            icon: 'fa fa-puzzle-piece',
+            icon: 'iconfont iconfont-ea1e',
             name: 'puzzle-piece',
-            suffixIcon: 'fa fa-search'
+            suffixIcon: 'iconfont iconfont-ea03'
         },
     ];
 
