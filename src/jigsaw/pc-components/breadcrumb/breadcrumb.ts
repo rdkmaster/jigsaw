@@ -75,7 +75,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @Input()
     public separator: BreadcrumbSeparator = {
         type:"icon",
-        content:"fa fa-angle-right"
+        content:"iconfont iconfont-e144"
     };
 
     /**
@@ -215,7 +215,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         <ng-content></ng-content>
         <span 
             class="jigsaw-breadcrumb-separator" 
-            *ngIf="!getLast && (_$breadcrumbHost?.separator.type === 'text')">{{_$breadcrumbHost?.separator.content}}
+            *ngIf="!isLast && (_$breadcrumbHost?.separator.type === 'text')">{{_$breadcrumbHost?.separator.content}}
         </span>
         <span 
             class="jigsaw-breadcrumb-separator" 
@@ -242,11 +242,6 @@ export class JigsawBreadcrumbItem {
      */
     @Input()
     public isLast: boolean;
-
-    public get getLast(){
-        console.log(this.isLast,this)
-        return this.isLast;
-    }
 }
 
 @NgModule({
