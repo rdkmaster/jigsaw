@@ -5,7 +5,7 @@
 <h3>面包屑折叠</h3>
 
 <j-breadcrumb [foldMin]="foldMin" [_$breadcrumbNodes]="_$breadcrumbNodes" [generatorContext]="this"></j-breadcrumb>
-<j-numeric-input [(value)]="foldMin" min="3" max="99" placeholder="请输入数字" (valueChange)="valueChange($event)"></j-numeric-input>
+<j-numeric-input [(value)]="foldMin" min="3" max="99" placeholder="请输入数字"></j-numeric-input>
 <p class="message">
     输入值是：<span>{{ foldMin }}</span>
 </p>
