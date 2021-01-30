@@ -28,7 +28,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     template: `
         <j-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
                  (valueChange)="_$handleSearching($event)">
-            <span jigsaw-prefix-icon class="fa fa-search"></span>
+            <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </j-input>
         <div class="jigsaw-list-lite-wrapper"
              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"

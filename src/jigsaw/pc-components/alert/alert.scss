@@ -3,9 +3,9 @@
 $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 
 .#{$alert-prefix-cls}-host {
-    // outline: 1px solid red;
     @include inline-block;
     width: 100%;
+    user-select: none;
 }
 
 .#{$alert-prefix-cls} {
@@ -16,8 +16,10 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     min-width: 480px;
     min-height: 240px;
     background: $bg-component;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
     border-radius: $border-radius-base;
-    box-shadow: $box-shadow-lv3;
 
     &-head {
         display: flex;
@@ -27,15 +29,8 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         padding: 0 16px;
         border-bottom-width: 1px;
         border-bottom-style: solid;
-        border-bottom-color: $splitline-color;
+        border-bottom-color: $splitline-default;
         cursor: move;
-    }
-
-    &-head &-icon {
-        display: none;
-        vertical-align: middle;
-        font-size: 36px;
-        margin: 0 16px 0 20px;
     }
 
     &-head &-title {
@@ -55,40 +50,77 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     }
 
     &-content {
-        padding: 16px 0 0 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 32px 0 32 + $height-sm;
+        outline: red;
+
+        .content-main {
+            position: relative;
+            margin-bottom: 8px;
+
+            i {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: (0 - $height-sm);
+                width: $height-sm;
+                height: $height-sm;
+                font-size: 24px;
+            }
+
+            p {
+                font-size: $font-size-lg;
+                font-weight: bold;
+                line-height: $height-sm;
+                color: $font-color-heading-bold;
+            }
+        }
+
+        .content-sub {
+            p {
+                font-size: $font-size-base;
+                color: $font-color-hint;
+            }
+        }
     }
 
-    &-info &-icon,
-    &-info &-title {
-        color: $primary-color;
+    &-info &-icon {
+        padding-right: 12px;
+        color: $primary-default;
     }
 
-    &-warning &-icon,
-    &-warning &-title {
-        color: $warning-color;
+    &-warning &-icon {
+        padding-right: 12px;
+        color: $warning-default;
     }
 
-    &-error &-icon,
-    &-error &-title {
-        color: $error-color;
+    &-error &-icon {
+        padding-right: 12px;
+        color: $error-default;
     }
 
-    &-confirm &-icon,
-    &-confirm &-title {
-        color: $primary-color;
+    &-confirm &-icon {
+        padding-right: 12px;
+        color: $primary-default;
     }
 
     &-button-group {
         display: flex;
         justify-content: center;
         height: $height-base + 24px;
+
         jigsaw-button {
-            // outline: 1px solid red;
             margin-right: 8px;
             &:last-child {
                 margin-right: 0;
             }
         }
+
         div {
             display: inline-block;
         }

@@ -40,11 +40,11 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
-     * 设置`waiting`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置`waiting`状态的图标，支持Jigsaw自研的@rdkmaster/icon-font符号图标
      *
      * $demo = steps/custom-icons
      */
-    private _waitingIcon: string = 'fa-file-text-o';
+    private _waitingIcon: string = 'iconfont-e162';
 
     /**
      * @NoMarkForCheckRequired
@@ -60,10 +60,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
-    private _doneIcon: string = 'fa-check-square-o';
+    private _doneIcon: string = 'iconfont-e140';
 
     /**
-     * 设置`done`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置`done`状态的图标，支持Jigsaw自研的@rdkmaster/icon-font符号图标
      *
      * @NoMarkForCheckRequired
      *
@@ -80,10 +80,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
-    private _processingIcon: string = 'fa-cog fa-spin fa-2x fa-fw';
+    private _processingIcon: string = 'iconfont-ea2c';
 
     /**
-     * 设置`processing`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置`processing`状态的图标，支持Jigsaw自研的@rdkmaster/icon-font符号图标
      *
      * @NoMarkForCheckRequired
      *
@@ -100,10 +100,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
-    private _errorIcon: string = 'fa-times';
+    private _errorIcon: string = 'iconfont-e9b9';
 
     /**
-     * 设置`error`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置`error`状态的图标，支持Jigsaw自研的@rdkmaster/icon-font符号图标
      *
      * @NoMarkForCheckRequired
      *
@@ -120,10 +120,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
         }
     }
 
-    private _skippedIcon: string = 'fa-ban';
+    private _skippedIcon: string = 'iconfont-e192';
 
     /**
-     * 设置`skipped`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置`skipped`状态的图标，支持Jigsaw自研的@rdkmaster/icon-font符号图标
      *
      * @NoMarkForCheckRequired
      *
@@ -139,10 +139,10 @@ export class JigsawStepItem extends AbstractJigsawComponent implements OnInit {
             this._skippedIcon = value;
         }
     }
-    private _warningIcon: string = 'fa-exclamation-triangle';
+    private _warningIcon: string = 'iconfont-e437';
 
     /**
-     * 设置`warning`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
+     * 设置`warning`状态的图标，支持Jigsaw自研的@rdkmaster/icon-font符号图标
      *
      * @NoMarkForCheckRequired
      *

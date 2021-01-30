@@ -120,9 +120,20 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls} {
+    &-tree-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
     &-tree-bar {
-        cursor: pointer;
-        font-size: 14px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 2px;
+        font-size: $icon-size-sm;
         color: $primary-default;
+        cursor: pointer;
     }
 }

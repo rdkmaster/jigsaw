@@ -8,7 +8,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 const defaultHrefValue = 'javascript:void(0);';
 
 /**
- * 图标控件，支持输入fontawesome的图标
+ * 图标控件，支持输入@rdkmaster/icon-font等符号图标
  *
  * $demo = button/basic
  */
@@ -35,8 +35,8 @@ export class JigsawIcon extends AbstractJigsawComponent {
     public title: string = '';
 
     /**
-     * 为true时：生成的html是 <a class="fa fa-edit">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
-     * 为false时：生成的html是 <span class="fa fa-edit">some text</span>
+     * 为true时：生成的html是 <a class="iconfont iconfont-xxxx">some text</a> 不改变图标的颜色，只将鼠标cursor改为pointer
+     * 为false时：生成的html是 <span class="iconfont iconfont-xxxx">some text</span>
      *
      * @NoMarkForCheckRequired
      */
@@ -44,7 +44,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
     public isLinkButton: boolean = false;
 
     /**
-     * 图标类型 fa fa-xxx
+     * 图标类型 iconfont iconfont-xxx
      */
     @RequireMarkForCheck()
     @Input()

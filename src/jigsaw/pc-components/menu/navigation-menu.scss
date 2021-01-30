@@ -22,15 +22,14 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             color: $font-color-default;
 
             .#{$nav-menu-prefix-cls}-item-top {
-                position: relative;
-                font-size: $font-size-lg;
-                font-weight: 400;
                 display: flex;
                 align-items: center;
-                height: $height-huge;
-                line-height: $height-huge;
-                cursor: pointer;
+                position: relative;
                 padding-left: 16px;
+                font-size: $font-size-lg;
+                font-weight: 400;
+                height: $height-huge;
+                cursor: pointer;
 
                 i {
                     margin-right: 8px;
@@ -45,9 +44,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 .#{$nav-menu-prefix-cls}-item-arrow {
                     position: absolute;
                     right: 16px;
-                    top: 50%;
-                    margin-top: -7px;
-
                     @include prefixer(transition, all 0.3s ease);
                 }
             }
@@ -127,9 +123,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 .#{$nav-menu-prefix-cls}-item-arrow {
                     position: absolute;
                     right: 16px;
-                    top: 50%;
-                    margin-top: -7px;
-
                     @include prefixer(transition, all 0.3s ease);
                 }
             }

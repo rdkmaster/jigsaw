@@ -93,7 +93,7 @@ export class PopupZIndexDemoComponent implements OnInit {
         JigsawWarningAlert.show('this is a great warning alert!');
     }
 
-    tooltipMessage: string = '这是一个内联tooltip  <span class="fa fa-thumbs-up"></span>';
+    tooltipMessage: string = '这是一个内联tooltip  <span class="iconfont iconfont-e3f0"></span>';
 
     ngOnInit() {
         JigsawNotification.show('这是一个JigsawNotification提示框', {timeout: 0});
