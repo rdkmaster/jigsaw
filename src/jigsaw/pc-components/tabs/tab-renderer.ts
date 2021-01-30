@@ -10,9 +10,9 @@ import {JigsawTabLabel} from "./tab-item";
     template: `
         <div *ngIf="!_$editable">
             <span>{{title}}</span>
-            <span class="fa fa-edit jigsaw-editable-tab-title-bar" (click)="_handleEditable($event)"></span>
+            <span class="iconfont iconfont-e105 jigsaw-editable-tab-title-bar" (click)="_handleEditable($event)"></span>
         </div>
-        <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()"
+        <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()" style="height: 100%;"
                  class="jigsaw-editable-tab-title-input">
         </j-input>
     `,

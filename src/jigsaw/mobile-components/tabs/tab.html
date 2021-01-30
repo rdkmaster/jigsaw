@@ -16,14 +16,14 @@
                                       (remove)="_$handleRemove($event)"
                                       (change)="titleChange.emit($event)">
                     </jigsaw-mobile-tab-label>
-                    <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable"
+                    <span class="iconfont iconfont-ea1c jigsaw-tabs-add-bar" *ngIf="editable"
                           (click)="_$handleAdd()"></span>
                 </div>
             </div>
             <div class="jigsaw-tabs-overflow-button" *ngIf="_$showOverflowButton"
                  (mouseenter)="_$popupTabList(tabsList,$event,overflowButton)"
                  (mouseleave)="_$menuAreaLeave()" #overflowButton>
-                <span class="fa  fa-angle-double-right">
+                <span class="iconfont iconfont-e9c6">
                 </span>
             </div>
         </div>
@@ -49,7 +49,7 @@
         <jigsaw-mobile-list-option *ngFor="let tab of _$tabPanes; let i = index;" [value]="tab" (click)="_$listOptionClick(i)"
                             [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden">
             <div [class.jigsaw-list-option-selected]="_$selectedIndex === i">
-                <span class="fa fa-check" *ngIf="_$selectedIndex === i"></span>
+                <span class="iconfont iconfont-e13f" *ngIf="_$selectedIndex === i"></span>
                 <span style="display: inline-block" [innerHTML]="_$tabList[i]"></span>
             </div>
         </jigsaw-mobile-list-option>

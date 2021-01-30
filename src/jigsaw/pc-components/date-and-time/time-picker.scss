@@ -84,23 +84,15 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
                 flex: 1;
                 justify-content: center;
                 align-items: center;
+                width: 100%;
+                height: 50%;
+                font-size: $icon-size-sm;
                 border-bottom: 1px solid $border-color-base;
                 cursor: pointer;
                 text-align: center;
-                width: 100%;
-
-                &:first-child {
-                    &:before {
-                        content: "\f106";
-                    }
-                }
 
                 &:last-child {
                     border-bottom: none;
-
-                    &:before {
-                        content: "\f107";
-                    }
                 }
 
                 &:hover {

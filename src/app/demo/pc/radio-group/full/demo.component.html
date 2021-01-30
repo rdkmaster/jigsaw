@@ -34,7 +34,7 @@
                        (valueChange)="radioChange($event)">
             <j-radio-option *ngFor="let goods of goodsList" [value]="goods" [disabled]="!!goods.disabled">
                 <div class="goods-box">
-                    <span class="logo fa fa-{{goods.logo}}"></span>
+                    <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                     <p>{{goods.desc}}</p>
                 </div>
             </j-radio-option>

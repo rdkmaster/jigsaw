@@ -96,19 +96,19 @@ export class JigsawMobileAlert extends AbstractMobileDialogComponentBase {
         if (!this._icon) {
             switch (this._level) {
                 case AlertLevel.info:
-                    this._icon = "fa-info-circle";
+                    this._icon = "iconfont-e9f9";
                     break;
                 case AlertLevel.warning:
-                    this._icon = "fa-info-circle";
+                    this._icon = "iconfont-ea50";
                     break;
                 case AlertLevel.error:
-                    this._icon = "fa-times-circle";
+                    this._icon = "iconfont-e9b9";
                     break;
                 case AlertLevel.confirm:
-                    this._icon = "fa-question";
+                    this._icon = "iconfont-e9ef";
                     break;
                 default:
-                    this._icon = "fa-check-circle";
+                    this._icon = "iconfont-ea39";
                     break;
             }
         }

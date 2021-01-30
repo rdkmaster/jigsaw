@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {TableData, LineGraphData} from "jigsaw/public_api";
+import {TableData, LineGraphData, JigsawProgress} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class JigsawTabsDemoComponent {
+export class JigsawTabsDemoComponent implements AfterViewInit {
     fruitList: TableData = new TableData(
         [
             ["banana", "$12.0", "The banana is an edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.", "Southeast Asia"],
@@ -19,6 +19,21 @@ export class JigsawTabsDemoComponent {
         ["name", "price", "desc", "origin"],
         ["Name", "Price", "Description", "Origin"]
     );
+
+    @ViewChild('progress')
+    progress: JigsawProgress;
+
+    ngAfterViewInit() {
+        this.startEstimating();
+    }
+
+    startEstimating() {
+        if (!this.progress) {
+            return;
+        }
+        this.progress.value = 0;
+        this.progress.startEstimating(10000, 99.99);
+    }
 
     testEvent(value) {
         console.info(value);
@@ -39,6 +54,6 @@ export class JigsawTabsDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '此demo主要描述tab的加载机制';
+    summary: string = '此demo主要描述tab的基本用法，包括如何使用渲染器来丰富tab头';
     description: string = require('!!raw-loader!./readme.md').default;
 }

@@ -573,12 +573,12 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
         <div class="jigsaw-table-tree-cell">
             <span [style.margin-left]="indent"></span>
             <span class="jigsaw-table-tree-bar" *ngIf="cellData.isParent" (click)="_$toggleOpenNode()">
-                <span *ngIf="cellData.open; else close" class="fa fa-minus-square-o"></span>
+                <span *ngIf="cellData.open; else close" class="iconfont iconfont-ea09"></span>
                 <ng-template #close>
-                    <span class="fa fa-plus-square-o"></span>
+                    <span class="iconfont iconfont-ea1c"></span>
                 </ng-template>
             </span>
-            {{cellData.data}}
+            <span>{{cellData.data}}</span>
         </div>
     `
 })
@@ -637,7 +637,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     public get _$icon() {
-        return this.initData && this.initData.icon ? this.initData.icon : "fa fa-arrows-alt";
+        return this.initData && this.initData.icon ? this.initData.icon : "iconfont iconfont-e515";
     }
 
     public get _$label() {
