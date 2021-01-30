@@ -33,14 +33,15 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         @include clearfix;
         display: flex;
         align-items: center;
-        width: 100%;
         position: relative;
-        height: $height-huge;
-        background: $bg-component;
+        width: 100%;
         padding: 0 18px;
-        line-height: 20px;
-        color: $heading-color;
+        height: $height-huge;
+        min-height: $height-huge;
+        background: $bg-component;
         font-size: 14px;
+        color: $heading-color;
+        line-height: 20px;
         border-bottom: 1px solid $border-color-base;
         cursor: move;
     }
@@ -62,15 +63,20 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     }
 
     &-button-group {
-        background: $bg-component;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
         height: 50px;
-        line-height: 50px;
+        min-height: 50px;
+        background: $bg-component;
+
+        & > div {
+            display: flex;
+            align-items: center;
+        }
+
         jigsaw-button {
             margin-right: 8px;
-        }
-        div {
-            display: inline-block;
         }
     }
 }
