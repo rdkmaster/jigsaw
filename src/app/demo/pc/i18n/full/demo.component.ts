@@ -6,16 +6,6 @@ import {
     TimeGr, TimeService
 } from "jigsaw/public_api";
 
-/**
- * 覆盖控件内部的国际化词条
- */
-TranslateHelper.alert.zh = {
-    button: {ok: '知道了'}
-};
-TranslateHelper.alert.en = {
-    button: {ok: 'Gotcha'}
-};
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`

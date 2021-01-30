@@ -35,6 +35,8 @@ export enum AlertLevel {
     info, warning, error, confirm
 }
 
+export type AlertMessage = {message?: string, header: string};
+
 @Component({
     selector: 'jigsaw-alert, j-alert',
     templateUrl: 'alert.html',
@@ -123,7 +125,7 @@ export class JigsawAlert extends AbstractDialogComponentBase {
                     this._icon = "iconfont-e9f9";
                     break;
                 case AlertLevel.warning:
-                    this._icon = "iconfont-ea50";
+                    this._icon = "iconfont-e437";
                     break;
                 case AlertLevel.error:
                     this._icon = "iconfont-e9b9";
@@ -149,7 +151,9 @@ export class JigsawAlert extends AbstractDialogComponentBase {
 
     protected init() {
         const iconEl = this.elementRef.nativeElement.querySelector('.jigsaw-alert-icon');
-        this.renderer.addClass(iconEl, this.icon);
+        if (!!iconEl) {
+            this.renderer.addClass(iconEl, this.icon);
+        }
         super.init();
     }
 }
@@ -164,8 +168,9 @@ export abstract class JigsawCommonAlert extends DialogBase {
         if (!value) {
             return;
         }
-        this.message = value.message ? value.message : 'the "message" property in the initData goes here.';
         this.caption = value.title ? value.title : this._getDefaultTitle();
+        this.header = value.header ? value.header : this.caption;
+        this.message = value.message ? value.message : '';
         this.buttons = value.buttons ? value.buttons : this.buttons;
     }
 
@@ -173,23 +178,25 @@ export abstract class JigsawCommonAlert extends DialogBase {
     public abstract set dialog(value: JigsawDialog);
 
     public message: string;
+    public header: string;
     public buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
     public level: AlertLevel = AlertLevel.info;
 
     public static showAlert(what: Type<JigsawCommonAlert>,
-                            message: string,
+                            message: string | AlertMessage,
                             callback?: DialogCallback,
                             buttons?: ButtonInfo[],
                             caption?: string,
                             modal: boolean = true,
                             popupOptions?: PopupOptions): PopupInfo {
+        const msg: AlertMessage = typeof message == 'string' ? {header: message} : message;
         const po = popupOptions ? popupOptions : {
             modal: modal, //是否模态
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut
         };
         const popupInfo = PopupService.instance.popup(what, po,
-            {message: message, title: caption, buttons: buttons});
+            {message: msg.message, header: msg.header, title: caption, buttons});
         popupInfo.answer.subscribe(answer => {
             CommonUtils.safeInvokeCallback(null, callback, [answer]);
             popupInfo.answer.unsubscribe();
@@ -215,7 +222,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
         }
     }
 
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    protected constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super();
         this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-common-alert');
     }
@@ -242,6 +249,11 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    public header: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -254,13 +266,13 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     @Input()
     public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
 
-    public static show(message: string,
+    public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
                        popupOptions?: PopupOptions): PopupInfo {
-        return JigsawCommonAlert.showAlert(JigsawInfoAlert, message, callback, buttons, caption, modal, popupOptions);
+        return JigsawCommonAlert.showAlert(JigsawInfoAlert, info, callback, buttons, caption, modal, popupOptions);
     }
 }
 
@@ -285,6 +297,11 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    public header: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -297,13 +314,13 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     @Input()
     public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
 
-    public static show(message: string,
+    public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
                        popupOptions?: PopupOptions): PopupInfo {
-        return JigsawCommonAlert.showAlert(JigsawWarningAlert, message, callback, buttons, caption, modal, popupOptions);
+        return JigsawCommonAlert.showAlert(JigsawWarningAlert, info, callback, buttons, caption, modal, popupOptions);
     }
 }
 
@@ -329,6 +346,11 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    public header: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -341,13 +363,13 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     @Input()
     public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
 
-    public static show(message: string,
+    public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
                        popupOptions?: PopupOptions): PopupInfo {
-        return JigsawCommonAlert.showAlert(JigsawErrorAlert, message, callback, buttons, caption, modal, popupOptions);
+        return JigsawCommonAlert.showAlert(JigsawErrorAlert, info, callback, buttons, caption, modal, popupOptions);
     }
 }
 
@@ -372,6 +394,11 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    public header: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -384,13 +411,13 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
     @Input()
     public buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 
-    public static show(message: string,
+    public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
                        modal: boolean = true,
                        popupOptions?: PopupOptions): PopupInfo {
-        return JigsawCommonAlert.showAlert(JigsawConfirmAlert, message, callback, buttons, caption, modal, popupOptions);
+        return JigsawCommonAlert.showAlert(JigsawConfirmAlert, info, callback, buttons, caption, modal, popupOptions);
     }
 }
 
