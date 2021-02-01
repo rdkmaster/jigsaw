@@ -4,8 +4,8 @@
 <!-- start to learn the demo from here -->
 <h3>面包屑折叠</h3>
 
-<j-breadcrumb [foldMin]="foldMin" [_$breadcrumbNodes]="_$breadcrumbNodes" [generatorContext]="this"></j-breadcrumb>
-<j-numeric-input [(value)]="foldMin" min="3" max="99" placeholder="请输入数字"></j-numeric-input>
+<j-breadcrumb [_$foldThreshold]="_$foldThreshold" [breadcrumbNodes]="breadcrumbNodes" [generatorContext]="this"></j-breadcrumb>
+<j-numeric-input [(value)]="_$foldThreshold" min="3" max="99" placeholder="请输入数字"></j-numeric-input>
 <p class="message">
-    输入值是：<span>{{ foldMin }}</span>
+    输入值是：<span>{{ _$foldThreshold }}</span>
 </p>

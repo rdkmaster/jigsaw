@@ -7,7 +7,7 @@ import { BreadcrumbNode } from "jigsaw/public_api";
 export class BreadcrumbFoldDemoComponent {
     constructor() {}
 
-    public _$breadcrumbNodes: BreadcrumbNode[] = [
+    public breadcrumbNodes: BreadcrumbNode[] = [
         {
             label: "主页",
             icon: "fa fa-home"
@@ -29,7 +29,7 @@ export class BreadcrumbFoldDemoComponent {
         }
     ];
 
-    public foldMin = 4;
+    public _$foldThreshold = 4;
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

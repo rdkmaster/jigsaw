@@ -7,10 +7,10 @@ import { BreadcrumbNode } from "jigsaw/public_api";
 export class BreadcrumbHintDemoComponent {
     constructor() {}
 
-    public _$breadcrumbNodes: BreadcrumbNode[] = [
+    public breadcrumbNodes: BreadcrumbNode[] = [
         {
             label: "主页",
-            icon: "fa fa-home",
+            icon: "iconfont iconfont-e647",
             hint: "点击即可返回主页"
         },
         {
@@ -19,7 +19,7 @@ export class BreadcrumbHintDemoComponent {
         },
         {
             label: "业务清单-1",
-            icon:"fa fa-list"
+            icon: "iconfont iconfont-e526"
         },
         {
             label: "业务清单-2"

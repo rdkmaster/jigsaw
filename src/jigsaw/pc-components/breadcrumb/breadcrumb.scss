@@ -25,6 +25,8 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
             color: $heading-color;
         }
         .#{$bc-prefix-cls}-link {
+            display: flex;
+            align-items: center;
             color: inherit;
         }
         &.fold:not(:nth-of-type(2)) {
@@ -46,6 +48,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
     &-hint {
         display: inline-flex;
+        justify-content: center;
         align-items: center;
         font-size: $font-size-sm;
         font-weight: 400;

@@ -90,6 +90,13 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @Input()
     public theme: 'light' | 'dark' | 'inner' = 'light';
 
+    /* 超过这个值的时候面包屑会折叠中间的部分 */
+    /**
+     * @internal
+     */
+    @Input()
+    public _$foldThreshold = 99;
+
     private _routesConfig: BreadcrumbRouteConfig[];
 
     /**
@@ -108,7 +115,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         this.runMicrotask(() => {
             // _generateBreadcrumb需要用到generatorContext这个输入属性，这里需要异步执行
             this._changeDetectorRef.markForCheck();
-            this._$breadcrumbNodes = this._generateBreadcrumb(this._router.url);
+            this.breadcrumbNodes = this._generateBreadcrumb(this._router.url);
         });
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
@@ -117,7 +124,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 this._changeDetectorRef.markForCheck();
-                this._$breadcrumbNodes = this._generateBreadcrumb(event.url);
+                this.breadcrumbNodes = this._generateBreadcrumb(event.url);
             }
         })
     }
@@ -129,20 +136,8 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public _$breadcrumbNodes: BreadcrumbNode[] = [];
-
-    /* 超过这个值的时候面包屑会折叠中间的部分 */
-    public _foldMin = 99;
+    public breadcrumbNodes: BreadcrumbNode[] = [];
     
-    @Input()
-    public get foldMin(){
-        return this._foldMin
-    }
-    
-    public set foldMin(v){
-        this._foldMin = v;
-    }
-
     private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
         breadcrumbNodes = breadcrumbNodes ? breadcrumbNodes : [];
         if (!url) {
