@@ -5,9 +5,7 @@ import { BreadcrumbNode } from "jigsaw/public_api";
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbHintDemoComponent {
-    constructor() {}
-
-    public breadcrumbNodes: BreadcrumbNode[] = [
+    public data: BreadcrumbNode[] = [
         {
             label: "主页",
             icon: "iconfont iconfont-e647",
@@ -35,6 +33,6 @@ export class BreadcrumbHintDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "";
+    summary: string = "面包屑的标签可以配置一些提示信息，带有提示信息的标签右侧会出现一个问号图标";
     description: string = "";
 }

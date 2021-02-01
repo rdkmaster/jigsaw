@@ -5,12 +5,10 @@ import { BreadcrumbNode } from "jigsaw/public_api";
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbFoldDemoComponent {
-    constructor() {}
-
-    public breadcrumbNodes: BreadcrumbNode[] = [
+    public data: BreadcrumbNode[] = [
         {
             label: "主页",
-            icon: "fa fa-home"
+            icon: "iconfont iconfont-e647"
         },
         {
             label: "业务管理"
@@ -33,6 +31,6 @@ export class BreadcrumbFoldDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "";
-    description: string = "";
+    summary: string = "面包屑的标签数超过指定数目时进行折叠";
+    description: string = "在组件标签内设置foldThreshold的值，控制面包屑的折叠。一旦面包屑的标签数超过设定的值，会进行折叠。";
 }

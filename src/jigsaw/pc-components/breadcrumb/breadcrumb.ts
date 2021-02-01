@@ -35,7 +35,8 @@ export type BreadcrumbNode = {
      */
     routeLink?: string;
     /**
-     * 注释链接
+     * 面包屑节点说明，当这个值有效时，Jigsaw会在节点后添加一个问号图标。
+     * $demo = breadcrumb/hints
      */
     hint?: string;
 }
@@ -71,7 +72,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public _$separator: string = "iconfont iconfont-e144";
+    public separator: string = "iconfont iconfont-e144";
 
     /**
      * @NoMarkForCheckRequired
@@ -85,12 +86,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @Input()
     public theme: 'light' | 'dark' | 'inner' = 'light';
 
-    /* 超过这个值的时候面包屑会折叠中间的部分 */
-    /**
+    /** 
+     * 超过这个值的时候面包屑会折叠中间的部分
      * @internal
      */
     @Input()
-    public foldThreshold = 99;
+    public foldThreshold :number = Infinity;
 
     private _routesConfig: BreadcrumbRouteConfig[];
 
@@ -110,7 +111,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         this.runMicrotask(() => {
             // _generateBreadcrumb需要用到generatorContext这个输入属性，这里需要异步执行
             this._changeDetectorRef.markForCheck();
-            this.breadcrumbNodes = this._generateBreadcrumb(this._router.url);
+            this.data = this._generateBreadcrumb(this._router.url);
         });
         if (this._removeRouterEventSubscriber) {
             this._removeRouterEventSubscriber.unsubscribe();
@@ -119,7 +120,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         this._removeRouterEventSubscriber = this._router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 this._changeDetectorRef.markForCheck();
-                this.breadcrumbNodes = this._generateBreadcrumb(event.url);
+                this.data = this._generateBreadcrumb(event.url);
             }
         })
     }
@@ -131,12 +132,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public breadcrumbNodes: BreadcrumbNode[] = [];
+    public data: BreadcrumbNode[] = [];
     
-    private _generateBreadcrumb(url: string, breadcrumbNodes?: BreadcrumbNode[]): BreadcrumbNode[] {
-        breadcrumbNodes = breadcrumbNodes ? breadcrumbNodes : [];
+    private _generateBreadcrumb(url: string, data?: BreadcrumbNode[]): BreadcrumbNode[] {
+        data = data ? data : [];
         if (!url) {
-            return breadcrumbNodes;
+            return data;
         }
         let routeConfig = this.routesConfig.find(route => {
             let configUrl = Object.keys(route)[0];
@@ -158,11 +159,11 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
                 // 拷贝一份，保证原数据不变
                 breadcrumbNode = Object.assign({}, breadcrumbNode);
                 breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
-                breadcrumbNodes.unshift(breadcrumbNode);
+                data.unshift(breadcrumbNode);
             })
         }
 
-        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), breadcrumbNodes);
+        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), data);
     }
 
     ngAfterContentInit() {
@@ -205,12 +206,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         <ng-content></ng-content>
         <span 
             class="jigsaw-breadcrumb-separator" 
-            *ngIf="!isLast && (separatorType === 'text')">{{_$separator}}
+            *ngIf="!isLast && (separatorType === 'text')">{{separator}}
         </span>
         <span 
             class="jigsaw-breadcrumb-separator" 
             *ngIf="!isLast && (separatorType === 'icon')">
-            <i class="{{_$separator}}"></i>
+            <i class="{{separator}}"></i>
         </span>
         `,
     host: {
@@ -221,8 +222,6 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
 })
 
 export class JigsawBreadcrumbItem {
-    constructor() { }
-
     /**
      * @NoMarkForCheckRequired
      */
@@ -239,7 +238,7 @@ export class JigsawBreadcrumbItem {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public _$separator: string;
+    public separator: string;
 }
 
 @NgModule({
