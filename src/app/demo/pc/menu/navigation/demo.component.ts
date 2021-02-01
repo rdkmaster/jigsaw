@@ -20,9 +20,9 @@ export class NavigationMenuNavDemo {
         this.data1.fromXML(`
             <node>
                 <node label="当前告警" icon="iconfont iconfont-e9ad" isActive="true" selected="true">
-                    <node label="告警监控" selected="true"></node>
+                    <node label="告警监控" selected="true" icon="iconfont iconfont-e5fc"></node>
                     <node label="告警统计"></node>
-                    <node label="定时导出"></node>
+                    <node label="定时导出" icon="iconfont iconfont-e0bd"></node>
                     <node label="告警同步"></node>
                     <node label="告警提示"></node>
                 </node>
