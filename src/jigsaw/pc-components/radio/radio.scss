@@ -47,6 +47,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         border-radius: 50%;
         background-color: $bg-component;
         margin-right: 8px;
+        @include prefixer(transition, all 0.3s $ease-in-out-circ);
         &.#{$radio-option-prefix-cls}-checked {
             border-width: 4px;
             border-color: $brand-default;
