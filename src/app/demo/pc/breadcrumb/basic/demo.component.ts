@@ -24,6 +24,10 @@ export class BreadcrumbBasicDemoComponent {
         ];
     }
 
+    public separatorType: string = "icon";
+
+    public _$separator: string = "iconfont iconfont-e144";
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

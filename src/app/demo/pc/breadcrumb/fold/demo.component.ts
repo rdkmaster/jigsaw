@@ -29,7 +29,7 @@ export class BreadcrumbFoldDemoComponent {
         }
     ];
 
-    public _$foldThreshold = 4;
+    public foldThreshold = 4;
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

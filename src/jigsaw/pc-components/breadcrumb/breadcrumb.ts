@@ -40,14 +40,6 @@ export type BreadcrumbNode = {
     hint?: string;
 }
 
-export type BreadcrumbSeparator = {
-    /**
-     * Type => icon / text 
-     */
-    type: string;
-    content: string;
-};
-
 export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode | BreadcrumbNode[];
 
 @Component({
@@ -73,10 +65,13 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public separator: BreadcrumbSeparator = {
-        type:"icon",
-        content:"iconfont iconfont-e144"
-    };
+    public separatorType: 'icon' | 'text' = "icon";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public _$separator: string = "iconfont iconfont-e144";
 
     /**
      * @NoMarkForCheckRequired
@@ -95,7 +90,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @internal
      */
     @Input()
-    public _$foldThreshold = 99;
+    public foldThreshold = 99;
 
     private _routesConfig: BreadcrumbRouteConfig[];
 
@@ -210,12 +205,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         <ng-content></ng-content>
         <span 
             class="jigsaw-breadcrumb-separator" 
-            *ngIf="!isLast && (_$breadcrumbHost?.separator.type === 'text')">{{_$breadcrumbHost?.separator.content}}
+            *ngIf="!isLast && (separatorType === 'text')">{{_$separator}}
         </span>
         <span 
             class="jigsaw-breadcrumb-separator" 
-            *ngIf="!isLast && (_$breadcrumbHost?.separator.type === 'icon')">
-            <i class="{{_$breadcrumbHost?.separator.content}}"></i>
+            *ngIf="!isLast && (separatorType === 'icon')">
+            <i class="{{_$separator}}"></i>
         </span>
         `,
     host: {
@@ -224,19 +219,27 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class JigsawBreadcrumbItem {
-    constructor(
-        /**
-         * @internal
-         */
-        @Optional() public _$breadcrumbHost: JigsawBreadcrumb
-    ) { }
+    constructor() { }
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public isLast: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public separatorType: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public _$separator: string;
 }
 
 @NgModule({
