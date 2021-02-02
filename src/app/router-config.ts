@@ -224,6 +224,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/color-select/demo-set.module').then(m => m.ColorSelectDemoModule),
     },
     {
+        path: "pc/badge",
+        loadChildren: () => import('./demo/pc/badge/demo-set.module').then(m => m.BadgeDemoModule),
+    },
+    {
         path: "pc/time-section",
         loadChildren: () => import('./demo/pc/time-section/demo-set.module').then(m => m.TimeSectionDemoModule),
     }
