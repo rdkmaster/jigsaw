@@ -10,6 +10,6 @@ export class TagPresetColorDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '提供了内置颜色和大小';
     description: string = '';
 }

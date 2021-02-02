@@ -1,0 +1,11 @@
+.tagStyle {
+    color: red !important;
+}
+
+section {
+    display: flex;
+    align-items: center;
+    jigsaw-tag {
+        margin: 5px;
+    }
+}

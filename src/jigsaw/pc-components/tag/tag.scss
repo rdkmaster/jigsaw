@@ -3,7 +3,6 @@
 $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
 .#{$tag-prefix-cls}-host {
-    @include line-ellipsis-style;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -142,5 +141,11 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         &:hover {
             color: $brand-default;
         }
+    }
+
+    & > span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
