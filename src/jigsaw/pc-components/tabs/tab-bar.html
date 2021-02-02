@@ -17,14 +17,14 @@
                                   (remove)="_$handleRemove($event)"
                                   (change)="titleChange.emit($event)">
                 </jigsaw-tab-label>
-                <span class="fa fa-plus-square-o jigsaw-tabs-add-bar" *ngIf="editable"
+                <span class="iconfont iconfont-ea1d jigsaw-tabs-add-bar" *ngIf="editable"
                       (click)="_$handleAdd()"></span>
             </div>
         </div>
         <div *ngIf="_$showOverflowButton" class="jigsaw-tabs-overflow-button"
              jigsaw-float jigsawFloatPosition="bottomRight" [jigsawFloatTarget]="tabsList"
              [jigsawFloatOptions]="{useCustomizedBackground: true}">
-            <span class="fa  fa-angle-double-right"></span>
+            <span class="iconfont iconfont-e9c6"></span>
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@
         <jigsaw-list-option *ngFor="let tab of _$tabPanes; let i = index;" [value]="tab" (click)="_$listOptionClick(i)"
                             [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden">
             <div class="jigsaw-tabs-bar-list-option" [class.jigsaw-list-option-selected]="_$selectedIndex === i">
-                <span class="fa fa-check check-icon" *ngIf="_$selectedIndex === i"></span>
+                <span class="iconfont iconfont-e13f check-icon" *ngIf="_$selectedIndex === i"></span>
                 <span *ngIf="tab.icon" [ngClass]="tab.icon"></span>
                 <span class="jigsaw-tabs-bar-list-content" [innerHTML]="_$tabList[i]"></span>
             </div>

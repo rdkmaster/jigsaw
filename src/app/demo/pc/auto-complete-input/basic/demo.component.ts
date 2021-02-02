@@ -23,9 +23,9 @@ export class AutoCompleteInputBasicDemoComponent {
         alert('你输入的值是 ' + this.inputValue)
     }
 
-    public preIcons: string[] = ['fa fa-search', 'fa fa-save'];
+    public preIcons: string[] = ['iconfont iconfont-ea03', 'iconfont iconfont-ea2a'];
 
-    public backIcon: string = 'fa fa-question';
+    public backIcon: string = 'iconfont iconfont-e9ee';
 
     public message: string = '';
 

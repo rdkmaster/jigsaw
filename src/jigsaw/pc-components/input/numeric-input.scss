@@ -75,10 +75,11 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     }
 
     &-option-bar {
-        display: flex;
         flex: 1;
+        display: flex;
         justify-content: center;
         align-items: center;
+        height: 50%;
         border-left: 1px solid $border-color-default;
         cursor: pointer;
         text-align: center;
@@ -117,17 +118,6 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
             &:hover,
             &:active {
                 color: $font-color-disabled;
-            }
-        }
-
-        &-up {
-            &:before {
-                content: "\f106";
-            }
-        }
-        &-down {
-            &:before {
-                content: "\f107";
             }
         }
     }

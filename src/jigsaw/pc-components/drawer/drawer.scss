@@ -33,6 +33,9 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
         height: 100%;
     }
     &-bar {
+        display: flex;
+        justify-content: center;
+        align-self: center;
         position: absolute;
         width: 14px;
         height: 50px;
@@ -43,9 +46,15 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
         cursor: pointer;
         border-radius: 0 $border-radius-base $border-radius-base 0;
         box-shadow: $box-shadow-lv2;
+
+        .iconfont {
+            font-size: $icon-size-sm;
+        }
+
         &:hover {
             background: $brand-hover;
         }
+
         &:active {
             background: $brand-active;
         }

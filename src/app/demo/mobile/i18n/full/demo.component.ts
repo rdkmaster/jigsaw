@@ -6,16 +6,6 @@ import {
     TimeGr, TimeService
 } from "jigsaw/mobile_public_api";
 
-/**
- * 覆盖控件内部的国际化词条
- */
-TranslateHelper.alert.zh = {
-    button: {ok: '知道了'}
-};
-TranslateHelper.alert.en = {
-    button: {ok: 'Gotcha'}
-};
-
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
@@ -23,14 +13,14 @@ TranslateHelper.alert.en = {
             padding: 30px;
         }
 
-        .dialog-content .fa {
+        .dialog-content .iconfont {
             font-size: 36px;
             color: #41addc;
             margin-right: 10px;
             vertical-align: middle;
         }
 
-        jigsaw-mobile-dialog .fa {
+        jigsaw-mobile-dialog .iconfont {
             margin-right: 5px
         }
 
