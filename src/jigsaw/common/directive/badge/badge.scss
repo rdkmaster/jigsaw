@@ -37,6 +37,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     border-radius: 24px;
     border-width: 2px !important;
     font-weight: bold;
+    font-size: 14px;
 }
 
 .#{$badge-prefix-cls}-size-normal {
@@ -54,7 +55,6 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     align-items: center;
     border-radius: 16px;
     border-width: 1px !important;
-    font-weight: lighter;
 }
 
 .#{$badge-prefix-cls}-normal {
