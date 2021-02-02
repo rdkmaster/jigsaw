@@ -1,19 +1,15 @@
-import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawTag} from "jigsaw/public_api";
+import { Component, QueryList, ViewChildren } from "@angular/core";
+import { JigsawTag } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.scss']
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.scss"]
 })
 export class TagAddDemoComponent {
-
-    public addTag(cntr){
-        
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = '添加isAdd="true"来设置新增tag';
+    description: string = "";
 }
