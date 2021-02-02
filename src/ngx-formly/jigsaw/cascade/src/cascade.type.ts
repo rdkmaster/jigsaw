@@ -27,7 +27,7 @@ import {ArrayCollection} from "@rdkmaster/jigsaw";
             [searchKeyword]="to.searchKeyword"
             [searchBoxMinWidth]="to.searchBoxMinWidth"
             [showValueBorder]="to.showValueBorder"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (select)="to.select && to.select($event)"
             (openChange)="to.openChange && to.openChange($event)"

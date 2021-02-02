@@ -7,9 +7,9 @@ import {FieldType} from '@ngx-formly/core';
         <jigsaw-radios-lite
             [formlyAttributes]="field"
             [formControl]="formControl"
-            [(value)]="to.value"
+            [value]="to.value"
             [data]="to.data"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [trackItemBy]="to.trackItemBy"
             [labelField]="to.labelField"
             (valueChange)="to.valueChange && to.valueChange($event)"

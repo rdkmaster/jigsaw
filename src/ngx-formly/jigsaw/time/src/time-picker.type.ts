@@ -12,7 +12,7 @@ import {TimeGr} from '@rdkmaster/jigsaw';
             [height]="to.height"
             [(value)]="to.value"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [step]="to.step"
             [gr]="to.gr"
             [limitStart]="to.limitStart"
@@ -33,13 +33,4 @@ export class FormlyFieldTimePicker extends FieldType {
             popDirection: 'down',
         },
     };
-
-    public _$valueChange(event): void {
-        if (this.to.valueChange) {
-            this.to.valueChange(event);
-        }
-        console.log(' ======> ', this.model['timePicker']);
-        // this.model['timePicker'] = event;
-        // console.log(' ======> ', this.model['timePicker']);
-    }
 }

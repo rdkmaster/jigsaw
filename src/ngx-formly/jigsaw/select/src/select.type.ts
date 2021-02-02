@@ -7,7 +7,7 @@ import {FieldType} from '@ngx-formly/core';
         <jigsaw-select
             [formControl]="formControl"
             [formlyAttributes]="field"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [width]="to.width"
             [height]="to.height"
             [minWidth]="to.minWidth"
@@ -33,8 +33,6 @@ import {FieldType} from '@ngx-formly/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldSelect extends FieldType {
-    public _$width = '100%';
-
     defaultOptions = {
         templateOptions: {
             valid: true,

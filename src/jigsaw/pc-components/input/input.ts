@@ -59,7 +59,9 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     @Output('blur')
     private _blurEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
-    private _propagateChange: any = () => {
+    protected _propagateChange: any = () => {
+    };
+    protected _onTouched: any = () => {
     };
 
     public writeValue(value: any): void {
@@ -75,6 +77,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
     }
 
     private _value: string = ''; //input表单值
@@ -156,6 +159,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
+        this._onTouched();
         if (this.blurOnClear) {
             this._blurEmitter.emit(event);
         } else {
@@ -272,8 +276,8 @@ export class JigsawInput extends JigsawInputBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get autocomplete():string{
-        return this.password ? "new-password" : "off" ;
+    public get autocomplete(): string {
+        return this.password ? "new-password" : "off";
     }
 
     @ViewChild('input')
@@ -312,7 +316,7 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$stopPropagation(event) {
-        if(!this.disabled) {
+        if (!this.disabled) {
             event.preventDefault();
             event.stopPropagation();
         }

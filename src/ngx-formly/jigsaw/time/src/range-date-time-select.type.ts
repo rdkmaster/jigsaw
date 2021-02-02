@@ -11,7 +11,7 @@ import {TimeGr} from '@rdkmaster/jigsaw';
             [width]="to.width"
             [height]="to.height"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [gr]="to.gr"
             [(date)]="to.date"
             [limitStart]="to.limitStart"
@@ -35,7 +35,7 @@ export class FormlyFieldRangeDateTimeSelect extends FieldType {
             disabled: false,
             valid: true,
             gr: TimeGr.date,
-            date: {beginDate: 'now-3d', endDate: 'now'},
+            // date: {beginDate: 'now-3d', endDate: 'now'},
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave'
         },

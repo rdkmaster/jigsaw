@@ -10,7 +10,7 @@ import {FieldType} from '@ngx-formly/core';
             [(checked)]="to.checked"
             [(enableIndeterminate)]="to.enableIndeterminate"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             (change)="to.change && to.change($event)"
         >
             {{to.content}}
@@ -21,6 +21,7 @@ import {FieldType} from '@ngx-formly/core';
 export class FormlyFieldCheckbox extends FieldType {
     defaultOptions = {
         templateOptions: {
+            hideLabel: true,
             valid: true
         },
     };

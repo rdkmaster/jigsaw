@@ -4,12 +4,12 @@ import {
     Component,
     EventEmitter,
     forwardRef,
+    Injector,
     Input,
     NgModule,
+    OnDestroy,
     OnInit,
-    Output,
-    Injector,
-    OnDestroy
+    Output
 } from '@angular/core';
 import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select/index";
@@ -22,16 +22,18 @@ import {DropDownTrigger} from "../../common/directive/float/float";
 import {AbstractJigsawComponent} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { debounceTime } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `
         <jigsaw-combo-select [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150">
+                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
+                             (openChange)="_$onComboOpenChange($event)">
             <ng-template>
-                <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr" (grChange)="grChange.emit($event)"
+                <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
+                                         (grChange)="grChange.emit($event)"
                                          [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
                                          [step]="step" [weekStart]="weekStart">
                 </jigsaw-date-time-picker>
@@ -53,7 +55,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
                 private _injector: Injector) {
         super();
         this._removeUpdateValueSubscriber = this._$updateValue.pipe(debounceTime(100)).subscribe(date => {
-           this.writeValue(date);
+            this.writeValue(date);
         });
         this._removeMulInputsChangeSubscriber = this._multipleInputsChange.pipe(debounceTime(100)).subscribe(() => {
             this._changeDateByGr();
@@ -86,7 +88,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         if (typeof value === 'string') {
             value = TimeGr[value];
         }
-        if (value == this._gr) return;
+        if (value == this._gr) {
+            return;
+        }
         this._gr = <TimeGr>value;
         if (this.initialized && this.date) {
             this._multipleInputsChange.emit();
@@ -105,9 +109,11 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     public set date(date: WeekTime) {
-        if (this._isDateSame(date, this._date)) return;
+        if (this._isDateSame(date, this._date)) {
+            return;
+        }
         this._date = date;
-        if(this.initialized) {
+        if (this.initialized) {
             this._multipleInputsChange.emit();
         }
     }
@@ -177,7 +183,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      */
     public _$setComboValue(date: string | TimeWeekDay) {
         date = this._getDateStr(date);
-        if (!date) return;
+        if (!date) {
+            return;
+        }
         this._$dateComboValue = new ArrayCollection([{
             label: date,
             closable: false
@@ -187,12 +195,16 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     private _getDateStr(date: string | TimeWeekDay) {
         if (!((typeof date == 'string' && !date.includes('now')) ||
-            (date && date.hasOwnProperty('year') && date.hasOwnProperty('week')))) return null;
+            (date && date.hasOwnProperty('year') && date.hasOwnProperty('week')))) {
+            return null;
+        }
         return typeof date == 'string' ? date : `${date.year}-${date.week}`;
     }
 
     private _isDateSame(date1, date2) {
-        if (!date1 || !date2) return false;
+        if (!date1 || !date2) {
+            return false;
+        }
         if (this.gr == TimeGr.week && typeof date1 == 'object' && typeof date2 == 'object') {
             return date1.year == date2.year && date1.week == date2.week
         } else {
@@ -208,7 +220,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     private _changeDateByGr() {
-        if (!this.date) return;
+        if (!this.date) {
+            return;
+        }
         let convertDate = TimeService.getDateByGr(this.date, this._gr);
         this._$updateValue.emit(convertDate);
     }
@@ -220,11 +234,11 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if(this._removeUpdateValueSubscriber) {
+        if (this._removeUpdateValueSubscriber) {
             this._removeUpdateValueSubscriber.unsubscribe();
             this._removeUpdateValueSubscriber = null;
         }
-        if(this._removeMulInputsChangeSubscriber) {
+        if (this._removeMulInputsChangeSubscriber) {
             this._removeMulInputsChangeSubscriber.unsubscribe();
             this._removeMulInputsChangeSubscriber = null;
         }
@@ -232,14 +246,23 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched();
     }
 
+    /**
+     * @internal
+     */
+    public _$onComboOpenChange(optionState: boolean) {
+        this._onTouched();
+    }
 }
 
 @NgModule({

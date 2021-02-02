@@ -13,7 +13,7 @@ import {FieldType} from '@ngx-formly/core';
             [clearable]="to.clearable"
             [placeholder]="to.placeholder"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-textarea>
     `,

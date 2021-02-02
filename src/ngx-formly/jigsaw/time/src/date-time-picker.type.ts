@@ -11,7 +11,7 @@ import {TimeGr} from '@rdkmaster/jigsaw';
             [width]="to.width"
             [height]="to.height"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [gr]="to.gr"
             [date]="to.date"
             [limitStart]="to.limitStart"
@@ -32,7 +32,6 @@ export class FormlyFieldDateTimePicker extends FieldType {
         templateOptions: {
             disabled: false,
             valid: true,
-            date: 'now',
             gr: TimeGr.date,
         },
     };

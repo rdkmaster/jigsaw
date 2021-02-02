@@ -1,11 +1,14 @@
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     Component,
     ContentChild,
     ElementRef,
     EventEmitter,
     forwardRef,
+    Injector,
     Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -13,10 +16,7 @@ import {
     Renderer2,
     TemplateRef,
     ViewChild,
-    ViewChildren,
-    NgZone,
-    ChangeDetectionStrategy,
-    Injector
+    ViewChildren
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -196,7 +196,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 this._editor.select();
             }
         }
-
+        this._onTouched();
         this.openChange.emit(value);
     }
 
@@ -244,7 +244,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @ViewChild('editor')
     private _editor: JigsawInput;
 
-    @ViewChild('editor', { read: ElementRef })
+    @ViewChild('editor', {read: ElementRef})
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
@@ -421,6 +421,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any, emit = true): void {
         if (emit) {
@@ -446,5 +448,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public _$onClick($event: Event): void {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this._onTouched();
     }
 }

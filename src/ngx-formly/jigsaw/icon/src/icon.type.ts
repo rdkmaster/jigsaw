@@ -22,4 +22,10 @@ import {FieldType} from '@ngx-formly/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldIcon extends FieldType {
+    defaultOptions = {
+        templateOptions: {
+            hideLabel: true,
+            iconPosition: 'left',
+        },
+    };
 }

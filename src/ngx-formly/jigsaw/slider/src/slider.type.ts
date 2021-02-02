@@ -9,7 +9,7 @@ import {FieldType} from '@ngx-formly/core';
             [formlyAttributes]="field"
             [width]="to.width"
             [height]="to.height"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [min]="to.min"
             [max]="to.max"
             [step]="to.step"

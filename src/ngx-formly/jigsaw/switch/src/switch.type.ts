@@ -8,7 +8,7 @@ import {FieldType} from '@ngx-formly/core';
             [formlyAttributes]="field"
             [formControl]="formControl"
             [(checked)]="to.checked"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [onLabel]="to.onLabel"
             [offLabel]="to.offLabel"
             [size]="to.size"
@@ -22,8 +22,9 @@ import {FieldType} from '@ngx-formly/core';
 export class FormlyFieldSwitch extends FieldType {
     defaultOptions = {
         templateOptions: {
+            hideLabel: true,
             valid: true,
-            size: 'default',    //可选值 ‘small’
+            size: 'default',
         }
     };
 }

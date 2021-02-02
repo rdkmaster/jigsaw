@@ -12,7 +12,7 @@ import {FieldType} from '@ngx-formly/core';
             [data]="to.data"
             [clearable]="to.clearable"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
             [blurOnClear]="to.blurOnClear"
             [closeDropDownOnSelect]="to.closeDropDownOnSelect"

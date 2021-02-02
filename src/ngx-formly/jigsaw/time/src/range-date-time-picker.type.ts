@@ -11,7 +11,7 @@ import {TimeGr} from '@rdkmaster/jigsaw';
             [width]="to.width"
             [height]="to.height"
             [disabled]="to.disabled"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [gr]="to.gr"
             [beginDate]="to.beginDate"
             [endDate]="to.endDate"

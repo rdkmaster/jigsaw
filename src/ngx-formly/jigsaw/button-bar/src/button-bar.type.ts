@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FieldType} from '@ngx-formly/core';
+import {ColorType} from "../../button/src/button.type";
 
 @Component({
     selector: 'formly-field-jigsaw-button-bar',
@@ -9,7 +10,7 @@ import {FieldType} from '@ngx-formly/core';
             [formControl]="formControl"
             [optionWidth]="to.optionWidth"
             [colorType]="to.colorType"
-            [valid]="to.valid"
+            [valid]="to.valid && !showError"
             [data]="to.data"
             [trackItemBy]="to.trackItemBy"
             [labelField]="to.labelField"
@@ -25,7 +26,7 @@ export class FormlyFieldButtonBar extends FieldType {
         templateOptions: {
             valid: true,
             labelField: 'label',
-            colorType: 'primary'
+            colorType: ColorType.PRIMARY
         },
     };
 }
