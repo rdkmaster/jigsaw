@@ -1,0 +1,9 @@
+.movable {
+    position: fixed;
+    left: 20px;
+    top: 100px;
+}
+
+.label {
+    padding: 6px 12px;
+}
