@@ -1,5 +1,6 @@
 .movable {
     position: fixed;
+    cursor: move;
     left: 20px;
     top: 100px;
 }

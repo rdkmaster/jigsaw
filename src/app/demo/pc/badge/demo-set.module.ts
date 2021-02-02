@@ -12,31 +12,17 @@ import {BadgeMaskDemoModule} from "./mask/demo.module";
 import {BadgeMaxValueDemoModule} from "./max-value/demo.module";
 import {BadgePositionDemoModule} from "./position/demo.module";
 import {BadgeStatusDemoModule} from "./status/demo.module";
-import { BadgeMoveDemoComponent } from './move/demo.component';
-import { BadgeMoveDemoModule } from './move/demo.module';
+import {BadgeMoveDemoComponent} from "./move/demo.component";
+import {BadgeMoveDemoModule} from "./move/demo.module";
 
 export const routerConfig = [
-    {
-        path: 'basic', component: BadgeBasicDemoComponent
-    },
-    {
-        path: 'mask', component: BadgeMaskDemoComponent
-    },
-    {
-        path: 'max-value', component: BadgeMaxValueDemoComponent
-    },
-    {
-        path: 'position', component: BadgePositionDemoComponent
-    },
-    {
-        path: 'size', component: BadgeSizeDemoComponent
-    },
-    {
-        path: 'status', component: BadgeStatusDemoComponent
-    },
-    {
-        path: 'move', component: BadgeMoveDemoComponent
-    }
+    {path: 'basic', component: BadgeBasicDemoComponent},
+    {path: 'mask', component: BadgeMaskDemoComponent},
+    {path: 'max-value', component: BadgeMaxValueDemoComponent},
+    {path: 'position', component: BadgePositionDemoComponent},
+    {path: 'size', component: BadgeSizeDemoComponent},
+    {path: 'status', component: BadgeStatusDemoComponent},
+    {path: 'move', component: BadgeMoveDemoComponent},
 
 ];
 
