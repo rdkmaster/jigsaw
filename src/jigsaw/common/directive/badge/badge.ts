@@ -9,6 +9,8 @@ import {
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
 
+type Position = {left?: string, right?: string, top?: string, bottom?: string};
+
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
@@ -173,7 +175,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         }
     }
 
-    private _calPosition(): any {
+    private _calPosition(): Position {
         if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
         }
@@ -214,7 +216,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         }
     }
 
-    private _calMaskPosition(): any {
+    private _calMaskPosition(): Position {
         const differ = this._getDiffer();
         switch (this.jigsawBadgePosition) {
             case "left":
