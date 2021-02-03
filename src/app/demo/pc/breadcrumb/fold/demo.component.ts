@@ -5,17 +5,13 @@ import { BreadcrumbNode } from "jigsaw/public_api";
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbFoldDemoComponent {
-    public data: BreadcrumbNode[] = [
+    public data: (string | BreadcrumbNode)[] = [
         {
             label: "主页",
             icon: "iconfont iconfont-e647"
         },
-        {
-            label: "业务管理"
-        },
-        {
-            label: "业务清单-1"
-        },
+        "业务管理",
+        "业务清单-1",
         {
             label: "业务清单-2"
         },
