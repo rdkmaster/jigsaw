@@ -44,6 +44,11 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         line-height: 20px;
         border-bottom: 1px solid $border-color-base;
         cursor: move;
+
+        & > div {
+            display: flex;
+            align-items: center;
+        }
     }
 
     &-head &-close {
