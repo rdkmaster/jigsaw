@@ -20,7 +20,7 @@ export class BreadcrumbBasicDemoComponent {
             { id: 0, label: "Home", icon: "iconfont iconfont-e647" },
             { id: 1, label: "Digital", icon: "iconfont iconfont-e12e" },
             { id: 2, label: "List", icon: "iconfont iconfont-e526" },
-            { id: 3, label: "Detail", icon: "iconfont iconfont-e385" }
+            { id: 3, label: "Detail", icon: "iconfont iconfont-e385" },"Text"
         ];
     }
 

@@ -130,13 +130,28 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
     private _items: QueryList<JigsawBreadcrumbItem>;
 
+    private _data: (string | BreadcrumbNode)[] = [];
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public data: string | BreadcrumbNode[] = [];
+    public get data(): (string | BreadcrumbNode)[] {
+        return this._data;
+    }
 
-    private _generateBreadcrumb(url: string, data?: BreadcrumbNode[]): BreadcrumbNode[] {
+    public set data(value: (string | BreadcrumbNode)[]) {
+        value.map((item, i) => {
+            if (typeof item == "string") {
+                value[i] = {
+                    label: item
+                };
+            }
+        });
+        this._data = value;
+    }
+
+    private _generateBreadcrumb(url: string, data?: (string | BreadcrumbNode)[]): (string | BreadcrumbNode)[] {
         data = data ? data : [];
         if (!url) {
             return data;
