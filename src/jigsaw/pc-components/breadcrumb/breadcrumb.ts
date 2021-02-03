@@ -4,6 +4,8 @@ import {
     ContentChildren,
     forwardRef,
     Input,
+    Output,
+    EventEmitter,
     NgModule,
     OnDestroy,
     Optional,
@@ -44,13 +46,13 @@ export type BreadcrumbNode = {
 export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode | BreadcrumbNode[];
 
 @Component({
-    selector: 'jigsaw-breadcrumb, j-breadcrumb',
-    templateUrl: 'breadcrumb.html',
+    selector: "jigsaw-breadcrumb, j-breadcrumb",
+    templateUrl: "breadcrumb.html",
     host: {
-        '[class.jigsaw-breadcrumb]': 'true',
-        '[class.jigsaw-breadcrumb-light]': 'theme == "light"',
-        '[class.jigsaw-breadcrumb-dark]': 'theme == "dark"',
-        '[class.jigsaw-breadcrumb-inner]': 'theme == "inner"'
+        "[class.jigsaw-breadcrumb]": "true",
+        "[class.jigsaw-breadcrumb-light]": 'theme == "light"',
+        "[class.jigsaw-breadcrumb-dark]": 'theme == "dark"',
+        "[class.jigsaw-breadcrumb-inner]": 'theme == "inner"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -66,7 +68,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public separatorType: 'icon' | 'text' = "icon";
+    public separatorType: "icon" | "text" = "icon";
 
     /**
      * @NoMarkForCheckRequired
@@ -84,14 +86,14 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public theme: 'light' | 'dark' | 'inner' = 'light';
+    public theme: "light" | "dark" | "inner" = "light";
 
-    /** 
+    /**
      * 超过这个值的时候面包屑会折叠中间的部分
      * @internal
      */
     @Input()
-    public foldThreshold :number = Infinity;
+    public foldThreshold: number = Infinity;
 
     private _routesConfig: BreadcrumbRouteConfig[];
 
@@ -122,7 +124,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
                 this._changeDetectorRef.markForCheck();
                 this.data = this._generateBreadcrumb(event.url);
             }
-        })
+        });
     }
 
     @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
@@ -132,8 +134,8 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public data: BreadcrumbNode[] = [];
-    
+    public data: string | BreadcrumbNode[] = [];
+
     private _generateBreadcrumb(url: string, data?: BreadcrumbNode[]): BreadcrumbNode[] {
         data = data ? data : [];
         if (!url) {
@@ -144,26 +146,34 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             if (!configUrl) {
                 return false;
             }
-            configUrl = configUrl[0] == '/' ? configUrl : '/' + configUrl;
-            let urlRegStr = '^' + configUrl.replace(/([\[\]\-|(){}^.+?$=!,\\])/g, '\\$1')
-                .replace(/\*/g, '[^\/]+\/?') + '$';
+            configUrl = configUrl[0] == "/" ? configUrl : "/" + configUrl;
+            let urlRegStr = "^" + configUrl.replace(/([\[\]\-|(){}^.+?$=!,\\])/g, "\\$1").replace(/\*/g, "[^/]+/?") + "$";
             return new RegExp(urlRegStr).test(url);
         });
         if (routeConfig) {
-            const urlNode = url.slice(url.lastIndexOf('/') + 1);
+            const urlNode = url.slice(url.lastIndexOf("/") + 1);
             let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
-            breadcrumbNodeTemp = typeof breadcrumbNodeTemp == 'function' ?
-                CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)]) : breadcrumbNodeTemp;
+            breadcrumbNodeTemp = typeof breadcrumbNodeTemp == "function" ? CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)]) : breadcrumbNodeTemp;
             breadcrumbNodeTemp = breadcrumbNodeTemp instanceof Array ? breadcrumbNodeTemp : [breadcrumbNodeTemp];
             breadcrumbNodeTemp.reverse().forEach((breadcrumbNode: BreadcrumbNode) => {
                 // 拷贝一份，保证原数据不变
                 breadcrumbNode = Object.assign({}, breadcrumbNode);
                 breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
                 data.unshift(breadcrumbNode);
-            })
+            });
         }
 
-        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf('/') == -1 ? 0 : url.lastIndexOf('/')), data);
+        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf("/") == -1 ? 0 : url.lastIndexOf("/")), data);
+    }
+
+    @Output()
+    public select: EventEmitter<BreadcrumbNode> = new EventEmitter<BreadcrumbNode>();
+
+    /**
+     * @internal
+     */
+    public _$itemSelect(item: BreadcrumbNode) {
+        this.select.emit(item);
     }
 
     ngAfterContentInit() {
@@ -171,7 +181,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
             if (this._items.last) {
                 this.runMicrotask(() => {
                     this._items.last.isLast = true;
-                })
+                });
             }
             if (this._removeItemChangeSubscriber) {
                 this._removeItemChangeSubscriber.unsubscribe();
@@ -181,9 +191,9 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
                 if (this._items.last) {
                     this.runMicrotask(() => {
                         this._items.last.isLast = true;
-                    })
+                    });
                 }
-            })
+            });
         }
     }
 

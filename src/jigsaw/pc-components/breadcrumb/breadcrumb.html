@@ -2,7 +2,11 @@
 <j-breadcrumb-item *ngFor="let item of data; let isLast = last; let i = index; let len = count" [isLast]="isLast" 
     [ngClass]="!(len > foldThreshold && 0 < i && i < len - 2) ?'':'fold'" 
     [separatorType]="separatorType" [separator]="separator">
-    <a class="jigsaw-breadcrumb-link" [routerLink]="item?.routeLink" *ngIf="!(len > foldThreshold && i == 1)">
+    <a *ngIf="!(len > foldThreshold && i == 1)"
+        class="jigsaw-breadcrumb-link"
+        [routerLink]="item?.routeLink"
+        (click)="_$itemSelect(item)"
+        >
         <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
         <span class="jigsaw-breadcrumb-label">{{item?.label}}</span>
         <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911" title="{{item?.hint}}"><i></i></span>
