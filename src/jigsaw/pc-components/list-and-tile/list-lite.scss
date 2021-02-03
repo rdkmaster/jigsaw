@@ -17,6 +17,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
             border: none;
         }
     }
+
     .#{$list-option-prefix-cls}-wrapper {
         font-size: 0;
     }
@@ -24,7 +25,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         display: none;
     }
     &-text {
-        @include line-ellipsis(100%);
         font-size: $font-size-base;
     }
     &-error {
