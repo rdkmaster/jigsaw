@@ -236,7 +236,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
                     };
                 } else {
                     right.badge = {
-                        left: `calc( 100% + ${differ + this.jigsawBadgeHorizontalOffset}px)`,
+                        left: `calc( 100% - ${differ + this.jigsawBadgeHorizontalOffset}px)`,
                         top: `calc(50% - ${differ}px)`
                     };
                 }
