@@ -5,23 +5,24 @@
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
     <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
-                 [icon]="'fa fa-edit'" [iconSize]="100"
-                 title="编辑" jigsawBadgeSize="normal">
+                 jigsawBadgeSize="normal" jigsawBadgeStatus="critical"
+                 [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
     </jigsaw-icon>
 
     <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-                 [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'" (jigsawBadgeClick)="select($event)"
-                 jigsawBadgeTitle="aaasds" title="编辑" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true">
+                 [jigsawBadgeStyle]="'solid'" jigsawBadgeStatus="success" (jigsawBadgeClick)="select($event)"
+                 jigsawBadgeTitle="aaasds" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true"
+                 title="编辑" [icon]="'fa fa-edit'" [iconSize]="100">
     </jigsaw-icon>
 
     <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-                 [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'"
-                 title="编辑" jigsawBadgeSize="normal">
+                 [jigsawBadgeStyle]="'none'" jigsawBadgeStatus="warn" jigsawBadgeSize="normal"
+                 [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
     </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-                 [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'"
-                 title="编辑" jigsawBadgeSize="large">
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'iconfont iconfont-e8f5'" jigsawBadgePosition="right"
+                 jigsawBadgeMaxValue="50" [jigsawBadgeStyle]="'none'" jigsawBadgeSize="large"
+                 [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
     </jigsaw-icon>
     <br>
     <br>
