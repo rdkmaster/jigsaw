@@ -8,7 +8,6 @@ import {
     EventEmitter,
     NgModule,
     OnDestroy,
-    Optional,
     QueryList,
     ChangeDetectionStrategy,
     ChangeDetectorRef
@@ -19,19 +18,21 @@ import {Subscription} from "rxjs";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 
+type CompoundedBreadcrumbData = string | BreadcrumbNode | (string | BreadcrumbNode)[];
+
 export type BreadcrumbRouteConfig = {
-    [url: string]: BreadcrumbNode | BreadcrumbGenerator;
+    [url: string]: string | BreadcrumbNode | BreadcrumbGenerator;
 }
 
 export type BreadcrumbNode = {
     /**
      * 单节点在面包屑中的显示文本
      */
-    label: string | BreadcrumbGenerator,
+    label: string,
     /**
      * 字体的class，支持@rdkmaster/icon-font符号图标
      */
-    icon?: string | BreadcrumbGenerator,
+    icon?: string,
     /**
      * 节点链接，一般不填的会自动生成
      */
@@ -43,7 +44,7 @@ export type BreadcrumbNode = {
     hint?: string;
 }
 
-export type BreadcrumbGenerator = (routeNode: string) => BreadcrumbNode | BreadcrumbNode[];
+export type BreadcrumbGenerator = (routeNode: string) => CompoundedBreadcrumbData;
 
 @Component({
     selector: "jigsaw-breadcrumb, j-breadcrumb",
@@ -139,14 +140,14 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     /**
      * @internal
      */
-    public _$getLabel(item: string | BreadcrumbNode) {
+    public _$getLabel(item: string | BreadcrumbNode): string {
         return typeof item === "string" ? item : item.label;
     }
 
-    private _generateBreadcrumb(url: string, data?: (string | BreadcrumbNode)[]): (string | BreadcrumbNode)[] {
-        data = data ? data : [];
+    private _generateBreadcrumb(url: string, nodes?: (string | BreadcrumbNode)[]): (string | BreadcrumbNode)[] {
+        nodes = nodes ? nodes : [];
         if (!url) {
-            return data;
+            return nodes;
         }
         let routeConfig = this.routesConfig.find(route => {
             let configUrl = Object.keys(route)[0];
@@ -159,29 +160,23 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
         });
         if (routeConfig) {
             const urlNode = url.slice(url.lastIndexOf("/") + 1);
-            let breadcrumbNodeTemp: any = routeConfig[Object.keys(routeConfig)[0]];
-            breadcrumbNodeTemp = typeof breadcrumbNodeTemp == "function" ? CommonUtils.safeInvokeCallback(this.generatorContext, breadcrumbNodeTemp, [decodeURIComponent(urlNode)]) : breadcrumbNodeTemp;
-            breadcrumbNodeTemp = breadcrumbNodeTemp instanceof Array ? breadcrumbNodeTemp : [breadcrumbNodeTemp];
-            breadcrumbNodeTemp.reverse().forEach((breadcrumbNode: BreadcrumbNode) => {
+            const config: BreadcrumbGenerator | CompoundedBreadcrumbData = routeConfig[Object.keys(routeConfig)[0]];
+            const tempData: CompoundedBreadcrumbData = typeof config == "function" ?
+                CommonUtils.safeInvokeCallback(this.generatorContext, config, [decodeURIComponent(urlNode)]) : config;
+            const tempNodes: (string | BreadcrumbNode)[] = tempData instanceof Array ? tempData : [tempData];
+            tempNodes.reverse().forEach((breadcrumbNode: string | BreadcrumbNode) => {
                 // 拷贝一份，保证原数据不变
-                breadcrumbNode = Object.assign({}, breadcrumbNode);
-                breadcrumbNode.routeLink = breadcrumbNode.routeLink ? breadcrumbNode.routeLink : decodeURI(url);
-                data.unshift(breadcrumbNode);
+                const node: BreadcrumbNode = typeof breadcrumbNode === 'string' ? {label: breadcrumbNode} : Object.assign({}, breadcrumbNode);
+                node.routeLink = node.routeLink ? node.routeLink : decodeURI(url);
+                nodes.unshift(node);
             });
         }
 
-        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf("/") == -1 ? 0 : url.lastIndexOf("/")), data);
+        return this._generateBreadcrumb(url.slice(0, url.lastIndexOf("/") == -1 ? 0 : url.lastIndexOf("/")), nodes);
     }
 
     @Output()
     public select: EventEmitter<string | BreadcrumbNode> = new EventEmitter<string | BreadcrumbNode>();
-
-    /**
-     * @internal
-     */
-    public _$itemSelect(item: string | BreadcrumbNode) {
-        this.select.emit(item);
-    }
 
     ngAfterContentInit() {
         if (this._items) {
@@ -221,12 +216,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     selector: 'jigsaw-breadcrumb-item, j-breadcrumb-item',
     template: `
         <ng-content></ng-content>
-        <span 
-            class="jigsaw-breadcrumb-separator" 
+        <span
+            class="jigsaw-breadcrumb-separator"
             *ngIf="!isLast && (separatorType === 'text')">{{separator}}
         </span>
-        <span 
-            class="jigsaw-breadcrumb-separator" 
+        <span
+            class="jigsaw-breadcrumb-separator"
             *ngIf="!isLast && (separatorType === 'icon')">
             <i class="{{separator}}"></i>
         </span>
