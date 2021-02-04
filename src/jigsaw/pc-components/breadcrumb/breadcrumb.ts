@@ -130,25 +130,17 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     @ContentChildren(forwardRef(() => JigsawBreadcrumbItem))
     private _items: QueryList<JigsawBreadcrumbItem>;
 
-    private _data: (string | BreadcrumbNode)[] = [];
-
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): (string | BreadcrumbNode)[] {
-        return this._data;
-    }
+    public data: (string | BreadcrumbNode)[] = [];
 
-    public set data(value: (string | BreadcrumbNode)[]) {
-        value.map((item, i) => {
-            if (typeof item == "string") {
-                value[i] = {
-                    label: item
-                };
-            }
-        });
-        this._data = value;
+    /**
+     * @internal
+     */
+    public _$isString(item: string | BreadcrumbNode) {
+        return typeof item === "string";
     }
 
     private _generateBreadcrumb(url: string, data?: (string | BreadcrumbNode)[]): (string | BreadcrumbNode)[] {
@@ -182,12 +174,12 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     }
 
     @Output()
-    public select: EventEmitter<BreadcrumbNode> = new EventEmitter<BreadcrumbNode>();
+    public select: EventEmitter<string | BreadcrumbNode> = new EventEmitter<string | BreadcrumbNode>();
 
     /**
      * @internal
      */
-    public _$itemSelect(item: BreadcrumbNode) {
+    public _$itemSelect(item: string | BreadcrumbNode) {
         this.select.emit(item);
     }
 

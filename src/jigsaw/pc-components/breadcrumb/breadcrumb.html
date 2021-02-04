@@ -5,10 +5,9 @@
     <a *ngIf="!(len > foldThreshold && i == 1)"
         class="jigsaw-breadcrumb-link"
         [routerLink]="item?.routeLink"
-        (click)="_$itemSelect(item)"
-        >
+        (click)="_$itemSelect(item)">
         <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
-        <span class="jigsaw-breadcrumb-label">{{item?.label}}</span>
+        <span class="jigsaw-breadcrumb-label">{{_$isString(item) ? item : item?.label}}</span>
         <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911" title="{{item?.hint}}"><i></i></span>
     </a>
     <a class="jigsaw-breadcrumb-link" *ngIf="len > foldThreshold && i == 1">
