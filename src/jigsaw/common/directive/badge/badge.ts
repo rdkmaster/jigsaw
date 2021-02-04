@@ -1,20 +1,24 @@
-import {
-    Directive,
-    ElementRef,
-    Input,
-    Output,
-    NgZone,
-    EventEmitter
-} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
 
-type Position = {left?: string, right?: string, top?: string, bottom?: string};
+type Style = {
+    left?: string | number,
+    right?: string | number,
+    top?: string | number,
+    bottom?: string | number,
+    width?: string,
+    height?: string,
+};
+type Position = { host: Style, badge?: Style };
 
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
-export class JigsawBadgeDirective extends AbstractJigsawViewBase {
+export class JigsawBadgeDirective extends AbstractJigsawViewBase implements AfterViewInit {
+    private _badge: HTMLElement;
+
+    private _jigsawBadgeValue: string | number | 'dot';
 
     /**
      * @NoMarkForCheckRequired
@@ -30,14 +34,6 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
             this._addBadge();
         }
     }
-
-    private _jigsawBadgeValue: string | number | 'dot';
-
-    constructor(private _elementRef: ElementRef, protected _zone: NgZone) {
-        super();
-    }
-
-    private _badge: HTMLElement;
 
     /**
      * @NoMarkForCheckRequired
@@ -79,13 +75,13 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeTitle: string
+    public jigsawBadgeTitle: string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgePointerCursor: boolean
+    public jigsawBadgePointerCursor: boolean;
 
     /**
      * @NoMarkForCheckRequired
@@ -96,7 +92,15 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
 
-    private _addBadge() {
+    constructor(private _elementRef: ElementRef, protected _zone: NgZone, private _render: Renderer2) {
+        super();
+    }
+
+    ngAfterViewInit(): void {
+        this._addBadge();
+    }
+
+    private _addBadge(): void {
         if (!this.initialized) {
             return;
         }
@@ -104,17 +108,25 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
             this._elementRef.nativeElement.removeChild(this._badge);
             this._badge = null;
         }
+        this._setHostStyle();
 
         this._badge = window.document.createElement('div');
-        if (!this._elementRef.nativeElement.style.position) {
-            this._elementRef.nativeElement.style.position = "relative";
-        }
         this._badge.classList.add("jigsaw-badge-host");
         const realBadge = this._getRealBadge();
         const classPre = this.jigsawBadgeValue == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
-        const position = this._calPosition();
-        const positionStr = `left:${position.left}; top:${position.top}; right:${position.right}; bottom:${position.bottom}`;
-        const title = this.jigsawBadgeTitle? this.jigsawBadgeTitle : '';
+
+        const position: Position = this._calPosition();
+        // 设置徽标顶层元素的位置和尺寸
+        this._render.setStyle(this._badge, 'left', position.host.left);
+        this._render.setStyle(this._badge, 'right', position.host.right);
+        this._render.setStyle(this._badge, 'top', position.host.top);
+        this._render.setStyle(this._badge, 'bottom', position.host.bottom);
+        this._render.setStyle(this._badge, 'width', position.host.width);
+        this._render.setStyle(this._badge, 'height', position.host.height);
+        // 徽标自身的位置
+        const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
+
+        const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
         this._badge.innerHTML = this.jigsawBadgeValue == 'dot' ?
             `<div style="${positionStr}" title="${title}"></div>` :
             `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr};white-space: nowrap" title="${title}">${realBadge}</div>`;
@@ -148,7 +160,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
 
         if (this.jigsawBadgePointerCursor) {
             this._badge.children[0].classList.add(`jigsaw-badge-cursor`);
-        }else{
+        } else {
             this._badge.children[0].classList.add(`jigsaw-badge-cursor-default`);
         }
         this._badge.children[0].addEventListener('click', () => {
@@ -157,9 +169,15 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
     }
 
-
-    ngAfterViewInit() {
-        this._addBadge();
+    // 设置宿主的样式，徽标本身采用absolute布局，所以需要考虑宿主的position和overflow
+    private _setHostStyle(): void {
+        const hostStyle = getComputedStyle(this._elementRef.nativeElement);
+        if (["absolute", "relative", "fixed", "sticky"].findIndex(item => item == hostStyle.position) == -1) {
+            this._elementRef.nativeElement.style.position = "relative";
+        }
+        if (hostStyle.overflow == 'hidden' || hostStyle.overflow == 'scroll') {
+            this._elementRef.nativeElement.style.overflow = "visible";
+        }
     }
 
     private _getRealBadge(): string {
@@ -182,37 +200,57 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         const differ = this._getDiffer();
         switch (this.jigsawBadgePosition) {
             case "left":
+                const left: Position = {
+                    host: {left: 0, top: `50%`}
+                };
                 if (this.jigsawBadgeValue == 'dot') {
-                    return {
+                    left.badge = {
                         left: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`,
                         top: `calc(50% - ${differ}px)`
-                    };
+                    }
                 } else {
-                    return {
+                    left.badge = {
                         right: `calc( 100% - ${this.jigsawBadgeHorizontalOffset}px )`,
                         top: `calc( 50% - ${differ}px )`
-                    };
+                    }
                 }
+                return left;
             case "leftBottom":
-                return {left: `${-differ}px`, top: `calc( 100% - ${differ}px)`};
+                return {
+                    host: {left: 0, top: '100%'},
+                    badge: {left: `${-differ}px`, top: `calc( 100% - ${differ}px)`}
+                };
             case "leftTop":
-                return {left: `${-differ}px`, top: `${-differ}px`};
+                return {
+                    host: {left: 0, top: 0},
+                    badge: {left: `${-differ}px`, top: `${-differ}px`}
+                };
             case "right":
+                const right: Position = {
+                    host: {right: 0, top: `50%`}
+                };
                 if (this.jigsawBadgeValue == 'dot') {
-                    return {
+                    right.badge = {
                         right: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`,
                         top: `calc(50% - ${differ}px)`
                     };
                 } else {
-                    return {
+                    right.badge = {
                         left: `calc( 100% + ${differ + this.jigsawBadgeHorizontalOffset}px)`,
                         top: `calc(50% - ${differ}px)`
                     };
                 }
+                return right;
             case "rightBottom":
-                return {right: `${-differ}px`, top: `calc( 100% - ${differ}px)`};
+                return {
+                    host: {right: 0, top: '100%'},
+                    badge: {right: `${-differ}px`, top: `calc( 100% - ${differ}px)`}
+                };
             case "rightTop":
-                return {right: `${-differ}px`, top: `${-differ}px`};
+                return {
+                    host: {right: 0, top: 0},
+                    badge: {right: `${-differ}px`, top: `${-differ}px`}
+                };
         }
     }
 
@@ -221,88 +259,108 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase {
         switch (this.jigsawBadgePosition) {
             case "left":
                 return {
-                    left: `calc(15% - ${differ}px)`,
-                    top: `calc(50% - ${differ}px)`
+                    host: {left: 0, top: 0, width: '30%', height: '100%'},
+                    badge: {
+                        left: `calc(50% - ${differ}px)`,
+                        top: `calc(50% - ${differ}px)`
+                    }
                 };
             case "leftBottom":
+                const leftBottom: Position = {
+                    host: {left: 0, top: '100%'}
+                };
                 if (this.jigsawBadgeValue == 'dot') {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: `calc( 100% - ${2 * differ + 5}px)`, left: "5px"};
+                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 5}px)`, left: "5px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: `calc( 100% - ${2 * differ + 4}px)`, left: "4px"};
+                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 4}px)`, left: "4px"};
                     } else {
-                        return {top: `calc( 100% - ${2 * differ + 3}px)`, left: "3px"};
+                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 3}px)`, left: "3px"};
                     }
                 } else {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: `calc( 100% - ${2 * differ + 7}px)`, left: "7px"};
+                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 7}px)`, left: "7px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: `calc( 100% - ${2 * differ + 5}px)`, left: "5px"};
+                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 5}px)`, left: "5px"};
                     } else {
-                        return {top: `calc( 100% - ${2 * differ + 3}px)`, left: "3px"};
+                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 3}px)`, left: "3px"};
                     }
                 }
-
+                return leftBottom;
             case "leftTop":
+                const leftTop: Position = {
+                    host: {left: 0, top: 0}
+                };
                 if (this.jigsawBadgeValue == 'dot') {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: "5px", left: "5px"};
+                        leftTop.badge = {top: "5px", left: "5px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: "4px", left: "4px"};
+                        leftTop.badge = {top: "4px", left: "4px"};
                     } else {
-                        return {top: "3px", left: "3px"};
+                        leftTop.badge = {top: "3px", left: "3px"};
                     }
                 } else {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: "7px", left: "7px"};
+                        leftTop.badge = {top: "7px", left: "7px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: "5px", left: "5px"};
+                        leftTop.badge = {top: "5px", left: "5px"};
                     } else {
-                        return {top: "3px", left: "3px"};
+                        leftTop.badge = {top: "3px", left: "3px"};
                     }
                 }
+                return leftTop;
             case "right":
                 return {
-                    right: `calc(15% - ${differ}px)`,
-                    top: `calc(50% - ${differ}px)`
+                    host: {right: 0, top: 0, width: '30%', height: '100%'},
+                    badge: {
+                        right: `calc(50% - ${differ}px)`,
+                        top: `calc(50% - ${differ}px)`
+                    }
                 };
             case "rightBottom":
+                const rightBottom: Position = {
+                    host: {right: 0, top: '100%'}
+                };
                 if (this.jigsawBadgeValue == 'dot') {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: `calc( 100% - ${2 * differ + 5}px)`, right: "5px"};
+                        rightBottom.badge = {top: `calc( 100% - ${2 * differ + 5}px)`, right: "5px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: `calc( 100% - ${2 * differ + 4}px)`, right: "4px"};
+                        rightBottom.badge = {top: `calc( 100% - ${2 * differ + 4}px)`, right: "4px"};
                     } else {
-                        return {top: `calc( 100% - ${2 * differ + 3}px)`, right: "3px"};
+                        rightBottom.badge = {top: `calc( 100% - ${2 * differ + 3}px)`, right: "3px"};
                     }
                 } else {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: `calc( 100% - ${2 * differ + 7}px)`, right: "7px"};
+                        rightBottom.badge = {top: `calc( 100% - ${2 * differ + 7}px)`, right: "7px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: `calc( 100% - ${2 * differ + 5}px)`, right: "5px"};
+                        rightBottom.badge = {top: `calc( 100% - ${2 * differ + 5}px)`, right: "5px"};
                     } else {
-                        return {top: `calc( 100% - ${2 * differ + 3}px)`, right: "3px"};
+                        rightBottom.badge = {top: `calc( 100% - ${2 * differ + 3}px)`, right: "3px"};
                     }
                 }
-
+                return rightBottom;
             case "rightTop":
+                const rightTop: Position = {
+                    host: {right: 0, top: 0}
+                };
                 if (this.jigsawBadgeValue == 'dot') {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: "5px", right: "5px"};
+                        rightTop.badge = {top: "5px", right: "5px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: "4px", right: "4px"};
+                        rightTop.badge = {top: "4px", right: "4px"};
                     } else {
-                        return {top: "3px", right: "3px"};
+                        rightTop.badge = {top: "3px", right: "3px"};
                     }
                 } else {
                     if (this.jigsawBadgeSize == "large") {
-                        return {top: "7px", right: "7px"};
+                        rightTop.badge = {top: "7px", right: "7px"};
                     } else if (this.jigsawBadgeSize == "normal") {
-                        return {top: "5px", right: "5px"};
+                        rightTop.badge = {top: "5px", right: "5px"};
                     } else {
-                        return {top: "3px", right: "3px"};
+                        rightTop.badge = {top: "3px", right: "3px"};
                     }
                 }
+                return rightTop;
         }
     }
 
