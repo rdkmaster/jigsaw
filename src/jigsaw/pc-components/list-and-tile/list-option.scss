@@ -2,11 +2,13 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
 .#{$list-option-prefix-cls} {
     display: block;
-    padding: 5px 8px;
+    position: relative;
+    width: 100%;
     min-height: $height-base;
+    padding: 5px 8px;
     cursor: pointer;
     box-sizing: border-box;
-    position: relative;
+
     &:hover {
         background: $brand-light;
     }
@@ -25,10 +27,22 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     &-title {
         float: left;
         color: $font-color-heading;
+        width: 100%;
+        p {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
     }
     &-sub-title {
         float: right;
         color: $font-color-hint;
+        width: 100%;
+        p {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
     }
     &-block {
         position: absolute;
