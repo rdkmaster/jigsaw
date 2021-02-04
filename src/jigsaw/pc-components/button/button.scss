@@ -20,12 +20,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     text-align: center;
     user-select: none;
     cursor: pointer;
-    &:before {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-    }
+
     &:hover {
         color: $brand-hover;
         border-color: $brand-default;
@@ -39,6 +34,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &#{&}-clicked:after {
         content: "";
+        display: block;
         position: absolute;
         top: -1px;
         left: -1px;
@@ -48,7 +44,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         border: 1px solid $brand-active;
         opacity: 0.4;
         @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
-        display: block;
     }
 
     &-content {
@@ -122,7 +117,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &#{&}-disabled {
         pointer-events: none;
         cursor: default;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
         background-color: $disabled-bg;
         border-color: $border-color-base;
     }
