@@ -139,8 +139,8 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
     /**
      * @internal
      */
-    public _$isString(item: string | BreadcrumbNode) {
-        return typeof item === "string";
+    public _$getLabel(item: string | BreadcrumbNode) {
+        return typeof item === "string" ? item : item.label;
     }
 
     private _generateBreadcrumb(url: string, data?: (string | BreadcrumbNode)[]): (string | BreadcrumbNode)[] {
