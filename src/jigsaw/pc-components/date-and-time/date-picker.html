@@ -7,9 +7,9 @@
     <div class="jigsaw-date-picker-control">
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar iconfont iconfont-e143"
            (click)="_$handleCtrlBar(-1)"></i>
-        <span *ngIf="_$selectMode == 'day'"  class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
-        <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
-        <span *ngIf="_$selectMode == 'year'">{{_$rangeYear}}</span>
+           <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
+           <span *ngIf="_$selectMode == 'year'">{{_$rangeYear}}</span>
+           <span *ngIf="_$selectMode == 'day'"  class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
         <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar iconfont iconfont-e144"
            (click)="_$handleCtrlBar(1)"></i>
     </div>

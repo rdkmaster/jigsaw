@@ -8,14 +8,20 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
     height: 100%;
     border-radius: $border-radius-sm;
     background: $bg-component;
-    box-shadow: $box-shadow-lv2;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
     overflow: hidden;
     user-select: none;
 
     &-header {
-        height: $height-base;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: $height-huge;
         background: $bg-container;
-        padding: 0 14px;
     }
 
     &-gr-switch {
@@ -54,32 +60,25 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
     }
 
     &-control {
-        height: $height-base;
-        line-height: $height-base;
         position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: $height-base;
+        padding: 0 14px;
+        line-height: $height-base;
         font-size: $font-size-base;
-        text-align: center;
 
         .#{$date-prefix-cls}-control-bar {
-            position: absolute;
-            top: 50%;
-            @include prefixer(transform, translateY(-50%));
-            cursor: pointer;
+
             font-size: 20px;
             color: $text-color-secondary;
-            padding: 4px;
+            cursor: pointer;
 
             &:hover {
                 color: $primary-5;
             }
-        }
-
-        .#{$date-prefix-cls}-previous-bar {
-            left: -4px;
-        }
-
-        .#{$date-prefix-cls}-next-bar {
-            right: -4px;
         }
 
         &-month,
@@ -200,11 +199,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 span,
                 span:hover {
                     background: none !important;
-                    @include compatible(
-                        color,
-                        $disabled-color,
-                        $disabled-color-ie11
-                    );
                     cursor: not-allowed;
                 }
                 &.#{$date-prefix-cls}-content-day-cell-selected {
@@ -303,11 +297,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 span,
                 span:hover {
                     background: none;
-                    @include compatible(
-                        color,
-                        $disabled-color,
-                        $disabled-color-ie11
-                    );
                     cursor: not-allowed;
                 }
             }
