@@ -9,17 +9,17 @@
                  title="编辑" jigsawBadgeSize="normal">
     </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="rightBottom" jigsawBadgeMaxValue="50"
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
                  [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'" (jigsawBadgeClick)="select($event)"
                  jigsawBadgeTitle="aaasds" title="编辑" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true">
     </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="rightBottom" jigsawBadgeMaxValue="50"
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
                  [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'"
                  title="编辑" jigsawBadgeSize="normal">
     </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="rightBottom" jigsawBadgeMaxValue="50"
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
                  [icon]="'fa fa-edit'" [iconSize]="100" [jigsawBadgeStyle]="'solid'"
                  title="编辑" jigsawBadgeSize="large">
     </jigsaw-icon>
@@ -29,31 +29,41 @@
     <br>
 
     <jigsaw-button jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">确定</jigsaw-button>
+    <br><br>
+    <jigsaw-button jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop">确定</jigsaw-button>
     <br>
     <br>
     <br>
     <br>
 
     <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"></jigsaw-switch>
-
+    <br><br>
+    <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop"></jigsaw-switch>
     <br>
     <br>
     <br>
     <br>
 
     <jigsaw-input jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"></jigsaw-input>
+    <br><br>
+    <jigsaw-input jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop"></jigsaw-input>
     <br>
     <br>
     <br>
     <br>
 
     <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
+    <br><br>
+    <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
     <br>
     <br>
     <br>
     <br>
 
     <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
+                       [data]="cities"></jigsaw-button-bar>
+    <br><br>
+    <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop"
                        [data]="cities"></jigsaw-button-bar>
     <br>
     <br>
@@ -62,11 +72,17 @@
 
     <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                         [data]="cities"></jigsaw-radios-lite>
+    <br><br>
+    <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                        [data]="cities"></jigsaw-radios-lite>
     <br>
     <br>
     <br>
     <br>
 
     <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="'dot'"
+                      jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+    <br><br>
+    <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="'Nice'"
                       jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
 </div>
