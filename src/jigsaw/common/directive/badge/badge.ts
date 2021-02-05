@@ -129,10 +129,13 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
         this._badge.innerHTML = this.jigsawBadgeValue == 'dot' ?
             `<div style="${positionStr}" title="${title}"></div>` :
-            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr};white-space: nowrap" title="${title}">${realBadge}</div>`;
+            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center;" title="${title}">${realBadge}</div>`;
         this._badge.children[0].classList.add(classPre);
         this._badge.children[0].classList.add(`${classPre}-size-${this.jigsawBadgeSize}`);
-        const solid = this.jigsawBadgeStyle == 'solid' && this.jigsawBadgeValue != 'dot' ? "-solid" : "";
+        let badgeStyle = '-dot';
+        if (this.jigsawBadgeValue != 'dot') {
+            badgeStyle = this.jigsawBadgeStyle == 'none' ? '' : `-${this.jigsawBadgeStyle}`;
+        }
         if (this.jigsawBadgeMask != "none") {
             this._badge.innerHTML += `<div></div>`;
             const classMaskPre = "jigsaw-badge-mask";
@@ -155,7 +158,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
                 this._badge.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
             }
         } else {
-            this._badge.children[0].classList.add(`jigsaw-badge${solid}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
+            this._badge.children[0].classList.add(`jigsaw-badge${badgeStyle}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
         }
 
         if (this.jigsawBadgePointerCursor) {

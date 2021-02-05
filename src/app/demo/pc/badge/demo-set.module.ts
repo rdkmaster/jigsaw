@@ -14,6 +14,8 @@ import {BadgePositionDemoModule} from "./position/demo.module";
 import {BadgeStatusDemoModule} from "./status/demo.module";
 import {BadgeMoveDemoComponent} from "./move/demo.component";
 import {BadgeMoveDemoModule} from "./move/demo.module";
+import {BadgeStyleDemoComponent} from "./style/demo.component";
+import {BadgeStyleDemoModule} from "./style/demo.module";
 
 export const routerConfig = [
     {path: 'basic', component: BadgeBasicDemoComponent},
@@ -23,13 +25,13 @@ export const routerConfig = [
     {path: 'size', component: BadgeSizeDemoComponent},
     {path: 'status', component: BadgeStatusDemoComponent},
     {path: 'move', component: BadgeMoveDemoComponent},
-
+    {path: 'style', component: BadgeStyleDemoComponent},
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), BadgeBasicDemoModule, BadgeSizeDemoModule, BadgeMaskDemoModule,
-        BadgeMaxValueDemoModule, BadgePositionDemoModule, BadgeStatusDemoModule, BadgeMoveDemoModule
+        BadgeMaxValueDemoModule, BadgePositionDemoModule, BadgeStatusDemoModule, BadgeMoveDemoModule, BadgeStyleDemoModule
     ]
 })
 export class BadgeDemoModule {

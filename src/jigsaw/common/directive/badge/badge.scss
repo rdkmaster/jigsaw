@@ -1,7 +1,6 @@
 $badge-prefix-cls: #{$jigsaw-prefix}-badge;
 
 .#{$badge-prefix-cls} {
-    color: #ffffff;
     text-align: center;
     position: absolute;
     width: auto;
@@ -32,8 +31,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     align-items: center;
     border-radius: 24px;
     border-width: 2px !important;
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .#{$badge-prefix-cls}-size-normal {
@@ -42,7 +40,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     align-items: center;
     border-radius: 20px;
     border-width: 2px !important;
-    font-weight: bold;
+    font-size: 14px;
 }
 
 .#{$badge-prefix-cls}-size-small {
@@ -54,40 +52,77 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
 }
 
 .#{$badge-prefix-cls}-normal {
-    background-color: $primary-color;
+    background: transparent;
+    color: $primary-color;
 }
 
 .#{$badge-prefix-cls}-warn {
-    background-color: $warning-color;
-}
-
-.#{$badge-prefix-cls}-error {
-    background-color: $error-color;
+    color: $warning-color;
 }
 
 .#{$badge-prefix-cls}-success {
+    color: $success-color;
+}
+
+.#{$badge-prefix-cls}-error {
+    color: $error-color;
+}
+
+.#{$badge-prefix-cls}-dot-normal {
+    background-color: $primary-color;
+}
+
+.#{$badge-prefix-cls}-dot-warn {
+    background-color: $warning-color;
+}
+
+.#{$badge-prefix-cls}-dot-error {
+    background-color: $error-color;
+}
+
+.#{$badge-prefix-cls}-dot-success {
     background-color: $success-color;
 }
 
 .#{$badge-prefix-cls}-solid-normal {
+    color: $default-color;
+    background-color: $primary-color;
+}
+
+.#{$badge-prefix-cls}-solid-warn {
+    color: $default-color;
+    background-color: $warning-color;
+}
+
+.#{$badge-prefix-cls}-solid-error {
+    color: $default-color;
+    background-color: $error-color;
+}
+
+.#{$badge-prefix-cls}-solid-success {
+    color: $default-color;
+    background-color: $success-color;
+}
+
+.#{$badge-prefix-cls}-border-normal {
     background: transparent;
     color: $primary-color;
     border: 1px solid $primary-color;
 }
 
-.#{$badge-prefix-cls}-solid-warn {
+.#{$badge-prefix-cls}-border-warn {
     background: transparent;
     color: $warning-color;
     border: 1px solid $warning-color;
 }
 
-.#{$badge-prefix-cls}-solid-success {
+.#{$badge-prefix-cls}-border-success {
     background: transparent;
     color: $success-color;
     border: 1px solid $success-color;
 }
 
-.#{$badge-prefix-cls}-solid-error {
+.#{$badge-prefix-cls}-border-error {
     background: transparent;
     color: $error-color;
     border: 1px solid $error-color;;
@@ -129,20 +164,16 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     border-color: rgba(255, 255, 255, 0.6);
 }
 
-.#{$badge-prefix-cls}-font-light {
-    color: #333;
-}
-
 .#{$badge-prefix-cls}-mask-background-light {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
 .#{$badge-prefix-cls}-mask-dark {
-    border-color: rgba(0, 0, 0, 0.3);
+    border-color: $shadow-color;
 }
 
 .#{$badge-prefix-cls}-mask-background-dark {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: $shadow-color;
 }
 
 .#{$badge-prefix-cls}-mask-dot-small {
