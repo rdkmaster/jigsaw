@@ -17,8 +17,10 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     border-color: $border-color-default;
     color: $brand-default;
     font-size: $font-size-base;
-    text-align: center;
     user-select: none;
+    box-sizing: border-box;
+    line-height: $height-base;
+    vertical-align: top;
     cursor: pointer;
 
     &:hover {
@@ -52,9 +54,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &-icon {
-        @include inline-block();
         img {
-            vertical-align: top;
             height: 20px;
         }
     }
