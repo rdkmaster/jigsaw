@@ -42,6 +42,7 @@ export class RangeDateTimeSelectComponent {
 
     date5 = {beginDate: 'now-1M', endDate: 'now'};
     weekStart = ['mon'];
+    janX = [4];
 
     date6;
     gr6;

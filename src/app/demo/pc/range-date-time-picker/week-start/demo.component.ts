@@ -25,6 +25,7 @@ export class RangeDateTimeWeekStartComponent {
     endDate = "now";
 
     weekStart = ['mon'];
+    janX = [4];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
