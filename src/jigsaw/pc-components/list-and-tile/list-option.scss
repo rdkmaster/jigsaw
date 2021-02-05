@@ -24,26 +24,19 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     &-title-box {
         @include clearfix();
     }
+
     &-title {
         float: left;
         color: $font-color-heading;
         width: 100%;
-        p {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
     }
+
     &-sub-title {
         float: right;
         color: $font-color-hint;
         width: 100%;
-        p {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
     }
+    
     &-block {
         position: absolute;
         top: 0;

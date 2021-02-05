@@ -24,9 +24,25 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     .#{$list-option-prefix-cls}-block {
         display: none;
     }
+
     &-text {
+        display: flex;
+        align-items: center;
         font-size: $font-size-base;
+
+        .jigsaw-list-lite-text-content {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .iconfont {
+            display: inline-flex;
+            justify-self: center;
+            align-items: center;
+        }
     }
+
     &-error {
         border-color: $error-default;
     }

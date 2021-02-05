@@ -39,7 +39,8 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
                                [disabled]="item?.disabled">
                     <p j-title class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
-                        {{item && item[labelField] ? item[labelField] : item}}</p>
+                        <span class="jigsaw-list-lite-text-content">{{item && item[labelField] ? item[labelField] : item}}</span>
+                    </p>
                     <span j-sub-title *ngIf="item?.suffixIcon" class="{{item?.suffixIcon}}" style="font-size:12px; margin-top:3px"></span>
                 </j-list-option>
             </j-list>
