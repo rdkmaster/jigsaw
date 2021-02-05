@@ -236,7 +236,7 @@ export const routerConfig = [
         path: "draggable-table", component: TableDraggableDemoComponent
     },
     {
-        path: "update-columnDefines", component: TableUpdateColumnDefinesDemoComponent
+        path: "update-column-defines", component: TableUpdateColumnDefinesDemoComponent
     }
 ];
 
