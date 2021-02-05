@@ -93,8 +93,8 @@ import {TreeTableDemoComponent} from "./tree-table/demo.component";
 import {TreeTableDemoModule} from "./tree-table/demo.module";
 import {TableCellEditablePropertyDemoComponent} from "./cell-editable-property/demo.component";
 import {TableCellEditablePropertyDemoModule} from "./cell-editable-property/demo.module";
-import {TableUpdateColumnDefinesDemoModule} from "./update-columnDefines/demo.module";
-import {TableUpdateColumnDefinesDemoComponent} from "./update-columnDefines/demo.component";
+import {TableUpdateColumnDefinesDemoModule} from "./update-column-defines/demo.module";
+import {TableUpdateColumnDefinesDemoComponent} from "./update-column-defines/demo.component";
 
 export const routerConfig = [
     {
