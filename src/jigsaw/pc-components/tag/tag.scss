@@ -16,6 +16,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     color: $font-color-tag;
     background: $bg-gray;
     box-sizing: border-box;
+    user-select: none;
     cursor: pointer;
 
     &.#{$tag-prefix-cls}-color {
@@ -90,6 +91,14 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
     &.#{$tag-prefix-cls}-closable {
         padding-right: 20px;
+    }
+
+    &.#{$tag-prefix-cls}-selected {
+        -webkit-filter: saturate(90%) brightness(95%);
+        -moz-filter: saturate(90%) brightness(95%);
+        -o-filter: saturate(90%) brightness(95%);
+        -ms-filter: saturate(90%) brightness(95%);
+        filter: saturate(90%) brightness(95%);
     }
 
     &.#{$tag-prefix-cls}-add {

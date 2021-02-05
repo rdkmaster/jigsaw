@@ -41,6 +41,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-tag-preset-gray]': 'preset == "gray"',
         '[class.jigsaw-tag-size-med]': 'size == "medium"',
         '[class.jigsaw-tag-size-sm]': 'size == "small"',
+        '[class.jigsaw-tag-selected]': 'isSelected',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
     },
@@ -61,7 +62,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public size: string = "medium";
+    public size: "small" | "medium";
 
     /**
      * @NoMarkForCheckRequired
@@ -74,6 +75,12 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      */
     @Input()
     public disabled:boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public isSelected: boolean = false;
 
     /**
      * @NoMarkForCheckRequired
@@ -137,7 +144,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public _$select(event) {
         event.preventDefault();
         event.stopPropagation();
-        this.select.emit(this);
+        this.isSelected  = !this.isSelected;
     }
 
     public show() {

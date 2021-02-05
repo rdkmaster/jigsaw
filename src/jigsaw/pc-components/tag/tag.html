@@ -1,3 +1,3 @@
 <span #text (click)="_$select($event)" [title]="text.innerText" *ngIf="!isAdd"><ng-content></ng-content></span>
-<span *ngIf="closable && showBorder" (click)="_$close($event)" class="jigsaw-tag-close-bar">&times;</span>
+<span *ngIf="closable && showBorder && !isAdd" (click)="_$close($event)" class="jigsaw-tag-close-bar">&times;</span>
 <span *ngIf="isAdd"><i class="iconfont iconfont-ea1d"></i></span>
