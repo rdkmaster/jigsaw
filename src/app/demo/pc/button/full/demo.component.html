@@ -50,8 +50,10 @@
 
         <div class="demo-6 live-demo live-demo-block">
             <h3>不可点击状态</h3>
-            <j-button [(disabled)]="disabled" (click)="changeClickCount()">click me</j-button>
-            <j-checkbox [(checked)]="disabled">disable/enable</j-checkbox>
+            <section class="align-center">
+                <j-button [(disabled)]="disabled" (click)="changeClickCount()">click me</j-button>
+                <j-checkbox [(checked)]="disabled">disable/enable</j-checkbox>
+            </section>
             <p class="message">点击次数<span>{{clickCount}}</span></p>
         </div>
     </div>
