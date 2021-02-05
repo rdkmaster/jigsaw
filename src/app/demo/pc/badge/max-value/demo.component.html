@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="count" [jigsawBadgeMaxValue]="99"
+                 [icon]="'fa fa-edit'" [iconSize]="100"
+                 title="编辑">
+    </jigsaw-icon>
+    <br>
+    <jigsaw-numeric-input [(value)]="count"></jigsaw-numeric-input>
+</div>
