@@ -43,11 +43,25 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
      */
     @Input()
     public field: string;
+
+    protected _customRenderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public renderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
+    public get renderer(): Type<TableCellRendererBase> | TemplateRef<any> | 'html' {
+        return this._customRenderer
+    }
+
+    public set renderer(value: Type<TableCellRendererBase> | TemplateRef<any> | 'html') {
+        if (this._customRenderer == value) {
+            return;
+        }
+        this._customRenderer = value;
+        if (this.rendererHost) {
+            this.rendererHost.viewContainerRef.clear();
+        }
+    }
 
     private _rendererInitData: any;
 
