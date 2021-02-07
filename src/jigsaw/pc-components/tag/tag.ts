@@ -69,13 +69,13 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public disabled:boolean = false;
+    public disabled: boolean = false;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public color: string | PresetColor;
+    public color: string | PresetColor = 'preset-gray';
 
     private _closable: boolean;
 
