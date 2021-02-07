@@ -90,7 +90,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         width: auto;
         min-width: 60px;
         margin: 0;
-        padding: 0;
+        padding: 0 8px;
         border-radius: 0;
 
         &:first-child {
@@ -111,6 +111,9 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
         & > p {
             margin-left: 3px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
     }
 

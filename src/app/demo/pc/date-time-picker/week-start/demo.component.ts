@@ -18,6 +18,7 @@ export class DateTimePickerWeekStartComponent {
     date = "now";
 
     weekStart = ['mon'];
+    janX = [4]
 
     dateChange($event) {
         console.log($event);

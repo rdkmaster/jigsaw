@@ -7,10 +7,20 @@ import {BreadcrumbRouterDemoModule} from "./router/demo.module";
 import {BreadcrumbRouterList} from "./router/list/list";
 import {BreadcrumbRouterDetail} from "./router/detail/detail";
 import {BreadcrumbRouterBuy} from "./router/buy/buy";
+import { BreadcrumbHintDemoComponent } from "./hints/demo.component";
+import { BreadcrumbHintDemoModule } from "./hints/demo.module"
+import { BreadcrumbFoldDemoComponent } from "./fold/demo.component";
+import { BreadcrumbFoldDemoModule } from "./fold/demo.module"
 
 export const routerConfig = [
     {
         path: 'basic', component: BreadcrumbBasicDemoComponent
+    },
+    {
+        path: 'hint', component: BreadcrumbHintDemoComponent
+    },
+    {
+        path: 'fold', component: BreadcrumbFoldDemoComponent
     },
     {
         path: 'router', component: BreadcrumbRouterDemoComponent,
@@ -32,6 +42,8 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         BreadcrumbBasicDemoModule,
+        BreadcrumbHintDemoModule,
+        BreadcrumbFoldDemoModule,
         BreadcrumbRouterDemoModule
     ]
 })
