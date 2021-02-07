@@ -55,6 +55,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &-icon {
         img {
+            vertical-align: top;
             height: 20px;
         }
     }
@@ -121,7 +122,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         border-color: $border-color-base;
     }
 }
-/* mark */
+
 a[#{$btn-prefix-cls}] {
     padding: 0 10px;
     outline: none;
