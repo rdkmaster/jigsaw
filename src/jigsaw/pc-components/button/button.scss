@@ -20,7 +20,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     user-select: none;
     box-sizing: border-box;
     line-height: $height-base;
-    vertical-align: top;
+    vertical-align: middle;
     cursor: pointer;
 
     &:hover {
