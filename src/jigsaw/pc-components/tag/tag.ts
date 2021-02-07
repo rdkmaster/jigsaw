@@ -16,6 +16,8 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'preset-magenta' |
+    'preset-orange' | 'preset-red' | 'preset-purple' | 'preset-gray';
 @Component({
     selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',
@@ -51,13 +53,6 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public preset: string = "gray";
-
     /**
      * @NoMarkForCheckRequired
      */
@@ -80,7 +75,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public color: string;
+    public color: string | PresetColor;
 
     private _closable: boolean;
 
