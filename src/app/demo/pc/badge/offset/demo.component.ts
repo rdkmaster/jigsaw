@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 export class BadgeOffsetDemoComponent {
     hOffset1 = 0;
     hOffset2 = -10;
-    goods = [
+    list = [
         'bicycle', 'camera', 'car', 'football', 'book', 'puzzle-piece',
     ];
 

@@ -46,12 +46,10 @@
     <br>
     <br>
 
-    <jigsaw-list width="250" trackItemBy="name">
+    <jigsaw-list width="250">
         <j-list-option *ngFor="let item of list" [value]="item">
             <div style="width: 140px" [jigsawBadgeValue]="item" jigsawBadgePosition="right" jigsawBadge
-                 [jigsawBadgeHorizontalOffset]=-10 [jigsawBadgeStyle]="'border'">{{item}}</div>
+                 [jigsawBadgeHorizontalOffset]="-10" [jigsawBadgeStyle]="'border'">{{item}}</div>
         </j-list-option>
     </jigsaw-list>
-
-
 </div>

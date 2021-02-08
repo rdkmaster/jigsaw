@@ -50,12 +50,10 @@
 
     <jigsaw-slider min="-30" max="30" [(value)]="hOffset2" width="300px"></jigsaw-slider>
     <br><br>
-    <jigsaw-list width="250" trackItemBy="name">
-        <j-list-option *ngFor="let item of goods" [value]="item">
+    <jigsaw-list width="250">
+        <j-list-option *ngFor="let item of list" [value]="item">
             <div style="width: 140px" jigsawBadge [jigsawBadgeValue]="item" jigsawBadgePosition="right"
                  [jigsawBadgeHorizontalOffset]="-hOffset2" [jigsawBadgeStyle]="'border'">{{item}}</div>
         </j-list-option>
     </jigsaw-list>
-
-
 </div>
