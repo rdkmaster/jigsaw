@@ -13,7 +13,8 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeBasicDemoComponent {
-    public visible = "visible";
+    public nice = "Nice";
+    public dot = "dot";
 
     public cities = [
         {label: "北京", id: 1},

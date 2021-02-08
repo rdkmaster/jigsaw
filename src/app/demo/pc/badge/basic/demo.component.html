@@ -28,38 +28,42 @@
     </div>
 
     <div style="margin:20px;">
-        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"></jigsaw-switch>
-        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
+        是否显示徽标：<jigsaw-switch [checked]="true" (checkedChange)="nice = $event ? 'Nice' : ''; dot = $event ? 'dot' : '';"></jigsaw-switch>
     </div>
 
     <div style="margin:20px;">
-        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"></jigsaw-input>
-        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
+        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-switch>
+        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
     </div>
 
     <div style="margin:20px;">
-        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
-        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
+        <jigsaw-input [(value)]="nice" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-input>
+        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
     </div>
 
     <div style="margin:20px;">
-        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
+        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
+        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
                            [data]="cities"></jigsaw-button-bar>
-        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                            [data]="cities"></jigsaw-button-bar>
     </div>
 
     <div style="margin:20px;">
-        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                             [data]="cities"></jigsaw-radios-lite>
-        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                             [data]="cities"></jigsaw-radios-lite>
     </div>
 
     <div style="margin:20px;">
-        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="'dot'"
+        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="dot"
                           jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
-        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgeSize="small"
+        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgeSize="small"
                           jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
     </div>
 </div>
