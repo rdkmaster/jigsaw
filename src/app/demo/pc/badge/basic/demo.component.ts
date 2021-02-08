@@ -6,15 +6,15 @@ import {Component} from '@angular/core';
         jigsaw-icon {
             margin-right: 50px;
         }
+        jigsaw-switch, jigsaw-input, jigsaw-checkbox, jigsaw-button-bar, jigsaw-radios-lite, jigsaw-tile-lite {
+            margin-right: 20px;
+        }
     `]
 })
 
 export class BadgeBasicDemoComponent {
-    public select($event) {
-        console.log($event);
-    }
-
-    public visible = "visible";
+    public nice = "Nice";
+    public dot = "dot";
 
     public cities = [
         {label: "北京", id: 1},

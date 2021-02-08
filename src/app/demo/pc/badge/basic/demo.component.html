@@ -4,86 +4,66 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
-                 jigsawBadgeSize="normal" jigsawBadgeStatus="critical"
-                 [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
-    </jigsaw-icon>
+    <div style="margin:20px;">
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
+                     jigsawBadgeSize="normal" jigsawBadgeStatus="critical"
+                     [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
+        </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-                 [jigsawBadgeStyle]="'solid'" jigsawBadgeStatus="success" (jigsawBadgeClick)="select($event)"
-                 jigsawBadgeTitle="aaasds" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true"
-                 title="编辑" [icon]="'fa fa-edit'" [iconSize]="100">
-    </jigsaw-icon>
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'solid'" jigsawBadgeStatus="success"
+                     jigsawBadgeTitle="aaasds" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true"
+                     title="编辑" [icon]="'fa fa-edit'" [iconSize]="100">
+        </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-                 [jigsawBadgeStyle]="'none'" jigsawBadgeStatus="warn" jigsawBadgeSize="normal"
-                 [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
-    </jigsaw-icon>
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'none'" jigsawBadgeStatus="warn" jigsawBadgeSize="normal"
+                     [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
+        </jigsaw-icon>
 
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'iconfont iconfont-e8f5'" jigsawBadgePosition="right"
-                 jigsawBadgeMaxValue="50" [jigsawBadgeStyle]="'none'" jigsawBadgeSize="large"
-                 [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
-    </jigsaw-icon>
-    <br>
-    <br>
-    <br>
-    <br>
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'iconfont iconfont-e8f5'" jigsawBadgePosition="right"
+                     jigsawBadgeMaxValue="50" [jigsawBadgeStyle]="'none'" jigsawBadgeSize="large"
+                     [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
+        </jigsaw-icon>
+    </div>
 
-    <jigsaw-button jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">确定</jigsaw-button>
-    <br><br>
-    <jigsaw-button jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">确定</jigsaw-button>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div style="margin:20px;">
+        是否显示徽标：<jigsaw-switch [checked]="true" (checkedChange)="nice = $event ? 'Nice' : ''; dot = $event ? 'dot' : '';"></jigsaw-switch>
+    </div>
 
-    <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"></jigsaw-switch>
-    <br><br>
-    <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div style="margin:20px;">
+        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-switch>
+        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
+    </div>
 
-    <jigsaw-input jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"></jigsaw-input>
-    <br><br>
-    <jigsaw-input jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div style="margin:20px;">
+        <jigsaw-input [(value)]="nice" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-input>
+        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
+    </div>
 
-    <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
-    <br><br>
-    <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div style="margin:20px;">
+        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
+        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
+    </div>
 
-    <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
-                       [data]="cities"></jigsaw-button-bar>
-    <br><br>
-    <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
-                       [data]="cities"></jigsaw-button-bar>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div style="margin:20px;">
+        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
+                           [data]="cities"></jigsaw-button-bar>
+        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                           [data]="cities"></jigsaw-button-bar>
+    </div>
 
-    <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
-                        [data]="cities"></jigsaw-radios-lite>
-    <br><br>
-    <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
-                        [data]="cities"></jigsaw-radios-lite>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div style="margin:20px;">
+        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                            [data]="cities"></jigsaw-radios-lite>
+        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                            [data]="cities"></jigsaw-radios-lite>
+    </div>
 
-    <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="'dot'"
-                      jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
-    <br><br>
-    <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="'Nice'" jigsawBadgeSize="small"
-                      jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+    <div style="margin:20px;">
+        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="dot"
+                          jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgeSize="small"
+                          jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+    </div>
 </div>

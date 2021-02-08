@@ -5,32 +5,8 @@ import {Component} from '@angular/core';
 })
 
 export class BadgePositionDemoComponent {
-
-    goodsList = [
-        {
-            logo: 'bicycle',
-            name: 'bicycle',
-        },
-        {
-            logo: 'camera',
-            name: 'camera',
-        },
-        {
-            logo: 'car',
-            name: 'car',
-        },
-        {
-            logo: 'futbol-o',
-            name: 'football',
-        },
-        {
-            logo: 'book',
-            name: 'book',
-        },
-        {
-            logo: 'puzzle-piece',
-            name: 'puzzle-piece',
-        }
+    list = [
+        'bicycle', 'camera', 'car', 'football', 'book', 'puzzle-piece',
     ];
 
     // ====================================================================
