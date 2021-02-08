@@ -5,6 +5,14 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeMaskDemoComponent {
+    public select($event) {
+        console.log('badge click: ', $event);
+    }
+
+    public _$btn() {
+        console.log('host click');
+    }
+
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
