@@ -13,7 +13,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     line-height: 20px;
     font-size: $font-size-base;
     border-radius: $border-radius-base;
-    color: $font-color-tag;
+    color: inherit;
     background: $bg-gray;
     box-sizing: border-box;
     user-select: none;
