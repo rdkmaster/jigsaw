@@ -281,27 +281,6 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
                     badge: {left: `calc(50% - ${differ}px)`, top: `calc(50% - ${differ}px)`}
                 };
             case "leftBottom":
-                /*const leftBottom: Position = {
-                    host: {left: 0, top: '100%'}
-                };
-                if (this.jigsawBadgeValue == 'dot') {
-                    if (this.jigsawBadgeSize == "large") {
-                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 5}px)`, left: "5px"};
-                    } else if (this.jigsawBadgeSize == "normal") {
-                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 4}px)`, left: "4px"};
-                    } else {
-                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 3}px)`, left: "3px"};
-                    }
-                } else {
-                    if (this.jigsawBadgeSize == "large") {
-                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 7}px)`, left: "7px"};
-                    } else if (this.jigsawBadgeSize == "normal") {
-                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 5}px)`, left: "5px"};
-                    } else {
-                        leftBottom.badge = {top: `calc( 100% - ${2 * differ + 3}px)`, left: "3px"};
-                    }
-                }
-                return leftBottom;*/
                 return this._getBottomPosition('left', differ, calibrateSize);
             case "leftTop":
                 return this._getTopPosition('left', differ, calibrateSize);
