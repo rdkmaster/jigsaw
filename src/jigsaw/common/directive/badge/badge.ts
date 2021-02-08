@@ -334,7 +334,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             host: {top: 0}
         };
         position.host[pos] = 0;
-        let offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.jigsawBadgeSize == "large" ? 6 : 4);
+        const offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.jigsawBadgeSize == "large" ? 6 : 4);
         differ = calibrateSize == 0 ? offset : calibrateSize - (differ - 1);
         position.badge = {top: `${differ}px`};
         position.badge[pos] = `${differ}px`;
