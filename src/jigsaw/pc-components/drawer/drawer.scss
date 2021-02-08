@@ -43,9 +43,8 @@ $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
         text-align: center;
         color: $font-color-white;
         background: $brand-default;
-        cursor: pointer;
         border-radius: 0 $border-radius-base $border-radius-base 0;
-        box-shadow: $box-shadow-lv2;
+        cursor: pointer;
 
         .iconfont {
             font-size: $icon-size-sm;
