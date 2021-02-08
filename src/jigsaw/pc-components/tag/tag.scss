@@ -93,14 +93,6 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         padding-right: 20px;
     }
 
-    &.#{$tag-prefix-cls}-selected {
-        -webkit-filter: saturate(90%) brightness(95%);
-        -moz-filter: saturate(90%) brightness(95%);
-        -o-filter: saturate(90%) brightness(95%);
-        -ms-filter: saturate(90%) brightness(95%);
-        filter: saturate(90%) brightness(95%);
-    }
-
     &.#{$tag-prefix-cls}-add {
         background: $bg-component;
         color: $font-color-tag;
@@ -144,9 +136,11 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
     .#{$tag-prefix-cls}-close-bar {
         position: absolute;
-        right: 6px;
+        left: calc(100% - 16px);
         line-height: 18px;
         font-size: 16px;
+        width: auto;
+
         &:hover {
             color: $brand-default;
         }
@@ -156,5 +150,6 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        width: 100%;
     }
 }

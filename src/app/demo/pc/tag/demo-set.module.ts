@@ -5,8 +5,10 @@ import {TagBasicDemoModule} from "./basic/demo.module";
 import {TagBasicDemoComponent} from "./basic/demo.component";
 import { TagPresetColorDemoComponent } from './preset-color/demo.component';
 import { TagPresetColorDemoModule } from './preset-color/demo.module';
-import { TagAddDemoComponent } from './add-tag/demo.component';
-import { TagAddDemoModule } from './add-tag/demo.module';
+import { TagSelectableDemoComponent } from './selectable/demo.component';
+import { TagSelectableDemoModule } from './selectable/demo.module';
+import {TagAddRemoveDemoComponent} from "./add-remove/demo.component";
+import {TagAddRemoveDemoModule} from "./add-remove/demo.module";
 
 export const routerConfig = [
     {
@@ -16,16 +18,20 @@ export const routerConfig = [
         path: 'preset-color', component: TagPresetColorDemoComponent
     },
     {
-        path: 'add-tag', component: TagAddDemoComponent
+        path: 'selectable', component: TagSelectableDemoComponent
+    },
+    {
+        path: 'add-remove', component: TagAddRemoveDemoComponent
+    },
+    {
+        path: 'disabled', component: TagSelectableDemoComponent
     },
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig),
-        TagBasicDemoModule,
-        TagPresetColorDemoModule,
-        TagAddDemoModule
+        RouterModule.forChild(routerConfig), TagBasicDemoModule, TagPresetColorDemoModule,
+        TagSelectableDemoModule, TagAddRemoveDemoModule
     ]
 })
 

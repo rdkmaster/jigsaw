@@ -25,25 +25,25 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
-        '[style.background]': 'color',
-        '[style.border-color]': 'color',
+        '[style.background]': '_$realColor',
+        '[style.border-color]': '_$realColor',
         '[class.jigsaw-tag-without-border]': '!showBorder',
         '[class.jigsaw-tag-closable]': 'closable && showBorder',
         '[class.jigsaw-tag-disabled]': 'disabled',
         '[class.jigsaw-tag-add]': 'isAdd',
-        '[class.jigsaw-tag-color]': '!!color && !color.indexOf("preset")',
+        '[class.jigsaw-tag-color]': '_$realColor?.startsWith("preset-")',
         '[class.jigsaw-tag-host]': 'true',
-        '[class.jigsaw-tag-preset-blue]': 'color == "preset-blue"',
-        '[class.jigsaw-tag-preset-cyan]': 'color == "preset-cyan"',
-        '[class.jigsaw-tag-preset-green]': 'color == "preset-green"',
-        '[class.jigsaw-tag-preset-magenta]': 'color == "preset-magenta"',
-        '[class.jigsaw-tag-preset-orange]': 'color == "preset-orange"',
-        '[class.jigsaw-tag-preset-red]': 'color == "preset-red"',
-        '[class.jigsaw-tag-preset-purple]': 'color == "preset-purple"',
-        '[class.jigsaw-tag-preset-gray]': 'color == "preset-gray"',
+        '[class.jigsaw-tag-preset-blue]': '_$realColor == "preset-blue"',
+        '[class.jigsaw-tag-preset-cyan]': '_$realColor == "preset-cyan"',
+        '[class.jigsaw-tag-preset-green]': '_$realColor == "preset-green"',
+        '[class.jigsaw-tag-preset-magenta]': '_$realColor == "preset-magenta"',
+        '[class.jigsaw-tag-preset-orange]': '_$realColor == "preset-orange"',
+        '[class.jigsaw-tag-preset-red]': '_$realColor == "preset-red"',
+        '[class.jigsaw-tag-preset-purple]': '_$realColor == "preset-purple"',
+        '[class.jigsaw-tag-preset-gray]': '_$realColor == "preset-gray"',
         '[class.jigsaw-tag-size-med]': 'size == "medium"',
         '[class.jigsaw-tag-size-sm]': 'size == "small"',
-        '[class.jigsaw-tag-selected]': 'selected',
+        '[class.jigsaw-tag-selected]': 'select',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
     },
@@ -75,7 +75,32 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
+    public disabledColor: string | PresetColor = 'preset-gray';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public color: string | PresetColor = 'preset-gray';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public selectedColor: string | PresetColor;
+
+    /**
+     * @internal
+     */
+    public get _$realColor(): string {
+        if (this.disabled) {
+            return this.disabledColor || 'preset-gray';
+        } else if (this.select) {
+            return this.selectedColor || this.color;
+        } else {
+            return this.color;
+        }
+    }
 
     private _closable: boolean;
 
@@ -115,6 +140,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Output()
     public close = new EventEmitter<JigsawTag>();
 
+    @Output()
+    public add = new EventEmitter<JigsawTag>();
+
     /**
      * @internal
      */
@@ -128,10 +156,10 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public selected: boolean = false;
+    public select: boolean = false;
 
     @Output()
-    public selectedChange = new EventEmitter<JigsawTag>();
+    public selectChange = new EventEmitter<boolean>();
 
     /**
      * @internal
@@ -139,8 +167,11 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public _$select(event) {
         event.preventDefault();
         event.stopPropagation();
-        this.selected  = !this.selected;
-        this.selectedChange.emit(event);
+        if (this.disabled) {
+            return;
+        }
+        this.select  = !this.select;
+        this.selectChange.emit(this.select);
     }
 
     public show() {
@@ -159,7 +190,6 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     ngOnInit() {
         this.basicClass && this._renderer.addClass(this._elementRef.nativeElement, this.basicClass);
     }
-
 }
 
 
@@ -169,5 +199,4 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     exports: [JigsawTag]
 })
 export class JigsawTagModule {
-
 }
