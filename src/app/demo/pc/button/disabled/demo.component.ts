@@ -3,6 +3,7 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html'
 })
+
 export class ButtonDisableDemoComponent {
     disabled: boolean;
     clickCount: number = 0;
