@@ -1,4 +1,4 @@
-import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
 
@@ -15,8 +15,9 @@ type Position = { host: Style, badge?: Style };
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
-export class JigsawBadgeDirective extends AbstractJigsawViewBase implements AfterViewInit {
+export class JigsawBadgeDirective extends AbstractJigsawViewBase implements AfterViewInit, OnDestroy {
     private _badge: HTMLElement;
+    private _removeBadgeClickHandler: Function;
 
     private _jigsawBadgeValue: string | number | 'dot';
 
@@ -100,6 +101,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         this._addBadge();
     }
 
+    ngOnDestroy(): void {
+        if (this._removeBadgeClickHandler) {
+            this._removeBadgeClickHandler();
+        }
+    }
+
     private _addBadge(): void {
         if (!this.initialized) {
             return;
@@ -168,7 +175,10 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         } else {
             this._badge.children[0].classList.add(`jigsaw-badge-cursor-default`);
         }
-        this._badge.children[0].addEventListener('click', (event) => {
+        if (this._removeBadgeClickHandler) {
+            this._removeBadgeClickHandler();
+        }
+        this._removeBadgeClickHandler = this._render.listen(this._badge.children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
             this.jigsawBadgeClick.emit(this.jigsawBadgeValue);
@@ -193,7 +203,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         const width = parseInt(hostStyle.width);
         const height = parseInt(hostStyle.height);
         const compareSize = Math.floor(Math.min(width, height) / 2);
-        let maskSize = this.jigsawBadgeSize == 'small' ? 20 : (this.jigsawBadgeSize == 'large' ? 28 : 24);
+        const maskSize = this.jigsawBadgeSize == 'small' ? 20 : (this.jigsawBadgeSize == 'large' ? 28 : 24);
         return compareSize != 0 && maskSize > compareSize ? compareSize : 0;
     }
 
@@ -273,7 +283,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
 
     private _calMaskPosition(): Position {
         const calibrateSize = this._calibrateMaskSize() / 2;
-        let differ = this._getDiffer();
+        const differ = this._getDiffer();
         switch (this.jigsawBadgePosition) {
             case "left":
                 return {
