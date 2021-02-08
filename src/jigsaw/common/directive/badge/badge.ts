@@ -245,12 +245,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             case "leftBottom":
                 return {
                     host: {left: 0, top: '100%'},
-                    badge: {left: `${-differ}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {left: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "leftTop":
                 return {
                     host: {left: 0, top: 0},
-                    badge: {left: `${-differ}px`, top: `${-differ}px`}
+                    badge: {left: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `${-differ}px`}
                 };
             case "right":
                 const right: Position = {
@@ -271,12 +271,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             case "rightBottom":
                 return {
                     host: {right: 0, top: '100%'},
-                    badge: {right: `${-differ}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {right: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "rightTop":
                 return {
                     host: {right: 0, top: 0},
-                    badge: {right: `${-differ}px`, top: `${-differ}px`}
+                    badge: {right: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `${-differ}px`}
                 };
         }
     }
