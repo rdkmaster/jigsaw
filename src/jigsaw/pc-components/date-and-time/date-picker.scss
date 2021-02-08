@@ -17,10 +17,11 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
     &-header {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: $height-huge;
+        min-height: $height-huge;
         background: $bg-container;
     }
 
@@ -29,6 +30,8 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         justify-content: center;
         align-items: center;
         text-align: center;
+        width: 100%;
+        padding: 8px 8px 0;
 
         & > span {
             display: inline-block;
@@ -37,7 +40,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             line-height: 22px;
             background: $bg-component;
             border: 1px solid $border-color-base;
-            border-right: none;
             cursor: pointer;
 
             &:first-child {
@@ -48,13 +50,12 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             &:last-child {
                 border-top-right-radius: $border-radius-base;
                 border-bottom-right-radius: $border-radius-base;
-                border-right: 1px solid $border-color-default;
-            }
+             }
 
             &.active {
-                background-color: $primary-default;
-                color: $font-color-white;
-                border-color: $primary-default;
+                background-color: $brand-light;
+                color: $brand-default;
+                border-color: $brand-default;
             }
         }
     }
@@ -65,18 +66,29 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        height: $height-base;
-        padding: 0 14px;
-        line-height: $height-base;
+        height: $height-huge;
+        line-height: $height-huge;
         font-size: $font-size-base;
 
         .#{$date-prefix-cls}-control-bar {
-
+            display: inline-flex;
+            align-items: center;
+            width: 56px;
             font-size: 20px;
             color: $text-color-secondary;
             cursor: pointer;
 
-            &:hover {
+            &.jigsaw-date-picker-previous-bar {
+                justify-content: flex-start;
+                padding-left: 16px;
+            }
+
+            &.jigsaw-date-picker-next-bar {
+                justify-content: flex-end;
+                padding-right: 16px;
+            }
+
+            i:hover {
                 color: $primary-5;
             }
         }
@@ -123,24 +135,25 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
             thead {
                 padding: 0 8px;
-                height: 32px;
-                line-height: 28px;
-                background: $background-color-base;
+                height: $height-med;
+                line-height: $height-med;
+                background: $bg-container;
+                vertical-align: initial;
 
                 th {
                     text-align: center;
                     font-weight: normal;
-                    color: #333;
+                    color: $font-color-heading;
                 }
             }
 
             tbody {
-                height: 200px;
-                padding: 10px 8px;
+                height: 100%;
+                padding: 8px 8px;
 
                 tr {
-                    height: 28px;
-                    line-height: 28px;
+                    height: $height-med;
+                    line-height: $height-med;
                 }
             }
         }
@@ -223,15 +236,15 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &-recommend:after {
-                background: $success-color;
+                background: $success-default;
             }
 
             &-warn:after {
-                background: #f1f13e;
+                background: $warning-default;
             }
 
             &-error:after {
-                background: $error-color;
+                background: $error-default;
             }
 
             &-inRange {

@@ -4,26 +4,40 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
 
 .#{$date-time-prefix-cls} {
     @include inline-block();
-    background: $bg-component;
-    border-radius: $border-radius-sm;
-    font-size: $font-size-base;
-    box-shadow: $box-shadow-lv2;
     overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
+    background: $bg-component;
+    font-size: $font-size-base;
     user-select: none;
 
-    jigsaw-date-picker {
-        border: none;
+    jigsaw-date-picker{
+        border-bottom: none;
     }
 
     &-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 0 8px 8px;
+
+        j-time-picker {
+            max-width: 124px;
+        }
+
+        jigsaw-button {
+            min-width: 60px;
+        }
     }
 
     &-gr-switch {
-        padding: 8px 8px 0;
         display: flex;
         justify-content: center;
         text-align: center;
+        width: 100%;
+        padding: 8px 8px 0;
 
         & > span {
             display: inline-block;
@@ -32,7 +46,6 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             line-height: 22px;
             background: $bg-component;
             border: 1px solid $border-color-base;
-            border-right: none;
             cursor: pointer;
 
             &:first-child {
@@ -43,13 +56,12 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             &:last-child {
                 border-top-right-radius: $border-radius-base;
                 border-bottom-right-radius: $border-radius-base;
-                border-right: 1px solid $border-color-base;
             }
 
             &.active {
-                background-color: $primary-default;
-                color: $font-color-white;
-                border-color: $primary-default;
+                background-color: $brand-light;
+                color: $brand-default;
+                border-color: $brand-default;
             }
         }
     }

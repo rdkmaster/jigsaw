@@ -5,64 +5,73 @@
         </span>
     </div>
     <div class="jigsaw-date-picker-control">
-        <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar iconfont iconfont-e143"
-           (click)="_$handleCtrlBar(-1)"></i>
-           <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
-           <span *ngIf="_$selectMode == 'year'">{{_$rangeYear}}</span>
-           <span *ngIf="_$selectMode == 'day'"  class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
-        <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar iconfont iconfont-e144"
-           (click)="_$handleCtrlBar(1)"></i>
+        <span class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar">
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class="iconfont iconfont-e4c0" (click)="_$handleCtrlBar(-12)"></i>
+            <i *ngIf="(_$selectMode == 'year') || (_$selectMode == 'month')" class="iconfont iconfont-e4c0" (click)="_$handleCtrlBar(-1)"></i>
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class="iconfont iconfont-e143" (click)="_$handleCtrlBar(-1)"></i>
+        </span>
+        <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year"
+            (click)="_$showYearList()">{{_$curYear}}</span>
+        <span *ngIf="_$selectMode == 'year'">{{_$rangeYear}}</span>
+        <span *ngIf="_$selectMode == 'day'" class="jigsaw-date-picker-control-month"
+            (click)="_$showMonthList()">{{_$curMonth.label}}</span>
+        <span class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar">
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class=" iconfont iconfont-e144" (click)="_$handleCtrlBar(1)"></i>
+            <i *ngIf="(_$selectMode == 'year') || (_$selectMode == 'month')" class=" iconfont iconfont-e4c1" (click)="_$handleCtrlBar(1)"></i>
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class="iconfont iconfont-e4c1" (click)="_$handleCtrlBar(12)"></i>
+        </span>
     </div>
 </div>
+
 <div class="jigsaw-date-picker-content">
     <table class="jigsaw-date-picker-content-day" *ngIf="_$selectMode == 'day'">
         <thead>
-        <tr>
-            <th *ngFor="let week of _$weekList">
-                <div>{{week}}</div>
-            </th>
-        </tr>
+            <tr>
+                <th *ngFor="let week of _$weekList">
+                    <div>{{week}}</div>
+                </th>
+            </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let row of _$dayList">
-            <td *ngFor="let dayCell of row" class="jigsaw-date-picker-content-day-cell"
-                [class.jigsaw-date-picker-content-day-cell-prev-next]="dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth"
-                [class.jigsaw-date-picker-content-day-cell-today]="dayCell.isToday"
-                [class.jigsaw-date-picker-content-day-cell-selected]="dayCell.isSelected"
-                [class.jigsaw-date-picker-content-day-cell-disabled]="dayCell.isDisabled"
-                [class.jigsaw-date-picker-content-day-cell-recommend]="dayCell.mark?.type == 'recommend'"
-                [class.jigsaw-date-picker-content-day-cell-warn]="dayCell.mark?.type == 'warn'"
-                [class.jigsaw-date-picker-content-day-cell-error]="dayCell.mark?.type == 'error'"
-                [class.jigsaw-date-picker-content-day-cell-inRange]="dayCell.isInRange"
-                (click)="_$selectDay(dayCell)">
-                <span [title]="dayCell.mark?.label">{{dayCell.day}}</span>
-            </td>
-        </tr>
+            <tr *ngFor="let row of _$dayList">
+                <td *ngFor="let dayCell of row" class="jigsaw-date-picker-content-day-cell"
+                    [class.jigsaw-date-picker-content-day-cell-prev-next]="dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth"
+                    [class.jigsaw-date-picker-content-day-cell-today]="dayCell.isToday"
+                    [class.jigsaw-date-picker-content-day-cell-selected]="dayCell.isSelected"
+                    [class.jigsaw-date-picker-content-day-cell-disabled]="dayCell.isDisabled"
+                    [class.jigsaw-date-picker-content-day-cell-recommend]="dayCell.mark?.type == 'recommend'"
+                    [class.jigsaw-date-picker-content-day-cell-warn]="dayCell.mark?.type == 'warn'"
+                    [class.jigsaw-date-picker-content-day-cell-error]="dayCell.mark?.type == 'error'"
+                    [class.jigsaw-date-picker-content-day-cell-inRange]="dayCell.isInRange"
+                    (click)="_$selectDay(dayCell)">
+                    <span [title]="dayCell.mark?.label">{{dayCell.day}}</span>
+                </td>
+            </tr>
         </tbody>
     </table>
     <table class="jigsaw-date-picker-content-month" *ngIf="_$selectMode == 'month'">
         <tbody>
-        <tr *ngFor="let row of _$monthList">
-            <td *ngFor="let monthCell of row" class="jigsaw-date-picker-content-month-cell"
-                [class.jigsaw-date-picker-content-month-cell-selected]="monthCell.isSelected"
-                [class.jigsaw-date-picker-content-month-cell-disabled]="monthCell.isDisabled"
-                (click)="_$selectMonth(monthCell)">
-                <span>{{monthCell.label}}</span>
-            </td>
-        </tr>
+            <tr *ngFor="let row of _$monthList">
+                <td *ngFor="let monthCell of row" class="jigsaw-date-picker-content-month-cell"
+                    [class.jigsaw-date-picker-content-month-cell-selected]="monthCell.isSelected"
+                    [class.jigsaw-date-picker-content-month-cell-disabled]="monthCell.isDisabled"
+                    (click)="_$selectMonth(monthCell)">
+                    <span>{{monthCell.label}}</span>
+                </td>
+            </tr>
         </tbody>
     </table>
     <table class="jigsaw-date-picker-content-year" *ngIf="_$selectMode == 'year'">
         <tbody>
-        <tr *ngFor="let row of _$yearList">
-            <td *ngFor="let yearCell of row" class="jigsaw-date-picker-content-year-cell"
-                [class.jigsaw-date-picker-content-year-cell-selected]="yearCell.isSelected"
-                [class.jigsaw-date-picker-content-year-cell-disabled]="yearCell.isDisabled"
-                [class.jigsaw-date-picker-content-year-cell-prev-next]="yearCell.isOwnPrevOrNext"
-                (click)="_$selectYear(yearCell)">
-                <span>{{yearCell.year}}</span>
-            </td>
-        </tr>
+            <tr *ngFor="let row of _$yearList">
+                <td *ngFor="let yearCell of row" class="jigsaw-date-picker-content-year-cell"
+                    [class.jigsaw-date-picker-content-year-cell-selected]="yearCell.isSelected"
+                    [class.jigsaw-date-picker-content-year-cell-disabled]="yearCell.isDisabled"
+                    [class.jigsaw-date-picker-content-year-cell-prev-next]="yearCell.isOwnPrevOrNext"
+                    (click)="_$selectYear(yearCell)">
+                    <span>{{yearCell.year}}</span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
