@@ -29,6 +29,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         display: flex;
         align-items: center;
         font-size: $font-size-base;
+        width: 100%;
 
         .jigsaw-list-lite-text-content {
             text-overflow: ellipsis;
