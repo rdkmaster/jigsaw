@@ -4,8 +4,10 @@ import {Component} from '@angular/core';
     templateUrl: './demo.component.html'
 })
 
-export class BadgePositionDemoComponent {
-    list = [
+export class BadgeOffsetDemoComponent {
+    hOffset1 = 0;
+    hOffset2 = -10;
+    goods = [
         'bicycle', 'camera', 'car', 'football', 'book', 'puzzle-piece',
     ];
 

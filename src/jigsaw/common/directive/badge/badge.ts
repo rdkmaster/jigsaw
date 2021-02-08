@@ -66,11 +66,23 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
     @Input()
     public jigsawBadgeStyle: "solid" | "border" | "none" = "solid"
 
+    private _hOffset: number = 0;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeHorizontalOffset: number = 0;
+    public get jigsawBadgeHorizontalOffset(): number {
+        return this._hOffset;
+    }
+
+    public set jigsawBadgeHorizontalOffset(value: number) {
+        if (this._hOffset == value) {
+            return;
+        }
+        this._hOffset = value;
+        this._addBadge();
+    }
 
     /**
      * @NoMarkForCheckRequired
@@ -232,12 +244,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
                 };
                 if (this.jigsawBadgeValue == 'dot') {
                     left.badge = {
-                        left: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`,
+                        left: `${-(differ + this._hOffset)}px`,
                         top: `calc(50% - ${differ}px)`
                     }
                 } else {
                     left.badge = {
-                        right: `calc( 100% - ${differ + 2 + this.jigsawBadgeHorizontalOffset}px )`,
+                        right: `calc( 100% - ${differ + 2 + this._hOffset}px )`,
                         top: `calc( 50% - ${differ}px )`
                     }
                 }
@@ -245,12 +257,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             case "leftBottom":
                 return {
                     host: {left: 0, top: '100%'},
-                    badge: {left: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "leftTop":
                 return {
                     host: {left: 0, top: 0},
-                    badge: {left: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `${-differ}px`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
                 };
             case "right":
                 const right: Position = {
@@ -258,12 +270,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
                 };
                 if (this.jigsawBadgeValue == 'dot') {
                     right.badge = {
-                        right: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`,
+                        right: `${-(differ + this._hOffset)}px`,
                         top: `calc(50% - ${differ}px)`
                     };
                 } else {
                     right.badge = {
-                        left: `calc( 100% - ${differ + 2 + this.jigsawBadgeHorizontalOffset}px)`,
+                        left: `calc( 100% - ${differ + 2 + this._hOffset}px)`,
                         top: `calc(50% - ${differ}px)`
                     };
                 }
@@ -271,12 +283,12 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             case "rightBottom":
                 return {
                     host: {right: 0, top: '100%'},
-                    badge: {right: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "rightTop":
                 return {
                     host: {right: 0, top: 0},
-                    badge: {right: `${-(differ + this.jigsawBadgeHorizontalOffset)}px`, top: `${-differ}px`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
                 };
         }
     }
