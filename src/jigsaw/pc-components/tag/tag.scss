@@ -3,8 +3,9 @@
 $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
 .#{$tag-prefix-cls}-host {
-    @include inline-block;
-    @include line-ellipsis-style;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     max-width: 200px;
     padding: 2px 8px;
@@ -12,25 +13,143 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     line-height: 20px;
     font-size: $font-size-base;
     border-radius: $border-radius-base;
-    color: $font-color-tag;
+    color: inherit;
     background: $bg-gray;
+    box-sizing: border-box;
+    user-select: none;
     cursor: pointer;
-    &.#{$tag-prefix-cls}-closable {
-        padding-right: 20px;
-    }
+
     &.#{$tag-prefix-cls}-color {
         color: $font-color-white;
     }
+
+    &.#{$tag-prefix-cls}-without-border {
+        border: none;
+    }
+
+    &.#{$tag-prefix-cls}-preset {
+        &-blue {
+            color: $blue-7;
+            background: $blue-1;
+            border-color: $blue-1;
+        }
+
+        &-cyan {
+            color: $cyan-7;
+            background: $cyan-1;
+            border-color: $cyan-1;
+        }
+
+        &-green {
+            color: $green-7;
+            background: $green-1;
+            border-color: $green-1;
+        }
+
+        &-magenta {
+            color: $magenta-7;
+            background: $magenta-1;
+            border-color: $magenta-1;
+        }
+
+        &-orange {
+            color: $orange-7;
+            background: $orange-1;
+            border-color: $orange-1;
+        }
+
+        &-red {
+            color: $red-7;
+            background: $red-1;
+            border-color: $red-1;
+        }
+
+        &-purple {
+            color: $purple-7;
+            background: $purple-1;
+            border-color: $purple-1;
+        }
+
+        &-gray {
+            color: $gray-9;
+            background: $gray-3;
+            border-color: $gray-3;
+        }
+    }
+
+    &.#{$tag-prefix-cls}-size {
+        &-med {
+            height: 22px;
+            padding: 0 8px;
+        }
+
+        &-sm {
+            height: 18px;
+            padding: 0 4px;
+        }
+    }
+
+    &.#{$tag-prefix-cls}-closable {
+        padding-right: 20px;
+    }
+
+    &.#{$tag-prefix-cls}-add {
+        background: $bg-component;
+        color: $font-color-tag;
+        border-width: 1px;
+        border-style: dashed;
+        border-color: $border-color-default;
+
+        &:hover {
+            color: $brand-hover;
+            border-color: $brand-hover;
+        }
+
+        &.#{$tag-prefix-cls}-disabled {
+            color: $font-color-disabled;
+            border-color: $border-color-default;
+            user-select: none;
+            cursor: not-allowed;
+
+            &:hover {
+                color: $font-color-disabled;
+                border-color: $border-color-default;
+            }
+        }
+
+        i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &.#{$tag-prefix-cls}-size-med {
+            width: 84px;
+            font-size: 12px;
+        }
+
+        &.#{$tag-prefix-cls}-size-sm {
+            width: 56px;
+            font-size: 12px;
+        }
+    }
+
     .#{$tag-prefix-cls}-close-bar {
         position: absolute;
-        right: 6px;
+        left: calc(100% - 16px);
         line-height: 18px;
         font-size: 16px;
+        width: auto;
+
         &:hover {
             color: $brand-default;
         }
     }
-    &.#{$tag-prefix-cls}-without-border {
-        border: none;
+
+    & > span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
     }
 }
