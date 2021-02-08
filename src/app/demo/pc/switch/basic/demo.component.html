@@ -2,10 +2,23 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
-<!-- start to learn the demo from here -->
-<jigsaw-switch [checked]="true" [disabled]="false"></jigsaw-switch><br><br>
-<jigsaw-switch id="test-switch1" [(checked)]="checked"></jigsaw-switch><span id="result-message">result: {{checked}}</span><br><br>
-<jigsaw-switch id="test-switch2" [checked]="true" [disabled]="true"></jigsaw-switch><br><br>
-<jigsaw-switch id="test-switch3" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+<div style="margin: 20px;">
+    <label>正常状态：</label>
+    <div style="margin-bottom: 10px;">
+        <jigsaw-switch [(checked)]="checked" style="margin-right: 5px;"></jigsaw-switch>
+        <span>result: {{checked}}</span>
+    </div>
+    <jigsaw-switch onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+</div>
+<div style="margin: 20px;">
+    <label>禁用状态：</label>
+    <div style="margin-bottom: 10px;">
+        <jigsaw-switch [checked]="true" [disabled]="true"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" [disabled]="true"></jigsaw-switch>
+    </div>
+    <div>
+        <jigsaw-switch [checked]="true" [disabled]="true" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" [disabled]="true" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+    </div>
+</div>
 

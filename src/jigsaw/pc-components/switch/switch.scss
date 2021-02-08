@@ -76,6 +76,15 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         }
     }
 
+    &-checked-disabled {
+        cursor: not-allowed;
+        opacity: .3;
+
+        &:after {
+            cursor: not-allowed;
+        }
+    }
+
     &-disabled {
         cursor: not-allowed;
         background-color: $bg-disabled;

@@ -195,7 +195,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
             'jigsaw-switch': 'true',
             'jigsaw-switch-small': this.size === 'small',
             'jigsaw-switch-checked': this.checked,
-            'jigsaw-switch-disabled': this.disabled,
+            'jigsaw-switch-disabled': this.disabled && !this.checked,
+            'jigsaw-switch-checked-disabled': this.disabled && this.checked,
             'jigsaw-switch-readonly': this.readonly
         };
         this._changeDetector.markForCheck();
