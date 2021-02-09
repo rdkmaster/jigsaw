@@ -149,6 +149,10 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     .#{$tag-prefix-cls}-content {
         display: flex;
         align-items: center;
+
+        i {
+            margin-right: 3px;
+        }
     }
 
     & > span {
