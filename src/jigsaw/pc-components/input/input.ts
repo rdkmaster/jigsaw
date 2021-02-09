@@ -21,7 +21,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-    constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
+    protected constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -179,11 +179,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     @Input()
     public set preIcon(value: string | string[]) {
-        if (typeof value == 'string') {
-            this._$preIcon = [value];
-            return;
-        }
-        this._$preIcon = value;
+        this._$preIcon = typeof value == 'string' ? [value] : value;
     }
 
     /**
@@ -198,11 +194,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     @Input()
     public set icon(value: string | string[]) {
-        if (typeof value == 'string') {
-            this._$icon = [value];
-            return;
-        }
-        this._$icon = value;
+        this._$icon = typeof value == 'string' ? [value] : value;
     }
 
     /**
@@ -325,5 +317,4 @@ export class JigsawInput extends JigsawInputBase {
     exports: [JigsawInput],
 })
 export class JigsawInputModule {
-
 }
