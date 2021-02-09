@@ -30,7 +30,6 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     }
     & > div {
         transition-duration: 300ms;
-        border: 1px solid $border-color-default;
     }
     &.#{$transfer-prefix-cls}-error > div {
         transition-duration: 300ms;
