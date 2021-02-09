@@ -5,15 +5,24 @@
         </span>
     </div>
     <div class="jigsaw-date-picker-control">
-        <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar iconfont iconfont-e143"
-           (click)="_$handleCtrlBar(-1)"></i>
-        <span *ngIf="_$selectMode == 'day'"  class="jigsaw-date-picker-control-month" (click)="_$showMonthList()">{{_$curMonth.label}}</span>
-        <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year" (click)="_$showYearList()">{{_$curYear}}</span>
+        <span class="jigsaw-date-picker-control-bar jigsaw-date-picker-previous-bar">
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class="iconfont iconfont-e4c0" (click)="_$handleCtrlBar(-12)"></i>
+            <i *ngIf="(_$selectMode == 'year') || (_$selectMode == 'month')" class="iconfont iconfont-e4c0" (click)="_$handleCtrlBar(-1)"></i>
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class="iconfont iconfont-e143" (click)="_$handleCtrlBar(-1)"></i>
+        </span>
+        <span *ngIf="_$selectMode != 'year'" class="jigsaw-date-picker-control-year"
+            (click)="_$showYearList()">{{_$curYear}}</span>
         <span *ngIf="_$selectMode == 'year'">{{_$rangeYear}}</span>
-        <i class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar iconfont iconfont-e144"
-           (click)="_$handleCtrlBar(1)"></i>
+        <span *ngIf="_$selectMode == 'day'" class="jigsaw-date-picker-control-month"
+            (click)="_$showMonthList()">{{_$curMonth.label}}</span>
+        <span class="jigsaw-date-picker-control-bar jigsaw-date-picker-next-bar">
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class=" iconfont iconfont-e144" (click)="_$handleCtrlBar(1)"></i>
+            <i *ngIf="(_$selectMode == 'year') || (_$selectMode == 'month')" class=" iconfont iconfont-e4c1" (click)="_$handleCtrlBar(1)"></i>
+            <i *ngIf="(_$selectMode != 'year') && (_$selectMode != 'month')" class="iconfont iconfont-e4c1" (click)="_$handleCtrlBar(12)"></i>
+        </span>
     </div>
 </div>
+
 <div class="jigsaw-date-picker-content">
     <table class="jigsaw-date-picker-content-day" *ngIf="_$selectMode == 'day'">
         <thead>

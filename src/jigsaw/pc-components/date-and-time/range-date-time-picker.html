@@ -4,13 +4,13 @@
                              (dateChange)="_$dateChange('beginDate',$event)" (grChange)="_$grChange($event)" [rangeDate]="endDate"
                              [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains" class="jigsaw-range-date-time-picker-startTime">
     </jigsaw-date-time-picker>
-    <jigsaw-date-time-picker #timeEnd [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate || _$limitStart"
+    <jigsaw-date-time-picker [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate || _$limitStart"
                              [limitEnd]="_$endTimeLimitEnd" [markDates]="markDates" [grItems]="grItems" [rangeDate]="beginDate"
                              (dateChange)="_$dateChange('endDate',$event)" [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
                              class="jigsaw-range-date-time-picker-endTime">
     </jigsaw-date-time-picker>
     <div *ngIf="_$shortcuts && _$shortcuts.length" class="jigsaw-range-date-time-picker-shortcuts">
-        <span *ngFor="let item of _$shortcuts" (click)="_changeShortcut(item)">
+        <span *ngFor="let item of _$shortcuts" (click)="_changeShortcut(item)" [class.active]="item.label == _$selectedShortcutLabel">
             {{item.label}}
         </span>
     </div>

@@ -42,6 +42,9 @@ export const routerConfig: any = [
     {
         path: 'week-start', component: RangeDateTimeWeekStartComponent
     },
+    {
+        path: 'shortcut', component: RangeDateTimeGrItemsComponent
+    },
 ];
 
 @NgModule({

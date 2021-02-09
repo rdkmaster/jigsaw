@@ -8,6 +8,10 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
         position: relative;
         background: $bg-component;
         font-size: 0;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
     }
 
     &-error {
@@ -30,7 +34,15 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
         }
     }
 
+    &-startTime {
+        border: none;
+        .jigsaw-date-time-picker-bottom jigsaw-button {
+            display: none;
+        }
+    }
+
     &-endTime {
+        border: none;
         .jigsaw-date-time-picker-gr-switch span {
             visibility: hidden;
         }
@@ -46,8 +58,8 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
         display: flex;
         justify-content: center;
         padding: 8px 8px 0;
-        background: $background-color-base;
         font-size: $font-size-base;
+        background: $bg-container;
 
         & > span {
             display: inline-block;
@@ -55,8 +67,7 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
             height: 24px;
             line-height: 22px;
             background: $bg-component;
-            border: 1px solid $border-color-base;
-            border-right: none;
+            border: 1px solid $border-color-default;
             cursor: pointer;
 
             &:first-child {
@@ -67,12 +78,11 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
             &:last-child {
                 border-top-right-radius: $border-radius-base;
                 border-bottom-right-radius: $border-radius-base;
-                border-right: 1px solid $border-color-base;
             }
 
             &.active {
-                background-color: $brand-default;
-                color: $font-color-white;
+                background-color: $brand-light;
+                color: $brand-default;
                 border-color: $brand-default;
             }
         }
