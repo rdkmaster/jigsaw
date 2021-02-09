@@ -42,6 +42,15 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         align-items: center;
         flex: none;
         padding: 0 4px;
+
+        a {
+            display: flex;
+        }
+    }
+    &-icon-end {
+        a {
+            margin: 5px;
+        }
     }
     input {
         flex: 1;
@@ -51,6 +60,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         outline: none;
         border-radius: 3px;
         background: transparent;
+        padding-bottom: 2px;
     }
     &.#{$input-prefix-cls}-disabled &-wrapper {
         background-color: $bg-disabled;
@@ -71,6 +81,8 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
+        padding-bottom: 3px;
+
         &:hover {
             color: $font-color-default;
         }
