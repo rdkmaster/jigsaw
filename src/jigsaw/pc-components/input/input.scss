@@ -42,6 +42,15 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         align-items: center;
         flex: none;
         padding: 0 4px;
+
+        a {
+            display: flex;
+        }
+    }
+    &-icon-end {
+        a {
+            margin: 5px;
+        }
     }
     input {
         flex: 1;
