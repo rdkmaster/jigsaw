@@ -110,6 +110,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         }
 
         & > p {
+            max-width: 120px;
             margin-left: 3px;
             text-overflow: ellipsis;
             white-space: nowrap;
