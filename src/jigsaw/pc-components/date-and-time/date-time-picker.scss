@@ -13,8 +13,8 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
     font-size: $font-size-base;
     user-select: none;
 
-    jigsaw-date-picker{
-        border-bottom: none;
+    jigsaw-date-picker {
+        border: none;
     }
 
     &-bottom {
@@ -38,6 +38,7 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
         text-align: center;
         width: 100%;
         padding: 8px 8px 0;
+        background: $bg-container;
 
         & > span {
             display: inline-block;

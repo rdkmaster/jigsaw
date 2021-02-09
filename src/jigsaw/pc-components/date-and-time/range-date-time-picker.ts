@@ -454,7 +454,13 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         this._init();
         this.grChange.emit(value);
         this._cdr.markForCheck();
+        this.shortcutsLabel = "";
     }
+
+    /**
+     * @internal
+     */
+    public shortcutsLabel: string;
 
     /**
      * @internal
@@ -471,6 +477,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             } else {
                 this._beginDate = limitStart;
             }
+            this.shortcutsLabel = selectedShortcut.label;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
             this._endDate = TimeService.convertValue(endDate, this._$gr);
             this._updateValue.emit();
