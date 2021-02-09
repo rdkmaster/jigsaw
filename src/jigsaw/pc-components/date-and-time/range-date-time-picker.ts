@@ -454,35 +454,36 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         this._init();
         this.grChange.emit(value);
         this._cdr.markForCheck();
-        this.shortcutsLabel = "";
+        this._$selectedShortcutLabel = "";
     }
 
     /**
      * @internal
      */
-    public shortcutsLabel: string;
+    public _$selectedShortcutLabel: string;
 
     /**
      * @internal
      */
-    public _changeShortcut(selectedShortcut: Shortcut) {
-        if (selectedShortcut.dateRange) {
-            let [beginDate, endDate] = typeof selectedShortcut.dateRange === "function" ? selectedShortcut.dateRange.call(this) :
-                selectedShortcut.dateRange;
-            beginDate = TimeService.convertValue(beginDate, this._$gr);
-            let limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, this._$gr);
-            let limitEnd = this._$limitEnd && TimeService.convertValue(this._$limitEnd, this._$gr);
-            if (!((limitStart && beginDate < limitStart) || (limitEnd && beginDate > limitEnd))) {
-                this._beginDate = beginDate;
-            } else {
-                this._beginDate = limitStart;
-            }
-            this.shortcutsLabel = selectedShortcut.label;
-            this._$endTimeLimitEnd = this._calculateLimitEnd();
-            this._endDate = TimeService.convertValue(endDate, this._$gr);
-            this._updateValue.emit();
-            this._cdr.markForCheck();
+    public _changeShortcut(selectedShortcut: Shortcut): void {
+        if (!selectedShortcut.dateRange) {
+            return;
         }
+        let [beginDate, endDate] = typeof selectedShortcut.dateRange === "function" ?
+            selectedShortcut.dateRange.call(this) : selectedShortcut.dateRange;
+        beginDate = TimeService.convertValue(beginDate, this._$gr);
+        const limitStart = this._$limitStart && TimeService.convertValue(this._$limitStart, this._$gr);
+        const limitEnd = this._$limitEnd && TimeService.convertValue(this._$limitEnd, this._$gr);
+        if (!((limitStart && beginDate < limitStart) || (limitEnd && beginDate > limitEnd))) {
+            this._beginDate = beginDate;
+        } else {
+            this._beginDate = limitStart;
+        }
+        this._$selectedShortcutLabel = selectedShortcut.label;
+        this._$endTimeLimitEnd = this._calculateLimitEnd();
+        this._endDate = TimeService.convertValue(endDate, this._$gr);
+        this._updateValue.emit();
+        this._cdr.markForCheck();
     }
 
     public writeValue(value: any): void {
