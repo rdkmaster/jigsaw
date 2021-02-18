@@ -55,7 +55,6 @@ export class TableCalendarDemoComponent {
     styles: [`
         .date-cell {
             height: 70px;
-            margin: 0 -9px 0 -9px;
             color: #ababab;
         }
 
