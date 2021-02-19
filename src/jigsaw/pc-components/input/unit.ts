@@ -21,8 +21,8 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
                  (jigsawFloatOpenChange)="_$autoWidth()">
                 <div class="jigsaw-input-units-selected">
                     <span *ngIf="_$selectUnit?.icon" class="{{_$selectUnit?.icon}}"></span>
-                    <span class="jigsaw-input-units-selected-text" *ngIf="showLabel(_$selectUnit)">
-                        {{showLabel(_$selectUnit)}}
+                    <span class="jigsaw-input-units-selected-text" *ngIf="_$showLabel(_$selectUnit)">
+                        {{_$showLabel(_$selectUnit)}}
                     </span>
                     <span *ngIf="_$selectUnit?.suffixIcon" class="{{_$selectUnit?.suffixIcon}}"></span>
                 </div>
@@ -34,7 +34,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
                 <j-list-option *ngFor="let item of data" [value]="item">
                     <p j-title>
                         <span *ngIf="item?.icon" class="{{item?.icon}}"></span>
-                        <span>{{showLabel(item)}}</span>
+                        <span>{{_$showLabel(item)}}</span>
                     </p>
                     <p j-sub-title *ngIf="item?.suffixIcon">
                         <i class="{{item?.suffixIcon}}"></i>
@@ -53,7 +53,10 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
         super(_zone);
     }
 
-    public showLabel(item: any): string {
+    /**
+     * @internal
+     */
+    public _$showLabel(item: any): string {
         if (item && item[this.labelField]) {
             return item && item[this.labelField];
         }
