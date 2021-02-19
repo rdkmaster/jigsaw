@@ -5,6 +5,8 @@ import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawPrefixUnitModule} from "./unit";
+import {GroupOptionValue} from "../list-and-tile/group-common";
 
 /**
  * 数字输入框
@@ -371,10 +373,31 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     public registerOnTouched(fn: any): void {
     }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public unit: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public unitWidth: string = '60px';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public unitLabelField: GroupOptionValue | GroupOptionValue[];
+
+    @Output()
+    public unitChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, JigsawPrefixUnitModule],
     declarations: [JigsawNumericInput],
     exports: [JigsawNumericInput],
 })

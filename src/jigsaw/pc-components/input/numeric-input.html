@@ -1,20 +1,26 @@
-<!--<ng-content></ng-content>-->
-<input #input
-       [placeholder]="placeholder"
-       [(ngModel)]="value"
-       [disabled]="disabled"
-       (blur)="_$handleBlur($event)"
-       (focus)="_$handleFocus($event)"
-       (keydown)="_handleKeyDown($event)"
-       autocomplete="off">
+<div style="display: flex; height: 100%; width: 100%">
+    <div class="jigsaw-numeric-input-wrapper">
+        <input #input
+               [placeholder]="placeholder"
+               [(ngModel)]="value"
+               [disabled]="disabled"
+               (blur)="_$handleBlur($event)"
+               (focus)="_$handleFocus($event)"
+               (keydown)="_handleKeyDown($event)"
+               autocomplete="off">
 
-<div class="jigsaw-numeric-input-option-box">
-    <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
-         (mousedown)="_$increase($event)">
-        <span class="iconfont iconfont-e24f jigsaw-numeric-input-option-bar-up"></span>
+        <div class="jigsaw-numeric-input-option-box">
+            <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
+                 (mousedown)="_$increase($event)">
+                <span class="iconfont iconfont-e24f jigsaw-numeric-input-option-bar-up"></span>
+            </div>
+            <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$downDisabled"
+                 (mousedown)="_$decrease($event)">
+                <span class="iconfont iconfont-e24c jigsaw-numeric-input-option-bar-down"></span>
+            </div>
+        </div>
     </div>
-    <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$downDisabled"
-         (mousedown)="_$decrease($event)">
-        <span class="iconfont iconfont-e24c jigsaw-numeric-input-option-bar-down"></span>
-    </div>
+
+    <jigsaw-unit *ngIf="unit" position="right" [disabled]="disabled" [data]="unit" [unitWidth]="unitWidth"
+                 [labelField]="unitLabelField" (unitChange)="unitChange.emit($event)"></jigsaw-unit>
 </div>

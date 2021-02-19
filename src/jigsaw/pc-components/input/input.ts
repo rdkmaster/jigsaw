@@ -18,6 +18,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/for
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {JigsawPrefixUnitModule} from "./unit";
+import {GroupOptionValue} from "../list-and-tile/group-common";
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
@@ -208,6 +210,48 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     @Output()
     public iconSelect: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public unit: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public unitWidth: string = '60px';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public unitLabelField: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefix: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefixWidth: string = '60px';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefixLabelField: GroupOptionValue | GroupOptionValue[];
+
+    @Output()
+    public unitChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+
+    @Output()
+    public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
 }
 
 /**
@@ -264,8 +308,8 @@ export class JigsawInput extends JigsawInputBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get autocomplete():string{
-        return this.password ? "new-password" : "off" ;
+    public get autocomplete(): string {
+        return this.password ? "new-password" : "off";
     }
 
     @ViewChild('input')
@@ -304,7 +348,7 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$stopPropagation(event) {
-        if(!this.disabled) {
+        if (!this.disabled) {
             event.preventDefault();
             event.stopPropagation();
         }
@@ -312,7 +356,7 @@ export class JigsawInput extends JigsawInputBase {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, JigsawPrefixUnitModule],
     declarations: [JigsawInput],
     exports: [JigsawInput],
 })

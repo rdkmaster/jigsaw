@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div style="margin: 20px;">
+    <label>单位组合：</label><br>
+    <jigsaw-input placeholder="unit demo" prefix="https://"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" unit="单位"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" unit="单位" prefix="https://"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" unit="单位" prefix="https://" [disabled]="true"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" unit="单位" prefix="https://" width="300"></jigsaw-input>
+
+    <br><br>
+    <label>单位可选：</label><br>
+    <jigsaw-input placeholder="unit demo" [unit]="_$units" [unitWidth]="'100px'" (unitChange)="_$unitChange($event)"
+                  width="300"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" [unit]="_$units" [unitWidth]="'100px'" [disabled]="true" width="300"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" [prefix]="_$prefix" [prefixWidth]="'80px'" (prefixChange)="_$unitChange($event)"
+                  width="300"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" [prefix]="_$prefix" [prefixWidth]="'80px'" [disabled]="true" width="300"></jigsaw-input>
+
+    <br><br>
+    <label>更多内容：</label><br>
+    <jigsaw-input placeholder="unit demo" width="400"
+                  [prefix]="_$prefixIcons" [prefixWidth]="'90px'" (prefixChange)="_$unitChange($event)" [prefixLabelField]="'name'"
+                  [unit]="_$icons" [unitWidth]="'120px'" (unitChange)="_$unitChange($event)" [unitLabelField]="'name'"></jigsaw-input>
+</div>
+
+

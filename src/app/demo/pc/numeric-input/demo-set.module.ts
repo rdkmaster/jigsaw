@@ -8,6 +8,8 @@ import {NumericInputSizeDemoComponent} from "./size/demo.component";
 import {NumericInputSizeDemoModule} from "./size/demo.module";
 import {NumericInputStepDemoComponent} from "./step/demo.component";
 import {NumericInputStepDemoModule} from "./step/demo.module";
+import {NumericInputUnitDemoComponent} from "./unit/demo.component";
+import {NumericInputUnitDemoModule} from "./unit/demo.module";
 
 export const routerConfig = [
     {
@@ -22,6 +24,9 @@ export const routerConfig = [
     {
         path: 'step', component: NumericInputStepDemoComponent
     },
+    {
+        path: 'unit', component: NumericInputUnitDemoComponent
+    },
 ];
 
 @NgModule({
@@ -30,7 +35,8 @@ export const routerConfig = [
         NumericInputBasicDemoModule,
         NumericInputDisabledDemoModule,
         NumericInputSizeDemoModule,
-        NumericInputStepDemoModule
+        NumericInputStepDemoModule,
+        NumericInputUnitDemoModule,
     ]
 })
 export class NumericInputDemoModule {

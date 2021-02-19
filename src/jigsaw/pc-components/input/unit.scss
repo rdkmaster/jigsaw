@@ -1,0 +1,47 @@
+@import "../../common/assets/scss/core/base";
+
+.#{$jigsaw-prefix}-input-unit {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    position: relative;
+
+    .#{$input-prefix-cls}-units {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &-selected {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+
+            &-text {
+                flex: 1;
+                margin: 0 4px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+
+        &-dropdown {
+            margin: 0 5px;
+            font-size: 14px;
+        }
+
+    }
+
+    .#{$input-prefix-cls}-disabled {
+        background-color: $bg-disabled;
+        cursor: not-allowed;
+    }
+}

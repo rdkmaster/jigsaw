@@ -1,0 +1,35 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div style="margin: 20px;">
+    <label>单位组合：</label><br>
+    <jigsaw-numeric-input placeholder="unit demo" unit="单位"></jigsaw-numeric-input>
+    <br>
+    <jigsaw-numeric-input placeholder="unit demo" unit="单位" [disabled]="true"></jigsaw-numeric-input>
+    <br>
+    <jigsaw-numeric-input placeholder="unit demo" unit="单位" width="300"></jigsaw-numeric-input>
+
+    <br><br>
+    <label>单位可选：</label><br>
+    <jigsaw-numeric-input placeholder="unit demo" [unit]="_$units" [unitWidth]="'100px'" (unitChange)="_$unitChange($event)"
+                          width="300"></jigsaw-numeric-input>
+    <br>
+    <jigsaw-numeric-input placeholder="unit demo" [unit]="_$units" [unitWidth]="'100px'" [disabled]="true"
+                          width="300"></jigsaw-numeric-input>
+
+    <br><br>
+    <label>设置尺寸：</label><br>
+    <jigsaw-button-bar [(selectedItems)]="_$size" [data]="_$sizes"></jigsaw-button-bar>
+    <br>
+    <jigsaw-numeric-input #input placeholder="unit demo" [unit]="_$units" [unitWidth]="'100px'" width="300" [size]="_$size"
+                          [valid]="input.value > 10"></jigsaw-numeric-input>
+
+    <br><br>
+    <label>更多内容：</label><br>
+    <jigsaw-numeric-input placeholder="unit demo" width="400"
+                          [unit]="_$icons" [unitWidth]="'120px'" (unitChange)="_$unitChange($event)"
+                          [unitLabelField]="'name'"></jigsaw-numeric-input>
+</div>
+
+
