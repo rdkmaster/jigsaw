@@ -23,7 +23,8 @@ export class RangeDateTimeBasicDemoComponent implements AfterViewInit {
     constructor(public changeDetectorRef: ChangeDetectorRef) {
     }
 
-
+    beginDate = "now-1d";
+    endDate = "now";
 
     ngAfterViewInit() {
         this.changeDetectorRef.detectChanges();
