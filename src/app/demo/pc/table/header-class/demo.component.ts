@@ -4,7 +4,7 @@ import {TableData, ColumnDefine} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./style.css'],
+    styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class TableSetHeaderClassDemoComponent {
