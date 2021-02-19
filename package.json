@@ -9,7 +9,7 @@
         "build": "gulp build:jigsaw:clean",
         "build-mobile": "gulp build:jigsaw-mobile:clean",
         "build-app": "ng build --prod --aot --delete-output-path",
-        "build-formly": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --prod @ngx-formly/jigsaw",
+        "build-formly": "gulp build:formly:clean",
         "test": "ng test jigsaw --code-coverage",
         "lint": "ng lint",
         "e2e": "ng e2e"
