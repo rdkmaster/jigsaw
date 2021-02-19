@@ -39,6 +39,7 @@ export class DateTimeSelectDemoComponent {
 
     date8 = "now";
     weekStart = ['mon'];
+    janX = [4];
 
     date9='2020-07-24';
     gr9;

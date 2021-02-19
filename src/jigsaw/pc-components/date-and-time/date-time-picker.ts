@@ -340,6 +340,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     @RequireMarkForCheck()
     public weekStart: string | TimeWeekStart;
 
+    /**
+     * 设置一年的第一周要包含一月几号
+     * $demo = date-time-picker/week-start
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public firstWeekMustContains: number;
+
     private _updateValueCombine = new EventEmitter();
     private _removeUpdateValueCombineSubscriber: Subscription;
     private _updateValueSeparate = new EventEmitter();

@@ -276,8 +276,28 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         } else {
             this._weekStart = value;
         }
-        // weekStart必须预先设置好，用于初始化之后的计算
+        // weekStart/janX必须预先设置好，用于初始化之后的计算
         TimeService.setWeekStart(this._weekStart);
+    }
+
+    private _firstWeekMustContains: number;
+
+    /**
+     * 设置一年的第一周要包含一月几号
+     * $demo = range-date-time-picker/week-start
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public get firstWeekMustContains(): number {
+        return this._firstWeekMustContains;
+    }
+
+    public set firstWeekMustContains(value: number) {
+        if(CommonUtils.isUndefined(value)) return;
+        value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
+        this._firstWeekMustContains = value;
+        // weekStart/janX必须预先设置好，用于初始化之后的计算
+        TimeService.setFirstWeekOfYear(this._firstWeekMustContains);
     }
 
     /**

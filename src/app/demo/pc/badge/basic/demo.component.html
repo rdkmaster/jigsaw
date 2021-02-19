@@ -1,0 +1,69 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <div style="margin:20px;">
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
+                     jigsawBadgeSize="normal" jigsawBadgeStatus="critical"
+                     [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'solid'" jigsawBadgeStatus="success"
+                     jigsawBadgeTitle="aaasds" jigsawBadgeSize="small" [jigsawBadgePointerCursor]="true"
+                     title="编辑" [icon]="'fa fa-edit'" [iconSize]="100">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'none'" jigsawBadgeStatus="warn" jigsawBadgeSize="normal"
+                     [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'iconfont iconfont-e8f5'" jigsawBadgePosition="right"
+                     jigsawBadgeMaxValue="50" [jigsawBadgeStyle]="'none'" jigsawBadgeSize="large"
+                     [icon]="'fa fa-edit'" [iconSize]="100" title="编辑">
+        </jigsaw-icon>
+    </div>
+
+    <div style="margin:20px;">
+        是否显示徽标：<jigsaw-switch [checked]="true" (checkedChange)="nice = $event ? 'Nice' : ''; dot = $event ? 'dot' : '';"></jigsaw-switch>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-switch>
+        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-input [(value)]="nice" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-input>
+        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
+        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
+                           [data]="cities"></jigsaw-button-bar>
+        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                           [data]="cities"></jigsaw-button-bar>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                            [data]="cities"></jigsaw-radios-lite>
+        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
+                            [data]="cities"></jigsaw-radios-lite>
+    </div>
+
+    <div style="margin:20px;">
+        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="dot"
+                          jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgeSize="small"
+                          jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+    </div>
+</div>

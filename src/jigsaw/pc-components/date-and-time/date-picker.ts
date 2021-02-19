@@ -708,7 +708,34 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         TimeService.setWeekStart(this._weekStart);
         if(this.initialized) {
             if(this.date && this.gr == TimeGr.week) {
-                // weekStart改变时，在跨年时之前的weekDate可能会无效，需要重新计算
+                // weekStart/janX改变时，在跨年时之前的weekDate可能会无效，需要重新计算
+                this.date = TimeService.getDateByGr(this.date, this.gr)
+            }
+            this._createCalendar();
+        }
+    }
+
+    private _firstWeekMustContains: number;
+    /**
+     * 设置一年的第一周要包含一月几号
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = date-picker/week-start
+     */
+    @Input()
+    public get firstWeekMustContains(): number {
+        return this._firstWeekMustContains;
+    }
+
+    public set firstWeekMustContains(value: number) {
+        if(CommonUtils.isUndefined(value)) return;
+        value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
+        this._firstWeekMustContains = value;
+        TimeService.setFirstWeekOfYear(this._firstWeekMustContains);
+        if(this.initialized) {
+            if(this.date && this.gr == TimeGr.week) {
+                // weekStart/janX改变时，在跨年时之前的weekDate可能会无效，需要重新计算
                 this.date = TimeService.getDateByGr(this.date, this.gr)
             }
             this._createCalendar();

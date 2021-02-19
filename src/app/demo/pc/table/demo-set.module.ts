@@ -93,6 +93,8 @@ import {TreeTableDemoComponent} from "./tree-table/demo.component";
 import {TreeTableDemoModule} from "./tree-table/demo.module";
 import {TableCellEditablePropertyDemoComponent} from "./cell-editable-property/demo.component";
 import {TableCellEditablePropertyDemoModule} from "./cell-editable-property/demo.module";
+import {TableUpdateColumnDefinesDemoModule} from "./update-column-defines/demo.module";
+import {TableUpdateColumnDefinesDemoComponent} from "./update-column-defines/demo.component";
 
 export const routerConfig = [
     {
@@ -230,7 +232,12 @@ export const routerConfig = [
     {
         path: 'cell-editable-property', component: TableCellEditablePropertyDemoComponent
     },
-    {path:"draggable-table",component:TableDraggableDemoComponent}
+    {
+        path: "draggable-table", component: TableDraggableDemoComponent
+    },
+    {
+        path: "update-column-defines", component: TableUpdateColumnDefinesDemoComponent
+    }
 ];
 
 @NgModule({
@@ -246,7 +253,7 @@ export const routerConfig = [
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
-        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule
+        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule
     ]
 })
 export class TableDemoModule {
