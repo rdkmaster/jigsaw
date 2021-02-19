@@ -1,2 +1,2 @@
 export {FormlyJigsawButtonModule} from './button.module';
-export {FormlyFieldButton} from './button.type';
+export {FormlyFieldButton, ColorType} from './button.type';

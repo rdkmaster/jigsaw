@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FieldType} from '@ngx-formly/core';
-import {ColorType} from "../../button/src/button.type";
+import {ColorType} from "@ngx-formly/jigsaw/button";
 
 @Component({
     selector: 'formly-field-jigsaw-button-bar',
