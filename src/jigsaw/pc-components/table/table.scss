@@ -23,6 +23,21 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 td {
                     height: 40px;
                     background: $bg-header;
+                    
+                    .#{$table-prefix-cls}-header-cell{
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+
+                        .iconfont{
+                            margin-right: 2px;
+                        }
+
+                        ng-component{
+                            width: 100%;
+                        }
+                    }
                 }
             }
         }
