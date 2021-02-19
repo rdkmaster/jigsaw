@@ -159,11 +159,10 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         }
 
         &-day-cell {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            box-sizing: border-box;
 
             span {
                 display: inline-flex;
@@ -194,6 +193,8 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 border-style: solid;
                 border-color: $brand-default;
                 border-radius: $border-radius-sm;
+                box-sizing: border-box;
+                z-index: $zindex-popover-level-1;
             }
 
             &-prev-next span {
