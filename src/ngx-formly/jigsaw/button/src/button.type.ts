@@ -2,11 +2,11 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FieldType} from '@ngx-formly/core';
 
 export enum ColorType {
-    DEFAULT = 'default', PRIMARY = 'primary', WARNING = 'warning', ERROR = 'error', DANGER = 'danger'
+    default = 'default', primary = 'primary', warning = 'warning', error = 'error', danger = 'danger'
 }
 
 enum SizeType {
-    DEFAULT = 'default', SMALL = 'small', LARGE = 'large'
+    default = 'default', small = 'small', large = 'large'
 }
 
 @Component({
@@ -28,8 +28,8 @@ export class FormlyFieldButton extends FieldType {
         templateOptions: {
             hideLabel: true,
             content: '按钮',
-            colorType: ColorType.DEFAULT,
-            preSize: SizeType.DEFAULT
+            colorType: ColorType.default,
+            preSize: SizeType.default
         },
     };
 }

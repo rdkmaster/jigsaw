@@ -35,7 +35,6 @@ export class FormlyFieldRangeDateTimeSelect extends FieldType {
             disabled: false,
             valid: true,
             gr: TimeGr.date,
-            // date: {beginDate: 'now-3d', endDate: 'now'},
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave'
         },

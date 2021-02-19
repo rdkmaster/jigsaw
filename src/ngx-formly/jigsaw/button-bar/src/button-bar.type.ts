@@ -26,7 +26,7 @@ export class FormlyFieldButtonBar extends FieldType {
         templateOptions: {
             valid: true,
             labelField: 'label',
-            colorType: ColorType.PRIMARY
+            colorType: ColorType.primary
         },
     };
 }
