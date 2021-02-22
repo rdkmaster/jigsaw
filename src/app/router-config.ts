@@ -232,8 +232,8 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/time-section/demo-set.module').then(m => m.TimeSectionDemoModule),
     },
     {
-        path: "pc/title",
-        loadChildren: () => import('./demo/pc/title/demo-set.module').then(m => m.TitleDemoModule),
+        path: "pc/header",
+        loadChildren: () => import('./demo/pc/header/demo-set.module').then(m => m.HeaderDemoModule),
     }
 ];
 export const routerConfigMobile = [

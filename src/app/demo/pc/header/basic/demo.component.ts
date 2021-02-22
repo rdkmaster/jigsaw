@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.scss"]
 })
-export class JigsawTitleBasicDemoComponent {
+export class JigsawHeaderBasicDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
