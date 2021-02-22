@@ -78,6 +78,7 @@ export * from "./pc-components/tag/tag";
 export * from "./pc-components/textarea/index";
 export * from "./pc-components/tooltip/tooltip";
 export * from "./pc-components/transfer/transfer";
+export * from "./pc-components/header/header";
 export * from "./pc-components/tree/tree-ext";
 export * from "./pc-components/tree/ztree-types";
 export * from "./pc-components/upload/index";
