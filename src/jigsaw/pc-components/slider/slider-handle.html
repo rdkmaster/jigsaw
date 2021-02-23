@@ -1,3 +1,5 @@
-<div class="jigsaw-slider-handle"
-     [ngStyle]="_$handleStyle"
-     (mousedown)="_$startToDrag()"></div>
+<div class="jigsaw-slider-handle" [ngStyle]="_$handleStyle" (mousedown)="_$startToDrag()">
+     <div class="jigsaw-slider-tooltip">
+         {{value}}
+     </div>
+</div>

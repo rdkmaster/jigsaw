@@ -63,12 +63,51 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         border: 2px solid $brand-default;
         background-color: $default-color;
         z-index: $zindex-level-2;
+        background: red;
 
-        transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        transition: border-color 0.3s ease,
+            transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+        .jigsaw-slider-tooltip {
+            display: none;
+            justify-content: center;
+            position: absolute;
+            min-width: 30px;
+            height: $height-sm;
+            background: $bg-body;
+            top: -35px;
+            left: 50%;
+            padding: 3px 5px;
+            border-radius: $border-radius-base;
+            font-size: $font-size-base;
+            transform: translateX(-50%);
+            box-shadow: $box-shadow-lv2;
+
+            &:after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                width: 0;
+                height: 0;
+                pointer-events: none;
+                border-width: 5px;
+                border-style: solid;
+                border-color: $bg-body;
+                border-right-color: transparent;
+                border-left-color: transparent;
+                border-bottom-color: transparent;
+            }
+        }
 
         &:hover {
             border-color: $brand-default;
             transform-origin: center center;
+
+            .jigsaw-slider-tooltip {
+                display: flex;
+            }
         }
 
         &:active {

@@ -3,15 +3,15 @@
  */
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-
+import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawSlider, JigsawSliderHandle} from './slider';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule, JigsawFloatModule
     ],
     exports: [JigsawSlider],
-    declarations: [JigsawSlider,JigsawSliderHandle],
+    declarations: [JigsawSlider, JigsawSliderHandle],
     providers: [],
 })
 export class JigsawSliderModule { }

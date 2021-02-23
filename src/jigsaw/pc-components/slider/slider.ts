@@ -23,7 +23,7 @@ import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-
+import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 export class SliderMark {
     value: number;
     label: string;
