@@ -21,6 +21,7 @@
             flex-grow: 0;
             font-size: 20px;
             margin-right: 11px;
+            line-height: 22px;
 
             .jigsaw-notification-icon-success {
                 color: $success-default;
@@ -46,6 +47,7 @@
         .jigsaw-notification-text {
             flex-grow: 1;
             width: calc(100% - 94px);
+            height: 100%;
 
             // 标题
             .jigsaw-notification-caption {
@@ -85,5 +87,21 @@
         jigsaw-button {
             margin-left: 6px;
         }
+    }
+
+    &.jigsaw-notification-success {
+        border-left: 3px solid $success-default;
+    }
+
+    &.jigsaw-notification-error {
+        border-left: 3px solid $error-default;
+    }
+
+    &.jigsaw-notification-warning {
+        border-left: 3px solid $warning-default;
+    }
+
+    &.jigsaw-notification-info {
+        border-left: 3px solid $primary-default;
     }
 }

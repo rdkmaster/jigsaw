@@ -9,6 +9,8 @@ import {
     Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {take} from 'rxjs/operators';
+import {TranslateService} from "@ngx-translate/core";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
     ButtonInfo,
@@ -22,8 +24,6 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {take} from 'rxjs/operators';
-import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 /**
@@ -154,7 +154,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this.caption = iconType2Caption.hasOwnProperty(value.iconType) ?
             this._translateService.instant(iconType2Caption[value.iconType]) : value.caption;
         this.message = value.message || 'the "message" property in the initData goes here.';
-        this.icon = value.icon;
+        this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;
         this.position = value.position;
         this.innerHtmlContext = value.innerHtmlContext;
@@ -253,6 +253,18 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
         this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
         this._$onLeave();
+    }
+
+    /**
+     * @internal
+     */
+    public _$getClassObject(classPrefix: string): {[className: string]: boolean} {
+        return {
+            [`${classPrefix}-success`]: this._$iconType == 'success',
+            [`${classPrefix}-error`]: this._$iconType == 'error',
+            [`${classPrefix}-warning`]: this._$iconType == 'warning',
+            [`${classPrefix}-info`]: this._$iconType != 'success' && this._$iconType != 'error' && this._$iconType != 'warning'
+        };
     }
 
     /**
@@ -422,7 +434,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         if (CommonUtils.isUndefined(message)) {
             return;
         }
-        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options || {});
         opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
         opt.position = typeof opt.position === 'string' ? NotificationPosition[<string>opt.position] : opt.position;
@@ -477,7 +489,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e1a5';
+        opt.icon = 'iconfont iconfont-e437';
         opt.iconType = 'warning';
         return JigsawNotification.show(message, opt);
     };

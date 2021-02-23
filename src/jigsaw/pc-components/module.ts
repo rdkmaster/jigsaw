@@ -61,6 +61,7 @@ import {JigsawRangeDateTimeSelectModule} from "./date-and-time/range-date-time-s
 import {JigsawColorSelectModule} from "./color-select/index";
 import {JigsawBadgeModule} from "../common/directive/badge/index";
 import {JigsawTimeSectionModule} from "./date-and-time/time-section";
+import {JigsawHeaderModule} from "./header/header";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -103,6 +104,7 @@ const JIGSAW_MODULE = [
     JigsawTagModule,
     JigsawTileSelectModule,
     JigsawTileLiteModule,
+    JigsawHeaderModule,
     JigsawTooltipModule,
     JigsawTreeExtModule,
     JigsawTrustedHtmlModule,
