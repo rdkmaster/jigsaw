@@ -1,0 +1,17 @@
+<div class="jigsaw-circle-progress">
+    <div>
+        <div class="full jigsaw-circle-progress-slice">
+            <div class="jigsaw-circle-progress-fill"></div>
+        </div>
+        <div class="jigsaw-circle-progress-slice">
+            <div class="jigsaw-circle-progress-fill"></div>
+            <div class="jigsaw-circle-progress-fill jigsaw-circle-progress-bar"></div>
+        </div>
+    </div>
+    <div class="jigsaw-circle-progress-overlay">
+        <span *ngIf="showMarker">{{data + "%"}}</span>
+    </div>
+    <div *ngIf="label" class="jigsaw-circle-progress-label" title="{{label}}">
+        <span>{{label}}</span>
+    </div>
+</div>

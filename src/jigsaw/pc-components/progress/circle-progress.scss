@@ -1,0 +1,169 @@
+$circle-progress-prefix-cls: #{$jigsaw-prefix}-circle-progress;
+
+.#{$circle-progress-prefix-cls}-host {
+    .#{$circle-progress-prefix-cls} {
+        $circle-background: #d9d9d9;
+        $circle-color: $brand-default;
+        $inset-color: #fbfbfb;
+        $transition-length: 1s;
+
+        position: relative;
+        background-color: $circle-background;
+        border-radius: 50%;
+
+        .#{$circle-progress-prefix-cls}-slice,
+        .#{$circle-progress-prefix-cls}-fill {
+            position: absolute;
+            -webkit-backface-visibility: hidden;
+            transition: transform $transition-length;
+            border-radius: 50%;
+        }
+
+        .#{$circle-progress-prefix-cls}-slice
+            .#{$circle-progress-prefix-cls}-fill {
+            background-color: $circle-color;
+        }
+
+        .#{$circle-progress-prefix-cls}-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            background-color: $inset-color;
+            border-radius: 50%;
+            font-size: $font-size-base;
+        }
+
+        .#{$circle-progress-prefix-cls}-label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            > span {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+    }
+
+    &.#{$circle-progress-prefix-cls}-size-lg {
+        $circle-size: 66px;
+        $inset-size: 60px;
+        .#{$circle-progress-prefix-cls} {
+            width: $circle-size;
+            height: $circle-size;
+
+            .#{$circle-progress-prefix-cls}-slice,
+            .#{$circle-progress-prefix-cls}-fill {
+                width: $circle-size;
+                height: $circle-size;
+            }
+
+            .#{$circle-progress-prefix-cls}-slice {
+                clip: rect(0px, $circle-size, $circle-size, $circle-size/2);
+                .#{$circle-progress-prefix-cls}-fill {
+                    clip: rect(0px, $circle-size/2, $circle-size, 0px);
+                }
+            }
+
+            .#{$circle-progress-prefix-cls}-overlay {
+                width: $inset-size;
+                height: $inset-size;
+                margin-left: ($circle-size - $inset-size)/2;
+                margin-top: ($circle-size - $inset-size)/2;
+            }
+
+            .#{$circle-progress-prefix-cls}-label {
+                width: $circle-size * 2;
+            }
+        }
+    }
+
+    &.#{$circle-progress-prefix-cls}-size-med {
+        $circle-size: 38px;
+        $inset-size: 34px;
+        .#{$circle-progress-prefix-cls} {
+            width: $circle-size;
+            height: $circle-size;
+
+            .#{$circle-progress-prefix-cls}-slice,
+            .#{$circle-progress-prefix-cls}-fill {
+                width: $circle-size;
+                height: $circle-size;
+            }
+
+            .#{$circle-progress-prefix-cls}-slice {
+                clip: rect(0px, $circle-size, $circle-size, $circle-size/2);
+                .#{$circle-progress-prefix-cls}-fill {
+                    clip: rect(0px, $circle-size/2, $circle-size, 0px);
+                }
+            }
+
+            .#{$circle-progress-prefix-cls}-overlay {
+                width: $inset-size;
+                height: $inset-size;
+                margin-left: ($circle-size - $inset-size)/2;
+                margin-top: ($circle-size - $inset-size)/2;
+            }
+
+            .#{$circle-progress-prefix-cls}-label {
+                width: $circle-size * 2;
+            }
+        }
+    }
+
+    &.#{$circle-progress-prefix-cls}-size-sm {
+        $circle-size: 22px;
+        $inset-size: 20px;
+        .#{$circle-progress-prefix-cls} {
+            width: $circle-size;
+            height: $circle-size;
+
+            .#{$circle-progress-prefix-cls}-slice,
+            .#{$circle-progress-prefix-cls}-fill {
+                width: $circle-size;
+                height: $circle-size;
+            }
+
+            .#{$circle-progress-prefix-cls}-slice {
+                clip: rect(0px, $circle-size, $circle-size, $circle-size/2);
+                .#{$circle-progress-prefix-cls}-fill {
+                    clip: rect(0px, $circle-size/2, $circle-size, 0px);
+                }
+            }
+
+            .#{$circle-progress-prefix-cls}-overlay {
+                width: $inset-size;
+                height: $inset-size;
+                margin-left: ($circle-size - $inset-size)/2;
+                margin-top: ($circle-size - $inset-size)/2;
+                span {
+                    padding-left: $circle-size * 2 + 10px;
+                }
+            }
+
+            .#{$circle-progress-prefix-cls}-label {
+                width: $circle-size * 2;
+            }
+        }
+    }
+
+    $i: 0;
+    $increment: 180deg / 100;
+    @while $i <= 100 {
+        &[ng-reflect-data="#{$i}"] {
+            .#{$circle-progress-prefix-cls}-slice.full,
+            .#{$circle-progress-prefix-cls}-fill {
+                transform: rotate($increment * $i);
+            }
+            .#{$circle-progress-prefix-cls}-fill.#{$circle-progress-prefix-cls}-bar {
+                transform: rotate($increment * $i * 2);
+            }
+            $i: $i + 1;
+        }
+    }
+}

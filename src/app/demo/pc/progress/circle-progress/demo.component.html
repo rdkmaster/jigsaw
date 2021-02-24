@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<section>
+    <jigsaw-header [level]="2"> 有Large、meduim、small三种大小 </jigsaw-header>
+    <div>
+        <jigsaw-circle-progress [data]="getRandomData()" size="large" label="large"></jigsaw-circle-progress>
+        <jigsaw-circle-progress [data]="getRandomData()" size="medium" label="medium"></jigsaw-circle-progress>
+        <jigsaw-circle-progress [data]="getRandomData()" size="small" label="small"></jigsaw-circle-progress>
+    </div>
+
+    <jigsaw-header [level]="2"> 可选择是否显示数据 </jigsaw-header>
+    <div>
+        <jigsaw-circle-progress [data]="getRandomData()" size="large" [showMarker]="false"></jigsaw-circle-progress>
+        <jigsaw-circle-progress [data]="getRandomData()" size="medium" [showMarker]="false"></jigsaw-circle-progress>
+        <jigsaw-circle-progress [data]="getRandomData()" size="small" [showMarker]="false"></jigsaw-circle-progress>
+    </div>
+
+    <jigsaw-header [level]="2"> 可选择是否添加label </jigsaw-header>
+    <div>
+        <jigsaw-circle-progress [data]="getRandomData()" size="large" label="添加文字"></jigsaw-circle-progress>
+        <jigsaw-circle-progress [data]="getRandomData()" size="medium" label="非常长长长长长长长长长长长长的文字"></jigsaw-circle-progress>
+        <jigsaw-circle-progress [data]="getRandomData()" size="small"></jigsaw-circle-progress>
+    </div>
+</section>
