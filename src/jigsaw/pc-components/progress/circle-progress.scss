@@ -2,9 +2,9 @@ $circle-progress-prefix-cls: #{$jigsaw-prefix}-circle-progress;
 
 .#{$circle-progress-prefix-cls}-host {
     .#{$circle-progress-prefix-cls} {
-        $circle-background: #d9d9d9;
+        $circle-background: $bg-gray;
         $circle-color: $brand-default;
-        $inset-color: #fbfbfb;
+        $inset-color: $bg-body;
         $transition-length: 1s;
 
         position: relative;
@@ -15,6 +15,7 @@ $circle-progress-prefix-cls: #{$jigsaw-prefix}-circle-progress;
         .#{$circle-progress-prefix-cls}-fill {
             position: absolute;
             -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
             transition: transform $transition-length;
             border-radius: 50%;
         }
