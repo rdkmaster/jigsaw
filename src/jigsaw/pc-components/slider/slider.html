@@ -10,7 +10,8 @@
               [ngStyle]="mark.dotStyle"></span>
     </div>
 
-    <jigsaw-slider-handle *ngFor="let item of _$value;let i = index;" [value]="item" [key]="i">
+    <jigsaw-slider-handle *ngFor="let item of _$value; let i = index; trackBy: _$trackBy"
+                          [value]="item" [index]="i" [tooltipPosition]="vertical ? 'right' : 'top'">
     </jigsaw-slider-handle>
 
     <div *ngIf="_$marks.length > 0" class="jigsaw-slider-mark">

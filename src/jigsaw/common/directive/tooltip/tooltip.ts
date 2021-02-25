@@ -1,7 +1,18 @@
-import {ChangeDetectionStrategy, Component, Directive, EventEmitter, Input, NgModule, Output, ViewEncapsulation} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Directive,
+    EventEmitter,
+    Input,
+    NgModule,
+    Output,
+    ViewEncapsulation
+} from "@angular/core";
 import {ButtonInfo, IPopupable, PopupService} from "../../service/popup.service";
 import {FloatPosition, JigsawFloatBase} from "../float/float";
 import {JigsawTrustedHtmlModule} from "../trusted-html/trusted-html";
+import {CommonUtils} from "../../core/utils/common-utils";
 
 export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any };
 export type TooltipRenderAs = 'plain-text' | 'html';
@@ -15,11 +26,14 @@ export class JigsawTooltipComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
     public initData: TooltipInitData;
 
+    constructor(public changeDetector: ChangeDetectorRef) {
+    }
+
     public get tooltip(): string {
-        if (!this.initData) {
+        if (!this.initData || CommonUtils.isUndefined(this.initData.tooltip)) {
             return '...';
         }
-        let tooltip = this.initData.tooltip;
+        let tooltip = this.initData.tooltip.toString();
         if (this.initData.renderAs !== 'html') {
             tooltip = tooltip.replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
@@ -54,18 +68,24 @@ export class JigsawTooltip extends JigsawFloatBase {
     @Output('jigsawTooltipOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private _tooltip: string;
+    private _tooltip: string | number;
 
     @Input()
-    public get jigsawTooltip(): string {
+    public get jigsawTooltip(): string | number {
         return this._tooltip;
     }
 
-    public set jigsawTooltip(value: string) {
+    public set jigsawTooltip(value: string | number) {
         this._tooltip = value;
-        this.jigsawFloatInitData.tooltip = this._tooltip;
+        this.jigsawFloatInitData.tooltip = CommonUtils.isDefined(value) ? value.toString() : undefined;
         this.jigsawFloatInitData.renderAs = this.renderAs;
         this.jigsawFloatInitData.context = this.context;
+        this.runAfterMicrotasks(() => {
+            // 这if等于在做非空判断
+            if (this.popupInstance instanceof JigsawTooltipComponent) {
+                this.popupInstance.changeDetector.markForCheck();
+            }
+        });
     }
 
     /**
