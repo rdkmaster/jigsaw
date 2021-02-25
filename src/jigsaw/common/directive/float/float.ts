@@ -40,11 +40,28 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * @internal
      */
-    public jigsawFloatOpenDelay: number = 100;
+    public _jigsawFloatOpenDelay: number = 100;
+
+    public get jigsawFloatOpenDelay(): number {
+        return this._jigsawFloatOpenDelay;
+    }
+
+    public set jigsawFloatOpenDelay(value: number) {
+        this._jigsawFloatOpenDelay = typeof value != 'number' ? parseInt(value) : value;
+    }
+
     /**
      * @internal
      */
-    public jigsawFloatCloseDelay: number = 400;
+    private _jigsawFloatCloseDelay: number = 400;
+
+    public get jigsawFloatCloseDelay(): number {
+        return this._jigsawFloatCloseDelay;
+    }
+
+    public set jigsawFloatCloseDelay(value: number) {
+        this._jigsawFloatCloseDelay = typeof value != 'number' ? parseInt(value) : value;
+    }
 
     public get popupElement(): HTMLElement {
         return this._popupInfo ? this._popupInfo.element : null;
@@ -169,6 +186,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._init();
     }
 
+    /**
+     * 留给子类去覆盖
+     */
     protected _init(): void {
     }
 
@@ -649,7 +669,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
         } else if (this.jigsawFloatPosition === 'left' || this.jigsawFloatPosition === 'right') {
             pos.top = Math.max(8 /*安全边距*/, pos.top);
-            const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
+            const leftDelta = popupElement.offsetWidth + offsetWidth + differ + 8 /*安全边距*/;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         }
         return pos;
@@ -662,9 +682,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         }
         const totalWidth = window.pageXOffset + document.body.clientWidth;
         // 宿主组件在可视范围外
-        if (point.x < 0 && (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'bottomLeft') && leftDelta <= totalWidth - (offsetWidth + point.x)) {
+        const atLeft = this.jigsawFloatPosition == 'topLeft' || this.jigsawFloatPosition == 'bottomLeft' || this.jigsawFloatPosition == 'left';
+        const atRight = this.jigsawFloatPosition == 'topRight' || this.jigsawFloatPosition == 'bottomRight' || this.jigsawFloatPosition == 'right';
+        if (point.x < 0 && atLeft && leftDelta <= totalWidth - (offsetWidth + point.x)) {
             pos.left += offsetWidth;
-        } else if (point.x + offsetWidth > totalWidth && (this.jigsawFloatPosition === 'topRight' || this.jigsawFloatPosition === 'bottomRight') && point.x >= leftDelta) {
+        } else if (point.x + offsetWidth > totalWidth && atRight && point.x >= leftDelta) {
             pos.left -= offsetWidth;
         }
         if (pos.left < 0 && pos.left + leftDelta + popupElement.offsetWidth <= totalWidth) {
@@ -685,9 +707,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         const totalHeight = window.pageYOffset + document.body.clientHeight;
 
         // 宿主组件在可视范围外
-        if (point.y < 0 && (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop') && upDelta <= totalHeight - (offsetHeight + point.y)) {
+        const atTop = this.jigsawFloatPosition == 'leftTop' || this.jigsawFloatPosition == 'rightTop' || this.jigsawFloatPosition == 'top';
+        const atBottom = this.jigsawFloatPosition == 'leftBottom' || this.jigsawFloatPosition == 'rightBottom' || this.jigsawFloatPosition == 'bottom';
+        if (point.y < 0 && atTop && upDelta <= totalHeight - (offsetHeight + point.y)) {
             pos.top += offsetHeight;
-        } else if (point.y + offsetHeight > totalHeight && (this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') && point.y >= upDelta) {
+        } else if (point.y + offsetHeight > totalHeight && atBottom && point.y >= upDelta) {
             pos.top -= offsetHeight;
         }
         if (pos.top < 0 && pos.top + upDelta + popupElement.offsetHeight <= totalHeight) {
