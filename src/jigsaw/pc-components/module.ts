@@ -25,7 +25,7 @@ import {JigsawTableRendererModule} from "./table/table-renderer";
 import {JigsawTabsModule} from './tabs/index';
 import {JigsawTagModule} from './tag/tag';
 import {JigsawTileSelectModule} from './list-and-tile/tile';
-import {JigsawTooltipModule} from './tooltip/tooltip';
+import {JigsawTooltipModule} from '../common/directive/tooltip/tooltip';
 import {JigsawTreeExtModule} from './tree/tree-ext';
 import {JigsawMovableModule} from "../common/directive/movable/index";
 import {JigsawFloatModule} from "../common/directive/float/float";

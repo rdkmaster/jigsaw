@@ -1,0 +1,10 @@
+.movable {
+    position: fixed;
+    cursor: move;
+    left: 20px;
+    top: 100px;
+}
+
+.label {
+    padding: 6px 12px;
+}

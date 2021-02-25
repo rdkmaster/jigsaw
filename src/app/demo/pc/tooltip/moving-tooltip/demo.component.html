@@ -4,13 +4,8 @@
 
 
 <!-- start to learn the demo from here -->
-编辑tooltip
-<jigsaw-input width="370" [(value)]="tooltipMessage">
-</jigsaw-input>
-
-<br>
-<br>
-
-<jigsaw-button width="180px" [jigsawTooltip]="tooltipMessage">
-    鼠标挪到这里显示tooltip
-</jigsaw-button>
+<button j-movable class="movable" (jigsawMovableMoving)="onMoving()">
+    <p #tooltip class="label" jigsawTooltip="拖动按钮跟着跑的Tooltip">
+        拖动按钮看效果
+    </p>
+</button>
