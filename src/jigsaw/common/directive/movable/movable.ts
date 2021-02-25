@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2} from "@angular/core";
 import {AffixUtils} from "../../core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
@@ -46,12 +46,16 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
     };
 
+    @Output('jigsawMovableMoving')
+    public moving = new EventEmitter<{x: number, y: number}>();
+
     private _dragMove = (event) => {
         if (this._moving) {
             const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0);
             const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0);
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
             this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
+            this.moving.emit({x: ox, y: oy});
         }
     };
 
