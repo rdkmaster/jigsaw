@@ -2,8 +2,8 @@
                 [autoClose]="!multipleSelect" [placeholder]="placeholder" [disabled]="disabled"
                 [showValueBorder]="multipleSelect" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
                 (openChange)="_$onComboOpenChange($event)" (valueChange)="_$handleClearable($event)"
-                (remove)="_$onTagRemove($event)"
-                width="100%" [autoWidth]="!optionWidth" [valid]="valid" [maxHeight]="maxHeight">
+                (remove)="_$onTagRemove($event)" width="100%" [autoWidth]="!optionWidth" [valid]="valid"
+                [maxHeight]="maxHeight">
     <ng-template>
         <j-list-lite [data]="data" [labelField]="labelField" [trackItemBy]="trackItemBy"
                      [(selectedItems)]="_$selectedItems" [multipleSelect]="multipleSelect"
