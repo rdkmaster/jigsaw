@@ -283,7 +283,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
                 this.closeFloat(event);
-            }, this.jigsawFloatCloseDelay);
+            }, this._jigsawFloatCloseDelay);
         }
     }
 
