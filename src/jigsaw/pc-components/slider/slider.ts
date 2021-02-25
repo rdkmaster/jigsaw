@@ -15,14 +15,16 @@ import {
     ViewEncapsulation,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Injector
+    Injector, ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {JigsawTooltip} from "../../common/directive/tooltip/tooltip";
+import {FloatPosition} from "../../common/directive/float/float";
 
 export class SliderMark {
     value: number;
@@ -39,7 +41,7 @@ export class SliderMark {
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSliderHandle implements OnInit {
+export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit {
 
     private _value: number;
 
@@ -47,7 +49,7 @@ export class JigsawSliderHandle implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public key: number;
+    public index: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -62,12 +64,18 @@ export class JigsawSliderHandle implements OnInit {
         this._valueToPos();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public tooltipPosition: FloatPosition = 'top';
+
     @Output()
     public change = new EventEmitter<number>();
 
     private _valueToPos() {
         this._offset = this._slider._transformValueToPos(this.value);
-        this.setHandleStyle();
+        this._setHandleStyle();
     }
 
     private _offset: number = 0;
@@ -77,12 +85,13 @@ export class JigsawSliderHandle implements OnInit {
      */
     public _$handleStyle = {};
 
-    private setHandleStyle() {
+    private _setHandleStyle() {
         if (isNaN(this._offset)) {
             return;
         }
         this._zone.runOutsideAngular(() => {
-            if (this._slider.vertical) { // 兼容垂直滑动条;
+            // 兼容垂直滑动条;
+            if (this._slider.vertical) {
                 this._$handleStyle = {
                     bottom: this._offset + "%"
                 }
@@ -96,14 +105,14 @@ export class JigsawSliderHandle implements OnInit {
 
     private _dragging: boolean = false;
 
-    public transformPosToValue(pos) {
+    private _transformPosToValue(pos: {x: number, y: number}): number {
         // 更新取得的滑动条尺寸.
         this._slider._refresh();
-        let dimensions = this._slider._dimensions;
+        const dimensions = this._slider._dimensions;
 
         // bottom 在dom中的位置.
-        let offset = this._slider.vertical ? dimensions.bottom : dimensions.left;
-        let size = this._slider.vertical ? dimensions.height : dimensions.width;
+        const offset = this._slider.vertical ? dimensions.bottom : dimensions.left;
+        const size = this._slider.vertical ? dimensions.height : dimensions.width;
         let posValue = this._slider.vertical ? pos.y - 6 : pos.x;
 
         if (this._slider.vertical) {
@@ -113,9 +122,7 @@ export class JigsawSliderHandle implements OnInit {
         }
 
         let newValue = Math.abs(posValue - offset) / size * (this._slider.max - this._slider.min) + (this._slider.min - 0); // 保留两位小数
-
-        let m = this._calFloat(this._slider.step);
-
+        const m = this._calFloat(this._slider.step);
         // 解决出现的有时小数点多了N多位.
         newValue = Math.round(Math.round(newValue / this._slider.step) * this._slider.step * Math.pow(10, m)) / Math.pow(10, m);
 
@@ -123,62 +130,73 @@ export class JigsawSliderHandle implements OnInit {
     }
 
     /**
-     * 计算需要保留小数的位数
-     * 子级组件需要用到
-     * @internal
+     * 增加步长的计算，计算需要保留小数的位数
      */
-    public _calFloat(value: number): number {
-        // 增加步长的计算;
-        let m = 0;
+    private _calFloat(value: number): number {
         try {
-            m = this._slider.step.toString().split(".")[1].length;
+            return this._slider.step.toString().split(".")[1].length;
         } catch (e) {
+            return 0;
         }
-        return m;
     }
 
     /**
      * @internal
      */
-    public _$startToDrag() {
+    public _$startToDrag(): void {
+        this._tooltip.jigsawFloatCloseTrigger = 'none';
         this._dragging = true;
         this._registerGlobalEvent();
     }
 
-    globalEventMouseMove: Function;
-    globalEventMouseUp: Function;
+    private _removeGlobalEventMouseMoveListener: Function;
+    private _removeGlobalEventMouseUpListener: Function;
 
-    _registerGlobalEvent() {
-        this.globalEventMouseMove = this._render.listen("document", "mousemove", (e) => {
-            this._$updateValuePosition(e);
+    private _registerGlobalEvent(): void {
+        if (this._removeGlobalEventMouseMoveListener) {
+            this._removeGlobalEventMouseMoveListener();
+        }
+        this._removeGlobalEventMouseMoveListener = this._render.listen("document", "mousemove", (e) => {
+            this._updateValuePosition(e);
         });
-        this.globalEventMouseUp = this._render.listen("document", "mouseup", () => {
+
+        if (this._removeGlobalEventMouseUpListener) {
+            this._removeGlobalEventMouseUpListener();
+        }
+        this._removeGlobalEventMouseUpListener = this._render.listen("document", "mouseup", () => {
             this._dragging = false;
             this._destroyGlobalEvent();
         });
     }
 
-    _destroyGlobalEvent() {
-        if (this.globalEventMouseMove) {
-            this.globalEventMouseMove();
+    private _destroyGlobalEvent() {
+        if (this._removeGlobalEventMouseMoveListener) {
+            this._removeGlobalEventMouseMoveListener();
         }
-
-        if (this.globalEventMouseUp) {
-            this.globalEventMouseUp();
+        if (this._removeGlobalEventMouseUpListener) {
+            this._removeGlobalEventMouseUpListener();
         }
-    }
-
-    private _slider: JigsawSlider; // 父组件;
-
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any, protected _zone: NgZone) {
-        this._slider = slider;
+        this._tooltip.jigsawFloatCloseTrigger = 'mouseleave';
     }
 
     /**
-     * 改变value的值
-     * @internal
+     * 父组件
+     * @private
      */
-    public _$updateValuePosition(event?) {
+    private _slider: JigsawSlider;
+
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any, protected _zone: NgZone) {
+        super();
+        this._slider = slider;
+    }
+
+    @ViewChild(JigsawTooltip)
+    private _tooltip: JigsawTooltip;
+
+    /**
+     * 改变value的值
+     */
+    private _updateValuePosition(event?) {
         if (!this._dragging || this._slider.disabled) {
             return;
         }
@@ -187,12 +205,12 @@ export class JigsawSliderHandle implements OnInit {
         event.stopPropagation();
         event.preventDefault();
 
-        let pos = {
+        const pos = {
             x: event["clientX"],
             y: event["clientY"]
         };
 
-        let newValue = this.transformPosToValue(pos);
+        let newValue = this._transformPosToValue(pos);
 
         if (this.value === newValue) {
             return;
@@ -200,7 +218,10 @@ export class JigsawSliderHandle implements OnInit {
 
         this.value = newValue;
 
-        this._slider._updateValue(this.key, newValue);
+        this._slider._updateValue(this.index, newValue);
+        this.runAfterMicrotasks(() => {
+            this._tooltip.reposition();
+        });
     }
 
     ngOnInit() {
@@ -246,7 +267,15 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public valid: boolean = true;
 
     // Todo 支持滑动条点击.
-    @ViewChildren(JigsawSliderHandle) private _sliderHandle: QueryList<JigsawSliderHandle>;
+    @ViewChildren(JigsawSliderHandle)
+    private _sliderHandle: QueryList<JigsawSliderHandle>;
+
+    /**
+     * @internal
+     */
+    public get _$trackBy() {
+        return (index: number) => index;
+    }
 
     /**
      * @internal
@@ -490,12 +519,12 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         // 设置标记.
         this._calcMarks();
         // 注册resize事件;
-        this.resize();
+        this._resize();
     }
 
     private _removeResizeEvent: Function;
 
-    private resize() {
+    private _resize() {
         this._zone.runOutsideAngular(() => {
             this._removeResizeEvent = this._render.listen("window", "resize", () => {
                 // 计算slider 的尺寸.
@@ -508,10 +537,10 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * 暂没有使用场景.
      */
     public ngOnDestroy() {
+        super.ngOnDestroy();
         if (this._removeResizeEvent) {
             this._removeResizeEvent();
         }
-
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
         }
@@ -522,7 +551,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * 子级组件需要用到
      * @internal
      */
-    public _verifyValue(value: number) {
+    public _verifyValue(value: number): number {
         if (value - this.min < 0 && this.initialized) {
             return this.min;
         } else if (value - this.max > 0 && this.initialized) {

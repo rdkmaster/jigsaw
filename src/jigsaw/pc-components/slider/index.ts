@@ -5,10 +5,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
 import {JigsawSlider, JigsawSliderHandle} from './slider';
+import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule, JigsawTooltipModule
     ],
     exports: [JigsawSlider],
     declarations: [JigsawSlider,JigsawSliderHandle],
