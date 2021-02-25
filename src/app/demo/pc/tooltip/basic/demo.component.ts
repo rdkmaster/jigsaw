@@ -3,7 +3,7 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class SimpleTooltipDemoComponent {
+export class TooltipBasicDemoComponent {
     tooltipMessage: string = '这是一个内联tooltip  <span class="iconfont iconfont-e3f0"></span>';
 
     // ====================================================================

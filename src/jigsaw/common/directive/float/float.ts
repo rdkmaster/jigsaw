@@ -21,8 +21,8 @@ export enum DropDownTrigger {
     none,
 }
 
-export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-    'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | 'leftTop' |
+    'leftBottom' | 'rightTop' | 'rightBottom' | 'left' | 'right' | 'top' | 'bottom';
 
 @Directive()
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
@@ -166,6 +166,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 protected _popupService: PopupService,
                 protected _zone: NgZone) {
         super(_zone);
+        this._init();
+    }
+
+    protected _init(): void {
     }
 
     protected _emitOpenChange(open: boolean): void {
@@ -415,6 +419,20 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 point.x += this._elementRef.nativeElement.offsetWidth + differ;
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
+            case 'top':
+                point.x += this._elementRef.nativeElement.offsetWidth / 2;
+                break;
+            case 'bottom':
+                point.x += this._elementRef.nativeElement.offsetWidth / 2;
+                point.y += this._elementRef.nativeElement.offsetHeight;
+                break;
+            case 'left':
+                point.y += this._elementRef.nativeElement.offsetHeight / 2;
+                break;
+            case 'right':
+                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.y += this._elementRef.nativeElement.offsetHeight / 2;
+
         }
         return point;
     }
@@ -456,6 +474,20 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             case 'leftBottom':
                 pos.left -= popupElement.offsetWidth;
                 pos.top -= popupElement.offsetHeight;
+                break;
+            case 'top':
+                pos.left -= popupElement.offsetWidth / 2;
+                pos.top -= popupElement.offsetHeight;
+                break;
+            case 'bottom':
+                pos.left -= popupElement.offsetWidth / 2;
+                break;
+            case 'left':
+                pos.left -= popupElement.offsetWidth;
+                pos.top -= popupElement.offsetHeight / 2;
+                break;
+            case 'right':
+                pos.top -= popupElement.offsetHeight / 2;
                 break;
         }
     }
@@ -605,9 +637,18 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
-        } else {
+        } else if (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop' ||
+            this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') {
             const upDelta = popupElement.offsetHeight;
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
+            const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
+        } else if (this.jigsawFloatPosition === 'top' || this.jigsawFloatPosition === 'bottom') {
+            pos.left = Math.max(8 /*安全边距*/, pos.left);
+            const upDelta = offsetHeight + popupElement.offsetHeight + differ;
+            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
+        } else if (this.jigsawFloatPosition === 'left' || this.jigsawFloatPosition === 'right') {
+            pos.top = Math.max(8 /*安全边距*/, pos.top);
             const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         }
