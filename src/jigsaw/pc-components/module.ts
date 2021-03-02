@@ -17,6 +17,7 @@ import {JigsawRadioModule} from './radio/radio';
 import {JigsawScrollbarModule} from '../common/components/scrollbar/index';
 import {JigsawSelectModule} from './select/select';
 import {JigsawSliderModule} from './slider/index';
+import {JigsawStepModule} from './step/step';
 import {JigsawStepsModule} from './steps/index';
 import {JigsawStepsMultilineModule} from "./steps/steps-multiline";
 import {JigsawSwitchModule} from './switch/index';
@@ -96,6 +97,7 @@ const JIGSAW_MODULE = [
     JigsawScrollbarModule,
     JigsawSelectModule,
     JigsawSliderModule,
+    JigsawStepModule,
     JigsawStepsModule,
     JigsawSwitchModule,
     JigsawTableModule,
