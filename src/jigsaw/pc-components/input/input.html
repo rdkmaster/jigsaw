@@ -1,8 +1,8 @@
-<div style="display: flex; height: 100%; width: 100%">
+<div class="jigsaw-input-container">
     <jigsaw-unit *ngIf="prefix" position="left" [disabled]="disabled" [data]="prefix" [unitWidth]="prefixWidth"
                  [labelField]="prefixLabelField" (unitChange)="prefixChange.emit($event)"></jigsaw-unit>
 
-    <div class="jigsaw-input-wrapper">
+    <div class="jigsaw-input-wrapper" [ngStyle]="_$getBorderRadius" [ngClass]="_$getWrapperClass">
         <div class="jigsaw-input-icon-front">
             <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
             <ng-container *ngFor="let icon of _$preIcon;">

@@ -1,6 +1,4 @@
-import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy
-} from "@angular/core";
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Output, ViewChild} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -384,16 +382,37 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitWidth: string = '60px';
+    public unitWidth: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitLabelField: GroupOptionValue | GroupOptionValue[];
+    public unitLabelField: string;
 
     @Output()
     public unitChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+
+    /**
+     * @internal
+     */
+    public get _$getBorderRadius(): any {
+        let radius = {};
+        if (CommonUtils.isDefined(this.unit)) {
+            Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
+        }
+        return radius;
+    }
+
+    /**
+     * @internal
+     */
+    public get _$getWrapperClass(): any {
+        if (CommonUtils.isDefined(this.unit)) {
+            return 'jigsaw-numeric-input-right';
+        }
+        return 'jigsaw-numeric-input-none';
+    }
 }
 
 @NgModule({

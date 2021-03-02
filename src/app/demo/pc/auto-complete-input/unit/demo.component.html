@@ -1,0 +1,42 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div style="margin: 20px;">
+    <label>单位组合：</label><br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" prefix="https://" width="300"></jigsaw-auto-complete-input>
+    <br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" unit="单位" width="300"></jigsaw-auto-complete-input>
+    <br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" unit="单位" prefix="https://"
+                                width="300"></jigsaw-auto-complete-input>
+    <br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" unit="单位" prefix="https://"
+                                [disabled]="true" width="300"></jigsaw-auto-complete-input>
+
+    <br><br>
+    <label>单位可选：</label><br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" [unit]="_$units" unitWidth="100"
+                                (unitChange)="_$unitChange($event)"
+                                width="300"></jigsaw-auto-complete-input>
+    <br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" [unit]="_$units" unitWidth="100" [disabled]="true"
+                                width="300"></jigsaw-auto-complete-input>
+    <br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" [prefix]="_$prefix" prefixWidth="80"
+                                (prefixChange)="_$unitChange($event)"
+                                width="300"></jigsaw-auto-complete-input>
+    <br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" [prefix]="_$prefix" prefixWidth="80" [disabled]="true"
+                                width="300"></jigsaw-auto-complete-input>
+
+    <br><br>
+    <label>更多内容：</label><br>
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="_$dropdownData" width="400"
+                                [prefix]="_$prefixIcons" prefixWidth="100" (prefixChange)="_$unitChange($event)" [prefixLabelField]="'name'"
+                                [unit]="_$icons" unitWidth="120" (unitChange)="_$unitChange($event)"
+                                [unitLabelField]="'name'"></jigsaw-auto-complete-input>
+    <br>
+</div>
+
+

@@ -1,5 +1,5 @@
-<div style="display: flex; height: 100%; width: 100%">
-    <div class="jigsaw-numeric-input-wrapper">
+<div class="jigsaw-input-container">
+    <div class="jigsaw-numeric-input-wrapper" [ngStyle]="_$getBorderRadius" [ngClass]="_$getWrapperClass">
         <input #input
                [placeholder]="placeholder"
                [(ngModel)]="value"

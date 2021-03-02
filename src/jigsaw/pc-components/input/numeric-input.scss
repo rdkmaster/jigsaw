@@ -8,7 +8,12 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     height: $height-base;
     font-size: $font-size-base;
     user-select: none;
-    border-radius: $border-radius-base;
+
+    &-container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
 
     &-wrapper {
         width: 120px;
@@ -19,6 +24,7 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         border-width: 1px;
         border-style: solid;
         border-color: $border-color-default;
+        border-radius: $border-radius-base;
     }
 
     .#{$numeric-input-prefix-cls}-wrapper:hover,
@@ -29,13 +35,21 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
 
     &.#{$numeric-input-prefix-cls}-error {
         .#{$numeric-input-prefix-cls}-wrapper,
-        .#{$numeric-input-prefix-cls}-wrapper:hover {
-            border-color: $error-default;
+        .#{$numeric-input-prefix-cls}-wrapper:hover,
+        &.#{$numeric-input-prefix-cls}-focused .#{$numeric-input-prefix-cls}-wrapper {
+            &.#{$numeric-input-prefix-cls}-none {
+                border-color: $error-default;
+            }
+
+            &.#{$numeric-input-prefix-cls}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
+            }
+
+            box-shadow: none;
         }
 
-        &.#{$numeric-input-prefix-cls}-focused .#{$numeric-input-prefix-cls}-wrapper {
-            border-color: $error-color;
-            box-shadow: none;
+        .#{$jigsaw-prefix}-input-unit {
+            border-color: $error-default;
         }
     }
 

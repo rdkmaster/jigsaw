@@ -6,8 +6,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     @include inline-block();
     height: $height-base;
     font-size: $font-size-base;
-    border-radius: $border-radius-base;
     overflow: hidden;
+
+    &-container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
 
     &-wrapper {
         width: 120px;
@@ -19,6 +24,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border-width: 1px;
         border-style: solid;
         border-color: $border-color-default;
+        border-radius: $border-radius-base;
     }
 
     &-icon-front,
@@ -45,9 +51,9 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         height: 100%;
         border: none;
         outline: none;
-        border-radius: 3px;
         background: transparent;
         padding-bottom: 2px;
+        border-radius: $border-radius-base;
     }
 
     .#{$input-prefix-cls}-wrapper:hover,
@@ -78,13 +84,29 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 
     &.#{$input-prefix-cls}-error {
         .#{$input-prefix-cls}-wrapper,
-        .#{$input-prefix-cls}-wrapper:hover {
-            border-color: $error-default;
+        .#{$input-prefix-cls}-wrapper:hover,
+        &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
+            &.#{$input-prefix-cls}-none {
+                border-color: $error-default;
+            }
+
+            &.#{$input-prefix-cls}-left {
+                border-color: $error-default $error-default $error-default $border-color-default;
+            }
+
+            &.#{$input-prefix-cls}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
+            }
+
+            &.#{$input-prefix-cls}-both {
+                border-color: $error-default $border-color-default $error-default $border-color-default;
+            }
+
+            box-shadow: none;
         }
 
-        &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
-            border-color: $error-color;
-            box-shadow: none;
+        .#{$jigsaw-prefix}-input-unit {
+            border-color: $error-default;
         }
     }
 
