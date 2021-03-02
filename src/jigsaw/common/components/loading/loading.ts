@@ -164,10 +164,28 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
 
 }
 
+@Component({
+    selector: 'jigsaw-circle-loading, j-circle-loading',
+    templateUrl: 'loading-circle.html'
+})
+export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit{
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+        super(renderer, elementRef);
+    }
+
+    ngOnInit() {
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-circle-loading-host');
+    }
+
+    protected getColorElement(): NodeListOf<Element> {
+        return this.getPopupElement().querySelectorAll('.jigsaw-loading-circle-spin');
+    }
+}
+
 @NgModule({
     imports: [CommonModule, JigsawBlockModule],
-    declarations: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading],
-    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading]
+    declarations: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawCircleLoading],
+    exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawCircleLoading]
 })
 export class JigsawLoadingModule {
 

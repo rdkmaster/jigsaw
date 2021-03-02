@@ -1,0 +1,77 @@
+// keyframes mixin
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+$primaryColor: $brand-default;
+$secondaryColor: $brand-default;
+
+.jigsaw-loading-circle {
+    background: none;
+    border: 0;
+    box-sizing: border-box;
+    margin: 1em;
+    padding: 1em 2em;
+    font-size: inherit;
+    font-weight: 700;
+    position: relative;
+
+    &::after {
+        box-sizing: inherit;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.jigsaw-loading-circle-spin {
+    width: 5em;
+    height: 5em;
+    padding: 0;
+    color: $font-color-heading-bold;
+
+    &::after {
+        top: 0;
+        left: 0;
+        border: 0 solid transparent;
+        border-top: 2px solid;
+        border-left-width: 2px;
+        border-right-width: 2px;
+        animation: infiniteRotate 1s infinite;
+        transition: border-top-color ease-in 0.5s, transform ease-in 0.1s;
+    }
+}
+
+.jigsaw-loading-circle-spin {
+    border-radius: 10%;
+    box-shadow: none;
+
+    &::before,
+    &::after {
+        border-radius: 100%;
+        border: 3px solid #999;
+    }
+}
+
+@include keyframes(infiniteRotate) {
+    from {
+        transform: rotate(0deg);
+        border-top-color: $secondaryColor;
+    }
+    to {
+        transform: rotate(360deg);
+        border-top-color: $primaryColor;
+    }
+}

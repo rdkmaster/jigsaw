@@ -15,6 +15,8 @@ import {FontLoadingDemoComponent} from "./font-icon/demo.component";
 import {DefinedLoadingDemoComponent} from "./user-defined/demo.component";
 import {DomInnerDemoComponent} from "./dom-inner/demo.component";
 import {ColorfulLoadingDemoComponent} from "./color/demo.component";
+import { CircleLoadingDemoComponent } from './circle/demo.component';
+import { CircleLoadingDemoModule } from './circle/demo.module';
 
 export const routerConfig = [
     {
@@ -22,6 +24,9 @@ export const routerConfig = [
     },
     {
         path: 'ball', component: BallLoadingDemoComponent
+    },
+    {
+        path: 'circle', component: CircleLoadingDemoComponent
     },
     {
         path: 'bubble', component: BubbleLoadingDemoComponent
@@ -45,6 +50,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         LoadingFullDemoModule,
         BallLoadingDemoModule,
+        CircleLoadingDemoModule,
         BubbleLoadingDemoModule,
         FontLoadingDemoModule,
         DefinedLoadingDemoModule,
