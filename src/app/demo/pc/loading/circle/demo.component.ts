@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService, PopupInfo, JigsawCircleLoading, } from "jigsaw/public_api";
+import {LoadingService, PopupInfo, JigsawCircleLoading } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
