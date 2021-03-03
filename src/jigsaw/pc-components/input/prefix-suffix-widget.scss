@@ -1,0 +1,51 @@
+@import "../../common/assets/scss/core/base";
+
+$prefix-suffix-cls: #{$jigsaw-prefix}-prefix-suffix;
+
+.#{$prefix-suffix-cls} {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
+    position: relative;
+
+    .#{$prefix-suffix-cls}-list {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+
+        &-selected {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &-text {
+                flex: 1;
+                margin: 0 4px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                position: relative;
+                top: -1px;
+            }
+        }
+
+        &-dropdown {
+            font-size: 14px;
+        }
+
+    }
+
+    &.#{$prefix-suffix-cls}-disabled {
+        background-color: $bg-disabled;
+        cursor: not-allowed;
+    }
+}

@@ -18,6 +18,13 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/for
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
+import {GroupOptionValue} from "../list-and-tile/group-common";
+
+type BorderRadiusValue = {
+    'border-top-left-radius'?: number, 'border-bottom-left-radius'?: number,
+    'border-top-right-radius'?: number, 'border-bottom-right-radius'?: number
+}
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
@@ -208,6 +215,78 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     @Output()
     public iconSelect: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public suffix: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public suffixWidth: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public suffixLabelField: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefix: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefixWidth: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefixLabelField: string;
+
+    @Output()
+    public suffixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+
+    @Output()
+    public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+
+    /**
+     * @internal
+     */
+    public get _$getBorderRadius(): BorderRadiusValue {
+        const radius: BorderRadiusValue = {};
+        if (CommonUtils.isDefined(this.prefix)) {
+            Object.assign(radius, {'border-top-left-radius': 0, 'border-bottom-left-radius': 0});
+        }
+        if (CommonUtils.isDefined(this.suffix)) {
+            Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
+        }
+        return radius;
+    }
+
+    /**
+     * @internal
+     */
+    public get _$getWrapperClass(): 'jigsaw-input-both' | 'jigsaw-input-left' | 'jigsaw-input-right' | 'jigsaw-input-none' {
+        if (CommonUtils.isDefined(this.prefix) && CommonUtils.isDefined(this.suffix)) {
+            return 'jigsaw-input-both';
+        }
+        if (CommonUtils.isDefined(this.prefix)) {
+            return 'jigsaw-input-left';
+        }
+        if (CommonUtils.isDefined(this.suffix)) {
+            return 'jigsaw-input-right';
+        }
+        return 'jigsaw-input-none';
+    }
 }
 
 /**
@@ -264,8 +343,8 @@ export class JigsawInput extends JigsawInputBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get autocomplete():string{
-        return this.password ? "new-password" : "off" ;
+    public get autocomplete(): string {
+        return this.password ? "new-password" : "off";
     }
 
     @ViewChild('input')
@@ -304,7 +383,7 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$stopPropagation(event) {
-        if(!this.disabled) {
+        if (!this.disabled) {
             event.preventDefault();
             event.stopPropagation();
         }
@@ -312,7 +391,7 @@ export class JigsawInput extends JigsawInputBase {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, JigsawPrefixSuffixModule],
     declarations: [JigsawInput],
     exports: [JigsawInput],
 })

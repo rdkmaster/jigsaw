@@ -4,38 +4,29 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 
 .#{$input-prefix-cls} {
     @include inline-block();
-    width: 120px;
     height: $height-base;
     font-size: $font-size-base;
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color-default;
-    border-radius: $border-radius-base;
     overflow: hidden;
-    &:hover,
-    &.#{$input-prefix-cls}-focused {
-        @include prefixer(
-            transition,
-            (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
-        );
-        border: 1px solid $brand-default;
-    }
-    &.#{$input-prefix-cls}-error {
-        border-color: $error-default;
-        &:hover {
-            border-color: $error-color;
-        }
-        &.#{$input-prefix-cls}-focused {
-            border-color: $error-color;
-            box-shadow: none;
-        }
-    }
-    &-wrapper {
+
+    &-container {
         display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    &-wrapper {
+        width: 120px;
+        display: flex;
+        flex: 1;
         height: 100%;
         overflow: hidden;
         background: $bg-component;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
     }
+
     &-icon-front,
     &-icon-end {
         display: flex;
@@ -47,36 +38,85 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             display: flex;
         }
     }
+
     &-icon-end {
         a {
             margin: 5px;
         }
     }
+
     input {
         flex: 1;
         min-width: 0;
         height: 100%;
         border: none;
         outline: none;
-        border-radius: 3px;
         background: transparent;
         padding-bottom: 2px;
+        border-radius: $border-radius-base;
     }
-    &.#{$input-prefix-cls}-disabled &-wrapper {
-        background-color: $bg-disabled;
-        input {
-            @include compatible(color, $disabled-color, $disabled-color-ie11);
+
+    .#{$input-prefix-cls}-wrapper:hover,
+    &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
+        @include prefixer(
+                transition,
+                    (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
+        );
+        border: 1px solid $brand-default;
+    }
+
+    &.#{$input-prefix-cls}-disabled {
+        .#{$input-prefix-cls}-wrapper {
+            background-color: $bg-disabled;
+            cursor: not-allowed;
+
+            input {
+                @include compatible(color, $disabled-color, $disabled-color-ie11);
+                cursor: not-allowed;
+            }
         }
     }
+
+    &.#{$input-prefix-cls}-error {
+        .#{$input-prefix-cls}-wrapper,
+        .#{$input-prefix-cls}-wrapper:hover,
+        &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
+            &.#{$input-prefix-cls}-none {
+                border-color: $error-default;
+            }
+
+            &.#{$input-prefix-cls}-left {
+                border-color: $error-default $error-default $error-default $border-color-default;
+            }
+
+            &.#{$input-prefix-cls}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
+            }
+
+            &.#{$input-prefix-cls}-both {
+                border-color: $error-default $border-color-default $error-default $border-color-default;
+            }
+
+            box-shadow: none;
+        }
+
+        .#{$jigsaw-prefix}-prefix-suffix {
+            border-color: $error-default;
+        }
+    }
+
     input::-webkit-input-placeholder {
         color: $font-color-hint;
     }
+
     input:-ms-input-placeholder {
         color: $font-color-hint;
     }
+
     input:-moz-placeholder {
         color: $font-color-hint;
     }
+
     &-clear-bar {
         cursor: pointer;
         font-size: 16px;
@@ -86,6 +126,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         &:hover {
             color: $font-color-default;
         }
+
         &[hidden] {
             display: none !important;
         }

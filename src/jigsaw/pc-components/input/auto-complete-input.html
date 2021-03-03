@@ -3,8 +3,11 @@
          [blurOnClear]="blurOnClear" [clearable]="clearable" [disabled]="disabled" [valid]="valid"
          [preIcon]="_$preIcon" [icon]="_$icon" (preIconSelect)="preIconSelect.emit($event)" (iconSelect)="iconSelect.emit($event)"
          (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)"
-         jigsaw-float [jigsawFloatTarget]="dropDownTemp"  [jigsawFloatOpen]="_$propertyListOpen"
-         jigsawFloatOpenTrigger="none" jigsawFloatCloseTrigger="none">
+         jigsaw-float [jigsawFloatTarget]="dropDownTemp" [jigsawFloatOpen]="_$propertyListOpen"
+         jigsawFloatOpenTrigger="none" jigsawFloatCloseTrigger="none"
+         [prefixWidth]="prefixWidth" [prefix]="prefix" [prefixLabelField]="prefixLabelField" (prefixChange)="prefixChange.emit($event)"
+         [suffixWidth]="suffixWidth" [suffix]="suffix" [suffixLabelField]="suffixLabelField"
+         (suffixChange)="suffixChange.emit($event)">
     <ng-content jigsaw-prefix-icon select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
     <ng-content jigsaw-icon select="[jigsaw-icon], [j-icon]"></ng-content>
 </j-input>

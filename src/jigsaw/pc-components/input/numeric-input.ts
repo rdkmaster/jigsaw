@@ -1,10 +1,10 @@
-import {
-    NgModule, Component, EventEmitter, Input, Output, ElementRef, ViewChild, forwardRef, ChangeDetectionStrategy
-} from "@angular/core";
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Output, ViewChild} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
+import {GroupOptionValue} from "../list-and-tile/group-common";
 
 /**
  * 数字输入框
@@ -371,10 +371,49 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     public registerOnTouched(fn: any): void {
     }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public suffix: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public suffixWidth: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public suffixLabelField: string;
+
+    @Output()
+    public suffixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+
+    /**
+     * @internal
+     */
+    public get _$getBorderRadius(): {'border-top-right-radius'?: number, 'border-bottom-right-radius'?: number} {
+        const radius = {};
+        if (CommonUtils.isDefined(this.suffix)) {
+            Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
+        }
+        return radius;
+    }
+
+    /**
+     * @internal
+     */
+    public get _$getWrapperClass(): 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-none' {
+        return CommonUtils.isDefined(this.suffix) ? 'jigsaw-numeric-input-right' : 'jigsaw-numeric-input-none';
+    }
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, JigsawPrefixSuffixModule],
     declarations: [JigsawNumericInput],
     exports: [JigsawNumericInput],
 })

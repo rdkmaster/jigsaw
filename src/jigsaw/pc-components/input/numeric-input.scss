@@ -5,47 +5,75 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
 .#{$numeric-input-prefix-cls} {
     @include inline-block();
     position: relative;
-    width: 120px;
     height: $height-base;
     font-size: $font-size-base;
     user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color-default;
-    border-radius: $border-radius-base;
 
-    &:hover,
-    &.#{$numeric-input-prefix-cls}-focused {
+    &-container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    &-wrapper {
+        width: 120px;
+        display: flex;
+        flex: 1;
+        height: 100%;
+        background: $bg-component;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
+    }
+
+    .#{$numeric-input-prefix-cls}-wrapper:hover,
+    &.#{$numeric-input-prefix-cls}-focused .#{$numeric-input-prefix-cls}-wrapper {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-color: $brand-default;
     }
 
     &.#{$numeric-input-prefix-cls}-error {
-        border-color: $error-default;
+        .#{$numeric-input-prefix-cls}-wrapper,
+        .#{$numeric-input-prefix-cls}-wrapper:hover,
+        &.#{$numeric-input-prefix-cls}-focused .#{$numeric-input-prefix-cls}-wrapper {
+            &.#{$numeric-input-prefix-cls}-none {
+                border-color: $error-default;
+            }
 
-        &:hover {
-            border-color: $error-default;
+            &.#{$numeric-input-prefix-cls}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
+            }
+
+            box-shadow: none;
         }
 
-        &.#{$numeric-input-prefix-cls}-focused {
+        .#{$jigsaw-prefix}-prefix-suffix {
             border-color: $error-default;
-            box-shadow: none;
         }
     }
 
     input {
-        width: 100%;
+        width: calc(100% - 20px);
         height: 100%;
-        padding: 0 20px 0 8px;
+        padding-left: 8px;
         border: none;
         outline: none;
         border-radius: $border-radius-base;
         background: $component-background;
     }
 
-    &.#{$numeric-input-prefix-cls}-disabled input {
-        color: $font-color-disabled;
-        background-color: $bg-disabled;
+    &.#{$numeric-input-prefix-cls}-disabled {
+        .#{$numeric-input-prefix-cls}-wrapper {
+            background-color: $bg-disabled;
+            cursor: not-allowed;
+
+            input {
+                color: $font-color-disabled;
+                background-color: $bg-disabled;
+                cursor: not-allowed;
+            }
+        }
     }
 
     input::-webkit-input-placeholder {
@@ -61,9 +89,6 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     }
 
     &-option-box {
-        position: absolute;
-        right: 0;
-        top: 0;
         width: 20px;
         height: 100%;
         display: none;
