@@ -29,20 +29,20 @@ type Styles = {
 @Component({
     selector: 'jigsaw-prefix-suffix, j-prefix-suffix',
     template: `
-        <div *ngIf="data" class="jigsaw-input-prefix-suffix" [ngStyle]="_$getStyles">
+        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled}">
             <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
-            <div *ngIf="!_$isUnique" class="jigsaw-input-prefix-suffix-list" [ngClass]="{'jigsaw-input-disabled': disabled}"
+            <div *ngIf="!_$isUnique" class="jigsaw-prefix-suffix-list" [ngStyle]="{'cursor': disabled ? 'not-allowed' : 'pointer'}"
                  jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
                  [jigsawFloatOpenTrigger]="disabled ? 'none' : 'click'" jigsawFloatCloseTrigger="click"
                  (jigsawFloatOpenChange)="_$autoWidth($event)">
-                <div class="jigsaw-input-prefix-suffix-list-selected">
+                <div class="jigsaw-prefix-suffix-list-selected">
                     <span *ngIf="_$selected?.icon" class="{{_$selected?.icon}}"></span>
-                    <span class="jigsaw-input-prefix-suffix-list-selected-text" *ngIf="_$showLabel(_$selected)">
+                    <span class="jigsaw-prefix-suffix-list-selected-text" *ngIf="_$showLabel(_$selected)">
                         {{_$showLabel(_$selected)}}
                     </span>
                     <span *ngIf="_$selected?.suffixIcon" class="{{_$selected?.suffixIcon}}"></span>
                 </div>
-                <i class="iconfont iconfont-e24c jigsaw-input-prefix-suffix-list-dropdown"></i>
+                <i class="iconfont iconfont-e24c jigsaw-prefix-suffix-list-dropdown"></i>
             </div>
         </div>
         <ng-template #dropdownTemplate>
