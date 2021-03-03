@@ -33,11 +33,11 @@ export class JigsawStepVerticalDemoComponent {
     }
 
     public changeData() {
-        let _data = [];
+        let tempData = [];
         for (let i = 0; i < 6; i++) {
-            _data.push(this._createStepData(i));
+            tempData.push(this._createStepData(i));
         }
-        this.data = _data;
+        this.data = tempData;
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

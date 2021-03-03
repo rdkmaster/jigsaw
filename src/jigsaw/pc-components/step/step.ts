@@ -58,7 +58,7 @@ export class JigsawStep extends AbstractJigsawComponent {
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/vertical
+     * $demo = step/vertical
      */
     @Input()
     public direction: "vertical" | "horizontal" = "horizontal";
