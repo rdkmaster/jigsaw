@@ -175,11 +175,31 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit{
 
     ngOnInit() {
         this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-circle-loading-host');
+        console.log(this.elementRef.nativeElement.querySelector('.jigsaw-circle-loading-svg-bar'))
     }
 
-    protected getColorElement(): NodeListOf<Element> {
-        return this.getPopupElement().querySelectorAll('.jigsaw-loading-circle-spin');
-    }
+    public level ="1";
+
+    /**
+     * @internal
+     */
+    private _$radius = 33;
+
+    /**
+     * @internal
+     */
+    private circumference = this._$radius * 2 * Math.PI;
+
+    
+
+    /**
+     * 超过这个值的时候面包屑会折叠中间的部分
+     * @internal
+     */
+    @Input()
+    public foldThreshold: number = Infinity;
+
+    private _routesConfig=[];
 }
 
 @NgModule({

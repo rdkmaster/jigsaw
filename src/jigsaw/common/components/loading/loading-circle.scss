@@ -1,57 +1,41 @@
-.jigsaw-loading-circle {
+$circle-loading-prefix-cls: #{$jigsaw-prefix}-circle-loading;
+
+.#{$circle-loading-prefix-cls}-host {
     position: absolute;
-    left: 50%;
     top: 50%;
-    background: none;
-    border: 0;
-    width: 5em;
-    height: 5em;
-    margin-left: -2.5em;
-    margin-top: -2.5em;
-    font-size: inherit;
-    font-weight: 700;
-    outline: none;
-    padding: 0;
-    color: $font-color-heading-bold;
-    box-sizing: border-box;
-    box-shadow: none;
+    left: 50%;
 
-    &::after {
-        box-sizing: inherit;
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        border-radius: 50%;
-        border: 0.2em solid $bg-disabled;
-        border-top-color: $brand-default;
-        animation: infiniteRotate 1s infinite;
-        transition: transform ease-in 0.1s;
-    }
-}
+    .#{$circle-loading-prefix-cls}-svg {
+        position: relative;
+        width: 72px;
+        height: 72px;
+        box-sizing: border-box;
 
-@include keyframes(infiniteRotate) {
-    from {
-        transform: rotate(0deg);
+        svg {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            transform-origin: center center;
+        }
     }
-    to {
-        transform: rotate(360deg);
-    }
-}
 
-@mixin keyframes($name) {
-    @-webkit-keyframes #{$name} {
-        @content;
+    .#{$circle-loading-prefix-cls}-svg-bar,
+    .#{$circle-loading-prefix-cls}-svg-back {
+        stroke-width: 6px;
+        fill: none;
+        stroke-miterlimit: 10;
     }
-    @-moz-keyframes #{$name} {
-        @content;
+
+    .#{$circle-loading-prefix-cls}-svg-bar {
+        stroke: #1993ff;
+        stroke-linecap: round;
     }
-    @-ms-keyframes #{$name} {
-        @content;
-    }
-    @keyframes #{$name} {
-        @content;
+
+    .#{$circle-loading-prefix-cls}-svg-back {
+        stroke: $bg-disabled;
     }
 }
