@@ -1,6 +1,6 @@
 @import "../../common/assets/scss/core/base";
 
-.#{$jigsaw-prefix}-input-unit {
+.#{$jigsaw-prefix}-input-prefix-suffix {
     height: 100%;
     display: flex;
     align-items: center;
@@ -11,7 +11,7 @@
     border-radius: $border-radius-base;
     position: relative;
 
-    .#{$input-prefix-cls}-units {
+    .#{$input-prefix-cls}-prefix-suffix-list {
         cursor: pointer;
         width: 100%;
         height: 100%;

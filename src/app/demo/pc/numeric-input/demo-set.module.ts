@@ -8,8 +8,8 @@ import {NumericInputSizeDemoComponent} from "./size/demo.component";
 import {NumericInputSizeDemoModule} from "./size/demo.module";
 import {NumericInputStepDemoComponent} from "./step/demo.component";
 import {NumericInputStepDemoModule} from "./step/demo.module";
-import {NumericInputUnitDemoComponent} from "./unit/demo.component";
-import {NumericInputUnitDemoModule} from "./unit/demo.module";
+import {NumericInputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
+import {NumericInputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
 
 export const routerConfig = [
     {
@@ -25,7 +25,7 @@ export const routerConfig = [
         path: 'step', component: NumericInputStepDemoComponent
     },
     {
-        path: 'unit', component: NumericInputUnitDemoComponent
+        path: 'prefix-suffix', component: NumericInputPrefixSuffixDemoComponent
     },
 ];
 
@@ -36,7 +36,7 @@ export const routerConfig = [
         NumericInputDisabledDemoModule,
         NumericInputSizeDemoModule,
         NumericInputStepDemoModule,
-        NumericInputUnitDemoModule,
+        NumericInputPrefixSuffixDemoModule,
     ]
 })
 export class NumericInputDemoModule {

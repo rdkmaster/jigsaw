@@ -17,30 +17,36 @@ import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float
 import {JigsawListModule} from "../list-and-tile/list";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 
+type Styles = {
+    width: string,
+    'border-top-right-radius'?: number, 'border-bottom-right-radius'?: number, 'border-right'?: 'none'
+    'border-top-left-radius'?: number, 'border-bottom-left-radius'?: number, 'border-left'?: 'none'
+}
+
 /**
  * @internal
  */
 @Component({
-    selector: 'jigsaw-unit, j-unit',
+    selector: 'jigsaw-prefix-suffix, j-prefix-suffix',
     template: `
-        <div *ngIf="data" class="jigsaw-input-unit" [ngStyle]="_$getStyles">
-            <span *ngIf="_$uniqueUnit" style="padding: 0 5px;">{{data}}</span>
-            <div *ngIf="!_$uniqueUnit" class="jigsaw-input-units" [ngClass]="{'jigsaw-input-disabled': disabled}"
-                 jigsawFloat [jigsawFloatTarget]="unitTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
+        <div *ngIf="data" class="jigsaw-input-prefix-suffix" [ngStyle]="_$getStyles">
+            <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
+            <div *ngIf="!_$isUnique" class="jigsaw-input-prefix-suffix-list" [ngClass]="{'jigsaw-input-disabled': disabled}"
+                 jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
                  [jigsawFloatOpenTrigger]="disabled ? 'none' : 'click'" jigsawFloatCloseTrigger="click"
                  (jigsawFloatOpenChange)="_$autoWidth($event)">
-                <div class="jigsaw-input-units-selected">
-                    <span *ngIf="_$selectedUnit?.icon" class="{{_$selectedUnit?.icon}}"></span>
-                    <span class="jigsaw-input-units-selected-text" *ngIf="_$showLabel(_$selectedUnit)">
-                        {{_$showLabel(_$selectedUnit)}}
+                <div class="jigsaw-input-prefix-suffix-list-selected">
+                    <span *ngIf="_$selected?.icon" class="{{_$selected?.icon}}"></span>
+                    <span class="jigsaw-input-prefix-suffix-list-selected-text" *ngIf="_$showLabel(_$selected)">
+                        {{_$showLabel(_$selected)}}
                     </span>
-                    <span *ngIf="_$selectedUnit?.suffixIcon" class="{{_$selectedUnit?.suffixIcon}}"></span>
+                    <span *ngIf="_$selected?.suffixIcon" class="{{_$selected?.suffixIcon}}"></span>
                 </div>
-                <i class="iconfont iconfont-e24c jigsaw-input-units-dropdown"></i>
+                <i class="iconfont iconfont-e24c jigsaw-input-prefix-suffix-list-dropdown"></i>
             </div>
         </div>
-        <ng-template #unitTemplate>
-            <jigsaw-list [selectedItems]="_$selectedUnit" (selectedItemsChange)="_$selectedUnitChange($event)">
+        <ng-template #dropdownTemplate>
+            <jigsaw-list [selectedItems]="_$selected" (selectedItemsChange)="_$selectedChange($event)">
                 <j-list-option *ngFor="let item of data" [value]="item">
                     <p j-title>
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="position: relative; top: 2px;"></span>
@@ -55,7 +61,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawUnitComponent extends AbstractJigsawComponent {
+export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
 
@@ -66,9 +72,9 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public get _$getStyles(): any {
-        let radius = {
-            width: this.unitWidth + 'px'
+    public get _$getStyles(): Styles {
+        const radius: Styles = {
+            width: this.contentWidth + 'px'
         };
         if (this.position == 'left') {
             Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0, 'border-right': 'none'});
@@ -84,7 +90,7 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
      */
     public _$showLabel(item: any): string {
         if (item && item[this.labelField]) {
-            return item && item[this.labelField];
+            return item[this.labelField];
         }
         return typeof item == 'string' ? item : '';
     }
@@ -107,12 +113,12 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
     @Input()
     public disabled: boolean;
 
-    private _data: GroupOptionValue | GroupOptionValue[];
-
     /**
      * @internal
      */
-    public _$selectedUnit: GroupOptionValue;
+    public _$selected: GroupOptionValue;
+
+    private _data: GroupOptionValue | GroupOptionValue[];
 
     /**
      * @NoMarkForCheckRequired
@@ -125,7 +131,7 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
     public set data(value: GroupOptionValue | GroupOptionValue[]) {
         this._data = value;
         if (this._data instanceof Array && this._data.length > 0) {
-            this._$selectedUnit = this._data[0];
+            this._$selected = this._data[0];
         }
     }
 
@@ -133,7 +139,7 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
      * @internal
      * 判断是唯一的单位，还是多选的单位
      */
-    public get _$uniqueUnit(): boolean {
+    public get _$isUnique(): boolean {
         return !(this._data instanceof Array);
     }
 
@@ -141,21 +147,21 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitWidth: number;
+    public contentWidth: number;
 
     @Output()
-    public unitChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+    public change: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
 
     /**
      * @internal
      */
-    public _$selectedUnitChange(event: GroupOptionValue[]): void {
+    public _$selectedChange(event: GroupOptionValue[]): void {
         if (!event) {
             return;
         }
-        this._$selectedUnit = event[0];
+        this._$selected = event[0];
         this._jigsawFloat.closeFloat();
-        this.unitChange.emit(this._$selectedUnit);
+        this.change.emit(this._$selected);
     }
 
     /**
@@ -179,9 +185,9 @@ export class JigsawUnitComponent extends AbstractJigsawComponent {
  */
 @NgModule({
     imports: [CommonModule, FormsModule, JigsawFloatModule, JigsawListModule],
-    declarations: [JigsawUnitComponent],
-    exports: [JigsawUnitComponent],
+    declarations: [JigsawPrefixSuffixComponent],
+    exports: [JigsawPrefixSuffixComponent],
 })
-export class JigsawPrefixUnitModule {
+export class JigsawPrefixSuffixModule {
 
 }

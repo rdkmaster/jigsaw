@@ -6,7 +6,8 @@
          jigsaw-float [jigsawFloatTarget]="dropDownTemp" [jigsawFloatOpen]="_$propertyListOpen"
          jigsawFloatOpenTrigger="none" jigsawFloatCloseTrigger="none"
          [prefixWidth]="prefixWidth" [prefix]="prefix" [prefixLabelField]="prefixLabelField" (prefixChange)="prefixChange.emit($event)"
-         [unitWidth]="unitWidth" [unit]="unit" [unitLabelField]="unitLabelField" (unitChange)="unitChange.emit($event)">
+         [suffixWidth]="suffixWidth" [suffix]="suffix" [suffixLabelField]="suffixLabelField"
+         (suffixChange)="suffixChange.emit($event)">
     <ng-content jigsaw-prefix-icon select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
     <ng-content jigsaw-icon select="[jigsaw-icon], [j-icon]"></ng-content>
 </j-input>

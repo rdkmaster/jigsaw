@@ -21,8 +21,8 @@ import {InputValidComponent} from "./valid/demo.component";
 import {InputSelectDemoComponent} from "./select/demo.component";
 import {InputPasswordModule} from "./password/demo.module";
 import {InputPasswordComponent} from "./password/demo.component";
-import {InputUnitDemoModule} from "./unit/demo.module";
-import {InputUnitDemoComponent} from "./unit/demo.component";
+import {InputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
+import {InputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
 
 export const routerConfig = [
     {
@@ -56,7 +56,7 @@ export const routerConfig = [
         path: 'password', component: InputPasswordComponent
     },
     {
-        path: 'unit', component: InputUnitDemoComponent
+        path: 'prefix-suffix', component: InputPrefixSuffixDemoComponent
     }
 ];
 
@@ -73,7 +73,7 @@ export const routerConfig = [
         InputValidModule,
         InputSelectDemoModule,
         InputPasswordModule,
-        InputUnitDemoModule
+        InputPrefixSuffixDemoModule
     ]
 })
 export class InputDemoModule {

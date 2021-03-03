@@ -9,9 +9,9 @@ import {GroupOptionValue} from "jigsaw/public_api";
         }
     `]
 })
-export class InputUnitDemoComponent {
+export class InputPrefixSuffixDemoComponent {
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
-    public _$prefix = ['http://', 'https://'];
+    public _$prefix = ['上行流量', '下行流量'];
     public _$prefixIcons: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
@@ -54,7 +54,7 @@ export class InputUnitDemoComponent {
     ];
 
     public _$unitChange(event: any) {
-        console.log('unit selected: ', event);
+        console.log('prefix-suffix selected: ', event);
     }
 
     // ====================================================================

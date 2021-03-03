@@ -21,6 +21,7 @@
         </div>
     </div>
 
-    <jigsaw-unit *ngIf="unit" position="right" [disabled]="disabled" [data]="unit" [unitWidth]="unitWidth"
-                 [labelField]="unitLabelField" (unitChange)="unitChange.emit($event)"></jigsaw-unit>
+    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [disabled]="disabled" [data]="suffix"
+                          [contentWidth]="suffixWidth"
+                          [labelField]="suffixLabelField" (change)="suffixChange.emit($event)"></jigsaw-prefix-suffix>
 </div>

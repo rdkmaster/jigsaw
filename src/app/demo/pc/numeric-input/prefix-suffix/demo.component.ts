@@ -9,7 +9,7 @@ import {GroupOptionValue} from "jigsaw/public_api";
         }
     `]
 })
-export class NumericInputUnitDemoComponent {
+export class NumericInputPrefixSuffixDemoComponent {
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
     public _$sizes = ['small', 'default', 'large'];
     public _$size = 'default';
@@ -37,7 +37,7 @@ export class NumericInputUnitDemoComponent {
     ];
 
     public _$unitChange(event: any) {
-        console.log('unit selected: ', event);
+        console.log('prefix-suffix selected: ', event);
     }
 
     // ====================================================================

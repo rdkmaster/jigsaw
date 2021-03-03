@@ -9,10 +9,10 @@ import {GroupOptionValue} from "jigsaw/public_api";
         }
     `]
 })
-export class AutoCompleteInputUnitDemoComponent {
-    public _$dropdownData = ['点击发送事件', '滚动页面', '发送事件到事件总线', '更新变量', '等待弹出关闭'];
-    public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
-    public _$prefix = ['http://', 'https://'];
+export class AutoCompleteInputPrefixSuffixDemoComponent {
+    public hosts = ['rdk.zte.com.cn', 'jigsaw-zte.gitee.io'];
+    public pages = ['/jigsaw/index.html', '/awade/index.html', '/rdk/index.html'];
+    public protocols = ['http://', 'https://'];
     public _$prefixIcons: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
@@ -54,8 +54,8 @@ export class AutoCompleteInputUnitDemoComponent {
         }
     ];
 
-    public _$unitChange(event: any) {
-        console.log('unit selected: ', event);
+    public onChange(event: any) {
+        console.log('prefix-suffix selected: ', event);
     }
 
     // ====================================================================

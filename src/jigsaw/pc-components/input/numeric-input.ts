@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawPrefixUnitModule} from "./unit";
+import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 
 /**
@@ -376,29 +376,29 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unit: GroupOptionValue | GroupOptionValue[];
+    public suffix: GroupOptionValue | GroupOptionValue[];
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitWidth: number;
+    public suffixWidth: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitLabelField: string;
+    public suffixLabelField: string;
 
     @Output()
-    public unitChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+    public suffixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
 
     /**
      * @internal
      */
-    public get _$getBorderRadius(): any {
-        let radius = {};
-        if (CommonUtils.isDefined(this.unit)) {
+    public get _$getBorderRadius(): {'border-top-right-radius'?: number, 'border-bottom-right-radius'?: number} {
+        const radius = {};
+        if (CommonUtils.isDefined(this.suffix)) {
             Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
         }
         return radius;
@@ -407,16 +407,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * @internal
      */
-    public get _$getWrapperClass(): any {
-        if (CommonUtils.isDefined(this.unit)) {
-            return 'jigsaw-numeric-input-right';
-        }
-        return 'jigsaw-numeric-input-none';
+    public get _$getWrapperClass(): 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-none' {
+        return CommonUtils.isDefined(this.suffix) ? 'jigsaw-numeric-input-right' : 'jigsaw-numeric-input-none';
     }
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawPrefixUnitModule],
+    imports: [CommonModule, FormsModule, JigsawPrefixSuffixModule],
     declarations: [JigsawNumericInput],
     exports: [JigsawNumericInput],
 })

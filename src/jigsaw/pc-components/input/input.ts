@@ -18,8 +18,13 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/for
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {JigsawPrefixUnitModule} from "./unit";
+import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
+
+type BorderRadiusValue = {
+    'border-top-left-radius'?: number, 'border-bottom-left-radius'?: number,
+    'border-top-right-radius'?: number, 'border-bottom-right-radius'?: number
+}
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
@@ -215,19 +220,19 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unit: GroupOptionValue | GroupOptionValue[];
+    public suffix: GroupOptionValue | GroupOptionValue[];
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitWidth: number;
+    public suffixWidth: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public unitLabelField: string;
+    public suffixLabelField: string;
 
     /**
      * @NoMarkForCheckRequired
@@ -248,7 +253,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public prefixLabelField: string;
 
     @Output()
-    public unitChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+    public suffixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
 
     @Output()
     public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
@@ -256,12 +261,12 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public get _$getBorderRadius(): any {
-        let radius = {};
+    public get _$getBorderRadius(): BorderRadiusValue {
+        const radius: BorderRadiusValue = {};
         if (CommonUtils.isDefined(this.prefix)) {
             Object.assign(radius, {'border-top-left-radius': 0, 'border-bottom-left-radius': 0});
         }
-        if (CommonUtils.isDefined(this.unit)) {
+        if (CommonUtils.isDefined(this.suffix)) {
             Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
         }
         return radius;
@@ -270,14 +275,14 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public get _$getWrapperClass(): any {
-        if (CommonUtils.isDefined(this.prefix) && CommonUtils.isDefined(this.unit)) {
+    public get _$getWrapperClass(): 'jigsaw-input-both' | 'jigsaw-input-left' | 'jigsaw-input-right' | 'jigsaw-input-none' {
+        if (CommonUtils.isDefined(this.prefix) && CommonUtils.isDefined(this.suffix)) {
             return 'jigsaw-input-both';
         }
         if (CommonUtils.isDefined(this.prefix)) {
             return 'jigsaw-input-left';
         }
-        if (CommonUtils.isDefined(this.unit)) {
+        if (CommonUtils.isDefined(this.suffix)) {
             return 'jigsaw-input-right';
         }
         return 'jigsaw-input-none';
@@ -386,7 +391,7 @@ export class JigsawInput extends JigsawInputBase {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawPrefixUnitModule],
+    imports: [CommonModule, FormsModule, JigsawPrefixSuffixModule],
     declarations: [JigsawInput],
     exports: [JigsawInput],
 })
