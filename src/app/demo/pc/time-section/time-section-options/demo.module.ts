@@ -1,16 +1,15 @@
 import {NgModule} from "@angular/core";
 import {JigsawButtonBarModule, JigsawCheckBoxModule, JigsawTimeSectionModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {TimeSectionBasicDemoComponent} from "./demo.component";
+import {TimeSectionOptionsDemoComponent} from "./demo.component";
 
 @NgModule({
-    declarations: [TimeSectionBasicDemoComponent],
-    exports: [ TimeSectionBasicDemoComponent ],
+    declarations: [TimeSectionOptionsDemoComponent],
+    exports: [ TimeSectionOptionsDemoComponent ],
     imports: [
         JigsawDemoDescriptionModule, JigsawTimeSectionModule, JigsawButtonBarModule, JigsawCheckBoxModule,
         JigsawCheckBoxModule
     ]
 })
-export class TimeSectionBasicDemoModule{
-
+export class TimeSectionOptionsDemoModule {
 }
