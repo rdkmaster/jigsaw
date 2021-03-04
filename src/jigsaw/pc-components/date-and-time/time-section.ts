@@ -657,7 +657,7 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     @Input()
     public showDate: boolean = true;
 
-        /**
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -747,7 +747,7 @@ export class JigsawTimeSectionModule {
                 timeTitle: '时间',
                 switchMonth: '按月',
                 switchWeek: '按周',
-                switchDay: '按天'
+                switchDay: '每天'
             },
             en: {
                 selectAll: 'Select All',
@@ -756,7 +756,7 @@ export class JigsawTimeSectionModule {
                 timeTitle: 'Time',
                 switchMonth: 'Set Month',
                 switchWeek: 'Set Week',
-                switchDay: 'Set Day'
+                switchDay: 'Everyday'
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
