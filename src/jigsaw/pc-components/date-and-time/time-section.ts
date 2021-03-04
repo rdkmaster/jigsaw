@@ -526,24 +526,27 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
                                        (valueChange)="_$selectChange()">
                 </j-time-section-picker>
             </div>
-            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate">
-                <div class="jigsaw-time-section-switch" *ngIf="showWeek && showDate">
+            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate || showDay">
+                <div class="jigsaw-time-section-switch" *ngIf="showWeek && showDate && showDay">
                     <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList"
                                         trackItemBy="value">
                     </jigsaw-radios-lite>
                 </div>
                 <div class="jigsaw-time-section-week"
-                     *ngIf="showWeek && showDate && _$selectType.value == 0 || (showDate && !showWeek)">
+                     *ngIf="showWeek && showDate && showDay && _$selectType.value == 0 || (showDate && showDay && !showWeek )">
                     <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay"
                                           [currentTime]="currentTime"
                                           [multipleSelect]="multipleDate"
                                           (valueChange)="_$selectChange()"></j-day-section-picker>
                 </div>
                 <div class="jigsaw-time-section-month"
-                     *ngIf="showWeek && showDate && _$selectType.value == 1 || (showWeek && !showDate)">
+                     *ngIf="showWeek && showDate && showDay && _$selectType.value == 1 || (showWeek && showDay && !showDate)">
                     <j-week-section-picker [(value)]="_$weekValue" [multipleSelect]="multipleDate"
                                            (valueChange)="_$selectChange()">
                     </j-week-section-picker>
+                </div>
+                <div class="jigsaw-time-section-day"
+                *ngIf="showWeek && showDate && showDay && _$selectType.value == 2 || (showWeek && showDate && !showDay)">
                 </div>
             </div>
         </div>
@@ -658,6 +661,12 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
      * @NoMarkForCheckRequired
      */
     @Input()
+    public showDay: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public multipleHour: boolean = true;
 
     /**
@@ -672,7 +681,8 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     private _createSwitchList() {
         this._$switchList = [
             {label: this._translateService.instant('timeSection.switchMonth'), value: 0},
-            {label: this._translateService.instant('timeSection.switchWeek'), value: 1}
+            {label: this._translateService.instant('timeSection.switchWeek'), value: 1},
+            {label: this._translateService.instant('timeSection.switchDay'), value: 2}
         ];
         this._$selectType = this._$selectType ? this._$switchList.find(s => s.value == this._$selectType.value) : this._$switchList[0];
     }
@@ -736,7 +746,8 @@ export class JigsawTimeSectionModule {
                 lastDayTooltip: "当前月份的最后一天",
                 timeTitle: '时间',
                 switchMonth: '按月',
-                switchWeek: '按周'
+                switchWeek: '按周',
+                switchDay: '每天'
             },
             en: {
                 selectAll: 'Select All',
@@ -744,7 +755,8 @@ export class JigsawTimeSectionModule {
                 lastDayTooltip: "The last day of the current month",
                 timeTitle: 'Time',
                 switchMonth: 'Set Month',
-                switchWeek: 'Set Week'
+                switchWeek: 'Set Week',
+                switchDay: 'Everyday'
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
