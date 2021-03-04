@@ -2,11 +2,11 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { JigsawStepOverLengthDemoComponent } from "./demo.component";
-import { JigsawStepModule, JigsawHeaderModule } from "jigsaw/public_api";
+import { JigsawStepsModule, JigsawHeaderModule } from "jigsaw/public_api";
 
 @NgModule({
     imports: [
-        JigsawStepModule,
+        JigsawStepsModule,
         CommonModule,
         JigsawDemoDescriptionModule,
         JigsawHeaderModule

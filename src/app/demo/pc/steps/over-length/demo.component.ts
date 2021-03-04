@@ -10,13 +10,23 @@ export class JigsawStepOverLengthDemoComponent {
         {
             title: "这是非常长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长的title",
             status: "normal",
-            subTitle: `<a (click)="changeStatus(0)">跳至此处</a>这是非常长长长长长长长长长长长长长长长长长长长长长的subtitle`,
+            subTitle: `
+                <span title="可以通过这个方式来添加tooltip">
+                    <a (click)="changeStatus(0)">跳至此处</a>
+                    这是非常长长长长长长长长长长长长长长长长长长长长长的subtitle
+                </span>
+            `,
             context: this
         },
         {
             title: "这是非常长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长的title",
             status: "normal",
-            subTitle: `<a (click)="changeStatus(1)">跳至此处</a>这是非常长长长长长长长长长长长长长长长长长长长长长的subtitle`,
+            subTitle: `
+                <span title="可以通过这个方式来添加tooltip">
+                    <a (click)="changeStatus(1)">跳至此处</a>
+                    这是非常长长长长长长长长长长长长长长长长长长长长长的subtitle
+                </span>
+            `,
             context: this
         }
     ];

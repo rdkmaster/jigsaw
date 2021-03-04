@@ -25,16 +25,18 @@ export type StepItem = {
 };
 
 @Component({
-    selector: "jigsaw-step,j-step",
+    selector: "jigsaw-steps,j-steps",
     templateUrl: "step.html",
     host: {
-        "[class.jigsaw-step-host]": "true",
-        "[class.jigsaw-step-vertical]": "direction === 'vertical'",
-        "[class.jigsaw-step-horizontal]": "direction === 'horizontal'"
+        "[class.jigsaw-steps-host]": "true",
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        "[class.jigsaw-steps-vertical]": "direction === 'vertical'",
+        "[class.jigsaw-steps-horizontal]": "direction === 'horizontal'"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawStep extends AbstractJigsawComponent {
+export class JigsawSteps extends AbstractJigsawComponent {
     /**
      * 步骤条的数据
      *
@@ -58,7 +60,7 @@ export class JigsawStep extends AbstractJigsawComponent {
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = step/vertical
+     * $demo = steps/vertical
      */
     @Input()
     public direction: "vertical" | "horizontal" = "horizontal";
@@ -66,7 +68,7 @@ export class JigsawStep extends AbstractJigsawComponent {
 
 @NgModule({
     imports: [CommonModule, JigsawTrustedHtmlModule],
-    declarations: [JigsawStep],
-    exports: [JigsawStep]
+    declarations: [JigsawSteps],
+    exports: [JigsawSteps]
 })
-export class JigsawStepModule {}
+export class JigsawStepsModule {}

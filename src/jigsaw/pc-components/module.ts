@@ -17,9 +17,7 @@ import {JigsawRadioModule} from './radio/radio';
 import {JigsawScrollbarModule} from '../common/components/scrollbar/index';
 import {JigsawSelectModule} from './select/select';
 import {JigsawSliderModule} from './slider/index';
-import {JigsawStepModule} from './step/step';
-import {JigsawStepsModule} from './steps/index';
-import {JigsawStepsMultilineModule} from "./steps/steps-multiline";
+import {JigsawStepsModule} from './steps/step';
 import {JigsawSwitchModule} from './switch/index';
 import {JigsawTableModule} from './table/table';
 import {JigsawTableRendererModule} from "./table/table-renderer";
@@ -97,7 +95,6 @@ const JIGSAW_MODULE = [
     JigsawScrollbarModule,
     JigsawSelectModule,
     JigsawSliderModule,
-    JigsawStepModule,
     JigsawStepsModule,
     JigsawSwitchModule,
     JigsawTableModule,
@@ -117,7 +114,6 @@ const JIGSAW_MODULE = [
     JigsawTextareaModule,
     JigsawBreadcrumbModule,
     JigsawRateModule,
-    JigsawStepsMultilineModule,
     JigsawMenuModule,
     JigsawProgressModule,
     JigsawDatePickerModule,

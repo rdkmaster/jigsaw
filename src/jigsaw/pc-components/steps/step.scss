@@ -1,4 +1,4 @@
-$steps-prefix-cls: #{$jigsaw-prefix}-step;
+$steps-prefix-cls: #{$jigsaw-prefix}-steps;
 
 .#{$steps-prefix-cls}-host {
     display: inline-flex;
@@ -60,7 +60,7 @@ $steps-prefix-cls: #{$jigsaw-prefix}-step;
                 .#{$steps-prefix-cls}-title {
                     color: $font-color-heading-bold;
                     /**
-                     *  text-shadow 代替 font-weight 
+                     *  text-shadow 代替 font-weight
                      *  font-weight会带来width上的变化
                      */
                     text-shadow: 1px 0 0 currentColor;
