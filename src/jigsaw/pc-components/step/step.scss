@@ -175,7 +175,6 @@ $steps-prefix-cls: #{$jigsaw-prefix}-step;
 }
 
 .#{$steps-prefix-cls}-horizontal {
-    overflow-x: scroll;
     .#{$steps-prefix-cls}-item {
         width: 0;
     }
