@@ -522,14 +522,12 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         <div class="jigsaw-time-section-wrapper" [class.jigsaw-time-section-horizontal]="layout == 'horizontal'">
             <div class="jigsaw-time-section-time" *ngIf="showHour">
                 <span class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</span>
-                <j-time-section-picker [(value)]="_$timeValue" [multipleSelect]="multipleHour"
-                                       (valueChange)="_$selectChange()">
+                <j-time-section-picker [(value)]="_$timeValue" [multipleSelect]="multipleHour" (valueChange)="_$selectChange()">
                 </j-time-section-picker>
             </div>
             <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate || showEveryday">
                 <div class="jigsaw-time-section-switch" *ngIf="_$switchList.length > 1">
-                    <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList"
-                                        trackItemBy="value">
+                    <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList" trackItemBy="value">
                     </jigsaw-radios-lite>
                 </div>
                 <div *ngIf="_$byMonth" class="jigsaw-time-section-month">
@@ -538,8 +536,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
                     </j-day-section-picker>
                 </div>
                 <div *ngIf="_$byWeek" class="jigsaw-time-section-week">
-                    <j-week-section-picker [(value)]="_$weekValue" [multipleSelect]="multipleDate"
-                                           (valueChange)="_$selectChange()">
+                    <j-week-section-picker [(value)]="_$weekValue" [multipleSelect]="multipleDate" (valueChange)="_$selectChange()">
                     </j-week-section-picker>
                 </div>
                 <div *ngIf="_$useEveryday" class="jigsaw-time-section-everyday">
@@ -805,8 +802,8 @@ export class JigsawTimeSectionModule {
                 lastDay: "Last Day",
                 lastDayTooltip: "The last day of the current month",
                 timeTitle: 'Time',
-                switchMonth: 'Set Month',
-                switchWeek: 'Set Week',
+                switchMonth: 'Month Day',
+                switchWeek: 'Week Day',
                 switchEveryday: 'Everyday'
             }
         });
