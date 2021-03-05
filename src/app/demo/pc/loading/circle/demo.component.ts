@@ -8,10 +8,14 @@ import {LoadingService, PopupInfo, JigsawCircleLoading } from "jigsaw/public_api
 export class CircleLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
 
+    percent: number = 0;
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
     constructor(public loadingService: LoadingService) {
+        setInterval(() => {
+            this.percent = (this.percent + Math.random() * 10) % 100;
+        }, 500);
     }
 
     popupBlockLoading() {

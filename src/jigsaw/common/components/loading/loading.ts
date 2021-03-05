@@ -184,7 +184,7 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
             this.renderer.addClass(
                 this.elementRef.nativeElement,
                 "jigsaw-circle-loading-within-mask"
-            );  
+            );
         }
     }
 
@@ -252,6 +252,14 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
      * @internal
      */
     public _$strokeWidth = 6;
+
+    /**
+     * @internal
+     */
+    public get _$percent(): string {
+        const fractions = this.size == 'large' ? 2 : 1;
+        return isNaN(this.percent) || typeof this.percent != 'number' ? '' : this.percent.toFixed(fractions);
+    }
 
     /**
      * @NoMarkForCheckRequired
