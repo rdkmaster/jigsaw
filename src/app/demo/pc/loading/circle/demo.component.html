@@ -4,6 +4,7 @@
 
 <!-- start to learn the demo from here -->
 <div class="wrap">
+    <jigsaw-header>这是一个在容器内的loading</jigsaw-header>
     <j-button (click)="popupBlockLoading()">popupBlockLoading</j-button>
     <j-button (click)="closeBlockLoading()">closeBlockLoading</j-button>
     <div #block class="block">
@@ -24,6 +25,7 @@
         </div>
     </div>
 
+    <jigsaw-header>这是一个全屏带遮罩的loading</jigsaw-header>
     <j-button (click)="popupGlobalLoading()">popupGlobalLoading</j-button>
 
     <jigsaw-header>圆形Loading 各种size</jigsaw-header>
@@ -31,7 +33,7 @@
     <div class="large-loading-cntr">
         <jigsaw-circle-loading
             [size]="'large'"
-            [label]="'这是标签'"
+            [label]="'这是large'"
             [percent]="0"
         ></jigsaw-circle-loading>
     </div>
@@ -39,7 +41,7 @@
     <div class="medium-loading-cntr">
         <jigsaw-circle-loading
             [size]="'medium'"
-            [label]="'这是标签'"
+            [label]="'这是medium'"
             [percent]="10"
         ></jigsaw-circle-loading>
     </div>
@@ -47,7 +49,7 @@
     <div class="small-loading-cntr">
         <jigsaw-circle-loading
             [size]="'small'"
-            [label]="'这是标签'"
+            [label]="'这是small'"
             [percent]="20"
         ></jigsaw-circle-loading>
     </div>
