@@ -52,6 +52,14 @@ $circle-loading-prefix-cls: #{$jigsaw-prefix}-circle-loading;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
+            @at-root .#{$circle-loading-prefix-cls}-within-mask
+                    .#{$circle-loading-prefix-cls}-svg {
+                .#{$circle-loading-prefix-cls}-percent,
+                .#{$circle-loading-prefix-cls}-label {
+                    color: $font-color-white !important;
+                }
+            }
         }
 
         &.#{$circle-loading-prefix-cls}-svg-small {

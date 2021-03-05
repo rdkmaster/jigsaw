@@ -178,6 +178,14 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
             this.elementRef.nativeElement,
             "jigsaw-circle-loading-host"
         );
+        let parent = this.renderer.parentNode(this.elementRef.nativeElement);
+        let sibling = parent.querySelector('jigsaw-block');
+        if (sibling){
+            this.renderer.addClass(
+                this.elementRef.nativeElement,
+                "jigsaw-circle-loading-within-mask"
+            );  
+        }
     }
 
     public _size: "small" | "medium" | "large" = "large";
@@ -216,6 +224,8 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
         this._$radius = circleWidth / 2;
         this._$center = currentWidth / 2;
         this._$svgWidth = currentWidth;
+        this.renderer.setStyle(this.elementRef.nativeElement, 'width', currentWidth + "px");
+        this.renderer.setStyle(this.elementRef.nativeElement, 'height', currentWidth + "px");
         this._$strokeWidth = currentStroke;
         this.elementRef.nativeElement.querySelector(".jigsaw-circle-loading-svg-bar")
             .style.strokeDasharray = `${circumference},${circumference}`;

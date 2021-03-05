@@ -41,7 +41,7 @@
 
             <jigsaw-button (click)="startToLoad()" height="32px" colorType="primary">
                 <jigsaw-circle-loading *ngIf="isLoading" [size]="'small'"></jigsaw-circle-loading>
-                <span [ngStyle]="{'padding-left': isLoading ? '16px' : ''}">{{label}} </span>
+                <span>{{label}} </span>
             </jigsaw-button>
         </div>
     </div>
