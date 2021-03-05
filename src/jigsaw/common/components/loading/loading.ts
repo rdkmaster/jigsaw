@@ -258,14 +258,22 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
      */
     public get _$percent(): string {
         const fractions = this.size == 'large' ? 2 : 1;
-        return isNaN(this.percent) || typeof this.percent != 'number' ? '' : this.percent.toFixed(fractions);
+        return this._$validPercent ? this.percent.toFixed(fractions) : '--';
     }
+
+    private _percent: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public percent: number;
+    public get percent(): number {
+        return this._percent;
+    }
+
+    public set percent(value: number) {
+        this._percent = typeof value != 'number' ? parseFloat(value) : value;
+    }
 
     /**
      * @internal
