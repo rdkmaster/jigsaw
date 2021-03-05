@@ -1,6 +1,6 @@
 import {ElementRef, Injectable, TemplateRef, Type} from "@angular/core";
 import {IPopupable, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "./popup.service";
-import {JigsawLoading} from "../components/loading/loading";
+import {JigsawCircleLoading} from "../components/loading/loading";
 import {JigsawBlock} from "../components/block/block";
 
 @Injectable()
@@ -24,7 +24,7 @@ export class LoadingService {
             } else if (blockBy instanceof TemplateRef) {
                 popupInfo = this._popupService.popup(blockBy, LoadingService._getOptions(blockTo));
             } else {
-                popupInfo = this._popupService.popup(JigsawLoading, LoadingService._getOptions(blockTo));
+                popupInfo = this._popupService.popup(JigsawCircleLoading, LoadingService._getOptions(blockTo));
             }
 
             const dispose = () => {
@@ -46,7 +46,7 @@ export class LoadingService {
                 popupInfo = this._popupService.popup(blockBy, LoadingService._getDefaultOptions());
             }
         } else {
-            popupInfo = this._popupService.popup(JigsawLoading, LoadingService._getDefaultOptions());
+            popupInfo = this._popupService.popup(JigsawCircleLoading, LoadingService._getDefaultOptions());
         }
         return popupInfo;
     }
