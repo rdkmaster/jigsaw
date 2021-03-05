@@ -62,9 +62,20 @@ $circle-loading-prefix-cls: #{$jigsaw-prefix}-circle-loading;
             }
         }
 
+        &.#{$circle-loading-prefix-cls}-svg-medium{
+            .#{$circle-loading-prefix-cls}-percent{
+                font-size: $font-size-sm;
+            }
+        }
+
         &.#{$circle-loading-prefix-cls}-svg-small {
             .#{$circle-loading-prefix-cls}-percent {
-                left: 110%;
+                justify-content:flex-start;
+                left: 100%;
+                width: 200%;
+                padding-left: 5px;
+                font-size: $font-size-sm;
+                transform: none;
             }
         }
     }
