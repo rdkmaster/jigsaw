@@ -17,6 +17,8 @@ export class CircleLoadingDemoComponent {
     popupBlockLoading() {
         if (!this.blockLoading) {
             this.blockLoading = this.loadingService.show(this.block, JigsawCircleLoading);
+            this.blockLoading.instance.size = "medium";
+            this.blockLoading.instance.label = "加载中...";
         }
     }
 
@@ -30,6 +32,8 @@ export class CircleLoadingDemoComponent {
     popupGlobalLoading() {
         if (!this.globalLoading) {
             this.globalLoading = this.loadingService.show(JigsawCircleLoading);
+            this.globalLoading.instance.size = "large";
+            this.globalLoading.instance.label = "加载中...";
             setTimeout(() => {
                 this.closeGlobalLoading();
             }, 3000)

@@ -2,7 +2,6 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
 <div class="wrap">
     <j-button (click)="popupBlockLoading()">popupBlockLoading</j-button>
@@ -26,5 +25,67 @@
     </div>
 
     <j-button (click)="popupGlobalLoading()">popupGlobalLoading</j-button>
-    <jigsaw-circle-loading></jigsaw-circle-loading>
+
+    <jigsaw-header>圆形Loading 各种size</jigsaw-header>
+
+    <div class="large-loading-cntr">
+        <jigsaw-circle-loading
+            [size]="'large'"
+            [label]="'这是标签'"
+            [percent]="0"
+        ></jigsaw-circle-loading>
+    </div>
+
+    <div class="medium-loading-cntr">
+        <jigsaw-circle-loading
+            [size]="'medium'"
+            [label]="'这是标签'"
+            [percent]="10"
+        ></jigsaw-circle-loading>
+    </div>
+
+    <div class="small-loading-cntr">
+        <jigsaw-circle-loading
+            [size]="'small'"
+            [label]="'这是标签'"
+            [percent]="20"
+        ></jigsaw-circle-loading>
+    </div>
+
+    <jigsaw-header>圆形Loading 不显示标签</jigsaw-header>
+
+    <div class="large-loading-cntr">
+        <jigsaw-circle-loading
+            [size]="'large'"
+            [percent]="0"
+        ></jigsaw-circle-loading>
+    </div>
+
+    <div class="medium-loading-cntr">
+        <jigsaw-circle-loading
+            [size]="'medium'"
+            [percent]="10"
+        ></jigsaw-circle-loading>
+    </div>
+
+    <div class="small-loading-cntr">
+        <jigsaw-circle-loading
+            [size]="'small'"
+            [percent]="20"
+        ></jigsaw-circle-loading>
+    </div>
+
+    <jigsaw-header>圆形Loading 不显示百分比</jigsaw-header>
+
+    <div class="large-loading-cntr">
+        <jigsaw-circle-loading [size]="'large'"></jigsaw-circle-loading>
+    </div>
+
+    <div class="medium-loading-cntr">
+        <jigsaw-circle-loading [size]="'medium'"></jigsaw-circle-loading>
+    </div>
+
+    <div class="small-loading-cntr">
+        <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>
+    </div>
 </div>

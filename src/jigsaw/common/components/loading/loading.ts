@@ -1,8 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
-import {IPopupable} from "../../service/popup.service";
-import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../../common";
-import {JigsawBlock, JigsawBlockModule} from "../block/block";
+import { IPopupable } from "../../service/popup.service";
+import { CommonModule } from "@angular/common";
+import { AbstractJigsawComponent } from "../../common";
+import { JigsawBlock, JigsawBlockModule } from "../block/block";
 
 /**
  * Loading组件的基类，自定义Loading组件必须继承这个类。
@@ -149,7 +149,7 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
     selector: 'jigsaw-ball-loading, j-ball-loading',
     templateUrl: 'loading-ball.html'
 })
-export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
+export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
@@ -165,41 +165,97 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit  {
 }
 
 @Component({
-    selector: 'jigsaw-circle-loading, j-circle-loading',
-    templateUrl: 'loading-circle.html'
+    selector: "jigsaw-circle-loading, j-circle-loading",
+    templateUrl: "loading-circle.html"
 })
-export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit{
+export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 
     ngOnInit() {
-        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-circle-loading-host');
-        console.log(this.elementRef.nativeElement.querySelector('.jigsaw-circle-loading-svg-bar'))
+        this.renderer.addClass(
+            this.elementRef.nativeElement,
+            "jigsaw-circle-loading-host"
+        );
     }
 
-    public level ="1";
+    public _size: "small" | "medium" | "large" = "large";
 
     /**
-     * @internal
-     */
-    private _$radius = 33;
-
-    /**
-     * @internal
-     */
-    private circumference = this._$radius * 2 * Math.PI;
-
-    
-
-    /**
-     * 超过这个值的时候面包屑会折叠中间的部分
-     * @internal
+     * @NoMarkForCheckRequired
      */
     @Input()
-    public foldThreshold: number = Infinity;
+    public get size(): "small" | "medium" | "large" {
+        return this._size;
+    }
 
-    private _routesConfig=[];
+    public set size(value: "small" | "medium" | "large") {
+        this._size = value;
+        let circleWidth = 66;
+        let currentStroke = 6;
+        let currentWidth = 78;
+        let circumference = circleWidth * Math.PI;
+        if (value === "large") {
+            circleWidth = 66;
+            currentStroke = 6;
+            currentWidth = circleWidth + currentStroke * 2;
+            circumference = circleWidth * Math.PI;
+        } else if (value === "medium") {
+            circleWidth = 38;
+            currentStroke = 4;
+            currentWidth = circleWidth + currentStroke * 2;
+            circumference = circleWidth * Math.PI;
+        } else if (value === "small") {
+            circleWidth = 22;
+            currentStroke = 2;
+            currentWidth = circleWidth + currentStroke * 2;
+            circumference = circleWidth * Math.PI;
+        }
+
+        this._$radius = circleWidth / 2;
+        this._$center = currentWidth / 2;
+        this._$svgWidth = currentWidth;
+        this._$strokeWidth = currentStroke;
+        this.elementRef.nativeElement.querySelector(
+            ".jigsaw-circle-loading-svg-bar"
+        ).style.strokeDasharray = `${circumference},${circumference}`;
+        this.elementRef.nativeElement.querySelector(
+            ".jigsaw-circle-loading-svg-bar"
+        ).style.strokeDashoffset = `0`;
+    }
+
+    /**
+     * @internal
+     */
+    public _$radius = 33;
+
+    /**
+     * @internal
+     */
+    public _$center = 39;
+
+    /**
+     * @internal
+     */
+    public _$svgWidth = 78;
+
+    /**
+     * @internal
+     */
+    public _$strokeWidth = 6;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public percent: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public label = '';
 }
 
 @NgModule({
