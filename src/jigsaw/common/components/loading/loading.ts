@@ -217,12 +217,10 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
         this._$center = currentWidth / 2;
         this._$svgWidth = currentWidth;
         this._$strokeWidth = currentStroke;
-        this.elementRef.nativeElement.querySelector(
-            ".jigsaw-circle-loading-svg-bar"
-        ).style.strokeDasharray = `${circumference},${circumference}`;
-        this.elementRef.nativeElement.querySelector(
-            ".jigsaw-circle-loading-svg-bar"
-        ).style.strokeDashoffset = `0`;
+        this.elementRef.nativeElement.querySelector(".jigsaw-circle-loading-svg-bar")
+            .style.strokeDasharray = `${circumference},${circumference}`;
+        this.elementRef.nativeElement.querySelector(".jigsaw-circle-loading-svg-bar")
+            .style.strokeDashoffset = `0`;
     }
 
     /**
@@ -252,10 +250,17 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     public percent: number;
 
     /**
+     * @internal
+     */
+    public get _$validPercent(): boolean {
+        return !isNaN(this.percent);
+    }
+
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public label = '';
+    public label: string = '';
 }
 
 @NgModule({
@@ -264,6 +269,5 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     exports: [JigsawLoading, JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawCircleLoading]
 })
 export class JigsawLoadingModule {
-
 }
 

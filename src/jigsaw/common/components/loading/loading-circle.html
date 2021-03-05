@@ -24,10 +24,7 @@
             [attr.stroke-width]="_$strokeWidth"
         />
     </svg>
-    <div
-        *ngIf="percent === 0 ? true : !!percent"
-        class="jigsaw-circle-loading-percent"
-    >
+    <div *ngIf="_$validPercent" class="jigsaw-circle-loading-percent">
         {{percent + '%'}}
     </div>
     <div *ngIf="label" class="jigsaw-circle-loading-label">{{label}}</div>
