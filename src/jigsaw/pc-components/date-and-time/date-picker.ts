@@ -127,9 +127,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 this._createCalendar(this._$curYear, this._$curMonth.month);
             }
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
-        TimeService.setLocale(browserLang);
+        const currentLang = _translateService.currentLang ? _translateService.currentLang : _translateService.getBrowserLang();
+        _translateService.setDefaultLang(currentLang);
+        TimeService.setLocale(currentLang);
     }
 
     /**
