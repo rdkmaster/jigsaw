@@ -5,10 +5,7 @@ import { Component } from "@angular/core";
     styleUrls: ["./demo.component.scss"]
 })
 export class JigsawCircleProgressDemoComponent {
-    data = 25;
-    getRandomData() {
-        return Math.floor(Math.random() * 100);
-    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

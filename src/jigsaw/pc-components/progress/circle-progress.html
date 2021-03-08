@@ -1,17 +1,36 @@
-<div class="jigsaw-circle-progress">
-    <div>
-        <div class="full jigsaw-circle-progress-slice">
-            <div class="jigsaw-circle-progress-fill"></div>
-        </div>
-        <div class="jigsaw-circle-progress-slice">
-            <div class="jigsaw-circle-progress-fill"></div>
-            <div class="jigsaw-circle-progress-fill jigsaw-circle-progress-bar"></div>
-        </div>
-    </div>
-    <div class="jigsaw-circle-progress-overlay">
-        <span *ngIf="showMarker">{{data + "%"}}</span>
-    </div>
-    <div *ngIf="label" class="jigsaw-circle-progress-label" title="{{label}}">
-        <span>{{label}}</span>
+<div
+    class="jigsaw-circle-progress-svg"
+    [style.width]="_$svgWidth + 'px'"
+    [style.height]="_$svgWidth + 'px'"
+>
+    <svg>
+        <circle
+            class="jigsaw-circle-progress-track"
+            fill="transparent"
+            [attr.r]="_$radius"
+            [attr.cx]="_$center"
+            [attr.cy]="_$center"
+            [attr.stroke-width]="_$strokeWidth"
+        />
+        <circle
+            class="jigsaw-circle-progress-bar"
+            fill="transparent"
+            [attr.r]="_$radius"
+            [attr.cx]="_$center"
+            [attr.cy]="_$center"
+            [attr.stroke-width]="_$strokeWidth"
+            [style.strokeDasharray]="_$circumference + ','+ _$circumference"
+            [style.strokeDashoffset]="_$offset ? _$offset : _$circumference"
+        />
+    </svg>
+    <div *ngIf="_$validPercent" class="jigsaw-circle-progress-percent">
+        <span *ngIf="status==='primary'">{{_$percent + '%'}}</span>
+        <i
+            *ngIf="status!=='primary'"
+            class="iconfont"
+            [ngClass]="{'iconfont-ea18':status === 'success',
+                        'iconfont-e328':status === 'warning',
+                        'iconfont-e9b8':status === 'error'}"
+        ></i>
     </div>
 </div>
