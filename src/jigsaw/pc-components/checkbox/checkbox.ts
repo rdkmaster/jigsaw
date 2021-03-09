@@ -228,4 +228,8 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     public registerOnTouched(fn: any): void {
         this._onTouched = fn;
     }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
 }

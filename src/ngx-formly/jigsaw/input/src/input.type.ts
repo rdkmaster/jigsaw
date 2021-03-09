@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {FieldType} from '@ngx-formly/core';
+import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-input',
@@ -11,7 +12,6 @@ import {FieldType} from '@ngx-formly/core';
             [width]="to.width"
             [height]="to.height"
             [clearable]="to.clearable"
-            [disabled]="to.disabled"
             [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
             [blurOnClear]="to.blurOnClear"
@@ -31,7 +31,6 @@ import {FieldType} from '@ngx-formly/core';
                 [min]="to.min"
                 [max]="to.max"
                 [step]="to.step"
-                [disabled]="to.disabled"
                 [valid]="to.valid && !showError"
                 [placeholder]="to.placeholder"
                 [size]="to.size"
@@ -42,11 +41,11 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldInput extends FieldType {
+
+export class FormlyFieldInput extends FieldType implements AfterViewInit {
     defaultOptions = {
         templateOptions: {
             width: '100%',
-            disabled: false,
             valid: true,
             clearable: true,
             blurOnClear: true,
@@ -55,4 +54,13 @@ export class FormlyFieldInput extends FieldType {
             step: 1
         },
     };
+
+    @ViewChild(JigsawInput)
+    private _input: JigsawInput;
+    @ViewChild(JigsawNumericInput)
+    private _numericInput: JigsawNumericInput;
+
+    ngAfterViewInit(): void {
+        this.to.componentRef = this.to.type === 'number' ? this._numericInput : this._input;
+    }
 }

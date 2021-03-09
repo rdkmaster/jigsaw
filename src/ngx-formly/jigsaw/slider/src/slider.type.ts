@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawSlider} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-slider',
@@ -14,14 +15,13 @@ import {FieldType} from '@ngx-formly/core';
             [max]="to.max"
             [step]="to.step"
             [vertical]="to.vertical"
-            [disabled]="to.disabled"
             [marks]="to.marks"
             (change)="to.change && to.change($event)"
         ></jigsaw-slider>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldSlider extends FieldType {
+export class FormlyFieldSlider extends FormlyFieldType<JigsawSlider> {
     defaultOptions = {
         templateOptions: {
             valid: true,
@@ -31,4 +31,7 @@ export class FormlyFieldSlider extends FieldType {
             marks: [],
         },
     };
+
+    @ViewChild(JigsawSlider)
+    protected _instance: JigsawSlider;
 }

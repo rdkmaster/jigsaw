@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
-import {TimeGr} from '@rdkmaster/jigsaw';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawDateTimeSelect, TimeGr} from '@rdkmaster/jigsaw';
 
 @Component({
     selector: 'formly-field-jigsaw-date-time-select',
@@ -10,7 +10,6 @@ import {TimeGr} from '@rdkmaster/jigsaw';
             [formControl]="formControl"
             [width]="to.width"
             [height]="to.height"
-            [disabled]="to.disabled"
             [valid]="to.valid && !showError"
             [gr]="to.gr"
             [(date)]="to.date"
@@ -29,15 +28,16 @@ import {TimeGr} from '@rdkmaster/jigsaw';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldDateTimeSelect extends FieldType {
+export class FormlyFieldDateTimeSelect extends FormlyFieldType<JigsawDateTimeSelect> {
     defaultOptions = {
         templateOptions: {
-            disabled: false,
             valid: true,
-            // date: 'now',
             gr: TimeGr.date,
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave'
         },
     };
+
+    @ViewChild(JigsawDateTimeSelect)
+    protected _instance: JigsawDateTimeSelect;
 }

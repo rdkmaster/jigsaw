@@ -311,6 +311,10 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         this._onTouched();
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     /**
      * @internal
      */

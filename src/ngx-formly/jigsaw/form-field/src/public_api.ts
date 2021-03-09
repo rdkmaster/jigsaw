@@ -1,1 +1,1 @@
-export {FormlyJigsawFormFieldModule} from './form-field.module';
+export {FormlyJigsawFormFieldModule, FormlyFieldType} from './form-field.module';

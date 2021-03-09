@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawSelect} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-select',
@@ -15,7 +16,6 @@ import {FieldType} from '@ngx-formly/core';
             [trackItemBy]="to.trackItemBy"
             [labelField]="to.labelField"
             [placeholder]="to.placeholder"
-            [disabled]="to.disabled"
             [optionWidth]="to.optionWidth"
             [optionHeight]="to.optionHeight"
             [optionCount]="to.optionCount"
@@ -32,7 +32,7 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldSelect extends FieldType {
+export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
     defaultOptions = {
         templateOptions: {
             valid: true,
@@ -44,4 +44,7 @@ export class FormlyFieldSelect extends FieldType {
             closeTrigger: 'mouseleave',
         },
     };
+
+    @ViewChild(JigsawSelect)
+    protected _instance: JigsawSelect;
 }

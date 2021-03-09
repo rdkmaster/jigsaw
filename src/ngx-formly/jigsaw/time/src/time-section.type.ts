@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
-import {TimeGr} from '@rdkmaster/jigsaw';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawTimeSection} from '@rdkmaster/jigsaw';
 
 @Component({
     selector: 'formly-field-jigsaw-time-section',
@@ -24,7 +24,7 @@ import {TimeGr} from '@rdkmaster/jigsaw';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldTimeSection extends FieldType {
+export class FormlyFieldTimeSection extends FormlyFieldType<JigsawTimeSection> {
     defaultOptions = {
         templateOptions: {
             layout: 'vertical',
@@ -35,4 +35,7 @@ export class FormlyFieldTimeSection extends FieldType {
             multipleDate: true,
         },
     };
+
+    @ViewChild(JigsawTimeSection)
+    protected _instance: JigsawTimeSection;
 }

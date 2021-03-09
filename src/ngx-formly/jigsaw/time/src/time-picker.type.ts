@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
-import {TimeGr} from '@rdkmaster/jigsaw';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawTimePicker, TimeGr} from '@rdkmaster/jigsaw';
 
 @Component({
     selector: 'formly-field-jigsaw-time-picker',
@@ -11,7 +11,6 @@ import {TimeGr} from '@rdkmaster/jigsaw';
             [width]="to.width"
             [height]="to.height"
             [(value)]="to.value"
-            [disabled]="to.disabled"
             [valid]="to.valid && !showError"
             [step]="to.step"
             [gr]="to.gr"
@@ -23,14 +22,16 @@ import {TimeGr} from '@rdkmaster/jigsaw';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldTimePicker extends FieldType {
+export class FormlyFieldTimePicker extends FormlyFieldType<JigsawTimePicker> {
     defaultOptions = {
         templateOptions: {
-            disabled: false,
             valid: true,
             step: 1,
             gr: TimeGr.time,
             popDirection: 'down',
         },
     };
+
+    @ViewChild(JigsawTimePicker)
+    protected _instance: JigsawTimePicker;
 }

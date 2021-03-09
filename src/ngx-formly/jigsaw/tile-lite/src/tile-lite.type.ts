@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from "@ngx-formly/core";
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawTileLite} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-tile-lite',
@@ -23,11 +24,14 @@ import {FieldType} from "@ngx-formly/core";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldTileLite extends FieldType {
+export class FormlyFieldTileLite extends FormlyFieldType<JigsawTileLite> {
     defaultOptions = {
         templateOptions: {
             valid: true,
             labelField: 'label',
         },
     };
+
+    @ViewChild(JigsawTileLite)
+    protected _instance: JigsawTileLite;
 }

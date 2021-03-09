@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawIcon} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-icon',
@@ -21,11 +22,14 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldIcon extends FieldType {
+export class FormlyFieldIcon extends FormlyFieldType<JigsawIcon> {
     defaultOptions = {
         templateOptions: {
-            hideLabel: true,
+            hideLabel: false,
             iconPosition: 'left',
         },
     };
+
+    @ViewChild(JigsawIcon)
+    protected _instance: JigsawIcon;
 }

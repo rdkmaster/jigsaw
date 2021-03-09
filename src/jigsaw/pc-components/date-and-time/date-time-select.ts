@@ -293,6 +293,10 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         this._onTouched();
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     /**
      * @internal
      */

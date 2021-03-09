@@ -80,6 +80,10 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         this._onTouched = fn;
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     private _value: string = ''; //input表单值
 
     /**

@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawTextarea} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-textarea',
@@ -12,14 +13,13 @@ import {FieldType} from '@ngx-formly/core';
             [(value)]="to.value"
             [clearable]="to.clearable"
             [placeholder]="to.placeholder"
-            [disabled]="to.disabled"
             [valid]="to.valid && !showError"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-textarea>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldTextArea extends FieldType {
+export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
     defaultOptions = {
         templateOptions: {
             clearable: true,
@@ -27,4 +27,7 @@ export class FormlyFieldTextArea extends FieldType {
             width: '100%'
         }
     };
+
+    @ViewChild(JigsawTextarea)
+    protected _instance: JigsawTextarea;
 }

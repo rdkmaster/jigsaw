@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawSwitch} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-switch',
@@ -12,19 +13,21 @@ import {FieldType} from '@ngx-formly/core';
             [onLabel]="to.onLabel"
             [offLabel]="to.offLabel"
             [size]="to.size"
-            [disabled]="to.disabled"
             [readonly]="to.readonly"
             (change)="to.change && to.change($event)"
         ></jigsaw-switch>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldSwitch extends FieldType {
+export class FormlyFieldSwitch extends FormlyFieldType<JigsawSwitch> {
     defaultOptions = {
         templateOptions: {
-            hideLabel: true,
+            hideLabel: false,
             valid: true,
             size: 'default',
         }
     };
+
+    @ViewChild(JigsawSwitch)
+    protected _instance: JigsawSwitch;
 }

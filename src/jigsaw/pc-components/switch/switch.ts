@@ -233,4 +233,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     public registerOnTouched(fn: any): void {
         this._onTouched = fn;
     }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
 }

@@ -348,6 +348,10 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         this._onTouched = fn;
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     ngOnInit() {
         super.ngOnInit();
         // 设置默认选中的初始值

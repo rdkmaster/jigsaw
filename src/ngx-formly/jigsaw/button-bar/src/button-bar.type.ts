@@ -1,6 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
 import {ColorType} from "@ngx-formly/jigsaw/button";
+import {JigsawButtonBar} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-button-bar',
@@ -21,7 +22,7 @@ import {ColorType} from "@ngx-formly/jigsaw/button";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldButtonBar extends FieldType {
+export class FormlyFieldButtonBar extends FormlyFieldType<JigsawButtonBar> {
     defaultOptions = {
         templateOptions: {
             valid: true,
@@ -29,4 +30,7 @@ export class FormlyFieldButtonBar extends FieldType {
             colorType: ColorType.primary
         },
     };
+
+    @ViewChild(JigsawButtonBar)
+    protected _instance: JigsawButtonBar;
 }

@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawRadiosLite} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-radio',
@@ -17,7 +18,7 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldRadio extends FieldType {
+export class FormlyFieldRadio extends FormlyFieldType<JigsawRadiosLite> {
     defaultOptions = {
         templateOptions: {
             valid: true,
@@ -25,4 +26,7 @@ export class FormlyFieldRadio extends FieldType {
             labelField: 'label'
         }
     };
+
+    @ViewChild(JigsawRadiosLite)
+    protected _instance: JigsawRadiosLite;
 }

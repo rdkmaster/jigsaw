@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawButton} from "@rdkmaster/jigsaw";
 
 export enum ColorType {
     default = 'default', primary = 'primary', warning = 'warning', error = 'error', danger = 'danger'
@@ -23,13 +24,16 @@ enum SizeType {
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldButton extends FieldType {
+export class FormlyFieldButton extends FormlyFieldType<JigsawButton> {
     defaultOptions = {
         templateOptions: {
-            hideLabel: true,
+            hideLabel: false,
             content: '按钮',
             colorType: ColorType.default,
             preSize: SizeType.default
         },
     };
+
+    @ViewChild(JigsawButton)
+    protected _instance: JigsawButton;
 }

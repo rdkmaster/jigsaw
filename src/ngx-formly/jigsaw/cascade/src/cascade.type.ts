@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
-import {ArrayCollection} from "@rdkmaster/jigsaw";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {ArrayCollection, JigsawCascade} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-cascade',
@@ -13,7 +13,6 @@ import {ArrayCollection} from "@rdkmaster/jigsaw";
             [(value)]="_$comboValue"
             [labelField]="to.labelField"
             [placeholder]="to.placeholder"
-            [disabled]="to.disabled"
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
             [maxWidth]="to.maxWidth"
@@ -54,7 +53,7 @@ import {ArrayCollection} from "@rdkmaster/jigsaw";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldCascade extends FieldType implements OnInit {
+export class FormlyFieldCascade extends FormlyFieldType<JigsawCascade> implements OnInit {
     defaultOptions = {
         templateOptions: {
             width: '100%',
@@ -72,6 +71,9 @@ export class FormlyFieldCascade extends FieldType implements OnInit {
     };
 
     public _$comboValue: any[];
+
+    @ViewChild(JigsawCascade)
+    protected _instance: JigsawCascade;
 
     constructor(private _cdr: ChangeDetectorRef) {
         super();

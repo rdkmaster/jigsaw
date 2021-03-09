@@ -451,9 +451,16 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._onTouched = fn;
     }
 
+    /**
+     * @internal
+     */
     public _$onClick($event: Event): void {
         $event.preventDefault();
         $event.stopPropagation();
         this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

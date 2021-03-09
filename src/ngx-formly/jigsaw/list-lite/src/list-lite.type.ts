@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawListLite} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-list-lite',
@@ -23,7 +24,7 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldListLite extends FieldType {
+export class FormlyFieldListLite extends FormlyFieldType<JigsawListLite> {
     defaultOptions = {
         templateOptions: {
             width: '200px',
@@ -31,4 +32,7 @@ export class FormlyFieldListLite extends FieldType {
             labelField: 'label',
         },
     };
+
+    @ViewChild(JigsawListLite)
+    protected _instance: JigsawListLite;
 }

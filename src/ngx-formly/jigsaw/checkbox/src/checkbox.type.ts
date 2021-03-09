@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawCheckBox} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-checkbox',
@@ -9,7 +10,6 @@ import {FieldType} from '@ngx-formly/core';
             [formControl]="formControl"
             [(checked)]="to.checked"
             [(enableIndeterminate)]="to.enableIndeterminate"
-            [disabled]="to.disabled"
             [valid]="to.valid && !showError"
             (change)="to.change && to.change($event)"
         >
@@ -18,11 +18,14 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldCheckbox extends FieldType {
+export class FormlyFieldCheckbox extends FormlyFieldType<JigsawCheckBox> {
     defaultOptions = {
         templateOptions: {
-            hideLabel: true,
+            hideLabel: false,
             valid: true
         },
     };
+
+    @ViewChild(JigsawCheckBox)
+    protected _instance: JigsawCheckBox;
 }

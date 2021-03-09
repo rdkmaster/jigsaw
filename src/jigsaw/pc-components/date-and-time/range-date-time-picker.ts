@@ -508,6 +508,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         this._onTouched();
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     ngOnInit() {
         super.ngOnInit();
         this._init();

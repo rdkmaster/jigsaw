@@ -437,6 +437,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         this._onTouched();
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     ngOnInit() {
         super.ngOnInit();
         this._updateValueSeparate.emit();

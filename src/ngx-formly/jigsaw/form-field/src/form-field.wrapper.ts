@@ -4,7 +4,8 @@ import {FieldWrapper} from '@ngx-formly/core';
 @Component({
     selector: 'formly-wrapper-form-field',
     template: `
-        <div class="jigsaw-formly-field-wrapper" [title]="to.title ? to.title : ''">
+        <div class="jigsaw-formly-field-wrapper" [title]="to.title ? to.title : ''"
+             [ngStyle]="{height: to.fixHeightInner ? '100%' : 'calc(100% - 16px)'}">
             <div class="jigsaw-formly-field-wrapper-label" *ngIf="!to.hideLabel" [attr.for]="id">
                 <label>{{ to.label }}</label>
                 <span *ngIf="to.required && to.hideRequiredMarker !== true">*</span>
@@ -26,7 +27,6 @@ import {FieldWrapper} from '@ngx-formly/core';
             margin-bottom: 16px;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
         .jigsaw-formly-field-wrapper-label {

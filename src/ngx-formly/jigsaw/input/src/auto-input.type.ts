@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FieldType} from '@ngx-formly/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {JigsawAutoCompleteInput} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-auto-input',
@@ -11,7 +12,6 @@ import {FieldType} from '@ngx-formly/core';
             [height]="to.height"
             [data]="to.data"
             [clearable]="to.clearable"
-            [disabled]="to.disabled"
             [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
             [blurOnClear]="to.blurOnClear"
@@ -30,11 +30,10 @@ import {FieldType} from '@ngx-formly/core';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldAutoInput extends FieldType {
+export class FormlyFieldAutoInput extends FormlyFieldType<JigsawAutoCompleteInput> {
     defaultOptions = {
         templateOptions: {
             width: '100%',
-            disabled: false,
             valid: true,
             clearable: true,
             blurOnClear: true,
@@ -44,4 +43,7 @@ export class FormlyFieldAutoInput extends FieldType {
             filterOnFocus: true
         },
     };
+
+    @ViewChild(JigsawAutoCompleteInput)
+    protected _instance: JigsawAutoCompleteInput;
 }

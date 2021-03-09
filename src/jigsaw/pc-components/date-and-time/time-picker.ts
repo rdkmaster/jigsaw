@@ -690,6 +690,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._onTouched();
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     ngOnInit() {
         super.ngOnInit();
         if (this._isValueOutOfLimit(this.value)) {

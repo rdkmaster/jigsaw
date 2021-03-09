@@ -588,4 +588,8 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         }
         this._onTouched();
     }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
 }
