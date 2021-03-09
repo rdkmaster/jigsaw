@@ -557,7 +557,7 @@ export class PopupService {
     private _setBackground(options: PopupOptions, element: HTMLElement): void {
         // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
         if (!this._isModal(options) && this._isShowShadow(options)) {
-            InternalUtils.renderer.setStyle(element, 'box-shadow', '1px 1px 6px rgba(0, 0, 0, .2)');
+            InternalUtils.renderer.setStyle(element, 'box-shadow', '0px 2px 12px hsla(0, 0%, 0%, 0.15)');
         }
         if (options && options.showBorder) {
             InternalUtils.renderer.setStyle(element, 'border', '1px solid #dcdcdc');

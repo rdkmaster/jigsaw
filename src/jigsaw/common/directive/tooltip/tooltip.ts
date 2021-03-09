@@ -18,7 +18,8 @@ export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, co
 export type TooltipRenderAs = 'plain-text' | 'html';
 
 @Component({
-    template: '<div style="padding:12px; max-width:400px" [trustedHtml]="tooltip" [trustedHtmlContext]="initData?.context"></div>',
+    // template: '<div class="jigsaw-tooltip" [trustedHtml]="tooltip" [trustedHtmlContext]="initData?.context"></div>',
+    template: '<div class="jigsaw-tooltip"><span>{{tooltip}}</span></div>',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
