@@ -160,12 +160,11 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
 
     &-top-label {
         font-size: 14px;
-        padding: 2px 0;
-        line-height: 1;
     }
 
     &-top-icon {
         font-size: 16px;
+        margin-bottom: -4px;
     }
 
     &-mark {
