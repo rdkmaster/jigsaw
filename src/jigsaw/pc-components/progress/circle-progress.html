@@ -20,16 +20,16 @@
             [attr.cy]="_$center"
             [attr.stroke-width]="_$strokeWidth"
             [style.strokeDasharray]="_$circumference + ','+ _$circumference"
-            [style.strokeDashoffset]="_$offset ? _$offset : _$circumference"
+            [style.strokeDashoffset]="_$offset >= 0 ? _$offset : _$circumference"
         />
     </svg>
     <div *ngIf="_$validPercent" class="jigsaw-circle-progress-percent">
-        <span *ngIf="status==='primary'">{{_$percent + '%'}}</span>
+        <span *ngIf="status==='processing'">{{_$percent + '%'}}</span>
         <i
-            *ngIf="status!=='primary'"
+            *ngIf="status!=='processing'"
             class="iconfont"
             [ngClass]="{'iconfont-ea18':status === 'success',
-                        'iconfont-e328':status === 'warning',
+                        'iconfont-e328':status === 'block',
                         'iconfont-e9b8':status === 'error'}"
         ></i>
     </div>

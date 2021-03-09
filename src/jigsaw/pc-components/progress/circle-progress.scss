@@ -43,7 +43,7 @@ $circle-progress-prefix-cls: #{$jigsaw-prefix}-circle-progress;
                     .#{$circle-progress-prefix-cls}-percent {
                 color: $success-default;
             }
-            @at-root .#{$circle-progress-prefix-cls}-warning
+            @at-root .#{$circle-progress-prefix-cls}-block
                     .#{$circle-progress-prefix-cls}-svg
                     .#{$circle-progress-prefix-cls}-percent {
                 color: $warning-default;
@@ -73,7 +73,7 @@ $circle-progress-prefix-cls: #{$jigsaw-prefix}-circle-progress;
                     .#{$circle-progress-prefix-cls}-bar {
                 stroke: $success-default;
             }
-            @at-root .#{$circle-progress-prefix-cls}-warning
+            @at-root .#{$circle-progress-prefix-cls}-block
                     .#{$circle-progress-prefix-cls}-svg
                     .#{$circle-progress-prefix-cls}-bar {
                 stroke: $warning-default;

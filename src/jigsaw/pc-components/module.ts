@@ -52,7 +52,6 @@ import {JigsawBreadcrumbModule} from "./breadcrumb/breadcrumb";
 import {JigsawRateModule} from "./rate/index";
 import {JigsawMenuModule} from "./menu/index";
 import {JigsawProgressModule} from "./progress/progress";
-import {JigsawCircleProgressModule} from "./progress/circle-progress";
 import {JigsawDatePickerModule} from "./date-and-time/date-picker";
 import {JigsawTimePickerModule} from "./date-and-time/time-picker";
 import {JigsawDateTimePickerModule} from "./date-and-time/date-time-picker";
@@ -119,7 +118,6 @@ const JIGSAW_MODULE = [
     JigsawStepsMultilineModule,
     JigsawMenuModule,
     JigsawProgressModule,
-    JigsawCircleProgressModule,
     JigsawDatePickerModule,
     JigsawTimePickerModule,
     JigsawDateTimePickerModule,

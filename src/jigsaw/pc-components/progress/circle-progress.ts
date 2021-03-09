@@ -1,90 +1,26 @@
-import {
-    Component,
-    NgModule,
-    ChangeDetectionStrategy,
-    Input,
-    OnInit,
-    ChangeDetectorRef,
-    NgZone
-} from "@angular/core";
-import { AbstractJigsawComponent } from "jigsaw/common/common";
-import { CommonModule } from "@angular/common";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Input, NgZone} from "@angular/core";
+import {ProgressBase, Status} from "./base";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: "jigsaw-circle-progress, j-circle-progress",
     templateUrl: "circle-progress.html",
     host: {
         "[class.jigsaw-circle-progress-host]": "true",
-        "[class.jigsaw-circle-progress-primary]": "status === 'primary'",
+        "[class.jigsaw-circle-progress-processing]": "status === 'processing'",
         "[class.jigsaw-circle-progress-success]": "status === 'success'",
-        "[class.jigsaw-circle-progress-warning]": "status === 'warning'",
+        "[class.jigsaw-circle-progress-block]": "status === 'block'",
         "[class.jigsaw-circle-progress-error]": "status === 'error'"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawCircleProgress extends AbstractJigsawComponent implements OnInit{
-    constructor(private _detector: ChangeDetectorRef, protected _zone?: NgZone) {
-        super(_zone);
+export class JigsawCircleProgress extends ProgressBase {
+    constructor(private _detector: ChangeDetectorRef, protected _zone: NgZone, protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
+        super(_cdr);
+        this._updateSize(92 /* default diameter */);
     }
-
-    ngOnInit() {
-        if (!this._circleWidth){
-            this.circleWidth = 92;
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public get _$percent(): string {
-        if (this._$countDecimals === 0) {
-            return this._$validPercent ? this.percent.toString() : "--";
-        } else if (this._$countDecimals === 1) {
-            return this._$validPercent ? this.percent.toString() : "--";
-        } else {
-            const fractions = 2;
-            return this._$validPercent ? this.percent.toFixed(fractions) : "--";
-        }
-    }
-
-    private _percent: number;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get percent(): number {
-        return this._percent;
-    }
-
-    public set percent(value: number) {
-        this._percent = typeof value != "number" ? parseFloat(value) : value;
-        this.runMicrotask(()=>{
-            this._$offset = this._$circumference - this._percent / 100 * this._$circumference;
-            this._detector.markForCheck();
-        })
-    }
-
-    /**
-     * @internal
-     */
-    public get _$validPercent(): boolean {
-        return !isNaN(this.percent);
-    }
-
-    /**
-     * @internal
-     */
-    public get _$countDecimals(): number {
-        if(Math.floor(this.percent) === this.percent) return 0;
-        return this.percent.toString().split(".")[1].length || 0; 
-    }
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public status: "primary" | "success" | "warning" | "error" = "primary";
 
     /**
      * @internal
@@ -116,29 +52,76 @@ export class JigsawCircleProgress extends AbstractJigsawComponent implements OnI
      */
     public _$circumference: number;
 
-    private _circleWidth:number;
+    /**
+     * @internal
+     */
+    public get _$percent(): string {
+        return this._$validPercent ? this.value.toFixed(2) : '--';
+    }
+
+    private _value: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get circleWidth(): number {
-        return this._circleWidth;
+    public get value(): number {
+        return this._value;
     }
 
-    public set circleWidth(value: number) {
-        this._circleWidth =
-            typeof value != "number" ? parseFloat(value) : value;
-        this._$svgWidth = this._circleWidth + this._$strokeWidth * 2;
-        this._$radius = this._circleWidth / 2;
+    public set value(value: number) {
+        value = typeof value != "number" ? parseFloat(value) : value;
+        this._value = isNaN(value) ? 0 : Math.min(value, 100);
+        this.runMicrotask(() => {
+            this._$offset = this._$circumference - this._value / 100 * this._$circumference;
+            this._detector.markForCheck();
+        })
+    }
+
+    /**
+     * @internal
+     */
+    public get _$validPercent(): boolean {
+        return !isNaN(this.value);
+    }
+
+    @Input()
+    @RequireMarkForCheck()
+    public status: Status = "processing";
+
+    private _diameter: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get diameter(): number {
+        return this._diameter;
+    }
+
+    public set diameter(value: number) {
+        this._diameter = value;
+        this._updateSize(value);
+    }
+
+    private _updateSize(diameter: number) {
+        diameter = typeof diameter != "number" ? parseFloat(diameter) : diameter;
+        if (isNaN(diameter) || diameter < 0) {
+            return;
+        }
+        this._$svgWidth = diameter + this._$strokeWidth * 2;
+        this._$radius = diameter / 2;
         this._$center = this._$svgWidth / 2;
-        this._$circumference = this._circleWidth * Math.PI;
+        this._$circumference = diameter * Math.PI;
+    }
+
+    protected _updateProgress(value: number): void {
+        this.value = value;
+    }
+
+    protected _processInitData(): void {
+        this.value = this.initData.value;
+        this.status = this.initData.status;
+        this.diameter = this.initData.diameter;
     }
 }
-
-@NgModule({
-    imports: [CommonModule],
-    declarations: [JigsawCircleProgress],
-    exports: [JigsawCircleProgress]
-})
-export class JigsawCircleProgressModule {}

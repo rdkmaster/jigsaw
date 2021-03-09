@@ -1,29 +1,38 @@
-import {Component, ViewChild} from "@angular/core";
-import {JigsawProgress, PopupInfo} from "jigsaw/public_api";
+import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {JigsawCircleProgress, JigsawProgress, PopupInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
 })
 export class ProgressFullComponent {
-    @ViewChild('estimateProgress')
-    estimateProgress: JigsawProgress;
+    @ViewChildren(JigsawProgress)
+    progresses1: QueryList<JigsawProgress>;
+    @ViewChildren(JigsawCircleProgress)
+    progresses2: QueryList<JigsawCircleProgress>;
+
+    get progresses(): (JigsawCircleProgress | JigsawProgress)[] {
+        return [...this.progresses1.toArray(), ...this.progresses2.toArray()];
+    }
+
     progressValue: number = 32;
     estimationInfo: string = '';
     duration: number = 10000;
     maxProgress: number = 80;
     dockingBar: PopupInfo;
 
-    refreshProgress() {
-        this.estimateProgress.value = this.progressValue;
-        this.estimateProgress.startEstimating(this.duration, this.maxProgress);
+    startEstimation() {
         this.estimationInfo = '';
-        this.estimateProgress.status = 'processing';
+        this.progresses.forEach(progress => {
+            progress.value = this.progressValue;
+            progress.startEstimating(this.duration, this.maxProgress);
+            progress.status = 'processing';
+        });
     }
 
     onEstimationStopped(value: number) {
         this.estimationInfo = '进度估计终止在' + value + '%';
         if (value >= this.maxProgress) {
-            this.estimateProgress.status = 'block';
+            this.progresses.forEach(progress => progress.status = 'block');
         }
     }
 
@@ -40,6 +49,10 @@ export class ProgressFullComponent {
         }
         this.dockingBar.instance.status = 'processing';
         this.dockingBar.instance.value += offset;
+    }
+
+    reset() {
+        location.reload();
     }
 
     // ====================================================================
