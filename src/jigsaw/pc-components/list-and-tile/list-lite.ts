@@ -13,6 +13,8 @@ import {GroupOptionValue} from "./group-common";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 
+type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[];
+
 /**
  * 一个轻量的list控件，是在list控件基础上做的封装，做了一些功能的拓展
  * - 支持单选和多选
@@ -79,20 +81,28 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     /**
      * 供选择的数据集合
      */
-    private _data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[];
+    private _data: SupportedDataType;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[] {
+    public get data(): SupportedDataType {
         return this._data;
     }
 
-    public set data(data: ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[]) {
-        if (!data || this.data == data) return;
+    public set data(data: SupportedDataType) {
+        this._updateData(data, false);
+    }
+
+    private _updateData(data: SupportedDataType, suppressEvent: boolean): void {
+        if (!data || this.data == data) {
+            return;
+        }
         this._data = data;
-        this.dataChange.emit(this.data);
+        if (!suppressEvent) {
+            this.dataChange.emit(this.data);
+        }
         if (this._data instanceof ArrayCollection || this._data instanceof LocalPageableArray || this._data instanceof PageableArray) {
             if (this._removeOnChange) {
                 this._removeOnChange();
@@ -106,6 +116,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
         } else {
             this._needCheckSelectedItems = true;
         }
+
     }
 
     @Output()
@@ -168,7 +179,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             data.pagingInfo.pageSize = Infinity;
             data.fromArray(this.data);
             this._needCheckSelectedItems = false;
-            this.data = data;
+            this._updateData(data, true);
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
