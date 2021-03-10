@@ -8,29 +8,13 @@ import {
     Input,
     NgModule,
     OnDestroy,
-    OnInit,
-    Output
+    OnInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from "../../common/common";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-
-class EstimationInfo {
-    duration: number = 10000;
-    maxProgress: number = 80;
-    timer: any;
-    increment: number;
-}
-
-export type LabelPosition = 'left' | 'right' | 'top' | 'followLeft' | 'followRight' | 'none';
-export type Status = 'processing' | 'block' | 'error' | 'success';
-export type PreSize = 'default' | 'small' | 'large';
-export type ProgressInitData = {
-    value?: number, showMarker?: boolean, status?: Status, animate?: boolean,
-    labelPosition?: LabelPosition, preSize?: PreSize
-};
+import {JigsawCircleProgress} from "./circle-progress";
+import {LabelPosition, PreSize, ProgressBase, ProgressInitData, Status} from "./base";
 
 // @dynamic
 @Component({
@@ -49,11 +33,11 @@ export type ProgressInitData = {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy, OnInit, IPopupable {
-    constructor(private _hostElRef: ElementRef, private _cdr: ChangeDetectorRef,
+export class JigsawProgress extends ProgressBase implements OnDestroy, OnInit, IPopupable {
+    constructor(private _hostElRef: ElementRef, protected _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
-        super()
+        super(_cdr);
     }
 
     public answer: EventEmitter<any>;
@@ -74,7 +58,7 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         this._updateProgress(value);
     }
 
-    private _updateProgress(value: number): void {
+    protected _updateProgress(value: number): void {
         // 留小1位数点
         value = isNaN(value) ? 0 : Math.round(value * 10) / 10;
         if (value > 100) {
@@ -90,6 +74,15 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
             this._autoLabelPosition();
         }
         this._cdr.markForCheck();
+    }
+
+    protected _processInitData() {
+        this.value = this.initData.value;
+        this.showMarker = this.initData.showMarker;
+        this.labelPosition = this.initData.labelPosition;
+        this.status = this.initData.status;
+        this.preSize = this.initData.preSize;
+        this.animate = this.initData.animate;
     }
 
     @Input()
@@ -136,9 +129,6 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
     @RequireMarkForCheck()
     public animate: boolean = true;
 
-    @Output()
-    public estimationStopped = new EventEmitter<number>();
-
     /**
      * @internal
      */
@@ -172,52 +162,6 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
         this._cdr.markForCheck();
     }
 
-    private _estimationInfo: EstimationInfo;
-
-    /**
-     * 不是所有情况下都可以给定精确的进度值，但虽然这样的事务无法精确计算进度，但其大约需要花掉的时间，是相对容易预估出来的。
-     * 此时，可以调用此方法来让进度条继续往前走，给用户一个假象，这样比进度条卡着不动的体验会好许多，能有效缓解用户的焦虑感。
-     *
-     * @param duration 从当前进度到`maxProgress`估计需要持续的时长，单位：毫秒数
-     * @param maxProgress 在估计进度值的过程中，进度条的值将随机递增，最大到达这个值后终止
-     * @param interval 更新进度的间隔，单位：毫秒数
-     */
-    public startEstimating(duration: number = 10000, maxProgress: number = 80, interval: number = 800): void {
-        maxProgress = Math.min(maxProgress, 99.9);
-        if (this.value >= maxProgress) {
-            return;
-        }
-        this.stopEstimating();
-        this._estimationInfo = new EstimationInfo();
-        this._estimationInfo.maxProgress = maxProgress;
-        this._estimationInfo.duration = duration;
-        this._estimationInfo.increment = (maxProgress - this.value) / (duration / interval);
-        this._updateProgress(this.value + this._estimationInfo.increment);
-        this._estimationInfo.timer = setInterval(() => {
-            if (this.value >= maxProgress) {
-                this.stopEstimating();
-                return;
-            }
-            const increment = InternalUtils.randomNumber(this._estimationInfo.increment * .9, this._estimationInfo.increment * 1.1);
-            this._updateProgress(Math.min(this.value + increment, this._estimationInfo.maxProgress));
-            this._cdr.markForCheck();
-        }, interval);
-    }
-
-    /**
-     * 提前终止`startEstimating`方法启动的进度估计过程
-     */
-    public stopEstimating(suppressEvent: boolean = false): void {
-        if (!this._estimationInfo) {
-            return;
-        }
-        this.clearCallLater(this._estimationInfo.timer);
-        this._estimationInfo = null;
-        if (!suppressEvent) {
-            this.estimationStopped.emit(this.value);
-        }
-    }
-
     public static topProgressBar: PopupInfo;
 
     public static showDockingBar(value: number): PopupInfo {
@@ -244,14 +188,6 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.initData) {
-            this.value = this.initData.value;
-            this.showMarker = this.initData.showMarker;
-            this.labelPosition = this.initData.labelPosition;
-            this.status = this.initData.status;
-            this.preSize = this.initData.preSize;
-            this.animate = this.initData.animate;
-        }
         Promise.resolve().then(() => {
             this._autoLabelPosition();
         });
@@ -260,9 +196,8 @@ export class JigsawProgress extends AbstractJigsawComponent implements OnDestroy
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [JigsawProgress],
-    exports: [JigsawProgress]
+    declarations: [JigsawProgress, JigsawCircleProgress],
+    exports: [JigsawProgress, JigsawCircleProgress]
 })
 export class JigsawProgressModule {
-
 }
