@@ -33,16 +33,22 @@ export type TimeSectionInfo = {
 }
 
 export type WeekAndDaySectionInfo = {
-    label: string | number,
+    label?: string | number,
     value: number,
     lastDay?: boolean
 }
 
+/**
+ * @internal
+ */
 export type TimeSection = {
     time?: string[],
     week?: WeekAndDaySectionInfo[],
-    date?: WeekAndDaySectionInfo[]
+    date?: WeekAndDaySectionInfo[],
+    everyday?: boolean
 }
+
+export type TimeSectionValue = TimeSection;
 
 @Component({
     selector: 'jigsaw-time-section-picker, j-time-section-picker',
@@ -631,7 +637,15 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         this._$timeValue = this.value.time;
         this._$weekValue = this.value.week;
         this._$dateValue = this.value.date;
-        this._$selectType = this._$weekValue ? this._$switchList[1] : this._$switchList[0];
+        if (this.value.everyday && this._$switchList.length >= 3) {
+            this._$selectType = this._$switchList.find(type => type.value == 2);
+        } else if (this._$weekValue && this._$switchList.length >= 2) {
+            this._$selectType = this._$switchList.find(type => type.value == 1);
+        } else if (this._$switchList.length >= 1) {
+            this._$selectType = this._$switchList.find(type => type.value == 0);
+        } else {
+            this._$selectType = undefined;
+        }
         this._cdr.markForCheck();
     }
 

@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <p>组件的值，编辑后会回填到time-section组件中</p>
+    <jigsaw-textarea [(value)]="value" (blur)="onChange()" width="70%" height="330"
+                     style="font-family: Consolas, Monaco; font-size: 14px;">
+    </jigsaw-textarea>
+    <br><br>
+
+    <j-time-section [(value)]="timeSectionValue" [showEveryday]="true" (valueChange)="onTimeSectionChange($event)">
+    </j-time-section>
+</div>
