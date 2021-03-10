@@ -1,0 +1,6 @@
+$tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
+
+.#{$tooltip-prefix-cls} {
+    padding: 12px;
+    max-width: 400px;
+}
