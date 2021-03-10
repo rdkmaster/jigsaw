@@ -566,48 +566,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         const host = this.jigsawFloatArrowElement ? this.jigsawFloatArrowElement : this._elementRef.nativeElement;
         let ele = <HTMLElement>this.popupElement.querySelector('.jigsaw-float-arrow');
         if (ele) {
-            if (popupElement.offsetTop >= position.y + host.offsetHeight) {
-                ele.style.top = '-4px';
-                if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
-                    popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
-                }
-                ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderTop = "1px solid #dcdcdc";
-                    ele.style.borderRight = "1px solid #dcdcdc";
-                }
-            } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
-                const differ = options.showBorder ? 5 : 3;
-                ele.style.top = popupElement.offsetHeight - differ + 'px';
-                if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
-                    popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
-                }
-                ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderLeft = "1px solid #dcdcdc";
-                    ele.style.borderBottom = "1px solid #dcdcdc";
-                }
-            } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
-                ele.style.left = '-4px';
-                if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
-                    popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
-                }
-                ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderTop = "1px solid #dcdcdc";
-                    ele.style.borderLeft = "1px solid #dcdcdc";
-                }
-            } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
-                ele.style.left = popupElement.offsetWidth - 3 + 'px';
-                if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
-                    popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
-                }
-                ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderRight = "1px solid #dcdcdc";
-                    ele.style.borderBottom = "1px solid #dcdcdc";
-                }
-            }
+            this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options);
         } else {
             ele = document.createElement('div');
             ele.setAttribute("class", "jigsaw-float-arrow");
@@ -617,52 +576,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             ele.style.position = 'absolute';
             ele.style.transform = 'rotateZ(-45deg)';
             ele.style.backgroundColor = 'inherit';
-
-            if (popupElement.offsetTop >= position.y + host.offsetHeight) {
-                ele.style.top = '-4px';
-                if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
-                    popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
-                }
-                ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderTop = "1px solid #dcdcdc";
-                    ele.style.borderRight = "1px solid #dcdcdc";
-                }
-            } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
-                const differ = options.showBorder ? 5 : 3;
-                ele.style.top = popupElement.offsetHeight - differ + 'px';
-                if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
-                    popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
-                }
-                ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderLeft = "1px solid #dcdcdc";
-                    ele.style.borderBottom = "1px solid #dcdcdc";
-                }
-            } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
-                ele.style.left = '-4px';
-                if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
-                    popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
-                }
-                ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderTop = "1px solid #dcdcdc";
-                    ele.style.borderLeft = "1px solid #dcdcdc";
-                }
-            } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
-                ele.style.left = popupElement.offsetWidth - 3 + 'px';
-                if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
-                    popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
-                }
-                ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
-                if (options.showBorder) {
-                    ele.style.borderRight = "1px solid #dcdcdc";
-                    ele.style.borderBottom = "1px solid #dcdcdc";
-                }
-            }
+            this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
             popupElement.appendChild(ele);
-        }
-    }
+        }  
+    } 
 
     private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
         let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
@@ -682,6 +599,51 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             delta = popupElement.offsetHeight - 13;
         }
         return delta;
+    }
+
+    private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
+        if (popupElement.offsetTop >= position.y + host.offsetHeight) {
+            ele.style.top = '-4px';
+            if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
+                popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
+            }
+            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
+            if (options.showBorder) {
+                ele.style.borderTop = "1px solid #dcdcdc";
+                ele.style.borderRight = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
+            const differ = options.showBorder ? 5 : 3;
+            ele.style.top = popupElement.offsetHeight - differ + 'px';
+            if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
+                popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
+            }
+            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
+            if (options.showBorder) {
+                ele.style.borderLeft = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
+            ele.style.left = '-4px';
+            if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
+                popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
+            }
+            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
+            if (options.showBorder) {
+                ele.style.borderTop = "1px solid #dcdcdc";
+                ele.style.borderLeft = "1px solid #dcdcdc";
+            }
+        } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
+            ele.style.left = popupElement.offsetWidth - 3 + 'px';
+            if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
+                popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
+            }
+            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
+            if (options.showBorder) {
+                ele.style.borderRight = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        }
     }
 
     /**
