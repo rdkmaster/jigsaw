@@ -637,15 +637,16 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         this._$timeValue = this.value.time;
         this._$weekValue = this.value.week;
         this._$dateValue = this.value.date;
-        if (this.value.everyday && this._$switchList.length >= 3) {
+
+        // 注意这个if过后，this._$selectType的值有可能是undefined
+        if (this.value.everyday) {
             this._$selectType = this._$switchList.find(type => type.value == 2);
-        } else if (this._$weekValue && this._$switchList.length >= 2) {
+        } else if (this._$weekValue) {
             this._$selectType = this._$switchList.find(type => type.value == 1);
-        } else if (this._$switchList.length >= 1) {
-            this._$selectType = this._$switchList.find(type => type.value == 0);
         } else {
-            this._$selectType = undefined;
+            this._$selectType = this._$switchList.find(type => type.value == 0);
         }
+
         this._cdr.markForCheck();
     }
 
