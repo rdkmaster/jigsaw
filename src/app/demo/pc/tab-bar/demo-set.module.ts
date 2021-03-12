@@ -5,7 +5,7 @@ import {JigsawTabBarDemoModule} from "./basic/demo.module";
 
 export const routerConfig = [
     {
-        path: 'tab-bar', component: JigsawTabBarComponent
+        path: 'basic', component: JigsawTabBarComponent
     },
 ];
 
