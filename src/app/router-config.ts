@@ -152,6 +152,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/tab/demo-set.module').then(m => m.TabsDemoModule),
     },
     {
+        path: "pc/tab-bar",
+        loadChildren: () => import('./demo/pc/tab-bar/demo-set.module').then(m => m.TabBarDemoModule),
+    },
+    {
         path: "pc/tag",
         loadChildren: () => import('./demo/pc/tag/demo-set.module').then(m => m.TagDemoModule),
     },
@@ -245,7 +249,6 @@ export const routerConfigMobile = [
         path: "mobile/button-bar",
         loadChildren: () => import('./demo/mobile/button-bar/demo-set.module').then(m => m.ButtonBarMobileDemoModule),
     },
-
     {
         path: "mobile/checkbox",
         loadChildren: () => import('./demo/mobile/checkbox/demo-set.module').then(m => m.CheckBoxMobileDemoModule),
