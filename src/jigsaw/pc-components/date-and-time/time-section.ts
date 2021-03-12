@@ -9,7 +9,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Injector,
-    forwardRef
+    forwardRef, AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -559,7 +559,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy, ControlValueAccessor {
+export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy, AfterViewInit, ControlValueAccessor {
     constructor(private _translateService: TranslateService, private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
@@ -567,9 +567,7 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._updateSwitchList();
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
-        this._updateSwitchList();
+        _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     private _langChangeSubscriber: Subscription;
@@ -634,6 +632,10 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     }
 
     public update(): void {
+        if (!this.initialized) {
+            return;
+        }
+
         this._$timeValue = this.value.time;
         this._$weekValue = this.value.week;
         this._$dateValue = this.value.date;
@@ -770,6 +772,11 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         this._value = value;
         this.valueChange.emit(value);
         this._propagateChange(this._value);
+    }
+
+    ngAfterViewInit() {
+        this._updateSwitchList();
+        this.update();
     }
 
     ngOnDestroy() {
