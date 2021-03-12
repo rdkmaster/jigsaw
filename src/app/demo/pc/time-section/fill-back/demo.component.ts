@@ -8,7 +8,7 @@ export class TimeSectionFillBackDemoComponent {
     timeSectionValue: TimeSectionValue = {
         time: ['00:00-01:00', '05:00-06:00', '18:00-19:00'],
         date: [{value: 2}, {value: 4}],
-        everyday: false
+        everyday: true
     };
     value: string  = JSON.stringify(this.timeSectionValue, null, '  ');
 
@@ -16,7 +16,7 @@ export class TimeSectionFillBackDemoComponent {
         try {
             this.timeSectionValue = JSON.parse(this.value);
         } catch (e) {
-            alert('解析组件值出错啦')
+            alert('解析组件值出错啦');
         }
     }
 
