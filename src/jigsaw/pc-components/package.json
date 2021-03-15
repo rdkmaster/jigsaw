@@ -21,7 +21,7 @@
     "homepage": "https://jigsaw-zte.gitee.io",
     "peerDependencies": {
         "@ngx-translate/core": "~11.0.1",
-        "echarts": "~4.7.0",
+        "echarts": "~4.9.0",
         "jquery": "~3.5.1",
         "ztree": "~3.5.24",
         "font-awesome": "~4.7.0",

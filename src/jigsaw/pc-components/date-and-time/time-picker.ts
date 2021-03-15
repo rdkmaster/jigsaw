@@ -418,7 +418,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /* limitStart & limitEnd 自动补0 */
     private _timeFormatter(value: string): string{
-        return value.replace(/(\d{1,2})(:|$)/g, (found, digit, splitter) => (digit.length == 1 ? `0${digit}` : digit) + splitter);
+        return value ? value.replace(/(\d{1,2})(:|$)/g, (found, digit, splitter) => (digit.length == 1 ? `0${digit}` : digit) + splitter) : value;
     }
 
     private _getStepValue(value: any): string {

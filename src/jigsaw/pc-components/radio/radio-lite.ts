@@ -74,7 +74,8 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public labelField: string = 'label';
 
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     public get _$trackByFn() {
         return CommonUtils.toTrackByFunction(this._trackItemBy);

@@ -23,6 +23,8 @@ import {SelectSizeDemoComponent} from "./size/demo.component";
 import {SelectSizeDemoModule} from "./size/demo.module";
 import {SelectClearableDemoComponent} from "./clearable/demo.component";
 import {SelectClearableDemoModule} from "./clearable/demo.module";
+import {SelectOptionWidthDemoComponent} from "./option-width/demo.component";
+import {SelectOptionWidthDemoModule} from "./option-width/demo.module";
 
 export const routerConfig = [
     {
@@ -58,6 +60,9 @@ export const routerConfig = [
     {
         path: 'clearable', component: SelectClearableDemoComponent
     },
+    {
+        path: 'option-width', component: SelectOptionWidthDemoComponent
+    },
 ];
 
 @NgModule({
@@ -73,7 +78,8 @@ export const routerConfig = [
         SelectMultipleDemoModule,
         SelectSearchableDemoModule,
         SelectSizeDemoModule,
-        SelectClearableDemoModule
+        SelectClearableDemoModule,
+        SelectOptionWidthDemoModule
     ]
 })
 export class SelectDemoModule {

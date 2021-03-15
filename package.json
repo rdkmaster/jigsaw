@@ -28,7 +28,7 @@
         "@rdkmaster/icon-font": "^1.0.6",
         "@stackblitz/sdk": "~1.3.0",
         "core-js": "~3.0.1",
-        "echarts": "~4.7.0",
+        "echarts": "~4.9.0",
         "file-saver": "~2.0.1",
         "font-awesome": "~4.7.0",
         "jquery": "~3.5.0",

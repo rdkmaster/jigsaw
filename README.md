@@ -9,7 +9,7 @@
 
 ## Why Jigsaw?
 
-Jigsaw is a complete and powerful Web components set. The current version contains 42 components, 6 containers, 5 services, and 5 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
+Jigsaw is a complete and powerful Web components set. The current version contains 43 components, 6 containers, 5 services, and 5 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
 
 Jigsaw has an ability that other component sets do not have: **Jigsaw’s application can support multiple Ux specifications at the same time in one development**. [Click here](https://jigsaw-zte.gitee.io/latest/#/components/guide/supports-multiple-ux-specifications) to learn more about it.
 
@@ -51,17 +51,18 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 29 | Steps | Displays a series of custom steps which have some predefined states. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
 30 | Switch | A form control for collection yes/no on/off choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
 31 | Table | A very very powerful data grid. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer)
-32 | Tag | A tag control. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
-33 | Textarea | A form control for collecting multi lines of text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
-34 | Tile | Renders a list of data by tiling. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile/demo/full)
-35 | TileLite | To show a list of data by tiling. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo)
-36 | Time | A time selector for selecting hours, minutes and seconds. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo/basic)
-37 | Time Section | A time rule selector, you can set the rule for matching time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-section/demo/basic)
-38 | Tooltip | A customized tooltip. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tooltip/demo/inline)
-39 | Transfer | A complex selector, used to select a large number of entries, supports paging. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/transfer/demo/basic)
-40 | Tree | Renders some data with subordinate relationships as a tree, powered by [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/editable)
-41 | Upload | Opens a file explorer to select one or more files and upload to the sever. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
-42 | Viewport | Represents part of an abstract view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
+32 | Tab Bar | Tab bar of the [Tabs container](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/tab-bar)
+33 | Tag | A tag control. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
+34 | Textarea | A form control for collecting multi lines of text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
+35 | Tile | Renders a list of data by tiling. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile/demo/full)
+36 | TileLite | To show a list of data by tiling. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo)
+37 | Time | A time selector for selecting hours, minutes and seconds. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo/basic)
+38 | Time Section | A time rule selector, you can set the rule for matching time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-section/demo/basic)
+39 | Tooltip | A customized tooltip. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tooltip/demo/inline)
+40 | Transfer | A complex selector, used to select a large number of entries, supports paging. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/transfer/demo/basic)
+41 | Tree | Renders some data with subordinate relationships as a tree, powered by [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/editable)
+42 | Upload | Opens a file explorer to select one or more files and upload to the sever. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
+43 | Viewport | Represents part of an abstract view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
 
 ### Containers
 

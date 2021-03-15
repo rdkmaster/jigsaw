@@ -19,5 +19,5 @@ import {JigsawTabBarComponent} from "./demo.component";
     declarations: [JigsawTabBarComponent],
     exports: [JigsawTabBarComponent]
 })
-export class TabBarDemoModule {
+export class JigsawTabBarDemoModule {
 }

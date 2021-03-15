@@ -36,7 +36,7 @@
             <div class="jigsaw-tabs-bar-list-option" [class.jigsaw-list-option-selected]="_$selectedIndex === i">
                 <span class="fa fa-check check-icon" *ngIf="_$selectedIndex === i"></span>
                 <span *ngIf="tab.icon" [ngClass]="tab.icon"></span>
-                <span class="jigsaw-tabs-bar-list-content" [innerHTML]="_$tabList[i]"></span>
+                <span class="jigsaw-tabs-bar-list-content" [trustedHtml]="_$tabList[i]"></span>
             </div>
         </jigsaw-list-option>
     </j-list>

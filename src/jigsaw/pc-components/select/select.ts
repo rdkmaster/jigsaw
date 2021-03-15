@@ -142,13 +142,21 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     public disabled: boolean;
 
     /**
+     * 设置下拉列表的跨度，设置了非法值时，下拉列表与select组件同宽
+     * $demo = select/option-width
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
     public optionWidth: string;
 
     /**
+     * 此属性废弃，使用 `optionCount` 替代
+     * $demo = select/option-count
+     *
      * @NoMarkForCheckRequired
+     * @internal
+     * @deprecated
      */
     @Input()
     public optionHeight: string;
