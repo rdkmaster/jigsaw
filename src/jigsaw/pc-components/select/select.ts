@@ -317,6 +317,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      * @internal
      */
     public _$onComboOpenChange(optionState: boolean) {
+        this._onTouched();
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._listCmp && this._listCmp._$handleSearching();
@@ -332,6 +333,8 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     private _propagateChange: any = () => {
+    };
+    private _onTouched: any = () => {
     };
 
     public writeValue(value: any, emit = true): void {
@@ -350,6 +353,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 
     ngOnInit() {

@@ -1,14 +1,4 @@
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Input,
-    Output,
-    ViewChild,
-    ChangeDetectionStrategy,
-    Injector
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Injector, Input, Output, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -79,6 +69,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
         if (CommonUtils.isUndefined(value)) {
@@ -92,6 +84,11 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 
     private _value: string = ''; //textarea表单值
@@ -189,8 +186,16 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     /**
      * @internal
      */
-    public _$handleFocus(event: FocusEvent) {
+    public _$handleFocus(event: FocusEvent): void {
         this._focused = true;
         this._focusEmitter.emit(event);
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleBlur(event: FocusEvent): void {
+        this._onTouched();
+        this.blur.emit(event);
     }
 }

@@ -5,12 +5,13 @@ import {
     Component,
     EventEmitter,
     forwardRef,
+    HostListener,
+    Injector,
     Input,
     NgModule,
     OnDestroy,
     OnInit,
-    Output,
-    Injector
+    Output
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -59,7 +60,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
                 private _injector: Injector) {
         super();
         this._removeUpdateValueCombineSubscriber = this._updateValueCombine.pipe(debounceTime(300)).subscribe((mode: 'combine' | 'separate') => {
-            if (!this._$date) return;
+            if (!this._$date) {
+                return;
+            }
             let newDate: WeekTime = TimeService.isWeekDate(this._$date) ? TimeService.convertValue(this._$date, this._gr).split(' ')[0] : this._$date;
             if (this.gr == TimeGr.hour || this.gr == TimeGr.minute || this.gr == TimeGr.second) {
                 this._$time = this._$time ? this._$time : this._getDefaultTime();
@@ -69,7 +72,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
             this.writeValue(newDate);
         });
         this._removeUpdateValueSeparateSubscriber = this._updateValueSeparate.pipe(debounceTime(300)).subscribe(() => {
-            if (!this.date) return;
+            if (!this.date) {
+                return;
+            }
             let newDate: WeekTime = TimeService.convertValue(this.date, this._gr);
             [this._$date, this._$time] = newDate.split(' ');
             newDate = this.gr == TimeGr.week ? TimeService.getWeekDate(newDate) : newDate;
@@ -137,7 +142,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         if (typeof value === 'string') {
             value = TimeGr[value];
         }
-        if (value == this._gr) return;
+        if (value == this._gr) {
+            return;
+        }
         this._gr = <TimeGr>value;
         this._calTimeGr(this._gr);
         this._calDateGr(this._gr);
@@ -193,7 +200,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     public set date(newValue: WeekTime) {
-        if (!newValue || newValue == this._date) return;
+        if (!newValue || newValue == this._date) {
+            return;
+        }
         this._date = newValue;
         if (this.initialized) {
             this._updateValueSeparate.emit();
@@ -388,7 +397,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     private _isDateSame(date1, date2) {
-        if (!date1 || !date2) return false;
+        if (!date1 || !date2) {
+            return false;
+        }
         if (this.gr == TimeGr.week && typeof date1 == 'object' && typeof date2 == 'object') {
             return date1.year == date2.year && date1.week == date2.week
         } else {
@@ -397,7 +408,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     public writeValue(date: WeekTime): void {
-        if (this._isDateSame(date, this._date)) return;
+        if (this._isDateSame(date, this._date)) {
+            return;
+        }
         this._date = date;
         this.dateChange.emit(date);
         this._propagateChange(this._date);
@@ -405,12 +418,27 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        if (this.disabled) {
+            return;
+        }
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 
     ngOnInit() {

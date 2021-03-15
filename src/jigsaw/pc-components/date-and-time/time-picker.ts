@@ -5,14 +5,15 @@ import {
     ElementRef,
     EventEmitter,
     forwardRef,
+    HostListener,
+    Injector,
     Input,
     NgModule,
     NgZone,
     OnDestroy,
     OnInit,
     Output,
-    ViewChild,
-    Injector
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -111,7 +112,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set value(value: string) {
-        if (!value || value == this._value) return;
+        if (!value || value == this._value) {
+            return;
+        }
         this.writeValue(value);
         if (this.initialized) {
             this._createTime(value, this.gr);
@@ -133,8 +136,10 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set step(step: TimeStep) {
-        if (!step || step == this._step) return;
-        step = step != 1 && step != 5 && step != 10 && step != 15 && step!= 30 ? 1 : step;
+        if (!step || step == this._step) {
+            return;
+        }
+        step = step != 1 && step != 5 && step != 10 && step != 15 && step != 30 ? 1 : step;
         this._step = step;
     }
 
@@ -156,7 +161,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (typeof gr === 'string') {
             gr = TimeGr[gr];
         }
-        if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second && gr != TimeGr.time_hour) return;
+        if (gr != TimeGr.time && gr != TimeGr.time_hour_minute && gr != TimeGr.time_minute_second && gr != TimeGr.time_hour) {
+            return;
+        }
         this._gr = gr;
         if (this.initialized) {
             this._updateValue.emit();
@@ -188,7 +195,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set limitStart(value: string) {
-        if (value == this._limitStart || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) return;
+        if (value == this._limitStart || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) {
+            return;
+        }
         this._limitStart = this._timeFormatter(value);
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
@@ -210,7 +219,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set limitEnd(value: string) {
-        if (value == this._limitEnd || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) return;
+        if (value == this._limitEnd || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) {
+            return;
+        }
         this._limitEnd = this._timeFormatter(value);
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
@@ -240,7 +251,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$hour(value: string) {
-        if (value == this._hour) return;
+        if (value == this._hour) {
+            return;
+        }
         if (this._updateHour(value) && this.initialized && this._hour.length > 1) {
             this._updateValue.emit();
             this._switchWhenHour();
@@ -262,7 +275,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$minute(value: string) {
-        if (value == this._minute) return;
+        if (value == this._minute) {
+            return;
+        }
         if (this._updateMinute(value) && this.initialized && this._minute.length > 1) {
             this._updateValue.emit();
             this._switchWhenMinute();
@@ -284,7 +299,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public set _$second(value: string) {
-        if (value == this._second) return;
+        if (value == this._second) {
+            return;
+        }
         if (this._updateSecond(value) && this.initialized && this._second.length > 1) {
             this._updateValue.emit();
             this._$cancelSelect('second');
@@ -449,7 +466,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         } else if ($event.keyCode == 38) {
             this._$handleCtrlBarClick($event, this.step == 1 ? -10 : -1);
         } else if ($event.keyCode == 9) {
-            if($event.shiftKey) {
+            if ($event.shiftKey) {
                 if (this._$selectMode == 'second') {
                     this._$handleSelectMode('minute', true);
                 } else if (this._$selectMode == 'minute' && (this.gr == TimeGr.time || this.gr == TimeGr.time_hour_minute)) {
@@ -465,7 +482,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         }
     }
 
-    private _getValidNumberInRange(num: number| string, min: number, max: number): number {
+    private _getValidNumberInRange(num: number | string, min: number, max: number): number {
         num = Math.max(min, Number(num));
         num = Math.min(num, max);
         return num;
@@ -544,7 +561,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
                 [this._$hour, this._$minute, this._$second] = TimeService.convertValue('now', TimeGr.second).split(' ')[1].split(':');
                 this._$cancelSelect(mode, true);
             } else {
-                if(this._$hour == value) {
+                if (this._$hour == value) {
                     // 选择原来的值也会切换
                     this._switchWhenHour();
                 } else {
@@ -552,7 +569,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
                 }
             }
         } else if (mode == 'minute') {
-            if(this._$minute == value) {
+            if (this._$minute == value) {
                 // 选择原来的值也会切换
                 this._switchWhenMinute();
             } else {
@@ -580,7 +597,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _getTimeLimit(limit: string, add: 1 | -1): string {
-        if (!TimeService.isMacro(limit)) return limit;
+        if (!TimeService.isMacro(limit)) {
+            return limit;
+        }
         let limitDate = TimeService.convertValue(limit, TimeGr.second);
         return TimeService.convertValue(TimeService.addDate(limitDate, add * 5, TimeUnit.m), this._gr);
     }
@@ -596,7 +615,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     private _checkLimitValid(limit: string): boolean {
-        if (!limit) return false;
+        if (!limit) {
+            return false;
+        }
         let timeArr = limit.split(':');
         if (this.gr == TimeGr.time) {
             return timeArr.length == 3
@@ -640,7 +661,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public writeValue(newValue: string): void {
-        if (!newValue || newValue == this._value) return;
+        if (!newValue || newValue == this._value) {
+            return;
+        }
         this._value = newValue;
         this.valueChange.emit(newValue);
         this._propagateChange(this._value);
@@ -648,12 +671,27 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        if (this.disabled) {
+            return;
+        }
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 
     ngOnInit() {
@@ -673,7 +711,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._removeUpdateValueSubscriber.unsubscribe();
             this._removeUpdateValueSubscriber = null;
         }
-        if(this._removeSwitchPopupSubscriber) {
+        if (this._removeSwitchPopupSubscriber) {
             this._removeSwitchPopupSubscriber.unsubscribe();
             this._removeSwitchPopupSubscriber = null;
         }
@@ -742,7 +780,9 @@ export class JigsawTimePopup implements IPopupable {
      * @private
      */
     public _$select(item: TimePopupItem) {
-        if (item.disabled) return;
+        if (item.disabled) {
+            return;
+        }
         this._value.value = String(item.value);
         this.answer.emit(this._value);
     }
@@ -765,7 +805,7 @@ export class JigsawTimePopup implements IPopupable {
 export class JigsawTimePickerModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, 'timePicker', {
-            zh: { now: "此刻" }, en: { now: 'Now' }
+            zh: {now: "此刻"}, en: {now: 'Now'}
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
     }

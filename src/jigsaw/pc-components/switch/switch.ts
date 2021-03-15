@@ -179,6 +179,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
             // 发出事件
             this.checkedChange.emit(this.checked);
             this._propagateChange(this.checked);
+            this._onTouched();
         }
     }
 
@@ -216,6 +217,8 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
         this._checked = !!value;
@@ -228,5 +231,10 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

@@ -3,18 +3,18 @@
  */
 
 import {
-    Component,
-    Input,
-    EventEmitter,
-    Output,
-    OnInit,
     AfterContentInit,
-    Renderer2,
-    ElementRef,
-    forwardRef,
     ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
     NgZone,
-    Injector
+    OnInit,
+    Output,
+    Renderer2
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -192,6 +192,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         if (!this.disabled) {
             this._toggle();
             this._setCheckBoxClass();
+            this._onTouched();
         }
     }
 
@@ -210,7 +211,10 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         }
     }
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {
+    };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
         this._checked = this._fixCheckValue(value);
@@ -222,5 +226,10 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

@@ -9,7 +9,9 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Injector,
-    forwardRef, AfterViewInit
+    forwardRef,
+    HostListener, 
+    AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -789,12 +791,20 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
     }
 }
 
