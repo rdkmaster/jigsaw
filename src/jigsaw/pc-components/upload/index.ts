@@ -5,19 +5,21 @@ import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawButtonModule} from "../button/button";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
-import {JigsawUploadDirective, JigsawUploadFileInfoList} from "../../common/directive/upload/upload.directive";
-import {JigsawUpload} from "./upload";
+import {JigsawUploadDirective} from "../../common/directive/upload/upload.directive";
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import { JigsawUploadPanel } from './upload-panel';
+import { JigsawCollapseModule } from '../collapse/collapse';
+import { JigsawProgressModule } from '../progress/progress';
 
 @NgModule({
     imports: [
         JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, TranslateModule.forChild()
+        JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule, JigsawProgressModule, TranslateModule.forChild()
     ],
-    declarations: [JigsawUpload, JigsawUploadDirective, JigsawUploadFileInfoList],
-    exports: [JigsawUpload, JigsawUploadDirective],
+    declarations: [JigsawUploadDirective, JigsawUploadPanel],
+    exports: [JigsawUploadDirective, JigsawUploadPanel],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {
@@ -149,6 +151,5 @@ export class JigsawUploadModule {
     }
 }
 
-export * from './upload';
 export * from './upload.base';
 export * from '../../common/directive/upload/upload.directive';

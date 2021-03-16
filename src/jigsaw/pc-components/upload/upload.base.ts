@@ -13,11 +13,18 @@ import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 
 export type UploadFileInfo = {
-    name: string, url: string, file: File, reason: string,
-    state: 'pause' | 'loading' | 'success' | 'error'
+    name: string, url: string, file: File, reason?: string,
+    state: 'pause' | 'loading' | 'success' | 'error',
+    progress?: number, log?: UploadingFileLog[]
 };
+
+export type UploadingFileLog = {
+    time: string,
+    content: string
+}
 
 @Directive()
 export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestroy {
@@ -112,6 +119,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
     @Output()
     public remove = new EventEmitter<UploadFileInfo>();
+
+    @Output()
+    public reupload = new EventEmitter<UploadFileInfo>();
 
     @Output()
     public complete = new EventEmitter<UploadFileInfo[]>();
@@ -229,10 +239,16 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             const oldFiles = files;
             files = files.filter(f => !!fileTypes.find(ft => this._testFileType(f.name, ft)));
             oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
-                this._$invalidFiles.push({
-                    name: file.name, state: 'error', url: '', file: file,
-                    reason: this._translateService.instant(`upload.fileTypeError`)
-                })
+                let fileInfo: UploadFileInfo = {
+                    name: file.name,
+                    state: "error",
+                    url: "",
+                    file: file,
+                    progress: 0
+                }
+                this._statusLog(fileInfo, this._translateService.instant(`upload.fileTypeError`))
+                this._$invalidFiles.push(fileInfo);
+                this.update.emit(this._$allFiles);
             });
         }
 
@@ -240,10 +256,16 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             const oldFiles = files;
             files = files.filter(f => f.size >= this.minSize * 1024 * 1024);
             oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
-                this._$invalidFiles.push({
-                    name: file.name, state: 'error', url: '', file: file,
-                    reason: this._translateService.instant(`upload.fileMinSizeError`)
-                })
+                let fileInfo: UploadFileInfo = {
+                    name: file.name,
+                    state: 'error',
+                    url: '',
+                    file: file,
+                    progress: 0
+                }
+                this._statusLog(fileInfo, this._translateService.instant(`upload.fileMinSizeError`))
+                this._$invalidFiles.push(fileInfo);
+                this.update.emit(this._$allFiles);
             });
         }
 
@@ -251,17 +273,30 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             const oldFiles = files;
             files = files.filter(f => f.size <= this.maxSize * 1024 * 1024);
             oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
-                this._$invalidFiles.push({
-                    name: file.name, state: 'error', url: '', file: file,
-                    reason: this._translateService.instant(`upload.fileMaxSizeError`)
-                })
+                let fileInfo: UploadFileInfo = {
+                    name: file.name,
+                    state: 'error',
+                    url: '',
+                    file: file,
+                    progress: 0
+                }
+                this._statusLog(fileInfo, this._translateService.instant(`upload.fileMaxSizeError`))
+                this._$invalidFiles.push(fileInfo);
+                this.update.emit(this._$allFiles);
             });
         }
 
         files.forEach((file: File) => {
-            this._$validFiles.push({
-                name: file.name, state: 'pause', url: '', file: file, reason: ''
-            });
+            let fileInfo: UploadFileInfo = {
+                name: file.name,
+                state: 'pause',
+                url: '',
+                file: file,
+                progress: 0
+            }
+            this._statusLog(fileInfo, this._translateService.instant(`upload.waiting`))
+            this._$validFiles.push(fileInfo);
+            this.update.emit(this._$allFiles);
         });
     }
 
@@ -271,19 +306,35 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
 
     private _sequenceUpload(fileInfo: UploadFileInfo) {
         fileInfo.state = 'loading';
+        this._statusLog(fileInfo, this._translateService.instant(`upload.uploading`));
         const formData = new FormData();
         formData.append(this.contentField, fileInfo.file);
         this._appendAdditionalFields(formData, fileInfo.file.name);
-        this._http.post(this.targetUrl, formData, {responseType: 'text'}).subscribe(res => {
-            fileInfo.state = 'success';
-            fileInfo.url = res;
-            fileInfo.reason = '';
-            this._afterCurFileUploaded(fileInfo);
-        }, (e) => {
-            fileInfo.state = 'error';
-            fileInfo.reason = this._translateService.instant(`upload.${e.statusText}`);
-            this._afterCurFileUploaded(fileInfo);
-        });
+        this._http.post(this.targetUrl, formData,
+            {
+                responseType: 'text',
+                reportProgress: true,
+                observe: 'events'
+            }).subscribe(res => {
+                console.log(res);
+                if (res.type === 1) {
+                    fileInfo.progress = res["loaded"] / res["total"] * 100;
+                    this.update.emit(this._$allFiles);
+                }
+                if (res.type === 3) {
+                    fileInfo.url = res["partialText"];
+                }
+                if (res.type === 4) {
+                    fileInfo.state = 'success';
+                    this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
+                    this._afterCurFileUploaded(fileInfo);
+                }
+            }, (e) => {
+                fileInfo.state = 'error';
+                fileInfo.reason = this._translateService.instant(`upload.${e.statusText}`);
+                this._statusLog(fileInfo, this._translateService.instant(`upload.${e.statusText}`));
+                this._afterCurFileUploaded(fileInfo);
+            });
     }
 
     private _appendAdditionalFields(formData: FormData, fileName: string): void {
@@ -315,9 +366,20 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
             this.complete.emit(this._$validFiles);
-            this.update.emit(this._$validFiles)
+            this.update.emit(this._$allFiles);
         }
         this._cdr.markForCheck();
+    }
+
+    private _statusLog(fileInfo: UploadFileInfo, content: string) {
+        if (!fileInfo.log) {
+            fileInfo.log = [];
+        }
+        const log = {
+            time: TimeService.convertValue(new Date(), TimeGr.second),
+            content: content
+        }
+        fileInfo.log.push(log);
     }
 
     /**
@@ -329,17 +391,27 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (fileIndex != -1) {
             this._$validFiles.splice(fileIndex, 1);
             // 保持向下兼容
-            if (this._isAllFilesUploaded()) {
-                this.update.emit(this._$validFiles);
+            if (this._isAllFilesUploaded()) { 
+                this.update.emit(this._$allFiles);
             }
         }
         fileIndex = this._$invalidFiles.findIndex(f => f == file);
         if (fileIndex != -1) {
             this._$invalidFiles.splice(fileIndex, 1);
+              // 保持向下兼容
+              if (this._isAllFilesUploaded()) { 
+                this.update.emit(this._$allFiles);
+            }
         }
         if (this._fileInputEl) {
             this._fileInputEl['value'] = null;
         }
+    }
+
+    public _$reupload(file:UploadFileInfo){
+        this.reupload.emit(file);
+        file.progress = 0;
+        this._sequenceUpload(file);
     }
 
     public clearFileList() {

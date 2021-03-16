@@ -1,5 +1,5 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
-import {UploadFileInfo, JigsawUploadDirective, JigsawUpload} from "jigsaw/public_api";
+import {UploadFileInfo, JigsawUploadDirective} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -30,8 +30,6 @@ export class UploadBasicDemoComponent {
 
     @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
     uploadDirectives: QueryList<JigsawUploadDirective>;
-    @ViewChild('upload')
-    upload: JigsawUpload;
 
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log('one file uploaded', fileInfo);
@@ -46,13 +44,6 @@ export class UploadBasicDemoComponent {
             case 'link':
                 this.isLinkUploadWaiting = false;
         }
-    }
-
-    clearFileList() {
-        this.uploadDirectives.forEach(upload => {
-            upload.clearFileList();
-        });
-        this.upload.clearFileList();
     }
 
     showUploadFileName(files?: UploadFileInfo[]) {
