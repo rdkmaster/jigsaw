@@ -24,7 +24,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     user-select: none;
 
     .#{$switch-prefix}-inner {
-        color: $default-color;
+        color: $bg-body;
         font-size: $font-size-base;
         margin-left: 24px;
         margin-right: 6px;
@@ -39,7 +39,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         top: 1px;
 
         border-radius: 18px;
-        background-color: $default-color;
+        background-color: $bg-body;
         content: " ";
         cursor: pointer;
         transition: all $animation-duration-slow, width $animation-duration-slow;
@@ -50,7 +50,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     }
 
     &:focus {
-        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        box-shadow: 0 0 0 2px $brand-active-light;
         outline: 0;
     }
 

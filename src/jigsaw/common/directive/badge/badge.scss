@@ -53,79 +53,79 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
 
 .#{$badge-prefix-cls}-normal {
     background: transparent;
-    color: $primary-color;
+    color: $primary-default;
 }
 
 .#{$badge-prefix-cls}-warn {
-    color: $warning-color;
+    color: $warning-default;
 }
 
 .#{$badge-prefix-cls}-success {
-    color: $success-color;
+    color: $success-default;
 }
 
 .#{$badge-prefix-cls}-error {
-    color: $error-color;
+    color: $error-default;
 }
 
 .#{$badge-prefix-cls}-dot-normal {
-    background-color: $primary-color;
+    background-color: $primary-default;
 }
 
 .#{$badge-prefix-cls}-dot-warn {
-    background-color: $warning-color;
+    background-color: $warning-default;
 }
 
 .#{$badge-prefix-cls}-dot-error {
-    background-color: $error-color;
+    background-color: $error-default;
 }
 
 .#{$badge-prefix-cls}-dot-success {
-    background-color: $success-color;
+    background-color: $success-default;
 }
 
 .#{$badge-prefix-cls}-solid-normal {
-    color: $default-color;
-    background-color: $primary-color;
+    color: $font-color-white;
+    background-color: $primary-default;
 }
 
 .#{$badge-prefix-cls}-solid-warn {
-    color: $default-color;
-    background-color: $warning-color;
+    color: $font-color-white;
+    background-color: $warning-default;
 }
 
 .#{$badge-prefix-cls}-solid-error {
-    color: $default-color;
-    background-color: $error-color;
+    color: $font-color-white;
+    background-color: $error-default;
 }
 
 .#{$badge-prefix-cls}-solid-success {
-    color: $default-color;
-    background-color: $success-color;
+    color: $font-color-white;
+    background-color: $success-default;
 }
 
 .#{$badge-prefix-cls}-border-normal {
     background: transparent;
-    color: $primary-color;
-    border: 1px solid $primary-color;
+    color: $primary-default;
+    border: 1px solid $primary-default;
 }
 
 .#{$badge-prefix-cls}-border-warn {
     background: transparent;
-    color: $warning-color;
-    border: 1px solid $warning-color;
+    color: $warning-default;
+    border: 1px solid $warning-default;
 }
 
 .#{$badge-prefix-cls}-border-success {
     background: transparent;
-    color: $success-color;
-    border: 1px solid $success-color;
+    color: $success-default;
+    border: 1px solid $success-default;
 }
 
 .#{$badge-prefix-cls}-border-error {
     background: transparent;
-    color: $error-color;
-    border: 1px solid $error-color;;
+    color: $error-default;
+    border: 1px solid $error-default;;
 }
 
 .#{$badge-prefix-cls}-dot {

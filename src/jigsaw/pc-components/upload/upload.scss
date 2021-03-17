@@ -8,7 +8,6 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     height: 400px;
     &.#{$upload-prefix-cls}-drag-over {
         .#{$upload-prefix-cls}-select-box {
-            border: 1px solid $primary-color;
         }
     }
     &-file-input {
@@ -100,15 +99,6 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     &-loading, &-success, &-error {
         font-size: 16px;
         display: inline-block;
-    }
-    &-loading {
-        color: $primary-color;
-    }
-    &-success {
-        color: $success-color;
-    }
-    &-error {
-        color: $error-color;
     }
 
     &-file-list-container {

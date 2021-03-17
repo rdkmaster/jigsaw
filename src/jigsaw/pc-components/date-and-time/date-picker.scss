@@ -50,7 +50,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             &:last-child {
                 border-top-right-radius: $border-radius-base;
                 border-bottom-right-radius: $border-radius-base;
-             }
+            }
 
             &.active {
                 background-color: $brand-light;
@@ -89,7 +89,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             i:hover {
-                color: $primary-5;
+                color: $brand-default;
             }
         }
 
@@ -98,7 +98,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             cursor: pointer;
 
             &:hover {
-                color: $primary-5;
+                color: $brand-default;
             }
         }
 
@@ -243,7 +243,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &-inRange {
-                background: $primary-1;
+                background: $brand-light;
                 &.#{$date-prefix-cls}-content-day-cell-selected {
                     background: none;
                 }

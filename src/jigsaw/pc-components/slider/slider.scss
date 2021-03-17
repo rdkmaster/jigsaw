@@ -61,7 +61,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         height: 14px;
         border-radius: 50%;
         border: 2px solid $brand-default;
-        background-color: $default-color;
+        background-color: $bg-body;
         z-index: $zindex-level-2;
 
         transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
@@ -112,7 +112,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             width: 8px;
             height: 8px;
             border: 2px solid $border-color-split;
-            background-color: $default-color;
+            background-color: $bg-body;
             cursor: pointer;
             border-radius: 50%;
             vertical-align: middle;
@@ -123,8 +123,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
                 margin-left: -4px;
             }
             &-active {
-                border-color: mix($primary-color, #fff, 50%);
-                border-color: red;
+                border-color: $brand-default;
             }
         }
     }
@@ -139,7 +138,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         .#{$jigsaw-slider}-handle,
         .#{$jigsaw-slider}-dot {
             border-color: $brand-disabled !important;
-            background-color: $default-color;
+            background-color: $bg-body;
             cursor: not-allowed;
             box-shadow: none;
         }

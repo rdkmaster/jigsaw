@@ -38,7 +38,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $item-hover-bg;
+                    background: $brand-light;
                 }
 
                 .#{$nav-menu-prefix-cls}-item-arrow {
@@ -92,7 +92,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected {
-                background-color: $default-color !important;
+                background-color: $bg-body !important;
             }
         }
     }

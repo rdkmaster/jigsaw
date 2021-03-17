@@ -339,28 +339,8 @@ $color-dark-10: hsl(229, 100%, 90%);
 
 // Color
 $primary-color: #41addc;
-$info-color: #41addc;
-$success-color: #87d068;
-$error-color: #ec6d6d;
-$highlight-color: #ec6d6d;
-$warning-color: #e78f4e;
-$normal-color: #dcdcdc;
-$default-color: #fff;
-
-// Palette
-$primary-1: mix(#fff, $primary-color, 90%);
-$primary-2: mix(#fff, $primary-color, 80%);
-$primary-3: mix(#fff, $primary-color, 60%);
-$primary-4: mix(#fff, $primary-color, 40%);
-$primary-5: mix(#fff, $primary-color, 20%);
-$primary-6: $primary-color;
-$primary-7: mix(#000, $primary-color, 10%);
-$primary-8: mix(#000, $primary-color, 20%);
-$primary-9: mix(#000, $primary-color, 30%);
-$primary-10: mix(#000, $primary-color, 40%);
 
 // ------ Base & Require ------
-
 $font-family: "Microsoft YaHei", Arial;
 $code-family: Consolas, Menlo, Courier, monospace;
 $heading-color: #333;
@@ -401,11 +381,6 @@ $disabled-color: rgba(#000, 0.25);
 $disabled-color-ie11: #bfbfbf; // 兼容IE11
 $disabled-bg: $background-color-base;
 $disabled-bg-dark: #f4f4f4; // switch组件disabled bg
-
-// The background colors for active and hover states for things like
-// list items or table cells.
-$item-hover-bg: $primary-1;
-$item-active-bg: $primary-2;
 
 // Buttons
 $btn-box-shadow: none;
@@ -476,7 +451,6 @@ $grid-gutter-width: 0;
 
 // Form
 // ---
-$label-required-color: $highlight-color;
 $label-color: $text-color;
 $form-item-margin-bottom: 24px;
 
