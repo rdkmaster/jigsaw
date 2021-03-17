@@ -16,7 +16,8 @@ import { JigsawProgressModule } from '../progress/progress';
 @NgModule({
     imports: [
         JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule, JigsawProgressModule, TranslateModule.forChild()
+        JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule,
+        JigsawProgressModule, TranslateModule.forChild()
     ],
     declarations: [JigsawUploadDirective, JigsawUploadPanel],
     exports: [JigsawUploadDirective, JigsawUploadPanel],

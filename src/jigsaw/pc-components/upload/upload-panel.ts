@@ -23,7 +23,8 @@ export class JigsawUploadPanel extends AbstractJigsawComponent {
     constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
     }
-    public _uploader: JigsawUploadDirective;
+
+    private _uploader: JigsawUploadDirective;
 
     @Input()
     public get uploader(): JigsawUploadDirective {

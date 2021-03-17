@@ -9,7 +9,7 @@ import {
     Renderer2,
     ChangeDetectorRef
 } from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -130,9 +130,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public start = new EventEmitter<UploadFileInfo[]>();
 
     @Output()
-    /**
-     * @deprecated
-     */
     public update = new EventEmitter<UploadFileInfo[]>();
 
     /**
@@ -325,7 +322,9 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
                     fileInfo.url = res["partialText"];
                 }
                 if (res.type === 4) {
+                    const resp: HttpResponse<string> = <HttpResponse<string>>res;
                     fileInfo.state = 'success';
+                    fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
                     this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
                     this._afterCurFileUploaded(fileInfo);
                 }
@@ -390,7 +389,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (fileIndex != -1) {
             this._$validFiles.splice(fileIndex, 1);
             // 保持向下兼容
-            if (this._isAllFilesUploaded()) { 
+            if (this._isAllFilesUploaded()) {
                 this.update.emit(this._$allFiles);
             }
         }
@@ -398,7 +397,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         if (fileIndex != -1) {
             this._$invalidFiles.splice(fileIndex, 1);
               // 保持向下兼容
-              if (this._isAllFilesUploaded()) { 
+              if (this._isAllFilesUploaded()) {
                 this.update.emit(this._$allFiles);
             }
         }

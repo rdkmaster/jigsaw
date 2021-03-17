@@ -16,7 +16,7 @@ export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
         private _injector: Injector) {
 }
     @ViewChild(JigsawUploadDirective)
-    upload: JigsawUploadDirective;
+    uploader: JigsawUploadDirective;
 
     public updateFileData(fileInfoList: UploadFileInfo[]) {
         console.log("update");
@@ -24,11 +24,11 @@ export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        console.log(`OnInit:${this.upload}`);
+        console.log(`OnInit, uploader:`, this.uploader);
     }
 
     ngAfterViewInit(): void {
-        console.log(`AfterViewInit:${this.upload}`);
+        console.log(`AfterViewInit, uploader:`, this.uploader);
         this._changeDetectorRef.detectChanges();
     }
 

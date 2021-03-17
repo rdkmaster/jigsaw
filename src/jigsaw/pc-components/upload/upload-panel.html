@@ -12,7 +12,7 @@
                 *ngIf="file.state === 'error'"
                 class="iconfont iconfont-ea4f error-icon"
             ></i>
-            <i class="iconfont iconfont-e9b8 delete-icon" (click)="this._uploader._$removeFile(file)"></i>
+            <i class="iconfont iconfont-e9b8 delete-icon" (click)="this.uploader._$removeFile(file)"></i>
         </div>
         <div jigsaw-body class="jigsaw-upload-panel-log-detail">
             <jigsaw-progress
@@ -21,7 +21,7 @@
                 preSize="small"
                 status="processing"
             ></jigsaw-progress>
-            <span class="jigsaw-upload-panel-reupload" *ngIf="file.state === 'error'" (click)="this._uploader._$reupload(file)">重新上传</span>
+            <span class="jigsaw-upload-panel-reupload" *ngIf="file.state === 'error'" (click)="this.uploader._$reupload(file)">重新上传</span>
             <ul>
                 <li *ngFor="let log of file.log">
                     <span class="detail-time">{{log.time}}</span>
