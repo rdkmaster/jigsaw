@@ -216,13 +216,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                     background: none !important;
                     cursor: not-allowed;
                 }
-                &.#{$date-prefix-cls}-content-day-cell-selected {
-                    span,
-                    span:hover {
-                        background: $primary-color;
-                        color: $text-color-of-bg;
-                    }
-                }
             }
 
             &-recommend:after,

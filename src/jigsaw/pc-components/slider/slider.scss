@@ -124,6 +124,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             }
             &-active {
                 border-color: mix($primary-color, #fff, 50%);
+                border-color: red;
             }
         }
     }
