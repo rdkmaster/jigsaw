@@ -93,8 +93,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     /**
      * @internal
      */
-    public _$reupload(file: UploadFileInfo) {
-        super._$reupload(file);
+    public _$reUpload(file: UploadFileInfo) {
+        super._$reUpload(file);
     }
 
     ngOnDestroy() {

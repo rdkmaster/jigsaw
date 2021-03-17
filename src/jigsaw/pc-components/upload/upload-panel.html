@@ -21,7 +21,7 @@
                 preSize="small"
                 status="processing"
             ></jigsaw-progress>
-            <span class="jigsaw-upload-panel-reupload" *ngIf="file.state === 'error'" (click)="this.uploader._$reupload(file)">重新上传</span>
+            <span class="jigsaw-upload-panel-re-upload" *ngIf="file.state === 'error'" (click)="this.uploader._$reUpload(file)">重新上传</span>
             <ul>
                 <li *ngFor="let log of file.log">
                     <span class="detail-time">{{log.time}}</span>

@@ -13,8 +13,8 @@ import { UploadFileInfo } from "./upload.base";
     selector: "jigsaw-upload-panel, j-upload-panel",
     templateUrl: "upload-panel.html",
     host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height',
+        "[style.width]": "width",
+        "[style.height]": "height",
         "[class.jigsaw-upload-panel-host]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -37,16 +37,13 @@ export class JigsawUploadPanel extends AbstractJigsawComponent {
         }
         this._uploader = value;
         this._uploader.update.subscribe(fileData => {
-            console.group("update");
-            console.log(fileData);
-            console.groupEnd();
             this._$fileData = [...fileData];
-            console.log(this._$fileData);
             this._cdr.markForCheck();
         });
     }
 
+    /**
+     * @internal
+     */
     public _$fileData: UploadFileInfo[] = [];
-
-    public updatePanel() {}
 }

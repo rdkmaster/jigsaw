@@ -121,9 +121,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
     public remove = new EventEmitter<UploadFileInfo>();
 
     @Output()
-    public reupload = new EventEmitter<UploadFileInfo>();
-
-    @Output()
     public complete = new EventEmitter<UploadFileInfo[]>();
 
     @Output()
@@ -313,7 +310,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
                 reportProgress: true,
                 observe: 'events'
             }).subscribe(res => {
-                console.log(res);
                 if (res.type === 1) {
                     fileInfo.progress = res["loaded"] / res["total"] * 100;
                     this.update.emit(this._$allFiles);
@@ -396,8 +392,8 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         fileIndex = this._$invalidFiles.findIndex(f => f == file);
         if (fileIndex != -1) {
             this._$invalidFiles.splice(fileIndex, 1);
-              // 保持向下兼容
-              if (this._isAllFilesUploaded()) {
+            // 保持向下兼容
+            if (this._isAllFilesUploaded()) {
                 this.update.emit(this._$allFiles);
             }
         }
@@ -406,8 +402,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         }
     }
 
-    public _$reupload(file:UploadFileInfo){
-        this.reupload.emit(file);
+    public _$reUpload(file:UploadFileInfo){
         file.progress = 0;
         this._sequenceUpload(file);
     }
