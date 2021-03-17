@@ -3,8 +3,44 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
+<jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
 <div>
-    <jigsaw-header>指令面板</jigsaw-header>
-    <a j-upload>上传</a>
+    <a j-upload #first>上传</a>
 </div>
-<jigsaw-upload-panel [uploader]="uploader"></jigsaw-upload-panel>
+<jigsaw-upload-panel [uploader]="uploader1" width="200px" height="200px"></jigsaw-upload-panel>
+
+<jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
+<div>
+    <a j-upload #second>上传</a>
+</div>
+<jigsaw-upload-panel [uploader]="uploader2"></jigsaw-upload-panel>
+
+<jigsaw-header>指令面板：上传按钮</jigsaw-header>
+<div>
+    <jigsaw-button j-upload #third>上传</jigsaw-button>
+</div>
+<jigsaw-upload-panel [uploader]="uploader3"></jigsaw-upload-panel>
+
+<jigsaw-header>指令面板：配置选项</jigsaw-header>
+<div>
+    <span>文件数目：</span>
+    <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
+    <br>
+    <span>文件类型：</span>
+    <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg']">
+    </jigsaw-radios-lite>
+    <br>
+    <span>文件大小：</span>
+    <span>最小限制</span>
+    <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input>
+    <span>MB</span>
+    <span>最大限制</span>
+    <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input>
+    <span>MB</span>
+</div>
+<div>
+    <jigsaw-button j-upload #forth>上传</jigsaw-button>
+</div>
+<jigsaw-upload-panel [uploader]="uploader4" [multiple]="multiple"
+    [fileType]="fileType" [minSize]="minSize" [maxSize]="maxSize">
+</jigsaw-upload-panel>

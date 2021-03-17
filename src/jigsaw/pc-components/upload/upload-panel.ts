@@ -6,8 +6,7 @@ import {
     NgZone
 } from "@angular/core";
 import { AbstractJigsawComponent } from "jigsaw/common/common";
-import { JigsawUploadDirective } from "jigsaw/common/directive/upload/upload.directive";
-import { UploadFileInfo } from "./upload.base";
+import { JigsawUploadDirective, UploadFileInfo } from "jigsaw/common/directive/upload/upload.directive";
 
 @Component({
     selector: "jigsaw-upload-panel, j-upload-panel",

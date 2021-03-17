@@ -1,6 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { JigsawUploadModule, JigsawHeaderModule, JigsawRadioLiteModule, JigsawSwitchModule, JigsawNumericInputModule } from "jigsaw/public_api";
+import {
+    JigsawUploadModule,
+    JigsawHeaderModule,
+    JigsawRadioLiteModule,
+    JigsawSwitchModule,
+    JigsawNumericInputModule,
+    JigsawButtonModule
+} from "jigsaw/public_api";
 import { UploadPanelDemoComponent } from "./demo.component";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 
@@ -14,7 +21,8 @@ import { JigsawDemoDescriptionModule } from "app/demo-description/demo-descripti
         CommonModule,
         JigsawRadioLiteModule,
         JigsawSwitchModule,
-        JigsawNumericInputModule
+        JigsawNumericInputModule,
+        JigsawButtonModule
     ]
 })
 export class UploadPanelDemoModule {}

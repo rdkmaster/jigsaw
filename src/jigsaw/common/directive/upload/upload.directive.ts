@@ -39,8 +39,8 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     }
 
     /**
- * @NoMarkForCheckRequired
- */
+    * @NoMarkForCheckRequired
+    */
     @Input()
     public targetUrl: string = '/rdk/service/common/upload';
 
@@ -80,34 +80,35 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     @Input()
     public additionalFields: { [prop: string]: string };
 
-    private _minSize: number;
-
+    
     @Output('uploadProgress')
     public progress = new EventEmitter<UploadFileInfo>();
-
+    
     @Output('uploadRemove')
     public remove = new EventEmitter<UploadFileInfo>();
 
     @Output('uploadComplete')
     public complete = new EventEmitter<UploadFileInfo[]>();
-
+    
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
-
+    
     @Output('uploadUpdate')
     public update = new EventEmitter<UploadFileInfo[]>();
-
+    
     @Input()
     public uploadOptionCount: number;
-
+    
     @Input()
     public uploadShowFileList: boolean = true;
-
+    
     @HostListener('click', ['$event'])
     onClick($event) {
         this._$selectFile($event);
     }
-
+    
+    private _minSize: number;
+    
     /**
      * @NoMarkForCheckRequired
      */
@@ -142,7 +143,6 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
         this._maxSize = Number(value);
     }
 
-
     /**
      * @internal
      */
@@ -155,16 +155,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     /**
      * @internal
      */
-    public _$validFiles: UploadFileInfo[] = [];
-
-    /**
-     * @internal
-     */
-    public _$invalidFiles: UploadFileInfo[] = [];
-
-    public get _$allFiles(): UploadFileInfo[] {
-        return [...this._$validFiles, ...this._$invalidFiles];
-    }
+    public _$allFiles: UploadFileInfo[] = [];
 
     /**
      * @internal
@@ -215,12 +206,11 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
         }
 
         if (!this.multiple) {
-            this._$validFiles = [];
-            this._$invalidFiles = [];
+            this._$allFiles = [];
         }
 
         this._classifyFiles(Array.from(files));
-        const pendingFiles = this._$validFiles.filter(file => file.state == 'pause');
+        const pendingFiles = this._$allFiles.filter(file => file.state == 'pause');
         for (let i = 0, len = Math.min(5, pendingFiles.length); i < len; i++) {
             // 最多前5个文件同时上传给服务器
             this._sequenceUpload(pendingFiles[i]);
@@ -228,7 +218,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
 
         this._$uploadMode = 'selectAndList';
         if (pendingFiles.length > 0) {
-            this.start.emit(this._$validFiles);
+            this.start.emit(this._$allFiles);
         }
 
         if (this._fileInputEl) {
@@ -255,7 +245,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
                     progress: 0
                 }
                 this._statusLog(fileInfo, this._translateService.instant(`upload.fileTypeError`))
-                this._$invalidFiles.push(fileInfo);
+                this._$allFiles.push(fileInfo);
                 this.update.emit(this._$allFiles);
             });
         }
@@ -272,7 +262,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
                     progress: 0
                 }
                 this._statusLog(fileInfo, this._translateService.instant(`upload.fileMinSizeError`))
-                this._$invalidFiles.push(fileInfo);
+                this._$allFiles.push(fileInfo);
                 this.update.emit(this._$allFiles);
             });
         }
@@ -289,7 +279,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
                     progress: 0
                 }
                 this._statusLog(fileInfo, this._translateService.instant(`upload.fileMaxSizeError`))
-                this._$invalidFiles.push(fileInfo);
+                this._$allFiles.push(fileInfo);
                 this.update.emit(this._$allFiles);
             });
         }
@@ -303,13 +293,13 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
                 progress: 0
             }
             this._statusLog(fileInfo, this._translateService.instant(`upload.waiting`))
-            this._$validFiles.push(fileInfo);
+            this._$allFiles.push(fileInfo);
             this.update.emit(this._$allFiles);
         });
     }
 
     private _isAllFilesUploaded(): boolean {
-        return !this._$validFiles.find(f => f.state == 'loading' || f.state == 'pause');
+        return !this._$allFiles.find(f => f.state == 'loading' || f.state == 'pause');
     }
 
     private _sequenceUpload(fileInfo: UploadFileInfo) {
@@ -369,12 +359,12 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
 
-        const waitingFile = this._$validFiles.find(f => f.state == 'pause');
+        const waitingFile = this._$allFiles.find(f => f.state == 'pause');
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
-            this.complete.emit(this._$validFiles);
             this.update.emit(this._$allFiles);
+            this.complete.emit(this._$allFiles);
         }
         this._cdr.markForCheck();
     }
@@ -395,17 +385,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
      */
     public _$removeFile(file) {
         this.remove.emit(file);
-        let fileIndex = this._$validFiles.findIndex(f => f == file);
+        let fileIndex = this._$allFiles.findIndex(f => f == file);
         if (fileIndex != -1) {
-            this._$validFiles.splice(fileIndex, 1);
-            // 保持向下兼容
-            if (this._isAllFilesUploaded()) {
-                this.update.emit(this._$allFiles);
-            }
-        }
-        fileIndex = this._$invalidFiles.findIndex(f => f == file);
-        if (fileIndex != -1) {
-            this._$invalidFiles.splice(fileIndex, 1);
+            this._$allFiles.splice(fileIndex, 1);
             // 保持向下兼容
             if (this._isAllFilesUploaded()) {
                 this.update.emit(this._$allFiles);
@@ -425,8 +407,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     }
 
     public clearFileList() {
-        this._$validFiles = [];
-        this._$invalidFiles = [];
+        this._$allFiles = [];
         this._cdr.detectChanges();
     }
 
