@@ -16,7 +16,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 
 export type UploadFileInfo = {
-    name: string, url: string, file: File, reason?: string,
+    name: string, url: string, file: File,
     state: 'pause' | 'loading' | 'success' | 'error',
     progress?: number, log?: UploadingFileLog[]
 };
@@ -331,7 +331,6 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
                 }
             }, (e) => {
                 fileInfo.state = 'error';
-                fileInfo.reason = this._translateService.instant(`upload.${e.statusText}`);
                 this._statusLog(fileInfo, this._translateService.instant(`upload.${e.statusText}`));
                 this._afterCurFileUploaded(fileInfo);
             });
