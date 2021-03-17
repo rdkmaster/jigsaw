@@ -45,11 +45,11 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
 
                 @at-root .#{$steps-prefix-cls}-host
                         .#{$steps-prefix-cls}-item:last-of-type {
-                    flex-grow: 0;
-                    width: auto;
-                    flex-wrap: nowrap;
                     .#{$steps-prefix-cls}-bar {
-                        display: none;
+                        flex-grow: 0;
+                        min-width: 0px;
+                        margin-right: 0px;
+                        opacity: 0;
                     }
                 }
             }
