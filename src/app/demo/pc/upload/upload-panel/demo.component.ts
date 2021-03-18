@@ -18,7 +18,7 @@ export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
     ) {}
 
     @ViewChild("first", { read: JigsawUploadDirective })
-    public uploader: JigsawUploadDirective;
+    public uploader1: JigsawUploadDirective;
     @ViewChild("second", { read: JigsawUploadDirective })
     public uploader2: JigsawUploadDirective;
     @ViewChild("third", { read: JigsawUploadDirective })
@@ -37,11 +37,11 @@ export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
     minSize: number = 0;
 
     ngOnInit() {
-        console.log(`OnInit, uploader:`, this.uploader);
+        console.log(`OnInit, uploader:`, this.uploader1);
     }
 
     ngAfterViewInit(): void {
-        console.log(`AfterViewInit, uploader:`, this.uploader);
+        console.log(`AfterViewInit, uploader:`, this.uploader1);
         this._changeDetectorRef.detectChanges();
     }
 

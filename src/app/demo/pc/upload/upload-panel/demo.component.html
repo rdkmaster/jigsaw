@@ -39,8 +39,7 @@
     <span>MB</span>
 </div>
 <div>
-    <jigsaw-button j-upload #forth>上传</jigsaw-button>
+    <jigsaw-button j-upload #forth [multiple]="multiple"
+    [fileType]="fileType" [minSize]="minSize" [maxSize]="maxSize">上传</jigsaw-button>
 </div>
-<jigsaw-upload-panel [uploader]="uploader4" [multiple]="multiple"
-    [fileType]="fileType" [minSize]="minSize" [maxSize]="maxSize">
-</jigsaw-upload-panel>
+<jigsaw-upload-panel [uploader]="uploader4"></jigsaw-upload-panel>
