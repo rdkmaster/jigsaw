@@ -104,7 +104,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         .#{$nav-menu-prefix-cls}-item {
             width: 100%;
             min-width: 40px;
-            color: $text-color;
+            color: $font-color-default;
 
             .#{$nav-menu-prefix-cls}-item-top {
                 position: relative;

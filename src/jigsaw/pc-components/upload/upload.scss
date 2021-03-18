@@ -17,11 +17,9 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         display: inline-block;
         font-size: 60px;
         margin-bottom: 18px;
-        color: $text-color-secondary;
     }
     &-prompt {
         font-size: 14px;
-        color: $text-color-secondary;
         margin-bottom: 12px;
     }
     &-file-list {
@@ -62,7 +60,6 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         }
         .#{$upload-prefix-cls}-file-name {
             font-size: 12px;
-            color: $text-color-secondary;
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
@@ -90,10 +87,9 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         font-size: 14px;
         margin-left: 4px;
         cursor: pointer;
-        color: $text-color-secondary;
         z-index: $zindex-level-1;
         &:hover {
-            color: $text-color;
+         
         }
     }
     &-loading, &-success, &-error {

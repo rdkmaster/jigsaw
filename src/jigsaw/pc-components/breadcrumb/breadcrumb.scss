@@ -20,10 +20,6 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     &-item {
         display: flex;
         align-items: center;
-        color: $text-color-secondary;
-        &.#{$bc-prefix-cls}-current {
-            color: $heading-color;
-        }
         .#{$bc-prefix-cls}-link {
             display: flex;
             align-items: center;
@@ -39,7 +35,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         justify-content: center;
         align-items: center;
         margin: 0 8px;
-        color: $text-color-secondary;
+        color: $font-color-watermark;
     }
 
     &-icon {

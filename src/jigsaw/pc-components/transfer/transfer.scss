@@ -87,12 +87,12 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         cursor: not-allowed;
         @include compatible(color, $disabled-color, $disabled-color-ie11);
         border: 1px solid $border-color-base;
-        background: $disabled-bg;
-        color: $text-color-secondary;
+        background: $bg-disabled;
+        color: $icon-color-stress;
         &:hover,
         &:active {
-            background: $disabled-bg;
-            color: $text-color-secondary;
+            background: $bg-disabled;
+            color: $icon-color-stress;
         }
     }
     &-head {

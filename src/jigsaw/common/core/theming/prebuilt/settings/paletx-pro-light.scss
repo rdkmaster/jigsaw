@@ -343,13 +343,7 @@ $primary-color: #41addc;
 // ------ Base & Require ------
 $font-family: "Microsoft YaHei", Arial;
 $code-family: Consolas, Menlo, Courier, monospace;
-$heading-color: #333;
-$heading-color-dark: #222;
 $text-color: #666;
-$text-color-secondary: #999;
-$text-color-dark: #444;
-$text-color-secondary-dark: #777;
-$text-color-of-bg: #fff;
 
 $body-background: #fff;
 $component-background: #fff;
@@ -448,11 +442,6 @@ $screen-lg-max: ($screen-lg-min - 1);
 // Layout and Grid system
 $grid-columns: 24;
 $grid-gutter-width: 0;
-
-// Form
-// ---
-$label-color: $text-color;
-$form-item-margin-bottom: 24px;
 
 // perfect scrollbar
 // see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121
