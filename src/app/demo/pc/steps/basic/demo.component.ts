@@ -1,39 +1,47 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
+import { InternalUtils } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.scss"]
 })
-export class StepsHorizontalBasicComponent {
-    steps = [
-        {
-            title: 'done',
-            status: "done"
-        },
-        {
-            title: 'error',
-            status: "error"
-        },
-        {
-            title: 'processing',
-            status: "processing"
-        },
-        {
-            title: 'warning',
-            status: "warning"
-        },
-        {
-            title: 'skipped',
-            status: "skipped"
-        },
-        {
-            title: 'waiting',
-            status: "waiting"
-        },
-    ];
+export class JigsawStepBasicDemoComponent {
+    data = [];
 
+    current = 0;
+
+    constructor() {
+        for (let i = 0; i < 6; i++) {
+            this.data.push(this._createStepData(i));
+        }
+    }
+
+    private _createStepData(index: number) {
+        const statuses = ["error", "warning", "normal", "normal", "normal"];
+        const status =
+            statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
+        return {
+            title: `这是${status}`,
+            status: status,
+            subTitle: `<a (click)="changeStatus(${index})">跳至此处</a>`,
+            context: this
+        };
+    }
+
+    public changeStatus(idx: number) {
+        this.current = idx;
+    }
+
+    public changeData() {
+        let tempData = [];
+        for (let i = 0; i < 6; i++) {
+            tempData.push(this._createStepData(i));
+        }
+        this.data = tempData;
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo演示了jigsaw-steps组件最简单的用法，所有配置项都用默认';
-    description: string = '';
+    summary: string = "";
+    description: string = "";
 }
