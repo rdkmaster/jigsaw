@@ -15,7 +15,7 @@ body {
     font-size: $font-size-base;
     line-height: 1.5;
     color: $font-color-default;
-    background-color: $body-background;
+    background-color: $bg-body;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
@@ -93,7 +93,7 @@ input::-ms-clear, input::-ms-reveal {
 }
 
 ::selection {
-    background: $primary-color;
+    background: $brand-default;
     color: #fff;
 }
 

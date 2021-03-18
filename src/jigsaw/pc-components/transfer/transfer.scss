@@ -53,7 +53,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         z-index: $zindex-level-3;
     }
     &-box {
-        border: 1px solid $border-color-base;
+        border: 1px solid $border-color-default;
         border-radius: $border-radius-base;
         flex: 1 1 0;
         position: relative;
@@ -85,7 +85,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     }
     &-option-disabled {
         cursor: not-allowed;
-        border: 1px solid $border-color-base;
+        border: 1px solid $border-color-default;
         background: $bg-disabled;
         color: $icon-color-stress;
         &:hover,

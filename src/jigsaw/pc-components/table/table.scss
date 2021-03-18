@@ -14,7 +14,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
             color: $font-color-default;
             border-width: 1px;
             border-style: solid;
-            border-color: $border-color-base;
+            border-color: $border-color-default;
         }
         thead {
             color: $font-color-heading-bold;

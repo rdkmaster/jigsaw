@@ -31,7 +31,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
     &-container {
         width: 100%;
         background: $bg-component;
-        border: 1px solid $border-color-base;
+        border: 1px solid $border-color-default;
         border-radius: $border-radius-base;
         @include prefixer(transition, border 0.3s $ease-in-out);
 

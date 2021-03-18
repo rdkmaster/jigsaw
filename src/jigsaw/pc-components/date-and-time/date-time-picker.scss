@@ -46,7 +46,7 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             height: 24px;
             line-height: 22px;
             background: $bg-component;
-            border: 1px solid $border-color-base;
+            border: 1px solid $border-color-default;
             cursor: pointer;
 
             &:first-child {

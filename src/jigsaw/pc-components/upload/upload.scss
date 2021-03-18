@@ -25,7 +25,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     &-file-list {
         width: 100%;
         height: 100%;
-        background: $component-background;
+        background: $bg-component;
     }
     &-file {
         position: relative;
@@ -46,7 +46,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     &-file-left {
         width: 100%;
         height: 100%;
-        border-bottom: 1px solid $border-color-base;
+        border-bottom: 1px solid $border-color-default;
         &:before {
             display: inline-block;
             height: 100%;
@@ -99,7 +99,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
 
     &-file-list-container {
         height: 70%;
-        border: 1px solid $border-color-base;
+        border: 1px solid $border-color-default;
         border-top: none;
         border-radius: 0 0 4px 4px;
     }
@@ -109,11 +109,11 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         justify-content: center;
         align-items: center;
         flex: 1 0 0;
-        border: 1px dashed $border-color-base;
+        border: 1px dashed $border-color-default;
         border-radius: 4px;
         &.#{$upload-prefix-cls}-select-box-small {
-            border: 1px solid $border-color-base;
-            border-bottom: 1px dashed $border-color-base;
+            border: 1px solid $border-color-default;
+            border-bottom: 1px dashed $border-color-default;
             border-radius: 4px 4px 0 0;
             .#{$upload-prefix-cls}-icon {
                 margin-bottom: 0;
