@@ -85,7 +85,6 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     }
     &-option-disabled {
         cursor: not-allowed;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
         border: 1px solid $border-color-base;
         background: $bg-disabled;
         color: $icon-color-stress;

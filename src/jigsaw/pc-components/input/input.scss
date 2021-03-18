@@ -71,7 +71,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             cursor: not-allowed;
 
             input {
-                @include compatible(color, $disabled-color, $disabled-color-ie11);
+                color: $font-color-disabled;
                 cursor: not-allowed;
             }
         }

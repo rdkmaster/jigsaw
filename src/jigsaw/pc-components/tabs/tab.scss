@@ -159,7 +159,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 .#{$tab-prefix}-tab-disabled {
                     pointer-events: none;
                     cursor: default;
-                    @include compatible(color, $disabled-color, $disabled-color-ie11);
+                    color: $font-color-disabled;
                 }
 
                 jigsaw-tab-label {

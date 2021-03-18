@@ -53,7 +53,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
     }
 
     &.#{$textarea-prefix-cls}-disabled .#{$textarea-prefix-cls}-container {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
         background-color: $bg-disabled;
 
         textarea {

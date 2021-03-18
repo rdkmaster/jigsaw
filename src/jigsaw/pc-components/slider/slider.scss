@@ -64,7 +64,8 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
         background-color: $bg-body;
         z-index: $zindex-level-2;
 
-        transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        transition: border-color 0.3s ease,
+            transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
         &:hover {
             border-color: $brand-default;
@@ -111,13 +112,15 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
             margin-left: -4px;
             width: 8px;
             height: 8px;
-            border: 2px solid $border-color-split;
+            border-width: 2px;
+            border-style: solid;
+            border-color: $border-color-default;
             background-color: $bg-body;
             cursor: pointer;
             border-radius: 50%;
             vertical-align: middle;
             &:first-child {
-                margin-left: -4px;
+                margin-left: -4px; 
             }
             &:last-child {
                 margin-left: -4px;
@@ -129,7 +132,7 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     }
 
     &-disabled {
-        background-color: $border-color-split !important;
+        background-color: $border-color-disabled !important;
 
         .#{$jigsaw-slider}-track {
             background-color: $brand-disabled !important;
