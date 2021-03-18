@@ -16,7 +16,7 @@ import {JigsawSlider} from "@rdkmaster/jigsaw";
             [step]="to.step"
             [vertical]="to.vertical"
             [marks]="to.marks"
-            (change)="to.change && to.change($event)"
+            (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-slider>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
