@@ -14,7 +14,7 @@ import {JigsawSwitch} from "@rdkmaster/jigsaw";
             [offLabel]="to.offLabel"
             [size]="to.size"
             [readonly]="to.readonly"
-            (change)="to.change && to.change($event)"
+            (checkedChange)="to.checkedChange && to.checkedChange($event)"
         ></jigsaw-switch>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,

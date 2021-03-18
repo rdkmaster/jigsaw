@@ -11,7 +11,7 @@ import {JigsawCheckBox} from "@rdkmaster/jigsaw";
             [(checked)]="to.checked"
             [(enableIndeterminate)]="to.enableIndeterminate"
             [valid]="to.valid && !showError"
-            (change)="to.change && to.change($event)"
+            (checkedChange)="to.checkedChange && to.checkedChange($event)"
         >
             {{to.content}}
         </jigsaw-checkbox>
