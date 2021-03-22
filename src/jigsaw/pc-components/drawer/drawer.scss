@@ -3,7 +3,7 @@
 $drawer-prefix-cls: #{$jigsaw-prefix}-drawer;
 
 .#{$drawer-prefix-cls} {
-    background: $bg-component;
+    background: $bg-container;
     box-shadow: $box-shadow-lv2;
     z-index: $zindex-popover-level-0;
     &-in-dom {

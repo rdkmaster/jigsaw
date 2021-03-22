@@ -74,12 +74,12 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background-color: $bg-component;
+                background-color: $bg-body;
                 color: $brand-default;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $bg-component;
+                background-color: $bg-body;
                 color: $brand-default;
             }
         }
@@ -157,11 +157,11 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background: $bg-component;
+                background: $bg-body;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background: $bg-component;
+                background: $bg-body;
             }
         }
     }
@@ -266,7 +266,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $bg-component;
+                background-color: $bg-body;
             }
         }
     }
