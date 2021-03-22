@@ -55,6 +55,11 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
     &.#{$textarea-prefix-cls}-disabled .#{$textarea-prefix-cls}-container {
         color: $font-color-disabled;
         background-color: $bg-disabled;
+        border-color: $border-color-disabled;
+
+        &:hover {
+            border-color: $border-color-disabled;
+        }
 
         textarea {
             background-color: $bg-disabled;

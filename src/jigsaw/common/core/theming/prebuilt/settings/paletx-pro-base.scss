@@ -77,3 +77,9 @@ $ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 $animation-duration-slow: 0.3s; // Modal
 $animation-duration-base: 0.2s;
 $animation-duration-fast: 0.1s; // Tooltip
+
+// perfect scrollbar
+// see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121
+.ps {
+    position: relative;
+}
