@@ -68,6 +68,10 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
             background-color: $bg-disabled;
             cursor: not-allowed;
 
+            &:hover{
+                    border-color: $border-color-disabled 
+            }
+            
             input {
                 color: $font-color-disabled;
                 background-color: $bg-disabled;
