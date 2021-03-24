@@ -35,9 +35,12 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-remove-bar {
+        display: flex;
+        align-items: center;
         position: absolute;
-        right: 6px;
-        top: -2px;
+        right: 0;
+        top: 0;
+        height: 100%;
         font-size: 18px;
         color: $icon-color-default;
 
@@ -47,7 +50,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-add-bar {
-        font-size: 24px;
+        font-size: 18px;
         vertical-align: middle;
         color: $icon-color-default;
         cursor: pointer;
