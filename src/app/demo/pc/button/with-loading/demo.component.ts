@@ -1,15 +1,22 @@
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: "./demo.component.html"
 })
 export class ButtonWithLoadingComponent {
     isLoading = false;
     label: string = 'click to load';
+    disabled = false;
 
     onClick() {
         this.isLoading = !this.isLoading;
         this.label = this.isLoading ? 'loading...' : 'click to load';
+        this.disabled = true;
+        setTimeout(() => {
+            this.disabled = false;
+            this.isLoading = !this.isLoading;
+            this.label = this.isLoading ? 'loading...' : 'click to load';
+        }, 3000);
     }
 
     // ====================================================================

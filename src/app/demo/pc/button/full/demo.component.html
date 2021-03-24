@@ -63,7 +63,7 @@
                 <span class="iconfont iconfont-e9ff"></span>
                 <span>内嵌图标</span>
             </j-button>
-            <j-button (click)="onClick()" colorType="primary">
+            <j-button (click)="onClick()" colorType="primary" [disabled]="loadingDisabled">
                 <j-font-loading *ngIf="isLoading" width="16px" height="16px" color="white"></j-font-loading>
                 <span>{{label}}</span>
             </j-button>

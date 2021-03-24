@@ -3,6 +3,7 @@
 $header-prefix-cls: #{$jigsaw-prefix}-header;
 
 .#{$header-prefix-cls}-host {
+    display: flex;
     &.#{$header-prefix-cls}-level-1 {
         .#{$header-prefix-cls}-content {
             display: flex;
