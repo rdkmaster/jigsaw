@@ -13,9 +13,9 @@
 body {
     font-family: $font-family !important;
     font-size: $font-size-base;
-    line-height: $line-height-base;
-    color: $text-color;
-    background-color: $body-background;
+    line-height: 1.5;
+    color: $font-color-default;
+    background-color: $bg-body;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
@@ -93,7 +93,7 @@ input::-ms-clear, input::-ms-reveal {
 }
 
 ::selection {
-    background: $primary-color;
+    background: $brand-default;
     color: #fff;
 }
 
@@ -127,7 +127,7 @@ th {
 
 /*Links*/
 a {
-    color: $link-color;
+    color: $brand-default;
     background: transparent;
     text-decoration: none;
     outline: none;
@@ -135,11 +135,11 @@ a {
     transition: color .3s ease;
 
     &:hover {
-        color: $link-hover-color;
+        color: $brand-hover;
     }
 
     &:active {
-        color: $link-active-color;
+        color: $brand-active;
     }
 
     &:active,

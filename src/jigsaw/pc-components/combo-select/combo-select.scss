@@ -74,6 +74,13 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     &-disabled {
         color: $font-color-disabled;
         pointer-events: none;
+
+        .#{$jigsaw-combo-select}-selection
+            .#{$jigsaw-combo-select}-selection-rendered {
+            .jigsaw-tag-host {
+                color: $font-color-disabled;
+            }
+        }
     }
 
     &-disabled &-placeholder {

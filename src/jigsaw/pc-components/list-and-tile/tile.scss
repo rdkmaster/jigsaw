@@ -61,7 +61,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
     &.#{$tile-option-prefix-cls}-disabled {
         background: $bg-disabled;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
         cursor: not-allowed;
     }
 }

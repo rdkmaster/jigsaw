@@ -51,7 +51,7 @@
 
             // 标题
             .jigsaw-notification-caption {
-                @include line-ellipsis-style;
+                @include line-ellipsis-style();
                 font-size: $font-title-med;
                 color: $font-color-heading;
                 margin-bottom: 6px;

@@ -13,7 +13,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         background: $brand-light;
     }
     &.#{$list-option-prefix-cls}-active {
-        background: $item-active-bg;
         background: $brand-active-light;
     }
     &.#{$list-option-prefix-cls}-disabled {

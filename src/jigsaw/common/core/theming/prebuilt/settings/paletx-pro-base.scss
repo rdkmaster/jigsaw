@@ -1,0 +1,85 @@
+/*
+ *皮肤基本参数 
+ */
+
+/* Prefix */
+$jigsaw-prefix: jigsaw;
+
+/* font */
+$font-family: "Microsoft YaHei", Arial;
+$code-family: Consolas, Menlo, Courier, monospace;
+
+/* line-width */
+$line-width-base: 1px;
+$line-width-med: 2px;
+$line-width-lg: 4px;
+
+/* border-radius
+    $border-radius-base => tab,button,button bar,input,notification,card,alert
+    $border-radius-sm => checkbox,colorpick,pagination,timepicker,tag,datepicker
+    $border-radius-lg => switch,badge
+*/
+$border-radius-base: 3px;
+$border-radius-sm: $border-radius-base - 1px;
+$border-radius-lg: 6px;
+
+/* height */
+$height-base: 32px;
+$height-sm: 24px;
+$height-med: 28px;
+$height-lg: 36px;
+$height-huge: 40px;
+
+/* font size */
+$font-size-base: 12px;
+$font-size-sm: $font-size-base - 2px;
+$font-size-lg: $font-size-base + 2px;
+
+$font-title-lg: 16px;
+$font-title-med: 14px;
+$font-title-sm: 12px;
+
+/* icon size */
+$icon-size-lg: 48px;
+$icon-size-med: 20px;
+$icon-size-sm: 16px;
+
+/* z-index list */
+// 地面部分分成4层：null,1,2,3
+$zindex-level-1: 1;
+$zindex-level-2: 2;
+$zindex-level-3: 3;
+// 空中部分采用后来居上的策略，所以高度设成1000
+$zindex-popover-level-0: 1000;
+$zindex-popover-level-1: 1001;
+$zindex-popover-level-2: 1002;
+// ui设计器box部分
+$zindex-ui-level-0: 100;
+$zindex-ui-level-1: 101;
+$zindex-ui-level-2: 102;
+$zindex-ui-level-3: 103;
+
+/* Animation */
+$ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+$ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-out-back: cubic-bezier(0.12, 0.4, 0.29, 1.46);
+$ease-in-back: cubic-bezier(0.71, -0.46, 0.88, 0.6);
+$ease-in-out-back: cubic-bezier(0.71, -0.46, 0.29, 1.46);
+$ease-out-circ: cubic-bezier(0.08, 0.82, 0.17, 1);
+$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+$ease-in-out-circ: cubic-bezier(0.78, 0.14, 0.15, 0.86);
+$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+
+/* Animation duration */
+$animation-duration-slow: 0.3s; // Modal
+$animation-duration-base: 0.2s;
+$animation-duration-fast: 0.1s; // Tooltip
+
+// perfect scrollbar
+// see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121
+.ps {
+    position: relative;
+}
