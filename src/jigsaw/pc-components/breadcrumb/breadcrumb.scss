@@ -34,7 +34,8 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        margin: 0 8px;
+        margin: 0 2px;
+        font-size: $icon-size-sm;
         color: $font-color-watermark;
     }
 
@@ -53,11 +54,16 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
     &.#{$bc-prefix-cls}-light {
         background: $bg-container;
+        font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
             height: $height-sm;
             color: $brand-default;
+            font-size: $font-size-lg;
+            &:hover{
+                color: $brand-hover;
+            }
             &.#{$bc-prefix-cls}-current {
-                font-size: $font-title-lg;
+                font-size: $font-title-med;
                 font-weight: bold;
                 color: $font-color-heading-bold;
             }
@@ -66,10 +72,16 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
     &.#{$bc-prefix-cls}-dark {
         background: $bg-body-dark;
+        font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
-            color: $font-color-white;
+            color: $font-color-white-dark;
+            font-size: $font-size-lg;
+            &:hover {
+                color: $font-color-white;
+            }
             &.#{$bc-prefix-cls}-current {
-                font-size: $font-title-lg;
+                font-size: $font-title-med;
+                font-weight: bold;
                 color: $font-color-white;
             }
         }
@@ -94,6 +106,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
                 font-size: $font-title-lg;
                 font-weight: bold;
                 color: $font-color-heading-bold;
+                padding-bottom: 4px;
                 .#{$bc-prefix-cls}-icon {
                     color: $font-color-heading-bold;
                 }
