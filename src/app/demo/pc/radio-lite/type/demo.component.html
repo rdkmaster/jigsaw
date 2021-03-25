@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<jigsaw-header>存在各种状态的单选</jigsaw-header>
+
+<jigsaw-radios-lite [(value)]="selectedItem" [data]="cities">
+</jigsaw-radios-lite>
+<p class="message">{{ "当前选中的是: " + selectedItem }}</p>
+<a (click)="clearSelectedItem()">取消单选</a>
+<div><a (click)="reset()">重置</a></div>

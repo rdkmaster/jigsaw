@@ -22,8 +22,8 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `
         <j-radios [(value)]="value" (valueChange)="radioChange($event)" [trackItemBy]="trackItemBy">
-            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
-                {{item && item[labelField] ? item[labelField] : item}}
+            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item?.labelField ? item?.labelField : item" [disabled]="item?.disabled">
+                {{item?.labelField ? item?.labelField : item}}
             </j-radio-option>
         </j-radios>`,
     host: {
