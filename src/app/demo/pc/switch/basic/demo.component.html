@@ -2,23 +2,52 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<div style="margin: 20px;">
-    <label>正常状态：</label>
-    <div style="margin-bottom: 10px;">
-        <jigsaw-switch [(checked)]="checked" style="margin-right: 5px;"></jigsaw-switch>
-        <span>result: {{checked}}</span>
-    </div>
-    <jigsaw-switch onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
-</div>
-<div style="margin: 20px;">
-    <label>禁用状态：</label>
-    <div style="margin-bottom: 10px;">
-        <jigsaw-switch [checked]="true" [disabled]="true"></jigsaw-switch>
-        <jigsaw-switch [checked]="false" [disabled]="true"></jigsaw-switch>
-    </div>
-    <div>
-        <jigsaw-switch [checked]="true" [disabled]="true" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
-        <jigsaw-switch [checked]="false" [disabled]="true" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
-    </div>
+<jigsaw-header>正常状态：</jigsaw-header>
+<div>
+    <jigsaw-switch [(checked)]="checked" style="margin-right: 5px"></jigsaw-switch>
+    <span>result: {{ checked }}</span>
 </div>
 
+<jigsaw-header>正常状态带文字：</jigsaw-header>
+<jigsaw-switch onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+
+<jigsaw-header>禁用状态：</jigsaw-header>
+<div>
+    <jigsaw-switch [checked]="true" [disabled]="true"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" [disabled]="true"></jigsaw-switch>
+</div>
+
+<jigsaw-header>禁用状态带文字：</jigsaw-header>
+<div>
+    <jigsaw-switch [checked]="true" [disabled]="true" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!">
+    </jigsaw-switch>
+    <jigsaw-switch [checked]="false" [disabled]="true" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!">
+    </jigsaw-switch>
+</div>
+
+<jigsaw-header> size:default </jigsaw-header>
+<div>
+    <jigsaw-switch [checked]="false"></jigsaw-switch>
+    <jigsaw-switch [checked]="true"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" [disabled]="true"></jigsaw-switch>
+    <jigsaw-switch [checked]="true" [disabled]="true"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+</div>
+
+<jigsaw-header> size:medium </jigsaw-header>
+<div>
+    <jigsaw-switch [checked]="false" size="medium"></jigsaw-switch>
+    <jigsaw-switch [checked]="true" size="medium"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" [disabled]="true" size="medium"></jigsaw-switch>
+    <jigsaw-switch [checked]="true" [disabled]="true" size="medium"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!" size="medium"></jigsaw-switch>
+</div>
+
+<jigsaw-header> size:small </jigsaw-header>
+<div>
+    <jigsaw-switch [checked]="false" size="small"></jigsaw-switch>
+    <jigsaw-switch [checked]="true" size="small"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" [disabled]="true" size="small"></jigsaw-switch>
+    <jigsaw-switch [checked]="true" [disabled]="true" size="small"></jigsaw-switch>
+    <jigsaw-switch [checked]="false" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!" size="small"></jigsaw-switch>
+</div>
