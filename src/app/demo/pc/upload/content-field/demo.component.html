@@ -5,28 +5,30 @@
 <!-- start to learn the demo from here -->
 
 <div class="live-demo-wrap">
+    <jigsaw-header>预设字段名(key)修改</jigsaw-header>
     <label class="field-label">contentField: </label>
     <j-input #contentField width="180" [value]="'file'"></j-input>
-    <br>
+    <br />
     <label class="field-label">fileNameField: </label>
     <j-input #fileNameField width="180" [value]="'filename'"></j-input>
-    <br>
+    <br />
     <label class="field-label">fileVerify: </label>
     <j-input #fileVerify width="180" [value]="'$svr/my-verifier.js'"></j-input>
-    <br>
+    <br />
 
     <!-- 其他字段-->
-    <div *ngFor="let item of additionalFields; let last = last;" style="margin-bottom: 8px">
+    <jigsaw-header>其他字段(key:value)</jigsaw-header>
+    <div *ngFor="let item of additionalFields; let last = last" style="margin-bottom: 8px">
         <j-input width="130" [clearable]="false" [(value)]="item.field"></j-input>
         :
         <j-input width="180" [(value)]="item.value"></j-input>
         <a *ngIf="last" (click)="addField()">add field</a>
-        <br>
+        <br />
     </div>
 
-    <jigsaw-button style="margin-bottom:16px;" jigsaw-upload [uploadAdditionalFields]="readAdditionalFields">
+    <jigsaw-button style="margin-bottom: 16px" jigsaw-upload [uploadAdditionalFields]="readAdditionalFields"
+        (uploadStart)="onComplete($event)">
         上传
     </jigsaw-button>
-    <br>
+    <br />
 </div>
-

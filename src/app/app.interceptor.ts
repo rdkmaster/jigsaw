@@ -58,6 +58,10 @@ export class AjaxInterceptor implements HttpInterceptor {
         const filename = decodeURIComponent(req.body.get('filename'));
         const url = `upload_files/${uuidv4()}/${filename}`;
         const file = req.body.get('file');
+        console.group('字段名')
+        console.log(req.body.get('file'));
+        console.log(req.body.get('filename'));
+        console.groupEnd();
         if (!file) {
             return new Observable<HttpEvent<any>>(subscriber => {
                 // simulate network latency
