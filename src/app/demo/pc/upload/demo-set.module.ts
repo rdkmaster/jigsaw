@@ -2,8 +2,8 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {UploadBasicDemoComponent} from "./basic/demo.component";
 import {UploadBasicDemoModule} from "./basic/demo.module";
-import { UploadPanelDemoComponent } from './upload-panel/demo.component';
-import { UploadPanelDemoModule } from './upload-panel/demo.module';
+import { UploadResultDemoComponent } from './upload-result/demo.component';
+import { UploadResultDemoModule } from './upload-result/demo.module';
 import { UploadContentFieldDemoComponent } from './content-field/demo.component';
 import { UploadContentFieldDemoModule } from './content-field/demo.module';
 
@@ -16,15 +16,15 @@ export const routerConfig = [
         path: 'content-field', component: UploadContentFieldDemoComponent
     },
     {
-        path: 'upload-panel', component: UploadPanelDemoComponent
+        path: 'upload-result', component: UploadResultDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        UploadBasicDemoModule, UploadPanelDemoModule, UploadContentFieldDemoModule
+        UploadBasicDemoModule, UploadResultDemoModule, UploadContentFieldDemoModule
     ]
-}) 
+})
 export class UploadDemoModule {
 }

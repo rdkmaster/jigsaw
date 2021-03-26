@@ -1,20 +1,10 @@
-import {
-    Component,
-    ViewChild,
-    OnInit,
-    AfterViewInit,
-    Renderer2,
-    ChangeDetectorRef,
-    Injector
-} from "@angular/core";
-import { UploadFileInfo, JigsawUploadDirective } from "jigsaw/public_api";
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from "@angular/core";
+import {JigsawUploadDirective, UploadFileInfo} from "jigsaw/public_api";
 
 @Component({ templateUrl: "./demo.component.html" })
-export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
+export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        private _injector: Injector
     ) {}
 
     @ViewChild("first", { read: JigsawUploadDirective })
@@ -26,15 +16,21 @@ export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
     @ViewChild("forth", { read: JigsawUploadDirective })
     public uploader4: JigsawUploadDirective;
 
-    public updateFileData(fileInfoList: UploadFileInfo[]) {
-        console.log("update");
-        console.log(fileInfoList);
+    public onChange(msg: string, data: UploadFileInfo | UploadFileInfo[]) {
+        console.log(msg, "!!!!!!", data);
     }
 
     multiple: boolean;
     fileType = ".png";
     maxSize: number = 1024;
     minSize: number = 0;
+
+    clear() {
+        this.uploader1.clear();
+        this.uploader2.clear();
+        this.uploader3.clear();
+        this.uploader4.clear();
+    }
 
     ngOnInit() {
         console.log(`OnInit, uploader:`, this.uploader1);
@@ -48,6 +44,6 @@ export class UploadPanelDemoComponent implements OnInit, AfterViewInit {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "只需要将upload指令实例传给uploader属性即可";
+    summary: string = "`jigsaw-upload-result`组件是`jigsaw-upload`指令上传结果的可视化显示器，它无法独立使用，必须配合指令来使用";
     description: string = "";
 }

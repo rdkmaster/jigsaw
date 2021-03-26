@@ -1,21 +1,21 @@
-$upload-panel-prefix-cls: #{$jigsaw-prefix}-upload-panel;
+$upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
 
-.#{$upload-panel-prefix-cls}-host {
+.#{$upload-result-prefix-cls}-host {
     display: inline-flex;
     flex-direction: column;
     min-width: 300px;
     width: 380px;
 
-    .#{$upload-panel-prefix-cls}-collapse {
-        .#{$upload-panel-prefix-cls}-log {
-            &.#{$upload-panel-prefix-cls}-error {
-                .#{$upload-panel-prefix-cls}-log-header .file-name,
-                .#{$upload-panel-prefix-cls}-log-header .file-icon {
+    .#{$upload-result-prefix-cls}-collapse {
+        .#{$upload-result-prefix-cls}-log {
+            &.#{$upload-result-prefix-cls}-error {
+                .#{$upload-result-prefix-cls}-log-header .file-name,
+                .#{$upload-result-prefix-cls}-log-header .file-icon {
                     color: $error-default;
                 }
 
-                .#{$upload-panel-prefix-cls}-log-detail
-                    .#{$upload-panel-prefix-cls}-log-progress
+                .#{$upload-result-prefix-cls}-log-detail
+                    .#{$upload-result-prefix-cls}-log-progress
                     .jigsaw-progress-bar {
                     .jigsaw-progress-bar-track
                         .jigsaw-progress-bar-track-value {
@@ -31,7 +31,7 @@ $upload-panel-prefix-cls: #{$jigsaw-prefix}-upload-panel;
                 }
             }
 
-            .#{$upload-panel-prefix-cls}-log-header {
+            .#{$upload-result-prefix-cls}-log-header {
                 position: relative;
                 display: flex;
                 align-items: center;
@@ -84,15 +84,15 @@ $upload-panel-prefix-cls: #{$jigsaw-prefix}-upload-panel;
                 }
             }
 
-            .#{$upload-panel-prefix-cls}-log-detail {
+            .#{$upload-result-prefix-cls}-log-detail {
                 padding-left: calc(16px + 10px);
 
-                .#{$upload-panel-prefix-cls}-log-progress {
+                .#{$upload-result-prefix-cls}-log-progress {
                     width: 70%;
                     line-height: 28px;
                 }
 
-                .#{$upload-panel-prefix-cls}-re-upload {
+                .#{$upload-result-prefix-cls}-re-upload {
                     font-size: $font-size-sm;
                     color: $brand-default;
                     cursor: pointer;
@@ -111,6 +111,12 @@ $upload-panel-prefix-cls: #{$jigsaw-prefix}-upload-panel;
                     color: $font-color-hint;
                     .detail-time {
                         margin-right: 16px;
+                        white-space: nowrap;
+                    }
+                    .detail-content {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
             }

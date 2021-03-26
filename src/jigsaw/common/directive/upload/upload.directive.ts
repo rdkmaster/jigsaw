@@ -1,26 +1,17 @@
-import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnDestroy,
-    Optional,
-    Output,
-    Renderer2
-} from "@angular/core";
-import { HttpClient, HttpResponse } from "@angular/common/http";
-import { TranslateService } from "@ngx-translate/core";
-import { AbstractJigsawComponent } from 'jigsaw/common/common';
-import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
-import { TimeService, TimeGr } from 'jigsaw/common/service/time.service';
+import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
+import {HttpClient, HttpResponse} from "@angular/common/http";
+import {TranslateService} from "@ngx-translate/core";
+import {AbstractJigsawComponent} from 'jigsaw/common/common';
+import {CommonUtils} from 'jigsaw/common/core/utils/common-utils';
+import {TimeGr, TimeService} from 'jigsaw/common/service/time.service';
 
 export type UploadFileInfo = {
     name: string, url: string, file: File,
     state: 'pause' | 'loading' | 'success' | 'error',
-    progress?: number, log?: UploadingFileLog[]
+    progress?: number, log?: UploadingFileLog[], message?: string
 };
+
+const maxConcurrencyUpload = 5;
 
 export type UploadingFileLog = {
     time: string,
@@ -30,99 +21,95 @@ export type UploadingFileLog = {
     selector: '[j-upload], [jigsaw-upload]'
 })
 export class JigsawUploadDirective extends AbstractJigsawComponent implements OnDestroy {
-    constructor(@Optional() protected _http: HttpClient,
-        protected _renderer: Renderer2,
-        protected _elementRef: ElementRef,
-        @Optional() protected _translateService: TranslateService,
-        protected _cdr: ChangeDetectorRef) {
+    constructor(@Optional() private _http: HttpClient,
+                    private _renderer: Renderer2,
+                    @Optional() private _translateService: TranslateService,
+                    private _cdr: ChangeDetectorRef) {
         super();
     }
 
     /**
     * @NoMarkForCheckRequired
     */
-    @Input()
+    @Input('uploadTargetUrl')
     public targetUrl: string = '/rdk/service/common/upload';
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadFileType')
     public fileType: string;
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadMultiple')
     public multiple: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadContentField')
     public contentField: string = 'file';
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadFileNameField')
     public fileNameField: string = 'filename';
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadFileVerify')
     public fileVerify: string;
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadAdditionalFields')
     public additionalFields: { [prop: string]: string };
 
-    
+    /**
+     * 每个文件上传完成（无论成功还是失败）之后发出
+     */
     @Output('uploadProgress')
     public progress = new EventEmitter<UploadFileInfo>();
-    
-    @Output('uploadRemove')
-    public remove = new EventEmitter<UploadFileInfo>();
+
+    /**
+     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此时可以获取到此文件的真实进度
+     */
+    @Output('uploadDataSendProgress')
+    public dataSendProgress = new EventEmitter<UploadFileInfo>();
 
     @Output('uploadComplete')
     public complete = new EventEmitter<UploadFileInfo[]>();
-    
+
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
-    
-    @Output('uploadUpdate')
-    public update = new EventEmitter<UploadFileInfo[]>();
-    
-    @Input()
-    public uploadOptionCount: number;
-    
-    @Input()
-    public uploadShowFileList: boolean = true;
-    
+
     @HostListener('click', ['$event'])
     onClick($event) {
-        this._$selectFile($event);
+        this._selectFile($event);
     }
-    
+
     private _minSize: number;
-    
+
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadMinSize')
     public get minSize(): number {
         return this._minSize;
     }
 
     public set minSize(value: number) {
+        value = parseInt(<any>value);
         if (isNaN(value)) {
             console.error('minSize property must be a number, please input a number or number string');
             return;
         }
-        this._minSize = Number(value);
+        this._minSize = value;
     }
 
     private _maxSize: number;
@@ -130,181 +117,165 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
+    @Input('uploadMaxSize')
     public get maxSize(): number {
         return this._maxSize;
     }
 
     public set maxSize(value: number) {
+        value = parseInt(<any>value);
         if (isNaN(value)) {
-            console.error('max property must be a number, please input a number or number string');
+            console.error('maxSize property must be a number, please input a number or number string');
             return;
         }
-        this._maxSize = Number(value);
+        this._maxSize = value;
+    }
+
+    private _fileInputElement: Element;
+    private _removeFileChangeEvent: Function;
+    public allFiles: UploadFileInfo[] = [];
+
+    public retryUpload(fileInfo: UploadFileInfo) {
+        if (!fileInfo || !fileInfo.file) {
+            console.error('invalid retry upload file:', fileInfo);
+            return;
+        }
+        if (!this.allFiles.find(file => file === fileInfo)) {
+            console.error('invalid retry upload file: the file is in our file list, maybe it was removed from our file list:', fileInfo);
+            return;
+        }
+        if (!this._isFileUploaded(fileInfo)) {
+            console.error('invalid retry upload file, this file is still pending:', fileInfo);
+            return;
+        }
+
+        const uploadingCount = this.allFiles.filter(file => file.state == 'loading').length;
+        console.log('1111111111111==', uploadingCount);
+        if (uploadingCount < maxConcurrencyUpload) {
+            this._sequenceUpload(fileInfo);
+        } else {
+            // 排队，后面上传线程有空了，会再来上传它的。
+            fileInfo.state = 'pause';
+            fileInfo.message = this._translateService.instant(`upload.waiting`);
+        }
     }
 
     /**
-     * @internal
+     * 清空所有已上传的文件
      */
-    public _$uploadMode: 'select' | 'selectAndList' = 'select';
+    public clear() {
+        this.allFiles.splice(0, this.allFiles.length);
+        this._cdr.markForCheck();
+    }
 
-    protected _fileInputEl: Element;
-
-    private _removeFileChangeEvent: Function;
-
-    /**
-     * @internal
-     */
-    public _$allFiles: UploadFileInfo[] = [];
-
-    /**
-     * @internal
-     */
-    public _$selectFile($event) {
+    private _selectFile($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        let e = document.createEvent("MouseEvent");
-        e.initEvent("click", true, true);
 
-        if (!this._fileInputEl) {
-            this._fileInputEl = document.createElement('input');
-            this._fileInputEl.setAttribute('type', 'file');
-            if (CommonUtils.isIE()) {
-                //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
-                this._fileInputEl.setAttribute('display', 'none');
-                document.body.appendChild(this._fileInputEl);
-            }
-        }
-        if (this.multiple) {
-            this._fileInputEl.setAttribute('multiple', 'true');
-        } else {
-            this._fileInputEl.removeAttribute('multiple');
-        }
-        this._fileInputEl.setAttribute('accept', this.fileType);
-
-        this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
-            this._renderer.listen(this._fileInputEl, 'change', () => {
-                this._upload();
-            });
-
-        this._fileInputEl.dispatchEvent(e);
-    }
-
-    protected _upload(files?: FileList) {
         if (!this._http) {
             console.error('Jigsaw upload pc-components must inject HttpClientModule, please import it to the module!');
             return;
         }
 
-        if (!files) {
-            const fileInput = this._fileInputEl;
-            files = fileInput['files'];
+        const e = document.createEvent("MouseEvent");
+        e.initEvent("click", true, true);
+        if (!this._fileInputElement) {
+            this._fileInputElement = document.createElement('input');
+            this._fileInputElement.setAttribute('type', 'file');
+            if (CommonUtils.isIE()) {
+                //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
+                this._fileInputElement.setAttribute('display', 'none');
+                document.body.appendChild(this._fileInputElement);
+            }
         }
-        if (!files || !files.length) {
-            console.warn('there are no upload files');
+        if (this.multiple) {
+            this._fileInputElement.setAttribute('multiple', 'true');
+        } else {
+            this._fileInputElement.removeAttribute('multiple');
+        }
+        this._fileInputElement.setAttribute('accept', this.fileType);
+
+        this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
+            this._renderer.listen(this._fileInputElement, 'change', () => {
+                this._upload();
+            });
+
+        this._fileInputElement.dispatchEvent(e);
+    }
+
+    private _upload() {
+        const fileInput: any = this._fileInputElement;
+        const files = this._checkFiles(Array.from(fileInput.files || []));
+        if (!this.multiple) {
+            this.allFiles.splice(0, this.allFiles.length);
+            files.splice(1, files.length);
+        }
+        this.allFiles.push(...files);
+        this.start.emit(this.allFiles);
+        const pendingFiles = this.allFiles.filter(file => file.state == 'pause');
+        if (pendingFiles.length == 0) {
+            this.complete.emit(this.allFiles);
             return;
         }
 
-        if (!this.multiple) {
-            this._$allFiles = [];
-        }
-
-        this._classifyFiles(Array.from(files));
-        const pendingFiles = this._$allFiles.filter(file => file.state == 'pause');
-        for (let i = 0, len = Math.min(5, pendingFiles.length); i < len; i++) {
-            // 最多前5个文件同时上传给服务器
+        for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
+            // 最多前maxConcurrencyUpload个文件同时上传给服务器
             this._sequenceUpload(pendingFiles[i]);
         }
 
-        this._$uploadMode = 'selectAndList';
-        if (pendingFiles.length > 0) {
-            this.start.emit(this._$allFiles);
-        }
-
-        if (this._fileInputEl) {
-            this._fileInputEl['value'] = null;
-        }
+        fileInput.value = null;
     }
 
     private _testFileType(fileName: string, type: string): boolean {
+        if (type == '*') {
+            return true;
+        }
         const re = new RegExp(`.+\\${type.trim()}$`, 'i');
         return re.test(fileName);
     }
 
-    private _classifyFiles(files: File[]): void {
-        if (this.fileType) {
-            const fileTypes = this.fileType.split(',');
-            const oldFiles = files;
-            files = files.filter(f => !!fileTypes.find(ft => this._testFileType(f.name, ft)));
-            oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
-                let fileInfo: UploadFileInfo = {
-                    name: file.name,
-                    state: "error",
-                    url: "",
-                    file: file,
-                    progress: 0
-                }
-                this._statusLog(fileInfo, this._translateService.instant(`upload.fileTypeError`))
-                this._$allFiles.push(fileInfo);
-                this.update.emit(this._$allFiles);
-            });
-        }
-
-        if (this.minSize) {
-            const oldFiles = files;
-            files = files.filter(f => f.size >= this.minSize * 1024 * 1024);
-            oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
-                let fileInfo: UploadFileInfo = {
-                    name: file.name,
-                    state: 'error',
-                    url: '',
-                    file: file,
-                    progress: 0
-                }
-                this._statusLog(fileInfo, this._translateService.instant(`upload.fileMinSizeError`))
-                this._$allFiles.push(fileInfo);
-                this.update.emit(this._$allFiles);
-            });
-        }
-
-        if (this.maxSize) {
-            const oldFiles = files;
-            files = files.filter(f => f.size <= this.maxSize * 1024 * 1024);
-            oldFiles.filter(f => files.indexOf(f) == -1).forEach(file => {
-                let fileInfo: UploadFileInfo = {
-                    name: file.name,
-                    state: 'error',
-                    url: '',
-                    file: file,
-                    progress: 0
-                }
-                this._statusLog(fileInfo, this._translateService.instant(`upload.fileMaxSizeError`))
-                this._$allFiles.push(fileInfo);
-                this.update.emit(this._$allFiles);
-            });
-        }
-
-        files.forEach((file: File) => {
-            let fileInfo: UploadFileInfo = {
-                name: file.name,
-                state: 'pause',
-                url: '',
-                file: file,
-                progress: 0
+    private _checkFiles(files: File[]): UploadFileInfo[] {
+        const fileTypes = this.fileType ? this.fileType.trim().split(/\s*,\s*/) : ['*'];
+        return files.map(file => {
+            const fileInfo: UploadFileInfo = {
+                name: file.name, state: "error", url: "", file: file, progress: 0,
+                message: this._translateService.instant(`upload.unknownStatus`)
             }
-            this._statusLog(fileInfo, this._translateService.instant(`upload.waiting`))
-            this._$allFiles.push(fileInfo);
-            this.update.emit(this._$allFiles);
+            if (!fileTypes.find(type => this._testFileType(file.name, type))) {
+                fileInfo.message = this._translateService.instant(`upload.fileTypeError`);
+                this._statusLog(fileInfo, fileInfo.message);
+                return fileInfo;
+            }
+            if (!isNaN(this.minSize) && file.size < this.minSize * 1024 * 1024) {
+                fileInfo.message = this._translateService.instant(`upload.fileMinSizeError`);
+                this._statusLog(fileInfo, fileInfo.message);
+                return fileInfo;
+            }
+            if (!isNaN(this.maxSize) && file.size > this.maxSize * 1024 * 1024) {
+                fileInfo.message = this._translateService.instant(`upload.fileMaxSizeError`);
+                this._statusLog(fileInfo, fileInfo.message);
+                return fileInfo;
+            }
+
+            fileInfo.state = 'pause';
+            fileInfo.message = this._translateService.instant(`upload.waiting`);
+            this._statusLog(fileInfo, fileInfo.message);
+            return fileInfo;
         });
     }
 
     private _isAllFilesUploaded(): boolean {
-        return !this._$allFiles.find(f => f.state == 'loading' || f.state == 'pause');
+        return !this.allFiles.find(f => !this._isFileUploaded(f));
+    }
+
+    private _isFileUploaded(fileInfo: UploadFileInfo): boolean {
+        return fileInfo.state !== 'loading' && fileInfo.state !== 'pause'
     }
 
     private _sequenceUpload(fileInfo: UploadFileInfo) {
         fileInfo.state = 'loading';
-        this._statusLog(fileInfo, this._translateService.instant(`upload.uploading`));
+        fileInfo.message = this._translateService.instant(`upload.uploading`);
+        this._statusLog(fileInfo, fileInfo.message);
         const formData = new FormData();
         formData.append(this.contentField, fileInfo.file);
         this._appendAdditionalFields(formData, fileInfo.file.name);
@@ -313,24 +284,29 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
                 responseType: 'text',
                 reportProgress: true,
                 observe: 'events'
-            }).subscribe(res => {
+            }).subscribe((res: any) => {
                 if (res.type === 1) {
-                    fileInfo.progress = res["loaded"] / res["total"] * 100;
-                    this.update.emit(this._$allFiles);
+                    fileInfo.progress = res.loaded / res.total * 100;
+                    this.dataSendProgress.emit(fileInfo);
+                    return;
                 }
                 if (res.type === 3) {
-                    fileInfo.url = res["partialText"];
+                    fileInfo.url = res.partialText;
+                    return;
                 }
                 if (res.type === 4) {
-                    const resp: HttpResponse<string> = <HttpResponse<string>>res;
                     fileInfo.state = 'success';
+                    fileInfo.message = '';
+                    const resp: HttpResponse<string> = <HttpResponse<string>>res;
                     fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
                     this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
                     this._afterCurFileUploaded(fileInfo);
                 }
             }, (e) => {
                 fileInfo.state = 'error';
-                this._statusLog(fileInfo, this._translateService.instant(`upload.${e.statusText}`));
+                const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
+                this._statusLog(fileInfo, message);
+                fileInfo.message = message;
                 this._afterCurFileUploaded(fileInfo);
             });
     }
@@ -359,12 +335,11 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
 
-        const waitingFile = this._$allFiles.find(f => f.state == 'pause');
+        const waitingFile = this.allFiles.find(f => f.state == 'pause');
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
-            this.update.emit(this._$allFiles);
-            this.complete.emit(this._$allFiles);
+            this.complete.emit(this.allFiles);
         }
         this._cdr.markForCheck();
     }
@@ -373,42 +348,8 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
         if (!fileInfo.log) {
             fileInfo.log = [];
         }
-        const log = {
-            time: TimeService.convertValue(new Date(), TimeGr.second),
-            content: content
-        }
+        const log = { time: TimeService.convertValue(new Date(), TimeGr.second), content: content };
         fileInfo.log.push(log);
-    }
-
-    /**
-     * @internal
-     */
-    public _$removeFile(file) {
-        this.remove.emit(file);
-        let fileIndex = this._$allFiles.findIndex(f => f == file);
-        if (fileIndex != -1) {
-            this._$allFiles.splice(fileIndex, 1);
-            // 保持向下兼容
-            if (this._isAllFilesUploaded()) {
-                this.update.emit(this._$allFiles);
-            }
-        }
-        if (this._fileInputEl) {
-            this._fileInputEl['value'] = null;
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$reUpload(file: UploadFileInfo) {
-        file.progress = 0;
-        this._sequenceUpload(file);
-    }
-
-    public clearFileList() {
-        this._$allFiles = [];
-        this._cdr.detectChanges();
     }
 
     ngOnDestroy() {
@@ -417,7 +358,6 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
             this._removeFileChangeEvent();
             this._removeFileChangeEvent = null;
         }
-
-        this._fileInputEl = null;
+        this._fileInputElement = null;
     }
 }

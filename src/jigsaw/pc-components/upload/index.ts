@@ -9,18 +9,19 @@ import {JigsawUploadDirective} from "../../common/directive/upload/upload.direct
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import { JigsawUploadPanel } from './upload-panel';
+import { JigsawUploadResult } from './upload-result';
 import { JigsawCollapseModule } from '../collapse/collapse';
 import { JigsawProgressModule } from '../progress/progress';
+import {JigsawLoadingModule} from "../../common/components/loading/loading";
 
 @NgModule({
     imports: [
         JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
         JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule,
-        JigsawProgressModule, TranslateModule.forChild()
+        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild()
     ],
-    declarations: [JigsawUploadDirective, JigsawUploadPanel],
-    exports: [JigsawUploadDirective, JigsawUploadPanel],
+    declarations: [JigsawUploadDirective, JigsawUploadResult],
+    exports: [JigsawUploadDirective, JigsawUploadResult],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {
@@ -31,8 +32,7 @@ export class JigsawUploadModule {
                 "uploading": "上传中",
                 "done": "上传成功",
                 "failed": "上传失败",
-                "dragHere": "将文件拖拽到此处上传",
-                "selectFile": "选择文件",
+                "unknownStatus": "未知状态",
 
                 "Bad Request": "错误详情：错误请求",
                 "Unauthorized": "错误详情：未授权",
@@ -90,8 +90,7 @@ export class JigsawUploadModule {
                 "uploading": "Uploading",
                 "done": "Success to upload",
                 "failed": "Failed to upload",
-                "dragHere": "Drag and drop the file(s) here to upload",
-                "selectFile": "Select File",
+                "unknownStatus": "Unknown status",
 
                 "Bad Request": "Error detail: Bad Request",
                 "Unauthorized": "Error detail: Unauthorized",

@@ -18,6 +18,8 @@ import {InternalUtils} from "../jigsaw/common/core/utils/internal-utils";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
+    // 用于控制文件上传失败率，从而模拟出更逼真的上传效果，取值[0,100]越大失败的概率越高
+    public static uploadFailureRate = 30;
     private static _processors: any[] = [];
 
     public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
@@ -73,13 +75,31 @@ export class AjaxInterceptor implements HttpInterceptor {
         return new Observable<HttpEvent<any>>(observer => {
             // notify the event stream that the request was sent.
             observer.next({type: HttpEventType.Sent});
-            uploadLoop(0);
 
-            function uploadLoop(loaded: number) {
+            const random = InternalUtils.randomNumber(1, 99);
+            if (random <= AjaxInterceptor.uploadFailureRate) {
+                // 模拟失败
+                const statusTexts = [
+                    "Bad Request", "Unauthorized", "Payment Required", "Forbidden",
+                    "Not Found", "Method Not Allowed", "Not Acceptable"
+                ];
+                const r = InternalUtils.randomNumber(0, statusTexts.length - 1);
+                observer.error({
+                    error: 'Failed to upload, random = ' + random,
+                    headers: new HttpHeaders(), name: "HttpErrorResponse",
+                    message: 'Failed to upload, random = ' + random,
+                    ok: false, status: 500, statusText: statusTexts[r], url: ''
+                });
+                return;
+            }
+
+            // 模拟成功
+            const uploadLoop = (loaded: number) => {
                 // N.B.: Cannot use setInterval or rxjs delay (which uses setInterval)
                 // because e2e test won't complete. A zone thing?
                 // Use setTimeout and tail recursion instead.
                 setTimeout(() => {
+                    // 模拟成功
                     loaded += InternalUtils.randomNumber(chunkSize * 0.5, chunkSize * 1.5);
                     loaded = Math.min(loaded, total);
 
@@ -89,9 +109,7 @@ export class AjaxInterceptor implements HttpInterceptor {
                     observer.next(progressEvent);
 
                     if (loaded >= total) {
-                        const doneResponse = new HttpResponse({
-                            status: 200, body: url
-                        });
+                        const doneResponse = new HttpResponse({status: 200, body: url});
                         observer.next(doneResponse);
                         observer.complete();
                         return;
@@ -99,6 +117,7 @@ export class AjaxInterceptor implements HttpInterceptor {
                     uploadLoop(loaded);
                 }, InternalUtils.randomNumber(300, 2000));
             }
+            uploadLoop(0);
         });
     }
 
