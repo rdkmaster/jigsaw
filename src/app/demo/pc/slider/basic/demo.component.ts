@@ -48,6 +48,8 @@ export class SliderBasicDemoComponent {
         }
     ];
 
+    rangeValue3 = new ArrayCollection([30, 50, 60]);
+
     // demo6
     value6 = 10;
     vertical = true;
