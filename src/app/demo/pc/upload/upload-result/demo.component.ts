@@ -1,5 +1,5 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from "@angular/core";
-import {JigsawUploadDirective, UploadFileInfo} from "jigsaw/public_api";
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader} from "jigsaw/public_api";
 
 @Component({ templateUrl: "./demo.component.html" })
 export class UploadResultDemoComponent implements OnInit, AfterViewInit {
@@ -8,13 +8,16 @@ export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     ) {}
 
     @ViewChild("first", { read: JigsawUploadDirective })
-    public uploader1: JigsawUploadDirective;
+    public uploader1: IUploader;
     @ViewChild("second", { read: JigsawUploadDirective })
-    public uploader2: JigsawUploadDirective;
+    public uploader2: IUploader;
     @ViewChild("third", { read: JigsawUploadDirective })
-    public uploader3: JigsawUploadDirective;
+    public uploader3: IUploader;
     @ViewChild("forth", { read: JigsawUploadDirective })
-    public uploader4: JigsawUploadDirective;
+    public uploader4: IUploader;
+
+    @ViewChildren(JigsawUploadResult)
+    results: QueryList<JigsawUploadResult>;
 
     public onChange(msg: string, data: UploadFileInfo | UploadFileInfo[]) {
         console.log(msg, "!!!!!!", data);
@@ -26,10 +29,7 @@ export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     minSize: number = 0;
 
     clear() {
-        this.uploader1.clear();
-        this.uploader2.clear();
-        this.uploader3.clear();
-        this.uploader4.clear();
+        this.results.toArray().forEach(r => r.clear());
     }
 
     ngOnInit() {
@@ -44,6 +44,8 @@ export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "`jigsaw-upload-result`组件是`jigsaw-upload`指令上传结果的可视化显示器，它无法独立使用，必须配合指令来使用";
-    description: string = "";
+    summary: string = "`jigsaw-upload`指令实现了`IUploader`接口，" +
+        "它可以与`jigsaw-upload-result`组件配合使用，作为`jigsaw-upload`指令的结果可视化显示器。";
+    description: string = "`jigsaw-upload-result`组件是`IUploader`上传结果的可视化显示器，" +
+        "它无法独立使用，必须配合实现了IUploader的类来使用";
 }

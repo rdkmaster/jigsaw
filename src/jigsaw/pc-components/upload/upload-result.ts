@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import {Subscription} from "rxjs";
 import { AbstractJigsawComponent } from "jigsaw/common/common";
-import { JigsawUploadDirective, UploadFileInfo } from "jigsaw/common/directive/upload/upload.directive";
+import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
 
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
@@ -23,15 +23,13 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
     }
-
-    private _uploader: JigsawUploadDirective;
     private _dataSendProgressSubscription: Subscription;
     private _startUploadSubscription: Subscription;
     private _completeSubscription: Subscription;
     private _progressSubscription: Subscription;
 
     public get files(): UploadFileInfo[] {
-        return this.uploader ? this.uploader.allFiles : [];
+        return this.uploader ? this.uploader.files : [];
     }
 
     @Output()
@@ -43,15 +41,22 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     @Output()
     public remove = new EventEmitter<UploadFileInfo>();
 
+    public clear() {
+        this.files.splice(0, this.files.length);
+        this._cdr.markForCheck();
+    }
+
+    private _uploader: IUploader;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get uploader(): JigsawUploadDirective {
+    public get uploader(): IUploader {
         return this._uploader;
     }
 
-    public set uploader(value: JigsawUploadDirective) {
+    public set uploader(value: IUploader) {
         if (!value || value === this._uploader) {
             return;
         }
@@ -60,7 +65,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         if (this._startUploadSubscription) {
             this._startUploadSubscription.unsubscribe();
         }
-        this._startUploadSubscription = this._uploader.start.subscribe((fileInfos: UploadFileInfo[]) => {
+        this._startUploadSubscription = this._uploader.start.subscribe(() => {
             this.change.emit(this.files);
             this._cdr.markForCheck();
         });

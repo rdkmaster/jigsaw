@@ -152,3 +152,5 @@ export class JigsawUploadModule {
 }
 
 export * from '../../common/directive/upload/upload.directive';
+export * from '../../common/directive/upload/uploader-typings';
+export * from './upload-result';

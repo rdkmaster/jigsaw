@@ -4,23 +4,14 @@ import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from 'jigsaw/common/common';
 import {CommonUtils} from 'jigsaw/common/core/utils/common-utils';
 import {TimeGr, TimeService} from 'jigsaw/common/service/time.service';
-
-export type UploadFileInfo = {
-    name: string, url: string, file: File,
-    state: 'pause' | 'loading' | 'success' | 'error',
-    progress?: number, log?: UploadingFileLog[], message?: string
-};
+import {IUploader, UploadFileInfo} from "./uploader-typings";
 
 const maxConcurrencyUpload = 5;
 
-export type UploadingFileLog = {
-    time: string,
-    content: string
-}
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
 })
-export class JigsawUploadDirective extends AbstractJigsawComponent implements OnDestroy {
+export class JigsawUploadDirective extends AbstractJigsawComponent implements IUploader, OnDestroy {
     constructor(@Optional() private _http: HttpClient,
                     private _renderer: Renderer2,
                     @Optional() private _translateService: TranslateService,
@@ -69,6 +60,8 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
      */
     @Input('uploadAdditionalFields')
     public additionalFields: { [prop: string]: string };
+
+    public files: UploadFileInfo[] = [];
 
     /**
      * 每个文件上传完成（无论成功还是失败）之后发出
@@ -133,14 +126,13 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
 
     private _fileInputElement: Element;
     private _removeFileChangeEvent: Function;
-    public allFiles: UploadFileInfo[] = [];
 
     public retryUpload(fileInfo: UploadFileInfo) {
         if (!fileInfo || !fileInfo.file) {
             console.error('invalid retry upload file:', fileInfo);
             return;
         }
-        if (!this.allFiles.find(file => file === fileInfo)) {
+        if (!this.files.find(file => file === fileInfo)) {
             console.error('invalid retry upload file: the file is in our file list, maybe it was removed from our file list:', fileInfo);
             return;
         }
@@ -149,8 +141,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
             return;
         }
 
-        const uploadingCount = this.allFiles.filter(file => file.state == 'loading').length;
-        console.log('1111111111111==', uploadingCount);
+        const uploadingCount = this.files.filter(file => file.state == 'loading').length;
         if (uploadingCount < maxConcurrencyUpload) {
             this._sequenceUpload(fileInfo);
         } else {
@@ -164,7 +155,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
      * 清空所有已上传的文件
      */
     public clear() {
-        this.allFiles.splice(0, this.allFiles.length);
+        this.files.splice(0, this.files.length);
         this._cdr.markForCheck();
     }
 
@@ -207,14 +198,14 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
         const fileInput: any = this._fileInputElement;
         const files = this._checkFiles(Array.from(fileInput.files || []));
         if (!this.multiple) {
-            this.allFiles.splice(0, this.allFiles.length);
+            this.files.splice(0, this.files.length);
             files.splice(1, files.length);
         }
-        this.allFiles.push(...files);
-        this.start.emit(this.allFiles);
-        const pendingFiles = this.allFiles.filter(file => file.state == 'pause');
+        this.files.push(...files);
+        this.start.emit(this.files);
+        const pendingFiles = this.files.filter(file => file.state == 'pause');
         if (pendingFiles.length == 0) {
-            this.complete.emit(this.allFiles);
+            this.complete.emit(this.files);
             return;
         }
 
@@ -265,7 +256,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     }
 
     private _isAllFilesUploaded(): boolean {
-        return !this.allFiles.find(f => !this._isFileUploaded(f));
+        return !this.files.find(f => !this._isFileUploaded(f));
     }
 
     private _isFileUploaded(fileInfo: UploadFileInfo): boolean {
@@ -335,11 +326,11 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements On
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
 
-        const waitingFile = this.allFiles.find(f => f.state == 'pause');
+        const waitingFile = this.files.find(f => f.state == 'pause');
         if (waitingFile) {
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
-            this.complete.emit(this.allFiles);
+            this.complete.emit(this.files);
         }
         this._cdr.markForCheck();
     }
