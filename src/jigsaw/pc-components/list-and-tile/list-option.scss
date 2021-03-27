@@ -11,15 +11,23 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
     &:hover {
         background: $brand-light;
+
+        .#{$list-option-prefix-cls}-title-box
+            .#{$list-option-prefix-cls}-title {
+            color: $brand-default;
+        }
     }
+
     &.#{$list-option-prefix-cls}-active {
         background: $brand-active-light;
     }
+
     &.#{$list-option-prefix-cls}-disabled {
         background: $bg-disabled;
         color: $font-color-disabled;
         cursor: not-allowed;
     }
+
     &-title-box {
         @include clearfix();
         display: flex;
@@ -52,6 +60,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         height: 100%;
         z-index: $zindex-level-1;
     }
+
     &.#{$list-option-prefix-cls}-separator {
         display: block;
         width: 100%;
@@ -59,6 +68,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         padding: 0 8px;
         min-height: 0;
     }
+
     &-separator-line {
         display: block;
         width: 100%;

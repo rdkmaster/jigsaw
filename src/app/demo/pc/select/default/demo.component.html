@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>基本用法</jigsaw-header>
+<jigsaw-select
+    [(value)]="selectedOptionForSelect"
+    (valueChange)="selectChange($event)"
+    placeholder="请选择"
+    [data]="optionList"
+    openTrigger="click"
+    closeTrigger="click"
+>
+</jigsaw-select>
+<p class="message">
+    选择的选项是 <span>{{ selectedOptionName }}</span>
+</p>
+
+<jigsaw-header>字符串数组</jigsaw-header>
+<jigsaw-select
+    [(value)]="selectedOptionForSelect2"
+    (valueChange)="selectChange2($event)"
+    placeholder="请选择"
+    [data]="optionList2"
+>
+</jigsaw-select>
+<p class="message">
+    选择的选项是 <span>{{ selectedOptionForSelect2 }}</span>
+</p>
