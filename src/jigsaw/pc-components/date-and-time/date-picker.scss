@@ -136,6 +136,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             thead {
                 padding: 0 8px;
                 height: $height-med;
+                border-bottom: 1px solid $border-color-disabled;
                 line-height: $height-med;
                 background: $bg-container;
                 vertical-align: initial;
@@ -143,7 +144,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 th {
                     text-align: center;
                     font-weight: normal;
-                    color: $font-color-heading;
+                    color: $font-color-tag;
                 }
             }
 
@@ -198,7 +199,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &-prev-next span {
-                color: $font-color-hint;
+                color: $font-color-disabled;
             }
 
             &-selected {
