@@ -195,7 +195,6 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 border-color: $brand-default;
                 border-radius: $border-radius-sm;
                 box-sizing: border-box;
-                z-index: $zindex-popover-level-1;
             }
 
             &-prev-next span {

@@ -46,6 +46,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
 
             &.#{$time-prefix-cls}-input-selected {
                 background: $brand-default;
+                color: $font-color-white;
             }
         }
 
