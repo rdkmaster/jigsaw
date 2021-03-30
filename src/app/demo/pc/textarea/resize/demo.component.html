@@ -1,0 +1,34 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>双向可伸缩</jigsaw-header>
+<jigsaw-textarea
+    width="400px"
+    height="120px"
+    [(value)]="textareaValue"
+    [resize]="'both'"
+    placeholder="这是双向可伸缩的文本输入框"
+>
+</jigsaw-textarea>
+
+<jigsaw-header>纵向可伸缩</jigsaw-header>
+<jigsaw-textarea
+    width="400px"
+    height="120px"
+    [(value)]="textareaValue2"
+    [resize]="'vertical'"
+    placeholder="这是纵向可伸缩的文本输入框"
+>
+</jigsaw-textarea>
+
+<jigsaw-header>横向可伸缩</jigsaw-header>
+<jigsaw-textarea
+    width="400px"
+    height="120px"
+    [(value)]="textareaValue3"
+    [resize]="'horizontal'"
+    placeholder="这是横向可伸缩的文本输入框"
+>
+</jigsaw-textarea>

@@ -13,11 +13,12 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-textarea, j-textarea',
     templateUrl: './textarea.html',
     host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height',
         '[class.jigsaw-textarea]': 'true',
         '[class.jigsaw-textarea-error]': '!valid',
-        '[class.jigsaw-textarea-disabled]': 'disabled'
+        '[class.jigsaw-textarea-disabled]': 'disabled',
+        '[class.jigsaw-textarea-resize-both]':'resize == "both"',
+        '[class.jigsaw-textarea-resize-horizontal]':'resize == "horizontal"',
+        '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
@@ -44,6 +45,16 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      */
     @Input()
     public disabled: boolean = false;
+
+    /**
+     * 设置文本输入框是否可以拉伸，为true则不可交互，为false则可交互。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/resize
+     */
+    @Input()
+    public resize: "both" | "horizontal" | "vertical" | "none" = "none";
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
