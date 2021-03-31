@@ -1,0 +1,80 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>右侧按钮常驻状态</jigsaw-header>
+<j-numeric-input
+    [(value)]="value"
+    showOption="true"
+    min="1"
+    max="110"
+    placeholder="请输入数字"
+></j-numeric-input>
+<p class="message">
+    输入值是：<span>{{ value }}</span>
+</p>
+
+<jigsaw-header>带单位的右侧按钮常驻状态</jigsaw-header>
+<j-numeric-input
+    [(value)]="value3"
+    showOption="true"
+    min="1"
+    max="110"
+    placeholder="请输入数字"
+    [suffix]="'单位'"
+></j-numeric-input>
+<p class="message">
+    输入值是：<span>{{ value3 }}</span>
+</p>
+
+<jigsaw-header>带可选单位的右侧按钮常驻状态</jigsaw-header>
+<j-numeric-input
+    [(value)]="value2"
+    showOption="true"
+    min="1"
+    max="110"
+    placeholder="请输入数字"
+    [suffix]="_$units"
+></j-numeric-input>
+<p class="message">
+    输入值是：<span>{{ value2 }}</span>
+</p>
+
+<jigsaw-header>禁用态</jigsaw-header>
+<div>
+    <j-numeric-input
+        [(value)]="value4"
+        showOption="true"
+        min="1"
+        max="110"
+        placeholder="请输入数字"
+        [disabled]="true"
+    ></j-numeric-input>
+</div>
+<br />
+
+<div>
+    <j-numeric-input
+        [(value)]="value4"
+        showOption="true"
+        min="1"
+        max="110"
+        placeholder="请输入数字"
+        [suffix]="'单位'"
+        [disabled]="true"
+    ></j-numeric-input>
+</div>
+<br />
+
+<div>
+    <j-numeric-input
+        [(value)]="value4"
+        showOption="true"
+        min="1"
+        max="110"
+        placeholder="请输入数字"
+        [suffix]="_$units"
+        [disabled]="true"
+    ></j-numeric-input>
+</div>
