@@ -17,6 +17,9 @@ import {JigsawTextarea} from "@rdkmaster/jigsaw";
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-textarea>
     `,
+    host: {
+        '[style.flex]': '1',
+    },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
@@ -24,7 +27,8 @@ export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
         templateOptions: {
             clearable: true,
             valid: true,
-            width: '100%'
+            width: '100%',
+            height: '100%',
         }
     };
 
