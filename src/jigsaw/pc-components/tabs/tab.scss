@@ -246,9 +246,44 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 }
 
 .#{$tab-prefix}-page {
+    .#{$tab-prefix}-bar {
+        position: relative;
+        border: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 1px;
+            width: 100%;
+            background: $border-color-default;
+            z-index: -1;
+        }
+    }
+
     .#{$tab-prefix}-nav-container {
         .#{$tab-prefix}-ink-bar {
             visibility: hidden;
+        }
+
+        .#{$tab-prefix}-nav-wrap {
+            .#{$tab-prefix}-nav {
+                .#{$tab-prefix}-tab {
+                    border-width: 1px;
+                    border-style: solid;
+                    border-color: $border-color-default;
+                    border-radius: $border-radius-base;
+                    margin-right: 2px;
+                    padding: 0 16px;
+                    line-height: 32px;
+
+                    &-active {
+                        border-top-width: 2px;
+                        border-top-color: $brand-default;
+                        border-bottom-color: $bg-body;
+                    }
+                }
+            }
         }
     }
 }
