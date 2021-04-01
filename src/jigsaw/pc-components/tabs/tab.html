@@ -1,9 +1,4 @@
-<div
-    class="jigsaw-tabs"
-    [class.jigsaw-tabs-vertical-response]="!!height"
-    [ngClass]="{'jigsaw-tabs-page':tabType == 'page',
-            'jigsaw-tabs-label':tabType == 'label'}"
->
+<div class="jigsaw-tabs" [class.jigsaw-tabs-vertical-response]="!!height">
     <jigsaw-tab-bar
         #tabBar
         *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless"

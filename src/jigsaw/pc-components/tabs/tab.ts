@@ -386,7 +386,8 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     host: {
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-tabs-page]': 'tabType == "page"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
