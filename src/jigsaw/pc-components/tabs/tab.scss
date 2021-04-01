@@ -124,6 +124,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
         .#{$tab-prefix}-ink-bar {
             position: absolute;
+            display: block;
             z-index: $zindex-level-1;
             left: 0;
             bottom: -1px;
@@ -240,6 +241,14 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             &-hidden {
                 display: none;
             }
+        }
+    }
+}
+
+.#{$tab-prefix}-page {
+    .#{$tab-prefix}-nav-container {
+        .#{$tab-prefix}-ink-bar {
+            display: none;
         }
     }
 }

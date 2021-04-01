@@ -302,7 +302,6 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         }
 
         this._$inkBarStyle = {
-            'display': 'block',
             'transform': 'translate3d(' + (labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
         };
@@ -401,6 +400,30 @@ export class JigsawTab extends JigsawTabBase {
         super(_changeDetector, _injector);
     }
 
+    /** 
+     * 控制tab显示为标签式 or 页签式
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = tab/type
+     */
+
+    public _tabType: 'label' | 'page' = 'label';
+
+    @Input()
+    @RequireMarkForCheck()
+    public get tabType(){
+        console.log("get:",this._tabType)
+        return this._tabType;
+    }
+    public set tabType(v){
+        console.log('set: ', v)
+        if (this._tabType == v) {
+            return;
+        }
+        this._tabType = v;
+    }
+    
     /**
      * @internal
      */
