@@ -11,7 +11,7 @@ export class RadioLiteTypeDemoComponent {
         "未选中2",
         "未选中3",
         { label: "未选中禁用", disabled: true },
-        { label: "选中禁用", disabled: false }
+        { label: "选中禁用", disabled: true }
     ];
 
     constructor() {
