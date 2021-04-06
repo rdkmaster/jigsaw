@@ -15,7 +15,6 @@ import {CommonUtils} from "../jigsaw/common/core/utils/common-utils";
 import {RawTableData, TableData} from "../jigsaw/common/core/data/table-data";
 import {PagingInfo} from "../jigsaw/common/core/data/component-data";
 import {InternalUtils} from "../jigsaw/common/core/utils/internal-utils";
-import {until} from "selenium-webdriver";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
