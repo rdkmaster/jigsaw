@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
+import { RadiosGroupValue } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html"
 })
 export class RadioLiteTypeDemoComponent {
-    public selectedItems;
+    public selectedItem: string | RadiosGroupValue;
     cities = [
         "未选中1",
         "未选中2",
@@ -14,15 +15,15 @@ export class RadioLiteTypeDemoComponent {
     ];
 
     constructor() {
-        this.selectedItems = "选中禁用";
+        this.selectedItem = "选中禁用";
     }
 
-    clearSelectedItems() {
-        this.selectedItems = null;
+    clearSelectedItem() {
+        this.selectedItem = null;
     }
 
     selectDisabledItem() {
-        this.selectedItems = { label: "选中禁用" };
+        this.selectedItem = { label: "选中禁用" };
     }
 
     // ====================================================================

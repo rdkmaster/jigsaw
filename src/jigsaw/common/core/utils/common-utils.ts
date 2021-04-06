@@ -62,6 +62,8 @@ export class CommonUtils {
                     if (item1[trackItemBy[i]] != item2) {
                         return false;
                     }
+                } else {
+                    return item1 === item2;
                 }
             }
             return true;
