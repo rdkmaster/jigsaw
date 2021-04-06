@@ -8,6 +8,42 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
 
 .#{$collapse-prefix} {
     &-item {
+        .#{$collapse-prefix}-header {
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 38px;
+            line-height: 38px;
+            cursor: pointer;
+            color: $font-color-heading;
+            .#{$collapse-prefix}-arrow {
+                position: absolute;
+                @include prefixer(transition, all 0.3s ease);
+
+                &:hover {
+                    color: $brand-default;
+                }
+            }
+        }
+
+        &.#{$collapse-prefix}-item-arrow-right {
+            .#{$collapse-prefix}-header {
+                padding-left: 16px;
+                .#{$collapse-prefix}-arrow {
+                    right: 16px;
+                }
+            }
+        }
+
+        &.#{$collapse-prefix}-item-arrow-left {
+            .#{$collapse-prefix}-header {
+                padding-left: 32px;
+                .#{$collapse-prefix}-arrow {
+                    left: 16px;
+                }
+            }
+        }
+
         &.#{$collapse-prefix}-item-inactive {
             > .#{$collapse-prefix}-header {
                 .#{$collapse-prefix}-arrow {
@@ -15,28 +51,6 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
                 }
             }
         }
-    }
-
-    &-item &-header {
-        display: flex;
-        align-items: center;
-        position: relative;
-        height: 38px;
-        line-height: 38px;
-        cursor: pointer;
-        color: $font-color-heading;
-        padding-left: 16px;
-    }
-
-    &-header &-arrow {
-        position: absolute;
-        right: 16px;
-
-        &:hover {
-            color: $brand-default;
-        }
-
-        @include prefixer(transition, all 0.3s ease);
     }
 
     &-item &-content {

@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {
     JigsawUploadModule, JigsawSwitchModule, JigsawRadioLiteModule, JigsawButtonModule,
-    JigsawLoadingModule, JigsawNumericInputModule
+    JigsawLoadingModule, JigsawNumericInputModule, JigsawHeaderModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {UploadBasicDemoComponent} from "./demo.component";
@@ -11,7 +11,8 @@ import {UploadBasicDemoComponent} from "./demo.component";
     declarations: [UploadBasicDemoComponent],
     exports: [UploadBasicDemoComponent],
     imports: [JigsawUploadModule, JigsawDemoDescriptionModule, JigsawSwitchModule,
-        JigsawRadioLiteModule, JigsawButtonModule, JigsawLoadingModule, CommonModule, JigsawNumericInputModule]
+        JigsawRadioLiteModule, JigsawButtonModule, JigsawLoadingModule, CommonModule,
+        JigsawNumericInputModule, JigsawHeaderModule]
 })
 export class UploadBasicDemoModule {
 

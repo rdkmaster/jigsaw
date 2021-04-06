@@ -4,7 +4,6 @@
 
 
 <!-- start to learn the demo from here -->
-
 <div class="live-demo-wrap">
     <h2>Upload</h2>
     <div class="common-param-setting">
@@ -23,37 +22,28 @@
          最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
         <br>
         <br>
-        <a (click)="clearFileList()">清空已上传文件</a>
     </div>
 
-    <div class="demo-1 live-demo">
-        <h3>组件</h3>
-        <j-upload #upload [multiple]="multiple" [fileType]="fileType" [minSize]="minSize" [maxSize]="maxSize"
-                  (progress)="getUploadFile($event)" (update)="getAllUploadFiles($event)">
-        </j-upload>
-    </div>
     <div class="demo-2 live-demo">
         <h3>指令</h3>
         <span style="font-weight: bold;">常见模式：</span>
-        <a j-upload [uploadMultiple]="multiple" [uploadShowFileList]="false"
-           (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
+        <a j-upload (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
+           [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMultiple]="multiple"
            class="link-upload">上传文件</a>
         <span>{{uploadedFile}}</span>
 
         <br><br>
 
         <span style="font-weight: bold;">极简模式：</span>
-        <j-button j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType"
-                  [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
-                  (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
-                  (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadOptionCount]="4">
+        <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
+                  (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadMultiple]="multiple"
+                  [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
             <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc">
             </j-font-loading>
             click to upload
         </j-button>
-        <a j-upload [uploadMultiple]="multiple" [uploadFileType]="fileType"
-           [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
-           [uploadOptionCount]="3" (uploadStart)="isLinkUploadWaiting = true"
+        <a j-upload (uploadStart)="isLinkUploadWaiting = true"
+           [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMultiple]="multiple"
            (uploadProgress)="getUploadFile($event)" (uploadComplete)="getAllUploadFiles($event, 'link')"
            class="link-upload">上传文件</a>
         <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
