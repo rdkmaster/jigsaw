@@ -473,12 +473,16 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         this._calcMarks();
     }
 
-    public isDotActive(markVal: number, value: any) {
+    /**
+     * @internal
+     * @param markVal
+     */
+    public _$isDotActive(markVal: number): boolean {
         if (this._$value.length == 1) {
-            return markVal < value;
+            return markVal < this.value;
         } else {
-            let min = Math.min(...value);
-            let max = Math.max(...value);
+            const min = Math.min(...this._$value);
+            const max = Math.max(...this._$value);
             return markVal >= min && markVal <= max;
         }
     }
