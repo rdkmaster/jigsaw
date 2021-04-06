@@ -20,6 +20,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
         </j-tile>`,
     host: {
         '[class.jigsaw-button-bar]': 'true',
+        '[class.jigsaw-button-bar-default]': "colorType === 'default'",
         '[class.jigsaw-button-bar-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-bar-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-bar-error]': "colorType === 'error' || colorType === 'danger'",

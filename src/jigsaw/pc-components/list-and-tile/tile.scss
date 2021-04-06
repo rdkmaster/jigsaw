@@ -3,7 +3,6 @@
 $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 $tile-option-prefix-cls: #{$tile-prefix-cls}-option;
 $tile-lite-prefix-cls: #{$tile-prefix-cls}-lite;
-$button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
 .#{$tile-prefix-cls} {
     @include inline-block();
@@ -66,77 +65,6 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     }
 }
 
-.#{$tile-lite-prefix-cls},
-.#{$button-bar-prefix-cls} {
+.#{$tile-lite-prefix-cls} {
     @include inline-block;
-}
-
-.#{$button-bar-prefix-cls} {
-    height: $height-base;
-
-    .#{$tile-prefix-cls} {
-        padding: 0 0;
-        border: none;
-
-        &.#{$tile-prefix-cls}-error {
-            border-color: $error-default;
-        }
-    }
-
-    .#{$tile-option-prefix-cls} {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: auto;
-        min-width: 60px;
-        margin: 0;
-        padding: 0 8px;
-        border-radius: 0;
-
-        &:first-child {
-            border-radius: 3px 0 0 3px;
-        }
-
-        &:last-child {
-            border-radius: 0 3px 3px 0;
-        }
-
-        &:not(:first-child) {
-            margin-left: -1px;
-        }
-
-        &.#{$tile-option-prefix-cls}-active {
-            position: relative;
-        }
-
-        & > p {
-            max-width: 120px;
-            margin-left: 3px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-    }
-
-    &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border-color: $primary-default;
-        background-color: $primary-default;
-        color: $font-color-white;
-    }
-
-    &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border-color: $warning-default;
-        background-color: $warning-default;
-        color: $font-color-white;
-    }
-
-    &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border-color: $error-default;
-        background-color: $error-default;
-        color: $font-color-white;
-    }
-
-    &-one-option {
-        border-radius: 4px !important;
-    }
 }
