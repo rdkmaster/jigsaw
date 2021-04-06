@@ -11,6 +11,8 @@ import { BreadcrumbHintDemoComponent } from "./hints/demo.component";
 import { BreadcrumbHintDemoModule } from "./hints/demo.module"
 import { BreadcrumbFoldDemoComponent } from "./fold/demo.component";
 import { BreadcrumbFoldDemoModule } from "./fold/demo.module"
+import { BreadcrumbModeDemoComponent } from './mode/demo.component';
+import { BreadcrumbModeDemoModule } from './mode/demo.module';
 
 export const routerConfig = [
     {
@@ -35,6 +37,9 @@ export const routerConfig = [
                 path: 'buy/:id', component: BreadcrumbRouterBuy
             }
         ]
+    },
+    {
+        path: 'theme', component: BreadcrumbModeDemoComponent
     }
 ];
 
@@ -44,7 +49,8 @@ export const routerConfig = [
         BreadcrumbBasicDemoModule,
         BreadcrumbHintDemoModule,
         BreadcrumbFoldDemoModule,
-        BreadcrumbRouterDemoModule
+        BreadcrumbRouterDemoModule,
+        BreadcrumbModeDemoModule
     ]
 })
 export class BreadcrumbDemoModule {

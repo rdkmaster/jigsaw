@@ -215,8 +215,10 @@ $bg-body: $gray-1;
 $bg-component: $gray-2;
 $bg-container: $gray-2;
 $bg-disabled: $gray-3;
+$bg-disabled-deep: $gray-6;
 $bg-header: $gray-4;
 $bg-gray: $gray-3;
+$bg-body-dark: hsl(229, 27%, 8%);
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -236,6 +238,7 @@ $font-color-heading: $gray-10;
 $font-color-heading-bold: $gray-9;
 $font-color-tag: $gray-8;
 $font-color-white: hsl(0, 0%, 100%);
+$font-color-white-dark: $gray-6;
 
 /* border 边框 */
 $border-color-default: $gray-6;
@@ -261,286 +264,26 @@ $box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 0.15);
 $box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 0.12);
 
 /* ******************************************************** */
-// 皮肤结构参数，后期分文件
-/* line-width */
-$line-width-base: 1px;
-$line-width-med: 2px;
-$line-width-lg: 4px;
+// 色阶生成工具
+$color-base: hsl(233, 71%, 60%);
+$color-light-1: hsl(227, 100%, 95%);
+$color-light-2: hsl(229, 100%, 90%);
+$color-light-3: hsl(230, 89%, 83%);
+$color-light-4: hsl(231, 80%, 75%);
+$color-light-5: hsl(232, 76%, 68%);
+$color-light-6: hsl(233, 71%, 60%);
+$color-light-7: hsl(234, 54%, 49%);
+$color-light-8: hsl(235, 61%, 39%);
+$color-light-9: hsl(236, 70%, 30%);
+$color-light-10: hsl(237, 79%, 21%);
 
-/* border-radius
-    $border-radius-base => tab,button,button bar,input,notification,card,alert
-    $border-radius-sm => checkbox,colorpick,pagination,timepicker,tag,datepicker
-    $border-radius-lg => switch,badge
-*/
-$border-radius-base: 3px;
-$border-radius-sm: $border-radius-base - 1px;
-$border-radius-lg: 6px;
-
-/* height */
-$height-base: 32px;
-$height-sm: 24px;
-$height-med: 28px;
-$height-lg: 36px;
-$height-huge: 40px;
-
-/* font size */
-$font-size-base: 12px;
-$font-size-sm: $font-size-base - 2px;
-$font-size-lg: $font-size-base + 2px;
-
-$font-title-lg: 16px;
-$font-title-med: 14px;
-$font-title-sm: 12px;
-
-/* icon size */
-$icon-size-lg: 48px;
-$icon-size-med: 20px;
-$icon-size-sm: 16px;
-
-/* z-index list */
-// 地面部分分成4层：null,1,2,3
-$zindex-level-1: 1;
-$zindex-level-2: 2;
-$zindex-level-3: 3;
-// 空中部分采用后来居上的策略，所以高度设成1000
-$zindex-popover-level-0: 1000;
-$zindex-popover-level-1: 1001;
-$zindex-popover-level-2: 1002;
-// ui设计器box部分
-$zindex-ui-level-0: 100;
-$zindex-ui-level-1: 101;
-$zindex-ui-level-2: 102;
-$zindex-ui-level-3: 103;
-
-/* ******************************************************** */
-// Color
-$primary-color: #41addc;
-$info-color: #41addc;
-$success-color: #87d068;
-$error-color: #ec6d6d;
-$highlight-color: #ec6d6d;
-$warning-color: #e78f4e;
-$normal-color: #dcdcdc;
-$default-color: #fff;
-
-// Palette
-$primary-1: mix(#fff, $primary-color, 90%);
-$primary-2: mix(#fff, $primary-color, 80%);
-$primary-3: mix(#fff, $primary-color, 60%);
-$primary-4: mix(#fff, $primary-color, 40%);
-$primary-5: mix(#fff, $primary-color, 20%);
-$primary-6: $primary-color;
-$primary-7: mix(#000, $primary-color, 10%);
-$primary-8: mix(#000, $primary-color, 20%);
-$primary-9: mix(#000, $primary-color, 30%);
-$primary-10: mix(#000, $primary-color, 40%);
-
-// ------ Base & Require ------
-
-$font-family: "Microsoft YaHei", Arial;
-$code-family: Consolas, Menlo, Courier, monospace;
-$heading-color: #333;
-$heading-color-dark: #222;
-$text-color: #666;
-$text-color-secondary: #999;
-$text-color-dark: #444;
-$text-color-secondary-dark: #777;
-$text-color-of-bg: #fff;
-
-$body-background: #fff;
-$component-background: #fff;
-
-$line-height-base: 1.5;
-
-// Border color
-$border-color-base: #dcdcdc;
-$border-color-split: #e9e9e9;
-$border-width-base: 1px;
-$border-style-base: solid;
-
-// Background color
-$background-color-base: #f7f7f7;
-$background-color-dark: mix(#000, $background-color-base, 80%);
-
-// Shadow
-$shadow-color: rgba(#000, 0.2);
-$shadow-1-down: 0 1px 6px $shadow-color;
-$shadow-1-up: 0 -1px 6px $shadow-color;
-$shadow-1-left: -1px 0 6px $shadow-color;
-$shadow-1-right: 1px 0 6px $shadow-color;
-$shadow-2: 0 2px 8px $shadow-color;
-$box-shadow-base: $shadow-1-down;
-$box-focus-shadow: 0 0 0 2px fade-out($primary-color, 0.8);
-
-// Disabled
-$disabled-color: rgba(#000, 0.25);
-$disabled-color-ie11: #bfbfbf; // 兼容IE11
-$disabled-bg: $background-color-base;
-$disabled-bg-dark: #f4f4f4; // switch组件disabled bg
-
-// The background colors for active and hover states for things like
-// list items or table cells.
-$item-hover-bg: $primary-1;
-$item-active-bg: $primary-2;
-
-// Buttons
-$btn-box-shadow: none;
-$btn-font-weight: 500;
-
-// Scroll bar
-$scroll-field-bg: $border-color-base;
-$scroll-bar-bg: fade-out(#008fd4, 0.7);
-$scroll-bar-active-bg: fade-out(#008fd4, 0.5);
-
-// Prefix
-$jigsaw-prefix: jigsaw;
-
-// LINK
-$link-color: #008fd4;
-$link-hover-color: mix(#fff, $link-color, 20%);
-$link-active-color: mix(#000, $link-color, 5%);
-$link-hover-decoration: none;
-
-// Animation
-$ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
-$ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-$ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
-$ease-out-back: cubic-bezier(0.12, 0.4, 0.29, 1.46);
-$ease-in-back: cubic-bezier(0.71, -0.46, 0.88, 0.6);
-$ease-in-out-back: cubic-bezier(0.71, -0.46, 0.29, 1.46);
-$ease-out-circ: cubic-bezier(0.08, 0.82, 0.17, 1);
-$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.34);
-$ease-in-out-circ: cubic-bezier(0.78, 0.14, 0.15, 0.86);
-$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
-$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
-
-// Animation duration
-$animation-duration-slow: 0.3s; // Modal
-$animation-duration-base: 0.2s;
-$animation-duration-fast: 0.1s; // Tooltip
-
-// Outline
-$outline-blur-size: 0;
-$outline-width: 2px;
-$outline-color: $primary-color;
-
-// Media queries breakpoints
-// Extra small screen / phone
-$screen-xs: 480px;
-$screen-xs-min: $screen-xs;
-$screen-xs-max: ($screen-xs-min - 1);
-
-// Small screen / tablet
-$screen-sm: 768px;
-$screen-sm-min: $screen-sm;
-$screen-sm-max: ($screen-sm-min - 1);
-
-// Medium screen / desktop
-$screen-md: 992px;
-$screen-md-min: $screen-md;
-$screen-md-max: ($screen-md-min - 1);
-
-// Large screen / wide desktop
-$screen-lg: 1200px;
-$screen-lg-min: $screen-lg;
-$screen-lg-max: ($screen-lg-min - 1);
-
-// Layout and Grid system
-$grid-columns: 24;
-$grid-gutter-width: 0;
-
-// Form
-// ---
-$label-required-color: $highlight-color;
-$label-color: $text-color;
-$form-item-margin-bottom: 24px;
-
-// perfect scrollbar
-// see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121
-.ps {
-    position: relative;
-}
-
-@mixin clearfix() {
-    *zoom: 1;
-    &:after {
-        clear: both;
-        content: "";
-        display: block;
-    }
-}
-
-@mixin inline-block() {
-    display: inline-block;
-    *zoom: 1;
-    *display: inline;
-    vertical-align: middle;
-}
-
-@mixin opacity($opacity) {
-    // IE8 filter
-    $opacity-ie: ($opacity * 100);
-
-    opacity: $opacity;
-    filter: alpha(opacity=$opacity-ie);
-}
-
-@mixin line-ellipsis($width) {
-    width: $width;
-    @include line-ellipsis-style();
-}
-
-@mixin line-ellipsis-style() {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-@mixin word-break() {
-    word-wrap: break-word;
-    word-break: break-all;
-}
-
-@mixin prefixer($property, $value) {
-    -webkit-#{$property}: $value;
-    -moz-#{$property}: $value;
-    -ms-#{$property}: $value;
-    -o-#{$property}: $value;
-    #{$property}: $value;
-}
-
-@mixin compatible($property, $value, $compatibleValue) {
-    #{$property}: $value;
-    @include compatibleIE($property, $compatibleValue);
-}
-
-@mixin compatibleIE($property, $value) {
-    @include ie11Hack {
-        #{$property}: $value;
-    }
-}
-
-@mixin ie11Hack() {
-    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-        @content;
-    }
-}
-
-@mixin keyframes($name) {
-    @-webkit-keyframes #{$name} {
-        @content;
-    }
-    @-moz-keyframes #{$name} {
-        @content;
-    }
-    @-o-keyframes #{$name} {
-        @content;
-    }
-    @-ms-keyframes #{$name} {
-        @content;
-    }
-    @keyframes #{$name} {
-        @content;
-    }
-}
+$color-dark-1: hsl(237, 17%, 20%);
+$color-dark-2: hsl(238, 25%, 30%);
+$color-dark-3: hsl(236, 33%, 38%);
+$color-dark-4: hsl(235, 39%, 45%);
+$color-dark-5: hsl(234, 49%, 53%);
+$color-dark-6: hsl(233, 71%, 60%);
+$color-dark-7: hsl(232, 76%, 68%);
+$color-dark-8: hsl(231, 80%, 75%);
+$color-dark-9: hsl(230, 89%, 83%);
+$color-dark-10: hsl(229, 100%, 90%);

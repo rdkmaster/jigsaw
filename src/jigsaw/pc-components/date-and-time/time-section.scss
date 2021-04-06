@@ -50,17 +50,17 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
                 width: 40px;
                 height: 12px;
                 margin-right: -1px;
-                border: 1px solid $border-color-base;
+                border: 1px solid $border-color-default;
                 position: relative;
                 cursor: pointer;
 
                 &:hover {
-                    background: $primary-2;
+                    background: $brand-light;
                 }
 
                 &.#{$time-section-picker-prefix-cls}-selected {
-                    border: 1px solid $primary-color;
-                    background: $primary-2;
+                    border: 1px solid $primary-default;
+                    background: $brand-light;
                     z-index: $zindex-level-1;
                 }
             }

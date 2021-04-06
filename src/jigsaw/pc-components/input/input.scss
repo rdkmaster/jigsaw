@@ -62,16 +62,19 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
                 transition,
                     (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
         );
-        border: 1px solid $brand-default;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $brand-default;
     }
 
     &.#{$input-prefix-cls}-disabled {
         .#{$input-prefix-cls}-wrapper {
             background-color: $bg-disabled;
             cursor: not-allowed;
+            border-color: $border-color-disabled;
 
             input {
-                @include compatible(color, $disabled-color, $disabled-color-ie11);
+                color: $font-color-disabled;
                 cursor: not-allowed;
             }
         }

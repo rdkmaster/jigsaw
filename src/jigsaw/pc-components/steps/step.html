@@ -1,0 +1,35 @@
+<div *ngFor="let item of data;index as index" class="jigsaw-steps-item"
+    [ngClass]="{
+                    'jigsaw-steps-item-waiting': current < index,
+                    'jigsaw-steps-item-progressing': current === index,
+                    'jigsaw-steps-item-finished': current > index,
+                    'jigsaw-steps-item-normal': item?.status === 'normal',
+                    'jigsaw-steps-item-error': item?.status === 'error',
+                    'jigsaw-steps-item-warning': item?.status === 'warning'
+                }">
+    <div class="jigsaw-steps-title-cntr">
+        <span class="jigsaw-steps-icon">
+            <i
+                class="iconfont"
+                *ngIf="current > index"
+                [ngClass]="{'iconfont-ea37':item?.status === 'normal',
+                        'iconfont-e192':item?.status === 'error',
+                        'iconfont-e76c':item?.status === 'warning'
+                    }"
+            ></i>
+            <span class="jigsaw-steps-icon-number" *ngIf="current <= index"
+                >{{index + 1}}</span
+            >
+        </span>
+        <span class="jigsaw-steps-title" title="{{item?.title}}">{{item?.title}}</span>
+        <span class="jigsaw-steps-bar" *ngIf="direction === 'horizontal'"></span>
+    </div>
+    <div
+        class="jigsaw-steps-sub-title"
+        trustedHtml="{{item?.subTitle}}"
+        [trustedHtmlContext]="item?.context"
+    ></div>
+    <div class="jigsaw-steps-bar" *ngIf="direction === 'vertical'">
+        <span></span>
+    </div>
+</div>

@@ -5,7 +5,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
 .#{$cascade-prefix-cls} {
     display: inline-block;
-    border: 1px solid $border-color-base;
+    border: 1px solid $border-color-default;
     border-radius: $border-radius-base;
 
     .#{$tile-prefix-cls} {
@@ -23,13 +23,13 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
             bottom: 8px;
         }
         cursor: pointer;
-        color: $primary-color;
+        color: $brand-default;
         font-weight: 700;
         &:hover {
-            color: $primary-5;
+            color: $brand-hover;
         }
         &:active {
-            color: $primary-7;
+            color: $brand-active;
         }
     }
 

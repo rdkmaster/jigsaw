@@ -70,10 +70,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     };
 
     public writeValue(value: any): void {
-        if (CommonUtils.isUndefined(value)) {
-            return;
-        }
-        this._value = value.toString();
+        this._value = CommonUtils.isDefined(value) ? value.toString() : '';
         this._cdr.markForCheck();
     }
 

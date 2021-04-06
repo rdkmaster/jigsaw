@@ -38,7 +38,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $item-hover-bg;
+                    background: $brand-light;
                 }
 
                 .#{$nav-menu-prefix-cls}-item-arrow {
@@ -74,12 +74,12 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background-color: $bg-component;
+                background-color: $bg-body;
                 color: $brand-default;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $bg-component;
+                background-color: $bg-body;
                 color: $brand-default;
             }
         }
@@ -92,7 +92,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected {
-                background-color: $default-color !important;
+                background-color: $bg-body !important;
             }
         }
     }
@@ -104,7 +104,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         .#{$nav-menu-prefix-cls}-item {
             width: 100%;
             min-width: 40px;
-            color: $text-color;
+            color: $font-color-default;
 
             .#{$nav-menu-prefix-cls}-item-top {
                 position: relative;
@@ -157,11 +157,11 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background: $bg-component;
+                background: $bg-body;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background: $bg-component;
+                background: $bg-body;
             }
         }
     }
@@ -266,7 +266,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $bg-component;
+                background-color: $bg-body;
             }
         }
     }

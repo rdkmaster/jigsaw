@@ -17,14 +17,14 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     line-height: 20px;
     border-radius: 20px;
     border: 1px solid transparent;
-    background-color: $disabled-color;
+    background-color: $bg-disabled-deep;
     cursor: pointer;
     transition: all $animation-duration-slow;
     -ms-transition: none;
     user-select: none;
 
     .#{$switch-prefix}-inner {
-        color: $default-color;
+        color: $bg-body;
         font-size: $font-size-base;
         margin-left: 24px;
         margin-right: 6px;
@@ -39,7 +39,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         top: 1px;
 
         border-radius: 18px;
-        background-color: $default-color;
+        background-color: $bg-body;
         content: " ";
         cursor: pointer;
         transition: all $animation-duration-slow, width $animation-duration-slow;
@@ -50,7 +50,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     }
 
     &:focus {
-        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        box-shadow: 0 0 0 2px $brand-active-light;
         outline: 0;
     }
 
@@ -78,7 +78,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 
     &-checked-disabled {
         cursor: not-allowed;
-        opacity: .3;
+        opacity: 0.3;
 
         &:after {
             cursor: not-allowed;
@@ -91,12 +91,12 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         border-color: $border-color-disabled;
 
         &:after {
-            background-color: $disabled-color;
+            background-color: $bg-disabled-deep;
             cursor: not-allowed;
         }
 
         .#{$switch-prefix}-inner {
-            @include compatible(color, $disabled-color, $disabled-color-ie11);
+            color: $font-color-disabled;
         }
     }
 
