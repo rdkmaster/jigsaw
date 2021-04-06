@@ -4,25 +4,25 @@ import { Component } from "@angular/core";
     templateUrl: "./demo.component.html"
 })
 export class RadioLiteTypeDemoComponent {
-    public selectedItem;
+    public selectedItems;
     cities = [
         "未选中1",
         "未选中2",
         "未选中3",
-        { labelField: "未选中禁用", disabled: true },
-        { labelField: "选中禁用", disabled: true }
+        { label: "未选中禁用", disabled: true },
+        { label: "选中禁用", disabled: false }
     ];
 
     constructor() {
-        this.selectedItem = "选中禁用";
+        this.selectedItems = "选中禁用";
     }
 
-    clearSelectedItem() {
-        this.selectedItem = null;
+    clearSelectedItems() {
+        this.selectedItems = null;
     }
-    
-    reset(){
-        this.selectedItem = "选中禁用";
+
+    selectDisabledItem() {
+        this.selectedItems = { label: "选中禁用" };
     }
 
     // ====================================================================

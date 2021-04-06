@@ -6,8 +6,8 @@
 
 <jigsaw-header>存在各种状态的单选</jigsaw-header>
 
-<jigsaw-radios-lite [(value)]="selectedItem" [data]="cities">
+<jigsaw-radios-lite [(value)]="selectedItems" [data]="cities" trackItemBy="label">
 </jigsaw-radios-lite>
-<p class="message">{{ "当前选中的是: " + selectedItem }}</p>
-<a (click)="clearSelectedItem()">取消单选</a>
-<div><a (click)="reset()">重置</a></div>
+<p class="message">{{ "当前选中的是: " + selectedItems }}</p>
+<a (click)="clearSelectedItems()">取消单选</a>
+<div><a (click)="selectDisabledItem()">选中禁用的条目</a></div>
