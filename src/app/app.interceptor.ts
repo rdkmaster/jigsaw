@@ -15,6 +15,7 @@ import {CommonUtils} from "../jigsaw/common/core/utils/common-utils";
 import {RawTableData, TableData} from "../jigsaw/common/core/data/table-data";
 import {PagingInfo} from "../jigsaw/common/core/data/component-data";
 import {InternalUtils} from "../jigsaw/common/core/utils/internal-utils";
+import {until} from "selenium-webdriver";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -55,13 +56,18 @@ export class AjaxInterceptor implements HttpInterceptor {
      * @param req
      */
     dealServerSideUploadRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        console.group('All additional fields within the current upload request:');
+        const entries = req.body.entries();
+        let entry = entries.next();
+        while (!entry.done) {
+            console.log(entry.value[0], ':', entry.value[1]);
+            entry = entries.next();
+        }
+        console.groupEnd();
+
         const filename = decodeURIComponent(req.body.get('filename'));
         const url = `upload_files/${uuidv4()}/${filename}`;
         const file = req.body.get('file');
-        console.group('字段名')
-        console.log(req.body.get('file'));
-        console.log(req.body.get('filename'));
-        console.groupEnd();
         if (!file) {
             return new Observable<HttpEvent<any>>(subscriber => {
                 // simulate network latency

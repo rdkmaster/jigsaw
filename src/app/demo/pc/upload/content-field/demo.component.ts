@@ -24,8 +24,8 @@ export class UploadContentFieldDemoComponent {
         this.additionalFields.push({field: 'new-field', value: ''});
     }
 
-    public onComplete(data: UploadFileInfo | UploadFileInfo[]){
-        console.log(data)
+    public onComplete(data: UploadFileInfo | UploadFileInfo[]) {
+        console.log(data);
     }
 
     // ====================================================================

@@ -26,8 +26,9 @@
         <br />
     </div>
 
-    <jigsaw-button style="margin-bottom: 16px" jigsaw-upload [uploadAdditionalFields]="readAdditionalFields"
-        (uploadStart)="onComplete($event)">
+    <jigsaw-button jigsaw-upload [uploadAdditionalFields]="readAdditionalFields" [uploadContentField]="contentField.value"
+                   [uploadFileNameField]="fileNameField.value" [uploadFileVerify]="fileVerify.value"
+                   (uploadStart)="onComplete($event)" style="margin-bottom: 16px">
         上传
     </jigsaw-button>
     <br />
