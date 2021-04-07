@@ -3,32 +3,50 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-header>双向可伸缩</jigsaw-header>
-<jigsaw-textarea
-    width="400px"
-    height="120px"
-    [(value)]="textareaValue"
-    [resize]="'both'"
-    placeholder="这是双向可伸缩的文本输入框"
->
-</jigsaw-textarea>
+<div class="container">
+    <jigsaw-header>不可伸缩（默认）</jigsaw-header>
+    <jigsaw-textarea [resize]="'none'"
+                     width="300px" height="80px"
+                     placeholder="这是不可伸缩的文本输入框（固定尺寸）">
+    </jigsaw-textarea>
+    <jigsaw-textarea [resize]="'none'"
+                     width="calc(60% - 310px)" height="100%"
+                     placeholder="这是不可伸缩的文本输入框（相对尺寸）">
+    </jigsaw-textarea>
+</div>
 
+<div class="container">
 <jigsaw-header>纵向可伸缩</jigsaw-header>
-<jigsaw-textarea
-    width="400px"
-    height="120px"
-    [(value)]="textareaValue2"
-    [resize]="'vertical'"
-    placeholder="这是纵向可伸缩的文本输入框"
->
-</jigsaw-textarea>
+    <jigsaw-textarea [resize]="'vertical'"
+                     width="300px" height="80px"
+                     placeholder="这是纵向可伸缩的文本输入框（固定尺寸）">
+    </jigsaw-textarea>
+    <jigsaw-textarea [resize]="'vertical'"
+                     width="calc(60% - 310px)" height="100%"
+                     placeholder="这是纵向可伸缩的文本输入框（相对尺寸）">
+    </jigsaw-textarea>
+</div>
 
+<div class="container">
 <jigsaw-header>横向可伸缩</jigsaw-header>
-<jigsaw-textarea
-    width="400px"
-    height="120px"
-    [(value)]="textareaValue3"
-    [resize]="'horizontal'"
-    placeholder="这是横向可伸缩的文本输入框"
->
-</jigsaw-textarea>
+    <jigsaw-textarea [resize]="'horizontal'"
+                     width="300px" height="80px"
+                     placeholder="这是横向可伸缩的文本输入框（固定尺寸）">
+    </jigsaw-textarea>
+    <jigsaw-textarea [resize]="'horizontal'"
+                     width="calc(60% - 310px)" height="100%"
+                     placeholder="这是横向可伸缩的文本输入框（相对尺寸）">
+    </jigsaw-textarea>
+</div>
+
+<div class="container">
+<jigsaw-header>双向可伸缩</jigsaw-header>
+    <jigsaw-textarea [resize]="'both'"
+                     width="300px" height="80px"
+                     placeholder="这是双向可伸缩的文本输入框（固定尺寸）">
+    </jigsaw-textarea>
+    <jigsaw-textarea [resize]="'both'"
+                     width="calc(60% - 310px)" height="100%"
+                     placeholder="这是双向可伸缩的文本输入框（相对尺寸）">
+    </jigsaw-textarea>
+</div>

@@ -14,16 +14,11 @@
     >
     </textarea>
     <div class="jigsaw-textarea-icon-end">
-        <span
-            *ngIf="clearable && !disabled && !!value"
-            (click)="_$clearValue()"
-            class="jigsaw-textarea-clear-bar"
-            >&times;</span
-        >
+        <span *ngIf="clearable && !disabled && !!value" (click)="_$clearValue()" class="jigsaw-textarea-clear-bar">
+            &times;
+        </span>
     </div>
     <div class="jigsaw-textarea-statistics" *ngIf="maxLength">
-        <span class="jigsaw-textarea-content"
-            >{{_$currentLength}}/{{maxLength}}</span
-        >
+        <span class="jigsaw-textarea-content">{{_$currentLength}}/{{maxLength}}</span>
     </div>
 </div>
