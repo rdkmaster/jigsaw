@@ -13,7 +13,7 @@ import {TableData, PageableTreeTableData} from "../../common/core/data/table-dat
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
-import {JigsawSelectModule} from "../select/select";
+import {JigsawSelectModule} from "../select/index";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";

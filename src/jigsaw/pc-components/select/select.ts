@@ -5,7 +5,6 @@ import {
     EventEmitter,
     forwardRef,
     Input,
-    NgModule,
     NgZone,
     OnInit,
     Output,
@@ -15,8 +14,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {JigsawComboSelectModule} from "../combo-select/index";
-import {JigsawListLite, JigsawListLiteModule} from "../list-and-tile/list-lite";
+import {JigsawListLite} from "../list-and-tile/list-lite";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
@@ -351,12 +349,4 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
             this.writeValue(this.value, false);
         }
     }
-}
-
-@NgModule({
-    imports: [JigsawComboSelectModule, JigsawListLiteModule],
-    declarations: [JigsawSelect],
-    exports: [JigsawSelect]
-})
-export class JigsawSelectModule {
 }

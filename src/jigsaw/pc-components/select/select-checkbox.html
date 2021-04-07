@@ -1,0 +1,49 @@
+<jigsaw-combo-select
+    [(value)]="_$selectedItems"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [clearable]="clearable"
+    openTrigger="click"
+    (valueChange)="_$checkSelectAll()"
+>
+    <ng-template>
+        <jigsaw-list
+            class="jigsaw-select-checkbox-list"
+            [data]="data"
+            [labelField]="labelField"
+            [trackItemBy]="trackItemBy"
+            [(selectedItems)]="_$selectedItems"
+            multipleSelect="true"
+            [ngClass]="{'jigsaw-select-checkbox-list-filter': _$listFilter}"
+        >
+            <div class="jigsaw-select-checkbox-selectAll">
+                <jigsaw-checkbox [(checked)]="_$selectAllChecked" *ngIf="!_$listFilter" (checkedChange)="_$selectAll()"
+                    >全选</jigsaw-checkbox
+                >
+                <div class="jigsaw-select-checkbox-show-selected" *ngIf="!_$listFilter" (click)="_$listShowSelected()">
+                    <span>查看已选</span>
+                </div>
+                <div class="jigsaw-select-checkbox-show-all" *ngIf="_$listFilter" (click)="_$listShowAll()">
+                    <i class="iconfont iconfont-e9ac"></i>
+                    <span>返回</span>
+                </div>
+            </div>
+            <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled">
+                <jigsaw-checkbox [(checked)]="listItem.selected" [disabled]="item.disabled"></jigsaw-checkbox>
+                <span>{{item.label}}</span>
+            </jigsaw-list-option>
+        </jigsaw-list>
+    </ng-template>
+    <div
+        *ngIf="overall && _$selectedItems?.length !== 0 && _$selectedItems?.length === data?.length"
+        class="jigsaw-select-checkbox-overall"
+    >
+        全部
+    </div>
+    <div
+        *ngIf="overall && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== data?.length"
+        class="jigsaw-select-checkbox-overall"
+    >
+        {{"已选择" + _$selectedItems?.length + "项"}}
+    </div>
+</jigsaw-combo-select>

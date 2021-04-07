@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>带checkbox的下拉选择</jigsaw-header>
+<jigsaw-select-checkbox [data]="dataList" placeholder="请选择"></jigsaw-select-checkbox>
+<jigsaw-header>不带禁用选项的显示总计（全选时显示全选）</jigsaw-header>
+<jigsaw-select-checkbox [data]="dataListWithoutDisabled" overall="true" placeholder="请选择"></jigsaw-select-checkbox>
+<jigsaw-header>带禁用选项的显示总计</jigsaw-header>
+<jigsaw-select-checkbox [data]="dataList" overall="true" placeholder="请选择"></jigsaw-select-checkbox>
+<jigsaw-header>禁用状态</jigsaw-header>
+<jigsaw-select-checkbox [data]="dataList" overall="true" placeholder="请选择" disabled="true"></jigsaw-select-checkbox>
+<jigsaw-header>可清空</jigsaw-header>
+<jigsaw-select-checkbox [data]="dataList" overall="true" placeholder="请选择" clearable="true"></jigsaw-select-checkbox>
