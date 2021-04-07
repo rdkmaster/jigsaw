@@ -63,10 +63,9 @@ export class CommonUtils {
                         return false;
                     }
                 } else {
-                    return item1 === item2;
+                    return item1 == item2;
                 }
             }
-            return true;
         } else {
             return item1 == item2;
         }

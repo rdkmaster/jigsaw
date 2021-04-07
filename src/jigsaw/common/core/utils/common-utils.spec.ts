@@ -51,6 +51,16 @@ describe('Unit Test for common-utils', () => {
         expect(r).toEqual(true);
         r = CommonUtils.compareWithKeyProperty(2, {a: 1}, ['a']);
         expect(r).toEqual(false);
+        r = CommonUtils.compareWithKeyProperty(2, 2, ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareWithKeyProperty(2, '2', ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareWithKeyProperty(true, true, ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareWithKeyProperty('true', true, ['prop']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareWithKeyProperty('abc', 'efg', ['prop']);
+        expect(r).toEqual(false);
 
         done();
     });
