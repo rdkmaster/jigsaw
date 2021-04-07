@@ -25,7 +25,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     user-select: none;
 
     .#{$switch-prefix}-inner {
-        color: $bg-body;
+        color: $font-color-default;
         font-size: $font-size-lg;
         margin-left: calc(var(--switch-height) + 4px);
         margin-right: calc(var(--switch-height) / 4);
@@ -64,6 +64,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         background-color: $primary-default;
 
         .#{$switch-prefix}-inner {
+            color: $font-color-white;
             margin-left: calc(var(--switch-height) / 4);
             margin-right: calc(var(--switch-height) + 4px);
         }
