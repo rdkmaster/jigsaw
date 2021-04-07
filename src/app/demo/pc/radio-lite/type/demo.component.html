@@ -8,6 +8,6 @@
 
 <jigsaw-radios-lite [(value)]="selectedItem" [data]="cities" trackItemBy="label">
 </jigsaw-radios-lite>
-<p class="message">{{ "当前选中的是: " + selectedItem }}</p>
+<p class="message">{{ "当前选中的是: " + (selectedItem?.label || selectedItem) }}</p>
 <a (click)="clearSelectedItem()">取消单选</a>
 <div><a (click)="selectDisabledItem()">选中禁用的条目</a></div>

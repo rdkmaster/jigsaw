@@ -58,7 +58,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
     /**
      * 选中的条目
-     *
+     * @internal
      * @NoMarkForCheckRequired
      */
     @Input()
