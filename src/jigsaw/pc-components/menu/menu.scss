@@ -31,7 +31,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             &.#{$list-option-prefix-cls}-disabled {
                 background: #102331;
 
-                .menu-list-title {
+                .#{$menu-prefix-cls}-list-title {
                     float: left;
                     line-height: 32px;
                     color: #666666;
@@ -367,5 +367,3 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
         }
     }
 }
-
-
