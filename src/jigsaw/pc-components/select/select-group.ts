@@ -30,7 +30,7 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
  *
  */
 @Component({
-    selector: "jigsaw-select, j-select",
+    selector: "jigsaw-select-group, j-select-group",
     templateUrl: "select.html",
     host: {
         "[class.jigsaw-select-host]": "true",
@@ -40,10 +40,10 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'
     },
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelectGroup), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+export class JigsawSelectGroup extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
     constructor(
         protected _zone: NgZone,
         private _changeDetector: ChangeDetectorRef,

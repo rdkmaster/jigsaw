@@ -25,6 +25,8 @@ import {SelectClearableDemoComponent} from "./clearable/demo.component";
 import {SelectClearableDemoModule} from "./clearable/demo.module";
 import { SelectCheckboxDemoComponent } from './select-checkbox/demo.component';
 import { SelectCheckboxDemoModule } from './select-checkbox/demo.module';
+import { MultipleSelectDemoComponent } from './multiple-select/demo.component';
+import { MultipleSelectDemoModule } from './multiple-select/demo.module';
 
 export const routerConfig = [
     {
@@ -63,6 +65,9 @@ export const routerConfig = [
     {
         path: 'select-checkbox', component: SelectCheckboxDemoComponent
     },
+    {
+        path: 'multiple-select', component: MultipleSelectDemoComponent
+    }
 ];
 
 @NgModule({
@@ -79,7 +84,8 @@ export const routerConfig = [
         SelectSearchableDemoModule,
         SelectSizeDemoModule,
         SelectClearableDemoModule,
-        SelectCheckboxDemoModule
+        SelectCheckboxDemoModule,
+        MultipleSelectDemoModule
     ]
 })
 export class SelectDemoModule {
