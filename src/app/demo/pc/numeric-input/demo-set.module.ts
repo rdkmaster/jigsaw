@@ -10,8 +10,8 @@ import {NumericInputStepDemoComponent} from "./step/demo.component";
 import {NumericInputStepDemoModule} from "./step/demo.module";
 import {NumericInputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
 import {NumericInputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
-import { NumericInputShowOptionDemoModule } from './showOption/demo.module';
-import { NumericInputShowOptionDemoComponent } from './showOption/demo.component';
+import { NumericInputShowOptionDemoModule } from './show-option/demo.module';
+import { NumericInputShowOptionDemoComponent } from './show-option/demo.component';
 
 export const routerConfig = [
     {
@@ -30,7 +30,7 @@ export const routerConfig = [
         path: 'prefix-suffix', component: NumericInputPrefixSuffixDemoComponent
     },
     {
-        path: 'showOption', component: NumericInputShowOptionDemoComponent
+        path: 'show-option', component: NumericInputShowOptionDemoComponent
     },
 ];
 
