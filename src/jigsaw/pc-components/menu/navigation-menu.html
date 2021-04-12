@@ -17,7 +17,7 @@
                  [ngStyle]="{'display': collapsed ? 'none' : 'block'}">
                 <div *ngFor="let subMenu of menuItem?.nodes" class="jigsaw-nav-menu-sub-item"
                      [ngClass]="{'jigsaw-nav-menu-sub-item-selected': subMenu.selected}" (click)="_$subMenuSelect(subMenu)">
-                    <i *ngIf="subMenu.icon" [ngClass]="subMenu.icon"></i>
+                    <i [ngClass]="subMenu.icon"></i>
                     <span>{{subMenu.label}}</span>
                 </div>
             </div>
