@@ -29,6 +29,9 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
                 padding-left: 8px;
                 pointer-events: none;
             }
+        }
+
+        &.#{$select-prefix-cls}-show-overall {
             .jigsaw-combo-select {
                 .jigsaw-combo-select-selection {
                     .jigsaw-combo-select-selection-rendered {
