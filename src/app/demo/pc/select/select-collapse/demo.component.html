@@ -1,0 +1,45 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>折叠下拉（单选）</jigsaw-header>
+<jigsaw-select-collapse [data]="dataListWithoutDisabled" placeholder="请选择" width="160px"></jigsaw-select-collapse>
+<jigsaw-select-collapse [data]="dataList" placeholder="请选择" width="160px"></jigsaw-select-collapse>
+
+<jigsaw-header>折叠下拉（多选）</jigsaw-header>
+<jigsaw-select-collapse
+    [data]="dataListWithoutDisabled"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="160px"
+></jigsaw-select-collapse>
+<jigsaw-select-collapse [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px"></jigsaw-select-collapse>
+
+<jigsaw-header>折叠下拉（多选 & 展开结果）</jigsaw-header>
+<jigsaw-select-collapse
+    [data]="dataListWithoutDisabled"
+    [multipleSelect]="true"
+    [overall]="false"
+    placeholder="请选择"
+    width="160px"
+></jigsaw-select-collapse>
+<jigsaw-select-collapse
+    [data]="dataList"
+    [multipleSelect]="true"
+    [overall]="false"
+    placeholder="请选择"
+    width="160px"
+    maxWidth="100%"
+    minWidth="160px"
+></jigsaw-select-collapse>
+
+<jigsaw-header>折叠下拉（自定义宽度）</jigsaw-header>
+<jigsaw-select-collapse
+    [data]="dataList"
+    [multipleSelect]="true"
+    [overall]="false"
+    placeholder="请选择"
+    width="160px"
+    maxWidth="240px"
+    minWidth="160px"
+></jigsaw-select-collapse>

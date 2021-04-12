@@ -30,8 +30,8 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
  *
  */
 @Component({
-    selector: "jigsaw-select-collapse, j-select-group",
-    templateUrl: "select-group.html",
+    selector: "jigsaw-select-collapse, j-select-collapse",
+    templateUrl: "select-collapse.html",
     host: {
         "[class.jigsaw-select-collapse-host]": "true",
         "[class.jigsaw-select-collapse-single]": "!multipleSelect",

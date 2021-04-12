@@ -23,12 +23,12 @@ import {SelectSizeDemoComponent} from "./size/demo.component";
 import {SelectSizeDemoModule} from "./size/demo.module";
 import {SelectClearableDemoComponent} from "./clearable/demo.component";
 import {SelectClearableDemoModule} from "./clearable/demo.module";
-import { SelectCheckboxDemoComponent } from './select-checkbox/demo.component';
-import { SelectCheckboxDemoModule } from './select-checkbox/demo.module';
 import { MultipleSelectDemoComponent } from './multiple-select/demo.component';
 import { MultipleSelectDemoModule } from './multiple-select/demo.module';
 import { SelectGroupDemoComponent } from './select-group/demo.component';
 import { SelectGroupDemoModule } from './select-group/demo.module';
+import { SelectCollapseDemoComponent } from './select-collapse/demo.component';
+import { SelectCollapseDemoModule } from './select-collapse/demo.module';
 
 export const routerConfig = [
     {
@@ -65,13 +65,13 @@ export const routerConfig = [
         path: 'clearable', component: SelectClearableDemoComponent
     },
     {
-        path: 'select-checkbox', component: SelectCheckboxDemoComponent
-    },
-    {
         path: 'multiple-select', component: MultipleSelectDemoComponent
     },
     {
         path: 'select-group', component: SelectGroupDemoComponent
+    },
+    {
+        path: 'select-collapse', component: SelectCollapseDemoComponent
     }
 ];
 
@@ -89,9 +89,9 @@ export const routerConfig = [
         SelectSearchableDemoModule,
         SelectSizeDemoModule,
         SelectClearableDemoModule,
-        SelectCheckboxDemoModule,
         MultipleSelectDemoModule,
-        SelectGroupDemoModule
+        SelectGroupDemoModule,
+        SelectCollapseDemoModule
     ]
 })
 export class SelectDemoModule {

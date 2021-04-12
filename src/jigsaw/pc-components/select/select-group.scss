@@ -107,6 +107,14 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
                 margin-right: 8px;
             }
         }
+
+        &.jigsaw-list-option-active {
+            .jigsaw-list-option-wrapper {
+                span {
+                    color: $brand-default;
+                }
+            }
+        }
     }
     &.#{$jigsaw-select-group}-list-filter {
         jigsaw-list-option:not(.jigsaw-list-option-active) {

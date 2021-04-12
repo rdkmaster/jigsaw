@@ -1,6 +1,6 @@
 @import "../../common/assets/scss/core/base";
 
-$jigsaw-select-collapse: #{$jigsaw-prefix}-select-group;
+$jigsaw-select-collapse: #{$jigsaw-prefix}-select-collapse;
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 $jigsaw-tag: #{$jigsaw-prefix}-tag;
@@ -94,6 +94,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             }
         }
     }
+
     jigsaw-list-option {
         padding-left: 16px;
         .jigsaw-list-option-wrapper {
@@ -105,6 +106,14 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
 
             jigsaw-checkbox {
                 margin-right: 8px;
+            }
+        }
+
+        &.jigsaw-list-option-active {
+            .jigsaw-list-option-wrapper {
+                span {
+                    color: $brand-default;
+                }
             }
         }
     }
@@ -121,15 +130,10 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             .#{$jigsaw-collapse}-item {
                 .#{$jigsaw-collapse}-header {
                     padding-left: 8px;
-                    pointer-events: none;
-
-                    .#{$jigsaw-collapse}-arrow {
-                        display: none;
-                    }
 
                     .#{$jigsaw-select-collapse}-name {
-                        font-size: $font-title-sm;
-                        color: $font-color-watermark;
+                        font-size: $font-title-med;
+                        color: $font-color-heading;
                     }
                 }
                 .#{$jigsaw-collapse}-content {

@@ -3,10 +3,10 @@ import { JigsawListLiteModule } from "../list-and-tile/list-lite";
 import { NgModule } from "@angular/core";
 import { JigsawSelect } from "./select";
 import { JigsawCheckBoxModule } from "../checkbox";
-import { JigsawSelectCheckbox } from "./select-checkbox";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawSelectGroup } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
+import { JigsawSelectCollapse } from "./select-collapse";
 
 @NgModule({
     imports: [
@@ -16,10 +16,10 @@ import { JigsawCollapseModule } from "../collapse/collapse";
         JigsawCheckBoxModule,
         JigsawCollapseModule
     ],
-    declarations: [JigsawSelect, JigsawSelectCheckbox, JigsawSelectGroup],
-    exports: [JigsawSelect, JigsawSelectCheckbox, JigsawSelectGroup]
+    declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
+    exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse]
 })
 export class JigsawSelectModule {}
 export * from "./select";
-export * from "./select-checkbox";
+export * from "./select-collapse";
 export * from "./select-group";
