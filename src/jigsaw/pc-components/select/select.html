@@ -20,11 +20,11 @@
         <jigsaw-list
             [ngClass]="{'jigsaw-select-list-filter': _$listFilter,
                         'jigsaw-select-multiple-list': multipleSelect,
-                        'jigsaw-select-sigle-list': !multipleSelect}"
+                        'jigsaw-select-single-list': !multipleSelect}"
             [data]="data"
             [labelField]="labelField"
             [trackItemBy]="trackItemBy"
-            [multipleSelect]="multipleSelect"
+            [multipleSelect]="multipleSelect"n
             [optionCount]="optionCount"
             [(selectedItems)]="_$selectedItems"
             (selectedItemsChange)="_$handleSelectChange($event)"

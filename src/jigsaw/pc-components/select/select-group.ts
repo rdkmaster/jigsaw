@@ -31,11 +31,12 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
  */
 @Component({
     selector: "jigsaw-select-group, j-select-group",
-    templateUrl: "select.html",
+    templateUrl: "select-group.html",
     host: {
-        "[class.jigsaw-select-host]": "true",
-        "[class.jigsaw-select-single-select]": "!multipleSelect",
-        "[class.jigsaw-select-multiple-select]": "multipleSelect",
+        "[class.jigsaw-select-group-host]": "true",
+        "[class.jigsaw-select-group-single]": "!multipleSelect",
+        "[class.jigsaw-select-group-multiple]": "multipleSelect",
+        "[class.jigsaw-select-group-show-overall]": "overall",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'
@@ -53,9 +54,7 @@ export class JigsawSelectGroup extends AbstractJigsawComponent implements Contro
         super(_zone);
     }
 
-    protected _width: string = "120px";
-    private _minWidth: string = "120px";
-    private _maxWidth: string = "100%";
+    protected _width: string = "160px";
 
     /**
      * @NoMarkForCheckRequired
@@ -67,16 +66,9 @@ export class JigsawSelectGroup extends AbstractJigsawComponent implements Contro
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.runAfterMicrotasks(() => {
-            this._zone.run(() => {
-                if (this.multipleSelect) {
-                    this.minWidth = CommonUtils.getCssValue(value);
-                    this.maxWidth = CommonUtils.getCssValue(value);
-                }
-            });
-        });
     }
 
+    private _minWidth: string = "160px";
     /**
      * 用于多选时设置最小宽度
      *
@@ -90,6 +82,8 @@ export class JigsawSelectGroup extends AbstractJigsawComponent implements Contro
     public set minWidth(value: string) {
         this._minWidth = CommonUtils.getCssValue(value);
     }
+
+    private _maxWidth: string;
 
     /**
      * 用于多选时设置最大宽度
@@ -128,6 +122,14 @@ export class JigsawSelectGroup extends AbstractJigsawComponent implements Contro
      */
     @Input()
     public labelField: string = "label";
+
+    /**
+     * 设置组名的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public groupName: string = "groupName";
 
     /**
      * 已选选项
@@ -271,6 +273,7 @@ export class JigsawSelectGroup extends AbstractJigsawComponent implements Contro
 
     private _data: ArrayCollection<object>;
     private vaildData: any[];
+    public _$allOptions: any[];
 
     /**
      * 提供选择的数据集合
@@ -284,7 +287,11 @@ export class JigsawSelectGroup extends AbstractJigsawComponent implements Contro
 
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.vaildData = this._data.filter(item => item["disabled"] !== true);
+        this._$allOptions = [];
+        value.forEach(item => {
+            this._$allOptions = this._$allOptions.concat(item["data"]);
+        });
+        this.vaildData = this._$allOptions.filter(item => item["disabled"] !== true);
     }
 
     private _value: any;

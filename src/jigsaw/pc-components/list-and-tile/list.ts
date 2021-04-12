@@ -46,7 +46,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
      * 获取映射的子组件
      * @internal
      */
-    @ContentChildren(forwardRef(() => JigsawListOption))
+    @ContentChildren(forwardRef(() => JigsawListOption),{descendants: true})
     public _items: QueryList<JigsawListOption>;
 }
 

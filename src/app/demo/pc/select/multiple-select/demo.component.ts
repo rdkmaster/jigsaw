@@ -6,7 +6,6 @@ import { ArrayCollection } from "jigsaw/public_api";
     styleUrls: ["./demo.component.scss"]
 })
 export class MultipleSelectDemoComponent {
-    selectedCityForSelect: any;
     dataList = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
@@ -34,21 +33,6 @@ export class MultipleSelectDemoComponent {
         { label: "文本选项10" },
         { label: "文本选项11" }
     ]);
-
-    selectedCityForSelect2: string;
-    cityArrayList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
-
-    selectedCityName: string;
-
-    public selectChange(selectedItem: any) {
-        console.log("select city is:" + selectedItem.label);
-        this.selectedCityName = selectedItem.label;
-    }
-
-    public selectChange2(selectedItem: any) {
-        console.log("select city is:" + selectedItem);
-        this.selectedCityForSelect2 = selectedItem;
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

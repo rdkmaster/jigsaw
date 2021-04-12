@@ -29,6 +29,7 @@ export enum CollapseMode {
 @Component({
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html',
+    host: {'[class.jigsaw-collapse-pane]': 'true'},
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

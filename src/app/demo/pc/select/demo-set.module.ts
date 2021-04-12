@@ -27,6 +27,8 @@ import { SelectCheckboxDemoComponent } from './select-checkbox/demo.component';
 import { SelectCheckboxDemoModule } from './select-checkbox/demo.module';
 import { MultipleSelectDemoComponent } from './multiple-select/demo.component';
 import { MultipleSelectDemoModule } from './multiple-select/demo.module';
+import { SelectGroupDemoComponent } from './select-group/demo.component';
+import { SelectGroupDemoModule } from './select-group/demo.module';
 
 export const routerConfig = [
     {
@@ -67,6 +69,9 @@ export const routerConfig = [
     },
     {
         path: 'multiple-select', component: MultipleSelectDemoComponent
+    },
+    {
+        path: 'select-group', component: SelectGroupDemoComponent
     }
 ];
 
@@ -85,7 +90,8 @@ export const routerConfig = [
         SelectSizeDemoModule,
         SelectClearableDemoModule,
         SelectCheckboxDemoModule,
-        MultipleSelectDemoModule
+        MultipleSelectDemoModule,
+        SelectGroupDemoModule
     ]
 })
 export class SelectDemoModule {

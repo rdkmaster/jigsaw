@@ -30,20 +30,21 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
  *
  */
 @Component({
-    selector: "jigsaw-select, j-select",
-    templateUrl: "select.html",
+    selector: "jigsaw-select-collapse, j-select-group",
+    templateUrl: "select-group.html",
     host: {
-        "[class.jigsaw-select-host]": "true",
-        "[class.jigsaw-select-single-select]": "!multipleSelect",
-        "[class.jigsaw-select-multiple-select]": "multipleSelect",
+        "[class.jigsaw-select-collapse-host]": "true",
+        "[class.jigsaw-select-collapse-single]": "!multipleSelect",
+        "[class.jigsaw-select-collapse-multiple]": "multipleSelect",
+        "[class.jigsaw-select-collapse-show-overall]": "overall",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'
     },
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelectCollapse), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+export class JigsawSelectCollapse extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
     constructor(
         protected _zone: NgZone,
         private _changeDetector: ChangeDetectorRef,
@@ -53,7 +54,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
         super(_zone);
     }
 
-    protected _width: string = "120px";
+    protected _width: string = "160px";
 
     /**
      * @NoMarkForCheckRequired
@@ -65,17 +66,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.runAfterMicrotasks(() => {
-            this._zone.run(() => {
-                if (this.multipleSelect) {
-                    this.minWidth = CommonUtils.getCssValue(value);
-                    this.maxWidth = CommonUtils.getCssValue(value);
-                }
-            });
-        });
     }
-    private _minWidth: string = "120px";
 
+    private _minWidth: string = "160px";
     /**
      * 用于多选时设置最小宽度
      *
@@ -89,7 +82,9 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
     public set minWidth(value: string) {
         this._minWidth = CommonUtils.getCssValue(value);
     }
-    private _maxWidth: string = "100%";
+
+    private _maxWidth: string;
+
     /**
      * 用于多选时设置最大宽度
      *
@@ -127,6 +122,14 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
      */
     @Input()
     public labelField: string = "label";
+
+    /**
+     * 设置组名的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public groupName: string = "groupName";
 
     /**
      * 已选选项
@@ -270,6 +273,7 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     private _data: ArrayCollection<object>;
     private vaildData: any[];
+    public _$allOptions: any[];
 
     /**
      * 提供选择的数据集合
@@ -283,7 +287,11 @@ export class JigsawSelect extends AbstractJigsawComponent implements ControlValu
 
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.vaildData = this._data.filter(item => item["disabled"] !== true);
+        this._$allOptions = [];
+        value.forEach(item => {
+            this._$allOptions = this._$allOptions.concat(item["data"]);
+        });
+        this.vaildData = this._$allOptions.filter(item => item["disabled"] !== true);
     }
 
     private _value: any;

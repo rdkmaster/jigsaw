@@ -18,9 +18,9 @@
 >
     <ng-template>
         <jigsaw-list
-            [ngClass]="{'jigsaw-select-group-list-filter': _$listFilter,
-                        'jigsaw-select-group-multiple-list': multipleSelect,
-                        'jigsaw-select-group-single-list': !multipleSelect}"
+            [ngClass]="{'jigsaw-select-collapse-list-filter': _$listFilter,
+                        'jigsaw-select-collapse-multiple-list': multipleSelect,
+                        'jigsaw-select-collapse-single-list': !multipleSelect}"
             [data]="data"
             [labelField]="labelField"
             [trackItemBy]="trackItemBy"
@@ -30,21 +30,21 @@
             [(selectedItems)]="_$selectedItems"
             (selectedItemsChange)="_$handleSelectChange($event)"
         >
-            <div *ngIf="multipleSelect" class="jigsaw-select-group-select-all">
+            <div *ngIf="multipleSelect" class="jigsaw-select-collapse-select-all">
                 <jigsaw-checkbox [(checked)]="_$selectAllChecked" *ngIf="!_$listFilter" (checkedChange)="_$selectAll()">
                     <span>全选</span>
                 </jigsaw-checkbox>
-                <div class="jigsaw-select-group-show-selected" *ngIf="!_$listFilter" (click)="_$listShowSelected()">
+                <div class="jigsaw-select-collapse-show-selected" *ngIf="!_$listFilter" (click)="_$listShowSelected()">
                     <span>查看已选</span>
                 </div>
-                <div class="jigsaw-select-group-show-all" *ngIf="_$listFilter" (click)="_$listShowAll()">
+                <div class="jigsaw-select-collapse-show-all" *ngIf="_$listFilter" (click)="_$listShowAll()">
                     <i class="iconfont iconfont-e9ac"></i>
                     <span>返回</span>
                 </div>
             </div>
-            <jigsaw-collapse class="jigsaw-select-group-collapse">
+            <jigsaw-collapse class="jigsaw-select-collapse-collapse">
                 <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data">
-                    <div j-title class="jigsaw-select-group-name">{{group[groupName]}}</div>
+                    <div j-title class="jigsaw-select-collapse-name">{{group[groupName]}}</div>
                     <div j-body>
                         <jigsaw-list-option
                             #listItem
@@ -66,13 +66,13 @@
     </ng-template>
     <div
         *ngIf="multipleSelect && overall && _$selectedItems?.length !== 0 && _$selectedItems?.length === _$allOptions?.length"
-        class="jigsaw-select-group-overall"
+        class="jigsaw-select-collapse-overall"
     >
         全部
     </div>
     <div
         *ngIf="multipleSelect && overall && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== _$allOptions?.length"
-        class="jigsaw-select-group-overall"
+        class="jigsaw-select-collapse-overall"
     >
         {{"已选择" + _$selectedItems?.length + "项"}}
     </div>
