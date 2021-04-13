@@ -12,6 +12,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
                 padding: 0;
                 max-width: 100%;
                 background: none;
+                pointer-events: none;
             }
         }
     }

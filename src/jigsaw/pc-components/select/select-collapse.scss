@@ -14,6 +14,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
                 padding: 0;
                 max-width: 100%;
                 background: none;
+                pointer-events: none;
             }
         }
     }
