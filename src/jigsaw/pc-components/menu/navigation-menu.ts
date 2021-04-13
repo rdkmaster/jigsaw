@@ -52,11 +52,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     /**
      * @internal
      */
-    public _$popupMenuItem = PopupMenuItem;
-
-    /**
-     * @internal
-     */
     public _$popupMenuOptions: PopupOptions = {
         posReviser: (pos: PopupPositionValue, popupElement: HTMLElement) => {
             pos.top -= 40;
@@ -79,14 +74,14 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         if (CommonUtils.isUndefined(value) || CommonUtils.isUndefined(value.nodes)) {
             return;
         }
-        this._data = value;
-        this._data.nodes.forEach(item => {
+        value.nodes.forEach(item => {
             item.nodes.forEach(subItem => {
                 if (!subItem.icon) {
                     subItem.icon = this._$getRandomIcon();
                 }
             })
         })
+        this._data = value;
         if (this._removeDataRefresh) {
             this._removeDataRefresh();
         }
@@ -174,33 +169,7 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     public _$getRandomIcon() {
         let iconSet = ["e231", "e17c", "e0d1", "e191", "e2d4", "e455", "e54c", "e261"]
         let icon = "iconfont iconfont-" + iconSet[Math.floor(Math.random() * iconSet.length)];
-        console.log(1)
         return icon;
-    }
-
-    /**
-     * @internal
-     */
-    public _$openPopupMenu(index: number): void {
-        if (!this.showToggleButton || !this.collapsed || !this._floatMenus || this._floatMenus.length == 0) {
-            return;
-        }
-        this._floatMenus.toArray()[index].openFloat();
-    }
-
-    /**
-     * @internal
-     */
-    public _$popupAnswerHandler(event: PopupAnswer): void {
-        if (!event) {
-            return;
-        }
-        if (event.level == MenuLevel.top) {
-            this._$menuSelect(event.menu);
-        }
-        if (event.level == MenuLevel.sub) {
-            this._$subMenuSelect(event.menu);
-        }
     }
 
     ngOnDestroy() {
@@ -209,33 +178,5 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             this._removeDataRefresh();
             this._removeDataRefresh = null;
         }
-    }
-}
-
-/**
- * @internal
- */
-@Component({
-    templateUrl: 'popup-menu-item.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class PopupMenuItem implements IPopupable {
-    initData: any;
-
-    @Output()
-    public answer: EventEmitter<any> = new EventEmitter<any>();
-
-    /**
-     * @internal
-     */
-    public _$menuSelect(): void {
-        this.answer.emit({level: MenuLevel.top, menu: this.initData});
-    }
-
-    /**
-     * @internal
-     */
-    public _$subMenuSelect(subMenu: any): void {
-        this.answer.emit({level: MenuLevel.sub, menu: subMenu});
     }
 }
