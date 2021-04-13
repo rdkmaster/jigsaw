@@ -9,14 +9,14 @@
     <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
     <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<br />
+<br /><br />
 <span>触发关闭：</span>
 <jigsaw-radios [(value)]="closeTrigger">
     <jigsaw-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-radio-option>
     <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
     <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<br />
+<br /><br />
 <jigsaw-select
     id="test-select"
     [(value)]="selectedCityForSelect"
@@ -27,6 +27,7 @@
     [closeTrigger]="closeTrigger"
 >
 </jigsaw-select>
+<br />
 <p class="message">
     选择的城市是 <span>{{ selectedCityName }}</span>
 </p>
