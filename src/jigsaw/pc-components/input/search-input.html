@@ -1,0 +1,13 @@
+<div class="jigsaw-search-input">
+    <jigsaw-input
+        #myInput1
+        placeholder="搜索"
+        [disabled]="disabled"
+        [(value)]="value"
+        (valueChange)="_$valueChange($event)"
+        (keydown.enter)="_$enterSearch($event)"
+    >
+        <a jigsaw-prefix-icon><span class="iconfont iconfont-ea03"></span></a>
+    </jigsaw-input>
+    <span class="iconfont iconfont-ea03 jigsaw-search-input-button" (click)="_$searchBtnClicked($event)"></span>
+</div>
