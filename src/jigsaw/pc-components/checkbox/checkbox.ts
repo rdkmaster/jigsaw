@@ -5,6 +5,7 @@
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
@@ -79,11 +80,11 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     /**
      * 用于设置复选框的状态，支持的所有状态参考`CheckBoxStatus`，默认值是`CheckBoxStatus.unchecked`
+     * @NoMarkForCheckRequired
      *
      * $demo = checkbox/basic
      */
     @Input()
-    @RequireMarkForCheck()
     public get checked(): CheckBoxValue {
         return this._checked
     }
@@ -93,6 +94,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
             return;
         }
         this.writeValue(value);
+        this._propagateChange(value);
     }
 
     /**
@@ -135,7 +137,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone,
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super(_zone);
@@ -219,6 +221,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     public writeValue(value: any): void {
         this._checked = this._fixCheckValue(value);
         this._setCheckBoxClass();
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
