@@ -8,7 +8,8 @@ import {JigsawTabsDemoComponent} from './demo.component';
 
 @NgModule({
     imports: [
-        JigsawTabsModule, JigsawProgressModule, JigsawInputModule, JigsawTableModule, JigsawDemoDescriptionModule, JigsawGraphModule
+        JigsawTabsModule, JigsawProgressModule, JigsawInputModule, JigsawTableModule,
+        JigsawDemoDescriptionModule, JigsawGraphModule
     ],
     declarations: [JigsawTabsDemoComponent],
     exports: [JigsawTabsDemoComponent]

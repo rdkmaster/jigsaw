@@ -1,0 +1,34 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<jigsaw-header>默认color-type</jigsaw-header>
+<jigsaw-button-bar
+    [(selectedItems)]="selectedCity"
+    [data]="cities"
+    [multipleSelect]="multiple"
+    (selectedItemsChange)="basicSelectChange($event)"
+    optionWidth="80"
+    colorType="default"
+>
+</jigsaw-button-bar>
+<jigsaw-header>primary-color</jigsaw-header>
+<jigsaw-button-bar
+    [(selectedItems)]="selectedCity"
+    [data]="cities"
+    [multipleSelect]="multiple"
+    (selectedItemsChange)="basicSelectChange($event)"
+    optionWidth="80"
+    colorType="primary"
+>
+</jigsaw-button-bar>
+<p class="message">当前已选择：{{ selectedCityStr }}</p>
+<jigsaw-switch
+    [(checked)]="multiple"
+    onLabel="多选"
+    offLabel="单选"
+    (change)="resetSelection()"
+>
+</jigsaw-switch>

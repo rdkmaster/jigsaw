@@ -6,8 +6,9 @@
     <div class="jigsaw-slider-track" [ngStyle]="_$trackStyle"></div>
 
     <div class="jigsaw-slider-step">
-        <span *ngFor="let mark of _$marks" class="jigsaw-slider-dot jigsaw-slider-dot-active"
-              [ngStyle]="mark.dotStyle"></span>
+        <span *ngFor="let mark of _$marks" class="jigsaw-slider-dot"
+              [ngStyle]="mark.dotStyle"
+              [class.jigsaw-slider-dot-active]="_$isDotActive(mark.value)"></span>
     </div>
 
     <jigsaw-slider-handle *ngFor="let item of _$value; let i = index; trackBy: _$trackBy"

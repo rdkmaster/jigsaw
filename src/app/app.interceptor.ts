@@ -1,15 +1,25 @@
 import {Injectable} from "@angular/core";
-import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse} from "@angular/common/http";
+import {
+    HttpEvent,
+    HttpEventType,
+    HttpHandler,
+    HttpHeaders,
+    HttpInterceptor,
+    HttpProgressEvent,
+    HttpRequest,
+    HttpResponse
+} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { v4 as uuidv4 } from 'uuid';
 import {CommonUtils} from "../jigsaw/common/core/utils/common-utils";
 import {RawTableData, TableData} from "../jigsaw/common/core/data/table-data";
 import {PagingInfo} from "../jigsaw/common/core/data/component-data";
+import {InternalUtils} from "../jigsaw/common/core/utils/internal-utils";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
-
-    private static _usingRealRDK: boolean = false;
+    // 用于控制文件上传失败率，从而模拟出更逼真的上传效果，取值[0,100]越大失败的概率越高
+    public static uploadFailureRate = 30;
     private static _processors: any[] = [];
 
     public static registerProcessor(urlPattern: RegExp | string, processor: (req: HttpRequest<any>) => any, context?: any) {
@@ -18,34 +28,106 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
-        AjaxInterceptor.registerProcessor('/rdk/service/common/upload', this.dealServerSideUploadRequest, this);
         AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (AjaxInterceptor._usingRealRDK && req.url.match(/\/rdk\/service\/.+/)) {
-            return next.handle(req)
-        }
-
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
 
         const processor = AjaxInterceptor._processors.find(p => {
-            const url = p.urlPattern;
-            return url instanceof RegExp ? url.test(req.url) : url === req.url;
-        });
-        let body;
+                const url = p.urlPattern;
+                return url instanceof RegExp ? url.test(req.url) : url === req.url;
+            });
         if (processor) {
-            body = CommonUtils.safeInvokeCallback(processor.context, processor.processor, [req]);
+            const body = CommonUtils.safeInvokeCallback(processor.context, processor.processor, [req]);
+            return this.createResult(body, req.url);
+        } else if (req.url == '/rdk/service/common/upload') {
+            return this.dealServerSideUploadRequest(req);
         } else {
-            console.error('no mock data processor found!');
+            console.error('no mock data processor found, forwarding the request to the server...');
+            return next.handle(req);
         }
-        return this.createResult(body, req.url);
     }
 
-    dealServerSideUploadRequest(req: HttpRequest<any>): any {
+    /**
+     * Simulate XHR behavior which would provide this information in a ProgressEvent
+     * @param req
+     */
+    dealServerSideUploadRequest(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        console.group('All additional fields within the current upload request:');
+        const entries = req.body.entries();
+        let entry = entries.next();
+        while (!entry.done) {
+            console.log(entry.value[0], ':', entry.value[1]);
+            entry = entries.next();
+        }
+        console.groupEnd();
+
         const filename = decodeURIComponent(req.body.get('filename'));
-        return `upload_files/${uuidv4()}/${filename}`;
+        const url = `upload_files/${uuidv4()}/${filename}`;
+        const file = req.body.get('file');
+        if (!file) {
+            return new Observable<HttpEvent<any>>(subscriber => {
+                // simulate network latency
+                setTimeout(() => {
+                    const resp = new HttpResponse({body: url, url: url, status: 200});
+                    subscriber.next(resp);
+                    subscriber.complete();
+                }, InternalUtils.randomNumber(300, 2000));
+            });
+        }
+
+        const total = file.size;
+        const chunkSize = Math.ceil(total / 5);
+
+        return new Observable<HttpEvent<any>>(observer => {
+            // notify the event stream that the request was sent.
+            observer.next({type: HttpEventType.Sent});
+
+            const random = InternalUtils.randomNumber(1, 99);
+            if (random <= AjaxInterceptor.uploadFailureRate) {
+                // 模拟失败
+                const statusTexts = [
+                    "Bad Request", "Unauthorized", "Payment Required", "Forbidden",
+                    "Not Found", "Method Not Allowed", "Not Acceptable"
+                ];
+                const r = InternalUtils.randomNumber(0, statusTexts.length - 1);
+                observer.error({
+                    error: 'Failed to upload, random = ' + random,
+                    headers: new HttpHeaders(), name: "HttpErrorResponse",
+                    message: 'Failed to upload, random = ' + random,
+                    ok: false, status: 500, statusText: statusTexts[r], url: ''
+                });
+                return;
+            }
+
+            // 模拟成功
+            const uploadLoop = (loaded: number) => {
+                // N.B.: Cannot use setInterval or rxjs delay (which uses setInterval)
+                // because e2e test won't complete. A zone thing?
+                // Use setTimeout and tail recursion instead.
+                setTimeout(() => {
+                    // 模拟成功
+                    loaded += InternalUtils.randomNumber(chunkSize * 0.5, chunkSize * 1.5);
+                    loaded = Math.min(loaded, total);
+
+                    const progressEvent: HttpProgressEvent = {
+                        type: HttpEventType.UploadProgress, loaded, total
+                    };
+                    observer.next(progressEvent);
+
+                    if (loaded >= total) {
+                        const doneResponse = new HttpResponse({status: 200, body: url});
+                        observer.next(doneResponse);
+                        observer.complete();
+                        return;
+                    }
+                    uploadLoop(loaded);
+                }, InternalUtils.randomNumber(300, 2000));
+            }
+            uploadLoop(0);
+        });
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
@@ -86,7 +168,7 @@ export class AjaxInterceptor implements HttpInterceptor {
                         ok: false, status: 404, statusText: "Not Found", url: url
                     });
                 }
-            }, Math.random() * 1000);
+            }, InternalUtils.randomNumber(300, 2000));
         });
     }
 }

@@ -52,6 +52,14 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         }
     }
 
+    /**
+     * 箭头位置(默认值 "right";)
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public arrowPosition: "right" | "left" = "right";
+
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
         pane.isActiveChange.emit(value);
