@@ -11,10 +11,10 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     min-width: 80px;
     height: $height-base;
     border-radius: $border-radius-base;
-    background-color: transparent;
+    background-color: $bg-container;
     border-width: 1px;
     border-style: solid;
-    border-color: $border-color-default;
+    border-color: $border-color-disabled;
     color: $brand-default;
     font-size: $font-size-base;
     user-select: none;
@@ -31,7 +31,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &:hover {
-        color: $brand-hover;
         border-color: $brand-default;
         @include prefixer(transition, all 0.3s $ease-in-out);
     }
@@ -124,14 +123,23 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         }
     }
 
+    &#{&}-size-small {
+        height: $height-sm;
+        font-size: $font-size-sm;
+    }
+
+    &#{&}-size-medium {
+        height: $height-med;
+        font-size: $font-size-med;
+    }
+
     &#{&}-size-large {
         height: $height-lg;
         font-size: $font-size-lg;
     }
 
-    &#{&}-size-small {
-        height: $height-sm;
-        font-size: $font-size-sm;
+    & .iconfont{
+      margin-right: 4px; 
     }
 }
 

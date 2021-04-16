@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "./radio";
+import {JigsawRadioModule, RadiosGroupValue} from "./radio";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -56,7 +56,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     @RequireMarkForCheck()
     @Input()
-    public value: any;
+    public value: string | RadiosGroupValue;
 
     private _trackItemBy: string | string[];
 
@@ -84,7 +84,8 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public labelField: string = 'label';
 
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     public get _$trackByFn() {
         return CommonUtils.toTrackByFunction(this._trackItemBy);

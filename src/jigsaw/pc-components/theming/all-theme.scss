@@ -6,6 +6,7 @@
 @import "../alert/common-alert";
 @import "../../common/components/block/block";
 @import "../button/button";
+@import "../list-and-tile/button-bar.scss";
 @import "../checkbox/checkbox";
 @import "../collapse/collapse";
 @import "../combo-select/combo-select";
@@ -44,7 +45,7 @@
 @import "../drawer/drawer";
 @import "../cascade/cascade";
 @import "../input/auto-complete-input";
-@import "../upload/upload";
+@import "../upload/upload-result";
 @import "../icon/icon";
 @import "../transfer/transfer";
 @import "../textarea/textarea";

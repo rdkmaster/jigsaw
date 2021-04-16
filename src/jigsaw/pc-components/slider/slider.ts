@@ -473,6 +473,20 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
         this._calcMarks();
     }
 
+    /**
+     * @internal
+     * @param markVal
+     */
+    public _$isDotActive(markVal: number): boolean {
+        if (this._$value.length == 1) {
+            return markVal < this.value;
+        } else {
+            const min = Math.min(...this._$value);
+            const max = Math.max(...this._$value);
+            return markVal >= min && markVal <= max;
+        }
+    }
+
     private _calcMarks() {
         if (!this._marks || !this.initialized) {
             return;
@@ -506,6 +520,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             // 如果用户自定义了样式, 要进行样式的合并;
             CommonUtils.extendObject(richMark.labelStyle, mark.style);
             richMark.label = mark.label;
+            richMark.value = mark.value;
             this._$marks.push(richMark);
         });
     }

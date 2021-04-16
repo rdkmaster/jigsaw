@@ -32,6 +32,9 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
                 border-color: $border-color-disabled;
             }
         }
+        .#{$radio-option-prefix-cls}-content{
+            color: $font-color-disabled;
+        }
     }
 
     .#{$radio-option-prefix-cls}-inner {

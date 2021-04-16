@@ -110,9 +110,9 @@ $navy-9: hsl(236, 70%, 30%);
 $navy-10: hsl(237, 79%, 21%);
 
 $gray-1: hsl(0, 0%, 100%);
-$gray-2: hsl(0, 0%, 96%);
+$gray-2: hsl(0, 0%, 96%); //#f5f5f5
 $gray-3: hsl(0, 0%, 93%); //#EEEEEE
-$gray-4: hsl(0, 0%, 90%);
+$gray-4: hsl(0, 0%, 90%); //#e5e5e5
 $gray-5: hsl(0, 0%, 85%); //#D9D9D9
 $gray-6: hsl(0, 0%, 75%); //#BFBFBF
 $gray-7: hsl(0, 0%, 60%); //#999999
@@ -240,6 +240,7 @@ $font-color-heading: $gray-10;
 $font-color-heading-bold: $gray-9;
 $font-color-tag: $gray-8;
 $font-color-white: hsl(0, 0%, 100%);
+$font-color-white-dark: $gray-6;
 
 /* border 边框 */
 $border-color-default: $gray-5;

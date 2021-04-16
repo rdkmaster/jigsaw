@@ -21,9 +21,16 @@ export class ButtonFullComponent {
     // demo-7
     isLoading = false;
     label: string = 'click to load';
+    loadingDisabled = false;
     onClick() {
         this.isLoading = !this.isLoading;
         this.label = this.isLoading ? 'loading...' : 'click to load';
+        this.loadingDisabled = true;
+        setTimeout(() => {
+            this.isLoading = !this.isLoading;
+            this.label = this.isLoading ? 'loading...' : 'click to load';
+            this.loadingDisabled = false;
+        }, 3000);
     }
 
     // ====================================================================

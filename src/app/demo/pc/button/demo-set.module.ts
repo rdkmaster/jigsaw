@@ -13,6 +13,8 @@ import {ButtonDisableDemoComponent} from "./disabled/demo.component";
 import {ButtonWidthHeightDemoComponent} from "./width-height/demo.component";
 import {ButtonPresetDemoComponent} from "./preset/demo.component";
 import {ButtonWithLoadingComponent} from "./with-loading/demo.component";
+import { ButtonIconDemoComponent } from './icon/demo.component';
+import { ButtonIconDemoModule } from './icon/demo.module';
 
 export const routerConfig = [
     {
@@ -33,6 +35,9 @@ export const routerConfig = [
     {
         path: 'with-loading', component: ButtonWithLoadingComponent
     },
+    {
+        path: 'with-icon', component: ButtonIconDemoComponent
+    }
 ];
 
 @NgModule({
@@ -43,7 +48,8 @@ export const routerConfig = [
         ButtonPresetDemoModule,
         ButtonWidthHeightDemoModule,
         ButtonWithLoadingModule,
-        ButtonFullModule
+        ButtonFullModule,
+        ButtonIconDemoModule
     ]
 })
 export class ButtonDemoModule {
