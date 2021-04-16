@@ -8,9 +8,9 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
     vertical-align: top;
     span {
         @include inline-block();
-        width: $height-base;
-        height: $height-base;
-        line-height: $height-base;
+        width: var(--height-paging);
+        height: var(--height-paging);
+        line-height: var(--height-paging);
         font-size: $font-size-base;
         text-align: center;
         border-width: 1px;
@@ -35,16 +35,24 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
     }
     i {
         @include inline-block();
-        width: $height-base;
-        height: $height-base;
+        width: var(--height-paging);
+        height: var(--height-paging);
+        line-height: var(--height-paging);
+        font-size: $font-size-base;
+        text-align: center;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-sm;
         cursor: pointer;
         &:after {
             display: block;
-            content: ". . .";
+            content: "\e6a8";
             font-weight: 700;
             font-size: 14px;
-            color: #bbbbbb;
-            line-height: 21px;
+            font-family: "iconfont";
+            color: $icon-color-default;
+            line-height: var(--height-paging);
             text-align: center;
         }
         &.#{$page-prefix-cls}-prevs {
@@ -54,13 +62,10 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
             margin-right: 8px;
         }
         &:hover {
-            &.#{$page-prefix-cls}-prevs:after {
-                content: "<<";
-                line-height: $height-base;
-            }
+            border-color: $brand-default;
+            &.#{$page-prefix-cls}-prevs:after,
             &.#{$page-prefix-cls}-nexts:after {
-                content: ">>";
-                line-height: $height-base;
+                color: $brand-default;
             }
         }
     }

@@ -29,6 +29,23 @@
                            [searchable]="searchable"
                            [placeholder]="'搜一搜'"
                            [showQuickJumper]="showQuickJumper"
+                           [complexMode]="'default'"
+                           (currentChange)="getCurrentPage($event)"
+                           (pageSizeChange)="getPageSize($event)"
+                           widh="710px"
+                           [size]="'large'">
+        </jigsaw-pagination>
+        <p class="message">当前第{{pageable.pagingInfo.currentPage}}页</p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <h3>默认模式（折叠）</h3>
+        <jigsaw-pagination [data]="pageable"
+                           [pageSizeOptions]="pageSizeOptions"
+                           [searchable]="searchable"
+                           [placeholder]="'搜一搜'"
+                           [showQuickJumper]="showQuickJumper"
+                           [complexMode]="'folding'"
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"
                            widh="710px">
