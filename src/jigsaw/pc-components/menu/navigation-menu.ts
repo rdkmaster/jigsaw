@@ -77,7 +77,7 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         value.nodes.forEach(item => {
             item.nodes.forEach(subItem => {
                 if (!subItem.icon) {
-                    subItem.icon = this._$getRandomIcon();
+                    subItem.icon = "iconfont iconfont-e231"
                 }
             })
         })
@@ -159,17 +159,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
                 node.nodes.forEach(item => item.selected = false);
             }
         })
-    }
-
-    /**
-     * 为没有icon的二级条目随机生成符合规范的图标
-     * 
-     * @internal
-     */
-    public _$getRandomIcon() {
-        let iconSet = ["e231", "e17c", "e0d1", "e191", "e2d4", "e455", "e54c", "e261"]
-        let icon = "iconfont iconfont-" + iconSet[Math.floor(Math.random() * iconSet.length)];
-        return icon;
     }
 
     ngOnDestroy() {
