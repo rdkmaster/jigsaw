@@ -3,10 +3,14 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-header>右侧按钮常驻状态</jigsaw-header>
+<jigsaw-header>上下翻按钮常驻切换</jigsaw-header>
+<jigsaw-switch [(checked)]="showOption"></jigsaw-switch>
+<span>{{showOption ? '永久显示' : '当组件有焦点时显示'}}上下翻按钮</span>
+
+<jigsaw-header>默认情况</jigsaw-header>
 <j-numeric-input
     [(value)]="value"
-    showOption="true"
+    [showOption]="showOption"
     min="1"
     max="110"
     placeholder="请输入数字"
@@ -15,10 +19,10 @@
     输入值是：<span>{{ value }}</span>
 </p>
 
-<jigsaw-header>带单位的右侧按钮常驻状态</jigsaw-header>
+<jigsaw-header>带单位的</jigsaw-header>
 <j-numeric-input
     [(value)]="value3"
-    showOption="true"
+    [showOption]="showOption"
     min="1"
     max="110"
     placeholder="请输入数字"
@@ -28,10 +32,10 @@
     输入值是：<span>{{ value3 }}</span>
 </p>
 
-<jigsaw-header>带可选单位的右侧按钮常驻状态</jigsaw-header>
+<jigsaw-header>带可选单位的</jigsaw-header>
 <j-numeric-input
     [(value)]="value2"
-    showOption="true"
+    [showOption]="showOption"
     min="1"
     max="110"
     placeholder="请输入数字"
@@ -45,7 +49,7 @@
 <div>
     <j-numeric-input
         [(value)]="value4"
-        showOption="true"
+        [showOption]="showOption"
         min="1"
         max="110"
         placeholder="请输入数字"
@@ -57,7 +61,7 @@
 <div>
     <j-numeric-input
         [(value)]="value4"
-        showOption="true"
+        [showOption]="showOption"
         min="1"
         max="110"
         placeholder="请输入数字"
@@ -70,7 +74,7 @@
 <div>
     <j-numeric-input
         [(value)]="value4"
-        showOption="true"
+        [showOption]="showOption"
         min="1"
         max="110"
         placeholder="请输入数字"

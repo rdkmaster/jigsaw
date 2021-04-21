@@ -67,7 +67,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = numeric-input/showOption
+     * $demo = numeric-input/show-option
      */
     @Input()
     public showOption: boolean = false;

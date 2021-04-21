@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import {
     JigsawNumericInputModule,
-    JigsawHeaderModule
+    JigsawHeaderModule,
+    JigsawSwitchModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { NumericInputShowOptionDemoComponent } from "./demo.component";
@@ -12,7 +13,7 @@ import { NumericInputShowOptionDemoComponent } from "./demo.component";
     imports: [
         JigsawNumericInputModule,
         JigsawDemoDescriptionModule,
-        JigsawHeaderModule
+        JigsawHeaderModule, JigsawSwitchModule
     ]
 })
 export class NumericInputShowOptionDemoModule {}

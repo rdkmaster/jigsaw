@@ -5,6 +5,7 @@ import { Component } from "@angular/core";
     styleUrls: ["./demo.component.scss"]
 })
 export class NumericInputShowOptionDemoComponent {
+    showOption: boolean = true;
     value: number;
     value2: number;
     value3: number;
