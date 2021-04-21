@@ -10,43 +10,44 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 }
 
 .#{$switch-prefix} {
+    --switch-height: 24px;
     @include inline-block;
     position: relative;
-    height: 22px;
-    min-width: 44px;
-    line-height: 20px;
-    border-radius: 20px;
-    border: 1px solid transparent;
-    background-color: $bg-disabled-deep;
+    height: var(--switch-height);
+    min-width: calc(var(--switch-height) * 2);
+    line-height: calc(var(--switch-height) - 2px);
+    border-radius: calc(var(--switch-height) - 2px);
+    border: 1px solid $border-color-default;
+    background-color: $bg-body;
     cursor: pointer;
     transition: all $animation-duration-slow;
     -ms-transition: none;
     user-select: none;
 
     .#{$switch-prefix}-inner {
-        color: $bg-body;
-        font-size: $font-size-base;
-        margin-left: 24px;
-        margin-right: 6px;
+        color: $font-color-default;
+        font-size: $font-size-lg;
+        margin-left: calc(var(--switch-height) + 4px);
+        margin-right: calc(var(--switch-height) / 4);
         display: block;
     }
 
     &:after {
         position: absolute;
-        width: 18px;
-        height: 18px;
+        width: calc(var(--switch-height) - 4px);
+        height: calc(var(--switch-height) - 4px);
         left: 1px;
         top: 1px;
-
-        border-radius: 18px;
-        background-color: $bg-body;
+        border-radius: 50%;
+        background-color: $bg-container;
+        box-shadow: $box-shadow-lv1;
         content: " ";
         cursor: pointer;
         transition: all $animation-duration-slow, width $animation-duration-slow;
     }
 
     &:active:after {
-        width: 24px;
+        width: calc((var(--switch-height) - 4px) * 1.3);
     }
 
     &:focus {
@@ -63,16 +64,18 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         background-color: $primary-default;
 
         .#{$switch-prefix}-inner {
-            margin-left: 6px;
-            margin-right: 24px;
+            color: $font-color-white;
+            margin-left: calc(var(--switch-height) / 4);
+            margin-right: calc(var(--switch-height) + 4px);
         }
 
         &:after {
             left: 100%;
-            margin-left: -19px;
+            margin-left: calc(3px - var(--switch-height));
         }
+
         &:active:after {
-            margin-left: -25px;
+            margin-left: calc((3px - var(--switch-height)) * 1.3);
         }
     }
 
@@ -91,7 +94,6 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         border-color: $border-color-disabled;
 
         &:after {
-            background-color: $bg-disabled-deep;
             cursor: not-allowed;
         }
 
@@ -106,43 +108,18 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
             cursor: not-allowed;
         }
     }
+}
 
-    /*小一号的开关*/
-    &-small {
-        height: 14px;
-        line-height: 12px;
-        min-width: 28px;
+.#{$switch-prefix}-medium {
+    --switch-height: 16px;
+    .#{$switch-prefix}-inner {
+        font-size: $font-size-med;
+    }
+}
 
-        .#{$switch-prefix}-inner {
-            margin-left: 18px;
-            margin-right: 3px;
-        }
-
-        &:after {
-            width: 12px;
-            height: 12px;
-            top: 0px;
-            left: 0.5px;
-        }
-
-        &:active:after {
-            width: 16px;
-        }
-
-        &.#{$switch-prefix}-checked {
-            .#{$switch-prefix}-inner {
-                margin-left: 3px;
-                margin-right: 18px;
-            }
-
-            &:after {
-                left: 100%;
-                margin-left: -12.5px;
-            }
-
-            &:active:after {
-                margin-left: -16.5px;
-            }
-        }
+.#{$switch-prefix}-small {
+    --switch-height: 12px;
+    .#{$switch-prefix}-inner {
+        font-size: $font-size-sm;
     }
 }

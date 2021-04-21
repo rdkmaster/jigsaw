@@ -86,7 +86,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this._offLabel = value;
         this._setInnerValue();
     }
-    private _size: string = 'default';
+    private _size: 'default' | 'small' | 'medium' = 'default';
 
     /**
      * size 默认 'default' 可选值 ‘small’
@@ -94,11 +94,11 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get size(): string {
+    public get size(): 'default' | 'small' | 'medium' {
         return this._size;
     }
 
-    public set size(value: string) {
+    public set size(value: 'default' | 'small' | 'medium') {
         if (this._size == value) {
             return;
         }
@@ -194,6 +194,7 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this._$switchClass = {
             'jigsaw-switch': 'true',
             'jigsaw-switch-small': this.size === 'small',
+            'jigsaw-switch-medium': this.size === 'medium',
             'jigsaw-switch-checked': this.checked,
             'jigsaw-switch-disabled': this.disabled && !this.checked,
             'jigsaw-switch-checked-disabled': this.disabled && this.checked,
