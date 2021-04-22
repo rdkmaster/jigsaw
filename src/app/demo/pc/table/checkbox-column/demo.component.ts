@@ -36,7 +36,7 @@ export class TableAddCheckboxColumnDemoComponent {
             },
             rendererInitData: (td, row, col) => {
                 return {
-                    disabled: row > 8
+                    disabled: row > 8, valid: row != 2
                 }
             }
         }
