@@ -33,6 +33,11 @@ export class TableAddCheckboxColumnDemoComponent {
             renderer: TableCellCheckboxRenderer,
             data: (td, row, col) => {
                 return td.data[row][2] == 'Developer'
+            },
+            rendererInitData: (td, row, col) => {
+                return {
+                    disabled: row > 8
+                }
             }
         }
     }];
