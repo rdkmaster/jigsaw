@@ -358,7 +358,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-checkbox [checked]="checked" (checkedChange)="onChange($event)">
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -367,6 +367,22 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
+        this._updateInitData();
+    }
+
+    private _initDataJson: any;
+
+    private _updateInitData() {
+        this._initDataJson = this.initData instanceof Function ?
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
+    public get _$disabled() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
     }
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
