@@ -3,6 +3,8 @@ import { AbstractJigsawComponent } from "jigsaw/common/common";
 import { JigsawInputModule } from "./input";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
+import { TranslateService } from '@ngx-translate/core';
+import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
@@ -17,8 +19,11 @@ import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSearchInput), multi: true }]
 })
 export class JigsawSearchInput extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(private _translateService: TranslateService) {
+        super();
+    }
     /**
-     * 设置不可用
+     * 设置搜索模式（自动/手动）
      *
      * @NoMarkForCheckRequired
      */
@@ -41,16 +46,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public placeholder: string = "";
 
-    private _value: string;
-
-    @Input()
-    public get value(): string {
-        return this._value;
-    }
-
-    public set value(value: string) {
-        this._value = value;
-    }
+    private value: string;
 
     @Output()
     public search: EventEmitter<string> = new EventEmitter<string>();
@@ -132,17 +128,37 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     }
 
     public writeValue(value: any): void {
-        this._value = CommonUtils.isDefined(value) ? value.toString() : "";
+        this.value = CommonUtils.isDefined(value) ? value.toString() : "";
     }
 
-    public registerOnChange(fn: any): void {}
+    public registerOnChange(fn: any): void { }
 
-    public registerOnTouched(fn: any): void {}
+    public registerOnTouched(fn: any): void { }
+
+    /**
+    * 国际化
+    */
+    public searchText = this._translateService.instant("search.search")
 }
 
 @NgModule({
     imports: [JigsawInputModule],
     declarations: [JigsawSearchInput],
-    exports: [JigsawSearchInput]
+    exports: [JigsawSearchInput],
+    providers: [TranslateService]
 })
-export class JigsawSearchInputModule {}
+export class JigsawSearchInputModule {
+
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'search', {
+            zh: {
+                search: "搜索"
+            },
+            en: {
+                search: 'Search'
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
+
+}

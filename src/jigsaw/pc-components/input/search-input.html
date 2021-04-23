@@ -1,7 +1,7 @@
 <div class="jigsaw-search-input">
     <jigsaw-input
         #myInput1
-        placeholder="搜索"
+        [placeholder]="searchText"
         [disabled]="disabled"
         [(value)]="value"
         (valueChange)="_$valueChange($event)"
