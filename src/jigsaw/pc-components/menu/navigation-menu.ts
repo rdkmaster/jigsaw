@@ -6,26 +6,15 @@ import {
     Injector,
     Input,
     OnDestroy,
-    Output,
-    QueryList,
-    ViewChildren
+    Output
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {IPopupable, PopupOptions, PopupPositionValue} from "../../common/service/popup.service";
-import {JigsawFloat} from "../../common/directive/float/float";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateHelper } from 'jigsaw/common/core/utils/translate-helper';
-
-enum MenuLevel {top, sub}
-
-type PopupAnswer = {
-    level: MenuLevel,
-    menu: any
-}
 
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
@@ -49,22 +38,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
 
     private _data: SimpleTreeData;
 
-    @ViewChildren(JigsawFloat)
-    private _floatMenus: QueryList<JigsawFloat>;
-
-    /**
-     * @internal
-     */
-    public _$popupMenuOptions: PopupOptions = {
-        posReviser: (pos: PopupPositionValue, popupElement: HTMLElement) => {
-            pos.top -= 40;
-            return pos;
-        },
-        useCustomizedBackground: true,
-        showShadow: false,
-        showBorder: false
-    };
-
     @Input()
     @RequireMarkForCheck()
     public get data(): SimpleTreeData {
@@ -82,8 +55,8 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
                 if (!subItem.icon) {
                     subItem.icon = "iconfont iconfont-e231"
                 }
-            })
-        })
+            });
+        });
         this._data = value;
         if (this._removeDataRefresh) {
             this._removeDataRefresh();
