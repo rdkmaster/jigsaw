@@ -96,13 +96,8 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }, this.searchDebounce);
     }
 
-    private _isValidSearchDebounce() {
-        return (
-            this.searchDebounce &&
-            this.searchDebounce != "none" &&
-            !isNaN(this.searchDebounce) &&
-            Number(this.searchDebounce) > 0
-        );
+    private _isValidSearchDebounce(): boolean {
+        return Number(this.searchDebounce) > 0;
     }
 
     private _clearSearchTimer() {
@@ -131,14 +126,14 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this.value = CommonUtils.isDefined(value) ? value.toString() : "";
     }
 
-    public registerOnChange(fn: any): void { }
+    public registerOnChange(fn: any): void {}
 
-    public registerOnTouched(fn: any): void { }
+    public registerOnTouched(fn: any): void {}
 
     /**
-    * 国际化
-    */
-    public searchText = this._translateService.instant("search.search")
+     * 国际化
+     */
+    public searchText = this._translateService.instant("search.search");
 }
 
 @NgModule({
