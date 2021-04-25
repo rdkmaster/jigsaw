@@ -1,18 +1,30 @@
 import {
-    NgModule, Component, Input, Output, EventEmitter, OnInit,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Injector
-} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+    NgModule,
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    QueryList,
+    ViewChildren,
+    Optional,
+    forwardRef,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Injector
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import {JigsawSelectModule} from '../select/select';
-import {JigsawInput, JigsawInputModule} from '../input/input';
-import {AbstractJigsawComponent} from "../../common/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {IPageable, PagingInfo} from "../../common/core/data/component-data";
-import {CommonUtils} from "../../common/core/utils/common-utils";
+import { JigsawSelectModule } from "../select/select";
+import { JigsawInput, JigsawInputModule } from "../input/input";
+import { AbstractJigsawComponent } from "../../common/common";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
+import { TranslateHelper } from "../../common/core/utils/translate-helper";
+import { IPageable, PagingInfo } from "../../common/core/data/component-data";
+import { CommonUtils } from "../../common/core/utils/common-utils";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 
 export class PageSizeData {
@@ -28,10 +40,10 @@ export class PageSizeData {
         "[style.height]": "height",
         "[class.jigsaw-paging]": "true",
         "[class.jigsaw-paging-simple]": 'mode == "simple"',
-        "[class.jigsaw-paging-complex]": 'mode == "complex"',
+        "[class.jigsaw-paging-complex]": 'mode == "complex" || mode == "folding"',
         "[class.jigsaw-paging-small]": 'size == "small"',
         "[class.jigsaw-paging-medium]": 'size == "medium"',
-        "[class.jigsaw-paging-large]": 'size == "large"',
+        "[class.jigsaw-paging-large]": 'size == "large"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -130,15 +142,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     @RequireMarkForCheck()
     @Input()
-    public mode: "complex" | "simple" = "complex";
-
-    /**
-     * complex模式下选择是否折叠
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public complexMode: "default" | "folding" = "default";
+    public mode: "complex" | "simple" | "folding" = "complex";
 
     /**
      * 设置分页的size大小
@@ -195,7 +199,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     private _isValidSearchDebounce() {
-        return ( this.searchDebounce && this.searchDebounce != "none" && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0 );
+        return Number(this.searchDebounce) > 0;
     }
 
     /**
@@ -306,14 +310,21 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * */
     private _pageShow(): void {
         console.log("pageShow:", this._pages);
-        if (this.complexMode === "default") {
-            if (this._totalPage > 5) {
-                if (this.current >= this._totalPage - 2) {
-                    this._showPages = [ this._totalPage - 4, this._totalPage - 3, this._totalPage - 2, this._totalPage - 1, this._totalPage ];
-                } else if (this.current <= 3){
-                    this._showPages = [1, 2, 3, 4, 5];
-                }else {
-                    this._showPages = [ this.current - 2, this.current - 1, this.current, this.current + 1, this.current + 2 ];
+        if (this.mode === "folding") {
+            if (this._totalPage > 10) {
+                if (this.current <= 3) {
+                    this._showPages = [1, 2, 3, 4, 5, this._totalPage];
+                } else if (this.current >= this._totalPage - 2) {
+                    this._showPages = [
+                        1,
+                        this._totalPage - 4,
+                        this._totalPage - 3,
+                        this._totalPage - 2,
+                        this._totalPage - 1,
+                        this._totalPage
+                    ];
+                } else {
+                    this._showPages = [1, this.current - 1, this.current, this.current + 1, this._totalPage];
                 }
                 this._pages.forEach(page => {
                     this._showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
@@ -323,15 +334,26 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                     page.show();
                 });
             }
-        }
-        if (this.complexMode === "folding") {
-            if (this._totalPage > 10) {
-                if (this.current <= 3) {
-                    this._showPages = [1, 2, 3, 4, 5, this._totalPage];
-                } else if (this.current >= this._totalPage - 2) {
-                    this._showPages = [ 1, this._totalPage - 4, this._totalPage - 3, this._totalPage - 2, this._totalPage - 1, this._totalPage ];
+        } else {
+            if (this._totalPage > 5) {
+                if (this.current >= this._totalPage - 2) {
+                    this._showPages = [
+                        this._totalPage - 4,
+                        this._totalPage - 3,
+                        this._totalPage - 2,
+                        this._totalPage - 1,
+                        this._totalPage
+                    ];
+                } else if (this.current <= 3) {
+                    this._showPages = [1, 2, 3, 4, 5];
                 } else {
-                    this._showPages = [1, this.current - 1, this.current, this.current + 1, this._totalPage];
+                    this._showPages = [
+                        this.current - 2,
+                        this.current - 1,
+                        this.current,
+                        this.current + 1,
+                        this.current + 2
+                    ];
                 }
                 this._pages.forEach(page => {
                     this._showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
@@ -584,13 +606,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
  * @internal
  */
 @Component({
-    selector: 'jigsaw-paging-item, j-paging-item',
-    templateUrl: 'pagination-item.html',
+    selector: "jigsaw-paging-item, j-paging-item",
+    templateUrl: "pagination-item.html",
     host: {
-        '(click)': '_onClick()',
-        '[class.jigsaw-page-current]': 'current',
-        '[class.jigsaw-page-hidden]': '!_isShow',
-        '[class.jigsaw-page-item]': 'true'
+        "(click)": "_onClick()",
+        "[class.jigsaw-page-current]": "current",
+        "[class.jigsaw-page-hidden]": "!_isShow",
+        "[class.jigsaw-page-item]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -666,25 +688,20 @@ export class JigsawPagingItem {
     imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forChild()],
     declarations: [JigsawPagination, JigsawPagingItem],
     exports: [JigsawPagination],
-    providers: [TranslateService],
+    providers: [TranslateService]
 })
 export class JigsawPaginationModule {
-
     constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'pagination', {
+        InternalUtils.initI18n(translateService, "pagination", {
             zh: {
                 page: "页",
-                goto: '前往'
+                goto: "前往"
             },
             en: {
-                page: 'Page',
-                goto: 'Goto'
+                page: "Page",
+                goto: "Goto"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
     }
-
 }
-
-
-
