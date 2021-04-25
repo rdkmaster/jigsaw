@@ -3,8 +3,10 @@ import { AbstractJigsawComponent } from "jigsaw/common/common";
 import { JigsawInputModule } from "./input";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
-import { TranslateService } from '@ngx-translate/core';
-import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
+import { TranslateService } from "@ngx-translate/core";
+import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
+import { Subscription } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
@@ -46,10 +48,12 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public placeholder: string = "";
 
-    private value: string;
+    public value: string;
 
     @Output()
     public search: EventEmitter<string> = new EventEmitter<string>();
+
+    private _valueChangeEvent = new EventEmitter();
 
     /**
      * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
@@ -63,48 +67,53 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
+    public _$enterSearch() {
+        this.search.emit(this.value);
+    }
+
+    /**
+     * @internal
+     */
     public _$valueChange($event) {
         if (!this.autoSearch) {
             return;
         }
         if (this._isValidSearchDebounce()) {
-            // 输入3000ms没有回车也会发一次事件
-            this._debounceSearch($event);
+            this._debounceSearch();
+            this._valueChangeEvent.emit($event);
         } else {
             this.search.emit($event);
         }
     }
 
-    private _searchTimer: number;
-
-    /**
-     * @internal
-     */
-    public _$enterSearch($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        if (this._isValidSearchDebounce()) {
-            this._clearSearchTimer();
-            this.search.emit(this.value);
-        }
-    }
-
-    private _debounceSearch(key: string) {
-        this._clearSearchTimer();
-        this._searchTimer = this.callLater(() => {
-            this.search.emit(key);
-        }, this.searchDebounce);
+    private _debounceSearch() {
+        this._unsubscribeValueChange();
+        this._subscribeValueChange();
     }
 
     private _isValidSearchDebounce(): boolean {
         return Number(this.searchDebounce) > 0;
     }
 
-    private _clearSearchTimer() {
-        if (this._searchTimer) {
-            clearTimeout(this._searchTimer);
-            this._searchTimer = null;
+    private _valueChangeSubscription: Subscription;
+    private _subscribeValueChange(): void {
+        if (this._valueChangeSubscription) {
+            return;
         }
+
+        this._valueChangeSubscription = this._valueChangeEvent
+            .pipe(debounceTime(Number(this.searchDebounce)))
+            .subscribe(() => {
+                this.search.emit(this.value);
+            });
+    }
+
+    private _unsubscribeValueChange(): void {
+        if (!this._valueChangeSubscription) {
+            return;
+        }
+        this._valueChangeSubscription.unsubscribe();
+        this._valueChangeSubscription = null;
     }
 
     /**
@@ -134,6 +143,11 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      * 国际化
      */
     public searchText = this._translateService.instant("search.search");
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        this._unsubscribeValueChange();
+    }
 }
 
 @NgModule({
@@ -143,17 +157,15 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     providers: [TranslateService]
 })
 export class JigsawSearchInputModule {
-
     constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'search', {
+        InternalUtils.initI18n(translateService, "search", {
             zh: {
                 search: "搜索"
             },
             en: {
-                search: 'Search'
+                search: "Search"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
     }
-
 }
