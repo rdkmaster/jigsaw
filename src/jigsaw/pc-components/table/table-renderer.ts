@@ -308,7 +308,7 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
         <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"></jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableHeadCheckboxRenderer extends TableCellRendererBase{
+export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
