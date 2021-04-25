@@ -28,6 +28,11 @@ export class TableAddCheckboxColumnDemoComponent {
         pos: 0,
         header: {
             renderer: TableHeadCheckboxRenderer,
+            rendererInitData: (td, row, col) => {
+                return {
+                    disabled: true
+                }
+            }
         },
         cell: {
             renderer: TableCellCheckboxRenderer,

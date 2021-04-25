@@ -9,7 +9,7 @@ export class TableUtils {
     public static updateHeaderSettings(columnDefine: ColumnDefine, settings: TableHeadSetting): TableHeadSetting {
         if (!settings) {
             settings = {
-                cellData: null, width: null, visible: true, renderer: null, clazz: '', field: '',
+                cellData: null, width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', field: '',
                 sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null
             };
         }
@@ -19,6 +19,7 @@ export class TableUtils {
         if (headerDef) {
             settings.cellData = CommonUtils.isDefined(headerDef.text) ? headerDef.text : settings.cellData;
             settings.renderer = TableUtils.getRenderer(headerDef.renderer);
+            settings.rendererInitData = headerDef.rendererInitData;
             settings.clazz = headerDef.clazz;
             settings.sortable = headerDef.sortable;
             settings.sortAs = CommonUtils.isDefined(headerDef.sortAs) ? headerDef.sortAs : settings.sortAs;
