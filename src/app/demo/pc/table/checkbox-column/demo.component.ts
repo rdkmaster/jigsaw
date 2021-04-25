@@ -23,14 +23,16 @@ export class TableAddCheckboxColumnDemoComponent {
     tableData: TableData;
     selectedRows: string;
     additionalData: AdditionalTableData;
+    headerDisabled = true;
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             renderer: TableHeadCheckboxRenderer,
             rendererInitData: (td, row, col) => {
+                console.log(row, col);
                 return {
-                    disabled: true
+                    disabled: this.headerDisabled
                 }
             }
         },
@@ -41,7 +43,9 @@ export class TableAddCheckboxColumnDemoComponent {
             },
             rendererInitData: (td, row, col) => {
                 return {
-                    disabled: row > 8, valid: row != 2
+                    disabled: row > 3,
+                    // 偶数行无效
+                    valid: row % 2
                 }
             }
         }
@@ -70,6 +74,14 @@ export class TableAddCheckboxColumnDemoComponent {
         // 重置additionalData
         this.additionalData.reset();
         this.selectedRows = '';
+    }
+
+    toggleHeaderDisabled() {
+        // copy origin table data
+        this.tableData.fromObject({
+            data: [...this.tableData.data], header: [...this.tableData.header], field: [...this.tableData.field]
+        });
+        this.headerDisabled = !this.headerDisabled;
     }
 
     // ====================================================================
