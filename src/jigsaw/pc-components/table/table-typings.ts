@@ -73,6 +73,7 @@ export type TableRenderer = TableSyncRenderer | TableAsyncRenderer | string;
 export class TableHeader {
     text?: string; // 此属性专门用于additionalColumnDefine的header设置显示表头
     renderer?: TableRenderer;
+    rendererInitData?: any;
     clazz?: string;
     sortable?: boolean;
     sortAs?: SortAs;
@@ -98,6 +99,7 @@ export class TableHeadSetting {
     width: string | number;
     visible: boolean;
     renderer: Type<TableCellRendererBase> | TemplateRef<any>;
+    rendererInitData?: any;
     clazz: string;
     sortable: boolean;
     sortAs: SortAs;

@@ -305,7 +305,7 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`,
+        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"></jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -315,6 +315,21 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_injector);
+    }
+
+    private _initDataJson: any;
+
+    private _updateInitData() {
+        this._initDataJson = this.initData instanceof Function ?
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
+    public get _$disabled() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
     }
 
     public get checked(): CheckBoxStatus {
@@ -349,6 +364,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             default:
                 this._checked = CheckBoxStatus.unchecked;
         }
+        this._updateInitData();
         this._changeDetectorRef.markForCheck();
     }
 }
