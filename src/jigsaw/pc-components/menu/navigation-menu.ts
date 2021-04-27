@@ -137,17 +137,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         })
     }
 
-    /**
-     * 国际化 
-     * */
-    public hideText = this._translateService.instant(`navigation.hide`);
-
-   ngOnInit(){
-    TranslateHelper.languageChangEvent.subscribe(langInfo => {
-        this._translateService.use(langInfo.curLang);
-    })
-   } 
-
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._removeDataRefresh) {
