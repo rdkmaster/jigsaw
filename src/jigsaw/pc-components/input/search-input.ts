@@ -3,7 +3,7 @@ import { AbstractJigsawComponent } from "jigsaw/common/common";
 import { JigsawInputModule } from "./input";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -46,7 +46,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      * @NoMarkForCheckRequired
      */
     @Input()
-    public placeholder: string = "";
+    public placeholder: string = this._translateService.instant("search.search");
 
     public value: string;
 
@@ -139,11 +139,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
     public registerOnTouched(fn: any): void {}
 
-    /**
-     * 国际化
-     */
-    public searchText = this._translateService.instant("search.search");
-
     ngOnDestroy() {
         super.ngOnDestroy();
         this._unsubscribeValueChange();
@@ -151,7 +146,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 }
 
 @NgModule({
-    imports: [JigsawInputModule],
+    imports: [JigsawInputModule, TranslateModule.forChild()],
     declarations: [JigsawSearchInput],
     exports: [JigsawSearchInput],
     providers: [TranslateService]
