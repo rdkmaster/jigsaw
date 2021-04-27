@@ -18,6 +18,87 @@ export abstract class JigsawSelectBase
         super(_zone);
     }
 
+    protected _width: string = "120px";
+
+    /**
+     * 宽度
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                if (this.multipleSelect) {
+                    this.minWidth = CommonUtils.getCssValue(value);
+                    this.maxWidth = CommonUtils.getCssValue(value);
+                }
+            });
+        });
+    }
+
+    private _minWidth: string = "120px";
+
+    /**
+     * 用于多选时设置最小宽度
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get minWidth(): string {
+        return this._minWidth;
+    }
+
+    public set minWidth(value: string) {
+        this._minWidth = CommonUtils.getCssValue(value);
+    }
+    private _maxWidth: string = "100%";
+
+    /**
+     * 用于多选时设置最大宽度
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get maxWidth(): string {
+        return this._maxWidth;
+    }
+
+    public set maxWidth(value: string) {
+        this._maxWidth = CommonUtils.getCssValue(value);
+    }
+
+    /**
+     * 选项宽度
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public optionWidth: string;
+
+    /**
+     * 选项高度
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public optionHeight: string;
+
+    /**
+     * 显示的option个数，超出的会显示滚动条
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = select/option-count
+     */
+    @Input()
+    public optionCount: number;
+
     /**
      * 设置对象的标识
      *
@@ -57,6 +138,60 @@ export abstract class JigsawSelectBase
      */
     @Input()
     public multipleSelect: boolean = false;
+
+    /**
+     * 选择结果框的清除按钮的显示与隐藏
+     * $demo = select/clearable
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearable: boolean;
+
+    /**
+     * placeholder文本
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public placeholder: string;
+
+    /**
+     * 设置多选框显示详细结果/统计结果
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public overall: boolean = true;
+
+    /**
+     * 搜索开关
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = select/searchable
+     */
+    @Input()
+    public searchable: boolean;
+
+    /**
+     * 打开下拉的触发方式
+     *
+     * $demo = select/trigger
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public openTrigger: "click" | "mouseenter" = "click";
+
+    /**
+     * 关闭下拉的触发方式
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = select/trigger
+     */
+    @Input()
+    public closeTrigger: "click" | "mouseleave" = "mouseleave";
 
     /**
      * 已选选项
@@ -125,84 +260,6 @@ export abstract class JigsawSelectBase
 
     public registerOnTouched(fn: any): void {}
 
-    /* xxxxxxxxxxxxxxxxxxxxxx */
-    protected _width: string = "120px";
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get width(): string {
-        return this._width;
-    }
-
-    public set width(value: string) {
-        this._width = CommonUtils.getCssValue(value);
-        this.runAfterMicrotasks(() => {
-            this._zone.run(() => {
-                if (this.multipleSelect) {
-                    this.minWidth = CommonUtils.getCssValue(value);
-                    this.maxWidth = CommonUtils.getCssValue(value);
-                }
-            });
-        });
-    }
-    private _minWidth: string = "120px";
-
-    /**
-     * 用于多选时设置最小宽度
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get minWidth(): string {
-        return this._minWidth;
-    }
-
-    public set minWidth(value: string) {
-        this._minWidth = CommonUtils.getCssValue(value);
-    }
-    private _maxWidth: string = "100%";
-    /**
-     * 用于多选时设置最大宽度
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get maxWidth(): string {
-        return this._maxWidth;
-    }
-
-    public set maxWidth(value: string) {
-        this._maxWidth = CommonUtils.getCssValue(value);
-    }
-    /* xxxxxxxxxxxxxxxxxxxxxx */
-
-    /**
-     * 选择结果框的清除按钮的显示与隐藏
-     * $demo = select/clearable
-     */
-    @RequireMarkForCheck()
-    @Input()
-    public clearable: boolean;
-
-    /**
-     * placeholder文本
-     *
-     * @internal
-     */
-    @RequireMarkForCheck()
-    @Input()
-    public placeholder: string;
-
-    /**
-     * 设置多选框显示详细结果/统计结果
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public overall: boolean = true;
-
     /**
      * 全选
      *
@@ -240,57 +297,6 @@ export abstract class JigsawSelectBase
     public _$listShowAll() {
         this._$listFilter = false;
     }
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public optionWidth: string;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public optionHeight: string;
-
-    /**
-     * 显示的option个数，超出的会显示滚动条
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = select/option-count
-     */
-    @Input()
-    public optionCount: number;
-
-    /**
-     * 搜索开关
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = select/searchable
-     */
-    @Input()
-    public searchable: boolean;
-
-    /**
-     * 打开下拉的触发方式
-     *
-     * $demo = select/trigger
-     */
-    @RequireMarkForCheck()
-    @Input()
-    public openTrigger: "click" | "mouseenter" = "click";
-
-    /**
-     * 关闭下拉的触发方式
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = select/trigger
-     */
-    @Input()
-    public closeTrigger: "click" | "mouseleave" = "click";
 
     protected _data: ArrayCollection<object>;
     protected vaildData: any[];
@@ -364,8 +370,6 @@ export abstract class JigsawSelectBase
         this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
-    /* xxxxxxxxxxxxxxxxxxxxxx */
-    /* xxxxxxxxxxxxxxxxxxxxxx */
 }
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     constructor(
