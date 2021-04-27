@@ -7,9 +7,9 @@ import { JigsawSelectGroupBase } from "./select-base";
     templateUrl: "select.html",
     host: {
         "[class.jigsaw-select-group-host]": "true",
-        "[class.jigsaw-select-group-single]": "!multipleSelect",
-        "[class.jigsaw-select-group-multiple]": "multipleSelect",
-        "[class.jigsaw-select-group-show-overall]": "overall",
+        "[class.jigsaw-select-single]": "!multipleSelect",
+        "[class.jigsaw-select-multiple]": "multipleSelect",
+        "[class.jigsaw-select-show-overall]": "overall",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'
@@ -35,9 +35,9 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase {
     templateUrl: "select.html",
     host: {
         "[class.jigsaw-select-collapse-host]": "true",
-        "[class.jigsaw-select-collapse-single]": "!multipleSelect",
-        "[class.jigsaw-select-collapse-multiple]": "multipleSelect",
-        "[class.jigsaw-select-collapse-show-overall]": "overall",
+        "[class.jigsaw-select-single-select]": "!multipleSelect",
+        "[class.jigsaw-select-multiple-select]": "multipleSelect",
+        "[class.jigsaw-select-show-overall]": "overall",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'

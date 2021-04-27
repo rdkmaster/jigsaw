@@ -6,6 +6,8 @@ import { JigsawCheckBoxModule } from "../checkbox";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
 
 @NgModule({
     imports: [
@@ -13,11 +15,34 @@ import { JigsawCollapseModule } from "../collapse/collapse";
         JigsawListLiteModule,
         JigsawListModule,
         JigsawCheckBoxModule,
-        JigsawCollapseModule
+        JigsawCollapseModule,
+        TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
     exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse]
 })
-export class JigsawSelectModule {}
+export class JigsawSelectModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, "select", {
+            zh: {
+                selectAll: "全选",
+                checkSelected: "查看已选",
+                return: "返回",
+                allSelected: "全部",
+                selected: "已选择",
+                itemUnit: "项"
+            },
+            en: {
+                selectAll: "All",
+                checkSelected: "Check Selected",
+                return: "All",
+                allSelected: "All Selected",
+                selected: "You have selected",
+                itemUnit: "items"
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
+}
 export * from "./select";
 export * from "./select-group";
