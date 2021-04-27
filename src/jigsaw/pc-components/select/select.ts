@@ -2,22 +2,13 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    EventEmitter,
     forwardRef,
-    Input,
     NgZone,
     OnInit,
-    Output,
-    ViewChild,
-    Injector,
-    Directive
+    Injector
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
-import { ArrayCollection } from "../../common/core/data/array-collection";
-import { JigsawListLite } from "../list-and-tile/list-lite";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { CommonUtils } from "../../common/core/utils/common-utils";
-import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { JigsawSelectBase } from "./select-base";
 
 /**
@@ -55,6 +46,8 @@ export class JigsawSelect extends JigsawSelectBase implements OnInit {
     ) {
         super(_changeDetector, _injector);
     }
+
+    public render = "normal";
 
     ngOnInit() {
         super.ngOnInit();

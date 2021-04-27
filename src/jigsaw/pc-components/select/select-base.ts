@@ -337,6 +337,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$handleClearable(selectedItems: any[]) {
+        console.log(this._$selectedItems);
         if (!this.clearable) {
             return;
         }
@@ -365,4 +366,45 @@ export abstract class JigsawSelectBase
     }
     /* xxxxxxxxxxxxxxxxxxxxxx */
     /* xxxxxxxxxxxxxxxxxxxxxx */
+}
+export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
+    constructor(
+        protected _zone: NgZone,
+        protected _changeDetector: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector
+    ) {
+        super(_changeDetector, _injector);
+    }
+
+    /**
+     * 设置组名的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public groupField: string = "groupName";
+
+    protected _data: ArrayCollection<object>;
+    protected vaildData: any[];
+    public _$allOptions: any[];
+
+    /**
+     * 提供选择的数据集合
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get data(): ArrayCollection<object> | object[] {
+        return this._data;
+    }
+
+    public set data(value: ArrayCollection<object> | object[]) {
+        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        this._$allOptions = [];
+        value.forEach(item => {
+            this._$allOptions = this._$allOptions.concat(item["data"]);
+        });
+        this.vaildData = this._$allOptions.filter(item => item["disabled"] !== true);
+    }
 }

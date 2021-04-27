@@ -24,7 +24,7 @@
             [data]="data"
             [labelField]="labelField"
             [trackItemBy]="trackItemBy"
-            [multipleSelect]="multipleSelect"n
+            [multipleSelect]="multipleSelect"
             [optionCount]="optionCount"
             [(selectedItems)]="_$selectedItems"
             (selectedItemsChange)="_$handleSelectChange($event)"
@@ -41,14 +41,38 @@
                     <span>返回</span>
                 </div>
             </div>
-            <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled">
-                <jigsaw-checkbox
-                    *ngIf="multipleSelect"
-                    [disabled]="item.disabled"
-                    [(checked)]="listItem.selected"
-                ></jigsaw-checkbox>
-                <span>{{item && item[labelField] ? item[labelField] : item}}</span>
-            </jigsaw-list-option>
+            <ng-container *ngIf="!groupField">
+                <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled">
+                    <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected">
+                    </jigsaw-checkbox>
+                    <span>{{item && item[labelField] ? item[labelField] : item}}</span>
+                </jigsaw-list-option>
+            </ng-container>
+            <ng-container *ngIf="!!groupField">
+                <jigsaw-collapse
+                    [ngClass]="{'jigsaw-select-group-option-cntr': type == 'group',
+                                'jigsaw-select-collapse-option-cntr': type =='collapse'}"
+                >
+                    <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data">
+                        <div j-title class="jigsaw-select-option-title">{{group[groupField]}}</div>
+                        <div j-body>
+                            <jigsaw-list-option
+                                #listItem
+                                *ngFor="let item of group.data"
+                                [value]="item"
+                                [disabled]="item.disabled"
+                            >
+                                <jigsaw-checkbox
+                                    *ngIf="multipleSelect"
+                                    [disabled]="item.disabled"
+                                    [(checked)]="listItem.selected"
+                                ></jigsaw-checkbox>
+                                <span>{{item && item[labelField] ? item[labelField] : item}}</span>
+                            </jigsaw-list-option>
+                        </div>
+                    </jigsaw-collapse-pane>
+                </jigsaw-collapse>
+            </ng-container>
         </jigsaw-list>
     </ng-template>
     <div

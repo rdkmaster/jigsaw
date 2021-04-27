@@ -4,9 +4,8 @@ import { NgModule } from "@angular/core";
 import { JigsawSelect } from "./select";
 import { JigsawCheckBoxModule } from "../checkbox";
 import { JigsawListModule } from "../list-and-tile/list";
-import { JigsawSelectGroup } from "./select-group";
+import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
-import { JigsawSelectCollapse } from "./select-collapse";
 
 @NgModule({
     imports: [
@@ -21,5 +20,4 @@ import { JigsawSelectCollapse } from "./select-collapse";
 })
 export class JigsawSelectModule {}
 export * from "./select";
-export * from "./select-collapse";
 export * from "./select-group";

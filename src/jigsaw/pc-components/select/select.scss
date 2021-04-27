@@ -2,13 +2,20 @@
 
 $select-prefix-cls: #{$jigsaw-prefix}-select;
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
+$jigsaw-select-collapse: #{$jigsaw-prefix}-select-collapse;
+$jigsaw-select-group: #{$jigsaw-prefix}-select-group;
+$jigsaw-tag: #{$jigsaw-prefix}-tag;
+$jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
+$jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 
-.#{$select-prefix-cls}-host {
+.#{$select-prefix-cls}-host,
+.#{$jigsaw-select-collapse}-host,
+.#{$jigsaw-select-group}-host {
     @include inline-block();
 
     &.#{$select-prefix-cls}-single-select {
         .#{$jigsaw-combo-select}-host {
-            .jigsaw-tag-host {
+            .#{$jigsaw-tag}-host {
                 padding: 0;
                 max-width: 100%;
                 background: none;
@@ -33,15 +40,24 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         }
 
         &.#{$select-prefix-cls}-show-overall {
-            .jigsaw-combo-select {
-                .jigsaw-combo-select-selection {
-                    .jigsaw-combo-select-selection-rendered {
+            .#{$jigsaw-combo-select} {
+                .#{$jigsaw-combo-select}-selection {
+                    .#{$jigsaw-combo-select}-selection-rendered {
                         jigsaw-tag {
                             display: none;
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+.#{$select-prefix-cls}-single-list {
+    .#{$jigsaw-select-collapse}-option-cntr,
+    .#{$jigsaw-select-group}-option-cntr {
+        jigsaw-list-option {
+            padding-left: 16px;
         }
     }
 }
@@ -55,11 +71,11 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         cursor: pointer;
         jigsaw-checkbox {
             margin: 0 16px 0 8px;
-            .jigsaw-checkbox-wrapper {
+            .#{$jigsaw-checkbox}-wrapper {
                 .jigsaw-checkbox {
                     margin-right: 6px;
                 }
-                .jigsaw-checkbox-label {
+                .#{$jigsaw-checkbox}-label {
                     margin: 0;
                     padding: 0;
                 }
@@ -105,6 +121,53 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     &.#{$select-prefix-cls}-list-filter {
         jigsaw-list-option:not(.jigsaw-list-option-active) {
             display: none;
+        }
+    }
+}
+
+.#{$select-prefix-cls}-single-list,
+.#{$select-prefix-cls}-multiple-list {
+    .#{$jigsaw-select-collapse}-option-cntr,
+    .#{$jigsaw-select-group}-option-cntr {
+        .#{$jigsaw-collapse} {
+            .#{$jigsaw-collapse}-pane {
+                .#{$jigsaw-collapse}-item {
+                    .#{$jigsaw-collapse}-header {
+                        padding-left: 8px;
+
+                        .#{$select-prefix-cls}-option-title {
+                            font-size: $font-title-med;
+                            color: $font-color-heading;
+                        }
+                    }
+                    .#{$jigsaw-collapse}-content {
+                        .#{$jigsaw-collapse}-padding {
+                            padding: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .#{$jigsaw-select-group}-option-cntr {
+        .#{$jigsaw-collapse} {
+            .#{$jigsaw-collapse}-pane {
+                .#{$jigsaw-collapse}-item {
+                    .#{$jigsaw-collapse}-header {
+                        pointer-events: none;
+
+                        .#{$jigsaw-collapse}-arrow {
+                            display: none;
+                        }
+
+                        .#{$jigsaw-select-collapse}-name {
+                            font-size: $font-title-sm;
+                            color: $font-color-watermark;
+                        }
+                    }
+                }
+            }
         }
     }
 }
