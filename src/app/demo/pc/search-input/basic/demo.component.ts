@@ -6,9 +6,8 @@ import { JigsawSearchInput } from "jigsaw/public_api";
     styleUrls: ["./demo.component.scss"]
 })
 export class SearchInputBasicDemoComponent {
-    public searchTrigger($event) {
-        console.log("demo search event:", $event);
-    }
+    value1: string;
+    value2: string;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

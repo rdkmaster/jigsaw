@@ -4,8 +4,13 @@
 <!-- start to learn the demo from here -->
 
 <jigsaw-header>自动搜索</jigsaw-header>
-<jigsaw-search-input #first width="200px" (search)="searchTrigger($event)" [searchDebounce]="1000">
-</jigsaw-search-input>
+<jigsaw-search-input width="200px" (search)="value1 = $event" [searchDebounce]="1000">
+</jigsaw-search-input><div>
+    {{ " 搜索值为：" + value1 }}
+</div>
 
 <jigsaw-header>手动搜索</jigsaw-header>
-<jigsaw-search-input width="200px" [autoSearch]="false" (search)="searchTrigger($event)"> </jigsaw-search-input>
+<jigsaw-search-input width="200px" [autoSearch]="false" (search)="value2 = $event">
+</jigsaw-search-input><div>
+    {{ " 搜索值为：" + value2 }}
+</div>

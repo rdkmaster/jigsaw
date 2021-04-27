@@ -9,11 +9,10 @@
     <jigsaw-numeric-input
         width="120px"
         [(value)]="debounceTime"
-        min="1000"
-        step="1000"
+        min="0"
+        step="500"
         suffix="ms"
     ></jigsaw-numeric-input>
-    <jigsaw-button (click)="resetTime()">重置</jigsaw-button>
 </div>
 <jigsaw-search-input #first width="200px" (search)="searchTrigger($event)" [searchDebounce]="debounceTime">
 </jigsaw-search-input>

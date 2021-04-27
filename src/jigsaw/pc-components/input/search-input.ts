@@ -48,12 +48,13 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public placeholder: string = this._translateService.instant("search.search");
 
+    @Input()
     public value: string;
+
+    private _valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
     public search: EventEmitter<string> = new EventEmitter<string>();
-
-    private _valueChangeEvent = new EventEmitter();
 
     /**
      * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
@@ -80,7 +81,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }
         if (this._isValidSearchDebounce()) {
             this._debounceSearch();
-            this._valueChangeEvent.emit($event);
+            this._valueChange.emit($event);
         } else {
             this.search.emit($event);
         }
@@ -101,7 +102,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
             return;
         }
 
-        this._valueChangeSubscription = this._valueChangeEvent
+        this._valueChangeSubscription = this._valueChange
             .pipe(debounceTime(Number(this.searchDebounce)))
             .subscribe(() => {
                 this.search.emit(this.value);
@@ -119,7 +120,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$searchBtnClicked($event) {
+    public _$searchBtnClicked() {
         this.search.emit(this.value);
     }
 
