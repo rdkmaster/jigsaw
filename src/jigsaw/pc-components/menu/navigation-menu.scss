@@ -49,7 +49,14 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-submenus {
+                border: none;
+                background: $bg-gray;
                 overflow: hidden;
+
+                &-actived {
+                    border-top: 1px solid $border-color-default;
+                    border-bottom: 1px solid $border-color-default;
+                }
 
                 .#{$nav-menu-prefix-cls}-sub-item {
                     position: relative;
@@ -70,15 +77,24 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     &:hover {
                         background: $brand-light;
                     }
+
+                    &.#{$nav-menu-prefix-cls}-sub-item-selected {
+                        background-color: $bg-body;
+                        color: $brand-default;
+                    }
+
+                    &.#{$nav-menu-prefix-cls}-sub-item-collapsed {
+                        width: 40px !important;
+                        padding-left: 16px;
+
+                        span {
+                            display: none;
+                        }
+                    }
                 }
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background-color: $bg-body;
-                color: $brand-default;
-            }
-
-            .#{$nav-menu-prefix-cls}-sub-item-selected {
                 background-color: $bg-body;
                 color: $brand-default;
             }
@@ -218,56 +234,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
         .#{$nav-menu-prefix-cls}-toggle-button-arrow {
             @include prefixer(transform, rotate(180deg));
-        }
-    }
-
-    &-detail {
-        .#{$nav-menu-prefix-cls}-item {
-            position: relative;
-            width: 240px;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            padding-left: 14px;
-            font-size: 14px;
-            background: $bg-container;
-            cursor: pointer;
-            border: 1px solid $border-color-default;
-
-            i {
-                margin-right: 16px;
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-submenus {
-            overflow: hidden;
-            position: absolute;
-            left: 40px;
-            width: calc(100% - 40px);
-            min-width: 40px;
-            background: $bg-container;
-            font-size: 14px;
-            border: 1px solid $border-color-default;
-            border-top: none;
-
-            .#{$nav-menu-prefix-cls}-sub-item {
-                position: relative;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                padding-left: 35px;
-                font-size: 14px;
-                font-weight: 400;
-                cursor: pointer;
-
-                &:hover {
-                    background: $brand-light;
-                }
-            }
-
-            .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $bg-body;
-            }
         }
     }
 }
