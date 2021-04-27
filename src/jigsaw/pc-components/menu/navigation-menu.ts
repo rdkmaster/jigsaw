@@ -14,7 +14,6 @@ import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateHelper } from 'jigsaw/common/core/utils/translate-helper';
 
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
@@ -31,8 +30,7 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     protected _width: string = '200px';
 
     constructor(// @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector, private _cdr: ChangeDetectorRef,
-        private _translateService: TranslateService,) {
+        protected _injector: Injector, private _cdr: ChangeDetectorRef) {
         super();
     }
 
