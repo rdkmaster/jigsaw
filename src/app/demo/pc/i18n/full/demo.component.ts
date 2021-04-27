@@ -3,7 +3,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {HttpClient} from "@angular/common/http";
 import {
     TranslateHelper, ButtonInfo, LocalPageableTableData, ArrayCollection,
-    TimeGr, TimeService
+    TimeGr, TimeService, SimpleTreeData
 } from "jigsaw/public_api";
 
 @Component({
@@ -63,6 +63,25 @@ export class I18nFullDemoComponent {
         // 触发一次改变语言的动作。注意如果把设置国际化词条的动作移动到模块构造函数中去，
         // 则下面这行代码是不需要的。
         this.changeLang('zh');
+
+        this.navigationMenuData.fromXML(`
+            <node>
+                <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
+                    <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8"></node>
+                    <node label="告警统计"></node>
+                    <node label="定时导出" icon="iconfont iconfont-e601"></node>
+                    <node label="告警同步"></node>
+                    <node label="告警提示" icon="iconfont iconfont-e52a"></node>
+                </node>
+                <node label="历史告警" icon="iconfont iconfont-e5f7">
+                    <node label="告警查询"></node>
+                </node>
+                <node label="通知" icon="iconfont iconfont-e605">
+                    <node label="通知监控"></node>
+                </node>
+                <node label="告警设置" icon="iconfont iconfont-e36f"></node>
+            </node>
+        `);
     }
 
     infoInitData = {
@@ -103,6 +122,7 @@ export class I18nFullDemoComponent {
         ];
     }
 
+    public navigationMenuData: SimpleTreeData = new SimpleTreeData();
     beginDate = TimeService.getFormatDate('now-7d', TimeGr.date);
     endDate = TimeService.getFormatDate('now', TimeGr.date);
     rangeTimeComboValue = new ArrayCollection([
