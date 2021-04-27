@@ -6,7 +6,7 @@
             <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </jigsaw-input>
 
-        <div *ngIf="mode=='complex' && complexMode!=='folding'" class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
+        <div *ngIf="mode == 'complex'" class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)">
         </div>
         <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02e"
@@ -17,7 +17,7 @@
         <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02f"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()">
         </div>
-        <div *ngIf="mode=='complex' && complexMode!=='folding'" class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
+        <div *ngIf="mode == 'complex'" class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(data?.pagingInfo?.totalPage)">
         </div>
 
