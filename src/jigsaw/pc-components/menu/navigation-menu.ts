@@ -13,7 +13,6 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
@@ -48,13 +47,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         if (CommonUtils.isUndefined(value) || CommonUtils.isUndefined(value.nodes)) {
             return;
         }
-        value.nodes.forEach(item => {
-            item.nodes.forEach(subItem => {
-                if (!subItem.icon) {
-                    subItem.icon = "iconfont iconfont-e231"
-                }
-            });
-        });
         this._data = value;
         if (this._removeDataRefresh) {
             this._removeDataRefresh();

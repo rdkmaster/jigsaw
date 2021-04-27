@@ -50,6 +50,13 @@ export class I18nFullDemoComponent {
             dialogButtonCancel: '退出',
             dialogTitle: '创建任务',
             dialogContent: '创建任务成功',
+            curWarn: '当前告警',
+            warnStatic: '告警统计',
+            exportSchedule: '定时导出',
+            syncWarn: '告警同步',
+            warnHint: '告警提示',
+            warnHistory: '历史告警',
+            warnQuery: '告警查询'
         }, true);
         translateService.setTranslation('en', {
             desc: 'A complete example shows how to use i18n with Jigsaw.',
@@ -59,29 +66,18 @@ export class I18nFullDemoComponent {
             dialogButtonCancel: 'Cancel',
             dialogTitle: 'Create Task',
             dialogContent: 'Create task success',
+            curWarn: 'Current Warn',
+            warnStatic: 'Warn Static',
+            exportSchedule: 'Export Schedule',
+            syncWarn: 'Warn Synchronize',
+            warnHint: 'Warn Hint',
+            warnHistory: 'Warn History',
+            warnQuery: 'Warn Query'
         }, true /* shouldMerge参数必须是true */);
         // 触发一次改变语言的动作。注意如果把设置国际化词条的动作移动到模块构造函数中去，
         // 则下面这行代码是不需要的。
         this.changeLang('zh');
-
-        this.navigationMenuData.fromXML(`
-            <node>
-                <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
-                    <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8"></node>
-                    <node label="告警统计"></node>
-                    <node label="定时导出" icon="iconfont iconfont-e601"></node>
-                    <node label="告警同步"></node>
-                    <node label="告警提示" icon="iconfont iconfont-e52a"></node>
-                </node>
-                <node label="历史告警" icon="iconfont iconfont-e5f7">
-                    <node label="告警查询"></node>
-                </node>
-                <node label="通知" icon="iconfont iconfont-e605">
-                    <node label="通知监控"></node>
-                </node>
-                <node label="告警设置" icon="iconfont iconfont-e36f"></node>
-            </node>
-        `);
+        this._updateNavigatonData();
     }
 
     infoInitData = {
@@ -104,6 +100,7 @@ export class I18nFullDemoComponent {
 
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this.translateService, lang);
+        this._updateNavigatonData();
         this.infoInitData = {
             message: this.translateService.instant('alertText')
         };
@@ -129,6 +126,22 @@ export class I18nFullDemoComponent {
         {label: this.beginDate, closable: false},
         {label: this.endDate, closable: false}
     ]);
+
+    private _updateNavigatonData() {
+        this.navigationMenuData.fromXML(`
+            <node>
+                <node label="${this.translateService.instant('curWarn')}" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
+                    <node label="${this.translateService.instant('warnStatic')}" selected="true" icon="iconfont iconfont-e2d8"></node>
+                    <node label="${this.translateService.instant('exportSchedule')}"></node>
+                    <node label="${this.translateService.instant('syncWarn')}" icon="iconfont iconfont-e601"></node>
+                    <node label="${this.translateService.instant('warnHint')}"></node>
+                </node>
+                <node label="${this.translateService.instant('warnHistory')}" icon="iconfont iconfont-e5f7">
+                    <node label="${this.translateService.instant('warnQuery')}"></node>
+                </node>
+            </node>
+        `);
+    }
 
     handleRangeDateChange() {
         this.rangeTimeComboValue[0].label = this.beginDate;
