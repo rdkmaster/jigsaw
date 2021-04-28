@@ -1,12 +1,12 @@
 import { Component, NgModule, Input, Output, EventEmitter, forwardRef } from "@angular/core";
-import { AbstractJigsawComponent } from "jigsaw/common/common";
-import { JigsawInputModule } from "./input";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
-import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+import { AbstractJigsawComponent } from "jigsaw/common/common";
+import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
+import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
+import { JigsawInputModule } from "./input";
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
