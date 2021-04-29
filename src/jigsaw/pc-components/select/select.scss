@@ -69,37 +69,57 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
         height: 32px;
         border-bottom: 1px solid $splitline-default;
         cursor: pointer;
-        jigsaw-checkbox {
+
+        .#{$jigsaw-checkbox}-host {
             margin: 0 16px 0 8px;
             .#{$jigsaw-checkbox}-wrapper {
-                .jigsaw-checkbox {
+                display: flex;
+                align-items: center;
+                .#{$jigsaw-checkbox} {
                     margin-right: 6px;
                 }
                 .#{$jigsaw-checkbox}-label {
                     margin: 0;
                     padding: 0;
+
+                    span {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
                 }
             }
         }
+
         .#{$select-prefix-cls}-show-selected {
             display: flex;
             align-items: center;
             color: $brand-default;
             user-select: none;
             cursor: pointer;
+
             &:hover {
                 color: $brand-active;
             }
+
+            span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
+
         .#{$select-prefix-cls}-show-all {
             display: flex;
             align-items: center;
             padding: 0 0 0 8px;
             color: $brand-default;
+
             i {
                 margin-right: 4px;
                 font-size: $icon-size-sm;
             }
+
             &:hover {
                 color: $brand-active;
             }
@@ -118,7 +138,7 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
             }
         }
     }
-    &.#{$select-prefix-cls}-list-filter {
+    &.#{$select-prefix-cls}-show-selected {
         jigsaw-list-option:not(.jigsaw-list-option-active) {
             display: none;
         }

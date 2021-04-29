@@ -18,7 +18,7 @@
 >
     <ng-template>
         <jigsaw-list
-            [ngClass]="{'jigsaw-select-list-filter': _$showSelected,
+            [ngClass]="{'jigsaw-select-show-selected': _$showSelected,
                         'jigsaw-select-multiple-list': multipleSelect,
                         'jigsaw-select-single-list': !multipleSelect}"
             [data]="data"
@@ -82,7 +82,7 @@
         {{'select.allSelected' | translate}}
     </div>
     <div
-        *ngIf="multipleSelect && overall && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
+        *ngIf="multipleSelect && overall && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
         class="jigsaw-select-overall"
     >
         {{('select.selected' | translate) + _$selectedItems?.length + ('select.itemUnit' | translate) }}

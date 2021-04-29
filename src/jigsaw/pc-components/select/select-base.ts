@@ -191,7 +191,7 @@ export abstract class JigsawSelectBase
      * $demo = select/trigger
      */
     @Input()
-    public closeTrigger: "click" | "mouseleave" = "mouseleave";
+    public closeTrigger: "click" | "mouseleave" = "click";
 
     /**
      * 已选选项
@@ -200,7 +200,7 @@ export abstract class JigsawSelectBase
      */
     public _$selectedItems: ArrayCollection<any> | any[];
 
-    public _value: any;
+    private _value: any;
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
@@ -277,11 +277,7 @@ export abstract class JigsawSelectBase
         this._changeDetector.markForCheck();
     }
     public _$checkSelectAll() {
-        if (this._$selectedItems.length === this.validData.length) {
-            this._$selectAllChecked = true;
-        } else {
-            this._$selectAllChecked = false;
-        }
+        this._$selectAllChecked = this._$selectedItems.length === this.validData.length;
         this._changeDetector.markForCheck();
     }
 
