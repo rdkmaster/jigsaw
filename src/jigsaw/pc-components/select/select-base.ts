@@ -299,7 +299,7 @@ export abstract class JigsawSelectBase
     }
 
     protected _data: ArrayCollection<object>;
-    protected vaildData: any[];
+    public vaildData: any[];
 
     /**
      * 提供选择的数据集合
@@ -390,7 +390,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public groupField: string = "groupName";
 
     protected _data: ArrayCollection<object>;
-    protected vaildData: any[];
+    public vaildData: any[];
     public _$allOptions: any[];
 
     /**
