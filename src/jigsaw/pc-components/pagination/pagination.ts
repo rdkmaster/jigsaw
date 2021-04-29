@@ -308,13 +308,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 根据current控制page显示
      * */
     private _pageShow(): void {
-        let _showPages: number[] = [];
+        let showPages: number[] = [];
         if (this.mode === "folding") {
             if (this._totalPage > 10) {
                 if (this.current <= 3) {
-                    _showPages = [1, 2, 3, 4, 5, this._totalPage];
+                    showPages = [1, 2, 3, 4, 5, this._totalPage];
                 } else if (this.current >= this._totalPage - 2) {
-                    _showPages = [
+                    showPages = [
                         1,
                         this._totalPage - 4,
                         this._totalPage - 3,
@@ -323,10 +323,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                         this._totalPage
                     ];
                 } else {
-                    _showPages = [1, this.current - 1, this.current, this.current + 1, this._totalPage];
+                    showPages = [1, this.current - 1, this.current, this.current + 1, this._totalPage];
                 }
                 this._pages.forEach(page => {
-                    _showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
+                    showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
                 });
             } else {
                 this._pages.forEach(page => {
@@ -336,7 +336,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         } else {
             if (this._totalPage > 5) {
                 if (this.current >= this._totalPage - 2) {
-                    _showPages = [
+                    showPages = [
                         this._totalPage - 4,
                         this._totalPage - 3,
                         this._totalPage - 2,
@@ -344,9 +344,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                         this._totalPage
                     ];
                 } else if (this.current <= 3) {
-                    _showPages = [1, 2, 3, 4, 5];
+                    showPages = [1, 2, 3, 4, 5];
                 } else {
-                    _showPages = [
+                    showPages = [
                         this.current - 2,
                         this.current - 1,
                         this.current,
@@ -355,7 +355,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                     ];
                 }
                 this._pages.forEach(page => {
-                    _showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
+                    showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
                 });
             } else {
                 this._pages.forEach(page => {
