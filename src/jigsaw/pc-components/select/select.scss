@@ -2,15 +2,15 @@
 
 $select-prefix-cls: #{$jigsaw-prefix}-select;
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
-$jigsaw-select-collapse: #{$jigsaw-prefix}-select-collapse;
-$jigsaw-select-group: #{$jigsaw-prefix}-select-group;
+$jigsaw-collapse-select: #{$jigsaw-prefix}-collapse-select;
+$jigsaw-group-select: #{$jigsaw-prefix}-group-select;
 $jigsaw-tag: #{$jigsaw-prefix}-tag;
 $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
 $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 
 .#{$select-prefix-cls}-host,
-.#{$jigsaw-select-collapse}-host,
-.#{$jigsaw-select-group}-host {
+.#{$jigsaw-collapse-select}-host,
+.#{$jigsaw-group-select}-host {
     @include inline-block();
 
     &.#{$select-prefix-cls}-single-select {
@@ -54,8 +54,8 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 }
 
 .#{$select-prefix-cls}-single-list {
-    .#{$jigsaw-select-collapse}-option-cntr,
-    .#{$jigsaw-select-group}-option-cntr {
+    .#{$jigsaw-collapse-select}-option-cntr,
+    .#{$jigsaw-group-select}-option-cntr {
         jigsaw-list-option {
             padding-left: 16px;
         }
@@ -127,8 +127,8 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 
 .#{$select-prefix-cls}-single-list,
 .#{$select-prefix-cls}-multiple-list {
-    .#{$jigsaw-select-collapse}-option-cntr,
-    .#{$jigsaw-select-group}-option-cntr {
+    .#{$jigsaw-collapse-select}-option-cntr,
+    .#{$jigsaw-group-select}-option-cntr {
         .#{$jigsaw-collapse} {
             .#{$jigsaw-collapse}-pane {
                 .#{$jigsaw-collapse}-item {
@@ -150,7 +150,7 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
         }
     }
 
-    .#{$jigsaw-select-group}-option-cntr {
+    .#{$jigsaw-group-select}-option-cntr {
         .#{$jigsaw-collapse} {
             .#{$jigsaw-collapse}-pane {
                 .#{$jigsaw-collapse}-item {
@@ -161,7 +161,7 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
                             display: none;
                         }
 
-                        .#{$jigsaw-select-collapse}-name {
+                        .#{$jigsaw-collapse-select}-name {
                             font-size: $font-title-sm;
                             color: $font-color-watermark;
                         }

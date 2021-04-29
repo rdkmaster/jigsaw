@@ -3,27 +3,27 @@
 
 <!-- start to learn the demo from here -->
 <jigsaw-header>分组下拉（单选）</jigsaw-header>
-<jigsaw-select-group [data]="dataListWithoutDisabled" placeholder="请选择" width="160px"></jigsaw-select-group>
-<jigsaw-select-group [data]="dataList" placeholder="请选择" width="160px"></jigsaw-select-group>
+<jigsaw-group-select [data]="dataListWithoutDisabled" placeholder="请选择" width="160px"></jigsaw-group-select>
+<jigsaw-group-select [data]="dataList" placeholder="请选择" width="160px"></jigsaw-group-select>
 
 <jigsaw-header>分组下拉（多选）</jigsaw-header>
-<jigsaw-select-group
+<jigsaw-group-select
     [data]="dataListWithoutDisabled"
     [multipleSelect]="true"
     placeholder="请选择"
     width="160px"
-></jigsaw-select-group>
-<jigsaw-select-group [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px"></jigsaw-select-group>
+></jigsaw-group-select>
+<jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px"></jigsaw-group-select>
 
 <jigsaw-header>分组下拉（多选 & 展开结果）</jigsaw-header>
-<jigsaw-select-group
+<jigsaw-group-select
     [data]="dataListWithoutDisabled"
     [multipleSelect]="true"
     [overall]="false"
     placeholder="请选择"
     width="160px"
-></jigsaw-select-group>
-<jigsaw-select-group
+></jigsaw-group-select>
+<jigsaw-group-select
     [data]="dataList"
     [multipleSelect]="true"
     [overall]="false"
@@ -31,10 +31,10 @@
     width="160px"
     maxWidth="100%"
     minWidth="160px"
-></jigsaw-select-group>
+></jigsaw-group-select>
 
 <jigsaw-header>分组下拉（自定义宽度）</jigsaw-header>
-<jigsaw-select-group
+<jigsaw-group-select
     [data]="dataList"
     [multipleSelect]="true"
     [overall]="false"
@@ -42,4 +42,4 @@
     width="160px"
     maxWidth="240px"
     minWidth="160px"
-></jigsaw-select-group>
+></jigsaw-group-select>

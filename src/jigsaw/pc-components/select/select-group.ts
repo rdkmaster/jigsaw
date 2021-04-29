@@ -3,10 +3,10 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { JigsawSelectGroupBase } from "./select-base";
 
 @Component({
-    selector: "jigsaw-select-group, j-select-group",
+    selector: "jigsaw-group-select, j-group-select",
     templateUrl: "select.html",
     host: {
-        "[class.jigsaw-select-group-host]": "true",
+        "[class.jigsaw-group-select-host]": "true",
         "[class.jigsaw-select-single]": "!multipleSelect",
         "[class.jigsaw-select-multiple]": "multipleSelect",
         "[class.jigsaw-select-show-overall]": "overall",
@@ -18,23 +18,19 @@ import { JigsawSelectGroupBase } from "./select-base";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelectGroup extends JigsawSelectGroupBase {
-    constructor(
-        protected _zone: NgZone,
-        protected _changeDetector: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector
-    ) {
-        super(_zone, _changeDetector, _injector);
-    }
 
-    public type = "group";
+
+    /**
+     * select分组下拉的类型，用于给float添加class进行样式控制
+     */
+    public _$type = "group";
 }
 
 @Component({
-    selector: "jigsaw-select-collapse, j-select-collapse",
+    selector: "jigsaw-collapse-select, j-select-collapse",
     templateUrl: "select.html",
     host: {
-        "[class.jigsaw-select-collapse-host]": "true",
+        "[class.jigsaw-collapse-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-overall]": "overall",
@@ -46,14 +42,10 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSelectCollapse extends JigsawSelectGroupBase {
-    constructor(
-        protected _zone: NgZone,
-        protected _changeDetector: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector
-    ) {
-        super(_zone, _changeDetector, _injector);
-    }
 
-    public type = "collapse";
+
+    /**
+     * select分组下拉的类型，用于给float添加class进行样式控制
+     */
+    public _$type = "collapse";
 }

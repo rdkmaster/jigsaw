@@ -47,8 +47,6 @@ export class JigsawSelect extends JigsawSelectBase implements OnInit {
         super(_changeDetector, _injector);
     }
 
-    public render = "normal";
-
     ngOnInit() {
         super.ngOnInit();
         // 设置默认选中的初始值

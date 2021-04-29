@@ -10,7 +10,7 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 export abstract class JigsawSelectBase
     extends AbstractJigsawComponent
     implements IJigsawFormControl, ControlValueAccessor {
-    protected constructor(
+    public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
         protected _zone?: NgZone
@@ -267,17 +267,17 @@ export abstract class JigsawSelectBase
      */
     public _$selectAllChecked: boolean = false;
     public _$selectAll() {
-        if (this._$selectedItems && this._$selectedItems.length === this.vaildData.length) {
+        if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
             this._$selectedItems = [];
             this._$selectAllChecked = false;
         } else {
-            this._$selectedItems = this.vaildData;
+            this._$selectedItems = this.validData;
             this._$selectAllChecked = true;
         }
         this._changeDetector.markForCheck();
     }
     public _$checkSelectAll() {
-        if (this._$selectedItems.length === this.vaildData.length) {
+        if (this._$selectedItems.length === this.validData.length) {
             this._$selectAllChecked = true;
         } else {
             this._$selectAllChecked = false;
@@ -286,20 +286,14 @@ export abstract class JigsawSelectBase
     }
 
     /**
-     * 查看已选
+     * 下拉显示已选选项
      *
      * @internal
      */
-    public _$listFilter: boolean = false;
-    public _$listShowSelected() {
-        this._$listFilter = true;
-    }
-    public _$listShowAll() {
-        this._$listFilter = false;
-    }
+    public _$showSelected: boolean = false;
 
     protected _data: ArrayCollection<object>;
-    public vaildData: any[];
+    public validData: any[];
 
     /**
      * 提供选择的数据集合
@@ -313,7 +307,7 @@ export abstract class JigsawSelectBase
 
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.vaildData = this._data.filter(item => item["disabled"] !== true);
+        this.validData = this._data.filter(item => item["disabled"] !== true);
     }
 
     /**
@@ -372,15 +366,6 @@ export abstract class JigsawSelectBase
     }
 }
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
-    constructor(
-        protected _zone: NgZone,
-        protected _changeDetector: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector
-    ) {
-        super(_changeDetector, _injector);
-    }
-
     /**
      * 设置组名的显示字段
      *
@@ -390,8 +375,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public groupField: string = "groupName";
 
     protected _data: ArrayCollection<object>;
-    public vaildData: any[];
-    public _$allOptions: any[];
+    public validData: any[];
 
     /**
      * 提供选择的数据集合
@@ -405,10 +389,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this._$allOptions = [];
-        value.forEach(item => {
-            this._$allOptions = this._$allOptions.concat(item["data"]);
-        });
-        this.vaildData = this._$allOptions.filter(item => item["disabled"] !== true);
+        let allOptions = [];
+        allOptions.push(...value.map((item: any) => { item.data }));
+        this.validData = allOptions.filter(item => item["disabled"] !== true);
     }
 }
