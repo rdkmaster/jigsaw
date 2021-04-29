@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, Output, EventEmitter, forwardRef } from "@angular/core";
+import { Component, NgModule, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -18,7 +18,8 @@ import { JigsawInputModule } from "./input";
         "[class.jigsaw-search-input-auto]": "autoSearch",
         "[class.jigsaw-search-input-disabled]": "disabled"
     },
-    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSearchInput), multi: true }]
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSearchInput), multi: true }],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSearchInput extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(private _translateService: TranslateService) {
@@ -48,8 +49,26 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public placeholder: string = this._translateService.instant("search.search");
 
+    public _value: string;
+
+    /**
+     * 文本框中当前的文本
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public value: string;
+    public get value(): string {
+        return this._value;
+    }
+
+    public set value(newValue: string) {
+        if (this._value === newValue) {
+            return;
+        }
+        this._value = newValue;
+        // 表单友好接口
+        this._propagateChange(this._value);
+    }
 
     private _valueChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -117,6 +136,11 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this._valueChangeSubscription = null;
     }
 
+    public _$onBlur($event) {
+        // 表单友好接口
+        this._onTouched();
+    }
+
     /**
      * @internal
      */
@@ -136,9 +160,20 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this.value = CommonUtils.isDefined(value) ? value.toString() : "";
     }
 
-    public registerOnChange(fn: any): void {}
+    /**
+     * 组件表单友好需支持接口
+     */
+    private _propagateChange: any = () => {};
 
-    public registerOnTouched(fn: any): void {}
+    public registerOnChange(fn: any): void {
+        this._propagateChange = fn;
+    }
+
+    private _onTouched: any = () => {};
+
+    public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
 
     ngOnDestroy() {
         super.ngOnDestroy();

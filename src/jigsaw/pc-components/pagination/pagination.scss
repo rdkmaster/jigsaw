@@ -1,6 +1,7 @@
 @import "../../common/assets/scss/core/base";
 
 $paging-prefix-cls: #{$jigsaw-prefix}-paging;
+$jigsaw-input: #{$jigsaw-prefix}-input;
 
 .#{$paging-prefix-cls}-small {
     --height-paging: #{$height-sm};
@@ -88,6 +89,10 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
 
     &-search {
         height: var(--height-paging);
+
+        .#{$jigsaw-input} {
+            height: var(--height-paging);
+        }
     }
 
     &-select {

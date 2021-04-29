@@ -26,6 +26,7 @@ import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { IPageable, PagingInfo } from "../../common/core/data/component-data";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { JigsawSearchInputModule, JigsawSearchInput } from "../input/search-input";
 
 export class PageSizeData {
     value: number;
@@ -152,22 +153,31 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public size: "small" | "medium" | "large" = "medium";
 
     /**
-     * 搜索框的提示信息
+     * search事件
      */
-    @RequireMarkForCheck()
-    @Input()
-    public placeholder: string = "";
+    @Output()
+    public search = new EventEmitter<string>();
+    public _$searchEvent($event) {
+        this.search.emit($event);
+    }
 
     /**
      * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
      * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
+     *
+     * @NoMarkForCheckRequired
      */
-    @RequireMarkForCheck()
     @Input()
     public searchDebounce: number | "none" = NaN;
 
-    @Output()
-    public search = new EventEmitter<string>();
+    /**
+     * 设置搜索模式（自动/手动）
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public autoSearch: boolean = true;
+
     /**
      * 页码改变的事件
      */
@@ -182,57 +192,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
 
-    @ViewChildren(JigsawInput)
-    public inputs: QueryList<JigsawInput>;
-
-    /**
-     * @internal
-     */
-    public _$searchKeyChange($event) {
-        if (this._isValidSearchDebounce()) {
-            // 输入3000ms没有回车也会发一次事件
-            this._debounceSearch($event);
-        } else {
-            this.search.emit($event);
-        }
-    }
-
-    private _isValidSearchDebounce() {
-        return Number(this.searchDebounce) > 0;
-    }
-
-    /**
-     * @internal
-     */
-    public _$searchKey: string;
-
-    /**
-     * @internal
-     */
-    public _$enterSearch($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        if (this._isValidSearchDebounce()) {
-            this._clearSearchTimer();
-            this.search.emit(this._$searchKey);
-        }
-    }
-
-    private _searchTimer: number;
-
-    private _debounceSearch(key: string) {
-        this._clearSearchTimer();
-        this._searchTimer = this.callLater(() => {
-            this.search.emit(key);
-        }, this.searchDebounce);
-    }
-
-    private _clearSearchTimer() {
-        if (this._searchTimer) {
-            clearTimeout(this._searchTimer);
-            this._searchTimer = null;
-        }
-    }
+    @ViewChildren(JigsawSearchInput)
+    public inputs: QueryList<JigsawSearchInput>;
 
     private _current: number;
 
@@ -346,13 +307,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 } else if (this.current <= 3) {
                     showPages = [1, 2, 3, 4, 5];
                 } else {
-                    showPages = [
-                        this.current - 2,
-                        this.current - 1,
-                        this.current,
-                        this.current + 1,
-                        this.current + 2
-                    ];
+                    showPages = [this.current - 2, this.current - 1, this.current, this.current + 1, this.current + 2];
                 }
                 this._pages.forEach(page => {
                     showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
@@ -684,7 +639,14 @@ export class JigsawPagingItem {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forChild()],
+    imports: [
+        CommonModule,
+        FormsModule,
+        JigsawSelectModule,
+        JigsawInputModule,
+        JigsawSearchInputModule,
+        TranslateModule.forChild()
+    ],
     declarations: [JigsawPagination, JigsawPagingItem],
     exports: [JigsawPagination],
     providers: [TranslateService]
