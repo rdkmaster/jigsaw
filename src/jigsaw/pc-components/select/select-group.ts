@@ -4,7 +4,7 @@ import { JigsawSelectGroupBase } from "./select-base";
 
 @Component({
     selector: "jigsaw-group-select, j-group-select",
-    templateUrl: "select.html",
+    templateUrl: "select-group.html",
     host: {
         "[class.jigsaw-group-select-host]": "true",
         "[class.jigsaw-select-single]": "!multipleSelect",
@@ -28,7 +28,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase {
 
 @Component({
     selector: "jigsaw-collapse-select, j-select-collapse",
-    templateUrl: "select.html",
+    templateUrl: "select-group.html",
     host: {
         "[class.jigsaw-collapse-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",

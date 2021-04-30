@@ -241,8 +241,6 @@ export abstract class JigsawSelectBase
     @Output()
     public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    public _propagateChange: any = () => {};
-
     public writeValue(value: any, emit = true): void {
         if (CommonUtils.isDefined(value)) {
             this._$selectedItems = this.multipleSelect ? value : [value];
@@ -254,11 +252,17 @@ export abstract class JigsawSelectBase
         }
     }
 
+    private _propagateChange: any = () => {};
+
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
-    public registerOnTouched(fn: any): void {}
+    private _onTouched: any = () => {};
+
+    public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
 
     /**
      * 全选
@@ -386,7 +390,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public set data(value: ArrayCollection<object> | object[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
         let allOptions = [];
-        allOptions.push(...value.map((item: any) => { item.data }));
+        value.forEach(item => {
+            allOptions = allOptions.concat(item["data"]);
+        });
         this.validData = allOptions.filter(item => item["disabled"] !== true);
     }
 }
