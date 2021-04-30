@@ -50,6 +50,7 @@ export * from "./pc-components/icon/icon";
 export * from "./pc-components/input/auto-complete-input";
 export * from "./pc-components/input/input";
 export * from "./pc-components/input/numeric-input";
+export * from "./pc-components/input/search-input";
 export * from "./pc-components/list-and-tile/button-bar";
 export * from "./pc-components/list-and-tile/group-common";
 export * from "./pc-components/list-and-tile/group-lite-common";
