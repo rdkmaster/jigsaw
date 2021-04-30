@@ -157,6 +157,11 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     @Output()
     public search = new EventEmitter<string>();
+
+    /**
+     * @internal
+     * @param $event
+     */
     public _$searchEvent($event) {
         this.search.emit($event);
     }
@@ -193,7 +198,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _pages: QueryList<JigsawPagingItem> = null;
 
     @ViewChildren(JigsawSearchInput)
-    public inputs: QueryList<JigsawSearchInput>;
+    private _inputs: QueryList<JigsawSearchInput>;
 
     private _current: number;
 
@@ -513,8 +518,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 刷新数据时清空搜索框
      */
     public reset() {
-        if (!this.inputs) return;
-        this.inputs.forEach(input => (input.value = ""));
+        if (!this._inputs) {
+            return;
+        }
+        this._inputs.forEach(input => (input.value = ""));
     }
 
     ngOnInit() {

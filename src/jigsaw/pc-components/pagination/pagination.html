@@ -1,7 +1,8 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchDefault>
         <jigsaw-search-input class="jigsaw-paging-search" *ngIf="searchable" width="160"
-               (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce" [autoSearch]="autoSearch">
+                             (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
+                             [autoSearch]="autoSearch">
         </jigsaw-search-input>
         <div *ngIf="mode == 'complex'" class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)">
@@ -36,7 +37,8 @@
     </ng-container>
     <ng-container *ngSwitchCase="'simple'">
         <jigsaw-search-input class="jigsaw-paging-search" *ngIf="searchable" width="100"
-               (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce" [autoSearch]="autoSearch">
+                             (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
+                             [autoSearch]="autoSearch">
         </jigsaw-search-input>
         <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)">
