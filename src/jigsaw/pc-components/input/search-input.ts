@@ -47,7 +47,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      * @NoMarkForCheckRequired
      */
     @Input()
-    public placeholder: string = this._translateService.instant("search.search");
+    public placeholder: string = this._translateService.instant("search-input.placeholder");
 
     public _value: string;
 
@@ -136,7 +136,10 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this._valueChangeSubscription = null;
     }
 
-    public _$onBlur($event) {
+    /**
+     * @internal
+     */
+    public _$onBlur() {
         // 表单友好接口
         this._onTouched();
     }
@@ -146,14 +149,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     public _$searchBtnClicked() {
         this.search.emit(this.value);
-    }
-
-    /**
-     * @internal
-     */
-    public _$stopPropagation(event) {
-        event.preventDefault();
-        event.stopPropagation();
     }
 
     public writeValue(value: any): void {
@@ -189,12 +184,12 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 })
 export class JigsawSearchInputModule {
     constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "search", {
+        InternalUtils.initI18n(translateService, "search-input", {
             zh: {
-                search: "搜索"
+                placeholder: "搜索"
             },
             en: {
-                search: "Search"
+                placeholder: "Search"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
