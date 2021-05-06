@@ -1,4 +1,4 @@
-<j-combo-select
+<jigsaw-combo-select
     width="100%"
     [autoWidth]="true"
     [maxHeight]="maxHeight"
@@ -34,6 +34,7 @@
                     [(checked)]="_$selectAllChecked"
                     *ngIf="!_$showSelected"
                     (checkedChange)="_$selectAll()"
+                    [enableIndeterminate]="true"
                 >
                     <span>{{'select.selectAll' | translate}}</span>
                 </jigsaw-checkbox>
@@ -64,4 +65,4 @@
     >
         {{('select.selected' | translate) + _$selectedItems?.length + ('select.itemUnit' | translate) }}
     </div>
-</j-combo-select>
+</jigsaw-combo-select>

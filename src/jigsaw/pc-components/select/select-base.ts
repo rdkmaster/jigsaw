@@ -5,7 +5,12 @@ import { ArrayCollection } from "../../common/core/data/array-collection";
 import { JigsawListLite } from "../list-and-tile/list-lite";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { CheckBoxStatus } from '../checkbox/typings';
 
+type SelectOption = {
+    (labelField: string): string;
+    disabled?: boolean;
+};
 @Directive()
 export abstract class JigsawSelectBase
     extends AbstractJigsawComponent
@@ -198,7 +203,7 @@ export abstract class JigsawSelectBase
      *
      * @internal
      */
-    public _$selectedItems: ArrayCollection<any> | any[];
+    public _$selectedItems: ArrayCollection<SelectOption> | any[];
 
     private _value: any;
 
@@ -269,19 +274,27 @@ export abstract class JigsawSelectBase
      *
      * @internal
      */
-    public _$selectAllChecked: boolean = false;
+    public _$selectAllChecked = CheckBoxStatus.unchecked;
     public _$selectAll() {
         if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
             this._$selectedItems = [];
-            this._$selectAllChecked = false;
+            this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             this._$selectedItems = this.validData;
-            this._$selectAllChecked = true;
+            this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._changeDetector.markForCheck();
     }
     public _$checkSelectAll() {
-        this._$selectAllChecked = this._$selectedItems.length === this.validData.length;
+        if (this._$selectedItems.length === 0) {
+            this._$selectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this._$selectedItems.length === this.validData.length) {
+            this._$selectAllChecked = CheckBoxStatus.checked;
+        } else {
+            this._$selectAllChecked = CheckBoxStatus.indeterminate;
+        }
         this._changeDetector.markForCheck();
     }
 
@@ -292,8 +305,8 @@ export abstract class JigsawSelectBase
      */
     public _$showSelected: boolean = false;
 
-    protected _data: ArrayCollection<object>;
-    public validData: any[];
+    protected _data: ArrayCollection<SelectOption>;
+    public validData: SelectOption[];
 
     /**
      * 提供选择的数据集合
@@ -301,11 +314,11 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<object> | object[] {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<object> | object[]) {
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
         this.validData = this._data.filter(item => item["disabled"] !== true);
     }
@@ -374,7 +387,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
-    protected _data: ArrayCollection<object>;
+    protected _data: ArrayCollection<SelectOption>;
     public validData: any[];
 
     /**
@@ -383,11 +396,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<object> | object[] {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<object> | object[]) {
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
         let allOptions = [];
         value.forEach(item => {
