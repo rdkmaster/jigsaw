@@ -97,7 +97,7 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public optionWidth: number | string;
+    public optionWidth: number;
 
     /**
      * 选项高度
@@ -105,17 +105,35 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public optionHeight: number | string;
+    public optionHeight: number;
 
+    public _optionCount: number;
     /**
      * 显示的option个数，超出的会显示滚动条
+     * 目前默认
+     * optionHeight = 32px;
+     * 多选时，全选高度为32px
      *
      * @NoMarkForCheckRequired
      *
      * $demo = select/option-count
      */
     @Input()
-    public optionCount: number;
+    public get optionCount(): number {
+        return this._optionCount;
+    }
+
+    public set optionCount(value: number) {
+        this._optionCount = value;
+        let multiHeight = 0;
+        if (CommonUtils.isUndefined(value)) {
+            return;
+        }
+        if (this.multipleSelect) {
+            multiHeight = 32;
+        }
+        this._$listHeight = value * 32 + multiHeight + "px";
+    }
 
     /**
      * @internal
