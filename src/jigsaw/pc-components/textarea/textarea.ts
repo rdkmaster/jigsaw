@@ -1,4 +1,15 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Injector, Input, Output, ViewChild} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -62,6 +73,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(
+        private _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super();
@@ -73,10 +85,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     };
 
     public writeValue(value: any): void {
-        if (CommonUtils.isUndefined(value)) {
-            return;
-        }
-        this._value = value.toString();
+        this._value = CommonUtils.isDefined(value) ? value.toString() : '';
+        // 不加这个的话，非法的红框无法正确渲染
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {

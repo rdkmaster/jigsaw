@@ -26,6 +26,7 @@ import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10 | 15 | 30;
@@ -417,7 +418,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     /* limitStart & limitEnd 自动补0 */
-    private _timeFormatter(value: string): string{
+    private _timeFormatter(value: string): string {
         return value ? value.replace(/(\d{1,2})(:|$)/g, (found, digit, splitter) => (digit.length == 1 ? `0${digit}` : digit) + splitter) : value;
     }
 
@@ -661,9 +662,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 
     public writeValue(newValue: string): void {
-        if (!newValue || newValue == this._value) {
-            return;
-        }
+        newValue = CommonUtils.isUndefined(newValue) ? this._calValueByGr('0', '0', '0') : newValue;
+        this._createTime(newValue, this.gr);
         this._value = newValue;
         this.valueChange.emit(newValue);
         this._propagateChange(this._value);
