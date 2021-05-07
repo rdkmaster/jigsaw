@@ -1,17 +1,7 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    forwardRef,
-    Input,
-    NgModule,
-    Output,
-    Injector
-} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, HostListener, Injector, Input, NgModule, Output} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "./radio";
+import {JigsawRadioModule, RadiosGroupValue} from "./radio";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -33,7 +23,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
     ],
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(
@@ -56,7 +46,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     @RequireMarkForCheck()
     @Input()
-    public value: any;
+    public value: string | RadiosGroupValue;
 
     private _trackItemBy: string | string[];
 
@@ -84,7 +74,8 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public labelField: string = 'label';
 
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     public get _$trackByFn() {
         return CommonUtils.toTrackByFunction(this._trackItemBy);
@@ -101,6 +92,8 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
 
@@ -111,6 +104,12 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
     }
 }
 

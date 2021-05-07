@@ -1,0 +1,37 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <j-button-bar [data]="['水平排列', '垂直排列']" [selectedItems]="['垂直排列']"
+                  (selectedItemsChange)="toggleLayout()">
+    </j-button-bar>
+    <j-button-bar style="margin-left: 16px" [data]="['时间单选', '时间多选']" [selectedItems]="['时间多选']"
+                  (selectedItemsChange)="
+                      multipleHour = $event[0] == '时间多选';
+                      timeSectionValue.time = [];
+                      dateTime.update()
+                  ">
+    </j-button-bar>
+    <j-button-bar style="margin-left: 16px" [data]="['日期单选', '日期多选']" [selectedItems]="['日期多选']"
+                  (selectedItemsChange)="
+                      multipleDate = $event[0] == '日期多选';
+                      timeSectionValue.date = [];
+                      timeSectionValue.week = [];
+                      dateTime.update()
+                  ">
+    </j-button-bar>
+    <br><br>
+    <jigsaw-checkbox [(checked)]="showDate">显示按月（showDate）</jigsaw-checkbox>
+    <jigsaw-checkbox [(checked)]="showWeek">显示按周（showWeek）</jigsaw-checkbox>
+    <jigsaw-checkbox [(checked)]="showEveryday">显示每天（showEveryday）</jigsaw-checkbox>
+    <br><br>
+
+    <j-time-section #dateTime [(value)]="timeSectionValue" [layout]="layout" [showLastDay]="true"
+                    [multipleHour]="multipleHour" [multipleDate]="multipleDate" [currentTime]="curTime"
+                    [showDate]="showDate" [showWeek]="showWeek" [showEveryday]="showEveryday"
+                    (valueChange)="sectionValueChange($event)">
+    </j-time-section>
+</div>

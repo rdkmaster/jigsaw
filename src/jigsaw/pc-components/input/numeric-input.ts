@@ -27,7 +27,8 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
-        '[class.jigsaw-numeric-input-focused]': 'focused'
+        '[class.jigsaw-numeric-input-focused]': 'focused',
+        '[class.jigsaw-numeric-input-showOption]': 'showOption'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
@@ -60,6 +61,16 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     @Input()
     public placeholder = '';
+
+    /**
+     * 数字输入框的右侧箭头是否常驻
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = numeric-input/show-option
+     */
+    @Input()
+    public showOption: boolean = false;
 
     private _min: number = -Infinity;
 
@@ -409,6 +420,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public get _$getWrapperClass(): 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-none' {
         return CommonUtils.isDefined(this.suffix) ? 'jigsaw-numeric-input-right' : 'jigsaw-numeric-input-none';
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }
 

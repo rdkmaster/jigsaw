@@ -29,6 +29,8 @@ import { SelectGroupDemoComponent } from './select-group/demo.component';
 import { SelectGroupDemoModule } from './select-group/demo.module';
 import { SelectCollapseDemoComponent } from './select-collapse/demo.component';
 import { SelectCollapseDemoModule } from './select-collapse/demo.module';
+import {SelectOptionWidthDemoComponent} from "./option-width/demo.component";
+import {SelectOptionWidthDemoModule} from "./option-width/demo.module";
 
 export const routerConfig = [
     {
@@ -72,7 +74,11 @@ export const routerConfig = [
     },
     {
         path: 'select-collapse', component: SelectCollapseDemoComponent
-    }
+    },
+    {
+        path: 'option-width', component: SelectOptionWidthDemoComponent
+    },
+
 ];
 
 @NgModule({
@@ -91,7 +97,8 @@ export const routerConfig = [
         SelectClearableDemoModule,
         MultipleSelectDemoModule,
         SelectGroupDemoModule,
-        SelectCollapseDemoModule
+        SelectCollapseDemoModule,
+        SelectOptionWidthDemoModule
     ]
 })
 export class SelectDemoModule {

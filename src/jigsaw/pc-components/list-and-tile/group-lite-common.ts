@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import { EventEmitter, Input, Output, Directive, Injector } from "@angular/core";
+import {Directive, EventEmitter, HostListener, Injector, Input, Output} from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
@@ -92,11 +92,12 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
         super.ngOnInit();
     }
 
-    private _propagateChange: any = () => {
+    protected _propagateChange: any = () => {
+    };
+    protected _onTouched: any = () => {
     };
 
     public writeValue(value: any): void {
-
     }
 
     public registerOnChange(fn: any): void {
@@ -104,6 +105,11 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
     }
 
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
+    }
 }

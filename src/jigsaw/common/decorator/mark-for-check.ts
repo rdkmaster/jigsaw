@@ -60,7 +60,8 @@ export function RequireMarkForCheck(): PropertyDecorator {
                 }
                 // 无论是原来就有的setter，还是装饰器生成的，都追加 MarkForCheck 的调用
                 if (!this._injector) {
-                    console.error(`There has no DI for 'Injector' in ${className}.`);
+                    console.warn("There is no DI for 'Injector' in " + className +
+                        ", maybe we access to the '_injector' member too early, we will try again later.");
                     return;
                 }
                 this._injector.get(ChangeDetectorRef).markForCheck();

@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<jigsaw-header>自动搜索禁用</jigsaw-header>
+<jigsaw-search-input width="200px" [disabled]="disabled1"> </jigsaw-search-input>
+<div class="switch-cntr">
+    <span>禁用：</span>
+    <jigsaw-switch [(checked)]="disabled1"></jigsaw-switch>
+</div>
+
+<jigsaw-header>手动搜索禁用</jigsaw-header>
+<jigsaw-search-input width="200px" [autoSearch]="false" [disabled]="disabled2"> </jigsaw-search-input>
+<div class="switch-cntr">
+    <span>禁用：</span>
+    <jigsaw-switch [(checked)]="disabled2"></jigsaw-switch>
+</div>

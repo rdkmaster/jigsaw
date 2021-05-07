@@ -58,10 +58,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 
     .#{$input-prefix-cls}-wrapper:hover,
     &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
-        @include prefixer(
-                transition,
-                    (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
-        );
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-width: 1px;
         border-style: solid;
         border-color: $brand-default;
@@ -76,6 +73,13 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             input {
                 color: $font-color-disabled;
                 cursor: not-allowed;
+            }
+
+            .#{$input-prefix-cls}-icon-front,
+            .#{$input-prefix-cls}-icon-end {
+                .iconfont {
+                    color: $font-color-disabled;
+                }
             }
         }
     }

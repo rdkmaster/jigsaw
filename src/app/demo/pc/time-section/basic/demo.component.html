@@ -59,38 +59,15 @@
                       ">
         </j-button-bar>
         <br><br>
+        <jigsaw-checkbox [(checked)]="showDate">显示按月（showDate）</jigsaw-checkbox>
+        <jigsaw-checkbox [(checked)]="showWeek">显示按周（showWeek）</jigsaw-checkbox>
+        <jigsaw-checkbox [(checked)]="showEveryday">显示每天（showEveryday）</jigsaw-checkbox>
+        <br><br>
+
         <j-time-section #dateTime [(value)]="timeSectionValue" [layout]="layout" [showLastDay]="true"
-                        [multipleHour]="multipleHour"
-                        [multipleDate]="multipleDate" [currentTime]="curTime"
+                        [multipleHour]="multipleHour" [multipleDate]="multipleDate" [currentTime]="curTime"
+                        [showDate]="showDate" [showWeek]="showWeek" [showEveryday]="showEveryday"
                         (valueChange)="sectionValueChange($event)">
-        </j-time-section>
-    </div>
-    <div class="demo-5 live-demo">
-        <h3>time-section - time & month date only</h3>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showWeek]="false" [showLastDay]="true"
-                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
-    </div>
-    <div class="demo-6 live-demo">
-        <h3>time-section - time & week date only</h3>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDate]="false" [showLastDay]="true"
-                        [currentTime]="curTime" (valueChange)="sectionValueChange($event)"></j-time-section>
-    </div>
-    <div class="demo-7 live-demo">
-        <h3>time-section</h3>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showDate]="false" [showWeek]="false"
-                        [showLastDay]="true" [currentTime]="curTime" (valueChange)="sectionValueChange($event)">
-        </j-time-section>
-    </div>
-    <div class="demo-8 live-demo">
-        <h3>time-section - month date only</h3>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showHour]="false" [showWeek]="false"
-                        [showLastDay]="true" [currentTime]="curTime" (valueChange)="sectionValueChange($event)">
-        </j-time-section>
-    </div>
-    <div class="demo-9 live-demo">
-        <h3>time-section - week date only</h3>
-        <j-time-section [value]="timeSectionValue" [layout]="layout" [showHour]="false" [showDate]="false"
-                        [showLastDay]="true" [currentTime]="curTime" (valueChange)="sectionValueChange($event)">
         </j-time-section>
     </div>
 </div>

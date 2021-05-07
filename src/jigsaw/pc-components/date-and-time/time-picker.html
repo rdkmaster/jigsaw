@@ -13,8 +13,8 @@
            [(ngModel)]="_$second" (blur)="_$cancelSelect('second')" (focus)="_$handleSelectMode('second')">
     <div class="jigsaw-time-picker-ctrl">
         <div *ngIf="_$selectMode != 'none'; else clock" class="jigsaw-time-picker-ctrl-bar">
-            <span class="iconfont iconfont-e0cc" (mousedown)="_$handleCtrlBarClick($event, 1)"></span>
-            <span class="iconfont iconfont-e0ca" (mousedown)="_$handleCtrlBarClick($event, -1)"></span>
+            <span class="iconfont iconfont-e24f" (mousedown)="_$handleCtrlBarClick($event, 1)"></span>
+            <span class="iconfont iconfont-e24c" (mousedown)="_$handleCtrlBarClick($event, -1)"></span>
         </div>
         <ng-template #clock>
             <i class="iconfont iconfont-e450"></i>
