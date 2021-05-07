@@ -535,6 +535,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: PieSeries[];
     private _options: EchartOptions;
+    public legendSource: 'dim' | 'kpi';
 
     get options(): EchartOptions {
         if (!this._options) {
@@ -568,7 +569,10 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
                 const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'pie'}, this.template.seriesItem);
-                if (dimensions.length > 1) {
+                this.legendSource = this.legendSource ? this.legendSource : dimensions.length > 1 ? 'dim' : 'kpi';
+                if (dimensions.length == 0) {
+                    console.warn('No valid dimension found, this graph will not be rendered!');
+                } else if (this.legendSource == 'dim') {
                     // 多维度
                     this._mergeLegend(options.legend, dimensions);
                     let records;
@@ -583,15 +587,13 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                     indicator.index = 1;
                     seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
                         .map(row => ({name: row[0], value: row[1]}));
-                } else if (dimensions.length == 1) {
+                } else {
                     // 多指标
                     this._mergeLegend(options.legend, seriesData.indicators);
                     const dim = dimensions[0].name;
                     const records = this.data.filter(row => row[dimIndex] == dim);
                     const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
-                } else {
-                    console.warn('No valid dimension found, this graph will not be rendered!');
                 }
 
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
