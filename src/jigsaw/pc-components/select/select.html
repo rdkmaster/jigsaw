@@ -47,10 +47,17 @@
                     <span>{{'select.return' | translate}}</span>
                 </div>
             </div>
-            <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled" [width]="optionWidth" [height]="optionHeight">
+            <jigsaw-list-option
+                #listItem
+                *ngFor="let item of data"
+                [value]="item"
+                [disabled]="item.disabled"
+                [width]="optionWidth"
+                [height]="optionHeight"
+            >
                 <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected">
                 </jigsaw-checkbox>
-                <span>{{item && item[labelField] ? item[labelField] : item}}</span>
+                <span class="select-option-label">{{item && item[labelField] ? item[labelField] : item}}</span>
             </jigsaw-list-option>
         </jigsaw-list>
     </ng-template>
@@ -64,6 +71,6 @@
         *ngIf="multipleSelect && overall && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
         class="jigsaw-select-overall"
     >
-        {{('select.selected' | translate) + _$selectedItems?.length + ('select.itemUnit' | translate) }}
+        {{'select.selected' | translate:{ num : _$selectedItems?.length } }}
     </div>
 </jigsaw-combo-select>

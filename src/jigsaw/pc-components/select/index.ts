@@ -31,16 +31,14 @@ export class JigsawSelectModule {
                 checkSelected: "查看已选",
                 return: "返回",
                 allSelected: "全部",
-                selected: "已选择",
-                itemUnit: "项"
+                selected: "已选择 {{ num }} 项"
             },
             en: {
                 selectAll: "All",
                 checkSelected: "Check Selected",
                 return: "All",
                 allSelected: "All Selected",
-                selected: "You have selected",
-                itemUnit: "items"
+                selected: "You have selected {{ num }} item(s)"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

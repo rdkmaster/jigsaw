@@ -105,7 +105,7 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public optionHeight: number;
+    public optionHeight = 32;
 
     public _optionCount: number;
     /**
@@ -132,7 +132,7 @@ export abstract class JigsawSelectBase
         if (this.multipleSelect) {
             multiHeight = 32;
         }
-        this._$listHeight = value * 32 + multiHeight + "px";
+        this._$listHeight = value * this.optionHeight + multiHeight + "px";
     }
 
     /**
@@ -386,7 +386,6 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$handleClearable(selectedItems: any[]) {
-        console.log(this._$selectedItems);
         if (!this.clearable) {
             return;
         }

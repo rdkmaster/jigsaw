@@ -147,6 +147,22 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
 .#{$select-prefix-cls}-single-list,
 .#{$select-prefix-cls}-multiple-list {
+    #{$jigsaw-list-option} {
+        display: flex;
+        align-items: center;
+
+        .#{$jigsaw-list-option}-wrapper {
+            width: 100%;
+            .select-option-label {
+                display: block;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+
     .#{$jigsaw-collapse-select}-option-cntr,
     .#{$jigsaw-group-select}-option-cntr {
         .#{$jigsaw-collapse} {
