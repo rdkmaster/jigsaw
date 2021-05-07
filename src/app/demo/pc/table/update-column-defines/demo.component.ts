@@ -34,17 +34,31 @@ export class TableUpdateColumnDefinesDemoComponent {
     columnDefines: ColumnDefine[];
 
     changeColumnDefine() {
-        this.columnDefines = [{
-            target: 0,
-            header: {
-                renderer: 'html',
-                data: (data, col) => `${data.header[col]}
+        this.columnDefines = [
+            {
+                target: 2,
+                header: {
+                    renderer: 'html',
+                    data: (data, col) => `${data.header[col]}
                     <select id="unitSelect">
                         <option value="￥">￥</option>
                         <option value="$">$</option>
                     </select>`
+                }
+            },
+            {
+                target: 5,
+                header: {
+                    "sortable": true,
+                    "sortAs": 1,
+                },
+                "cell": {
+                    "renderer": "html",
+                    "data": (td, row, col) => !parseInt(td.data[row][col]) ? td.data[row][col] : `<a (click)="onClick1(${row}, ${col})">${td.data[row][col]}</a>`,
+                    "innerHtmlContext": {onClick1: (row, col) => console.log(row, col)}
+                }
             }
-        }];
+        ];
         setTimeout(() => {
             this.tableData.refresh();
         })

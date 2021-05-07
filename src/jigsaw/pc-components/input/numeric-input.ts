@@ -421,6 +421,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public get _$getWrapperClass(): 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-none' {
         return CommonUtils.isDefined(this.suffix) ? 'jigsaw-numeric-input-right' : 'jigsaw-numeric-input-none';
     }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
 }
 
 @NgModule({
