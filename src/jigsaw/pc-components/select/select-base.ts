@@ -1,11 +1,24 @@
-import { ChangeDetectorRef, EventEmitter, Input, NgZone, Output, ViewChild, Injector, Directive } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    EventEmitter,
+    Input,
+    NgZone,
+    Output,
+    ViewChild,
+    Injector,
+    Directive,
+    ViewChildren,
+    QueryList
+} from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
 import { ArrayCollection } from "../../common/core/data/array-collection";
 import { JigsawListLite } from "../list-and-tile/list-lite";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { CheckBoxStatus } from '../checkbox/typings';
+import { CheckBoxStatus } from "../checkbox/typings";
+import { JigsawListOption, JigsawList } from "../list-and-tile/list";
+import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 type SelectOption = {
     (labelField: string): string;
@@ -84,7 +97,7 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public optionWidth: string;
+    public optionWidth: number | string;
 
     /**
      * 选项高度
@@ -92,7 +105,7 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public optionHeight: string;
+    public optionHeight: number | string;
 
     /**
      * 显示的option个数，超出的会显示滚动条
@@ -103,6 +116,11 @@ export abstract class JigsawSelectBase
      */
     @Input()
     public optionCount: number;
+
+    /**
+     * @internal
+     */
+    public _$listHeight: string;
 
     /**
      * 设置对象的标识

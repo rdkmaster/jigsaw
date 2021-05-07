@@ -8,6 +8,7 @@ import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
         JigsawListModule,
         JigsawCheckBoxModule,
         JigsawCollapseModule,
+        PerfectScrollbarModule,
         TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],

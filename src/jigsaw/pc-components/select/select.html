@@ -25,9 +25,10 @@
             [labelField]="labelField"
             [trackItemBy]="trackItemBy"
             [multipleSelect]="multipleSelect"
-            [optionCount]="optionCount"
             [(selectedItems)]="_$selectedItems"
             (selectedItemsChange)="_$handleSelectChange($event)"
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+            [height]="_$listHeight"
         >
             <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
                 <jigsaw-checkbox
@@ -46,7 +47,7 @@
                     <span>{{'select.return' | translate}}</span>
                 </div>
             </div>
-            <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled">
+            <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled" [width]="optionWidth" [height]="optionHeight">
                 <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected">
                 </jigsaw-checkbox>
                 <span>{{item && item[labelField] ? item[labelField] : item}}</span>

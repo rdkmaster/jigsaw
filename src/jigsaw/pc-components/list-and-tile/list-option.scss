@@ -1,7 +1,8 @@
 $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
 .#{$list-option-prefix-cls} {
-    display: block;
+    display: flex;
+    align-items: center;
     position: relative;
     width: 100%;
     min-height: $height-base;

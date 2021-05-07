@@ -54,6 +54,8 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     selector: 'jigsaw-list-option,j-list-option',
     templateUrl: 'list-option.html',
     host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
         '[class.jigsaw-list-option]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
         '[class.jigsaw-list-option-disabled]': 'disabled',
