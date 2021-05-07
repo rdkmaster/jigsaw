@@ -20,15 +20,12 @@ import {
     QueryList,
     Renderer2,
     ViewChildren,
-    ViewEncapsulation,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Injector, ViewChild
+    ViewEncapsulation, 
+    ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTooltip} from "../../common/directive/tooltip/tooltip";
