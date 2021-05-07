@@ -5,9 +5,9 @@ import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawMenu, JigsawMenuHelper} from "./menu";
 import {JigsawNavigationMenu} from "./navigation-menu";
 import {JigsawCascadingMenu} from "../../common/directive/menu/cascading-menu";
-import { JigsawTooltipModule } from 'jigsaw/common/directive/tooltip/tooltip';
+import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
+import { InternalUtils } from '../../common/core/utils/internal-utils';
 
 @NgModule({
     declarations: [JigsawMenu, JigsawCascadingMenu, JigsawMenuHelper, JigsawNavigationMenu],

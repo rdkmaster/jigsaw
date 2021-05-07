@@ -11,7 +11,7 @@ import {
     ChangeDetectorRef,
     NgZone,
     NgModule,
-    Injector
+    Injector, HostListener
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule} from '@angular/forms';
 import {GrItem, MarkDate, Shortcut} from "./date-picker";
@@ -497,12 +497,27 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched();
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        if (this.disabled) {
+            return;
+        }
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 
     ngOnInit() {

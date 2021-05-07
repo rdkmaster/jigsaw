@@ -9,7 +9,9 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Injector,
-    forwardRef
+    forwardRef,
+    HostListener,
+    AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -33,16 +35,22 @@ export type TimeSectionInfo = {
 }
 
 export type WeekAndDaySectionInfo = {
-    label: string | number,
+    label?: string | number,
     value: number,
     lastDay?: boolean
 }
 
+/**
+ * @internal
+ */
 export type TimeSection = {
     time?: string[],
     week?: WeekAndDaySectionInfo[],
-    date?: WeekAndDaySectionInfo[]
+    date?: WeekAndDaySectionInfo[],
+    everyday?: boolean
 }
+
+export type TimeSectionValue = TimeSection;
 
 @Component({
     selector: 'jigsaw-time-section-picker, j-time-section-picker',
@@ -522,28 +530,24 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         <div class="jigsaw-time-section-wrapper" [class.jigsaw-time-section-horizontal]="layout == 'horizontal'">
             <div class="jigsaw-time-section-time" *ngIf="showHour">
                 <span class="jigsaw-time-section-time-title">{{'timeSection.timeTitle' | translate}}</span>
-                <j-time-section-picker [(value)]="_$timeValue" [multipleSelect]="multipleHour"
-                                       (valueChange)="_$selectChange()">
+                <j-time-section-picker [(value)]="_$timeValue" [multipleSelect]="multipleHour" (valueChange)="_$selectChange()">
                 </j-time-section-picker>
             </div>
-            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate">
-                <div class="jigsaw-time-section-switch" *ngIf="showWeek && showDate">
-                    <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList"
-                                        trackItemBy="value">
+            <div class="jigsaw-time-section-switch-wrapper" *ngIf="showWeek || showDate || showEveryday">
+                <div class="jigsaw-time-section-switch" *ngIf="_$switchList && _$switchList.length > 1">
+                    <jigsaw-radios-lite [(value)]="_$selectType" (valueChange)="_$selectChange()" [data]="_$switchList" trackItemBy="value">
                     </jigsaw-radios-lite>
                 </div>
-                <div class="jigsaw-time-section-week"
-                     *ngIf="showWeek && showDate && _$selectType.value == 0 || (showDate && !showWeek)">
-                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay"
-                                          [currentTime]="currentTime"
-                                          [multipleSelect]="multipleDate"
-                                          (valueChange)="_$selectChange()"></j-day-section-picker>
+                <div *ngIf="_$byMonth" class="jigsaw-time-section-month">
+                    <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay" [currentTime]="currentTime"
+                                          [multipleSelect]="multipleDate" (valueChange)="_$selectChange()">
+                    </j-day-section-picker>
                 </div>
-                <div class="jigsaw-time-section-month"
-                     *ngIf="showWeek && showDate && _$selectType.value == 1 || (showWeek && !showDate)">
-                    <j-week-section-picker [(value)]="_$weekValue" [multipleSelect]="multipleDate"
-                                           (valueChange)="_$selectChange()">
+                <div *ngIf="_$byWeek" class="jigsaw-time-section-week">
+                    <j-week-section-picker [(value)]="_$weekValue" [multipleSelect]="multipleDate" (valueChange)="_$selectChange()">
                     </j-week-section-picker>
+                </div>
+                <div *ngIf="_$useEveryday" class="jigsaw-time-section-everyday">
                 </div>
             </div>
         </div>
@@ -557,17 +561,15 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy, ControlValueAccessor {
+export class JigsawTimeSection extends AbstractJigsawComponent implements OnDestroy, AfterViewInit, ControlValueAccessor {
     constructor(private _translateService: TranslateService, private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            this._createSwitchList();
+            this._updateSwitchList();
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
-        this._createSwitchList();
+        _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     private _langChangeSubscriber: Subscription;
@@ -592,6 +594,27 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
      * @internal
      */
     public _$dateValue;
+    /**
+     * @internal
+     */
+    public get _$byMonth(): boolean {
+        return (this._$switchList && this._$switchList.length > 1 && this._$selectType && this._$selectType.value == 0) ||
+            (this.showDate && !this.showEveryday && !this.showWeek);
+    }
+    /**
+     * @internal
+     */
+    public get _$byWeek(): boolean {
+        return (this._$switchList && this._$switchList.length > 1 && this._$selectType && this._$selectType.value == 1) ||
+            (this.showWeek && !this.showEveryday && !this.showDate);
+    }
+    /**
+     * @internal
+     */
+    public get _$useEveryday(): boolean {
+        return (this._$switchList && this._$switchList.length > 1 && this._$selectType && this._$selectType.value == 2) ||
+            (this.showEveryday && !this.showWeek && !this.showDate);
+    }
 
     private _value: TimeSection;
     /**
@@ -611,10 +634,27 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     }
 
     public update(): void {
-        this._$timeValue = this.value.time;
-        this._$weekValue = this.value.week;
-        this._$dateValue = this.value.date;
-        this._$selectType = this._$weekValue ? this._$switchList[1] : this._$switchList[0];
+        if (!this.initialized) {
+            return;
+        }
+
+        if (this.value) {
+            this._$timeValue = this.value.time;
+            this._$weekValue = this.value.week;
+            this._$dateValue = this.value.date;
+        }
+
+        // 注意这个if过后，this._$selectType的值有可能是undefined
+        if (this._$switchList) {
+            if (this.value && this.value.everyday) {
+                this._$selectType = this._$switchList.find(type => type.value == 2);
+            } else if (this._$weekValue) {
+                this._$selectType = this._$switchList.find(type => type.value == 1);
+            } else {
+                this._$selectType = this._$switchList.find(type => type.value == 0);
+            }
+        }
+
         this._cdr.markForCheck();
     }
 
@@ -642,17 +682,50 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     @Input()
     public showHour: boolean = true;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public showWeek: boolean = true;
+    private _showDate: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public showDate: boolean = true;
+    public get showDate(): boolean {
+        return this._showDate;
+    }
+
+    public set showDate(value: boolean) {
+        this._showDate = !!value;
+        this._updateSwitchList();
+    }
+
+    private _showWeek: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get showWeek(): boolean {
+        return this._showWeek;
+    }
+
+    public set showWeek(value: boolean) {
+        this._showWeek = !!value;
+        this._updateSwitchList();
+    }
+
+    private _showEveryday: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get showEveryday(): boolean {
+        return this._showEveryday;
+    }
+
+    public set showEveryday(value: boolean) {
+        this._showEveryday = !!value;
+        this._updateSwitchList();
+    }
 
     /**
      * @NoMarkForCheckRequired
@@ -669,11 +742,17 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     @Output()
     public valueChange = new EventEmitter<TimeSection>();
 
-    private _createSwitchList() {
-        this._$switchList = [
-            {label: this._translateService.instant('timeSection.switchMonth'), value: 0},
-            {label: this._translateService.instant('timeSection.switchWeek'), value: 1}
-        ];
+    private _updateSwitchList() {
+        this._$switchList = [];
+        if (this.showDate) {
+            this._$switchList.push({label: this._translateService.instant('timeSection.switchMonth'), value: 0});
+        }
+        if (this.showWeek) {
+            this._$switchList.push({label: this._translateService.instant('timeSection.switchWeek'), value: 1});
+        }
+        if (this.showEveryday) {
+            this._$switchList.push({label: this._translateService.instant('timeSection.switchEveryday'), value: 2});
+        }
         this._$selectType = this._$selectType ? this._$switchList.find(s => s.value == this._$selectType.value) : this._$switchList[0];
     }
 
@@ -685,10 +764,12 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         if (this.showHour) {
             Object.assign(value, {time: this._$timeValue});
         }
-        if (this.showDate && this.showWeek && this._$selectType && this._$selectType.value == 0 || (this.showDate && !this.showWeek)) {
+        if (this._$byMonth) {
             Object.assign(value, {date: this._$dateValue});
-        } else if (this.showWeek && this.showDate && this._$selectType && this._$selectType.value == 1 || (this.showWeek && !this.showDate)) {
+        } else if (this._$byWeek) {
             Object.assign(value, {week: this._$weekValue})
+        } else if (this._$useEveryday) {
+            Object.assign(value, {everyday: true})
         }
         this.writeValue(value);
     }
@@ -697,6 +778,11 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
         this._value = value;
         this.valueChange.emit(value);
         this._propagateChange(this._value);
+    }
+
+    ngAfterViewInit() {
+        this._updateSwitchList();
+        this.update();
     }
 
     ngOnDestroy() {
@@ -709,12 +795,20 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
     }
 }
 
@@ -736,15 +830,17 @@ export class JigsawTimeSectionModule {
                 lastDayTooltip: "当前月份的最后一天",
                 timeTitle: '时间',
                 switchMonth: '按月',
-                switchWeek: '按周'
+                switchWeek: '按周',
+                switchEveryday: '每天'
             },
             en: {
                 selectAll: 'Select All',
                 lastDay: "Last Day",
                 lastDayTooltip: "The last day of the current month",
                 timeTitle: 'Time',
-                switchMonth: 'Set Month',
-                switchWeek: 'Set Week'
+                switchMonth: 'Month Day',
+                switchWeek: 'Week Day',
+                switchEveryday: 'Everyday'
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

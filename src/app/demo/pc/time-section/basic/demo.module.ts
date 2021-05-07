@@ -6,7 +6,10 @@ import {TimeSectionBasicDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [TimeSectionBasicDemoComponent],
     exports: [ TimeSectionBasicDemoComponent ],
-    imports: [JigsawDemoDescriptionModule, JigsawTimeSectionModule, JigsawButtonBarModule, JigsawCheckBoxModule]
+    imports: [
+        JigsawDemoDescriptionModule, JigsawTimeSectionModule, JigsawButtonBarModule, JigsawCheckBoxModule,
+        JigsawCheckBoxModule
+    ]
 })
 export class TimeSectionBasicDemoModule{
 

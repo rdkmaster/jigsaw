@@ -383,6 +383,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public registerOnTouched(fn: any): void {
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
     /**
      * @NoMarkForCheckRequired
      */

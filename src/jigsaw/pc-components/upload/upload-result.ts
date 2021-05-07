@@ -6,7 +6,7 @@ import {
     NgZone, OnDestroy, EventEmitter, Output
 } from "@angular/core";
 import {Subscription} from "rxjs";
-import { AbstractJigsawComponent } from "jigsaw/common/common";
+import { AbstractJigsawComponent } from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
 
 @Component({

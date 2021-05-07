@@ -38,6 +38,7 @@ import {routerConfig as stepsConfig} from "./demo/pc/steps/demo-set.module";
 import {routerConfig as switchConfig} from "./demo/pc/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/pc/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/pc/tab/demo-set.module";
+import {routerConfig as tabBarConfig} from "./demo/pc/tab-bar/demo-set.module";
 import {routerConfig as tagConfig} from "./demo/pc/tag/demo-set.module";
 import {routerConfig as textareaConfig} from "./demo/pc/textarea/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/pc/tile/demo-set.module";
@@ -191,6 +192,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'switch', switchConfig);
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
+        this._addRouterConfig(routerConfig, 'tab-bar', tabBarConfig);
         this._addRouterConfig(routerConfig, 'tag', tagConfig);
         this._addRouterConfig(routerConfig, 'textarea', textareaConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
