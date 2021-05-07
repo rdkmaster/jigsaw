@@ -569,10 +569,10 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
                 const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'pie'}, this.template.seriesItem);
-                this.legendSource = this.legendSource ? this.legendSource : dimensions.length > 1 ? 'dim' : 'kpi';
+                const legendSource = this.legendSource ? this.legendSource : dimensions.length > 1 ? 'dim' : 'kpi';
                 if (dimensions.length == 0) {
                     console.warn('No valid dimension found, this graph will not be rendered!');
-                } else if (this.legendSource == 'dim') {
+                } else if (legendSource == 'dim') {
                     // 多维度
                     this._mergeLegend(options.legend, dimensions);
                     let records;
