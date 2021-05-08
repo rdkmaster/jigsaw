@@ -22,6 +22,7 @@ export class SelectMultipleDemoComponent {
     maxHeight: number = 32;
 
     selectChange(selectedItems: any[]) {
+        console.log(selectedItems);
         this.selectedCityName = selectedItems.reduce((str, item, index) => {
             return str += item.label + (index == selectedItems.length - 1 ? '' : ' | ')
         }, '');
