@@ -90,7 +90,7 @@ export class JigsawIcon extends AbstractJigsawComponent {
      */
     @RequireMarkForCheck()
     @Input()
-    public iconPosition: 'left' | 'top' = 'left';
+    public iconPosition: 'left' | 'top' | 'right' = 'left';
 
     /**
      * 超链接 href

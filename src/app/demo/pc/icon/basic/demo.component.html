@@ -50,6 +50,17 @@
                      [text]="'编辑'" title="编辑" (click)="onClick()">
         </jigsaw-icon>
     </div>
+</div>
+
+<div class="boxes">
+    <div class="box">
+        <h3>图标位置</h3>
+        <p>图标在左，文字在右</p>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16"
+                     [text]="'编辑'" title="编辑" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
 
     <div class="box">
         <h3>图标位置</h3>
@@ -60,5 +71,21 @@
         </jigsaw-icon>
     </div>
 
-</div>
+    <div class="box">
+        <h3>图标位置</h3>
+        <p>图标在右，文字在左</p>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e9c7'" [iconSize]="24"
+        [text]="'下拉'" title="下拉" iconPosition="right" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
 
+    <div class="box">
+        <h3>图标位置</h3>
+        <p>图标在下，文字在上</p>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e9b1'" [iconSize]="24"
+        [text]="'日历'" title="日历" iconPosition="bottom" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
+</div>
