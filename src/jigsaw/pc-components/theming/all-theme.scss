@@ -27,7 +27,7 @@
 @import "../radio/radio";
 @import "../select/select";
 @import "../slider/slider";
-@import "../steps/step";
+// @import "../steps/step";
 @import "../switch/switch";
 @import "../table/table";
 @import "../table/table-head";
@@ -67,3 +67,7 @@
 @import "../menu/navigation-menu";
 @import "../date-and-time/time-section";
 @import "../header/header";
+
+/* fall back components */
+@import "../fallback/steps/steps.scss";
+@import "../fallback/steps/steps-multiline";

@@ -62,6 +62,7 @@ import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set
 import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfigPC} from "./router-config";
 import {PopupPositionType} from "../jigsaw/common/service/popup.service";
+import {routerConfig as stepsFallbackConfig} from "./demo/pc/fallback/steps/demo-set.module";
 
 @Component({
     template: `
@@ -214,6 +215,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'badge', badgeConfig);
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
         this._addRouterConfig(routerConfig, 'header', headerConfig);
+        this._addRouterConfig(routerConfig, 'steps-fallback', stepsFallbackConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {
