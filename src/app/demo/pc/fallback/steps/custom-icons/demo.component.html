@@ -2,7 +2,7 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-steps preSize="large">
+<jigsaw-steps-fallback preSize="large">
     <jigsaw-step-item
         *ngFor="let step of steps"
         [status]="step.status"
@@ -15,4 +15,4 @@
     >
         {{ step.title }}
     </jigsaw-step-item>
-</jigsaw-steps>
+</jigsaw-steps-fallback>

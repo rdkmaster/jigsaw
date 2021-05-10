@@ -11,10 +11,10 @@ import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
  * $since = v1.1.7
  */
 @Component({
-    selector: 'jigsaw-steps, j-steps',
+    selector: 'jigsaw-steps-fallback, j-steps-fallback',
     template: '<div class="jigsaw-steps-container" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"><div class="jigsaw-step-left-space"></div><ng-content></ng-content></div>',
     host: {
-        '[class.jigsaw-steps]': 'true',
+        '[class.jigsaw-steps-fallback]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-steps-size-small]': "preSize === 'small'",

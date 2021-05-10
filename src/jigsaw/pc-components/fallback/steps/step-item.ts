@@ -43,7 +43,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * $demo = steps/custom-icons
      */
-    private _waitingIcon: string = "fa-file-text-o";
+    private _waitingIcon: string = "iconfont-e9d5";
 
     /**
      * @NoMarkForCheckRequired
@@ -59,7 +59,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
         }
     }
 
-    private _doneIcon: string = "fa-check-square-o";
+    private _doneIcon: string = "iconfont-ea5b";
 
     /**
      * 设置`done`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
@@ -79,7 +79,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
         }
     }
 
-    private _processingIcon: string = "fa-cog fa-spin fa-2x fa-fw";
+    private _processingIcon: string = "iconfont-ea2c";
 
     /**
      * 设置`processing`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
@@ -99,7 +99,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
         }
     }
 
-    private _errorIcon: string = "fa-times";
+    private _errorIcon: string = "iconfont-e9b8";
 
     /**
      * 设置`error`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
@@ -119,7 +119,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
         }
     }
 
-    private _skippedIcon: string = "fa-ban";
+    private _skippedIcon: string = "iconfont-e192";
 
     /**
      * 设置`skipped`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
@@ -138,7 +138,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
             this._skippedIcon = value;
         }
     }
-    private _warningIcon: string = "fa-exclamation-triangle";
+    private _warningIcon: string = "iconfont-e34a";
 
     /**
      * 设置`warning`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标

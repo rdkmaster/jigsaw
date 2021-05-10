@@ -40,7 +40,7 @@ export type StepsData = {
                     *ngFor="let rowIndex of _$rowIndexes; odd as odd; even as even; index as index; last as last"
                     style="width: 100%;height: 100%"
                 >
-                    <jigsaw-steps
+                    <jigsaw-steps-fallback
                         [preSize]="preSize"
                         [ngClass]="{ 'jigsaw-steps-multiline-odd': odd, 'jigsaw-steps-multiline-even': even }"
                     >
@@ -68,7 +68,7 @@ export type StepsData = {
                                 [trustedHtmlContext]="step.context"
                             ></div>
                         </jigsaw-step-item>
-                    </jigsaw-steps>
+                    </jigsaw-steps-fallback>
                     <div *ngIf="!last" style="width: 100%;height: 50px;position: relative">
                         <div
                             class="jigsaw-steps-multiline-v"

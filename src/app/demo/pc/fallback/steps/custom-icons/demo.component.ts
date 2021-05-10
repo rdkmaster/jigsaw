@@ -8,62 +8,62 @@ export class StepsCustomIconsComponent {
         {
             title: 'done',
             status: "done",
-            waitingIcon: 'fa-hand-stop-o',
-            doneIcon:'fa-hand-peace-o',
-            processingIcon:'fa-hourglass fa-spin fa-2x fa-fw',
-            errorIcon:'fa-window-close-o',
-            warningIcon:'fa-exclamation-circle',
-            skippedIcon:'fa-share-square'
+            waitingIcon: 'iconfont-e29c',
+            doneIcon:'iconfont-e29d',
+            processingIcon:'iconfont-e297',
+            errorIcon:'iconfont-e298',
+            warningIcon:'iconfont-e299',
+            skippedIcon:'iconfont-e29a'
         },
         {
             title: 'error',
             status: "error",
-            waitingIcon: 'fa-hand-stop-o',
-            doneIcon:'fa-hand-peace-o',
-            processingIcon:'fa-hourglass fa-spin fa-2x fa-fw',
-            errorIcon:'fa-window-close-o',
-            warningIcon:'fa-exclamation-circle',
-            skippedIcon:'fa-share-square'
+            waitingIcon: 'iconfont-e29c',
+            doneIcon:'iconfont-e29d',
+            processingIcon:'iconfont-e297',
+            errorIcon:'iconfont-e298',
+            warningIcon:'iconfont-e299',
+            skippedIcon:'iconfont-e29a'
         },
         {
             title: 'processing',
             status: "processing",
-            waitingIcon: 'fa-hand-stop-o',
-            doneIcon:'fa-hand-peace-o',
-            processingIcon:'fa-hourglass fa-spin  fa-fw',
-            errorIcon:'fa-window-close-o',
-            warningIcon:'fa-exclamation-circle',
-            skippedIcon:'fa-share-square'
+            waitingIcon: 'iconfont-e29c',
+            doneIcon:'iconfont-e29d',
+            processingIcon:'iconfont-e297',
+            errorIcon:'iconfont-e298',
+            warningIcon:'iconfont-e299',
+            skippedIcon:'iconfont-e29a'
         },
         {
             title: 'warning',
             status: "warning",
-            waitingIcon: 'fa-hand-stop-o',
-            doneIcon:'fa-hand-peace-o',
-            processingIcon:'fa-hourglass fa-spin fa-2x fa-fw',
-            errorIcon:'fa-window-close-o',
-            warningIcon:'fa-exclamation-circle',
-            skippedIcon:'fa-share-square'
+            waitingIcon: 'iconfont-e29c',
+            doneIcon:'iconfont-e29d',
+            processingIcon:'iconfont-e297',
+            errorIcon:'iconfont-e298',
+            warningIcon:'iconfont-e299',
+            skippedIcon:'iconfont-e29a'
         },
         {
             title: 'skipped',
             status: "skipped",
-            waitingIcon: 'fa-hand-stop-o',
-            doneIcon:'fa-hand-peace-o',
-            processingIcon:'fa-hourglass fa-spin fa-2x fa-fw',
-            errorIcon:'fa-window-close-o',
-            warningIcon:'fa-exclamation-circle',
-            skippedIcon:'fa-share-square'
+            waitingIcon: 'iconfont-e29c',
+            doneIcon:'iconfont-e29d',
+            processingIcon:'iconfont-e297',
+            errorIcon:'iconfont-e298',
+            warningIcon:'iconfont-e299',
+            skippedIcon:'iconfont-e29a'
         },
         {
             title: 'waiting',
             status: "waiting",
-            waitingIcon: 'fa-hand-stop-o',
-            doneIcon:'fa-hand-peace-o',
-            processingIcon:'fa-hourglass fa-spin  fa-fw',
-            errorIcon:'fa-window-close-o',
-            warningIcon:'fa-exclamation-circle',
-            skippedIcon:'fa-share-square'
+            waitingIcon: 'iconfont-e29c',
+            doneIcon:'iconfont-e29d',
+            processingIcon:'iconfont-e297',
+            errorIcon:'iconfont-e298',
+            warningIcon:'iconfont-e299',
+            skippedIcon:'iconfont-e29a'
         },
     ];
 

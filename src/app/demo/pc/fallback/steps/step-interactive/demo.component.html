@@ -2,7 +2,7 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-steps preSize="large" direction="horizontal">
+<jigsaw-steps-fallback preSize="large" direction="horizontal">
     <jigsaw-step-item *ngFor="let step of steps; index as idx" [status]="step.status">
         <div jigsaw-title>{{ step.title }}</div>
         <div
@@ -11,4 +11,4 @@
             [trustedHtmlContext]="this"
         ></div>
     </jigsaw-step-item>
-</jigsaw-steps>
+</jigsaw-steps-fallback>
