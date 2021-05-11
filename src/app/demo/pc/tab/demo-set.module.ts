@@ -60,15 +60,9 @@ export const routerConfig = [
     {
         path: 'headless', component: TabHeadlessDemoComponent
     },
-<<<<<<< HEAD
-    {
-        path: 'tab-bar', component: JigsawTabBarComponent
-    },
     {
         path: 'type', component: TabsTypeDemoComponent
     }
-=======
->>>>>>> v9.2
 ];
 
 @NgModule({
@@ -76,11 +70,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
         DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule,
-<<<<<<< HEAD
-        TabsEditableDemoModule, TabHeadlessDemoModule, TabBarDemoModule, TabsTypeDemoModule
-=======
-        TabsEditableDemoModule, TabHeadlessDemoModule
->>>>>>> v9.2
+        TabsEditableDemoModule, TabHeadlessDemoModule, TabsTypeDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
