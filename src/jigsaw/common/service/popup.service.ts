@@ -116,8 +116,8 @@ export class PopupOptions {
      * $box-shadow-lv3 => 及时消息、模态弹框、alert
      * $box-shadow-lv0: none;
      * $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
-     * $box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 0.15);
-     * $box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 0.12);
+     * $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
+     * $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
      */
     shadowDepth?: 1 | 2 | 3 | number = 2;
 
