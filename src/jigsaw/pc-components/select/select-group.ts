@@ -7,8 +7,8 @@ import { JigsawSelectGroupBase } from "./select-base";
     templateUrl: "select-group.html",
     host: {
         "[class.jigsaw-group-select-host]": "true",
-        "[class.jigsaw-select-single]": "!multipleSelect",
-        "[class.jigsaw-select-multiple]": "multipleSelect",
+        "[class.jigsaw-select-single-select]": "!multipleSelect",
+        "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-overall]": "overall",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
