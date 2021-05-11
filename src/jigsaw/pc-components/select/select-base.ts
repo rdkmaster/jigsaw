@@ -232,7 +232,7 @@ export abstract class JigsawSelectBase
      * $demo = select/trigger
      */
     @Input()
-    public closeTrigger: "click" | "mouseleave" = "click";
+    public closeTrigger: "click" | "mouseleave" = "mouseleave";
 
     /**
      * 已选选项
