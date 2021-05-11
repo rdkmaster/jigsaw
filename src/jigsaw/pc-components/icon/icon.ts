@@ -86,11 +86,11 @@ export class JigsawIcon extends AbstractJigsawComponent {
     public textColor: string = 'inherit';
 
     /**
-     * 图标相对于文字的位置，left为左侧，默认值：top为上方
+     * 图标相对于文字的位置，默认值：top为上方
      */
     @RequireMarkForCheck()
     @Input()
-    public iconPosition: 'left' | 'top' = 'left';
+    public iconPosition: 'left' | 'top' | 'right' | 'bottom' = 'left';
 
     /**
      * 超链接 href
