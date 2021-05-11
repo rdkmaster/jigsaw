@@ -1,18 +1,33 @@
 @import "../../common/assets/scss/core/base";
 
 $paging-prefix-cls: #{$jigsaw-prefix}-paging;
+$jigsaw-input: #{$jigsaw-prefix}-input;
+
+.#{$paging-prefix-cls}-small {
+    --height-paging: #{$height-sm};
+}
+
+.#{$paging-prefix-cls}-medium {
+    height: $height-med;
+    --height-paging: #{$height-med};
+}
+
+.#{$paging-prefix-cls}-large {
+    --height-paging: #{$height-base};
+}
 
 .#{$paging-prefix-cls} {
     @include inline-block();
+
     font-size: $font-size-base;
     user-select: none;
 
     &-page {
         position: relative;
         @include inline-block;
-        width: $height-base;
-        height: $height-base;
-        line-height: $height-base;
+        width: var(--height-paging);
+        height: var(--height-paging);
+        line-height: var(--height-paging);
         text-align: center;
         border-width: 1px;
         border-style: solid;
@@ -58,12 +73,12 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
 
     &-goto {
         @include inline-block;
-        height: $height-base;
+        height: var(--height-paging);
         vertical-align: top;
 
         jigsaw-input {
-            width: $height-base;
-            height: $height-base;
+            width: var(--height-paging);
+            height: var(--height-paging);
         }
 
         > span {
@@ -72,17 +87,32 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         }
     }
 
-    &.#{$paging-prefix-cls}-small {
+    &-search {
+        height: var(--height-paging);
+
+        .#{$jigsaw-input} {
+            height: var(--height-paging);
+        }
+    }
+
+    &-select {
+        height: var(--height-paging);
+        .#{$jigsaw-prefix}-combo-select-host {
+            height: var(--height-paging);
+        }
+    }
+
+    &.#{$paging-prefix-cls}-simple {
         &:before {
             content: "";
             display: inline-block;
             vertical-align: middle;
-            height: $height-sm;
+            height: var(--height-paging);
         }
 
         .#{$paging-prefix-cls}-page {
-            height: $height-sm;
-            line-height: $height-sm;
+            height: var(--height-paging);
+            line-height: var(--height-paging);
             border: none;
             font-size: 16px;
             width: 12px;
@@ -97,6 +127,7 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         .#{$paging-prefix-cls}-current-page {
             margin: 0 4px;
             vertical-align: middle;
+            height: var(--height-paging);
 
             input {
                 text-align: center;
@@ -105,16 +136,22 @@ $paging-prefix-cls: #{$jigsaw-prefix}-paging;
         }
 
         .#{$paging-prefix-cls}-page-size {
+            height: var(--height-paging);
             margin-left: 8px;
-            .#{$jigsaw-prefix}-combo-select-selection {
-                min-height: 22px;
-                max-height: 22px;
-                .#{$jigsaw-prefix}-combo-select-selection-rendered {
-                    min-height: 20px;
-                    max-height: 20px;
-                    .#{$jigsaw-prefix}-tag-host {
-                        height: auto;
-                        line-height: 1;
+            .#{$jigsaw-prefix}-combo-select-host {
+                height: var(--height-paging);
+                .#{$jigsaw-prefix}-combo-select {
+                    height: var(--height-paging);
+                    .#{$jigsaw-prefix}-combo-select-selection {
+                        height: 100%;
+                        min-height: unset;
+                        .#{$jigsaw-prefix}-combo-select-selection-rendered {
+                            display: flex;
+                            align-items: center;
+                            padding: 0;
+                            min-height: unset;
+                            height: 100%;
+                        }
                     }
                 }
             }

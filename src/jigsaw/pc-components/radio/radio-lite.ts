@@ -4,10 +4,11 @@ import {
     Component,
     EventEmitter,
     forwardRef,
+    HostListener,
+    Injector,
     Input,
     NgModule,
-    Output,
-    Injector
+    Output
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -33,10 +34,11 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
     ],
-    changeDetection:ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(
+        private _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super()
@@ -102,9 +104,11 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
-
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -112,6 +116,12 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
     }
 }
 

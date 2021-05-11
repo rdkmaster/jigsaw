@@ -50,6 +50,7 @@ export * from "./pc-components/icon/icon";
 export * from "./pc-components/input/auto-complete-input";
 export * from "./pc-components/input/input";
 export * from "./pc-components/input/numeric-input";
+export * from "./pc-components/input/search-input";
 export * from "./pc-components/list-and-tile/button-bar";
 export * from "./pc-components/list-and-tile/group-common";
 export * from "./pc-components/list-and-tile/group-lite-common";
@@ -85,3 +86,8 @@ export * from "./pc-components/upload/index";
 export * from "./pc-components/viewport/viewport";
 export * from "./pc-components/menu/index";
 export * from "./pc-components/color-select/index";
+
+/* fallback components */
+export * from "./pc-components/fallback/steps/index";
+export * from "./pc-components/fallback/steps/steps-multiline";
+export * from "./pc-components/fallback/upload/index";

@@ -368,6 +368,75 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 }
 
+@Component({
+    selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
+    templateUrl: 'tab-bar.html',
+    host: {
+        '[class.jigsaw-tabs]': 'true',
+        '[class.jigsaw-tabs-host]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawTabBar extends JigsawTabBase {
+
+    constructor(private _cfr: ComponentFactoryResolver,
+                protected _changeDetector: ChangeDetectorRef,
+                private _viewContainer: ViewContainerRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_changeDetector, _injector);
+    }
+
+    /**
+     * tab页点击
+     * @internal
+     */
+    public _$tabClick(index) {
+        this.selectedIndex = index;
+        this._updateTitlePosition(index);
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleAdd() {
+        this.add.emit();
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleRemove(index) {
+        this.remove.emit(index);
+    }
+
+    /**
+     * @internal
+     */
+    public _$listOptionClick(index) {
+        if (this.data[index].disabled) return;
+        this.selectedIndex = index;
+    }
+
+    protected get tabsInkBar(): ElementRef {
+        return this._tabsInkBar;
+    }
+
+    protected get tabsNavWrap(): ElementRef {
+        return this._tabsNavWrap;
+    }
+
+    protected get tabsNav(): ElementRef {
+        return this._tabsNav;
+    }
+
+    protected get tabLabels(): QueryList<JigsawTabLabel> {
+        return this._tabLabels;
+    }
+}
+
 /**
  * 使用`JigsawTab`来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
  * `JigsawTab`提供了多个api用于动态创建、销毁、隐藏tab页，
@@ -666,74 +735,5 @@ export class JigsawTab extends JigsawTabBase {
 
     protected get tabLabels(): QueryList<JigsawTabLabel> {
         return this._tabBar ? this._tabBar._tabLabels : this._tabLabels;
-    }
-}
-
-@Component({
-    selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
-    templateUrl: 'tab-bar.html',
-    host: {
-        '[class.jigsaw-tabs]': 'true',
-        '[class.jigsaw-tabs-host]': 'true',
-        '[style.width]': 'width',
-        '[style.height]': 'height'
-    },
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class JigsawTabBar extends JigsawTabBase {
-
-    constructor(private _cfr: ComponentFactoryResolver,
-                protected _changeDetector: ChangeDetectorRef,
-                private _viewContainer: ViewContainerRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_changeDetector, _injector);
-    }
-
-    /**
-     * tab页点击
-     * @internal
-     */
-    public _$tabClick(index) {
-        this.selectedIndex = index;
-        this._updateTitlePosition(index);
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleAdd() {
-        this.add.emit();
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleRemove(index) {
-        this.remove.emit(index);
-    }
-
-    /**
-     * @internal
-     */
-    public _$listOptionClick(index) {
-        if (this.data[index].disabled) return;
-        this.selectedIndex = index;
-    }
-
-    protected get tabsInkBar(): ElementRef {
-        return this._tabsInkBar;
-    }
-
-    protected get tabsNavWrap(): ElementRef {
-        return this._tabsNavWrap;
-    }
-
-    protected get tabsNav(): ElementRef {
-        return this._tabsNav;
-    }
-
-    protected get tabLabels(): QueryList<JigsawTabLabel> {
-        return this._tabLabels;
     }
 }

@@ -1,31 +1,33 @@
 <div class="jigsaw-nav-menu-container">
-    <div [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}" [style.width]="collapsed ? null : '100%'"
-         [ngClass]="{'jigsaw-nav-menu-items': showToggleButton, 'jigsaw-nav-menu-items-inline': !showToggleButton}">
-        <div *ngFor="let menuItem of data?.nodes; let i = index" class="jigsaw-nav-menu-item"
-             [ngClass]="{'jigsaw-nav-menu-item-inactive': !menuItem.isActive, 'jigsaw-nav-menu-item-collapsed': collapsed}"
-             jigsaw-float [jigsawFloatTarget]="_$popupMenuItem" [jigsawFloatOptions]="_$popupMenuOptions"
-             (mouseenter)="_$openPopupMenu(i)" jigsawFloatOpenTrigger="none" jigsawFloatCloseDelay="100"
-             [jigsawFloatInitData]="menuItem" (jigsawFloatAnswer)="_$popupAnswerHandler($event)">
-            <div class="jigsaw-nav-menu-item-top" (click)="_$menuSelect(menuItem)"
-                 [ngClass]="{'jigsaw-nav-menu-item-selected': menuItem.selected && menuItem?.nodes?.length > 0,
+    <div [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+        [style.width]="collapsed ? null : '100%'" [ngClass]="{'jigsaw-nav-menu-items': showToggleButton,
+                    'jigsaw-nav-menu-items-inline': !showToggleButton}">
+        <div *ngFor="let menuItem of data?.nodes; let i = index" class="jigsaw-nav-menu-item" [ngClass]="{'jigsaw-nav-menu-item-inactive': !menuItem.isActive,
+                        'jigsaw-nav-menu-item-collapsed': collapsed}">
+            <div class="jigsaw-nav-menu-item-top" (click)="_$menuSelect(menuItem)" [ngClass]="{'jigsaw-nav-menu-item-selected': menuItem.selected && menuItem?.nodes?.length > 0,
                  'jigsaw-nav-menu-item-selected-top': menuItem.selected && menuItem?.nodes?.length == 0}">
-                <i [ngClass]="menuItem.icon"></i>
+                <i *ngIf="collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="menuItem.label"
+                    jigsawTooltipPosition="bottomRight"></i>
+                <i *ngIf="!collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'"></i>
                 <span>{{menuItem.label}}</span>
-                <i *ngIf="menuItem?.nodes?.length > 0 && !collapsed" class="iconfont iconfont-e24c jigsaw-nav-menu-item-arrow"></i>
+                <i *ngIf="menuItem?.nodes?.length > 0 && !collapsed"
+                    class="iconfont iconfont-e24c jigsaw-nav-menu-item-arrow"></i>
             </div>
-            <div class="jigsaw-nav-menu-submenus" [@collapseMotion]="menuItem.isActive ? 'expanded' : 'collapsed' "
-                 [ngStyle]="{'display': collapsed ? 'none' : 'block'}">
-                <div *ngFor="let subMenu of menuItem?.nodes" class="jigsaw-nav-menu-sub-item"
-                     [ngClass]="{'jigsaw-nav-menu-sub-item-selected': subMenu.selected}" (click)="_$subMenuSelect(subMenu)">
-                    <i *ngIf="subMenu.icon" [ngClass]="subMenu.icon"></i>
+            <div class="jigsaw-nav-menu-submenus" [ngClass]="{'jigsaw-nav-menu-submenus-actived': menuItem.isActive}"
+                [@collapseMotion]="menuItem.isActive ? 'expanded' : 'collapsed' ">
+                <div *ngFor="let subMenu of menuItem?.nodes" class="jigsaw-nav-menu-sub-item" [ngClass]="{'jigsaw-nav-menu-sub-item-selected': subMenu.selected,
+                                'jigsaw-nav-menu-sub-item-collapsed': collapsed}" (click)="_$subMenuSelect(subMenu)">
+                    <i *ngIf="collapsed" [ngClass]="subMenu.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="subMenu.label"
+                        jigsawTooltipPosition="bottomRight"></i>
+                    <i *ngIf="!collapsed" [ngClass]="subMenu.icon || 'iconfont iconfont-e231'"></i>
                     <span>{{subMenu.label}}</span>
                 </div>
             </div>
         </div>
     </div>
     <div *ngIf="showToggleButton" class="jigsaw-nav-menu-toggle-button" (click)="collapsed = !collapsed"
-         [ngClass]="{'jigsaw-nav-menu-toggle-button-collapsed': collapsed}">
+        [ngClass]="{'jigsaw-nav-menu-toggle-button-collapsed': collapsed}">
         <i class="iconfont iconfont-e4aa jigsaw-nav-menu-toggle-button-arrow"></i>
-        <span *ngIf="!collapsed">收起</span>
+        <span *ngIf="!collapsed">{{"navigation.hide" | translate}}</span>
     </div>
 </div>

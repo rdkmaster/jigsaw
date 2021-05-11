@@ -2,10 +2,18 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
-    EventEmitter, forwardRef, Host, Inject,
-    Input, NgZone,
+    EventEmitter,
+    forwardRef,
+    Host,
+    HostListener,
+    Inject,
+    Injector,
+    Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -13,14 +21,11 @@ import {
     Renderer2,
     ViewChildren,
     ViewEncapsulation,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Injector, ViewChild
+    ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {CommonUtils} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTooltip} from "../../common/directive/tooltip/tooltip";
@@ -105,7 +110,7 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
 
     private _dragging: boolean = false;
 
-    private _transformPosToValue(pos: {x: number, y: number}): number {
+    private _transformPosToValue(pos: { x: number, y: number }): number {
         // 更新取得的滑动条尺寸.
         this._slider._refresh();
         const dimensions = this._slider._dimensions;
@@ -587,6 +592,8 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     // ngModel触发的writeValue方法，只会在ngOnInit,ngAfterContentInit,ngAfterViewInit这些生命周期之后才调用
     public writeValue(value: any): void {
@@ -616,5 +623,18 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        if (this.disabled) {
+            return;
+        }
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

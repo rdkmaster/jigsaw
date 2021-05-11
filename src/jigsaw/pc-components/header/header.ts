@@ -4,7 +4,7 @@ import {
     ChangeDetectionStrategy,
     Input
 } from "@angular/core";
-import { AbstractJigsawComponent } from "jigsaw/common/common";
+import { AbstractJigsawComponent } from "../../common/common";
 import { CommonModule } from "@angular/common";
 
 @Component({

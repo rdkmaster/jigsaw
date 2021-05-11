@@ -1,4 +1,15 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Input, NgModule, Output, ViewChild} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    NgModule,
+    Output,
+    ViewChild
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -27,7 +38,8 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
-        '[class.jigsaw-numeric-input-focused]': 'focused'
+        '[class.jigsaw-numeric-input-focused]': 'focused',
+        '[class.jigsaw-numeric-input-showOption]': 'showOption'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
@@ -35,6 +47,9 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(private _cdr: ChangeDetectorRef) {
+        super();
+    }
     /**
      * @NoMarkForCheckRequired
      */
@@ -60,6 +75,16 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     @Input()
     public placeholder = '';
+
+    /**
+     * 数字输入框的右侧箭头是否常驻
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = numeric-input/show-option
+     */
+    @Input()
+    public showOption: boolean = false;
 
     private _min: number = -Infinity;
 
@@ -154,10 +179,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     public set value(value: number) {
         if (CommonUtils.isUndefined(value) || this._value === value) {
+            this._propagateChange(this._value);
+            this._cdr.markForCheck();
             return;
         }
         this._checkValue(value);
         this._updateValue();
+        this._cdr.markForCheck();
     }
 
     private _checkValue(value: number) {
@@ -248,6 +276,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$increase(event): void {
         event.preventDefault();
         event.stopPropagation();
+        this._onTouched();
         if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             // 非法的value取最小值
             this.value = this.min == -Infinity ? 0 : this.min;
@@ -263,6 +292,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$decrease(event): void {
         event.preventDefault();
         event.stopPropagation();
+        this._onTouched();
         if (CommonUtils.isUndefined(this.value) || this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             // 非法的value取最小值
             this.value = this.min == -Infinity ? 0 : this.min;
@@ -324,6 +354,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
+        this._onTouched();
         if (this._value < this.min || isNaN(this._value) || <any>this._value === "") {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
@@ -360,6 +391,8 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
         this.value = value;
@@ -370,6 +403,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
     }
 
     /**
@@ -409,6 +443,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     public get _$getWrapperClass(): 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-none' {
         return CommonUtils.isDefined(this.suffix) ? 'jigsaw-numeric-input-right' : 'jigsaw-numeric-input-none';
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }
 

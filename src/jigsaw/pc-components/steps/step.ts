@@ -4,9 +4,9 @@ import {
     ChangeDetectionStrategy,
     Input
 } from "@angular/core";
-import { AbstractJigsawComponent } from "jigsaw/common/common";
+import { AbstractJigsawComponent } from "../../common/common";
 import { CommonModule } from "@angular/common";
-import { JigsawTrustedHtmlModule } from "jigsaw/common/directive/trusted-html/trusted-html";
+import { JigsawTrustedHtmlModule } from "../../common/directive/trusted-html/trusted-html";
 
 export type StepItem = {
     /**

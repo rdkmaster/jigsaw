@@ -80,6 +80,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/numeric-input/demo-set.module').then(m => m.NumericInputDemoModule),
     },
     {
+        path: "pc/search-input",
+        loadChildren: () => import('./demo/pc/search-input/demo-set.module').then(m => m.SearchInputDemoModule),
+    },
+    {
         path: "pc/list",
         loadChildren: () => import('./demo/pc/list/demo-set.module').then(m => m.ListDemoModule),
     },
@@ -150,6 +154,10 @@ export const routerConfigPC = [
     {
         path: "pc/tab",
         loadChildren: () => import('./demo/pc/tab/demo-set.module').then(m => m.TabsDemoModule),
+    },
+    {
+        path: "pc/tab-bar",
+        loadChildren: () => import('./demo/pc/tab-bar/demo-set.module').then(m => m.TabBarDemoModule),
     },
     {
         path: "pc/tag",
@@ -249,7 +257,6 @@ export const routerConfigMobile = [
         path: "mobile/button-bar",
         loadChildren: () => import('./demo/mobile/button-bar/demo-set.module').then(m => m.ButtonBarMobileDemoModule),
     },
-
     {
         path: "mobile/checkbox",
         loadChildren: () => import('./demo/mobile/checkbox/demo-set.module').then(m => m.CheckBoxMobileDemoModule),
