@@ -20,7 +20,7 @@ import {
     QueryList,
     Renderer2,
     ViewChildren,
-    ViewEncapsulation, 
+    ViewEncapsulation,
     ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";

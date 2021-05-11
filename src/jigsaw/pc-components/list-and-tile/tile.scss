@@ -46,7 +46,6 @@ $tile-lite-prefix-cls: #{$tile-prefix-cls}-lite;
     border-color: $border-color-default;
     border-radius: $border-radius-base;
     @include line-ellipsis-style();
-    @include prefixer(transition, color 0.3s $ease-in-out);
 
     &:hover,
     &.#{$tile-option-prefix-cls}-active {
