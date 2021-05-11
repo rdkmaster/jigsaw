@@ -3,6 +3,8 @@ import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 
 /**
  * 用于在界面上显示一个步骤条，并且可以实时更新各个步骤的状态，需要配合`JigsawStepItem`组件一起使用。
+ * 
+ * @internal
  *
  * $demo = steps/basic
  * $demo = steps/step-interactive

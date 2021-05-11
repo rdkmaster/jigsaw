@@ -3,6 +3,7 @@ import { AbstractJigsawComponent } from "../../../common/common";
 
 /**
  * 代表了`JigsawSteps`组件的一个步骤，需要配合`JigsawSteps`组件一起使用
+ * @internal
  *
  * $since = v1.1.7
  */

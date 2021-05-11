@@ -16,9 +16,12 @@ import { AbstractJigsawComponent } from "../../../common/common";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { JigsawTrustedHtmlModule } from "../../../common/directive/trusted-html/trusted-html";
 import { LoadingService } from "../../../common/service/loading.service";
-import { JigsawStepsFallbackModule } from ".";
+import { JigsawStepsFallbackModule } from "./index";
 
-export type StepsData = {
+/**
+ * @internal
+ */
+type StepsData = {
     status: string;
     title?: string;
     subTitle: string;

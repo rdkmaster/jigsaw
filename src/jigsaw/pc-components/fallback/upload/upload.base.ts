@@ -19,6 +19,9 @@ export type UploadFileInfoFallback = {
     state: 'pause' | 'loading' | 'success' | 'error'
 };
 
+/**
+ * @internal
+ */
 @Directive()
 export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements OnDestroy {
     constructor(@Optional() protected _http: HttpClient,

@@ -13,6 +13,9 @@ import { JigsawUploadFallbackBase } from "./upload.base";
 import { DragDropInfo } from "../../../common/directive/dragdrop/types";
 import { TranslateService } from "@ngx-translate/core";
 
+/**
+ * @internal
+ */
 @Component({
     selector: "jigsaw-upload-fallback, j-upload-fallback",
     templateUrl: "upload.html",

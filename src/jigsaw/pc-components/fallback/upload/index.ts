@@ -14,6 +14,9 @@ import { PopupService } from "../../../common/service/popup.service";
 import { InternalUtils } from "../../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../../common/core/utils/translate-helper";
 
+/**
+ * @internal
+ */
 @NgModule({
     imports: [
         JigsawButtonModule,

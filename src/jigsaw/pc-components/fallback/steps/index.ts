@@ -7,6 +7,9 @@ import { JigsawStepsFallback } from "./steps";
 import { JigsawStepItemFallback } from "./step-item";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 
+/**
+ * @internal
+ */
 @NgModule({
     imports: [CommonModule, PerfectScrollbarModule],
     declarations: [JigsawStepsFallback, JigsawStepItemFallback],
