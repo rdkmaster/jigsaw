@@ -193,7 +193,8 @@ export abstract class JigsawCommonAlert extends DialogBase {
         const po = popupOptions ? popupOptions : {
             modal: modal, //是否模态
             showEffect: PopupEffect.bubbleIn,
-            hideEffect: PopupEffect.bubbleOut
+            hideEffect: PopupEffect.bubbleOut,
+            shadowDepth: 3
         };
         const popupInfo = PopupService.instance.popup(what, po,
             {message: msg.message, header: msg.header, title: caption, buttons});

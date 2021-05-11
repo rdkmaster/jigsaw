@@ -108,6 +108,20 @@ export class PopupOptions {
     showShadow?: boolean = true;
 
     /**
+     * 阴影深度，默认为深度2
+     * box-shadow 阴影（基于altitude）
+     * $box-shadow-lv0 => 背景
+     * $box-shadow-lv1 => 页内卡片
+     * $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
+     * $box-shadow-lv3 => 及时消息、模态弹框、alert
+     * $box-shadow-lv0: none;
+     * $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
+     * $box-shadow-lv2: 0px 2px 12px hsla(0, 0%, 0%, 0.15);
+     * $box-shadow-lv3: 0px 5px 15px hsla(0, 0%, 0%, 0.12);
+     */
+    shadowDepth?: 1 | 2 | 3 | number = 2;
+
+    /**
      * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
      * 设置了true/false之后，则`PopupService`不再自动检测，而是根据这个属性的值决定是否要还是不加边框&阴影。
      */
@@ -557,7 +571,16 @@ export class PopupService {
     private _setBackground(options: PopupOptions, element: HTMLElement): void {
         // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
         if (!this._isModal(options) && this._isShowShadow(options)) {
-            InternalUtils.renderer.setStyle(element, 'box-shadow', '0px 2px 12px hsla(0, 0%, 0%, 0.15)');
+            const shadow = [
+                "0px 1px 2px hsla(0, 0%, 0%, 0.2)",
+                "0px 2px 12px hsla(0, 0%, 0%, 0.15)",
+                "0px 5px 15px hsla(0, 0%, 0%, 0.12)"
+            ];
+            let shadowValue = "0px 2px 12px hsla(0, 0%, 0%, 0.15)";
+            if (options.shadowDepth === 1 || options.shadowDepth === 3) {
+                shadowValue = shadow[options.shadowDepth - 1]
+            }
+            InternalUtils.renderer.setStyle(element, 'box-shadow', shadowValue);
         }
         if (options && options.showBorder) {
             InternalUtils.renderer.setStyle(element, 'border', '1px solid #dcdcdc');
