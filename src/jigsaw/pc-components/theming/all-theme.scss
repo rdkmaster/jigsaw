@@ -68,3 +68,9 @@
 @import "../date-and-time/time-section"; 
 @import "../header/header";
 @import "../tree/tree";
+
+/* fall back components */
+@import "../fallback/steps/steps.scss";
+@import "../fallback/steps/steps-multiline";
+@import "../fallback/upload/upload";
+
