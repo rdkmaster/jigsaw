@@ -1,47 +1,55 @@
-import {TranslateService, TranslateModule} from "@ngx-translate/core";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {NgModule} from "@angular/core";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawButtonModule} from "../../button/button";
-import {JigsawDraggableModule, JigsawDroppableModule} from "../../../common/directive/dragdrop/index";
-import {JigsawUploadDirective, JigsawUploadFileInfoList} from "../../../common/directive/fallback/upload/upload.directive";
-import {JigsawUploadFallback} from "./upload";
-import {PopupService} from "../../../common/service/popup.service";
-import {InternalUtils} from "../../../common/core/utils/internal-utils";
-import {TranslateHelper} from "../../../common/core/utils/translate-helper";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { NgModule } from "@angular/core";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { JigsawButtonModule } from "../../button/button";
+import { JigsawDraggableModule, JigsawDroppableModule } from "../../../common/directive/dragdrop/index";
+import {
+    JigsawUploadFallbackDirective,
+    JigsawUploadFileInfoListFallback
+} from "../../../common/directive/fallback/upload/upload.directive";
+import { JigsawUploadFallback } from "./upload";
+import { PopupService } from "../../../common/service/popup.service";
+import { InternalUtils } from "../../../common/core/utils/internal-utils";
+import { TranslateHelper } from "../../../common/core/utils/translate-helper";
 
 @NgModule({
     imports: [
-        JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, TranslateModule.forChild()
+        JigsawButtonModule,
+        PerfectScrollbarModule,
+        JigsawDraggableModule,
+        JigsawDroppableModule,
+        CommonModule,
+        FormsModule,
+        TranslateModule.forChild()
     ],
-    declarations: [JigsawUploadFallback, JigsawUploadDirective, JigsawUploadFileInfoList],
-    exports: [JigsawUploadFallback, JigsawUploadDirective],
-    providers: [PopupService, TranslateService],
+    declarations: [JigsawUploadFallback, JigsawUploadFallbackDirective, JigsawUploadFileInfoListFallback],
+    exports: [JigsawUploadFallback, JigsawUploadFallbackDirective],
+    providers: [PopupService, TranslateService]
 })
-export class JigsawUploadModule {
+export class JigsawUploadFallbackModule {
     constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'upload', {
+        InternalUtils.initI18n(translateService, "upload", {
             zh: {
-                "waiting": "等待中",
-                "uploading": "上传中",
-                "done": "上传成功",
-                "failed": "上传失败",
-                "dragHere": "将文件拖拽到此处上传",
-                "selectFile": "选择文件",
+                waiting: "等待中",
+                uploading: "上传中",
+                done: "上传成功",
+                failed: "上传失败",
+                dragHere: "将文件拖拽到此处上传",
+                selectFile: "选择文件",
 
                 "Bad Request": "错误详情：错误请求",
-                "Unauthorized": "错误详情：未授权",
+                Unauthorized: "错误详情：未授权",
                 "Payment Required": "错误详情：需要支付",
-                "Forbidden": "错误详情：禁止",
+                Forbidden: "错误详情：禁止",
                 "Not Found": "错误详情：未找到",
                 "Method Not Allowed": "错误详情：方法禁用",
                 "Not Acceptable": "错误详情：不接受",
                 "Proxy Authentication Required": "错误详情：需要代理授权",
                 "Request Timeout": "错误详情：请求超时",
-                "Conflict": "错误详情：冲突",
-                "Gone": "错误详情：已删除",
+                Conflict: "错误详情：冲突",
+                Gone: "错误详情：已删除",
                 "Length Required": "错误详情：需要有效长度",
                 "Precondition Failed": "错误详情：未满足前提条件",
                 "Request Entity Too Large": "错误详情：请求实体过大",
@@ -51,7 +59,7 @@ export class JigsawUploadModule {
                 "Expectation Failed": "错误详情：未满足期望值",
                 "Authentication Timeout": "错误详情：授权超时",
                 "Unprocessable Entity": "错误详情：不可处理的请求实体",
-                "Locked": "错误详情：锁定",
+                Locked: "错误详情：锁定",
                 "Failed Dependency": "错误详情：错误的依赖关系",
                 "Upgrade Required": "错误详情：需要更新",
                 "Precondition Required": "错误详情：需要前提条件",
@@ -78,29 +86,29 @@ export class JigsawUploadModule {
                 "Network Authentication Required": "错误详情：需要网络授权",
                 "Network read timeout error": "错误详情：网络读取超时错误",
                 "Network connect timeout error": "错误详情：网络连接超时错误",
-                "fileTypeError": "错误详情：文件类型错误",
-                "fileMinSizeError": "错误详情：文件尺寸小于最小限制",
-                "fileMaxSizeError": "错误详情：文件尺寸大于最大限制"
+                fileTypeError: "错误详情：文件类型错误",
+                fileMinSizeError: "错误详情：文件尺寸小于最小限制",
+                fileMaxSizeError: "错误详情：文件尺寸大于最大限制"
             },
             en: {
-                "waiting": "Waiting",
-                "uploading": "Uploading",
-                "done": "Success to upload",
-                "failed": "Failed to upload",
-                "dragHere": "Drag and drop the file(s) here to upload",
-                "selectFile": "Select File",
+                waiting: "Waiting",
+                uploading: "Uploading",
+                done: "Success to upload",
+                failed: "Failed to upload",
+                dragHere: "Drag and drop the file(s) here to upload",
+                selectFile: "Select File",
 
                 "Bad Request": "Error detail: Bad Request",
-                "Unauthorized": "Error detail: Unauthorized",
+                Unauthorized: "Error detail: Unauthorized",
                 "Payment Required": "Error detail: Payment Required",
-                "Forbidden": "Error detail: Forbidden",
+                Forbidden: "Error detail: Forbidden",
                 "Not Found": "Error detail: Not Found",
                 "Method Not Allowed": "Error detail: Method Not Allowed",
                 "Not Acceptable": "Error detail: Not Acceptable",
                 "Proxy Authentication Required": "Error detail: Proxy Authentication Required",
                 "Request Timeout": "Error detail: Request Timeout",
-                "Conflict": "Error detail: Conflict",
-                "Gone": "Error detail: Gone",
+                Conflict: "Error detail: Conflict",
+                Gone: "Error detail: Gone",
                 "Length Required": "Error detail: Length Required",
                 "Precondition Failed": "Error detail: Precondition Failed",
                 "Request Entity Too Large": "Error detail: Request Entity Too Large",
@@ -110,7 +118,7 @@ export class JigsawUploadModule {
                 "Expectation Failed": "Error detail: Expectation Failed",
                 "Authentication Timeout": "Error detail: Authentication Timeout",
                 "Unprocessable Entity": "Error detail: Unprocessable Entity",
-                "Locked": "Error detail: Locked",
+                Locked: "Error detail: Locked",
                 "Failed Dependency": "Error detail: Failed Dependency",
                 "Upgrade Required": "Error detail: Upgrade Required",
                 "Precondition Required": "Error detail: Precondition Required",
@@ -137,9 +145,9 @@ export class JigsawUploadModule {
                 "Network Authentication Required": "Error detail: Network Authentication Required",
                 "Network read timeout error": "Error detail: Network read timeout error",
                 "Network connect timeout error": "Error detail: Network connect timeout error",
-                "fileTypeError": "Error detail: File type error",
-                "fileMinSizeError": "Error detail: Size of the file is less than the minSize",
-                "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize"
+                fileTypeError: "Error detail: File type error",
+                fileMinSizeError: "Error detail: Size of the file is less than the minSize",
+                fileMaxSizeError: "Error detail: Size of the file is more than the maxSize"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
@@ -149,6 +157,6 @@ export class JigsawUploadModule {
     }
 }
 
-export * from './upload';
-export * from './upload.base';
-export * from '../../../common/directive/fallback/upload/upload.directive';
+export * from "./upload";
+export * from "./upload.base";
+export * from "../../../common/directive/fallback/upload/upload.directive";

@@ -14,7 +14,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from "../../../common/common";
 import {CommonUtils} from "../../../common/core/utils/common-utils";
 
-export type UploadFileInfo = {
+export type UploadFileInfoFallback = {
     name: string, url: string, file: File, reason: string,
     state: 'pause' | 'loading' | 'success' | 'error'
 };
@@ -108,22 +108,22 @@ export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements
     }
 
     @Output()
-    public progress = new EventEmitter<UploadFileInfo>();
+    public progress = new EventEmitter<UploadFileInfoFallback>();
 
     @Output()
-    public remove = new EventEmitter<UploadFileInfo>();
+    public remove = new EventEmitter<UploadFileInfoFallback>();
 
     @Output()
-    public complete = new EventEmitter<UploadFileInfo[]>();
+    public complete = new EventEmitter<UploadFileInfoFallback[]>();
 
     @Output()
-    public start = new EventEmitter<UploadFileInfo[]>();
+    public start = new EventEmitter<UploadFileInfoFallback[]>();
 
     @Output()
     /**
      * @deprecated
      */
-    public update = new EventEmitter<UploadFileInfo[]>();
+    public update = new EventEmitter<UploadFileInfoFallback[]>();
 
     /**
      * @internal
@@ -137,14 +137,14 @@ export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public _$validFiles: UploadFileInfo[] = [];
+    public _$validFiles: UploadFileInfoFallback[] = [];
 
     /**
      * @internal
      */
-    public _$invalidFiles: UploadFileInfo[] = [];
+    public _$invalidFiles: UploadFileInfoFallback[] = [];
 
-    public get _$allFiles(): UploadFileInfo[] {
+    public get _$allFiles(): UploadFileInfoFallback[] {
         return [...this._$validFiles, ...this._$invalidFiles];
     }
 
@@ -269,7 +269,7 @@ export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements
         return !this._$validFiles.find(f => f.state == 'loading' || f.state == 'pause');
     }
 
-    private _sequenceUpload(fileInfo: UploadFileInfo) {
+    private _sequenceUpload(fileInfo: UploadFileInfoFallback) {
         fileInfo.state = 'loading';
         const formData = new FormData();
         formData.append(this.contentField, fileInfo.file);
@@ -307,7 +307,7 @@ export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements
         }
     }
 
-    private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
+    private _afterCurFileUploaded(fileInfo: UploadFileInfoFallback) {
         this.progress.emit(fileInfo);
 
         const waitingFile = this._$validFiles.find(f => f.state == 'pause');

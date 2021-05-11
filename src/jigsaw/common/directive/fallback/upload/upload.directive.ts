@@ -23,14 +23,14 @@ import {
     PopupPositionType,
     PopupPositionValue,
     PopupService
-} from "../../service/popup.service";
-import {JigsawUploadBase, UploadFileInfo} from "../../../pc-components/upload/upload.base";
-import {AbstractJigsawComponent} from "../../common";
+} from "../../../service/popup.service";
+import {JigsawUploadFallbackBase, UploadFileInfoFallback} from "../../../../pc-components/fallback/upload/upload.base";
+import {AbstractJigsawComponent} from "../../../common";
 
 @Directive({
-    selector: '[j-upload], [jigsaw-upload]'
+    selector: '[j-upload-fallback], [jigsaw-upload-fallback]'
 })
-export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy {
+export class JigsawUploadFallbackDirective extends JigsawUploadFallbackBase implements OnDestroy {
     constructor(@Optional() protected _http: HttpClient,
                 protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
@@ -73,19 +73,19 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     public maxSize: number;
 
     @Output('uploadProgress')
-    public progress = new EventEmitter<UploadFileInfo>();
+    public progress = new EventEmitter<UploadFileInfoFallback>();
 
     @Output('uploadRemove')
-    public remove = new EventEmitter<UploadFileInfo>();
+    public remove = new EventEmitter<UploadFileInfoFallback>();
 
     @Output('uploadComplete')
-    public complete = new EventEmitter<UploadFileInfo[]>();
+    public complete = new EventEmitter<UploadFileInfoFallback[]>();
 
     @Output('uploadStart')
-    public start = new EventEmitter<UploadFileInfo[]>();
+    public start = new EventEmitter<UploadFileInfoFallback[]>();
 
     @Output('uploadUpdate')
-    public update = new EventEmitter<UploadFileInfo[]>();
+    public update = new EventEmitter<UploadFileInfoFallback[]>();
 
     @Input()
     public uploadOptionCount: number;
@@ -121,14 +121,14 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
             if (this._popupInfo) {
                 return;
             }
-            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getNonModelOptions(), this._$allFiles);
+            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoListFallback, this._getNonModelOptions(), this._$allFiles);
 
             if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
                 console.error('unable to popup drop down, unknown error!');
                 return;
             }
 
-            if (this._popupInfo.instance instanceof JigsawUploadFileInfoList) {
+            if (this._popupInfo.instance instanceof JigsawUploadFileInfoListFallback) {
                 this._popupInfo.instance.uploader = this;
                 this._popupInfo.instance.optionCount = this.uploadOptionCount;
                 this._popupInfo.instance.removable = false;
@@ -226,13 +226,13 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
             [style.width]="width" [style.maxHeight.px]="optionCount > 0 ? 40*optionCount : ''">
             <li *ngFor="let file of initData" class="jigsaw-upload-file">
                 <div class="jigsaw-upload-file-left">
-                    <span class="jigsaw-upload-file-icon fa fa-file"></span>
+                    <span class="jigsaw-upload-file-icon iconfont iconfont-e9d5"></span>
                     <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
                 </div>
                 <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
                     <ng-container *ngSwitchCase="'pause'">
                         <span>{{'upload.waiting' | translate}}</span>
-                        <span class="jigsaw-upload-pause fa fa-pause-circle"></span>
+                        <span class="jigsaw-upload-pause iconfont iconfont-ea25"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'loading'">
                         <span>{{'upload.uploading' | translate}}</span>
@@ -240,34 +240,34 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
                     </ng-container>
                     <ng-container *ngSwitchCase="'success'">
                         <span>{{'upload.done' | translate}}</span>
-                        <span class="jigsaw-upload-success fa fa-check-circle"></span>
+                        <span class="jigsaw-upload-success iconfont iconfont-ea38"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'error'">
                         <div [title]="file.reason">
                             <span>{{'upload.failed' | translate}}</span>
-                            <span class="jigsaw-upload-error fa fa-times-circle"></span>
+                            <span class="jigsaw-upload-error iconfont iconfont-e9b9"></span>
                         </div>
                     </ng-container>
                 </div>
-                <span *ngIf="removable" class="jigsaw-upload-file-remove fa fa-trash"
+                <span *ngIf="removable" class="jigsaw-upload-file-remove iconfont iconfont-e9c3"
                       (click)="uploader?._$removeFile(file)"></span>
             </li>
         </ul>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
+export class JigsawUploadFileInfoListFallback extends AbstractJigsawComponent implements IPopupable {
     public answer: EventEmitter<ButtonInfo>;
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public initData: UploadFileInfo[];
+    public initData: UploadFileInfoFallback[];
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public uploader: JigsawUploadDirective;
+    public uploader: JigsawUploadFallbackDirective;
     /**
      * @NoMarkForCheckRequired
      */

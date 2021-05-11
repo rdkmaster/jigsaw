@@ -246,6 +246,10 @@ export const routerConfigPC = [
     {
         path: "pc/steps-fallback",
         loadChildren: () => import('./demo/pc/fallback/steps/demo-set.module').then(m => m.StepsFallbackDemoModule),
+    },
+    {
+        path: "pc/upload-fallback",
+        loadChildren: () => import('./demo/pc/fallback/upload/demo-set.module').then(m => m.UploadFallbackDemoModule),
     }
 ];
 export const routerConfigMobile = [

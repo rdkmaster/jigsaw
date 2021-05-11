@@ -90,3 +90,4 @@ export * from "./pc-components/color-select/index";
 /* fallback components */
 export * from "./pc-components/fallback/steps/index";
 export * from "./pc-components/fallback/steps/steps-multiline";
+export * from "./pc-components/fallback/upload/index";

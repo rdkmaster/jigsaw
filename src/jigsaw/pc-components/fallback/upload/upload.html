@@ -1,17 +1,22 @@
-<div class="jigsaw-upload-fallback-select-box" [class.jigsaw-upload-fallback-select-box-small]="_$uploadMode == 'selectAndList'"
-       [style.flex-direction]="_$uploadMode == 'selectAndList' ? 'row' : 'column'"
-       [style.height]="_$uploadMode == 'selectAndList' ? '30%' : '100%'"
-       jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle($event)"
-       (jigsawDragOver)="_$fileDragOverHandle($event)"
-       (jigsawDragLeave)="_$fileDragLeaveHandle($event)" (jigsawDrop)="_$fileDropHandle($event)">
-    <span class="jigsaw-upload-fallback-icon fa fa-upload"></span>
-    <div class="jigsaw-upload-fallback-select-right">
-        <p class="jigsaw-upload-fallback-prompt">{{'upload.dragHere' | translate}}</p>
+<div
+    class="jigsaw-upload-select-box"
+    [class.jigsaw-upload-select-box-small]="_$uploadMode == 'selectAndList'"
+    [style.flex-direction]="_$uploadMode == 'selectAndList' ? 'row' : 'column'"
+    [style.height]="_$uploadMode == 'selectAndList' ? '30%' : '100%'"
+    jigsaw-droppable
+    (jigsawDragEnter)="_$fileDragEnterHandle($event)"
+    (jigsawDragOver)="_$fileDragOverHandle($event)"
+    (jigsawDragLeave)="_$fileDragLeaveHandle($event)"
+    (jigsawDrop)="_$fileDropHandle($event)"
+>
+    <span class="jigsaw-upload-icon iconfont iconfont-ea4b"></span>
+    <div class="jigsaw-upload-select-right">
+        <p class="jigsaw-upload-prompt">{{'upload.dragHere' | translate}}</p>
         <j-button (click)="_$selectFile($event)">{{'upload.selectFile' | translate}}</j-button>
     </div>
-    <input #fileInput class="jigsaw-upload-fallback-file-input" type='file'>
+    <input #fileInput class="jigsaw-upload-file-input" type="file" />
 </div>
 
-<div *ngIf="_$uploadMode == 'selectAndList'" class="jigsaw-upload-fallback-file-list-container">
+<div *ngIf="_$uploadMode == 'selectAndList'" class="jigsaw-upload-file-list-container">
     <j-upload-file-list [initData]="_$allFiles" [uploader]="this" [optionCount]="null"></j-upload-file-list>
 </div>
