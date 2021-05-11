@@ -203,7 +203,7 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public overall: boolean = true;
+    public useStatistics: boolean = true;
 
     /**
      * 搜索开关

@@ -27,7 +27,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     &.#{$select-prefix-cls}-multiple-select {
         .#{$jigsaw-combo-select}-host {
             position: relative;
-            .#{$select-prefix-cls}-overall {
+            .#{$select-prefix-cls}-statistics {
                 display: flex;
                 align-items: center;
                 position: absolute;
@@ -39,7 +39,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
 
-        &.#{$select-prefix-cls}-show-overall {
+        &.#{$select-prefix-cls}-show-statistics {
             .#{$jigsaw-combo-select} {
                 .#{$jigsaw-combo-select}-selection {
                     .#{$jigsaw-combo-select}-selection-rendered {

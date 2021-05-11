@@ -77,14 +77,14 @@
         </jigsaw-list>
     </ng-template>
     <div
-        *ngIf="multipleSelect && overall && _$selectedItems?.length !== 0 && _$selectedItems?.length === validData?.length"
-        class="jigsaw-select-overall"
+        *ngIf="multipleSelect && useStatistics && _$selectedItems?.length !== 0 && _$selectedItems?.length === validData?.length"
+        class="jigsaw-select-statistics"
     >
         {{'select.allSelected' | translate}}
     </div>
     <div
-        *ngIf="multipleSelect && overall && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
-        class="jigsaw-select-overall"
+        *ngIf="multipleSelect && useStatistics && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
+        class="jigsaw-select-statistics"
     >
         {{'select.selected' | translate:{ num : _$selectedItems?.length } }}
     </div>

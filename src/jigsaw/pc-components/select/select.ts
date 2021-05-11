@@ -29,7 +29,7 @@ import { JigsawSelectBase } from "./select-base";
         "[class.jigsaw-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
-        "[class.jigsaw-select-show-overall]": "overall",
+        "[class.jigsaw-select-show-statistics]": "useStatistics",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'
