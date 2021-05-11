@@ -7,6 +7,8 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 export class SelectGroupDemoComponent {
     selectedCityForSelect: any;
+    disabled: boolean = false;
+    
     dataList = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
         {
