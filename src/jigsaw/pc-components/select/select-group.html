@@ -79,12 +79,14 @@
     <div
         *ngIf="multipleSelect && overall && _$selectedItems?.length !== 0 && _$selectedItems?.length === validData?.length"
         class="jigsaw-select-overall"
+        [ngClass]="{'jigsaw-select-overall-disabled': disabled}"
     >
         {{'select.allSelected' | translate}}
     </div>
     <div
         *ngIf="multipleSelect && overall && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
         class="jigsaw-select-overall"
+        [ngClass]="{'jigsaw-select-overall-disabled': disabled}"
     >
         {{'select.selected' | translate:{ num : _$selectedItems?.length } }}
     </div>
