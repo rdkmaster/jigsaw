@@ -8,6 +8,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     padding: 5px 8px;
     cursor: pointer;
     box-sizing: border-box;
+    background: $bg-body;
 
     &:hover {
         background: $brand-light;
