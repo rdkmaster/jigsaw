@@ -283,6 +283,26 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                         border-bottom-color: $bg-body;
                     }
                 }
+
+                .#{$tab-prefix}-tab-disabled {
+                    background: $bg-disabled;
+                }
+            }
+        }
+    }
+
+    &.#{$tab-prefix}-editable {
+        .#{$tab-prefix}-remove-bar {
+            right: 4px;
+        }
+
+        .#{$tab-prefix}-nav-container {
+            .#{$tab-prefix}-nav-wrap {
+                .#{$tab-prefix}-nav {
+                    .#{$tab-prefix}-tab {
+                        padding-right: 20px;
+                    }
+                }
             }
         }
     }

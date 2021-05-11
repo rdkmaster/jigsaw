@@ -456,7 +456,8 @@ export class JigsawTabBar extends JigsawTabBase {
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-tabs-page]': 'tabType == "page"'
+        '[class.jigsaw-tabs-page]': 'tabType == "page"',
+        '[class.jigsaw-tabs-editable]': 'editable'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -483,11 +484,9 @@ export class JigsawTab extends JigsawTabBase {
     @Input()
     @RequireMarkForCheck()
     public get tabType(){
-        console.log("get:",this._tabType)
         return this._tabType;
     }
     public set tabType(v){
-        console.log('set: ', v)
         if (this._tabType == v) {
             return;
         }
