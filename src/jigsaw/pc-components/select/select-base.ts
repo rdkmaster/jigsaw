@@ -410,6 +410,7 @@ export abstract class JigsawSelectBase
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
         this.valueChange.emit(this.value);
+        this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
 }
