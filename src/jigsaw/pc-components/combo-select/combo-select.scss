@@ -14,9 +14,23 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     font-size: $font-size-base;
     cursor: pointer;
 
+    .#{$jigsaw-combo-select}-arrow {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &[ng-reflect-jigsaw-float-open="true"] &-selection {
+        border-color: $brand-default;
+    }
+
+    &[ng-reflect-jigsaw-float-open="true"] {
+        .#{$jigsaw-combo-select}-arrow {
+            @include prefixer(transform, translateY(-50%) rotate(180deg));
+        }
+    }
+
     &-selection {
         min-height: $height-base;
-        padding: 0 30px 0 7px;
+        padding: 0 30px 0 8px;
         background: $bg-component;
         border-width: 1px;
         border-style: solid;
@@ -28,6 +42,11 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         &:hover {
             border-color: $brand-default;
         }
+
+        &:active {
+            border-color: $brand-active;
+        }
+
         .#{$jigsaw-combo-select}-error & {
             border-color: $error-default;
             &:hover {
@@ -75,8 +94,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         color: $font-color-disabled;
         pointer-events: none;
 
-        .#{$jigsaw-combo-select}-selection
-            .#{$jigsaw-combo-select}-selection-rendered {
+        .#{$jigsaw-combo-select}-selection .#{$jigsaw-combo-select}-selection-rendered {
             .jigsaw-tag-host {
                 color: $font-color-disabled;
             }

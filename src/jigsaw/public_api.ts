@@ -67,7 +67,7 @@ export * from "./pc-components/radio/radio-lite";
 export * from "./pc-components/radio/radio";
 export * from "./pc-components/rate/index";
 export * from "./pc-components/root/root";
-export * from "./pc-components/select/select";
+export * from "./pc-components/select/index";
 export * from "./pc-components/slider/index";
 export * from "./pc-components/steps/step";
 export * from "./pc-components/switch/index";

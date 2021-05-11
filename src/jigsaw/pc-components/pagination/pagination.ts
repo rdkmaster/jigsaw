@@ -17,7 +17,7 @@ import {
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
-import { JigsawSelectModule } from "../select/select";
+import { JigsawSelectModule } from "../select/index";
 import { JigsawInputModule } from "../input/input";
 import { AbstractJigsawComponent } from "../../common/common";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";

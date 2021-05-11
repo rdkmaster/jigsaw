@@ -15,7 +15,7 @@ import { JigsawNotificationModule } from "./notification/notification";
 import { JigsawPaginationModule } from "./pagination/pagination";
 import { JigsawRadioModule } from "./radio/radio";
 import { JigsawScrollbarModule } from "../common/components/scrollbar/index";
-import { JigsawSelectModule } from "./select/select";
+import { JigsawSelectModule } from "./select/index";
 import { JigsawSliderModule } from "./slider/index";
 import { JigsawStepsModule } from "./steps/step";
 import { JigsawSwitchModule } from "./switch/index";
