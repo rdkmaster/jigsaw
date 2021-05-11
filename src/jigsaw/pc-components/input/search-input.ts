@@ -3,9 +3,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
-import { AbstractJigsawComponent } from "jigsaw/common/common";
-import { InternalUtils } from "jigsaw/common/core/utils/internal-utils";
-import { CommonUtils } from "jigsaw/common/core/utils/common-utils";
+import { AbstractJigsawComponent } from "../../common/common";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
+import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawInputModule } from "./input";
 
 @Component({

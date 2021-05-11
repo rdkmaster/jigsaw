@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {AbstractJigsawComponent} from 'jigsaw/common/common';
-import {CommonUtils} from 'jigsaw/common/core/utils/common-utils';
-import {TimeGr, TimeService} from 'jigsaw/common/service/time.service';
+import {AbstractJigsawComponent} from '../../common';
+import {CommonUtils} from '../../core/utils/common-utils';
+import {TimeGr, TimeService} from '../../service/time.service';
 import {IUploader, UploadFileInfo} from "./uploader-typings";
 
 const maxConcurrencyUpload = 5;

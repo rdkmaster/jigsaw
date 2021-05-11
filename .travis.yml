@@ -35,6 +35,7 @@ script:
   - node build/scripts/check-mark-for-check.js
   - node build/scripts/check-public-variables.js
   - node build/scripts/check-html-element-type.js
+  - node build/scripts/check-import-path.js
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
   - gulp build:jigsaw

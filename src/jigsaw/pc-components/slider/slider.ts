@@ -110,7 +110,7 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
 
     private _dragging: boolean = false;
 
-    private _transformPosToValue(pos: {x: number, y: number}): number {
+    private _transformPosToValue(pos: { x: number, y: number }): number {
         // 更新取得的滑动条尺寸.
         this._slider._refresh();
         const dimensions = this._slider._dimensions;
