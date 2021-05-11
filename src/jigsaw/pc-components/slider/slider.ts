@@ -19,9 +19,9 @@ import {
     Output,
     QueryList,
     Renderer2,
-    ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
