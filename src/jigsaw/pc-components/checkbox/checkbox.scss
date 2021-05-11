@@ -55,7 +55,21 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
         background-color: $bg-component;
         transition: all 0.3s;
 
-        &:after {
+        &::after {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 5px;
+            height: 8px;
+            border: 2px solid #fff;
+            border-top: 0;
+            border-left: 0;
+            transform: rotate(45deg) scale(0);
+            transition: all 0.1s $ease-in-back;
+        }
+
+        &::before {
             content: "";
             position: absolute;
             left: 4px;
@@ -85,13 +99,29 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
             &:after {
                 content: "";
                 position: absolute;
-                top: 1px;
-                left: 4px;
+                top: 6.1px;
+                left: 0.5px;
                 width: 5px;
-                height: 8px;
+                height: 2px;
                 border: 2px solid #fff;
                 border-top: 0;
                 border-left: 0;
+                border-radius: 2px;
+                transform: rotate(45deg) scale(1);
+                transition: all 0.2s $ease-out-back 0.1s;
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 1px;
+                left: 6.5px;
+                width: 2px;
+                height: 10px;
+                border: 2px solid #fff;
+                border-top: 0;
+                border-left: 0;
+                border-radius: 2px;
                 transform: rotate(45deg) scale(1);
                 transition: all 0.2s $ease-out-back 0.1s;
             }
