@@ -255,7 +255,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             },
             view: {
                 fontCss: undefined,
-                showLine: false
+                showLine: true
             }
         };
 

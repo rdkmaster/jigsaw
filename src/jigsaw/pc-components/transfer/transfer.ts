@@ -125,9 +125,10 @@ const transferServerFilterFunction = function (item) {
 
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(
+        protected _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
-        super(_injector);
+        super(_cdr, _injector);
     }
 
     private _removePageableCallbackListener: CallbackRemoval;
@@ -333,10 +334,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, private _cdr: ChangeDetectorRef,
+    constructor(@Optional() private _transfer: JigsawTransfer, protected _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
-        super(_injector);
+        super(_cdr, _injector);
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });

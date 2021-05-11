@@ -61,10 +61,10 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
-    constructor(private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone,
+    constructor(protected _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
-        super(_injector);
+        super(_changeDetectorRef, _injector);
     }
 
     /**
