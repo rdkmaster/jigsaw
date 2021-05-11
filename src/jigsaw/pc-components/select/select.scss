@@ -153,12 +153,39 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
         .#{$jigsaw-list-option}-wrapper {
             width: 100%;
+
+            .#{$jigsaw-checkbox}-host {
+                pointer-events: none;
+            }
+
             .select-option-label {
                 display: block;
                 width: 100%;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+
+            &:hover {
+                .#{$jigsaw-checkbox}-host {
+                    .#{$jigsaw-checkbox}-wrapper {
+                        .#{$jigsaw-checkbox} {
+                            border-color: $brand-default;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.#{$jigsaw-list-option}-disabled {
+            .#{$jigsaw-list-option}-wrapper:hover {
+                .#{$jigsaw-checkbox}-host {
+                    .#{$jigsaw-checkbox}-wrapper {
+                        .#{$jigsaw-checkbox} {
+                            border-color: $border-color-disabled;
+                        }
+                    }
+                }
             }
         }
     }
