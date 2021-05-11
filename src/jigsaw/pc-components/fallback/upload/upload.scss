@@ -49,7 +49,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         width: 100%;
         height: 100%;
         border-bottom: 1px solid #dcdcdc;
-        .#{$upload-prefix-cls}:before {
+        &::before {
             display: inline-block;
             height: 100%;
             content: "";
