@@ -391,6 +391,9 @@ export abstract class JigsawSelectBase
         }
         if (!selectedItems || selectedItems.length == 0) {
             this.value = [];
+            this._value = (this.multipleSelect || !selectedItems) ? selectedItems : selectedItems[0];
+            this._propagateChange(this.value);
+            this.valueChange.emit(this.value);
             this._changeDetector.markForCheck();
         }
     }
