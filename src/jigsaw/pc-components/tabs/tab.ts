@@ -375,7 +375,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         '[class.jigsaw-tabs]': 'true',
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-tabs-page]': 'tabType == "page"',
+        '[class.jigsaw-tabs-editable]': 'editable'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -387,6 +389,28 @@ export class JigsawTabBar extends JigsawTabBase {
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_changeDetector, _injector);
+    }
+
+    /** 
+     * 控制tab显示为标签式 or 页签式
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = tab-bar/type
+     */
+
+    public _tabType: 'label' | 'page' = 'label';
+
+    @Input()
+    @RequireMarkForCheck()
+    public get tabType(){
+        return this._tabType;
+    }
+    public set tabType(v){
+        if (this._tabType == v) {
+            return;
+        }
+        this._tabType = v;
     }
 
     /**
@@ -455,9 +479,7 @@ export class JigsawTabBar extends JigsawTabBase {
     host: {
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height',
-        '[class.jigsaw-tabs-page]': 'tabType == "page"',
-        '[class.jigsaw-tabs-editable]': 'editable'
+        '[style.height]': 'height'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -469,28 +491,6 @@ export class JigsawTab extends JigsawTabBase {
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_changeDetector, _injector);
-    }
-
-    /** 
-     * 控制tab显示为标签式 or 页签式
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = tab/type
-     */
-
-    public _tabType: 'label' | 'page' = 'label';
-
-    @Input()
-    @RequireMarkForCheck()
-    public get tabType(){
-        return this._tabType;
-    }
-    public set tabType(v){
-        if (this._tabType == v) {
-            return;
-        }
-        this._tabType = v;
     }
     
     /**

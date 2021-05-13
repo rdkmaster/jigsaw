@@ -5,16 +5,18 @@ import {
     JigsawHeaderModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
-import { TabsTypeDemoComponent } from "./demo.component";
+import { TabBarTypeDemoComponent } from "./demo.component";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
     imports: [
+        CommonModule,
         JigsawTabsModule,
         JigsawDemoDescriptionModule,
         JigsawButtonModule,
         JigsawHeaderModule
     ],
-    declarations: [TabsTypeDemoComponent],
-    exports: [TabsTypeDemoComponent]
+    declarations: [TabBarTypeDemoComponent],
+    exports: [TabBarTypeDemoComponent]
 })
-export class TabsTypeDemoModule {}
+export class TabBarTypeDemoModule {}
