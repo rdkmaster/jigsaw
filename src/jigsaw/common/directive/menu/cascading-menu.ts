@@ -2,7 +2,7 @@ import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
-import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
+import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/index";
 import {CommonUtils} from "../../core/utils/common-utils";
 
 @Directive({

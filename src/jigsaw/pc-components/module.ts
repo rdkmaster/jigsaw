@@ -51,16 +51,19 @@ import { JigsawBreadcrumbModule } from "./breadcrumb/breadcrumb";
 import { JigsawRateModule } from "./rate/index";
 import { JigsawMenuModule } from "./menu/index";
 import { JigsawProgressModule } from "./progress/progress";
-import { JigsawDatePickerModule } from "./date-and-time/date-picker";
-import { JigsawTimePickerModule } from "./date-and-time/time-picker";
-import { JigsawDateTimePickerModule } from "./date-and-time/date-time-picker";
-import { JigsawRangeDateTimePickerModule } from "./date-and-time/range-date-time-picker";
-import { JigsawDateTimeSelectModule } from "./date-and-time/date-time-select";
-import { JigsawRangeDateTimeSelectModule } from "./date-and-time/range-date-time-select";
+import { JigsawDatePickerModule } from "./date-and-time/index";
+import { JigsawTimePickerModule } from "./date-and-time/index";
+import { JigsawDateTimePickerModule } from "./date-and-time/index";
+import { JigsawRangeDateTimePickerModule } from "./date-and-time/index";
+import { JigsawDateTimeSelectModule } from "./date-and-time/index";
+import { JigsawRangeDateTimeSelectModule } from "./date-and-time/index";
 import { JigsawColorSelectModule } from "./color-select/index";
 import { JigsawBadgeModule } from "../common/directive/badge/index";
-import { JigsawTimeSectionModule } from "./date-and-time/time-section";
+import { JigsawTimeSectionModule } from "./date-and-time/index";
 import { JigsawHeaderModule } from "./header/header";
+import { JigsawUploadFallbackModule } from './fallback/upload/index';
+import { JigsawStepsFallbackModule } from './fallback/steps/index';
+import { JigsawStepsMultilineFallbackModule } from './fallback/steps/steps-multiline';
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -125,7 +128,10 @@ const JIGSAW_MODULE = [
     JigsawColorSelectModule,
     JigsawBadgeModule,
     JigsawMenuModule,
-    JigsawTimeSectionModule
+    JigsawTimeSectionModule,
+    JigsawUploadFallbackModule,
+    JigsawStepsFallbackModule,
+    JigsawStepsMultilineFallbackModule
 ];
 
 @NgModule({

@@ -24,7 +24,7 @@ import {
     PopupPositionValue,
     PopupService
 } from "../../../service/popup.service";
-import {JigsawUploadFallbackBase, UploadFileInfoFallback} from "../../../../pc-components/fallback/upload/upload.base";
+import {JigsawUploadFallbackBase, UploadFileInfoFallback} from "../../../../pc-components/fallback/upload/index";
 import {AbstractJigsawComponent} from "../../../common";
 
 @Directive({
