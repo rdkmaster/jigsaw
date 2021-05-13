@@ -1,7 +1,14 @@
 <div class="jigsaw-tabs" [class.jigsaw-tabs-vertical-response]="!!height">
-    <jigsaw-tab-bar #tabBar *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless"
-                    (remove)="_$handleRemove($event)" (add)="_$handleAdd()"
-                    [(data)]="_$tabPanes" [editable]="editable" [(selectedIndex)]="selectedIndex"></jigsaw-tab-bar>
+    <jigsaw-tab-bar
+        #tabBar
+        *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless"
+        (remove)="_$handleRemove($event)"
+        (add)="_$handleAdd()"
+        [tabType]="tabType"
+        [(data)]="_$tabPanes"
+        [editable]="editable"
+        [(selectedIndex)]="selectedIndex"
+    ></jigsaw-tab-bar>
     <div class="jigsaw-tabs-content">
         <jigsaw-tab-content
             *ngFor="let tab of _$tabPanes; let i = index;"
@@ -10,7 +17,8 @@
             [isActive]="selectedIndex === i"
             [lazy]="tab.lazy"
             [initData]="tab.initData"
-            [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)', transition: enableAnimation ?  'transform 0.5s' : ''}">
+            [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)', transition: enableAnimation ?  'transform 0.5s' : ''}"
+        >
         </jigsaw-tab-content>
     </div>
 </div>
