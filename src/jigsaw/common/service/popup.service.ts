@@ -108,11 +108,11 @@ export class PopupOptions {
     showShadow?: boolean = true;
 
     /**
-     * 阴影深度，默认为深度2
-     * box-shadow 阴影（基于altitude）
-     * $box-shadow-lv1 => 页内卡片
-     * $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
-     * $box-shadow-lv3 => 及时消息、模态弹框、alert
+     * 阴影深度（基于altitude），默认为default
+     * - inline: 适用于页面内联元素，比如页内卡片
+     * - default: 适用于Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker等悬浮类视图弹出场景
+     * - dialog: 适用于及时消息、模态弹框等对话框场景
+     * - alert: 适用于警示框等重要对话框场景
      */
     shadowType?: 'inline' | 'default' | 'dialog' | 'alert' = 'default';
 
@@ -572,10 +572,7 @@ export class PopupService {
                 dialog: "0px 5px 15px hsla(0, 0%, 0%, 0.12)",
                 alert: "0px 5px 15px hsla(0, 0%, 0%, 0.12)"
             };
-            let shadowValue = "0px 2px 12px hsla(0, 0%, 0%, 0.15)";
-            if (options.shadowType === "inline" || options.shadowType === "dialog" || options.shadowType === "alert") {
-                shadowValue = shadow[options.shadowType];
-            }
+            const shadowValue = shadow[options.shadowType] || "0px 2px 12px hsla(0, 0%, 0%, 0.15)";
             InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);
         }
         if (options && options.showBorder) {
