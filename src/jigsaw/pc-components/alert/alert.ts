@@ -190,7 +190,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
                             modal: boolean = true,
                             popupOptions?: PopupOptions): PopupInfo {
         const msg: AlertMessage = typeof message == 'string' ? {header: message} : message;
-        const po = popupOptions ? popupOptions : {
+        const po: PopupOptions = popupOptions ? popupOptions : {
             modal: modal, //是否模态
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut,
