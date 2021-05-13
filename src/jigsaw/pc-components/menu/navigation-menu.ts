@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
-import {collapseMotion} from "../../common/components/animations/collapse";
+import {collapseMotion} from "../../common/components/animations/index";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 

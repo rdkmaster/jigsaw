@@ -11,7 +11,7 @@ import {
     Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AnimationDestroy} from "../../common/components/animations/destroy";
+import {AnimationDestroy} from "../../common/components/animations/index";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";

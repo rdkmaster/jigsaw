@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common/common";
-import {fadeIn} from "../../common/components/animations/fade-in";
+import {fadeIn} from "../../common/components/animations/index";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";

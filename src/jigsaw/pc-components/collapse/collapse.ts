@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
-import {collapseMotion} from "../../common/components/animations/collapse";
+import {collapseMotion} from "../../common/components/animations/index";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
