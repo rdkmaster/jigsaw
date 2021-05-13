@@ -3,11 +3,9 @@
 
 <!-- start to learn the demo from here -->
 <jigsaw-header>标签式</jigsaw-header>
-<jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData" [editable]="editable"></jigsaw-tabs-bar>
-<jigsaw-tabs-bar [(selectedIndex)]="selectedIndex2" [data]="tabBarData2" [editable]="editable"></jigsaw-tabs-bar>
-
-<ng-template #newTab> new tab content </ng-template>
+<jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar>
+<jigsaw-tabs-bar [data]="tabBarData2"></jigsaw-tabs-bar>
 
 <jigsaw-header>页签式</jigsaw-header>
-<jigsaw-tabs-bar [(selectedIndex)]="selectedIndex3" [data]="tabBarData" [tabType]="'page'"></jigsaw-tabs-bar>
-<jigsaw-tabs-bar [(selectedIndex)]="selectedIndex4" [data]="tabBarData2" [tabType]="'page'"></jigsaw-tabs-bar>
+<jigsaw-tabs-bar [data]="tabBarData" [tabType]="'page'"></jigsaw-tabs-bar>
+<jigsaw-tabs-bar [data]="tabBarData2" [tabType]="'page'"></jigsaw-tabs-bar>

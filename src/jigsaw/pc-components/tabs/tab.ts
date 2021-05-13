@@ -169,6 +169,17 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     public titleChange = new EventEmitter<TabTitleInfo>();
 
     /**
+     * 控制tab显示为标签式 or 页签式
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = tab-bar/type
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public tabType: 'label' | 'page' = 'label';
+
+    /**
      * @internal
      */
     public _$selectTabStyle: object = {};
@@ -391,28 +402,6 @@ export class JigsawTabBar extends JigsawTabBase {
         super(_changeDetector, _injector);
     }
 
-    /** 
-     * 控制tab显示为标签式 or 页签式
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = tab-bar/type
-     */
-
-    public _tabType: 'label' | 'page' = 'label';
-
-    @Input()
-    @RequireMarkForCheck()
-    public get tabType(){
-        return this._tabType;
-    }
-    public set tabType(v){
-        if (this._tabType == v) {
-            return;
-        }
-        this._tabType = v;
-    }
-
     /**
      * tab页点击
      * @internal
@@ -492,7 +481,7 @@ export class JigsawTab extends JigsawTabBase {
                 protected _injector: Injector) {
         super(_changeDetector, _injector);
     }
-    
+
     /**
      * @internal
      */

@@ -4,6 +4,7 @@
         *ngIf="((_$tabPanes && _$tabPanes.length > 0) || editable ) && !_$headless"
         (remove)="_$handleRemove($event)"
         (add)="_$handleAdd()"
+        [tabType]="tabType"
         [(data)]="_$tabPanes"
         [editable]="editable"
         [(selectedIndex)]="selectedIndex"

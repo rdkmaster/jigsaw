@@ -9,12 +9,7 @@ import { HttpClient } from "@angular/common/http";
 export class TabBarTypeDemoComponent implements OnInit {
     tabBarData: Array<string>;
     tabBarData2: TabBarData[];
-    lineBarGraphData: LineGraphData;
     menuData: SimpleTreeData;
-    selectedIndex = 0;
-    selectedIndex2 = 0;
-    selectedIndex3 = 0;
-    selectedIndex4 = 0;
 
     public _$more() {
         const mouseEvent: MouseEvent = window.event || arguments[0];
@@ -26,10 +21,7 @@ export class TabBarTypeDemoComponent implements OnInit {
         alert(`${node.label} 被点击了!!!`);
     }
 
-    constructor(http: HttpClient) {
-        this.lineBarGraphData = new LineGraphData();
-        this.lineBarGraphData.http = http;
-        this.lineBarGraphData.fromAjax("mock-data/marketing");
+    constructor() {
         this.menuData = new SimpleTreeData();
         this.menuData.fromXML(`
             <node>
