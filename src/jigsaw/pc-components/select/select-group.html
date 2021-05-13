@@ -21,11 +21,7 @@
             [ngClass]="{'jigsaw-select-show-selected': _$showSelected,
                         'jigsaw-select-multiple-list': multipleSelect,
                         'jigsaw-select-single-list': !multipleSelect}"
-            [data]="data"
-            [labelField]="labelField"
             [trackItemBy]="trackItemBy"
-            [multipleSelect]="multipleSelect"
-            [optionCount]="optionCount"
             [(selectedItems)]="_$selectedItems"
             (selectedItemsChange)="_$handleSelectChange($event)"
             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"

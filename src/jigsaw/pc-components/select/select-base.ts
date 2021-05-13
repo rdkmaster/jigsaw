@@ -1,24 +1,11 @@
-import {
-    ChangeDetectorRef,
-    EventEmitter,
-    Input,
-    NgZone,
-    Output,
-    ViewChild,
-    Injector,
-    Directive,
-    ViewChildren,
-    QueryList
-} from "@angular/core";
-import { ControlValueAccessor } from "@angular/forms";
-import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
-import { ArrayCollection } from "../../common/core/data/array-collection";
-import { JigsawListLite } from "../list-and-tile/list-lite";
-import { CommonUtils } from "../../common/core/utils/common-utils";
-import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { CheckBoxStatus } from "../checkbox/typings";
-import { JigsawListOption, JigsawList } from "../list-and-tile/list";
-import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild} from "@angular/core";
+import {ControlValueAccessor} from "@angular/forms";
+import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
+import {ArrayCollection} from "../../common/core/data/array-collection";
+import {JigsawListLite} from "../list-and-tile/list-lite";
+import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CheckBoxStatus} from "../checkbox/typings";
 
 type SelectOption = {
     (labelField: string): string;

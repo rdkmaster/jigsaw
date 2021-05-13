@@ -103,5 +103,4 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
     exports: [JigsawList, JigsawListOption]
 })
 export class JigsawListModule {
-
 }

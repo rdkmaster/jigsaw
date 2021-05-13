@@ -5,6 +5,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
+import {take} from 'rxjs/operators';
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -17,7 +18,6 @@ import {JigsawSelectModule} from "../select/index";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {take} from 'rxjs/operators';
 import { DragDropInfo } from "../../common/directive/dragdrop/types";
 import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
 
