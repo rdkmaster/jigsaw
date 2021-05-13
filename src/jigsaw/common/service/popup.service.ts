@@ -572,7 +572,7 @@ export class PopupService {
                 dialog: "0px 5px 15px hsla(0, 0%, 0%, 0.12)",
                 alert: "0px 5px 15px hsla(0, 0%, 0%, 0.12)"
             };
-            const shadowValue = shadow[options.shadowType] || "0px 2px 12px hsla(0, 0%, 0%, 0.15)";
+            const shadowValue = shadow[options.shadowType] || shadow.default;
             InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);
         }
         if (options && options.showBorder) {
