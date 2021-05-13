@@ -1,19 +1,17 @@
-import { JigsawComboSelectModule } from "../combo-select";
-import { JigsawListLiteModule } from "../list-and-tile/list-lite";
 import { NgModule } from "@angular/core";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { JigsawComboSelectModule } from "../combo-select/index";
 import { JigsawSelect } from "./select";
-import { JigsawCheckBoxModule } from "../checkbox";
+import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
-import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
     imports: [
         JigsawComboSelectModule,
-        JigsawListLiteModule,
         JigsawListModule,
         JigsawCheckBoxModule,
         JigsawCollapseModule,

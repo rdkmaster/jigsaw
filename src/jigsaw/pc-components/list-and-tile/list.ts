@@ -1,7 +1,6 @@
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ContentChildren,
     ElementRef,
@@ -103,5 +102,4 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
     exports: [JigsawList, JigsawListOption]
 })
 export class JigsawListModule {
-
 }

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, NgZone, Injector } from "@angular/core";
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
-import { JigsawSelectGroupBase } from "./select-base";
+import {ChangeDetectionStrategy, Component, forwardRef} from "@angular/core";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {JigsawSelectGroupBase} from "./select-base";
 
 @Component({
     selector: "jigsaw-group-select, j-group-select",
