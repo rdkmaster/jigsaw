@@ -38,6 +38,7 @@ import {FieldWrapper} from '@ngx-formly/core';
             flex-direction: column;
             justify-content: center;
             flex: 1;
+            height: 100%;
         }
 
         .jigsaw-formly-field-wrapper-error {
