@@ -134,9 +134,10 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private _modifiedHtml: string;
 
     private _updateHtml(): void {
-        if (!this._trustedHtml || !this._initialized) {
+        if (!this._initialized) {
             return;
         }
+        this._trustedHtml = CommonUtils.isUndefined(this._trustedHtml) ? "" : this._trustedHtml;
         const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
             .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
                 (found, prefix, event, quot, funcAccessor, args) => this._replacer(`on${event}=${quot}`, funcAccessor, args))
