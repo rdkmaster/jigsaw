@@ -15,6 +15,7 @@ export class NavigationMenuNavDemo {
     public data1: SimpleTreeData = new SimpleTreeData();
     public data2: SimpleTreeData = new SimpleTreeData();
     public data3: SimpleTreeData = new SimpleTreeData();
+    public collapsed: boolean = true;
 
     constructor() {
         this.data1.fromXML(`
@@ -70,6 +71,14 @@ export class NavigationMenuNavDemo {
 
     menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
+    }
+
+    updateCollapsed() {
+        this.collapsed = !this.collapsed;
+    }
+
+    collapsedChanged(event: boolean) {
+        console.log(event, this.collapsed);
     }
 
     // ====================================================================
