@@ -231,8 +231,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._$cellSettings.forEach(row => row.splice(0, row.length));
         const dataLen = this.data.data.length;
         // remove extra lines if necessary
-        this._$cellSettings.splice(dataLen, this._$cellSettings.length);
-        this._additionalData.data.splice(dataLen, this._$cellSettings.length);
+        const lengthBefore = this._$cellSettings.length;
+        this._$cellSettings.splice(dataLen, lengthBefore);
+        this._additionalData.data.splice(dataLen, lengthBefore);
 
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
