@@ -28,7 +28,7 @@ type BorderRadiusValue = {
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-    protected constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
+    public constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
         super(_zone);
     }
 
