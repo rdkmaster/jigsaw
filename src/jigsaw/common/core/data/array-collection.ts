@@ -616,6 +616,8 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public filterInfo: DataFilterInfo;
     public sortInfo: DataSortInfo;
 
+    public pagingServerUrl: string;
+
     /**
      * 参考`PageableTableData.sourceRequestOptions`的说明
      */
@@ -682,7 +684,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._ajax();
     }
 
-    private _ajax(): void {
+    protected _ajax(): void {
         if (this._busy) {
             this.ajaxErrorHandler(null);
             return;
@@ -718,7 +720,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             options.params = PreparedHttpClientOptions.prepareParams(options.params)
         }
 
-        this.http.request(options.method, PagingInfo.pagingServerUrl, options)
+        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
+
+        this.http.request(options.method, pagingService, options)
             .pipe(
                 map(res => this.reviseData(res)),
                 map(data => {
@@ -739,7 +743,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             );
     }
 
-    private _updatePagingInfo(data: any): void {
+    protected _updatePagingInfo(data: any): void {
         if (!data.hasOwnProperty('paging')) {
             return;
         }
@@ -859,9 +863,39 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
  * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
 export class DirectPageableArray extends PageableArray {
-    constructor(public http: HttpClient, public sourceRequestOptions: HttpClientOptions) {
-        super(http, sourceRequestOptions);
-        console.error("unsupported yet!");
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this.http.request(options.method, options.url, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
+            .subscribe(
+                tableData => this.ajaxSuccessHandler(tableData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
     }
 }
 
