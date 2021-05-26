@@ -554,7 +554,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
     }
 
-    private _updatePagingInfo(data: any): void {
+    protected _updatePagingInfo(data: any): void {
         if (!data.hasOwnProperty('paging')) {
             return;
         }
@@ -652,6 +652,43 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
+    }
+}
+
+export class DirectPageableTableData extends PageableTableData implements IServerSidePageable, IFilterable, ISortable {
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this.http.request(options.method, options.url, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
+            .subscribe(
+                tableData => this.ajaxSuccessHandler(tableData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
     }
 }
 
