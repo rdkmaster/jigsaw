@@ -302,9 +302,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             return;
         }
         this.current--;
-        if (this.mode != 'simple') {
-            this._showPages();
-        }
         this._changeDetectorRef.markForCheck();
     }
 
@@ -317,9 +314,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             return;
         }
         this.current++;
-        if (this.mode != 'simple') {
-            this._showPages();
-        }
         this._changeDetectorRef.markForCheck();
     }
 
@@ -330,7 +324,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         let pageNum = this.current + 5;
         pageNum = pageNum > this._totalPage ? this._totalPage : pageNum;
         this.current = pageNum;
-        this._showPages();
         this._changeDetectorRef.markForCheck();
     }
 
@@ -341,7 +334,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         let pageNum = this.current - 5;
         pageNum = pageNum < 1 ? 1 : pageNum;
         this.current = pageNum;
-        this._showPages();
         this._changeDetectorRef.markForCheck();
     }
 
@@ -428,12 +420,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (!this.data || !this.data.pagingInfo) {
             return;
         }
-        this._calePagingInfo();
+        this._calcPagingInfo();
         this._showPages();
         this._changeDetectorRef.markForCheck();
     }
 
-    private _calePagingInfo() {
+    private _calcPagingInfo() {
         this.current = this.data.pagingInfo.currentPage;
         this._totalRecord = this.data.pagingInfo.totalRecord;
         this.pageSize = this.data.pagingInfo.pageSize;
