@@ -7,7 +7,7 @@
 
         <div class="jigsaw-paging-prev jigsaw-paging-page fa jigsaw-paging-left"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()"></div>
-        <jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber"></jigsaw-paging-item>
+        <jigsaw-paging-item *ngFor="let pageNumber of _$pageNums" [pageNumber]="pageNumber"></jigsaw-paging-item>
         <div class="jigsaw-paging-next jigsaw-paging-page fa jigsaw-paging-right"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()"></div>
 
