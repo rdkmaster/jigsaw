@@ -8,9 +8,10 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
     vertical-align: top;
     span {
         @include inline-block();
-        width: var(--height-paging);
+        min-width: var(--height-paging);
         height: var(--height-paging);
         line-height: var(--height-paging);
+        padding: 0 2px;
         font-size: $font-size-base;
         text-align: center;
         border-width: 1px;
