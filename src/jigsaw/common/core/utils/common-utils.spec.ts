@@ -105,5 +105,11 @@ describe('Unit Test for common-utils', () => {
         expect(JSON.stringify(s)).toEqual(JSON.stringify({a:1,b:1,c:1}));
         done();
     });
+    it('extendObject2111', (done) => {
+        let t = {a:[{b:1,c:2}]};
+        let s = CommonUtils.extendObject(t,{a:[{b:3},{d:4}]});
+        expect(JSON.stringify(s)).toEqual(JSON.stringify({a:[{b:3,c:2},{d:4}]}));
+        done();
+    })
 });
 

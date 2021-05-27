@@ -309,6 +309,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                     this._$pageNums = [this.current - 2, this.current - 1, this.current, this.current + 1, this.current + 2];
                 }
             } else {
+                // 小于10页不需要省略显示
                 this._$pageNums = Array.from(new Array(this._totalPage)).map((item, index) => ++index);
             }
         }

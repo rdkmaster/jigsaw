@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="showToggleButton" class="jigsaw-nav-menu-toggle-button" (click)="collapsed = !collapsed"
+    <div *ngIf="showToggleButton" class="jigsaw-nav-menu-toggle-button" (click)="_$handleCollapsed()"
         [ngClass]="{'jigsaw-nav-menu-toggle-button-collapsed': collapsed}">
         <i class="iconfont iconfont-e4aa jigsaw-nav-menu-toggle-button-arrow"></i>
         <span *ngIf="!collapsed">{{"navigation.hide" | translate}}</span>
