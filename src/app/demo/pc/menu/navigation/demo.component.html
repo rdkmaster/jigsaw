@@ -21,7 +21,8 @@
 
         <div class="demo-2 live-demo block">
             <h3>默认折叠的导航菜单</h3>
-            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" collapsed="true"
+            <a (click)="updateCollapsed()">更改折叠状态</a><br><br>
+            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" [(collapsed)]="collapsed" (collapsedChange)="collapsedChanged($event)"
                                     style="border: 1px solid #dcdcdc"></jigsaw-navigation-menu>
         </div>
     </div>

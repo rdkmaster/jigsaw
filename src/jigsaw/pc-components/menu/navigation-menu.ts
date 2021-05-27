@@ -72,6 +72,9 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     @Output()
     public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
+    @Output()
+    public collapsedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     /**
      * @internal
      */
@@ -133,5 +136,13 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             this._removeDataRefresh();
             this._removeDataRefresh = null;
         }
+    }
+    
+    /**
+     * @internal
+     */
+    public _$handleCollapsed() {
+        this.collapsed = !this.collapsed;
+        this.collapsedChange.emit(this.collapsed);
     }
 }
