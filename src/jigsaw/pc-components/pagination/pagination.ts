@@ -528,7 +528,11 @@ export class JigsawPagingItem {
     @Input()
     public pageNumber: number;
 
-    constructor(@Optional() pagination: JigsawPagination, public _changeDetectorRef: ChangeDetectorRef) {
+    constructor(@Optional() pagination: JigsawPagination,
+                /**
+                 * @internal
+                 */
+                public _changeDetectorRef: ChangeDetectorRef) {
         this._pagination = pagination;
     }
 
