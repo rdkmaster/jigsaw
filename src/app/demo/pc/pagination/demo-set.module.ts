@@ -7,6 +7,9 @@ import { PaginationBasicDemoComponent } from "./basic/demo.component";
 import { WithPagingInfoDemoComponent } from "./with-page-info/demo.component";
 import { PaginationSizeDemoComponent } from "./size/demo.component";
 import { PaginationSizeDemoModule } from "./size/demo.module";
+import {PaginationBigDataDemoComponent} from "./big-data/demo.component";
+import {PaginationBigDataDemoModule} from "./big-data/demo.module";
+
 
 export const routerConfig = [
     {
@@ -20,7 +23,10 @@ export const routerConfig = [
     {
         path: "size",
         component: PaginationSizeDemoComponent
-    }
+    },
+    {
+        path: 'big-data', component: PaginationBigDataDemoComponent
+    },
 ];
 
 @NgModule({
@@ -28,7 +34,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         PaginationBasicDemoModule,
         WithPagingInfoDemoModule,
-        PaginationSizeDemoModule
+        PaginationSizeDemoModule,
+        PaginationBigDataDemoModule
     ]
 })
 export class PaginationDemoModule {}

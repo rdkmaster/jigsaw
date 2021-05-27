@@ -384,6 +384,7 @@ export class MockData {
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
+        this.dataSet['big-data-for-paging'] = this.createBigTableData(50000, 4);
 
         // 静态文件引用数据
         this.dataSet['provinces.json'] = require('mock-data/provinces.json');
@@ -391,13 +392,13 @@ export class MockData {
         this.dataSet['districts.json'] = require('mock-data/districts.json');
     }
 
-    static createBigTableData(): RawTableData {
+    static createBigTableData(rowLength = 5000, colLength = 200): RawTableData {
         const rtd: RawTableData = {field: [], header: [], data: []};
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < colLength; i++) {
             rtd.field.push('field-' + i);
             rtd.header.push('header-' + i);
         }
-        for (let i = 0; i < 5000; i++) {
+        for (let i = 0; i < rowLength; i++) {
             const row = [];
             rtd.data.push(row);
             for (let j = 0; j < 200; j++) {
