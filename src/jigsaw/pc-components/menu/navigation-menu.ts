@@ -70,10 +70,10 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     public collapsed: boolean = false;
 
     @Output()
-    public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
+    public collapsedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Output()
-    public collapsedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
     /**
      * @internal
