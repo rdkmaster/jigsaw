@@ -176,7 +176,6 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
      * $demo = tab-bar/type
      */
     @Input()
-    @RequireMarkForCheck()
     public tabType: 'label' | 'page' = 'label';
 
     /**

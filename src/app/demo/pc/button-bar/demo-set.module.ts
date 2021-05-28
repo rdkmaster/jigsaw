@@ -10,7 +10,7 @@ export const routerConfig = [
         path: 'basic', component: ButtonBarBasicDemoComponent
     },
     {
-        path: 'color-type', component: ButtonBarThemeDemoComponent
+        path: 'theme', component: ButtonBarThemeDemoComponent
     }
 ];
 

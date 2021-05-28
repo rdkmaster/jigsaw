@@ -11,15 +11,15 @@ import { BreadcrumbHintDemoComponent } from "./hints/demo.component";
 import { BreadcrumbHintDemoModule } from "./hints/demo.module"
 import { BreadcrumbFoldDemoComponent } from "./fold/demo.component";
 import { BreadcrumbFoldDemoModule } from "./fold/demo.module"
-import { BreadcrumbModeDemoComponent } from './mode/demo.component';
-import { BreadcrumbModeDemoModule } from './mode/demo.module';
+import { BreadcrumbModeDemoComponent } from './theme/demo.component';
+import { BreadcrumbModeDemoModule } from './theme/demo.module';
 
 export const routerConfig = [
     {
         path: 'basic', component: BreadcrumbBasicDemoComponent
     },
     {
-        path: 'hint', component: BreadcrumbHintDemoComponent
+        path: 'hints', component: BreadcrumbHintDemoComponent
     },
     {
         path: 'fold', component: BreadcrumbFoldDemoComponent

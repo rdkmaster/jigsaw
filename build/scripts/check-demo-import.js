@@ -2,11 +2,26 @@ const fs = require('fs');
 const path = require('path');
 
 const reg = /^\s*import\s*{([\s\S]*?)}\s*from\s*['"](.+)['"]\s*;?\s*/gm;
-let jigsawApi = 'jigsaw/public_api';
-processAllComponents('pc');
-jigsawApi = 'jigsaw/mobile_public_api';
-processAllComponents('mobile');
-console.error(`All demo's imports are fine!`);
+
+let jigsawApi, errors;
+const r1 = checkAll('pc');
+const r2 = checkAll('mobile');
+console.error(r1);
+console.error(r2);
+if (!r1 && !r2) {
+    console.log(`All demo's imports are fine!`);
+    process.exit(0);
+} else {
+    process.exit(1);
+}
+
+function checkAll(platform) {
+    jigsawApi = platform === 'pc' ? 'jigsaw/public_api' : 'jigsaw/mobile_public_api';
+    errors = [];
+    errors.push(`Error: invalid import from path, import jigsaw's api from '${jigsawApi}' instead!`);
+    processAllComponents(platform);
+    return errors.length === 1 ? '' : errors.join('\n');
+}
 
 function processAllComponents(platform) {
     const demoHome = path.resolve(`${__dirname}/../../src/app/demo/${platform}`);
@@ -52,9 +67,7 @@ function checkDemoSource(srcPath) {
     console.log(`Checking ${srcPath} ...`);
     fs.readFileSync(srcPath).toString().replace(reg, (found, imports, from) => {
         if (from.match(/jigsaw\/.+/) && from !== jigsawApi) {
-            console.error(`Error: invalid import from path, import jigsaw's api from '${jigsawApi}' instead!`);
-            console.error(" path:", srcPath);
-            process.exit(1);
+            errors.push("  path: " + srcPath);
         }
     });
 }

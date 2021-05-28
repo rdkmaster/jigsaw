@@ -94,7 +94,7 @@ export abstract class JigsawSelectBase
     @Input()
     public optionHeight = 32;
 
-    public _optionCount: number;
+    private _optionCount: number;
     /**
      * 显示的option个数，超出的会显示滚动条
      * 目前默认
@@ -298,6 +298,10 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$selectAllChecked = CheckBoxStatus.unchecked;
+
+    /**
+     * @internal
+     */
     public _$selectAll() {
         if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
             this._$selectedItems = [];
@@ -308,6 +312,10 @@ export abstract class JigsawSelectBase
         }
         this._changeDetector.markForCheck();
     }
+
+    /**
+     * @internal
+     */
     public _$checkSelectAll() {
         if (this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;

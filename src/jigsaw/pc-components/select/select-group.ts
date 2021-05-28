@@ -22,6 +22,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase {
 
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
+     * @internal
      */
     public _$type = "group";
 }
@@ -46,6 +47,7 @@ export class JigsawSelectCollapse extends JigsawSelectGroupBase {
 
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
+     * @internal
      */
     public _$type = "collapse";
 }

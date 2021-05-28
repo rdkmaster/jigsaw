@@ -188,7 +188,7 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
         }
     }
 
-    public _size: "small" | "medium" | "large" = "large";
+    private _size: "small" | "medium" | "large" = "large";
 
     /**
      * @NoMarkForCheckRequired

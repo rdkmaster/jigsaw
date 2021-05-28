@@ -49,7 +49,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public placeholder: string = this._translateService.instant("search-input.placeholder");
 
-    public _value: string;
+    private _value: string;
 
     /**
      * 文本框中当前的文本
