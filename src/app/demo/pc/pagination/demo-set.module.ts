@@ -23,11 +23,9 @@ export const routerConfig = [
         component: PaginationSizeDemoComponent
     },
     {
-        path: 'big-data', component: PaginationBigDataDemoComponent
-    },
-    {
-        path: 'big-data', component: PaginationBigDataDemoComponent
-    },
+        path: 'big-data', 
+        component: PaginationBigDataDemoComponent
+    }
 ];
 
 @NgModule({
