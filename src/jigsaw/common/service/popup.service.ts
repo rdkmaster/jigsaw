@@ -130,6 +130,10 @@ export class PopupOptions {
      * pointer表示弹出的模块带指向的三角
      */
     borderType?: 'default' | 'pointer';
+    /**
+     * borderRadius表示弹框的边框圆角
+     */
+    borderRadius?: string | number;
 }
 
 export type AbsolutePosition =
@@ -578,6 +582,9 @@ export class PopupService {
         if (options && options.showBorder) {
             InternalUtils.renderer.setStyle(element, "border", "1px solid #dcdcdc");
             InternalUtils.renderer.setStyle(element, "border-radius", "4px");
+        }
+        if (options && options.borderRadius) {
+            InternalUtils.renderer.setStyle(element, "border-radius", CommonUtils.getCssValue(options.borderRadius));
         }
     }
 

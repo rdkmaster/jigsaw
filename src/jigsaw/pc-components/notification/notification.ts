@@ -396,7 +396,6 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         const instancesCopy = instances.concat();
         instances.splice(0, instances.length);
         instancesCopy.forEach(popupInfo => {
-            // console.log(popupInfo.element.offsetHeight, popupInfo.element.innerText);
             const p = this._positionReviser(position, popupInfo.element);
             const options = {posType: PopupPositionType.fixed, pos: {x: p.left, y: p.top}};
             PopupService.instance.setPosition(options, popupInfo.element);
@@ -447,7 +446,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
             // `pos` not null to tell PopupService don't add resize event listener
-            pos: {x: 0, y: 0}, posType: PopupPositionType.fixed
+            pos: {x: 0, y: 0}, posType: PopupPositionType.fixed,
+            borderRadius: '3px'
         };
         const initData = {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
