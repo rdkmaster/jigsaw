@@ -15,9 +15,8 @@ import {
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {Observable, Subscription} from "rxjs";
-import {JigsawTabsModule} from "../tabs/index";
+import {JigsawTab, JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
-import {JigsawTab} from "../tabs/tab";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
@@ -428,13 +427,13 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     template: `
         <div class="jigsaw-cascade-tile-wrapper">
             <div *ngIf="_$showLoading; else tile" class="jigsaw-cascade-loading">
-                <span class="iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+                <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
             </div>
             <ng-template #tile>
                 <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
                     <j-input class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
                              (valueChange)="_$handleSearching($event)">
-                        <span jigsaw-prefix-icon class="fa fa-search"></span>
+                        <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
                     </j-input>
                 </div>
                 <j-tile [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$handleSelect()"

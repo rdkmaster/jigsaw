@@ -19,6 +19,7 @@ import {routerConfig as graphConfig} from "./demo/pc/graph/demo-set.module";
 import {routerConfig as i18nConfig} from "./demo/pc/i18n/demo-set.module";
 import {routerConfig as inputConfig} from "./demo/pc/input/demo-set.module";
 import {routerConfig as numericInputConfig} from "./demo/pc/numeric-input/demo-set.module";
+import {routerConfig as searchInputConfig} from "./demo/pc/search-input/demo-set.module";
 import {routerConfig as listConfig} from "./demo/pc/list/demo-set.module";
 import {routerConfig as listLiteConfig} from "./demo/pc/list-lite/demo-set.module";
 import {routerConfig as loadingConfig} from "./demo/pc/loading/demo-set.module";
@@ -58,6 +59,7 @@ import {routerConfig as progressConfig} from "./demo/pc/progress/demo-set.module
 import {routerConfig as colorSelectConfig} from "./demo/pc/color-select/demo-set.module";
 import {routerConfig as badgeConfig} from "./demo/pc/badge/demo-set.module";
 import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set.module";
+import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfigPC} from "./router-config";
 import {PopupPositionType} from "../jigsaw/common/service/popup.service";
 
@@ -171,6 +173,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'i18n', i18nConfig);
         this._addRouterConfig(routerConfig, 'input', inputConfig);
         this._addRouterConfig(routerConfig, 'numeric-input', numericInputConfig);
+        this._addRouterConfig(routerConfig, 'search-input', searchInputConfig);
         this._addRouterConfig(routerConfig, 'list', listConfig);
         this._addRouterConfig(routerConfig, 'list-lite', listLiteConfig);
         this._addRouterConfig(routerConfig, 'loading', loadingConfig);
@@ -210,6 +213,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'color-select', colorSelectConfig);
         this._addRouterConfig(routerConfig, 'badge', badgeConfig);
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
+        this._addRouterConfig(routerConfig, 'header', headerConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

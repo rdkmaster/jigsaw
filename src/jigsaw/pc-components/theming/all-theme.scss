@@ -6,6 +6,7 @@
 @import "../alert/common-alert";
 @import "../../common/components/block/block";
 @import "../button/button";
+@import "../list-and-tile/button-bar.scss";
 @import "../checkbox/checkbox";
 @import "../collapse/collapse";
 @import "../combo-select/combo-select";
@@ -13,18 +14,20 @@
 @import "../graph/graph";
 @import "../input/input";
 @import "../input/numeric-input";
+@import "../input/prefix-suffix-widget";
+@import "../input/search-input";
 @import "../../common/components/loading/loading-ring";
 @import "../../common/components/loading/loading-font";
 @import "../../common/components/loading/loading-bubble";
 @import "../../common/components/loading/loading-ball";
+@import "../../common/components/loading/loading-circle";
 @import "../notification/notification";
 @import "../pagination/pagination";
-@import "../pagination/page";
+@import "../pagination/pagination-item";
 @import "../radio/radio";
 @import "../select/select";
 @import "../slider/slider";
-@import "../steps/steps";
-@import "../steps/steps-multiline";
+@import "../steps/step";
 @import "../switch/switch";
 @import "../table/table";
 @import "../table/table-head";
@@ -32,7 +35,6 @@
 @import "../tabs/tab";
 @import "../tag/tag";
 @import "../list-and-tile/tile";
-@import "../tooltip/tooltip";
 @import "../list-and-tile/list";
 @import "../list-and-tile/list-lite";
 @import "../list-and-tile/list-option";
@@ -44,7 +46,7 @@
 @import "../drawer/drawer";
 @import "../cascade/cascade";
 @import "../input/auto-complete-input";
-@import "../upload/upload";
+@import "../upload/upload-result";
 @import "../icon/icon";
 @import "../transfer/transfer";
 @import "../textarea/textarea";
@@ -58,7 +60,17 @@
 @import "../date-and-time/range-date-time-picker";
 @import "../date-and-time/date-time-select";
 @import "../progress/progress";
+@import "../progress/circle-progress";
 @import "../color-select/color-select";
 @import "../../common/directive/badge/badge";
+@import "../../common/directive/tooltip/tooltip";
 @import "../menu/navigation-menu";
-@import "../date-and-time/time-section";
+@import "../date-and-time/time-section"; 
+@import "../header/header";
+@import "../tree/tree";
+
+/* fall back components */
+@import "../fallback/steps/steps.scss";
+@import "../fallback/steps/steps-multiline";
+@import "../fallback/upload/upload";
+

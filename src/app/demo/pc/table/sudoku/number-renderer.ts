@@ -17,7 +17,6 @@ import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, P
             line-height: 48px;
             cursor: pointer;
             height: 48px;
-            margin: 1px -7px 1px -7px;
         }
     `]
 })

@@ -1,11 +1,16 @@
-<textarea #textarea
-          [placeholder]="placeholder"
-          [(ngModel)]="value"
-          [disabled]="disabled"
-          (focus)="_$handleFocus($event)"
-          (blur)="_$handleBlur($event)">
-</textarea>
-<div class="jigsaw-textarea-icon-end">
-    <span *ngIf="clearable && !disabled && !!value" (click)="_$clearValue()"
-          class="jigsaw-textarea-clear-bar">&times;</span>
+<div class="jigsaw-textarea-container" [ngStyle]="{'height': height ? height : '100%'}"
+     [ngClass]="{'jigsaw-textarea-focused': focused}">
+    <textarea #textarea [ngStyle]="{'height': maxLength ? 'calc(100% - 20px)' : '100%'}"
+              [placeholder]="placeholder"
+              [(ngModel)]="value"
+              [disabled]="disabled"
+              (focus)="_$handleFocus($event)"
+              (blur)="_$handleBlur($event)">
+    </textarea>
+    <div class="jigsaw-textarea-icon-end">
+        <span *ngIf="clearable && !disabled && !!value" (click)="_$clearValue()" class="jigsaw-textarea-clear-bar">&times;</span>
+    </div>
+    <div class="jigsaw-textarea-statistics" *ngIf="maxLength">
+        <span class="jigsaw-textarea-content">{{_$currentLength}}/{{maxLength}}</span>
+    </div>
 </div>

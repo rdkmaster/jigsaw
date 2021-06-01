@@ -1,7 +1,18 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, HostListener, Injector, Input, NgModule, Output} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    HostListener,
+    Injector,
+    Input,
+    NgModule,
+    Output
+} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "./radio";
+import {JigsawRadioModule, RadiosGroupValue} from "./radio";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -27,6 +38,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(
+        private _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super()
@@ -46,7 +58,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     @RequireMarkForCheck()
     @Input()
-    public value: any;
+    public value: string | RadiosGroupValue;
 
     private _trackItemBy: string | string[];
 
@@ -96,7 +108,7 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     };
 
     public writeValue(value: any): void {
-
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {

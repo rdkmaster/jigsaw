@@ -16,6 +16,11 @@ import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../li
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+export type RadiosGroupValue = {
+    disabled?: boolean, label?: string,
+    [prop: string]: any
+}
+
 @Component({
     selector: 'jigsaw-radios, j-radios',
     template: '<ng-content></ng-content>',
@@ -34,15 +39,16 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get value(): any {
+    public get value(): string | RadiosGroupValue {
         return this.selectedItems && this.selectedItems.length != 0 ? this.selectedItems[0] : null;
     }
 
-    public set value(newValue: any) {
+    public set value(newValue: string | RadiosGroupValue) {
         this.writeValue(newValue);
     }
 
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     // 默认多选
     public multipleSelect: boolean = false;
@@ -52,7 +58,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
 
     /**
      * 选中的条目
-     *
+     * @internal
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -72,7 +78,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
     }
 
     // 重写writeValue
-    public writeValue(newValue: any): void {
+    public writeValue(newValue: string | RadiosGroupValue): void {
         if (newValue && this.value != newValue) {
             this.selectedItems = [newValue];
         } else if (CommonUtils.isUndefined(newValue)) {
@@ -115,5 +121,4 @@ export class JigsawRadioOption extends AbstractJigsawOptionComponent {
     exports: [JigsawRadioGroup, JigsawRadioOption]
 })
 export class JigsawRadioModule {
-
 }

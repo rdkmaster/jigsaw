@@ -4,32 +4,42 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
 .#{$date-prefix-cls} {
     @include inline-block();
-    border-radius: 4px;
-    border: 1px solid $border-color-base;
     width: 210px;
+    height: 100%;
+    border-radius: $border-radius-sm;
+    background: $bg-component;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
     overflow: hidden;
     user-select: none;
-    background: $component-background;
 
     &-header {
-        background: $background-color-base;
-        padding: 0 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: $height-huge;
+        background: $bg-container;
     }
 
     &-gr-switch {
-        padding-top: 8px;
         display: flex;
         justify-content: center;
+        align-items: center;
         text-align: center;
+        width: 100%;
+        padding: 8px 8px 0;
 
         & > span {
             display: inline-block;
             flex: 1;
             height: 24px;
             line-height: 22px;
-            background: $component-background;
-            border: 1px solid $border-color-base;
-            border-right: none;
+            background: $bg-body;
+            border: 1px solid $border-color-default;
             cursor: pointer;
 
             &:first-child {
@@ -40,51 +50,55 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             &:last-child {
                 border-top-right-radius: $border-radius-base;
                 border-bottom-right-radius: $border-radius-base;
-                border-right: 1px solid $border-color-base;
             }
 
             &.active {
-                background-color: $primary-color;
-                color: $text-color-of-bg;
-                border-color: $primary-color;
+                background-color: $brand-light;
+                color: $brand-default;
+                border-color: $brand-default;
             }
         }
     }
 
     &-control {
-        height: 40px;
-        line-height: 40px;
         position: relative;
-        font-size: 14px;
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: $height-huge;
+        line-height: $height-huge;
+        font-size: $font-size-base;
 
         .#{$date-prefix-cls}-control-bar {
-            position: absolute;
-            top: 50%;
-            @include prefixer(transform, translateY(-50%));
-            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            width: 56px;
             font-size: 20px;
-            color: $text-color-secondary;
-            padding: 4px;
+            color: $icon-color-stress;
+            cursor: pointer;
 
-            &:hover {
-                color: $primary-5;
+            &.jigsaw-date-picker-previous-bar {
+                justify-content: flex-start;
+                padding-left: 16px;
+            }
+
+            &.jigsaw-date-picker-next-bar {
+                justify-content: flex-end;
+                padding-right: 16px;
+            }
+
+            i:hover {
+                color: $brand-default;
             }
         }
 
-        .#{$date-prefix-cls}-previous-bar {
-            left: -4px;
-        }
-
-        .#{$date-prefix-cls}-next-bar {
-            right: -4px;
-        }
-
-        &-month, &-year {
+        &-month,
+        &-year {
             cursor: pointer;
 
             &:hover {
-                color: $primary-5;
+                color: $brand-default;
             }
         }
 
@@ -99,17 +113,20 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         &-day {
             width: 100%;
 
-            thead, tbody {
+            thead,
+            tbody {
                 display: block;
                 width: 100%;
             }
 
-            thead tr, tbody tr {
+            thead tr,
+            tbody tr {
                 display: inline-block;
                 width: 100%;
             }
 
-            th, td {
+            th,
+            td {
                 width: 14.28571%;
                 height: 100%;
                 display: block;
@@ -118,78 +135,92 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
             thead {
                 padding: 0 8px;
-                height: 32px;
-                line-height: 28px;
-                background: $background-color-base;
+                height: $height-med;
+                border-bottom: 1px solid $border-color-disabled;
+                line-height: $height-med;
+                background: $bg-container;
+                vertical-align: initial;
 
                 th {
                     text-align: center;
                     font-weight: normal;
-                    color: #333;
+                    color: $font-color-tag;
                 }
             }
 
             tbody {
+                height: 100%;
                 padding: 8px 8px;
 
                 tr {
-                    height: 24px;
-                    line-height: 24px;
+                    height: $height-med;
+                    line-height: $height-med;
                 }
             }
         }
 
         &-day-cell {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             span {
-                display: inline-block;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
                 width: 24px;
                 height: 24px;
-                border-radius: 50%;
+                border-radius: $border-radius-sm;
+                font-size: $font-size-base;
+                color: $font-color-default;
+                box-sizing: border-box;
                 cursor: pointer;
             }
 
             & span:hover {
-                background: $primary-2;
+                background: $brand-light;
             }
 
-            &-today:before {
+            &-today span:before {
                 content: "";
-                display: block;
                 position: absolute;
-                right: 1px;
-                top: 1px;
-                border-top: 6px solid $primary-7;
-                border-left: 6px solid transparent;
+                top: -2px;
+                left: -2px;
+                width: 28px;
+                height: 28px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: $brand-default;
+                border-radius: $border-radius-sm;
+                box-sizing: border-box;
             }
 
-            &-prev-next {
-                color: $text-color-secondary;
+            &-prev-next span {
+                color: $font-color-disabled;
             }
 
             &-selected {
-                span, span:hover {
-                    background: $primary-color;
-                    color: $text-color-of-bg;
+                span,
+                span:hover {
+                    background: $brand-default;
+                    color: $font-color-white;
                 }
             }
 
             &-disabled {
-                span, span:hover {
+                span,
+                span:hover {
+                    color: $font-color-disabled;
                     background: none !important;
-                    @include compatible(color, $disabled-color, $disabled-color-ie11);
                     cursor: not-allowed;
-                }
-                &.#{$date-prefix-cls}-content-day-cell-selected {
-                    span, span:hover {
-                        background: $primary-color;
-                        color: $text-color-of-bg;
-                    }
                 }
             }
 
-            &-recommend:after, &-warn:after, &-error:after {
+            &-recommend:after,
+            &-warn:after,
+            &-error:after {
                 content: "";
                 position: absolute;
                 right: 4px;
@@ -200,28 +231,30 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &-recommend:after {
-                background: $success-color;
+                background: $success-default;
             }
 
             &-warn:after {
-                background: #f1f13e;
+                background: $warning-default;
             }
 
             &-error:after {
-                background: $error-color;
+                background: $error-default;
             }
 
             &-inRange {
-                background: $primary-1;
+                background: $brand-light;
                 &.#{$date-prefix-cls}-content-day-cell-selected {
                     background: none;
                 }
             }
         }
 
-        &-month, &-year {
+        &-month,
+        &-year {
             display: block;
-            padding: 8px 8px 0;
+            height: 188px;
+            padding: 8px;
 
             tbody {
                 width: 100%;
@@ -230,70 +263,75 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 tr {
                     width: 100%;
                     display: block;
-                    height: 46px;
+                    height: 42px;
 
                     td {
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
                         width: 33.33%;
-                        height: 46px;
-                        display: inline-block;
+                        height: 42px;
                     }
                 }
             }
         }
 
-        &-month-cell, &-year-cell {
+        &-month-cell,
+        &-year-cell {
             span {
-                display: inline-block;
-                width: 36px;
-                height: 36px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 48px;
+                height: 26px;
                 line-height: 36px;
-                border-radius: 50%;
+                border-radius: $border-radius-sm;
                 cursor: pointer;
 
                 &:hover {
-                    background: $primary-2
+                    background: $brand-light;
                 }
             }
 
             &-selected {
-                span, span:hover {
-                    background: $primary-color;
-                    color: $text-color-of-bg;
+                span,
+                span:hover {
+                    background: $brand-default;
+                    color: $font-color-white;
                 }
             }
 
             &-disabled {
-                span, span:hover {
+                span,
+                span:hover {
                     background: none;
-                    @include compatible(color, $disabled-color, $disabled-color-ie11);
                     cursor: not-allowed;
                 }
             }
 
             &-prev-next {
-                color: $text-color-secondary;
+                color: $font-color-hint;
             }
         }
     }
 
     &-error {
-        border-color: $error-color;
+        border-color: $error-default;
     }
 
     &-disabled {
         position: relative;
         &:before {
-            content: ' ';
+            content: " ";
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            background: $disabled-bg;
+            background: $bg-disabled;
             opacity: 0.7;
             z-index: $zindex-level-1;
             cursor: not-allowed;
         }
     }
 }
-

@@ -48,14 +48,13 @@ export class TableCalendarDemoComponent {
             <p class="date-text">{{date}}</p>
             <p class="status" [ngClass]="status" *ngIf="date">
                 <span *ngIf="cellData < 100">{{cellData}}%</span>
-                <span *ngIf="cellData >= 100" class="fa fa-check status-done"></span>
+                <span *ngIf="cellData >= 100" class="iconfont iconfont-e13f status-done"></span>
             </p>
         </div>
     `,
     styles: [`
         .date-cell {
             height: 70px;
-            margin: 0 -9px 0 -9px;
             color: #ababab;
         }
 

@@ -6,24 +6,13 @@ import {
     Injector,
     Input,
     OnDestroy,
-    Output,
-    QueryList,
-    ViewChildren
+    Output
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {IPopupable, PopupOptions, PopupPositionValue} from "../../common/service/popup.service";
-import {JigsawFloat} from "../../common/directive/float/float";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-
-enum MenuLevel {top, sub}
-
-type PopupAnswer = {
-    level: MenuLevel,
-    menu: any
-}
 
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
@@ -45,27 +34,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     }
 
     private _data: SimpleTreeData;
-
-    @ViewChildren(JigsawFloat)
-    private _floatMenus: QueryList<JigsawFloat>;
-
-    /**
-     * @internal
-     */
-    public _$popupMenuItem = PopupMenuItem;
-
-    /**
-     * @internal
-     */
-    public _$popupMenuOptions: PopupOptions = {
-        posReviser: (pos: PopupPositionValue, popupElement: HTMLElement) => {
-            pos.top -= 40;
-            return pos;
-        },
-        useCustomizedBackground: true,
-        showShadow: false,
-        showBorder: false
-    };
 
     @Input()
     @RequireMarkForCheck()
@@ -162,31 +130,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         })
     }
 
-    /**
-     * @internal
-     */
-    public _$openPopupMenu(index: number): void {
-        if (!this.showToggleButton || !this.collapsed || !this._floatMenus || this._floatMenus.length == 0) {
-            return;
-        }
-        this._floatMenus.toArray()[index].openFloat();
-    }
-
-    /**
-     * @internal
-     */
-    public _$popupAnswerHandler(event: PopupAnswer): void {
-        if (!event) {
-            return;
-        }
-        if (event.level == MenuLevel.top) {
-            this._$menuSelect(event.menu);
-        }
-        if (event.level == MenuLevel.sub) {
-            this._$subMenuSelect(event.menu);
-        }
-    }
-
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._removeDataRefresh) {
@@ -194,40 +137,12 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             this._removeDataRefresh = null;
         }
     }
-
+    
     /**
      * @internal
      */
     public _$handleCollapsed() {
         this.collapsed = !this.collapsed;
         this.collapsedChange.emit(this.collapsed);
-    }
-}
-
-/**
- * @internal
- */
-@Component({
-    templateUrl: 'popup-menu-item.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class PopupMenuItem implements IPopupable {
-    initData: any;
-
-    @Output()
-    public answer: EventEmitter<any> = new EventEmitter<any>();
-
-    /**
-     * @internal
-     */
-    public _$menuSelect(): void {
-        this.answer.emit({level: MenuLevel.top, menu: this.initData});
-    }
-
-    /**
-     * @internal
-     */
-    public _$subMenuSelect(subMenu: any): void {
-        this.answer.emit({level: MenuLevel.sub, menu: subMenu});
     }
 }

@@ -2,33 +2,56 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
 .#{$list-option-prefix-cls} {
     display: block;
-    padding: 5px 8px;
+    position: relative;
+    width: 100%;
     min-height: $height-base;
+    padding: 5px 8px;
     cursor: pointer;
     box-sizing: border-box;
-    position: relative;
+    background: $bg-body;
+
     &:hover {
-        background: $item-hover-bg;
+        background: $brand-light;
+
+        .#{$list-option-prefix-cls}-title-box .#{$list-option-prefix-cls}-title {
+            color: $brand-default;
+        }
     }
+
     &.#{$list-option-prefix-cls}-active {
-        background: $item-active-bg;
+        background: $brand-active-light;
     }
+
     &.#{$list-option-prefix-cls}-disabled {
-        background: $disabled-bg;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background: $bg-disabled;
+        color: $font-color-disabled;
         cursor: not-allowed;
     }
+
     &-title-box {
         @include clearfix();
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
     }
+
     &-title {
-        float: left;
-        color: #333;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: $font-color-heading;
+        width: 100%;
     }
+
     &-sub-title {
-        float: right;
-        color: #999;
+        font-size: $font-size-base;
+        color: $font-color-hint;
+        p {
+            height: 18px;
+        }
     }
+
     &-block {
         position: absolute;
         top: 0;
@@ -48,6 +71,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         display: block;
         width: 100%;
         height: 0;
-        border-top: 1px dotted $border-color-split;
+        border-top: 1px dotted $splitline-default;
     }
 }

@@ -19,11 +19,11 @@
 <h4>dialog</h4>
 <jigsaw-dialog width="400" [buttons]="buttons">
     <div jigsaw-title>
-        <span class="fa fa-thumbs-up"></span>{{'dialogTitle' | translate}}
+        <span class="iconfont iconfont-e3f0"></span>{{'dialogTitle' | translate}}
     </div>
     <div jigsaw-body>
         <div class="dialog-content">
-            <span class="fa fa-info-circle"></span> <span>{{'dialogContent' | translate}}</span>
+            <span class="iconfont iconfont-e23f"></span> <span>{{'dialogContent' | translate}}</span>
         </div>
     </div>
 </jigsaw-dialog>
@@ -45,5 +45,10 @@
                    [pageSizeOptions]="[5,10,20]"
                    [searchable]="true"
                    [showQuickJumper]="true"
-                   width="710px">
+                   width="800px">
 </jigsaw-pagination>
+
+<br>
+<h4>navigation menu</h4>
+<jigsaw-navigation-menu [data]="navigationMenuData" height="320px" style="border: 1px solid #dcdcdc">
+</jigsaw-navigation-menu>

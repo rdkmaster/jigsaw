@@ -4,7 +4,6 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
 .#{$nav-menu-prefix-cls} {
     @include inline-block();
-    background: $component-background;
 
     &-container {
         height: 100%;
@@ -15,23 +14,22 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
     &-items {
         flex: 1;
-        background: $background-color-base;
+        background: $bg-container;
 
         .#{$nav-menu-prefix-cls}-item {
             width: 100%;
             min-width: 40px;
-            color: $text-color;
+            color: $font-color-default;
 
             .#{$nav-menu-prefix-cls}-item-top {
-                position: relative;
-                font-size: 14px;
-                font-weight: 700;
                 display: flex;
                 align-items: center;
-                height: 40px;
-                line-height: 40px;
+                position: relative;
+                padding-left: 16px;
+                font-size: $font-size-lg;
+                font-weight: 400;
+                height: $height-huge;
                 cursor: pointer;
-                padding-left: 14px;
 
                 i {
                     margin-right: 8px;
@@ -40,21 +38,25 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $item-hover-bg;
+                    background: $brand-light;
                 }
 
                 .#{$nav-menu-prefix-cls}-item-arrow {
                     position: absolute;
                     right: 16px;
-                    top: 50%;
-                    margin-top: -7px;
-
-                    @include prefixer(transition, all .3s ease);
+                    @include prefixer(transition, all 0.3s ease);
                 }
             }
 
             .#{$nav-menu-prefix-cls}-submenus {
+                border: none;
+                background: $bg-gray;
                 overflow: hidden;
+
+                &-actived {
+                    border-top: 1px solid $border-color-default;
+                    border-bottom: 1px solid $border-color-default;
+                }
 
                 .#{$nav-menu-prefix-cls}-sub-item {
                     position: relative;
@@ -66,18 +68,35 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     font-weight: 400;
                     cursor: pointer;
 
+                    i {
+                        margin-right: 8px;
+                        width: 14px;
+                        text-align: center;
+                    }
+
                     &:hover {
-                        background: $item-hover-bg;
+                        background: $brand-light;
+                    }
+
+                    &.#{$nav-menu-prefix-cls}-sub-item-selected {
+                        background-color: $bg-body;
+                        color: $brand-default;
+                    }
+
+                    &.#{$nav-menu-prefix-cls}-sub-item-collapsed {
+                        width: 40px !important;
+                        padding-left: 16px;
+
+                        span {
+                            display: none;
+                        }
                     }
                 }
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background-color: $default-color;
-            }
-
-            .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $default-color;
+                background-color: $bg-body;
+                color: $brand-default;
             }
         }
 
@@ -89,24 +108,23 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected {
-                background-color: $default-color !important;
+                background-color: $bg-body !important;
             }
         }
     }
 
     &-items-inline {
         flex: 1;
-        background: $component-background;
+        background: $bg-component;
 
         .#{$nav-menu-prefix-cls}-item {
             width: 100%;
             min-width: 40px;
-            color: $text-color;
+            color: $font-color-default;
 
             .#{$nav-menu-prefix-cls}-item-top {
                 position: relative;
                 font-size: 12px;
-                font-weight: 700;
                 display: flex;
                 align-items: center;
                 height: 32px;
@@ -121,16 +139,13 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $item-hover-bg;
+                    background: $brand-light;
                 }
 
                 .#{$nav-menu-prefix-cls}-item-arrow {
                     position: absolute;
                     right: 16px;
-                    top: 50%;
-                    margin-top: -7px;
-
-                    @include prefixer(transition, all .3s ease);
+                    @include prefixer(transition, all 0.3s ease);
                 }
             }
 
@@ -148,21 +163,21 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     cursor: pointer;
 
                     &:hover {
-                        background: $item-hover-bg;
+                        background: $brand-light;
                     }
                 }
             }
 
             .#{$nav-menu-prefix-cls}-item-selected {
-                color: $primary-color;
+                color: $brand-default;
             }
 
             .#{$nav-menu-prefix-cls}-item-selected-top {
-                background: $item-active-bg;
+                background: $bg-body;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background: $item-active-bg;
+                background: $bg-body;
             }
         }
     }
@@ -185,8 +200,8 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         position: absolute;
         top: 0;
         left: 0;
-        width: 3px;
-        background-color: $primary-color;
+        width: 4px;
+        background-color: $brand-default;
     }
 
     &-toggle-button {
@@ -194,78 +209,31 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         width: 100%;
         min-width: 40px;
         height: 40px;
-        background: $background-color-base;
+        background: $bg-container;
         display: flex;
+        justify-content: flex-end;
         align-items: center;
-        justify-content: center;
-        border-top: 1px solid $border-color-base;
-
+        border-top: 1px solid $border-color-default;
         &:hover {
-            color: $primary-color;
+            color: $brand-default;
+        }
+
+        span {
+            margin: 0 8px;
         }
     }
 
     &-toggle-button &-toggle-button-arrow {
         font-size: 16px;
-        @include prefixer(transition, all .3s ease);
+        @include prefixer(transition, all 0.3s ease);
     }
 
     &-toggle-button-collapsed {
+        justify-content: center;
         width: 40px;
 
         .#{$nav-menu-prefix-cls}-toggle-button-arrow {
             @include prefixer(transform, rotate(180deg));
-        }
-    }
-
-    &-detail {
-        .#{$nav-menu-prefix-cls}-item {
-            position: relative;
-            width: 240px;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            padding-left: 14px;
-            font-size: 14px;
-            font-weight: 700;
-            background: $background-color-base;
-            cursor: pointer;
-            border: 1px solid $border-color-base;
-
-            i {
-                margin-right: 16px;
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-submenus {
-            overflow: hidden;
-            position: absolute;
-            left: 40px;
-            width: calc(100% - 40px);
-            min-width: 40px;
-            background: $background-color-base;
-            font-size: 14px;
-            border: 1px solid $border-color-base;
-            border-top: none;
-
-            .#{$nav-menu-prefix-cls}-sub-item {
-                position: relative;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                padding-left: 35px;
-                font-size: 14px;
-                font-weight: 400;
-                cursor: pointer;
-
-                &:hover {
-                    background: $item-hover-bg;
-                }
-            }
-
-            .#{$nav-menu-prefix-cls}-sub-item-selected {
-                background-color: $default-color;
-            }
         }
     }
 }

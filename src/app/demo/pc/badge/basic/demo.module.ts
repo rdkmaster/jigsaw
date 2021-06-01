@@ -1,16 +1,14 @@
 import {NgModule} from "@angular/core";
 import {
-    JigsawIconModule,
     JigsawBadgeModule,
-    JigsawNumericInputModule,
+    JigsawButtonBarModule,
     JigsawButtonModule,
-    JigsawSwitchModule,
     JigsawCheckBoxModule,
+    JigsawIconModule,
     JigsawInputModule,
     JigsawRadioLiteModule,
-    JigsawButtonBarModule,
+    JigsawSwitchModule,
     JigsawTileLiteModule,
-    JigsawDatePickerModule,
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BadgeBasicDemoComponent} from "./demo.component";
@@ -18,9 +16,8 @@ import {BadgeBasicDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [BadgeBasicDemoComponent],
     imports: [
-        JigsawDemoDescriptionModule, JigsawIconModule, JigsawBadgeModule, JigsawNumericInputModule, JigsawButtonModule,
-        JigsawSwitchModule, JigsawCheckBoxModule, JigsawInputModule, JigsawRadioLiteModule, JigsawButtonBarModule,
-        JigsawTileLiteModule, JigsawDatePickerModule
+        JigsawDemoDescriptionModule, JigsawIconModule, JigsawBadgeModule, JigsawButtonModule, JigsawSwitchModule, JigsawCheckBoxModule,
+        JigsawInputModule, JigsawRadioLiteModule, JigsawButtonBarModule, JigsawTileLiteModule,
     ],
     exports: [BadgeBasicDemoComponent]
 })

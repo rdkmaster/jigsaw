@@ -8,24 +8,43 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         display: block;
     }
     &-wrapper {
-        border: 1px solid $border-color-base;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
         border-radius: $border-radius-base;
-        background: $component-background;
+        background: $bg-component;
         .#{$list-prefix-cls} {
             border: none;
         }
     }
+
     .#{$list-option-prefix-cls}-wrapper {
         font-size: 0;
     }
     .#{$list-option-prefix-cls}-block {
         display: none;
     }
+
     &-text {
-        @include line-ellipsis(100%);
-        font-size: 12px;
+        display: flex;
+        align-items: center;
+        font-size: $font-size-base;
+        width: 100%;
+
+        .jigsaw-list-lite-text-content {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .iconfont {
+            display: inline-flex;
+            justify-self: center;
+            align-items: center;
+        }
     }
+
     &-error {
-        border: 1px solid $error-color;
+        border-color: $error-default;
     }
 }

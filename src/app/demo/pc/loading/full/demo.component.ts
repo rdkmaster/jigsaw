@@ -10,7 +10,7 @@ export class LoadingFullDemoComponent {
     private _block: ElementRef;
 
     public isLoading: boolean = false;
-    public label:string = 'submit';
+    public label:string = 'Submit';
 
     constructor(public loadingService: LoadingService) {
     }
@@ -24,10 +24,10 @@ export class LoadingFullDemoComponent {
 
     startToLoad() {
         this.isLoading = true;
-        this.label = 'loading...';
+        this.label = 'Loading...';
         setTimeout(() => {
             this.isLoading = false;
-            this.label = 'submit';
+            this.label = 'Submit';
         }, 3000)
     }
 

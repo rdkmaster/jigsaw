@@ -27,6 +27,7 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[style.height]': 'height',
         '[class.jigsaw-button-clicked]': "_$clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
+        '[class.jigsaw-button-size-medium]': "preSize === 'medium'",
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
@@ -67,7 +68,7 @@ export class JigsawButton extends AbstractJigsawComponent {
      * $demo = button/full
      */
     @Input()
-    public preSize: 'default' | 'small' | 'large' = 'default';
+    public preSize: 'default' | 'small' | 'medium' | 'large' = 'default';
 
     /**
      * 配置按钮图标

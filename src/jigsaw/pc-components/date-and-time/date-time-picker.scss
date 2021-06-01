@@ -4,37 +4,49 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
 
 .#{$date-time-prefix-cls} {
     @include inline-block();
-    border-radius: 4px;
-    border: 1px solid $border-color-base;
     overflow: hidden;
-    user-select: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
+    background: $bg-component;
     font-size: $font-size-base;
-    background: $component-background;
+    user-select: none;
 
     jigsaw-date-picker {
         border: none;
     }
 
     &-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 0 8px 8px;
 
+        j-time-picker {
+            max-width: 124px;
+        }
+
+        jigsaw-button {
+            min-width: 60px;
+        }
     }
 
     &-gr-switch {
-        padding: 8px 8px 0;
         display: flex;
         justify-content: center;
         text-align: center;
-        background: $background-color-base;
+        width: 100%;
+        padding: 8px 8px 0;
+        background: $bg-container;
 
         & > span {
             display: inline-block;
             flex: 1;
             height: 24px;
             line-height: 22px;
-            background: $component-background;
-            border: 1px solid $border-color-base;
-            border-right: none;
+            background: $bg-body;
+            border: 1px solid $border-color-default;
             cursor: pointer;
 
             &:first-child {
@@ -45,31 +57,30 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             &:last-child {
                 border-top-right-radius: $border-radius-base;
                 border-bottom-right-radius: $border-radius-base;
-                border-right: 1px solid $border-color-base;
             }
 
             &.active {
-                background-color: $primary-color;
-                color: $text-color-of-bg;
-                border-color: $primary-color;
+                background-color: $brand-light;
+                color: $brand-default;
+                border-color: $brand-default;
             }
         }
     }
 
     &-error {
-        border-color: $error-color;
+        border-color: $error-default;
     }
 
     &-disabled {
         position: relative;
         &:before {
-            content: ' ';
+            content: " ";
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            background: $disabled-bg;
+            background: $bg-disabled;
             opacity: 0.7;
             z-index: $zindex-level-1;
             cursor: not-allowed;

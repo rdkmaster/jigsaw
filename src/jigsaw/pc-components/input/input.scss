@@ -4,72 +4,134 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 
 .#{$input-prefix-cls} {
     @include inline-block();
-    width: 120px;
     height: $height-base;
     font-size: $font-size-base;
-    border: 1px solid $border-color-base;
-    border-radius: 3px;
     overflow: hidden;
-    &:hover, &.#{$input-prefix-cls}-focused {
-        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-        border: 1px solid $primary-color;
-    }
-    &.#{$input-prefix-cls}-focused {
-        box-shadow: $box-focus-shadow;
-    }
-    &.#{$input-prefix-cls}-error {
-        border: 1px solid $error-color;
-        &:hover {
-            border: 1px solid $error-color;
-        }
-        &.#{$input-prefix-cls}-focused {
-            border: 1px solid $error-color;
-            box-shadow: none;
-        }
-    }
-    &-wrapper {
+
+    &-container {
         display: flex;
         height: 100%;
-        overflow: hidden;
-        background: $component-background;
+        width: 100%;
     }
-    &-icon-front, &-icon-end {
+
+    &-wrapper {
+        width: 120px;
+        display: flex;
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+        background: $bg-component;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
+    }
+
+    &-icon-front,
+    &-icon-end {
         display: flex;
         align-items: center;
         flex: none;
         padding: 0 4px;
+
+        a {
+            display: flex;
+        }
     }
+
+    &-icon-end {
+        a {
+            margin: 5px;
+        }
+    }
+
     input {
         flex: 1;
         min-width: 0;
         height: 100%;
         border: none;
         outline: none;
-        border-radius: 3px;
         background: transparent;
+        border-radius: $border-radius-base;
     }
-    &.#{$input-prefix-cls}-disabled &-wrapper {
-        background-color: $disabled-bg;
-        input {
-            @include compatible(color, $disabled-color, $disabled-color-ie11);
+
+    .#{$input-prefix-cls}-wrapper:hover,
+    &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
+        border-width: 1px;
+        border-style: solid;
+        border-color: $brand-default;
+    }
+
+    &.#{$input-prefix-cls}-disabled {
+        .#{$input-prefix-cls}-wrapper {
+            background-color: $bg-disabled;
+            cursor: not-allowed;
+            border-color: $border-color-disabled;
+
+            input {
+                color: $font-color-disabled;
+                cursor: not-allowed;
+            }
+
+            .#{$input-prefix-cls}-icon-front,
+            .#{$input-prefix-cls}-icon-end {
+                .iconfont {
+                    color: $font-color-disabled;
+                }
+            }
         }
     }
+
+    &.#{$input-prefix-cls}-error {
+        .#{$input-prefix-cls}-wrapper,
+        .#{$input-prefix-cls}-wrapper:hover,
+        &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
+            &.#{$input-prefix-cls}-none {
+                border-color: $error-default;
+            }
+
+            &.#{$input-prefix-cls}-left {
+                border-color: $error-default $error-default $error-default $border-color-default;
+            }
+
+            &.#{$input-prefix-cls}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
+            }
+
+            &.#{$input-prefix-cls}-both {
+                border-color: $error-default $border-color-default $error-default $border-color-default;
+            }
+
+            box-shadow: none;
+        }
+
+        .#{$jigsaw-prefix}-prefix-suffix {
+            border-color: $error-default;
+        }
+    }
+
     input::-webkit-input-placeholder {
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
+
     input:-ms-input-placeholder {
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
+
     input:-moz-placeholder {
-        color: $text-color-secondary;
+        color: $font-color-hint;
     }
+
     &-clear-bar {
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
+
         &:hover {
-            color: $text-color-dark;
+            color: $font-color-default;
         }
+
         &[hidden] {
             display: none !important;
         }
@@ -80,6 +142,3 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         cursor: pointer;
     }
 }
-
-
-

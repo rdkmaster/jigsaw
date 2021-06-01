@@ -5,6 +5,7 @@ import {Component} from '@angular/core';
     styles: [`
         jigsaw-icon {
             margin-right: 50px;
+            line-height: 1;
         }
         jigsaw-switch, jigsaw-input, jigsaw-checkbox, jigsaw-button-bar, jigsaw-radios-lite, jigsaw-tile-lite {
             margin-right: 20px;

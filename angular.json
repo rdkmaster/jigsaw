@@ -28,10 +28,9 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
-              "node_modules/@rdkmaster/icon-font/css/iconfont.css",
+              "node_modules/@rdkmaster/icon-font/iconfont.css",
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/mbo.css",
               "src/styles.scss"

@@ -1,24 +1,34 @@
-<div class="jigsaw-input-wrapper">
-    <div class="jigsaw-input-icon-front">
-        <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
-        <ng-container *ngFor="let icon of _$preIcon;">
-            <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="preIconSelect.emit(icon)"></span>
-        </ng-container>
+<div class="jigsaw-input-container">
+    <jigsaw-prefix-suffix *ngIf="prefix" position="left" [disabled]="disabled" [data]="prefix" [contentWidth]="prefixWidth"
+                          [labelField]="prefixLabelField" (change)="prefixChange.emit($event)">
+    </jigsaw-prefix-suffix>
+
+    <div class="jigsaw-input-wrapper" [ngStyle]="_$getBorderRadius" [ngClass]="_$getWrapperClass">
+        <div class="jigsaw-input-icon-front">
+            <ng-content select="[jigsaw-prefix-icon], [j-prefix-icon]"></ng-content>
+            <ng-container *ngFor="let icon of _$preIcon;">
+                <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="preIconSelect.emit(icon)"></span>
+            </ng-container>
+        </div>
+        <ng-content></ng-content>
+        <input #input
+               [placeholder]="placeholder"
+               [(ngModel)]="value"
+               [disabled]="disabled"
+               (blur)="_$handleBlur($event)"
+               (focus)="_$handleFocus($event)"
+               [type]="type"
+               [autocomplete]="autocomplete">
+        <div class="jigsaw-input-icon-end">
+            <p *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</p>
+            <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
+            <ng-container *ngFor="let icon of _$icon;">
+                <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="iconSelect.emit(icon)"></span>
+            </ng-container>
+        </div>
     </div>
-    <ng-content></ng-content>
-    <input #input
-           [placeholder]="placeholder"
-           [(ngModel)]="value"
-           [disabled]="disabled"
-           (blur)="_$handleBlur($event)"
-           (focus)="_$handleFocus($event)"
-           [type]="type"
-           [autocomplete]="autocomplete">
-    <div class="jigsaw-input-icon-end">
-        <span *ngIf="clearable && !disabled" (click)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar">&times;</span>
-        <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
-        <ng-container *ngFor="let icon of _$icon;">
-            <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="iconSelect.emit(icon)"></span>
-        </ng-container>
-    </div>
+
+    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [disabled]="disabled" [data]="suffix" [contentWidth]="suffixWidth"
+                          [labelField]="suffixLabelField" (change)="suffixChange.emit($event)">
+    </jigsaw-prefix-suffix>
 </div>

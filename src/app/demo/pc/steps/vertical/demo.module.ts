@@ -1,15 +1,22 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {JigsawStepsModule} from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {StepsVerticalFullComponent} from './demo.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
+import { JigsawStepVerticalDemoComponent } from "./demo.component";
+import {
+    JigsawStepsModule,
+    JigsawHeaderModule,
+    JigsawButtonModule
+} from "jigsaw/public_api";
 
 @NgModule({
     imports: [
-        CommonModule, JigsawDemoDescriptionModule, JigsawStepsModule
+        JigsawStepsModule,
+        CommonModule,
+        JigsawDemoDescriptionModule,
+        JigsawHeaderModule,
+        JigsawButtonModule
     ],
-    declarations: [StepsVerticalFullComponent],
-    exports: [StepsVerticalFullComponent]
+    declarations: [JigsawStepVerticalDemoComponent],
+    exports: [JigsawStepVerticalDemoComponent]
 })
-export class StepsVerticalModule {
-}
+export class JigsawStepVerticalDemoModule {}

@@ -3,7 +3,7 @@ import {JigsawTag} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    styleUrls: ['./demo.component.scss']
 })
 export class TagBasicDemoComponent {
     handleClose(tag) {

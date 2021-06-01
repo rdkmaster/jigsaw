@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import {Directive, EventEmitter, HostListener, Injector, Input, Output} from "@angular/core";
+import {Directive, EventEmitter, HostListener, Injector, Input, Output, ChangeDetectorRef} from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
@@ -9,6 +9,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 @Directive()
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(
+        protected _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
         super()
@@ -98,6 +99,7 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     };
 
     public writeValue(value: any): void {
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {

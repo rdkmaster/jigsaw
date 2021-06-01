@@ -17,6 +17,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {CommonModule} from '@angular/common';
 import {GrItem, JigsawDatePickerModule, MarkDate} from "./date-picker";
 import {JigsawTimePickerModule, TimeStep} from "./time-picker";
+import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
 import {Subscription} from 'rxjs';
@@ -460,7 +461,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawTimePickerModule, JigsawDatePickerModule],
+    imports: [CommonModule, FormsModule, JigsawTimePickerModule, JigsawDatePickerModule, JigsawButtonModule],
     declarations: [JigsawDateTimePicker],
     exports: [JigsawDateTimePicker],
 })

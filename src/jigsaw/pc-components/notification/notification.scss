@@ -1,13 +1,13 @@
 @import "../../common/assets/scss/core/base";
 
 .jigsaw-notification-host {
-    z-index: $zindex-popover-level-1 !important;
+    z-index: $zindex-popover-level-1;
 }
 
 .jigsaw-notification {
     border-radius: $border-radius-base;
-    background: $component-background;
-    box-shadow: $box-shadow-base;
+    background: $bg-component;
+    box-shadow: $box-shadow-lv3;
     padding: 18px 22px 18px 18px;
     height: 100%;
     overflow: hidden;
@@ -16,57 +16,66 @@
         display: flex;
 
         .jigsaw-notification-icon {
+            display: flex;
+            align-items: flex-start;
             flex-grow: 0;
-            font-size: 44px;
+            font-size: 20px;
             margin-right: 11px;
+            line-height: 22px;
 
             .jigsaw-notification-icon-success {
-                color: #87d068;
-                font-size: 26px;
+                color: $success-default;
+                font-size: 20px;
             }
 
             .jigsaw-notification-icon-error {
-                color: #ec6d6d;
-                font-size: 26px;
+                color: $error-default;
+                font-size: 20px;
             }
 
             .jigsaw-notification-icon-warning {
-                color: #e78f4e;
-                font-size: 26px;
+                color: $warning-default;
+                font-size: 20px;
             }
 
             .jigsaw-notification-icon-info {
-                color: #41addc;
-                font-size: 26px;
+                color: $primary-default;
+                font-size: 20px;
             }
         }
 
         .jigsaw-notification-text {
             flex-grow: 1;
             width: calc(100% - 94px);
+            height: 100%;
 
+            // 标题
             .jigsaw-notification-caption {
-                @include line-ellipsis-style;
-                font-size: $font-size-lg+1px;
-                color: $heading-color-dark;
+                @include line-ellipsis-style();
+                font-size: $font-title-med;
+                color: $font-color-heading;
                 margin-bottom: 6px;
             }
 
             .jigsaw-notification-message {
                 word-wrap: break-word;
                 font-size: $font-size-base;
-                color: $text-color;
+                color: $font-color-tag;
             }
         }
     }
 
     .jigsaw-notification-close {
         position: absolute;
-        left: calc(100% - 20px);
-        top: 0;
+        right: 18px;
+        top: 10px;
         span {
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
+            color: $icon-color-default;
+            &:hover {
+                color: $brand-hover;
+            }
         }
     }
 
@@ -78,5 +87,21 @@
         jigsaw-button {
             margin-left: 6px;
         }
+    }
+
+    &.jigsaw-notification-success {
+        border-left: 3px solid $success-default;
+    }
+
+    &.jigsaw-notification-error {
+        border-left: 3px solid $error-default;
+    }
+
+    &.jigsaw-notification-warning {
+        border-left: 3px solid $warning-default;
+    }
+
+    &.jigsaw-notification-info {
+        border-left: 3px solid $primary-default;
     }
 }

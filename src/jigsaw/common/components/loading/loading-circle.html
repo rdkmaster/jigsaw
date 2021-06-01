@@ -1,0 +1,31 @@
+<div
+    class="jigsaw-circle-loading-svg"
+    [style.width]="_$svgWidth + 'px'"
+    [style.height]="_$svgWidth + 'px'"
+    [ngClass]="{'jigsaw-circle-loading-svg-large':size === 'large',
+                'jigsaw-circle-loading-svg-medium':size === 'medium',
+                'jigsaw-circle-loading-svg-small':size === 'small'}"
+>
+    <svg>
+        <circle
+            class="jigsaw-circle-loading-svg-back"
+            fill="transparent"
+            [attr.r]="_$radius"
+            [attr.cx]="_$center"
+            [attr.cy]="_$center"
+            [attr.stroke-width]="_$strokeWidth"
+        />
+        <circle
+            class="jigsaw-circle-loading-svg-bar"
+            fill="transparent"
+            [attr.r]="_$radius"
+            [attr.cx]="_$center"
+            [attr.cy]="_$center"
+            [attr.stroke-width]="_$strokeWidth"
+        />
+    </svg>
+    <div *ngIf="_$validPercent" class="jigsaw-circle-loading-percent">
+        {{_$percent + '%'}}
+    </div>
+    <div *ngIf="label" class="jigsaw-circle-loading-label">{{label}}</div>
+</div>

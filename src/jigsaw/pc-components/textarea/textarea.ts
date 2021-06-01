@@ -1,4 +1,15 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Injector, Input, Output, ViewChild} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -62,6 +73,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(
+        private _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super();
@@ -73,10 +85,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     };
 
     public writeValue(value: any): void {
-        if (CommonUtils.isUndefined(value)) {
-            return;
-        }
-        this._value = value.toString();
+        this._value = CommonUtils.isDefined(value) ? value.toString() : '';
+        // 不加这个的话，非法的红框无法正确渲染
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -107,9 +118,18 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
         }
+
+        if (!isNaN(this.maxLength) && this.maxLength > 0) {
+            // 只有合法的正整数才计算限制字符数
+            newValue = this._updateValue(newValue);
+            this._$currentLength = this.includesCRLF ? newValue.length : this._getLengthWithoutCRLF(newValue);
+        }
+
+        const currentValue = this._value;
         this._value = newValue;
-        this._propagateChange(this._value);
-        if (this.initialized) {
+        this._propagateChange(newValue);
+        if (this.initialized && (this.maxLength === 0 || (this.maxLength !== 0 && this._value !== currentValue))) {
+            // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
             this.valueChange.emit(this._value);
         }
     }
@@ -139,6 +159,85 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         return this._placeholder;
     }
 
+    /**
+     * 设置多行文本框字数，是否包含回车换行符
+     * true：表示字数包含换行符
+     * false：表示字数不包含换行符。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/max-length
+     */
+    @Input()
+    public includesCRLF: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$currentLength: number = 0;
+
+    private _maxLength: number = 0;
+
+    /**
+     * 最大字数
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/max-length
+     */
+    @Input()
+    public get maxLength(): number {
+        return this._maxLength;
+    }
+
+    public set maxLength(value: number) {
+        if (isNaN(value) || value < 0) {
+            console.error('maxLength property must be a non-negative number, please input a number or number string');
+            return;
+        }
+        this._maxLength = Number(value);
+    }
+
+    private _updateValue(value: string): string {
+        if (this.includesCRLF) {
+            value = value.substring(0, this._maxLength);
+        } else {
+            // 换行符和回车符不计入字符数
+            const textLength = this._getLengthWithoutCRLF(value);
+            if (textLength > this._maxLength) {
+                value = this._getValue(value);
+            }
+        }
+        this._textareaElement.nativeElement.value = value;
+        return value;
+    }
+
+    private _getLengthWithoutCRLF(value: string): number {
+        const newLines = value.match(/(\r\n|\n|\r)/g);
+        const lineLen = newLines ? newLines.length : 0;
+        return value.length - lineLen;
+    }
+
+    private _getValue(value: string): string {
+        let tempValue = value.substring(0, this._maxLength);
+        const newLines = tempValue.match(/(\r\n|\n|\r)/g);
+        if (newLines) {
+            // 存在换行符
+            let position = this._maxLength;
+            let i = 0;
+            while (i < newLines.length) {
+                const char = value.charAt(position + i);
+                tempValue += char;
+                if (char.match(/(\r\n|\n|\r)/g)) {
+                    // 换行符，不算个数
+                    position++
+                } else {
+                    i++;
+                }
+            }
+        }
+        return tempValue;
+    }
 
     @ViewChild('textarea')
     private _textareaElement: ElementRef;
@@ -196,6 +295,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      */
     public _$handleBlur(event: FocusEvent): void {
         this._onTouched();
+        this._focused = false;
         this.blur.emit(event);
     }
 }

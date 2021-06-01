@@ -27,7 +27,6 @@
         <jigsaw-pagination [data]="pageable"
                            [pageSizeOptions]="pageSizeOptions"
                            [searchable]="searchable"
-                           [placeholder]="'搜一搜'"
                            [showQuickJumper]="showQuickJumper"
                            [pageSizeOptions]="[2,5,10]"
                            (currentChange)="getCurrentPage($event)"
@@ -42,7 +41,6 @@
         <jigsaw-pagination [data]="pageableForSimple"
                            (currentChange)="getCurrentPage($event)"
                            mode="simple"
-                           [placeholder]="'搜一搜'"
                            [searchable]="searchable"
                            [pageSizeOptions]="pageSizeOptions">
         </jigsaw-pagination>

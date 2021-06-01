@@ -80,6 +80,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/numeric-input/demo-set.module').then(m => m.NumericInputDemoModule),
     },
     {
+        path: "pc/search-input",
+        loadChildren: () => import('./demo/pc/search-input/demo-set.module').then(m => m.SearchInputDemoModule),
+    },
+    {
         path: "pc/list",
         loadChildren: () => import('./demo/pc/list/demo-set.module').then(m => m.ListDemoModule),
     },
@@ -234,6 +238,10 @@ export const routerConfigPC = [
     {
         path: "pc/time-section",
         loadChildren: () => import('./demo/pc/time-section/demo-set.module').then(m => m.TimeSectionDemoModule),
+    },
+    {
+        path: "pc/header",
+        loadChildren: () => import('./demo/pc/header/demo-set.module').then(m => m.HeaderDemoModule),
     }
 ];
 export const routerConfigMobile = [

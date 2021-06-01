@@ -1,14 +1,74 @@
-<j-combo-select [(value)]="_$selectedItems" [clearable]="clearable" [labelField]="labelField"
-                [autoClose]="!multipleSelect" [placeholder]="placeholder" [disabled]="disabled"
-                [showValueBorder]="multipleSelect" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
-                (openChange)="_$onComboOpenChange($event)" (valueChange)="_$handleClearable($event)"
-                (remove)="_$onTagRemove($event)" width="100%" [autoWidth]="!optionWidth" [valid]="valid"
-                [maxHeight]="maxHeight">
+<jigsaw-combo-select
+    width="100%"
+    [autoWidth]="true"
+    [maxHeight]="maxHeight"
+    [(value)]="_$selectedItems"
+    [clearable]="clearable"
+    [labelField]="labelField"
+    [valid]="valid"
+    [disabled]="disabled"
+    [placeholder]="placeholder"
+    [showValueBorder]="multipleSelect"
+    [openTrigger]="openTrigger"
+    [closeTrigger]="closeTrigger"
+    [autoClose]="!multipleSelect"
+    (openChange)="_$onComboOpenChange($event)"
+    (valueChange)="_$handleClearable($event)"
+    (remove)="_$onTagRemove($event)"
+>
     <ng-template>
-        <j-list-lite [data]="data" [labelField]="labelField" [trackItemBy]="trackItemBy"
-                     [(selectedItems)]="_$selectedItems" [multipleSelect]="multipleSelect"
-                     [searchable]="searchable" [optionCount]="optionCount" [width]="optionWidth"
-                     (selectedItemsChange)="_$handleSelectChange($event)">
-        </j-list-lite>
+        <jigsaw-list
+            [ngClass]="{'jigsaw-select-show-selected': _$showSelected,
+                        'jigsaw-select-multiple-list': multipleSelect,
+                        'jigsaw-select-single-list': !multipleSelect}"
+            [trackItemBy]="trackItemBy"
+            [(selectedItems)]="_$selectedItems"
+            (selectedItemsChange)="_$handleSelectChange($event)"
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+            [height]="_$listHeight"
+            [multipleSelect]="multipleSelect"
+        >
+            <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
+                <jigsaw-checkbox
+                    [(checked)]="_$selectAllChecked"
+                    *ngIf="!_$showSelected"
+                    (checkedChange)="_$selectAll()"
+                    [enableIndeterminate]="true"
+                >
+                    <span>{{'select.selectAll' | translate}}</span>
+                </jigsaw-checkbox>
+                <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected" (click)="_$showSelected = true">
+                    <span>{{'select.checkSelected' | translate}}</span>
+                </div>
+                <div class="jigsaw-select-show-all" *ngIf="_$showSelected" (click)="_$showSelected = false">
+                    <i class="iconfont iconfont-e9ac"></i>
+                    <span>{{'select.return' | translate}}</span>
+                </div>
+            </div>
+            <jigsaw-list-option
+                #listItem
+                *ngFor="let item of data"
+                [value]="item"
+                [disabled]="item.disabled"
+                [width]="optionWidth"
+                [height]="optionHeight"
+            >
+                <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected">
+                </jigsaw-checkbox>
+                <span class="select-option-label">{{item && item[labelField] ? item[labelField] : item}}</span>
+            </jigsaw-list-option>
+        </jigsaw-list>
     </ng-template>
-</j-combo-select>
+    <div
+        *ngIf="multipleSelect && useStatistics && _$selectedItems?.length !== 0 && _$selectedItems?.length === validData?.length"
+        class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
+    >
+        {{'select.allSelected' | translate}}
+    </div>
+    <div
+        *ngIf="multipleSelect && useStatistics && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
+        class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
+    >
+        {{'select.selected' | translate:{ num : _$selectedItems?.length } }}
+    </div>
+</jigsaw-combo-select>

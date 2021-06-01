@@ -8,6 +8,10 @@ import {NumericInputSizeDemoComponent} from "./size/demo.component";
 import {NumericInputSizeDemoModule} from "./size/demo.module";
 import {NumericInputStepDemoComponent} from "./step/demo.component";
 import {NumericInputStepDemoModule} from "./step/demo.module";
+import {NumericInputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
+import {NumericInputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
+import { NumericInputShowOptionDemoModule } from './show-option/demo.module';
+import { NumericInputShowOptionDemoComponent } from './show-option/demo.component';
 
 export const routerConfig = [
     {
@@ -22,6 +26,12 @@ export const routerConfig = [
     {
         path: 'step', component: NumericInputStepDemoComponent
     },
+    {
+        path: 'prefix-suffix', component: NumericInputPrefixSuffixDemoComponent
+    },
+    {
+        path: 'show-option', component: NumericInputShowOptionDemoComponent
+    },
 ];
 
 @NgModule({
@@ -30,7 +40,9 @@ export const routerConfig = [
         NumericInputBasicDemoModule,
         NumericInputDisabledDemoModule,
         NumericInputSizeDemoModule,
-        NumericInputStepDemoModule
+        NumericInputStepDemoModule,
+        NumericInputPrefixSuffixDemoModule,
+        NumericInputShowOptionDemoModule
     ]
 })
 export class NumericInputDemoModule {

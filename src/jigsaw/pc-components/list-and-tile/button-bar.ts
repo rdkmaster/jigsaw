@@ -15,11 +15,12 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
                            [width]="optionWidth" [height]="height" [disabled]="item?.disabled"
                            title="{{item && item[labelField] ? item[labelField] : item}}">
                 <span *ngIf="item.icon" [class]="item.icon"></span>
-                {{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}
+                <p>{{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}</p>
             </j-tile-option>
         </j-tile>`,
     host: {
         '[class.jigsaw-button-bar]': 'true',
+        '[class.jigsaw-button-bar-default]': "colorType === 'default'",
         '[class.jigsaw-button-bar-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-bar-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-bar-error]': "colorType === 'error' || colorType === 'danger'",

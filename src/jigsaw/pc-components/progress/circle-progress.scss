@@ -1,0 +1,92 @@
+$circle-progress-prefix-cls: #{$jigsaw-prefix}-circle-progress;
+
+.#{$circle-progress-prefix-cls}-host {
+    position: relative;
+
+    .#{$circle-progress-prefix-cls}-svg {
+        display: inline-flex;
+        position: relative;
+        box-sizing: border-box;
+
+        svg {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            transform-origin: center center;
+        }
+
+        .#{$circle-progress-prefix-cls}-percent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            font-size: $font-size-lg + 2px;
+            font-weight: 500;
+            letter-spacing: 0.32px;
+            color: $font-color-heading;
+
+            i.iconfont {
+                font-size: $icon-size-med;
+                font-weight: bold;
+            }
+
+            @at-root .#{$circle-progress-prefix-cls}-success
+                    .#{$circle-progress-prefix-cls}-svg
+                    .#{$circle-progress-prefix-cls}-percent {
+                color: $success-default;
+            }
+            @at-root .#{$circle-progress-prefix-cls}-block
+                    .#{$circle-progress-prefix-cls}-svg
+                    .#{$circle-progress-prefix-cls}-percent {
+                color: $warning-default;
+            }
+            @at-root .#{$circle-progress-prefix-cls}-error
+                    .#{$circle-progress-prefix-cls}-svg
+                    .#{$circle-progress-prefix-cls}-percent {
+                color: $error-default;
+            }
+        }
+
+        .#{$circle-progress-prefix-cls}-bar,
+        .#{$circle-progress-prefix-cls}-track {
+            fill: none;
+            stroke-miterlimit: 10;
+        }
+
+        .#{$circle-progress-prefix-cls}-bar {
+            stroke: $brand-default;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 0.35s;
+
+            @at-root .#{$circle-progress-prefix-cls}-success
+                    .#{$circle-progress-prefix-cls}-svg
+                    .#{$circle-progress-prefix-cls}-bar {
+                stroke: $success-default;
+            }
+            @at-root .#{$circle-progress-prefix-cls}-block
+                    .#{$circle-progress-prefix-cls}-svg
+                    .#{$circle-progress-prefix-cls}-bar {
+                stroke: $warning-default;
+            }
+            @at-root .#{$circle-progress-prefix-cls}-error
+                    .#{$circle-progress-prefix-cls}-svg
+                    .#{$circle-progress-prefix-cls}-bar {
+                stroke: $error-default;
+            }
+        }
+
+        .#{$circle-progress-prefix-cls}-track {
+            stroke: $bg-disabled;
+        }
+    }
+}

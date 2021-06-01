@@ -29,6 +29,7 @@ export enum CollapseMode {
 @Component({
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html',
+    host: {'[class.jigsaw-collapse-pane]': 'true'},
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -51,6 +52,14 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
             this._changeDetector.detectChanges();
         }
     }
+
+    /**
+     * 箭头位置(默认值 "right";)
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public arrowPosition: "right" | "left" = "right";
 
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;

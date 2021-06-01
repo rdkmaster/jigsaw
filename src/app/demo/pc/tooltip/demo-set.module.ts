@@ -1,30 +1,35 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {PopupService} from "jigsaw/common/service/popup.service";
-import {TooltipDialogDemoModule} from "./dialog/demo.module";
-import {TooltipInDomDemoModule} from "./in-dom/demo.module";
-import {SimpleTooltipDemoModule} from "./inline/demo.module";
 
-import {TooltipInDomDemoComponent} from "./in-dom/demo.component";
-import {TooltipDialogDemoComponent} from "./dialog/demo.component";
-import {SimpleTooltipDemoComponent} from "./inline/demo.component";
+import {TooltipBasicDemoComponent} from "./basic/demo.component";
+import {TooltipBasicDemoModule} from "./basic/demo.module";
+import {TooltipHtmlDemoComponent} from "./html-renderer/demo.component";
+import {TooltipHtmlDemoModule} from "./html-renderer/demo.module";
+import {MovingTooltipDemoComponent} from "./moving-tooltip/demo.component";
+import {MovingTooltipDemoModule} from "./moving-tooltip/demo.module";
+import {TooltipShowDemoComponent} from "./programmatic-show/demo.component";
+import {TooltipShowDemoModule} from "./programmatic-show/demo.module";
 
 export const routerConfig = [
     {
-        path: 'inline', component: SimpleTooltipDemoComponent
+        path: 'basic', component: TooltipBasicDemoComponent
     },
     {
-        path: 'in-dom', component: TooltipInDomDemoComponent
+        path: 'html-renderer', component: TooltipHtmlDemoComponent
     },
     {
-        path: 'dialog', component: TooltipDialogDemoComponent
+        path: 'moving-tooltip', component: MovingTooltipDemoComponent
+    },
+    {
+        path: 'programmatic-show', component: TooltipShowDemoComponent
     },
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig),
-        TooltipDialogDemoModule, TooltipInDomDemoModule, SimpleTooltipDemoModule
+        RouterModule.forChild(routerConfig), TooltipBasicDemoModule, TooltipHtmlDemoModule, MovingTooltipDemoModule,
+        TooltipShowDemoModule
     ],
     providers: [PopupService]
 })

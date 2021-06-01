@@ -349,7 +349,7 @@ function getAngularJson(deps: any): [string, string, string] {
         return `https://unpkg.com/${match[1]}${version}/${match[2]}`;
     };
     // 由于stackblitz加载这里的styles会有问题，因此把这里的styles依赖挪到index.html里去
-    const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/zte.css"])
+    const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/paletx-pro-light.css"])
         .filter(style => style.match(/^(\.\/)?node_modules\/.+/))
         .map(style => `  <link rel="stylesheet" type="text/css" href="${toUnpkgUrl(style)}">`)
         .join('\n');

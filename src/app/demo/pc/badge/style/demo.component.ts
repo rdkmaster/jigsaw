@@ -5,6 +5,7 @@ import {Component} from '@angular/core';
     styles: [`
         jigsaw-icon {
             margin-right: 50px;
+            line-height: 1;
         }
     `]
 })

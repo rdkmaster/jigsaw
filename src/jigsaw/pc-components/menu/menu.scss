@@ -13,6 +13,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
                 background: #015c91;
@@ -31,7 +32,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             &.#{$list-option-prefix-cls}-disabled {
                 background: #102331;
 
-                .menu-list-title {
+                .#{$menu-prefix-cls}-list-title {
                     float: left;
                     line-height: 32px;
                     color: #666666;
@@ -116,6 +117,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             color: #eee;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
                 background: #015c91;
@@ -219,6 +221,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
                 background: #e6f5fe;
@@ -319,6 +322,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             color: #ffffff;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
                 background: #015c91;
@@ -367,5 +371,3 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
         }
     }
 }
-
-

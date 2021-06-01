@@ -1,0 +1,291 @@
+/* paletx-pro-light */
+$blue-1: hsl(204, 100%, 95%); //#e6f5ff
+$blue-2: hsl(205, 100%, 87%); //#bde4ff
+$blue-3: hsl(205, 100%, 79%); //#94d2ff
+$blue-4: hsl(206, 100%, 71%);
+$blue-5: hsl(207, 100%, 63%);
+$blue-6: hsl(208, 100%, 55%); //#1993FF
+$blue-7: hsl(209, 85%, 46%); //#1178D9
+$blue-8: hsl(210, 88%, 37%); //#0B5FB3
+$blue-9: hsl(211, 92%, 29%);
+$blue-10: hsl(212, 96%, 20%);
+
+$cyan-1: hsl(174, 100%, 94%); // #E0FFFC
+$cyan-2: hsl(176, 78%, 83%);
+$cyan-3: hsl(177, 64%, 69%);
+$cyan-4: hsl(178, 58%, 57%);
+$cyan-5: hsl(179, 61%, 46%);
+$cyan-6: hsl(180, 85%, 37%);
+$cyan-7: hsl(181, 89%, 31%);
+$cyan-8: hsl(182, 92%, 25%);
+$cyan-9: hsl(183, 96%, 19%);
+$cyan-10: hsl(183, 100%, 14%);
+
+$green-1: hsl(123, 100%, 95%);
+$green-2: hsl(124, 85%, 87%);
+$green-3: hsl(125, 64%, 75%);
+$green-4: hsl(126, 56%, 64%);
+$green-5: hsl(127, 50%, 54%);
+$green-6: hsl(128, 59%, 44%);
+$green-7: hsl(129, 64%, 36%);
+$green-8: hsl(130, 69%, 28%);
+$green-9: hsl(131, 76%, 21%);
+$green-10: hsl(132, 81%, 14%);
+
+$lime-1: hsl(75, 100%, 94%);
+$lime-2: hsl(77, 71%, 83%);
+$lime-3: hsl(78, 62%, 71%);
+$lime-4: hsl(79, 57%, 61%);
+$lime-5: hsl(80, 53%, 51%);
+$lime-6: hsl(81, 70%, 42%);
+$lime-7: hsl(82, 74%, 35%);
+$lime-8: hsl(83, 79%, 27%);
+$lime-9: hsl(84, 83%, 21%);
+$lime-10: hsl(85, 89%, 14%);
+
+$yellow-1: hsl(57, 100%, 93%);
+$yellow-2: hsl(55, 100%, 85%);
+$yellow-3: hsl(54, 92%, 75%);
+$yellow-4: hsl(53, 88%, 66%);
+$yellow-5: hsl(52, 86%, 57%);
+$yellow-6: hsl(51, 88%, 49%);
+$yellow-7: hsl(50, 90%, 41%);
+$yellow-8: hsl(49, 92%, 33%);
+$yellow-9: hsl(48, 94%, 26%);
+$yellow-10: hsl(47, 96%, 18%);
+
+$orange-1: hsl(34, 100%, 95%);
+$orange-2: hsl(34, 100%, 86%);
+$orange-3: hsl(33, 100%, 78%);
+$orange-4: hsl(32, 94%, 69%);
+$orange-5: hsl(31, 90%, 60%);
+$orange-6: hsl(30, 88%, 51%);
+$orange-7: hsl(29, 87%, 43%);
+$orange-8: hsl(28, 91%, 35%);
+$orange-9: hsl(27, 94%, 27%);
+$orange-10: hsl(26, 98%, 19%);
+
+$red-1: hsl(4, 100%, 95%);
+$red-2: hsl(4, 100%, 88%);
+$red-3: hsl(3, 100%, 83%);
+$red-4: hsl(2, 92%, 75%);
+$red-5: hsl(1, 88%, 68%);
+$red-6: hsl(0, 85%, 61%);
+$red-7: hsl(359, 61%, 50%);
+$red-8: hsl(358, 68%, 39%);
+$red-9: hsl(357, 75%, 30%);
+$red-10: hsl(356, 83%, 21%);
+
+$magenta-1: hsl(326, 100%, 95%);
+$magenta-2: hsl(323, 100%, 88%);
+$magenta-3: hsl(323, 85%, 79%);
+$magenta-4: hsl(322, 80%, 71%);
+$magenta-5: hsl(321, 76%, 63%);
+$magenta-6: hsl(320, 73%, 55%);
+$magenta-7: hsl(319, 65%, 45%);
+$magenta-8: hsl(318, 71%, 36%);
+$magenta-9: hsl(317, 77%, 28%);
+$magenta-10: hsl(316, 84%, 20%);
+
+$purple-1: hsl(274, 100%, 95%);
+$purple-2: hsl(272, 100%, 89%);
+$purple-3: hsl(271, 93%, 83%);
+$purple-4: hsl(270, 87%, 75%);
+$purple-5: hsl(269, 84%, 68%);
+$purple-6: hsl(268, 82%, 61%);
+$purple-7: hsl(267, 59%, 50%);
+$purple-8: hsl(266, 65%, 39%);
+$purple-9: hsl(265, 72%, 30%);
+$purple-10: hsl(264, 81%, 20%);
+
+$navy-1: hsl(227, 100%, 95%);
+$navy-2: hsl(229, 100%, 90%);
+$navy-3: hsl(230, 89%, 83%);
+$navy-4: hsl(231, 80%, 75%);
+$navy-5: hsl(232, 76%, 68%);
+$navy-6: hsl(233, 71%, 60%);
+$navy-7: hsl(234, 54%, 49%);
+$navy-8: hsl(235, 61%, 39%);
+$navy-9: hsl(236, 70%, 30%);
+$navy-10: hsl(237, 79%, 21%);
+
+$gray-1: hsl(0, 0%, 100%);
+$gray-2: hsl(0, 0%, 96%); //#f5f5f5
+$gray-3: hsl(0, 0%, 93%); //#EEEEEE
+$gray-4: hsl(0, 0%, 90%); //#e5e5e5
+$gray-5: hsl(0, 0%, 85%); //#D9D9D9
+$gray-6: hsl(0, 0%, 75%); //#BFBFBF
+$gray-7: hsl(0, 0%, 60%); //#999999
+$gray-8: hsl(0, 0%, 45%); //#737373
+$gray-9: hsl(0, 0%, 30%); //#4D4D4D
+$gray-10: hsl(0, 0%, 20%); //#333333
+
+/* 线型色 */
+$line-blue: $blue-6;
+$line-green: $green-5;
+$line-yellow: $yellow-6;
+$line-red: $red-6;
+$line-cyan: $cyan-5;
+$line-purple: $purple-6;
+$line-orange: $orange-6;
+$line-navy: $navy-6;
+$line-lime: $lime-5;
+$line-magenta: $magenta-6;
+
+/* 面型色 */
+$surf-blue: $blue-5;
+$surf-green: $green-4;
+$surf-yellow: $yellow-5;
+$surf-red: $red-5;
+$surf-cyan: $cyan-4;
+$surf-purple: $purple-4;
+$surf-orange: $orange-5;
+$surf-navy: $navy-5;
+$surf-lime: $lime-4;
+$surf-magenta: $magenta-5;
+
+/* 面透明（基本用于hover） */
+$surf-tp-blue: $blue-1;
+$surf-tp-green: $green-1;
+$surf-tp-uellow: $yellow-1;
+$surf-tp-red: $red-1;
+$surf-tp-cyan: $cyan-1;
+$surf-tp-purple: $purple-1;
+$surf-tp-orange: $orange-1;
+$surf-tp-navy: $navy-1;
+$surf-tp-lime: $lime-1;
+$surf-tp-magenta: $magenta-1;
+
+/* 功能色-基础 */
+$status-primary: $blue-6;
+$status-success: $green-6;
+$status-warning: $yellow-6;
+$status-danger: $orange-6;
+$status-error: $red-6;
+
+/* ******************************************************************* */
+
+/* 功能色-primary */
+$primary-default: $blue-6;
+$primary-hover: $blue-7;
+$primary-active: $blue-8;
+$primary-disabled: $blue-2;
+
+/* 功能色-success */
+$success-default: $green-6;
+$success-hover: $green-7;
+$success-active: $green-8;
+$success-disabled: $green-2;
+
+/* 功能色-warning */
+$warning-default: $yellow-6;
+$warning-hover: $yellow-7;
+$warning-active: $yellow-8;
+$warning-disabled: $yellow-2;
+
+/* 功能色-error */
+$error-default: $red-6;
+$error-hover: $red-7;
+$error-active: $red-8;
+$error-disabled: $red-2;
+
+/* 功能色-danger */
+$danger-default: $orange-6;
+$danger-hover: $orange-7;
+$danger-active: $orange-8;
+$danger-disabled: $orange-2;
+
+/* brand 品牌色 */
+$brand-default: $blue-6;
+$brand-hover: $blue-7;
+$brand-active: $blue-8;
+$brand-disabled: $blue-2;
+$brand-light: $blue-1;
+$brand-active-light: $blue-2;
+
+/* background 背景色
+    $bg-body => 背景、页面背景
+    $bg-component => 组件背景
+    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
+    $bg-disabled => 组件禁用背景
+    $bg-disabled-deeo => 组件禁用背景(深色)
+    $bg-header => 表头
+    $bg-gray => tag
+    $bg-body-dark => 黑色背景
+*/
+$bg-body: $gray-1;
+$bg-component: transparent;
+$bg-container: $gray-2;
+$bg-disabled: $gray-3;
+$bg-disabled-deep: $gray-6;
+$bg-header: $gray-3;
+$bg-gray: $gray-3;
+$bg-body-dark: hsl(229, 27%, 8%);
+
+/* font 字体颜色
+    $font-color-default => 正文
+    $font-color-disabled => 禁用文字
+    $font-color-hint => 提示
+    $font-color-watermark => 水印文字
+    $font-color-heading => 非加粗标题
+    $font-color-heading-bold => 加粗标题
+    $font-color-tag => 标签文字
+    $font-color-white => 深底白字
+*/
+$font-color-default: $gray-9;
+$font-color-disabled: $gray-6;
+$font-color-hint: $gray-7;
+$font-color-watermark: $gray-7;
+$font-color-heading: $gray-10;
+$font-color-heading-bold: $gray-9;
+$font-color-tag: $gray-8;
+$font-color-white: hsl(0, 0%, 100%);
+$font-color-white-dark: $gray-6;
+
+/* border 边框 */
+$border-color-default: $gray-5;
+$border-color-disabled: $gray-4;
+
+/* split line 分割线 */
+$splitline-default: $gray-4;
+
+/* icon 图标 */
+$icon-color-default: $gray-6;
+$icon-color-disabled: $gray-4;
+$icon-color-stress: $gray-8;
+
+/* box-shadow 阴影（基于altitude）
+    $box-shadow-lv0 => 背景
+    $box-shadow-lv1 => 页内卡片
+    $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
+    $box-shadow-lv3 => 及时消息、模态弹框、alert
+*/
+$box-shadow-lv0: none;
+$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
+$box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
+$box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
+
+/* ******************************************************** */
+// 色阶生成工具
+$color-base: hsl(233, 71%, 60%);
+$color-light-1: hsl(227, 100%, 95%);
+$color-light-2: hsl(229, 100%, 90%);
+$color-light-3: hsl(230, 89%, 83%);
+$color-light-4: hsl(231, 80%, 75%);
+$color-light-5: hsl(232, 76%, 68%);
+$color-light-6: hsl(233, 71%, 60%);
+$color-light-7: hsl(234, 54%, 49%);
+$color-light-8: hsl(235, 61%, 39%);
+$color-light-9: hsl(236, 70%, 30%);
+$color-light-10: hsl(237, 79%, 21%);
+
+$color-dark-1: hsl(237, 17%, 20%);
+$color-dark-2: hsl(238, 25%, 30%);
+$color-dark-3: hsl(236, 33%, 38%);
+$color-dark-4: hsl(235, 39%, 45%);
+$color-dark-5: hsl(234, 49%, 53%);
+$color-dark-6: hsl(233, 71%, 60%);
+$color-dark-7: hsl(232, 76%, 68%);
+$color-dark-8: hsl(231, 80%, 75%);
+$color-dark-9: hsl(230, 89%, 83%);
+$color-dark-10: hsl(229, 100%, 90%);

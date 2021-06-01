@@ -9,6 +9,8 @@ import {
     Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {take} from 'rxjs/operators';
+import {TranslateService} from "@ngx-translate/core";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
     ButtonInfo,
@@ -22,8 +24,6 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {take} from 'rxjs/operators';
-import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 /**
@@ -42,7 +42,7 @@ export class NotificationMessage {
      */
     caption?: string;
     /**
-     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
      */
     icon?: string;
     /**
@@ -154,7 +154,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this.caption = iconType2Caption.hasOwnProperty(value.iconType) ?
             this._translateService.instant(iconType2Caption[value.iconType]) : value.caption;
         this.message = value.message || 'the "message" property in the initData goes here.';
-        this.icon = value.icon;
+        this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;
         this.position = value.position;
         this.innerHtmlContext = value.innerHtmlContext;
@@ -183,7 +183,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     public caption: string;
 
     /**
-     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
      *
      * @NoMarkForCheckRequired
      */
@@ -253,6 +253,18 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
         this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
         this._$onLeave();
+    }
+
+    /**
+     * @internal
+     */
+    public _$getClassObject(classPrefix: string): {[className: string]: boolean} {
+        return {
+            [`${classPrefix}-success`]: this._$iconType == 'success',
+            [`${classPrefix}-error`]: this._$iconType == 'error',
+            [`${classPrefix}-warning`]: this._$iconType == 'warning',
+            [`${classPrefix}-info`]: this._$iconType != 'success' && this._$iconType != 'error' && this._$iconType != 'warning'
+        };
     }
 
     /**
@@ -384,7 +396,6 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         const instancesCopy = instances.concat();
         instances.splice(0, instances.length);
         instancesCopy.forEach(popupInfo => {
-            // console.log(popupInfo.element.offsetHeight, popupInfo.element.innerText);
             const p = this._positionReviser(position, popupInfo.element);
             const options = {posType: PopupPositionType.fixed, pos: {x: p.left, y: p.top}};
             PopupService.instance.setPosition(options, popupInfo.element);
@@ -422,7 +433,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         if (CommonUtils.isUndefined(message)) {
             return;
         }
-        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options || {});
         opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
         opt.position = typeof opt.position === 'string' ? NotificationPosition[<string>opt.position] : opt.position;
@@ -435,7 +446,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
             // `pos` not null to tell PopupService don't add resize event listener
-            pos: {x: 0, y: 0}, posType: PopupPositionType.fixed
+            pos: {x: 0, y: 0}, posType: PopupPositionType.fixed,
+            borderRadius: '3px'
         };
         const initData = {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
@@ -463,28 +475,28 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     public static showSuccess(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f8';
+        opt.icon = 'iconfont iconfont-e142';
         opt.iconType = 'success';
         return JigsawNotification.show(message, opt);
     };
 
     public static showError(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f5';
+        opt.icon = 'iconfont iconfont-e132';
         opt.iconType = 'error';
         return JigsawNotification.show(message, opt);
     };
 
     public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'iconfont iconfont-e8f7';
+        opt.icon = 'iconfont iconfont-e437';
         opt.iconType = 'warning';
         return JigsawNotification.show(message, opt);
     };
 
     public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
         const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
-        opt.icon = 'fa fa-info-circle';
+        opt.icon = 'iconfont iconfont-e23e';
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };

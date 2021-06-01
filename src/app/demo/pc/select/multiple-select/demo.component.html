@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>多选下拉选择</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px"></jigsaw-select>
+
+<jigsaw-header>结果展开</jigsaw-header>
+<jigsaw-select
+    [data]="dataList"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="160px"
+    [useStatistics]="false"
+></jigsaw-select>

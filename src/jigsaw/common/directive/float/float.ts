@@ -21,8 +21,8 @@ export enum DropDownTrigger {
     none,
 }
 
-export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' |
-    'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+export type FloatPosition = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | 'leftTop' |
+    'leftBottom' | 'rightTop' | 'rightBottom' | 'left' | 'right' | 'top' | 'bottom';
 
 @Directive()
 export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy {
@@ -40,11 +40,28 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * @internal
      */
-    public jigsawFloatOpenDelay: number = 100;
+    public _jigsawFloatOpenDelay: number = 100;
+
+    public get jigsawFloatOpenDelay(): number {
+        return this._jigsawFloatOpenDelay;
+    }
+
+    public set jigsawFloatOpenDelay(value: number) {
+        this._jigsawFloatOpenDelay = typeof value != 'number' ? parseInt(value) : value;
+    }
+
     /**
      * @internal
      */
-    public jigsawFloatCloseDelay: number = 400;
+    private _jigsawFloatCloseDelay: number = 400;
+
+    public get jigsawFloatCloseDelay(): number {
+        return this._jigsawFloatCloseDelay;
+    }
+
+    public set jigsawFloatCloseDelay(value: number) {
+        this._jigsawFloatCloseDelay = typeof value != 'number' ? parseInt(value) : value;
+    }
 
     public get popupElement(): HTMLElement {
         return this._popupInfo ? this._popupInfo.element : null;
@@ -166,6 +183,13 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 protected _popupService: PopupService,
                 protected _zone: NgZone) {
         super(_zone);
+        this._init();
+    }
+
+    /**
+     * 留给子类去覆盖
+     */
+    protected _init(): void {
     }
 
     protected _emitOpenChange(open: boolean): void {
@@ -415,6 +439,20 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 point.x += this._elementRef.nativeElement.offsetWidth + differ;
                 point.y += this._elementRef.nativeElement.offsetHeight;
                 break;
+            case 'top':
+                point.x += this._elementRef.nativeElement.offsetWidth / 2;
+                break;
+            case 'bottom':
+                point.x += this._elementRef.nativeElement.offsetWidth / 2;
+                point.y += this._elementRef.nativeElement.offsetHeight;
+                break;
+            case 'left':
+                point.y += this._elementRef.nativeElement.offsetHeight / 2;
+                break;
+            case 'right':
+                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.y += this._elementRef.nativeElement.offsetHeight / 2;
+
         }
         return point;
     }
@@ -456,6 +494,20 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             case 'leftBottom':
                 pos.left -= popupElement.offsetWidth;
                 pos.top -= popupElement.offsetHeight;
+                break;
+            case 'top':
+                pos.left -= popupElement.offsetWidth / 2;
+                pos.top -= popupElement.offsetHeight;
+                break;
+            case 'bottom':
+                pos.left -= popupElement.offsetWidth / 2;
+                break;
+            case 'left':
+                pos.left -= popupElement.offsetWidth;
+                pos.top -= popupElement.offsetHeight / 2;
+                break;
+            case 'right':
+                pos.top -= popupElement.offsetHeight / 2;
                 break;
         }
     }
@@ -508,23 +560,48 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return;
         }
         const hostPosition = this._getElementPos();
-        const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)};
+        const position: PopupPoint = { x: Math.round(hostPosition.x), y: Math.round(hostPosition.y) };
         const arrowPosition = this._getElementPos(this.jigsawFloatArrowElement);
-        const arrowPoint: PopupPoint = {x: Math.round(arrowPosition.x), y: Math.round(arrowPosition.y)};
+        const arrowPoint: PopupPoint = { x: Math.round(arrowPosition.x), y: Math.round(arrowPosition.y) };
         const host = this.jigsawFloatArrowElement ? this.jigsawFloatArrowElement : this._elementRef.nativeElement;
         let ele = <HTMLElement>this.popupElement.querySelector('.jigsaw-float-arrow');
         if (ele) {
-            this.popupElement.removeChild(ele);
-        }
-        ele = document.createElement('div');
-        ele.setAttribute("class", "jigsaw-float-arrow");
-        // 根据tooltip尖角算出来大概在5√2，约为7px
-        ele.style.width = '7px';
-        ele.style.height = '7px';
-        ele.style.position = 'absolute';
-        ele.style.transform = 'rotateZ(-45deg)';
-        ele.style.backgroundColor = 'inherit';
+            this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options);
+        } else {
+            ele = document.createElement('div');
+            ele.setAttribute("class", "jigsaw-float-arrow");
+            // 根据tooltip尖角算出来大概在5√2，约为7px
+            ele.style.width = '7px';
+            ele.style.height = '7px';
+            ele.style.position = 'absolute';
+            ele.style.transform = 'rotateZ(-45deg)';
+            ele.style.backgroundColor = 'inherit';
+            this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
+            popupElement.appendChild(ele);
+        }  
+    } 
 
+    private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
+        if (delta < 4) {
+            delta = 4;
+        } else if (delta > popupElement.offsetWidth - 13) {
+            delta = popupElement.offsetWidth - 13;
+        }
+        return delta;
+    }
+
+    private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 5;
+        if (delta < 4) {
+            delta = 4;
+        } else if (delta > popupElement.offsetHeight - 13) {
+            delta = popupElement.offsetHeight - 13;
+        }
+        return delta;
+    }
+
+    private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
         if (popupElement.offsetTop >= position.y + host.offsetHeight) {
             ele.style.top = '-4px';
             if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
@@ -567,27 +644,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
         }
-        popupElement.appendChild(ele);
-    }
-
-    private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
-        if (delta < 4) {
-            delta = 4;
-        } else if (delta > popupElement.offsetWidth - 13) {
-            delta = popupElement.offsetWidth - 13;
-        }
-        return delta;
-    }
-
-    private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 5;
-        if (delta < 4) {
-            delta = 4;
-        } else if (delta > popupElement.offsetHeight - 13) {
-            delta = popupElement.offsetHeight - 13;
-        }
-        return delta;
     }
 
     /**
@@ -605,10 +661,19 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
-        } else {
+        } else if (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop' ||
+            this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') {
             const upDelta = popupElement.offsetHeight;
             pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
             const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
+        } else if (this.jigsawFloatPosition === 'top' || this.jigsawFloatPosition === 'bottom') {
+            pos.left = Math.max(8 /*安全边距*/, pos.left);
+            const upDelta = offsetHeight + popupElement.offsetHeight + differ;
+            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
+        } else if (this.jigsawFloatPosition === 'left' || this.jigsawFloatPosition === 'right') {
+            pos.top = Math.max(8 /*安全边距*/, pos.top);
+            const leftDelta = popupElement.offsetWidth + offsetWidth + differ + 8 /*安全边距*/;
             pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
         }
         return pos;
@@ -621,9 +686,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         }
         const totalWidth = window.pageXOffset + document.body.clientWidth;
         // 宿主组件在可视范围外
-        if (point.x < 0 && (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'bottomLeft') && leftDelta <= totalWidth - (offsetWidth + point.x)) {
+        const atLeft = this.jigsawFloatPosition == 'topLeft' || this.jigsawFloatPosition == 'bottomLeft' || this.jigsawFloatPosition == 'left';
+        const atRight = this.jigsawFloatPosition == 'topRight' || this.jigsawFloatPosition == 'bottomRight' || this.jigsawFloatPosition == 'right';
+        if (point.x < 0 && atLeft && leftDelta <= totalWidth - (offsetWidth + point.x)) {
             pos.left += offsetWidth;
-        } else if (point.x + offsetWidth > totalWidth && (this.jigsawFloatPosition === 'topRight' || this.jigsawFloatPosition === 'bottomRight') && point.x >= leftDelta) {
+        } else if (point.x + offsetWidth > totalWidth && atRight && point.x >= leftDelta) {
             pos.left -= offsetWidth;
         }
         if (pos.left < 0 && pos.left + leftDelta + popupElement.offsetWidth <= totalWidth) {
@@ -644,9 +711,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         const totalHeight = window.pageYOffset + document.body.clientHeight;
 
         // 宿主组件在可视范围外
-        if (point.y < 0 && (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop') && upDelta <= totalHeight - (offsetHeight + point.y)) {
+        const atTop = this.jigsawFloatPosition == 'leftTop' || this.jigsawFloatPosition == 'rightTop' || this.jigsawFloatPosition == 'top';
+        const atBottom = this.jigsawFloatPosition == 'leftBottom' || this.jigsawFloatPosition == 'rightBottom' || this.jigsawFloatPosition == 'bottom';
+        if (point.y < 0 && atTop && upDelta <= totalHeight - (offsetHeight + point.y)) {
             pos.top += offsetHeight;
-        } else if (point.y + offsetHeight > totalHeight && (this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') && point.y >= upDelta) {
+        } else if (point.y + offsetHeight > totalHeight && atBottom && point.y >= upDelta) {
             pos.top -= offsetHeight;
         }
         if (pos.top < 0 && pos.top + upDelta + popupElement.offsetHeight <= totalHeight) {
@@ -783,7 +852,7 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     public jigsawFloatOptions: PopupOptions;
 
     /**
-     * 一共8个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
+     * 一共支持12个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
      * 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
      * 避免视图超时浏览器边界的情况
      * $demo = float/position

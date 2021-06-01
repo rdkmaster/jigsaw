@@ -7,42 +7,46 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
     position: relative;
     width: 135px;
     height: $height-base;
+    background: $bg-component;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-sm;
     font-size: $font-size-base;
-    border: 1px solid $border-color-base;
-    border-radius: 3px;
-    background: $component-background;
     overflow: hidden;
     padding: 4px 34px 4px 8px;
 
-    &:hover, &-active {
+    &:hover,
+    &-active {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-        border: 1px solid $primary-color;
-        box-shadow: $box-focus-shadow;
+        border-color: $primary-default;
     }
 
     &-wrapper {
         display: flex;
-        height: 100%;
         justify-content: center;
         align-items: center;
+        height: 100%;
 
         input {
             @include inline-block();
             flex: 1;
             padding: 3px 0;
-            border: 0;
             margin: 0;
-            outline: none;
             width: 22px;
             height: 100%;
+            border: 0;
+            border-radius: $border-radius-sm;
             text-align: center;
+            outline: none;
 
             &:hover {
-                background: $primary-2;
+                background: $brand-light;
             }
 
             &.#{$time-prefix-cls}-input-selected {
-                border-bottom: 1px solid $primary-color;
+                background: $brand-default;
+                color: $font-color-white;
             }
         }
 
@@ -58,7 +62,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
         width: 34px;
         height: 100%;
         font-size: 14px;
-        color: $text-color-secondary;
+        color: $font-color-default;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -74,57 +78,49 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-left: 1px solid $border-color-base;
+            border-left: 1px solid $border-color-default;
 
             span {
                 display: flex;
                 flex: 1;
                 justify-content: center;
                 align-items: center;
-                border-bottom: 1px solid $border-color-base;
+                width: 100%;
+                height: 50%;
+                font-size: $icon-size-sm;
+                border-bottom: 1px solid $border-color-default;
                 cursor: pointer;
                 text-align: center;
-                width: 100%;
-
-                &:first-child {
-                    &:before {
-                        content: "\f106";
-                    }
-                }
 
                 &:last-child {
                     border-bottom: none;
-
-                    &:before {
-                        content: "\f107";
-                    }
                 }
 
                 &:hover {
-                    color: $primary-5;
+                    color: $brand-hover;
                 }
 
                 &:active {
-                    color: $primary-7;
+                    color: $brand-active;
                 }
             }
         }
     }
 
     &-error {
-        border-color: $error-color;
+        border-color: $error-default;
     }
 
     &-disabled {
         position: relative;
         &:before {
-            content: ' ';
+            content: " ";
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            background: $disabled-bg;
+            background: $bg-disabled;
             opacity: 0.7;
             z-index: $zindex-level-1;
             cursor: not-allowed;

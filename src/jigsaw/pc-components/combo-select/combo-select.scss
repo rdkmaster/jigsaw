@@ -10,27 +10,47 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
 .#{$jigsaw-combo-select} {
     position: relative;
-    color: $text-color;
+    color: $icon-color-default;
     font-size: $font-size-base;
     cursor: pointer;
 
+    .#{$jigsaw-combo-select}-arrow {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &[ng-reflect-jigsaw-float-open="true"] &-selection {
+        border-color: $brand-default;
+    }
+
+    &[ng-reflect-jigsaw-float-open="true"] {
+        .#{$jigsaw-combo-select}-arrow {
+            @include prefixer(transform, translateY(-50%) rotate(180deg));
+        }
+    }
+
     &-selection {
         min-height: $height-base;
+        padding: 0 30px 0 8px;
+        background: $bg-component;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
         border-radius: $border-radius-base;
-        border: $border-width-base $border-style-base $border-color-base;
-        background: $component-background;
-        transition: all .3s $ease-in-out;
+        transition: all 0.3s $ease-in-out;
         user-select: none;
-        padding: 0 30px 0 7px;
+
         &:hover {
-            border-color: $primary-color;
-            box-shadow: $box-focus-shadow;
+            border-color: $brand-default;
         }
+
+        &:active {
+            border-color: $brand-active;
+        }
+
         .#{$jigsaw-combo-select}-error & {
-            border: 1px solid $error-color;
+            border-color: $error-default;
             &:hover {
-                border: 1px solid $error-color;
-                box-shadow: none;
+                border-color: $error-default;
             }
         }
     }
@@ -49,7 +69,8 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             height: $height-base - 8;
             line-height: $height-base - 8;
             border: none;
-            &.jigsaw-input-focused, &:hover {
+            &.jigsaw-input-focused,
+            &:hover {
                 box-shadow: none;
                 border: none;
             }
@@ -63,27 +84,35 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     &-placeholder {
         @include inline-block();
         font-size: $font-size-base;
-        color: $text-color-secondary;
+        color: $font-color-hint;
         padding-bottom: 3px;
         height: $height-base - 6;
         line-height: $height-base - 9;
     }
 
     &-disabled {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
         pointer-events: none;
+
+        .#{$jigsaw-combo-select}-selection .#{$jigsaw-combo-select}-selection-rendered {
+            .jigsaw-tag-host {
+                color: $font-color-disabled;
+            }
+        }
     }
 
     &-disabled &-placeholder {
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        color: $font-color-disabled;
     }
 
     &-disabled &-selection {
-        background-color: $disabled-bg;
+        background-color: $bg-disabled;
         cursor: not-allowed;
 
-        &:hover, &:active, &:focus {
-            border-color: $disabled-bg;
+        &:hover,
+        &:active,
+        &:focus {
+            border-color: $bg-disabled;
             box-shadow: none;
         }
     }
@@ -95,29 +124,31 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
     &-arrow {
         position: absolute;
         top: 50%;
-        right: 8px;
-        transform-origin: 50% 20%;
+        right: 5px;
+        font-size: $icon-size-med;
+        color: $icon-color-default;
         transform: translateY(-50%);
-        transition: transform 0.3s $ease-in-out;
-    }
-
-    &-down{
-        &:before{
-            content: "\f107";
+        &:hover {
+            color: $brand-default;
         }
     }
 
     &-clear {
         position: absolute;
         top: 50%;
-        right: 18px;
-        width: 12px;
+        right: 20px;
         transform: translateY(-50%);
-        color: $text-color-secondary;
+        font-size: $icon-size-sm;
+        color: $icon-color-default;
+        &:hover {
+            color: $brand-default;
+        }
     }
 
     &-disabled &-clear {
-        color: darken($disabled-bg, 8%);
+        color: $icon-color-disabled;
+        &:hover {
+            color: $icon-color-disabled;
+        }
     }
-
 }

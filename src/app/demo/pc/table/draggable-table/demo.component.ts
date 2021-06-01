@@ -14,7 +14,7 @@ export class TableDraggableDemoComponent {
     public tableData: TableData;
     public selectedRow: number = -1;
     public rendererInitData = {
-        icon: 'fa fa-arrows-alt', title: '拖拽换行', label: ''
+        icon: 'iconfont iconfont-e515', title: '拖拽换行', label: ''
     };
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {

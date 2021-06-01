@@ -169,6 +169,16 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     public titleChange = new EventEmitter<TabTitleInfo>();
 
     /**
+     * 控制tab显示为标签式 or 页签式
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = tab-bar/type
+     */
+    @Input()
+    public tabType: 'label' | 'page' = 'label';
+
+    /**
      * @internal
      */
     public _$selectTabStyle: object = {};
@@ -302,7 +312,6 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         }
 
         this._$inkBarStyle = {
-            'display': 'block',
             'transform': 'translate3d(' + (labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
         };
@@ -376,7 +385,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         '[class.jigsaw-tabs]': 'true',
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[class.jigsaw-tabs-page]': 'tabType == "page"',
+        '[class.jigsaw-tabs-editable]': 'editable'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

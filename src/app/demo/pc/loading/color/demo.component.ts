@@ -22,7 +22,7 @@ export class ColorfulLoadingDemoComponent {
 
     public pauseLoading() {
         if( this.paused == 'paused') {
-            this.paused = 'runing';
+            this.paused = 'running';
             this.setElementsStyle('.spinner-container > div','animationPlayState','running');
             this.setElementsStyle('.jigsaw-loading-content > div','animationPlayState','running');
             this.setElementsStyle('.jigsaw-font-loading','animationPlayState','running');

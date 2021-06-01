@@ -1,45 +1,23 @@
-import {NgModule} from "@angular/core";
-import {RouterModule} from "@angular/router";
-import {StepsHorizontalBasicModule} from "./basic/demo.module";
-import {StepsClickChangeStatusModule} from "./step-interactive/demo.module";
-import {StepsVerticalModule} from "./vertical/demo.module";
-import {StepsHorizontalBasicComponent} from "./basic/demo.component";
-import {StepsVerticalFullComponent} from "./vertical/demo.component";
-import {StepsClickChangeStatusComponent} from "./step-interactive/demo.component";
-import {StepsCustomIconsModule} from "./custom-icons/demo.module";
-import {StepsCustomIconsComponent} from "./custom-icons/demo.component";
-import {StepsMultilineComponent} from "./steps-multiline/demo.component";
-import {StepsMultilineModule} from "./steps-multiline/demo.module";
+import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { JigsawStepBasicDemoModule } from "./basic/demo.module";
+import { JigsawStepBasicDemoComponent } from "./basic/demo.component";
+import { JigsawStepOverLengthDemoComponent } from "./over-length/demo.component";
+import { JigsawStepOverLengthDemoModule } from "./over-length/demo.module";
+import { JigsawStepVerticalDemoModule } from "./vertical/demo.module";
+import { JigsawStepVerticalDemoComponent } from './vertical/demo.component';
 
 export const routerConfig = [
-    {
-        path: 'basic', component: StepsHorizontalBasicComponent,
-    },
-    {
-        path: 'vertical', component: StepsVerticalFullComponent,
-    },
-    {
-        path: 'step-interactive', component: StepsClickChangeStatusComponent
-    },
-    {
-        path:'custom-icons',component:StepsCustomIconsComponent
-    },
-    {
-        path:'steps-multiline',component:StepsMultilineComponent
-    }
-
+    { path: "basic", component: JigsawStepBasicDemoComponent },
+    { path: "over-length", component: JigsawStepOverLengthDemoComponent },
+    { path: "vertical", component: JigsawStepVerticalDemoComponent }
 ];
-
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        StepsHorizontalBasicModule,
-        StepsClickChangeStatusModule,
-        StepsCustomIconsModule,
-        StepsVerticalModule,
-        StepsMultilineModule
+        JigsawStepBasicDemoModule,
+        JigsawStepOverLengthDemoModule,
+        JigsawStepVerticalDemoModule
     ]
 })
-export class StepsDemoModule {
-
-}
+export class StepsDemoModule {}
