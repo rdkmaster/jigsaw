@@ -639,6 +639,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
         <div class="jigsaw-table-option-box"
             jigsaw-draggable
             jigsaw-droppable
+            [title]="_$title"
             (jigsawDragStart)="_$dragStartHandle($event)"
             (jigsawDragEnd)="_$dragEndHandle()">
             <span class="drop-top"
