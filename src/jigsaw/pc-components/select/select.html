@@ -25,7 +25,7 @@
             [(selectedItems)]="_$selectedItems"
             (selectedItemsChange)="_$handleSelectChange($event)"
             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
-            [height]="_$listHeight"
+            [ngStyle]="{'max-height': _$listHeight}"
             [multipleSelect]="multipleSelect"
         >
             <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
