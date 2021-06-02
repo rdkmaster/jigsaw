@@ -61,6 +61,8 @@ import { JigsawColorSelectModule } from "./color-select/index";
 import { JigsawBadgeModule } from "../common/directive/badge/index";
 import { JigsawTimeSectionModule } from "./date-and-time/time-section";
 import { JigsawHeaderModule } from "./header/header";
+import {JigsawStepsMultilineFallbackModule} from './fallback/steps/steps-multiline';
+import {JigsawUploadFallbackModule} from './fallback/upload/index';
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -125,7 +127,9 @@ const JIGSAW_MODULE = [
     JigsawColorSelectModule,
     JigsawBadgeModule,
     JigsawMenuModule,
-    JigsawTimeSectionModule
+    JigsawTimeSectionModule,
+    JigsawStepsMultilineFallbackModule,
+    JigsawUploadFallbackModule
 ];
 
 @NgModule({
