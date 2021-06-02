@@ -25,14 +25,14 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 display: flex;
                 align-items: center;
                 position: relative;
-                padding-left: 16px;
+                padding-left: 14px;
                 font-size: $font-size-lg;
                 font-weight: 400;
                 height: $height-huge;
                 cursor: pointer;
 
                 i {
-                    margin-right: 8px;
+                    margin-right: 10px;
                     width: 14px;
                     text-align: center;
                 }
@@ -69,7 +69,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     cursor: pointer;
 
                     i {
-                        margin-right: 8px;
+                        margin-right: 10px;
                         width: 14px;
                         text-align: center;
                     }
@@ -85,7 +85,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                     &.#{$nav-menu-prefix-cls}-sub-item-collapsed {
                         width: 40px !important;
-                        padding-left: 16px;
+                        padding-left: 14px;
 
                         span {
                             display: none;
