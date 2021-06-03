@@ -358,7 +358,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _autoPopupPos() {
         if (!this.autoClose && this._jigsawFloat) {
-            this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            this.runAfterMicrotasks(() => {
+                this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            })
         }
     }
 
@@ -430,6 +432,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
         this._autoWidth();
         this._autoClose();
+        this._autoPopupPos();
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
