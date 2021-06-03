@@ -23,10 +23,6 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         color: $font-color-white;
     }
 
-    &.#{$tag-prefix-cls}-without-border {
-        border: none;
-    }
-
     &.#{$tag-prefix-cls}-preset {
         &-blue {
             color: $blue-7;
