@@ -55,7 +55,8 @@
             >
                 <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected">
                 </jigsaw-checkbox>
-                <span class="select-option-label">{{item && item[labelField] ? item[labelField] : item}}</span>
+                <span class="select-option-label" title="{{item && item[labelField] ? item[labelField] : item}}">
+                    {{item && item[labelField] ? item[labelField] : item}}</span>
             </jigsaw-list-option>
         </jigsaw-list>
     </ng-template>
