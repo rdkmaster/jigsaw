@@ -11,6 +11,7 @@ type SelectOption = {
     (labelField: string): string;
     disabled?: boolean;
 };
+
 @Directive()
 export abstract class JigsawSelectBase
     extends AbstractJigsawComponent
@@ -62,6 +63,7 @@ export abstract class JigsawSelectBase
     public set minWidth(value: string) {
         this._minWidth = CommonUtils.getCssValue(value);
     }
+
     private _maxWidth: string = "100%";
 
     /**
@@ -78,13 +80,20 @@ export abstract class JigsawSelectBase
         this._maxWidth = CommonUtils.getCssValue(value);
     }
 
+    private _optionWidth: string;
     /**
      * 选项宽度
      *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public optionWidth: number;
+    public get optionWidth(): string {
+        return this._optionWidth;
+    }
+
+    public set optionWidth(value: string) {
+        this._optionWidth = CommonUtils.getCssValue(value);
+    }
 
     /**
      * 选项高度
@@ -280,13 +289,15 @@ export abstract class JigsawSelectBase
         }
     }
 
-    private _propagateChange: any = () => {};
+    private _propagateChange: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
-    private _onTouched: any = () => {};
+    private _onTouched: any = () => {
+    };
 
     public registerOnTouched(fn: any): void {
         this._onTouched = fn;
@@ -412,6 +423,7 @@ export abstract class JigsawSelectBase
         this._changeDetector.markForCheck();
     }
 }
+
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * 设置组名的显示字段
