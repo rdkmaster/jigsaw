@@ -8,7 +8,7 @@
                     'jigsaw-steps-item-warning': item?.status === 'warning'
                 }">
     <div class="jigsaw-steps-title-cntr">
-        <span class="jigsaw-steps-icon">
+        <span class="jigsaw-steps-icon" (click)="changeCurrent(index)">
             <i
                 class="iconfont"
                 *ngIf="current > index"
@@ -21,7 +21,7 @@
                 >{{index + 1}}</span
             >
         </span>
-        <span class="jigsaw-steps-title" title="{{item?.title}}">{{item?.title}}</span>
+        <span class="jigsaw-steps-title" title="{{item?.title}}" (click)="changeCurrent(index)">{{item?.title}}</span>
         <span class="jigsaw-steps-bar" *ngIf="direction === 'horizontal'"></span>
     </div>
     <div

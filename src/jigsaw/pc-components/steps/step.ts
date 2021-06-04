@@ -64,6 +64,10 @@ export class JigsawSteps extends AbstractJigsawComponent {
      */
     @Input()
     public direction: "vertical" | "horizontal" = "horizontal";
+
+    public changeCurrent(idx: number) {
+        this.current = idx;
+    }
 }
 
 @NgModule({

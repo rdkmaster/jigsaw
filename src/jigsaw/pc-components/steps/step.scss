@@ -3,6 +3,7 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
 .#{$steps-prefix-cls}-host {
     display: inline-flex;
     justify-content: space-between;
+    width: 100%;
     .#{$steps-prefix-cls}-item {
         flex-grow: 1;
         flex-basis: 0;
@@ -22,6 +23,8 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
                 margin-right: 6px;
                 border-radius: 50%;
                 font-size: $font-size-lg;
+                cursor: pointer;
+
                 .iconfont {
                     font-size: 28px;
                 }
@@ -34,6 +37,7 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                cursor: pointer;
             }
 
             .#{$steps-prefix-cls}-bar {
