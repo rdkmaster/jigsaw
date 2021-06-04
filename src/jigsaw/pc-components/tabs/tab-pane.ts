@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import { IJigsawTabTitleRenderer } from './tab-renderer';
 import {IDynamicInstantiatable} from "../../common/common";
 
 @Component({
@@ -70,7 +71,7 @@ export class JigsawTabPane {
     public initData: Object;
 
     @ViewChild('label', {static: true})
-    public label: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    public label: TemplateRef<any> | Type<IJigsawTabTitleRenderer>;
     @ContentChild(TemplateRef, {static: true})
     public content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }

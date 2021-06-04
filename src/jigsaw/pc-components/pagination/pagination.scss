@@ -95,10 +95,24 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
-    &-select {
+    &-page-size {
         height: var(--height-paging);
         .#{$jigsaw-prefix}-combo-select-host {
             height: var(--height-paging);
+            .#{$jigsaw-prefix}-combo-select {
+                height: var(--height-paging);
+                .#{$jigsaw-prefix}-combo-select-selection {
+                    height: 100%;
+                    min-height: unset;
+                    .#{$jigsaw-prefix}-combo-select-selection-rendered {
+                        display: flex;
+                        align-items: center;
+                        padding: 0;
+                        min-height: unset;
+                        height: 100%;
+                    }
+                }
+            }
         }
     }
 
@@ -135,26 +149,8 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             }
         }
 
-        .#{$paging-prefix-cls}-page-size {
-            height: var(--height-paging);
+        jigsaw-select {
             margin-left: 8px;
-            .#{$jigsaw-prefix}-combo-select-host {
-                height: var(--height-paging);
-                .#{$jigsaw-prefix}-combo-select {
-                    height: var(--height-paging);
-                    .#{$jigsaw-prefix}-combo-select-selection {
-                        height: 100%;
-                        min-height: unset;
-                        .#{$jigsaw-prefix}-combo-select-selection-rendered {
-                            display: flex;
-                            align-items: center;
-                            padding: 0;
-                            min-height: unset;
-                            height: 100%;
-                        }
-                    }
-                }
-            }
         }
     }
 }
