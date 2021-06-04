@@ -276,13 +276,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public searchKeywordChange = new EventEmitter<any>();
 
     /**
-     * 是否显示tag的边框和删除按钮，默认显示
-     */
-    @Input()
-    @RequireMarkForCheck()
-    public showValueBorder: boolean = true;
-
-    /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
      *
      * @NoMarkForCheckRequired
