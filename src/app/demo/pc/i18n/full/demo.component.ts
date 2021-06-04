@@ -56,7 +56,8 @@ export class I18nFullDemoComponent {
             syncWarn: '告警同步',
             warnHint: '告警提示',
             warnHistory: '历史告警',
-            warnQuery: '告警查询'
+            warnQuery: '告警查询',
+            selectPlaceholder: '请选择'
         }, true);
         translateService.setTranslation('en', {
             desc: 'A complete example shows how to use i18n with Jigsaw.',
@@ -72,7 +73,8 @@ export class I18nFullDemoComponent {
             syncWarn: 'Warn Synchronize',
             warnHint: 'Warn Hint',
             warnHistory: 'Warn History',
-            warnQuery: 'Warn Query'
+            warnQuery: 'Warn Query',
+            selectPlaceholder: 'Please Select'
         }, true /* shouldMerge参数必须是true */);
         // 触发一次改变语言的动作。注意如果把设置国际化词条的动作移动到模块构造函数中去，
         // 则下面这行代码是不需要的。
@@ -101,6 +103,7 @@ export class I18nFullDemoComponent {
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this.translateService, lang);
         this._updateNavigatonData();
+        this._updateSelectData(lang);
         this.infoInitData = {
             message: this.translateService.instant('alertText')
         };
@@ -143,11 +146,76 @@ export class I18nFullDemoComponent {
         `);
     }
 
+    private _updateSelectData(lang) {
+        if (lang === "zh") {
+            this.dataList = new ArrayCollection([
+                {
+                    groupName: "分组标题1",
+                    data: [
+                        { label: "文本选项1文本选项1文本选项1文本选项1文本选项1" },
+                        { label: "文本选项2" },
+                        { label: "文本选项3" }
+                    ]
+                },
+                {
+                    groupName: "分组标题2",
+                    data: [
+                        { label: "禁用选项4", disabled: true },
+                        { label: "禁用选项5", disabled: true },
+                        { label: "文本选项6" }
+                    ]
+                },
+                {
+                    groupName: "分组标题3",
+                    data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }]
+                }
+            ]);
+        }
+
+        if (lang === "en") {
+            this.dataList = new ArrayCollection([
+                {
+                    groupName: "group name1",
+                    data: [
+                        { label: "text option1text option1text option1text option1text option1" },
+                        { label: "text option2" },
+                        { label: "text option3" }
+                    ]
+                },
+                {
+                    groupName: "group name2",
+                    data: [
+                        { label: "disabled option4", disabled: true },
+                        { label: "disabled option5", disabled: true },
+                        { label: "text option6" }
+                    ]
+                },
+                {
+                    groupName: "group name3",
+                    data: [{ label: "text option7" }, { label: "text option8" }, { label: "text option9" }]
+                }
+            ]);
+        }
+    }
+
     handleRangeDateChange() {
         this.rangeTimeComboValue[0].label = this.beginDate;
         this.rangeTimeComboValue[1].label = this.endDate;
         this.rangeTimeComboValue.refresh();
     }
+
+    dataList = new ArrayCollection([
+        { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+        {
+            groupName: "分组标题2",
+            data: [
+                { label: "禁用选项4", disabled: true },
+                { label: "禁用选项5", disabled: true },
+                { label: "文本选项6" }
+            ]
+        },
+        { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
+    ]);
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

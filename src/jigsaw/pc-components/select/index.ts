@@ -36,7 +36,7 @@ export class JigsawSelectModule {
                 checkSelected: "Check Selected",
                 return: "All",
                 allSelected: "All Selected",
-                selected: "You have selected {{ num }} item(s)"
+                selected: "Selected {{ num }} item(s)"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
