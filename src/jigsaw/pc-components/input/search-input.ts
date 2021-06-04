@@ -7,8 +7,8 @@ import { AbstractJigsawComponent } from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawInputModule } from "./input";
-import { TranslateHelper } from 'jigsaw/common/core/utils/translate-helper';
-import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
+import { TranslateHelper } from '../../common/core/utils/translate-helper';
+import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
