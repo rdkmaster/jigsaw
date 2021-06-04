@@ -222,6 +222,10 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
             this._removeOnChange();
             this._removeOnChange = null;
         }
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+            this._removeOnRefresh = null;
+        }
         if (this._removeFilterSubscribe) {
             this._removeFilterSubscribe.unsubscribe();
             this._removeFilterSubscribe = null;
