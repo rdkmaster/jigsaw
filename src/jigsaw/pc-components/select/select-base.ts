@@ -1,11 +1,12 @@
 import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection} from "../../common/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {JigsawListLite} from "../list-and-tile/list-lite";
-import {CommonUtils} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 type SelectOption = {
     (labelField: string): string;
@@ -141,8 +142,26 @@ export abstract class JigsawSelectBase
      *
      * @NoMarkForCheckRequired
      */
+    private _trackItemBy: string | string[];
+
+    /**
+     * 设置对象的标识
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public trackItemBy: string | string[];
+    public get trackItemBy(): string | string[] {
+        if (this.data && (typeof this.data[0] == 'string' || typeof this.data[0] == 'number')) {
+            this._trackItemBy = null;
+        } else if (CommonUtils.isUndefined(this._trackItemBy) && this.data && typeof this.data[0] !== 'string') {
+            this._trackItemBy = [this.labelField];
+        }
+        return this._trackItemBy;
+    }
+
+    public set trackItemBy(value: string | string[]) {
+        this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
+    }
 
     /**
      * 设置数据的显示字段
@@ -347,6 +366,8 @@ export abstract class JigsawSelectBase
      */
     public _$showSelected: boolean = false;
 
+    private _removeOnRefresh: CallbackRemoval;
+
     protected _data: ArrayCollection<SelectOption>;
     public validData: SelectOption[];
 
@@ -356,13 +377,27 @@ export abstract class JigsawSelectBase
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
-        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.validData = this._data.filter(item => item["disabled"] !== true);
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+        this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
+        this._setValidData();
+        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
+            if (this._removeOnRefresh) {
+                this._removeOnRefresh();
+            }
+            this._removeOnRefresh = this._data.onRefresh(() => {
+                this._setValidData();
+                this._changeDetector.markForCheck();
+            })
+        }
+    }
+
+    private _setValidData() {
+        // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
+        this.validData = this._data.concat().filter(item => item["disabled"] !== true);
     }
 
     /**
@@ -375,6 +410,9 @@ export abstract class JigsawSelectBase
 
     @ViewChild(JigsawListLite)
     private _listCmp: JigsawListLite;
+
+    @ViewChild(PerfectScrollbarDirective)
+    private _listScrollbar: PerfectScrollbarDirective;
 
     /**
      * @internal
@@ -410,7 +448,7 @@ export abstract class JigsawSelectBase
     public _$onComboOpenChange(optionState: boolean) {
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
-        this._listCmp && this._listCmp._$handleSearching();
+        this._$handleSearching();
     }
 
     /**
@@ -421,6 +459,31 @@ export abstract class JigsawSelectBase
         this.valueChange.emit(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleSearching(filterKey?: string) {
+        if(this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+            this._filterData(filterKey);
+        } else {
+            const data = new LocalPageableArray<SelectOption>();
+            data.pagingInfo.pageSize = Infinity;
+            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+                removeUpdateSubscriber.unsubscribe();
+                this.data = data;
+                this._filterData(filterKey);
+            });
+            data.fromArray(this.data);
+        }
+    }
+
+    private _filterData(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : '';
+        (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 }
 
