@@ -1,5 +1,5 @@
-import {IDynamicInstantiatable} from "../../common/common";
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild} from "@angular/core";
+import {AbstractJigsawViewBase, IDynamicInstantiatable} from "../../common/common";
+import {ChangeDetectorRef, Component, ViewChild, ChangeDetectionStrategy, NgZone} from "@angular/core";
 import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";
 
@@ -25,8 +25,9 @@ export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawEditableTabTitleRenderer implements IJigsawTabTitleRenderer {
-    constructor(private _tabLabel: JigsawTabLabel, private _changeDetectorRef: ChangeDetectorRef) {
+export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase implements IJigsawTabTitleRenderer {
+    constructor(private _tabLabel: JigsawTabLabel, private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     public initData: any;
@@ -47,7 +48,7 @@ export class JigsawEditableTabTitleRenderer implements IJigsawTabTitleRenderer {
         e.preventDefault();
         e.stopPropagation();
         this._$editable = !this._$editable;
-        Promise.resolve().then(() => {
+        this.runAfterMicrotasks(() => {
             // 等待input渲染
             this.input.focus();
         });
