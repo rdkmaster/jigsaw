@@ -65,7 +65,6 @@ export class TableCalendarDemoComponent {
 
         .status {
             padding-top: 22px;
-            padding-left: 24px;
             font-size: 20px;
             color: #c7220f;
         }
@@ -76,10 +75,6 @@ export class TableCalendarDemoComponent {
 
         .status-less-well {
             color: #c7220f;
-        }
-        
-        .status-done {
-            margin-left: 12px;
         }
 
         .weekEnd {
