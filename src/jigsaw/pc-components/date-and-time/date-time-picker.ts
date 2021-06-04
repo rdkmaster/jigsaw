@@ -24,7 +24,7 @@ import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
+import { InternalUtils } from '../../common/core/utils/internal-utils';
 
 /**
  * 用于在界面上提供一个时刻选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，
