@@ -222,14 +222,14 @@ export class JigsawUploadFallbackDirective extends JigsawUploadFallbackBase impl
 @Component({
     selector: 'jigsaw-upload-file-list, j-upload-file-list',
     template: `
-        <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
+        <ul class="jigsaw-upload-fallback-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
             [style.width]="width" [style.maxHeight.px]="optionCount > 0 ? 40*optionCount : ''">
             <li *ngFor="let file of initData" class="jigsaw-upload-file">
                 <div class="jigsaw-upload-file-left">
                     <span class="jigsaw-upload-file-icon iconfont iconfont-e9d5"></span>
                     <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
                 </div>
-                <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
+                <div [ngSwitch]="file.state" class="jigsaw-upload-file-right" style="display: flex;align-items: center;justify-content: center;">
                     <ng-container *ngSwitchCase="'pause'">
                         <span>{{'upload.waiting' | translate}}</span>
                         <span class="jigsaw-upload-pause iconfont iconfont-ea25"></span>
@@ -243,7 +243,7 @@ export class JigsawUploadFallbackDirective extends JigsawUploadFallbackBase impl
                         <span class="jigsaw-upload-success iconfont iconfont-ea38"></span>
                     </ng-container>
                     <ng-container *ngSwitchCase="'error'">
-                        <div [title]="file.reason">
+                        <div [title]="file.reason" style="display: flex;align-items: center;justify-content: center;">
                             <span>{{'upload.failed' | translate}}</span>
                             <span class="jigsaw-upload-error iconfont iconfont-e9b9"></span>
                         </div>

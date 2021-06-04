@@ -24,22 +24,57 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
         color: #999;
         margin-bottom: 12px;
     }
-    .#{$upload-prefix-cls}-file-list {
-        width: 100%;
-        height: 100%;
-        background: #fff;
+
+    .#{$upload-prefix-cls}-file-list-container {
+        height: 70%;
+        border: 1px solid #dcdcdc;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
     }
+
+    .#{$upload-prefix-cls}-select-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0 0;
+        border: 1px dashed #dcdcdc;
+        border-radius: 4px;
+        .#{$upload-prefix-cls}-select-box-small {
+            border: 1px solid #dcdcdc;
+            border-bottom: 1px dashed #dcdcdc;
+            border-radius: 4px 4px 0 0;
+            .#{$upload-prefix-cls}-icon {
+                margin-bottom: 0;
+            }
+            .#{$upload-prefix-cls}-select-right {
+                text-align: left;
+                margin-left: 12px;
+                .#{$upload-prefix-cls}-prompt {
+                    margin-bottom: 6px;
+                }
+            }
+        }
+        .#{$upload-prefix-cls}-select-right {
+            text-align: center;
+        }
+    }
+}
+
+.#{$upload-fallback}-file-list {
+    width: 100%;
+    height: 100%;
+    background: #fff;
     .#{$upload-prefix-cls}-file {
         position: relative;
         height: 40px;
         padding: 0 20px;
         z-index: 1;
-        .#{$upload-prefix-cls}:last-child {
+        &:last-child {
             .#{$upload-prefix-cls}-file-left {
                 border-bottom: none;
             }
         }
-        .#{$upload-prefix-cls}:hover {
+        &:hover {
             .#{$upload-prefix-cls}-file-remove {
                 display: inline;
             }
@@ -114,38 +149,7 @@ $upload-prefix-cls: #{$jigsaw-prefix}-upload;
     .#{$upload-prefix-cls}-error {
         color: #ec6d6d;
     }
-
-    .#{$upload-prefix-cls}-file-list-container {
-        height: 70%;
-        border: 1px solid #dcdcdc;
-        border-top: none;
-        border-radius: 0 0 4px 4px;
-    }
-
-    .#{$upload-prefix-cls}-select-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 1 0 0;
-        border: 1px dashed #dcdcdc;
-        border-radius: 4px;
-        .#{$upload-prefix-cls}-select-box-small {
-            border: 1px solid #dcdcdc;
-            border-bottom: 1px dashed #dcdcdc;
-            border-radius: 4px 4px 0 0;
-            .#{$upload-prefix-cls}-icon {
-                margin-bottom: 0;
-            }
-            .#{$upload-prefix-cls}-select-right {
-                text-align: left;
-                margin-left: 12px;
-                .#{$upload-prefix-cls}-prompt {
-                    margin-bottom: 6px;
-                }
-            }
-        }
-        .#{$upload-prefix-cls}-select-right {
-            text-align: center;
-        }
-    }
 }
+
+
+
