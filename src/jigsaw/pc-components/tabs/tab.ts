@@ -5,6 +5,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ComponentRef,
     ContentChildren,
     Directive,
     ElementRef,
@@ -275,6 +276,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
             let title = "";
             let rootNodes = label._tabItemRef ? (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes : null;
             if (rootNodes) {
+                // 模板类型
                 for (let i = 0; i < rootNodes.length; i++) {
                     if (rootNodes[i] instanceof HTMLElement) {
                         title += " " + rootNodes[i].outerHTML;
@@ -282,6 +284,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
                         title += " " + rootNodes[i].textContent.trim();
                     }
                 }
+            } else if (label._tabItemRef && label._tabItemRef instanceof ComponentRef) {
+                // 动态加载的自定义类型：渲染器
+                title = label._tabItemRef.instance['title'];
             } else if (typeof label.tabItem == 'string') {
                 title = label.tabItem;
             }
