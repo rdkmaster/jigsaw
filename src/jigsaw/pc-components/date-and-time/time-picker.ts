@@ -463,9 +463,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         } else if ($event.keyCode == 37) {
             this._$handleCtrlBarClick($event, -1);
         } else if ($event.keyCode == 40) {
-            this._$handleCtrlBarClick($event, this.step == 1 ? 10 : 1);
+            this._$handleCtrlBarClick($event, this.step == 1 ? 9 : 1);
         } else if ($event.keyCode == 38) {
-            this._$handleCtrlBarClick($event, this.step == 1 ? -10 : -1);
+            this._$handleCtrlBarClick($event, this.step == 1 ? -9 : -1);
         } else if ($event.keyCode == 9) {
             if ($event.shiftKey) {
                 if (this._$selectMode == 'second') {
