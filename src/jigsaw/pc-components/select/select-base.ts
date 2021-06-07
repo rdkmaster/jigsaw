@@ -260,8 +260,7 @@ export abstract class JigsawSelectBase
                     ? <string[]>this.trackItemBy
                     : [this.trackItemBy.toString()];
         }
-        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy) &&
-            CommonUtils.compareWithKeyProperty(this._value, newValue, [this.labelField])) {
+        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
             return;
         }
         this._propagateChange(newValue);
