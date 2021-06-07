@@ -8,6 +8,7 @@ import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
+import {JigsawInputModule} from "../input/input";
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { InternalUtils } from "../../common/core/utils/internal-utils";
         JigsawListModule,
         JigsawCheckBoxModule,
         JigsawCollapseModule,
+        JigsawInputModule,
         PerfectScrollbarModule,
         TranslateModule.forChild()
     ],
