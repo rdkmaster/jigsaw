@@ -52,6 +52,7 @@ export class JigsawSelect extends JigsawSelectBase implements OnInit {
         // 设置默认选中的初始值
         if (CommonUtils.isDefined(this.value)) {
             this.writeValue(this.value, false);
+            this._$checkSelectAll();
         }
     }
 }

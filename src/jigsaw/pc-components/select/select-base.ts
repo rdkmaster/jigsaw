@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild, OnInit, AfterViewInit} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
@@ -284,9 +284,6 @@ export abstract class JigsawSelectBase
         }
         this._propagateChange(newValue);
         this._value = newValue;
-        if (this.initialized) {
-            this.writeValue(newValue);
-        }
     }
 
     /**
@@ -347,6 +344,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$checkSelectAll() {
+        console.log(this._$selectedItems.length,this.validData.length)
         if (this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
@@ -488,6 +486,21 @@ export abstract class JigsawSelectBase
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
+    public writeValue(value: any, emit = true): void {
+        if (CommonUtils.isDefined(value)) {
+            let items = [];
+            value.forEach(item => {
+                items = items.concat(item["data"]);
+            });
+            this._$selectedItems = this.multipleSelect ? items : [value];
+        } else {
+            this._$selectedItems = [];
+        }
+        if (this.initialized && emit) {
+            this.valueChange.emit(this.value);
+        }
+    }
+
     /**
      * 设置组名的显示字段
      *

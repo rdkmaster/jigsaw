@@ -34,6 +34,27 @@ export class MultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]);
 
+    fullSelectedOption = new ArrayCollection([
+        { label: "文本选项1" },
+        { label: "文本选项2" },
+        { label: "文本选项3" },
+        { label: "文本选项4" },
+        { label: "文本选项5" },
+        { label: "文本选项6" },
+        { label: "文本选项7" },
+        { label: "文本选项8" },
+        { label: "文本选项9" },
+        { label: "文本选项10" },
+        { label: "文本选项11" }
+    ]);
+
+    selectedOption = new ArrayCollection([
+        { label: "文本选项1" },
+        { label: "文本选项2" },
+        { label: "文本选项3" },
+        { label: "文本选项4" }
+    ]);
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
