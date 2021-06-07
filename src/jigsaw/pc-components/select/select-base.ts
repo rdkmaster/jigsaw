@@ -344,7 +344,6 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$checkSelectAll() {
-        console.log(this._$selectedItems.length,this.validData.length)
         if (this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
