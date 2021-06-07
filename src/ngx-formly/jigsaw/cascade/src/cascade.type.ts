@@ -25,7 +25,6 @@ import {ArrayCollection, JigsawComboSelect} from "@rdkmaster/jigsaw";
             [searching]="to.searching"
             [searchKeyword]="to.searchKeyword"
             [searchBoxMinWidth]="to.searchBoxMinWidth"
-            [showValueBorder]="to.showValueBorder"
             [valid]="to.valid && !showError"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (select)="to.select && to.select($event)"
@@ -63,7 +62,6 @@ export class FormlyFieldCascade extends FormlyFieldType<JigsawComboSelect> imple
             showBorder: true,
             searchKeyword: '',
             searchBoxMinWidth: 40,
-            showValueBorder: true,
             valid: true,
             pageSize: Infinity,
             autoWidth: true,
