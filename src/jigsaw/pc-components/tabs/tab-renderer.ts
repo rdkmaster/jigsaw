@@ -4,6 +4,13 @@ import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";
 
 /**
+ * 自定义Tab标题渲染器需要实现该接口，并将界面显示的标题放在title属性上
+ */
+export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
+    title: string;
+}
+
+/**
  * 此组件用于tab的可编辑的标题，主要通过addTab方法添加。
  */
 @Component({
@@ -18,7 +25,7 @@ import {JigsawTabLabel} from "./tab-item";
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase implements IDynamicInstantiatable {
+export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase implements IJigsawTabTitleRenderer {
     constructor(private _tabLabel: JigsawTabLabel, private _changeDetectorRef: ChangeDetectorRef, protected _zone: NgZone) {
         super(_zone);
     }

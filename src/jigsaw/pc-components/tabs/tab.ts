@@ -5,6 +5,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ComponentRef,
     ContentChildren,
     Directive,
     ElementRef,
@@ -26,6 +27,7 @@ import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {IJigsawTabTitleRenderer} from "./tab-renderer";
 
 export type TabBarData = {
     /**
@@ -275,6 +277,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
             let title = "";
             let rootNodes = label._tabItemRef ? (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes : null;
             if (rootNodes) {
+                // 模板类型
                 for (let i = 0; i < rootNodes.length; i++) {
                     if (rootNodes[i] instanceof HTMLElement) {
                         title += " " + rootNodes[i].outerHTML;
@@ -282,6 +285,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
                         title += " " + rootNodes[i].textContent.trim();
                     }
                 }
+            } else if (label._tabItemRef && label._tabItemRef instanceof ComponentRef) {
+                // 动态加载的自定义类型：渲染器
+                title = (<IJigsawTabTitleRenderer>label._tabItemRef.instance).title;
             } else if (typeof label.tabItem == 'string') {
                 title = label.tabItem;
             }
@@ -596,7 +602,7 @@ export class JigsawTab extends JigsawTabBase {
      * @param initData
      * @param activateImmediately
      */
-    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentTemplate: TemplateRef<any>,
+    public addTab(titleComponent: Type<IJigsawTabTitleRenderer>, contentTemplate: TemplateRef<any>,
                   initData?: Object, activateImmediately?: boolean);
     /**
      * @param titleString
@@ -621,12 +627,12 @@ export class JigsawTab extends JigsawTabBase {
      * @param initData
      * @param activateImmediately
      */
-    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentComponent: Type<IDynamicInstantiatable>,
+    public addTab(titleComponent: Type<IJigsawTabTitleRenderer>, contentComponent: Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately?: boolean);
     /**
      * @internal
      */
-    public addTab(title: string | TemplateRef<any> | Type<IDynamicInstantiatable>,
+    public addTab(title: string | TemplateRef<any> | Type<IJigsawTabTitleRenderer>,
                   content: TemplateRef<any> | Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately: boolean = true) {
         const factory = this._cfr.resolveComponentFactory(JigsawTabPane);
