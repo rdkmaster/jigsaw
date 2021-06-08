@@ -487,7 +487,9 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     template: `
         <jigsaw-select [value]="selected" [data]="data"
                        (valueChange)="_$handleValueChange($event)"
-                       [optionCount]="5" width="100%" height="20">
+                       [optionCount]="5" width="100%" height="20"
+                       openTrigger="mouseenter"
+                       closeTrigger="mouseleave">
         </jigsaw-select>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
