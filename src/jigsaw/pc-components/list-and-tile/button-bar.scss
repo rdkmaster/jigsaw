@@ -55,16 +55,22 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         }
     }
 
-    &-default
-        .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
-    &-primary
-        .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
-    &-warning
-        .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
-    &-error
-        .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &-default .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
+    &-primary .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
         position: relative;
         border-color: $primary-default;
+    }
+
+    &-warning .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+        position: relative;
+        border-color: $warning-default;
+        color: $warning-default;
+    }
+
+    &-error .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+        position: relative;
+        border-color: $error-default;
+        color: $error-default;
     }
 
     &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
@@ -76,13 +82,13 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
         border-color: $warning-default;
         background-color: $warning-default;
-        color: $font-color-white;
+        color: $font-color-white !important;
     }
 
     &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
         border-color: $error-default;
         background-color: $error-default;
-        color: $font-color-white;
+        color: $font-color-white !important;
     }
 
     &-one-option {
