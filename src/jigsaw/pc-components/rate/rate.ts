@@ -133,10 +133,15 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         if (this._disabled) {
             return;
         }
+        const oldValue = this._value;
         this._hoverValue = this._value = index + 1;
         this._hasHalf = !isFull && this._allowHalf;
         if (this._hasHalf) {
             this._value -= 0.5;
+        }
+        // 再次选择同样的rate时重置为0
+        if (oldValue === this._value) {
+            this, (this._value = 0);
         }
         this._onChange(this._value);
         this.valueChange.emit(this.value);
