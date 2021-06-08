@@ -337,6 +337,7 @@ export abstract class JigsawSelectBase
             this._$selectedItems = this.validData;
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
+        this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
 
