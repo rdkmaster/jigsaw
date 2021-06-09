@@ -476,9 +476,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         this.writeValue(`${year}-${month}-${day}`);
     }
 
-    /**
-     * @internal
-     */
     public clearDate() {
         let [year, month] = [this._$curYear, this._$curMonth.month];
         this._date = "";
