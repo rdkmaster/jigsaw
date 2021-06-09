@@ -464,12 +464,30 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (dayCell.isDisabled) {
             return;
         }
+        if (dayCell.isSelected) {
+            this.clearDate();
+            return;
+        }
         let [year, month, day] = [this._$curYear, this._$curMonth.month, dayCell.day];
         if (dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth) {
             let date = TimeService.addDate(`${year}-${month}`, dayCell.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
             [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         }
         this.writeValue(`${year}-${month}-${day}`);
+    }
+
+    /**
+     * @internal
+     */
+    public clearDate() {
+        let [year, month] = [this._$curYear, this._$curMonth.month];
+        this._date = "";
+        this.runMicrotask(() => {
+            this.dateChange.emit(this._date);
+            this._propagateChange(this._date);
+            this._changeDetectorRef.markForCheck();
+        });
+        this._createCalendar(year, month);
     }
 
     /**
