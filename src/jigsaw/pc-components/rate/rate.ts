@@ -141,7 +141,7 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         }
         // 再次选择同样的rate时重置为0
         if (oldValue === this._value) {
-            this, (this._value = 0);
+            this._value = 0;
         }
         this._onChange(this._value);
         this.valueChange.emit(this.value);
