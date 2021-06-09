@@ -306,7 +306,6 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (this._updateSecond(value) && this.initialized && this._second.length > 1) {
             this._updateValue.emit();
             this._$cancelSelect('second');
-            this._secondInput.nativeElement.blur();
         }
     }
 
@@ -392,6 +391,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     public _$cancelSelect(mode: TimeSelectMode, checkAll?: boolean) {
         this._checkFormat(mode, checkAll);
         if (this._$selectMode == mode || checkAll) {
+            // 让输入框失去焦点，否则再次点击的时候，无法弹出TimePop组件
+            this._hourInput?.nativeElement.blur();
+            this._minuteInput?.nativeElement.blur();
+            this._secondInput?.nativeElement.blur();
+
             this._$selectMode = 'none';
             this._switchPopup.emit(false);
         }
