@@ -46,7 +46,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                     justify-content: center;
                     align-items: center;
                     padding-right: 10px;
-                    font-size: $icon-size-sm;
+                    font-size: $icon-size-sm - 2px;
                     color: $icon-color-stress;
                 }
 

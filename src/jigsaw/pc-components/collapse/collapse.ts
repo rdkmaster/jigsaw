@@ -59,7 +59,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public arrowPosition: "right" | "left" = "right";
+    public arrowPosition: "right" | "left" = "left";
 
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
