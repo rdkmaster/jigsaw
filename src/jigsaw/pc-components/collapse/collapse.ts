@@ -60,6 +60,9 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         }
     }
 
+    /**
+     * @internal
+     */
     @RequireMarkForCheck()
     public _$arrowPosition: "right" | "left" = 'left';
 
