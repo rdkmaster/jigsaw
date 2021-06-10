@@ -10,6 +10,7 @@ export class CollapseBasicDemoComponent {
     }
 
     public isActive = true;
+    public arrowPos: 'left' | 'right' = '';
 
     public _$click() {
         this.isActive = !this.isActive;

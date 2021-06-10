@@ -35,6 +35,13 @@ export enum CollapseMode {
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
 
+    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
+                private _changeDetector: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
+        super();
+    }
+
     private _isActive: boolean = false;
 
     /**
@@ -53,13 +60,8 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         }
     }
 
-    /**
-     * 箭头位置(默认值 "right";)
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public arrowPosition: "right" | "left" = "left";
+    @RequireMarkForCheck()
+    public _$arrowPosition: "right" | "left" = 'left';
 
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
@@ -69,13 +71,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     @Output()
     public isActiveChange = new EventEmitter<boolean>();
-
-    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                private _changeDetector: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
-        super();
-    }
 
     @Input('header')
     @RequireMarkForCheck()
@@ -121,8 +116,23 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
+    @ContentChildren(JigsawCollapsePane)
+    public panes: QueryList<JigsawCollapsePane>;
 
-    @ContentChildren(JigsawCollapsePane) panes: QueryList<JigsawCollapsePane>;
+    private _arrowPosition: "right" | "left" = "left";
+    /**
+     * 箭头位置(默认值 "right";)
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get arrowPosition(): "right" | "left" {
+        return this._arrowPosition;
+    }
+
+    public set arrowPosition(value: "right" | "left") {
+        this._arrowPosition = value;
+        this.panes?.toArray().forEach(item => item._$arrowPosition = value);
+    }
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)
