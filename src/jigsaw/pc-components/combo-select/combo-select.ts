@@ -16,7 +16,8 @@ import {
     Renderer2,
     TemplateRef,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -56,7 +57,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 private _popupService: PopupService,
                 protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+                private _injector: Injector,
+                private _cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -420,6 +422,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     };
 
     public writeValue(value: any, emit = true): void {
+        if (value && this._value != value) {
+            // 初始表单值的赋值
+            this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+            this._cdr.markForCheck();
+        }
         if (emit) {
             this.runMicrotask(() => this.valueChange.emit(this._value));
         }
