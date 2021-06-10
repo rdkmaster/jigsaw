@@ -91,6 +91,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
                 border-bottom: 1px solid $border-color-default;
                 cursor: pointer;
                 text-align: center;
+                overflow: hidden;
 
                 &:last-child {
                     border-bottom: none;

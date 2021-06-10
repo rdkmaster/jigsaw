@@ -27,8 +27,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.line-height]': 'height',
         '[style.background]': '_$realColor',
         '[style.border-color]': '_$realColor',
-        '[class.jigsaw-tag-without-border]': '!showBorder',
-        '[class.jigsaw-tag-closable]': 'closable && showBorder',
+        '[class.jigsaw-tag-closable]': 'closable',
         '[class.jigsaw-tag-disabled]': 'disabled',
         '[class.jigsaw-tag-add]': 'isAdd',
         '[class.jigsaw-tag-color]': '_$realColor?.startsWith("preset-")',
@@ -113,14 +112,6 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public set closable(value: boolean) {
         this._closable = CommonUtils.isDefined(value) ? value : true;
     }
-
-    /**
-     * 是否显示tag的边框和删除按钮，默认显示
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public showBorder: boolean = true;
 
     /**
      * @internal
