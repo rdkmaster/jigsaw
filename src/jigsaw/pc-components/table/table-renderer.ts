@@ -465,6 +465,9 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
+    /**
+     * @internal
+     */
     public _$readonly: boolean;
 
     set initData(value: any) {
