@@ -460,8 +460,17 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
-    public get _$readonly() {
-        return this.initData && this.initData.readonly;
+    /**
+     * @internal
+     */
+    public _$readonly: boolean;
+
+    set initData(value: any) {
+        if (!value || !value.hasOwnProperty('readonly')) {
+            return;
+        }
+        this._$readonly = value.readonly;
+        this._changeDetectorRef.markForCheck();
     }
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,

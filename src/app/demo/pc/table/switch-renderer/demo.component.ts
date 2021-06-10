@@ -37,7 +37,10 @@ export class TableSwitchRendererDemoComponent {
                 }
             }
         ];
-        this.tableData.refresh();
+        setTimeout(() => {
+            // 等待表格内部columnDefines更新
+            this.tableData.refresh();
+        })
     }
 
     onCellChange(value) {
