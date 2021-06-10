@@ -540,7 +540,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
                 </div>
                 <div *ngIf="_$byMonth" class="jigsaw-time-section-month">
                     <j-day-section-picker [(value)]="_$dateValue" [showLastDay]="showLastDay" [currentTime]="currentTime"
-                                          [multipleSelect]="multipleDate" (valueChange)="_$selectChange()" style="minwidth:260px">
+                                          [multipleSelect]="multipleDate" (valueChange)="_$selectChange()" style="min-width:260px">
                     </j-day-section-picker>
                 </div>
                 <div *ngIf="_$byWeek" class="jigsaw-time-section-week">
