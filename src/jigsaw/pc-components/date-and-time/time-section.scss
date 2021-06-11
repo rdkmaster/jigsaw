@@ -86,6 +86,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
     &-wrapper {
         display: flex;
         width: 100%;
+        min-width: 478px;
     }
 
     &-checkbox {
