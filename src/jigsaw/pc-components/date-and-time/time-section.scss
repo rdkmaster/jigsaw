@@ -78,6 +78,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
 .#{$week-section-picker-prefix-cls} {
     @include inline-block();
+    min-width: 208px;
 }
 
 .#{$day-section-picker-prefix-cls} {
