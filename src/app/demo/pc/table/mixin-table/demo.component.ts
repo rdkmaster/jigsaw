@@ -34,7 +34,9 @@ export class TableMixinTableDemoComponent {
 
 @Component({
     template: `
-        <j-table #table [data]="tableData1" [hideHeader]="true" (selectedRowChange)="table.selectedRow=-1"></j-table>
+        <div style="margin: 4px;">
+            <j-table #table [data]="tableData1" (selectedRowChange)="table.selectedRow=-1"></j-table>
+        </div>
     `
 })
 export class MixinTable extends TableCellRendererBase {

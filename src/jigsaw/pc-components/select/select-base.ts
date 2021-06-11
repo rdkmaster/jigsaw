@@ -300,6 +300,8 @@ export abstract class JigsawSelectBase
         } else {
             this._$selectedItems = [];
         }
+        // 表单初始值需要check
+        this._changeDetector.markForCheck();
         if (this.initialized && emit) {
             this.valueChange.emit(this.value);
         }

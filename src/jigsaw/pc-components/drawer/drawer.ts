@@ -302,9 +302,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             return this.width;
         }
         if (this.width == "auto") {
-            let left = this.offsetLeft ? `- ${this.offsetLeft}` : '';
-            let right = this.offsetRight ? `- ${this.offsetRight}` : '';
-            return `calc(100% ${left} ${right})`;
+            const left = this.offsetLeft ? `- ${this.offsetLeft}` : '';
+            const right = this.offsetRight ? `- ${this.offsetRight}` : '';
+            const bar = (this.position == "left" || this.position == "right") ? ' - 14px' : '';
+            return `calc(100%${bar} ${left} ${right})`;
         }
         return undefined;
     }
@@ -323,9 +324,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             return this.height;
         }
         if (this.height == "auto") {
-            let top = this.offsetTop ? `- ${this.offsetTop}` : '';
-            let bottom = this.offsetBottom ? `- ${this.offsetBottom}` : '';
-            return `calc(100% ${top} ${bottom})`;
+            const top = this.offsetTop ? `- ${this.offsetTop}` : '';
+            const bottom = this.offsetBottom ? `- ${this.offsetBottom}` : '';
+            const bar = (this.position == "top" || this.position == "bottom") ? ' - 14px' : '';
+            return `calc(100%${bar} ${top} ${bottom})`;
         }
         return undefined;
     }

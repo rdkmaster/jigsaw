@@ -457,6 +457,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
+                this._cdr.markForCheck();
             });
             this._data.refresh();
             this._cdr.detectChanges();

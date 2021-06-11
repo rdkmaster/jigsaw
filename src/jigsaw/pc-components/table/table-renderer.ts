@@ -148,28 +148,23 @@ export class DefaultCellRenderer extends TableCellRendererBase {
         </jigsaw-input>
     `,
     styles: [`
-        .table-cell-password-renderer.jigsaw-input {
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper {
             border: none;
-        }
-
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper {
             background: transparent;
         }
 
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper,
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper input {
             cursor: inherit;
         }
 
-        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-container .jigsaw-input-wrapper input {
             color: #666;
         }
 
-        .table-cell-password-renderer.jigsaw-input:hover, .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper:hover,
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused .jigsaw-input-container .jigsaw-input-wrapper {
             border: none;
-        }
-
-        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
-            box-shadow: none;
         }
     `],
     encapsulation: ViewEncapsulation.None,
@@ -465,8 +460,17 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
-    public get _$readonly() {
-        return this.initData && this.initData.readonly;
+    /**
+     * @internal
+     */
+    public _$readonly: boolean;
+
+    set initData(value: any) {
+        if (!value || !value.hasOwnProperty('readonly')) {
+            return;
+        }
+        this._$readonly = value.readonly;
+        this._changeDetectorRef.markForCheck();
     }
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
