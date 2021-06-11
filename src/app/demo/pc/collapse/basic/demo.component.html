@@ -2,11 +2,15 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<j-button (click)="_$click()">切换 测试col 打开状态</j-button>
+箭头位置：
+<jigsaw-button-bar [data]="[{label:'靠左',value:'left'},{label:'靠右',value:'right'}]"
+                   [selectedItems]="[{label:'靠左',value:'left'}]" (selectedItemsChange)="arrowPos = $event[0].value">
+</jigsaw-button-bar>
+<j-button (click)="_$click()" style="margin-left: 12px">切换 测试col 打开状态</j-button>
 <br>
 <br>
 <!-- start to learn the demo from here -->
-<jigsaw-collapse id="test-collapse1" width="70%">
+<jigsaw-collapse id="test-collapse1" width="50%" [arrowPosition]="arrowPos">
     <jigsaw-collapse-pane header="测试col" [(isActive)]="isActive" (isActiveChange)="_$isActiveChange($event)">
         <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
     </jigsaw-collapse-pane>
@@ -17,12 +21,12 @@
     </jigsaw-collapse-pane>
 
     <jigsaw-collapse-pane header="嵌套">
-        <jigsaw-collapse mode="accordion">
+        <jigsaw-collapse mode="accordion" [arrowPosition]="arrowPos">
             <jigsaw-collapse-pane header="测试col">
                 <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
             </jigsaw-collapse-pane>
 
-            <jigsaw-collapse-pane header="afdafd" isactive="true">
+            <jigsaw-collapse-pane header="afdafd" [isActive]="true">
                 姓名:
                 <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
             </jigsaw-collapse-pane>
@@ -35,7 +39,7 @@
 <br>
 <hr style="width: 600px">
 <br>
-<jigsaw-collapse id="test-collapse2" mode="accordion" width="600px">
+<jigsaw-collapse id="test-collapse2" mode="accordion" width="600px" [arrowPosition]="arrowPos">
     <jigsaw-collapse-pane [isActive]="true">
         <div jigsaw-title class="test-title">
             <i class="iconfont iconfont-e1bb"></i>
