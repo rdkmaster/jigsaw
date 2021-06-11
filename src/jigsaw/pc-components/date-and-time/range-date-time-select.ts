@@ -38,6 +38,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
                                                [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
                                                [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
+                                               [showConfirmButton]="showConfirmButton"
                                                (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
                 </jigsaw-range-date-time-picker>
             </ng-template>
@@ -212,6 +213,13 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     @Input()
     @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
+
+    /**
+     * 是否显示确认按钮
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showConfirmButton: boolean = false;
 
     /**
      * @internal

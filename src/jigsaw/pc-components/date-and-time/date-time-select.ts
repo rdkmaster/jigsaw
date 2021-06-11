@@ -34,7 +34,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
-                                         (grChange)="grChange.emit($event)"
+                                         (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton"
                                          [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
                                          [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains">
                 </jigsaw-date-time-picker>
@@ -208,6 +208,13 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @Input()
     @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
+
+    /**
+     * 是否显示确认按钮
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showConfirmButton: boolean = false;
 
     /**
      * @internal

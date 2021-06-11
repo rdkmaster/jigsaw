@@ -17,7 +17,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {CommonModule} from '@angular/common';
 import {GrItem, JigsawDatePickerModule, MarkDate} from "./date-picker";
 import {JigsawTimePickerModule, TimeStep} from "./time-picker";
-import {JigsawButton, JigsawButtonModule} from "../button/button";
+import {JigsawButtonModule} from "../button/button";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
 import {Subscription} from 'rxjs';
@@ -349,6 +349,13 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     @RequireMarkForCheck()
     public firstWeekMustContains: number;
 
+    /**
+     * 是否显示确认按钮
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showConfirmButton: boolean = false;
+
     private _updateValueCombine = new EventEmitter();
     private _removeUpdateValueCombineSubscriber: Subscription;
     private _updateValueSeparate = new EventEmitter();
@@ -375,6 +382,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$handleDateChange() {
+        if (this.showConfirmButton) {
+            return;
+        }
         this._updateValueCombine.emit();
     }
 
@@ -382,6 +392,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$handleTimeChange() {
+        if (this.showConfirmButton) {
+            return;
+        }
         this._updateValueCombine.emit();
     }
 
@@ -440,6 +453,13 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 
     public setDisabledState(disabled: boolean): void {
         this.disabled = disabled;
+    }
+
+    /**
+     * @internal
+     */
+    public _$confirm() {
+        this._updateValueCombine.emit();
     }
 
     ngOnInit() {

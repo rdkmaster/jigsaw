@@ -1,0 +1,41 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4>是否显示确认按钮 showConfirmButton</h4>
+
+<jigsaw-switch [(checked)]="showConfirmButton"></jigsaw-switch>
+<br><br>
+
+<div class="live-demo-wrap">
+    <div class="demo-1 live-demo">
+        <h3>jigsaw-date-time-picker</h3>
+        <jigsaw-date-time-picker [(date)]="date1" gr="second" [showConfirmButton]="showConfirmButton"></jigsaw-date-time-picker>
+        <br>
+        <p class="message">选择的时间是：{{date1 | json}}</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <h3>jigsaw-date-time-select</h3>
+        <jigsaw-date-time-select [(date)]="date2" gr="second" [showConfirmButton]="showConfirmButton"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date2 | json}}</p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <h3>jigsaw-range-date-time-picker</h3>
+        <jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" gr="second"
+                                       [showConfirmButton]="showConfirmButton"></jigsaw-range-date-time-picker>
+        <br>
+        <p class="message">选择的时间是：BeginDate : {{beginDate | json}} , EndDate : {{endDate| json}}</p>
+    </div>
+
+    <div class="demo-4 live-demo">
+        <h3>jigsaw-range-date-time-select</h3>
+        <jigsaw-range-date-time-select [(date)]="date3" gr="second" [showConfirmButton]="showConfirmButton"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date3 | json}}</p>
+    </div>
+</div>
