@@ -333,10 +333,10 @@ export abstract class JigsawSelectBase
      */
     public _$selectAll() {
         if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
-            this._$selectedItems = [];
+            this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = this.validData;
+            this._$selectedItems = new ArrayCollection(this.validData);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
