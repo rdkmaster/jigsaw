@@ -115,6 +115,13 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
+
+    constructor(
+    // @RequireMarkForCheck 需要用到，勿删
+    private _injector: Injector) {
+        super();
+    }
+
     @ContentChildren(JigsawCollapsePane)
     public panes: QueryList<JigsawCollapsePane>;
 
@@ -122,6 +129,7 @@ export class JigsawCollapse extends AbstractJigsawComponent {
      * 箭头位置(默认值 "left")
      */
     @Input()
+    @RequireMarkForCheck()
     public arrowPosition: "right" | "left" = "left";
 
     /**
