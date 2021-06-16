@@ -199,7 +199,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             return;
         }
         this._maxLength = Number(value);
-        // 因为有效字符数的计算，依赖于maxLength。当先设置value，再修改maxLength时，需要及时更新当前的value已经当前字符数
+        // 因为有效字符数的计算，依赖于maxLength。当先设置value，再修改maxLength时，需要及时更新当前的value以及当前字符数
         this._value = this._updateCurrentLength(this.value);
     }
 
