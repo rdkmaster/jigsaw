@@ -27,7 +27,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.line-height]': 'height',
         '[style.background]': '_$realColor',
         '[style.border-color]': '_$realColor',
-        '[class.jigsaw-tag-closable]': 'closable',
+        '[class.jigsaw-tag-closable]': 'closable && !isAdd',
         '[class.jigsaw-tag-disabled]': 'disabled',
         '[class.jigsaw-tag-add]': 'isAdd',
         '[class.jigsaw-tag-color]': '_$realColor?.startsWith("preset-")',
@@ -146,6 +146,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _$close(event) {
+        if (this.disabled) {
+            return;
+        }
         event.preventDefault();
         event.stopPropagation();
         this._state = 'inactive';

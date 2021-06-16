@@ -127,10 +127,23 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             width: 56px;
             font-size: 12px;
         }
+
+        span {
+            width: 100%;
+        }
     }
 
     &.#{$tag-prefix-cls}-disabled {
         cursor: not-allowed;
+        color: $font-color-disabled;
+
+        .#{$tag-prefix-cls}-close-bar {
+            color: $font-color-disabled;
+
+            &:hover {
+                color: $font-color-disabled;
+            }
+        }
     }
 
     .#{$tag-prefix-cls}-close-bar {
@@ -156,7 +169,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             margin-right: 3px;
         }
 
-        .#{$tag-prefix-cls}-text{
+        .#{$tag-prefix-cls}-text {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
