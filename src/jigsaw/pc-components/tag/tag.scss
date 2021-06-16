@@ -129,6 +129,10 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         }
     }
 
+    &.#{$tag-prefix-cls}-disabled {
+        cursor: not-allowed;
+    }
+
     .#{$tag-prefix-cls}-close-bar {
         display: inline-flex;
         align-items: center;
