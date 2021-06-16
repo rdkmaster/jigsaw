@@ -1,4 +1,5 @@
 @import "../../common/assets/scss/core/base";
+$jigsaw-rate: #{$jigsaw-prefix}-rate;
 
 // vars need check
 .#{$jigsaw-prefix}-rate {
@@ -9,10 +10,36 @@
     vertical-align: middle;
     &-disabled &-star {
         cursor: not-allowed;
+
         &:hover {
             transform: scale(1);
         }
+
+        &-half {
+            .#{$jigsaw-rate}-star-first {
+                color: $danger-disabled;
+            }
+
+            &:hover {
+                .#{$jigsaw-rate}-star-first {
+                    color: $danger-disabled;
+                }
+            }
+        }
+
+        &-full {
+            .#{$jigsaw-rate}-star-second {
+                color: $danger-disabled;
+            }
+
+            &:hover {
+                .#{$jigsaw-rate}-star-second {
+                    color: $danger-disabled;
+                }
+            }
+        }
     }
+
     &-star {
         padding: 0;
         display: inline-block;

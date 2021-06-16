@@ -1,8 +1,4 @@
-<div class="jigsaw-collapse-item"
-     [class.jigsaw-collapse-item-inactive]="!isActive"
-     [ngClass]="{'jigsaw-collapse-item-arrow-right': arrowPosition === 'right',
-                'jigsaw-collapse-item-arrow-left': arrowPosition === 'left'}"
->
+<div class="jigsaw-collapse-item" [class.jigsaw-collapse-item-inactive]="!isActive">
     <div class="jigsaw-collapse-header" (click)="_$onClick()">
         <i class="iconfont iconfont-ea4a jigsaw-collapse-arrow"></i>
 

@@ -20,6 +20,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 padding: 0;
                 max-width: 100%;
                 background: none;
+
+                .#{$jigsaw-tag}-close-bar{
+                    display: none;
+                }
             }
         }
     }

@@ -12,34 +12,25 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
             display: flex;
             align-items: center;
             position: relative;
-            height: 38px;
-            line-height: 38px;
+            height: 32px;
+            line-height: 32px;
+            color: $font-color-heading-bold;
+            font-size: $font-title-med;
+            font-weight: bold;
             cursor: pointer;
-            color: $font-color-heading;
+
+            > div {
+                display: flex;
+                align-items: center;
+            }
+
             .#{$collapse-prefix}-arrow {
                 position: absolute;
+                color: $icon-color-stress;
                 @include prefixer(transition, all 0.3s ease);
 
                 &:hover {
                     color: $brand-default;
-                }
-            }
-        }
-
-        &.#{$collapse-prefix}-item-arrow-right {
-            .#{$collapse-prefix}-header {
-                padding-left: 16px;
-                .#{$collapse-prefix}-arrow {
-                    right: 16px;
-                }
-            }
-        }
-
-        &.#{$collapse-prefix}-item-arrow-left {
-            .#{$collapse-prefix}-header {
-                padding-left: 32px;
-                .#{$collapse-prefix}-arrow {
-                    left: 16px;
                 }
             }
         }
@@ -58,7 +49,29 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
         overflow: hidden;
 
         .#{$collapse-prefix}-padding {
-            padding: 16px;
+            padding: 0 16px;
+        }
+    }
+
+    &-arrow-position-left {
+        .#{$collapse-prefix}-item {
+            .#{$collapse-prefix}-header {
+                padding-left: 24px;
+                .#{$collapse-prefix}-arrow {
+                    left: 8px;
+                }
+            }
+        }
+    }
+
+    &-arrow-position-right {
+        .#{$collapse-prefix}-item {
+            .#{$collapse-prefix}-header {
+                padding-left: 16px;
+                .#{$collapse-prefix}-arrow {
+                    right: 16px;
+                }
+            }
         }
     }
 }

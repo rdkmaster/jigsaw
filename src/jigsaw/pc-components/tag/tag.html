@@ -1,6 +1,13 @@
 <span #text (click)="_$select($event)" [title]="text.innerText" *ngIf="!isAdd" class="jigsaw-tag-content">
     <p *ngIf="text?.innerText?.trim() == ''">&nbsp;</p>
-    <ng-content></ng-content>
+    <i *ngIf="!!icon" class="{{icon}}"></i>
+    <p class="jigsaw-tag-text">
+        <ng-content></ng-content>
+    </p>
 </span>
-<span *ngIf="closable && !isAdd" (click)="_$close($event)" class="jigsaw-tag-close-bar" [ngStyle]="{top: size == 'small' ? '-1px' : '1px' }">&times;</span>
-<span *ngIf="isAdd" (click)="!disabled && add.emit(this)"><i class="iconfont iconfont-ea1d"></i></span>
+<span *ngIf="closable && !isAdd" (click)="_$close($event)" class="jigsaw-tag-close-bar">
+    <i class="iconfont iconfont-e9b8"></i>
+</span>
+<span *ngIf="isAdd" (click)="!disabled && add.emit(this)">
+    <i class="iconfont iconfont-ea1d"></i>
+</span>

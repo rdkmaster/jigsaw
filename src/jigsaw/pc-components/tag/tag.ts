@@ -89,6 +89,14 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public selectedColor: string | PresetColor;
 
     /**
+     * 配置按钮图标
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
+
+    /**
      * @internal
      */
     public get _$realColor(): string {
