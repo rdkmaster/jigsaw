@@ -118,13 +118,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
         }
-
-        if (!isNaN(this.maxLength) && this.maxLength > 0) {
-            // 只有合法的正整数才计算限制字符数
-            newValue = this._updateValue(newValue);
-            this._$currentLength = this.includesCRLF ? newValue.length : this._getLengthWithoutCRLF(newValue);
-        }
-
+        newValue = this._updateCurrentLength(newValue);
         const currentValue = this._value;
         this._value = newValue;
         this._propagateChange(newValue);
@@ -132,6 +126,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
             this.valueChange.emit(this._value);
         }
+    }
+
+    private _updateCurrentLength(value: string): string {
+        if (!isNaN(this.maxLength) && this.maxLength > 0) {
+            // 只有合法的正整数才计算限制字符数
+            value = this._updateValue(value);
+            this._$currentLength = this.includesCRLF ? value.length : this._getLengthWithoutCRLF(value);
+        }
+        return value;
     }
 
     /**
@@ -196,6 +199,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             return;
         }
         this._maxLength = Number(value);
+        // 因为有效字符数的计算，依赖于maxLength。当先设置value，再修改maxLength时，需要及时更新当前的value已经当前字符数
+        this._value = this._updateCurrentLength(this.value);
     }
 
     private _updateValue(value: string): string {
@@ -208,7 +213,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
                 value = this._getValue(value);
             }
         }
-        this._textareaElement.nativeElement.value = value;
+        if (this._textareaElement) {
+            this._textareaElement.nativeElement.value = value;
+        }
         return value;
     }
 

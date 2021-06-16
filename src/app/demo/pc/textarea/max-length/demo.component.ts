@@ -5,8 +5,9 @@ import {Component} from "@angular/core";
 })
 export class TextareaMaxLengthDemoComponent {
     public _$includesCRLF: boolean = true;
+    public _$value = '多行文本框';
 
-    public _$valueChange($event: string):void {
+    public _$valueChange($event: string): void {
         console.log(' input value: ', $event)
     }
 
