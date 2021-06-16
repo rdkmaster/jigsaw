@@ -6,12 +6,13 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {MenuInDialogDemo} from "./demo.component";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 @NgModule({
     imports: [
         CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule, JigsawCollapseModule,
         JigsawDialogModule, JigsawButtonModule, JigsawSwitchModule, JigsawFloatModule,
-        JigsawNumericInputModule
+        JigsawNumericInputModule, PerfectScrollbarModule
     ],
     declarations: [MenuInDialogDemo],
     exports: [MenuInDialogDemo]
