@@ -60,12 +60,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         }
     }
 
-    /**
-     * @internal
-     */
-    @RequireMarkForCheck()
-    public _$arrowPosition: "right" | "left" = 'left';
-
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
         pane.isActiveChange.emit(value);
@@ -114,28 +108,29 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',
-        '[class.jigsaw-collapse-host]': 'true'
+        '[class.jigsaw-collapse-host]': 'true',
+        '[class.jigsaw-collapse-arrow-position-right]': 'arrowPosition === "right"',
+        '[class.jigsaw-collapse-arrow-position-left]': 'arrowPosition === "left"'
     },
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
+
+    constructor(
+    // @RequireMarkForCheck 需要用到，勿删
+    private _injector: Injector) {
+        super();
+    }
+
     @ContentChildren(JigsawCollapsePane)
     public panes: QueryList<JigsawCollapsePane>;
 
-    private _arrowPosition: "right" | "left" = "left";
     /**
-     * 箭头位置(默认值 "right";)
-     * @NoMarkForCheckRequired
+     * 箭头位置(默认值 "left")
      */
     @Input()
-    public get arrowPosition(): "right" | "left" {
-        return this._arrowPosition;
-    }
-
-    public set arrowPosition(value: "right" | "left") {
-        this._arrowPosition = value;
-        this.panes?.toArray().forEach(item => item._$arrowPosition = value);
-    }
+    @RequireMarkForCheck()
+    public arrowPosition: "right" | "left" = "left";
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)
@@ -149,7 +144,6 @@ export class JigsawCollapse extends AbstractJigsawComponent {
      * @internal
      */
     public _selectedIndex: number = 0;
-
 }
 
 /**

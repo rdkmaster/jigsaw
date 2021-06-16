@@ -19,7 +19,7 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
             font-weight: bold;
             cursor: pointer;
 
-            >div {
+            > div {
                 display: flex;
                 align-items: center;
             }
@@ -31,24 +31,6 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
 
                 &:hover {
                     color: $brand-default;
-                }
-            }
-        }
-
-        &.#{$collapse-prefix}-item-arrow-right {
-            .#{$collapse-prefix}-header {
-                padding-left: 16px;
-                .#{$collapse-prefix}-arrow {
-                    right: 16px;
-                }
-            }
-        }
-
-        &.#{$collapse-prefix}-item-arrow-left {
-            .#{$collapse-prefix}-header {
-                padding-left: 24px;
-                .#{$collapse-prefix}-arrow {
-                    left: 8px;
                 }
             }
         }
@@ -68,6 +50,28 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
 
         .#{$collapse-prefix}-padding {
             padding: 0 16px;
+        }
+    }
+
+    &-arrow-position-left {
+        .#{$collapse-prefix}-item {
+            .#{$collapse-prefix}-header {
+                padding-left: 24px;
+                .#{$collapse-prefix}-arrow {
+                    left: 8px;
+                }
+            }
+        }
+    }
+
+    &-arrow-position-right {
+        .#{$collapse-prefix}-item {
+            .#{$collapse-prefix}-header {
+                padding-left: 16px;
+                .#{$collapse-prefix}-arrow {
+                    right: 16px;
+                }
+            }
         }
     }
 }
