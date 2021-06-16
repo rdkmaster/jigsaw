@@ -52,3 +52,18 @@
 <h4>navigation menu</h4>
 <jigsaw-navigation-menu [data]="navigationMenuData" height="320px" style="border: 1px solid #dcdcdc">
 </jigsaw-navigation-menu>
+
+<br>
+<h4>select</h4>
+<div>
+    <jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="{{'selectPlaceholder' | translate}}" width="160px"
+        [useStatistics]="true">
+    </jigsaw-group-select>
+</div>
+<br>
+<div>
+    <jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="{{'selectPlaceholder' | translate}}" width="160px"
+        [useStatistics]="false">
+    </jigsaw-group-select>
+</div>
+

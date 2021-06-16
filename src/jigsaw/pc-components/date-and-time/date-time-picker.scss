@@ -86,4 +86,8 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             cursor: not-allowed;
         }
     }
+
+    &-confirm {
+        max-width: 60px;
+    }
 }
