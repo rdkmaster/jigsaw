@@ -110,6 +110,10 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
                         padding: 0;
                         min-height: unset;
                         height: 100%;
+
+                        .#{$jigsaw-prefix}-tag-host {
+                            margin: 0;
+                        }
                     }
                 }
             }
