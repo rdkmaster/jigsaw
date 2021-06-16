@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy } from "@angular/core";
+import { Component, NgModule, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy, Injector } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -7,6 +7,8 @@ import { AbstractJigsawComponent } from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawInputModule } from "./input";
+import { TranslateHelper } from '../../common/core/utils/translate-helper';
+import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
@@ -22,7 +24,9 @@ import { JigsawInputModule } from "./input";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSearchInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _translateService: TranslateService) {
+    constructor(private _translateService: TranslateService,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
     /**
@@ -43,9 +47,8 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
     /**
      * 输入框的placeholder
-     *
-     * @NoMarkForCheckRequired
      */
+    @RequireMarkForCheck()
     @Input()
     public placeholder: string = this._translateService.instant("search-input.placeholder");
 
@@ -173,6 +176,16 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     ngOnDestroy() {
         super.ngOnDestroy();
         this._unsubscribeValueChange();
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+
+        //国际化
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            this._translateService.use(langInfo.curLang);
+            this.placeholder = this._translateService.instant("search-input.placeholder")
+        })
     }
 }
 
