@@ -230,8 +230,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             if (element.target !== parent.element) {
                 return;
             }
-            this._removeBodyNodeRemovedHandler();
-            this._removeBodyNodeRemovedHandler = null;
+            if (this._removeBodyNodeRemovedHandler) {
+                this._removeBodyNodeRemovedHandler();
+                this._removeBodyNodeRemovedHandler = null;
+            }
             closeAllContextMenu(this._popupService.popups);
         });
     }

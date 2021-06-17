@@ -12,7 +12,7 @@
 
         <div class="demo-2 live-demo live-demo-block">
             <h3>限制30个字符（默认不包含回车换行符）</h3>
-            <jigsaw-textarea maxLength="30" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
+            <jigsaw-textarea maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
         </div>
     </div>
 

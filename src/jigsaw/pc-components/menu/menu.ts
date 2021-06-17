@@ -334,8 +334,8 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             return {maxWidth: 'auto'};
         }
         const wrapElement = titleElement.parentElement;
-        // 5是给有子节点时，留下的箭头；
-        const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
+        // 14是给有子节点时，留下的箭头；
+        const minWidth = node.nodes && node.nodes.length > 0 ? 14 : 0;
         if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
             return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
         } else {
