@@ -306,6 +306,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
+        if (monthCell.isSelected) {
+            this.clearDate();
+            return;
+        }
         if (this.date || this.gr == TimeGr.month) {
             let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.writeValue(date);
