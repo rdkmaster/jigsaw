@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
-    Injector,
     Component,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
     OnInit,
@@ -18,6 +18,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'preset-magenta' |
     'preset-orange' | 'preset-red' | 'preset-purple' | 'preset-gray';
+
 @Component({
     selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',
@@ -45,6 +46,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[class.jigsaw-tag-selected]': 'select',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
+        '(click)': '_$click($event)',
     },
     animations: [
         AnimationDestroy
@@ -62,7 +64,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public isAdd:boolean = false;
+    public isAdd: boolean = false;
 
     /**
      * @NoMarkForCheckRequired
@@ -146,11 +148,11 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _$close(event) {
+        event.preventDefault();
+        event.stopPropagation();
         if (this.disabled) {
             return;
         }
-        event.preventDefault();
-        event.stopPropagation();
         this._state = 'inactive';
     }
 
@@ -166,13 +168,17 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     /**
      * @internal
      */
-    public _$select(event) {
+    public _$click(event) {
         event.preventDefault();
         event.stopPropagation();
         if (this.disabled) {
             return;
         }
-        this.select  = !this.select;
+        if (this.isAdd) {
+            this.add.emit(this);
+            return;
+        }
+        this.select = !this.select;
         this.selectChange.emit(this.select);
     }
 

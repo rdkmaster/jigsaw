@@ -127,10 +127,6 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             width: 56px;
             font-size: 12px;
         }
-
-        span {
-            width: 100%;
-        }
     }
 
     &.#{$tag-prefix-cls}-disabled {
