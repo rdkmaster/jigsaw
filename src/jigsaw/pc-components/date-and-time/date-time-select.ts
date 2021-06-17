@@ -218,14 +218,21 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$setComboValue(date: string | TimeWeekDay) {
-        date = this._getDateStr(date);
-        if (!date) {
-            return;
+        if (this.date === "") {
+            this._$dateComboValue.splice(0, this._$dateComboValue.length);
+            this._$dateComboValue.refresh();
+        } else {
+            date = this._getDateStr(date);
+            if (!date) {
+                return;
+            }
+            this._$dateComboValue = new ArrayCollection([
+                {
+                    label: date,
+                    closable: false
+                }
+            ]);
         }
-        this._$dateComboValue = new ArrayCollection([{
-            label: date,
-            closable: false
-        }]);
         this._cdr.markForCheck();
     }
 

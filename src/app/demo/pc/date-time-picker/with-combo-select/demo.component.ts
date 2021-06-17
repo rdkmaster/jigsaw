@@ -19,7 +19,14 @@ export class WithComboSelectDemoComponent {
     ]);
 
     handleDateChange(value) {
-        this.singleTimeComboValue[0].label = this.date;
+        if (this.date === "") {
+            this.singleTimeComboValue.splice(0, this.singleTimeComboValue.length);
+        } else {
+            this.singleTimeComboValue = new ArrayCollection([{
+                label: this.date,
+                closable: false
+            }]);
+        }
         this.singleTimeComboValue.refresh();
     }
 
