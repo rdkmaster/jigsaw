@@ -128,6 +128,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         if (key == 'beginDate') {
             this._beginDate = value;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
+            if (this.showConfirmButton) {
+                // 开始时间，显示确认按钮的时候，不触发updateValue
+                return;
+            }
         } else if (key == 'endDate') {
             this._endDate = value;
         }
@@ -299,6 +303,13 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         // weekStart/janX必须预先设置好，用于初始化之后的计算
         TimeService.setFirstWeekOfYear(this._firstWeekMustContains);
     }
+
+    /**
+     * 是否显示确认按钮
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showConfirmButton: boolean = false;
 
     /**
      * 当用户选择时间时，Jigsaw发出此事件。

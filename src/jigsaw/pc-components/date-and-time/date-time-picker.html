@@ -10,6 +10,7 @@
                    popDirection="up" [limitStart]="_$timeLimitStartCur" [limitEnd]="_$timeLimitEndCur"
                    [step]="step">
     </j-time-picker>
-    <jigsaw-button class="jigsaw-date-time-picker-confirm" preSize="small" colorType="primary">{{'date-time-picker.confirm' | translate}}</jigsaw-button>
+    <jigsaw-button *ngIf="showConfirmButton" class="jigsaw-date-time-picker-confirm" preSize="small" colorType="primary" 
+                   (click)="_$confirm()">{{'date-time-picker.confirm' | translate}}</jigsaw-button>
 </div>
 
