@@ -431,7 +431,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$handleClearable() {
-        this._value = new ArrayCollection([]);
+        this._value = this.multipleSelect ? new ArrayCollection([]) : "";
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);
