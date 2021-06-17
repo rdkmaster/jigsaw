@@ -291,6 +291,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return CommonUtils.toTrackByFunction(this.labelField);
     };
 
+    @Output()
+    public clear = new EventEmitter<any>();
+
     /**
      * @internal
      */
@@ -298,6 +301,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._value.splice(0, this._value.length);
         this._value.refresh();
         this._autoWidth();
+        this.clear.emit();
     }
 
     /**

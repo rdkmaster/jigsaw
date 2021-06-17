@@ -430,18 +430,12 @@ export abstract class JigsawSelectBase
     /**
      * @internal
      */
-    public _$handleClearable(selectedItems: any[]) {
-        if (!this.clearable) {
-            return;
-        }
-        if (!selectedItems || selectedItems.length == 0) {
-            this.value = [];
-            this._value = (this.multipleSelect || !selectedItems) ? selectedItems : selectedItems[0];
-            this._$selectAllChecked = CheckBoxStatus.unchecked;
-            this._propagateChange(this.value);
-            this.valueChange.emit(this.value);
-            this._changeDetector.markForCheck();
-        }
+    public _$handleClearable() {
+        this._value = new ArrayCollection([]);
+        this._$selectAllChecked = CheckBoxStatus.unchecked;
+        this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 
     /**

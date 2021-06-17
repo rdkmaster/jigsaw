@@ -19,7 +19,12 @@
 <jigsaw-select [data]="dataListWithoutDisabled" [value]="selectedOption" [multipleSelect]="true" placeholder="请选择"
     width="160px" [useStatistics]="true" (valueChange)="valueChange($event)"></jigsaw-select>
 
-<jigsaw-header>可清除</jigsaw-header>
+<jigsaw-header>可清除单选</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="false" placeholder="请选择" width="160px" [useStatistics]="true"
+    (valueChange)="valueChange($event)" [clearable]="true">
+</jigsaw-select>
+
+<jigsaw-header>可清除多选</jigsaw-header>
 <jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="true"
     (valueChange)="valueChange($event)" [clearable]="true">
 </jigsaw-select>
