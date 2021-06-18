@@ -53,3 +53,25 @@
     maxWidth="240px"
     minWidth="160px"
 ></jigsaw-group-select>
+
+<jigsaw-header>初始全选</jigsaw-header>
+<jigsaw-group-select
+    [disabled]="disabled"
+    [data]="dataListWithoutDisabled"
+    [value]="fullSelectedOption"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="160px"
+    [useStatistics]="true"
+></jigsaw-group-select>
+
+<jigsaw-header>初始半选</jigsaw-header>
+<jigsaw-group-select
+    [disabled]="disabled"
+    [data]="dataListWithoutDisabled"
+    [value]="selectedOption"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="160px"
+    [useStatistics]="true"
+></jigsaw-group-select>
