@@ -67,6 +67,9 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                         background: $brand-active-light;
                     }
                 }
+                td{
+                    word-break: break-all;
+                }
                 td[rowspan] {
                     background: $bg-component;
                 }
