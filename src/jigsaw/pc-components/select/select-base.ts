@@ -332,7 +332,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$selectAll() {
-        if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
+        if (this._allSelectCheck()) {
             this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
@@ -348,16 +348,44 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$checkSelectAll() {
-        if (this._$selectedItems.length === 0) {
+        if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._$selectedItems.length === this.validData.length) {
+        if (this._allSelectCheck()) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
         this._changeDetector.markForCheck();
+    }
+
+    /**
+     * 搜索过滤的时候会存在当前已选不在当期列表中的情况
+     */
+    private _validDataAllNotSelected(): boolean {
+        if(!this._$selectedItems || !this.validData) {
+            return false;
+        }
+        return this.searchable && this._$selectedItems.every(item => !this.validData.find(data => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+    }
+
+    /**
+     * @internal
+     * 搜索过滤的时候会存在当前已选不在当期列表中的情况
+     */
+    private _validDataAllSelected(): boolean {
+        if(!this._$selectedItems || !this.validData) {
+            return false;
+        }
+        return this.searchable && this.validData.every(data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+    }
+
+    private _allSelectCheck() {
+        if(!this._$selectedItems || !this.validData) {
+            return false;
+        }
+        return (!this.searchable && this._$selectedItems.length === this.validData.length) || this._validDataAllSelected();
     }
 
     /**
@@ -391,6 +419,7 @@ export abstract class JigsawSelectBase
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
                 this._setValidData();
+                this._$checkSelectAll();
                 this._changeDetector.markForCheck();
             })
         }
