@@ -128,8 +128,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         if (key == 'beginDate') {
             this._beginDate = value;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
-            if (this.showConfirmButton) {
+            if (this.showConfirmButton && (this.gr != TimeGr.date && this.gr != TimeGr.week && this.gr != TimeGr.month)) {
                 // 开始时间，显示确认按钮的时候，不触发updateValue
+                // 确认按钮只有在粒度是 时分秒 的时候起作用，在天月周时不起作用
                 return;
             }
         } else if (key == 'endDate') {
