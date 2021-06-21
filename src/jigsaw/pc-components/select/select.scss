@@ -47,6 +47,14 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
 
+        &.#{$select-prefix-cls}-with-max-width {
+            .#{$jigsaw-combo-select}-host {
+                .#{$jigsaw-tag}-host {
+                    max-width: 100%;
+                }
+            }
+        }
+
         &.#{$select-prefix-cls}-show-statistics {
             .#{$jigsaw-combo-select} {
                 .#{$jigsaw-combo-select}-selection {
