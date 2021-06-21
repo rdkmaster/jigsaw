@@ -201,17 +201,24 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
             this._$invalidFiles = [];
         }
 
-        this._classifyFiles(Array.from(files));
+        const allFiles = this._classifyFiles(Array.from(files));
+        // 无论是否有错误的文件，都发送start事件
+        this.start.emit(allFiles);
+
         const pendingFiles = this._$validFiles.filter(file => file.state == 'pause');
+
+        if (pendingFiles.length == 0) {
+            // 没有需要上传的文件时，直接complete
+            this.complete.emit(allFiles);
+            return;
+        }
+
         for (let i = 0, len = Math.min(5, pendingFiles.length); i < len; i++) {
             // 最多前5个文件同时上传给服务器
             this._sequenceUpload(pendingFiles[i]);
         }
 
         this._$uploadMode = 'selectAndList';
-        if (pendingFiles.length > 0) {
-            this.start.emit(this._$validFiles);
-        }
 
         if (this._fileInputEl) {
             this._fileInputEl['value'] = null;
@@ -223,7 +230,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
         return re.test(fileName);
     }
 
-    private _classifyFiles(files: File[]): void {
+    private _classifyFiles(files: File[]): UploadFileInfo[] {
         if (this.fileType) {
             const fileTypes = this.fileType.split(',');
             const oldFiles = files;
@@ -263,6 +270,7 @@ export class JigsawUploadBase extends AbstractJigsawComponent implements OnDestr
                 name: file.name, state: 'pause', url: '', file: file, reason: ''
             });
         });
+        return [...this._$validFiles, ...this._$invalidFiles];
     }
 
     private _isAllFilesUploaded(): boolean {
