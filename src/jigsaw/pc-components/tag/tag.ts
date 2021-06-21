@@ -44,6 +44,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[class.jigsaw-tag-size-med]': 'size == "medium"',
         '[class.jigsaw-tag-size-sm]': 'size == "small"',
         '[class.jigsaw-tag-selected]': 'select',
+        '[class.jigsaw-tag-toggleSelect]': 'toggleSelect',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
         '(click)': '_$click($event)',
@@ -162,6 +163,12 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input()
     public select: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public toggleSelect: boolean = false;
+
     @Output()
     public selectChange = new EventEmitter<boolean>();
 
@@ -178,7 +185,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
             this.add.emit(this);
             return;
         }
-        this.select = !this.select;
+        if (!this.toggleSelect) {
+            this.select = !this.select;
+        }
         this.selectChange.emit(this.select);
     }
 

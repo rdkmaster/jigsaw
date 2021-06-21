@@ -19,9 +19,7 @@ export class TagSelectableDemoComponent {
     onSelect1(tag: { label: string, selected: boolean }) {
         const idx = this.tags1.indexOf(tag);
         this.tags1.forEach(tag => tag.selected = false);
-        setTimeout(() => {
-            this.tags1[idx].selected = true;
-        });
+        this.tags1[idx].selected = true;
     }
 
     // ====================================================================
