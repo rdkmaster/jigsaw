@@ -1,24 +1,26 @@
 import {AbstractJigsawComponent} from "../../common/common";
 import {
-    Component,
-    forwardRef,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    HostListener,
+    Injector,
+    Input,
+    NgModule,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
-    EventEmitter,
-    Input,
-    ChangeDetectorRef,
-    NgZone,
-    NgModule,
-    Injector, HostListener
+    ViewChild
 } from '@angular/core';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule} from '@angular/forms';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {GrItem, MarkDate, Shortcut} from "./date-picker";
 import {CommonModule} from '@angular/common';
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
-import {JigsawDateTimePickerModule} from "./date-time-picker";
+import {JigsawDateTimePicker, JigsawDateTimePickerModule} from "./date-time-picker";
 import {TimeStep} from "./time-picker";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
@@ -128,11 +130,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         if (key == 'beginDate') {
             this._beginDate = value;
             this._$endTimeLimitEnd = this._calculateLimitEnd();
-            if (this.showConfirmButton && (this.gr != TimeGr.date && this.gr != TimeGr.week && this.gr != TimeGr.month)) {
-                // 开始时间，显示确认按钮的时候，不触发updateValue
-                // 确认按钮只有在粒度是 时分秒 的时候起作用，在天月周时不起作用
-                return;
-            }
         } else if (key == 'endDate') {
             this._endDate = value;
         }
@@ -275,7 +272,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set weekStart(value: string | TimeWeekStart) {
-        if(CommonUtils.isUndefined(value)) return;
+        if (CommonUtils.isUndefined(value)) return;
         if (typeof value === 'string') {
             this._weekStart = TimeWeekStart[value];
         } else {
@@ -298,7 +295,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set firstWeekMustContains(value: number) {
-        if(CommonUtils.isUndefined(value)) return;
+        if (CommonUtils.isUndefined(value)) return;
         value = isNaN(value) || Number(value) < 1 ? 1 : Number(value);
         this._firstWeekMustContains = value;
         // weekStart/janX必须预先设置好，用于初始化之后的计算
@@ -496,6 +493,24 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         this._endDate = TimeService.convertValue(endDate, this._$gr);
         this._updateValue.emit();
         this._cdr.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    @ViewChild('timeStart')
+    public _$timeStart: JigsawDateTimePicker;
+
+    /**
+     * @internal
+     */
+    public _$updateBeginDate() {
+        if (!this.showConfirmButton || !this._$timeStart) {
+            return;
+        }
+        // 当配置了确认按钮时，如果只改变了开始时间，没有改变结束时间，此时点击确认按钮，需要通知开始时间的更新
+        this._$timeStart._$handleDateChange(true);
+        this._$timeStart._$handleTimeChange(true);
     }
 
     public writeValue(value: any): void {

@@ -362,6 +362,12 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * @internal
      */
+    @Output()
+    public confirmButtonClicked = new EventEmitter();
+
+    /**
+     * @internal
+     */
     @ViewChild('datePicker')
     public _$datePicker: JigsawDatePicker;
 
@@ -396,8 +402,8 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * @internal
      */
-    public _$handleDateChange() {
-        if (this.showConfirmButton && !!this._$timeGr && this._$datePicker._$touched) {
+    public _$handleDateChange(update?: boolean) {
+        if (!update && this.showConfirmButton && !!this._$timeGr && this._$datePicker._$touched) {
             // 确认按钮只有在粒度是 时分秒 的时候起作用
             return;
         }
@@ -407,8 +413,8 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * @internal
      */
-    public _$handleTimeChange() {
-        if (this.showConfirmButton && (this._$datePicker._$touched || (this._$timePicker && this._$timePicker._$touched))) {
+    public _$handleTimeChange(update?: boolean) {
+        if (!update && this.showConfirmButton && (this._$datePicker._$touched || (this._$timePicker && this._$timePicker._$touched))) {
             return;
         }
         this._updateValueCombine.emit();
@@ -480,6 +486,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      */
     public _$confirm() {
         this._updateValueCombine.emit();
+        this.confirmButtonClicked.emit();
     }
 
     ngOnInit() {
