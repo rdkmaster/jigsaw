@@ -1,4 +1,4 @@
-<span #text (click)="_$select($event)" [title]="text.innerText" *ngIf="!isAdd" class="jigsaw-tag-content">
+<span #text [title]="text.innerText" *ngIf="!isAdd" class="jigsaw-tag-content">
     <p *ngIf="text?.innerText?.trim() == ''">&nbsp;</p>
     <i *ngIf="!!icon" class="{{icon}}"></i>
     <p class="jigsaw-tag-text">
@@ -8,6 +8,6 @@
 <span *ngIf="closable && !isAdd" (click)="_$close($event)" class="jigsaw-tag-close-bar">
     <i class="iconfont iconfont-e9b8"></i>
 </span>
-<span *ngIf="isAdd" (click)="!disabled && add.emit(this)">
+<span *ngIf="isAdd">
     <i class="iconfont iconfont-ea1d"></i>
 </span>

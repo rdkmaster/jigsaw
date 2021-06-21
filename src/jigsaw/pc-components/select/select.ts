@@ -30,6 +30,7 @@ import { JigsawSelectBase } from "./select-base";
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
+        "[class.jigsaw-select-with-max-width]": "!!maxWidth",
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'
@@ -52,6 +53,7 @@ export class JigsawSelect extends JigsawSelectBase implements OnInit {
         // 设置默认选中的初始值
         if (CommonUtils.isDefined(this.value)) {
             this.writeValue(this.value, false);
+            this._$checkSelectAll();
         }
     }
 }

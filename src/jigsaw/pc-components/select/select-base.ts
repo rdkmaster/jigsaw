@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild, OnInit, AfterViewInit} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
@@ -284,9 +284,6 @@ export abstract class JigsawSelectBase
         }
         this._propagateChange(newValue);
         this._value = newValue;
-        if (this.initialized) {
-            this.writeValue(newValue);
-        }
     }
 
     /**
@@ -336,12 +333,14 @@ export abstract class JigsawSelectBase
      */
     public _$selectAll() {
         if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
-            this._$selectedItems = [];
+            this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = this.validData;
+            this._$selectedItems = new ArrayCollection(this.validData);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
+        this._value = this._$selectedItems;
+        this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -431,17 +430,12 @@ export abstract class JigsawSelectBase
     /**
      * @internal
      */
-    public _$handleClearable(selectedItems: any[]) {
-        if (!this.clearable) {
-            return;
-        }
-        if (!selectedItems || selectedItems.length == 0) {
-            this.value = [];
-            this._value = (this.multipleSelect || !selectedItems) ? selectedItems : selectedItems[0];
-            this._propagateChange(this.value);
-            this.valueChange.emit(this.value);
-            this._changeDetector.markForCheck();
-        }
+    public _$handleClearable() {
+        this._value = this.multipleSelect ? new ArrayCollection([]) : "";
+        this._$selectAllChecked = CheckBoxStatus.unchecked;
+        this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 
     /**
@@ -490,6 +484,21 @@ export abstract class JigsawSelectBase
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
+    public writeValue(value: any, emit = true): void {
+        if (CommonUtils.isDefined(value)) {
+            let items = [];
+            value.forEach(item => {
+                items = items.concat(item["data"]);
+            });
+            this._$selectedItems = this.multipleSelect ? items : [value];
+        } else {
+            this._$selectedItems = [];
+        }
+        if (this.initialized && emit) {
+            this.valueChange.emit(this.value);
+        }
+    }
+
     /**
      * 设置组名的显示字段
      *

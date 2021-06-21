@@ -5,7 +5,7 @@ import { ArrayCollection } from "jigsaw/public_api";
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.scss"]
 })
-export class MultipleSelectDemoComponent {
+export class SelectValueChangeDemoComponent {
     dataList = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
@@ -54,6 +54,10 @@ export class MultipleSelectDemoComponent {
         { label: "文本选项3" },
         { label: "文本选项4" }
     ]);
+
+    public valueChange(selectedItem: any){
+        console.log("valueChange事件触发了", selectedItem);
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
