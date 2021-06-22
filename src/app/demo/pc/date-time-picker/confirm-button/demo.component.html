@@ -5,13 +5,14 @@
 
 <!-- start to learn the demo from here -->
 <div class="condition">
-    <label>是否显示确认按钮 showConfirmButton: </label>
-    <jigsaw-switch [(checked)]="showConfirmButton"></jigsaw-switch>
-</div>
-
-<div class="condition">
     <label>粒度 Gr: </label>
     <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']" [(selectedItems)]="gr"></jigsaw-button-bar>
+</div>
+<div class="condition">
+    <label>是否显示确认按钮 showConfirmButton: </label>
+    <jigsaw-switch [disabled]="['hour', 'minute', 'second'].indexOf(gr[0]) == -1" [(checked)]="showConfirmButton">
+    </jigsaw-switch>
+    <span style="color: #999; margin-left: 12px;">仅在粒度为 'hour', 'minute', 'second' 时才有效。</span>
 </div>
 
 <div class="live-demo-wrap">

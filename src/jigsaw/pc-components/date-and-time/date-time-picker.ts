@@ -363,7 +363,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      * @internal
      */
     @Output()
-    public confirmButtonClicked = new EventEmitter();
+    public confirm = new EventEmitter();
 
     /**
      * @internal
@@ -486,7 +486,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      */
     public _$confirm() {
         this._updateValueCombine.emit();
-        this.confirmButtonClicked.emit();
+        this.confirm.emit();
     }
 
     ngOnInit() {
