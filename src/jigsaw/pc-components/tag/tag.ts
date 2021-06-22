@@ -44,7 +44,6 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[class.jigsaw-tag-size-med]': 'size == "medium"',
         '[class.jigsaw-tag-size-sm]': 'size == "small"',
         '[class.jigsaw-tag-selected]': 'select',
-        '[class.jigsaw-tag-toggleSelect]': 'toggleSelect',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
         '(click)': '_$click($event)',
