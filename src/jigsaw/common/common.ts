@@ -39,6 +39,7 @@ export interface IJigsawComponent {
 /**
  * 一般来说，应用无需关注此类
  */
+@Directive()
 export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
     constructor(protected _zone?: NgZone) {
     }

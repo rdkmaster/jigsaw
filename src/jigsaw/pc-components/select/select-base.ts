@@ -483,6 +483,7 @@ export abstract class JigsawSelectBase
     }
 }
 
+@Directive()
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public writeValue(value: any, emit = true): void {
         if (CommonUtils.isDefined(value)) {

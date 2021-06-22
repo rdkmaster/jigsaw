@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, EventEmitter, OnDestroy, OnInit, Output} from "@angular/core";
+import { ChangeDetectorRef, EventEmitter, OnDestroy, OnInit, Output, Directive } from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -18,6 +18,7 @@ export type ProgressInitData = {
     labelPosition?: LabelPosition, preSize?: PreSize, diameter?: number
 };
 
+@Directive()
 export abstract class ProgressBase extends AbstractJigsawComponent implements OnDestroy, OnInit, IPopupable {
     protected constructor(protected _cdr: ChangeDetectorRef) {
         super();

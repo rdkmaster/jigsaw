@@ -1,7 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, Directive } from "@angular/core";
 import {Subscription} from "rxjs";
 import {TableCellRendererBase, TableData, DropDownTrigger} from "jigsaw/public_api";
 
+@Directive()
 export class OfficeRendererBase extends TableCellRendererBase {
     officeList = [
         {label: 'Online Prod I'}, {label: 'Online Prod II'},
