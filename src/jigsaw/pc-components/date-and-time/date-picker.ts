@@ -306,7 +306,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
-        if (monthCell.isSelected) {
+        if (monthCell.isSelected && TimeGr[this._gr] === 'month') {
             this.clearDate();
             return;
         }
