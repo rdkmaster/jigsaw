@@ -88,6 +88,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public get data(): SupportedDataType {
         return this._data;
     }

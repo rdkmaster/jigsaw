@@ -166,10 +166,12 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public get data() {
         return this._$data;
     }
@@ -218,6 +220,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     @RequireMarkForCheck()
     @Input()
+    // @ts-ignore
     public get selectedItems() {
         return this._selectedItems;
     }
@@ -361,6 +364,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public get data(): LocalPageableArray<GroupOptionValue> | PageableArray {
         return this._data;
     }
@@ -399,6 +403,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public trackItemBy: string | string[];
 
     /**

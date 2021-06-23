@@ -578,8 +578,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             ele.style.backgroundColor = 'inherit';
             this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
             popupElement.appendChild(ele);
-        }  
-    } 
+        }
+    }
 
     private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
         let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
@@ -779,6 +779,7 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/trigger
      */
     @Input()
+    // @ts-ignore
     public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
@@ -808,6 +809,7 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/trigger
      */
     @Input()
+    // @ts-ignore
     public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
@@ -831,18 +833,23 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
     }
 
     @Input()
+    // @ts-ignore
     public jigsawFloatArrowElement: any;
 
     @Input()
+    // @ts-ignore
     public jigsawFloatInitData: any;
 
     @Input()
+    // @ts-ignore
     public jigsawFloatOpen: boolean;
 
     @Input()
+    // @ts-ignore
     public jigsawFloatOpenDelay: number = 100;
 
     @Input()
+    // @ts-ignore
     public jigsawFloatCloseDelay: number = 400;
 
     /**
@@ -864,6 +871,7 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/target
      */
     @Input()
+    // @ts-ignore
     public jigsawFloatTarget: Type<IPopupable> | TemplateRef<any>;
 
     @Output()

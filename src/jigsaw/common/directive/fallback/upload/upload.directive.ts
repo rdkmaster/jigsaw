@@ -67,9 +67,11 @@ export class JigsawUploadFallbackDirective extends JigsawUploadFallbackBase impl
     public additionalFields: { [prop: string]: string };
 
     @Input('uploadMinSize')
+    // @ts-ignore
     public minSize: number;
 
     @Input('uploadMaxSize')
+    // @ts-ignore
     public maxSize: number;
 
     @Output('uploadProgress')

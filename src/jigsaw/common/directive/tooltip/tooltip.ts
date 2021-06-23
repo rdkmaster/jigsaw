@@ -57,8 +57,10 @@ export class JigsawTooltipComponent implements IPopupable {
 })
 export class JigsawTooltip extends JigsawFloatBase {
     @Input('jigsawTooltipOpenDelay')
+    // @ts-ignore
     public jigsawFloatOpenDelay: number = 200;
     @Input('jigsawTooltipCloseDelay')
+    // @ts-ignore
     public jigsawFloatCloseDelay: number = 10;
     @Input('jigsawTooltipPosition')
     public jigsawFloatPosition: FloatPosition = 'top';
@@ -67,6 +69,7 @@ export class JigsawTooltip extends JigsawFloatBase {
     @Input('jigsawTooltipContext')
     public context: any;
     @Input('jigsawTooltipOpen')
+    // @ts-ignore
     public jigsawFloatOpen: boolean;
 
     @Output('jigsawTooltipOpenChange')
@@ -95,6 +98,7 @@ export class JigsawTooltip extends JigsawFloatBase {
     /**
      * @internal
      */
+    // @ts-ignore
     public jigsawFloatInitData: TooltipInitData = {};
 
     protected _init(): void {

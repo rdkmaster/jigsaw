@@ -74,6 +74,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
 
     @RequireMarkForCheck()
     @Input()
+    // @ts-ignore
     public get selected(): boolean {
         return this._selected;
     }

@@ -133,6 +133,7 @@ export class JigsawMobileAlert extends AbstractMobileDialogComponentBase {
 @Directive()
 export abstract class JigsawMobileCommonAlert extends DialogBase {
     @Input()
+    // @ts-ignore
     public set initData(value: any) {
         if (!value) {
             return;
@@ -146,6 +147,7 @@ export abstract class JigsawMobileCommonAlert extends DialogBase {
     public abstract set dialog(value: JigsawMobileDialog);
 
     public message: string;
+    // @ts-ignore
     public buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
     public level: AlertLevel = AlertLevel.info;
 
@@ -205,6 +207,7 @@ export class JigsawMobileInfoAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
+    // @ts-ignore
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.info;
     @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
@@ -230,6 +233,7 @@ export class JigsawMobileWarningAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
+    // @ts-ignore
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.warning;
     @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
@@ -255,6 +259,7 @@ export class JigsawMobileErrorAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
+    // @ts-ignore
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.error;
     @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
@@ -280,6 +285,7 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
+    // @ts-ignore
     @Input() public caption: string;
     @Input() public level: AlertLevel = AlertLevel.confirm;
     @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];

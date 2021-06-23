@@ -65,6 +65,7 @@ export class JigsawCircleProgress extends ProgressBase {
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public get value(): number {
         return this._value;
     }

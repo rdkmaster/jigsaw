@@ -49,6 +49,7 @@ export class JigsawProgress extends ProgressBase implements OnDestroy, OnInit, I
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public get value(): number {
         return this._value;
     }
@@ -110,6 +111,7 @@ export class JigsawProgress extends ProgressBase implements OnDestroy, OnInit, I
 
     @Input()
     @RequireMarkForCheck()
+    // @ts-ignore
     public get status(): Status {
         return this._status
     }

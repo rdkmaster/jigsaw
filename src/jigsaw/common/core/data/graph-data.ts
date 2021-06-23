@@ -303,6 +303,7 @@ export abstract class AbstractNormalGraphData extends AbstractGraphData {
 
     private _data: GraphDataMatrix;
 
+    // @ts-ignore
     public get data(): any {
         return this._data;
     }

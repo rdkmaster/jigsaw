@@ -738,6 +738,7 @@ export class TableViewportData extends ViewportData {
 
     private _verticalTo = 0;
 
+    // @ts-ignore
     public set verticalTo(value: number) {
         value = value < 0 ? 0 : value;
         if (this._verticalTo == value) {
@@ -757,6 +758,7 @@ export class TableViewportData extends ViewportData {
 
     private _horizontalTo = 0;
 
+    // @ts-ignore
     public set horizontalTo(value: number) {
         value = value < 0 ? 0 : value;
         if (this._horizontalTo == value) {
@@ -779,6 +781,7 @@ export class TableViewportData extends ViewportData {
         this._bigTableData['sliceData']();
     }
 
+    // @ts-ignore
     public set width(value: number) {
         this.columns = value;
     }
@@ -787,6 +790,7 @@ export class TableViewportData extends ViewportData {
         return this.columns;
     }
 
+    // @ts-ignore
     public set height(value: number) {
         this.rows = value;
     }

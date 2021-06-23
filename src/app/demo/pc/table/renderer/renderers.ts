@@ -70,6 +70,7 @@ export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnIn
     private _cellData: any;
 
     @Input()
+    // @ts-ignore
     get cellData(): any {
         return this._cellData;
     }

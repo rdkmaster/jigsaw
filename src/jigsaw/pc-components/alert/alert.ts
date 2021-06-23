@@ -164,6 +164,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public set initData(value: any) {
         if (!value) {
             return;
@@ -179,6 +180,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
     public message: string;
     public header: string;
+    // @ts-ignore
     public buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
     public level: AlertLevel = AlertLevel.info;
 
@@ -252,10 +254,12 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
      */
     @Input()
     public header: string;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -304,6 +308,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -353,6 +358,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public caption: string;
     /**
      * @NoMarkForCheckRequired
@@ -401,6 +407,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
+    // @ts-ignore
     public caption: string;
     /**
      * @NoMarkForCheckRequired

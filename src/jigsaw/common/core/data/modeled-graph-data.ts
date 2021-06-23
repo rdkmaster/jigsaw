@@ -260,6 +260,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
 
     private _options: EchartOptions;
 
+    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -537,6 +538,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
     private _options: EchartOptions;
     public legendSource: 'dim' | 'kpi';
 
+    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -693,6 +695,7 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
     public title: EchartTitle;
     private _options: EchartOptions;
 
+    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -863,6 +866,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 
     private _options: EchartOptions;
 
+    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -994,6 +998,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
 
     private _options: EchartOptions;
 
+    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -1114,6 +1119,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
     public series: MapSeries[];
     private _options: EchartOptions;
 
+    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();

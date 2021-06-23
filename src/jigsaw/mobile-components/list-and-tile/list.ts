@@ -50,6 +50,7 @@ export class JigsawMobileListOption extends AbstractJigsawMobileOptionComponent 
     private _selected: boolean = false; // 选中状态
 
     @Input()
+    // @ts-ignore
     public get selected(): boolean {
         return this._selected;
     }

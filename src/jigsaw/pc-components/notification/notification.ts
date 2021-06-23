@@ -140,6 +140,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      *
      * @param value
      */
+    // @ts-ignore
     public set initData(value: any) {
         if (!value) {
             return;

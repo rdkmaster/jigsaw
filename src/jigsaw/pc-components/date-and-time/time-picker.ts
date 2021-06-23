@@ -154,11 +154,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
      * $demo = time-picker/gr
      */
     @Input()
-    public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string {
+    public get gr(): any {
         return this._gr;
     }
 
-    public set gr(gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string) {
+    public set gr(gr: any) {
         if (typeof gr === 'string') {
             gr = TimeGr[gr];
         }

@@ -23,6 +23,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')
+    // @ts-ignore
     get jigsawFloatOptions(): PopupOptions {
         return this._jigsawFloatOptions;
     }
@@ -99,6 +100,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input('jigsawCascadingMenuPosition')
+    // @ts-ignore
     public get jigsawFloatPosition(): FloatPosition {
         return this._jigsawCascadingMenuPosition;
     };
@@ -123,6 +125,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
      * @internal
      */
     @Input('jigsawCascadingMenuInitData')
+    // @ts-ignore
     public jigsawFloatInitData: any;
 
     @Input()
@@ -135,9 +138,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input()
+    // @ts-ignore
     public jigsawFloatOpenDelay: number = 300;
 
     @Input()
+    // @ts-ignore
     public jigsawFloatCloseDelay: number = 200;
 
     @Output()

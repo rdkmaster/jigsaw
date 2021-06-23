@@ -406,6 +406,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     private _cellData: any;
 
+    // @ts-ignore
     public get cellData(): any {
         return this._cellData;
     }
@@ -465,6 +466,7 @@ export class TableCellSwitchRenderer extends TableCellRendererBase {
      */
     public _$readonly: boolean;
 
+    // @ts-ignore
     set initData(value: any) {
         if (!value || !value.hasOwnProperty('readonly')) {
             return;
@@ -577,6 +579,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     @RequireMarkForCheck()
     @Input()
+    // @ts-ignore
     get cellData(): any {
         return this._cellData;
     }
@@ -622,6 +625,7 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
     public cellData: TreeTableCellData;
+    // @ts-ignore
     public tableData: PageableTreeTableData;
 
     public get indent(): string {
