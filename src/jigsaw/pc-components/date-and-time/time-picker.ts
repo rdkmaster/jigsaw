@@ -345,10 +345,19 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
 
     /**
      * @internal
+     *
+     * 标记是否有过交互，当时间组件存在确认按钮时，只有在人为交互之后，才需要点击确认来更新时间
+     * 而有些自动操作，比如设置limit时间之后的自动修正，是不需要点击确认按钮直接更新的
+     */
+    public _$touched: boolean;
+
+    /**
+     * @internal
      */
     public _$handleSelectMode(mode: TimeSelectMode | 'none', isTabSwitch?: boolean) {
         this._$selectMode = mode;
         this._switchPopup.emit(mode != 'none');
+        this._$touched = true;
         if (mode == 'hour') {
             if (!isTabSwitch) {
                 this._hourInput.nativeElement.select();
