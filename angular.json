@@ -60,7 +60,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -139,7 +138,7 @@
       "prefix": "jigsaw",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "src/jigsaw/tsconfig.lib.json",
             "project": "src/jigsaw/pc-components/ng-package.json"
@@ -180,7 +179,7 @@
       "prefix": "jigsaw-mobile",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "src/jigsaw/tsconfig.lib.json",
             "project": "src/jigsaw/mobile-components/ng-package-mobile.json"
@@ -221,7 +220,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "src/ngx-formly/jigsaw/tsconfig.lib.json",
             "project": "src/ngx-formly/jigsaw/ng-package.json"

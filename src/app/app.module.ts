@@ -30,7 +30,7 @@ import {DemoCodeComponent} from "./demo-code.component";
                     {path: '**', component: DemoCodeComponent}
                 ]},
             {path: '**', redirectTo: '/'}
-        ], {useHash: true}),
+        ], { useHash: true, relativeLinkResolution: 'legacy' }),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule,
         TranslateModule.forRoot()
     ],
