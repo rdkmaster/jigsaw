@@ -155,7 +155,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      * $demo = auto-complete-input/with-group
      */
     @Input()
-    public filterOnFocus: boolean = true;
+    public filterOnFocus: boolean = false;
 
     @ViewChild('dropDownTemp')
     private _dropDownTemp: TemplateRef<any>;
