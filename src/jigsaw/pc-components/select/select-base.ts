@@ -332,7 +332,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$selectAll() {
-        if (this._$selectedItems && this._$selectedItems.length === this.validData.length) {
+        if (this._allSelectCheck()) {
             this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
@@ -348,17 +348,78 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$checkSelectAll() {
-        if (this._$selectedItems.length === 0) {
+        if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._$selectedItems.length === this.validData.length) {
+        if (this._allSelectCheck()) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
         this._changeDetector.markForCheck();
     }
+
+    /**
+     * 搜索过滤的时候会存在当前已选不在当期列表中的情况
+     */
+    private _validDataAllNotSelected(): boolean {
+        if (!this._$selectedItems || !this.validData) {
+            return false;
+        }
+        return this.searchable && this._$selectedItems.every(item => !this.validData.find(data => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+    }
+
+    /**
+     * 搜索过滤的时候会存在当前已选不在当期列表中的情况
+     */
+    private _validDataAllSelected(): boolean {
+        if (!this._$selectedItems || !this.validData) {
+            return false;
+        }
+        return this.searchable && this.validData.every(data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+    }
+
+    private _allSelectCheck() {
+        if (!this._$selectedItems || !this.validData) {
+            return false;
+        }
+        if (this.searchable) {
+            return this._validDataAllSelected();
+        } else {
+            return this._$selectedItems.length === this.validData.length
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$showAllStatistics(): boolean {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this.validData || !this._$selectedItems.length) {
+            return false
+        }
+        if (this.searchable) {
+            return this._$selectedItems.length === this.validData.length && !this._searchKey;
+        } else {
+            return this._$selectedItems.length === this.validData.length
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$showNumStatistics(): boolean {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this.validData || !this._$selectedItems.length) {
+            return false
+        }
+        return !this._$showAllStatistics();
+    }
+
+    /**
+     * 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
+     */
+    private _searchKey: string;
+    private _searchKeyBak: string;
 
     /**
      * 下拉显示已选选项
@@ -391,6 +452,9 @@ export abstract class JigsawSelectBase
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
                 this._setValidData();
+                this._$checkSelectAll();
+                // 等待数据处理完成赋值，消除统计的闪动
+                this._searchKey = this._searchKeyBak;
                 this._changeDetector.markForCheck();
             })
         }
@@ -461,6 +525,8 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$handleSearching(filterKey?: string) {
+        // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
+        this._searchKeyBak = filterKey;
         if(this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
             this._filterData(filterKey);
         } else {

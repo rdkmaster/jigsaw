@@ -162,6 +162,12 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input()
     public select: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public toggleSelect: boolean = false;
+
     @Output()
     public selectChange = new EventEmitter<boolean>();
 
@@ -178,7 +184,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
             this.add.emit(this);
             return;
         }
-        this.select = !this.select;
+        if (!this.toggleSelect) {
+            this.select = !this.select;
+        }
         this.selectChange.emit(this.select);
     }
 

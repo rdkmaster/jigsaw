@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {
+    JigsawButtonBarModule,
     JigsawDateTimePickerModule,
     JigsawDateTimeSelectModule,
     JigsawRangeDateTimePickerModule,
@@ -13,7 +14,7 @@ import {DateTimePickerConfirmButtonDemoComponent} from './demo.component';
 @NgModule({
     imports: [
         CommonModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawDateTimePickerModule, JigsawDateTimeSelectModule,
-        JigsawRangeDateTimePickerModule, JigsawRangeDateTimeSelectModule
+        JigsawRangeDateTimePickerModule, JigsawRangeDateTimeSelectModule, JigsawButtonBarModule
     ],
     declarations: [DateTimePickerConfirmButtonDemoComponent],
     exports: [DateTimePickerConfirmButtonDemoComponent]

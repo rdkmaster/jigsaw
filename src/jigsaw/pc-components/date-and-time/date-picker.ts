@@ -165,6 +165,14 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      */
     public _$selectMode: 'day' | 'month' | 'year' = 'day';
 
+    /**
+     * @internal
+     *
+     * 标记是否有过交互，当时间组件存在确认按钮时，只有在人为交互之后，才需要点击确认来更新时间
+     * 而有些自动操作，比如设置limit时间之后的自动修正，是不需要点击确认按钮直接更新的
+     */
+    public _$touched: boolean;
+
     private _langChangeSubscriber: Subscription;
     private _weekPos: number[];
 
@@ -253,6 +261,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             this._createCalendar(yearCell.year, this._$curMonth.month);
         }
         this._$selectMode = this.gr == TimeGr.month ? 'month' : 'day';
+        this._$touched = true;
     }
 
     private _createMonthCal(year: number) {
@@ -315,6 +324,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.gr != TimeGr.month) {
             this._$selectMode = 'day';
         }
+        this._$touched = true;
     }
 
     private _createDayCal(year: number, month: number) {
@@ -470,6 +480,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         }
         this.writeValue(`${year}-${month}-${day}`);
+        this._$touched = true;
     }
 
     /**

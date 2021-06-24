@@ -60,13 +60,13 @@
         </div>
     </ng-template>
     <div
-        *ngIf="multipleSelect && useStatistics && _$selectedItems?.length !== 0 && _$selectedItems?.length === validData?.length"
+        *ngIf="_$showAllStatistics()"
         class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
     >
         {{'select.allSelected' | translate}}
     </div>
     <div
-        *ngIf="multipleSelect && useStatistics && _$selectedItems && _$selectedItems?.length !== 0 && _$selectedItems?.length !== validData?.length"
+        *ngIf="_$showNumStatistics()"
         class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
     >
         {{'select.selected' | translate:{num: _$selectedItems?.length} }}

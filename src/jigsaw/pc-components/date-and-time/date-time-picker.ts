@@ -11,12 +11,13 @@ import {
     NgModule,
     OnDestroy,
     OnInit,
-    Output
+    Output,
+    ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {GrItem, JigsawDatePickerModule, MarkDate} from "./date-picker";
-import {JigsawTimePickerModule, TimeStep} from "./time-picker";
+import {GrItem, JigsawDatePicker, JigsawDatePickerModule, MarkDate} from "./date-picker";
+import {JigsawTimePicker, JigsawTimePickerModule, TimeStep} from "./time-picker";
 import {JigsawButtonModule} from "../button/button";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
@@ -358,6 +359,24 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     @Input()
     public showConfirmButton: boolean = false;
 
+    /**
+     * @internal
+     */
+    @Output()
+    public confirm = new EventEmitter();
+
+    /**
+     * @internal
+     */
+    @ViewChild('datePicker')
+    public _$datePicker: JigsawDatePicker;
+
+    /**
+     * @internal
+     */
+    @ViewChild('timePicker')
+    public _$timePicker: JigsawTimePicker;
+
     private _updateValueCombine = new EventEmitter();
     private _removeUpdateValueCombineSubscriber: Subscription;
     private _updateValueSeparate = new EventEmitter();
@@ -383,8 +402,9 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * @internal
      */
-    public _$handleDateChange() {
-        if (this.showConfirmButton) {
+    public _$handleDateChange(update?: boolean) {
+        if (!update && this.showConfirmButton && !!this._$timeGr && this._$datePicker._$touched) {
+            // 确认按钮只有在粒度是 时分秒 的时候起作用
             return;
         }
         this._updateValueCombine.emit();
@@ -393,8 +413,8 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     /**
      * @internal
      */
-    public _$handleTimeChange() {
-        if (this.showConfirmButton) {
+    public _$handleTimeChange(update?: boolean) {
+        if (!update && this.showConfirmButton && (this._$datePicker._$touched || (this._$timePicker && this._$timePicker._$touched))) {
             return;
         }
         this._updateValueCombine.emit();
@@ -429,6 +449,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
         this._date = date;
         this.dateChange.emit(date);
+        this._$datePicker._$touched = false;
+        if (this._$timePicker) {
+            this._$timePicker._$touched = false;
+        }
         this._propagateChange(this._date);
     }
 
@@ -462,6 +486,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      */
     public _$confirm() {
         this._updateValueCombine.emit();
+        this.confirm.emit();
     }
 
     ngOnInit() {
@@ -492,11 +517,11 @@ export class JigsawDateTimePickerModule {
         InternalUtils.initI18n(translateService, 'date-time-picker', {
             zh: {
                 confirm: "确认",
-          
+
             },
             en: {
                 confirm: 'Confirm',
-            
+
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
