@@ -5,17 +5,17 @@ import {ProductService} from "./product.service";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        h3 {
+        .demo-container h3 {
             font-size: 16px;
             color: #333;
             margin-bottom: 6px;
         }
 
-        p {
+        .demo-container p {
             margin-bottom: 4px;
         }
 
-        j-breadcrumb {
+        .demo-container j-breadcrumb {
             margin-bottom: 12px;
         }
     `]

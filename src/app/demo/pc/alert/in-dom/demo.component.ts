@@ -2,19 +2,15 @@ import { Component } from "@angular/core";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styles: [
-        `
-            jigsaw-info-alert,
-            jigsaw-error-alert {
-                margin-left: 20px;
-            }
+    styles: [`
+        .demo-container jigsaw-info-alert, jigsaw-error-alert {
+            margin-left: 20px;
+        }
 
-            jigsaw-warning-alert,
-            jigsaw-confirm-alert {
-                margin-left: 100px;
-            }
-        `
-    ]
+        .demo-container jigsaw-warning-alert, jigsaw-confirm-alert {
+            margin-left: 100px;
+        }
+    `]
 })
 export class AlertInDomDemoComponent {
     // ====================================================================

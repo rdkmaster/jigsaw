@@ -4,7 +4,11 @@ import {GroupOptionValue} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        jigsaw-numeric-input, jigsaw-button-bar {
+        .demo-container {
+            margin: 20px;
+        }
+        .demo-container jigsaw-numeric-input,
+        .demo-container jigsaw-button-bar {
             margin-bottom: 10px;
         }
     `]
