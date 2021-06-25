@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, Output} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, Output} from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
@@ -33,6 +33,10 @@ export type StepItem = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSteps extends AbstractJigsawComponent {
+    constructor(private _changeDetector: ChangeDetectorRef) {
+        super();
+    }
+
     /**
      * 步骤条的数据
      *
@@ -62,6 +66,7 @@ export class JigsawSteps extends AbstractJigsawComponent {
         }
         if (this._current !== value) {
             this._current = value;
+            this._changeDetector.markForCheck();
             this.currentChange.emit(this._current);
         }
     }
