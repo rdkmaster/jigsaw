@@ -34,6 +34,7 @@ import {routerConfig as scrollbarConfig} from "./demo/pc/scrollbar/demo-set.modu
 import {routerConfig as selectConfig} from "./demo/pc/select/demo-set.module";
 import {routerConfig as sliderConfig} from "./demo/pc/slider/demo-set.module";
 import {routerConfig as stepsConfig} from "./demo/pc/steps/demo-set.module";
+import {routerConfig as numericStepsConfig} from "./demo/pc/numeric-steps/demo-set.module";
 import {routerConfig as switchConfig} from "./demo/pc/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/pc/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/pc/tab/demo-set.module";
@@ -186,6 +187,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'select', selectConfig);
         this._addRouterConfig(routerConfig, 'slider', sliderConfig);
         this._addRouterConfig(routerConfig, 'steps', stepsConfig);
+        this._addRouterConfig(routerConfig, 'numeric-steps', numericStepsConfig);
         this._addRouterConfig(routerConfig, 'switch', switchConfig);
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
