@@ -3,11 +3,13 @@ import { Component } from "@angular/core";
 @Component({
     templateUrl: "./demo.component.html",
     styles: [`
-        .demo-container jigsaw-info-alert, jigsaw-error-alert {
+        .demo-container jigsaw-info-alert,
+        .demo-container jigsaw-error-alert {
             margin-left: 20px;
         }
 
-        .demo-container jigsaw-warning-alert, jigsaw-confirm-alert {
+        .demo-container jigsaw-warning-alert,
+        .demo-container jigsaw-confirm-alert {
             margin-left: 100px;
         }
     `]

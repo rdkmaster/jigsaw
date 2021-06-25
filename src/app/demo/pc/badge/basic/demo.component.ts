@@ -7,12 +7,16 @@ import {Component} from '@angular/core';
             margin-right: 50px;
             line-height: 1;
         }
-        .live-demo-wrap jigsaw-switch, jigsaw-input, jigsaw-checkbox, jigsaw-button-bar, jigsaw-radios-lite, jigsaw-tile-lite {
+        .live-demo-wrap jigsaw-switch,
+        .live-demo-wrap jigsaw-input,
+        .live-demo-wrap jigsaw-checkbox,
+        .live-demo-wrap jigsaw-button-bar,
+        .live-demo-wrap jigsaw-radios-lite,
+        .live-demo-wrap jigsaw-tile-lite {
             margin-right: 20px;
         }
     `]
 })
-
 export class BadgeBasicDemoComponent {
     public nice = "Nice";
     public dot = "dot";

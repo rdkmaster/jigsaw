@@ -55,10 +55,9 @@ function doCheck(srcPath) {
 function checkTagNameSelector(srcPath, source) {
     const result = [];
     source.replace(/\/\*[\s\S]*?\*\//g, '')
-        .replace(/^\s*(.*)\s*{/gm, (_, name) => {
-            if (/^[a-z]/i.test(name)) {
-                result.push(name.trim());
-            }
+        .replace(/^\s*(.*)\s*{/gm, (_, names) => {
+            names.split(/,/).map(name => name.trim()).filter(name => /^[a-z]/i.test(name))
+                .forEach(name => result.push(name));
         });
     if (result.length > 0) {
         error('No tag name selector is allowed in demo!');
