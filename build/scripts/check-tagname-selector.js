@@ -10,7 +10,7 @@ if (hasError) {
     console.log(`Everything's fine!`);
 }
 
-function checkAll(folder) {
+function checkAll() {
     const cmpHome = path.resolve(`${__dirname}/../../src/app/demo/pc`);
     const cmpFolders = fs.readdirSync(cmpHome);
     cmpFolders.forEach(cmpFolder => {
@@ -55,19 +55,15 @@ function doCheck(srcPath) {
 function checkTagNameSelector(srcPath, source) {
     const result = [];
     source.replace(/\/\*[\s\S]*?\*\//g, '')
-        .replace(/^\s*(.*)\s*{/gm, (_, names) => {
-            names.split(/,/).map(name => name.trim()).filter(name => /^[a-z]/i.test(name))
-                .forEach(name => result.push(name));
+        .replace(/^\s*(.*)\s*{/gm, (_, selectors) => {
+            selectors.split(/,/).map(selector => selector.trim()).filter(selector => /^[a-z]/i.test(selector))
+                .forEach(selector => result.push(selector));
         });
     if (result.length > 0) {
         error('No tag name selector is allowed in demo!');
         error('File:', srcPath);
         error('Selector:', result.join(', '))
     }
-}
-
-function getFilePath(file) {
-    return file.replace(/(.*)[\/\\][^\/\\]*?\.\w+$/, '$1');
 }
 
 function error(...msg) {
