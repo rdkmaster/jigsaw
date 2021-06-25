@@ -24,7 +24,7 @@ import {PopupOptions, PopupPositionValue} from "jigsaw/public_api";
             cursor: move;
         }
 
-        p {
+        .message {
             margin: 10px;
         }
     `]

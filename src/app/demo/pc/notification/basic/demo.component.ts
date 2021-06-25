@@ -10,11 +10,11 @@ import {JigsawNotification} from "jigsaw/public_api";
             overflow: hidden;
         }
 
-        h4 {
+        .wrapper h4 {
             margin: 6px 0 18px 6px;
         }
 
-        jigsaw-button {
+        .wrapper jigsaw-button {
             margin: 0 6px 6px 6px;
         }
     `]

@@ -26,7 +26,7 @@ import {IPopupable, JigsawWarningAlert} from "jigsaw/public_api";
             text-align: right;
         }
 
-        span {
+        .toolbar span {
             margin-left: 12px;
             cursor: pointer;
         }

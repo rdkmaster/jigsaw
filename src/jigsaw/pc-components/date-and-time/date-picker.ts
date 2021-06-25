@@ -23,8 +23,6 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-declare const moment: any;
-
 export type DayCell = {
     day: number;
     isToday?: boolean;

@@ -3,12 +3,12 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        h4 {
+        .header {
             font-size: 20px;
             margin-bottom: 20px;
         }
 
-        p {
+        .message {
             font-size: 14px;
             margin: 10px 0 20px 0
         }

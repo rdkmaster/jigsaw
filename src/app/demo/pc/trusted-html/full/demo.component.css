@@ -5,11 +5,11 @@
     margin: 12px 0 12px 0;
 }
 
-p {
+.live-demo-wrap p {
     margin-top: 6px;
 }
 
-textarea {
+.live-demo-wrap textarea {
     padding: 6px;
     width: 400px;
     height: 120px;

@@ -4,7 +4,7 @@ import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/p
 @Component({
     templateUrl: "demo.component.html",
     styles: [`
-        p {
+        .demo-container p {
             margin-top: 8px
         }
     `],

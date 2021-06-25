@@ -8,7 +8,7 @@ import {
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        j-tag {
+        .live-demo-wrap j-tag {
             margin: 6px;
         }
     `]
