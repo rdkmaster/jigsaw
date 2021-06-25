@@ -140,6 +140,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/steps/demo-set.module').then(m => m.StepsDemoModule),
     },
     {
+        path: "pc/numeric-steps",
+        loadChildren: () => import('./demo/pc/numeric-steps/demo-set.module').then(m => m.NumericStepsDemoModule),
+    },
+    {
         path: "pc/switch",
         loadChildren: () => import('./demo/pc/switch/demo-set.module').then(m => m.SwitchDemoModule),
     },

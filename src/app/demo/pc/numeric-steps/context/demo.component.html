@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<h2>这是 numeric-steps 的 context 的用法</h2>
+<jigsaw-numeric-steps class="steps-horizontal" [data]="data" [(current)]="current"></jigsaw-numeric-steps>
+<div>
+    <span style="margin-right: 20px;">当前步骤：{{current}}</span>
+    <jigsaw-button (click)="changeData()">换一批数据瞅瞅</jigsaw-button>
+</div>

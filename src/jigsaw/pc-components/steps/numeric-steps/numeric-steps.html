@@ -1,0 +1,36 @@
+<div *ngFor="let item of data;index as index" class="jigsaw-numeric-steps-item"
+    [ngClass]="{
+                    'jigsaw-numeric-steps-item-waiting': current < index,
+                    'jigsaw-numeric-steps-item-progressing': current === index,
+                    'jigsaw-numeric-steps-item-finished': current > index,
+                    'jigsaw-numeric-steps-item-normal': item?.status === 'normal',
+                    'jigsaw-numeric-steps-item-error': item?.status === 'error',
+                    'jigsaw-numeric-steps-item-warning': item?.status === 'warning',
+                    'jigsaw-numeric-steps-item-disabled': item?.disabled
+                }">
+    <div class="jigsaw-numeric-steps-title-cntr">
+        <span class="jigsaw-numeric-steps-icon" (click)="_$changeCurrent(index, item)">
+            <i
+                class="iconfont"
+                *ngIf="current > index"
+                [ngClass]="{'iconfont-e8f8':item?.status === 'normal',
+                        'iconfont-e8f5':item?.status === 'error',
+                        'iconfont-e8f7':item?.status === 'warning'
+                    }"
+            ></i>
+            <span class="jigsaw-numeric-steps-icon-number" *ngIf="current <= index"
+                >{{index + 1}}</span
+            >
+        </span>
+        <span class="jigsaw-numeric-steps-title" title="{{item?.title}}" (click)="_$changeCurrent(index, item)">{{item?.title}}</span>
+        <span class="jigsaw-numeric-steps-bar" *ngIf="direction === 'horizontal'"></span>
+    </div>
+    <div
+        class="jigsaw-numeric-steps-sub-title"
+        trustedHtml="{{item?.subTitle}}"
+        [trustedHtmlContext]="item?.context"
+    ></div>
+    <div class="jigsaw-numeric-steps-bar" *ngIf="direction === 'vertical'">
+        <span></span>
+    </div>
+</div>

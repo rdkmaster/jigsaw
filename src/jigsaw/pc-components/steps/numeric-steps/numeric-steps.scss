@@ -1,0 +1,245 @@
+$steps-prefix-cls: #{$jigsaw-prefix}-numeric-steps;
+
+.#{$steps-prefix-cls}-host {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    .#{$steps-prefix-cls}-item {
+        flex-grow: 1;
+        flex-basis: 0;
+        .#{$steps-prefix-cls}-title-cntr {
+            display: flex;
+            justify-content: flex-start;
+            line-height: 24px;
+            align-items: center;
+            .#{$steps-prefix-cls}-icon {
+                flex-grow: 0;
+                flex-shrink: 0;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 24px;
+                height: 24px;
+                margin-right: 6px;
+                border-radius: 50%;
+                font-size: $font-size-lg;
+                cursor: pointer;
+
+                .iconfont {
+                    font-size: 26px;
+                }
+            }
+
+            .#{$steps-prefix-cls}-title {
+                max-width: calc(100% - 32px);
+                margin-right: 10px;
+                font-size: $font-size-lg;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+            }
+
+            .#{$steps-prefix-cls}-bar {
+                flex-grow: 1;
+                min-width: 20px;
+                height: 2px;
+                margin-right: 10px;
+                background: $border-color-base;
+
+                @at-root .#{$steps-prefix-cls}-host
+                        .#{$steps-prefix-cls}-item:last-of-type {
+                    .#{$steps-prefix-cls}-bar {
+                        flex-grow: 0;
+                        min-width: 0px;
+                        margin-right: 0px;
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-progressing {
+            .#{$steps-prefix-cls}-title-cntr {
+                .#{$steps-prefix-cls}-title {
+                    color: $text-color-dark;
+                    /**
+                     *  text-shadow 代替 font-weight
+                     *  font-weight会带来width上的变化
+                     */
+                    text-shadow: 1px 0 0 currentColor;
+                }
+
+                .#{$steps-prefix-cls}-icon {
+                    background: $info-color;
+                    color: $text-color-of-bg;
+                }
+            }
+
+            &.#{$steps-prefix-cls}-item-error {
+                .#{$steps-prefix-cls}-title-cntr {
+                    .#{$steps-prefix-cls}-title {
+                        color: $error-color;
+                    }
+
+                    .#{$steps-prefix-cls}-icon {
+                        background: $error-color;
+                        color: $text-color-of-bg;
+                    }
+                }
+            }
+
+            &.#{$steps-prefix-cls}-item-warning {
+                .#{$steps-prefix-cls}-title-cntr {
+                    .#{$steps-prefix-cls}-title {
+                        color: $warning-color;
+                    }
+
+                    .#{$steps-prefix-cls}-icon {
+                        background: $warning-color;
+                        color: $text-color-of-bg;
+                    }
+                }
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-finished {
+            .#{$steps-prefix-cls}-title-cntr {
+                .#{$steps-prefix-cls}-title {
+                    color: $text-color-secondary-dark;
+                    font-weight: normal;
+                }
+
+                .#{$steps-prefix-cls}-icon {
+                    color: $info-color;
+                }
+
+                .#{$steps-prefix-cls}-bar {
+                    background: $info-color;
+                }
+            }
+
+            &.#{$steps-prefix-cls}-item-error {
+                .#{$steps-prefix-cls}-title-cntr {
+                    .#{$steps-prefix-cls}-title {
+                        color: $error-color;
+                    }
+
+                    .#{$steps-prefix-cls}-icon {
+                        color: $error-color;
+                    }
+
+                    .#{$steps-prefix-cls}-bar {
+                        background: $error-color;
+                    }
+                }
+            }
+
+            &.#{$steps-prefix-cls}-item-warning {
+                .#{$steps-prefix-cls}-title-cntr {
+                    .#{$steps-prefix-cls}-title {
+                        color: $warning-color;
+                    }
+
+                    .#{$steps-prefix-cls}-icon {
+                        color: $warning-color;
+                    }
+
+                    .#{$steps-prefix-cls}-bar {
+                        background: $warning-color;
+                    }
+                }
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-waiting {
+            .#{$steps-prefix-cls}-title-cntr {
+                .#{$steps-prefix-cls}-title {
+                    color: $text-color-secondary-dark;
+                    font-weight: normal;
+                }
+
+                .#{$steps-prefix-cls}-icon {
+                    background: $border-color-base;
+                    color: $text-color-of-bg;
+                }
+            }
+        }
+
+        .#{$steps-prefix-cls}-sub-title {
+            margin-left: 30px;
+            padding-right: 20px;
+            flex-basis: 0;
+            color: $text-color-secondary;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &.#{$steps-prefix-cls}-item-disabled {
+            .#{$steps-prefix-cls}-title-cntr {
+                .#{$steps-prefix-cls}-title {
+                    cursor: not-allowed;
+                    color: $disabled-color;
+                }
+
+                .#{$steps-prefix-cls}-icon {
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
+.#{$steps-prefix-cls}-horizontal {
+    .#{$steps-prefix-cls}-item {
+        width: 0;
+    }
+}
+
+.#{$steps-prefix-cls}-vertical {
+    flex-direction: column;
+    .#{$steps-prefix-cls}-item {
+        position: relative;
+        .#{$steps-prefix-cls}-bar {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            width: 24px;
+            height: calc(100% - 24px);
+            bottom: 0;
+            left: 0;
+            padding: 5px;
+
+            & span {
+                width: 2px;
+                height: 100%;
+                background: $border-color-base;
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-error {
+            .#{$steps-prefix-cls}-bar span {
+                background: $error-color;
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-warning {
+            .#{$steps-prefix-cls}-bar span {
+                background: $warning-color;
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-waiting {
+            .#{$steps-prefix-cls}-bar span {
+                background: $border-color-base;
+            }
+        }
+
+        &.#{$steps-prefix-cls}-item-finished {
+            .#{$steps-prefix-cls}-bar span {
+                background: $info-color;
+            }
+        }
+    }
+}
