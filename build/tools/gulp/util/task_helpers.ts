@@ -7,15 +7,11 @@ import {buildConfig} from '../tasks/build-config';
 
 /* Those imports lack typings. */
 const gulpClean = require('gulp-clean');
-const gulpRunSequence = require('run-sequence');
-const gulpSass = require('gulp-sass');
-const gulpConnect = require('gulp-connect');
+const gulpSass = require('gulp-dart-sass');
 const gulpIf = require('gulp-if');
 const gulpCleanCss = require('gulp-clean-css');
-const rename = require("gulp-rename");
 // There are no type definitions available for these imports.
 const resolveBin = require('resolve-bin');
-const httpRewrite = require('http-rewrite-middleware');
 
 const {projectDir} = buildConfig;
 
@@ -70,7 +66,7 @@ export interface ExecTaskOptions {
 
 /** Create a task that executes a binary as if from the command line. */
 export function execTask(binPath: string, args: string[], options: ExecTaskOptions = {}) {
-    return (done: (err?: string) => void) => {
+    return (done: (error?: Error | null) => void) => {
         const env = Object.assign({}, process.env, options.env);
         const childProcess = child_process.spawn(binPath, args, {env});
 
@@ -85,9 +81,9 @@ export function execTask(binPath: string, args: string[], options: ExecTaskOptio
         childProcess.on('close', (code: number) => {
             if (code != 0) {
                 if (options.errMessage === undefined) {
-                    done('Process failed with code ' + code);
+                    done(new Error('Process failed with code ' + code));
                 } else {
-                    done(options.errMessage);
+                    done(new Error(options.errMessage));
                 }
             } else {
                 done();
@@ -139,59 +135,3 @@ export function cleanTask(glob: string) {
 }
 
 
-/** Build an task that depends on all application build tasks. */
-// export function buildAppTask(appName: string) {
-//     const buildTasks = ['ts', 'scss', 'assets']
-//         .map(taskName => `:build:${appName}:${taskName}`)
-//         .filter(taskName => gulp.hasTask(taskName));
-//
-//     return (done: () => void) => {
-//         gulpRunSequence(
-//             'jigsaw:clean-build',
-//             [...buildTasks],
-//             done
-//         );
-//     };
-// }
-
-/**
- * Create a task that serves a given directory in the project.
- * The server rewrites all node_module/ or dist/ requests to the correct directory.
- */
-// export function serverTask(packagePath: string, livereload = true) {
-//     // The http-rewrite-middlware only supports relative paths as rewrite destinations.
-//     const relativePath = path.relative(projectDir, packagePath);
-//
-//     return () => {
-//         gulpConnect.server({
-//             root: projectDir,
-//             livereload: livereload,
-//             port: 4200,
-//             fallback: path.join(packagePath, 'index.html'),
-//             middleware: () => {
-//                 return [httpRewrite.getMiddleware([
-//                     {from: '^/node_modules/(.*)$', to: '/node_modules/$1'},
-//                     {from: '^/dist/(.*)$', to: '/dist/$1'},
-//                     {from: '^(.*)$', to: `/${relativePath}/$1`}
-//                 ])];
-//             }
-//         });
-//     };
-// }
-
-/** Triggers a reload when livereload is enabled and a gulp-connect server is running. */
-export function triggerLivereload() {
-    console.log(yellow('Server: Changes were detected and a livereload was triggered.'));
-    return gulp.src('dist').pipe(gulpConnect.reload());
-}
-
-
-/** Create a task that's a sequence of other tasks. */
-export function sequenceTask(...args: any[]) {
-    return (done: any) => {
-        gulpRunSequence(
-            ...args,
-            done
-        );
-    };
-}

@@ -1,14 +1,13 @@
-import {dest, src, task} from 'gulp';
+import {dest, src, task, series, parallel} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {writeFileSync} from 'fs-extra';
-import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
 import {publishPackage} from './publish';
 import {copyFiles} from "../util/copy-files";
 
-const gulpSass = require('gulp-sass');
+const gulpSass = require('gulp-dart-sass');
 const gulpRun = require('gulp-run');
 const gulpCleanCss = require('gulp-clean-css');
 
@@ -25,18 +24,10 @@ export function createTask(packageName: string) {
     const allScssGlob = join(jigsawPath, '**/*.scss');
     const allThemingStyleGlob = join(jigsawPath, 'theming/prebuilt/*.scss');
     const prebuiltThemeSettingsGlob = join(jigsawCommonPath, 'core/theming/prebuilt/settings/*.scss');
-    const themingApiGlob = join(jigsawCommonPath, 'core/theming/theming-api.scss');
 
     task(`:build:${packageName}-package`, function () {
         return gulpRun('ng build ' + projectName + ' --prod', {}).exec();
     });
-
-    task(`:build:${packageName}-styles`, [
-        `:build:${packageName}-all-theme-file`,
-        `:build:${packageName}-bundle-theming-scss`,
-        `:build:${packageName}-copy-prebuilt-theme-settings`,
-        `:build:${packageName}-copy-theming-api`
-    ]);
 
     task(`:build:${packageName}-all-theme-file`,function () {
         return src([allThemingStyleGlob])
@@ -49,22 +40,23 @@ export function createTask(packageName: string) {
     });
 
     task(`:build:${packageName}-bundle-theming-scss`,() => {
-        return new Bundler().Bundle(themingEntryPointPath, [allScssGlob]).then(result => {
+        return new Bundler().bundle(themingEntryPointPath, [allScssGlob]).then(result => {
             writeFileSync(themingBundlePath, result.bundledContent);
         });
     });
 
     task(`:build:${packageName}-copy-prebuilt-theme-settings`,() => {
-        src(prebuiltThemeSettingsGlob)
+        return src(prebuiltThemeSettingsGlob)
             .pipe(dest(join(releasePath, 'prebuilt-themes', 'settings')));
     });
 
-    task(`:build:${packageName}-copy-theming-api`,() => {
-        src(themingApiGlob)
-            .pipe(dest(join(releasePath)));
-    });
+    task(`:build:${packageName}-styles`, parallel(
+        `:build:${packageName}-all-theme-file`,
+        `:build:${packageName}-bundle-theming-scss`,
+        `:build:${packageName}-copy-prebuilt-theme-settings`,
+    ));
 
-    task(`:build:${packageName}-copy-files`,() => {
+    task(`:build:${packageName}-copy-files`, async () => {
         copyFiles('./', 'LICENSE', releasePath);
         copyFiles('./', 'README.md', releasePath);
     });
@@ -82,20 +74,20 @@ export function createTask(packageName: string) {
         }
     });
 
-    task(`build:${packageName}`, sequenceTask(
+    task(`build:${packageName}`, series(
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
     ));
 
-    task(`build:${packageName}:clean`, sequenceTask(
+    task(`build:${packageName}:clean`, series(
         'clean',
         `build:${packageName}`
     ));
 
     task(`:publish:${packageName}`, async () => publishPackage(packageName));
 
-    task(`publish:${packageName}`, sequenceTask(
+    task(`publish:${packageName}`, series(
         ':publish:whoami',
         `build:${packageName}:clean`,
         `validate:check-${packageName}-bundles`,
