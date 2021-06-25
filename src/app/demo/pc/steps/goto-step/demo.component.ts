@@ -39,7 +39,7 @@ export class JigsawStepGotoDemoComponent {
 
     steps1: StepItem[] = [];
     steps2: StepItem[] = [];
-    step1 = 0;
+    step1 = 2;
     step2 = 0;
 
     constructor() {

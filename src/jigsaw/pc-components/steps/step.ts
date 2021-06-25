@@ -56,7 +56,11 @@ export class JigsawSteps extends AbstractJigsawComponent {
     }
 
     public set current(value: number) {
-        if (this._current !== value && typeof value == 'number') {
+        if (typeof value !== 'number' || value < 0 || value >= this.data?.length) {
+            // 非法值默认都不选
+            value = -1;
+        }
+        if (this._current !== value) {
             this._current = value;
             this.currentChange.emit(this._current);
         }
