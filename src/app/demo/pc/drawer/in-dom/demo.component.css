@@ -4,7 +4,7 @@
     text-align: center;
 }
 
-section {
+.content-section {
     height: 100px;
     background: #eee;
     line-height: 100px;

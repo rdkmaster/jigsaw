@@ -36,7 +36,7 @@ import {
             height: 400px;
         }
 
-        label {
+        .wrapper label {
             min-width: 50px
         }
     `]

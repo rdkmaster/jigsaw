@@ -8,7 +8,7 @@ import {
     templateUrl: './demo.component.html',
     styles: [`
         .menu {
-            margin: 16px 0 16px 216px;
+            margin: 16px 0 8px 216px;
             border: 1px solid #999;
             padding: 2px 10px;
             border-radius: 3px;
@@ -27,7 +27,7 @@ import {
             padding-top: 40px;
         }
 
-        p {
+        .message {
             margin-bottom: 8px;
         }
     `]

@@ -20,11 +20,11 @@ import {
             vertical-align: middle;
         }
 
-        jigsaw-dialog .iconfont {
+        .dialog-container .iconfont {
             margin-right: 5px
         }
 
-        h4 {
+        .header {
             padding: 20px 0 10px
         }`]
 })

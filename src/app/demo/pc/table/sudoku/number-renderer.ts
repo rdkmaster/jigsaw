@@ -5,13 +5,13 @@ import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, P
 
 @Component({
     template: `
-        <div (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
+        <div class="demo-container" (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
              (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
             {{cellData}}
         </div>
     `,
     styles: [`
-        div {
+        .demo-container {
             font-size: 22px;
             text-align: center;
             line-height: 48px;
