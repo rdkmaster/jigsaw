@@ -1,17 +1,17 @@
-h3 {
-    padding-bottom: 12px;
-}
-
-p {
-    padding-bottom: 12px;
-}
-
-hr {
-    padding-bottom: 12px;
-}
-
 .boxes {
     display: flex;
+}
+
+.boxes h3 {
+    padding-bottom: 12px;
+}
+
+.boxes p {
+    padding-bottom: 12px;
+}
+
+.boxes hr {
+    padding-bottom: 12px;
 }
 
 .box {

@@ -14,23 +14,23 @@ import {JigsawNotification} from "jigsaw/public_api";
             margin: 6px;
         }
 
-        h4 {
+        .wrapper h4 {
             margin: 6px 0 18px 6px;
         }
 
-        jigsaw-button {
+        .wrapper jigsaw-button {
             margin: 0 6px 6px 6px;
         }
 
-        label {
+        .wrapper label {
             width: 30px;
         }
 
-        jigsaw-input {
+        .wrapper jigsaw-input {
             width: 300px;
         }
 
-        jigsaw-slider {
+        .wrapper jigsaw-slider {
             width: 270px;
         }
     `]
