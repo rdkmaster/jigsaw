@@ -23,6 +23,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     transition: all $animation-duration-slow;
     -ms-transition: none;
     user-select: none;
+    overflow: hidden;
 
     .#{$switch-prefix}-inner {
         color: $font-color-default;
