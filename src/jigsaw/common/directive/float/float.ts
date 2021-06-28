@@ -173,6 +173,20 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
 
+    private _jigsawFloatDisabled: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get jigsawFloatDisabled(): boolean {
+        return this._jigsawFloatDisabled;
+    }
+
+    public set jigsawFloatDisabled(value: boolean) {
+        this._jigsawFloatDisabled = typeof value != 'boolean' ? false : value; 
+    }
+
     /**
      * @internal
      */
@@ -242,7 +256,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     public _$openByHover(event): void {
         this.clearCallLater(this._rollOutDenouncesTimer);
 
-        if (this.jigsawFloatOpenTrigger != 'mouseenter') {
+        if (this.jigsawFloatOpenTrigger != 'mouseenter' || this.jigsawFloatDisabled != false) {
             return;
         }
 
@@ -291,7 +305,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * @internal
      */
     public _$onHostClick() {
-        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
+        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false && this.jigsawFloatDisabled == false) {
             this.jigsawFloatOpen = true;
         }
     }
