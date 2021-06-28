@@ -60,7 +60,7 @@ export class JigsawSteps extends AbstractJigsawComponent {
     }
 
     public set current(value: number) {
-        if (typeof value !== 'number' || value < 0 || value >= this.data?.length) {
+        if (isNaN(value) || typeof value !== 'number' || value < 0 || value >= this.data?.length) {
             // 非法值默认都不选
             value = -1;
         }
