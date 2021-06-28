@@ -67,10 +67,9 @@ export class OfficeHeaderRenderer extends OfficeRendererBase {
 export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnInit, OnDestroy {
     selected: any;
 
-    private _cellData: any;
+    protected _cellData: any;
 
     @Input()
-    // @ts-ignore
     get cellData(): any {
         return this._cellData;
     }

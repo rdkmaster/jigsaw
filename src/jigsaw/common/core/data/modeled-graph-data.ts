@@ -35,7 +35,14 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
     /**
      * 图形的数据，二维数组。
      */
-    public data: GraphDataMatrix;
+    protected _data: GraphDataMatrix;
+    public get data(): GraphDataMatrix {
+        return this._data;
+    }
+
+    public set data(value: GraphDataMatrix) {
+        this._data = value;
+    }
     /**
      * 图形的列字段描述。
      */
@@ -47,7 +54,14 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
     /**
      * 一个适合输入给 echarts 的参数，由本类的子类自动构建出来
      */
-    public options: EchartOptions;
+    protected _options: EchartOptions;
+    public get options(): EchartOptions {
+        return this._options;
+    }
+
+    public set options(value: EchartOptions) {
+        this._options = value;
+    }
     /**
      * 图形个关键配置项的模板
      */
@@ -258,9 +272,8 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    private _options: EchartOptions;
+    protected _options: EchartOptions;
 
-    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -535,10 +548,9 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'pie';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: PieSeries[];
-    private _options: EchartOptions;
+    protected _options: EchartOptions;
     public legendSource: 'dim' | 'kpi';
 
-    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -693,9 +705,8 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: GaugeSeries[];
     public title: EchartTitle;
-    private _options: EchartOptions;
+    protected _options: EchartOptions;
 
-    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -864,9 +875,8 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    private _options: EchartOptions;
+    protected _options: EchartOptions;
 
-    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -996,9 +1006,8 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    private _options: EchartOptions;
+    protected _options: EchartOptions;
 
-    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -1117,9 +1126,8 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'map';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: MapSeries[];
-    private _options: EchartOptions;
+    protected _options: EchartOptions;
 
-    // @ts-ignore
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();

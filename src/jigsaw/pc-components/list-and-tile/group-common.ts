@@ -265,9 +265,16 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     @Output()
     public selectedChange = new EventEmitter<boolean>();
 
+    protected _selected: boolean = false; // 选中状态
     @RequireMarkForCheck()
     @Input()
-    public selected: boolean = false; // 选中状态
+    public get selected(): boolean {
+        return this._selected;
+    }
+
+    public set selected(value: boolean) {
+        this._selected = value;
+    }
 
     @Output()
     public change = new EventEmitter<AbstractJigsawOptionComponent>();

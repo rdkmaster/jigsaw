@@ -26,14 +26,21 @@ export type DialogMobileCallback = (button: ButtonInfo) => void;
  */
 @Directive()
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
+    private _initData: any;
 
     @Input()
-    public initData: any;
+    public get initData(): any {
+        return this._initData;
+    }
+
+    public set initData(value: any) {
+        this._initData = value;
+    }
 
     abstract get dialog(): JigsawMobileDialog;
     abstract set dialog(value: JigsawMobileDialog);
 
-    private _caption: string = '';
+    protected _caption: string = '';
 
     @Input()
     public get caption(): string {
@@ -47,7 +54,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
-    private _buttons: ButtonInfo[];
+    protected _buttons: ButtonInfo[];
 
     @Input()
     public get buttons(): ButtonInfo[] {

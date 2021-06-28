@@ -56,21 +56,53 @@ export class JigsawTooltipComponent implements IPopupable {
     }
 })
 export class JigsawTooltip extends JigsawFloatBase {
+    /**
+     * @internal
+     */
+    public _jigsawFloatOpenDelay: number = 200;
     @Input('jigsawTooltipOpenDelay')
-    // @ts-ignore
-    public jigsawFloatOpenDelay: number = 200;
+    public get jigsawFloatOpenDelay(): number {
+        return this._jigsawFloatOpenDelay;
+    }
+
+    public set jigsawFloatOpenDelay(value: number) {
+        this._jigsawFloatOpenDelay = value;
+    }
+
+    protected _jigsawFloatCloseDelay: number = 10;
     @Input('jigsawTooltipCloseDelay')
-    // @ts-ignore
-    public jigsawFloatCloseDelay: number = 10;
+    public get jigsawFloatCloseDelay(): number {
+        return this._jigsawFloatCloseDelay;
+    }
+
+    public set jigsawFloatCloseDelay(value: number) {
+        this._jigsawFloatCloseDelay = value;
+    }
+
+    protected _jigsawFloatPosition: FloatPosition = 'top';
     @Input('jigsawTooltipPosition')
-    public jigsawFloatPosition: FloatPosition = 'top';
+    public get jigsawFloatPosition(): FloatPosition {
+        return this._jigsawFloatPosition;
+    }
+
+    public set jigsawFloatPosition(value: FloatPosition) {
+        this._jigsawFloatPosition = value;
+    }
+
     @Input('jigsawTooltipRenderAs')
     public renderAs: TooltipRenderAs = 'plain-text';
     @Input('jigsawTooltipContext')
     public context: any;
+
+    private _jigsawFloatOpen: boolean;
     @Input('jigsawTooltipOpen')
-    // @ts-ignore
-    public jigsawFloatOpen: boolean;
+    public get jigsawFloatOpen(): boolean {
+        return this._jigsawFloatOpen;
+    }
+
+    public set jigsawFloatOpen(value: boolean) {
+        this._jigsawFloatOpen = value;
+    }
 
     @Output('jigsawTooltipOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -95,11 +127,17 @@ export class JigsawTooltip extends JigsawFloatBase {
         });
     }
 
+    protected _jigsawFloatInitData: TooltipInitData = {};
     /**
      * @internal
      */
-    // @ts-ignore
-    public jigsawFloatInitData: TooltipInitData = {};
+    public get jigsawFloatInitData(): TooltipInitData {
+        return this._jigsawFloatInitData;
+    }
+
+    public set jigsawFloatInitData(value: TooltipInitData) {
+        this._jigsawFloatInitData = value;
+    }
 
     protected _init(): void {
         this.jigsawFloatTarget = JigsawTooltipComponent;

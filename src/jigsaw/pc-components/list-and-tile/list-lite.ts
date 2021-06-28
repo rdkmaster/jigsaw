@@ -82,13 +82,12 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     /**
      * 供选择的数据集合
      */
-    private _data: SupportedDataType;
+    protected _data: SupportedDataType;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
     public get data(): SupportedDataType {
         return this._data;
     }

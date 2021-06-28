@@ -46,8 +46,8 @@ export class JigsawUploadFallback extends JigsawUploadFallbackBase implements Af
      * @internal
      */
     public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = "all";
-        if (dragInfo.event.dataTransfer.effectAllowed == "all") {
+        dragInfo.event.dataTransfer.dropEffect = "move";
+        if (dragInfo.event.dataTransfer.effectAllowed == "move") {
             this._renderer.addClass(this._elementRef.nativeElement, "jigsaw-upload-fallback-drag-over");
         }
     }
@@ -56,8 +56,8 @@ export class JigsawUploadFallback extends JigsawUploadFallbackBase implements Af
      * @internal
      */
     public _$fileDragOverHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = "all";
-        if (dragInfo.event.dataTransfer.effectAllowed == "all") {
+        dragInfo.event.dataTransfer.dropEffect = "move";
+        if (dragInfo.event.dataTransfer.effectAllowed == "move") {
             this._renderer.addClass(this._elementRef.nativeElement, "jigsaw-upload-fallback-drag-over");
         }
     }

@@ -171,7 +171,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
     public get data() {
         return this._$data;
     }
@@ -216,11 +215,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         }
     }
 
-    private _selectedItems: ArrayCollection<any> | any[] = [];
+    protected _selectedItems: ArrayCollection<any> | any[] = [];
 
     @RequireMarkForCheck()
     @Input()
-    // @ts-ignore
     public get selectedItems() {
         return this._selectedItems;
     }
@@ -358,13 +356,12 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     @Input()
     public isTarget: boolean;
 
-    private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
+    protected _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
     public get data(): LocalPageableArray<GroupOptionValue> | PageableArray {
         return this._data;
     }
@@ -399,12 +396,18 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
     @Input()
     public subLabelField: string;
 
+    protected _trackItemBy: string | string[];
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
-    public trackItemBy: string | string[];
+    public get trackItemBy(): string | string[] {
+        return this._trackItemBy;
+    }
+
+    public set trackItemBy(value: string | string[]) {
+        this._trackItemBy = value;
+    }
 
     /**
      * @NoMarkForCheckRequired

@@ -83,7 +83,7 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     constructor(/**
                  * 表格的数据，是一个二维数组。
                  */
-                public data: TableDataMatrix = [],
+                protected _data: TableDataMatrix = [],
                 /**
                  * 表格数据的字段序列，这个序列决定了`JigsawTable`实际渲染出来哪些列。无效、重复的字段将被抛弃。
                  */
@@ -93,6 +93,14 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
                  */
                 public header: TableDataHeader = []) {
         super();
+    }
+
+    public get data(): TableMatrixRow[] {
+        return this._data;
+    }
+
+    public set data(value: TableMatrixRow[]) {
+        this._data = value;
     }
 
     /**
@@ -736,9 +744,8 @@ export class TableViewportData extends ViewportData {
         return this._columns;
     }
 
-    private _verticalTo = 0;
+    protected _verticalTo = 0;
 
-    // @ts-ignore
     public set verticalTo(value: number) {
         value = value < 0 ? 0 : value;
         if (this._verticalTo == value) {
@@ -756,9 +763,8 @@ export class TableViewportData extends ViewportData {
         this._verticalTo = value < 0 ? this._verticalTo : value;
     }
 
-    private _horizontalTo = 0;
+    protected _horizontalTo = 0;
 
-    // @ts-ignore
     public set horizontalTo(value: number) {
         value = value < 0 ? 0 : value;
         if (this._horizontalTo == value) {
@@ -781,7 +787,6 @@ export class TableViewportData extends ViewportData {
         this._bigTableData['sliceData']();
     }
 
-    // @ts-ignore
     public set width(value: number) {
         this.columns = value;
     }
@@ -790,7 +795,6 @@ export class TableViewportData extends ViewportData {
         return this.columns;
     }
 
-    // @ts-ignore
     public set height(value: number) {
         this.rows = value;
     }
@@ -1312,7 +1316,14 @@ export class PageableTreeTableData extends LocalPageableTableData {
      *
      * @internal
      */
-    public data: TableDataMatrix = [];
+    protected _data: TableDataMatrix = [];
+    public get data(): TableMatrixRow[] {
+        return this._data;
+    }
+
+    public set data(value: TableMatrixRow[]) {
+        this._data = value;
+    }
     /**
      * 树表的数据，这是一个有层次化结构的`SimpleTreeData`类型数据，必须包含这些属性：
      * - data：一个字符串数组，这是表格里的一行数据，数组的个数必须与表格的列数严格一致

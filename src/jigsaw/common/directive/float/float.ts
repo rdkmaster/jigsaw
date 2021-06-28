@@ -53,7 +53,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * @internal
      */
-    private _jigsawFloatCloseDelay: number = 400;
+    protected _jigsawFloatCloseDelay: number = 400;
 
     public get jigsawFloatCloseDelay(): number {
         return this._jigsawFloatCloseDelay;
@@ -71,7 +71,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         return this._popupInfo ? this._popupInfo.instance : null;
     }
 
-    private _jigsawFloatArrowElement: HTMLElement;
+    protected _jigsawFloatArrowElement: HTMLElement;
 
     /**
      * @internal
@@ -85,7 +85,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         this._setArrow(this.popupElement);
     }
 
-    private _jigsawFloatInitData: any;
+    protected _jigsawFloatInitData: any;
     /**
      * @internal
      */
@@ -122,17 +122,32 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         }
     }
 
+    protected _jigsawFloatOptions: PopupOptions;
     /**
      * @internal
      */
-    public jigsawFloatOptions: PopupOptions;
+    public get jigsawFloatOptions(): PopupOptions {
+        return this._jigsawFloatOptions;
+    }
+
+    public set jigsawFloatOptions(value: PopupOptions) {
+        this._jigsawFloatOptions = value;
+    }
+
+    protected _jigsawFloatPosition: FloatPosition = 'bottomLeft';
 
     /**
      * @internal
      */
-    public jigsawFloatPosition: FloatPosition = 'bottomLeft';
+    public get jigsawFloatPosition(): FloatPosition {
+        return this._jigsawFloatPosition;
+    }
 
-    private _opened: boolean = false;
+    public set jigsawFloatPosition(value: FloatPosition) {
+        this._jigsawFloatPosition = value;
+    }
+
+    protected _opened: boolean = false;
 
     /**
      * @internal
@@ -163,15 +178,29 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    protected _jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger;
     /**
      * @internal
      */
-    public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger;
+    public get jigsawFloatCloseTrigger(): "click" | "mouseleave" | "none" | DropDownTrigger {
+        return this._jigsawFloatCloseTrigger;
+    }
 
+    public set jigsawFloatCloseTrigger(value: "click" | "mouseleave" | "none" | DropDownTrigger) {
+        this._jigsawFloatCloseTrigger = value;
+    }
+
+    protected _jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
     /**
      * @internal
      */
-    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
+    public get jigsawFloatOpenTrigger(): "click" | "mouseenter" | "none" | DropDownTrigger {
+        return this._jigsawFloatOpenTrigger;
+    }
+
+    public set jigsawFloatOpenTrigger(value: "click" | "mouseenter" | "none" | DropDownTrigger) {
+        this._jigsawFloatOpenTrigger = value;
+    }
 
     /**
      * @internal
@@ -779,7 +808,6 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/trigger
      */
     @Input()
-    // @ts-ignore
     public get jigsawFloatCloseTrigger(): 'click' | 'mouseleave' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
@@ -809,7 +837,6 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/trigger
      */
     @Input()
-    // @ts-ignore
     public get jigsawFloatOpenTrigger(): 'click' | 'mouseenter' | 'none' | DropDownTrigger {
         return this._openTrigger;
     }
@@ -832,32 +859,73 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
         }
     }
 
+    protected _jigsawFloatArrowElement: any;
     @Input()
-    // @ts-ignore
-    public jigsawFloatArrowElement: any;
+    public get jigsawFloatArrowElement(): any {
+        return this._jigsawFloatArrowElement;
+    }
 
+    public set jigsawFloatArrowElement(value: any) {
+        this._jigsawFloatArrowElement = value;
+    }
+
+    protected _jigsawFloatInitData: any;
     @Input()
-    // @ts-ignore
-    public jigsawFloatInitData: any;
+    public get jigsawFloatInitData(): any {
+        return this._jigsawFloatInitData;
+    }
 
+    public set jigsawFloatInitData(value: any) {
+        this._jigsawFloatInitData = value;
+    }
+
+    protected _jigsawFloatOpen: boolean;
     @Input()
-    // @ts-ignore
-    public jigsawFloatOpen: boolean;
+    public get jigsawFloatOpen(): boolean {
+        return this._jigsawFloatOpen;
+    }
 
+    public set jigsawFloatOpen(value: boolean) {
+        this._jigsawFloatOpen = value;
+    }
+
+    /**
+     * @internal
+     */
+    public _jigsawFloatOpenDelay: number = 100;
     @Input()
-    // @ts-ignore
-    public jigsawFloatOpenDelay: number = 100;
+    public get jigsawFloatOpenDelay(): number {
+        return this._jigsawFloatOpenDelay;
+    }
 
+    public set jigsawFloatOpenDelay(value: number) {
+        this._jigsawFloatOpenDelay = value;
+    }
+
+    protected _jigsawFloatCloseDelay: number = 400;
     @Input()
-    // @ts-ignore
-    public jigsawFloatCloseDelay: number = 400;
+    public get jigsawFloatCloseDelay(): number {
+        return this._jigsawFloatCloseDelay;
+    }
 
+    public set jigsawFloatCloseDelay(value: number) {
+        this._jigsawFloatCloseDelay = value;
+    }
+
+    protected _jigsawFloatOptions: PopupOptions;
     /**
      * $demo = float/option
      */
     @Input()
-    public jigsawFloatOptions: PopupOptions;
+    public get jigsawFloatOptions(): PopupOptions {
+        return this._jigsawFloatOptions;
+    }
 
+    public set jigsawFloatOptions(value: PopupOptions) {
+        this._jigsawFloatOptions = value;
+    }
+
+    protected _jigsawFloatPosition: FloatPosition = 'bottomLeft';
     /**
      * 一共支持12个位置，其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，比如'bottomLeft'表示在下面弹出来，
      * 并且视图左侧与触发点左侧对齐。注意，这个位置是应用给的理想位置，在弹出的时候，我们应该使用PopupService的位置修正函数来对理想位置坐修正，
@@ -865,14 +933,26 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
      * $demo = float/position
      */
     @Input()
-    public jigsawFloatPosition: FloatPosition = 'bottomLeft';
+    public get jigsawFloatPosition(): "bottomLeft" | "bottomRight" | "topLeft" | "topRight" | "leftTop" | "leftBottom" | "rightTop" | "rightBottom" | "left" | "right" | "top" | "bottom" {
+        return this._jigsawFloatPosition;
+    }
 
+    public set jigsawFloatPosition(value: "bottomLeft" | "bottomRight" | "topLeft" | "topRight" | "leftTop" | "leftBottom" | "rightTop" | "rightBottom" | "left" | "right" | "top" | "bottom") {
+        this._jigsawFloatPosition = value;
+    }
+
+    protected _jigsawFloatTarget: Type<IPopupable> | TemplateRef<any>;
     /**
      * $demo = float/target
      */
     @Input()
-    // @ts-ignore
-    public jigsawFloatTarget: Type<IPopupable> | TemplateRef<any>;
+    public get jigsawFloatTarget(): Type<IPopupable> | TemplateRef<any> {
+        return this._jigsawFloatTarget;
+    }
+
+    public set jigsawFloatTarget(value: Type<IPopupable> | TemplateRef<any>) {
+        this._jigsawFloatTarget = value;
+    }
 
     @Output()
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();

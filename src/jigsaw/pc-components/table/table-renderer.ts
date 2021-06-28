@@ -33,9 +33,16 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
      */
     public hostInstance: any;
 
+    protected _cellData: any;
     @RequireMarkForCheck()
     @Input()
-    public cellData: any;
+    public get cellData(): any {
+        return this._cellData;
+    }
+
+    public set cellData(value: any) {
+        this._cellData = value;
+    }
     /**
      * @NoMarkForCheckRequired
      */
@@ -46,11 +53,20 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
      */
     @Input()
     public field: string;
+
+    protected _initData: any;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public initData: any;
+    public get initData(): any {
+        return this._initData;
+    }
+
+    public set initData(value: any) {
+        this._initData = value;
+    }
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
@@ -72,7 +88,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         this.cellDataChange.emit(value)
     }
 
-    private _tableData: TableData;
+    protected _tableData: TableData;
 
     /**
      * @NoMarkForCheckRequired
@@ -404,9 +420,8 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     public checked: boolean;
 
-    private _cellData: any;
+    protected _cellData: any;
 
-    // @ts-ignore
     public get cellData(): any {
         return this._cellData;
     }
@@ -466,7 +481,6 @@ export class TableCellSwitchRenderer extends TableCellRendererBase {
      */
     public _$readonly: boolean;
 
-    // @ts-ignore
     set initData(value: any) {
         if (!value || !value.hasOwnProperty('readonly')) {
             return;
@@ -502,7 +516,13 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
     public selected: any;
-    public initData: InitDataGenerator | ArrayCollection<any> | any[];
+    protected _initData: InitDataGenerator | ArrayCollection<any> | any[];
+    public get initData(): InitDataGenerator | ArrayCollection<any> | any[] {
+        return this._initData;
+    }
+    public set initData(value: InitDataGenerator | ArrayCollection<any> | any[]) {
+        this._initData = value;
+    }
     public data: ArrayCollection<any> | any[];
 
     constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
@@ -575,11 +595,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
             }, []);
     }
 
-    private _cellData: any;
+    protected _cellData: any;
 
     @RequireMarkForCheck()
     @Input()
-    // @ts-ignore
     get cellData(): any {
         return this._cellData;
     }
@@ -624,9 +643,23 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
     `
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
-    public cellData: TreeTableCellData;
-    // @ts-ignore
-    public tableData: PageableTreeTableData;
+    protected _cellData: TreeTableCellData;
+    public get cellData(): TreeTableCellData {
+        return this._cellData;
+    }
+
+    public set cellData(value: TreeTableCellData) {
+        this._cellData = value;
+    }
+
+    protected _tableData: PageableTreeTableData;
+    public get tableData(): PageableTreeTableData {
+        return this._tableData;
+    }
+
+    public set tableData(value: PageableTreeTableData) {
+        this._tableData = value;
+    }
 
     public get indent(): string {
         return (this.cellData.id.length - 1) * 20 + 'px';

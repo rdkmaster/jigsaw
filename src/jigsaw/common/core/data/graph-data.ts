@@ -53,12 +53,20 @@ export abstract class AbstractGraphData extends TableDataBase {
     constructor(/**
                  * 图形的数据，二维数组。
                  */
-                public data: GraphDataMatrix = [],
+                protected _data: GraphDataMatrix = [],
                 public header: GraphDataHeader = [],
                 public rowDescriptor: GraphDataRowDescriptor = [],
                 public field: GraphDataField = []) {
-        super(data, field, header);
+        super(_data, field, header);
         this._makeFields();
+    }
+
+    get data(): GraphMatrixRow[] {
+        return this._data;
+    }
+
+    set data(value: GraphMatrixRow[]) {
+        this._data = value;
     }
 
     private _optionsPatch: EchartOptions;
@@ -301,9 +309,8 @@ export abstract class AbstractNormalGraphData extends AbstractGraphData {
     public legend: EchartLegend;
     public tooltip: EchartTooltip;
 
-    private _data: GraphDataMatrix;
+    protected _data: GraphDataMatrix;
 
-    // @ts-ignore
     public get data(): any {
         return this._data;
     }
@@ -1627,7 +1634,14 @@ export class HeatGraphData extends AbstractNormalGraphData {
  * 关系图
  */
 export class RelationalGraphData extends AbstractGraphData {
-    public data: any[];
+    protected _data: any[];
+    public get data(): any[] {
+        return this._data;
+    }
+
+    public set data(value: any[]) {
+        this._data = value;
+    }
 
     public title: string;
 

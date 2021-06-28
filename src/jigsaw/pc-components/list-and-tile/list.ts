@@ -70,11 +70,10 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
         super(_injector);
     }
 
-    private _selected: boolean = false; // 选中状态
+    protected _selected: boolean = false; // 选中状态
 
     @RequireMarkForCheck()
     @Input()
-    // @ts-ignore
     public get selected(): boolean {
         return this._selected;
     }

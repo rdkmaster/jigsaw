@@ -74,7 +74,7 @@ export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements
     @Input()
     public additionalFields: { [prop: string]: string };
 
-    private _minSize: number;
+    protected _minSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -92,7 +92,7 @@ export class JigsawUploadFallbackBase extends AbstractJigsawComponent implements
         this._minSize = Number(value);
     }
 
-    private _maxSize: number;
+    protected _maxSize: number;
 
     /**
      * @NoMarkForCheckRequired

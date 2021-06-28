@@ -17,18 +17,17 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
-    private _jigsawFloatOptions: PopupOptions;
+    protected _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
     private _jigsawCascadingMenuTheme: MenuTheme = 'dark';
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')
-    // @ts-ignore
-    get jigsawFloatOptions(): PopupOptions {
+    public get jigsawFloatOptions(): PopupOptions {
         return this._jigsawFloatOptions;
     }
 
-    set jigsawFloatOptions(value: PopupOptions) {
+    public set jigsawFloatOptions(value: PopupOptions) {
         if (this._jigsawFloatOptions != value) {
             this._jigsawFloatOptions = value;
             this.jigsawFloatInitData.options = value;
@@ -100,7 +99,6 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     @Input('jigsawCascadingMenuPosition')
-    // @ts-ignore
     public get jigsawFloatPosition(): FloatPosition {
         return this._jigsawCascadingMenuPosition;
     };
@@ -115,18 +113,37 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         }
     };
 
+    protected _jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
+
     @Input('jigsawCascadingMenuOpenTrigger')
-    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
+    public get jigsawFloatOpenTrigger(): "click" | "mouseenter" | "none" | DropDownTrigger {
+        return this._jigsawFloatOpenTrigger;
+    }
+
+    public set jigsawFloatOpenTrigger(value: "click" | "mouseenter" | "none" | DropDownTrigger) {
+        this._jigsawFloatOpenTrigger = value;
+    }
+
+    protected _jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
 
     @Input('jigsawCascadingMenuCloseTrigger')
-    public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
+    public get jigsawFloatCloseTrigger(): "click" | "mouseleave" | "none" | DropDownTrigger {
+        return this._jigsawFloatCloseTrigger;
+    }
 
-    /**
-     * @internal
-     */
+    public set jigsawFloatCloseTrigger(value: "click" | "mouseleave" | "none" | DropDownTrigger) {
+        this._jigsawFloatCloseTrigger = value;
+    }
+
+    protected _jigsawFloatInitData: any;
     @Input('jigsawCascadingMenuInitData')
-    // @ts-ignore
-    public jigsawFloatInitData: any;
+    public get jigsawFloatInitData(): any {
+        return this._jigsawFloatInitData;
+    }
+
+    public set jigsawFloatInitData(value: any) {
+        this._jigsawFloatInitData = value;
+    }
 
     @Input()
     public get jigsawCascadingMenuOpen(): boolean {
@@ -137,13 +154,28 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         this.jigsawFloatOpen = value;
     }
 
+    /**
+     * @internal
+     */
+    public _jigsawFloatOpenDelay: number = 300;
     @Input()
-    // @ts-ignore
-    public jigsawFloatOpenDelay: number = 300;
+    public get jigsawFloatOpenDelay(): number {
+        return this._jigsawFloatOpenDelay;
+    }
 
+    public set jigsawFloatOpenDelay(value: number) {
+        this._jigsawFloatOpenDelay = value;
+    }
+
+    protected _jigsawFloatCloseDelay: number = 200;
     @Input()
-    // @ts-ignore
-    public jigsawFloatCloseDelay: number = 200;
+    public get jigsawFloatCloseDelay(): number {
+        return this._jigsawFloatCloseDelay;
+    }
+
+    public set jigsawFloatCloseDelay(value: number) {
+        this._jigsawFloatCloseDelay = value;
+    }
 
     @Output()
     public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();

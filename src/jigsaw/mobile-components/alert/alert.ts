@@ -133,7 +133,6 @@ export class JigsawMobileAlert extends AbstractMobileDialogComponentBase {
 @Directive()
 export abstract class JigsawMobileCommonAlert extends DialogBase {
     @Input()
-    // @ts-ignore
     public set initData(value: any) {
         if (!value) {
             return;
@@ -147,8 +146,28 @@ export abstract class JigsawMobileCommonAlert extends DialogBase {
     public abstract set dialog(value: JigsawMobileDialog);
 
     public message: string;
-    // @ts-ignore
-    public buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
+
+    protected _caption: string;
+
+    @Input()
+    public get caption(): string {
+        return this._caption;
+    }
+
+    public set caption(value: string) {
+        this._caption = value;
+    }
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
+    @Input()
+    public get buttons(): ButtonInfo[] {
+        return this._buttons;
+    }
+
+    public set buttons(value: ButtonInfo[]) {
+        this._buttons = value;
+    }
+
     public level: AlertLevel = AlertLevel.info;
 
     public static showAlert(what: Type<JigsawMobileCommonAlert>,
@@ -207,10 +226,10 @@ export class JigsawMobileInfoAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
-    // @ts-ignore
-    @Input() public caption: string;
+
     @Input() public level: AlertLevel = AlertLevel.info;
-    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
 
     public static show(message: string,
                        callback?: DialogMobileCallback,
@@ -233,10 +252,10 @@ export class JigsawMobileWarningAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
-    // @ts-ignore
-    @Input() public caption: string;
+
     @Input() public level: AlertLevel = AlertLevel.warning;
-    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
 
     public static show(message: string,
                        callback?: DialogMobileCallback,
@@ -259,10 +278,10 @@ export class JigsawMobileErrorAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
-    // @ts-ignore
-    @Input() public caption: string;
+
     @Input() public level: AlertLevel = AlertLevel.error;
-    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
 
     public static show(message: string,
                        callback?: DialogMobileCallback,
@@ -285,10 +304,10 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
 
     @ViewChild(JigsawMobileAlert) dialog: JigsawMobileDialog;
     @Input() public message: string;
-    // @ts-ignore
-    @Input() public caption: string;
+
     @Input() public level: AlertLevel = AlertLevel.confirm;
-    @Input() public buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 
     public static show(message: string,
                        callback?: DialogMobileCallback,

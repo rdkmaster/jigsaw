@@ -46,17 +46,23 @@ export type DialogCallback = (button: ButtonInfo) => void;
  */
 @Directive()
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
-
+    protected _initData: any;
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public initData: any;
+    public get initData(): any {
+        return this._initData;
+    }
+
+    public set initData(value: any) {
+        this._initData = value;
+    }
 
     abstract get dialog(): JigsawDialog;
     abstract set dialog(value: JigsawDialog);
 
-    private _caption: string = '';
+    protected _caption: string = '';
 
     /**
      * @NoMarkForCheckRequired
@@ -73,7 +79,7 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
-    private _buttons: ButtonInfo[];
+    protected _buttons: ButtonInfo[];
 
     /**
      * @NoMarkForCheckRequired
@@ -132,11 +138,18 @@ export abstract class AbstractDialogComponentBase
     @Input()
     public caption: string;
 
+    protected _initData: any;
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public initData: any;
+    public get initData(): any {
+        return this._initData;
+    }
+
+    public set initData(value: any) {
+        this._initData = value;
+    }
 
     protected popupElement: HTMLElement;
 

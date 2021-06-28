@@ -164,7 +164,6 @@ export abstract class JigsawCommonAlert extends DialogBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
     public set initData(value: any) {
         if (!value) {
             return;
@@ -180,8 +179,33 @@ export abstract class JigsawCommonAlert extends DialogBase {
 
     public message: string;
     public header: string;
-    // @ts-ignore
-    public buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
+
+    protected _caption: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get caption(): string {
+        return this._caption;
+    }
+
+    public set caption(value: string) {
+        this._caption = value;
+    }
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok'}];
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get buttons(): ButtonInfo[] {
+        return this._buttons;
+    }
+
+    public set buttons(value: ButtonInfo[]) {
+        this._buttons = value;
+    }
+
     public level: AlertLevel = AlertLevel.info;
 
     public static showAlert(what: Type<JigsawCommonAlert>,
@@ -259,18 +283,9 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
-    public caption: string;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
     public level: AlertLevel = AlertLevel.info;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'primary'}];
 
     public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
@@ -304,22 +319,14 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
      */
     @Input()
     public header: string;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    // @ts-ignore
-    public caption: string;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public level: AlertLevel = AlertLevel.warning;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'warning'}];
 
     public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
@@ -354,22 +361,14 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
      */
     @Input()
     public header: string;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    // @ts-ignore
-    public caption: string;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public level: AlertLevel = AlertLevel.error;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.ok', 'type': 'error'}];
 
     public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
@@ -403,22 +402,14 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
      */
     @Input()
     public header: string;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    // @ts-ignore
-    public caption: string;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public level: AlertLevel = AlertLevel.confirm;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
+
+    protected _buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 
     public static show(info: string | AlertMessage,
                        callback?: DialogCallback,

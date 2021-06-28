@@ -21,13 +21,20 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     @Input()
     public valid: boolean = true;
 
+    protected _data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+    public get data(): ArrayCollection<GroupOptionValue> | GroupOptionValue[] {
+        return this._data;
+    }
 
-    private _trackItemBy: string | string[];
+    public set data(value: ArrayCollection<GroupOptionValue> | GroupOptionValue[]) {
+        this._data = value;
+    }
+
+    protected _trackItemBy: string | string[];
 
     /**
      * 设置对象的标识
@@ -64,12 +71,19 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     @Input()
     public multipleSelect: boolean;
 
+    protected _selectedItems: ArrayCollection<any> | any[];
     /**
      * 选择的结果集
      */
     @RequireMarkForCheck()
     @Input()
-    public selectedItems: ArrayCollection<any> | any[];
+    public get selectedItems(): ArrayCollection<any> | any[] {
+        return this._selectedItems;
+    }
+
+    public set selectedItems(value: ArrayCollection<any> | any[]) {
+        this._selectedItems = value;
+    }
 
     /**
      * 选择结果发生变化时，向外面发送事件

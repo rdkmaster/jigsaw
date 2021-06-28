@@ -440,14 +440,30 @@ export interface IFilterable extends IAjaxComponentData {
  * - 视口左上角位置：`horizontalTo` / `verticalTo`
  */
 export class ViewportData {
+
     /**
      * 视口当前的宽度值
      */
-    width: number;
+    protected _width: number;
+    public get width(): number {
+        return this._width;
+    }
+
+    public set width(value: number) {
+        this._width = value;
+    }
+
     /**
      * 视口当前的高度值
      */
-    height: number;
+    protected _height: number;
+    public get height(): number {
+        return this._height;
+    }
+
+    public set height(value: number) {
+        this._height = value;
+    }
 
     /**
      * 视口所处区域的最大宽度值
@@ -461,11 +477,26 @@ export class ViewportData {
     /**
      * 视口的左上角当前处于全局的水平位置，从0开始计数。
      */
-    horizontalTo: number;
+    protected _horizontalTo: number;
+    public get horizontalTo(): number {
+        return this._horizontalTo;
+    }
+
+    public set horizontalTo(value: number) {
+        this._horizontalTo = value;
+    }
+
     /**
      * 视口的左上角当前处于全局的垂直位置，从0开始计数。
      */
-    verticalTo: number;
+    protected _verticalTo: number;
+    public get verticalTo(): number {
+        return this._verticalTo;
+    }
+
+    public set verticalTo(value: number) {
+        this._verticalTo = value;
+    }
 }
 
 /**

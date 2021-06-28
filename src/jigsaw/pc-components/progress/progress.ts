@@ -43,13 +43,12 @@ export class JigsawProgress extends ProgressBase implements OnDestroy, OnInit, I
     public answer: EventEmitter<any>;
     public initData: ProgressInitData;
 
-    private _value: number = 0;
+    protected _value: number = 0;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
     public get value(): number {
         return this._value;
     }
@@ -107,11 +106,10 @@ export class JigsawProgress extends ProgressBase implements OnDestroy, OnInit, I
         }
     }
 
-    private _status: Status = 'processing';
+    protected _status: Status = 'processing';
 
     @Input()
     @RequireMarkForCheck()
-    // @ts-ignore
     public get status(): Status {
         return this._status
     }

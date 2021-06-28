@@ -29,8 +29,23 @@ export abstract class ProgressBase extends AbstractJigsawComponent implements On
 
     public answer: EventEmitter<any>;
     public initData: ProgressInitData;
-    public value: number;
-    public status: Status = "processing";
+    protected _value: number;
+    get value(): number {
+        return this._value;
+    }
+
+    set value(value: number) {
+        this._value = value;
+    }
+
+    protected _status: Status = "processing";
+    public get status(): "processing" | "block" | "error" | "success" {
+        return this._status;
+    }
+
+    public set status(value: "processing" | "block" | "error" | "success") {
+        this._status = value;
+    }
 
     protected abstract _updateProgress(value: number): void;
     protected abstract _processInitData(): void;

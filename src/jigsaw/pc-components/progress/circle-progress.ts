@@ -59,13 +59,12 @@ export class JigsawCircleProgress extends ProgressBase {
         return this._$validPercent ? this.value.toFixed(2) : '--';
     }
 
-    private _value: number;
+    protected _value: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    // @ts-ignore
     public get value(): number {
         return this._value;
     }
@@ -86,9 +85,16 @@ export class JigsawCircleProgress extends ProgressBase {
         return !isNaN(this.value);
     }
 
+    protected _status: Status = "processing";
     @Input()
     @RequireMarkForCheck()
-    public status: Status = "processing";
+    public get status(): "processing" | "block" | "error" | "success" {
+        return this._status;
+    }
+
+    public set status(value: "processing" | "block" | "error" | "success") {
+        this._status = value;
+    }
 
     private _diameter: number;
 
