@@ -1,7 +1,6 @@
 <jigsaw-collapse class="jigsaw-upload-result-collapse" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
     <jigsaw-collapse-pane
         *ngFor="let file of files"
-        arrowPosition="left"
         class="jigsaw-upload-result-log"
         [class.jigsaw-upload-result-error]="file.state === 'error'"
     >
