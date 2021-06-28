@@ -68,6 +68,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         .#{$jigsaw-search}-button {
             background: $bg-disabled;
             border-color: $border-color-disabled;
+            color: $icon-color-default;
 
             &:hover {
                 color: $icon-color-default;

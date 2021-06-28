@@ -72,6 +72,10 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             input {
                 color: $font-color-disabled;
                 cursor: not-allowed;
+                
+                &::-webkit-input-placeholder {
+                    color: $font-color-disabled;
+                }
             }
 
             .#{$input-prefix-cls}-icon-front,
@@ -129,7 +133,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         line-height: 1;
 
         &:hover {
-            color: $font-color-default;
+            color: $brand-default;
         }
 
         &[hidden] {
