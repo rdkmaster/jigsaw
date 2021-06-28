@@ -64,6 +64,15 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
                 private _injector: Injector) {
         super();
         this._removeUpdateValueCombineSubscriber = this._updateValueCombine.pipe(debounceTime(300)).subscribe((mode: 'combine' | 'separate') => {
+            // click已选日期进行日期重置
+            if (this._$date === ""){
+                this._date = "";
+                this.runMicrotask(() => {
+                    this.dateChange.emit(this._date);
+                    this._propagateChange(this._date);
+                    this._cdr.markForCheck();
+                });
+            }
             if (!this._$date) {
                 return;
             }
