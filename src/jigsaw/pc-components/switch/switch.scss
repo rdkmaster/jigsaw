@@ -114,7 +114,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 .#{$switch-prefix}-medium {
     --switch-height: 16px;
     .#{$switch-prefix}-inner {
-        font-size: $font-size-med;
+        font-size: $font-size-sm;
     }
 }
 
