@@ -9,6 +9,9 @@ export class BadgeMoveDemoComponent {
     @ViewChild('target', {read: ElementRef})
     target: ElementRef;
 
+    public offsetLeft: number = 30;
+    public offsetTop: number = 100;
+
     constructor(public _renderer: Renderer2) {
     }
 
@@ -17,6 +20,11 @@ export class BadgeMoveDemoComponent {
             return;
         }
         this._renderer.setStyle(this.target.nativeElement, style, value);
+    }
+
+    updateHandler(){
+        this.offsetLeft = this.target.nativeElement.offsetLeft;
+        this.offsetTop = this.target.nativeElement.offsetTop;
     }
 
     // ====================================================================
