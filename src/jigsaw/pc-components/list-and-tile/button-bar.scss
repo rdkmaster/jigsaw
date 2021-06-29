@@ -48,10 +48,17 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
         & > p {
             max-width: 120px;
-            margin-left: 3px;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+        }
+
+        .iconfont {
+            margin-right: 3px;
+
+            &.jigsaw-button-bar-icon-only {
+                margin-left: 3px;
+            }
         }
     }
 
