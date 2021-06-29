@@ -17,7 +17,7 @@
     <jigsaw-button colorType="danger">Danger</jigsaw-button>
 </div>
 
-<jigsaw-header>另一种写法（指令）</jigsaw-header>
+<jigsaw-header>预设颜色,另一种写法（指令）</jigsaw-header>
 <div>
     <a jigsaw-button>Default</a>
 
@@ -75,6 +75,7 @@
     <jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize('large')">Large</jigsaw-button>
 </div>
 
+<jigsaw-header>预设尺寸,另一种写法（指令）</jigsaw-header>
 <p>当前尺寸: {{aSize || "default"}}</p>
 <a jigsaw-button [preSize]="aSize" colorType="primary" (click)="changeASize('small')">Small</a>
 
