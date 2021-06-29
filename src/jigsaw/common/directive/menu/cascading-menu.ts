@@ -119,6 +119,17 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Input('jigsawCascadingMenuCloseTrigger')
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
 
+    private _floatDisabled: boolean = false;
+
+    @Input()
+    public get jigsawFloatDisabled(): boolean {
+        return this._floatDisabled;
+    }
+
+    public set jigsawFloatDisabled(value: boolean) {
+        this._floatDisabled = typeof value != 'boolean' ? false : value; 
+    }
+
     /**
      * @internal
      */

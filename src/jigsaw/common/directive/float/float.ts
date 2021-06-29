@@ -173,19 +173,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      */
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger;
 
-    private _jigsawFloatDisabled: boolean;
-
     /**
-     * @NoMarkForCheckRequired
+     * @internal
      */
-    @Input()
-    public get jigsawFloatDisabled(): boolean {
-        return this._jigsawFloatDisabled;
-    }
-
-    public set jigsawFloatDisabled(value: boolean) {
-        this._jigsawFloatDisabled = typeof value != 'boolean' ? false : value; 
-    }
+    public jigsawFloatDisabled: boolean;
 
     /**
      * @internal
@@ -858,6 +849,17 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
 
     @Input()
     public jigsawFloatCloseDelay: number = 400;
+
+    private _floatDisabled: boolean = false;
+
+    @Input()
+    public get jigsawFloatDisabled(): boolean {
+        return this._floatDisabled;
+    }
+
+    public set jigsawFloatDisabled(value: boolean) {
+        this._floatDisabled = typeof value != 'boolean' ? false : value; 
+    }
 
     /**
      * $demo = float/option
