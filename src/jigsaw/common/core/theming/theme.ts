@@ -1,7 +1,7 @@
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
 export type MajorStyle = "dark" | "light";
-export type PopupBackgroundColor = "#102331" | "#ffffff";
+export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
 
 // @dynamic
 export class JigsawTheme {
@@ -17,7 +17,7 @@ export class JigsawTheme {
 
         switch (value) {
             case "dark":
-                this._popupBackgroundColor = "#102331";
+                this._popupBackgroundColor = "#1b1d26";
                 break;
             case 'light':
             default:
