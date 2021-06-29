@@ -39,6 +39,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
             border-radius: $border-radius-sm;
             text-align: center;
             outline: none;
+            background: $bg-component;
 
             &:hover {
                 background: $brand-light;
