@@ -218,6 +218,12 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
             }
         }
 
+        &.#{$steps-prefix-cls}-item-finished {
+            .#{$steps-prefix-cls}-bar span {
+                background: $brand-default;
+            }
+        }
+
         &.#{$steps-prefix-cls}-item-error {
             .#{$steps-prefix-cls}-bar span {
                 background: $error-default;
@@ -233,12 +239,6 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
         &.#{$steps-prefix-cls}-item-waiting {
             .#{$steps-prefix-cls}-bar span {
                 background: $border-color-default;
-            }
-        }
-
-        &.#{$steps-prefix-cls}-item-finished {
-            .#{$steps-prefix-cls}-bar span {
-                background: $brand-default;
             }
         }
     }
