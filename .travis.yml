@@ -5,9 +5,8 @@ node_js:
 
 branches:
   - master
-  - v1.1
-  - v5.0
   - v8.0
+  - v9.3
 
 env:
   global:
