@@ -1,10 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { TabBarData, JigsawMenu, SimpleTreeData, LineGraphData } from "jigsaw/public_api";
-import { HttpClient } from "@angular/common/http";
+import {Component, OnInit} from "@angular/core";
+import {JigsawMenu, SimpleTreeData, TabBarData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class TabBarTypeDemoComponent implements OnInit {
     tabBarData: Array<string>;

@@ -3,7 +3,7 @@ import { BreadcrumbNode } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class BreadcrumbModeDemoComponent {
     public data: (string | BreadcrumbNode)[];

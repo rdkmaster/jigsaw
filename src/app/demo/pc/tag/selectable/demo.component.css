@@ -1,4 +1,4 @@
-section {
+.section-container {
     margin-bottom: 10px;
 }
 
@@ -6,7 +6,7 @@ section {
     display: flex;
     align-items: center;
 
-    jigsaw-tag {
-        margin-right: 10px;
-    }
+}
+.align-center jigsaw-tag {
+    margin-right: 10px;
 }
