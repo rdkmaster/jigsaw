@@ -3,7 +3,7 @@ import { JigsawTag } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class TagSelectableDemoComponent {
     tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Disabled1', 'Disabled2'];

@@ -1,9 +1,8 @@
-import { Component, ViewChild } from "@angular/core";
-import { JigsawSearchInput } from "jigsaw/public_api";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class SearchInputBasicDemoComponent {
     value1: string;

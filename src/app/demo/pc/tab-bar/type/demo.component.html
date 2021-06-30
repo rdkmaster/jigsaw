@@ -2,10 +2,12 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-header>标签式</jigsaw-header>
-<jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar>
-<jigsaw-tabs-bar [data]="tabBarData2"></jigsaw-tabs-bar>
+<div class="demo-container">
+    <jigsaw-header>标签式</jigsaw-header>
+    <jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar>
+    <jigsaw-tabs-bar [data]="tabBarData2"></jigsaw-tabs-bar>
 
-<jigsaw-header>页签式</jigsaw-header>
-<jigsaw-tabs-bar [data]="tabBarData" [tabType]="'page'"></jigsaw-tabs-bar>
-<jigsaw-tabs-bar [data]="tabBarData2" [tabType]="'page'"></jigsaw-tabs-bar>
+    <jigsaw-header>页签式</jigsaw-header>
+    <jigsaw-tabs-bar [data]="tabBarData" [tabType]="'page'"></jigsaw-tabs-bar>
+    <jigsaw-tabs-bar [data]="tabBarData2" [tabType]="'page'"></jigsaw-tabs-bar>
+</div>

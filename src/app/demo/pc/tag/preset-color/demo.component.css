@@ -1,8 +1,8 @@
-section {
+.section-container {
     margin-bottom: 10px;
 }
 
-span {
+.section-container span {
     width: 136px;
     display: inline-block;
     margin-top: 8px;

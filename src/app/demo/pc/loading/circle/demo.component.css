@@ -15,10 +15,10 @@
     position: relative;
     width: 400px;
     height: 200px;
+}
 
-    .jigsaw-circle-loading-host {
-        width: 100%;
-    }
+.large-loading-cntr .jigsaw-circle-loading-host {
+    width: 100%;
 }
 
 .medium-loading-cntr {
@@ -27,10 +27,10 @@
     position: relative;
     width: 400px;
     height: 200px;
+}
 
-    .jigsaw-circle-loading-host {
-        width: 100%;
-    }
+.medium-loading-cntr .jigsaw-circle-loading-host {
+    width: 100%;
 }
 
 .small-loading-cntr {
@@ -39,8 +39,8 @@
     position: relative;
     width: 400px;
     height: 200px;
+}
 
-    .jigsaw-circle-loading-host {
-        width: 100%;
-    }
+.small-loading-cntr .jigsaw-circle-loading-host {
+    width: 100%;
 }

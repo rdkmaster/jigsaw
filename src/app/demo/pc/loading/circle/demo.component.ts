@@ -3,7 +3,7 @@ import {LoadingService, PopupInfo, JigsawCircleLoading } from "jigsaw/public_api
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.scss']
+    styleUrls: ['./demo.component.css']
 })
 export class CircleLoadingDemoComponent {
     @ViewChild('block') block: ElementRef;
