@@ -1,9 +1,8 @@
-import {Component, ViewChild, AfterViewInit, Renderer2, ElementRef} from "@angular/core";
-import {JigsawInfoAlert} from "jigsaw/public_api";
+import {Component, ViewChild, Renderer2, ElementRef} from "@angular/core";
 
 @Component({
     templateUrl: 'demo.component.html',
-    styleUrls: ['./demo.component.scss']
+    styleUrls: ['./demo.component.css']
 })
 export class BadgeMoveDemoComponent {
     @ViewChild('target', {read: ElementRef})
