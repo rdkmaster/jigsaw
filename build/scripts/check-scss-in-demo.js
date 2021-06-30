@@ -42,12 +42,12 @@ function doCheck(srcPath) {
     }
 
     const source = fs.readFileSync(srcPath).toString();
-    source.replace(/\bstyleUrls:\s*\[([\s\S]*?)]/, (_, urls) => {
-        if (urls.match(/.+\.scss/i)) {
+    source.replace(/\bstyleUrls:\s*(\[[\s\S]*?])/, (_, urls) => {
+        if (eval(urls).find(url => url.match(/.+\.scss/i))) {
             error('Error: using scss file in demo is NOT allowed');
             error('File:', srcPath);
         }
-    })
+    });
 }
 
 function error(...msg) {
