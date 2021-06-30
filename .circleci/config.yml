@@ -1,0 +1,48 @@
+version: 2.1
+
+workflows:
+  orb-free-workflow:
+    jobs:
+      - build-and-test
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:10.16
+    steps:
+      - checkout
+      - restore_cache:
+          # See the configuration reference documentation for more details on using restore_cache and save_cache steps
+          # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
+          keys:
+            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      - run:
+          name: install packages
+          command: npm ci
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          paths:
+            - ~/.npm
+      - run:
+          name: Static Tests
+          command: |
+            node build/scripts/check-demo-import.js
+            node build/scripts/check-mark-for-check.js
+            node build/scripts/check-public-variables.js
+            node build/scripts/check-html-element-type.js
+            node build/scripts/check-import-path.js
+            gulp ensure-url-matches-path
+      - run:
+          name: Build
+          command: |
+            gulp generate-demo-info
+            gulp build:jigsaw
+            gulp build:formly:clean
+            sh build/scripts/doc-generator/generate.sh ./temp/doc/
+      - run:
+          name: Test
+          command: |
+            ng test jigsaw  --code-coverage false --watch false
+            sh build/scripts/build-tourist.sh
+            sh build/scripts/integrate-with-seed.sh
+            node build/scripts/patch-demos.js
