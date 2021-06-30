@@ -4,23 +4,22 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
     background: none !important;
 
     .#{$jigsaw-prefix}-list {
-        background: #102331;
-        border: #2e4657 1px solid;
+        border: 1px solid $border-color-default;
         font-size: 14px;
+        background: $bg-component;
 
         .#{$list-option-prefix-cls} {
-            color: #eee;
             line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
-            background: none;
+            background: $bg-body;
 
             &:hover {
-                background: #015c91;
+                background: $brand-light;
             }
 
             &.#{$list-option-prefix-cls}-active {
-                background: #027bc2;
+                background: $brand-active-light;
             }
 
             hr {
@@ -30,18 +29,12 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
-                background: #102331;
+                background: $bg-disabled;
 
-                .#{$menu-prefix-cls}-list-title {
-                    float: left;
-                    line-height: 32px;
-                    color: #666666;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                .#{$menu-prefix-cls}-list-title, .#{$menu-prefix-cls}-list-sub-title {
+                    color: $font-color-disabled;
                 }
-
-                @include compatible(color, #102331, #bfbfbf);
+                color: $font-color-disabled;
                 cursor: not-allowed;
             }
 
@@ -56,7 +49,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             .#{$menu-prefix-cls}-list-title {
                 float: left;
                 line-height: 32px;
-                color: #eee;
+                color: $font-color-heading;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -79,7 +72,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             .#{$menu-prefix-cls}-list-sub-title {
                 float: right;
                 line-height: 32px;
-                color: #999;
+                color: $font-color-hint;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
