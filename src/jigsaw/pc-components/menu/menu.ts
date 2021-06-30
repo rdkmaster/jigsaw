@@ -213,7 +213,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @NoMarkForCheckRequired
      */
     @Input()
-    public theme: MenuTheme = JigsawTheme.majorStyle;
+    public theme: MenuTheme = JigsawTheme.majorStyle || 'light';
 
     /**
      * @internal
