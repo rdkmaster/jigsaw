@@ -31,13 +31,13 @@ jobs:
             node build/scripts/check-public-variables.js
             node build/scripts/check-html-element-type.js
             node build/scripts/check-import-path.js
-            gulp ensure-url-matches-path
+            ./node_modules/.bin/gulp ensure-url-matches-path
       - run:
           name: Build
           command: |
-            gulp generate-demo-info
-            gulp build:jigsaw
-            gulp build:formly:clean
+            ./node_modules/.bin/gulp generate-demo-info
+            ./node_modules/.bin/gulp build:jigsaw
+            ./node_modules/.bin/gulp build:formly:clean
             sh build/scripts/doc-generator/generate.sh ./temp/doc/
       - run:
           name: Test
