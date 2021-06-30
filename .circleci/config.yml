@@ -32,8 +32,9 @@ jobs:
             node build/scripts/check-html-element-type.js
             node build/scripts/check-import-path.js
             ./node_modules/.bin/gulp ensure-url-matches-path
-      - run: Generate demo info
-        command: ./node_modules/.bin/gulp generate-demo-info
+      - run:
+          name: Generate demo info
+          command: ./node_modules/.bin/gulp generate-demo-info
       - run:
           name: Build jigsaw
           command: ./node_modules/.bin/gulp build:jigsaw
