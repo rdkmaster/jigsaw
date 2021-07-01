@@ -176,11 +176,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     /**
      * @internal
      */
-    public jigsawFloatDisabled: boolean;
-
-    /**
-     * @internal
-     */
     public jigsawFloatAnswer = new EventEmitter<any>();
 
     constructor(protected _renderer: Renderer2,
@@ -247,7 +242,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     public _$openByHover(event): void {
         this.clearCallLater(this._rollOutDenouncesTimer);
 
-        if (this.jigsawFloatOpenTrigger != 'mouseenter' || this.jigsawFloatDisabled != false) {
+        if (this.jigsawFloatOpenTrigger != 'mouseenter') {
             return;
         }
 
@@ -296,7 +291,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * @internal
      */
     public _$onHostClick() {
-        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false && this.jigsawFloatDisabled == false) {
+        if (this.jigsawFloatOpenTrigger == 'click' && !this.jigsawFloatOpen) {
             this.jigsawFloatOpen = true;
         }
     }
@@ -583,8 +578,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             ele.style.backgroundColor = 'inherit';
             this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
             popupElement.appendChild(ele);
-        }  
-    } 
+        }
+    }
 
     private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
         let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
@@ -849,17 +844,6 @@ export class JigsawFloat extends JigsawFloatBase implements OnDestroy {
 
     @Input()
     public jigsawFloatCloseDelay: number = 400;
-
-    private _floatDisabled: boolean = false;
-
-    @Input()
-    public get jigsawFloatDisabled(): boolean {
-        return this._floatDisabled;
-    }
-
-    public set jigsawFloatDisabled(value: boolean) {
-        this._floatDisabled = typeof value != 'boolean' ? false : value; 
-    }
 
     /**
      * $demo = float/option

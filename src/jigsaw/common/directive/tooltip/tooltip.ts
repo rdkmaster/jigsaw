@@ -69,17 +69,6 @@ export class JigsawTooltip extends JigsawFloatBase {
     @Input('jigsawTooltipOpen')
     public jigsawFloatOpen: boolean;
 
-    private _floatDisabled: boolean = false;
-
-    @Input()
-    public get jigsawFloatDisabled(): boolean {
-        return this._floatDisabled;
-    }
-
-    public set jigsawFloatDisabled(value: boolean) {
-        this._floatDisabled = typeof value != 'boolean' ? false : value; 
-    }
-
     @Output('jigsawTooltipOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
