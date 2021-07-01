@@ -12,9 +12,12 @@
 .live-demo-wrap > h2 {
     margin-bottom: 40px;
     color: #333;
-    /*color: #fff;*/
     font-size: 24px;
     font-weight: 700;
+}
+
+.theme-dark .live-demo-wrap > h2 {
+    color: #fff;
 }
 
 /* demo容器 block */
@@ -43,11 +46,14 @@
 .live-demo > h3 {
     margin: 0 0 10px -10px;
     color: #333;
-    /*color: #ccc;*/
     font-size: 16px;
     padding: 2px 14px;
     position: relative;
     border-left: 1px solid #c7254e;
+}
+
+.theme-dark .live-demo > h3 {
+    color: #fff;
 }
 
 .live-demo.live-demo-block h3 {
