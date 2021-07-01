@@ -57,7 +57,6 @@ jobs:
       - run:
           name: Clone tourist
           command: |
-            export JIGSAW_HOME=`pwd`
             mkdir -p `pwd`/../jigsaw-tourist
             cd `pwd`/../jigsaw-tourist
             git clone https://github.com/rdkmaster/jigsaw-tourist.git .
@@ -74,14 +73,14 @@ jobs:
       - run:
           name: Build with tourist
           command: |
-            echo "xxxxxxxxxxxxxxxxx $JIGSAW_HOME"
+            echo "xxxxxxxxxxxxxxxxx `pwd`"
             rm -fr node_modules/@rdkmaster/jigsaw
             cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
-            node_modules/.bin/ng build --prod --aot
+            node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --prod --aot
 
       - run:
           name: Build with seed
           command: |
             sh build/scripts/integrate-with-seed.sh
             cd ../jigsaw-seed
-            node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --aot
+            node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --prod --aot
