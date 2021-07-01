@@ -8,7 +8,7 @@
     <h2>Select</h2>
     <div class="live-demo">
         <h3>搜索功能</h3>
-        <button style="margin-bottom: 6px" (click)="changeData()">change data</button>
+        <j-button style="margin-bottom: 6px" (click)="changeData()">change data</j-button>
         <br>
         <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
                        placeholder="请选择城市" [data]="cityListForSelect" [searchable]="true">
@@ -18,7 +18,7 @@
 
     <div class="live-demo">
         <h3>本地数据过滤</h3>
-        <button style="margin-bottom: 6px" (click)="changeData2()">change data</button>
+        <j-button style="margin-bottom: 6px" (click)="changeData2()">change data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="lpaCountries" labelField="enName" (valueChange)="selectChange2($event)"
                        [multipleSelect]="true" [searchable]="true"></jigsaw-select>
@@ -27,7 +27,7 @@
 
     <div class="live-demo">
         <h3>服务端数据过滤</h3>
-        <button style="margin-bottom: 6px" (click)="changeData3()">change data</button>
+        <j-button style="margin-bottom: 6px" (click)="changeData3()">change data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="spaCountries" labelField="enName" (valueChange)="selectChange3($event)"
                        [multipleSelect]="true" [searchable]="true"></jigsaw-select>
