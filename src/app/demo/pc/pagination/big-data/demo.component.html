@@ -5,7 +5,7 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Pagination</h2>
+    <jigsaw-header [level]="1">Pagination</jigsaw-header>
 
     <span>显示搜索框</span>
     <jigsaw-switch style="margin-right: 20px" [(checked)]="searchable">
@@ -23,7 +23,7 @@
     <br><br>
 
     <div class="demo-1 live-demo">
-        <h3>默认模式</h3>
+        <jigsaw-header [level]="2">默认模式</jigsaw-header>
         <jigsaw-pagination [data]="pageable"
                            [pageSizeOptions]="pageSizeOptions"
                            [searchable]="searchable"
@@ -37,7 +37,7 @@
     </div>
 
     <div class="demo-2 live-demo">
-        <h3>简约模式</h3>
+        <jigsaw-header [level]="2">简约模式</jigsaw-header>
         <jigsaw-pagination [data]="pageableForSimple"
                            (currentChange)="getCurrentPage($event)"
                            mode="simple"

@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Upload</h2>
+    <jigsaw-header [level]="1">Upload</jigsaw-header>
     <div class="common-param-setting">
-        <h3>配置参数</h3>
+        <jigsaw-header [level]="2">配置参数</jigsaw-header>
         文件数目：
         <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
         <br>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="demo-2 live-demo">
-        <h3>指令</h3>
+        <jigsaw-header [level]="2">指令</jigsaw-header>
         <span style="font-weight: bold;">常见模式：</span>
         <a j-upload (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
            [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMultiple]="multiple"

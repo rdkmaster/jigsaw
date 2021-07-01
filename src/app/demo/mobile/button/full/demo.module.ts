@@ -3,10 +3,12 @@ import {JigsawMobileButtonModule, JigsawMobileCheckBoxModule, JigsawLoadingModul
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ButtonFullComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [ButtonFullComponent],
     exports: [ButtonFullComponent],
-    imports: [JigsawMobileButtonModule, JigsawMobileCheckBoxModule, JigsawLoadingModule, JigsawDemoDescriptionModule]
+    imports: [JigsawMobileButtonModule, JigsawMobileCheckBoxModule, JigsawLoadingModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
 })
 export class ButtonFullModule {
 

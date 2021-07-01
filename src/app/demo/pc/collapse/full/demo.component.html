@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Collapse</h2>
+    <jigsaw-header [level]="1">Collapse</jigsaw-header>
     <div class="demo-1 live-demo">
-        <h3>标题和内容</h3>
+        <jigsaw-header [level]="2">标题和内容</jigsaw-header>
         <p class="comment">
             标题如果是纯文本，可以用<code>header</code>属性<br>
             标题不是纯文本，使用<code>j-title</code><code>j-body</code>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="demo-2 live-demo">
-        <h3>手风琴</h3>
+        <jigsaw-header [level]="2">手风琴</jigsaw-header>
         <j-collapse width="50%" mode="accordion">
             <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of goodsList">
                 {{goods.desc}}

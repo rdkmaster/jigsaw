@@ -4,10 +4,12 @@ import {JigsawRangeDateTimePickerModule, JigsawRadioModule} from "jigsaw/public_
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RangeDateTimeLimitComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [RangeDateTimeLimitComponent],
     exports: [RangeDateTimeLimitComponent],
-    imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule, JigsawRangeDateTimePickerModule]
+    imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule, JigsawRangeDateTimePickerModule, JigsawHeaderModule]
 })
 export class RangeDateTimeLimitModule {
 

@@ -4,10 +4,12 @@ import {JigsawGraphModule} from "jigsaw/public_api";
 import {StackAreaGraphComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [StackAreaGraphComponent],
     exports: [StackAreaGraphComponent],
-    imports: [JigsawGraphModule, JigsawDemoDescriptionModule, CommonModule]
+    imports: [JigsawGraphModule, JigsawDemoDescriptionModule, CommonModule, JigsawHeaderModule]
 })
 export class StackAreaGraphModule {
 

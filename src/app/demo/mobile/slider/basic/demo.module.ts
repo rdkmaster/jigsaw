@@ -3,8 +3,10 @@ import {JigsawMobileSliderModule, JigsawMobileSwitchModule} from "jigsaw/mobile_
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SliderBasicDemoComponent} from './demo.component';
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawMobileSwitchModule, JigsawMobileSliderModule, JigsawDemoDescriptionModule],
+    imports: [JigsawMobileSwitchModule, JigsawMobileSliderModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [SliderBasicDemoComponent],
     exports: [SliderBasicDemoComponent]
 })

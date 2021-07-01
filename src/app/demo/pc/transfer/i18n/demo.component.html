@@ -6,8 +6,8 @@
 <!-- start to learn the demo from here -->
 
 <div class="live-demo-wrap">
-    <h2>国际化</h2>
-    <h2>点击按钮，切换中英文</h2>
+    <jigsaw-header [level]="1">国际化</jigsaw-header>
+    <jigsaw-header [level]="1">点击按钮，切换中英文</jigsaw-header>
     <jigsaw-button (click)="changeLang('en')">
         change language to English
     </jigsaw-button>
@@ -16,13 +16,13 @@
     </jigsaw-button><br>
 
     <div class="demo-1 live-demo">
-        <h3>普通数据</h3>
+        <jigsaw-header [level]="2">普通数据</jigsaw-header>
         <j-transfer width="50%" height="200" [data]="data" labelField="zhName" subLabelField="shortName"
                     [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
                     [selectedItems]="selectedCountries"></j-transfer>
         <p class="message">选择的地区：{{selectedCountriesStr}}</p>
 
-        <h3>本地分页数据</h3>
+        <jigsaw-header [level]="2">本地分页数据</jigsaw-header>
         <j-transfer width="50%" height="200" [data]="data_page" labelField="zhName" subLabelField="shortName"
                     [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
                     [selectedItems]="selectedCountries"></j-transfer>
