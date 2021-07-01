@@ -30,8 +30,10 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10 | 15 | 30;
-export type TimePopupValue = { mode: TimeSelectMode, value: string, list: TimePopupItem[] };
+export type TimePopupValue = { mode: TimeSelectMode | 'none', value: string, list: TimePopupItem[], showNowButton: boolean };
 export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: boolean };
+
+type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour;
 
 /**
  * 用于在界面上提供一个时间（不带日期）选择，如下是关于时间的一些常见的场景及其建议：
@@ -144,7 +146,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this._step = step;
     }
 
-    private _gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour = TimeGr.time;
+    private _gr: TimePickerGR = TimeGr.time;
 
     /**
      * 当前时间选择器的粒度，支持：仅小时、时分、分秒、时分秒这几种用法
@@ -154,11 +156,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
      * $demo = time-picker/gr
      */
     @Input()
-    public get gr(): TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string {
+    public get gr(): TimePickerGR | string {
         return this._gr;
     }
 
-    public set gr(gr: TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour | string) {
+    public set gr(gr: TimePickerGR | string) {
         if (typeof gr === 'string') {
             gr = TimeGr[gr];
         }
@@ -337,7 +339,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     /**
      * @internal
      */
-    public _$floatInitData: any = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
+    public _$floatInitData: any = this._getFloatInitData(this._$selectMode, this._$hour, this.step, this.gr);
     /**
      * @internal
      */
@@ -362,7 +364,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             if (!isTabSwitch) {
                 this._hourInput.nativeElement.select();
             }
-            this._$floatInitData = this._getFloatInitData(mode, this._$hour, this.step);
+            this._$floatInitData = this._getFloatInitData(mode, this._$hour, this.step, this.gr);
             this._$floatArrowElement = this._hourInput.nativeElement;
         } else if (mode == 'minute') {
             if (!isTabSwitch) {
@@ -373,7 +375,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
                 this._minute = minute;
                 this._updateValue.emit();
             }
-            this._$floatInitData = this._getFloatInitData(mode, this._$minute, this.step);
+            this._$floatInitData = this._getFloatInitData(mode, this._$minute, this.step, this.gr);
             this._$floatArrowElement = this._minuteInput.nativeElement;
         } else if (mode == 'second') {
             if (!isTabSwitch) {
@@ -384,7 +386,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
                 this._second = second;
                 this._updateValue.emit();
             }
-            this._$floatInitData = this._getFloatInitData(mode, this._$second, this.step);
+            this._$floatInitData = this._getFloatInitData(mode, this._$second, this.step, this.gr);
             this._$floatArrowElement = this._secondInput.nativeElement;
         }
         if (mode != 'none') {
@@ -512,21 +514,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             let value = Number(this._$hour) + add;
             value = this._getValidNumberInRange(value, 0, 23);
             if (this._updateHour(value)) {
-                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$hour, this.step);
+                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$hour, this.step, this.gr);
             }
         } else if (this._$selectMode == 'minute') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$minute)) + add;
             value = this._getValidNumberInRange(value, 0, 59);
             if (this._updateMinute(value)) {
-                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$minute, this.step);
+                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$minute, this.step, this.gr);
             }
         } else if (this._$selectMode == 'second') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$second)) + add;
             value = this._getValidNumberInRange(value, 0, 59);
             if (this._updateSecond(value)) {
-                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$second, this.step);
+                this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$second, this.step, this.gr);
             }
         }
     }
@@ -657,7 +659,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         return (this.limitStart && time < this._getTimeLimit(this.limitStart, -1)) || (this.limitEnd && time > this._getTimeLimit(this.limitEnd, 1))
     }
 
-    private _getFloatInitData(mode, value, step): TimePopupValue {
+    private _getFloatInitData(mode: TimeSelectMode | 'none', value: string, step: TimeStep, gr: TimePickerGR | string): TimePopupValue {
         let list;
         if (mode == 'hour') {
             list = Array.from(new Array(24).keys()).map((h: any) => {
@@ -671,7 +673,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
                 return {value: m, isSelected: Number(m) == Number(value), disabled: this._isValueOutOfLimit(m, mode)}
             });
         }
-        return {mode: mode, value: value, list: list}
+        const showNowButton = gr == TimeGr.time;
+        return {mode, value, list, showNowButton}
     }
 
     public writeValue(newValue: string): void {
