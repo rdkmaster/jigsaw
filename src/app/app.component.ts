@@ -1,11 +1,10 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {JigsawTheme} from "jigsaw/public_api";
 
 @Component({
     selector: 'app-root',
     template: `
         <jigsaw-root>
-            <div class="app-wrap" [class.theme-dark]="theme=='dark'">
+            <div class="app-wrap">
                 <router-outlet></router-outlet>
             </div>
         </jigsaw-root>
@@ -14,7 +13,4 @@ import {JigsawTheme} from "jigsaw/public_api";
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-    get theme() {
-        return JigsawTheme.majorStyle
-    }
 }
