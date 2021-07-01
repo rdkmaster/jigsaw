@@ -53,6 +53,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         if (this._moving) {
             const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0);
             const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0);
+            this._renderer.removeStyle(this._movableTarget, 'right');
+            this._renderer.removeStyle(this._movableTarget, 'bottom');
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
             this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
             this.moving.emit({x: ox, y: oy});
