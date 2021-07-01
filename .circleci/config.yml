@@ -46,7 +46,7 @@ jobs:
           command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
       - run:
           name: Unit test
-          command: ./node_modules/.bin/ng test jigsaw  --code-coverage false --watch false
+          command: npm test
       - run:
           name: Test with tourist
           command: |
