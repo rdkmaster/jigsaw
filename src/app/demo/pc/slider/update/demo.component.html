@@ -9,7 +9,7 @@
     <h2>Slider</h2>
     <div class="demo-4 live-demo">
         <h3>更新value</h3>
-        <button (click)="updateValue()">update value</button><br>
+        <j-button (click)="updateValue()">update value</j-button><br>
         <jigsaw-slider [(value)]="rangeValue" [max]="rangeMax" (change)="handleChange($event)"></jigsaw-slider>
         <p class="message">取值范围：{{rangeValueStr}}</p>
     </div>
