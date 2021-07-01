@@ -1,6 +1,7 @@
 @import "../../common/assets/scss/core/base";
 
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
+$input-prefix-cls: #{$jigsaw-prefix}-input;
 
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
@@ -65,14 +66,11 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             margin-right: 4px;
             margin-bottom: 2px;
         }
-        .jigsaw-input {
+        .#{$input-prefix-cls} {
             height: $height-base - 8;
             line-height: $height-base - 8;
-            border: none;
-            &.jigsaw-input-focused,
-            &:hover {
-                box-shadow: none;
-                border: none;
+            .#{$input-prefix-cls}-wrapper {
+                border: none !important;
             }
             input {
                 padding: 0 !important;
