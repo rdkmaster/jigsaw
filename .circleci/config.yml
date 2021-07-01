@@ -11,67 +11,70 @@ jobs:
       - image: cimg/node:10.16
     steps:
       - checkout
-      - restore_cache:
-          # See the configuration reference documentation for more details on using restore_cache and save_cache steps
-          # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
-          keys:
-            - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
       - run:
-          name: Install jigsaw packages
-          command: npm ci
-      - save_cache:
-          key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-          paths:
-            - ~/.npm
-      - run:
-          name: Static Tests
-          command: |
-            node build/scripts/check-demo-import.js
-            node build/scripts/check-mark-for-check.js
-            node build/scripts/check-public-variables.js
-            node build/scripts/check-html-element-type.js
-            node build/scripts/check-import-path.js
-            ./node_modules/.bin/gulp ensure-url-matches-path
-      - run:
-          name: Generate demo info
-          command: ./node_modules/.bin/gulp generate-demo-info
-      - run:
-          name: Build jigsaw
-          command: ./node_modules/.bin/gulp build:jigsaw
-      - run:
-          name: Build formly
-          command: ./node_modules/.bin/gulp build:formly:clean
-      - run:
-          name: Generate doc
-          command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
-      - run:
-          name: Unit test
-          command: npm test
+        name: xxxxxxxxxxxxxxxxxxxxxxx
+        command: pwd
+      # - restore_cache:
+      #     # See the configuration reference documentation for more details on using restore_cache and save_cache steps
+      #     # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
+      #     keys:
+      #       - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      # - run:
+      #     name: Install jigsaw packages
+      #     command: npm ci
+      # - save_cache:
+      #     key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      #     paths:
+      #       - ~/.npm
+      # - run:
+      #     name: Static Tests
+      #     command: |
+      #       node build/scripts/check-demo-import.js
+      #       node build/scripts/check-mark-for-check.js
+      #       node build/scripts/check-public-variables.js
+      #       node build/scripts/check-html-element-type.js
+      #       node build/scripts/check-import-path.js
+      #       ./node_modules/.bin/gulp ensure-url-matches-path
+      # - run:
+      #     name: Generate demo info
+      #     command: ./node_modules/.bin/gulp generate-demo-info
+      # - run:
+      #     name: Build jigsaw
+      #     command: ./node_modules/.bin/gulp build:jigsaw
+      # - run:
+      #     name: Build formly
+      #     command: ./node_modules/.bin/gulp build:formly:clean
+      # - run:
+      #     name: Generate doc
+      #     command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
+      # - run:
+      #     name: Unit test
+      #     command: npm test
 
-      - run:
-          name: Clone tourist
-          command: |
-            home=`pwd`
-            mkdir -p `pwd`/../jigsaw-tourist
-            cd `pwd`/../jigsaw-tourist
-            git clone https://github.com/rdkmaster/jigsaw-tourist.git .
-      - restore_cache:
-          keys:
-            - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-      - run:
-          name: Install tourist packages
-          command: npm ci
-      - save_cache:
-          key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-          paths:
-            - ~/.npm
-      - run:
-          name: Build with tourist
-          command: |
-            echo "xxxxxxxxxxxxxxxxxxxxxxx $home"
-            rm -fr node_modules/@rdkmaster/jigsaw
-            cp -r ../jigsaw/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
-            node_modules/.bin/ng build --prod --aot
+      # - run:
+      #     name: Clone tourist
+      #     command: |
+      #       home=`pwd`
+      #       mkdir -p `pwd`/../jigsaw-tourist
+      #       cd `pwd`/../jigsaw-tourist
+      #       git clone https://github.com/rdkmaster/jigsaw-tourist.git .
+      # - restore_cache:
+      #     keys:
+      #       - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      # - run:
+      #     name: Install tourist packages
+      #     command: npm ci
+      # - save_cache:
+      #     key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      #     paths:
+      #       - ~/.npm
+      # - run:
+      #     name: Build with tourist
+      #     command: |
+      #       echo "xxxxxxxxxxxxxxxxxxxxxxx $home"
+      #       rm -fr node_modules/@rdkmaster/jigsaw
+      #       cp -r ../jigsaw/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
+      #       node_modules/.bin/ng build --prod --aot
 
       # - run:
       #     name: Build with seed
