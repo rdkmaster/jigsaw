@@ -15,12 +15,12 @@ jobs:
           # See the configuration reference documentation for more details on using restore_cache and save_cache steps
           # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
           keys:
-            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
       - run:
-          name: install packages
+          name: Install jigsaw packages
           command: npm ci
       - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
           paths:
             - ~/.npm
       - run:
@@ -47,9 +47,34 @@ jobs:
       - run:
           name: Unit test
           command: npm test
+
       - run:
-          name: Test with tourist
+          name: Clone tourist
           command: |
-            sh build/scripts/build-tourist.sh
-            sh build/scripts/integrate-with-seed.sh
-            node build/scripts/patch-demos.js
+            home=`pwd`
+            mkdir -p `pwd`/../jigsaw-tourist
+            cd `pwd`/../jigsaw-tourist
+            git clone https://github.com/rdkmaster/jigsaw-tourist.git .
+      - restore_cache:
+          keys:
+            - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      - run:
+          name: Install tourist packages
+          command: npm ci
+      - save_cache:
+          key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          paths:
+            - ~/.npm
+      - run:
+          name: Build with tourist
+          command: |
+            echo "xxxxxxxxxxxxxxxxxxxxxxx $home"
+            rm -fr node_modules/@rdkmaster/jigsaw
+            cp -r ../jigsaw/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
+            node_modules/.bin/ng build --prod --aot
+
+      # - run:
+      #     name: Build with seed
+      #     command: |
+      #       sh build/scripts/integrate-with-seed.sh
+      #       node build/scripts/patch-demos.js

@@ -41,7 +41,7 @@ script:
   - npm test
   - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
-  - sh build/scripts/build-tourist.sh
+  - sh build/scripts/build-with-tourist/build-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
   - node build/scripts/patch-demos.js
   - git checkout src
