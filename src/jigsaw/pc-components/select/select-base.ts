@@ -260,7 +260,7 @@ export abstract class JigsawSelectBase
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
-     * 
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
