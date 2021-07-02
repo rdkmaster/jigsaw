@@ -23,61 +23,62 @@ jobs:
           key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
           paths:
             - ~/.npm
-      # - run:
-      #     name: Static Tests
-      #     command: |
-      #       node build/scripts/check-demo-import.js
-      #       node build/scripts/check-mark-for-check.js
-      #       node build/scripts/check-public-variables.js
-      #       node build/scripts/check-html-element-type.js
-      #       node build/scripts/check-import-path.js
-      #       ./node_modules/.bin/gulp ensure-url-matches-path
-      # - run:
-      #     name: Generate demo info
-      #     command: ./node_modules/.bin/gulp generate-demo-info
+      - run:
+          name: Static Tests
+          command: |
+            node build/scripts/check-demo-import.js
+            node build/scripts/check-mark-for-check.js
+            node build/scripts/check-public-variables.js
+            node build/scripts/check-html-element-type.js
+            node build/scripts/check-import-path.js
+            ./node_modules/.bin/gulp ensure-url-matches-path
+      - run:
+          name: Generate demo info
+          command: ./node_modules/.bin/gulp generate-demo-info
       - run:
           name: Building jigsaw lib
           command: ./node_modules/.bin/gulp build:jigsaw
       - run:
           name: Building jigsaw app
-          command: node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
+          command: node --max_old_space_size=3072 node_modules/@angular/cli/bin/ng build --prod --aot
 
-      # - run:
-      #     name: Building formly
-      #     command: ./node_modules/.bin/gulp build:formly:clean
-      # - run:
-      #     name: Generate doc
-      #     command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
-      # - run:
-      #     name: Testing patch demo
-      #     command: |
-      #       node build/scripts/patch-demos.js
-      #       git checkout src
+      - run:
+          name: Building formly
+          command: ./node_modules/.bin/gulp build:formly:clean
+      - run:
+          name: Generate doc
+          command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
 
-      # - run:
-      #     name: Unit test
-      #     command: npm test
+      - run:
+          name: Unit test
+          command: npm test
 
-      # - run:
-      #     name: Clone tourist
-      #     command: |
-      #       mkdir -p `pwd`/../jigsaw-tourist
-      #       cd `pwd`/../jigsaw-tourist
-      #       git clone https://github.com/rdkmaster/jigsaw-tourist.git .
-      # - restore_cache:
-      #     keys:
-      #       - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-      # - run:
-      #     name: Installing tourist packages
-      #     command: npm ci
-      # - save_cache:
-      #     key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-      #     paths:
-      #       - ~/.npm
-      # - run:
-      #     name: Building with tourist
-      #     command: |
-      #       rm -fr node_modules/@rdkmaster/jigsaw
-      #       cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
-      #       node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
+      - run:
+          name: Clone tourist
+          command: |
+            mkdir -p `pwd`/../jigsaw-tourist
+            cd `pwd`/../jigsaw-tourist
+            git clone https://github.com/rdkmaster/jigsaw-tourist.git .
+      - restore_cache:
+          keys:
+            - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      - run:
+          name: Installing tourist packages
+          command: npm ci
+      - save_cache:
+          key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          paths:
+            - ~/.npm
+      - run:
+          name: Building with tourist
+          command: |
+            rm -fr node_modules/@rdkmaster/jigsaw
+            cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
+            node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
 
+      - run:
+            name: Testing patch demo
+            command: |
+                sh build/scripts/clone-seed.sh
+                node build/scripts/patch-demos.js
+                git checkout src
