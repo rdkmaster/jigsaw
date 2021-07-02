@@ -39,16 +39,13 @@ script:
   - gulp build:jigsaw
   - gulp build:formly:clean
   - npm test
-  - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
-  - node build/scripts/patch-demos.js
-  - git checkout src
   - sh build/scripts/build-with-tourist/build-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
-  - # sh build/scripts/sauce_connect_block.sh
-  - cd $SEED_DIR # run e2e in seed directory
+#  - node build/scripts/patch-demos.js
+#  - git checkout src
+  - cd $SEED_DIR
   - travis_wait 30 node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --aot
-  - #ng e2e
 
 after_script:
   - # sh ./build/scripts/sauce_connect_teardown.sh

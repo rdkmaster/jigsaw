@@ -38,7 +38,6 @@ function processDemoSet(demoSetFolder) {
 }
 
 function patchDemo(demoPath) {
-    console.log(`Patching ${demoPath} ...`);
     patchDemoTs(demoPath);
     patchDemoHtml(demoPath);
 }

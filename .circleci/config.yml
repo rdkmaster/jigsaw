@@ -17,7 +17,7 @@ jobs:
           keys:
             - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
       - run:
-          name: Install jigsaw packages
+          name: Installing jigsaw packages
           command: npm ci
       - save_cache:
           key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
@@ -36,16 +36,16 @@ jobs:
       #     name: Generate demo info
       #     command: ./node_modules/.bin/gulp generate-demo-info
       - run:
-          name: Build jigsaw
+          name: Building jigsaw
           command: ./node_modules/.bin/gulp build:jigsaw
       # - run:
-      #     name: Build formly
+      #     name: Building formly
       #     command: ./node_modules/.bin/gulp build:formly:clean
       # - run:
       #     name: Generate doc
       #     command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
       # - run:
-      #     name: Test patch demo
+      #     name: Testing patch demo
       #     command: |
       #       node build/scripts/patch-demos.js
       #       git checkout src
@@ -54,31 +54,31 @@ jobs:
       #     name: Unit test
       #     command: npm test
 
-      - run:
-          name: Clone tourist
-          command: |
-            mkdir -p `pwd`/../jigsaw-tourist
-            cd `pwd`/../jigsaw-tourist
-            git clone https://github.com/rdkmaster/jigsaw-tourist.git .
-      - restore_cache:
-          keys:
-            - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-      - run:
-          name: Install tourist packages
-          command: npm ci
-      - save_cache:
-          key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-          paths:
-            - ~/.npm
-      - run:
-          name: Build with tourist
-          command: |
-            rm -fr node_modules/@rdkmaster/jigsaw
-            cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
-            node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
+      # - run:
+      #     name: Clone tourist
+      #     command: |
+      #       mkdir -p `pwd`/../jigsaw-tourist
+      #       cd `pwd`/../jigsaw-tourist
+      #       git clone https://github.com/rdkmaster/jigsaw-tourist.git .
+      # - restore_cache:
+      #     keys:
+      #       - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      # - run:
+      #     name: Installing tourist packages
+      #     command: npm ci
+      # - save_cache:
+      #     key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      #     paths:
+      #       - ~/.npm
+      # - run:
+      #     name: Building with tourist
+      #     command: |
+      #       rm -fr node_modules/@rdkmaster/jigsaw
+      #       cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
+      #       node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
 
       - run:
-          name: Build with seed
+          name: Building with seed
           command: |
             sh build/scripts/integrate-with-seed.sh
             cd ../jigsaw-seed

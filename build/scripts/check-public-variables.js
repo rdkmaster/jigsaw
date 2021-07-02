@@ -41,7 +41,6 @@ function checkPublicVariables(srcPath) {
         return;
     }
 
-    console.log(`Checking ${srcPath} ...`);
     const source = fs.readFileSync(srcPath).toString();
 
     const vars = source.match(/\spublic\s+(static\s+)?_\$?\w+/g);
