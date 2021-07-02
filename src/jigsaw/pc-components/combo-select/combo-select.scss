@@ -90,12 +90,21 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 
     &-disabled {
         color: $font-color-disabled;
-        pointer-events: none;
 
-        .#{$jigsaw-combo-select}-selection .#{$jigsaw-combo-select}-selection-rendered {
-            .jigsaw-tag-host {
-                color: $font-color-disabled;
+        .#{$jigsaw-combo-select}-selection {
+            border-color: $border-color-disabled;
+
+            .#{$jigsaw-combo-select}-selection-rendered {
+                .jigsaw-tag-host {
+                    color: $font-color-disabled;
+                    pointer-events: none;
+                }
             }
+        }
+        
+        .iconfont {
+            color: $icon-color-disabled;
+            pointer-events: none;
         }
     }
 
@@ -110,7 +119,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         &:hover,
         &:active,
         &:focus {
-            border-color: $bg-disabled;
+            border-color: $border-color-disabled;
             box-shadow: none;
         }
     }
