@@ -5,15 +5,15 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <jigsaw-header [level]="1">箱线图</jigsaw-header>
+    <jigsaw-mobile-header [level]="1">箱线图</jigsaw-mobile-header>
 
     <div class="live-demo">
-        <jigsaw-header [level]="2">BoxPlotGraphData静态数据</jigsaw-header>
+        <jigsaw-mobile-header [level]="2">BoxPlotGraphData静态数据</jigsaw-mobile-header>
         <jigsaw-mobile-graph [data]="boxPlotData" height="400" (click)="handleClick($event)"></jigsaw-mobile-graph>
     </div>
 
     <div class="live-demo">
-        <jigsaw-header [level]="2">BoxPlotGraphData异步数据</jigsaw-header>
+        <jigsaw-mobile-header [level]="2">BoxPlotGraphData异步数据</jigsaw-mobile-header>
         <jigsaw-mobile-graph [data]="boxPlotFromAjax" height="400" (click)="handleClick($event)"></jigsaw-mobile-graph>
     </div>
 </div>

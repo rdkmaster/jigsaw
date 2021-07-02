@@ -5,10 +5,10 @@ import {JigsawTrustedHtmlModule} from "jigsaw/mobile_public_api";
 import {TrustedHtmlFullComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
-import {JigsawHeaderModule} from "jigsaw/public_api";
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawTrustedHtmlModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
+    imports: [CommonModule, FormsModule, JigsawTrustedHtmlModule, JigsawDemoDescriptionModule, JigsawMobileHeaderModule],
     declarations: [TrustedHtmlFullComponent],
     exports: [TrustedHtmlFullComponent]
 })

@@ -3,10 +3,10 @@ import {JigsawMobileTileLiteModule} from "jigsaw/mobile_public_api";
 import {TileLiteBasicDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
-import {JigsawHeaderModule} from "jigsaw/public_api";
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
 
 @NgModule({
-    imports: [JigsawMobileTileLiteModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
+    imports: [JigsawMobileTileLiteModule, JigsawDemoDescriptionModule, JigsawMobileHeaderModule],
     declarations: [TileLiteBasicDemoComponent],
     exports: [TileLiteBasicDemoComponent]
 })

@@ -4,12 +4,12 @@ import {JigsawMobileRadioLiteModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RadioLiteBasicDemoComponent} from "./demo.component";
 
-import {JigsawHeaderModule} from "jigsaw/public_api";
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
 
 @NgModule({
     declarations: [RadioLiteBasicDemoComponent],
     exports: [RadioLiteBasicDemoComponent],
-    imports: [JigsawMobileRadioLiteModule, CommonModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
+    imports: [JigsawMobileRadioLiteModule, CommonModule, JigsawDemoDescriptionModule, JigsawMobileHeaderModule]
 })
 export class RadioLiteBasicDemoModule {
 

@@ -4,12 +4,12 @@ import {JigsawMobileIconModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {IconIconsDemoComponent} from "./demo.component";
 
-import {JigsawHeaderModule} from "jigsaw/public_api";
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
 
 @NgModule({
     imports: [
         JigsawMobileIconModule, CommonModule, JigsawDemoDescriptionModule
-    , JigsawHeaderModule],
+    , JigsawMobileHeaderModule],
     declarations: [IconIconsDemoComponent],
     exports: [IconIconsDemoComponent]
 })
