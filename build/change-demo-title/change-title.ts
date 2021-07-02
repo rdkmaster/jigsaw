@@ -19,11 +19,13 @@ glob('**/*.html', {cwd: demoHome}).forEach(fileName => {
     }
     if(changed) {
         fs.writeFileSync(filePath, code);
+        const isMobile = filePath.search('demo/mobile/') != -1;
+        const [headerModuleName, jigsawPkg] = isMobile ? ['JigsawMobileHeaderModule', 'jigsaw/mobile_public_api'] : ['JigsawHeaderModule', 'jigsaw/public_api'];
         let demoModulePath = filePath.replace('demo.component.html', 'demo.module.ts');
         let moduleCode = fs.readFileSync(demoModulePath).toString();
-        if(moduleCode.search('JigsawHeaderModule') == -1) {
-            moduleCode = moduleCode.replace('@NgModule', 'import {JigsawHeaderModule} from "jigsaw/public_api";\n\n@NgModule')
-                .replace(/imports\s*:\s*\[((.|\n)+?)\]/, 'imports: [$1, JigsawHeaderModule]');
+        if(moduleCode.search(headerModuleName) == -1) {
+            moduleCode = moduleCode.replace('@NgModule', `import {${headerModuleName} from "${jigsawPkg}";\n\n@NgModule`)
+                .replace(/imports\s*:\s*\[((.|\n)+?)\]/, `imports: [$1, ${headerModuleName}]`);
             fs.writeFileSync(demoModulePath, moduleCode);
         }
     }
