@@ -14,7 +14,7 @@ jobs:
             - when:
                 condition:
                     or:
-                        - equal: [ circleci-project-setup, << pipeline.git.branch >> ]
+                        - equal: [ master, << pipeline.git.branch >> ]
                 steps:
                     - run: echo "I am on master AND param1 is true OR param2 is true -- OR param1 is false"
 
