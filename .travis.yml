@@ -40,7 +40,7 @@ script:
   - gulp build:formly:clean
   - npm test
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
-  - sh build/scripts/build-with-tourist/build-tourist.sh
+  - sh build/scripts/build-with-tourist.sh
   - sh build/scripts/integrate-with-seed.sh
 #  - node build/scripts/patch-demos.js
 #  - git checkout src

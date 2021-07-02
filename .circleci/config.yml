@@ -36,8 +36,12 @@ jobs:
       #     name: Generate demo info
       #     command: ./node_modules/.bin/gulp generate-demo-info
       - run:
-          name: Building jigsaw
+          name: Building jigsaw lib
           command: ./node_modules/.bin/gulp build:jigsaw
+      - run:
+          name: Building jigsaw app
+          command: node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
+
       # - run:
       #     name: Building formly
       #     command: ./node_modules/.bin/gulp build:formly:clean
@@ -77,9 +81,3 @@ jobs:
       #       cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
       #       node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
 
-      - run:
-          name: Building with seed
-          command: |
-            sh build/scripts/integrate-with-seed.sh
-            cd ../jigsaw-seed
-            node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
