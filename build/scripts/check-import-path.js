@@ -40,7 +40,6 @@ function checkImportPath(srcPath) {
         return;
     }
 
-    console.log(`Checking ${srcPath} ...`);
     const source = fs.readFileSync(srcPath).toString();
 
     source.replace(/import\s+[\s\S]*?\s+from\s+['"](.*?)['"]/g, (found, importPath) => {
