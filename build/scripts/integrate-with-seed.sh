@@ -7,7 +7,7 @@ mkdir -p $seedDir
 cd $seedDir
 git clone https://github.com/rdkmaster/jigsaw-seed.git .
 
-
+echo "Patching jigsaw-seed ..."
 #copy demo source and e2e source.
 rm -fr ./e2e
 cp -r $home/e2e ./
@@ -31,6 +31,7 @@ do
 	sed -i "s/\(}\s\+from\s\+\)'\(\.\.\/\)*jigsaw\/.\+'\s*;\?\s*$/\1'@rdkmaster\/jigsaw';/g" $file
 done
 
+cd $seedDir
 npm install
 npm i @types/node
 #update jigsaw npm package
