@@ -49,7 +49,7 @@ jobs:
             - when:
                   condition:
                       or:
-                          - equal: [ circleci-project-setup, << pipeline.git.branch >> ]
+                          - equal: [ master, << pipeline.git.branch >> ]
                   steps:
                       - run:
                           name: Building jigsaw app
