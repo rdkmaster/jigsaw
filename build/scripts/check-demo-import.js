@@ -64,7 +64,6 @@ function checkDemoSource(srcPath) {
     if (!srcPath.match(/.+\.ts$/i)) {
         return;
     }
-    console.log(`Checking ${srcPath} ...`);
     fs.readFileSync(srcPath).toString().replace(reg, (found, imports, from) => {
         if (from.match(/jigsaw\/.+/) && from !== jigsawApi) {
             errors.push("  path: " + srcPath);

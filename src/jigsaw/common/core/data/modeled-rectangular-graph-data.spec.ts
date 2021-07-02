@@ -1,13 +1,6 @@
-import {
-    CustomModeledGraphTemplate,
-    Dimension,
-    Indicator,
-    ModeledRectangularGraphData,
-    ModeledRectangularTemplate
-} from "./modeled-graph-data";
-import {EchartLegend, EchartOptions, EchartToolbox, EchartTooltip} from "./echart-types";
+import {CustomModeledGraphTemplate, Dimension, Indicator, ModeledRectangularGraphData} from "./modeled-graph-data";
+import {EchartOptions} from "./echart-types";
 import {Grouped} from "../utils/data-collection-utils";
-import {CommonUtils} from "../utils/common-utils";
 
 class ModeledRectangularGraphDataSpec extends ModeledRectangularGraphData {
     public getRealDimensions(dimField: string, dimensions: Dimension[], usingAllDimensions: boolean): Dimension[] {

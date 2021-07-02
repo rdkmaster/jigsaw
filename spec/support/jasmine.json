@@ -1,0 +1,11 @@
+{
+    "spec_dir": "src/jigsaw",
+    "spec_files": [
+        "**/*[sS]pec.ts"
+    ],
+    "helpers": [
+        "../spec/helpers/**/*.js"
+    ],
+    "stopSpecOnExpectationFailure": false,
+    "random": false
+}
