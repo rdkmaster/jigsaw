@@ -36,18 +36,17 @@ jobs:
           name: Generate demo info
           command: ./node_modules/.bin/gulp generate-demo-info
       - run:
+          name: Generate doc
+          command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
+      - run:
           name: Building jigsaw lib
           command: ./node_modules/.bin/gulp build:jigsaw
       - run:
-          name: Building jigsaw app
-          command: node --max_old_space_size=3072 node_modules/@angular/cli/bin/ng build --prod --aot
-
-      - run:
-          name: Building formly
+          name: Building formly lib
           command: ./node_modules/.bin/gulp build:formly:clean
       - run:
-          name: Generate doc
-          command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
+          name: Building jigsaw app
+          command: node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
 
       - run:
           name: Unit test
