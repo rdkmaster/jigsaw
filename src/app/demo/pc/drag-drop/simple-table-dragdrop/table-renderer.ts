@@ -32,7 +32,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
 
     resetSelectedRow() {
         for (let i = 0; i < this.allRows.length; ++i) {
-            this._renderer.setStyle(this.allRows[i], 'background-color', i % 2 == 0 ? '#fff' : '#f8f8f8')
+            this._renderer.removeStyle(this.allRows[i], 'background-color')
         }
     }
 
