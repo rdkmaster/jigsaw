@@ -582,7 +582,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
+        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
         if (delta < 4) {
             delta = 4;
         } else if (delta > popupElement.offsetWidth - 13) {
