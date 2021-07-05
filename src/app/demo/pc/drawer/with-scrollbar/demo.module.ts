@@ -3,8 +3,10 @@ import {JigsawDrawerModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DrawerWithScrollbarDemoComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawDrawerModule, JigsawDemoDescriptionModule],
+    imports: [JigsawDrawerModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [DrawerWithScrollbarDemoComponent],
     exports: [DrawerWithScrollbarDemoComponent]
 })

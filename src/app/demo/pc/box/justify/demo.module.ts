@@ -4,10 +4,12 @@ import {JigsawRadioModule, JigsawBoxModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BoxJustifyDemoComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [BoxJustifyDemoComponent],
     exports: [BoxJustifyDemoComponent],
-    imports: [JigsawDemoDescriptionModule, CommonModule, JigsawRadioModule, JigsawBoxModule]
+    imports: [JigsawDemoDescriptionModule, CommonModule, JigsawRadioModule, JigsawBoxModule, JigsawHeaderModule]
 })
 export class BoxJustifyDemoModule {
 

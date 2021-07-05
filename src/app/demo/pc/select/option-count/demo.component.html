@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Select</h2>
+    <jigsaw-header [level]="1">Select</jigsaw-header>
     <div class="live-demo">
-        <h3>optionCount</h3>
+        <jigsaw-header [level]="2">optionCount</jigsaw-header>
         <jigsaw-select [(value)]="selectedCityForSelect"
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"

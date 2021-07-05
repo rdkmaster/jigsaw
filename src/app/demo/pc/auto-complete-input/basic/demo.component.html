@@ -4,7 +4,7 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Auto-Complete-Input</h2>
+    <jigsaw-header [level]="1">Auto-Complete-Input</jigsaw-header>
 
     <div class="demo-1">
         获得焦点后自动执行过滤
@@ -17,7 +17,7 @@
 
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>属性设置图标</h3>
+            <jigsaw-header [level]="2">属性设置图标</jigsaw-header>
             <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="250"
                                         (valueChange)="valueChanged($event)" [data]="_$dropdownData"
                                         [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
@@ -29,7 +29,7 @@
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
-            <h3>模板设置图标</h3>
+            <jigsaw-header [level]="2">模板设置图标</jigsaw-header>
             <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="250"
                                         (valueChange)="valueChanged($event)" [data]="_$dropdownData"
                                         [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect">
@@ -42,7 +42,7 @@
 
     <div class="clearfix">
         <div class="demo-3 live-demo live-demo-block">
-            <h3>下拉列表最大高度</h3>
+            <jigsaw-header [level]="2">下拉列表最大高度</jigsaw-header>
             <p class="notes">最大高度：
                 <jigsaw-input [(value)]="maxDropDownHeight"></jigsaw-input>
             </p>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="demo-4 live-demo live-demo-block">
-            <h3>带默认值</h3>
+            <jigsaw-header [level]="2">带默认值</jigsaw-header>
             <p class="notes">输入值是：<span>{{inputValue2}}</span></p>
             <jigsaw-auto-complete-input [(value)]="inputValue2" placeholder="auto complete input demo" width="20%"
                                         [data]="_$dropdownData" [filterOnFocus]="filterOnFocus"

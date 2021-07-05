@@ -4,12 +4,14 @@ import {JigsawTileSelectModule, JigsawComboSelectModule} from "jigsaw/public_api
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ComboSelectMaxHeightDemo} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [ComboSelectMaxHeightDemo],
     exports: [ComboSelectMaxHeightDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule
-    ]
+    , JigsawHeaderModule]
 })
 export class ComboSelectMaxHeightDemoModule {
 

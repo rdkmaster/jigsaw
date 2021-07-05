@@ -7,8 +7,10 @@ import {
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TableAddCheckboxColumnPageableDemoComponent} from './demo.component';
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawTagModule, JigsawDemoDescriptionModule, CommonModule, JigsawButtonModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawTagModule, JigsawDemoDescriptionModule, CommonModule, JigsawButtonModule, JigsawHeaderModule],
     declarations: [TableAddCheckboxColumnPageableDemoComponent],
     exports: [TableAddCheckboxColumnPageableDemoComponent]
 })
