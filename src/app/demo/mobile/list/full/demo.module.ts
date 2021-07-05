@@ -4,11 +4,13 @@ import {JigsawMobileListModule, JigsawMobileCheckBoxModule} from "jigsaw/mobile_
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ListFullDemoComponent} from "./demo.component";
 
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
+
 @NgModule({
     imports: [
         JigsawMobileListModule, CommonModule, JigsawMobileCheckBoxModule,
         JigsawDemoDescriptionModule
-    ],
+    , JigsawMobileHeaderModule],
     declarations: [ListFullDemoComponent],
     exports: [ListFullDemoComponent]
 })

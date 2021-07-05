@@ -52,4 +52,5 @@ export * from "./mobile-components/slider/index";
 export * from "./mobile-components/switch/index";
 export * from "./mobile-components/tabs/index";
 export * from "./mobile-components/tag/tag";
+export * from "./mobile-components/header/header";
 

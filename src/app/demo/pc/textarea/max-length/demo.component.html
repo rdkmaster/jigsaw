@@ -6,12 +6,12 @@
 <div class="live-demo-wrap">
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>不配置字符数限制</h3>
+            <jigsaw-header [level]="2">不配置字符数限制</jigsaw-header>
             <jigsaw-textarea (valueChange)="_$valueChange($event)"></jigsaw-textarea>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
-            <h3>限制30个字符（默认不包含回车换行符）</h3>
+            <jigsaw-header [level]="2">限制30个字符（默认不包含回车换行符）</jigsaw-header>
             <jigsaw-textarea maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
         </div>
     </div>

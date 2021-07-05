@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Select</h2>
+    <jigsaw-header [level]="1">Select</jigsaw-header>
     <div class="live-demo">
-        <h3>搜索功能</h3>
+        <jigsaw-header [level]="2">搜索功能</jigsaw-header>
         <j-button style="margin-bottom: 6px" (click)="changeData()">change data</j-button>
         <br>
         <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
@@ -17,7 +17,7 @@
     </div>
 
     <div class="live-demo">
-        <h3>本地数据过滤</h3>
+        <jigsaw-header [level]="2">本地数据过滤</jigsaw-header>
         <j-button style="margin-bottom: 6px" (click)="changeData2()">change data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="lpaCountries" labelField="enName" (valueChange)="selectChange2($event)"
@@ -26,7 +26,7 @@
     </div>
 
     <div class="live-demo">
-        <h3>服务端数据过滤</h3>
+        <jigsaw-header [level]="2">服务端数据过滤</jigsaw-header>
         <j-button style="margin-bottom: 6px" (click)="changeData3()">change data</j-button>
         <br>
         <jigsaw-select [optionCount]="4" [data]="spaCountries" labelField="enName" (valueChange)="selectChange3($event)"

@@ -6,12 +6,12 @@
 <div class="live-demo-wrap">
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>free 模式</h3>
+            <jigsaw-header [level]="2">free 模式</jigsaw-header>
             <jigsaw-color-select mode="free"></jigsaw-color-select>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
-            <h3>limited 模式</h3>
+            <jigsaw-header [level]="2">limited 模式</jigsaw-header>
             <jigsaw-color-select mode="limited" (colorChange)="_$colorChange($event)" color="#ba1621"
                                  [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']">
             </jigsaw-color-select>

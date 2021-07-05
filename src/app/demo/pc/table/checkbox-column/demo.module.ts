@@ -3,8 +3,10 @@ import {JigsawButtonModule, JigsawTableModule, TableCellCheckboxRenderer, TableH
 import {TableAddCheckboxColumnDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawTableModule, JigsawButtonModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTableModule, JigsawButtonModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [TableAddCheckboxColumnDemoComponent],
     exports: [TableAddCheckboxColumnDemoComponent]
 })

@@ -5,17 +5,17 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Button</h2>
+    <jigsaw-header [level]="1">Button</jigsaw-header>
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>用法</h3>
+            <jigsaw-header [level]="2">用法</jigsaw-header>
             <j-button colorType="primary">普通用法</j-button>
             <a jigsaw-button colorType="primary">使用 a 标签</a>
             <button jigsaw-button colorType="primary">使用 button 标签</button>
         </div>
 
         <div class="demo-2 live-demo live-demo-block">
-            <h3>类型</h3>
+            <jigsaw-header [level]="2">类型</jigsaw-header>
             <p class="comment">四种类型：<code>default</code> <code>primary</code> <code>warning</code>
                 <code>error|danger</code></p>
             <j-button>Default</j-button>
@@ -27,7 +27,7 @@
 
     <div class="clearfix">
         <div class="demo-3 live-demo live-demo-block">
-            <h3>尺寸</h3>
+            <jigsaw-header [level]="2">尺寸</jigsaw-header>
             <p class="comment">三种尺寸：<code>small</code> <code>default</code> <code>large</code></p>
             <j-button preSize="small" colorType="primary">Small</j-button>
             <j-button preSize="default" colorType="primary">Default</j-button>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="demo-4 live-demo live-demo-block">
-            <h3>设置宽高</h3>
+            <jigsaw-header [level]="2">设置宽高</jigsaw-header>
             <p class="comment">宽高支持 <code>number</code> <code>px</code> <code>%</code></p>
             <j-button width="150px" height="40">click me</j-button>
             <j-button width="20%">click me</j-button>
@@ -44,12 +44,12 @@
 
     <div class="clearfix">
         <div class="demo-5 live-demo live-demo-block">
-            <h3>绑定click事件</h3>
+            <jigsaw-header [level]="2">绑定click事件</jigsaw-header>
             <j-button (click)="canClick()">click me</j-button>
         </div>
 
         <div class="demo-6 live-demo live-demo-block">
-            <h3>不可点击状态</h3>
+            <jigsaw-header [level]="2">不可点击状态</jigsaw-header>
                 <j-button [(disabled)]="disabled" (click)="changeClickCount()">click me</j-button>
                 <j-checkbox [(checked)]="disabled">disable/enable</j-checkbox>
             <p class="message">点击次数<span>{{clickCount}}</span></p>
@@ -58,7 +58,7 @@
 
     <div class="clearfix">
         <div class="demo-7 live-demo live-demo-block">
-            <h3>多种图标解决方案</h3>
+            <jigsaw-header [level]="2">多种图标解决方案</jigsaw-header>
             <j-button>
                 <span class="iconfont iconfont-e9ff"></span>
                 <span>内嵌图标</span>
