@@ -5,17 +5,17 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>List lite</h2>
+    <jigsaw-header [level]="1">List lite</jigsaw-header>
 
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>单选</h3>
+            <jigsaw-header [level]="2">单选</jigsaw-header>
             <j-list-lite width="200" [data]="goodsList" labelField="name"
                          (selectedItemsChange)="handleSelect($event)"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems1}}</span></p>
         </div>
         <div class="demo-2 live-demo live-demo-block">
-            <h3>多选</h3>
+            <jigsaw-header [level]="2">多选</jigsaw-header>
             <j-list-lite width="200" [data]="goodsList" labelField="name"
                          (selectedItemsChange)="handleSelect2($event)" [multipleSelect]="true"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems2}}</span></p>
@@ -24,13 +24,13 @@
 
     <div class="clearfix">
         <div class="demo-3 live-demo live-demo-block">
-            <h3>预设选中值</h3>
+            <jigsaw-header [level]="2">预设选中值</jigsaw-header>
             <j-list-lite width="200" [data]="goodsList" labelField="name" [selectedItems]="selectedItems3"
                          (selectedItemsChange)="handleSelect3($event)" [multipleSelect]="true"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItemsStr3}}</span></p>
         </div>
         <div class="demo-4 live-demo live-demo-block">
-            <h3>搜索功能</h3>
+            <jigsaw-header [level]="2">搜索功能</jigsaw-header>
             <j-list-lite width="200" [data]="goodsList" labelField="name"
                          (selectedItemsChange)="handleSelect4($event)" [multipleSelect]="true"
                          [searchable]="true"></j-list-lite>
@@ -40,13 +40,13 @@
 
     <div class="clearfix">
         <div class="demo-5 live-demo live-demo-block">
-            <h3>optionCount</h3>
+            <jigsaw-header [level]="2">optionCount</jigsaw-header>
             <j-list-lite width="200" [data]="goodsList5" labelField="name"
                          (selectedItemsChange)="handleSelect5($event)" [optionCount]="4"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems5}}</span></p>
         </div>
         <div class="demo-6 live-demo live-demo-block">
-            <h3>与combo-select组合使用</h3>
+            <jigsaw-header [level]="2">与combo-select组合使用</jigsaw-header>
             <j-combo-select [(value)]="selectedItems6" [clearable]="true" maxWidth="500" labelField="name">
                 <ng-template>
                     <j-list-lite [data]="goodsList" labelField="name" [(selectedItems)]="selectedItems6"
@@ -58,7 +58,7 @@
 
     <div class="clearfix">
         <div class="demo-7 live-demo live-demo-block">
-            <h3>字符串数组搜索</h3>
+            <jigsaw-header [level]="2">字符串数组搜索</jigsaw-header>
             <j-list-lite width="200" [data]="goodsStrList" [(selectedItems)]="selectedItems7" [multipleSelect]="true" [searchable]="true"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems7?.join(',')}}</span></p>
         </div>

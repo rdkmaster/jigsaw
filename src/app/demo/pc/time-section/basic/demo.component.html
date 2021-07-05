@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>time-section</h2>
+    <jigsaw-header [level]="1">time-section</jigsaw-header>
     <div class="demo-1 live-demo">
-        <h3>time-section-picker</h3>
+        <jigsaw-header [level]="2">time-section-picker</jigsaw-header>
         <j-button-bar [data]="['单选', '多选']" [selectedItems]="['多选']"
                       (selectedItemsChange)="multipleSelect1 = $event[0] == '多选'; timeSection = []">
         </j-button-bar>
@@ -17,7 +17,7 @@
         <br>
     </div>
     <div class="demo-2 live-demo">
-        <h3>week-section-picker</h3>
+        <jigsaw-header [level]="2">week-section-picker</jigsaw-header>
         <j-button-bar [data]="['单选', '多选']" [selectedItems]="['多选']"
                       (selectedItemsChange)="multipleSelect2 = $event[0] == '多选'; weekSection = []">
         </j-button-bar>
@@ -28,7 +28,7 @@
         <br>
     </div>
     <div class="demo-3 live-demo">
-        <h3>day-section-picker</h3>
+        <jigsaw-header [level]="2">day-section-picker</jigsaw-header>
         <j-button-bar [data]="['单选', '多选']" [selectedItems]="['多选']"
                       (selectedItemsChange)="multipleSelect3 = $event[0] == '多选'; daySection = []">
         </j-button-bar>
@@ -39,7 +39,7 @@
                               width="50%"></j-day-section-picker>
     </div>
     <div class="demo-4 live-demo">
-        <h3>time-section</h3>
+        <jigsaw-header [level]="2">time-section</jigsaw-header>
         <j-button-bar [data]="['水平排列', '垂直排列']" [selectedItems]="['垂直排列']"
                       (selectedItemsChange)="toggleLayout()">
         </j-button-bar>

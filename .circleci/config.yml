@@ -46,46 +46,45 @@ jobs:
                 name: Building formly lib
                 command: ./node_modules/.bin/gulp build:formly:clean
 
+            - run:
+                  name: Unit test
+                  command: npm test
+            - run:
+                  name: Testing patch demo
+                  command: |
+                      sh build/scripts/clone-seed.sh
+                      sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
+                      node build/scripts/patch-demos.js
+                      git checkout src
+
             - when:
                   condition:
                       or:
                           - equal: [ master, << pipeline.git.branch >> ]
+                          - equal: [ v9.3, << pipeline.git.branch >> ]
                   steps:
                       - run:
                           name: Building jigsaw app
                           command: node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
-
-            - run:
-                name: Unit test
-                command: npm test
-
-            - run:
-                name: Clone tourist
-                command: |
-                    mkdir -p `pwd`/../jigsaw-tourist
-                    cd `pwd`/../jigsaw-tourist
-                    git clone https://github.com/rdkmaster/jigsaw-tourist.git .
-            - restore_cache:
-                keys:
-                    - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-            - run:
-                name: Installing tourist packages
-                command: npm ci
-            - save_cache:
-                key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-                paths:
-                    - ~/.npm
-            - run:
-                name: Building with tourist
-                command: |
-                    rm -fr node_modules/@rdkmaster/jigsaw
-                    cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
-                    node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
-
-            - run:
-                name: Testing patch demo
-                command: |
-                    sh build/scripts/clone-seed.sh
-                    sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
-                    node build/scripts/patch-demos.js
-                    git checkout src
+                      - run:
+                          name: Clone tourist
+                          command: |
+                              mkdir -p `pwd`/../jigsaw-tourist
+                              cd `pwd`/../jigsaw-tourist
+                              git clone https://github.com/rdkmaster/jigsaw-tourist.git .
+                      - restore_cache:
+                          keys:
+                              - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+                      - run:
+                          name: Installing tourist packages
+                          command: npm ci
+                      - save_cache:
+                          key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+                          paths:
+                              - ~/.npm
+                      - run:
+                          name: Building with tourist
+                          command: |
+                              rm -fr node_modules/@rdkmaster/jigsaw
+                              cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
+                              node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
