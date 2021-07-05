@@ -13,5 +13,5 @@
     </ul>
 </div>
 <div class="jigsaw-time-popup-control" *ngIf="initData?.mode == 'hour'">
-    <span (click)="_$select({value: 'now'})">{{'timePicker.now' | translate}}</span>
+    <span *ngIf="initData?.showNowButton" (click)="_$select({value: 'now'})">{{'timePicker.now' | translate}}</span>
 </div>

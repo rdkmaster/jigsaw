@@ -45,7 +45,6 @@ function checkInputProperty(srcPath) {
         return;
     }
 
-    console.log(`Checking ${srcPath} ...`);
     const source = fs.readFileSync(srcPath).toString();
     source.replace(/@Input\s*\(\s*\)\s*(public)?\s*(\w+)\s*:\s*HTMLElement/g, (found, _, prop) => {
         error(`Input property ${prop}'s type can NOT be "HTMLElement"! Use type "any" instead!`);

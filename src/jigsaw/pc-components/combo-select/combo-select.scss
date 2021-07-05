@@ -1,6 +1,7 @@
 @import "../../common/assets/scss/core/base";
 
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
+$input-prefix-cls: #{$jigsaw-prefix}-input;
 
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
@@ -65,14 +66,11 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
             margin-right: 4px;
             margin-bottom: 2px;
         }
-        .jigsaw-input {
+        .#{$input-prefix-cls} {
             height: $height-base - 8;
             line-height: $height-base - 8;
-            border: none;
-            &.jigsaw-input-focused,
-            &:hover {
-                box-shadow: none;
-                border: none;
+            .#{$input-prefix-cls}-wrapper {
+                border: none !important;
             }
             input {
                 padding: 0 !important;
@@ -92,12 +90,21 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 
     &-disabled {
         color: $font-color-disabled;
-        pointer-events: none;
 
-        .#{$jigsaw-combo-select}-selection .#{$jigsaw-combo-select}-selection-rendered {
-            .jigsaw-tag-host {
-                color: $font-color-disabled;
+        .#{$jigsaw-combo-select}-selection {
+            border-color: $border-color-disabled;
+
+            .#{$jigsaw-combo-select}-selection-rendered {
+                .jigsaw-tag-host {
+                    color: $font-color-disabled;
+                    pointer-events: none;
+                }
             }
+        }
+        
+        .iconfont {
+            color: $icon-color-disabled;
+            pointer-events: none;
         }
     }
 
@@ -112,7 +119,7 @@ $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
         &:hover,
         &:active,
         &:focus {
-            border-color: $bg-disabled;
+            border-color: $border-color-disabled;
             box-shadow: none;
         }
     }

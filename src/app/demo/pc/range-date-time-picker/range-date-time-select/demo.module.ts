@@ -4,10 +4,12 @@ import {JigsawButtonBarModule, JigsawRadioModule, JigsawRangeDateTimeSelectModul
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RangeDateTimeSelectComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [RangeDateTimeSelectComponent],
     exports: [RangeDateTimeSelectComponent],
-    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawButtonBarModule, JigsawRangeDateTimeSelectModule, JigsawRadioModule, JigsawSelectModule]
+    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawButtonBarModule, JigsawRangeDateTimeSelectModule, JigsawRadioModule, JigsawSelectModule, JigsawHeaderModule]
 })
 export class RangeDateTimeSelectModule {
 

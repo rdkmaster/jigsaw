@@ -3,10 +3,12 @@ import {JigsawSwitchModule, JigsawTextareaModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TextareaMaxLengthDemoComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [TextareaMaxLengthDemoComponent],
     exports: [TextareaMaxLengthDemoComponent],
-    imports: [JigsawDemoDescriptionModule, JigsawTextareaModule, JigsawSwitchModule]
+    imports: [JigsawDemoDescriptionModule, JigsawTextareaModule, JigsawSwitchModule, JigsawHeaderModule]
 })
 export class TextareaMaxLengthDemoModule {
 }

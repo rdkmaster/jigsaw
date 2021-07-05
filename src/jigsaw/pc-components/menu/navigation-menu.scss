@@ -142,6 +142,10 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     background: $brand-light;
                 }
 
+                &.#{$nav-menu-prefix-cls}-item-selected-top {
+                    color: $brand-default;
+                }
+
                 .#{$nav-menu-prefix-cls}-item-arrow {
                     position: absolute;
                     right: 16px;
@@ -177,6 +181,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$nav-menu-prefix-cls}-sub-item-selected {
+                color: $brand-default;
                 background: $bg-body;
             }
         }

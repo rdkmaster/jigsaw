@@ -4,10 +4,12 @@ import {JigsawMobileRadioModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RadioBasicDemoComponent} from "./demo.component";
 
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
+
 @NgModule({
     declarations: [RadioBasicDemoComponent],
     exports: [RadioBasicDemoComponent],
-    imports: [JigsawMobileRadioModule, CommonModule, JigsawDemoDescriptionModule]
+    imports: [JigsawMobileRadioModule, CommonModule, JigsawDemoDescriptionModule, JigsawMobileHeaderModule]
 })
 export class RadioBasicDemoModule {
 
