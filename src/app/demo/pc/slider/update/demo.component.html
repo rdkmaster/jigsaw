@@ -6,9 +6,9 @@
 
 
 <div class="live-demo-wrap">
-    <h2>Slider</h2>
+    <jigsaw-header [level]="1">Slider</jigsaw-header>
     <div class="demo-4 live-demo">
-        <h3>更新value</h3>
+        <jigsaw-header [level]="2">更新value</jigsaw-header>
         <j-button (click)="updateValue()">update value</j-button><br>
         <jigsaw-slider [(value)]="rangeValue" [max]="rangeMax" (change)="handleChange($event)"></jigsaw-slider>
         <p class="message">取值范围：{{rangeValueStr}}</p>

@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Box</h2>
+    <jigsaw-header [level]="1">Box</jigsaw-header>
     <div class="demo-1 live-demo">
-        <h3>表单布局</h3>
+        <jigsaw-header [level]="2">表单布局</jigsaw-header>
         <form #form="ngForm" (ngSubmit)="submit(form.value)">
             <j-box direction="v" height="640" width="50%">
                 <j-box>
@@ -103,7 +103,7 @@
                 <j-box>
                     <j-box grow="1"></j-box>
                     <j-box grow="2">
-                        <button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</button>
+                        <j-button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</j-button>
                     </j-box>
                 </j-box>
             </j-box>

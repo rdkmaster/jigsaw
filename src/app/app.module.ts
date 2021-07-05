@@ -5,7 +5,7 @@ import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
-    JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
+    JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTheme, JigsawTreeExtModule
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
@@ -46,6 +46,6 @@ import {DemoCodeComponent} from "./demo-code.component";
 })
 export class AppModule {
     constructor() {
-        //JigsawTheme.majorStyle = 'purple';
+        JigsawTheme.majorStyle = 'light';
     }
 }

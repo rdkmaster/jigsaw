@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Select</h2>
+    <jigsaw-header [level]="1">Select</jigsaw-header>
     <div class="live-demo">
-        <h3>基本用法</h3>
+        <jigsaw-header [level]="2">基本用法</jigsaw-header>
         <jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"
@@ -16,7 +16,7 @@
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>
     <div class="live-demo">
-        <h3>字符串数组</h3>
+        <jigsaw-header [level]="2">字符串数组</jigsaw-header>
         <jigsaw-select [(value)]="selectedCityForSelect2"
                        (valueChange)="selectChange2($event)"
                        placeholder="请选择城市"

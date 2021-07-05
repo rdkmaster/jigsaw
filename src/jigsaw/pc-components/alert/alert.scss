@@ -13,7 +13,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    min-width: 480px;
+    width: 480px;
     min-height: 240px;
     background: $bg-body;
     border-width: 1px;
@@ -55,7 +55,9 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         justify-content: center;
         align-items: flex-start;
         padding: 0 32px 0 32 + $height-sm;
+        max-height: 80vh;
         outline: red;
+        overflow: hidden;
 
         .content-main {
             position: relative;

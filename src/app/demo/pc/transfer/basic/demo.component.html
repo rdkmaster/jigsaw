@@ -6,9 +6,9 @@
 <!-- start to learn the demo from here -->
 
 <div class="live-demo-wrap">
-    <h2>Transfer</h2>
+    <jigsaw-header [level]="1">Transfer</jigsaw-header>
     <div class="demo-1 live-demo">
-        <h3>普通数据</h3>
+        <jigsaw-header [level]="2">普通数据</jigsaw-header>
         <j-transfer width="100%" height="500" [data]="data" labelField="zhName" subLabelField="shortName"
                     [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
                     [selectedItems]="selectedCountries"></j-transfer>
