@@ -149,7 +149,7 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
 
         &-disabled {
             border-color: $border-color-disabled;
-            background-color: $bg-disabled;
+            background-color: $bg-disabled-deep;
             cursor: not-allowed;
 
             & + span {
