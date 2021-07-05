@@ -21,6 +21,10 @@ export class SelectPresetDemoComponent {
         this.selectedCityName = selectedItem.label;
     }
 
+    public changePreset(){
+        this.selectedCityForSelect = this.cityListForSelect[Math.floor(Math.random()*this.cityListForSelect.length)];
+    }
+    
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

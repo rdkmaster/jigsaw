@@ -284,6 +284,7 @@ export abstract class JigsawSelectBase
         }
         this._propagateChange(newValue);
         this._value = newValue;
+        this.writeValue(newValue);
     }
 
     /**
@@ -556,7 +557,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             value.forEach(item => {
                 items = items.concat(item["data"]);
             });
-            this._$selectedItems = this.multipleSelect ? items : [value];
+            this._$selectedItems = this.multipleSelect ? items : items[0];
         } else {
             this._$selectedItems = [];
         }

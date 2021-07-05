@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Select</h2>
+    <jigsaw-header [level]="1">Select</jigsaw-header>
     <div class="live-demo">
-        <h3>服务端取数据</h3>
+        <jigsaw-header [level]="2">服务端取数据</jigsaw-header>
         <j-select [(value)]="selectedCity"
                        (valueChange)="selectChange($event)"
                        labelField="name"

@@ -4,10 +4,12 @@ import {JigsawProgressModule, JigsawNumericInputModule} from "jigsaw/public_api"
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ProgressFullComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [ProgressFullComponent],
     exports: [ProgressFullComponent],
-    imports: [JigsawProgressModule, JigsawDemoDescriptionModule, CommonModule, JigsawNumericInputModule]
+    imports: [JigsawProgressModule, JigsawDemoDescriptionModule, CommonModule, JigsawNumericInputModule, JigsawHeaderModule]
 })
 export class ProgressFullModule {
 

@@ -5,15 +5,15 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>热力图</h2>
+    <jigsaw-mobile-header [level]="1">热力图</jigsaw-mobile-header>
 
     <div class="live-demo">
-        <h3>HeatGraphData静态数据</h3>
+        <jigsaw-mobile-header [level]="2">HeatGraphData静态数据</jigsaw-mobile-header>
         <jigsaw-mobile-graph [data]="heatData" height="400" (click)="handleClick($event)"></jigsaw-mobile-graph>
     </div>
 
     <div class="live-demo">
-        <h3>HeatGraphData异步数据</h3>
+        <jigsaw-mobile-header [level]="2">HeatGraphData异步数据</jigsaw-mobile-header>
         <jigsaw-mobile-graph [data]="heatFromAjax" height="400" (click)="handleClick($event)"></jigsaw-mobile-graph>
     </div>
 </div>
