@@ -4,11 +4,11 @@ import {FormsModule} from "@angular/forms";
 import {JigsawTrustedHtmlModule} from "jigsaw/public_api";
 import {TrustedHtmlFullComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-
+import {JigsawTextareaModule} from "jigsaw/public_api";
 import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawTrustedHtmlModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
+    imports: [CommonModule, FormsModule, JigsawTrustedHtmlModule, JigsawDemoDescriptionModule, JigsawHeaderModule, JigsawTextareaModule],
     declarations: [TrustedHtmlFullComponent],
     exports: [TrustedHtmlFullComponent]
 })

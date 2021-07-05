@@ -5,13 +5,17 @@
     margin: 12px 0 12px 0;
 }
 
-.live-demo-wrap p {
+.demo-container {
+    width: 450px;
+}
+
+.demo-container p {
     margin-top: 6px;
 }
 
-.live-demo-wrap textarea {
-    padding: 6px;
-    width: 400px;
-    height: 120px;
+.demo-container jigsaw-textarea {
+    width: 450px;
+    height: 160px;
+    font-family: monospace;
 }
 
