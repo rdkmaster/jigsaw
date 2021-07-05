@@ -212,13 +212,14 @@ $brand-active-light: $blue-2;
     $bg-gray => tag
 */
 $bg-body: $gray-1;
-$bg-component: $gray-2;
+$bg-component: transparent;
 $bg-container: $gray-2;
 $bg-disabled: $gray-3;
 $bg-disabled-deep: $gray-6;
 $bg-header: $gray-4;
 $bg-gray: $gray-3;
-$bg-body-dark: hsl(229, 27%, 8%);
+$bg-body-dark: $gray-6;
+$bg-body-white: $gray-9;
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -242,7 +243,7 @@ $font-color-white-dark: $gray-6;
 
 /* border 边框 */
 $border-color-default: $gray-6;
-$border-color-disabled: $gray-4;
+$border-color-disabled: $gray-5;
 
 /* split line 分割线 */
 $splitline-default: $gray-4;
@@ -259,6 +260,6 @@ $icon-color-stress: $gray-10;
     $box-shadow-lv3 => 及时消息、模态弹框、alert
 */
 $box-shadow-lv0: none;
-$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
-$box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
-$box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
+$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 100%, 0.12);
+$box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 100%, 0.08);
+$box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 100%, 0.06);

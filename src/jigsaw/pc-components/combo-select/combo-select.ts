@@ -121,7 +121,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     @RequireMarkForCheck()
     public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
-        return this._openTrigger;
+        return this.disabled ? 'none' : this._openTrigger;
     }
 
     public set openTrigger(value: 'mouseenter' | 'click' | 'none' | DropDownTrigger) {

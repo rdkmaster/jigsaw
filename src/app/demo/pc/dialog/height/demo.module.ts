@@ -4,10 +4,12 @@ import {JigsawButtonModule, JigsawDialogModule, JigsawInputModule, PopupService}
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DialogHeightDemo} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [DialogHeightDemo],
     exports: [DialogHeightDemo],
-    imports: [JigsawDialogModule, JigsawButtonModule, JigsawInputModule, JigsawDemoDescriptionModule, PerfectScrollbarModule],
+    imports: [JigsawDialogModule, JigsawButtonModule, JigsawInputModule, JigsawDemoDescriptionModule, PerfectScrollbarModule, JigsawHeaderModule],
     providers: [PopupService]
 })
 export class DialogHeightDemoModule {

@@ -291,7 +291,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * @internal
      */
     public _$onHostClick() {
-        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
+        if (this.jigsawFloatOpenTrigger == 'click' && !this.jigsawFloatOpen) {
             this.jigsawFloatOpen = true;
         }
     }
@@ -578,8 +578,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             ele.style.backgroundColor = 'inherit';
             this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
             popupElement.appendChild(ele);
-        }  
-    } 
+        }
+    }
 
     private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
         let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;

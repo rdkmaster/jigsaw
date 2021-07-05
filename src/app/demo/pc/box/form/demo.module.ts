@@ -5,7 +5,7 @@ import {
     JigsawButtonModule, JigsawInputModule, JigsawRadioModule, JigsawComboSelectModule,
     JigsawTileSelectModule, JigsawCheckBoxModule, JigsawSliderModule,
     JigsawSwitchModule, JigsawBoxModule, JigsawDateTimePickerModule,
-    JigsawRangeDateTimePickerModule
+    JigsawRangeDateTimePickerModule, JigsawHeaderModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {FormDemoComponent} from "./demo.component";
@@ -18,7 +18,7 @@ import {FormDemoComponent} from "./demo.component";
         JigsawInputModule, JigsawCheckBoxModule, JigsawButtonModule,
         JigsawRadioModule, JigsawComboSelectModule, JigsawRangeDateTimePickerModule,
         JigsawDateTimePickerModule, JigsawSliderModule, JigsawSwitchModule,
-        JigsawTileSelectModule, JigsawDemoDescriptionModule
+        JigsawTileSelectModule, JigsawDemoDescriptionModule, JigsawHeaderModule
     ]
 })
 export class FormDemoModule {
