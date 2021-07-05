@@ -643,6 +643,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 ele.style.borderRight = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
+        } else {
+            // 覆盖在host上面
+            ele.style.left = '6px';
+            ele.style.bottom = '-4px';
         }
     }
 
