@@ -29,7 +29,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
 
     &-title-box {
-        @include clearfix();
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -41,7 +40,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         justify-content: flex-start;
         align-items: center;
         color: $font-color-heading;
-        width: 100%;
+        overflow: hidden;
     }
 
     &-sub-title {
