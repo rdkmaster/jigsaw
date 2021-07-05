@@ -125,9 +125,8 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
             }
 
             &-sub-title {
-                span.#{$transfer-prefix-cls}-sub-title {
-                    white-space: nowrap;
-                }
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
