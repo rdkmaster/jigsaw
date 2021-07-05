@@ -13,9 +13,9 @@
             <div class="host" [trustedHtml]="html" [trustedHtmlContext]="context">
             </div>
             <p><strong>HTML 源码</strong></p>
-            <textarea [(ngModel)]="html"></textarea>
+            <jigsaw-textarea [(value)]="html"></jigsaw-textarea>
             <p><strong>JS 源码</strong></p>
-            <textarea [(ngModel)]="jsCode" (ngModelChange)="onCodeChange($event)"></textarea>
+            <jigsaw-textarea [(value)]="jsCode" (valueChange)="onCodeChange($event)"></jigsaw-textarea>
         </div>
     </div>
 </div>

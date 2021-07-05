@@ -9,9 +9,7 @@
     margin-top: 6px;
 }
 
-.live-demo-wrap textarea {
-    padding: 6px;
-    width: 400px;
-    height: 120px;
+.live-demo-wrap jigsaw-textarea {
+    width: 360px;
 }
 
