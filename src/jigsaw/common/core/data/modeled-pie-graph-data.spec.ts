@@ -3,7 +3,6 @@ import {
     Dimension,
     Indicator,
     ModeledPieGraphData,
-    ModeledRectangularTemplate
 } from "./modeled-graph-data";
 import {EchartOptions} from "./echart-types";
 

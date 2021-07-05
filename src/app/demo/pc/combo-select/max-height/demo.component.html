@@ -4,9 +4,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>ComboSelect</h2>
+    <jigsaw-header [level]="1">ComboSelect</jigsaw-header>
     <div class="demo-1 live-demo">
-        <h3>单行显示</h3>
+        <jigsaw-header [level]="2">单行显示</jigsaw-header>
         <p class="comment">设置单行显示时，需要设置<code>height</code>为<code>32px</code>，如果设置了比<code>32px</code>小，我们会限制在<code>32px</code>。</p>
         <jigsaw-combo-select placeholder="请输入姓名~"
                              [(value)]="selectedCity"
@@ -25,7 +25,7 @@
         </jigsaw-combo-select>
     </div>
     <div class="demo-2 live-demo">
-        <h3>多行显示</h3>
+        <jigsaw-header [level]="2">多行显示</jigsaw-header>
         <jigsaw-combo-select placeholder="请输入姓名~"
                              [(value)]="selectedCity2"
                              maxWidth="300"

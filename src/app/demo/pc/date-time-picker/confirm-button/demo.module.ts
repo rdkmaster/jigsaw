@@ -11,11 +11,13 @@ import {
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DateTimePickerConfirmButtonDemoComponent} from './demo.component';
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     imports: [
         CommonModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawDateTimePickerModule, JigsawDateTimeSelectModule,
         JigsawRangeDateTimePickerModule, JigsawRangeDateTimeSelectModule, JigsawButtonBarModule
-    ],
+    , JigsawHeaderModule],
     declarations: [DateTimePickerConfirmButtonDemoComponent],
     exports: [DateTimePickerConfirmButtonDemoComponent]
 })

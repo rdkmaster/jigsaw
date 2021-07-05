@@ -3,10 +3,12 @@ import {JigsawMobileCheckBoxModule, JigsawMobileSwitchModule} from "jigsaw/mobil
 import {CheckBoxFullComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
+
 @NgModule({
     declarations: [CheckBoxFullComponent],
     exports: [CheckBoxFullComponent],
-    imports: [JigsawMobileCheckBoxModule, JigsawMobileSwitchModule, JigsawDemoDescriptionModule]
+    imports: [JigsawMobileCheckBoxModule, JigsawMobileSwitchModule, JigsawDemoDescriptionModule, JigsawMobileHeaderModule]
 })
 export class CheckBoxFullModule {
 

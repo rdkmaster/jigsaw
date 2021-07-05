@@ -28,6 +28,7 @@ import {JigsawMobileRadioLiteModule} from "./radio/radio-lite";
 import {JigsawMobileButtonBarModule} from "./list-and-tile/button-bar";
 import {JigsawMobileIconModule} from "./icon/icon";
 import {JigsawMobileRateModule} from "./rate/index";
+import {JigsawMobileHeaderModule} from  "./header/header";
 
 const JIGSAW_MODULE = [
     JigsawMobileAlertModule,
@@ -58,7 +59,8 @@ const JIGSAW_MODULE = [
     JigsawMobileRadioLiteModule,
     JigsawMobileButtonBarModule,
     JigsawMobileIconModule,
-    JigsawMobileRateModule
+    JigsawMobileRateModule,
+    JigsawMobileHeaderModule
 ];
 
 @NgModule({

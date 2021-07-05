@@ -4,10 +4,12 @@ import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description
 import {JigsawDrawerModule, JigsawMenuModule} from "jigsaw/public_api";
 import {NavigationMenuInlineDemo} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     imports: [
         CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule, JigsawDrawerModule
-    ],
+    , JigsawHeaderModule],
     declarations: [NavigationMenuInlineDemo],
     exports: [NavigationMenuInlineDemo]
 })
