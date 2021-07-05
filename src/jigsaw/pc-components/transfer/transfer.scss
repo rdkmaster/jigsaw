@@ -2,6 +2,7 @@
 
 $transfer-prefix-cls: #{$jigsaw-prefix}-transfer;
 $list-prefix-cls: #{$jigsaw-prefix}-list;
+$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
 .#{$transfer-prefix-cls} {
     display: inline-block;
@@ -113,6 +114,21 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
         }
         .#{$list-prefix-cls} {
             border: none;
+        }
+        .#{$list-option-prefix-cls} {
+            &-title {
+                span.#{$transfer-prefix-cls}-middle-title {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+
+            &-sub-title {
+                span.#{$transfer-prefix-cls}-sub-title {
+                    white-space: nowrap;
+                }
+            }
         }
     }
     &-search-wrapper {

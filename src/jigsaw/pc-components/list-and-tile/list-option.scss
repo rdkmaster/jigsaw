@@ -47,9 +47,6 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     &-sub-title {
         font-size: $font-size-base;
         color: $font-color-hint;
-        p {
-            height: 18px;
-        }
     }
 
     &-block {
