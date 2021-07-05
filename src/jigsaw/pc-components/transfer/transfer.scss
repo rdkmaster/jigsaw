@@ -117,6 +117,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         }
         .#{$list-option-prefix-cls} {
             &-title {
+                min-width: 50%;
                 span.#{$transfer-prefix-cls}-middle-title {
                     text-overflow: ellipsis;
                     white-space: nowrap;
@@ -125,6 +126,9 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
             }
 
             &-sub-title {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
                 span.#{$transfer-prefix-cls}-sub-title {
                     white-space: nowrap;
                 }
