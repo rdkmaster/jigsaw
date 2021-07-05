@@ -7,7 +7,7 @@
             <div class="jigsaw-nav-menu-item-top" (click)="_$menuSelect(menuItem)" [ngClass]="{'jigsaw-nav-menu-item-selected': menuItem.selected && menuItem?.nodes?.length > 0,
                  'jigsaw-nav-menu-item-selected-top': menuItem.selected && menuItem?.nodes?.length == 0}">
                 <i *ngIf="collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="menuItem.label"
-                    jigsawTooltipPosition="bottomRight"></i>
+                    jigsawTooltipPosition="right"></i>
                 <i *ngIf="!collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'"></i>
                 <span>{{menuItem.label}}</span>
                 <i *ngIf="menuItem?.nodes?.length > 0 && !collapsed"
