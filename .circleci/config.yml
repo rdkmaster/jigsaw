@@ -8,7 +8,7 @@ workflows:
 jobs:
     build-and-test:
         docker:
-            - image: cimg/node:12.22
+            - image: cimg/node:10.16
         steps:
             - checkout
 
