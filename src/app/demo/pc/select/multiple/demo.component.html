@@ -9,7 +9,7 @@
         <jigsaw-header [level]="2">多选</jigsaw-header>
         <p>可试试 maxWidth / maxHeight 对组件尺寸的影响</p>
         <jigsaw-checkbox [(checked)]="enableMaxWidth">maxWidth</jigsaw-checkbox>
-        <jigsaw-numeric-input [(value)]="maxWidth" [disabled]="!enableMaxWidth"></jigsaw-numeric-input>
+        <jigsaw-numeric-input min="120" [(value)]="maxWidth" [disabled]="!enableMaxWidth"></jigsaw-numeric-input>
 
         <br><br>
         <jigsaw-checkbox [(checked)]="enableMaxHeight">maxHeight</jigsaw-checkbox>
