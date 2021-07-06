@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TimeSectionValue} from "jigsaw/public_api";
+import {ArrayCollection, TimeSectionValue} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -21,7 +21,7 @@ export class TimeSectionFillBackDemoComponent {
     }
 
     onTimeSectionChange(value: TimeSectionValue) {
-        const v: TimeSectionValue = {time: value.time, everyday: !!value.everyday};
+        const v: TimeSectionValue = {time: [...value.time], everyday: !!value.everyday};
         if (value.date) {
             v.date = value.date.map(date => ({value: date.value}));
         }
