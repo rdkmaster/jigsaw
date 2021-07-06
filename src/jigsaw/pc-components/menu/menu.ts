@@ -16,6 +16,7 @@ import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
+import {JigsawTheme} from "../../common/core/theming/theme";
 
 export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
 
@@ -212,7 +213,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @NoMarkForCheckRequired
      */
     @Input()
-    public theme: MenuTheme = 'light';
+    public theme: MenuTheme = JigsawTheme.majorStyle || 'light';
 
     /**
      * @internal

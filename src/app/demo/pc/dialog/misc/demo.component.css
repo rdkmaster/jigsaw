@@ -1,8 +1,4 @@
 @charset "UTF-8";
-h3.title {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
 
 .dom-dialog {
     margin-bottom: 30px;
@@ -36,14 +32,6 @@ h3.title {
 
 .pop-win .btn-group-box {
     text-align: center;
-}
-
-.pop-win .btn-group-box btn-demo {
-    display: inline-block;
-    *zoom: 1;
-    *display: inline;
-    vertical-align: middle;
-    margin-right: 8px;
 }
 
 .pop-win .close-btn {

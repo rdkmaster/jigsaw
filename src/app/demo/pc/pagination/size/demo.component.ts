@@ -4,7 +4,7 @@ import { LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class PaginationSizeDemoComponent {
     searchable: boolean = true;

@@ -102,6 +102,7 @@
                 font-size: $font-size-lg;
                 color: $icon-color-default;
                 cursor: pointer;
+                overflow: hidden;
             }
 
             &:hover {

@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        jigsaw-icon {
+        .live-demo-wrap jigsaw-icon {
             margin: 10px;
             line-height: 1;
         }

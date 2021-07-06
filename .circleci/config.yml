@@ -1,0 +1,90 @@
+version: 2.1
+
+workflows:
+    orb-free-workflow:
+        jobs:
+            - build-and-test
+
+jobs:
+    build-and-test:
+        docker:
+            - image: cimg/node:10.16
+        steps:
+            - checkout
+
+            - restore_cache:
+                # See the configuration reference documentation for more details on using restore_cache and save_cache steps
+                # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
+                keys:
+                    - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - run:
+                name: Installing jigsaw packages
+                command: npm ci
+            - save_cache:
+                key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+                paths:
+                    - ~/.npm
+            - run:
+                name: Static Tests
+                command: |
+                    node build/scripts/check-demo-import.js
+                    node build/scripts/check-mark-for-check.js
+                    node build/scripts/check-public-variables.js
+                    node build/scripts/check-html-element-type.js
+                    node build/scripts/check-import-path.js
+                    ./node_modules/.bin/gulp ensure-url-matches-path
+            - run:
+                name: Generate demo info
+                command: ./node_modules/.bin/gulp generate-demo-info
+            - run:
+                name: Generate doc
+                command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
+            - run:
+                name: Building jigsaw lib
+                command: ./node_modules/.bin/gulp build:jigsaw
+            - run:
+                name: Building formly lib
+                command: ./node_modules/.bin/gulp build:formly:clean
+
+            - run:
+                  name: Unit test
+                  command: npm test
+            - run:
+                  name: Testing patch demo
+                  command: |
+                      sh build/scripts/clone-seed.sh
+                      sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
+                      node build/scripts/patch-demos.js
+                      git checkout src
+
+#            - when:
+#                  condition:
+#                      or:
+#                          - equal: [ master, << pipeline.git.branch >> ]
+#                          - equal: [ v9.3, << pipeline.git.branch >> ]
+#                  steps:
+#                      - run:
+#                          name: Building jigsaw app
+#                          command: node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot
+#                      - run:
+#                          name: Clone tourist
+#                          command: |
+#                              mkdir -p `pwd`/../jigsaw-tourist
+#                              cd `pwd`/../jigsaw-tourist
+#                              git clone https://github.com/rdkmaster/jigsaw-tourist.git .
+#                      - restore_cache:
+#                          keys:
+#                              - tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+#                      - run:
+#                          name: Installing tourist packages
+#                          command: npm ci
+#                      - save_cache:
+#                          key: tourist-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+#                          paths:
+#                              - ~/.npm
+#                      - run:
+#                          name: Building with tourist
+#                          command: |
+#                              rm -fr node_modules/@rdkmaster/jigsaw
+#                              cp -r /root/project/dist/@rdkmaster/jigsaw node_modules/@rdkmaster/
+#                              node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng build --prod --aot

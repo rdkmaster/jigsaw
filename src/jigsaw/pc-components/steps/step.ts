@@ -1,12 +1,7 @@
-import {
-    Component,
-    NgModule,
-    ChangeDetectionStrategy,
-    Input
-} from "@angular/core";
-import { AbstractJigsawComponent } from "../../common/common";
-import { CommonModule } from "@angular/common";
-import { JigsawTrustedHtmlModule } from "../../common/directive/trusted-html/trusted-html";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, Output} from "@angular/core";
+import {AbstractJigsawComponent} from "../../common/common";
+import {CommonModule} from "@angular/common";
+import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 
 export type StepItem = {
     /**
@@ -22,6 +17,7 @@ export type StepItem = {
      */
     subTitle?: string;
     context?: any;
+    disabled?: boolean
 };
 
 @Component({
@@ -37,6 +33,10 @@ export type StepItem = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSteps extends AbstractJigsawComponent {
+    constructor(private _changeDetector: ChangeDetectorRef) {
+        super();
+    }
+
     /**
      * 步骤条的数据
      *
@@ -46,6 +46,8 @@ export class JigsawSteps extends AbstractJigsawComponent {
     @Input()
     public data: StepItem[] = [];
 
+    private _current: number = 0;
+
     /**
      * 步骤条的当前步骤的索引值
      *
@@ -53,14 +55,31 @@ export class JigsawSteps extends AbstractJigsawComponent {
      *
      */
     @Input()
-    public current: number = 0;
+    public get current(): number {
+        return this._current;
+    }
+
+    public set current(value: number) {
+        if (isNaN(value) || typeof value !== 'number' || value < 0 || value >= this.data?.length) {
+            // 非法值默认都不选
+            value = -1;
+        }
+        if (this._current !== value) {
+            this._current = value;
+            this._changeDetector.markForCheck();
+            this.currentChange.emit(this._current);
+        }
+    }
+
+    @Output()
+    public currentChange = new EventEmitter<number>();
 
     /**
      * 设置步骤条的方向，支持水平方向和垂直方向
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/vertical
+     * $demo = steps/basic
      */
     @Input()
     public direction: "vertical" | "horizontal" = "horizontal";
@@ -68,7 +87,10 @@ export class JigsawSteps extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public _$changeCurrent(idx: number) {
+    public _$changeCurrent(idx: number, item: StepItem) {
+        if (item?.disabled) {
+            return;
+        }
         this.current = idx;
     }
 }
@@ -78,4 +100,5 @@ export class JigsawSteps extends AbstractJigsawComponent {
     declarations: [JigsawSteps],
     exports: [JigsawSteps]
 })
-export class JigsawStepsModule {}
+export class JigsawStepsModule {
+}

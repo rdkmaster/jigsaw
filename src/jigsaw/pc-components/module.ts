@@ -63,6 +63,7 @@ import { JigsawTimeSectionModule } from "./date-and-time/time-section";
 import { JigsawHeaderModule } from "./header/header";
 import {JigsawStepsMultilineFallbackModule} from './fallback/steps/steps-multiline';
 import {JigsawUploadFallbackModule} from './fallback/upload/index';
+import { JigsawSearchInputModule } from './input/search-input';
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -129,7 +130,8 @@ const JIGSAW_MODULE = [
     JigsawMenuModule,
     JigsawTimeSectionModule,
     JigsawStepsMultilineFallbackModule,
-    JigsawUploadFallbackModule
+    JigsawUploadFallbackModule,
+    JigsawSearchInputModule
 ];
 
 @NgModule({

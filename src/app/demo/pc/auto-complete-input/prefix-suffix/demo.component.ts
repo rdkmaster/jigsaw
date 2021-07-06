@@ -4,7 +4,10 @@ import {GroupOptionValue} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        jigsaw-auto-complete-input {
+        .demo-container {
+            margin: 20px;
+        }
+        .demo-container jigsaw-auto-complete-input {
             margin-bottom: 10px;
         }
     `]

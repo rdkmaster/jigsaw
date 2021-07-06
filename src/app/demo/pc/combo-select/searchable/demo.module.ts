@@ -4,12 +4,14 @@ import {JigsawTileSelectModule, JigsawComboSelectModule, JigsawInputModule} from
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ComboSelectAutoCompleteDemo} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     declarations: [ComboSelectAutoCompleteDemo],
     exports: [ComboSelectAutoCompleteDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule, JigsawInputModule
-    ],
+    , JigsawHeaderModule],
 })
 export class ComboSelectAutoCompleteDemoModule {
 

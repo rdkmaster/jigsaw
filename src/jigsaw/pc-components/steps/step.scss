@@ -175,6 +175,19 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        &.#{$steps-prefix-cls}-item-disabled {
+            .#{$steps-prefix-cls}-title-cntr {
+                .#{$steps-prefix-cls}-title {
+                    cursor: not-allowed;
+                    color: $font-color-disabled;
+                }
+
+                .#{$steps-prefix-cls}-icon {
+                    cursor: not-allowed;
+                }
+            }
+        }
     }
 }
 
@@ -205,6 +218,12 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
             }
         }
 
+        &.#{$steps-prefix-cls}-item-finished {
+            .#{$steps-prefix-cls}-bar span {
+                background: $brand-default;
+            }
+        }
+
         &.#{$steps-prefix-cls}-item-error {
             .#{$steps-prefix-cls}-bar span {
                 background: $error-default;
@@ -220,12 +239,6 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
         &.#{$steps-prefix-cls}-item-waiting {
             .#{$steps-prefix-cls}-bar span {
                 background: $border-color-default;
-            }
-        }
-
-        &.#{$steps-prefix-cls}-item-finished {
-            .#{$steps-prefix-cls}-bar span {
-                background: $brand-default;
             }
         }
     }

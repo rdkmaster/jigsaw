@@ -3,8 +3,10 @@ import {JigsawTableModule, JigsawPaginationModule, JigsawButtonModule} from "jig
 import {TableSetHeaderSortDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawButtonModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawButtonModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [TableSetHeaderSortDemoComponent],
     exports: [TableSetHeaderSortDemoComponent]
 })

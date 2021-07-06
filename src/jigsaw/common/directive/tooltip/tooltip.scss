@@ -1,6 +1,16 @@
 $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
 .#{$tooltip-prefix-cls} {
+    $maxLineNum: 5;
     padding: 12px;
     max-width: 400px;
+    > div {
+        display: -webkit-box;
+        word-break: break-all;
+        white-space:pre-wrap;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $maxLineNum;
+        overflow: hidden;
+    }
 }

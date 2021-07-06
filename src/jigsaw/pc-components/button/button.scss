@@ -19,7 +19,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     font-size: $font-size-base;
     user-select: none;
     box-sizing: border-box;
-    line-height: $height-base;
     vertical-align: middle;
     cursor: pointer;
 
@@ -63,7 +62,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         pointer-events: none;
         color: $font-color-disabled;
         background-color: $bg-disabled;
-        border-color: $border-color-default;
+        border-color: $border-color-disabled;
     }
 
     &#{&}-color-primary {
@@ -139,7 +138,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     & .iconfont{
-      margin-right: 4px; 
+      margin-right: 4px;
     }
 }
 

@@ -14,7 +14,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
                            [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
                            [width]="optionWidth" [height]="height" [disabled]="item?.disabled"
                            title="{{item && item[labelField] ? item[labelField] : item}}">
-                <span *ngIf="item.icon" [class]="item.icon"></span>
+                <span *ngIf="item.icon" [class]="item.icon" [ngClass]="{'jigsaw-button-bar-icon-only': item === '' || item[labelField] === ''}"></span>
                 <p>{{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}</p>
             </j-tile-option>
         </j-tile>`,

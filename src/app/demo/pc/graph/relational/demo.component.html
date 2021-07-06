@@ -5,15 +5,15 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>关系图</h2>
+    <jigsaw-header [level]="1">关系图</jigsaw-header>
 
     <div class="live-demo">
-        <h3>RelationalGraphData静态数据</h3>
+        <jigsaw-header [level]="2">RelationalGraphData静态数据</jigsaw-header>
         <jigsaw-graph [data]="relationalData" height="400" (click)="handleClick($event)"></jigsaw-graph>
     </div>
 
     <div class="live-demo">
-        <h3>RelationalGraphData异步数据</h3>
+        <jigsaw-header [level]="2">RelationalGraphData异步数据</jigsaw-header>
         <jigsaw-graph [data]="relationalFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
     </div>
 </div>

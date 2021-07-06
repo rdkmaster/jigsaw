@@ -15,7 +15,6 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
     @include inline-block();
     font-size: $font-size-base;
     margin-right: 10px;
-    background: $bg-component;
     cursor: pointer;
     &.#{$radio-option-prefix-cls}-disabled {
         cursor: not-allowed;

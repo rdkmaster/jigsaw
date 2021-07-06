@@ -5,7 +5,7 @@ import {Component} from "@angular/core";
 })
 
 export class ButtonDisableDemoComponent {
-    disabled: boolean;
+    disabled: boolean = true;
     clickCount: number = 0;
     click() {
         //alert('nothing happened!')

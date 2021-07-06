@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { InternalUtils } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {InternalUtils} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class JigsawStepBasicDemoComponent {
     data = [];
@@ -12,33 +12,33 @@ export class JigsawStepBasicDemoComponent {
 
     constructor() {
         for (let i = 0; i < 6; i++) {
-            this.data.push(this._createStepData(i));
+            this.data.push(this._createStepData());
         }
     }
 
-    private _createStepData(index: number) {
+    private _createStepData() {
         const statuses = ["error", "warning", "normal", "normal", "normal"];
         const status =
             statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
         return {
             title: `这是${status}`,
             status: status,
-            subTitle: `<a (click)="changeStatus(${index})">跳至此处</a>`,
-            context: this
+            subTitle: '描述信息'
         };
-    }
-
-    public changeStatus(idx: number) {
-        this.current = idx;
     }
 
     public changeData() {
         let tempData = [];
         for (let i = 0; i < 6; i++) {
-            tempData.push(this._createStepData(i));
+            tempData.push(this._createStepData());
         }
         this.data = tempData;
     }
+
+    public currentChange(event: number) {
+        console.log(`${event} is selected: `, this.data[event]);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

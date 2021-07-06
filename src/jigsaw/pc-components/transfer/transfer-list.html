@@ -20,13 +20,13 @@
         <j-list #listGroup width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
                 [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$updateSelectedItemsByCurrent()" >
             <j-list-option #listItem *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item.disabled">
-                <div j-title>
+                <ng-container j-title>
                     <j-checkbox [(checked)]="listItem.selected" [disabled]="item.disabled"
                                 (checkedChange)="listGroup.update(item, $event)"></j-checkbox>
                     <span
                         class="jigsaw-transfer-middle-title">{{item && item[labelField] ? item[labelField] : item}}</span>
-                </div>
-                <span j-sub-title>{{item && item[subLabelField] ? item[subLabelField] : ''}}</span>
+                </ng-container>
+                <span j-sub-title class="jigsaw-transfer-sub-title">{{item && item[subLabelField] ? item[subLabelField] : ''}}</span>
             </j-list-option>
         </j-list>
     </div>

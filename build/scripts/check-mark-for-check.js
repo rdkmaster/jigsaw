@@ -46,7 +46,6 @@ function checkInputProperty(srcPath) {
         return;
     }
 
-    console.log(`Checking ${srcPath} ...`);
     const source = fs.readFileSync(srcPath).toString();
 
     ts.transpileModule(source, {

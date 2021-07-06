@@ -3,20 +3,20 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        p {
+        .live-demo-wrap p {
             font-size: 14px;
             margin: 10px 0 20px 0
-        }
-
-        label {
-            margin-right: 10px;
-            margin-bottom: 0;
         }
 
         .condition {
             display: flex;
             align-items: center;
             margin: 10px;
+        }
+
+        .condition label {
+            margin-right: 10px;
+            margin-bottom: 0;
         }
 
         .block {

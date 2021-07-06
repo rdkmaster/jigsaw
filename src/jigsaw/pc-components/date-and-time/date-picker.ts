@@ -23,8 +23,6 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-declare const moment: any;
-
 export type DayCell = {
     day: number;
     isToday?: boolean;
@@ -315,6 +313,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
+        if (monthCell.isSelected && TimeGr[this._gr] === 'month') {
+            this.clearDate();
+            return;
+        }
         if (this.date || this.gr == TimeGr.month) {
             let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.writeValue(date);
@@ -474,6 +476,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (dayCell.isDisabled) {
             return;
         }
+        if (dayCell.isSelected) {
+            this.clearDate();
+            return;
+        }
         let [year, month, day] = [this._$curYear, this._$curMonth.month, dayCell.day];
         if (dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth) {
             let date = TimeService.addDate(`${year}-${month}`, dayCell.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
@@ -481,6 +487,17 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
         this.writeValue(`${year}-${month}-${day}`);
         this._$touched = true;
+    }
+
+    public clearDate() {
+        let [year, month] = [this._$curYear, this._$curMonth.month];
+        this._date = "";
+        this.runMicrotask(() => {
+            this.dateChange.emit(this._date);
+            this._propagateChange(this._date);
+            this._changeDetectorRef.markForCheck();
+        });
+        this._createCalendar(year, month);
     }
 
     /**

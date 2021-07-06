@@ -4,8 +4,10 @@ import {JigsawDateTimePickerModule, JigsawRadioModule, JigsawSwitchModule} from 
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DateTimePickerLimitComponent} from './demo.component';
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawRadioModule, JigsawDateTimePickerModule, JigsawSwitchModule],
+    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawRadioModule, JigsawDateTimePickerModule, JigsawSwitchModule, JigsawHeaderModule],
     declarations: [DateTimePickerLimitComponent],
     exports: [DateTimePickerLimitComponent]
 })
