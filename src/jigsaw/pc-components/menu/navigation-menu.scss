@@ -54,8 +54,13 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 overflow: hidden;
 
                 &-actived {
-                    border-top: 1px solid $border-color-default;
-                    border-bottom: 1px solid $border-color-default;
+                    .#{$nav-menu-prefix-cls}-sub-item:first-child {
+                        border-top: 1px solid $border-color-default;
+                    }
+                    
+                    .#{$nav-menu-prefix-cls}-sub-item:last-child {
+                        border-bottom: 1px solid $border-color-default;
+                    }
                 }
 
                 .#{$nav-menu-prefix-cls}-sub-item {
