@@ -57,15 +57,19 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 
     &-selection-rendered {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
         min-height: $height-base - 2;
-        padding: 3px 0 0;
+        padding: 1px 0;
         overflow: hidden;
         font-size: 0;
+
         .jigsaw-tag-host {
             vertical-align: middle;
-            margin-right: 4px;
-            margin-bottom: 2px;
+            margin: 2px 4px 2px 0px;
         }
+
         .#{$input-prefix-cls} {
             height: $height-base - 8;
             line-height: $height-base - 8;
@@ -80,12 +84,11 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 
     &-placeholder {
-        @include inline-block();
+        display: inline-flex;
+        align-items: center;
         font-size: $font-size-base;
         color: $font-color-hint;
-        padding-bottom: 3px;
         height: $height-base - 6;
-        line-height: $height-base - 9;
     }
 
     &-disabled {
