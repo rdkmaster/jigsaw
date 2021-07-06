@@ -31,7 +31,12 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     > .#{$fish-bone-prefix-cls}-item-description {
         left: 50%;
         transform: translateX(-50%) translate3d(0, 0, 0);
-        color: $font-color-heading-bold;
+        .#{$fish-bone-prefix-cls}-white & {
+            color: #999999;
+        }
+        .#{$fish-bone-prefix-cls}-dark & {
+            color: #a4a7b3;
+        }
         -webkit-font-smoothing: subpixel-antialiased;
     }
 
