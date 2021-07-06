@@ -1,5 +1,4 @@
 <span #text [title]="text.innerText" *ngIf="!isAdd" class="jigsaw-tag-content">
-    <p *ngIf="text?.innerText?.trim() == ''">&nbsp;</p>
     <i *ngIf="!!icon" class="{{icon}}"></i>
     <p class="jigsaw-tag-text">
         <ng-content></ng-content>
