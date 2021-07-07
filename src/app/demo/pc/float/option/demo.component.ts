@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {
     PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
-    PopupSize, CommonUtils
+    PopupSize, CommonUtils, FloatPosition
 } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont-e9d8 {
-            margin: 20px 100px;
+            margin: 0 200px;
             color: blue;
         }
 
@@ -49,6 +49,7 @@ export class FloatOptionDemo implements OnInit {
     showBorder = true;
     showShadow = true;
     showArrow = true;
+    position: FloatPosition = 'bottomLeft';
     size: PopupSize = {};
     options: PopupOptions = {useCustomizedBackground: true};
     _$height = 'auto';

@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {
     JigsawRadioModule, JigsawButtonModule, JigsawFloatModule, JigsawNumericInputModule,
-    JigsawInputModule, JigsawSwitchModule, JigsawTrustedHtmlModule
+    JigsawInputModule, JigsawSwitchModule, JigsawTrustedHtmlModule, JigsawSelectModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {FloatOptionDemo} from "./demo.component";
@@ -13,7 +13,7 @@ import {FloatOptionDemo} from "./demo.component";
     imports: [
         JigsawFloatModule, JigsawRadioModule, JigsawSwitchModule, JigsawTrustedHtmlModule,
         JigsawDemoDescriptionModule, JigsawButtonModule, CommonModule, JigsawNumericInputModule,
-        JigsawInputModule
+        JigsawInputModule, JigsawSelectModule
     ]
 })
 export class FloatOptionDemoModule {
