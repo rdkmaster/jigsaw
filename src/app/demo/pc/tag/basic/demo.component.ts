@@ -10,9 +10,10 @@ export class TagBasicDemoComponent {
         console.log(tag)
     }
 
-    @ViewChildren(JigsawTag) tags: QueryList<JigsawTag>;
+    @ViewChildren(JigsawTag)
+    tags: QueryList<JigsawTag>;
 
-    showAllTags() {
+    resetAllTags() {
         console.log(this.tags);
         this.tags.forEach(tag => tag.show());
     }
