@@ -13,9 +13,12 @@ export class SliderUpdateDemoComponent {
     rangeValueStr = '30-50-60';
 
     updateValue() {
+        // max是绑定变量，赋值给组件会有延迟，所以后面刷新视图需要加延迟
         this.rangeMax = 200;
-        this.rangeValue.set(2, 200);
-        this.rangeValue.refresh();
+        setTimeout(() => {
+            this.rangeValue.set(2, 200);
+            this.rangeValue.refresh();
+        })
     }
 
     handleChange($event) {
