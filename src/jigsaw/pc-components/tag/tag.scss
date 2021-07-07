@@ -170,6 +170,10 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 100%;
+
+            i {
+                margin-right: 0px;
+            }
         }
     }
 }
