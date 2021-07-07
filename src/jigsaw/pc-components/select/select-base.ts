@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild, OnInit, AfterViewInit} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {JigsawListLite} from "../list-and-tile/list-lite";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 type SelectOption = {
     (labelField: string): string;
@@ -445,6 +445,7 @@ export abstract class JigsawSelectBase
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+        value = value.filter(el => el != null);
         this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
         this._setValidData();
         if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
