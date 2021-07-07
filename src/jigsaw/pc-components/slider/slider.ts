@@ -351,7 +351,11 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     public set min(min: number) {
-        this._min = Number(min);
+        min = Number(min);
+        if (isNaN(min)) {
+            return;
+        }
+        this._min = min;
     }
 
     private _max: number = 100;
@@ -367,6 +371,10 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     public set max(max: number) {
+        max = Number(max);
+        if (isNaN(max)) {
+            return;
+        }
         this._max = Number(max);
     }
 
