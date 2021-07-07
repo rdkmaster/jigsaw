@@ -77,6 +77,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
     }
 
     public set jigsawBadgeHorizontalOffset(value: number) {
+        value = Number(value);
         if (this._hOffset == value) {
             return;
         }
