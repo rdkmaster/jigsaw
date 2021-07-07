@@ -346,12 +346,12 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get min() {
+    public get min():number {
         return this._min;
     }
 
     public set min(min: number) {
-        this._min = min;
+        this._min = Number(min);
     }
 
     private _max: number = 100;
@@ -362,12 +362,12 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get max() {
+    public get max():number {
         return this._max;
     }
 
     public set max(max: number) {
-        this._max = max;
+        this._max = Number(max);
     }
 
     private _step: number = 1;
