@@ -94,18 +94,16 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
         if (isNaN(this._offset)) {
             return;
         }
-        this._zone.runOutsideAngular(() => {
-            // 兼容垂直滑动条;
-            if (this._slider.vertical) {
-                this._$handleStyle = {
-                    bottom: this._offset + "%"
-                }
-            } else {
-                this._$handleStyle = {
-                    left: this._offset + "%"
-                }
+        if (this._slider.vertical) {
+            this._$handleStyle = {
+                bottom: this._offset + "%"
             }
-        })
+        } else {
+            this._$handleStyle = {
+                left: this._offset + "%"
+            }
+        }
+        this._cdr.markForCheck();
     }
 
     private _dragging: boolean = false;
@@ -190,7 +188,8 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
      */
     private _slider: JigsawSlider;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any, protected _zone: NgZone) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any,
+                protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
         super();
         this._slider = slider;
     }
@@ -431,28 +430,20 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      */
     public _$trackStyle = {};
 
-    private _setTrackStyle(value?) {
-        // 兼容双触点.
+    private _setTrackStyle() {
         let startPos: number = 0;
-        let trackSize: number = CommonUtils.isDefined(value) ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
-
+        let trackSize: number = 0;
         if (this._$value.length > 1) {
-            let max: number = this._$value[0];
-            let min: number = this._$value[0];
-
-            this._$value.map(item => {
-                if (max - item < 0) {
-                    max = item;
-                } else if (item - min < 0) {
-                    min = item;
-                }
-            });
-
+            // 多触点
+            let min: number = Math.min(...this._$value);
+            let max: number = Math.max(...this._$value);
             startPos = this._transformValueToPos(min);
             trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
+        } else {
+            // 单触点
+            trackSize = this._transformValueToPos(this.value);
         }
-
-        if (this.vertical) { // 垂直和水平两种
+        if (this.vertical) {
             this._$trackStyle = {
                 bottom: startPos + "%",
                 height: trackSize + "%"
@@ -591,11 +582,23 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     private _getRemoveRefreshCallback() {
         return this._$value.onRefresh(() => {
-            this._zone.runOutsideAngular(() => this._setTrackStyle(this.value));
+            this._zone.runOutsideAngular(() => this._setTrackStyle());
+            this._updateSliderHandleValue();
             this.valueChange.emit(this.value);
             this._propagateChange(this.value);
             this._changeDetectorRef.markForCheck();
         });
+    }
+
+    /**
+     * 手动更新handle的值，通过ngFor更新必须value发生变化，如max变化也需要调整位置
+     * @private
+     */
+    private _updateSliderHandleValue() {
+        if(!this._sliderHandle || !this._$value) {
+            return;
+        }
+        this._sliderHandle.forEach((item, index) => item.value = this._$value[index])
     }
 
     private _propagateChange: any = () => {
