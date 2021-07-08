@@ -93,7 +93,11 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         }
 
         .#{$tab-prefix}-bar-add-option {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            span {
+                margin-right: 6px;
+            }
         }
 
         .jigsaw-list-option {

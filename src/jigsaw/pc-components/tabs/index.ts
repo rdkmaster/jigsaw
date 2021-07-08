@@ -28,10 +28,10 @@ export class JigsawTabsModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, "tabs", {
             zh: {
-                add: "添加 Tab"
+                add: "添加新页"
             },
             en: {
-                add: "Add Tab"
+                add: "Add New Tab"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
