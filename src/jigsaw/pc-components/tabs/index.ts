@@ -31,7 +31,7 @@ export class JigsawTabsModule {
                 add: "添加新页"
             },
             en: {
-                add: "Add New Tab"
+                add: "New Tab"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
