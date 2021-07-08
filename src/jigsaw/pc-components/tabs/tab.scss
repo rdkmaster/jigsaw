@@ -92,6 +92,14 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             }
         }
 
+        .#{$tab-prefix}-bar-add-option {
+            display: flex;
+            justify-content: center;
+            span {
+                margin-right: 6px;
+            }
+        }
+
         .jigsaw-list-option {
             .span-margin {
                 margin: 0 4px;

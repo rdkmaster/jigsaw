@@ -220,6 +220,14 @@ export class I18nFullDemoComponent {
         }
     ]);
 
+    show(msg) {
+        alert(msg);
+    }
+
+    add(tab, content) {
+        tab.addTab('new tab', content);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
