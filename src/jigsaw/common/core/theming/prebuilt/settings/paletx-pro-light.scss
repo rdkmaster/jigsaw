@@ -234,7 +234,8 @@ $brand-active-dark: $blue-8-dark;
     $bg-disabled => 组件禁用背景
     $bg-header => 表头
     $bg-gray => tag
-    $bg-body-dark => 黑色背景
+    $bg-body-light => 组件内部实现亮色模式
+    $bg-body-dark => 组件内部实现暗色模式
 */
 $bg-body: $gray-1;
 $bg-component: transparent;
@@ -253,7 +254,11 @@ $bg-body-dark: $gray-3-dark;
     $font-color-heading => 非加粗标题
     $font-color-heading-bold => 加粗标题
     $font-color-tag => 标签文字
-    $font-color-white => 深底白字
+    $font-color-white => 深底白字，纯白色（此变量色值不会变）
+    $font-color-white-darken => 深底白字，暗白色
+    $font-color-default-light => 组件内部实现亮色模式
+    $font-color-disabled-light => 组件内部实现亮色模式
+    $font-color-disabled-dark => 组件内部实现暗色模式
 */
 $font-color-default: $gray-9;
 $font-color-disabled: $gray-6;
@@ -262,13 +267,17 @@ $font-color-watermark: $gray-7;
 $font-color-heading: $gray-10;
 $font-color-heading-bold: $gray-9;
 $font-color-tag: $gray-8;
-$font-color-white: hsl(0, 0%, 100%); // 此变量色值不会变
-$font-color-white-dark: $gray-6;
+$font-color-white: hsl(0, 0%, 100%);
+$font-color-white-darken: $gray-6;
 $font-color-default-light: $gray-9;
 $font-color-disabled-light: $gray-6;
 $font-color-disabled-dark: $gray-8-dark;
 
-/* border 边框 */
+/* border 边框 
+    $border-color-default => 边框颜色
+    $border-color-disabled => 边框禁用
+    $border-color-default-dark => 组件内部实现暗色模式
+*/
 $border-color-default: $gray-5;
 $border-color-disabled: $gray-4;
 $border-color-default-dark: $gray-5-dark;

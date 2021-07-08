@@ -74,7 +74,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         background: $bg-body-dark;
         font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
-            color: $font-color-white-dark;
+            color: $font-color-white-darken;
             font-size: $font-size-lg;
             &:hover {
                 color: $font-color-white;
