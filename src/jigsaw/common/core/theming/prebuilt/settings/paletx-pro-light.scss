@@ -9,6 +9,16 @@ $blue-7: #1178D9;
 $blue-8: #0B5FB3;
 $blue-9: #06478c;
 $blue-10: #023166;
+$blue-1-dark: #192738;
+$blue-2-dark: #1e3a59;
+$blue-3-dark: #1f4b7a;
+$blue-4-dark: #1c5c9c;
+$blue-5-dark: #196dbd;
+$blue-6-dark: #1681de;
+$blue-7-dark: #3c99e6;
+$blue-8-dark: #64b2ed;
+$blue-9-dark: #8ecaf5;
+$blue-10-dark: #bbe2fc;
 
 $cyan-1: #e0fffc;
 $cyan-2: #b0f5f0;
@@ -119,6 +129,16 @@ $gray-7: #999999;
 $gray-8: #737373;
 $gray-9: #4d4d4d;
 $gray-10: #333333;
+$gray-1-dark: #0f111a;
+$gray-2-dark: #1b1d26;
+$gray-3-dark: #22242e;
+$gray-4-dark: #2a2c38;
+$gray-5-dark: #323543;
+$gray-6-dark: #474a59;
+$gray-7-dark: #7b7e8c;
+$gray-8-dark: #a4a7b3;
+$gray-9-dark: #d9d9d9;
+$gray-10-dark: #e5e5e5;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -200,15 +220,18 @@ $brand-default: $blue-6;
 $brand-hover: $blue-7;
 $brand-active: $blue-8;
 $brand-disabled: $blue-2;
-$brand-light: $blue-1;
-$brand-active-light: $blue-2;
+$brand-lighten: $blue-1;
+$brand-active-lighten: $blue-2;
+$brand-lighten-light: $blue-1;
+$brand-active-lighten-light: $blue-2;
+$brand-hover-dark: $blue-7-dark;
+$brand-active-dark: $blue-8-dark;
 
 /* background 背景色
     $bg-body => 背景、页面背景
     $bg-component => 组件背景
     $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
     $bg-disabled => 组件禁用背景
-    $bg-disabled-deeo => 组件禁用背景(深色)
     $bg-header => 表头
     $bg-gray => tag
     $bg-body-dark => 黑色背景
@@ -217,11 +240,10 @@ $bg-body: $gray-1;
 $bg-component: transparent;
 $bg-container: $gray-2;
 $bg-disabled: $gray-3;
-$bg-disabled-deep: $gray-6;
 $bg-header: $gray-3;
 $bg-gray: $gray-3;
-$bg-body-dark: $gray-9;
-$bg-body-white: $gray-1;
+$bg-body-light: $gray-1;
+$bg-body-dark: $gray-3-dark;
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -240,12 +262,16 @@ $font-color-watermark: $gray-7;
 $font-color-heading: $gray-10;
 $font-color-heading-bold: $gray-9;
 $font-color-tag: $gray-8;
-$font-color-white: hsl(0, 0%, 100%);
+$font-color-white: hsl(0, 0%, 100%); // 此变量色值不会变
 $font-color-white-dark: $gray-6;
+$font-color-default-light: $gray-9;
+$font-color-disabled-light: $gray-6;
+$font-color-disabled-dark: $gray-8-dark;
 
 /* border 边框 */
 $border-color-default: $gray-5;
 $border-color-disabled: $gray-4;
+$border-color-default-dark: $gray-5-dark;
 
 /* split line 分割线 */
 $splitline-default: $gray-4;

@@ -27,7 +27,7 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         }
     }
     &.#{$page-prefix-cls}-current span {
-        background: $brand-light;
+        background: $brand-lighten;
         border: 1px solid $brand-default;
         color: $brand-default;
     }

@@ -10,7 +10,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
 
     /* jigsaw-fish-bone-white jigsaw-fish-bone-dark 鱼骨主题标识 放在host上*/
     &-white {
-        background: $bg-body-white;
+        background: $bg-body-light;
         color: #4d4d4d;
         .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
             background: #BABABA;

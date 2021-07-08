@@ -54,7 +54,7 @@ $tile-lite-prefix-cls: #{$tile-prefix-cls}-lite;
 
     &.#{$tile-option-prefix-cls}-active {
         border-color: $brand-default;
-        background: $brand-light;
+        background: $brand-lighten;
     }
 
     &.#{$tile-option-prefix-cls}-disabled {
