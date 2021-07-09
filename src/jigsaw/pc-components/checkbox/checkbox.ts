@@ -3,7 +3,6 @@
  */
 
 import {
-    AfterContentInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -15,7 +14,8 @@ import {
     NgZone,
     OnInit,
     Output,
-    Renderer2
+    Renderer2,
+    AfterContentChecked
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -47,7 +47,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit {
+export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentChecked {
 
     private _enableIndeterminate: boolean = false;
 
@@ -151,13 +151,11 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         this._setCheckBoxClass();
     }
 
-    public ngAfterContentInit() {
-        this.runAfterMicrotasks(() => {
+    ngAfterContentChecked () {
+        this._zone.runOutsideAngular(() => {
             const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
-            if (labelEl.innerText.trim() === '') {
-                this._renderer.setStyle(labelEl, 'padding', '0');
-            }
-        })
+            this._renderer.setStyle(labelEl, 'padding', labelEl.innerText.trim() === '' ? '0' : '0 8px');
+        });
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
