@@ -4,7 +4,6 @@ import {CommonUtils} from "../utils/common-utils";
 import {Type} from "@angular/core";
 
 import echarts from "echarts";
-import {JigsawTheme} from "../theming/theme";
 
 export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
@@ -518,42 +517,43 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
         const color = Number(this.data[0][0]) >= 95 ? '#98e2a6' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? '#9ad0e2' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? '#f7e685' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? '#f6c88a' : Number(this.data[0][0]) < 70 ? '#ff8e74' : '#dedede';
 
         const labelTop = {
-            itemStyle: {
-                color: color
-            },
-            label: {
-                show: true,
-                position: 'top',
-                formatter: '{b}',
-                textStyle: {
-                    baseline: 'top',
-                    fontFamily: '微软雅黑',
-                    fontSize: 14
+            normal: {
+                color: color,
+                label: {
+                    show: true,
+                    position: 'top',
+                    formatter: '{b}',
+                    textStyle: {
+                        baseline: 'top',
+                        fontFamily: '微软雅黑',
+                        fontSize: 14
+                    }
+                },
+                labelLine: {
+                    show: false
                 }
-            },
-            labelLine: {
-                show: false
             },
             emphasis: {
                 color: color
-            },
-            value: this.data[0][0]
+            }
         };
 
         //中间显示
         const labelFormatter = {
-            label: {
-                formatter: function (params) {
-                    return 100 - params.value + '%'
+            normal: {
+                label: {
+                    formatter: function (params) {
+                        return 100 - params.value + '%'
+                    },
+                    textStyle: {
+                        baseline: 'bottom',
+                        color: '#333',
+                        fontFamily: 'Arial'
+                    }
                 },
-                textStyle: {
-                    baseline: 'bottom',
-                    color: JigsawTheme.majorStyle == 'dark' ? '#fff' : '#333',
-                    fontFamily: 'Arial'
+                labelLine: {
+                    show: false
                 }
-            },
-            labelLine: {
-                show: false
             },
             emphasis: {
                 color: 'rgba(0,0,0,0)'
@@ -561,35 +561,35 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
         };
 
         const labelBottom = {
-            itemStyle: {
+            normal: {
                 color: '#DEDEDE',
-            },
-            label: {
-                show: true,
-                position: 'center',
-                textStyle: {
-                    fontSize: 24
+                label: {
+                    show: true,
+                    position: 'center',
+                    textStyle: {
+                        fontSize: 24
+                    }
+                },
+                labelLine: {
+                    show: false
                 }
-            },
-            labelLine: {
-                show: false
+
             },
             emphasis: {
                 color: '#DEDEDE'
-            },
-            value: 100 - Number(this.data[0][0])
+            }
         };
 
         //饼图的点击label
         const placeHolderStyle = {
-            itemStyle: {
-                color: 'rgba(0,0,0,0)'
-            },
-            label: {
-                show: false
-            },
-            labelLine: {
-                show: false
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
             },
             emphasis: {
                 color: 'rgba(0,0,0,0)'
@@ -598,7 +598,9 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
 
         const opt = {...this.optionsTemplate};
         this._extendOption(opt);
-        CommonUtils.extendObject(opt.series, [{...labelFormatter, data:[labelTop, labelBottom]}, placeHolderStyle]);
+        opt.series[0].itemStyle = labelFormatter;
+        [opt.series[0].data[0].value, opt.series[0].data[1].value] = [this.data[0][0], 100 - Number(this.data[0][0])];
+        [opt.series[0].data[0].itemStyle, opt.series[0].data[1].itemStyle, opt.series[1].data[0].itemStyle] = [labelTop, labelBottom, placeHolderStyle];
         return opt;
     }
 }
@@ -652,25 +654,23 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
         const innerColor = Number(this.data[0][0]) >= 95 ? 'rgb(152,226,166)' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? 'rgb(154,208,226)' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? 'rgb(247,230,133)' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? 'rgb(246,200,138)' : (Number(this.data[0][0]) < 70) ? 'rgb(255,142,116)' : '#dedede';
         const outerColor = Number(this.data[0][0]) >= 95 ? 'rgba(152,226,166,.2)' : (Number(this.data[0][0]) >= 90 && Number(this.data[0][0]) < 95) ? 'rgba(154,208,226,.2)' : (Number(this.data[0][0]) >= 80 && Number(this.data[0][0]) < 90) ? 'rgba(247,230,133,.2)' : (Number(this.data[0][0]) >= 70 && Number(this.data[0][0]) < 80) ? 'rgba(246,200,138,.2)' : (Number(this.data[0][0]) < 70) ? 'rgba(255,142,116,.2)' : '#dedede';
         const labelTop = {
-            name: Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]),
-            itemStyle: {
+            normal: {
                 color: outerColor,
-            },
-            label: {
-                show: true,
-                position: 'center',
-                formatter: '{b}',
-                textStyle: {
-                    baseline: 'top',
-                    fontFamily: 'arial',
-                    fontSize: 30,
-                    color: '#fff',
-                    fontWeight: 'bold'
+                label: {
+                    show: true,
+                    position: 'center',
+                    formatter: '{b}',
+                    textStyle: {
+                        baseline: 'top',
+                        fontFamily: 'arial',
+                        fontSize: 30,
+                        color: '#fff',
+                        fontWeight: 'bold'
+                    }
                 },
-                padding: [0, 0, 20, 0]
-            },
-            labelLine: {
-                show: false
+                labelLine: {
+                    show: false
+                }
             },
             emphasis: {
                 color: outerColor
@@ -679,16 +679,21 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
 
         //中间显示
         const labelFormatter = {
-            label: {
-                position: 'center',
-                textStyle: {
-                    baseline: 'bottom',
-                    color: '#333',
-                    fontFamily: 'Arial'
+            normal: {
+                label: {
+                    // formatter: function(params) {
+                    //     return 100 - params.value
+                    // },
+                    position: 'center',
+                    textStyle: {
+                        baseline: 'bottom',
+                        color: '#333',
+                        fontFamily: 'Arial'
+                    }
+                },
+                labelLine: {
+                    show: false
                 }
-            },
-            labelLine: {
-                show: false
             },
             emphasis: {
                 color: outerColor
@@ -696,33 +701,33 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
         };
 
         const labelBottom = {
-            name: this.rowDescriptor[0],
-            label: {
-                show: true,
-                position: 'center',
-                textStyle: {
-                    fontSize: 14,
-                    color: '#fff',
-                    fontFamily: '微软雅黑'
+            normal: {
+                label: {
+                    show: true,
+                    position: 'center',
+                    textStyle: {
+                        fontSize: 14,
+                        color: '#fff',
+                        fontFamily: '微软雅黑'
+                    }
                 },
-                padding: [40, 0, 0, 0]
-            },
-            labelLine: {
-                show: false
+                labelLine: {
+                    show: false
+                }
+
             }
         };
 
         //饼图的点击label
         const placeHolderStyle = {
-            name: this.rowDescriptor[0],
-            itemStyle: {
-                color: innerColor
-            },
-            label: {
-                show: false
-            },
-            labelLine: {
-                show: false
+            normal: {
+                color: innerColor,
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
             },
             emphasis: {
                 color: innerColor,
@@ -734,13 +739,9 @@ export class DoughnutScoreGraphData extends AbstractNormalGraphData {
 
         const opt = {...this.optionsTemplate};
         this._extendOption(opt);
-        CommonUtils.extendObject(opt.series, [
-            {
-                ...labelFormatter,
-                data: [labelTop, labelBottom]
-            },
-            placeHolderStyle
-        ]);
+        opt.series[0].itemStyle = labelFormatter;
+        [opt.series[0].data[0].name, opt.series[0].data[1].name] = [Number(this.data[0][0]) == 0 ? '0' : Number(this.data[0][0]), this.rowDescriptor[0]];
+        [opt.series[0].data[0].itemStyle, opt.series[0].data[1].itemStyle, opt.series[1].data[0].itemStyle] = [labelTop, labelBottom, placeHolderStyle];
         return opt;
     }
 }
@@ -1384,16 +1385,18 @@ export class RadarGraphData extends AbstractNormalGraphData {
  */
 export class KLineGraphData extends AbstractNormalGraphData {
     protected createSeries(): any[] {
-        return [{
-            name: 'k data',
-            type: 'k',
-            showAllSymbol: true,
-            animation: true,
-            smooth: false,
-            symbolSize: [5, 5],
-            hoverAnimation: false,
-            data: this.data
-        }];
+        return this.data.map((row, index) => {
+            return {
+                name: this.rowDescriptor[index],
+                type: 'line',
+                showAllSymbol: true,
+                animation: true,
+                smooth: false,
+                symbolSize: [5, 5],
+                hoverAnimation: false,
+                data: row
+            }
+        });
     }
 
     public sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
@@ -1406,6 +1409,16 @@ export class KLineGraphData extends AbstractNormalGraphData {
             position: function (point) {// 固定在顶部
                 return [point[0] + 10, point[1]];
             }
+        },
+        legend: {
+            left: 'center',
+            data: [],
+            itemWidth: 25,//设置icon长高
+            itemHeight: 5,
+            top: 20,
+            inactiveColor: "#bbb",
+            itemGap: 10,
+            selected: {}
         },
         grid: {
             left: 45,
@@ -1449,8 +1462,15 @@ export class KLineGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
 
+        const selectedLegend = this.rowDescriptor.reduce((s, legend, i) => {
+            s[legend] = i < 3 ? true : false;
+            return s;
+        }, {});
+
         const opt = {...this.optionsTemplate};
         this._extendOption(opt);
+        opt.legend.data = this.rowDescriptor;
+        opt.legend.selected = selectedLegend;
         opt.xAxis[0].data = this.header;
         opt.series = this.createSeries();
         return opt;
