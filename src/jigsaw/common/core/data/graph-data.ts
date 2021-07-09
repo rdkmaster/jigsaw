@@ -1388,7 +1388,7 @@ export class KLineGraphData extends AbstractNormalGraphData {
         return this.data.map((row, index) => {
             return {
                 name: this.rowDescriptor[index],
-                type: 'line',
+                type: 'k',
                 showAllSymbol: true,
                 animation: true,
                 smooth: false,
