@@ -1385,18 +1385,16 @@ export class RadarGraphData extends AbstractNormalGraphData {
  */
 export class KLineGraphData extends AbstractNormalGraphData {
     protected createSeries(): any[] {
-        return this.data.map((row, index) => {
-            return {
-                name: this.rowDescriptor[index],
-                type: 'line',
-                showAllSymbol: true,
-                animation: true,
-                smooth: false,
-                symbolSize: [5, 5],
-                hoverAnimation: false,
-                data: row
-            }
-        });
+        return [{
+            name: 'k data',
+            type: 'k',
+            showAllSymbol: true,
+            animation: true,
+            smooth: false,
+            symbolSize: [5, 5],
+            hoverAnimation: false,
+            data: this.data
+        }];
     }
 
     public sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
@@ -1409,16 +1407,6 @@ export class KLineGraphData extends AbstractNormalGraphData {
             position: function (point) {// 固定在顶部
                 return [point[0] + 10, point[1]];
             }
-        },
-        legend: {
-            left: 'center',
-            data: [],
-            itemWidth: 25,//设置icon长高
-            itemHeight: 5,
-            top: 20,
-            inactiveColor: "#bbb",
-            itemGap: 10,
-            selected: {}
         },
         grid: {
             left: 45,
@@ -1462,15 +1450,8 @@ export class KLineGraphData extends AbstractNormalGraphData {
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
 
-        const selectedLegend = this.rowDescriptor.reduce((s, legend, i) => {
-            s[legend] = i < 3 ? true : false;
-            return s;
-        }, {});
-
         const opt = {...this.optionsTemplate};
         this._extendOption(opt);
-        opt.legend.data = this.rowDescriptor;
-        opt.legend.selected = selectedLegend;
         opt.xAxis[0].data = this.header;
         opt.series = this.createSeries();
         return opt;
