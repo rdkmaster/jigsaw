@@ -22,6 +22,8 @@ import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 import {Subscription} from "rxjs";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
 
 import {
     _getColumnIndex,
@@ -861,8 +863,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule, TranslateModule.forChild()],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
 export class JigsawTableModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, "table", {
+            zh: {
+                noData: "暂无数据", 
+            },
+            en: {
+                noData: "NO DATA"
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
 }
