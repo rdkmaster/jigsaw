@@ -14,8 +14,7 @@ import {
     NgZone,
     OnInit,
     Output,
-    Renderer2,
-    AfterContentChecked
+    Renderer2
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -47,7 +46,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentChecked {
+export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
     private _enableIndeterminate: boolean = false;
 
@@ -101,6 +100,10 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         this._propagateChange(value);
     }
 
+    @Input()
+    @RequireMarkForCheck()
+    public mode: 'minimalist' | 'normal' = 'normal';
+
     /**
      * 选中状态变化时发出此事件，此事件可以简化为`change`
      */
@@ -149,13 +152,6 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     public ngOnInit() {
         this._setCheckBoxClass();
-    }
-
-    ngAfterContentChecked () {
-        this._zone.runOutsideAngular(() => {
-            const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
-            this._renderer.setStyle(labelEl, 'padding', labelEl.innerText.trim() === '' ? '0' : '0 8px');
-        });
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];

@@ -300,7 +300,8 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"></jigsaw-checkbox>`,
+        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"
+                         [valid]="_$valid" mode="minimalist"></jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -369,7 +370,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" (checkedChange)="onChange($event)">
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
+                         (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush

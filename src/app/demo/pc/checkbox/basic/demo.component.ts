@@ -11,6 +11,8 @@ export class CheckBoxBasicDemoComponent {
     // 第二个组件
     status = CheckBoxStatus.indeterminate;
 
+    mode = ['normal'];
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
