@@ -1,0 +1,13 @@
+.menu-demo-cntr .menu {
+    display: inline-block;
+    border: 1px solid #999;
+    padding: 2px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.menu-demo-cntr .message,
+.breadcrumb-demo-cntr .message,
+.fish-bone-demo-cntr .message {
+    margin-bottom: 12px;
+}
