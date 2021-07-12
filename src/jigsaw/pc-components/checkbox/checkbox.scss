@@ -24,7 +24,7 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
     vertical-align: text-bottom;
     outline: none;
     font-size: $font-size-base;
-    line-height: 18px;
+    line-height: 1;
     user-select: none;
     cursor: pointer;
     &:not(:last-child) {
