@@ -222,6 +222,9 @@ $brand-active: $blue-8;
 $brand-disabled: $blue-2;
 $brand-lighten: $blue-1;
 $brand-active-lighten: $blue-2;
+// 支持组件内部实现明暗皮肤
+$brand-default-light: $blue-6;
+$brand-hover-light: $blue-7;
 $brand-lighten-light: $blue-1;
 $brand-active-lighten-light: $blue-2;
 $brand-hover-dark: $blue-7-dark;
@@ -243,7 +246,9 @@ $bg-container: $gray-2;
 $bg-disabled: $gray-3;
 $bg-header: $gray-3;
 $bg-gray: $gray-3;
+// 支持组件内部实现明暗皮肤
 $bg-body-light: $gray-1;
+$bg-container-light: $gray-2;
 $bg-body-dark: $gray-3-dark;
 
 /* font 字体颜色
@@ -269,9 +274,15 @@ $font-color-heading-bold: $gray-9;
 $font-color-tag: $gray-8;
 $font-color-white: hsl(0, 0%, 100%);
 $font-color-white-darken: $gray-6;
+// 支持组件内部实现明暗皮肤
 $font-color-default-light: $gray-9;
 $font-color-disabled-light: $gray-6;
+$font-color-hint-light: $gray-7;
+$font-color-white-darken-light: $gray-6;
+$font-color-heading-bold-light: $gray-9;
+$font-color-default-dark: $gray-9-dark;
 $font-color-disabled-dark: $gray-8-dark;
+$font-color-white-darken-dark: $gray-7-dark;
 
 /* border 边框 
     $border-color-default => 边框颜色

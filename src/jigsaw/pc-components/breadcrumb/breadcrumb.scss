@@ -53,19 +53,19 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     }
 
     &.#{$bc-prefix-cls}-light {
-        background: $bg-container;
+        background: $bg-container-light;
         font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
             height: $height-sm;
-            color: $brand-default;
+            color: $brand-default-light;
             font-size: $font-size-lg;
             &:hover{
-                color: $brand-hover;
+                color: $brand-hover-light;
             }
             &.#{$bc-prefix-cls}-current {
                 font-size: $font-title-med;
                 font-weight: bold;
-                color: $font-color-heading-bold;
+                color: $font-color-heading-bold-light;
             }
         }
     }

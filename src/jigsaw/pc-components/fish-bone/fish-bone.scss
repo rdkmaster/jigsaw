@@ -11,16 +11,16 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     /* jigsaw-fish-bone-light jigsaw-fish-bone-dark 鱼骨主题标识 放在host上*/
     &-light {
         background: $bg-body-light;
-        color: #4d4d4d;
+        color: $font-color-default-light;
         .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
-            background: #BABABA;
+            background: $font-color-white-darken-light;
         }
     }
     &-dark {
         background: $bg-body-dark;
-        color: #d9d9d9;
+        color: $font-color-default-dark;
         .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
-            background: #6B6B6B;
+            background: $font-color-white-darken-light;
         }
     }
 
@@ -30,7 +30,7 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         left: 146px;
         top: 200px;
         height: 4px;
-        background: #BABABA;
+        background: $font-color-white-darken;
     }
 
     &-framework {
