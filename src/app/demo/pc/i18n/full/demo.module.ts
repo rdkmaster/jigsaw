@@ -3,7 +3,8 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
     JigsawAlertModule, JigsawButtonModule, PopupService, JigsawDialogModule,
     JigsawPaginationModule, JigsawComboSelectModule, JigsawDateTimePickerModule,
-    JigsawRangeDateTimePickerModule, TranslateHelper, JigsawMenuModule, JigsawSelectModule, JigsawTabsModule
+    JigsawRangeDateTimePickerModule, TranslateHelper, JigsawMenuModule, JigsawSelectModule, JigsawTabsModule,
+    JigsawTableModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
@@ -14,7 +15,7 @@ import {I18nFullDemoComponent} from "./demo.component";
     imports: [
         JigsawAlertModule, JigsawButtonModule, JigsawDateTimePickerModule, JigsawRangeDateTimePickerModule,
         JigsawDialogModule, JigsawDemoDescriptionModule, JigsawPaginationModule, JigsawComboSelectModule,
-        JigsawMenuModule, JigsawSelectModule, TranslateModule, JigsawTabsModule,/* #for-live-demo-only# .forRoot() */
+        JigsawMenuModule, JigsawSelectModule, TranslateModule, JigsawTabsModule, JigsawTableModule/* #for-live-demo-only# .forRoot() */
     ],
     providers: [PopupService, TranslateService]
 })

@@ -3,7 +3,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {HttpClient} from "@angular/common/http";
 import {
     TranslateHelper, ButtonInfo, LocalPageableTableData, ArrayCollection,
-    TimeGr, TimeService, SimpleTreeData
+    TimeGr, TimeService, SimpleTreeData, TableData
 } from "jigsaw/public_api";
 
 @Component({
@@ -30,11 +30,16 @@ import {
 })
 export class I18nFullDemoComponent {
     pageable: LocalPageableTableData;
+    tableData: TableData;
     constructor(public translateService: TranslateService, http: HttpClient) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;
         this.pageable.fromAjax('mock-data/hr-list');
+        this.tableData = new TableData(
+            [],
+            ["name", "position", "salary", "title1", "enroll-date", "office", "extn", "title2", "title3"],
+            ["姓名", "职位", "薪资", "很长很长很长很长很长很长很长的用于测试的标题", "入职日期", "部门", "其他", "很长很长很长很长很长很长很长的用于测试的标题", "很长很长很长很长很长很长很长的用于测试的标题"]);
 
         translateService.use(translateService.getBrowserLang());
 
