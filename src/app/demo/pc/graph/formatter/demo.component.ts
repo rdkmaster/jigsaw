@@ -78,6 +78,11 @@ export class GraphDataDemo extends AbstractGraphData {
             },
             legend: {
                 data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+                textStyle: {
+                    color: '#fff'
+                },
+                top: 20,
+                left: 'center'
             },
             toolbox: {
                 //工具栏，内置导出图片，数据视图，动态类型切换，数据区域缩放，重置
@@ -87,6 +92,15 @@ export class GraphDataDemo extends AbstractGraphData {
                         title:"Restore",
                     },
                     right:10
+                },
+                iconStyle: {
+                    color: '#fff',
+                    borderColor: '#fff'
+                },
+                emphasis:{
+                    iconStyle: {
+                        color: '#fff'
+                    }
                 }
             },
             grid: {
