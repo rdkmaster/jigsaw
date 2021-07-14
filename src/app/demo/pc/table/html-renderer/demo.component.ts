@@ -1,19 +1,12 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
-    AdditionalColumnDefine,
-    ColumnDefine,
-    CommonUtils,
-    JigsawTheme,
-    RawTableData,
-    SortAs,
-    SortOrder,
-    TableData
+    RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
+    CommonUtils, SortAs, SortOrder
 } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    encapsulation: ViewEncapsulation.None
+    templateUrl: './demo.component.html'
 })
 export class TableHtmlRendererDemoComponent {
     tableData: TableData;
