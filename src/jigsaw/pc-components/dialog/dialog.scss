@@ -48,6 +48,10 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         & > div {
             display: flex;
             align-items: center;
+
+            .iconfont {
+                margin-right: 5px;
+            }
         }
     }
 
