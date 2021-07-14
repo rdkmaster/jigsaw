@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
-    CommonUtils, SortAs, SortOrder
+    CommonUtils, SortAs, SortOrder, JigsawTheme
 } from "jigsaw/public_api";
 
 @Component({
