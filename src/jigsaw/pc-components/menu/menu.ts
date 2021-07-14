@@ -18,7 +18,7 @@ import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
-export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
+export type MenuTheme = 'light' | 'dark' | 'navigation';
 
 export class MenuOptions {
     data?: SimpleTreeData;
@@ -129,7 +129,6 @@ export class JigsawMenuHelper implements IPopupable {
         '(click)': "_$onClick($event)",
         '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
         '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
-        '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
         '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
     },
     changeDetection: ChangeDetectionStrategy.OnPush

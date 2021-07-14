@@ -11,7 +11,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     background: $bg-body;
 
     &:hover {
-        background: $brand-light;
+        background: $brand-lighten;
 
         .#{$list-option-prefix-cls}-title-box .#{$list-option-prefix-cls}-title {
             color: $brand-default;
@@ -19,7 +19,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
 
     &.#{$list-option-prefix-cls}-active {
-        background: $brand-active-light;
+        background: $brand-active-lighten;
     }
 
     &.#{$list-option-prefix-cls}-disabled {

@@ -81,7 +81,7 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
             }
 
             &.active {
-                background-color: $brand-light;
+                background-color: $brand-lighten;
                 color: $brand-default;
                 border-color: $brand-default;
             }

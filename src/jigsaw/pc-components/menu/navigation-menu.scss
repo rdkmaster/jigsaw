@@ -38,7 +38,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $brand-light;
+                    background: $brand-lighten;
                 }
 
                 .#{$nav-menu-prefix-cls}-item-arrow {
@@ -80,7 +80,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     }
 
                     &:hover {
-                        background: $brand-light;
+                        background: $brand-lighten;
                     }
 
                     &.#{$nav-menu-prefix-cls}-sub-item-selected {
@@ -144,7 +144,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $brand-light;
+                    background: $brand-lighten;
                 }
 
                 &.#{$nav-menu-prefix-cls}-item-selected-top {
@@ -172,7 +172,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     cursor: pointer;
 
                     &:hover {
-                        background: $brand-light;
+                        background: $brand-lighten;
                     }
                 }
             }

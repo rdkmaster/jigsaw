@@ -76,7 +76,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 }
 
                 &:hover {
-                    background: $brand-active-light;
+                    background: $brand-active-lighten;
 
                     .delete-icon {
                         display: flex;

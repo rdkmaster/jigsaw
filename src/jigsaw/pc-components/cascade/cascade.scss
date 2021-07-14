@@ -17,7 +17,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 
             &:hover {
                 color: $font-color-default;
-                background: $brand-light;
+                background: $brand-lighten;
             }
 
             &-active {

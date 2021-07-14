@@ -31,11 +31,11 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     > .#{$fish-bone-prefix-cls}-item-description {
         left: 50%;
         transform: translateX(-50%) translate3d(0, 0, 0);
-        .#{$fish-bone-prefix-cls}-white & {
-            color: #999999;
+        .#{$fish-bone-prefix-cls}-light & {
+            color: $font-color-hint-light;
         }
         .#{$fish-bone-prefix-cls}-dark & {
-            color: #a4a7b3;
+            color: $font-color-disabled-dark;
         }
         -webkit-font-smoothing: subpixel-antialiased;
     }
@@ -65,11 +65,11 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         top: 4px;
     }
 
-    .#{$fish-bone-prefix-cls}-white & {
-        background: #BABABA;
+    .#{$fish-bone-prefix-cls}-light & {
+        background: $font-color-white-darken-light;
     }
     .#{$fish-bone-prefix-cls}-dark & {
-        background: #6B6B6B;
+        background: $font-color-white-darken-light;
     }
 }
 

@@ -55,12 +55,12 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
                 cursor: pointer;
 
                 &:hover {
-                    background: $brand-light;
+                    background: $brand-lighten;
                 }
 
                 &.#{$time-section-picker-prefix-cls}-selected {
                     border: 1px solid $primary-default;
-                    background: $brand-light;
+                    background: $brand-lighten;
                     z-index: $zindex-level-1;
                 }
             }

@@ -21,7 +21,7 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
         '[class.jigsaw-fish-bone]': 'true',
         '[class.jigsaw-fish-bone-left]': 'direction === "left"',
         '[class.jigsaw-fish-bone-right]': 'direction === "right"',
-        '[class.jigsaw-fish-bone-white]': 'theme === "white"',
+        '[class.jigsaw-fish-bone-light]': 'theme === "light"',
         '[class.jigsaw-fish-bone-dark]': 'theme === "dark"',
         '[style.width]': 'width'
     }
@@ -85,7 +85,7 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      * $demo = fish-bone/full
      */
     @Input()
-    public theme: 'white' | 'dark' = 'white';
+    public theme: 'light' | 'dark' = 'light';
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     private _firstLevelBones: QueryList<JigsawFishBoneItem>;

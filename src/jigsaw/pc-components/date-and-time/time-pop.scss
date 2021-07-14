@@ -28,7 +28,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
                 cursor: pointer;
 
                 &:hover {
-                    background: $brand-light;
+                    background: $brand-lighten;
                 }
 
                 &.#{$time-select-prefix-cls}-isSelected {

@@ -53,7 +53,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &.active {
-                background-color: $brand-light;
+                background-color: $brand-lighten;
                 color: $brand-default;
                 border-color: $brand-default;
             }
@@ -180,7 +180,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             & span:hover {
-                background: $brand-light;
+                background: $brand-lighten;
             }
 
             &-today span:before {
@@ -195,6 +195,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 border-color: $brand-default;
                 border-radius: $border-radius-sm;
                 box-sizing: border-box;
+                z-index: 1;
             }
 
             &-prev-next span {
@@ -243,7 +244,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &-inRange {
-                background: $brand-light;
+                background: $brand-lighten;
                 &.#{$date-prefix-cls}-content-day-cell-selected {
                     background: none;
                 }
@@ -289,7 +290,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 cursor: pointer;
 
                 &:hover {
-                    background: $brand-light;
+                    background: $brand-lighten;
                 }
             }
 
