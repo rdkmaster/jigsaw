@@ -3,31 +3,7 @@ import {PopupOptions, PopupPositionValue} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .iconfont-e9d8 {
-            margin: 40px
-        }
-
-        .jigsawFloatArea {
-            width: 190px;
-            height: 60px;
-            background: orange;
-            color: #fff;
-            text-align: center;
-        }
-
-        .movable-box {
-            background-color: #b5d3dc;
-            display: inline-block;
-            border-radius: 4px;
-            padding: 12px;
-            cursor: move;
-        }
-
-        .message {
-            margin: 10px;
-        }
-    `]
+    styleUrls: ['./demo.component.css']
 })
 export class FloatPosReviserDemo {
     options: PopupOptions = {
