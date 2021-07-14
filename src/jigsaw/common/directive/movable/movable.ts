@@ -3,6 +3,7 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
 
+// @dynamic
 @Directive({
     selector: '[jigsaw-movable], [jigsawMovable], [j-movable]'
 })
@@ -19,6 +20,12 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     @Input()
     public movableAffected: string;
 
+    @Input()
+    public affixType: 'fixed' | 'absolute';
+
+    // 用于配置全局的偏移
+    public static moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
+
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
                 protected _zone: NgZone) {
@@ -27,11 +34,15 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _isFixed: boolean;
 
+    private _checkFixed() {
+        return this._movableTarget.style.position == 'fixed' || getComputedStyle(this._movableTarget)['position'] == 'fixed';
+    }
+
     private _dragStart = (event) => {
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
-        this._isFixed = this._movableTarget.style.position == 'fixed' || getComputedStyle(this._movableTarget)['position'] == 'fixed';
+        this._isFixed = this._checkFixed();
 
         if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
@@ -51,8 +62,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _dragMove = (event) => {
         if (this._moving) {
-            const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0);
-            const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0);
+            const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0) - JigsawMovable.moveOffset.apply(this).left;
+            const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0) - JigsawMovable.moveOffset.apply(this).top;
             this._renderer.removeStyle(this._movableTarget, 'right');
             this._renderer.removeStyle(this._movableTarget, 'bottom');
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
@@ -72,7 +83,13 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         this._host = this._elementRef.nativeElement;
         this._movableTarget = this.movableAffected ?
             CommonUtils.getParentNodeBySelector(this._host, this.movableAffected) : this._host;
-
+        if (this.affixType) {
+            this._renderer.setStyle(this._movableTarget, 'position', this.affixType);
+            const rect = this.affixType == 'fixed' ? this._movableTarget.getBoundingClientRect() :
+                AffixUtils.offset(this._movableTarget);
+            this._renderer.setStyle(this._movableTarget, 'left', rect.left - JigsawMovable.moveOffset.apply(this).left + 'px');
+            this._renderer.setStyle(this._movableTarget, 'top', rect.top - JigsawMovable.moveOffset.apply(this).top + 'px');
+        }
         if (this._isElementAffixed(this._movableTarget)) {
             if (this._removeHostMouseDownListener) {
                 this._removeHostMouseDownListener();
