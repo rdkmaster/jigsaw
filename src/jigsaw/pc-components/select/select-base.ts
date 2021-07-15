@@ -445,7 +445,12 @@ export abstract class JigsawSelectBase
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
-        value = value.filter(el => el != null);
+        value.forEach((item, index) => {
+            if (item === undefined) {
+                value.splice(index, 1);
+            }
+        });
+        
         this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
         this._setValidData();
         if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
