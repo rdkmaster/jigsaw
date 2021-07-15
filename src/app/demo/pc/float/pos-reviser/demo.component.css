@@ -19,6 +19,10 @@
     cursor: move;
 }
 
+.movable-box span {
+    margin-right: 8px;
+}
+
 .jigsawFloatArea .message {
     margin: 20px 10px;
 }
