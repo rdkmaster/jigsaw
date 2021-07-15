@@ -254,11 +254,11 @@ export class JigsawArray<T> implements Array<T> {
 
     /**
      * 参考这里 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter>
-     * @param callbackfn
+     * @param callback
      * @param thisArg
      *
      */
-    public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): T[] {
+    public filter(callback: (value: T, index: number, array: T[]) => any, thisArg?: any): T[] {
         return this._agent.filter.apply(this, arguments);
     }
 
@@ -763,13 +763,13 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
-    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
-    public filter(term: string, fields?: string[] | number[]): void;
-    public filter(term: DataFilterInfo): void;
+    public filter(callback: (value: any, index: number, array: any[]) => any, thisArg?: any): PageableArray;
+    public filter(term: string, fields?: string[] | number[]): PageableArray;
+    public filter(term: DataFilterInfo): PageableArray;
     /**
      * @internal
      */
-    public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): void {
+    public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): PageableArray {
         let pfi: DataFilterInfo;
         if (term instanceof DataFilterInfo) {
             pfi = term;
@@ -780,20 +780,22 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
             pfi = new DataFilterInfo(term, fields);
         }
         this._filterSubject.next(pfi);
+        return this;
     }
 
-    public sort(compareFn?: (a: any, b: any) => number): any;
-    public sort(as: SortAs, order: SortOrder, field: string | number): void;
-    public sort(sort: DataSortInfo): void;
+    public sort(compareFn?: (a: any, b: any) => number): PageableArray;
+    public sort(as: SortAs, order: SortOrder, field: string | number): PageableArray;
+    public sort(sort: DataSortInfo): PageableArray;
     /**
      * @internal
      */
-    public sort(as, order?: SortOrder, field?: string | number): void {
+    public sort(as, order?: SortOrder, field?: string | number): PageableArray {
         if (as instanceof Function) {
             throw 'compare function is NOT accepted by this class!';
         }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
+        return this;
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
@@ -990,14 +992,16 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         })
     }
 
-    public filter(callbackfn: (value: any, index: number, array: any[]) => any, context?: any): any;
-    public filter(term: string, fields?: string[] | number[]): void;
-    public filter(term: DataFilterInfo): void;
+    public filter(callback: (value: any, index: number, array: any[]) => any, context?: any): LocalPageableArray<T>;
+    public filter(term: string, fields?: string[] | number[]): LocalPageableArray<T>;
+    public filter(term: DataFilterInfo): LocalPageableArray<T>;
     /**
      * @internal
      */
-    public filter(term, fields?: string[] | number[]): void {
-        if (!this._bakData) return;
+    public filter(term, fields?: string[] | number[]): LocalPageableArray<T> {
+        if (!this._bakData) {
+            return this;
+        }
         if (term instanceof Function) {
             this.filteredData = this._bakData.filter(term.bind(fields));
             this.firstPage();
@@ -1005,22 +1009,26 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
             const pfi = term instanceof DataFilterInfo ? term : new DataFilterInfo(term, fields);
             this._filterSubject.next(pfi);
         }
+        return this;
     }
 
-    public sort(compareFn?: (a: any, b: any) => number): any;
-    public sort(as: SortAs, order: SortOrder, field?: string | number): void;
-    public sort(sort: DataSortInfo): void;
+    public sort(compareFn?: (a: any, b: any) => number): LocalPageableArray<T>;
+    public sort(as: SortAs, order: SortOrder, field?: string | number): LocalPageableArray<T>;
+    public sort(sort: DataSortInfo): LocalPageableArray<T>;
     /**
      * @internal
      */
-    public sort(as, order?: SortOrder, field?: string | number): void {
-        if (!this.filteredData) return;
+    public sort(as, order?: SortOrder, field?: string | number): LocalPageableArray<T> {
+        if (!this.filteredData) {
+            return this;
+        }
         if (as instanceof Function) {
             this.filteredData.sort(as);
             this.firstPage();
         }
         const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
         this._sortSubject.next(psi);
+        return this;
     }
 
     public changePage(currentPage: number, pageSize?: number): void;
