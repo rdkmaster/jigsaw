@@ -1,4 +1,4 @@
-.float-pos-reviser-demo-cntr .iconfont-e9d8 {
+.movable-box .iconfont-e9d8 {
     margin: 40px;
 }
 
@@ -10,15 +10,14 @@
     text-align: center;
 }
 
-.float-pos-reviser-demo-cntr .movable-box {
-    background-color: #83cde4;
-    color: white;
+.movable-box {
+    background-color: #3a4484;
     display: inline-block;
     border-radius: 4px;
     padding: 12px;
     cursor: move;
 }
 
-.float-pos-reviser-demo-cntr .message {
-    margin: 10px;
+.jigsawFloatArea .message {
+    margin: 20px 10px;
 }
