@@ -5,16 +5,17 @@
 .jigsawFloatArea {
     width: 190px;
     height: 60px;
-    background: orange;
+    background: #f08316;
     color: #fff;
     text-align: center;
 }
 
 .movable-box {
-    background-color: #3a4484;
-    display: inline-block;
-    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
     padding: 12px;
+    border-radius: 4px;
     cursor: move;
 }
 
