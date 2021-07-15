@@ -3,7 +3,6 @@ import {AffixUtils} from "../../core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {AbstractJigsawViewBase} from "../../common";
 
-// @dynamic
 @Directive({
     selector: '[jigsaw-movable], [jigsawMovable], [j-movable]'
 })
@@ -23,10 +22,10 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     @Input()
     public affixType: 'fixed' | 'absolute';
 
-    // 用于配置全局的偏移
-    public static moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
-
-    //public moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
+    /**
+     * 用于设置相对全局的偏移，如fixed不相对于body定位的情况
+     */
+    public moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
@@ -43,7 +42,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     private _dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        const offset = JigsawMovable.moveOffset.apply(this);
+        const offset = this.moveOffset.apply(this);
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
@@ -111,7 +110,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
      * @private
      */
     private _setOffsetByCurPos(offset?: {left: number, top: number}) {
-        offset = offset ? offset : JigsawMovable.moveOffset.apply(this);
+        offset = offset ? offset : this.moveOffset.apply(this);
         if (this.affixType) {
             const rect = this.affixType == 'fixed' ? this._movableTarget.getBoundingClientRect() :
                 AffixUtils.offset(this._movableTarget);
