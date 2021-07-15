@@ -26,6 +26,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     // 用于配置全局的偏移
     public static moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
 
+    //public moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
+
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
                 protected _zone: NgZone) {
@@ -39,6 +41,9 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     }
 
     private _dragStart = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const offset = JigsawMovable.moveOffset.apply(this);
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
@@ -48,7 +53,9 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
             this._removeWindowMouseMoveListener();
         }
         this._zone.runOutsideAngular(() => {
-            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', this._dragMove);
+            this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', (event) => {
+                this._dragMove(event, offset)
+            });
         });
 
         if (this._removeWindowMouseUpListener) {
@@ -60,10 +67,10 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     @Output('jigsawMovableMoving')
     public moving = new EventEmitter<{x: number, y: number}>();
 
-    private _dragMove = (event) => {
+    private _dragMove = (event, offset) => {
         if (this._moving) {
-            const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0) - JigsawMovable.moveOffset.apply(this).left;
-            const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0) - JigsawMovable.moveOffset.apply(this).top;
+            const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0) - offset.left;
+            const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0) - offset.top;
             this._renderer.removeStyle(this._movableTarget, 'right');
             this._renderer.removeStyle(this._movableTarget, 'bottom');
             this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
@@ -83,18 +90,33 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         this._host = this._elementRef.nativeElement;
         this._movableTarget = this.movableAffected ?
             CommonUtils.getParentNodeBySelector(this._host, this.movableAffected) : this._host;
+        this.runAfterMicrotasks(() => {
+            if (this.affixType) {
+                // 不能先设置position样式，会改变元素位置
+                this._setOffsetByCurPos();
+                this._renderer.setStyle(this._movableTarget, 'position', this.affixType);
+            }
+            if (this._isElementAffixed(this._movableTarget)) {
+                if (this._removeHostMouseDownListener) {
+                    this._removeHostMouseDownListener();
+                }
+                this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
+            }
+        })
+    }
+
+    /**
+     * 根据当前在文档流的位置设置偏移样式
+     * @param offset
+     * @private
+     */
+    private _setOffsetByCurPos(offset?: {left: number, top: number}) {
+        offset = offset ? offset : JigsawMovable.moveOffset.apply(this);
         if (this.affixType) {
-            this._renderer.setStyle(this._movableTarget, 'position', this.affixType);
             const rect = this.affixType == 'fixed' ? this._movableTarget.getBoundingClientRect() :
                 AffixUtils.offset(this._movableTarget);
-            this._renderer.setStyle(this._movableTarget, 'left', rect.left - JigsawMovable.moveOffset.apply(this).left + 'px');
-            this._renderer.setStyle(this._movableTarget, 'top', rect.top - JigsawMovable.moveOffset.apply(this).top + 'px');
-        }
-        if (this._isElementAffixed(this._movableTarget)) {
-            if (this._removeHostMouseDownListener) {
-                this._removeHostMouseDownListener();
-            }
-            this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
+            this._renderer.setStyle(this._movableTarget, 'left', rect.left - offset.left + 'px');
+            this._renderer.setStyle(this._movableTarget, 'top', rect.top - offset.top + 'px');
         }
     }
 
