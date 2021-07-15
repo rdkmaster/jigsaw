@@ -16,16 +16,19 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     private _removeWindowMouseMoveListener: CallbackRemoval;
     private _removeWindowMouseUpListener: CallbackRemoval;
 
-    @Input()
-    public movableAffected: string;
+    @Input('jigsawMovableTargetSelector')
+    public targetSelector: string;
 
-    @Input()
+    @Input('jigsawMovableAffixType')
     public affixType: 'fixed' | 'absolute';
+
+    @Output('jigsawMovableMoving')
+    public moving = new EventEmitter<{x: number, y: number}>();
 
     /**
      * 用于设置相对全局的偏移，如fixed不相对于body定位的情况
      */
-    public moveOffset: () => { left: number, top: number } = function() {return {left: 0, top: 0}};
+    public moveOffset: () => { left: number, top: number } = () => ({left: 0, top: 0});
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
@@ -42,7 +45,6 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     private _dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        const offset = this.moveOffset.apply(this);
         this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
             event.clientY - AffixUtils.offset(this._movableTarget).top];
         this._moving = true;
@@ -51,6 +53,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
         }
+        const offset = this.moveOffset.apply(this);
         this._zone.runOutsideAngular(() => {
             this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', (event) => {
                 this._dragMove(event, offset)
@@ -62,9 +65,6 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         }
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
     };
-
-    @Output('jigsawMovableMoving')
-    public moving = new EventEmitter<{x: number, y: number}>();
 
     private _dragMove = (event, offset) => {
         if (this._moving) {
@@ -87,8 +87,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     ngOnInit() {
         super.ngOnInit();
         this._host = this._elementRef.nativeElement;
-        this._movableTarget = this.movableAffected ?
-            CommonUtils.getParentNodeBySelector(this._host, this.movableAffected) : this._host;
+        this._movableTarget = this.targetSelector ?
+            CommonUtils.getParentNodeBySelector(this._host, this.targetSelector) : this._host;
         this.runAfterMicrotasks(() => {
             if (this.affixType) {
                 // 不能先设置position样式，会改变元素位置
@@ -111,16 +111,19 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
      */
     private _setOffsetByCurPos(offset?: {left: number, top: number}) {
         offset = offset ? offset : this.moveOffset.apply(this);
-        if (this.affixType) {
-            const rect = this.affixType == 'fixed' ? this._movableTarget.getBoundingClientRect() :
-                AffixUtils.offset(this._movableTarget);
-            this._renderer.setStyle(this._movableTarget, 'left', rect.left - offset.left + 'px');
-            this._renderer.setStyle(this._movableTarget, 'top', rect.top - offset.top + 'px');
+        if (!this.affixType) {
+            return;
         }
+        const rect = this.affixType == 'fixed' ? this._movableTarget.getBoundingClientRect() :
+            AffixUtils.offset(this._movableTarget);
+        this._renderer.setStyle(this._movableTarget, 'left', rect.left - offset.left + 'px');
+        this._renderer.setStyle(this._movableTarget, 'top', rect.top - offset.top + 'px');
     }
 
     private _isElementAffixed(element: HTMLElement): boolean {
-        if (!(element instanceof HTMLElement)) return false;
+        if (!(element instanceof HTMLElement)) {
+            return false;
+        }
         const positionType = element.style.position || getComputedStyle(element)['position'];
         return positionType == 'fixed' || positionType == 'absolute';
     }
