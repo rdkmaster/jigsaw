@@ -1,35 +1,19 @@
-import {Component} from "@angular/core";
-import {PopupOptions, PopupPositionValue} from "jigsaw/public_api";
+import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
+import {JigsawTheme, PopupOptions, PopupPositionValue} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .iconfont-e9d8 {
-            margin: 40px
-        }
-
-        .jigsawFloatArea {
-            width: 190px;
-            height: 60px;
-            background: orange;
-            color: #fff;
-            text-align: center;
-        }
-
-        .movable-box {
-            background-color: #b5d3dc;
-            display: inline-block;
-            border-radius: 4px;
-            padding: 12px;
-            cursor: move;
-        }
-
-        .message {
-            margin: 10px;
-        }
-    `]
+    styleUrls: ['./demo.component.css']
 })
-export class FloatPosReviserDemo {
+export class FloatPosReviserDemo implements AfterViewInit {
+    @ViewChild('mover')
+    public mover: ElementRef;
+    public position;
+
+    constructor(private _renderer: Renderer2) {
+        this.position = "bottomLeft";
+    }
+
     options: PopupOptions = {
         posReviser: (pos: PopupPositionValue, popupElement: HTMLElement) => {
             // pos.left < 0表示：自动调整区域后左侧还是被盖住一部分
@@ -41,10 +25,9 @@ export class FloatPosReviserDemo {
         useCustomizedBackground: true
     };
 
-    public position;
-
-    constructor() {
-        this.position = "bottomLeft";
+    ngAfterViewInit(): void {
+        const bg = JigsawTheme.majorStyle == 'light' ? '#eee' : '#333';
+        this._renderer.setStyle(this.mover.nativeElement, 'background-color', bg);
     }
 
     // ====================================================================
