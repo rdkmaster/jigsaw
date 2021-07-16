@@ -75,6 +75,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._completeSubscription = this._uploader.complete.subscribe(() => {
             this.change.emit(this.files);
+            this._cdr.markForCheck();
         });
 
         if (this._progressSubscription) {
