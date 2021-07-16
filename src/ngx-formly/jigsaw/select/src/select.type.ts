@@ -24,6 +24,7 @@ import {JigsawSelect} from "@rdkmaster/jigsaw";
             [clearable]="to.clearable"
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
+            [useStatistics]="to.useStatistics"
             [data]="to.data"
             [(value)]="to.value"
             (valueChange)="to.valueChange && to.valueChange($event)"
@@ -42,6 +43,7 @@ export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
             labelField: 'label',
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
+            useStatistics: true
         },
     };
 

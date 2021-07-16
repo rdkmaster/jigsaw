@@ -13,6 +13,8 @@ import {JigsawTextarea} from "@rdkmaster/jigsaw";
             [(value)]="to.value"
             [clearable]="to.clearable"
             [placeholder]="to.placeholder"
+            [maxLength]="to.maxContentLength"
+            [includesCRLF]="to.includesCRLF"
             [valid]="to.valid && !showError"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-textarea>
@@ -29,6 +31,7 @@ export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
             valid: true,
             width: '100%',
             height: '100%',
+            maxContentLength: 0
         }
     };
 

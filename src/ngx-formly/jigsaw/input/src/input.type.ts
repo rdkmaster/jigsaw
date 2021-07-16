@@ -18,9 +18,17 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
             [preIcon]="to.preIcon"
             [icon]="to.icon"
             [password]="to.password"
+            [suffix]="to.suffix"
+            [suffixWidth]="to.suffixWidth"
+            [suffixLabelField]="to.suffixLabelField"
+            [prefix]="to.prefix"
+            [prefixWidth]="to.prefixWidth"
+            [prefixLabelField]="to.prefixLabelField"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (iconSelect)="to.iconSelect && to.iconSelect($event)"
             (preIconSelect)="to.preIconSelect && to.preIconSelect($event)"
+            (suffixChange)="to.suffixChange && to.suffixChange($event)"
+            (prefixChange)="to.prefixChange && to.prefixChange($event)"
         ></jigsaw-input>
         <ng-template #numberTmp>
             <jigsaw-numeric-input
@@ -35,7 +43,12 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
                 [placeholder]="to.placeholder"
                 [size]="to.size"
                 [blurOnClear]="to.blurOnClear"
+                [showOption]="to.showOption"
+                [suffix]="to.suffix"
+                [suffixWidth]="to.suffixWidth"
+                [suffixLabelField]="to.suffixLabelField"
                 (valueChange)="to.valueChange && to.valueChange($event)"
+                (suffixChange)="to.suffixChange && to.suffixChange($event)"
             ></jigsaw-numeric-input>
         </ng-template>
     `,
