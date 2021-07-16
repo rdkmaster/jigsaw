@@ -25,7 +25,7 @@
                 preSize="small"
                 status="processing"
             ></jigsaw-progress>
-            <span class="jigsaw-upload-result-re-upload" *ngIf="file.state === 'error'"
+            <span class="jigsaw-upload-result-re-upload" *ngIf="!file.hideRetry && file.state === 'error'"
                   (click)="this.uploader.retryUpload(file)">重新上传</span>
             <ul>
                 <li *ngFor="let log of file.log">
