@@ -12,7 +12,7 @@ import {
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule, RadiosGroupValue} from "./radio";
+import {JigsawRadioModule} from "./radio";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -56,9 +56,12 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
+    /**
+     * value的实际类型是 `string | RadiosGroupValue`，由于一些兼容性原因，保留any作为类型定义
+     */
     @RequireMarkForCheck()
     @Input()
-    public value: string | RadiosGroupValue;
+    public value: any;
 
     private _trackItemBy: string | string[];
 

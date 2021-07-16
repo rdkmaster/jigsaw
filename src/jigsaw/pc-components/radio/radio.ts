@@ -1,10 +1,10 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ContentChildren,
     EventEmitter,
-    forwardRef, Injector,
+    forwardRef,
+    Injector,
     Input,
     NgModule,
     Output,
