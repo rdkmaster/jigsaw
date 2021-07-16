@@ -21,11 +21,19 @@ import {JigsawAutoCompleteInput} from "@rdkmaster/jigsaw";
             [filterOnFocus]="to.filterOnFocus"
             [preIcon]="to.preIcon"
             [icon]="to.icon"
+            [suffix]="to.suffix"
+            [suffixWidth]="to.suffixWidth"
+            [suffixLabelField]="to.suffixLabelField"
+            [prefix]="to.prefix"
+            [prefixWidth]="to.prefixWidth"
+            [prefixLabelField]="to.prefixLabelField"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (select)="to.select && to.select($event)"
             (textSelect)="to.textSelect && to.textSelect($event)"
             (iconSelect)="to.iconSelect && to.iconSelect($event)"
             (preIconSelect)="to.preIconSelect && to.preIconSelect($event)"
+            (suffixChange)="to.suffixChange && to.suffixChange($event)"
+            (prefixChange)="to.prefixChange && to.prefixChange($event)"
         ></jigsaw-auto-complete-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,8 +47,7 @@ export class FormlyFieldAutoInput extends FormlyFieldType<JigsawAutoCompleteInpu
             blurOnClear: true,
             maxDropDownWidth: '100%',
             maxDropDownHeight: '300px',
-            closeDropDownOnSelect: true,
-            filterOnFocus: true
+            closeDropDownOnSelect: true
         },
     };
 

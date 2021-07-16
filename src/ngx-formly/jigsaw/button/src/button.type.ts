@@ -7,7 +7,7 @@ export enum ColorType {
 }
 
 enum SizeType {
-    default = 'default', small = 'small', large = 'large'
+    default = 'default', small = 'small', medium = 'medium', large = 'large'
 }
 
 @Component({
