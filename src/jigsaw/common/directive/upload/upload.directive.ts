@@ -234,19 +234,16 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
             }
             if (!fileTypes.find(type => this._testFileType(file.name, type))) {
                 fileInfo.message = this._translateService.instant(`upload.fileTypeError`);
-                fileInfo.hideRetry = true;
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;
             }
             if (!isNaN(this.minSize) && file.size < this.minSize * 1024 * 1024) {
                 fileInfo.message = this._translateService.instant(`upload.fileMinSizeError`);
-                fileInfo.hideRetry = true;
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;
             }
             if (!isNaN(this.maxSize) && file.size > this.maxSize * 1024 * 1024) {
                 fileInfo.message = this._translateService.instant(`upload.fileMaxSizeError`);
-                fileInfo.hideRetry = true;
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;
             }

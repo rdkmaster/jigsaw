@@ -6,8 +6,9 @@ import {
     NgZone, OnDestroy, EventEmitter, Output
 } from "@angular/core";
 import {Subscription} from "rxjs";
-import { AbstractJigsawComponent } from "../../common/common";
+import {AbstractJigsawComponent} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
@@ -20,9 +21,11 @@ import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawUploadResult extends AbstractJigsawComponent implements OnDestroy {
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+    constructor(private _translateService: TranslateService,
+                protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
     }
+
     private _dataSendProgressSubscription: Subscription;
     private _startUploadSubscription: Subscription;
     private _completeSubscription: Subscription;
@@ -106,6 +109,16 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         this.files.splice(idx, 1);
         this.remove.emit(fileInfo);
         this.change.emit(this.files);
+    }
+
+    /**
+     * @internal
+     */
+    public hideRetry(file: UploadFileInfo): boolean {
+        const fileTypeError = this._translateService.instant(`upload.fileTypeError`);
+        const fileMinSizeError = this._translateService.instant(`upload.fileMinSizeError`);
+        const fileMaxSizeError = this._translateService.instant(`upload.fileMaxSizeError`);
+        return file.message == fileTypeError || file.message == fileMinSizeError || file.message == fileMaxSizeError;
     }
 
     ngOnDestroy() {
