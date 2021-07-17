@@ -113,6 +113,8 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
 
     /**
      * @internal
+     *
+     * 特定类型的失败原因：类型错误，大小不符合，不让显示重新上传，因为没有意义
      */
     public hideRetry(file: UploadFileInfo): boolean {
         const fileTypeError = this._translateService.instant(`upload.fileTypeError`);
