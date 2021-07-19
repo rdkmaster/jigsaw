@@ -5,10 +5,10 @@ import {
     ChangeDetectorRef,
     NgZone, OnDestroy, EventEmitter, Output
 } from "@angular/core";
+import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
@@ -26,6 +26,9 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         super(_zone);
     }
 
+    private readonly _fileTypeError = this._translateService.instant(`upload.fileTypeError`);
+    private readonly _fileMinSizeError = this._translateService.instant(`upload.fileMinSizeError`);
+    private readonly _fileMaxSizeError = this._translateService.instant(`upload.fileMaxSizeError`);
     private _dataSendProgressSubscription: Subscription;
     private _startUploadSubscription: Subscription;
     private _completeSubscription: Subscription;
@@ -116,11 +119,8 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
      *
      * 特定类型的失败原因：类型错误，大小不符合，不让显示重新上传，因为没有意义
      */
-    public hideRetry(file: UploadFileInfo): boolean {
-        const fileTypeError = this._translateService.instant(`upload.fileTypeError`);
-        const fileMinSizeError = this._translateService.instant(`upload.fileMinSizeError`);
-        const fileMaxSizeError = this._translateService.instant(`upload.fileMaxSizeError`);
-        return file.message == fileTypeError || file.message == fileMinSizeError || file.message == fileMaxSizeError;
+    public _$checkRetry(file: UploadFileInfo): boolean {
+        return file.message == this._fileTypeError || file.message == this._fileMinSizeError || file.message == this._fileMaxSizeError;
     }
 
     ngOnDestroy() {
