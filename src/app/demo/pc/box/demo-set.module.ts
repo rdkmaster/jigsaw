@@ -12,6 +12,8 @@ import {BoxMiddleResizeLineDemoComponent} from "./middle-resize-line/demo.compon
 import {BoxMiddleResizeLineDemoModule} from "./middle-resize-line/demo.module";
 import {BoxViewInitDemoComponent} from "./view-init/demo.component";
 import {BoxViewInitDemoModule} from "./view-init/demo.module";
+import {BoxPerformanceDemoComponent} from "./performance/demo.component";
+import {BoxPerformanceDemoModule} from "./performance/demo.module";
 
 export const routerConfig = [
     {
@@ -32,6 +34,9 @@ export const routerConfig = [
     {
         path: 'view-init', component: BoxViewInitDemoComponent
     },
+    {
+        path: 'performance', component: BoxPerformanceDemoComponent
+    },
 ];
 
 @NgModule({
@@ -42,7 +47,8 @@ export const routerConfig = [
         FormDemoModule,
         BoxLayoutScrollDemoModule,
         BoxMiddleResizeLineDemoModule,
-        BoxViewInitDemoModule
+        BoxViewInitDemoModule,
+        BoxPerformanceDemoModule
     ]
 })
 export class BoxDemoModule {
