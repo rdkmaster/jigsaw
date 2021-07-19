@@ -126,10 +126,15 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
         this._removeAllListener();
 
+        const resizeLineWrapper: HTMLElement = this._resizeLineParent.nativeElement;
+        const resizeLine: HTMLElement = this._resizeLine.nativeElement;
+
         this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
             if (this._isCurrentResizingBox || !this._resizeLineParent) return;
             // 兼容IE,去掉resize过程中产生的莫名滚动条
-            this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
+            this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
+            // 设置成0，防止出现滚动条
+            this.renderer.setStyle(resizeLine, this.parent.direction == 'column' ? 'width' : 'height', 0);
         });
 
         this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
@@ -138,10 +143,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             if (!this._resizeLineParent) return;
             // 兼容IE,去掉resize过程中产生的莫名滚动条
             if (this._isCurrentResizingBox) {
-                this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
+                this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
             }
             this.runMicrotask(() => {
-                this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'block');
+                this.renderer.setStyle(resizeLineWrapper, 'display', 'block');
             });
         });
 
@@ -151,11 +156,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             });
 
             this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
-                if (this._resizeLine.nativeElement.scrollTop != this.element.scrollTop) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'top', this.element.scrollTop + 'px');
+                if (resizeLine.scrollTop != this.element.scrollTop) {
+                    this.renderer.setStyle(resizeLine, 'top', this.element.scrollTop + 'px');
                 }
-                if (this._resizeLine.nativeElement.scrollLeft != this.element.scrollLeft) {
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'left', this.element.scrollLeft + 'px');
+                if (resizeLine.scrollLeft != this.element.scrollLeft) {
+                    this.renderer.setStyle(resizeLine, 'left', this.element.scrollLeft + 'px');
                 }
             });
         });
