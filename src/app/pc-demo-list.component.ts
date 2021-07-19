@@ -81,13 +81,13 @@ import { DOCUMENT } from '@angular/common';
             </ng-template>
         </p>
         <jigsaw-button-bar
-        class="demo-theme-button-bar"
-        height="26"
-        [(selectedItems)]="selectedTheme"
-        [data]="themes"
-        [multipleSelect]="false"
-        (selectedItemsChange)="themeSelectChange($event)"
-        optionWidth="140"
+            class="demo-theme-button-bar"
+            height="26"
+            [(selectedItems)]="selectedTheme"
+            [data]="themes"
+            [multipleSelect]="false"
+            (selectedItemsChange)="themeSelectChange($event)"
+            optionWidth="140"
         >
         </jigsaw-button-bar>
         <div *ngFor="let router of routes">
