@@ -5,7 +5,7 @@ import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
-    JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTheme, JigsawTreeExtModule
+    JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTheme, JigsawTreeExtModule, JigsawButtonBarModule
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
@@ -31,7 +31,7 @@ import {DemoCodeComponent} from "./demo-code.component";
                 ]},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
-        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule,
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         TranslateModule.forRoot()
     ],
     providers: [

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, AfterContentInit, Inject} from "@angular/core";
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
 import {routerConfig as autoCompleteInputConfig} from "./demo/pc/auto-complete-input/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/pc/data-encapsulation/demo-set.module";
@@ -63,6 +63,8 @@ import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfigPC} from "./router-config";
 import {PopupPositionType} from "../jigsaw/common/service/popup.service";
+import { ArrayCollection, JigsawTheme } from 'jigsaw/public_api';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     template: `
@@ -78,6 +80,16 @@ import {PopupPositionType} from "../jigsaw/common/service/popup.service";
                 </div>
             </ng-template>
         </p>
+        <jigsaw-button-bar
+        class="demo-theme-button-bar"
+        height="26"
+        [(selectedItems)]="selectedTheme"
+        [data]="themes"
+        [multipleSelect]="false"
+        (selectedItemsChange)="themeSelectChange($event)"
+        optionWidth="140"
+        >
+        </jigsaw-button-bar>
         <div *ngFor="let router of routes">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
@@ -107,9 +119,15 @@ import {PopupPositionType} from "../jigsaw/common/service/popup.service";
         div {
             margin-bottom: 12px;
         }
+
+        .demo-theme-button-bar {
+            position: fixed;
+            right: 145px;
+        }
     `]
 })
-export class PCDemoListComponent implements OnInit {
+export class PCDemoListComponent implements OnInit, AfterContentInit {
+    constructor(@Inject(DOCUMENT) private document: Document) {}
     floatOptions = {
         posType: PopupPositionType.fixed
     };
@@ -134,6 +152,52 @@ export class PCDemoListComponent implements OnInit {
         return childRouter.hasOwnProperty('desc') ? childRouter.desc : childRouter.path;
     }
 
+    selectedTheme: any[];
+    themes = new ArrayCollection([
+        { label: "Paletx Pro Light", id: 1 },
+        { label: "Paletx Pro Dark", id: 2 },
+        { label: "Vmax Light", id: 3 }
+    ]);
+
+    themeSelectChange(themeArr: ArrayCollection<any>) {
+        let themeName, themeLightness;
+        const themeId = themeArr[0].id;
+        if (themeId === 1) {
+            themeName = "paletx-pro-light.css";
+            themeLightness = "light";
+        } else if (themeId === 2) {
+            themeName = "paletx-pro-dark.css";
+            themeLightness = "dark";
+        } else if (themeId === 3) {
+            themeName = "vmax-light.css";
+            themeLightness = "light";
+        }
+        const head = this.document.getElementsByTagName("head")[0];
+        let themeLink = this.document.getElementById("demo-theme") as HTMLLinkElement;
+        if (themeLink) {
+            themeLink.href = themeName;
+        } else {
+            const style = this.document.createElement("link");
+            style.id = "demo-theme";
+            style.rel = "stylesheet";
+            style.href = `${themeName}`;
+
+            head.appendChild(style);
+        }
+        JigsawTheme.majorStyle = themeLightness;
+        localStorage.setItem("jigsawDemoTheme", JSON.stringify(themeArr));
+    }
+
+    themeInit(){
+        if (localStorage.getItem("jigsawDemoTheme") === null) {
+            this.selectedTheme = [{ label: "Paletx Pro Light", id: 1 }];
+        } else {
+            const themeArr = JSON.parse(localStorage.getItem("jigsawDemoTheme"));
+            this.selectedTheme = [themeArr[0]];
+            this.themeSelectChange(themeArr);
+        }
+    }
+
     ngOnInit(): void {
         const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.selectedItems = this.routes.filter(item => !item.hidden && stored.indexOf(item.path) != -1);
@@ -142,6 +206,10 @@ export class PCDemoListComponent implements OnInit {
             this.selectedItems = null;
         }
         this.showHideDemos(this.selectedItems);
+    }
+
+    ngAfterContentInit() {
+        this.themeInit();
     }
 }
 
