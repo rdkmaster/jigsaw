@@ -77,11 +77,13 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             this.callLater(() => {
                 if (this.parent.direction == 'column') {
                     if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                        this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth + 'px');
+                        // 2px用于消除四舍五入的偏差
+                        this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth - 2 + 'px');
                     }
                 } else {
                     if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                        this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight + 'px');
+                        // 2px用于消除四舍五入的偏差
+                        this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight - 2 + 'px');
                     }
                 }
             });
