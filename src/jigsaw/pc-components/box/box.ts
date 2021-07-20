@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
-import {CallbackRemoval} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -247,14 +247,22 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                     return;
                 }
                 const resizeLine: HTMLElement = this._resizeLine.nativeElement;
-                if (resizeLine.scrollTop != this.element.scrollTop) {
+                if (this._pxToNumber(getComputedStyle(resizeLine).top) != this.element.scrollTop) {
                     this.renderer.setStyle(resizeLine, 'top', this.element.scrollTop + 'px');
                 }
-                if (resizeLine.scrollLeft != this.element.scrollLeft) {
+                if (this._pxToNumber(getComputedStyle(resizeLine).left) != this.element.scrollLeft) {
                     this.renderer.setStyle(resizeLine, 'left', this.element.scrollLeft + 'px');
                 }
             });
         });
+    }
+
+    private _pxToNumber(px: string): number {
+        if (CommonUtils.isUndefined(px) || typeof px == 'number') {
+            return <any>px;
+        }
+        px = px.replace(/(px|PX)$/, '');
+        return Number(px);
     }
 
     private _removeAllResizeLineListener() {
