@@ -45,6 +45,13 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     public parent: JigsawBox;
 
+    public set viewInit(value: boolean) {
+        this._computeResizeLineWidth();
+        this._$childrenBox.forEach((box, index) => {
+            box.viewInit = true;
+        })
+    }
+
     @ContentChildren(JigsawBox)
     private _childrenBoxRaw: QueryList<JigsawBox>;
 
@@ -74,19 +81,17 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     private _computeResizeLineWidth() {
         if (!this._resizeLine) return;
         this.zone.runOutsideAngular(() => {
-            this.callLater(() => {
-                if (this.parent.direction == 'column') {
-                    if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                        // 2px用于消除四舍五入的偏差
-                        this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth - 2 + 'px');
-                    }
-                } else {
-                    if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                        // 2px用于消除四舍五入的偏差
-                        this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight - 2 + 'px');
-                    }
+            if (this.parent.direction == 'column') {
+                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
+                    // 2px用于消除四舍五入的偏差
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth - 2 + 'px');
                 }
-            });
+            } else {
+                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
+                    // 2px用于消除四舍五入的偏差
+                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight - 2 + 'px');
+                }
+            }
         })
     }
 
@@ -123,8 +128,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     ngAfterViewInit() {
         // resize line 视图渲染完成
         if (!this._resizeLine) return;
-
-        this.runAfterMicrotasks(this._computeResizeLineWidth, this);
 
         this._removeAllListener();
 
@@ -190,7 +193,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
                 this._$isFlicker = false;
-                if(!this.parent) JigsawBox.viewInit.emit();
+                if(!this.parent) {
+                    JigsawBox.viewInit.emit();
+                    this.viewInit = true;
+                }
             })
         });
     }
