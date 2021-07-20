@@ -1,4 +1,6 @@
 import {Component, OnInit, AfterContentInit, Inject} from "@angular/core";
+import { DOCUMENT } from '@angular/common';
+import { ArrayCollection, JigsawTheme, PopupPositionType } from 'jigsaw/public_api';
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
 import {routerConfig as autoCompleteInputConfig} from "./demo/pc/auto-complete-input/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/pc/data-encapsulation/demo-set.module";
@@ -62,9 +64,6 @@ import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set
 import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfigPC} from "./router-config";
-import {PopupPositionType} from "../jigsaw/common/service/popup.service";
-import { ArrayCollection, JigsawTheme } from 'jigsaw/public_api';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
     template: `
@@ -127,7 +126,7 @@ import { DOCUMENT } from '@angular/common';
     `]
 })
 export class PCDemoListComponent implements OnInit, AfterContentInit {
-    constructor(@Inject(DOCUMENT) private document: Document) {}
+    constructor(@Inject(DOCUMENT) private _document: Document) {}
     floatOptions = {
         posType: PopupPositionType.fixed
     };
@@ -172,16 +171,15 @@ export class PCDemoListComponent implements OnInit, AfterContentInit {
             themeName = "vmax-light.css";
             themeLightness = "light";
         }
-        const head = this.document.getElementsByTagName("head")[0];
-        let themeLink = this.document.getElementById("demo-theme") as HTMLLinkElement;
+        const head = this._document.getElementsByTagName("head")[0];
+        let themeLink = this._document.getElementById("demo-theme") as HTMLLinkElement;
         if (themeLink) {
             themeLink.href = themeName;
         } else {
-            const style = this.document.createElement("link");
+            const style = this._document.createElement("link");
             style.id = "demo-theme";
             style.rel = "stylesheet";
-            style.href = `${themeName}`;
-
+            style.href = themeName;
             head.appendChild(style);
         }
         JigsawTheme.majorStyle = themeLightness;
