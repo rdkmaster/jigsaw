@@ -7,13 +7,12 @@
 <div class="live-demo-wrap">
     <jigsaw-header [level]="1">Box</jigsaw-header>
     <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">布局</jigsaw-header>
+        <jigsaw-header [level]="2">NgIf & NgFor</jigsaw-header>
         <j-button (click)="showBox = !showBox">显示/隐藏box</j-button>
         <j-box [resizable]="true" height="400">
             <j-box *ngFor="let item of [1,2,3]"></j-box>
             <j-box *ngIf="showBox"></j-box>
         </j-box>
-        <p class="message">{{resizeInfo}}</p>
     </div>
 </div>
 

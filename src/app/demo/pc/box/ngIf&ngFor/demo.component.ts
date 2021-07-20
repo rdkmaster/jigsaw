@@ -5,19 +5,7 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class BoxNgIfNgForDemoComponent {
-    arr = new Array(20);
-
-    resizeInfo: string;
-
     showBox = true;
-
-    handleResizeStart(box) {
-        this.resizeInfo = 'Box is resizing';
-    }
-
-    handleResize(box) {
-        this.resizeInfo = `Box's width is changed to be ${box.element.offsetWidth} px.`;
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
