@@ -1,0 +1,21 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Box</jigsaw-header>
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="2">布局</jigsaw-header>
+        <j-button (click)="showBox = !showBox">显示/隐藏box</j-button>
+        <j-box [resizable]="true" height="400">
+            <j-box *ngFor="let item of [1,2,3]"></j-box>
+            <j-box *ngIf="showBox"></j-box>
+        </j-box>
+        <p class="message">{{resizeInfo}}</p>
+    </div>
+</div>
+
+
+

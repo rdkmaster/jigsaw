@@ -1,6 +1,6 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectionStrategy
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
@@ -19,7 +19,11 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
+    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone,
+                /**
+                 * @internal
+                 */
+                public _cdr: ChangeDetectorRef) {
         super(elementRef, renderer, zone);
     }
 
@@ -44,16 +48,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     public _$showResizeLine: boolean;
 
     public parent: JigsawBox;
-
-    public set viewInit(value: boolean) {
-        this._computeResizeLineWidth();
-        if (!this._$childrenBox) {
-            return;
-        }
-        this._$childrenBox.forEach(box => {
-            box.viewInit = true;
-        })
-    }
 
     @ContentChildren(JigsawBox)
     private _childrenBoxRaw: QueryList<JigsawBox>;
@@ -178,11 +172,26 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
         this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
         this.checkFlex();
+        this._setResizeLine();
         this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
             this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
             this.checkFlexByChildren();
+            this._setResizeLine();
         });
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this._$isFlicker = false;
+                if (!this.parent) {
+                    JigsawBox.viewInit.emit();
+                }
+            });
+        });
+    }
 
+    private _setResizeLine() {
+        if(!this._$childrenBox) {
+            return;
+        }
         this._$childrenBox.forEach((box, index) => {
             box.parent = this;
             this._supportSetSize(box, this);
@@ -190,17 +199,27 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 // 第一个child box没有resize line
                 // 设置了尺寸的box没有resize line
                 box._$showResizeLine = true;
+                box._cdr.markForCheck();
             }
         });
+        // 根据是否有parent判断当前是否根节点
+        if (!this.parent) {
+            this.runAfterMicrotasks(() => {
+                this.setResizeLineSize();
+            });
+        }
+    }
 
-        this.runAfterMicrotasks(() => {
-            this._zone.run(() => {
-                this._$isFlicker = false;
-                if(!this.parent) {
-                    JigsawBox.viewInit.emit();
-                    this.viewInit = true;
-                }
-            })
+    /**
+     * @internal
+     */
+    public setResizeLineSize() {
+        this._computeResizeLineWidth();
+        if (!this._$childrenBox) {
+            return;
+        }
+        this._$childrenBox.forEach(box => {
+            box.setResizeLineSize();
         });
     }
 
