@@ -42,15 +42,14 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$isFlicker: boolean = true;
 
-    private _$showResizeLine: boolean;
+    /**
+     * @internal
+     */
+    public _$showResizeLine: boolean;
 
     /**
      * @internal
      */
-    public get showResizeLine(): boolean {
-        return this._$showResizeLine;
-    }
-
     public set showResizeLine(value: boolean) {
         this._$showResizeLine = value;
         this._removeAllResizeLineListener();
@@ -150,7 +149,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             this.runAfterMicrotasks(() => {
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
                 if (!this.parent) {
-                    console.log(11100);
                     this.setResizeLineSize();
                 }
             });
@@ -160,10 +158,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 this._$isFlicker = false;
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
                 if (!this.parent) {
-                    console.log(2222);
                     JigsawBox.viewInit.emit();
                     this.runAfterMicrotasks(() => {
-                        console.log(111);
                         this.setResizeLineSize();
                     });
                 }
