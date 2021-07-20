@@ -1,3 +1,6 @@
+:root {
+    --color-font-general: #1a93ff;
+}
 
 .app-wrap {
     padding: 6px;
