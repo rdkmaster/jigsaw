@@ -23,6 +23,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "extractCss": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -33,7 +34,22 @@
               "node_modules/@rdkmaster/icon-font/iconfont.css",
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/mbo.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
+                "bundleName": "paletx-pro-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-dark.scss",
+                "bundleName": "paletx-pro-dark",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/vmax-light.scss",
+                "bundleName": "vmax-light",
+                "inject": false
+              }
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
