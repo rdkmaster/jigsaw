@@ -47,7 +47,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     public set viewInit(value: boolean) {
         this._computeResizeLineWidth();
-        this._$childrenBox.forEach((box, index) => {
+        if (!this._$childrenBox) {
+            return;
+        }
+        this._$childrenBox.forEach(box => {
             box.viewInit = true;
         })
     }
