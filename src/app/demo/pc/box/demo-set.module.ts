@@ -40,7 +40,7 @@ export const routerConfig = [
         path: 'performance', component: BoxPerformanceDemoComponent
     },
     {
-        path: 'ngIf&NgFor', component: BoxNgIfNgForDemoComponent
+        path: 'ngIf&ngFor', component: BoxNgIfNgForDemoComponent
     },
 ];
 
