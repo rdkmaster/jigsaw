@@ -19,7 +19,7 @@ task('ensure-url-matches-path', () => {
                 if (!existsSync(join(modulePath, 'demo.module.ts'))) {
                     mismatchUrls.push(modulePath);
                 }
-                if (/[^a-z0-9-]/i.test(child.path)) {
+                if (/[^a-z-0-9]/.test(child.path)) {
                     invalidPaths.push(`${router.path}/${child.path}`);
                 }
             });
@@ -30,12 +30,12 @@ task('ensure-url-matches-path', () => {
         process.exit(1);
     }
     if (invalidPaths.length > 0) {
-        console.log('these demo folder name are invalid, only letters, numbers and dash(-) are allowed:');
+        console.log('these demo folder name are invalid, only lower case letters, numbers and dash(-) are allowed:');
         console.log(invalidPaths);
         process.exit(1);
     }
     if (invalidPaths.length == 0 && mismatchUrls.length == 0) {
-        console.log('great! all urls match their path!');
+        console.log('great! all urls match their paths!');
     }
 });
 
