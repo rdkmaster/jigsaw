@@ -19,6 +19,9 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     templateUrl: 'navigation-menu.html',
     host: {
         '[class.jigsaw-nav-menu]': 'true',
+        '[class.jigsaw-nav-menu-light]': 'theme == "light"',
+        '[class.jigsaw-nav-menu-dark]': 'theme == "dark"',
+        '[class.jigsaw-nav-menu-default]': 'theme == "default"',
         '[style.height]': 'height',
         '[style.width]': 'showToggleButton && collapsed ? null : width'
     },
@@ -129,6 +132,12 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             }
         })
     }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public theme: "light" | "dark" | "default" = "default";
 
     ngOnDestroy() {
         super.ngOnDestroy();
