@@ -14,8 +14,8 @@ import {BoxViewInitDemoComponent} from "./view-init/demo.component";
 import {BoxViewInitDemoModule} from "./view-init/demo.module";
 import {BoxPerformanceDemoComponent} from "./performance/demo.component";
 import {BoxPerformanceDemoModule} from "./performance/demo.module";
-import {BoxNgIfNgForDemoComponent} from "./ngIf&ngFor/demo.component";
-import {BoxNgIfNgForDemoModule} from "./ngIf&ngFor/demo.module";
+import {BoxNgIfNgForDemoComponent} from "./ngIf-ngFor/demo.component";
+import {BoxNgIfNgForDemoModule} from "./ngIf-ngFor/demo.module";
 
 export const routerConfig = [
     {
@@ -40,7 +40,7 @@ export const routerConfig = [
         path: 'performance', component: BoxPerformanceDemoComponent
     },
     {
-        path: 'ngIf&ngFor', component: BoxNgIfNgForDemoComponent
+        path: 'ngIf-ngFor', component: BoxNgIfNgForDemoComponent
     },
 ];
 
