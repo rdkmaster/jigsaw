@@ -1,0 +1,16 @@
+.color-options {
+    margin-bottom: 4px;
+}
+
+.color-result {
+    margin-bottom: 8px;
+}
+
+.adjust-color-demo-cntr {
+    display: flex;
+    align-items: center;
+}
+
+.adjust-color-demo-cntr jigsaw-button {
+    margin-right: 6px;
+}

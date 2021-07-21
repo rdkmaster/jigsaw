@@ -344,6 +344,233 @@ export class CommonUtils {
         }
     }
 
+    public static adjustFontColor(bg){
+        /*
+         * sRGB Luma (ITU Rec. 709)标准
+         * L = (red * 0.2126 + green * 0.7152 + blue * 0.0722) / 255
+         *
+         */
+        bg = this.anyToRGB(bg);
+        const rgbArr = bg.replace(/[^\d,]/g, "").split(",");
+        const r = rgbArr[0] * 0.2126;
+        const g = rgbArr[1] * 0.7152;
+        const b = rgbArr[2] * 0.0722;
+        const lightness = (r + g + b) / 255 - 0.5 >= 0 ? "light" : "dark";
+        return lightness;
+    }
+
+    public static hexToRGB(h: string): string {
+        const ex = /^#([\da-f]{3}){1,2}$/i;
+        if (ex.test(h)) {
+            let r: number | string = 0,
+                g: number | string = 0,
+                b: number | string = 0;
+
+            if (h.length == 4) {
+                r = "0x" + h[1] + h[1];
+                g = "0x" + h[2] + h[2];
+                b = "0x" + h[3] + h[3];
+            } else if (h.length == 7) {
+                r = "0x" + h[1] + h[2];
+                g = "0x" + h[3] + h[4];
+                b = "0x" + h[5] + h[6];
+            }
+
+            return "rgb(" + +r + "," + +g + "," + +b + ")";
+        } else {
+            return "Invalid input color";
+        }
+    }
+
+    public static hexAToRGBA(h: string): string {
+        const ex = /^#([\da-f]{4}){1,2}$/i;
+        if (ex.test(h)) {
+            let r: number | string = 0,
+                g: number | string = 0,
+                b: number | string = 0,
+                a: any = 1;
+
+            if (h.length == 5) {
+                r = "0x" + h[1] + h[1];
+                g = "0x" + h[2] + h[2];
+                b = "0x" + h[3] + h[3];
+                a = "0x" + h[4] + h[4];
+            } else if (h.length == 9) {
+                r = "0x" + h[1] + h[2];
+                g = "0x" + h[3] + h[4];
+                b = "0x" + h[5] + h[6];
+                a = "0x" + h[7] + h[8];
+            }
+            a = +(a / 255).toFixed(3);
+
+            return "rgba(" + +r + "," + +g + "," + +b + "," + a + ")";
+        } else {
+            return "Invalid input color";
+        }
+    }
+
+    public static HSLToRGB(hsl) {
+        const ex =
+            /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
+        if (ex.test(hsl)) {
+            let sep = hsl.indexOf(",") > -1 ? "," : " ";
+            hsl = hsl.substr(4).split(")")[0].split(sep);
+
+            let h = hsl[0],
+                s = hsl[1].substr(0, hsl[1].length - 1) / 100,
+                l = hsl[2].substr(0, hsl[2].length - 1) / 100;
+
+            if (h.indexOf("deg") > -1) h = h.substr(0, h.length - 3);
+            else if (h.indexOf("rad") > -1) h = Math.round((h.substr(0, h.length - 3) / (2 * Math.PI)) * 360);
+            else if (h.indexOf("turn") > -1) h = Math.round(h.substr(0, h.length - 4) * 360);
+            if (h >= 360) h %= 360;
+
+            let c = (1 - Math.abs(2 * l - 1)) * s,
+                x = c * (1 - Math.abs(((h / 60) % 2) - 1)),
+                m = l - c / 2,
+                r = 0,
+                g = 0,
+                b = 0;
+
+            if (0 <= h && h < 60) {
+                r = c;
+                g = x;
+                b = 0;
+            } else if (60 <= h && h < 120) {
+                r = x;
+                g = c;
+                b = 0;
+            } else if (120 <= h && h < 180) {
+                r = 0;
+                g = c;
+                b = x;
+            } else if (180 <= h && h < 240) {
+                r = 0;
+                g = x;
+                b = c;
+            } else if (240 <= h && h < 300) {
+                r = x;
+                g = 0;
+                b = c;
+            } else if (300 <= h && h < 360) {
+                r = c;
+                g = 0;
+                b = x;
+            }
+
+            r = Math.round((r + m) * 255);
+            g = Math.round((g + m) * 255);
+            b = Math.round((b + m) * 255);
+
+            return "rgb(" + +r + "," + +g + "," + +b + ")";
+        } else {
+            return "Invalid input color";
+        }
+    }
+
+    public static HSLAToRGBA(hsla) {
+        const ex = /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+        if (ex.test(hsla)) {
+            let sep = hsla.indexOf(",") > -1 ? "," : " ";
+            hsla = hsla.substr(5).split(")")[0].split(sep);
+    
+            if (hsla.indexOf("/") > -1)
+                hsla.splice(3,1);
+    
+            let h = hsla[0],
+                s = hsla[1].substr(0,hsla[1].length-1) / 100,
+                l = hsla[2].substr(0,hsla[2].length-1) / 100,
+                a = hsla[3];
+            
+            if (h.indexOf("deg") > -1)
+                h = h.substr(0,h.length - 3);
+            else if (h.indexOf("rad") > -1)
+                h = Math.round(h.substr(0,h.length - 3) / (2 * Math.PI) * 360);
+            else if (h.indexOf("turn") > -1)
+                h = Math.round(h.substr(0,h.length - 4) * 360);
+            if (h >= 360)
+                h %= 360;
+    
+            let c = (1 - Math.abs(2 * l - 1)) * s,
+                x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+                m = l - c/2,
+                r = 0,
+                g = 0,
+                b = 0;
+            
+            if (0 <= h && h < 60) {
+                r = c; g = x; b = 0;
+            } else if (60 <= h && h < 120) {
+                r = x; g = c; b = 0;
+            } else if (120 <= h && h < 180) {
+                r = 0; g = c; b = x;
+            } else if (180 <= h && h < 240) {
+                r = 0; g = x; b = c;
+            } else if (240 <= h && h < 300) {
+                r = x; g = 0; b = c;
+            } else if (300 <= h && h < 360) {
+                r = c; g = 0; b = x;
+            }
+    
+            r = Math.round((r + m) * 255);
+            g = Math.round((g + m) * 255);
+            b = Math.round((b + m) * 255);
+            
+            return "rgba("+  +r + ","+ +g + "," + +b + "," + +a + ")";
+    
+        } else {
+            return "Invalid input color";
+        }
+    }
+
+    public static nameToRGB(name: string): string {
+        if (name === ""){
+            return "Invalid input color name";
+        }
+        let fakeDiv = document.createElement("div");
+        fakeDiv.style.color = name;
+        document.body.appendChild(fakeDiv);
+
+        let cs = window.getComputedStyle(fakeDiv),
+            pv = cs.getPropertyValue("color");
+
+        document.body.removeChild(fakeDiv);
+    
+        return pv;
+    }
+
+    public static anyToRGB(v: string): string {
+        const RGBTest =
+            /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
+        const RGBATest =
+            /^rgba\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+        const HexTest = /^#([\da-f]{3}){1,2}$/i;
+        const HexATest = /^#([\da-f]{4}){1,2}$/i;
+        const HSLTest =
+            /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
+        const HSLATest =
+            /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+
+        if (HexTest.test(v)) {
+            v = this.hexToRGB(v);
+        } else if (HexATest.test(v)) {
+            v = this.hexAToRGBA(v);
+        } else if (HSLTest.test(v)) {
+            v = this.HSLToRGB(v);
+        } else if (HSLATest.test(v)) {
+            v = this.HSLAToRGBA(v);
+        }
+
+        if (RGBATest.test(v)) {
+            const vArr = v.replace(/[^\d,]/g, "").split(",");
+            v = "rgb("+  +vArr[0] + ","+ +vArr[1] + "," + +vArr[2] + ")";
+        }
+        if (!RGBTest.test(v)) {
+            v = this.nameToRGB(v);
+        }
+        console.log(v);
+        return v;
+    }
 }
 
 export type CallbackRemoval = () => void;
