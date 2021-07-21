@@ -70,15 +70,16 @@ import {routerConfigPC} from "./router-config";
         <p jigsaw-float class="select-demo" [jigsawFloatTarget]="list" jigsawFloatPosition="bottomRight"
            [jigsawFloatOptions]="floatOptions">
             显示隐藏Demo集
-            <ng-template #list>
-                <div style="padding: 6px">
-                    <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
-                    <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
-                                      [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
-                    </jigsaw-list-lite>
-                </div>
-            </ng-template>
         </p>
+        <ng-template #list>
+            <div style="padding: 6px">
+                <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
+                <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
+                                  [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
+                </jigsaw-list-lite>
+            </div>
+        </ng-template>
+
         <jigsaw-button-bar
             class="demo-theme-button-bar"
             height="26"
@@ -153,37 +154,15 @@ export class PCDemoListComponent implements OnInit, AfterContentInit {
 
     selectedTheme: any[];
     themes = new ArrayCollection([
-        { label: "Paletx Pro Light", id: 1 },
-        { label: "Paletx Pro Dark", id: 2 },
-        { label: "Vmax Light", id: 3 }
+        { label: "Paletx Pro Light", name: 'paletx-pro', majorStyle: 'light' },
+        { label: "Paletx Pro Dark", name: 'paletx-pro', majorStyle: 'dark' },
+        { label: "Vmax Light", name: 'vmax', majorStyle: 'light' }
     ]);
 
     themeSelectChange(themeArr: ArrayCollection<any>) {
-        let themeName, themeLightness;
-        const themeId = themeArr[0].id;
-        if (themeId === 1) {
-            themeName = "paletx-pro-light.css";
-            themeLightness = "light";
-        } else if (themeId === 2) {
-            themeName = "paletx-pro-dark.css";
-            themeLightness = "dark";
-        } else if (themeId === 3) {
-            themeName = "vmax-light.css";
-            themeLightness = "light";
-        }
-        const head = this._document.getElementsByTagName("head")[0];
-        let themeLink = this._document.getElementById("demo-theme") as HTMLLinkElement;
-        if (themeLink) {
-            themeLink.href = themeName;
-        } else {
-            const style = this._document.createElement("link");
-            style.id = "demo-theme";
-            style.rel = "stylesheet";
-            style.href = themeName;
-            head.appendChild(style);
-        }
-        JigsawTheme.majorStyle = themeLightness;
+        const themeName = themeArr[0].name, majorStyle = themeArr[0].majorStyle;
         localStorage.setItem("jigsawDemoTheme", JSON.stringify(themeArr));
+        JigsawTheme.changeTheme(themeName, majorStyle);
     }
 
     themeInit(){

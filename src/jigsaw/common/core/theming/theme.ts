@@ -1,12 +1,35 @@
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
+export type SupportedTheme = 'paletx-pro' | 'vmax';
 export type MajorStyle = "dark" | "light";
 export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
+
+declare const document;
 
 // @dynamic
 export class JigsawTheme {
     private static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
     private static _majorStyle: MajorStyle = null;
+
+    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        majorStyle = majorStyle || this.majorStyle;
+        if (majorStyle != this.majorStyle) {
+            this.majorStyle = majorStyle;
+        }
+
+        const cssHref = `themes/${theme}-${majorStyle}.css`;
+        const head = document.getElementsByTagName("head")[0];
+        const themeLink = document.getElementById("jigsaw-theme") as HTMLLinkElement;
+        if (themeLink) {
+            themeLink.href = cssHref;
+        } else {
+            const style = document.createElement("link");
+            style.id = "jigsaw-theme";
+            style.rel = "stylesheet";
+            style.href = cssHref;
+            head.appendChild(style);
+        }
+    }
 
     public static get majorStyle(): MajorStyle {
         return this._majorStyle;

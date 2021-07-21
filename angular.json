@@ -37,17 +37,17 @@
               "src/styles.scss",
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
-                "bundleName": "paletx-pro-light",
+                "bundleName": "themes/paletx-pro-light",
                 "inject": false
               },
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-dark.scss",
-                "bundleName": "paletx-pro-dark",
+                "bundleName": "themes/paletx-pro-dark",
                 "inject": false
               },
               {
                 "input": "src/jigsaw/common/core/theming/themes/vmax-light.scss",
-                "bundleName": "vmax-light",
+                "bundleName": "themes/vmax-light",
                 "inject": false
               }
             ],
