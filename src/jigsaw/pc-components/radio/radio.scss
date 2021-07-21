@@ -12,9 +12,10 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
 }
 
 .#{$radio-option-prefix-cls} {
-    @include inline-block();
+    display: inline-flex;
+    align-items: center;
     font-size: $font-size-base;
-    margin-right: 10px;
+    margin-right: 16px;
     cursor: pointer;
     &.#{$radio-option-prefix-cls}-disabled {
         cursor: not-allowed;
@@ -31,7 +32,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
                 border-color: $border-color-disabled;
             }
         }
-        .#{$radio-option-prefix-cls}-content{
+        .#{$radio-option-prefix-cls}-content {
             color: $font-color-disabled;
         }
     }
@@ -49,7 +50,12 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         border-radius: 50%;
         background-color: $bg-component;
         margin-right: 8px;
-        @include prefixer(transition, all 0.3s $ease-in-out-circ);
+        -webkit-transition: border-color 0.15s linear, border-width 0.3s ease;
+        -moz-transition: border-color 0.15s linear, border-width 0.3s ease;
+        -ms-transition: border-color 0.15s linear, border-width 0.3s ease;
+        -o-transition: border-color 0.15s linear, border-width 0.3s ease;
+        transition: border-color 0.15s linear, border-width 0.3s ease;
+
         &.#{$radio-option-prefix-cls}-checked {
             border-width: 4px;
             border-color: $brand-default;
