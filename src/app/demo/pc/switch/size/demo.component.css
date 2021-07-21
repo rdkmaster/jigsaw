@@ -2,6 +2,6 @@
     margin-right: 20px;
 }
 
-.demo-container jigsaw-header:not(:first-of-type){
+.demo-container .jigsaw-header-host:not(:first-of-type){
     margin-top:20px;
 }

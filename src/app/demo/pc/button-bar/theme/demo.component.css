@@ -1,4 +1,4 @@
-jigsaw-header:not(:first-of-type) {
+.jigsaw-header-host:not(:first-of-type) {
     margin-top: 20px;
 }
 

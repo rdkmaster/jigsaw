@@ -1,10 +1,10 @@
 import {
     AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
-    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectionStrategy
+    Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
-import {CallbackRemoval} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -18,8 +18,12 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, AfterViewInit, OnDestroy {
-    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone) {
+export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, OnDestroy {
+    constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone,
+                /**
+                 * @internal
+                 */
+                public _cdr: ChangeDetectorRef) {
         super(elementRef, renderer, zone);
     }
 
@@ -43,17 +47,22 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$showResizeLine: boolean;
 
-    public parent: JigsawBox;
-
-    public set viewInit(value: boolean) {
-        this._computeResizeLineWidth();
-        if (!this._$childrenBox) {
+    /**
+     * @internal
+     */
+    public set showResizeLine(value: boolean) {
+        this._$showResizeLine = value;
+        this._removeAllResizeLineListener();
+        if (!value) {
             return;
         }
-        this._$childrenBox.forEach(box => {
-            box.viewInit = true;
-        })
+        this._listenResizeLineEvent();
     }
+
+    /**
+     * @internal
+     */
+    public parent: JigsawBox;
 
     @ContentChildren(JigsawBox)
     private _childrenBoxRaw: QueryList<JigsawBox>;
@@ -128,79 +137,66 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
     }
 
-    ngAfterViewInit() {
-        // resize line 视图渲染完成
-        if (!this._resizeLine) return;
-
-        this._removeAllListener();
-
-        const resizeLineWrapper: HTMLElement = this._resizeLineParent.nativeElement;
-        const resizeLine: HTMLElement = this._resizeLine.nativeElement;
-
-        this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
-            if (this._isCurrentResizingBox || !this._resizeLineParent) return;
-            // 兼容IE,去掉resize过程中产生的莫名滚动条
-            this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
-            // 设置成0，防止出现滚动条
-            this.renderer.setStyle(resizeLine, this.parent.direction == 'column' ? 'width' : 'height', 0);
-        });
-
-        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
-            this._computeResizeLineWidth();
-
-            if (!this._resizeLineParent) return;
-            // 兼容IE,去掉resize过程中产生的莫名滚动条
-            if (this._isCurrentResizingBox) {
-                this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
-            }
-            this.runMicrotask(() => {
-                this.renderer.setStyle(resizeLineWrapper, 'display', 'block');
-            });
-        });
-
-        this._zone.runOutsideAngular(() => {
-            this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
-                this._computeResizeLineWidth();
-            });
-
-            this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
-                if (resizeLine.scrollTop != this.element.scrollTop) {
-                    this.renderer.setStyle(resizeLine, 'top', this.element.scrollTop + 'px');
+    ngAfterContentInit() {
+        // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
+        this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
+        this.checkFlex();
+        this._showResizeLine();
+        this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
+            this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
+            this.checkFlexByChildren();
+            this._showResizeLine();
+            this.runAfterMicrotasks(() => {
+                // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
+                if (!this.parent) {
+                    this.setResizeLineSize();
                 }
-                if (resizeLine.scrollLeft != this.element.scrollLeft) {
-                    this.renderer.setStyle(resizeLine, 'left', this.element.scrollLeft + 'px');
+            });
+        });
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this._$isFlicker = false;
+                // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
+                if (!this.parent) {
+                    JigsawBox.viewInit.emit();
+                    this.runAfterMicrotasks(() => {
+                        this.setResizeLineSize();
+                    });
                 }
             });
         });
     }
 
-    ngAfterContentInit() {
-        // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
-        this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
-        this.checkFlex();
-        this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
-            this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
-            this.checkFlexByChildren();
-        });
-
+    private _showResizeLine() {
+        if (!this._$childrenBox) {
+            return;
+        }
         this._$childrenBox.forEach((box, index) => {
             box.parent = this;
             this._supportSetSize(box, this);
             if (this.resizable && index != 0 && !box._isFixedSize && !this._$childrenBox[index - 1]._isFixedSize) {
                 // 第一个child box没有resize line
                 // 设置了尺寸的box没有resize line
-                box._$showResizeLine = true;
+                // 异步消除变更检查报错
+                this.runMicrotask(() => {
+                    box.showResizeLine = true;
+                    box._cdr.markForCheck();
+                });
             }
         });
+    }
 
-        this.runAfterMicrotasks(() => {
-            this._zone.run(() => {
-                this._$isFlicker = false;
-                if(!this.parent) {
-                    JigsawBox.viewInit.emit();
-                    this.viewInit = true;
-                }
-            })
+    /**
+     * @internal
+     * 页面初始化之后从根节点开始向下递归修改 resize line 的尺寸
+     */
+    public setResizeLineSize() {
+        this._computeResizeLineWidth();
+        if (!this._$childrenBox) {
+            return;
+        }
+        this._$childrenBox.forEach(box => {
+            box.setResizeLineSize();
         });
     }
 
@@ -218,7 +214,58 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
     }
 
-    private _removeAllListener() {
+    private _listenResizeLineEvent() {
+        this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
+            if (this._isCurrentResizingBox || !this._resizeLineParent || !this._resizeLine) return;
+            // 兼容IE,去掉resize过程中产生的莫名滚动条
+            this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
+            // 设置成0，防止出现滚动条
+            this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', 0);
+        });
+
+        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
+            this._computeResizeLineWidth();
+            if (!this._resizeLineParent) {
+                return;
+            }
+            const resizeLineWrapper: HTMLElement = this._resizeLineParent.nativeElement;
+            // 兼容IE,去掉resize过程中产生的莫名滚动条
+            if (this._isCurrentResizingBox) {
+                this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
+            }
+            this.runMicrotask(() => {
+                this.renderer.setStyle(resizeLineWrapper, 'display', 'block');
+            });
+        });
+
+        this._zone.runOutsideAngular(() => {
+            this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
+                this._computeResizeLineWidth();
+            });
+            this.removeElementScrollEvent = this.renderer.listen(this.element, 'scroll', () => {
+                if (!this._resizeLine) {
+                    return;
+                }
+                const resizeLine: HTMLElement = this._resizeLine.nativeElement;
+                if (this._pxToNumber(getComputedStyle(resizeLine).top) != this.element.scrollTop) {
+                    this.renderer.setStyle(resizeLine, 'top', this.element.scrollTop + 'px');
+                }
+                if (this._pxToNumber(getComputedStyle(resizeLine).left) != this.element.scrollLeft) {
+                    this.renderer.setStyle(resizeLine, 'left', this.element.scrollLeft + 'px');
+                }
+            });
+        });
+    }
+
+    private _pxToNumber(px: string): number {
+        if (CommonUtils.isUndefined(px) || typeof px == 'number') {
+            return <any>px;
+        }
+        px = px.replace(/(px|PX)$/, '');
+        return Number(px);
+    }
+
+    private _removeAllResizeLineListener() {
         if (this._removeResizeStartListener) {
             this._removeResizeStartListener.unsubscribe();
             this._removeResizeStartListener = null;
@@ -239,6 +286,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._removeAllListener();
+        this._removeAllResizeLineListener();
     }
 }
