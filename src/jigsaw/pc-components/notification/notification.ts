@@ -101,7 +101,11 @@ export class NotificationMessage {
      * $demo = notification/full
      */
     innerHtmlContext?: any;
-    iconType?: 'success' | 'error' | 'warning' | 'info'
+    iconType?: 'success' | 'error' | 'warning' | 'info';
+    /**
+     * 控制是否在路由变化时提示框是否关闭，默认不关
+     */
+    disposeOnRouterChanged?: boolean
 }
 
 /**
@@ -442,7 +446,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
 
         const popupOptions = {
-            size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: false,
+            size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: opt.disposeOnRouterChanged ? opt.disposeOnRouterChanged : false,
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
             // `pos` not null to tell PopupService don't add resize event listener
