@@ -149,12 +149,6 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @ViewChild('label')
     private _label: ElementRef;
 
-    /**
-     * @internal
-     * 当没有内容投影进来时，不显示label元素
-     */
-    public showLabel = true;
-
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
@@ -167,7 +161,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     public ngAfterViewInit(): void {
         console.log(this._label?.nativeElement.innerHTML.trim());
-        this.showLabel = this._label?.nativeElement.innerHTML.trim() != '';
+        this.mode = this._label?.nativeElement.innerHTML.trim() != '' ? 'normal' : 'minimalist';
         this._cdr.detectChanges();
     }
 

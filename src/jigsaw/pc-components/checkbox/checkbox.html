@@ -1,6 +1,6 @@
 <label class="jigsaw-checkbox-wrapper" (click)="_$onCheckboxClick($event)">
     <span [ngClass]="_$checkboxClass"></span>
-    <span #label class="jigsaw-checkbox-label" *ngIf="mode != 'minimalist' && showLabel">
+    <span #label class="jigsaw-checkbox-label" *ngIf="mode != 'minimalist'">
         <ng-content></ng-content>
     </span>
 </label>
