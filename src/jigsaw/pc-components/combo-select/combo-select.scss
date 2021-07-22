@@ -37,7 +37,6 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border-style: solid;
         border-color: $border-color-default;
         border-radius: $border-radius-base;
-        transition: all 0.3s $ease-in-out;
         user-select: none;
 
         &:hover {
