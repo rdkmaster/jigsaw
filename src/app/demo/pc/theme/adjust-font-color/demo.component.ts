@@ -30,16 +30,16 @@ export class AdjustFontColorDemoComponent {
         this.hexAToRGBAResult = CommonUtils.hexAToRGBA(v);
     }
 
-    HSLToRGBValue: string = "";
-    HSLToRGBResult: string = "";
-    HSLToRGB(v) {
-        this.HSLToRGBResult = CommonUtils.HSLToRGB(v);
+    hslToRGBValue: string = "";
+    hslToRGBResult: string = "";
+    hslToRGB(v) {
+        this.hslToRGBResult = CommonUtils.hslToRGB(v);
     }
 
-    HSLAToRGBAValue: string = "";
-    HSLAToRGBAResult: string = "";
-    HSLAToRGBA(v) {
-        this.HSLAToRGBAResult = CommonUtils.HSLAToRGBA(v);
+    hslAToRGBAValue: string = "";
+    hslAToRGBAResult: string = "";
+    hslAToRGBA(v) {
+        this.hslAToRGBAResult = CommonUtils.hslAToRGBA(v);
     }
 
     nameToRGBValue: string = "";
@@ -57,6 +57,6 @@ export class AdjustFontColorDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '展示了按钮的3种使用场景。提示：使用button标签的方式可以与`form`结合使用，设置`type="submit"`。';
+    summary: string = '展示了文本颜色如何在背景修改时自动调整黑/白，以达到合适的对比度；';
     description: string = "";
 }

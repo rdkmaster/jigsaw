@@ -30,19 +30,19 @@
 </div>
 
 <div class="color-options">
-    <jigsaw-input [(value)]="HSLToRGBValue" placeholder="输入HSL值" width=180></jigsaw-input>
-    <jigsaw-button (click)="HSLToRGB(HSLToRGBValue)" colorType="primary" width=120>HSLToRGB</jigsaw-button>
+    <jigsaw-input [(value)]="hslToRGBValue" placeholder="输入HSL值" width=180></jigsaw-input>
+    <jigsaw-button (click)="hslToRGB(hslToRGBValue)" colorType="primary" width=120>hslToRGB</jigsaw-button>
 </div>
 <div class="color-result">
-    <jigsaw-tag color="preset-blue">{{"结果：" + HSLToRGBResult}}</jigsaw-tag>
+    <jigsaw-tag color="preset-blue">{{"结果：" + hslToRGBResult}}</jigsaw-tag>
 </div>
 
 <div class="color-options">
-    <jigsaw-input [(value)]="HSLAToRGBAValue" placeholder="输入HSLA值" width=180></jigsaw-input>
-    <jigsaw-button (click)="HSLAToRGBA(HSLAToRGBAValue)" colorType="primary" width=120>HSLAToRGBA</jigsaw-button>
+    <jigsaw-input [(value)]="hslAToRGBAValue" placeholder="输入HSLA值" width=180></jigsaw-input>
+    <jigsaw-button (click)="hslAToRGBA(hslAToRGBAValue)" colorType="primary" width=120>hslAToRGBA</jigsaw-button>
 </div>
 <div class="color-result">
-    <jigsaw-tag color="preset-blue">{{"结果：" + HSLAToRGBAResult}}</jigsaw-tag>
+    <jigsaw-tag color="preset-blue">{{"结果：" + hslAToRGBAResult}}</jigsaw-tag>
 </div>
 
 <div class="color-options">

@@ -344,7 +344,7 @@ export class CommonUtils {
         }
     }
 
-    public static adjustFontColor(bg){
+    public static adjustFontColor(bg: string): "light" | "dark" {
         /*
          * sRGB Luma (ITU Rec. 709)标准
          * L = (red * 0.2126 + green * 0.7152 + blue * 0.0722) / 255
@@ -352,9 +352,9 @@ export class CommonUtils {
          */
         bg = this.anyToRGB(bg);
         const rgbArr = bg.replace(/[^\d,]/g, "").split(",");
-        const r = rgbArr[0] * 0.2126;
-        const g = rgbArr[1] * 0.7152;
-        const b = rgbArr[2] * 0.0722;
+        const r = +rgbArr[0] * 0.2126;
+        const g = +rgbArr[1] * 0.7152;
+        const b = +rgbArr[2] * 0.0722;
         const lightness = (r + g + b) / 255 - 0.5 >= 0 ? "light" : "dark";
         return lightness;
     }
@@ -409,20 +409,17 @@ export class CommonUtils {
         }
     }
 
-    public static HSLToRGB(hsl) {
+    public static hslToRGB(hsl: string): string {
         const ex =
             /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
         if (ex.test(hsl)) {
             let sep = hsl.indexOf(",") > -1 ? "," : " ";
-            hsl = hsl.substr(4).split(")")[0].split(sep);
+            let hslArr = hsl.substr(4).split(")")[0].split(sep);
 
-            let h = hsl[0],
-                s = hsl[1].substr(0, hsl[1].length - 1) / 100,
-                l = hsl[2].substr(0, hsl[2].length - 1) / 100;
+            let h = +hslArr[0],
+                s = +hslArr[1].substr(0, hslArr[1].length - 1) / 100,
+                l = +hslArr[2].substr(0, hslArr[2].length - 1) / 100;
 
-            if (h.indexOf("deg") > -1) h = h.substr(0, h.length - 3);
-            else if (h.indexOf("rad") > -1) h = Math.round((h.substr(0, h.length - 3) / (2 * Math.PI)) * 360);
-            else if (h.indexOf("turn") > -1) h = Math.round(h.substr(0, h.length - 4) * 360);
             if (h >= 360) h %= 360;
 
             let c = (1 - Math.abs(2 * l - 1)) * s,
@@ -468,26 +465,20 @@ export class CommonUtils {
         }
     }
 
-    public static HSLAToRGBA(hsla) {
+    public static hslAToRGBA(hsla: string): string {
         const ex = /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
         if (ex.test(hsla)) {
             let sep = hsla.indexOf(",") > -1 ? "," : " ";
-            hsla = hsla.substr(5).split(")")[0].split(sep);
+            let hslaArr = hsla.substr(5).split(")")[0].split(sep);
     
-            if (hsla.indexOf("/") > -1)
-                hsla.splice(3,1);
+            if (hslaArr.indexOf("/") > -1)
+                hslaArr.splice(3,1);
     
-            let h = hsla[0],
-                s = hsla[1].substr(0,hsla[1].length-1) / 100,
-                l = hsla[2].substr(0,hsla[2].length-1) / 100,
-                a = hsla[3];
+            let h = +hslaArr[0],
+                s = +hslaArr[1].substr(0,hslaArr[1].length-1) / 100,
+                l = +hslaArr[2].substr(0,hslaArr[2].length-1) / 100,
+                a = +hslaArr[3];
             
-            if (h.indexOf("deg") > -1)
-                h = h.substr(0,h.length - 3);
-            else if (h.indexOf("rad") > -1)
-                h = Math.round(h.substr(0,h.length - 3) / (2 * Math.PI) * 360);
-            else if (h.indexOf("turn") > -1)
-                h = Math.round(h.substr(0,h.length - 4) * 360);
             if (h >= 360)
                 h %= 360;
     
@@ -539,36 +530,37 @@ export class CommonUtils {
         return pv;
     }
 
-    public static anyToRGB(v: string): string {
-        const RGBTest =
-            /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
-        const RGBATest =
-            /^rgba\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-        const HexTest = /^#([\da-f]{3}){1,2}$/i;
-        const HexATest = /^#([\da-f]{4}){1,2}$/i;
-        const HSLTest =
-            /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
-        const HSLATest =
-            /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+    private static HexTest = /^#([\da-f]{3}){1,2}$/i;
+    private static HexATest = /^#([\da-f]{4}){1,2}$/i;
+    private static RGBTest =
+        /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
+    private static RGBATest =
+        /^rgba\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+    private static HSLTest =
+        /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
+    private static HSLATest =
+    /   ^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
 
-        if (HexTest.test(v)) {
+
+    public static anyToRGB(v: string): string {
+  
+        if (this.HexTest.test(v)) {
             v = this.hexToRGB(v);
-        } else if (HexATest.test(v)) {
+        } else if (this.HexATest.test(v)) {
             v = this.hexAToRGBA(v);
-        } else if (HSLTest.test(v)) {
-            v = this.HSLToRGB(v);
-        } else if (HSLATest.test(v)) {
-            v = this.HSLAToRGBA(v);
+        } else if (this.HSLTest.test(v)) {
+            v = this.hslToRGB(v);
+        } else if (this.HSLATest.test(v)) {
+            v = this.hslAToRGBA(v);
         }
 
-        if (RGBATest.test(v)) {
+        if (this.RGBATest.test(v)) {
             const vArr = v.replace(/[^\d,]/g, "").split(",");
             v = "rgb("+  +vArr[0] + ","+ +vArr[1] + "," + +vArr[2] + ")";
         }
-        if (!RGBTest.test(v)) {
+        if (!this.RGBTest.test(v)) {
             v = this.nameToRGB(v);
         }
-        console.log(v);
         return v;
     }
 }
