@@ -138,7 +138,7 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
      * @NoMarkForCheckRequired
      */
     @Input()
-    public theme: "light" | "dark" | "default" = "default";
+    public theme: "light" | "dark" | "default" | "gray" = "default";
 
     ngOnDestroy() {
         super.ngOnDestroy();
