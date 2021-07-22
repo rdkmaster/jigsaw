@@ -254,9 +254,11 @@ $bg-active: $blue-2;
 $bg-body-light: $gray-1;
 $bg-container-light: $gray-2;
 $bg-gray-light: $gray-3;
+$bg-hover-light: $blue-1;
 $bg-container-dark: $gray-2-dark;
 $bg-body-dark: $gray-3-dark;
 $bg-gray-dark: $gray-3-dark;
+$bg-hover-dark: $gray-4-dark;
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -274,6 +276,7 @@ $bg-gray-dark: $gray-3-dark;
 */
 $font-color-default: $gray-9;
 $font-color-disabled: $gray-6;
+$font-color-disabled-spec: $gray-6;
 $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
 $font-color-heading: $gray-10;

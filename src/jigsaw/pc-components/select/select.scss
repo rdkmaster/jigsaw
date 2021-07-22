@@ -21,7 +21,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 max-width: 100%;
                 background: none;
 
-                .#{$jigsaw-tag}-close-bar{
+                .#{$jigsaw-tag}-close-bar {
                     display: none;
                 }
             }
@@ -42,7 +42,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 pointer-events: none;
 
                 &.#{$select-prefix-cls}-statistics-disabled {
-                    color: $font-color-disabled;
+                    color: $font-color-disabled-spec;
                 }
             }
         }
@@ -65,6 +65,12 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     }
                 }
             }
+        }
+    }
+
+    .#{$jigsaw-combo-select}-disabled {
+        .#{$jigsaw-tag}-host {
+            color: $font-color-disabled-spec !important;
         }
     }
 }

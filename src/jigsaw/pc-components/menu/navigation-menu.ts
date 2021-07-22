@@ -21,6 +21,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-nav-menu]': 'true',
         '[class.jigsaw-nav-menu-light]': 'theme == "light"',
         '[class.jigsaw-nav-menu-dark]': 'theme == "dark"',
+        '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
         '[class.jigsaw-nav-menu-default]': 'theme == "default"',
         '[style.height]': 'height',
         '[style.width]': 'showToggleButton && collapsed ? null : width'

@@ -61,7 +61,6 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &#{&}-disabled {
         pointer-events: none;
         color: $font-color-disabled;
-        background-color: $bg-disabled;
         border-color: $border-color-disabled;
     }
 

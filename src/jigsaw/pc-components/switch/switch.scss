@@ -99,7 +99,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         }
 
         .#{$switch-prefix}-inner {
-            color: $font-color-disabled;
+            color: $font-color-disabled-spec;
         }
     }
 

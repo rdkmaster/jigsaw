@@ -38,7 +38,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $brand-lighten;
+                    background: $bg-hover;
                 }
 
                 .#{$nav-menu-prefix-cls}-item-arrow {
@@ -84,7 +84,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     }
 
                     &:hover {
-                        background: $brand-lighten;
+                        background: $bg-hover;
                     }
 
                     &.#{$nav-menu-prefix-cls}-sub-item-selected {
@@ -148,7 +148,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $brand-lighten;
+                    background: $bg-hover;
                 }
 
                 &.#{$nav-menu-prefix-cls}-item-selected-top {
@@ -176,7 +176,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     cursor: pointer;
 
                     &:hover {
-                        background: $brand-lighten;
+                        background: $bg-hover;
                     }
                 }
             }
@@ -260,7 +260,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
-                        background: $brand-lighten;
+                        background: $bg-hover;
                     }
                 }
 
@@ -279,7 +279,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                     .#{$nav-menu-prefix-cls}-sub-item {
                         &:hover {
-                            background: $brand-lighten;
+                            background: $bg-hover;
                         }
 
                         &.#{$nav-menu-prefix-cls}-sub-item-selected {
@@ -310,7 +310,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
-                        background: $brand-lighten;
+                        background: $bg-hover;
                     }
 
                     &.#{$nav-menu-prefix-cls}-item-selected-top {
@@ -321,7 +321,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 .#{$nav-menu-prefix-cls}-submenus {
                     .#{$nav-menu-prefix-cls}-sub-item {
                         &:hover {
-                            background: $brand-lighten;
+                            background: $bg-hover;
                         }
                     }
                 }
@@ -366,7 +366,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
-                        background: $brand-lighten-light;
+                        background: $bg-hover-light;
                     }
                 }
 
@@ -385,7 +385,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                     .#{$nav-menu-prefix-cls}-sub-item {
                         &:hover {
-                            background: $brand-lighten-light;
+                            background: $bg-hover-light;
                         }
 
                         &.#{$nav-menu-prefix-cls}-sub-item-selected {
@@ -414,7 +414,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
-                        background: $brand-lighten-light;
+                        background: $bg-hover-light;
                     }
 
                     &.#{$nav-menu-prefix-cls}-item-selected-top {
@@ -425,7 +425,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 .#{$nav-menu-prefix-cls}-submenus {
                     .#{$nav-menu-prefix-cls}-sub-item {
                         &:hover {
-                            background: $brand-lighten-light;
+                            background: $bg-hover-light;
                         }
                     }
                 }
@@ -470,7 +470,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
-                        background: $brand-lighten-dark;
+                        background: $bg-hover-dark;
                     }
                 }
 
@@ -489,11 +489,11 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                     .#{$nav-menu-prefix-cls}-sub-item {
                         &:hover {
-                            background: $brand-lighten-dark;
+                            background: $bg-hover-dark;
                         }
 
                         &.#{$nav-menu-prefix-cls}-sub-item-selected {
-                            background-color: $bg-body-dark;
+                            background-color: $bg-hover-dark;
                             color: $brand-default-dark;
                         }
                     }
@@ -518,7 +518,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
-                        background: $brand-lighten-dark;
+                        background: $bg-hover-dark;
                     }
 
                     &.#{$nav-menu-prefix-cls}-item-selected-top {
@@ -529,7 +529,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 .#{$nav-menu-prefix-cls}-submenus {
                     .#{$nav-menu-prefix-cls}-sub-item {
                         &:hover {
-                            background: $brand-lighten-dark;
+                            background: $bg-hover-dark;
                         }
                     }
                 }
@@ -557,11 +557,74 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         }
 
         .#{$nav-menu-prefix-cls}-toggle-button {
-            background: $bg-container;
+            background: $bg-container-dark;
             border-top: 1px solid $border-color-default-dark;
+            color: $font-color-default-dark;
+            
             &:hover {
-                color: $brand-default-dark;
+                color: $brand-default;
             }
+        }
+    }
+
+    &.#{$nav-menu-prefix-cls}-gray {
+        .#{$nav-menu-prefix-cls}-items {
+            background: #516273;
+
+            .#{$nav-menu-prefix-cls}-item {
+                color: $font-color-default-dark;
+
+                .#{$nav-menu-prefix-cls}-item-top {
+                    &:hover {
+                        background: #212a33;
+                    }
+                }
+
+                .#{$nav-menu-prefix-cls}-submenus {
+                    background: #3c4c5a;
+
+                    &-actived {
+                        .#{$nav-menu-prefix-cls}-sub-item:first-child,
+                        .#{$nav-menu-prefix-cls}-sub-item:last-child {
+                            border: none;
+                        }
+                    }
+
+                    .#{$nav-menu-prefix-cls}-sub-item {
+                        &:hover {
+                            background: #212a33;
+                        }
+
+                        &.#{$nav-menu-prefix-cls}-sub-item-selected {
+                            background-color: #212a33;
+                            color: $font-color-default-dark;
+                        }
+                    }
+                }
+
+                .#{$nav-menu-prefix-cls}-item-selected-top {
+                    background-color: #212a33;
+                }
+            }
+
+            .#{$nav-menu-prefix-cls}-item-collapsed {
+                .#{$nav-menu-prefix-cls}-item-selected {
+                    background-color: #516273 !important;
+                }
+            }
+        }
+
+        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-item-selected-top:before,
+        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-sub-item-selected:before,
+        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-item-selected-before:before,
+        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-sub-item-selected:before {
+            background-color: $brand-default-dark;
+        }
+
+        .#{$nav-menu-prefix-cls}-toggle-button {
+            background: #516273;
+            border-top: 1px solid rgba(221, 221, 221, 0.5);
+            color: $font-color-default-dark;
         }
     }
 }

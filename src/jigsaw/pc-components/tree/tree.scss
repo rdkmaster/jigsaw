@@ -125,14 +125,14 @@
 }
 .ztree li a {
     &:hover {
-        background: $brand-lighten;
+        background: $bg-hover;
         .node_name {
             text-decoration: none;
         }
     }
     &.curSelectedNode {
-        background: $brand-lighten;
-        border-color: $brand-lighten;
+        background: $bg-hover;
+        border-color: $bg-hover;
         color: $brand-default;
         opacity: 1;
 

@@ -20,15 +20,32 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
 
     &.#{$list-option-prefix-cls}-active {
         background: $bg-active;
+        color: $brand-default;
+
+        .#{$list-option-prefix-cls}-title,
+        .#{$list-option-prefix-cls}-sub-title{
+            color: $brand-default;
+        }
     }
 
     &.#{$list-option-prefix-cls}-disabled {
         color: $font-color-disabled;
         cursor: not-allowed;
 
+        &:hover {
+            background: none;
+        }
+
         .#{$list-option-prefix-cls}-title,
         .#{$list-option-prefix-cls}-sub-title{
             color: $font-color-disabled;
+        }
+
+        &:hover {
+            .#{$list-option-prefix-cls}-title,
+            .#{$list-option-prefix-cls}-sub-title{
+                color: $font-color-disabled;
+            } 
         }
     }
 
