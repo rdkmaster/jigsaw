@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="wrapper">
+    <jigsaw-button width="350px" (click)="disposeOnRouter()">弹出会在路由变化后关掉的消息框</jigsaw-button>
+    <jigsaw-button width="350px" (click)="notDisposeOnRouter()">弹出不会在路由变化后关掉的消息框</jigsaw-button>
+    <jigsaw-button width="350px" (click)="goToBasic()">点我进入其他路由对比一下效果</jigsaw-button>
+</div>

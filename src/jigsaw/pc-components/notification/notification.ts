@@ -446,7 +446,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
 
         const popupOptions = {
-            size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: opt.disposeOnRouterChanged ? opt.disposeOnRouterChanged : false,
+            size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: !!opt.disposeOnRouterChanged,
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
             // `pos` not null to tell PopupService don't add resize event listener
