@@ -160,7 +160,6 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public ngAfterViewInit(): void {
-        console.log(this._label?.nativeElement.innerHTML.trim());
         this.mode = this._label?.nativeElement.innerHTML.trim() != '' ? 'normal' : 'minimalist';
         this._cdr.detectChanges();
     }
