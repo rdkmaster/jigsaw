@@ -3,6 +3,7 @@
  */
 
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -14,7 +15,8 @@ import {
     NgZone,
     OnInit,
     Output,
-    Renderer2
+    Renderer2,
+    ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -46,7 +48,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
+export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 
     private _enableIndeterminate: boolean = false;
 
@@ -144,6 +146,15 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @Input()
     public valid: boolean = true;
 
+    @ViewChild('label')
+    private _label: ElementRef;
+
+    /**
+     * @internal
+     * 当没有内容投影进来时，不显示label元素
+     */
+    public showLabel = true;
+
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
@@ -152,6 +163,12 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     public ngOnInit() {
         this._setCheckBoxClass();
+    }
+
+    public ngAfterViewInit(): void {
+        console.log(this._label?.nativeElement.innerHTML.trim());
+        this.showLabel = this._label?.nativeElement.innerHTML.trim() != '';
+        this._cdr.detectChanges();
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
