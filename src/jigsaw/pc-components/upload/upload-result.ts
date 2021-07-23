@@ -3,12 +3,13 @@ import {
     Input,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    NgZone, OnDestroy, EventEmitter, Output
+    NgZone, OnDestroy, EventEmitter, Output, ViewChild
 } from "@angular/core";
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
@@ -47,9 +48,22 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     @Output()
     public remove = new EventEmitter<UploadFileInfo>();
 
+    @ViewChild(PerfectScrollbarDirective)
+    private _perfectScrollbar: PerfectScrollbarDirective;
+
     public clear() {
         this.files.splice(0, this.files.length);
         this._cdr.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    public _$paneAnimationEnd(e) {
+        if (!e.target.classList.contains('jigsaw-collapse-arrow')) {
+            return;
+        }
+        this._perfectScrollbar.update();
     }
 
     private _uploader: IUploader;
