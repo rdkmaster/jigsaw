@@ -372,6 +372,7 @@ export class CommonUtils {
         }
     }
 
+    /* 文本颜色对比度是别 */
     public static adjustFontColor(bg: string): "light" | "dark" {
         /*
          * sRGB Luma (ITU Rec. 709)标准
@@ -386,8 +387,7 @@ export class CommonUtils {
     }
 
     public static hexToRGB(h: string): string {
-        const ex = /^#([\da-f]{3}){1,2}$/i;
-        if (ex.test(h)) {
+        if (this._hexTest.test(h)) {
             let r: number | string = 0,
                 g: number | string = 0,
                 b: number | string = 0;
