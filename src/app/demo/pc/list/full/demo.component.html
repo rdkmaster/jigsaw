@@ -37,7 +37,7 @@
                     (selectedItemsChange)="handleSelect3($event)" #listGroup>
                 <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
                     <div class="goods-box">
-                        <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"
+                        <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled" mode="minimalist"
                                     (checkedChange)="listGroup.update(goods, $event)"></j-checkbox>
                         <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                         <p>{{goods.desc}}</p>
@@ -54,7 +54,7 @@
                         <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods"
                                        [disabled]="goods.disabled">
                             <div class="goods-box">
-                                <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"></j-checkbox>
+                                <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled" mode="minimalist"></j-checkbox>
                                 <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                                 <p>{{goods.desc}}</p>
                             </div>
