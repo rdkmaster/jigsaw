@@ -2,7 +2,7 @@
     <jigsaw-collapse-pane
         *ngFor="let file of files"
         class="jigsaw-upload-result-log"
-        [class.jigsaw-upload-result-error]="file.state === 'error'"
+        [class.jigsaw-upload-result-error]="file.state === 'error'" (transitionend)="_$paneAnimationEnd($event)"
     >
         <div jigsaw-title class="jigsaw-upload-result-log-header">
             <i class="iconfont iconfont-e9d5 file-icon"></i>
