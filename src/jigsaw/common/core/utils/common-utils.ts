@@ -2,7 +2,25 @@
 export class CommonUtils {
 
     // to avoid compodoc generation error
-    private static _noDataImageSrc = 'data:image/png;base64,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';
+    private static _noDataImageSrc = 'data:image/png;base64,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';
 
     public static noDataImageSrc = CommonUtils._noDataImageSrc;
 
@@ -13,7 +31,9 @@ export class CommonUtils {
 
         let copy = (source instanceof Array) ? [] : {};
         for (let attr in source) {
-            if (!source.hasOwnProperty(attr)) continue;
+            if (!source.hasOwnProperty(attr)) {
+                continue;
+            }
             copy[attr] = isDeep ? CommonUtils.copy(source[attr], true) : source[attr];
         }
         return copy;
@@ -81,7 +101,9 @@ export class CommonUtils {
      *
      */
     public static isEmptyObject(obj): boolean {
-        for (let i in obj) return false;
+        for (let i in obj) {
+            return false;
+        }
         return true;
     }
 
@@ -114,7 +136,7 @@ export class CommonUtils {
                 // 如果原数据为数组,  而目标数据不是同类型，直接覆盖;
                 if (sourceObject[i] instanceof Array && !(targetObject[i] instanceof Array)) {
                     targetObject[i] = sourceObject[i];
-                } else if(this.isUndefined(targetObject[i])) {
+                } else if (this.isUndefined(targetObject[i])) {
                     // typeof null is object
                     targetObject[i] = this.isUndefined(sourceObject[i]) ? sourceObject[i] : this.extendObject({}, sourceObject[i]);
                 } else {
@@ -140,7 +162,9 @@ export class CommonUtils {
      * @returns string
      */
     public static getCssValue(value: string | number): string {
-        if(CommonUtils.isUndefined(value)) return null;
+        if (CommonUtils.isUndefined(value)) {
+            return null;
+        }
         value = typeof value === 'string' ? value : value + '';
         const match = value ? value.match(/^\s*\d+\.*\d*\s*$/) : null;
         return match ? (value + 'px') : value;
@@ -308,19 +332,19 @@ export class CommonUtils {
     }
 
     public static getBrowserType(): string {
-        if(navigator.userAgent.indexOf("MSIE")!=-1) {
+        if (navigator.userAgent.indexOf("MSIE") != -1) {
             return "MSIE";
         }
-        if(navigator.userAgent.indexOf("Firefox")!=-1){
+        if (navigator.userAgent.indexOf("Firefox") != -1) {
             return "Firefox";
         }
-        if(navigator.userAgent.indexOf("Chrome")!=-1){
+        if (navigator.userAgent.indexOf("Chrome") != -1) {
             return "Chrome";
         }
-        if(navigator.userAgent.indexOf("Safari")!=-1) {
+        if (navigator.userAgent.indexOf("Safari") != -1) {
             return "Safari";
         }
-        if(navigator.userAgent.indexOf("Opera")!=-1){
+        if (navigator.userAgent.indexOf("Opera") != -1) {
             return "Opera";
         }
         return null;
@@ -328,8 +352,12 @@ export class CommonUtils {
 
     public static toTrackByFunction(trackBy: string | string[]) {
         return function (index: number, item: any) {
-            if (typeof item === 'string') return item;
-            if (!trackBy || !item) return index;
+            if (typeof item === 'string') {
+                return item;
+            }
+            if (!trackBy || !item) {
+                return index;
+            }
             let tracker;
             if (trackBy instanceof Array) {
                 try {
@@ -348,15 +376,13 @@ export class CommonUtils {
         /*
          * sRGB Luma (ITU Rec. 709)标准
          * L = (red * 0.2126 + green * 0.7152 + blue * 0.0722) / 255
-         *
          */
         bg = this.anyToRGB(bg);
         const rgbArr = bg.replace(/[^\d,]/g, "").split(",");
         const r = +rgbArr[0] * 0.2126;
         const g = +rgbArr[1] * 0.7152;
         const b = +rgbArr[2] * 0.0722;
-        const lightness = (r + g + b) / 255 - 0.5 >= 0 ? "light" : "dark";
-        return lightness;
+        return (r + g + b) / 255 - 0.5 >= 0 ? "light" : "dark";
     }
 
     public static hexToRGB(h: string): string {
@@ -376,7 +402,7 @@ export class CommonUtils {
                 b = "0x" + h[5] + h[6];
             }
 
-            return "rgb(" + +r + "," + +g + "," + +b + ")";
+            return `rgb(${+r},${+g},${+b})`;
         } else {
             return "Invalid input color";
         }
@@ -403,119 +429,92 @@ export class CommonUtils {
             }
             a = +(a / 255).toFixed(3);
 
-            return "rgba(" + +r + "," + +g + "," + +b + "," + a + ")";
+            return `rgba(${+r},${+g},${+b},${+a})`;
         } else {
             return "Invalid input color";
         }
     }
+
+    private static _toRGB(h: number, s: number, l: number, a: number = NaN): string {
+        if (h >= 360) {
+            h %= 360;
+        }
+
+        let c = (1 - Math.abs(2 * l - 1)) * s,
+            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+            m = l - c / 2,
+            r = 0,
+            g = 0,
+            b = 0;
+        if (0 <= h && h < 60) {
+            r = c;
+            g = x;
+            b = 0;
+        } else if (60 <= h && h < 120) {
+            r = x;
+            g = c;
+            b = 0;
+        } else if (120 <= h && h < 180) {
+            r = 0;
+            g = c;
+            b = x;
+        } else if (180 <= h && h < 240) {
+            r = 0;
+            g = x;
+            b = c;
+        } else if (240 <= h && h < 300) {
+            r = x;
+            g = 0;
+            b = c;
+        } else if (300 <= h && h < 360) {
+            r = c;
+            g = 0;
+            b = x;
+        }
+
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+
+        return isNaN(a) ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${a})`;
+    }
+
+    private static _hslToRGBReg = /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
 
     public static hslToRGB(hsl: string): string {
-        const ex =
-            /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
-        if (ex.test(hsl)) {
-            let sep = hsl.indexOf(",") > -1 ? "," : " ";
-            let hslArr = hsl.substr(4).split(")")[0].split(sep);
-
-            let h = +hslArr[0],
-                s = +hslArr[1].substr(0, hslArr[1].length - 1) / 100,
-                l = +hslArr[2].substr(0, hslArr[2].length - 1) / 100;
-
-            if (h >= 360) h %= 360;
-
-            let c = (1 - Math.abs(2 * l - 1)) * s,
-                x = c * (1 - Math.abs(((h / 60) % 2) - 1)),
-                m = l - c / 2,
-                r = 0,
-                g = 0,
-                b = 0;
-
-            if (0 <= h && h < 60) {
-                r = c;
-                g = x;
-                b = 0;
-            } else if (60 <= h && h < 120) {
-                r = x;
-                g = c;
-                b = 0;
-            } else if (120 <= h && h < 180) {
-                r = 0;
-                g = c;
-                b = x;
-            } else if (180 <= h && h < 240) {
-                r = 0;
-                g = x;
-                b = c;
-            } else if (240 <= h && h < 300) {
-                r = x;
-                g = 0;
-                b = c;
-            } else if (300 <= h && h < 360) {
-                r = c;
-                g = 0;
-                b = x;
-            }
-
-            r = Math.round((r + m) * 255);
-            g = Math.round((g + m) * 255);
-            b = Math.round((b + m) * 255);
-
-            return "rgb(" + +r + "," + +g + "," + +b + ")";
+        if (this._hslToRGBReg.test(hsl)) {
+            const sep = hsl.indexOf(",") > -1 ? "," : " ";
+            const hslArr = hsl.substr(4).split(")")[0].split(sep);
+            const h: number = +hslArr[0],
+                s: number = +hslArr[1].substr(0, hslArr[1].length - 1) / 100,
+                l: number = +hslArr[2].substr(0, hslArr[2].length - 1) / 100;
+            return this._toRGB(h, s, l);
         } else {
             return "Invalid input color";
         }
     }
 
+    private static _hslAToRGBAReg = /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+
     public static hslAToRGBA(hsla: string): string {
-        const ex = /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-        if (ex.test(hsla)) {
-            let sep = hsla.indexOf(",") > -1 ? "," : " ";
-            let hslaArr = hsla.substr(5).split(")")[0].split(sep);
-    
-            if (hslaArr.indexOf("/") > -1)
-                hslaArr.splice(3,1);
-    
-            let h = +hslaArr[0],
-                s = +hslaArr[1].substr(0,hslaArr[1].length-1) / 100,
-                l = +hslaArr[2].substr(0,hslaArr[2].length-1) / 100,
-                a = +hslaArr[3];
-            
-            if (h >= 360)
-                h %= 360;
-    
-            let c = (1 - Math.abs(2 * l - 1)) * s,
-                x = c * (1 - Math.abs((h / 60) % 2 - 1)),
-                m = l - c/2,
-                r = 0,
-                g = 0,
-                b = 0;
-            
-            if (0 <= h && h < 60) {
-                r = c; g = x; b = 0;
-            } else if (60 <= h && h < 120) {
-                r = x; g = c; b = 0;
-            } else if (120 <= h && h < 180) {
-                r = 0; g = c; b = x;
-            } else if (180 <= h && h < 240) {
-                r = 0; g = x; b = c;
-            } else if (240 <= h && h < 300) {
-                r = x; g = 0; b = c;
-            } else if (300 <= h && h < 360) {
-                r = c; g = 0; b = x;
+        if (this._hslAToRGBAReg.test(hsla)) {
+            const sep = hsla.indexOf(",") > -1 ? "," : " ";
+            const hslaArr = hsla.substr(5).split(")")[0].split(sep);
+            if (hslaArr.indexOf("/") > -1) {
+                hslaArr.splice(3, 1);
             }
-    
-            r = Math.round((r + m) * 255);
-            g = Math.round((g + m) * 255);
-            b = Math.round((b + m) * 255);
-            
-            return "rgba("+  +r + ","+ +g + "," + +b + "," + +a + ")";
-    
+            const h: number = +hslaArr[0],
+                s: number = +hslaArr[1].substr(0, hslaArr[1].length - 1) / 100,
+                l: number = +hslaArr[2].substr(0, hslaArr[2].length - 1) / 100,
+                a: number = +hslaArr[3];
+            return this._toRGB(h, s, l, a);
         } else {
             return "Invalid input color";
         }
     }
 
     public static nameToRGB(name: string): string {
-        if (name === ""){
+        if (name === "") {
             return "Invalid input color name";
         }
         let fakeDiv = document.createElement("div");
@@ -526,38 +525,37 @@ export class CommonUtils {
             pv = cs.getPropertyValue("color");
 
         document.body.removeChild(fakeDiv);
-    
+
         return pv;
     }
 
-    private static hexTest = /^#([\da-f]{3}){1,2}$/i;
-    private static hexATest = /^#([\da-f]{4}){1,2}$/i;
-    private static rgbTest =
-        /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
-    private static rgbATest =
-        /^rgba\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-    private static hslTest =
+    private static _hexTest = /^#([\da-f]{3}){1,2}$/i;
+    private static _hexATest = /^#([\da-f]{4}){1,2}$/i;
+    private static _rgbTest =
+        /^rgb\(((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?){2}|(((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
+    private static _rgbATest =
+        /^rgba\(((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+    private static _hslTest =
         /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
-    private static hslATest =
-    /   ^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-
+    private static _hslATest =
+        /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
 
     public static anyToRGB(v: string): string {
-        if (this.hexTest.test(v)) {
+        if (this._hexTest.test(v)) {
             v = this.hexToRGB(v);
-        } else if (this.hexATest.test(v)) {
+        } else if (this._hexATest.test(v)) {
             v = this.hexAToRGBA(v);
-        } else if (this.hslTest.test(v)) {
+        } else if (this._hslTest.test(v)) {
             v = this.hslToRGB(v);
-        } else if (this.hslATest.test(v)) {
+        } else if (this._hslATest.test(v)) {
             v = this.hslAToRGBA(v);
         }
 
-        if (this.rgbATest.test(v)) {
+        if (this._rgbATest.test(v)) {
             const vArr = v.replace(/[^\d,]/g, "").split(",");
-            v = "rgb("+  +vArr[0] + ","+ +vArr[1] + "," + +vArr[2] + ")";
+            v = "rgb(" + +vArr[0] + "," + +vArr[1] + "," + +vArr[2] + ")";
         }
-        if (!this.rgbTest.test(v)) {
+        if (!this._rgbTest.test(v)) {
             v = this.nameToRGB(v);
         }
         return v;
