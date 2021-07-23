@@ -530,35 +530,34 @@ export class CommonUtils {
         return pv;
     }
 
-    private static HexTest = /^#([\da-f]{3}){1,2}$/i;
-    private static HexATest = /^#([\da-f]{4}){1,2}$/i;
-    private static RGBTest =
+    private static hexTest = /^#([\da-f]{3}){1,2}$/i;
+    private static hexATest = /^#([\da-f]{4}){1,2}$/i;
+    private static rgbTest =
         /^rgb\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){2}|((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s)){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
-    private static RGBATest =
+    private static rgbATest =
         /^rgba\((((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?)){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-    private static HSLTest =
+    private static hslTest =
         /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
-    private static HSLATest =
+    private static hslATest =
     /   ^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
 
 
     public static anyToRGB(v: string): string {
-  
-        if (this.HexTest.test(v)) {
+        if (this.hexTest.test(v)) {
             v = this.hexToRGB(v);
-        } else if (this.HexATest.test(v)) {
+        } else if (this.hexATest.test(v)) {
             v = this.hexAToRGBA(v);
-        } else if (this.HSLTest.test(v)) {
+        } else if (this.hslTest.test(v)) {
             v = this.hslToRGB(v);
-        } else if (this.HSLATest.test(v)) {
+        } else if (this.hslATest.test(v)) {
             v = this.hslAToRGBA(v);
         }
 
-        if (this.RGBATest.test(v)) {
+        if (this.rgbATest.test(v)) {
             const vArr = v.replace(/[^\d,]/g, "").split(",");
             v = "rgb("+  +vArr[0] + ","+ +vArr[1] + "," + +vArr[2] + ")";
         }
-        if (!this.RGBTest.test(v)) {
+        if (!this.rgbTest.test(v)) {
             v = this.nameToRGB(v);
         }
         return v;
