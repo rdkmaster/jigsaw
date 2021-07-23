@@ -54,7 +54,7 @@
                                 [value]="item"
                                 [disabled]="item.disabled"
                                 [height]="optionHeight">
-                                <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected"></jigsaw-checkbox>
+                                <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected" mode="minimalist"></jigsaw-checkbox>
                                 <span class="select-option-label" title="{{item && item[labelField] ? item[labelField] : item}}">
                                     {{item && item[labelField] ? item[labelField] : item}}
                                 </span>
