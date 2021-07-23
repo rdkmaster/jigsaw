@@ -17,6 +17,7 @@ import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, P
             line-height: 48px;
             cursor: pointer;
             height: 48px;
+            width: 48px;
         }
     `]
 })
@@ -25,7 +26,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
         super(_injector);
     }
 
-    bgColor = '#ddd';
+    bgColor = '#bfbfbf';
     fontColor = '#33a5dd';
     popupInfo = null;
     conflicted = false;
@@ -97,7 +98,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
         }
         const groupedCol = Math.floor(this.column / 3);
         const groupedRow = Math.floor(this.row / 3);
-        return (groupedCol + groupedRow) % 2 == 0 ? '#fff' : '#ddd';
+        return (groupedCol + groupedRow) % 2 == 0 ? '#fff' : '#bfbfbf';
     }
 
     ngOnInit() {
