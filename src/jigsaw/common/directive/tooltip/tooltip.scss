@@ -4,6 +4,10 @@ $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
     $maxLineNum: 5;
     padding: 12px;
     max-width: 400px;
+    border-radius: $border-radius-sm;
+    background: $bg-body-light !important;
+    color: $font-color-default-light;
+
     > div {
         display: -webkit-box;
         word-break: break-all;
