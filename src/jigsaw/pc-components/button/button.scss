@@ -31,7 +31,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
 
     &:hover {
         border-color: $brand-default;
-        @include prefixer(transition, all 0.3s $ease-in-out);
+        @include prefixer(transition, animation 0.3s $ease-in-out);
     }
 
     &:active {
