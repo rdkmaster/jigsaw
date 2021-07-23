@@ -111,5 +111,28 @@ describe('Unit Test for common-utils', () => {
         expect(JSON.stringify(s)).toEqual(JSON.stringify({a:[{b:3,c:2},{d:4}]}));
         done();
     })
+    it('color-contrast', (done) => {
+        let r = CommonUtils.hexToRGB('#000000');
+        expect(r === "rgb(0,0,0)").toEqual(true);
+        r =  CommonUtils.hexToRGB('#000');
+        expect(r === "rgb(0,0,0)").toEqual(true);
+        r =  CommonUtils.hexAToRGBA('#00000000');
+        expect(r === "rgba(0,0,0,0)").toEqual(true);
+        r =  CommonUtils.hexAToRGBA('#0000');
+        expect(r === "rgba(0,0,0,0)").toEqual(true);
+        r =  CommonUtils.hslToRGB('hsl(0,0%,0%)');
+        expect(r === "rgb(0,0,0)").toEqual(true);
+        r =  CommonUtils.hslAToRGBA('hsla(0,0%,0%,0.5)');
+        expect(r === "rgba(0,0,0,0.5)").toEqual(true); 
+        r =  CommonUtils.hslAToRGBA('hsla(0, 0%, 0%, .5)');
+        expect(r === "rgba(0,0,0,0.5)").toEqual(true); 
+        r =  CommonUtils.anyToRGB('#000');
+        expect(r === "rgb(0,0,0)").toEqual(true); 
+        r =  CommonUtils.adjustFontColor('#000');
+        expect(r === "dark").toEqual(true); 
+        r =  CommonUtils.adjustFontColor('#fff');
+        expect(r === "light").toEqual(true); 
+        done();
+    });
 });
 
