@@ -356,7 +356,6 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
 
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
-        console.log(1110000000111, 'tab ngAfterViewChecked called ...');
         if (!this.tabsInkBar || this.tabLabels.length == 0) {
             // ngFor的数据更新了需要markForCheck
             this._changeDetector.markForCheck();
