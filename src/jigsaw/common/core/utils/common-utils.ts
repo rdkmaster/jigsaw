@@ -372,7 +372,18 @@ export class CommonUtils {
         }
     }
 
-    /* 文本颜色对比度是别 */
+    /* 文本颜色对比度识别 */
+    private static _hexTest = /^#([\da-f]{3}){1,2}$/i;
+    private static _hexATest = /^#([\da-f]{4}){1,2}$/i;
+    private static _rgbTest =
+        /^rgb\(((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?){2}|(((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
+    private static _rgbATest =
+        /^rgba\(((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+    private static _hslTest =
+        /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
+    private static _hslATest =
+        /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
+    
     public static adjustFontColor(bg: string): "light" | "dark" {
         /*
          * sRGB Luma (ITU Rec. 709)标准
@@ -409,8 +420,7 @@ export class CommonUtils {
     }
 
     public static hexAToRGBA(h: string): string {
-        const ex = /^#([\da-f]{4}){1,2}$/i;
-        if (ex.test(h)) {
+        if (this._hexATest.test(h)) {
             let r: number | string = 0,
                 g: number | string = 0,
                 b: number | string = 0,
@@ -479,10 +489,8 @@ export class CommonUtils {
         return isNaN(a) ? `rgb(${r},${g},${b})` : `rgba(${r},${g},${b},${a})`;
     }
 
-    private static _hslToRGBReg = /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
-
     public static hslToRGB(hsl: string): string {
-        if (this._hslToRGBReg.test(hsl)) {
+        if (this._hslTest.test(hsl)) {
             const sep = hsl.indexOf(",") > -1 ? "," : " ";
             const hslArr = hsl.substr(4).split(")")[0].split(sep);
             const h: number = +hslArr[0],
@@ -494,10 +502,8 @@ export class CommonUtils {
         }
     }
 
-    private static _hslAToRGBAReg = /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-
     public static hslAToRGBA(hsla: string): string {
-        if (this._hslAToRGBAReg.test(hsla)) {
+        if (this._hslATest.test(hsla)) {
             const sep = hsla.indexOf(",") > -1 ? "," : " ";
             const hslaArr = hsla.substr(5).split(")")[0].split(sep);
             if (hslaArr.indexOf("/") > -1) {
@@ -528,17 +534,6 @@ export class CommonUtils {
 
         return pv;
     }
-
-    private static _hexTest = /^#([\da-f]{3}){1,2}$/i;
-    private static _hexATest = /^#([\da-f]{4}){1,2}$/i;
-    private static _rgbTest =
-        /^rgb\(((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?){2}|(((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){2})((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]))|((((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){2}|((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){2})(([1-9]?\d(\.\d+)?)|100|(\.\d+))%))\)$/i;
-    private static _rgbATest =
-        /^rgba\(((((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5]),\s?){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%,\s?){3}))|(((((1?[1-9]?\d)|10\d|(2[0-4]\d)|25[0-5])\s){3})|(((([1-9]?\d(\.\d+)?)|100|(\.\d+))%\s){3}))\/\s)((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-    private static _hslTest =
-        /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
-    private static _hslATest =
-        /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
 
     public static anyToRGB(v: string): string {
         if (this._hexTest.test(v)) {
