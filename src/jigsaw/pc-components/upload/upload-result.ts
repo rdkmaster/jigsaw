@@ -9,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
@@ -49,7 +49,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     public remove = new EventEmitter<UploadFileInfo>();
 
     @ViewChild(PerfectScrollbarDirective)
-    private perfectScrollbar: PerfectScrollbarDirective;
+    private _perfectScrollbar: PerfectScrollbarDirective;
 
     public clear() {
         this.files.splice(0, this.files.length);
@@ -60,10 +60,10 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
      * @internal
      */
     public _$paneAnimationEnd(e) {
-        if(!e.target.classList.contains('jigsaw-collapse-arrow')) {
+        if (!e.target.classList.contains('jigsaw-collapse-arrow')) {
             return;
         }
-        this.perfectScrollbar.update();
+        this._perfectScrollbar.update();
     }
 
     private _uploader: IUploader;
