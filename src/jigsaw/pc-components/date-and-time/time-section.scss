@@ -55,7 +55,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
                 cursor: pointer;
 
                 &:hover {
-                    background: $brand-lighten;
+                    background: $bg-hover;
                 }
 
                 &.#{$time-section-picker-prefix-cls}-selected {

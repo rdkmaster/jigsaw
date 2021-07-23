@@ -91,7 +91,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 
     &-disabled {
-        color: $font-color-disabled;
+        color: $font-color-disabled-spec;
 
         .#{$jigsaw-combo-select}-selection {
             border-color: $border-color-disabled;
@@ -111,7 +111,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 
     &-disabled &-placeholder {
-        color: $font-color-disabled;
+        color: $font-color-disabled-spec;
     }
 
     &-disabled &-selection {

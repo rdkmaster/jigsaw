@@ -180,7 +180,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             & span:hover {
-                background: $brand-lighten;
+                background: $bg-hover;
             }
 
             &-today span:before {
@@ -290,7 +290,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 cursor: pointer;
 
                 &:hover {
-                    background: $brand-lighten;
+                    background: $bg-hover;
                 }
             }
 

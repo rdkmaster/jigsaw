@@ -42,7 +42,7 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
             background: $bg-component;
 
             &:hover {
-                background: $brand-lighten;
+                background: $bg-hover;
             }
 
             &.#{$time-prefix-cls}-input-selected {

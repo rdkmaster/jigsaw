@@ -38,5 +38,15 @@
         <jigsaw-button-bar [(selectedItems)]="fishBoneTheme" [multipleSelect]="false" [data]="['light', 'dark']">
         </jigsaw-button-bar>
     </p>
-    <j-fish-bone [data]="fishBoneData" direction="right" [theme]="fishBoneTheme[0]" ></j-fish-bone>
+    <j-fish-bone [data]="fishBoneData" direction="right" [theme]="fishBoneTheme[0]"></j-fish-bone>
+</div>
+
+<jigsaw-header [level]="2">Navigation</jigsaw-header>
+<div class="navigation-demo-cntr">
+    <p class="message">
+        主题
+        <jigsaw-button-bar [(selectedItems)]="navigationTheme" [multipleSelect]="false" [data]="['default', 'light', 'dark', 'gray']">
+        </jigsaw-button-bar>
+    </p>
+    <jigsaw-navigation-menu [data]="navigationData" height="100%" [theme]="navigationTheme[0]"></jigsaw-navigation-menu>
 </div>

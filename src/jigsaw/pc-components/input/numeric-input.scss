@@ -72,6 +72,7 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     &.#{$numeric-input-prefix-cls}-disabled {
         .#{$numeric-input-prefix-cls}-wrapper {
             background-color: $bg-disabled;
+            border-color: $border-color-disabled;
             cursor: not-allowed;
 
             &:hover {
@@ -79,7 +80,7 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
             }
 
             input {
-                color: $font-color-disabled;
+                color: $font-color-disabled-spec;
                 background-color: $bg-disabled;
                 cursor: not-allowed;
             }
@@ -121,24 +122,34 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         justify-content: center;
         align-items: center;
         height: 50%;
-        border-left: 1px solid $border-color-default;
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-left-color: $border-color-default;
         cursor: pointer;
         text-align: center;
         box-sizing: border-box;
 
         &:first-child {
-            border-bottom: 0.5px solid $border-color-default;
+            border-bottom-width: 0.5px;
+            border-bottom-style: solid;
+            border-bottom-color: $border-color-default;
 
             &:hover {
-                border-bottom: 1px solid $brand-default;
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+                border-bottom-color: $brand-default;
             }
         }
 
         &:last-child {
-            border-top: 0.5px solid $border-color-default;
+            border-top-width: 0.5px;
+            border-top-style: solid;
+            border-top-color: $border-color-default;
 
             &:hover {
-                border-top: 1px solid $brand-default;
+                border-top-width: 1px;
+                border-top-style: solid;
+                border-top-color: $brand-default;
             }
         }
 
@@ -153,20 +164,38 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         }
 
         &.#{$numeric-input-prefix-cls}-option-bar-disabled {
-            color: $font-color-disabled;
+            color: $font-color-disabled-spec;
             cursor: not-allowed;
 
             &:hover,
             &:active {
-                color: $font-color-disabled;
+                color: $font-color-disabled-spec;
             }
         }
 
         @at-root .#{$numeric-input-prefix-cls}-disabled.#{$numeric-input-prefix-cls}-showOption
                 .#{$numeric-input-prefix-cls}-option-box
                 .#{$numeric-input-prefix-cls}-option-bar {
-            color: $font-color-disabled;
+            color: $font-color-disabled-spec;
+            border-left-color: $border-color-disabled;
             pointer-events: none;
+
+            &:first-child {
+                border-bottom-color: $border-color-disabled;
+
+                &:hover {
+                    border-bottom-color: $border-color-disabled;
+                }
+            }
+
+            &:last-child {
+                border-top-color: $border-color-disabled;
+
+                &:hover {
+                    border-top-color: $border-color-disabled;
+                }
+            }
+            
             &:hover {
                 border-color: $border-color-disabled;
             }

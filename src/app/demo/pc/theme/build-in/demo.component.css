@@ -8,6 +8,7 @@
 
 .menu-demo-cntr .message,
 .breadcrumb-demo-cntr .message,
-.fish-bone-demo-cntr .message {
+.fish-bone-demo-cntr .message,
+.navigation-demo-cntr .message {
     margin-bottom: 12px;
 }

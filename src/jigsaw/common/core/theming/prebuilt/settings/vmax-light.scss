@@ -227,7 +227,9 @@ $brand-default-light: $blue-6;
 $brand-hover-light: $blue-7;
 $brand-lighten-light: $blue-1;
 $brand-active-lighten-light: $blue-2;
+$brand-default-dark: $blue-6-dark;
 $brand-hover-dark: $blue-7-dark;
+$brand-lighten-dark: $blue-1-dark;
 $brand-active-dark: $blue-8-dark;
 
 /* background 背景色
@@ -246,10 +248,17 @@ $bg-container: $gray-2;
 $bg-disabled: $gray-3;
 $bg-header: $gray-3;
 $bg-gray: $gray-3;
+$bg-hover: $blue-1;
+$bg-active: $blue-2;
 // 支持组件内部实现明暗皮肤
 $bg-body-light: $gray-1;
 $bg-container-light: $gray-2;
+$bg-gray-light: $gray-3;
+$bg-hover-light: $blue-1;
+$bg-container-dark: $gray-2-dark;
 $bg-body-dark: $gray-3-dark;
+$bg-gray-dark: $gray-3-dark;
+$bg-hover-dark: $gray-4-dark;
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -267,6 +276,7 @@ $bg-body-dark: $gray-3-dark;
 */
 $font-color-default: $gray-9;
 $font-color-disabled: $gray-6;
+$font-color-disabled-spec: $gray-6;
 $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
 $font-color-heading: $gray-10;
@@ -291,6 +301,7 @@ $font-color-white-darken-dark: $gray-8-dark;
 */
 $border-color-default: $gray-5;
 $border-color-disabled: $gray-4;
+$border-color-default-light: $gray-5;
 $border-color-default-dark: $gray-5-dark;
 
 /* split line 分割线 */
