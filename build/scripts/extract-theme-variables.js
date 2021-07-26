@@ -2,7 +2,7 @@ const sass = require('node-sass');
 const fs = require('fs');
 
 // const file = `${__dirname}/../../src/jigsaw/common/core/theming/prebuilt/settings/zte.scss`;
-const file = `D:\\Codes\\jigsaw\\src\\jigsaw\\pc-components\\theming\\prebuilt\\paletx-pro-dark.scss`;
+const file = `.\\src\\jigsaw\\pc-components\\theming\\prebuilt\\paletx-pro-dark.scss`;
 const scssSource = fs.readFileSync(file).toString()//.replace(/^\s*@import\s+.+$/mg, '');
 
 // let spySource = '';
@@ -36,10 +36,9 @@ const result = sass.renderSync({
 });
 
 function addSpy(path) {
-    console.log('xxxxxxxxxxxxxx', path);
     const source = fs.readFileSync(path).toString();
     let spySource = '';
-    source.replace(/^\$(.+?)\s*:\s*(.+?);?$/gm, (found, varName, value) => {
+    source.replace(/^\/\*@export\*\/\s*\$(.+?)\s*:\s*(.+?);?$/gm, (found, varName, value) => {
             value = value.replace(/\s*\/\/.*/, '');
             value = value.replace(/\/\*[\s\S]*?\*\//, '');
             spySource += `.css-spy-mark { ${varName}: ${value} }\n`;

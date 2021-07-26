@@ -1,5 +1,5 @@
 /*
- *皮肤基本参数 
+ *皮肤基本参数
  */
 
 /* Prefix */
@@ -24,17 +24,17 @@ $border-radius-sm: $border-radius-base - 1px;
 $border-radius-lg: 6px;
 
 /* height */
-$height-base: 32px;
-$height-sm: 24px;
-$height-med: 28px;
+/*@export*/ $height-base: 32px;
+/*@export*/ $height-sm: 24px;
+/*@export*/ $height-med: 28px;
 $height-lg: 36px;
 $height-huge: 40px;
 
 /* font size */
 $font-size-base: 12px;
-$font-size-sm: $font-size-base - 2px;
-$font-size-med: $font-size-base - 1px;
-$font-size-lg: $font-size-base + 2px;
+/*@export*/ $font-size-sm: $font-size-base - 2px;
+/*@export*/ $font-size-med: $font-size-base - 1px;
+/*@export*/ $font-size-lg: $font-size-base + 2px;
 
 $font-title-lg: 16px;
 $font-title-med: 14px;
