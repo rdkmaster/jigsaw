@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>在Js中可以使用的变量</jigsaw-header>
+<ul class="public-variables-demo-ul">
+    <li *ngFor="let prop of propArr">
+        <div [ngStyle]="{'background': prop[1]}"></div>
+        <span>{{prop[0]}}</span>
+        <span>{{prop[1]}}</span>
+    </li>
+</ul>

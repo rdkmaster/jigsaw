@@ -41,7 +41,7 @@ function addSpy(path) {
     source.replace(/^\/\*@export\*\/\s*\$(.+?)\s*:\s*(.+?);?$/gm, (found, varName, value) => {
             value = value.replace(/\s*\/\/.*/, '');
             value = value.replace(/\/\*[\s\S]*?\*\//, '');
-            spySource += `.css-spy-mark { ${varName}: ${value} }\n`;
+            spySource += `:root { --${varName}: ${value} }\n`;
         });
     // console.log('----------------\n', spySource, '\n-----------------------');
     return source + '\n' + spySource;

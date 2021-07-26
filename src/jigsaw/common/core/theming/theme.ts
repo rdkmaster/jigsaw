@@ -21,7 +21,7 @@ export class JigsawTheme {
 
         const cssHref = `themes/${theme}-${majorStyle}.css`;
         const head = document.getElementsByTagName("head")[0];
-        const themeLink = document.getElementById("jigsaw-theme") as HTMLLinkElement;
+        let themeLink = document.getElementById("jigsaw-theme") as HTMLLinkElement;
         if (themeLink) {
             themeLink.href = cssHref;
         } else {
@@ -30,6 +30,10 @@ export class JigsawTheme {
             style.rel = "stylesheet";
             style.href = cssHref;
             head.appendChild(style);
+
+            style.onload = () => {
+                this.getCSSCustomProps();
+            };
         }
     }
 
@@ -56,6 +60,27 @@ export class JigsawTheme {
 
     public static getGraphTheme(): any {
         return this._popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
+    }
+
+    private static isStyleRule = (rule): boolean => {
+        return rule.type === 1 && rule.selectorText === ":root";
+    }
+    
+    private static isThemeFile = (styleSheet) => {
+        if (styleSheet.ownerNode.id === "jigsaw-theme") {
+            return true;
+        }
+    }
+
+    public static getCSSCustomProps(){
+        const styleSheet = [...document.styleSheets].filter(this.isThemeFile)[0];
+        const styleRules = [...styleSheet.cssRules].filter(this.isStyleRule)[0];
+        const propName = [...styleRules.style];
+        const propArr = propName.map(propName => [
+            propName.trim(),
+            styleRules.style.getPropertyValue(propName).trim()
+        ]);
+        return propArr;
     }
 
     private static _themeProperties = {

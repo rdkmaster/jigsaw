@@ -4,6 +4,8 @@ import { ThemeBuildInDemoComponent } from './build-in/demo.component';
 import { ThemeBuildInDemoModule } from './build-in/demo.module';
 import { AdjustFontColorDemoModule } from './adjust-font-color/demo.module';
 import { AdjustFontColorDemoComponent } from './adjust-font-color/demo.component';
+import { PublicVariablesDemoModule } from './public-variables/demo.module';
+import { PublicVariablesDemoComponent } from './public-variables/demo.component';
 
 export const routerConfig = [
     {
@@ -11,12 +13,16 @@ export const routerConfig = [
     },
     {
         path: 'adjust-font-color', component: AdjustFontColorDemoComponent
+    },
+    {
+        path: 'public-variables', component: PublicVariablesDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), ThemeBuildInDemoModule, AdjustFontColorDemoModule
+        RouterModule.forChild(routerConfig), ThemeBuildInDemoModule, AdjustFontColorDemoModule,
+        PublicVariablesDemoModule
     ]
 })
 export class ThemeDemoModule {
