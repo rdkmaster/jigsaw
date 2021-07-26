@@ -50,6 +50,9 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
 
     private _value: number;
 
+    /**
+     * @internal
+     */
     public _$tooltipRenderHtml: string;
 
     /**
@@ -69,7 +72,7 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
     public set value(value) {
         this._value = this._slider._verifyValue(value);
         this._valueToPos();
-        this._$tooltipRenderHtml = `<span style="word-break: normal;">${this._value}</span>`
+        this._$tooltipRenderHtml = `<div style="word-break: normal;">${this._value}</div>`
     }
 
     /**
