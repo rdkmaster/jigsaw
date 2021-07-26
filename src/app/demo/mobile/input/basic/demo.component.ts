@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
+import {JigsawMobileInput} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -11,7 +11,7 @@ export class InputBasicDemoComponent {
         console.log(`input value is: ${message}`);
     }
 
-    @ViewChild('myInput', {static: false}) myInput: JigsawMobileInput;
+    @ViewChild('myInput') myInput: JigsawMobileInput;
 
     click() {
         alert('你输入的值是 ' + this.myInput.value)
@@ -23,4 +23,3 @@ export class InputBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

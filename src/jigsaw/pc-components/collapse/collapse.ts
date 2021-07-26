@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ContentChildren,
@@ -6,6 +7,7 @@ import {
     forwardRef,
     Host,
     Inject,
+    Injector,
     Input,
     NgModule,
     Output,
@@ -15,6 +17,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 组件模式.
@@ -26,12 +29,24 @@ export enum CollapseMode {
 @Component({
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html',
-    animations: [collapseMotion]
+    host: {'[class.jigsaw-collapse-pane]': 'true'},
+    animations: [collapseMotion],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
 
+    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
+                private _changeDetector: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
+        super();
+    }
+
     private _isActive: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get isActive(): boolean {
         return this._isActive;
@@ -48,17 +63,14 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     private _changeActive(pane: JigsawCollapsePane, value: boolean): void {
         pane._isActive = value;
         pane.isActiveChange.emit(value);
+        pane._changeDetector.markForCheck();
     }
 
     @Output()
     public isActiveChange = new EventEmitter<boolean>();
 
-    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                private _changeDetector: ChangeDetectorRef) {
-        super();
-    }
-
     @Input('header')
+    @RequireMarkForCheck()
     public title: string;
 
     /**
@@ -96,25 +108,42 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',
-        '[class.jigsaw-collapse-host]': 'true'
+        '[class.jigsaw-collapse-host]': 'true',
+        '[class.jigsaw-collapse-arrow-position-right]': 'arrowPosition === "right"',
+        '[class.jigsaw-collapse-arrow-position-left]': 'arrowPosition === "left"'
     },
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
 
-    @ContentChildren(JigsawCollapsePane) panes: QueryList<JigsawCollapsePane>;
+    constructor(
+    // @RequireMarkForCheck 需要用到，勿删
+    private _injector: Injector) {
+        super();
+    }
+
+    @ContentChildren(JigsawCollapsePane)
+    public panes: QueryList<JigsawCollapsePane>;
+
+    /**
+     * 箭头位置(默认值 "left")
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public arrowPosition: "right" | "left" = "left";
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
-    public mode: string | CollapseMode = 'default';  // accordion
+    public mode: string | CollapseMode = 'default';
 
     /**
      * @internal
      */
     public _selectedIndex: number = 0;
-
 }
 
 /**

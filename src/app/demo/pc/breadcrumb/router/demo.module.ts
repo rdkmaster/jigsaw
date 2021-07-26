@@ -1,14 +1,13 @@
 import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
+import {CommonModule} from "@angular/common";
+import {JigsawBreadcrumbModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BreadcrumbRouterDemoComponent} from "./demo.component";
-import {JigsawBreadcrumbModule} from "jigsaw/pc-components/breadcrumb/breadcrumb";
-import {RouterModule} from "@angular/router";
 import {BreadcrumbRouterList} from "./list/list";
 import {BreadcrumbRouterDetail} from "./detail/detail";
 import {BreadcrumbRouterBuy} from "./buy/buy";
 import {ProductService} from "./product.service";
-import {CommonModule} from "@angular/common";
-
 
 /* #for-live-demo-only#
 const routes = [

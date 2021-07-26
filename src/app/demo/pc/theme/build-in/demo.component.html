@@ -1,0 +1,52 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1"> 组件内置主题 </jigsaw-header>
+
+<jigsaw-header>Menu</jigsaw-header>
+<div class="menu-demo-cntr">
+    <p class="message">
+        主题
+        <jigsaw-button-bar [(selectedItems)]="theme" [multipleSelect]="false" [data]="['light', 'dark' , 'navigation']">
+        </jigsaw-button-bar>
+    </p>
+
+    <p jigsaw-cascading-menu [jigsawCascadingMenuData]="data" class="menu" [jigsawCascadingMenuHeight]="height"
+        [jigsawCascadingMenuWidth]="width" [jigsawCascadingMenuTheme]='theme[0]'
+        (jigsawCascadingMenuSelect)="menuSelect($event)">
+        菜单弹出
+    </p>
+</div>
+
+<jigsaw-header>Breadcrumb</jigsaw-header>
+<div class="breadcrumb-demo-cntr">
+    <p class="message">
+        主题
+        <jigsaw-button-bar [(selectedItems)]="breadcrumbTheme" [multipleSelect]="false" [data]="['light', 'dark']">
+        </jigsaw-button-bar>
+    </p>
+    <j-breadcrumb [data]="breadData" [theme]="breadcrumbTheme[0]" (select)="itemSelect($event)"></j-breadcrumb>
+    <a (click)="resetBreadcrumbItems()">数据重置</a>
+</div>
+
+<jigsaw-header>Fish Bone</jigsaw-header>
+<div class="fish-bone-demo-cntr">
+    <p class="message">
+        主题
+        <jigsaw-button-bar [(selectedItems)]="fishBoneTheme" [multipleSelect]="false" [data]="['light', 'dark']">
+        </jigsaw-button-bar>
+    </p>
+    <j-fish-bone [data]="fishBoneData" direction="right" [theme]="fishBoneTheme[0]"></j-fish-bone>
+</div>
+
+<jigsaw-header [level]="2">Navigation</jigsaw-header>
+<div class="navigation-demo-cntr">
+    <p class="message">
+        主题
+        <jigsaw-button-bar [(selectedItems)]="navigationTheme" [multipleSelect]="false" [data]="['default', 'light', 'dark', 'gray']">
+        </jigsaw-button-bar>
+    </p>
+    <jigsaw-navigation-menu [data]="navigationData" height="100%" [theme]="navigationTheme[0]"></jigsaw-navigation-menu>
+</div>

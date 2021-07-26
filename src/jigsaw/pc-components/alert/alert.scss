@@ -5,78 +5,126 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 .#{$alert-prefix-cls}-host {
     @include inline-block;
     width: 100%;
+    user-select: none;
 }
 
 .#{$alert-prefix-cls} {
-    background: $component-background;
-    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
-    padding: 0 10px 10px;
-    border: 1px solid $border-color-base;
+    width: 480px;
+    min-height: 240px;
+    background: $bg-body;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
 
     &-head {
-        @include clearfix;
-        margin: 0 -10px;
-        padding-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $height-huge;
+        padding: 0 16px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: $splitline-default;
         cursor: move;
-        line-height: 36px;
     }
 
-    &-head &-icon {
-        vertical-align: middle;
-        font-size: 36px;
-        margin: 0 16px 0 20px;
-    }
     &-head &-title {
-        font-size: 20px;
-        vertical-align: middle;
+        font-size: $font-title-lg;
+        font-weight: bold;
+        color: $font-color-heading-bold;
     }
+
     &-head &-close {
-        float: right;
-        font-size: 24px;
-        color: $text-color;
+        text-align: right;
+        font-size: $icon-size-med;
+        color: $icon-color-default;
         cursor: pointer;
-        margin-right: 20px;
         &:hover {
-            color: $text-color-dark;
+            color: $brand-hover;
         }
     }
 
     &-content {
-        padding: 16px 0 0 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 32px 0 32 + $height-sm;
+        max-height: 80vh;
+        outline: red;
+        overflow: hidden;
+
+        .content-main {
+            position: relative;
+            margin-bottom: 8px;
+
+            i {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 0;
+                left: (0 - $height-sm);
+                width: $height-sm;
+                height: $height-sm;
+                font-size: 24px;
+            }
+
+            p {
+                font-size: $font-size-lg;
+                font-weight: bold;
+                line-height: $height-sm;
+                color: $font-color-heading-bold;
+            }
+        }
+
+        .content-sub {
+            p {
+                font-size: $font-size-base;
+                color: $font-color-hint;
+            }
+        }
     }
 
-    &-info &-icon, &-info &-title {
-        color: $primary-color;
+    &-info &-icon {
+        padding-right: 12px;
+        color: $primary-default;
     }
 
-    &-warning &-icon, &-warning &-title {
-        color: $warning-color;
+    &-warning &-icon {
+        padding-right: 12px;
+        color: $warning-default;
     }
 
-    &-error &-icon, &-error &-title {
-        color: $error-color;
+    &-error &-icon {
+        padding-right: 12px;
+        color: $error-default;
     }
 
-    &-confirm &-icon, &-confirm &-title {
-        color: $primary-color;
+    &-confirm &-icon {
+        padding-right: 12px;
+        color: $primary-default;
     }
 
     &-button-group {
-        text-align: center;
-        height: 50px;
-        line-height: 50px;
+        display: flex;
+        justify-content: center;
+        height: $height-base + 24px;
+
         jigsaw-button {
             margin-right: 8px;
             &:last-child {
                 margin-right: 0;
             }
         }
+
         div {
             display: inline-block;
         }
     }
 }
-
-
-

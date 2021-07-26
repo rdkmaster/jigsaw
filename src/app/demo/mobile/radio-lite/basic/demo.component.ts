@@ -25,4 +25,3 @@ export class RadioLiteBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

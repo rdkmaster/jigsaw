@@ -2,22 +2,26 @@ import {debounceTime} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     forwardRef,
     Input,
     NgModule,
+    NgZone,
     OnDestroy,
     Output,
     TemplateRef,
-    ViewChild
+    ViewChild,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawInput, JigsawInputModule} from "./input";
+import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -50,10 +54,11 @@ export class DropDownValue {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, AfterViewInit {
-    @ViewChild(JigsawFloat, {static: false})
+export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
+    @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
     /**
@@ -64,19 +69,31 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
      * @internal
      */
     public _bakData: any[];
-    /**
-     * @internal
-     */
-    public _$maxDropDownHeight: string = '300px';
+
     /**
      * @internal
      */
     public _$propertyListOpen: boolean | null = null;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public closeDropDownOnSelect: boolean = true;
 
+    /**
+     * @internal
+     */
+    public _$maxDropDownHeight: string = '300px';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
+    public get maxDropDownHeight(): string {
+        return this._$maxDropDownHeight;
+    }
+
     public set maxDropDownHeight(value: string) {
         if (value == this._$maxDropDownHeight || !value) {
             return;
@@ -84,6 +101,31 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         this._$maxDropDownHeight = CommonUtils.getCssValue(value);
     }
 
+    /**
+     * @internal
+     */
+    public _$maxDropDownWidth: string = this.width;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get maxDropDownWidth(): string {
+        return this._$maxDropDownWidth;
+    }
+
+    public set maxDropDownWidth(value: string) {
+        if (value == this._$maxDropDownWidth || !value) {
+            return;
+        }
+        this._$maxDropDownWidth = CommonUtils.getCssValue(value);
+    }
+
+    /**
+     * 下拉提示数据，支持简单字符串列表，也可以支持带分类的结构数据
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): string[] | DropDownValue[] {
         return this._$data;
@@ -94,7 +136,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
             return;
         }
 
-        if (typeof value[0] == 'string') {
+        if (typeof value[0] == 'string' || typeof value[0] == 'number') {
             this._$data = [new DropDownValue({
                 category: '',
                 items: value
@@ -105,21 +147,20 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         [...this._bakData] = this._$data;
     }
 
-    @Input()
-    public valid: boolean = true;
-
     /**
      * 用于控制在输入框获得焦点后是否自动执行过滤
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = auto-complete-input/with-group
      */
     @Input()
-    public filterOnFocus: boolean = true;
+    public filterOnFocus: boolean = false;
 
-    @ViewChild('dropDownTemp', {static: false})
+    @ViewChild('dropDownTemp')
     private _dropDownTemp: TemplateRef<any>;
 
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     private _input: JigsawInput;
 
     public focus() {
@@ -154,30 +195,14 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
 
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_cdr, _injector, _zone);
+    }
+
     ngAfterViewInit() {
-        this._subscribeInputValueChange();
-    }
-
-    private _inputValueChangeSubscription: Subscription;
-
-    private _subscribeInputValueChange(): void {
-        if(this._inputValueChangeSubscription) {
-        	return;
-        }
-
-        this._inputValueChangeSubscription = this._input.valueChange
-            .pipe(debounceTime(300))
-            .subscribe(() => {
-                this._getFilteredDropDownData(true);
-            });
-    }
-
-    private _unsubscribeInputValueChange(): void {
-        if (!this._inputValueChangeSubscription) {
-            return;
-        }
-        this._inputValueChangeSubscription.unsubscribe();
-        this._inputValueChangeSubscription = null;
+        this._subscribeKeydownEvent();
     }
 
     /**
@@ -200,14 +225,17 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
             this._$propertyListOpen = data.length > 0;
         }
         if (this._$propertyListOpen) {
-            this.callLater(() => {
-                this._dropdownFloat.reposition();
+            this.runAfterMicrotasks(() => {
+                this._zone.run(() => {
+                    this._dropdownFloat.reposition();
+                    this._cdr.markForCheck();
+                })
             });
         }
     }
 
     private _filter(category: DropDownValue, key): DropDownValue {
-        let items = category.items.filter(item => item.toLowerCase().includes(key.toLowerCase()));
+        let items = category.items.filter(item => String(item).toLowerCase().includes(key.toLowerCase()));
         if (items.length == 0) {
             return null;
         }
@@ -249,21 +277,54 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
         event.preventDefault();
         event.stopPropagation();
 
-        this._unsubscribeInputValueChange();
+        this._unsubscribeKeydownEvent();
         this.value = item;
 
         this.selectEvent.emit(item);
     }
 
-    public _$onKeyDown(event) {
-        if (!this._inputValueChangeSubscription) {
-            this._subscribeInputValueChange();
+    private _keydownEvent = new EventEmitter();
+    private _keydownSubscription: Subscription;
+
+    private _subscribeKeydownEvent(): void {
+        if (this._keydownSubscription) {
+            return;
         }
-        if (event.keyCode == 27) {
-            this._$propertyListOpen = false;
-        }
+
+        this._keydownSubscription = this._keydownEvent
+            .pipe(debounceTime(300))
+            .subscribe(() => {
+                this._getFilteredDropDownData(true);
+            });
     }
 
+    private _unsubscribeKeydownEvent(): void {
+        if (!this._keydownSubscription) {
+            return;
+        }
+        this._keydownSubscription.unsubscribe();
+        this._keydownSubscription = null;
+    }
+
+    /**
+     * @internal
+     */
+    public _$onKeyDown(event) {
+        if (event.keyCode == 27) {
+            this._$propertyListOpen = false;
+            this._unsubscribeKeydownEvent();
+            return;
+        }
+
+        if (!this._keydownSubscription) {
+            this._subscribeKeydownEvent();
+        }
+        this._keydownEvent.emit(event);
+    }
+
+    /**
+     * @internal
+     */
     public _$preventInputBlur(event) {
         if (this.closeDropDownOnSelect) {
             return;
@@ -276,7 +337,7 @@ export class JigsawAutoCompleteInput extends JigsawInput implements OnDestroy, A
     public ngOnDestroy() {
         super.ngOnDestroy();
         this._$propertyListOpen = false;
-        this._unsubscribeInputValueChange();
+        this._unsubscribeKeydownEvent();
     }
 }
 

@@ -3,73 +3,122 @@
 $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
 
 .#{$bc-prefix-cls} {
-    display: block;
-    font-size: 16px;
+    display: flex;
+    align-items: center;
     height: 54px;
-    background: $background-color-base;
     padding: 0 12px;
+    background: $bg-container;
+    font-size: $font-size-base;
+
     &:after {
         height: 100%;
-        content: '';
+        content: "";
         display: inline-block;
         vertical-align: middle;
     }
+
     &-item {
-        @include inline-block;
-        color: $text-color-secondary;
-        &:hover, &.#{$bc-prefix-cls}-current {
-            color: $heading-color;
-        }
+        display: flex;
+        align-items: center;
         .#{$bc-prefix-cls}-link {
+            display: flex;
+            align-items: center;
             color: inherit;
         }
+        &.fold:not(:nth-of-type(2)) {
+            display: none;
+        }
     }
+
     &-separator {
-        margin: 0 8px;
-        color: $text-color-secondary;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 2px;
+        font-size: $icon-size-sm;
+        color: $font-color-watermark;
     }
+
     &-icon {
         margin-right: 4px;
     }
+
+    &-hint {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        font-size: $font-size-sm;
+        font-weight: 400;
+        color: inherit;
+    }
+
     &.#{$bc-prefix-cls}-light {
-        background: $background-color-base;
+        background: $bg-container-light;
+        font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
-            color: $text-color-secondary;
-            &:hover, &.#{$bc-prefix-cls}-current {
-                color: $heading-color;
+            height: $height-sm;
+            color: $brand-default-light;
+            font-size: $font-size-lg;
+            &:hover{
+                color: $brand-hover-light;
+            }
+            &.#{$bc-prefix-cls}-current {
+                font-size: $font-title-med;
+                font-weight: bold;
+                color: $font-color-heading-bold-light;
             }
         }
     }
+
     &.#{$bc-prefix-cls}-dark {
-        background: $background-color-dark;
+        background: $bg-body-dark;
+        font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
-            color: $text-color-secondary;
-            &:hover, &.#{$bc-prefix-cls}-current {
-                color: $text-color-of-bg;
+            color: $font-color-white-darken-dark;
+            font-size: $font-size-lg;
+            &:hover {
+                color: $font-color-white;
+            }
+            &.#{$bc-prefix-cls}-current {
+                font-size: $font-title-med;
+                font-weight: bold;
+                color: $font-color-white;
             }
         }
     }
+
     &.#{$bc-prefix-cls}-inner {
-        height: 44px;
+        height: $height-base;
         padding: 0 8px;
-        font-size: 14px;
-        background: $component-background;
+        font-size: $font-size-base;
+        background: $bg-body;
         .#{$bc-prefix-cls}-item {
             .#{$bc-prefix-cls}-icon {
-                color: $primary-color;
+                color: $brand-default;
             }
             .#{$bc-prefix-cls}-label {
-                color: $heading-color;
+                color: $brand-default;
                 &:hover {
-                    color: $primary-color;
+                    color: $brand-hover;
                 }
             }
             &.#{$bc-prefix-cls}-current {
+                font-size: $font-title-lg;
+                font-weight: bold;
+                color: $font-color-heading-bold;
+                padding-bottom: 4px;
+                .#{$bc-prefix-cls}-icon {
+                    color: $font-color-heading-bold;
+                }
                 .#{$bc-prefix-cls}-label {
-                    color: $primary-color;
+                    color: $font-color-heading-bold;
                 }
             }
         }
     }
-}
 
+    & a {
+        font-size: inherit;
+        color: inherit;
+    }
+}

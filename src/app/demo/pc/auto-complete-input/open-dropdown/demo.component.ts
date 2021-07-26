@@ -1,12 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
-import {DropDownValue, JigsawAutoCompleteInput} from "jigsaw/pc-components/input/auto-complete-input";
+import {DropDownValue, JigsawAutoCompleteInput} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 
 export class AutoCompleteInputOpenDropdownDemoComponent {
-    @ViewChild('input', {static: false})
+    @ViewChild('input')
     public autoInput: JigsawAutoCompleteInput;
 
     public _$dropdownData: string[] | DropDownValue[] = [{

@@ -1,21 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    Input,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type,
-    ViewChild
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive, NgZone } from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
@@ -23,19 +6,23 @@ import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit {
+@Directive()
+export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
-                protected changeDetector: ChangeDetectorRef) {
-        super();
+                protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
-    @ViewChild(JigsawRendererHost, {static: false})
+    @ViewChild(JigsawRendererHost)
     protected rendererHost: JigsawRendererHost;
     protected targetData: TableData | AdditionalTableData;
     protected rendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
     private _cellData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get cellData() {
         return this._cellData;
@@ -46,18 +33,46 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         this._updateDataInRenderer('cellData', value);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public row: number;
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public field: string;
+
+    protected _customRenderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public renderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
+    public get renderer(): Type<TableCellRendererBase> | TemplateRef<any> | 'html' {
+        return this._customRenderer
+    }
+
+    public set renderer(value: Type<TableCellRendererBase> | TemplateRef<any> | 'html') {
+        if (this._customRenderer == value || (!value && this._customRenderer == DefaultCellRenderer)) {
+            return;
+        }
+        this._customRenderer = value;
+        if (this.rendererHost) {
+            this.rendererHost.viewContainerRef.clear();
+        }
+    }
 
     private _rendererInitData: any;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get rendererInitData() {
         return this._rendererInitData;
-    };
+    }
+
     public set rendererInitData(value: any) {
         this._rendererInitData = value;
         if(this.rendererRef instanceof ComponentRef) {
@@ -76,6 +91,9 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     private _tableData: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get tableData(): TableData {
         return this._tableData;
@@ -89,6 +107,9 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     private _additionalData: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalData(): TableData {
         return this._additionalData;
@@ -109,15 +130,22 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     }
 
     private _initTargetData(): void {
-        if (!this.tableData || !this.additionalData) {
+        if (!this.tableData || !this.additionalData || !this.initialized) {
             return;
         }
         [this._column, this.targetData] = _getColumnIndex(this._tableData, this._additionalData, this.field);
     }
 
-    /*
+    /**
+     * 宿主表格实例
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public hostInstance: any;
+
+    /**
      * 渲染器制造工厂
-     * */
+     */
     protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>, initData: any): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
         if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
@@ -134,6 +162,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             componentRef.instance.tableData = this.tableData;
             componentRef.instance.additionalData = this.additionalData;
             componentRef.instance.cellData = this.cellData;
+            componentRef.instance.hostInstance = this.hostInstance;
             componentRef.instance.initData = initData;
             return componentRef;
         }
@@ -147,6 +176,11 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
             this.changeDetector.detectChanges();
         }
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._initTargetData();
     }
 
     ngAfterViewInit(): void {
@@ -175,17 +209,33 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         </div>`
 })
 export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
-    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef) {
-        super(resolver, changeDetector);
+    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+        super(resolver, changeDetector, _zone);
     }
 
-    @Input() public sortable: boolean;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sortable: boolean;
 
-    @Input() public sortAs: SortAs;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sortAs: SortAs;
 
-    @Input() public headerTrustedHtml: string;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public headerTrustedHtml: string;
 
-    @Input() public headerTrustedHtmlContext: any;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public headerTrustedHtmlContext: any;
 
     /**
      * @internal
@@ -202,6 +252,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     private _defaultSortOrder: SortOrder;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get defaultSortOrder(): SortOrder {
         return this._defaultSortOrder;
@@ -267,6 +320,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     private _editable: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get editable(): boolean {
         return this._editable;
@@ -289,14 +345,27 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public editorRenderer: Type<TableCellRendererBase>;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public editorRendererInitData: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public group: boolean;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public rowSpan: number;
 
@@ -308,8 +377,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     private _goEditCallback: () => void;
 
     constructor(cfr: ComponentFactoryResolver, cd: ChangeDetectorRef,
-                private _renderer: Renderer2, private _elementRef: ElementRef) {
-        super(cfr, cd);
+                private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(cfr, cd, _zone);
     }
 
     private _emitDataChange(cellData: string | number): void {
@@ -318,9 +387,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             rows.push(this.row + i);
             // update tableData directly, therefor table.ts need not to do this.
             this.targetData.data[this.row + i][this.column] = cellData;
-        }
-        if (this.targetData instanceof AdditionalTableData) {
-            this.targetData.change.emit();
         }
 
         const change: TableDataChangeEvent = {
@@ -334,6 +400,12 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
         this.cellData = cellData;
         this.cellDataChange.emit(this.cellData);
+
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            })
+        });
     }
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
@@ -357,7 +429,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             }
             this.rendererHost.viewContainerRef.clear();
 
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 this.insertRenderer();
                 this._setGoEditListener();
             });

@@ -21,14 +21,14 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
         '[class.jigsaw-fish-bone]': 'true',
         '[class.jigsaw-fish-bone-left]': 'direction === "left"',
         '[class.jigsaw-fish-bone-right]': 'direction === "right"',
-        '[class.jigsaw-fish-bone-white]': 'theme === "white"',
+        '[class.jigsaw-fish-bone-light]': 'theme === "light"',
         '[class.jigsaw-fish-bone-dark]': 'theme === "dark"',
         '[style.width]': 'width'
     }
 })
 export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _zone: NgZone) {
-        super();
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     private _dataCallbackRemoval: CallbackRemoval;
@@ -44,6 +44,8 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      *     - 树根代表着目标；
      *     - 树的各支代表着为各个达成目标而必须完成的主要及次要任务；
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = fish-bone/full
      */
     @Input()
@@ -56,11 +58,19 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
         if (this._dataCallbackRemoval) {
             this._dataCallbackRemoval();
         }
-        this._dataCallbackRemoval = this._data.onRefresh(this.ngAfterViewInit, this);
+        this._dataCallbackRemoval = this._data.onRefresh(()=>{
+            this.runAfterMicrotasks(() => {
+                this._zone.run(() => {
+                    this.ngAfterViewInit();
+                })
+            })
+        });
     }
 
     /**
      * 鱼骨图鱼头的朝向，默认是朝左。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = fish-bone/full
      */
@@ -70,10 +80,12 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
     /**
      * 鱼骨图的整体色调，默认是白色调
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = fish-bone/full
      */
     @Input()
-    public theme: 'white' | 'dark' = 'white';
+    public theme: 'light' | 'dark' = 'light';
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     private _firstLevelBones: QueryList<JigsawFishBoneItem>;
@@ -206,11 +218,13 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
 
     ngAfterViewInit() {
         this._cacheFishBoneItems(this._firstLevelBones);
-        this.callLater(() => {
-            this._setAllBoneAttribute();
-            this._setFirstLevelBoneOffset(this._firstLevelBones);
-            this._setRangeHeight();
-            this._setRangeWidth();
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this._setAllBoneAttribute();
+                this._setFirstLevelBoneOffset(this._firstLevelBones);
+                this._setRangeHeight();
+                this._setRangeWidth();
+            })
         });
 
         this._zone.runOutsideAngular(() => {
@@ -249,29 +263,47 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
     private _itemContent: HTMLElement;
     private _itemDescription: HTMLElement;
 
-    constructor(private _renderer: Renderer2, elementRef: ElementRef) {
-        super();
+    constructor(private _renderer: Renderer2, elementRef: ElementRef, protected _zone: NgZone) {
+        super(_zone);
         this.itemEl = elementRef.nativeElement;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: SimpleTreeData | TreeData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public childRotate: string;
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     public childBones: QueryList<JigsawFishBoneItem>;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public parentBone: JigsawFishBoneItem;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public level: number = 0;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public index: number = 0;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public firstLevelRotate: string;
 
@@ -426,7 +458,11 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
 
         // 异步发送事件，为了最外面的父组件能够在ngAfterViewInit中订阅到子组件的事件
         // 如果立即发送事件，则父组件订阅不到事件
-        this.callLater(this.rectifyEvent.emit, this.rectifyEvent);
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                this.rectifyEvent.emit();
+            })
+        });
 
         // 标识没有子节点的，没有子节点的节点文本放在上面
         if (!this.childBones.length) {

@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
-import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
+import {CommonModule} from "@angular/common";
+import {JigsawGraphModule, JigsawHeaderModule} from "jigsaw/public_api";
 import {StripGraphComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [StripGraphComponent],
     exports: [StripGraphComponent],
-    imports: [JigsawGraphModule, JigsawDemoDescriptionModule, CommonModule]
+    imports: [JigsawGraphModule, JigsawDemoDescriptionModule, CommonModule, JigsawHeaderModule]
 })
 export class StripGraphModule {
 

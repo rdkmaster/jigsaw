@@ -17,10 +17,14 @@ export class ComboSelectTriggerDemo {
     closeTrigger = "mouseleave";
     public open: boolean = true;
 
-    public openCombo() {
+    public openCombo(e) {
+        e.preventDefault();
+        e.stopPropagation();
         this.open = true;
     }
-    public closeCombo() {
+    public closeCombo(e) {
+        e.preventDefault();
+        e.stopPropagation();
         this.open = false;
     }
     // ====================================================================

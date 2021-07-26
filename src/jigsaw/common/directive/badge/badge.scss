@@ -1,0 +1,242 @@
+$badge-prefix-cls: #{$jigsaw-prefix}-badge;
+
+.#{$badge-prefix-cls} {
+    text-align: center;
+    position: absolute;
+    width: auto;
+    display: inline-block;
+    top: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    z-index: $zindex-popover-level-2;
+}
+
+.#{$badge-prefix-cls}-host {
+    position: absolute;
+    border-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-cursor {
+    cursor: pointer;
+}
+
+.#{$badge-prefix-cls}-cursor-default {
+    cursor: default;
+}
+
+
+.#{$badge-prefix-cls}-size-large {
+    height: 24px;
+    min-width: 24px;
+    align-items: center;
+    border-radius: 24px;
+    border-width: 2px !important;
+    font-size: 16px;
+}
+
+.#{$badge-prefix-cls}-size-normal {
+    height: 20px;
+    min-width: 20px;
+    align-items: center;
+    border-radius: 20px;
+    border-width: 2px !important;
+    font-size: 14px;
+}
+
+.#{$badge-prefix-cls}-size-small {
+    height: 16px;
+    min-width: 16px;
+    align-items: center;
+    border-radius: 16px;
+    border-width: 1px !important;
+}
+
+.#{$badge-prefix-cls}-normal {
+    background: transparent;
+    color: $primary-default;
+}
+
+.#{$badge-prefix-cls}-warn {
+    color: $warning-default;
+}
+
+.#{$badge-prefix-cls}-success {
+    color: $success-default;
+}
+
+.#{$badge-prefix-cls}-error {
+    color: $error-default;
+}
+
+.#{$badge-prefix-cls}-dot-normal {
+    background-color: $primary-default;
+}
+
+.#{$badge-prefix-cls}-dot-warn {
+    background-color: $warning-default;
+}
+
+.#{$badge-prefix-cls}-dot-error {
+    background-color: $error-default;
+}
+
+.#{$badge-prefix-cls}-dot-success {
+    background-color: $success-default;
+}
+
+.#{$badge-prefix-cls}-solid-normal {
+    color: $font-color-white;
+    background-color: $primary-default;
+}
+
+.#{$badge-prefix-cls}-solid-warn {
+    color: $font-color-white;
+    background-color: $warning-default;
+}
+
+.#{$badge-prefix-cls}-solid-error {
+    color: $font-color-white;
+    background-color: $error-default;
+}
+
+.#{$badge-prefix-cls}-solid-success {
+    color: $font-color-white;
+    background-color: $success-default;
+}
+
+.#{$badge-prefix-cls}-border-normal {
+    background: transparent;
+    color: $primary-default;
+    border: 1px solid $primary-default;
+}
+
+.#{$badge-prefix-cls}-border-warn {
+    background: transparent;
+    color: $warning-default;
+    border: 1px solid $warning-default;
+}
+
+.#{$badge-prefix-cls}-border-success {
+    background: transparent;
+    color: $success-default;
+    border: 1px solid $success-default;
+}
+
+.#{$badge-prefix-cls}-border-error {
+    background: transparent;
+    color: $error-default;
+    border: 1px solid $error-default;;
+}
+
+.#{$badge-prefix-cls}-dot {
+    position: absolute;
+    width: auto;
+    display: inline-block;
+    z-index: $zindex-popover-level-2;
+}
+
+.#{$badge-prefix-cls}-dot-size-large {
+    height: 16px;
+    width: 16px;
+    border-radius: 16px;
+}
+
+.#{$badge-prefix-cls}-dot-size-normal {
+    height: 12px;
+    width: 12px;
+    border-radius: 12px;
+}
+
+.#{$badge-prefix-cls}-dot-size-small {
+    height: 8px;
+    width: 8px;
+    border-radius: 8px;
+}
+
+.#{$badge-prefix-cls}-mask {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    z-index: $zindex-popover-level-1;
+}
+
+.#{$badge-prefix-cls}-mask-light {
+    border-color: rgba(#fff, 0.6);
+}
+
+.#{$badge-prefix-cls}-mask-background-light {
+    background-color: rgba(#fff, 0.6);
+}
+
+.#{$badge-prefix-cls}-mask-dark {
+    border-color: rgba(#000, 0.3);
+}
+
+.#{$badge-prefix-cls}-mask-background-dark {
+    background-color: rgba(#000, 0.3);
+}
+
+.#{$badge-prefix-cls}-mask-small {
+    border-width: 20px;
+}
+
+.#{$badge-prefix-cls}-mask-normal {
+    border-width: 24px;
+}
+
+.#{$badge-prefix-cls}-mask-large {
+    border-width: 28px;
+}
+
+.#{$badge-prefix-cls}-mask-right-top {
+    right: 0;
+    top: 0;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-top-right-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-mask-right {
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-mask-right-bottom {
+    right: 0;
+    bottom: 0;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-bottom-right-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-mask-left-top {
+    left: 0;
+    top: 0;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    border-top-left-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-mask-left {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+
+.#{$badge-prefix-cls}-mask-left-bottom {
+    left: 0;
+    bottom: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-left-radius: inherit;
+}

@@ -1,18 +1,10 @@
-import {
-    Directive,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    AfterViewInit,
-    OnDestroy,
-    Renderer2,
-    ElementRef
-} from "@angular/core";
+import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
-import {DropDownTrigger, JigsawFloatBase, FloatPosition} from "../float/float";
-import {JigsawMenu, MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "../../../pc-components/menu/menu";
+import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
+import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
+import {CommonUtils} from "../../core/utils/common-utils";
+import {JigsawTheme} from "../../core/theming/theme";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -23,15 +15,12 @@ import {JigsawMenu, MenuTheme, cascadingMenuFlag, closeAllContextMenu} from "../
     }
 })
 export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, AfterViewInit, OnDestroy {
-    protected _floatOpenDelay = 300;
-    protected _floatCloseDelay = 200;
-
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
-    private _jigsawCascadingMenuTheme: MenuTheme = 'dark';
+    private _jigsawCascadingMenuTheme: MenuTheme = JigsawTheme.majorStyle;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')
@@ -55,6 +44,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._jigsawCascadingMenuData != value) {
             this._jigsawCascadingMenuData = value;
             this.jigsawFloatInitData.data = value;
+            if (this.initialized && CommonUtils.isUndefined(this.jigsawFloatTarget)) {
+                // 异步设置数据时，这里要获取一下target
+                this.jigsawFloatTarget = value && value.nodes && value.nodes.length > 0 ? JigsawMenu as any : null;
+            }
         }
     }
 
@@ -127,6 +120,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Input('jigsawCascadingMenuCloseTrigger')
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' | DropDownTrigger = "mouseleave";
 
+    /**
+     * @internal
+     */
     @Input('jigsawCascadingMenuInitData')
     public jigsawFloatInitData: any;
 
@@ -139,17 +135,17 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         this.jigsawFloatOpen = value;
     }
 
+    @Input()
+    public jigsawFloatOpenDelay: number = 300;
+
+    @Input()
+    public jigsawFloatCloseDelay: number = 200;
+
     @Output()
     public jigsawCascadingMenuSelect = new EventEmitter<SimpleNode>();
 
     @Output()
     public jigsawCascadingMenuClose = new EventEmitter<void>();
-
-    constructor(protected _renderer: Renderer2,
-                protected _elementRef: ElementRef,
-                protected _popupService: PopupService) {
-        super(_renderer, _elementRef, _popupService);
-    }
 
     ngOnInit() {
         super.ngOnInit();
@@ -196,6 +192,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         }
     }
 
+    /**
+     * @internal
+     */
     public _$openByHover($event) {
         // 跟当前宿主平级或者以下的其他弹出需要先关闭
         if (/^j(igsaw)?-list-option$/.test(this._elementRef.nativeElement.localName)) {
@@ -232,8 +231,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             if (element.target !== parent.element) {
                 return;
             }
-            this._removeBodyNodeRemovedHandler();
-            this._removeBodyNodeRemovedHandler = null;
+            if (this._removeBodyNodeRemovedHandler) {
+                this._removeBodyNodeRemovedHandler();
+                this._removeBodyNodeRemovedHandler = null;
+            }
             closeAllContextMenu(this._popupService.popups);
         });
     }

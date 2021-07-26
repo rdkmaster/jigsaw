@@ -1,21 +1,32 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/spec",
-    "module": "commonjs",
-    "target": "es5",
-    "baseUrl": "",
-    "types": [
-      "jasmine",
-      "node"
+    "compilerOptions": {
+        "declaration": true,
+        "stripInternal": false,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "inlineSources": true,
+        "skipLibCheck": true,
+
+        "outDir": "./out-tsc/spec",
+        "module": "commonjs",
+        "target": "es2016",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "baseUrl": "",
+        "types": [
+            "jasmine",
+            "node"
+        ]
+    },
+    "include": [
+        "**/*.spec.ts",
+        "**/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
     ]
-  },
-  "files": [
-    "test.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ]
 }

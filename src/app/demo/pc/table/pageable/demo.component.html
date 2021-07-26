@@ -11,5 +11,10 @@
     [searchable]="true"
     [showQuickJumper]="true"
     (search)="onSearch($event)"
+    [searchDebounce]="searchDebounce[0]"
 ></jigsaw-pagination>
 <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
+<div  style="padding: 10px 0; line-height: 1.5">
+    设置搜索防抖时间： <j-button-bar [data]="['none', 1000, 3000]" [(selectedItems)]="searchDebounce" ></j-button-bar>
+    <p>分页的默认搜索是没有防抖功能的。searchDebounce属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索。</p>
+</div>

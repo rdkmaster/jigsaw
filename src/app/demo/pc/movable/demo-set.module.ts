@@ -8,6 +8,15 @@ export const routerConfig = [
     {
         path: 'move-and-click', component: MoveAndClickDemoComponent
     },
+    {
+        desc: 'badge-move', url: '/pc/badge/move'
+    },
+    {
+        desc: 'alert-move', url: '/pc/alert/popup'
+    },
+    {
+        desc: 'dialog-move', url: '/pc/dialog/absolute-position'
+    },
 ];
 
 @NgModule({

@@ -2,10 +2,12 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
+<jigsaw-header [level]="2">这是step的最基础用法</jigsaw-header>
+<jigsaw-steps class="steps-horizontal" [data]="data" [(current)]="current" (currentChange)="currentChange($event)"></jigsaw-steps>
+<br>
+<jigsaw-steps class="steps-vertical" [data]="data" [(current)]="current" (currentChange)="currentChange($event)" direction="vertical"></jigsaw-steps>
 
-<!-- start to learn the demo from here -->
-<jigsaw-steps>
-    <jigsaw-step-item *ngFor="let step of steps" [status]="step.status">
-        {{step.title}}
-    </jigsaw-step-item>
-</jigsaw-steps>
+<div>
+    <span style="margin-right: 20px;">当前步骤：{{current}}</span>
+    <jigsaw-button (click)="changeData()">换一批数据瞅瞅</jigsaw-button>
+</div>

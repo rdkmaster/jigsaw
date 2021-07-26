@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
-import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/common/service/popup.service";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -23,7 +23,7 @@ export class DialogAbsolutePositionDemoComponent {
     public selectedPositionType: any;
     public popupInfo: PopupInfo;
 
-    @ViewChild('tpDialog', {static: false})
+    @ViewChild('tpDialog')
     private _tpDialog: TemplateRef<any>;
 
     constructor(private _popupService: PopupService) {
@@ -67,6 +67,5 @@ export class DialogAbsolutePositionDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo介绍了弹出对话框四个方位弹出的绝对位置：靠上、靠左、靠右、考下';
-    description: string = '[这里详细介绍了`PopupService`，请仔细阅读](/#/pc/popup/introduce)。';
+    description: string = '这里[详细介绍](#/pc/popup/introduce)了`PopupService`，请仔细阅读。';
 }
-

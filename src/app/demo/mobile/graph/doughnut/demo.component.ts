@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/common/core/data/graph-data";
-import {AjaxInterceptor} from "../../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/mobile_public_api";
+import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -56,7 +56,7 @@ export class DoughnutGraphComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用环形图';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 

@@ -1,8 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from '@angular/common/http';
-import {LocalPageableTableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {SortAs, SortOrder} from "jigsaw/common/core/data/component-data";
+import {LocalPageableTableData, ColumnDefine, SortAs, SortOrder, TableCellTextEditorRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -33,8 +31,24 @@ export class LocalPagingDataDemoComponent {
                 sortAs: SortAs.string,
                 defaultSortOrder: SortOrder.desc,
             }
+        }, {
+            target: 'office',
+            cell: {
+                editable: true,
+                editorRenderer: TableCellTextEditorRenderer
+            }
+        }, {
+            target: 'enroll-date',
+            cell: {
+                editable: true,
+                editorRenderer: TableCellTextEditorRenderer
+            }
         }
     ];
+
+    public _$search($event: string) {
+        this.pageable.filter($event);
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
@@ -42,4 +56,3 @@ export class LocalPagingDataDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

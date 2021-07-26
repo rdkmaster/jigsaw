@@ -16,7 +16,7 @@ import {JigsawMobileTabsModule} from './tabs/index';
 import {JigsawMobileTagModule} from './tag/tag';
 import {JigsawMobileTileSelectModule} from './list-and-tile/tile';
 import {JigsawMovableModule} from "../common/directive/movable/index";
-import {JigsawFloatModule} from "../common/directive/float/index";
+import {JigsawFloatModule} from "../common/directive/float/float";
 import {JigsawDraggableModule, JigsawDroppableModule} from '../common/directive/dragdrop/index';
 import {JigsawMobileRootModule} from "./root/root";
 import {JigsawCommonModule} from "../common/common";
@@ -28,6 +28,7 @@ import {JigsawMobileRadioLiteModule} from "./radio/radio-lite";
 import {JigsawMobileButtonBarModule} from "./list-and-tile/button-bar";
 import {JigsawMobileIconModule} from "./icon/icon";
 import {JigsawMobileRateModule} from "./rate/index";
+import {JigsawMobileHeaderModule} from  "./header/header";
 
 const JIGSAW_MODULE = [
     JigsawMobileAlertModule,
@@ -58,7 +59,8 @@ const JIGSAW_MODULE = [
     JigsawMobileRadioLiteModule,
     JigsawMobileButtonBarModule,
     JigsawMobileIconModule,
-    JigsawMobileRateModule
+    JigsawMobileRateModule,
+    JigsawMobileHeaderModule
 ];
 
 @NgModule({

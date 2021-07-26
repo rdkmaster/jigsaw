@@ -1,21 +1,21 @@
 import {Component} from "@angular/core";
+import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/public_api";
 import {ProductService} from "./product.service";
-import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/pc-components/breadcrumb/breadcrumb";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        h3 {
+        .demo-container h3 {
             font-size: 16px;
             color: #333;
             margin-bottom: 6px;
         }
 
-        p {
+        .demo-container p {
             margin-bottom: 4px;
         }
 
-        j-breadcrumb {
+        .demo-container j-breadcrumb {
             margin-bottom: 12px;
         }
     `]
@@ -25,7 +25,7 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     routes: BreadcrumbRouteConfig[] = [
-        {'pc/breadcrumb/router': {label: 'Product List', icon: 'fa fa-list'}},
+        {'pc/breadcrumb/router': {label: 'Product List', icon: 'iconfont iconfont-e12e'}},
         {'pc/breadcrumb/router/list/*': this.listBreadcrumbGenerator},
         {'pc/breadcrumb/router/detail/*': this.detailBreadcrumbGenerator},
         {'pc/breadcrumb/router/buy/*': this.buyBreadcrumbGenerator},
@@ -54,7 +54,7 @@ export class BreadcrumbRouterDemoComponent {
             // 节点的顺序是面包屑从左往右的显示顺序
             this.getListNode(detail.typeId),
             this.getDetailNode(detail),
-            {label: 'Buy', icon: 'fa fa-shopping-cart'}
+            {label: 'Buy', icon: 'iconfont iconfont-e385'}
         ];
     }
 
@@ -66,13 +66,13 @@ export class BreadcrumbRouterDemoComponent {
         let listNode;
         switch (typeId) {
             case 0:
-                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
+                listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
                 break;
             case 1:
-                listNode = {label: 'Digital', icon: 'fa fa-camera'};
+                listNode = {label: 'Digital', icon: 'iconfont iconfont-e12e'};
                 break;
             default:
-                listNode = {label: 'Fruits', icon: 'fa fa-lemon-o'};
+                listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
         }
         listNode.routeLink = '/pc/breadcrumb/router/list/' + typeId; // 请尽量使用绝对路径
         return listNode;
@@ -96,4 +96,3 @@ Angular的路由非常强大且灵活，当url的某段是由变量组成时，�
 从而可以生成一个更加具体、生动的面包屑节点。
     `;
 }
-

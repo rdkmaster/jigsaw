@@ -1,6 +1,7 @@
-import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef} from '@angular/core';
+import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy, Injector} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent} from "../../common/common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-rate, j-rate',
@@ -17,8 +18,14 @@ import {AbstractJigsawComponent} from "../../common/common";
             multi: true
         }
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRateComponent extends AbstractJigsawComponent implements OnInit, ControlValueAccessor {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super()
+    }
     /**
      * @internal
      */
@@ -41,20 +48,14 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
     private _onTouched = () => {
     };
 
-    private _icon: string = 'fa fa-star';
-
     @Input()
-    public get icon(): string {
-        return this._icon;
-    }
-
-    public set icon(icon: string) {
-        this._icon = icon;
-    }
+    @RequireMarkForCheck()
+    public icon: string = 'iconfont iconfont-e47b';
 
     private _max: number = 5;
 
     @Input()
+    @RequireMarkForCheck()
     public get max(): number {
         return this._max;
     }
@@ -66,11 +67,15 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     private _allowHalf: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set allowHalf(value: boolean) {
         this._allowHalf = !!value;
     }
 
+    @RequireMarkForCheck()
     @Input()
     public get value(): number {
         return this._value;
@@ -93,6 +98,9 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
 
     private _disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -125,10 +133,15 @@ export class JigsawRateComponent extends AbstractJigsawComponent implements OnIn
         if (this._disabled) {
             return;
         }
+        const oldValue = this._value;
         this._hoverValue = this._value = index + 1;
         this._hasHalf = !isFull && this._allowHalf;
         if (this._hasHalf) {
             this._value -= 0.5;
+        }
+        // 再次选择同样的rate时重置为0
+        if (oldValue === this._value) {
+            this._value = 0;
         }
         this._onChange(this._value);
         this.valueChange.emit(this.value);

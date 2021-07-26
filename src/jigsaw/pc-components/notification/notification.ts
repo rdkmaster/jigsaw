@@ -1,19 +1,30 @@
 import {
-    NgModule, Component, Renderer2, Input, ElementRef, NgZone
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Injector,
+    Input,
+    NgModule,
+    NgZone,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {take} from 'rxjs/operators';
+import {TranslateService} from "@ngx-translate/core";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
     ButtonInfo,
-    PopupService,
     PopupEffect,
     PopupInfo,
     PopupPositionType,
-    PopupPositionValue
+    PopupPositionValue,
+    PopupService
 } from "../../common/service/popup.service";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html"
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -31,13 +42,13 @@ export class NotificationMessage {
      */
     caption?: string;
     /**
-     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
      */
     icon?: string;
     /**
      * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向，默认右上角
      */
-    position?: NotificationPosition;
+    position?: NotificationPosition | string;
     /**
      * 提示信息超时自动关闭的毫秒数，为0则表示不关闭，默认8000ms
      */
@@ -90,6 +101,7 @@ export class NotificationMessage {
      * $demo = notification/full
      */
     innerHtmlContext?: any;
+    iconType?: 'success' | 'error' | 'warning' | 'info'
 }
 
 /**
@@ -109,14 +121,14 @@ const notificationInstances = {
         '[class.jigsaw-notification-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNotification extends AbstractDialogComponentBase {
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super();
-
-        this.renderer = renderer;
-        this.elementRef = elementRef;
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, private _translateService: TranslateService) {
+        super(renderer, elementRef, _zone, _injector);
     }
 
     protected getPopupElement(): HTMLElement {
@@ -129,11 +141,20 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      * @param value
      */
     public set initData(value: any) {
-        if (!value) return;
+        if (!value) {
+            return;
+        }
 
+        const iconType2Caption = {
+            success: 'notification.success',
+            error: 'notification.error',
+            warning: 'notification.warning',
+            info: 'notification.info'
+        };
+        this.caption = iconType2Caption.hasOwnProperty(value.iconType) ?
+            this._translateService.instant(iconType2Caption[value.iconType]) : value.caption;
         this.message = value.message || 'the "message" property in the initData goes here.';
-        this.caption = value.caption;
-        this.icon = value.icon;
+        this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;
         this.position = value.position;
         this.innerHtmlContext = value.innerHtmlContext;
@@ -141,37 +162,54 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this._callback = value.callback;
         this._callbackContext = value._callbackContext;
         this._timeout = value.timeout;
+
+        this._$iconType = value.iconType;
     }
 
     /**
      * 需要提示给用户的消息，支持基础html标记，支持附加交互动作。必选。
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public message: string;
+    @Input()
+    public message: string;
 
     /**
      * 提示框的标题，默认不显示标题
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public caption: string;
+    @Input()
+    public caption: string;
 
     /**
-     * 提示框的图标，目前仅支持font-awesome就Jigsaw自研的iconfont图标。默认无图标。
+     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
+     *
+     * @NoMarkForCheckRequired
      */
-    @Input() public icon: string;
+    @Input()
+    public icon: string;
 
     /**
      * 给提示框快速设置交互按钮
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = notification/full
      */
-    @Input() public buttons: ButtonInfo[];
+    @Input()
+    public buttons: ButtonInfo[];
 
     /**
      * 当`message`里包含html交互动作时，`JigsawNotification`在执行给定的回调函数时，会将这个对象作为函数的上下文。
      * 简单的说，这个属性值和回调函数里的`this`是同一个对象。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = notification/full
      */
-    @Input() public innerHtmlContext: any;
+    @Input()
+    public innerHtmlContext: any;
 
     private _timeout;
     private _timer;
@@ -182,7 +220,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
      *
-     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get position(): NotificationPosition | string {
@@ -216,6 +254,23 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
         this._$onLeave();
     }
+
+    /**
+     * @internal
+     */
+    public _$getClassObject(classPrefix: string): {[className: string]: boolean} {
+        return {
+            [`${classPrefix}-success`]: this._$iconType == 'success',
+            [`${classPrefix}-error`]: this._$iconType == 'error',
+            [`${classPrefix}-warning`]: this._$iconType == 'warning',
+            [`${classPrefix}-info`]: this._$iconType != 'success' && this._$iconType != 'error' && this._$iconType != 'warning'
+        };
+    }
+
+    /**
+     * @internal
+     */
+    public _$iconType: 'success' | 'error' | 'warning' | 'info';
 
     /**
      * @internal
@@ -296,17 +351,9 @@ export class JigsawNotification extends AbstractDialogComponentBase {
     /**
      * @internal
      */
-    public static _zone: NgZone;
-    /**
-     * @internal
-     */
-    public static _renderer: Renderer2;
-    /**
-     * @internal
-     */
     public static _removeResizeListener;
 
-    private static _positionReviser(position: NotificationPosition, element: HTMLElement): PopupPositionValue {
+    private static _positionReviser(position: NotificationPosition | string, element: HTMLElement): PopupPositionValue {
         let left = 0;
         if (position == NotificationPosition.rightTop || position == NotificationPosition.rightBottom) {
             left += document.body.clientWidth - element.offsetWidth - 24;
@@ -336,7 +383,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
      *
      * @param position 调整哪个方向上的提示框，可选，默认调试所有4个方向。
      */
-    public static reposition(position?: NotificationPosition) {
+    public static reposition(position?: NotificationPosition | string) {
         if (CommonUtils.isUndefined(position)) {
             this.reposition(NotificationPosition.leftTop);
             this.reposition(NotificationPosition.rightTop);
@@ -349,7 +396,6 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         const instancesCopy = instances.concat();
         instances.splice(0, instances.length);
         instancesCopy.forEach(popupInfo => {
-            // console.log(popupInfo.element.offsetHeight, popupInfo.element.innerText);
             const p = this._positionReviser(position, popupInfo.element);
             const options = {posType: PopupPositionType.fixed, pos: {x: p.left, y: p.top}};
             PopupService.instance.setPosition(options, popupInfo.element);
@@ -359,8 +405,8 @@ export class JigsawNotification extends AbstractDialogComponentBase {
 
     /**
      * 方便快速地将一些信息以卡片的方式弹出在视图上，起到通知用户的作用。
-     * 这种提示方式相比[alert]($demo=pc/alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
-     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo=pc/alert/popup)的方式通知用户。
+     * 这种提示方式相比[alert]($demo=alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
+     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo=alert/popup)的方式通知用户。
      *
      * $demo = notification/full
      *
@@ -387,7 +433,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         if (CommonUtils.isUndefined(message)) {
             return;
         }
-        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options ? options : {});
+        const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options || {});
         opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
         opt.position = typeof opt.position === 'string' ? NotificationPosition[<string>opt.position] : opt.position;
@@ -399,36 +445,89 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             size: {width: opt.width, height: opt.height}, disposeOnRouterChanged: false,
             showEffect: PopupEffect.bubbleIn, hideEffect: PopupEffect.bubbleOut, modal: false,
             posReviser: (pos, element) => this._positionReviser(opt.position, element),
-            pos: {x: 0, y: 0}, // `pos` not null to tell PopupService don't add resize event listener
-            posType: PopupPositionType.fixed
+            // `pos` not null to tell PopupService don't add resize event listener
+            pos: {x: 0, y: 0}, posType: PopupPositionType.fixed,
+            borderRadius: '3px'
         };
         const initData = {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
             buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
             callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
-            innerHtmlContext: opt.innerHtmlContext
+            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType
         };
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
         popupInfo.instance._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        setTimeout(() => this.reposition(opt.position));
+        let onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            onStableSubscription.unsubscribe();
+            this.reposition(opt.position);
+        });
 
         if (!this._removeResizeListener) {
-            this._zone.runOutsideAngular(() => {
-                this._removeResizeListener = this._renderer.listen(window, 'resize', () => this.reposition());
+            InternalUtils.zone.runOutsideAngular(() => {
+                this._removeResizeListener = InternalUtils.renderer.listen(window, 'resize', () => this.reposition());
             });
         }
 
         return popupInfo;
     };
+
+    public static showSuccess(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e142';
+        opt.iconType = 'success';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showError(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e132';
+        opt.iconType = 'error';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showWarn(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e437';
+        opt.iconType = 'warning';
+        return JigsawNotification.show(message, opt);
+    };
+
+    public static showInfo(message: string, options?: string | NotificationMessage): PopupInfo {
+        const opt: NotificationMessage = typeof options == 'string' ? {caption: options} : options ? options : {};
+        opt.icon = 'iconfont iconfont-e23e';
+        opt.iconType = 'info';
+        return JigsawNotification.show(message, opt);
+    };
+
 }
 
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule],
     declarations: [JigsawNotification],
     exports: [JigsawNotification],
-    entryComponents: [JigsawNotification]
+    providers: [TranslateService]
 })
 export class JigsawNotificationModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'notification', {
+            zh: {
+                success: '成功',
+                error: '错误',
+                warning: '警告',
+                info: '消息'
+            },
+            en: {
+                success: 'Success',
+                error: 'Error',
+                warning: 'Warning',
+                info: 'Information'
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+        TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            translateService.use(langInfo.curLang);
+        });
+    }
 }

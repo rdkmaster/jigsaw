@@ -1,12 +1,8 @@
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {
-    PopupInfo,
-    PopupOptions,
-    PopupPoint,
-    PopupPositionOffset,
-    PopupPositionType,
-    PopupService
-} from "jigsaw/common/service/popup.service";
+    PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
+    PopupPositionType, PopupService
+} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -30,9 +26,9 @@ export class DialogPopOptionDemo implements OnInit {
 
     offset: PopupPositionOffset;
 
-    @ViewChild("left", {static: false}) left: ElementRef;
-    @ViewChild("middle", {static: false}) middle: ElementRef;
-    @ViewChild("right", {static: false}) right: ElementRef;
+    @ViewChild("left") left: ElementRef;
+    @ViewChild("middle") middle: ElementRef;
+    @ViewChild("right") right: ElementRef;
 
     constructor(private popupService: PopupService) {
     }

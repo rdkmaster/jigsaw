@@ -3,17 +3,32 @@ import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawListModule} from "../list-and-tile/list";
 import {JigsawMenu, JigsawMenuHelper} from "./menu";
-import {JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawNavigationMenu} from "./navigation-menu";
 import {JigsawCascadingMenu} from "../../common/directive/menu/cascading-menu";
+import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { InternalUtils } from '../../common/core/utils/internal-utils';
 
 @NgModule({
-    declarations: [JigsawMenu, JigsawCascadingMenu, JigsawMenuHelper],
-    exports: [JigsawMenu, JigsawCascadingMenu],
-    imports: [JigsawListModule, JigsawFloatModule, CommonModule, PerfectScrollbarModule],
-    entryComponents: [JigsawMenu]
+    declarations: [JigsawMenu, JigsawCascadingMenu, JigsawMenuHelper, JigsawNavigationMenu],
+    exports: [JigsawMenu, JigsawCascadingMenu, JigsawNavigationMenu],
+    imports: [JigsawListModule, CommonModule, PerfectScrollbarModule, JigsawTooltipModule, TranslateModule.forChild()],
+    providers: [TranslateService]
 })
 export class JigsawMenuModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, 'navigation', {
+            zh: {
+                hide: "收起"
+            },
+            en: {
+                hide: "Dismiss"
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
 }
 
 export * from "../../common/directive/menu/cascading-menu";
 export * from "./menu";
+export * from "./navigation-menu";

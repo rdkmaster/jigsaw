@@ -3,128 +3,100 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-dark {
     background: none !important;
 
-    .jigsaw-list {
-        background: #102331;
-        border: #2e4657 1px solid;
+    .#{$jigsaw-prefix}-list {
+        background: $bg-body-dark;
+        border: $border-color-default-dark 1px solid;
         font-size: 14px;
 
         .#{$list-option-prefix-cls} {
-            color: #eee;
             line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
-                background: #015c91;
+                background: $brand-hover-dark;
             }
 
             &.#{$list-option-prefix-cls}-active {
-                background: #027bc2;
+                background: $brand-active-dark;
             }
 
             hr {
-                border-top: 1px solid #ffffff;
+                border-top: 1px solid $font-color-white;
                 margin: 1px 0;
                 opacity: 85%;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
-                background: #102331;
+                background: transparent;
 
-                .menu-list-title {
+                .#{$menu-prefix-cls}-list-title {
                     float: left;
                     line-height: 32px;
-                    color: #666666;
+                    color: $font-color-disabled-dark;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
 
-                @include compatible(color, #102331, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            .menu-list-title {
+            .#{$jigsaw-prefix}-list-option-title-box {
+                display: none;
+            }
+
+            .#{$jigsaw-prefix}-list-option-sub-title {
+                display: none;
+            }
+
+            .#{$menu-prefix-cls}-list-title {
                 float: left;
                 line-height: 32px;
-                color: #eee;
+                color: $font-color-white;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-            }
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
 
-            .menu-list-sub-title {
-                float: right;
-                line-height: 32px;
-                color: #999;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-        }
-    }
-}
+                i {
+                    margin-right: 4px;
+                }
 
-.#{$menu-prefix-cls}-black {
-    background: none !important;
-
-    .jigsaw-list {
-        background: #151518;
-        border: #2e2e33 1px solid;
-        font-size: 14px;
-
-        .#{$list-option-prefix-cls} {
-            line-height: 32px;
-            color: #eee;
-            padding: 0px 8px;
-            min-height: 1px;
-
-            &:hover {
-                background: #015c91;
-            }
-
-            &.#{$list-option-prefix-cls}-active {
-                background: #027bc2;
-            }
-
-            hr {
-                border-top: 1px solid #ffffff;
-                margin: 1px 0;
-                opacity: 85%;
-            }
-
-            &.#{$list-option-prefix-cls}-disabled {
-                background: #151518;
-
-                .menu-list-title {
-                    float: left;
-                    line-height: 32px;
-                    color: #666666;
+                span {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
-
-                @include compatible(color, #102331, #bfbfbf);
-                cursor: not-allowed;
             }
 
-            .menu-list-title {
-                float: left;
-                line-height: 32px;
-                color: #eee;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-            .menu-list-sub-title {
+            .#{$menu-prefix-cls}-list-sub-title {
                 float: right;
                 line-height: 32px;
-                color: #999;
+                color: $font-color-white;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+                min-height: 32px;
+
+                .#{$menu-prefix-cls}-subIcon {
+                    overflow: hidden;
+                    margin: 0px 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
         }
     }
@@ -133,23 +105,24 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-light {
     background: none !important;
 
-    .jigsaw-list {
-        background: #ffffff;
-        border: #cccccc 1px solid;
+    .#{$jigsaw-prefix}-list {
+        background: $bg-body-light;
+        border: #D9D9D9 1px solid;
         font-size: 14px;
 
         .#{$list-option-prefix-cls} {
-            color: #666666;
+            color: #4D4D4D;
             line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
-                background: #e6f5fe;
+                background: $brand-lighten-light;
             }
 
             &.#{$list-option-prefix-cls}-active {
-                background: #ccebfc;
+                background: $brand-active-lighten-light;
             }
 
             hr {
@@ -159,41 +132,72 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
-                background: #ffffff;
+                background: $bg-body-light;
 
-                .menu-list-title {
+                .#{$menu-prefix-cls}-list-title {
                     float: left;
                     line-height: 32px;
-                    color: #bbbbbb;
+                    color: $font-color-disabled-light;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
 
-                @include compatible(color, #bbbbbb, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            .menu-list-title {
+            .#{$jigsaw-prefix}-list-option-title-box {
+                display: none;
+            }
+
+            .#{$jigsaw-prefix}-list-option-sub-title {
+                display: none;
+            }
+
+            .#{$menu-prefix-cls}-list-title {
                 float: left;
                 line-height: 32px;
-                color: #666666;
+                color: $font-color-default-light;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
 
                 i {
-                    color: #888888;
+                    color: $font-color-default-light;
+                    margin-right: 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
 
-            .menu-list-sub-title {
+            .#{$menu-prefix-cls}-list-sub-title {
                 float: right;
                 line-height: 32px;
-                color: #cccccc;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                color: $font-color-default-light;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                align-content: flex-start;
+                min-height: 32px;
+
+                .#{$menu-prefix-cls}-subIcon {
+                    overflow: hidden;
+                    margin: 0px 4px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
         }
     }
@@ -202,22 +206,23 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
 .#{$menu-prefix-cls}-navigation {
     background: none !important;
 
-    .jigsaw-list {
-        background: #32404e;
+    .#{$jigsaw-prefix}-list {
+        background: $bg-body-dark;
         border: none;
         font-size: 14px;
 
         .#{$list-option-prefix-cls} {
-            color: #ffffff;
+            color: $font-color-white;
             padding: 0px 8px;
             min-height: 1px;
+            background: none;
 
             &:hover {
-                background: #015c91;
+                background: $brand-hover-dark;
             }
 
             &.#{$list-option-prefix-cls}-active {
-                background: #027bc2;
+                background: $brand-active-dark;
             }
 
             hr {
@@ -227,10 +232,10 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
             }
 
             &.#{$list-option-prefix-cls}-disabled {
-                background: #32404e;
+                background: transparent;
 
-                .navigation-title {
-                    color: #bbbbbb;
+                .#{$menu-prefix-cls}-navigation-title {
+                    color: $font-color-disabled-dark;
                     line-height: 40px;
                     text-align: center;
                     vertical-align: center;
@@ -239,12 +244,11 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                     white-space: nowrap;
                 }
 
-                @include compatible(color, #bbbbbb, #bfbfbf);
                 cursor: not-allowed;
             }
 
-            .navigation-title {
-                color: #ffffff;
+            .#{$menu-prefix-cls}-navigation-title {
+                color: $font-color-white;
                 line-height: 40px;
                 text-align: center;
                 vertical-align: center;
@@ -253,11 +257,9 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
                 white-space: nowrap;
 
                 i {
-                    color: #cccccc;
+                    color: $font-color-white;
                 }
             }
         }
     }
 }
-
-

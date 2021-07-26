@@ -1,12 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/common/service/loading.service";
+import {LoadingService} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class LoadingFullDemoComponent {
-    @ViewChild('block', {static: false})
+    @ViewChild('block')
     private _block: ElementRef;
 
     public isLoading: boolean = false;

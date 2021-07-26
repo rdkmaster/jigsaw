@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {JigsawTableModule, TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/public_api";
 import {TableCheckboxColumnObjectCellDemoComponent, TableCellObjectRenderer} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawTableModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTableModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [TableCheckboxColumnObjectCellDemoComponent, TableCellObjectRenderer],
-    exports: [TableCheckboxColumnObjectCellDemoComponent],
-    entryComponents: [TableCellObjectRenderer, TableCellCheckboxRenderer, TableHeadCheckboxRenderer]
+    exports: [TableCheckboxColumnObjectCellDemoComponent]
 })
 export class TableCheckboxColumnObjectCellDemoModule {
 }

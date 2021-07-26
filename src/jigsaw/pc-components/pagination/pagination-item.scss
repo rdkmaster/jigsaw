@@ -1,0 +1,73 @@
+@import "../../common/assets/scss/core/base";
+
+$page-prefix-cls: #{$jigsaw-prefix}-page;
+
+.#{$page-prefix-cls}-item {
+    @include inline-block();
+    margin-right: 8px;
+    vertical-align: top;
+    span {
+        @include inline-block();
+        min-width: var(--height-paging);
+        height: var(--height-paging);
+        line-height: var(--height-paging);
+        padding: 0 2px;
+        font-size: $font-size-base;
+        text-align: center;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+        vertical-align: top;
+        @include prefixer(transition, all 0.3s ease);
+        &:hover {
+            border-color: $brand-default;
+            color: $brand-default;
+        }
+    }
+    &.#{$page-prefix-cls}-current span {
+        background: $brand-lighten;
+        border: 1px solid $brand-default;
+        color: $brand-default;
+    }
+    &.#{$page-prefix-cls}-hidden {
+        display: none;
+    }
+    i {
+        @include inline-block();
+        width: var(--height-paging);
+        height: var(--height-paging);
+        line-height: var(--height-paging);
+        font-size: $font-size-base;
+        text-align: center;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+        &:after {
+            display: block;
+            content: "\e6a8";
+            font-weight: 700;
+            font-size: 14px;
+            font-family: "iconfont";
+            color: $icon-color-default;
+            line-height: var(--height-paging);
+            text-align: center;
+        }
+        &.#{$page-prefix-cls}-prevs {
+            margin-left: 8px;
+        }
+        &.#{$page-prefix-cls}-nexts {
+            margin-right: 8px;
+        }
+        &:hover {
+            border-color: $brand-default;
+            &.#{$page-prefix-cls}-prevs:after,
+            &.#{$page-prefix-cls}-nexts:after {
+                color: $brand-default;
+            }
+        }
+    }
+}

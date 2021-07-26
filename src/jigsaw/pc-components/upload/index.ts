@@ -5,20 +5,23 @@ import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawButtonModule} from "../button/button";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
-import {JigsawUploadFileInfoList, JigsawUploadDirective} from "./upload.directive";
-import {JigsawUpload} from "./upload";
+import {JigsawUploadDirective} from "../../common/directive/upload/upload.directive";
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import { JigsawUploadResult } from './upload-result';
+import { JigsawCollapseModule } from '../collapse/collapse';
+import { JigsawProgressModule } from '../progress/progress';
+import {JigsawLoadingModule} from "../../common/components/loading/loading";
 
 @NgModule({
     imports: [
         JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, TranslateModule.forRoot()
+        JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule,
+        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild()
     ],
-    declarations: [JigsawUpload, JigsawUploadDirective, JigsawUploadFileInfoList],
-    exports: [JigsawUpload, JigsawUploadDirective],
-    entryComponents: [JigsawUploadFileInfoList],
+    declarations: [JigsawUploadDirective, JigsawUploadResult],
+    exports: [JigsawUploadDirective, JigsawUploadResult],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {
@@ -29,8 +32,7 @@ export class JigsawUploadModule {
                 "uploading": "上传中",
                 "done": "上传成功",
                 "failed": "上传失败",
-                "dragHere": "将文件拖拽到此处上传",
-                "selectFile": "选择文件",
+                "unknownStatus": "未知状态",
 
                 "Bad Request": "错误详情：错误请求",
                 "Unauthorized": "错误详情：未授权",
@@ -88,8 +90,7 @@ export class JigsawUploadModule {
                 "uploading": "Uploading",
                 "done": "Success to upload",
                 "failed": "Failed to upload",
-                "dragHere": "Drag and drop the file(s) here to upload",
-                "selectFile": "Select File",
+                "unknownStatus": "Unknown status",
 
                 "Bad Request": "Error detail: Bad Request",
                 "Unauthorized": "Error detail: Unauthorized",
@@ -150,6 +151,6 @@ export class JigsawUploadModule {
     }
 }
 
-export * from './upload';
-export * from './upload.base';
-export * from './upload.directive';
+export * from '../../common/directive/upload/upload.directive';
+export * from '../../common/directive/upload/uploader-typings';
+export * from './upload-result';

@@ -1,9 +1,8 @@
 import {
-    AbstractModeledGraphData,
+    AbstractModeledGraphData, CustomModeledGraphTemplate,
     Dimension,
     Indicator,
     ModeledPieGraphData,
-    ModeledRectangularTemplate
 } from "./modeled-graph-data";
 import {EchartOptions} from "./echart-types";
 
@@ -20,6 +19,29 @@ class TestGraphData extends AbstractModeledGraphData {
 
     protected createChartOptions(): EchartOptions {
         return null;
+    }
+}
+
+function getPieDefaultTemplate() {
+    return {
+        title: {
+            x: 'center',
+            textStyle: {},
+            subtextStyle: {}
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)",
+            extraCssText: 'z-index: 999'
+        },
+        legend: {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            data: null
+        }
     }
 }
 
@@ -46,6 +68,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
 
     it('should return a valid echarts options', function () {
         const pd = new ModeledPieGraphData();
+        pd.template.option = getPieDefaultTemplate();
         pd.field = ['f1', 'f2', 'f3', 'f4'];
         pd.header = ['h1', 'h2', 'h3', 'h4'];
         pd.data = [
@@ -74,6 +97,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
 
     it('should return a options with specified dims', function () {
         const pd = new ModeledPieGraphData();
+        pd.template.option = getPieDefaultTemplate();
         pd.field = ['f1', 'f2', 'f3', 'f4'];
         pd.header = ['h1', 'h2', 'h3', 'h4'];
         pd.data = [
@@ -104,6 +128,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
 
     it('should return a multi kpi options', function () {
         const pd = new ModeledPieGraphData();
+        pd.template.option = getPieDefaultTemplate();
         pd.field = ['f1', 'f2', 'f3', 'f4'];
         pd.header = ['h1', 'h2', 'h3', 'h4'];
         pd.data = [
@@ -153,7 +178,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
 
     it('should return a options without legend', function () {
 
-        class BasicModeledPieTemplateSpec extends ModeledRectangularTemplate {
+        class CustomModeledPieTemplateSpec extends CustomModeledGraphTemplate {
             getInstance(): EchartOptions {
                 return {
                     title: {},
@@ -163,7 +188,7 @@ describe('Unit Test for ModeledPieGraphData', () => {
         }
 
         const pd = new ModeledPieGraphData();
-        pd.template = new BasicModeledPieTemplateSpec();
+        pd.template = new CustomModeledPieTemplateSpec();
         pd.field = ['f1', 'f2', 'f3', 'f4'];
         pd.header = ['h1', 'h2', 'h3', 'h4'];
         pd.data = [

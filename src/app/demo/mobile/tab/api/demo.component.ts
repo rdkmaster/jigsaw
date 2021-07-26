@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {JigsawMobileTab} from "jigsaw/mobile-components/tabs/tab";
+import {JigsawMobileTab} from "jigsaw/mobile_public_api";
 import {TabContentDefine} from "./tabContent/tabContent";
 
 @Component({
@@ -7,7 +7,7 @@ import {TabContentDefine} from "./tabContent/tabContent";
     styleUrls: ['./demo.component.css']
 })
 export class DynamicTabDemoComponent {
-    @ViewChild(JigsawMobileTab, {static: false}) tabs: JigsawMobileTab;
+    @ViewChild(JigsawMobileTab) tabs: JigsawMobileTab;
 
     public removeTab(index) {
         this.tabs.removeTab(index);

@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
-import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types";
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import {ZTreeSettingSetting, SimpleTreeData} from "jigsaw/public_api";
 
 declare const $:any;
 
@@ -67,4 +66,3 @@ $.ajax = function(info) {
         }, Math.random() * 2000);
     }
 }
-

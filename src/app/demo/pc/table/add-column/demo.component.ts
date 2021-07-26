@@ -1,8 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {AdditionalColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableData, AdditionalColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
 
 /*
  * 操作列头
@@ -18,15 +16,20 @@ export class MyTableHeadOption extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        <a href="javascript:;" (click)="clickHandler('修改')">修改</a>
-        <a href="javascript:;" (click)="clickHandler('删除')">删除</a>`,
-    styles: [`a {
-        color: #ffaa00
-    }
+        <div class="demo-link">
+            <a href="javascript:;" (click)="clickHandler('修改')">修改</a>
+            <a href="javascript:;" (click)="clickHandler('删除')">删除</a>
+        </div>
+        `,
+    styles: [`
+        .demo-link a {
+            color: #ffaa00
+        }
 
-    a:hover {
-        text-decoration: underline
-    }`]
+        .demo-link a:hover {
+            text-decoration: underline
+        }
+    `]
 })
 export class MyTableCellOption extends TableCellRendererBase {
     clickHandler(actioin) {
@@ -61,6 +64,3 @@ export class TableAddColumnDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-

@@ -1,4 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, AfterContentInit, Inject} from "@angular/core";
+import { DOCUMENT } from '@angular/common';
+import { ArrayCollection, JigsawTheme, PopupPositionType } from 'jigsaw/public_api';
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
 import {routerConfig as autoCompleteInputConfig} from "./demo/pc/auto-complete-input/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/pc/data-encapsulation/demo-set.module";
@@ -19,6 +21,7 @@ import {routerConfig as graphConfig} from "./demo/pc/graph/demo-set.module";
 import {routerConfig as i18nConfig} from "./demo/pc/i18n/demo-set.module";
 import {routerConfig as inputConfig} from "./demo/pc/input/demo-set.module";
 import {routerConfig as numericInputConfig} from "./demo/pc/numeric-input/demo-set.module";
+import {routerConfig as searchInputConfig} from "./demo/pc/search-input/demo-set.module";
 import {routerConfig as listConfig} from "./demo/pc/list/demo-set.module";
 import {routerConfig as listLiteConfig} from "./demo/pc/list-lite/demo-set.module";
 import {routerConfig as loadingConfig} from "./demo/pc/loading/demo-set.module";
@@ -30,7 +33,6 @@ import {routerConfig as popupConfig} from "./demo/pc/popup/demo-set.module";
 import {routerConfig as radioConfig} from "./demo/pc/radio-group/demo-set.module";
 import {routerConfig as radioLiteConfig} from "./demo/pc/radio-lite/demo-set.module";
 import {routerConfig as rateConfig} from "./demo/pc/rate/demo-set.module";
-import {routerConfig as rangeTimeConfig} from "./demo/pc/range-time/demo-set.module";
 import {routerConfig as scrollbarConfig} from "./demo/pc/scrollbar/demo-set.module";
 import {routerConfig as selectConfig} from "./demo/pc/select/demo-set.module";
 import {routerConfig as sliderConfig} from "./demo/pc/slider/demo-set.module";
@@ -38,11 +40,11 @@ import {routerConfig as stepsConfig} from "./demo/pc/steps/demo-set.module";
 import {routerConfig as switchConfig} from "./demo/pc/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/pc/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/pc/tab/demo-set.module";
+import {routerConfig as tabBarConfig} from "./demo/pc/tab-bar/demo-set.module";
 import {routerConfig as tagConfig} from "./demo/pc/tag/demo-set.module";
 import {routerConfig as textareaConfig} from "./demo/pc/textarea/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/pc/tile/demo-set.module";
 import {routerConfig as tileLiteConfig} from "./demo/pc/tile-lite/demo-set.module";
-import {routerConfig as timeConfig} from "./demo/pc/time/demo-set.module";
 import {routerConfig as tooltipConfig} from "./demo/pc/tooltip/demo-set.module";
 import {routerConfig as treeConfig} from "./demo/pc/tree/demo-set.module";
 import {routerConfig as trustedHtmlConfig} from "./demo/pc/trusted-html/demo-set.module";
@@ -51,24 +53,43 @@ import {routerConfig as iconConfig} from "./demo/pc/icon/demo-set.module";
 import {routerConfig as transferConfig} from "./demo/pc/transfer/demo-set.module";
 import {routerConfig as breadcrumbConfig} from "./demo/pc/breadcrumb/demo-set.module";
 import {routerConfig as menuConfig} from "./demo/pc/menu/demo-set.module";
+import {routerConfig as datePickerConfig} from "./demo/pc/date-picker/demo-set.module";
+import {routerConfig as timePickerConfig} from "./demo/pc/time-picker/demo-set.module";
+import {routerConfig as dateTimePickerConfig} from "./demo/pc/date-time-picker/demo-set.module";
+import {routerConfig as rangeDateTimePickerConfig} from "./demo/pc/range-date-time-picker/demo-set.module";
+import {routerConfig as progressConfig} from "./demo/pc/progress/demo-set.module";
+import {routerConfig as colorSelectConfig} from "./demo/pc/color-select/demo-set.module";
+import {routerConfig as badgeConfig} from "./demo/pc/badge/demo-set.module";
+import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set.module";
+import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
+import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfigPC} from "./router-config";
-import {PopupPositionType} from "../jigsaw/common/service/popup.service";
-import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
 
 @Component({
     template: `
         <p jigsaw-float class="select-demo" [jigsawFloatTarget]="list" jigsawFloatPosition="bottomRight"
            [jigsawFloatOptions]="floatOptions">
             显示隐藏Demo集
-            <ng-template #list>
-                <div style="padding: 6px">
-                    <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
-                    <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
-                                      [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
-                    </jigsaw-list-lite>
-                </div>
-            </ng-template>
         </p>
+        <ng-template #list>
+            <div style="padding: 6px">
+                <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
+                <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
+                                  [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
+                </jigsaw-list-lite>
+            </div>
+        </ng-template>
+
+        <jigsaw-button-bar
+            class="demo-theme-button-bar"
+            height="26"
+            [(selectedItems)]="selectedTheme"
+            [data]="themes"
+            [multipleSelect]="false"
+            (selectedItemsChange)="themeSelectChange($event)"
+            optionWidth="140"
+        >
+        </jigsaw-button-bar>
         <div *ngFor="let router of routes">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
@@ -98,9 +119,15 @@ import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
         div {
             margin-bottom: 12px;
         }
+
+        .demo-theme-button-bar {
+            position: fixed;
+            right: 145px;
+        }
     `]
 })
-export class PCDemoListComponent implements OnInit {
+export class PCDemoListComponent implements OnInit, AfterContentInit {
+    constructor(@Inject(DOCUMENT) private _document: Document) {}
     floatOptions = {
         posType: PopupPositionType.fixed
     };
@@ -125,14 +152,41 @@ export class PCDemoListComponent implements OnInit {
         return childRouter.hasOwnProperty('desc') ? childRouter.desc : childRouter.path;
     }
 
+    selectedTheme: any[];
+    themes = new ArrayCollection([
+        { label: "Paletx Pro Light", name: 'paletx-pro', majorStyle: 'light' },
+        { label: "Paletx Pro Dark", name: 'paletx-pro', majorStyle: 'dark' },
+        { label: "Vmax Light", name: 'vmax', majorStyle: 'light' }
+    ]);
+
+    themeSelectChange(themeArr: ArrayCollection<any>) {
+        const themeName = themeArr[0].name, majorStyle = themeArr[0].majorStyle;
+        localStorage.setItem("jigsawDemoTheme", JSON.stringify(themeArr));
+        JigsawTheme.changeTheme(themeName, majorStyle);
+    }
+
+    themeInit(){
+        if (localStorage.getItem("jigsawDemoTheme") === null) {
+            this.selectedTheme = [{ label: "Paletx Pro Light", id: 1 }];
+        } else {
+            const themeArr = JSON.parse(localStorage.getItem("jigsawDemoTheme"));
+            this.selectedTheme = [themeArr[0]];
+            this.themeSelectChange(themeArr);
+        }
+    }
+
     ngOnInit(): void {
-        const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list'));
+        const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.selectedItems = this.routes.filter(item => !item.hidden && stored.indexOf(item.path) != -1);
         if (this.selectedItems.length == this.routes.length) {
             // 全显示表示这是第一次打开此页面
             this.selectedItems = null;
         }
         this.showHideDemos(this.selectedItems);
+    }
+
+    ngAfterContentInit() {
+        this.themeInit();
     }
 }
 
@@ -165,6 +219,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'i18n', i18nConfig);
         this._addRouterConfig(routerConfig, 'input', inputConfig);
         this._addRouterConfig(routerConfig, 'numeric-input', numericInputConfig);
+        this._addRouterConfig(routerConfig, 'search-input', searchInputConfig);
         this._addRouterConfig(routerConfig, 'list', listConfig);
         this._addRouterConfig(routerConfig, 'list-lite', listLiteConfig);
         this._addRouterConfig(routerConfig, 'loading', loadingConfig);
@@ -176,7 +231,6 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'radio-group', radioConfig);
         this._addRouterConfig(routerConfig, 'radio-lite', radioLiteConfig);
         this._addRouterConfig(routerConfig, 'rate', rateConfig);
-        this._addRouterConfig(routerConfig, 'range-time', rangeTimeConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
         this._addRouterConfig(routerConfig, 'slider', sliderConfig);
@@ -184,11 +238,11 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'switch', switchConfig);
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
+        this._addRouterConfig(routerConfig, 'tab-bar', tabBarConfig);
         this._addRouterConfig(routerConfig, 'tag', tagConfig);
         this._addRouterConfig(routerConfig, 'textarea', textareaConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
         this._addRouterConfig(routerConfig, 'tile-lite', tileLiteConfig);
-        this._addRouterConfig(routerConfig, 'time', timeConfig);
         this._addRouterConfig(routerConfig, 'tooltip', tooltipConfig);
         this._addRouterConfig(routerConfig, 'tree', treeConfig);
         this._addRouterConfig(routerConfig, 'trusted-html', trustedHtmlConfig);
@@ -197,6 +251,16 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
         this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
         this._addRouterConfig(routerConfig, 'menu', menuConfig);
+        this._addRouterConfig(routerConfig, 'date-picker', datePickerConfig);
+        this._addRouterConfig(routerConfig, 'time-picker', timePickerConfig);
+        this._addRouterConfig(routerConfig, 'date-time-picker', dateTimePickerConfig);
+        this._addRouterConfig(routerConfig, 'range-date-time-picker', rangeDateTimePickerConfig);
+        this._addRouterConfig(routerConfig, 'progress', progressConfig);
+        this._addRouterConfig(routerConfig, 'color-select', colorSelectConfig);
+        this._addRouterConfig(routerConfig, 'badge', badgeConfig);
+        this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
+        this._addRouterConfig(routerConfig, 'header', headerConfig);
+        this._addRouterConfig(routerConfig, 'theme', themeConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

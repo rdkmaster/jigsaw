@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls:['./demo.component.css']
 })
 export class SwitchBasicDemoComponent {
     checked: boolean;
@@ -11,4 +12,3 @@ export class SwitchBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

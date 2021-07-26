@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {LineGraphData, LineGraphDataByRow} from "jigsaw/common/core/data/graph-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {LineGraphData, LineGraphDataByRow} from "jigsaw/mobile_public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
@@ -50,7 +50,7 @@ export class LineGraphComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用折线图';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 /* 模拟请求代码 start */
@@ -88,4 +88,3 @@ function dealAreaRequest(req: HttpRequest<any>) {
 }
 
 /* 模拟请求代码 end */
-

@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 
-
 @Component({
     templateUrl: 'user-component.html',
     styles: [`
@@ -15,4 +14,3 @@ import {Component} from "@angular/core";
 })
 export class UserComponent {
 }
-

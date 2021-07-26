@@ -1,9 +1,8 @@
 import {Component} from "@angular/core";
-import {JigsawInfoAlert} from "jigsaw/pc-components/alert/alert";
+import {JigsawInfoAlert} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: 'demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: 'demo.component.html'
 })
 export class MoveAndClickDemoComponent {
     mouseStartPosition = {x: null, y: null};

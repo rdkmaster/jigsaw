@@ -21,7 +21,7 @@ export * from "./common/core/utils/internal-utils";
 export * from "./common/core/utils/translate-helper";
 export * from "./common/directive/dragdrop/index";
 export * from "./common/directive/dragdrop/types";
-export * from "./common/directive/float/index";
+export * from "./common/directive/float/float";
 export * from "./common/directive/movable/index";
 export * from "./common/directive/trusted-html/trusted-html";
 export * from "./common/service/loading.service";
@@ -52,4 +52,5 @@ export * from "./mobile-components/slider/index";
 export * from "./mobile-components/switch/index";
 export * from "./mobile-components/tabs/index";
 export * from "./mobile-components/tag/tag";
+export * from "./mobile-components/header/header";
 

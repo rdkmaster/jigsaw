@@ -1,7 +1,5 @@
 import {NgModule} from "@angular/core";
-import {JigsawLoadingModule} from "jigsaw/common/components/loading/loading";
-import {LoadingService} from "jigsaw/common/service/loading.service";
-import {PopupService} from "jigsaw/common/service/popup.service";
+import {JigsawLoadingModule, JigsawMobileButtonModule, LoadingService, PopupService} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DefinedLoading} from "./definedLoading/definedLoading";
 import {DefinedLoadingDemoComponent} from "./demo.component";
@@ -9,9 +7,8 @@ import {DefinedLoadingDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [DefinedLoadingDemoComponent, DefinedLoading],
     exports: [DefinedLoadingDemoComponent],
-    imports: [JigsawLoadingModule, JigsawDemoDescriptionModule],
-    providers: [PopupService, LoadingService],
-    entryComponents: [DefinedLoading]
+    imports: [JigsawLoadingModule, JigsawDemoDescriptionModule, JigsawMobileButtonModule],
+    providers: [PopupService, LoadingService]
 })
 export class DefinedLoadingDemoModule {
 }

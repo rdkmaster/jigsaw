@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, ViewEncapsulation} from "@angular/core";
-import {ChartIconFactory, ChartType} from "jigsaw/pc-components/chart-icon/chart-icon-factory";
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import {AfterViewInit, Component, ViewEncapsulation, NgZone} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {take} from 'rxjs/operators';
+import {ChartIconFactory, ChartType, JigsawTheme, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,15 +10,15 @@ import {HttpClient} from "@angular/common/http";
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public _zone: NgZone) {
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
             {
-                label: '<span class="orange"><span class="fa fa-group"></span>父节点1</span>',
+                label: '<span class="orange"><span class="iconfont iconfont-e221"></span>父节点1</span>',
                 nodes: [
                     {
-                        label: '<span class="fa fa-line-chart"></span>父节点11',
+                        label: '<span class="iconfont iconfont-e67a"></span>父节点11',
                         nodes: [
                             {
                                 label: '子节点111',
@@ -57,23 +57,23 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             },
             {
-                label: '<span class="orange"><span class="fa fa-folder"></span>父节点2</span>',
+                label: '<span class="orange"><span class="iconfont iconfont-e1ee"></span>父节点2</span>',
                 nodes: [
                     {
-                        label: '<span class="fa fa-line-chart"></span>父节点21',
+                        label: '<span class="iconfont iconfont-e67a"></span>父节点21',
                         nodes: [
                             {
                                 label: '子节点211',
                                 nodes: [
                                     {
-                                        label: '<span class="fa fa-bar-chart"></span>end'
+                                        label: '<span class="iconfont iconfont-e547"></span>end'
                                     },
                                     {
                                         label: '<span class="line">5,3,9,6,5,9,7,3,5,2</span>'
                                     },
                                     {
                                         label: `
-                                                <div class="jigsaw-table-host" style="width: 300px">
+                                                <div class="jigsaw-table-host" style="width: 300px;${JigsawTheme.majorStyle == 'dark' ? 'background: #0f111a' : ''}">
                                                 <table>
                                                     <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
                                                     <tbody>
@@ -107,13 +107,13 @@ export class FishBoneFullComponent implements AfterViewInit {
                 ]
             },
             {
-                label: '<span class="orange"><span class="fa fa-line-chart"></span>父节点3</span>',
+                label: '<span class="orange"><span class="iconfont iconfont-e67a"></span>父节点3</span>',
                 nodes: [
                     {
                         label: '父节点31',
                         nodes: [
                             {
-                                label: '<span class="fa fa-bar-chart"></span>end'
+                                label: '<span class="iconfont iconfont-e547"></span>end'
                             }
                         ]
                     }
@@ -300,13 +300,15 @@ export class FishBoneFullComponent implements AfterViewInit {
                 nodesItem.desc = `<p class="call-loss-data"> count: ${node.count} <br> ratio: ${node.ratio} <br> delay: ${node.delay}</p>`;
                 node.nodes = [nodesItem];
             });
-            // 等待TreeData里的html字符串在鱼骨图中渲染
-            setTimeout(() => {
-                this.data3.nodes.forEach((node, index) => {
-                    const legendData = this.getLegendData(node);
-                    const pieData = this.getPieData(node);
-                    this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
-                });
+            // 等待TreeData里的html字符串在鱼骨图中渲染，此处的异步必须使用zone.onStable
+            this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+                this._zone.run(() => {
+                    this.data3.nodes.forEach((node, index) => {
+                        const legendData = this.getLegendData(node);
+                        const pieData = this.getPieData(node);
+                        this.drawPie(index, legendData, this.getPieTitle(pieData, legendData), node);
+                    });
+                })
             });
         })
     }
@@ -431,5 +433,5 @@ export class FishBoneFullComponent implements AfterViewInit {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = 'FishBone的使用说明';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }

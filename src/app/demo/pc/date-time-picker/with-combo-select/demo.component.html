@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-combo-select [(value)]="singleTimeComboValue" width="150px">
+    <ng-template>
+        <jigsaw-date-time-picker [(date)]="date" (dateChange)="handleDateChange()" gr="second">
+        </jigsaw-date-time-picker>
+    </ng-template>
+</jigsaw-combo-select>
+Selected Time : {{date}}<br><br>

@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<section class="section-container">
+    <h4>多选效果</h4>
+    <section class="align-center">
+        <jigsaw-tag *ngFor="let item of tags; let idx = index;" color="preset-blue"
+                    selectedColor="preset-red" disabledColor="preset-gray"
+                    [disabled]="idx > 4" (selectChange)="onSelect(item, $event)">
+            {{item}}
+        </jigsaw-tag>
+    </section>
+
+    <h4>单选效果</h4>
+    <section class="align-center">
+        <jigsaw-tag *ngFor="let item of tags1; let idx = index;" color="preset-blue"
+                    selectedColor="preset-red" disabledColor="preset-gray" toggleSelect='true'
+                    [select]="item.selected" [disabled]="idx > 4" (selectChange)="onSelect1(item)">
+            {{item.label}}
+        </jigsaw-tag>
+    </section>
+</section>

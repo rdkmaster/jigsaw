@@ -1,5 +1,5 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawTag} from "jigsaw/pc-components/tag/tag";
+import {JigsawTag} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,9 +10,10 @@ export class TagBasicDemoComponent {
         console.log(tag)
     }
 
-    @ViewChildren(JigsawTag) tags: QueryList<JigsawTag>;
+    @ViewChildren(JigsawTag)
+    tags: QueryList<JigsawTag>;
 
-    showAllTags() {
+    resetAllTags() {
         console.log(this.tags);
         this.tags.forEach(tag => tag.show());
     }
@@ -22,4 +23,3 @@ export class TagBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

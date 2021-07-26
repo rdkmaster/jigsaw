@@ -1,43 +1,34 @@
-import {Component, NgModule, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Injector,
+    Component,
+    NgModule,
+    NgZone,
+    Renderer2,
+    ViewContainerRef
+} from "@angular/core";
 import {PopupService} from "../../common/service/popup.service";
-import {JigsawBlock, JigsawBlockModule} from "../../common/components/block/block";
-import {
-    JigsawAlertModule, JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert,
-    JigsawWarningAlert
-} from "../alert/alert";
-import {
-    JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-    JigsawLoadingModule
-} from "../../common/components/loading/loading";
-import {JigsawNotification, JigsawNotificationModule} from "../notification/notification";
-import { JigsawMenuHelper, JigsawMenuModule } from '../menu/index';
+import {InternalUtils} from "../../common/core/utils/internal-utils";
 
 @Component({
     selector: 'jigsaw-root, j-root',
-    template: '<ng-content></ng-content>'
+    template: '<ng-content></ng-content>',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRoot {
-    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone,
-                ps:PopupService /* do not remove this line, need for global PopupService instantiate! */) {
-        PopupService._viewContainerRef = viewContainerRef;
-        PopupService._renderer = renderer;
-        JigsawNotification._zone = zone;
-        JigsawNotification._renderer = renderer;
+    constructor(viewContainerRef: ViewContainerRef, renderer: Renderer2, zone: NgZone, injector: Injector,
+                ps: PopupService /* do not remove this line, need for global PopupService instantiate! */) {
+        InternalUtils.viewContainerRef = viewContainerRef;
+        InternalUtils.renderer = renderer;
+        InternalUtils.zone = zone;
     }
 }
 
 @NgModule({
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
-    imports: [
-        JigsawBlockModule, JigsawAlertModule, JigsawLoadingModule, JigsawNotificationModule, JigsawMenuModule
-    ],
-    providers: [PopupService],
-    entryComponents: [
-        JigsawBlock, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert,
-        JigsawBallLoading, JigsawBubbleLoading, JigsawFontLoading, JigsawLoading,
-        JigsawNotification, JigsawMenuHelper
-    ]
+    imports: [],
+    providers: [PopupService]
 })
 export class JigsawRootModule {
 }

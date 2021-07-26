@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
-import {ComboSelectValue} from "jigsaw/pc-components/combo-select/combo-select";
-import {TableData} from "jigsaw/common/core/data/table-data";
+import {
+    ArrayCollection, LocalPageableArray, PageableArray, ComboSelectValue,
+    TableData
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -83,5 +84,5 @@ export class ComboSelectAutoCompleteDemo {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '演示了如何使用关键字过滤的功能，包括浏览器内部数据过滤，和服务端数据过滤';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }

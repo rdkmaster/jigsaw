@@ -1,4 +1,14 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgModule, Output} from "@angular/core";
+import {
+    AfterViewChecked,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgModule,
+    Output,
+    ChangeDetectionStrategy
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ViewportData} from "../../common/core/data/component-data";
 import {JigsawScrollbarModule} from "../../common/components/scrollbar/index";
@@ -20,7 +30,7 @@ export class ViewportScrollEvent {
 }
 
 /**
- * 为一个视口增加滚动条，让视口可以在整体可视区域中调整位置，具体用法请参考[这个demo]($demo=pc/table/big-table)。
+ * 为一个视口增加滚动条，让视口可以在整体可视区域中调整位置，具体用法请参考[这个demo]($demo=table/big-table)。
  */
 @Component({
     selector: 'jigsaw-viewport, j-viewport',
@@ -31,7 +41,8 @@ export class ViewportScrollEvent {
         '(mouseleave)': '_$handleMouseLeave()',
         '(mousewheel)': '_$handleMouseWheel($event)', // Chrome IE
         '(DOMMouseScroll)': '_$handleMouseWheel($event)' // firefox
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawViewport extends AbstractJigsawComponent implements AfterViewChecked {
 
@@ -39,6 +50,7 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
      * 滚动条在垂直方向上的偏移量，例如让滚动条跳过表格的表头，这样会让滚动条与表格的视觉效果更佳。
      * 一般来说，默认皮肤下，JigsawTable的表头高度为42px。
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public verticalOffset: number = 0;
@@ -46,6 +58,8 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
     /**
      * 视口数据，这些数据描述了视口尺寸、位置，及其整体可视区域的尺寸等信息，
      * `JigsawViewport`通过修改这些数据达到调整视口位置、尺寸等的目的。
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public viewport: ViewportData;
@@ -55,6 +69,7 @@ export class JigsawViewport extends AbstractJigsawComponent implements AfterView
      * “视口”是一个抽象的概念，视口位置偏移量也是抽象的，这个偏移量的单位是在视口设计时给定的。
      * 例如`BigTableData`所设计的视口，在垂直方向上的单位是记录数，即视口的每一个单位代表着表格的一行。
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public step: number = 1;

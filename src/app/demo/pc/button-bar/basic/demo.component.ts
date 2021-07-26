@@ -1,5 +1,5 @@
 import {AfterContentInit, Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -17,6 +17,14 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         {label: "长沙", id: 5},
         {label: "西安", id: 6}
     ]);
+    types = new ArrayCollection([
+        {label: "成功", id: 1, icon: 'iconfont iconfont-e142'},
+        {label: "错误", id: 2, icon: 'iconfont iconfont-e132'},
+        {label: "警告", id: 3, icon: 'iconfont iconfont-e1a5'},
+        {label: "信息", id: 4, icon: 'iconfont iconfont-e22c'}
+    ]);
+    unlabeledTypes = this.types.map(t => ({id: t.id, icon: t.icon, label: ''}));
+    selectedTypes = [{id: 4}];
 
     basicSelectChange(cityArr: ArrayCollection<any>) {
         this.selectedCityStr = cityArr.map(city => city.label).join(',');
@@ -55,4 +63,3 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
     summary: string = '';
     description: string = '';
 }
-

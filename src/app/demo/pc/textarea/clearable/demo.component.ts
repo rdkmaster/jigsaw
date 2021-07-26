@@ -5,6 +5,7 @@ import {Component} from "@angular/core";
 })
 export class TextareaClearableDemoComponent {
     textareaValue: any;
+    clearable = true;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
@@ -12,4 +13,3 @@ export class TextareaClearableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

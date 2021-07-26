@@ -81,8 +81,7 @@ export class JigsawMobileGraph extends AbstractJigsawComponent implements OnInit
         }
     }
 
-    private _globalTheme: any = JigsawTheme.majorStyle == 'dark' || JigsawTheme.majorStyle == 'gray' || JigsawTheme.majorStyle == 'black' ||
-    JigsawTheme.majorStyle == 'purple' || JigsawTheme.majorStyle == 'blue' ? darkGraphTheme : lightGraphTheme;
+    private _globalTheme: any;
 
     @Input()
     public get globalTheme() {
@@ -98,7 +97,7 @@ export class JigsawMobileGraph extends AbstractJigsawComponent implements OnInit
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
         super();
         this._host = this._elementRef.nativeElement;
     }

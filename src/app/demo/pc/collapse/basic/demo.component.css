@@ -1,0 +1,8 @@
+.test-title {
+    display: flex;
+    align-items: center;
+}
+
+.test-title i {
+    margin: 0 2px;
+}

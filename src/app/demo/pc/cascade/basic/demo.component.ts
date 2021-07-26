@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -28,4 +28,3 @@ export class CascadeBasicDemoComponent {
     summary: string = '以行政区选择作为场景，说明如何使用静态数据来实现级联数据的选择';
     description: string = '';
 }
-

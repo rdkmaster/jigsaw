@@ -1,6 +1,16 @@
-import {Component, Input, NgModule, OnDestroy, Optional} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    NgModule,
+    OnDestroy,
+    Optional,
+    ViewChild,
+    Injector
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {trigger, style, transition, animate, keyframes} from "@angular/animations"
+import {animate, keyframes, style, transition, trigger} from "@angular/animations"
 import {Subscription} from "rxjs/internal/Subscription";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -15,7 +25,7 @@ import {JigsawPaginationModule} from "../pagination/pagination";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -108,16 +118,27 @@ const transferServerFilterFunction = function (item) {
                     style({opacity: 0})
                 ]))
             ])
-        ])]
+        ])],
+    changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
+    constructor(
+        protected _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super(_cdr, _injector);
+    }
+
     private _removePageableCallbackListener: CallbackRemoval;
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
 
+    /**
+     * @internal
+     */
     public _$data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
     /**
@@ -127,6 +148,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     private _disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get disabled(): boolean {
         return this._disabled;
@@ -142,7 +166,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data() {
         return this._$data;
@@ -153,7 +179,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
             this._$data = value;
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
@@ -170,7 +196,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this._$data.pagingInfo.pageSize = Infinity;
             this._$data.fromArray(value);
             this._filterFunction = transferFilterFunction;
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 // 等待输入属性初始化
                 this._filterDataBySelectedItems();
             });
@@ -190,6 +216,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     private _selectedItems: ArrayCollection<any> | any[] = [];
 
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems() {
         return this._selectedItems;
@@ -210,9 +237,15 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public subLabelField: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchable: boolean;
 
@@ -237,11 +270,14 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     private _filterData() {
-        this._$data.filter(this._filterFunction, {selectedItems: [].concat(...this.selectedItems), trackItemBy: this.trackItemBy});
+        this._$data.filter(this._filterFunction, {
+            selectedItems: [].concat(...this.selectedItems),
+            trackItemBy: this.trackItemBy
+        });
     }
 
     /**
-     * @Internal
+     * @internal
      *
      * data和selectedItems不和list里数据双绑，list里面要做一些转换
      *
@@ -294,25 +330,36 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     templateUrl: './transfer-list.html',
     host: {
         '[class.jigsaw-transfer-list-frame]': 'true'
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer) {
-        super();
+    constructor(@Optional() private _transfer: JigsawTransfer, protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_cdr, _injector);
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public disabled: boolean = false;
 
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public isTarget: boolean;
 
     private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): LocalPageableArray<GroupOptionValue> | PageableArray {
         return this._data;
@@ -327,6 +374,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
+                this._cdr.markForCheck();
             });
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
@@ -341,12 +389,21 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public subLabelField: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public trackItemBy: string | string[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchable: boolean;
 
@@ -400,8 +457,10 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
+                this._cdr.markForCheck();
             });
             this._data.refresh();
+            this._cdr.detectChanges();
         })
     }
 
@@ -424,16 +483,18 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         }
     }
 
+    private _removeFilterSubscribe: Subscription;
+
     private _filterData(filterKey: string, field: string | number) {
-        this.callLater(() => {
-            // 触发变更检查
-            this._data.filter(this._filterFunction, {
-                selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
-                trackItemBy: this._transfer.trackItemBy,
-                keyword: filterKey,
-                fields: [field]
-            });
-        })
+        this._data.filter(this._filterFunction, {
+            selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
+            trackItemBy: this._transfer.trackItemBy,
+            keyword: filterKey,
+            fields: [field]
+        });
+        this._removeFilterSubscribe = this._data.pagingInfo.subscribe(() => {
+            this._cdr.markForCheck();
+        });
     }
 
     /**
@@ -455,14 +516,14 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
         }
         this.selectedItemsChange.emit(this.selectedItems);
+        this._cdr.markForCheck();
     }
 
     /**
      * @internal
      */
     public _$updateCurrentPageSelectedItems() {
-        this.callLater(() => {
-            // 初始化时触发变更检查
+        this.runMicrotask(() => {
             this.selectedItems = this.selectedItems ? this.selectedItems : [];
             if (this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity) {
                 this._$currentPageSelectedItems = this.selectedItems.filter(item => (<any[]>this.data).some(it =>
@@ -497,6 +558,10 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
         if (this._removeArrayCallbackListener) {
             this._removeArrayCallbackListener();
             this._removeArrayCallbackListener = null;
+        }
+        if (this._removeFilterSubscribe) {
+            this._removeFilterSubscribe.unsubscribe();
+            this._removeFilterSubscribe = null;
         }
     }
 }

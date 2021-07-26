@@ -1,5 +1,5 @@
 <div class="jigsaw-dialog">
-    <div class="jigsaw-dialog-head jigsaw-dialog-base-head" jigsaw-movable movableAffected="jigsaw-dialog">
+    <div class="jigsaw-dialog-head jigsaw-dialog-base-head" jigsaw-movable jigsawMovableTargetSelector="jigsaw-dialog">
         <ng-content select="[jigsaw-title]"></ng-content>
         <span>{{caption}}</span>
         <span class="jigsaw-dialog-close jigsaw-popup-close" (click)='dispose()'>&times;</span>
@@ -9,8 +9,7 @@
             <ng-content></ng-content>
         </div>
     </div>
-    <div class="jigsaw-dialog-button-group"
-         *ngIf="(_$inlineButtons && _$inlineButtons.length > 0) || (buttons && buttons.length > 0)">
+    <div class="jigsaw-dialog-button-group" *ngIf="_$hasInlineButtons || (buttons && buttons.length > 0)">
         <ng-content select="[jigsaw-button], [jigsaw-button-bar]"></ng-content>
         <jigsaw-button
             *ngFor="let bi of buttons"

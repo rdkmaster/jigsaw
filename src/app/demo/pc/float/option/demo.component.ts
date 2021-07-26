@@ -1,18 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {
-    PopupEffect,
-    PopupOptions,
-    PopupPositionOffset,
-    PopupPositionType,
-    PopupSize
-} from "jigsaw/common/service/popup.service";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+    PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
+    PopupSize, CommonUtils, FloatPosition
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        .fa-bars {
-            margin: 20px 100px;
+        .iconfont-e9d8 {
+            margin: 0 200px;
             color: blue;
         }
 
@@ -40,7 +36,7 @@ import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
             height: 400px;
         }
 
-        label {
+        .wrapper label {
             min-width: 50px
         }
     `]
@@ -53,6 +49,7 @@ export class FloatOptionDemo implements OnInit {
     showBorder = true;
     showShadow = true;
     showArrow = true;
+    position: FloatPosition = 'bottomLeft';
     size: PopupSize = {};
     options: PopupOptions = {useCustomizedBackground: true};
     _$height = 'auto';

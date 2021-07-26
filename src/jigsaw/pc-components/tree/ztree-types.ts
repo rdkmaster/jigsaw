@@ -19,15 +19,14 @@ export class ZTreeSettingView {
     autoCancelSelected?: boolean;
     dblClickExpand?: boolean;
     expandSpeed?: ZTreeSettingViewSpeedLevel;
-    fontCss?: object;
+    fontCss?: (id: string, node: any) => boolean | object;
     nameIsHTML?: boolean;
     selectedMulti?: boolean;
-    showIcon?: boolean;
+    showIcon?: boolean | ((id: string, node: any) => boolean);
     showLine?: boolean;
     showTitle?: boolean;
     txtSelectedEnable?: boolean;
 }
-
 
 export class ZTreeSettingDataKey {
     children?: string;

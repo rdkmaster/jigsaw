@@ -3,7 +3,7 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        .fa {
+        .iconfont {
             margin-right: 5px
         }
     `]
@@ -23,4 +23,3 @@ export class DialogInDomDemoComponent {
     summary: string = '`jigsaw-dialog`也是一个普通的组件，可以直接用在dom中';
     description: string = '[这里详细介绍了`PopupService`，请仔细阅读](#/pc/popup/introduce)。';
 }
-

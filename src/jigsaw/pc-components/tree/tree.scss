@@ -1,0 +1,143 @@
+.ztree li span {
+    color: $font-color-default;
+    &.button {
+        &.edit {
+            &::after {
+                content: "\ea0c";
+            }
+        }
+
+        &.remove {
+            &::after {
+                content: "\e9c3";
+            }
+        }
+
+        &.ico_open {
+            &::after {
+                content: "\e4e4";
+            }
+        }
+
+        &.ico_close {
+            &::after {
+                content: "\e4e3";
+            }
+        }
+
+        &.ico_docu {
+            &::after {
+                content: "\e9d5";
+            }
+        }
+
+        &.switch.noline_open,
+        &.switch.roots_open,
+        &.switch.center_open,
+        &.switch.bottom_open {
+            &::after {
+                content: "\ea09";
+            }
+        }
+
+        &.switch.noline_close,
+        &.switch.roots_close,
+        &.switch.center_close,
+        &.switch.bottom_close {
+            &::after {
+                content: "\ea1c";
+            }
+        }
+
+        &.chk.checkbox_false_full,
+        &.chk.checkbox_false_full_focus {
+            &::after {
+                content: "\e141";
+            }
+        }
+
+        &.chk.checkbox_true_full,
+        &.chk.checkbox_true_full_focus {
+            &::after {
+                content: "\e140";
+            }
+        }
+
+        &.chk.checkbox_true_part,
+        &.chk.checkbox_true_part_focus {
+            &::after {
+                content: "\e47a";
+            }
+        }
+
+        &.edit,
+        &.remove,
+        &.ico_open,
+        &.ico_close,
+        &.ico_docu,
+        &.chk.checkbox_false_full,
+        &.chk.checkbox_false_full_focus,
+        &.chk.checkbox_true_full,
+        &.chk.checkbox_true_full_focus,
+        &.switch.noline_open,
+        &.switch.noline_close,
+        &.switch.roots_open,
+        &.switch.roots_close,
+        &.switch.center_open,
+        &.switch.center_close,
+        &.switch.bottom_open,
+        &.switch.bottom_close,
+        &.chk.checkbox_true_part,
+        &.chk.checkbox_true_part_focus {
+            position: relative;
+            background-image: none;
+            &::after {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                font-family: "iconfont" !important;
+                font-size: $font-size-lg;
+                color: $icon-color-default;
+                cursor: pointer;
+                overflow: hidden;
+            }
+
+            &:hover {
+                &::after {
+                    color: $brand-default;
+                }
+            }
+        }
+
+        &.chk.checkbox_false_full_focus,
+        &.chk.checkbox_true_full,
+        &.chk.checkbox_true_full_focus,
+        &.chk.checkbox_true_part,
+        &.chk.checkbox_true_part_focus {
+            &::after {
+                color: $brand-default;
+            }
+        }
+    }
+}
+.ztree li a {
+    &:hover {
+        background: $bg-hover;
+        .node_name {
+            text-decoration: none;
+        }
+    }
+    &.curSelectedNode {
+        background: $bg-hover;
+        border-color: $bg-hover;
+        color: $brand-default;
+        opacity: 1;
+
+        .node_name {
+            color: $brand-default;
+        }
+    }
+}

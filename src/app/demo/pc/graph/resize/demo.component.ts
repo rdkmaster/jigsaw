@@ -1,14 +1,7 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {debounceTime} from "rxjs/operators";
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {combineLatest} from "rxjs";
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
-import {JigsawInput} from "jigsaw/pc-components/input/input";
+import {merge} from "rxjs";
+import {AbstractGraphData, EchartOptions, JigsawGraph, JigsawInput} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -24,14 +17,10 @@ export class GraphResizeComponent implements OnInit {
     @ViewChild("widthInput", {static: true}) widthInput: JigsawInput;
 
     @ViewChild("heightInput", {static: true}) heightInput: JigsawInput;
-
-    resizeGraph() {
-        this.graph.resize();
-    }
-
+    
     ngOnInit() {
         this.data = new GraphDataDemo();
-        combineLatest(this.widthInput.valueChange, this.heightInput.valueChange).pipe(debounceTime(500))
+        merge(this.widthInput.valueChange, this.heightInput.valueChange).pipe(debounceTime(500))
             .subscribe(
                 () => {
                     this.graphWidth = <string>this.widthInput.value;
@@ -128,4 +117,3 @@ export class GraphDataDemo extends AbstractGraphData {
         };
     }
 }
-

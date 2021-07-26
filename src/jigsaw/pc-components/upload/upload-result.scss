@@ -1,0 +1,129 @@
+$upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
+
+.#{$upload-result-prefix-cls}-host {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 300px;
+    width: 380px;
+
+    .#{$upload-result-prefix-cls}-collapse {
+        .#{$upload-result-prefix-cls}-log {
+            &.#{$upload-result-prefix-cls}-error {
+                .#{$upload-result-prefix-cls}-log-header .file-name,
+                .#{$upload-result-prefix-cls}-log-header .file-icon {
+                    color: $error-default;
+                }
+
+                .#{$upload-result-prefix-cls}-log-detail
+                    .#{$upload-result-prefix-cls}-log-progress
+                    .jigsaw-progress-bar {
+                    .jigsaw-progress-bar-track
+                        .jigsaw-progress-bar-track-value {
+                        background: $error-default;
+                        .jigsaw-am-processing {
+                            background: $error-default;
+                        }
+                    }
+
+                    .jigsaw-progress-bar-label {
+                        color: $error-default;
+                    }
+                }
+            }
+
+            .#{$upload-result-prefix-cls}-log-header {
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 28px;
+                padding: 0 20px 0 10px;
+                line-height: 28px;
+
+                .file-icon,
+                .error-icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding-right: 10px;
+                    font-size: $icon-size-sm - 2px;
+                    color: $icon-color-stress;
+                }
+
+                .file-name {
+                    font-size: $font-size-base;
+                    color: $font-color-default;
+                    padding-right: 10px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .error-icon {
+                    color: $error-default;
+                }
+
+                .delete-icon {
+                    position: absolute;
+                    display: none;
+                    right: 10px;
+                    font-size: $icon-size-sm;
+                    color: $icon-color-stress;
+
+                    &:hover {
+                        color: $brand-hover;
+                    }
+                }
+
+                &:hover {
+                    background: $brand-active-lighten;
+
+                    .delete-icon {
+                        display: flex;
+                    }
+                }
+            }
+
+            .#{$upload-result-prefix-cls}-log-detail {
+                padding-left: calc(16px + 10px);
+
+                .#{$upload-result-prefix-cls}-log-progress {
+                    width: 70%;
+                    line-height: 28px;
+                }
+
+                .#{$upload-result-prefix-cls}-re-upload {
+                    font-size: $font-size-sm;
+                    color: $brand-default;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $brand-hover;
+                    }
+                }
+
+                ul li {
+                    display: flex;
+                    align-items: center;
+                    height: 28px;
+                    line-height: 28px;
+                    font-size: $font-size-base;
+                    color: $font-color-hint;
+                    .detail-time {
+                        margin-right: 16px;
+                        white-space: nowrap;
+                    }
+                    .detail-content {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+
+        .jigsaw-collapse-padding {
+            padding: 0 16px;
+        }
+    }
+}

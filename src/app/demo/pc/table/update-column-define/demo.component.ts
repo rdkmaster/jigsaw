@@ -1,15 +1,13 @@
 import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {JigsawTable} from "jigsaw/pc-components/table/table";
+import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TableColumnSetWidthDemoComponent {
     tableData: TableData;
-    @ViewChild('table', {static: false}) table: JigsawTable;
+    @ViewChild('table') table: JigsawTable;
 
     changeWidth(value) {
         this.columns[0].width = value;
@@ -52,4 +50,3 @@ export class TableColumnSetWidthDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

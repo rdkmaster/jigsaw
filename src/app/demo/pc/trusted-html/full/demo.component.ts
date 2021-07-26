@@ -5,18 +5,26 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class TrustedHtmlFullComponent {
-    showDetail:boolean = false;
     html = this.stripPrefixSpaces(`
         <a onclick="hello('trustedHtml directive')">
-            <i class="fa fa-question"></i> say hello to trustedHtml
-        </a><br><br>
-        <input onblur="onBlur()" value="onblur....">
+            <i class="iconfont iconfont-e9ee"></i>
+            say hello to trustedHtml
+        </a>
+        <p style="margin-top:6px">让下面的输入框失去焦点试试触发事件</p>
+        <div contenteditable="true" onblur="onBlur()"
+             style="width:200px; height:32px; border-radius:4px;
+                    border:solid 1px #cdcdcd;">
+        </div>
     `);
     jsCode = this.stripPrefixSpaces(`
         // 这边不要使用箭头函数，因为很多浏览器还不支持原生es6
         this.context = {
-            hello: function(who) { alert('hello ' + who) },
-            onBlur: function() { alert('the input has lost focus!') }
+            hello: who => {
+                alert('hello ' + who);
+            },
+            onBlur: () => {
+                alert('the input has lost focus!');
+            }
         }
     `);
 
@@ -70,6 +78,5 @@ export class TrustedHtmlFullComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这是一个指令，用于将一段html文本插入到某个DOM元素中，是 Angular 内置指令 `[innerHtml]` 的火力增强版。';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
-

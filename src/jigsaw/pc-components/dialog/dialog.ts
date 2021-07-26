@@ -1,12 +1,17 @@
 import {
     AfterContentInit,
     AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ContentChildren,
+    Directive,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -18,8 +23,9 @@ import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawBlock, JigsawBlockModule} from "../../common/components/block/block";
+import {JigsawBlockModule} from "../../common/components/block/block";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
@@ -38,8 +44,12 @@ export type DialogCallback = (button: ButtonInfo) => void;
  * JigsawInfoAlert、JigsawWarningAlert、JigsawErrorAlert、JigsawConfirmAlert
  * 可以看到JigsawAlert使用起来比较麻烦，但是它具体化后的这些组件使用起来就非常简单了。
  */
+@Directive()
 export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: any;
 
@@ -48,6 +58,9 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     private _caption: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get caption(): string {
         return this._caption;
@@ -62,6 +75,9 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
 
     private _buttons: ButtonInfo[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get buttons(): ButtonInfo[] {
         return this._buttons;
@@ -97,25 +113,40 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
  * 这是所有对话框组件的基类，是一个内部，应用一般不应该直接使用这个类。
  * 当需要实现一种新的对话框的时候，则需要继承这个类，已知的对话框组件有JigsawDialog、JigsawAlert、JigsawNotification
  */
+@Directive()
 export abstract class AbstractDialogComponentBase
     extends AbstractJigsawComponent
     implements IPopupable, AfterContentInit, OnDestroy {
 
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_zone);
+    }
+
+    @RequireMarkForCheck()
     @Input()
     public buttons: ButtonInfo[];
+
+    @RequireMarkForCheck()
     @Input()
     public caption: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: any;
 
     protected popupElement: HTMLElement;
 
-    protected renderer: Renderer2;
-    protected elementRef: ElementRef;
-
     private _top: string;
 
-    //设置距离顶部高度
+    /**
+     * 设置距离顶部高度
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get top(): string {
         return this._top
@@ -152,13 +183,13 @@ export abstract class AbstractDialogComponentBase
             this.renderer.setStyle(this.popupElement, 'width', this.width);
         }
 
-        if(this.height) {
+        if (this.height) {
             this.renderer.setStyle(this.popupElement, 'height', this.height);
             this.renderer.addClass(this.popupElement, 'jigsaw-dialog-fixed-height');
         }
 
         //设置弹出位置和尺寸
-        this.callLater(() => {
+        this.runAfterMicrotasks(() => {
             if (this.top) {
                 this.renderer.setStyle(this.popupElement, 'top', this.top);
             }
@@ -177,36 +208,52 @@ export abstract class AbstractDialogComponentBase
 @Component({
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawDialog extends AbstractDialogComponentBase {
+export class JigsawDialog extends AbstractDialogComponentBase implements AfterContentInit {
     @Output()
     public close: EventEmitter<any> = new EventEmitter<any>();
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public caption: string;
 
     /**
      * @internal
      */
-    @ContentChildren(JigsawButton)
-    public _$inlineButtons:QueryList<JigsawButton>;
+    @ContentChildren(JigsawButton, {descendants: true})
+    public _$inlineButtons: QueryList<JigsawButton>;
+    /**
+     * @internal
+     */
+    public _$hasInlineButtons: boolean = false;
 
-    constructor(renderer: Renderer2, elementRef: ElementRef) {
-        super();
-        this.renderer = renderer;
-        this.elementRef = elementRef;
+    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(renderer, elementRef, _zone, _injector);
         this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-dialog-host');
     }
 
     protected getPopupElement(): HTMLElement {
         return this.elementRef.nativeElement;
     }
+
+    ngAfterContentInit(): void {
+        super.ngAfterContentInit();
+        this._$hasInlineButtons = this._$inlineButtons.toArray().some(btn => {
+            // 只有通过 "[jigsaw-button], [jigsaw-button-bar]" 投影进来的button，才算 button-group 里面的
+            return btn.element.nativeElement.hasAttribute('jigsaw-button') ||
+                (btn.element.nativeElement.parentElement && btn.element.nativeElement.parentElement.hasAttribute('jigsaw-button-bar'));
+        });
+    }
 }
 
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawMovableModule, JigsawBlockModule],
     declarations: [JigsawDialog],
-    exports: [JigsawDialog],
-    entryComponents: [JigsawBlock]
+    exports: [JigsawDialog]
 })
 export class JigsawDialogModule {
 }

@@ -21,38 +21,41 @@
 <ng-template #dialog>
     <jigsaw-dialog width="600" height="400" (close)="dispose()">
         <div jigsaw-title>
-            <span class="fa fa-thumbs-up"></span>对话框里的菜单
+            <span class="iconfont iconfont-e3f0"></span>对话框里的菜单
         </div>
-        <div jigsaw-body style="padding: 8px">
-            <jigsaw-collapse width="200px">
-                <j-collapse-pane [isActive]="true">
-                    <div j-title>
-                        <span class="fa fa-user"></span> 功能组1
-                    </div>
-                    <div j-body>
-                        <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
-                        </jigsaw-menu>
-                    </div>
-                </j-collapse-pane>
-                <j-collapse-pane [isActive]="false">
-                    <div j-title>
-                        <span class="fa fa-user"></span> 功能组2
-                    </div>
-                    <div j-body>
-                        <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
-                        </jigsaw-menu>
-                    </div>
-                </j-collapse-pane>
-                <j-collapse-pane [isActive]="false">
-                    <div j-title>
-                        <span class="fa fa-user"></span> 功能组3
-                    </div>
-                    <div j-body>
-                        <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
-                        </jigsaw-menu>
-                    </div>
-                </j-collapse-pane>
-            </jigsaw-collapse>
+        <div jigsaw-body style="padding: 8px; height: 100%; position: relative">
+            <div style="height: 100%; width: 200px" [perfectScrollbar]="{suppressScrollX: true,wheelPropagation: true}">
+                <jigsaw-collapse width="100%">
+                    <j-collapse-pane [isActive]="true">
+                        <div j-title>
+                            <span class="iconfont iconfont-ea4c"></span> 功能组1
+                        </div>
+                        <div j-body>
+                            <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
+                            </jigsaw-menu>
+                        </div>
+                    </j-collapse-pane>
+                    <j-collapse-pane [isActive]="false">
+                        <div j-title>
+                            <span class="iconfont iconfont-ea4c"></span> 功能组2
+                        </div>
+                        <div j-body>
+                            <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
+                            </jigsaw-menu>
+                        </div>
+                    </j-collapse-pane>
+                    <j-collapse-pane [isActive]="false">
+                        <div j-title>
+                            <span class="iconfont iconfont-ea4c"></span> 功能组3
+                        </div>
+                        <div j-body>
+                            <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%" [showBorder]="false">
+                            </jigsaw-menu>
+                        </div>
+                    </j-collapse-pane>
+                </jigsaw-collapse>
+            </div>
+
             <div class="content">
                 <p style="margin-bottom: 8px;">
                     <a jigsawCascadingMenu style="margin-right: 8px"

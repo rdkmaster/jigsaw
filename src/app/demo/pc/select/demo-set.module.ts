@@ -23,6 +23,16 @@ import {SelectSizeDemoComponent} from "./size/demo.component";
 import {SelectSizeDemoModule} from "./size/demo.module";
 import {SelectClearableDemoComponent} from "./clearable/demo.component";
 import {SelectClearableDemoModule} from "./clearable/demo.module";
+import { MultipleSelectDemoComponent } from './multiple-select/demo.component';
+import { MultipleSelectDemoModule } from './multiple-select/demo.module';
+import { SelectGroupDemoComponent } from './select-group/demo.component';
+import { SelectGroupDemoModule } from './select-group/demo.module';
+import { SelectCollapseDemoComponent } from './select-collapse/demo.component';
+import { SelectCollapseDemoModule } from './select-collapse/demo.module';
+import {SelectOptionWidthDemoComponent} from "./option-width/demo.component";
+import {SelectOptionWidthDemoModule} from "./option-width/demo.module";
+import { SelectValueChangeDemoComponent } from './value-change/demo.component';
+import { SelectValueChangeDemoModule } from './value-change/demo.module';
 
 export const routerConfig = [
     {
@@ -58,6 +68,21 @@ export const routerConfig = [
     {
         path: 'clearable', component: SelectClearableDemoComponent
     },
+    {
+        path: 'multiple-select', component: MultipleSelectDemoComponent
+    },
+    {
+        path: 'select-group', component: SelectGroupDemoComponent
+    },
+    {
+        path: 'select-collapse', component: SelectCollapseDemoComponent
+    },
+    {
+        path: 'option-width', component: SelectOptionWidthDemoComponent
+    },
+    {
+        path: 'value-change', component: SelectValueChangeDemoComponent
+    }
 ];
 
 @NgModule({
@@ -73,7 +98,12 @@ export const routerConfig = [
         SelectMultipleDemoModule,
         SelectSearchableDemoModule,
         SelectSizeDemoModule,
-        SelectClearableDemoModule
+        SelectClearableDemoModule,
+        MultipleSelectDemoModule,
+        SelectGroupDemoModule,
+        SelectCollapseDemoModule,
+        SelectOptionWidthDemoModule,
+        SelectValueChangeDemoModule
     ]
 })
 export class SelectDemoModule {

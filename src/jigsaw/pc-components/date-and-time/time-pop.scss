@@ -1,0 +1,67 @@
+@import "../../common/assets/scss/core/base";
+
+$time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
+
+.#{$time-select-prefix-cls} {
+    @include inline-block();
+    padding: 10px 6px;
+    position: relative;
+    border-radius: $border-radius-base;
+
+    &-content {
+        &-hour,
+        &-minute,
+        &-second {
+            width: 314px;
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+
+            li {
+                float: left;
+                width: 26px;
+                height: 26px;
+                margin: 0 4px;
+                border-radius: $border-radius-base;
+                line-height: 26px;
+                text-align: center;
+                cursor: pointer;
+
+                &:hover {
+                    background: $bg-hover;
+                }
+
+                &.#{$time-select-prefix-cls}-isSelected {
+                    background: $brand-default;
+                    color: $font-color-white;
+                }
+
+                &.#{$time-select-prefix-cls}-disabled {
+                    &,
+                    &:hover {
+                        background: none;
+                        color: $font-color-disabled;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+
+    &-control {
+        @include clearfix();
+        position: absolute;
+        bottom: 12px;
+        right: 20px;
+
+        span {
+            float: right;
+            color: $primary-default;
+            cursor: pointer;
+
+            &:hover {
+                color: $primary-active;
+            }
+        }
+    }
+}

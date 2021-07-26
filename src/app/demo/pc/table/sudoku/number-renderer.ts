@@ -1,33 +1,32 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
-import {PopupService} from "jigsaw/common/service/popup.service";
+import {Component, OnDestroy, OnInit, Injector} from "@angular/core";
+import {TableCellRendererBase, PopupService} from "jigsaw/public_api";
 import {NumberSelectPad} from "./number-select-pad";
 import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, PUZZLE_RESET} from "./utils";
 
 @Component({
     template: `
-        <div (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
+        <div class="demo-container" (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
              (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
             {{cellData}}
         </div>
     `,
     styles: [`
-        div {
+        .demo-container {
             font-size: 22px;
             text-align: center;
             line-height: 48px;
             cursor: pointer;
             height: 48px;
-            margin: 1px -7px 1px -7px;
+            width: 48px;
         }
     `]
 })
 export class NumberRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
-    constructor(public popupService: PopupService) {
-        super();
+    constructor(public popupService: PopupService, protected _injector: Injector) {
+        super(_injector);
     }
 
-    bgColor = '#ddd';
+    bgColor = '#bfbfbf';
     fontColor = '#33a5dd';
     popupInfo = null;
     conflicted = false;
@@ -48,8 +47,8 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
             posReviser: (pos) => {
                 // 单击右上角的时候，出现数字盘超出屏幕之外的问题，通过这个函数来修正
                 // `pos`是自动计算出来的值，有可能存在错误
-                pos.top = pos.top > 0 ? pos.top: 0;
-                pos.left = pos.left > 0 ? pos.left: 0;
+                pos.top = pos.top > 0 ? pos.top : 0;
+                pos.left = pos.left > 0 ? pos.left : 0;
                 return pos;
             }
         };
@@ -99,7 +98,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
         }
         const groupedCol = Math.floor(this.column / 3);
         const groupedRow = Math.floor(this.row / 3);
-        return (groupedCol + groupedRow) % 2 == 0 ? '#fff' : '#ddd';
+        return (groupedCol + groupedRow) % 2 == 0 ? '#fff' : '#bfbfbf';
     }
 
     ngOnInit() {

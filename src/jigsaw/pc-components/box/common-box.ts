@@ -1,15 +1,16 @@
-import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2} from "@angular/core";
+import { ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive } from "@angular/core";
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBox} from "./box";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 
+@Directive()
 export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy {
     public element: HTMLElement;
 
     constructor(private _elementRef: ElementRef, protected renderer: Renderer2, protected zone: NgZone) {
-        super();
+        super(zone);
         this.element = _elementRef.nativeElement;
     }
 
@@ -44,6 +45,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         ['stretch', 'stretch'],
     ]);
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public type: string;
 
@@ -52,6 +56,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     private _justify: string;
     private _align: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get direction(): string {
         return this._direction;
@@ -70,6 +77,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         this._checkFlexByOwnProperty(value);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get justify(): string {
         return this._justify;
@@ -83,6 +93,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         this._checkFlexByOwnProperty(value);
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get align(): string {
         return this._align;
@@ -101,6 +114,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     private _grow: number;
     private _shrink: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get order(): number {
         return this._order;
@@ -111,6 +127,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         this.renderer.setStyle(this.element, 'order', Number(value));
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get grow(): number {
         return this._grow;
@@ -124,6 +143,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         });
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get shrink(): number {
         return this._shrink;
@@ -140,13 +162,13 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
-            this.callLater(() => this.type = 'flex');
+            this.runMicrotask(() => this.type = 'flex');
         }
     }
 
     protected checkFlexByChildren() {
         if (this.childrenBox.length > 0 && this.type != 'flex') {
-            this.callLater(() => this.type = 'flex');
+            this.runMicrotask(() => this.type = 'flex');
         }
     }
 
@@ -170,11 +192,15 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 }
 
+@Directive()
 export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
 
     private _rawOffsets: number[];
 
+    /**
+     * @internal
+     */
     public _isFixedSize: boolean;
 
     protected removeElementScrollEvent: CallbackRemoval;

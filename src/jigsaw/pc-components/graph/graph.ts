@@ -12,6 +12,8 @@ import {
     OnInit,
     Output,
     Renderer2,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from "@angular/core";
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
@@ -32,6 +34,7 @@ try {
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
     // TODO 当前属性判断不正确, 当前判断是是否option为空
@@ -70,6 +73,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): AbstractGraphData {
         return this._data;
@@ -92,6 +98,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -106,6 +115,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get height(): string {
         return this._height;
@@ -122,6 +134,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _globalTheme: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get globalTheme() {
         if (!this._globalTheme) {
@@ -139,7 +154,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
+                private _changeDetectorRef: ChangeDetectorRef) {
         super();
         this._host = this._elementRef.nativeElement;
     }
@@ -163,6 +179,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
+        this._changeDetectorRef.markForCheck();
     }
 
     public resize(): void {
@@ -192,7 +209,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private _needListenWindowResize(): boolean {
-        return !!((this.width && this.width[this.width.length - 1] == '%') ||
+        return ((this.width && this.width[this.width.length - 1] == '%') ||
             (this.height && this.height[this.height.length - 1] == '%') || !this.width);
     }
 

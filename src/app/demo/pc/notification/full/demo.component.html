@@ -29,10 +29,10 @@
 
     <div class="row">
         <label>图标</label>
-        <jigsaw-input [(value)]="icon" width="195px" placeholder="输入图标（可选）"
-                      jigsawTooltip="图标的class字符串，支持font-awesome和iconfont">
+        <jigsaw-input [(value)]="icon" width="calc(100% - 67px)" placeholder="输入图标（可选）"
+                      title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
         </jigsaw-input>
-        <span>例如：fa fa-info</span>
+        <p style="margin-left: 34px;">例如：iconfont iconfont-e23e</p>
     </div>
 
     <div class="row">
@@ -61,6 +61,11 @@
     <jigsaw-button (click)="showNormal()">最简洁的用法</jigsaw-button>
     <jigsaw-button (click)="showCaption()">带标题的简洁用法</jigsaw-button>
     <jigsaw-button (click)="showButtons()">带交互按钮用法</jigsaw-button>
+    <br>
+    <jigsaw-button width="166px" (click)="showSuccess()">弹出成功消息框</jigsaw-button>
+    <jigsaw-button width="167px" (click)="showError()">弹出错误消息框</jigsaw-button>
+    <jigsaw-button width="166px" (click)="showWarn()">弹出警告消息框</jigsaw-button>
+    <jigsaw-button width="167px" (click)="showInfo()">弹出消息提示框</jigsaw-button>
     <br>
     <jigsaw-button width="350px" (click)="customizeInteractive()">自定义交互用法</jigsaw-button>
 </div>

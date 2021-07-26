@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4 style="font-size: 20px; margin-bottom: 20px;">
+    <span>grItems</span>
+    <span style="margin-left: 142px">shortcuts</span>
+</h4>
+
+<jigsaw-range-date-time-picker [(beginDate)]="beginDate" [grItems]="grItems" [(endDate)]="endDate" (change)="onChange($event)">
+</jigsaw-range-date-time-picker><br>
+
+<p style="font-size: 14px; margin: 10px 0 20px 0">{{beginDate | json}} - {{endDate | json}}</p>

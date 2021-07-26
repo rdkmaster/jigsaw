@@ -1,9 +1,6 @@
 import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/mobile-components/list-and-tile/group-common";
-import {JigsawMobileListLite} from "jigsaw/mobile-components/list-and-tile/list-lite";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
-import {TableData} from "jigsaw/common/core/data/table-data";
 import {HttpClient} from "@angular/common/http";
+import {GroupOptionValue, JigsawMobileListLite, ArrayCollection, TableData} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -12,35 +9,35 @@ import {HttpClient} from "@angular/common/http";
 export class ListLiteBasicDemoComponent {
     goodsList: GroupOptionValue[] = [
         {
-            logo: 'bicycle',
+            logo: 'e187',
             name: 'bicycle',
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
         },
         JigsawMobileListLite.SEPARATOR, // 配置分隔线
         {
-            logo: 'camera',
+            logo: 'e2e7',
             name: 'camera',
             desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
         },
         {
-            logo: 'car',
+            logo: 'e18a',
             name: 'car',
             desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.',
             disabled: true // 配置不可点击
         },
         {
-            logo: 'futbol-o',
+            logo: 'e534',
             name: 'football',
             desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
         },
         JigsawMobileListLite.SEPARATOR,
         {
-            logo: 'book',
+            logo: 'e565',
             name: 'book',
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
         {
-            logo: 'puzzle-piece',
+            logo: 'e6ca',
             name: 'puzzle-piece',
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },

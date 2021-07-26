@@ -1,7 +1,21 @@
 import {
-    Component, Input, ViewContainerRef, TemplateRef, ViewChild, ElementRef,
-    AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
-    ComponentRef, OnDestroy, Output, EventEmitter
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    Directive,
+    ElementRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    TemplateRef,
+    Type,
+    ViewChild,
+    ViewContainerRef
 } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 
@@ -13,22 +27,34 @@ export class TabTitleInfo {
     title: string
 }
 
-export abstract class JigsawTabBase extends AbstractJigsawComponent implements OnDestroy {
+@Directive()
+export abstract class JigsawTabItemBase extends AbstractJigsawComponent implements OnDestroy {
 
-    constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
+    protected constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
         super()
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public key: number;
 
+    /**
+     * string类型是在直接使用tab-bar时传入的
+     * 而模板类型，是在tab中使用tab-bar，自动传入的TemplateRef实例
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable> | string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: Object;
 
-    @ViewChild('body', {read: ViewContainerRef, static: false})
+    @ViewChild('body', {read: ViewContainerRef})
     protected _body: ViewContainerRef;
 
     /**
@@ -37,29 +63,43 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
     public _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
 
     protected _insert(): void {
-        if (!this._tabItemRef) {
-            this._tabItemRef = this._createTab(this.tabItem, this.initData);
-            this._changeDetector.detectChanges()
+        if (this._$isSimpleTabItem || !!this._tabItemRef) {
+            return;
         }
+        // 这里tabItem不可能是字符串
+        const tabItem = <TemplateRef<any> | Type<IDynamicInstantiatable>>this.tabItem;
+        this._tabItemRef = this._createTab(tabItem, this.initData);
+        this._changeDetector.detectChanges();
     }
 
     protected _destroy(): void {
         if (this._tabItemRef) {
             this._tabItemRef.destroy();
-            this._tabItemRef = null
+            this._tabItemRef = null;
         }
     }
 
     protected _createTab(what: Type<IDynamicInstantiatable> | TemplateRef<any>,
                          initData: Object): EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable> {
+        if (this._$isSimpleTabItem) {
+            return undefined;
+        }
         if (what instanceof TemplateRef) {
             return this._body.createEmbeddedView(what, initData);
-        } else if (what) {
+        }
+        if (what) {
             const factory = this._componentFactory.resolveComponentFactory(what);
             const componentRef = this._body.createComponent(factory);
             componentRef.instance.initData = initData;
             return componentRef;
         }
+    }
+
+    /**
+     * @internal
+     */
+    public get _$isSimpleTabItem(): boolean {
+        return typeof this.tabItem == 'string';
     }
 
     ngOnDestroy() {
@@ -73,11 +113,16 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements O
 @Component({
     selector: 'jigsaw-tab-label',
     template: `
+        <div *ngIf="_$isSimpleTabItem; else body">
+            <span *ngIf="icon" [ngClass]="icon"></span>
+            <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
+        </div>
         <ng-template #body></ng-template>
         <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">&times;</span>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
+export class JigsawTabLabel extends JigsawTabItemBase implements AfterViewInit {
 
     constructor(public elementRef: ElementRef,
                 protected _changeDetector: ChangeDetectorRef,
@@ -85,8 +130,23 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
         super(_changeDetector, _componentFactory)
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public editable: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public htmlContext: any;
 
     @Output()
     public remove = new EventEmitter<number>();
@@ -118,9 +178,10 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this._insert()
+        if (!this._$isSimpleTabItem) {
+            this._insert();
+        }
     }
-
 }
 
 /**
@@ -135,19 +196,26 @@ export class JigsawTabLabel extends JigsawTabBase implements AfterViewInit {
     },
     template: `
         <ng-template #body></ng-template>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
+export class JigsawTabContent extends JigsawTabItemBase implements AfterViewInit {
 
     constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
         super(_changeDetector, _componentFactory)
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public lazy: boolean;
 
     private _isActive: boolean;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get isActive(): boolean {
         return this._isActive;
@@ -166,5 +234,4 @@ export class JigsawTabContent extends JigsawTabBase implements AfterViewInit {
             this._insert();
         }
     }
-
 }

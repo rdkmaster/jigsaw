@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
-import {PopupOptions, PopupPositionValue} from "jigsaw/common/service/popup.service";
+import {PopupOptions, PopupPositionValue} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        .fa-bars {
+        .iconfont-e9d8 {
             margin: 40px
         }
 

@@ -1,14 +1,6 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {debounceTime} from "rxjs/operators";
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
-import {combineLatest} from "rxjs";
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
-import {JigsawInput} from "jigsaw/pc-components/input/input";
+import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -16,7 +8,7 @@ import {JigsawInput} from "jigsaw/pc-components/input/input";
 
 export class GraphFormatterComponent implements OnInit,AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph", {static: false}) graph: JigsawGraph;
+    @ViewChild("graph") graph: JigsawGraph;
 
 
     ngOnInit() {
@@ -86,6 +78,11 @@ export class GraphDataDemo extends AbstractGraphData {
             },
             legend: {
                 data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+                textStyle: {
+                    color: '#fff'
+                },
+                top: 20,
+                left: 'center'
             },
             toolbox: {
                 //工具栏，内置导出图片，数据视图，动态类型切换，数据区域缩放，重置
@@ -95,6 +92,15 @@ export class GraphDataDemo extends AbstractGraphData {
                         title:"Restore",
                     },
                     right:10
+                },
+                iconStyle: {
+                    color: '#fff',
+                    borderColor: '#fff'
+                },
+                emphasis:{
+                    iconStyle: {
+                        color: '#fff'
+                    }
                 }
             },
             grid: {
@@ -198,4 +204,3 @@ export class GraphDataDemo extends AbstractGraphData {
         return obj;
     }
 }
-

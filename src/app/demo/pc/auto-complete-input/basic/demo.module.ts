@@ -1,16 +1,15 @@
 import {NgModule} from "@angular/core";
+import {JigsawAutoCompleteInputModule, JigsawSwitchModule, JigsawInputModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-
 import {AutoCompleteInputBasicDemoComponent} from "./demo.component";
-import {JigsawAutoCompleteInputModule} from "jigsaw/pc-components/input/auto-complete-input";
-import {JigsawSwitchModule} from "jigsaw/pc-components/switch/index";
-import {JigsawInputModule} from "jigsaw/pc-components/input/input";
+
+import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     declarations: [AutoCompleteInputBasicDemoComponent],
     imports: [
         JigsawAutoCompleteInputModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawInputModule
-    ],
+    , JigsawHeaderModule],
     exports: [AutoCompleteInputBasicDemoComponent]
 })
 export class AutoCompleteInputBasicDemoModule {

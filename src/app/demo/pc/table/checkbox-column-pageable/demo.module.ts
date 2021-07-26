@@ -1,17 +1,18 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {
+    JigsawTableModule, TableCellCheckboxRenderer, TableHeadCheckboxRenderer, JigsawPaginationModule,
+    JigsawTagModule, JigsawButtonModule
+} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawPaginationModule} from "jigsaw/pc-components/pagination/pagination";
-import {JigsawTagModule} from "jigsaw/pc-components/tag/tag";
 import {TableAddCheckboxColumnPageableDemoComponent} from './demo.component';
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawTagModule, JigsawDemoDescriptionModule, CommonModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawTagModule, JigsawDemoDescriptionModule, CommonModule, JigsawButtonModule, JigsawHeaderModule],
     declarations: [TableAddCheckboxColumnPageableDemoComponent],
-    exports: [TableAddCheckboxColumnPageableDemoComponent],
-    entryComponents: [TableCellCheckboxRenderer, TableHeadCheckboxRenderer]
+    exports: [TableAddCheckboxColumnPageableDemoComponent]
 })
 export class TableAddCheckboxColumnPageableDemoModule {
 }

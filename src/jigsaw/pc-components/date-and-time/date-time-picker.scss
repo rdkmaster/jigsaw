@@ -1,0 +1,93 @@
+@import "../../common/assets/scss/core/base";
+
+$date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
+
+.#{$date-time-prefix-cls} {
+    @include inline-block();
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
+    background: $bg-component;
+    font-size: $font-size-base;
+    user-select: none;
+
+    jigsaw-date-picker {
+        border: none;
+    }
+
+    &-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 8px 8px;
+
+        j-time-picker {
+            max-width: 124px;
+        }
+
+        jigsaw-button {
+            min-width: 60px;
+        }
+    }
+
+    &-gr-switch {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        padding: 8px 8px 0;
+        background: $bg-container;
+
+        & > span {
+            display: inline-block;
+            flex: 1;
+            height: 24px;
+            line-height: 22px;
+            background: $bg-body;
+            border: 1px solid $border-color-default;
+            cursor: pointer;
+
+            &:first-child {
+                border-top-left-radius: $border-radius-base;
+                border-bottom-left-radius: $border-radius-base;
+            }
+
+            &:last-child {
+                border-top-right-radius: $border-radius-base;
+                border-bottom-right-radius: $border-radius-base;
+            }
+
+            &.active {
+                background-color: $brand-lighten;
+                color: $brand-default;
+                border-color: $brand-default;
+            }
+        }
+    }
+
+    &-error {
+        border-color: $error-default;
+    }
+
+    &-disabled {
+        position: relative;
+        &:before {
+            content: " ";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: $bg-disabled;
+            opacity: 0.7;
+            z-index: $zindex-level-1;
+            cursor: not-allowed;
+        }
+    }
+
+    &-confirm {
+        max-width: 60px;
+    }
+}

@@ -1,14 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/common/service/loading.service";
-import {PopupInfo} from "jigsaw/common/service/popup.service";
-import {JigsawFontLoading} from "jigsaw/common/components/loading/loading";
+import {LoadingService, PopupInfo, JigsawFontLoading} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class FontLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;

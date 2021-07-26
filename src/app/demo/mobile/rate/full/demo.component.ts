@@ -19,4 +19,3 @@ export class RateFullComponent {
     summary: string = '演示了Rate组件的多种用法';
     description: string = '';
 }
-

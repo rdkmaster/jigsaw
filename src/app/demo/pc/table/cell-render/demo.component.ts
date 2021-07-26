@@ -1,8 +1,6 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellSelectRenderer} from "jigsaw/pc-components/table/table-renderer";
+import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
 import {OfficeHeaderRenderer} from "./renderers";
 
 @Component({
@@ -10,7 +8,7 @@ import {OfficeHeaderRenderer} from "./renderers";
 })
 export class TableSetCellRenderDemoComponent {
 
-    @ViewChild("jobCellRender", {static: false}) jobCellRender: TemplateRef<any>;
+    @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
 
@@ -53,7 +51,3 @@ export class TableSetCellRenderDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-
-

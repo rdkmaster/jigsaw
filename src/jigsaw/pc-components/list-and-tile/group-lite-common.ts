@@ -1,21 +1,39 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import {EventEmitter, Input, Output} from "@angular/core";
+import {Directive, EventEmitter, HostListener, Injector, Input, Output, ChangeDetectorRef} from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@Directive()
 export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent implements ControlValueAccessor {
-    @Input() public valid: boolean = true;
+    constructor(
+        protected _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super()
+    }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public valid: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
-    /**
-     * 设置对象的标识
-     */
     private _trackItemBy: string | string[];
 
+    /**
+     * 设置对象的标识
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackItemBy(): string | string[] {
         if (this.data && (typeof this.data[0] == 'string' || typeof this.data[0] == 'number')) {
@@ -32,6 +50,8 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
 
     /**
      * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public labelField: string = 'label';
@@ -39,21 +59,23 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     /**
      * 多选开关
      *
+     * @NoMarkForCheckRequired
      */
-    @Input() public multipleSelect: boolean;
+    @Input()
+    public multipleSelect: boolean;
 
     /**
      * 选择的结果集
-     *
      */
+    @RequireMarkForCheck()
     @Input()
     public selectedItems: ArrayCollection<any> | any[];
 
     /**
      * 选择结果发生变化时，向外面发送事件
-     *
      */
-    @Output() public selectedItemsChange = new EventEmitter<any[]>();
+    @Output()
+    public selectedItemsChange = new EventEmitter<any[]>();
 
     public get _$trackByFn() {
         return CommonUtils.toTrackByFunction(this._trackItemBy);
@@ -71,11 +93,13 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
         super.ngOnInit();
     }
 
-    private _propagateChange: any = () => {
+    protected _propagateChange: any = () => {
+    };
+    protected _onTouched: any = () => {
     };
 
     public writeValue(value: any): void {
-
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -83,6 +107,11 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
     }
 
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
+    }
 }

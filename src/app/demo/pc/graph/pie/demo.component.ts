@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {PieGraphData, PieGraphDataByRow} from "jigsaw/common/core/data/graph-data";
+import {PieGraphData, PieGraphDataByRow} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
@@ -41,7 +41,7 @@ export class PieGraphDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用饼图';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 /* 模拟请求代码 start */

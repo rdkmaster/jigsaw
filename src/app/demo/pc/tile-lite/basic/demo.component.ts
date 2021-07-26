@@ -1,5 +1,5 @@
 import {AfterContentInit, Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -40,4 +40,3 @@ export class TileLiteBasicDemoComponent implements AfterContentInit {
     summary: string = '';
     description: string = '';
 }
-

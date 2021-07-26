@@ -1,8 +1,6 @@
 import {debounceTime, map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
-
-
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
@@ -21,6 +19,7 @@ import {
     ViewportData
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
+import {SimpleNode, SimpleTreeData} from "./tree-data";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -365,7 +364,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
 
 /**
  * 这是实际使用时做常用的表格数据对象，它具备服务端分页、服务端排序、服务端过滤能力。
- * 详细用法请参考[这个demo]($demo=pc/table/pageable)。
+ * 详细用法请参考[这个demo]($demo=table/pageable)。
  *
  * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
  * 更多信息请参考`PagingInfo.pagingServerUrl`
@@ -555,7 +554,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
     }
 
-    private _updatePagingInfo(data: any): void {
+    protected _updatePagingInfo(data: any): void {
         if (!data.hasOwnProperty('paging')) {
             return;
         }
@@ -653,6 +652,43 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._filterSubject = null;
         this._sortSubject.unsubscribe();
         this._sortSubject = null;
+    }
+}
+
+export class DirectPageableTableData extends PageableTableData implements IServerSidePageable, IFilterable, ISortable {
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this.http.request(options.method, options.url, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
+            .subscribe(
+                tableData => this.ajaxSuccessHandler(tableData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
     }
 }
 
@@ -1093,7 +1129,7 @@ export class BigTableData extends PageableTableData implements ISlicedData {
 /**
  * `LocalPageableTableData`具备浏览器本地内存中进行分页、排序、过滤能力，
  * 受限于浏览器内存的限制，无法操作大量的数据，建议尽量采用`PageableTableData`以服务端分页的形式展示数据。
- * 详细用法请参考[这个demo]($demo=pc/table/local-paging-data)。
+ * 详细用法请参考[这个demo]($demo=table/local-paging-data)。
  *
  * 相关的表格数据对象：
  * - {@link PageableTableData} 适用于需要在服务端进行分页、过滤、排序的场景，这是最常用的一个数据对象；
@@ -1125,7 +1161,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         })
     }
 
-    private _sortAndPaging() {
+    protected _sortAndPaging() {
         if (this.sortInfo) {
             super.sortData(this.filteredData, this.sortInfo);
         }
@@ -1260,5 +1296,218 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.sortInfo = null;
         this.filteredData = null;
         this.originalData = null;
+    }
+}
+
+/**
+ * 这是一个支持浏览器内部分页的树表数据对象，树表可以实现展开后关闭某些行，从而在衣蛾表格里展示具有层次结构的数据
+ */
+export class PageableTreeTableData extends LocalPageableTableData {
+    /**
+     * 这是一个内部对象，在了解树表的实现原理之前，请勿对其进行操作
+     *
+     * @internal
+     */
+    public data: TableDataMatrix = [];
+    /**
+     * 树表的数据，这是一个有层次化结构的`SimpleTreeData`类型数据，必须包含这些属性：
+     * - data：一个字符串数组，这是表格里的一行数据，数组的个数必须与表格的列数严格一致
+     * - open：一个布尔值，表示当前节点是否打开
+     * - isParent：一个布尔值，表示当前节点是否为一个可展开的节点，一般不需要主动设置这个值，Jigsaw会自行根据数据层次关系自动推断，
+     * 但是在某些情况下，一个层级没有下级节点，但是业务上必须渲染为可展开的节点时，则必须将这个属性设置为true
+     *
+     * $demo = table/tree-table
+     */
+    public originalTreeData: SimpleTreeData = new SimpleTreeData();
+    public filteredTreeData: SimpleTreeData = new SimpleTreeData();
+    /**
+     * 这是一个非常重要的标志，用于告诉Jigsaw当前表格的哪一列用于渲染成树节点，一般来说都是第一列，但是也可根据业务需要随意修改
+     *
+     * $demo = table/tree-table
+     */
+    public treeField: number = 0;
+
+    private static _getData(node: SimpleNode, field: number, id: string = '', data = []): any[] {
+        if (!node || field == -1) {
+            return data;
+        }
+        if (node.data) {
+            let row = node.data.concat();
+            row[field] = {
+                id: id,
+                open: node.open,
+                isParent: node.isParent || (node.nodes && node.nodes.length),
+                data: row[field]
+            };
+            data.push(row);
+        }
+        // !node.data这种情况是为了加入自动创建的根节点
+        if (node.nodes && node.nodes.length && (node.open || !node.data)) {
+            node.nodes.forEach((childNode, idx) => {
+                // 这样定义id值，在树层级超过10级时，会有bug
+                PageableTreeTableData._getData(childNode, field, id + idx, data);
+            });
+        }
+        return data;
+    }
+
+    /**
+     * 从数据结构推断此数据是否是一个树表数据对象
+     * @param data
+     */
+    public static isTreeTableData(data: any): boolean {
+        return data && data.hasOwnProperty('treeData') && data.hasOwnProperty('treeField') &&
+            data.hasOwnProperty('header') && data.header instanceof Array &&
+            data.hasOwnProperty('field') && data.field instanceof Array;
+    }
+
+    protected isDataValid(data): boolean {
+        return PageableTreeTableData.isTreeTableData(data);
+    }
+
+    public clear(): void {
+        super.clear();
+        this.originalTreeData = new SimpleTreeData();
+        this.filteredTreeData = new SimpleTreeData();
+    }
+
+    private _getTreeField(field: string | number): number {
+        const index = typeof field == 'number' ? field : this.field.findIndex(f => f == field);
+        return isNaN(index) || index < 0 ? 0 : index;
+    }
+
+    protected _fromObject(data: any): TableDataBase {
+        if (!PageableTreeTableData.isTreeTableData(data)) {
+            throw new Error('invalid raw TreeTableData object!');
+        }
+        this.clear();
+        TableDataBase.arrayAppend(this.field, data.field);
+        TableDataBase.arrayAppend(this.header, data.header);
+        this.originalTreeData.fromObject(data.treeData);
+        this.filteredTreeData.fromObject(data.treeData);
+        this.treeField = this._getTreeField(data.treeField);
+        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.originalTreeData, this.treeField));
+        this.refreshData();
+        this.invokeChangeCallback();
+        return this;
+    }
+
+    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: DataFilterInfo): void;
+    /**
+     * @internal
+     */
+    public filter(term, fields?: (string | number)[]): void {
+        let filterTerm: Function | string;
+        let numberFields: number[];
+        if (term instanceof Function) {
+            filterTerm = term;
+        } else {
+            if (term instanceof DataFilterInfo) {
+                filterTerm = term.key;
+                fields = term.field
+            } else {
+                filterTerm = term;
+            }
+            if (fields && fields.length != 0) {
+                if (typeof fields[0] === 'string') {
+                    numberFields = [];
+                    (<string[]>fields).forEach(field => {
+                            numberFields.push(this.field.findIndex(item => item == field))
+                        }
+                    )
+                } else {
+                    numberFields = <number[]>fields;
+                }
+            }
+        }
+        if(this.originalTreeData.nodes && this.originalTreeData.nodes.length) {
+            const curAllData = this.originalTreeData.nodes.map(node => node.data);
+            this.filteredTreeData.nodes = this.originalTreeData.nodes
+                .map((node: SimpleNode, index) => this._findRequiredNode(node, index, curAllData, filterTerm, numberFields))
+                .filter(node => !!node);
+        } else {
+            this.filteredTreeData.nodes = [];
+        }
+        this._refreshTreeAndTable();
+        this._sortAndPaging();
+    }
+
+    private _findRequiredNode(node: SimpleNode, index: number, array: any[], filterTerm: Function | string, numberFields: number[]) {
+        let requiredNode;
+        if (filterTerm instanceof Function) {
+            if (filterTerm(node.data, index, array)) {
+                requiredNode = {...node};
+                delete requiredNode.nodes;
+            }
+        } else {
+            if (numberFields && numberFields.length) {
+                const filtered = (node.data || [])
+                    .filter((item, index) => CommonUtils.isDefined(numberFields.find(num => num == index)))
+                    .filter(item => (item + '').indexOf(filterTerm) != -1);
+                if (filtered.length != 0) {
+                    requiredNode = {...node};
+                    delete requiredNode.nodes;
+                }
+            } else {
+                const filtered = (node.data || []).filter(item => (item + '').indexOf(filterTerm) != -1);
+                if (filtered.length != 0) {
+                    requiredNode = {...node};
+                    delete requiredNode.nodes;
+                }
+            }
+        }
+        if (node.nodes && node.nodes.length) {
+            const curAllData = node.nodes.map(node => node.data);
+            const nodes = node.nodes
+                .map((n: SimpleNode, i) => this._findRequiredNode(n, i, curAllData, filterTerm, numberFields))
+                .filter(node => !!node);
+            if(nodes.length) {
+                requiredNode = requiredNode ? requiredNode : {...node};
+                requiredNode.nodes = nodes;
+            }
+        }
+        return requiredNode;
+    }
+
+    private static _getNodeByIndexes(treeData: SimpleNode, indexes: (number | string)[]): SimpleNode {
+        let node: SimpleNode = treeData;
+        indexes.forEach(index => {
+            if (!node.nodes) {
+                return;
+            }
+            node = node.nodes[index];
+        });
+        return node
+    }
+
+    /**
+     * 调用这个方法可以通过编程方式展开或者关闭某一个层级
+     *
+     * @param indexes
+     * @param open
+     */
+    public toggleOpenNode(indexes: (number | string)[], open: boolean) {
+        let node = PageableTreeTableData._getNodeByIndexes(this.filteredTreeData, indexes);
+        node.open = open;
+        this._refreshTreeAndTable();
+    }
+
+    private _refreshTreeAndTable() {
+        this.data.splice(0, this.data.length);
+        TableDataBase.arrayAppend(this.data, PageableTreeTableData._getData(this.filteredTreeData, this.treeField));
+        let currentPage = this.pagingInfo.currentPage;
+        this.refreshData();
+        // 保持原来所在页
+        this.changePage(currentPage);
+        this.invokeChangeCallback();
+    }
+}
+
+export class TreeTableData extends PageableTreeTableData {
+    constructor() {
+        super();
+        this.pagingInfo.pageSize = Infinity;
     }
 }

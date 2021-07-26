@@ -37,6 +37,9 @@ export class JigsawScrollHandle implements OnInit {
 
     private _value: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value() {
         return this._value;
@@ -196,14 +199,18 @@ export class JigsawScrollHandle implements OnInit {
 })
 export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, private _zone: NgZone) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone) {
         super();
     }
 
-    @ViewChild(JigsawScrollHandle, {static: false}) private _sliderHandle: JigsawScrollHandle;
+    @ViewChild(JigsawScrollHandle)
+    private _sliderHandle: JigsawScrollHandle;
 
     private _value: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): number {
         return this._value;
@@ -233,6 +240,7 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     /**
      * 可选范围的最小值
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get min() {
@@ -246,8 +254,9 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     private _max: number = 100;
 
     /**
-     * 输入范围的可选最大值.
+     * 输入范围的可选最大值
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get max() {
@@ -264,8 +273,9 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     private _step: number = 1;
 
     /**
-     * 每次变化的最小值, 最小支持小数点后两位.
+     * 每次变化的最小值, 最小支持小数点后两位
      *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get step() {
@@ -297,6 +307,8 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
 
     /**
      * 垂直滑动条 默认 false
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public vertical: boolean = false;
@@ -312,15 +324,13 @@ export class JigsawScrollbar extends AbstractJigsawComponent implements OnInit, 
     }
 
     ngAfterViewInit() {
-        this.callLater(() => {
-            if (this.vertical) {
-                this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
-                    this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetHeight + 'px');
-            } else {
-                this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
-                    this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
-            }
-        });
+        if (this.vertical) {
+            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-bottom',
+                this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetHeight + 'px');
+        } else {
+            this._renderer.setStyle(this._elementRef.nativeElement, 'padding-right',
+                this._sliderHandle._elementRef.nativeElement.querySelector('.jigsaw-scrollbar-handle').offsetWidth + 'px');
+        }
     }
 
     private _removeResizeEvent: Function;

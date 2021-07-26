@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawFloatModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawFloatModule} from "jigsaw/common/directive/float";
 import {UserComponent} from "./user-component/user-component";
 import {FloatInitDataDemo} from "./demo.component";
 
@@ -10,8 +10,7 @@ import {FloatInitDataDemo} from "./demo.component";
     exports: [FloatInitDataDemo],
     imports: [
         JigsawFloatModule, JigsawDemoDescriptionModule, CommonModule
-    ],
-    entryComponents: [UserComponent]
+    ]
 })
 export class FloatInitDataDemoModule {
 }

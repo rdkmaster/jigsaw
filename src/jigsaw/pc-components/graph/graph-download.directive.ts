@@ -3,7 +3,8 @@ import {
     ElementRef,
     HostListener,
     Input,
-    OnDestroy
+    OnDestroy,
+    NgZone
 } from "@angular/core";
 import {AbstractJigsawViewBase} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -16,8 +17,8 @@ import echarts from "echarts";
     selector: '[j-graph-download], [jigsaw-graph-download], [jigsawGraphDownload]'
 })
 export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase implements OnDestroy {
-    constructor(private _elementRef: ElementRef) {
-        super();
+    constructor(private _elementRef: ElementRef, protected _zone: NgZone) {
+        super(_zone);
     }
 
     private _rollOutDenouncesTimer: any = null;
@@ -35,9 +36,15 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
 
     private _addButton: HTMLElement;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public jigsawGraphDownloadExportFileName: string = "graphs.zip";
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public jigsawGraphDownloadTooltip: string = '';
 
@@ -59,7 +66,7 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
                 <div style="width: 100%;height: 0;position: relative;z-index: 999">
                     <div style="width: 15px;height: 20px;background: #41addc;color: #ffffff;text-align: center;cursor: pointer;position: absolute;right: 10px;top:8px"
                         title="${this.jigsawGraphDownloadTooltip}">
-                    <span class="fa fa-download"></span>
+                    <span class="iconfont iconfont-e1c7"></span>
                     </div>
                 <div>`;
         this._addButton.children[0].addEventListener('click', () => {
@@ -69,9 +76,11 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
     }
 
     private _addRollOutDenouncesTimer() {
-        this._rollOutDenouncesTimer = this.callLater(() => {
-            this._closePopup();
-        }, 400);
+        this._zone.runOutsideAngular(() => {
+            this._rollOutDenouncesTimer = this.callLater(() => {
+                this._closePopup();
+            }, 400);
+        });
     }
 
     ngOnDestroy() {
@@ -137,6 +146,9 @@ export class JigsawGraphDownloadDirective extends AbstractJigsawViewBase impleme
         return codes;
     }
 
+    /**
+     * @internal
+     */
     public _$download() {
         let zip = new JSZip();
         const base64Codes = this._getGraphBase64Codes();

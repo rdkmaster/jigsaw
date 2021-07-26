@@ -38,7 +38,6 @@ function processDemoSet(demoSetFolder) {
 }
 
 function patchDemo(demoPath) {
-    console.log(`Patching ${demoPath} ...`);
     patchDemoTs(demoPath);
     patchDemoHtml(demoPath);
 }
@@ -59,8 +58,8 @@ function patchDemoTs(demoPath) {
     let end = match ? findQuoteEnd(match[2]) : -1;
     if (end === -1) {
         // 有可能是下面的方式引入的文本
-        // description: string = require('!!raw-loader!./readme.md');
-        const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\);?/);
+        // description: string = require('!!raw-loader!./readme.md').default;
+        const rMatch = match[2].match(/^require\(['"`]!!raw-loader!.+?['"`]\)\.default;?/);
         if (rMatch) {
             end = rMatch[0].length;
         } else {
@@ -75,8 +74,8 @@ function patchDemoTs(demoPath) {
 
     const allFiles = [];
     readAllFiles(demoPath);
-    const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}'),`).join('\n');
 
+    const entries = allFiles.map(file => `        "${file}": require('!!raw-loader!./${file}').default,`).join('\n');
     const part1 = cmpCode.substring(0, end);
     const part2 = cmpCode.substring(end).replace(/^\s*;?/, '');
     cmpCode = `${part1}\n    __codes: any = {\n${entries}\n    };\n` +

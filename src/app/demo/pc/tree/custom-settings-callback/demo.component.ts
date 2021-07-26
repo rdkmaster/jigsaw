@@ -1,15 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-
-
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
-import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
-import {ZTreeSettingSetting} from "jigsaw/pc-components/tree/ztree-types";
+import {SimpleTreeData, JigsawTreeExt, ZTreeSettingSetting} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
     setting: ZTreeSettingSetting = {

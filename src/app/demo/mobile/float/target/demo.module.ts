@@ -1,9 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {JigsawMobileRadioModule, JigsawFloatModule, JigsawMobileButtonBarModule} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawMobileRadioModule} from "jigsaw/mobile-components/radio/radio";
-import {JigsawFloatModule} from "jigsaw/common/directive/float";
-import {JigsawMobileButtonBarModule} from "jigsaw/mobile-components/list-and-tile/button-bar";
 import {UserComponent} from "./user-component/user-component";
 import {FloatTargetDemo} from "./demo.component";
 
@@ -12,8 +10,7 @@ import {FloatTargetDemo} from "./demo.component";
     exports: [FloatTargetDemo],
     imports: [
         JigsawFloatModule, JigsawMobileRadioModule, JigsawDemoDescriptionModule, JigsawMobileButtonBarModule, CommonModule
-    ],
-    entryComponents: [UserComponent]
+    ]
 })
 export class FloatTargetDemoModule {
 }

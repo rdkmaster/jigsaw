@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
-import {JigsawMobileInputModule} from "jigsaw/mobile-components/input/input";
+import {JigsawMobileButtonModule, JigsawMobileInputModule} from "jigsaw/mobile_public_api";
 import {TabContentComponent, TabContentDefine} from "./tabContent";
 
 const routes = [
@@ -17,8 +16,7 @@ const routes = [
     ],
     declarations: [
         TabContentComponent, TabContentDefine
-    ],
-    entryComponents: [TabContentDefine, TabContentComponent]
+    ]
 })
 export class TabMobileContentModule {
 }

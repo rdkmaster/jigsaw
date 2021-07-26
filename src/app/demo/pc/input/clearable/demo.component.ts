@@ -4,7 +4,7 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class InputClearableDemoComponent {
-    inputValue: any;
+    enabled: boolean;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
@@ -12,4 +12,3 @@ export class InputClearableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

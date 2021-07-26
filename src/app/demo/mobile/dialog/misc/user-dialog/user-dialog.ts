@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {DialogBase, JigsawMobileDialog} from "jigsaw/mobile-components/dialog/dialog";
+import {DialogBase, JigsawMobileDialog} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: 'user-dialog.html',
@@ -7,7 +7,7 @@ import {DialogBase, JigsawMobileDialog} from "jigsaw/mobile-components/dialog/di
 })
 export class UserDialogComponent extends DialogBase implements AfterViewInit {
     // 这个变量是父类所需，就照着这么写就行啦
-    @ViewChild(JigsawMobileDialog, {static: false}) public dialog: JigsawMobileDialog;
+    @ViewChild(JigsawMobileDialog) public dialog: JigsawMobileDialog;
 
     gotoGithub() {
         window.open('https://github.com/rdkmaster/jigsaw', '_blank');
@@ -17,4 +17,3 @@ export class UserDialogComponent extends DialogBase implements AfterViewInit {
         console.log(`input data is: ${this.initData.inputData}`);
     }
 }
-

@@ -1,0 +1,16 @@
+<div class="jigsaw-date-time-picker-gr-switch" *ngIf="grItems && grItems.length">
+    <span *ngFor="let item of grItems" (click)="_$changeGr(item)" [class.active]="item.value==gr">
+        {{item.label}}
+    </span>
+</div>
+<jigsaw-date-picker #datePicker [(date)]="_$date" (dateChange)="_$handleDateChange()" [gr]="_$dateGr" [markDates]="markDates"[firstWeekMustContains]="firstWeekMustContains"
+                    [limitStart]="_$dateLimitStart" [limitEnd]="_$dateLimitEnd" [rangeDate]="rangeDate" [weekStart]="weekStart"></jigsaw-date-picker>
+<div class="jigsaw-date-time-picker-bottom" *ngIf="!!_$timeGr">
+    <j-time-picker #timePicker height="24" [(value)]="_$time" (valueChange)="_$handleTimeChange()" [gr]="_$timeGr"
+                   popDirection="up" [limitStart]="_$timeLimitStartCur" [limitEnd]="_$timeLimitEndCur"
+                   [step]="step">
+    </j-time-picker>
+    <jigsaw-button *ngIf="showConfirmButton" class="jigsaw-date-time-picker-confirm" preSize="small" colorType="primary"
+                   (click)="_$confirm()">{{'date-time-picker.confirm' | translate}}</jigsaw-button>
+</div>
+

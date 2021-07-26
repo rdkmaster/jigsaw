@@ -1,14 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-
-
-import {SimpleTreeData} from "jigsaw/common/core/data/tree-data";
-import {JigsawTreeExt} from "jigsaw/pc-components/tree/tree-ext";
+import {SimpleTreeData, JigsawTreeExt} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt, {static: false}) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
 

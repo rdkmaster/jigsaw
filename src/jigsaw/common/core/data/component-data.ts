@@ -539,7 +539,7 @@ export class ComponentDataHelper {
         }
     }
 
-    private _timeout: any = null;
+    private _refreshDebounce: boolean;
     private _refreshCallbacks: DataRefreshCallback[] = [];
     private _changeCallbacks: DataRefreshCallback[] = [];
     private _ajaxStartCallbacks: AjaxSuccessCallback[] = [];
@@ -572,13 +572,14 @@ export class ComponentDataHelper {
     }
 
     public invokeRefreshCallback(): void {
-        if (this._timeout !== null) {
+        if (this._refreshDebounce) {
             return;
         }
-        this._timeout = setTimeout(() => {
-            this._timeout = null;
+        this._refreshDebounce = true;
+        Promise.resolve().then(() => {
+            this._refreshDebounce = false;
             this._refreshCallbacks.forEach(callback => CommonUtils.safeInvokeCallback(callback.context, callback.fn));
-        }, 0);
+        });
     }
 
     public invokeChangeCallback(): void {
@@ -612,7 +613,7 @@ export class ComponentDataHelper {
 }
 
 /**
- * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo=pc/pagination/with-page-info)
+ * 分页信息，在各个属性发生变化后，可以对外发出通知，参考[这个demo]($demo=pagination/with-page-info)
  */
 export class PagingInfo implements IEmittable {
     /**

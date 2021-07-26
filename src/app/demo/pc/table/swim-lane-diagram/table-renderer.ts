@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableCellRendererBase} from "jigsaw/public_api";
 
 /*
  * 泳道流程图
@@ -39,6 +39,3 @@ export class TableSwimLaneCell extends TableCellRendererBase {
         return fromNeIndex - toNeIndex < 0 ? 'left' : 'right';
     }
 }
-
-
-

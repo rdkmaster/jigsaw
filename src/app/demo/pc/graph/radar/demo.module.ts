@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
-import {JigsawGraphModule} from "jigsaw/pc-components/graph/index";
+import {CommonModule} from "@angular/common";
+import {JigsawGraphModule, JigsawHeaderModule} from "jigsaw/public_api";
 import {RadarGraphComponent} from "./demo.component";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {CommonModule} from "@angular/common";
 
 @NgModule({
     declarations: [RadarGraphComponent],
     exports: [RadarGraphComponent],
-    imports: [JigsawGraphModule, JigsawDemoDescriptionModule, CommonModule]
+    imports: [JigsawGraphModule, JigsawDemoDescriptionModule, CommonModule, JigsawHeaderModule]
 })
 export class RadarGraphModule {
 

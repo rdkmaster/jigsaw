@@ -1,21 +1,24 @@
 import {
+    AfterContentInit,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    Output,
+    ElementRef,
     EventEmitter,
     Input,
-    ViewChild,
-    ElementRef,
+    Output,
     Renderer2,
-    AfterViewInit,
-    ChangeDetectorRef
+    ViewChild
 } from "@angular/core";
-import {IPopupable, PopupOptions, PopupService, PopupInfo, PopupPositionType} from "../../common/service/popup.service";
+import {IPopupable, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
+import {JigsawTheme} from "../../common/core/theming/theme";
 
-export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
+export type MenuTheme = 'light' | 'dark' | 'navigation';
 
 export class MenuOptions {
     data?: SimpleTreeData;
@@ -60,7 +63,8 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              (jigsawCascadingMenuSelect)="onSelect($event)"
              (jigsawCascadingMenuClose)="close.emit()">
         </div>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawMenuHelper implements IPopupable {
     public answer: EventEmitter<any> = new EventEmitter<any>();
@@ -98,23 +102,24 @@ export class JigsawMenuHelper implements IPopupable {
                            (mouseenter)="_$mouseenter(index, node)"
                            (mouseleave)="_$mouseleave(index)"
                            [style.minHeight]="_$getMinHeight(node.label)">
-                <div class="menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.label,index,'menu-list-title')"
+                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')"
                      [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
-                    {{node.label}}
+                    <span>{{node.label}}</span>
                 </div>
                 <hr *ngIf="!node.label && _$realTheme != 'navigation'">
-                <div class="menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.subTitle,index,'menu-list-sub-title')"
+                <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
+                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')"
                      [ngStyle]="_$getSubTitleWidth(node, index)">
-                    {{node.subTitle}}
-                    <i class="{{node.subIcon}}"></i>
-                    <i *ngIf="node.nodes && node.nodes.length>0" class="fa fa-angle-right"></i>
+                    <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
+                    <i class="{{node.subIcon}} jigsaw-menu-subIcon"
+                       *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
+                    <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
                 </div>
-                <div class="navigation-title" *ngIf="_$realTheme == 'navigation'">
+                <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
                     {{node.label}}
-                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="fa fa-angle-right"
+                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="iconfont iconfont-e144"
                        style="position: absolute;right: 10px;line-height: 40px"></i>
                     <hr *ngIf="!node.label">
                 </div>
@@ -124,11 +129,11 @@ export class JigsawMenuHelper implements IPopupable {
         '(click)': "_$onClick($event)",
         '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
         '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
-        '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
         '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
     },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
+export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit, AfterContentInit {
 
     public initData: MenuOptions;
 
@@ -185,23 +190,29 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: SimpleTreeData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public options: PopupOptions;
 
-    @Input()
-    public backgroundColor: string;
-
-    @Input()
-    public selectedColor: string;
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showBorder: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    public theme: MenuTheme = 'light';
+    public theme: MenuTheme = JigsawTheme.majorStyle || 'light';
 
     /**
      * @internal
@@ -212,16 +223,19 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @Output()
     public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
-    @ViewChild('menuList', {read: ElementRef, static: false})
+    @ViewChild('menuList', {read: ElementRef})
     private _menuListElement: ElementRef;
 
-    @ViewChild('menuList', {static: false})
+    @ViewChild('menuList')
     private _menuListInstance: JigsawList;
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
+    /**
+     * @internal
+     */
     public _$onClick(event: any) {
         event.stopPropagation();
         event.preventDefault();
@@ -229,7 +243,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
-        this._changeDetectorRef.detectChanges();
+    }
+
+    ngAfterContentInit() {
     }
 
     private _setBorder() {
@@ -296,17 +312,32 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
+    _$isSubTitleOverflow(index: number): boolean {
+        if (!this._menuListElement) {
+            return false;
+        }
+        const listOptionElements = this._menuListElement.nativeElement.children;
+        const subTitleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-sub-title")[0].children[0];
+        return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
+    }
+
+    /**
+     * @internal
+     */
     public _$getSubTitleWidth(node: SimpleNode, index: number): any {
         if (!this._menuListElement || node.disabled || !node.label) {
             return {maxWidth: 'auto'};
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
-        const titleElement = listOptionElements[index].getElementsByClassName("menu-list-title")[0];
+        const titleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-title")[0];
+        if (!titleElement) {
+            return {maxWidth: 'auto'};
+        }
         const wrapElement = titleElement.parentElement;
-        // 5是给有子节点时，留下的箭头；
-        const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
-        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 2) {
-            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 2}px`};
+        // 14是给有子节点时，留下的箭头；
+        const minWidth = node.nodes && node.nodes.length > 0 ? 14 : 0;
+        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
+            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
         } else {
             return {width: `${minWidth}px`};
         }
@@ -321,7 +352,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
         const listOptionElements = this._menuListElement.nativeElement.children;
         const titleElement = listOptionElements[index].getElementsByClassName(titleClass)[0];
-        return titleElement.scrollWidth > titleElement.offsetWidth ? label : '';
+        return titleElement && titleElement.scrollWidth > titleElement.offsetWidth ? label : '';
     }
 
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,

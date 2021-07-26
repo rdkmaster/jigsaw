@@ -1,8 +1,4 @@
-import {
-    Component, Input, ViewContainerRef, TemplateRef, ViewChild, ElementRef,
-    AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver,
-    ComponentRef, OnDestroy, Output, EventEmitter
-} from '@angular/core';
+import { Component, Input, ViewContainerRef, TemplateRef, ViewChild, ElementRef, AfterViewInit, EmbeddedViewRef, ChangeDetectorRef, Type, ComponentFactoryResolver, ComponentRef, OnDestroy, Output, EventEmitter, Directive } from '@angular/core';
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 
 /**
@@ -13,6 +9,7 @@ export class TabTitleInfo {
     title: string
 }
 
+@Directive()
 export abstract class JigsawMobileTabBase extends AbstractJigsawComponent implements OnDestroy {
 
     constructor(protected _changeDetector: ChangeDetectorRef, protected _componentFactory: ComponentFactoryResolver) {
@@ -28,7 +25,7 @@ export abstract class JigsawMobileTabBase extends AbstractJigsawComponent implem
     @Input()
     public initData: Object;
 
-    @ViewChild('body', {read: ViewContainerRef, static: false})
+    @ViewChild('body', { read: ViewContainerRef })
     protected _body: ViewContainerRef;
 
     /**

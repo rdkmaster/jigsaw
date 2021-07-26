@@ -3,7 +3,7 @@ import {JigsawComboSelect} from "./combo-select";
 import {CommonModule} from "@angular/common";
 import {JigsawTagModule} from "../tag/tag";
 import {JigsawInputModule} from "../input/input";
-import {JigsawFloatModule} from "../../common/directive/float/index";
+import {JigsawFloatModule} from "../../common/directive/float/float";
 import {PopupService} from "../../common/service/popup.service";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 

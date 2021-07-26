@@ -1,12 +1,6 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {debounceTime} from "rxjs/operators";
 import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
+import {AbstractGraphData, EchartOptions, JigsawMobileGraph} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -14,7 +8,7 @@ import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
 
 export class GraphFormatterComponent implements OnInit, AfterViewChecked {
     data: AbstractGraphData;
-    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
+    @ViewChild("graph") graph: JigsawMobileGraph;
 
 
     ngOnInit() {
@@ -199,4 +193,3 @@ export class GraphDataDemo extends AbstractGraphData {
         return obj;
     }
 }
-

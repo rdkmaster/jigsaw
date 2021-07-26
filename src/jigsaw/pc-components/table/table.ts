@@ -13,13 +13,17 @@
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ChangeDetectionStrategy,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 import {Subscription} from "rxjs";
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
 
 import {
     _getColumnIndex,
@@ -37,18 +41,13 @@ import {SortOrder} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
-    TableCellCheckboxRenderer,
-    TableCellSelectRenderer,
-    TableCellSwitchRenderer,
-    TableCellTextEditorRenderer,
-    TableHeadCheckboxRenderer,
-    TableCellAutoCompleteEditorRenderer,
-    TableCellNumericEditorRenderer
+    TableCellTextEditorRenderer
 } from "./table-renderer";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -59,19 +58,28 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser'
     },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                private _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
     }
 
+    /**
+     * @internal
+     */
     public _$isFFBrowser;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get width(): string {
         return this._width;
@@ -79,7 +87,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
-        this.callLater(this.resize, this);
+        this.runMicrotask(this.resize, this);
     }
 
     @Output()
@@ -87,6 +95,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _contentWidth: string = 'auto';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get contentWidth(): string {
         return this._contentWidth;
@@ -97,10 +108,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     @Input()
+    @RequireMarkForCheck()
     public hideHeader: boolean = false;
 
     private _selectedRow: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get selectedRow(): number {
         return this._selectedRow;
@@ -218,8 +233,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._$cellSettings.forEach(row => row.splice(0, row.length));
         const dataLen = this.data.data.length;
         // remove extra lines if necessary
-        this._$cellSettings.splice(dataLen, this._$cellSettings.length);
-        this._additionalData.data.splice(dataLen, this._$cellSettings.length);
+        const lengthBefore = this._$cellSettings.length;
+        this._$cellSettings.splice(dataLen, lengthBefore);
+        this._additionalData.data.splice(dataLen, lengthBefore);
 
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
@@ -335,7 +351,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
 
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
@@ -347,6 +363,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _additionalData = new AdditionalTableData();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalData(): TableData {
         return this._additionalData;
@@ -361,6 +380,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _trackRowBy: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackRowBy(): string {
         return this._trackRowBy;
@@ -375,6 +397,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _removeAdditionalDataRefresh: CallbackRemoval;
     private _data: TableData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): TableData {
         return this._data;
@@ -403,14 +428,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public columnDefines: ColumnDefine[] | ColumnDefineGenerator;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public columnDefineGeneratorContext: any;
 
     private _additionalColumnDefines: AdditionalColumnDefine[] = [];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get additionalColumnDefines(): AdditionalColumnDefine[] {
         return this._additionalColumnDefines;
@@ -475,6 +509,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public floatingHeader: boolean = false;
 
@@ -576,10 +613,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective, static: false})
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -724,7 +761,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _initVerticalScroll() {
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // selector使用>选择直接子元素，避免选择到其他滚动条
             const yScrollbar = this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range > .ps__rail-y');
             if (yScrollbar) {
@@ -826,10 +863,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule, TranslateModule.forChild()],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    entryComponents: [DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
-        TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer]
 })
 export class JigsawTableModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, "table", {
+            zh: {
+                noData: "暂无数据", 
+            },
+            en: {
+                noData: "NO DATA"
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
 }

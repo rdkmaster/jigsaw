@@ -51,6 +51,16 @@ describe('Unit Test for common-utils', () => {
         expect(r).toEqual(true);
         r = CommonUtils.compareWithKeyProperty(2, {a: 1}, ['a']);
         expect(r).toEqual(false);
+        r = CommonUtils.compareWithKeyProperty(2, 2, ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareWithKeyProperty(2, '2', ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareWithKeyProperty(true, true, ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareWithKeyProperty('true', true, ['prop']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareWithKeyProperty('abc', 'efg', ['prop']);
+        expect(r).toEqual(false);
 
         done();
     });
@@ -93,6 +103,35 @@ describe('Unit Test for common-utils', () => {
         expect(JSON.stringify(s)).toEqual(JSON.stringify({a:1}));
         s = CommonUtils.extendObjects(t, {b:1}, {c:1});
         expect(JSON.stringify(s)).toEqual(JSON.stringify({a:1,b:1,c:1}));
+        done();
+    });
+    it('extendObject2111', (done) => {
+        let t = {a:[{b:1,c:2}]};
+        let s = CommonUtils.extendObject(t,{a:[{b:3},{d:4}]});
+        expect(JSON.stringify(s)).toEqual(JSON.stringify({a:[{b:3,c:2},{d:4}]}));
+        done();
+    })
+    it('color-contrast', (done) => {
+        let r = CommonUtils.hexToRGB('#000000');
+        expect(r === "rgb(0,0,0)").toEqual(true);
+        r =  CommonUtils.hexToRGB('#000');
+        expect(r === "rgb(0,0,0)").toEqual(true);
+        r =  CommonUtils.hexAToRGBA('#00000000');
+        expect(r === "rgba(0,0,0,0)").toEqual(true);
+        r =  CommonUtils.hexAToRGBA('#0000');
+        expect(r === "rgba(0,0,0,0)").toEqual(true);
+        r =  CommonUtils.hslToRGB('hsl(0,0%,0%)');
+        expect(r === "rgb(0,0,0)").toEqual(true);
+        r =  CommonUtils.hslAToRGBA('hsla(0,0%,0%,0.5)');
+        expect(r === "rgba(0,0,0,0.5)").toEqual(true); 
+        r =  CommonUtils.hslAToRGBA('hsla(0, 0%, 0%, .5)');
+        expect(r === "rgba(0,0,0,0.5)").toEqual(true); 
+        r =  CommonUtils.anyToRGB('#000');
+        expect(r === "rgb(0,0,0)").toEqual(true); 
+        r =  CommonUtils.adjustFontColor('#000');
+        expect(r === "dark").toEqual(true); 
+        r =  CommonUtils.adjustFontColor('#fff');
+        expect(r === "light").toEqual(true); 
         done();
     });
 });

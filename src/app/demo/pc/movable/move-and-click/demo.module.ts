@@ -1,12 +1,11 @@
 import {NgModule} from "@angular/core";
+import {JigsawMovableModule, JigsawAlertModule, JigsawButtonModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {MoveAndClickDemoComponent} from "./demo.component";
-import {JigsawMovableModule} from "jigsaw/common/directive/movable/index";
-import {JigsawAlertModule} from "jigsaw/pc-components/alert/alert";
 
 @NgModule({
     imports: [
-        JigsawMovableModule, JigsawAlertModule, JigsawDemoDescriptionModule
+        JigsawMovableModule, JigsawAlertModule, JigsawDemoDescriptionModule, JigsawButtonModule
     ],
     declarations: [MoveAndClickDemoComponent],
     exports: [MoveAndClickDemoComponent]

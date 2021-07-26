@@ -1,0 +1,29 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">导航菜单</jigsaw-header>
+
+    <div class="clearfix">
+        <div class="demo-2 live-demo block">
+            <jigsaw-header [level]="2">二级子菜单</jigsaw-header>
+            <a (click)="updateMenu()">更新菜单数据</a><br><br>
+            <jigsaw-navigation-menu [data]="data1" (select)="menuSelect($event)" height="100%"
+                                    ></jigsaw-navigation-menu>
+        </div>
+
+        <div class="demo-1 live-demo block">
+            <jigsaw-header [level]="2">一级菜单</jigsaw-header>
+            <jigsaw-navigation-menu [data]="data2" (select)="menuSelect($event)"
+                                    ></jigsaw-navigation-menu>
+        </div>
+
+        <div class="demo-2 live-demo block">
+            <jigsaw-header [level]="2">默认折叠的导航菜单</jigsaw-header>
+            <a (click)="updateCollapsed()">更改折叠状态</a><br><br>
+            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" [(collapsed)]="collapsed" (collapsedChange)="collapsedChanged($event)"
+                                    ></jigsaw-navigation-menu>
+        </div>
+    </div>
+</div>

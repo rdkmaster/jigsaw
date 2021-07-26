@@ -2,14 +2,8 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
-<j-breadcrumb>
-    <j-breadcrumb-item *ngFor="let item of breadcrumbItems;let idx = index;">
-        <a (click)="onClick(item)" [ngClass]="{last: idx == breadcrumbItems.length - 1}">
-            <span class="{{item.icon}}"></span> {{item.label}}
-        </a>
-    </j-breadcrumb-item>
+<j-breadcrumb [data]="breadcrumbItems" (select)="itemSelect($event)">
 </j-breadcrumb>
 
 <br>

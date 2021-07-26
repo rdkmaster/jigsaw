@@ -1,4 +1,15 @@
-import {Component, EventEmitter, forwardRef, Input, NgModule, Output} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    forwardRef,
+    HostListener,
+    Injector,
+    Input,
+    NgModule,
+    Output
+} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {JigsawRadioModule} from "./radio";
@@ -6,6 +17,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
@@ -21,21 +33,41 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawRadiosLite extends AbstractJigsawComponent implements ControlValueAccessor {
+    constructor(
+        private _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super()
+    }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
+    /**
+     * value的实际类型是 `string | RadiosGroupValue`，由于一些兼容性原因，保留any作为类型定义
+     */
+    @RequireMarkForCheck()
     @Input()
     public value: any;
 
     private _trackItemBy: string | string[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackItemBy(): string | string[] {
         if (!this._trackItemBy && this.data && typeof this.data[0] !== 'string') {
@@ -51,10 +83,14 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
         this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public labelField: string = 'label';
 
-    @Output() public valueChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
     public get _$trackByFn() {
         return CommonUtils.toTrackByFunction(this._trackItemBy);
@@ -71,9 +107,11 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
-
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -81,6 +119,12 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        this._onTouched();
     }
 }
 

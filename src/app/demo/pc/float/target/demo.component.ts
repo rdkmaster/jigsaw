@@ -4,7 +4,7 @@ import {UserComponent} from "./user-component/user-component";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        .fa-bars {
+        .iconfont-e9d8 {
             margin: 100px
         }
 
@@ -28,9 +28,9 @@ import {UserComponent} from "./user-component/user-component";
     `]
 })
 export class FloatTargetDemo implements AfterViewInit {
-    @ViewChild('jigsawFloatArea1', {static: false})
+    @ViewChild('jigsawFloatArea1')
     jigsawFloatArea1: TemplateRef<any>;
-    @ViewChild('jigsawFloatArea2', {static: false})
+    @ViewChild('jigsawFloatArea2')
     jigsawFloatArea2: TemplateRef<any>;
 
     public target: any = UserComponent;

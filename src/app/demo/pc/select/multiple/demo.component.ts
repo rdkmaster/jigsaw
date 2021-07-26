@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
   templateUrl: './demo.component.html',
@@ -22,6 +22,7 @@ export class SelectMultipleDemoComponent {
     maxHeight: number = 32;
 
     selectChange(selectedItems: any[]) {
+        console.log(selectedItems);
         this.selectedCityName = selectedItems.reduce((str, item, index) => {
             return str += item.label + (index == selectedItems.length - 1 ? '' : ' | ')
         }, '');
@@ -37,4 +38,3 @@ export class SelectMultipleDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

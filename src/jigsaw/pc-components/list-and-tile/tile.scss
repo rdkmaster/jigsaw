@@ -3,17 +3,18 @@
 $tile-prefix-cls: #{$jigsaw-prefix}-tile;
 $tile-option-prefix-cls: #{$tile-prefix-cls}-option;
 $tile-lite-prefix-cls: #{$tile-prefix-cls}-lite;
-$button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
 .#{$tile-prefix-cls} {
     @include inline-block();
-    border: 1px solid $border-color-base;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
     border-radius: $border-radius-base;
     padding: 8px 0px 0px 8px;
-    background: $component-background;
+    background: $bg-component;
 
     &.#{$tile-prefix-cls}-error {
-        border-color: $error-color;
+        border-color: $error-default;
     }
 
     .#{$tile-prefix-cls}-search {
@@ -33,92 +34,36 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     line-height: $height-base;
     font-size: $font-size-base;
     text-align: center;
-    color: $text-color;
+    color: $font-color-default;
     margin: {
         right: 8px;
         bottom: 8px;
     }
     padding: 0 4px;
     cursor: pointer;
-    border: 1px solid $border-color-base;
-    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
     @include line-ellipsis-style();
-    @include prefixer(transition, color .3s $ease-in-out);
 
-    &:hover, &.#{$tile-option-prefix-cls}-active {
-        color: $primary-color;
+    &:hover,
+    &.#{$tile-option-prefix-cls}-active {
+        color: $brand-default;
     }
 
     &.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $primary-color;
+        border-color: $brand-default;
+        background: $brand-lighten;
     }
 
     &.#{$tile-option-prefix-cls}-disabled {
-        background: $disabled-bg;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
+        background: $bg-disabled;
+        color: $font-color-disabled;
         cursor: not-allowed;
     }
 }
 
-.#{$tile-lite-prefix-cls}, .#{$button-bar-prefix-cls} {
+.#{$tile-lite-prefix-cls} {
     @include inline-block;
-}
-
-.#{$button-bar-prefix-cls} {
-    height: $height-base;
-
-    .#{$tile-prefix-cls} {
-        padding: 0 0;
-        border: none;
-
-        &.#{$tile-prefix-cls}-error {
-            border: 1px solid $error-color;
-        }
-    }
-
-    .#{$tile-option-prefix-cls} {
-        width: auto;
-        min-width: 60px;
-        margin: 0 0;
-        padding: 0 8px;
-        border-radius: 0;
-
-        &:first-child {
-            border-radius: 4px 0 0 4px;
-        }
-
-        &:last-child {
-            border-radius: 0 4px 4px 0;
-        }
-
-        &:not(:first-child) {
-            margin-left: -1px;
-        }
-
-        &.#{$tile-option-prefix-cls}-active {
-            position: relative;
-        }
-    }
-
-    &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $primary-color;
-        background-color: $primary-color;
-        color: $text-color-of-bg;
-    }
-
-    &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $warning-color;
-        background-color: $warning-color;
-        color: $text-color-of-bg;
-    }
-
-    &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
-        border: 1px solid $error-color;
-        background-color: $error-color;
-        color: $text-color-of-bg;
-    }
-
-    &-one-option {
-        border-radius: 4px !important;
-    }
 }

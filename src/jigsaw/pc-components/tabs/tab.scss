@@ -12,13 +12,14 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     position: relative;
     overflow: hidden;
     @include clearfix;
-    color: $text-color;
-    background: $component-background;
+    color: $font-color-default;
+    background: $bg-component;
 
     &.#{$tab-prefix}-vertical-response {
         display: flex;
         flex-direction: column;
         height: 100%;
+
         .#{$tab-prefix}-content {
             flex: 1;
             overflow: hidden;
@@ -26,29 +27,36 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-bar {
-        border-bottom: $border-width-base $border-style-base $border-color-base;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: $splitline-default;
         margin-bottom: 6px;
         outline: none;
     }
 
     &-remove-bar {
+        display: flex;
+        align-items: center;
         position: absolute;
-        right: 6px;
-        top: -2px;
+        right: 0;
+        top: 0;
+        height: 100%;
         font-size: 18px;
-        color: $text-color-secondary;
+        color: $icon-color-default;
+
         &:hover {
-            color: $text-color-dark;
+            color: $brand-default;
         }
     }
 
     &-add-bar {
-        cursor: pointer;
-        font-size: 24px;
+        font-size: 18px;
         vertical-align: middle;
-        color: $text-color-secondary;
+        color: $icon-color-default;
+        cursor: pointer;
+
         &:hover {
-            color: $text-color-dark;
+            color: $brand-default;
         }
     }
 
@@ -56,15 +64,16 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         position: absolute;
         top: 0;
         right: 0;
-        cursor: pointer;
-        font-size: 24px;
-        color: $text-color-secondary;
         width: 40px;
         height: 100%;
+        font-size: 24px;
+        color: $icon-color-default;
         text-align: center;
+        cursor: pointer;
+
         &:hover {
-            background-color: $primary-color;
-            color: $primary-1;
+            background-color: $brand-default;
+            color: $font-color-white;
         }
     }
 
@@ -72,23 +81,42 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         box-shadow: none !important;
         border-radius: 0;
         border: none;
-        width: 200px!important;
-        max-height: 200px;
+        width: 200px !important;
+        max-height: 300px;
+
+        .#{$tab-prefix}-bar-list-option {
+            display: flex;
+
+            .#{$tab-prefix}-bar-list-content {
+                display: inline-block;
+            }
+        }
+
+        .#{$tab-prefix}-bar-add-option {
+            display: flex;
+            justify-content: center;
+            span {
+                margin-right: 6px;
+            }
+        }
+
         .jigsaw-list-option {
             .span-margin {
                 margin: 0 4px;
                 width: 10px;
                 height: 9px;
             }
+
             &-selected {
-                color: $primary-color;
                 display: flex;
                 align-items: center;
+                color: $brand-default;
 
                 .check-icon {
                     margin-right: 5px;
                 }
             }
+
             &-hidden {
                 display: none;
             }
@@ -96,21 +124,23 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-nav-container {
-        font-size: $font-size-lg;
-        line-height: $line-height-base;
-        box-sizing: border-box;
         position: relative;
+        font-size: $font-size-lg;
+        line-height: 1.5;
         white-space: nowrap;
+        box-sizing: border-box;
 
         .#{$tab-prefix}-ink-bar {
             position: absolute;
+            display: block;
             z-index: $zindex-level-1;
             left: 0;
             bottom: -1px;
             height: 2px;
-            background-color: $primary-color;
+            background-color: $brand-default;
             transition: transform 0.3s $ease-in-out;
             transform-origin: 0 0;
+
             &:after {
                 position: absolute;
                 top: 2px;
@@ -121,40 +151,43 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 border: {
                     width: 4px 4px;
                     style: solid;
-                    color: $primary-color transparent transparent transparent;
+                    color: $brand-default transparent transparent transparent;
                 }
-                content: '';
+                content: "";
                 display: none;
             }
         }
 
         .#{$tab-prefix}-nav-wrap {
             @include clearfix();
-            width: calc( 100% - 40px );
+            width: calc(100% - 40px);
             overflow: hidden;
+
             .#{$tab-prefix}-nav {
                 position: relative;
                 float: left; /*用于width为auto，并能撑开tab nav*/
                 transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
 
                 .#{$tab-prefix}-tab-disabled {
+                    color: $font-color-disabled;
+                    cursor: not-allowed !important;
                     pointer-events: none;
-                    cursor: default;
-                    @include compatible(color, $disabled-color, $disabled-color-ie11);
                 }
 
                 jigsaw-tab-label {
                     a:hover {
                         text-decoration: none;
-                        color: $primary-color;
+                        color: $brand-default;
                     }
+
                     * {
                         outline: 0;
                     }
                 }
 
                 .#{$tab-prefix}-tab {
-                    display: inline-block;
+                    display: inline-flex;
+                    align-items: center;
                     height: 100%;
                     margin-right: 24px;
                     position: relative;
@@ -165,32 +198,34 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     text-decoration: none;
 
                     &:hover {
-                        color: $primary-5;
+                        color: $brand-hover;
                     }
 
                     &:active {
-                        color: $primary-7;
+                        color: $brand-active;
                     }
 
                     &-hidden {
                         display: none;
                     }
 
-                    span.fa {
+                    span.iconfont {
                         margin-right: 6px;
+                        line-height: 50%;
                     }
 
                     a:hover {
                         text-decoration: none;
-                        color: $primary-color;
+                        color: $brand-default;
                     }
+
                     * {
                         outline: 0;
                     }
                 }
 
                 .#{$tab-prefix}-tab-active {
-                    color: $primary-color;
+                    color: $brand-default;
                 }
             }
         }
@@ -214,6 +249,69 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
             &-hidden {
                 display: none;
+            }
+        }
+    }
+}
+
+.#{$tab-prefix}-page {
+    .#{$tab-prefix}-bar {
+        position: relative;
+        border: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 1px;
+            width: 100%;
+            background: $border-color-default;
+            z-index: -1;
+        }
+    }
+
+    .#{$tab-prefix}-nav-container {
+        .#{$tab-prefix}-ink-bar {
+            visibility: hidden;
+        }
+
+        .#{$tab-prefix}-nav-wrap {
+            .#{$tab-prefix}-nav {
+                .#{$tab-prefix}-tab {
+                    border-width: 1px;
+                    border-style: solid;
+                    border-color: $border-color-default;
+                    border-radius: $border-radius-base;
+                    margin-right: 2px;
+                    padding: 0 16px;
+                    line-height: 32px;
+
+                    &-active {
+                        border-top-width: 2px;
+                        border-top-color: $brand-default;
+                        border-bottom-color: $bg-body;
+                    }
+                }
+
+                .#{$tab-prefix}-tab-disabled {
+                    background: $bg-disabled;
+                }
+            }
+        }
+    }
+
+    &.#{$tab-prefix}-editable {
+        .#{$tab-prefix}-remove-bar {
+            right: 4px;
+        }
+
+        .#{$tab-prefix}-nav-container {
+            .#{$tab-prefix}-nav-wrap {
+                .#{$tab-prefix}-nav {
+                    .#{$tab-prefix}-tab {
+                        padding-right: 20px;
+                    }
+                }
             }
         }
     }

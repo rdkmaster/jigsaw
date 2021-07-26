@@ -1,0 +1,30 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>单选</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="false" placeholder="请选择" width="160px"
+    (valueChange)="valueChange($event)"></jigsaw-select>
+
+<jigsaw-header>多选</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="true"
+    (valueChange)="valueChange($event)">
+</jigsaw-select>
+
+<jigsaw-header>初始全选</jigsaw-header>
+<jigsaw-select [data]="dataListWithoutDisabled" [value]="fullSelectedOption" [multipleSelect]="true" placeholder="请选择"
+    width="160px" [useStatistics]="true" (valueChange)="valueChange($event)"></jigsaw-select>
+
+<jigsaw-header>初始半选</jigsaw-header>
+<jigsaw-select [data]="dataListWithoutDisabled" [value]="selectedOption" [multipleSelect]="true" placeholder="请选择"
+    width="160px" [useStatistics]="true" (valueChange)="valueChange($event)"></jigsaw-select>
+
+<jigsaw-header>可清除单选</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="false" placeholder="请选择" width="160px" [useStatistics]="true"
+    (valueChange)="valueChange($event)" [clearable]="true">
+</jigsaw-select>
+
+<jigsaw-header>可清除多选</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="true"
+    (valueChange)="valueChange($event)" [clearable]="true">
+</jigsaw-select>

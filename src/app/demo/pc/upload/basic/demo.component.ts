@@ -1,7 +1,5 @@
-import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
-import {UploadFileInfo} from "jigsaw/pc-components/upload/upload.base";
-import {JigsawUploadDirective} from "jigsaw/pc-components/upload/upload.directive";
-import {JigsawUpload} from "jigsaw/pc-components/upload";
+import {Component} from "@angular/core";
+import {UploadFileInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -30,11 +28,6 @@ export class UploadBasicDemoComponent {
     maxSize: number = 1024;
     minSize: number = 0;
 
-    @ViewChildren('uploadDirective', {read: JigsawUploadDirective})
-    uploadDirectives: QueryList<JigsawUploadDirective>;
-    @ViewChild('upload', {static: false})
-    upload: JigsawUpload;
-
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log('one file uploaded', fileInfo);
     }
@@ -50,14 +43,8 @@ export class UploadBasicDemoComponent {
         }
     }
 
-    clearFileList() {
-        this.uploadDirectives.forEach(upload => {
-            upload.clearFileList();
-        });
-        this.upload.clearFileList();
-    }
-
     showUploadFileName(files?: UploadFileInfo[]) {
+        console.log(files);
         this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
     }
 
@@ -67,4 +54,3 @@ export class UploadBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

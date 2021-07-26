@@ -22,7 +22,7 @@
 <a *ngIf="closeTrigger=='none'" (click)="closeFloat()">close</a>
 
 <br><br>
-<span class="fa fa-bars" jigsaw-float
+<span class="iconfont iconfont-e9d8" jigsaw-float
       [jigsawFloatOpenTrigger]="openTrigger"
       [jigsawFloatCloseTrigger]="closeTrigger"
       [jigsawFloatTarget]="jigsawFloatArea" [(jigsawFloatOpen)]="open"> 鼠标挪到这里来。。。
@@ -44,7 +44,7 @@
             下拉菜单
         </a>
         <div (contextmenu)="showContext($event)" class="context-menu">
-            <p>右击这里弹出上下文菜单</p>
+            <p style="color: #1681de">右击这里弹出上下文菜单</p>
         </div>
         <br><br>
         <jigsaw-auto-complete-input placeholder="click here..." width="200"

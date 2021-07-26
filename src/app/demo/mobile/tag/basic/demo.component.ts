@@ -1,5 +1,5 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawMobileTag} from "jigsaw/mobile-components/tag/tag";
+import {JigsawMobileTag} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -22,4 +22,3 @@ export class TagBasicDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

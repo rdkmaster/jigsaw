@@ -4,10 +4,10 @@
 
 
 <!-- start to learn the demo from here -->
-<button (click)="changeData()">click to change data</button>
+<j-button (click)="changeData()">click to change data</j-button>
 <jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
 
-<jigsaw-pagination
+<jigsaw-pagination style="margin-top: 8px"
     [data]="tableData"
     [pageSizeOptions]="[5, 10, 20]"
     [searchable]="true"

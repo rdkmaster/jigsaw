@@ -1,8 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawGraph} from "jigsaw/pc-components/graph/graph";
-
+import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -49,7 +46,9 @@ export class GraphDataDemo extends AbstractGraphData {
                 trigger: 'axis'
             },
             legend: {
-                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+                top: 20,
+                left: 'center'
             },
             toolbox: {
                 feature: {
@@ -120,4 +119,3 @@ export class GraphDataDemo extends AbstractGraphData {
         };
     }
 }
-

@@ -1,0 +1,55 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="demo-container">
+    <label>单位组合：</label><br>
+    <jigsaw-input placeholder="unit demo" prefix="上行流量"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" suffix="Gb"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" suffix="Gb" prefix="上行流量"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" suffix="Gb" prefix="上行流量" [disabled]="true"></jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" suffix="Gb" prefix="上行流量" width="300"></jigsaw-input>
+
+    <br><br>
+    <label>单位可选：</label><br>
+    <jigsaw-input placeholder="unit demo" [suffix]="_$units" suffixWidth="100" (suffixChange)="_$unitChange($event)"
+                  width="300">
+    </jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" [suffix]="_$units" suffixWidth="100" [disabled]="true" width="300">
+    </jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" [prefix]="_$prefix" prefixWidth="80" (prefixChange)="_$unitChange($event)"
+                  width="300">
+    </jigsaw-input>
+    <br>
+    <jigsaw-input placeholder="unit demo" [prefix]="_$prefix" prefixWidth="80" [disabled]="true" width="300">
+    </jigsaw-input>
+
+    <br><br>
+    <label>更多内容：</label><br>
+    <jigsaw-input placeholder="unit demo" width="400"
+                  [prefix]="_$prefixIcons" prefixWidth="100" (prefixChange)="_$unitChange($event)" [prefixLabelField]="'name'"
+                  [suffix]="_$icons" suffixWidth="120" (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'">
+    </jigsaw-input>
+    <br>
+    <jigsaw-input #input1 placeholder="unit demo" width="400" [valid]="input1.value.length >= 3"></jigsaw-input>
+    <br>
+    <jigsaw-input #input2 placeholder="unit demo" width="400" [valid]="input2.value.length >= 3"
+                  (prefixChange)="_$unitChange($event)" [prefix]="_$prefix" prefixWidth="100"></jigsaw-input>
+    <br>
+    <jigsaw-input #input3 placeholder="unit demo" width="400" [valid]="input3.value.length >= 3"
+                  (suffixChange)="_$unitChange($event)" [suffix]="_$units" suffixWidth="120"></jigsaw-input>
+    <br>
+    <jigsaw-input #input4 placeholder="unit demo" width="400" [valid]="input4.value.length >= 3"
+                  (suffixChange)="_$unitChange($event)" (prefixChange)="_$unitChange($event)"
+                  [prefix]="_$prefix" prefixWidth="100" [suffix]="_$units" suffixWidth="120">
+    </jigsaw-input>
+    <br>
+</div>
+
+

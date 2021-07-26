@@ -8,11 +8,14 @@ import {
     OnDestroy,
     Output,
     QueryList,
-    OnInit
+    OnInit,
+    Directive,
+    Injector
 } from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Subscription} from "rxjs";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class GroupOptionValue {
     [index: string]: any;
@@ -20,17 +23,24 @@ export class GroupOptionValue {
     disabled?: boolean;
 }
 
+@Directive()
 export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implements ControlValueAccessor, AfterContentInit, OnDestroy, OnInit {
 
     protected _removeRefreshCallback: CallbackRemoval;
     private _removeItemsChanges: Subscription;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public valid: boolean = true;
 
     //设置对象的标识
     private _trackItemBy: string[] = [];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackItemBy(): string | string[] {
         return this._trackItemBy;
@@ -40,13 +50,22 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
     }
 
-    //判断是否支持多选
-    @Input() public multipleSelect: boolean;
+    /**
+     * 判断是否支持多选
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public multipleSelect: boolean;
 
-    @Input() public autoRemoveInvalidValue: boolean = true;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public autoRemoveInvalidValue: boolean = true;
 
     protected _selectedItems = new ArrayCollection<any>();
 
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
         return this._selectedItems;
@@ -60,10 +79,17 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
+    constructor(protected _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
+        super();
+    }
+
     /**
      * @internal
      */
     public _removeInvalidSelectedItems(): void {
+        this._cdr.markForCheck();
         if (!this._items || !this._selectedItems || !this._selectedItems.length) {
             return;
         }
@@ -76,7 +102,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             this._selectedItems.splice(this.selectedItems.indexOf(selectedItem), 1);
             needRefresh = true;
         });
-        if(needRefresh) {
+        if (needRefresh) {
             this.selectedItemsChange.emit(this.selectedItems);
         }
     }
@@ -121,7 +147,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }
-        this.callLater(() => {
+        this.runMicrotask(() => {
             items.forEach(item => {
                 let hasSelected = false;
                 this._selectedItems.forEach(selectedItem => {
@@ -219,14 +245,27 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 }
 
+@Directive()
 export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
-    @Input() public value: any;
 
-    @Input() public disabled: boolean = false;
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super();
+    }
+
+    @RequireMarkForCheck()
+    @Input()
+    public value: any;
+
+    @RequireMarkForCheck()
+    @Input()
+    public disabled: boolean = false;
 
     @Output()
     public selectedChange = new EventEmitter<boolean>();
 
+    @RequireMarkForCheck()
     @Input()
     public selected: boolean = false; // 选中状态
 
@@ -234,5 +273,4 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
     public change = new EventEmitter<AbstractJigsawOptionComponent>();
 
     public changeDetector: ChangeDetectorRef
-
 }

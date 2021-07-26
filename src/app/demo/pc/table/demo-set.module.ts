@@ -33,6 +33,8 @@ import {TableDataFromAjaxDemoComponent} from "./data-from-ajax/demo.component";
 import {TableDataFromAjaxDemoModule} from "./data-from-ajax/demo.module";
 import {TableDataWithPopupDemoComponent} from "./with-popup/demo.component";
 import {TableDataWithPopupDemoModule} from "./with-popup/demo.module";
+import {TableDraggableDemoComponent} from "./draggable-table/demo.component";
+import {TableDraggableDemoModule} from "./draggable-table/demo.module";
 import {TableCalendarDemoComponent} from "./calendar/demo.component";
 import {TableCalendarDemoModule} from "./calendar/demo.module";
 import {TableFixedHeadDemoComponent} from "./fixed-header/demo.component";
@@ -87,6 +89,12 @@ import {TableMixinTableDemoComponent} from "./mixin-table/demo.component";
 import {TableMixinTableDemoModule} from "./mixin-table/demo.module";
 import {TableChangeDataDemoModule} from "./change-data/demo.module"
 import {TableChangeDataDemoComponent} from "./change-data/demo.component";
+import {TreeTableDemoComponent} from "./tree-table/demo.component";
+import {TreeTableDemoModule} from "./tree-table/demo.module";
+import {TableCellEditablePropertyDemoComponent} from "./cell-editable-property/demo.component";
+import {TableCellEditablePropertyDemoModule} from "./cell-editable-property/demo.module";
+import {TableUpdateColumnDefinesDemoModule} from "./update-column-defines/demo.module";
+import {TableUpdateColumnDefinesDemoComponent} from "./update-column-defines/demo.component";
 
 export const routerConfig = [
     {
@@ -218,6 +226,18 @@ export const routerConfig = [
     {
         path: 'change-data', component: TableChangeDataDemoComponent
     },
+    {
+        path: 'tree-table', component: TreeTableDemoComponent
+    },
+    {
+        path: 'cell-editable-property', component: TableCellEditablePropertyDemoComponent
+    },
+    {
+        path: "draggable-table", component: TableDraggableDemoComponent
+    },
+    {
+        path: "update-column-defines", component: TableUpdateColumnDefinesDemoComponent
+    }
 ];
 
 @NgModule({
@@ -232,7 +252,8 @@ export const routerConfig = [
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule, TableChangeDataDemoModule,
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
-        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule
+        TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
+        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule
     ]
 })
 export class TableDemoModule {

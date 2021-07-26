@@ -1,13 +1,15 @@
 import {NgModule} from "@angular/core";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawRateModule} from "jigsaw/pc-components/rate/index";
-import {RateFullComponent} from "./demo.component";
 import {CommonModule} from "@angular/common";
+import {JigsawRateModule} from "jigsaw/public_api";
+import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {RateFullComponent} from "./demo.component";
+
+import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     declarations: [RateFullComponent],
     exports: [RateFullComponent],
-    imports: [JigsawRateModule, JigsawDemoDescriptionModule,CommonModule]
+    imports: [JigsawRateModule, JigsawDemoDescriptionModule,CommonModule, JigsawHeaderModule]
 })
 export class RateFullModule {
 

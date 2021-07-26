@@ -1,14 +1,11 @@
-/**
- * Created by 10177553 on 2017/3/29.
- */
 import {Component, ViewChild} from '@angular/core';
-import {JigsawMobileTab} from "jigsaw/mobile-components/tabs/tab";
+import {JigsawMobileTab} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: "./demo.component.html"
 })
 export class JigsawDestoryTabComponent {
-    @ViewChild('myTab', {static: false}) myTab: JigsawMobileTab;
+    @ViewChild('myTab') myTab: JigsawMobileTab;
 
     destroyTab() {
         this.myTab.removeTab(0);

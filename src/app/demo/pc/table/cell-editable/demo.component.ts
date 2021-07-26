@@ -1,15 +1,9 @@
 import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {JigsawInput} from "jigsaw/pc-components/input/input";
 import {
-    TableCellRendererBase,
-    TableCellNumericEditorRenderer,
-    TableCellAutoCompleteEditorRenderer,
-    TableCellSwitchRenderer
-} from "jigsaw/pc-components/table/table-renderer";
-
+    TableData, ColumnDefine, JigsawInput, TableCellRendererBase,
+    TableCellNumericEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellSwitchRenderer
+} from "jigsaw/public_api";
 
 /*
  * 自定义单元格渲染组件
@@ -30,7 +24,7 @@ export class MyTableCell extends TableCellRendererBase {
 })
 export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit {
 
-    @ViewChild(JigsawInput, {static: false}) input: JigsawInput;
+    @ViewChild(JigsawInput) input: JigsawInput;
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
@@ -130,6 +124,3 @@ export class TableSetCellEditableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-

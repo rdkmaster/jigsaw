@@ -1,13 +1,14 @@
 import {NgModule} from "@angular/core";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {JigsawMobileAlertModule} from "jigsaw/mobile-components/alert/alert";
-import {JigsawMobileButtonModule} from "jigsaw/mobile-components/button/button";
-import {PopupService} from "jigsaw/common/service/popup.service";
-import {JigsawMobileDialogModule} from "jigsaw/mobile-components/dialog/dialog";
-
+import {
+    JigsawMobileAlertModule,
+    JigsawMobileButtonModule,
+    PopupService,
+    JigsawMobileDialogModule,
+    TranslateHelper
+} from "jigsaw/mobile_public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
-
 
 @NgModule({
     declarations: [I18nFullDemoComponent],
@@ -20,4 +21,15 @@ import {I18nFullDemoComponent} from "./demo.component";
     providers: [PopupService, TranslateService]
 })
 export class I18nFullDemoModule {
+    constructor() {
+        /**
+         * 覆盖控件内部的国际化词条
+         */
+        TranslateHelper.alert.zh = {
+            button: {ok: '知道了'}
+        };
+        TranslateHelper.alert.en = {
+            button: {ok: 'Gotcha'}
+        };
+    }
 }

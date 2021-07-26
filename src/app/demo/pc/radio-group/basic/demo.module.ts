@@ -1,13 +1,15 @@
 import {NgModule} from "@angular/core";
-import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
 import {CommonModule} from "@angular/common";
+import {JigsawRadioModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {RadioBasicDemoComponent} from "./demo.component";
+
+import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     declarations: [RadioBasicDemoComponent],
     exports: [RadioBasicDemoComponent],
-    imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule]
+    imports: [JigsawRadioModule, CommonModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
 })
 export class RadioBasicDemoModule {
 

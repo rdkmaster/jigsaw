@@ -118,7 +118,7 @@ export class JigsawDemoDescription implements OnInit {
         project.files['src/app/app.component.ts'] = getAppComponentTS();
         project.files['src/app/app.component.html'] = getAppComponentHtml();
         project.files['src/app/app.interceptor.ts'] = getAjaxInterceptor(project.files);
-        project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css');
+        project.files['src/app/app.component.css'] = require('!!raw-loader!../../../src/app/live-demo-wrapper.css').default;
         project.files['src/main.ts'] = getMainTs(scripts);
         project.files['src/polyfills.ts'] = getPolyfills();
         project.files['angular.json'] = angularJson;
@@ -286,7 +286,7 @@ export class AppModule {
 }
 
 function getAjaxInterceptor(files: any) {
-    let code = require('!!raw-loader!../../../src/app/app.interceptor.ts');
+    let code = require('!!raw-loader!../../../src/app/app.interceptor.ts').default;
     code = fixImport(code);
 
     // 不能位于在replace之后
@@ -349,7 +349,7 @@ function getAngularJson(deps: any): [string, string, string] {
         return `https://unpkg.com/${match[1]}${version}/${match[2]}`;
     };
     // 由于stackblitz加载这里的styles会有问题，因此把这里的styles依赖挪到index.html里去
-    const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/zte.css"])
+    const styles: string = options.styles.concat(["./node_modules/@rdkmaster/jigsaw/prebuilt-themes/paletx-pro-light.css"])
         .filter(style => style.match(/^(\.\/)?node_modules\/.+/))
         .map(style => `  <link rel="stylesheet" type="text/css" href="${toUnpkgUrl(style)}">`)
         .join('\n');

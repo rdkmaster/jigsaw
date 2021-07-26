@@ -1,8 +1,6 @@
-import {Component} from "@angular/core";
+import {Component, Injector} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableData, ColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -36,43 +34,38 @@ export class TableMixinTableDemoComponent {
 
 @Component({
     template: `
-        <j-table [data]="tableData1"></j-table>
+        <div style="margin: 4px;">
+            <j-table #table [data]="tableData1" (selectedRowChange)="table.selectedRow=-1"></j-table>
+        </div>
     `
 })
-export class MixinTable extends TableCellRendererBase{
+export class MixinTable extends TableCellRendererBase {
     tableData1: TableData;
 
-    constructor() {
-        super();
+    constructor(protected _injector: Injector) {
+        super(_injector);
         this.tableData1 = new TableData(
             [
                 [
-                    "Tiger Nixon1",
-                    "System Architect",
                     "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
+                    "$300,00",
+                    "$20,00",
                     "542"
                 ],
                 [
-                    "Garrett Winflters1",
-                    "Accountant",
                     "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
+                    "$150,7",
+                    "$707",
+                    "8,422"
                 ],
                 [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "$420,00",
+                    "$400,00",
+                    "$60,00",
+                    "1,542"
                 ],
             ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["before-tax", "after-tax", "bonus", "extn"],
+            ["税前", "税后", "奖金", "其他"]);
     }
 }
-

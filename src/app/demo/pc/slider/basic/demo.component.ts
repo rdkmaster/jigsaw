@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {SliderMark} from "jigsaw/pc-components/slider/slider";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
+import {SliderMark, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -48,6 +47,8 @@ export class SliderBasicDemoComponent {
             value: 60, label: '60 ℃', style: {color: "red"}
         }
     ];
+
+    rangeValue3 = new ArrayCollection([30, 50, 60]);
 
     // demo6
     value6 = 10;

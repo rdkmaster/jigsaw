@@ -1,19 +1,27 @@
-<!--<ng-content></ng-content>-->
-<input #input
-       [placeholder]="placeholder"
-       [(ngModel)]="value"
-       [disabled]="disabled"
-       (blur)="_$handleBlur($event)"
-       (focus)="_$handleFocus($event)"
-       (keydown)="_handleKeyDown($event)">
+<div class="jigsaw-input-container">
+    <div class="jigsaw-numeric-input-wrapper" [ngStyle]="_$getBorderRadius" [ngClass]="_$getWrapperClass">
+        <input #input
+               [placeholder]="placeholder"
+               [(ngModel)]="value"
+               [disabled]="disabled"
+               (blur)="_$handleBlur($event)"
+               (focus)="_$handleFocus($event)"
+               (keydown)="_handleKeyDown($event)"
+               autocomplete="off">
 
-<div class="jigsaw-numeric-input-option-box">
-    <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
-         (mousedown)="_$increase($event)">
-        <span class="fa jigsaw-numeric-input-option-bar-up"></span>
+        <div class="jigsaw-numeric-input-option-box">
+            <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$upDisabled"
+                 (mousedown)="_$increase($event)">
+                <span class="iconfont iconfont-e24f jigsaw-numeric-input-option-bar-up"></span>
+            </div>
+            <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$downDisabled"
+                 (mousedown)="_$decrease($event)">
+                <span class="iconfont iconfont-e24c jigsaw-numeric-input-option-bar-down"></span>
+            </div>
+        </div>
     </div>
-    <div class="jigsaw-numeric-input-option-bar" [class.jigsaw-numeric-input-option-bar-disabled]="_$downDisabled"
-         (mousedown)="_$decrease($event)">
-        <span class="fa jigsaw-numeric-input-option-bar-down"></span>
-    </div>
+
+    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [disabled]="disabled" [data]="suffix"
+                          [contentWidth]="suffixWidth"
+                          [labelField]="suffixLabelField" (change)="suffixChange.emit($event)"></jigsaw-prefix-suffix>
 </div>

@@ -1,6 +1,5 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {ColumnDefine} from "jigsaw/pc-components/table/table-typings";
+import {TableData, ColumnDefine} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -88,6 +87,5 @@ export class TableContentWidthDemoComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用contentWidth控制表格的列宽。';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
-

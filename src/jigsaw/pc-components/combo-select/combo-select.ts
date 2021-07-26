@@ -1,11 +1,14 @@
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     Component,
     ContentChild,
     ElementRef,
     EventEmitter,
     forwardRef,
+    Injector,
     Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -13,7 +16,8 @@ import {
     Renderer2,
     TemplateRef,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -24,7 +28,7 @@ import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
-
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class ComboSelectValue {
     [index: string]: any;
@@ -42,34 +46,50 @@ export class ComboSelectValue {
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawComboSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnDestroy, OnInit, AfterViewInit {
     private _removeRefreshCallback: CallbackRemoval;
 
     constructor(private _renderer: Renderer2,
                 private _elementRef: ElementRef,
-                private _popupService: PopupService) {
-        super();
+                private _popupService: PopupService,
+                protected _zone: NgZone,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector,
+                private _cdr: ChangeDetectorRef) {
+        super(_zone);
     }
 
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): ArrayCollection<ComboSelectValue> | ComboSelectValue[] {
         return this._value;
     }
 
     public set value(value: ArrayCollection<ComboSelectValue> | ComboSelectValue[]) {
-        this.writeValue(value);
-        if (value && this._value != value) {
-            this._propagateChange(this._value);
+        if (!value || this._value === value) {
+            return;
+        }
+        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+        this._propagateChange(this._value);
+        if (this.initialized) {
+            this.writeValue(value);
         }
     }
 
     @Output() public valueChange = new EventEmitter<any[]>();
 
-    @Input() public labelField: string = 'label';
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = 'label';
 
     @Output()
     public select = new EventEmitter<any>();
@@ -78,11 +98,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public remove = new EventEmitter<any>();
 
     @Input()
+    @RequireMarkForCheck()
     public placeholder: string = '';
 
     private _disabled: boolean;
 
     @Input()
+    @RequireMarkForCheck()
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -97,8 +119,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _openTrigger: DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
+    @RequireMarkForCheck()
     public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
-        return this._openTrigger;
+        return this.disabled ? 'none' : this._openTrigger;
     }
 
     public set openTrigger(value: 'mouseenter' | 'click' | 'none' | DropDownTrigger) {
@@ -109,6 +132,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     private _closeTrigger: DropDownTrigger = DropDownTrigger.mouseleave;
 
     @Input()
+    @RequireMarkForCheck()
     public get closeTrigger(): 'mouseleave' | 'click' | 'none' | DropDownTrigger {
         return this._closeTrigger;
     }
@@ -118,16 +142,19 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._closeTrigger = typeof value === 'string' ? DropDownTrigger[value] : value;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public maxWidth: string;
 
     /**
      * @internal
      */
-    @ContentChild(TemplateRef, {static: false})
+    @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
-    @ViewChild(JigsawFloat, {static: false})
+    @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
     /**
      * @internal
@@ -135,6 +162,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public _$opened: boolean = false;
 
     @Input()
+    @RequireMarkForCheck()
     public get open(): boolean {
         return this._$opened;
     }
@@ -145,11 +173,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 控件disabled，并且想打开下拉
             return;
         }
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // toggle open 外部控制时，用异步触发变更检查
             // 初始化open，等待组件初始化后执行
             if (value) {
-                if (this._editor) this._editor.focus();
+                if (this._editor) {
+                    this._editor.focus();
+                }
             } else {
                 this.searchKeyword = '';
             }
@@ -168,7 +198,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 this._editor.select();
             }
         }
-
+        this._onTouched();
         this.openChange.emit(value);
     }
 
@@ -182,6 +212,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _showBorder: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public set showBorder(value: boolean) {
         this._showBorder = value;
@@ -192,33 +225,52 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return this._showBorder;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public autoClose: boolean; //自动关闭dropdown
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public autoWidth: boolean; //自动同步dropdown宽度，与combo-select宽度相同
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public clearable: boolean = false;
 
-    @ViewChild('editor', {static: false})
+    @ViewChild('editor')
     private _editor: JigsawInput;
 
-    @ViewChild('editor', {read: ElementRef, static: false})
+    @ViewChild('editor', {read: ElementRef})
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
     private _tags: QueryList<JigsawTag>;
 
     @Input()
+    @RequireMarkForCheck()
     public searchable: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searching: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchKeyword: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public searchBoxMinWidth: number = 40;
 
@@ -226,13 +278,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public searchKeywordChange = new EventEmitter<any>();
 
     /**
-     * 是否显示tag的边框和删除按钮，默认显示
-     */
-    @Input()
-    public showValueBorder: boolean = true;
-
-    /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = form/template-driven
      */
@@ -243,6 +291,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return CommonUtils.toTrackByFunction(this.labelField);
     };
 
+    @Output()
+    public clear = new EventEmitter<any>();
+
     /**
      * @internal
      */
@@ -250,6 +301,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._value.splice(0, this._value.length);
         this._value.refresh();
         this._autoWidth();
+        this.clear.emit();
     }
 
     /**
@@ -266,11 +318,15 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoWidth() {
-        if (!this.autoWidth || !this._jigsawFloat.popupElement) {
+        if (!this.autoWidth || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
             return;
         }
-        this.callLater(() => {
+        this.runAfterMicrotasks(() => {
+            if (!this._jigsawFloat || !this._jigsawFloat.popupElement) {
+                return;
+            }
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
+            this._renderer.setStyle(this._jigsawFloat.popupElement, 'min-width', this._elementRef.nativeElement.offsetWidth + 'px');
         });
     }
 
@@ -281,7 +337,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _autoEditorWidth() {
-        if (!this.searchable || !this._editorElementRef) return;
+        if (!this.searchable || !this._editorElementRef) {
+            return;
+        }
 
         // 组件的空白长度 + 图标宽度
         const hostPaddingGap = 36;
@@ -300,7 +358,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _autoPopupPos() {
         if (!this.autoClose && this._jigsawFloat) {
-            this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            this.runAfterMicrotasks(() => {
+                this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            })
         }
     }
 
@@ -312,7 +372,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this.select.emit(tagItem);
 
         // 控制下拉状态;(如果没有打开下拉内容，下拉，如果已经下拉保持不变;)
-        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled) return;
+        if (this._openTrigger === DropDownTrigger.mouseenter || this.open || this.disabled) {
+            return;
+        }
 
         this.open = true;
     }
@@ -322,12 +384,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$handleSearchBoxChange() {
-        if (this.searchKeyword) this.open = true;
+        if (this.searchKeyword) {
+            this.open = true;
+        }
         this.searchKeywordChange.emit(this.searchKeyword);
     }
 
     public ngOnInit() {
         super.ngOnInit();
+        // 设置初始值
+        if (CommonUtils.isDefined(this.value)) {
+            this.writeValue(this.value, false);
+        }
         let maxWidth: string | number = CommonUtils.getCssValue(this.maxWidth);
         if (maxWidth && !maxWidth.match(/%/)) {
             maxWidth = parseInt(maxWidth.replace('px', ''));
@@ -355,15 +423,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
-    public writeValue(value: any): void {
-        if (!value || this._value === value) {
-            return;
+    public writeValue(value: any, emit = true): void {
+        if (value && this._value != value) {
+            // 初始表单值的赋值
+            this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+            this._cdr.markForCheck();
         }
-        this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this.callLater(() => this.valueChange.emit(this._value));
+        if (emit) {
+            this.runMicrotask(() => this.valueChange.emit(this._value));
+        }
         this._autoWidth();
         this._autoClose();
+        this._autoPopupPos();
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
@@ -382,5 +456,19 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    /**
+     * @internal
+     */
+    public _$onClick($event: Event): void {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

@@ -5,9 +5,9 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>Radio</h2>
+    <jigsaw-header [level]="1">Radio</jigsaw-header>
     <div class="demo-1 live-demo live-demo-block">
-        <h3>数据是对象数组</h3>
+        <jigsaw-header [level]="2">数据是对象数组</jigsaw-header>
         <p class="comment">数据是对象数组时必须输入<code>trackItemBy</code></p>
         <j-radios [(value)]="selectedCity" trackItemBy="name"
                        (valueChange)="radioChange($event)">
@@ -18,7 +18,7 @@
         <p class="message">选择的城市是: <span>{{selectedCity.name}}</span></p>
     </div>
     <div class="demo-2 live-demo live-demo-block">
-        <h3>数据是字符串数组</h3>
+        <jigsaw-header [level]="2">数据是字符串数组</jigsaw-header>
         <p class="comment">数据是对象数组时不需要输入<code>trackItemBy</code></p>
         <j-radios [(value)]="selectedCity2">
             <j-radio-option *ngFor="let item of citys2" [value]="item">
@@ -29,12 +29,12 @@
     </div>
 
     <div class="demo-3 live-demo live-demo-block">
-        <h3>复杂的场景</h3>
+        <jigsaw-header [level]="2">复杂的场景</jigsaw-header>
         <j-radios [(value)]="selectedGoods" trackItemBy="name"
                        (valueChange)="radioChange($event)">
             <j-radio-option *ngFor="let goods of goodsList" [value]="goods" [disabled]="!!goods.disabled">
                 <div class="goods-box">
-                    <span class="logo fa fa-{{goods.logo}}"></span>
+                    <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                     <p>{{goods.desc}}</p>
                 </div>
             </j-radio-option>

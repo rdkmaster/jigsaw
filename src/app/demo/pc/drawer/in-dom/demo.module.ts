@@ -1,17 +1,17 @@
 import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {JigsawButtonModule, JigsawDrawerModule, JigsawInputModule, JigsawRadioModule, JigsawSwitchModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DrawerInDomDemoComponent} from "./demo.component";
-import {JigsawDrawerModule} from "jigsaw/pc-components/drawer/drawer";
-import {JigsawRadioModule} from "jigsaw/pc-components/radio/radio";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
-import {CommonModule} from "@angular/common";
-import {JigsawInputModule} from "jigsaw/pc-components/input/input";
 
 @NgModule({
-    imports: [JigsawDrawerModule, JigsawRadioModule,JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule, JigsawInputModule],
+    imports: [
+        JigsawDrawerModule, JigsawRadioModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule,
+        JigsawInputModule, JigsawSwitchModule
+    ],
     declarations: [DrawerInDomDemoComponent],
-    exports: [ DrawerInDomDemoComponent ]
+    exports: [DrawerInDomDemoComponent]
 })
-export class DrawerInDomDemoModule{
+export class DrawerInDomDemoModule {
 
 }

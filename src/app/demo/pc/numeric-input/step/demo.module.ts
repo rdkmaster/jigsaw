@@ -1,12 +1,14 @@
 import {NgModule} from "@angular/core";
+import {JigsawNumericInputModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {NumericInputStepDemoComponent} from "./demo.component";
-import {JigsawNumericInputModule} from "jigsaw/pc-components/input/numeric-input";
+
+import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     declarations: [NumericInputStepDemoComponent],
     exports: [NumericInputStepDemoComponent],
-    imports: [JigsawNumericInputModule, JigsawDemoDescriptionModule]
+    imports: [JigsawNumericInputModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
 })
 export class NumericInputStepDemoModule {
 

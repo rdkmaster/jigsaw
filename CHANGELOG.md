@@ -1,3 +1,219 @@
+## v9.1.7 (2020-07-15)
+
+### 新特性 / New Features
+- [新增] input、auto-complete-input新增输入属性preIcon和icon用于设置前后图标
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] 当select控件的trackItemBy属性有效时，根据trackItemBy所指的属性的值来判定value值是否有变更
+
+#### 破坏性说明
+
+select控件的`valueChange`事件触发时机有细微的变化，此前，通过select组件的`value`属性输入任何非空新对象都会触发`valueChange`事件，而不管当前控件是否给定了`trackItemBy`属性。这个做法导致了`trackItemBy`属性失去作用。比如下面的代码
+
+```
+html:
+// 注意，trackItemBy值为label，是有效的，这是关键
+<j-select [value]="value" trackItemBy="label" (valueChange)="onValueChange()">
+</j-select>
+
+ts:
+this.value = {label: 'xxx'}; // onValueChange将会被调用
+this.value = {label: 'xxx'}; // onValueChange也会被调用，因为前后两次给的value值不是同一个对象。
+```
+
+现在，控件在触发`valueChange`事件之前，增加了对`trackItemBy`值的判断，行为发生了变更：
+
+```
+html: 与前例一致
+
+ts:
+this.value = {label: 'xxx'}; // onValueChange将会被调用
+this.value = {label: 'xxx'}; // onValueChange不会被调用，因为label的值前后都是xxx，没有变化
+```
+
+但请注意，如果`trackItemBy`值为空，则select控件的行为与之前一致：
+
+```
+html:
+// 注意，trackItemBy没有配置，为非法值
+<j-select [value]="value" (valueChange)="onValueChange()">
+</j-select>
+
+ts:
+this.value = {label: 'xxx'}; // onValueChange将会被调用
+this.value = {label: 'xxx'}; // onValueChange也会被调用，不给trackItemBy时，select控件会按照引用来判定value是否发生变化
+```
+
+###  优化 / Modified
+- [优化] 将jigsawFloatArrowElement属性的类型改为any，避免在node运行时使用Jigsaw报错
+
+### 修复 / Fixes
+- [故障] 修复输入框在非键盘输入情况下改变时无法触发valueChange的问题
+
+## v9.1.4 (2020-07-03)
+
+### 新特性 / New Features
+- [新增] autoinput组件添加maxDropDownWidth属性，可以设置弹出的最大宽度
+- [新增] 分页组件增加searchDebounce，用于给搜索增加防抖和敲击回车键立刻搜索功能
+- [新增] 时间选择器，用于只选择时间（不带日期），详见[这里](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo)
+- [新增] 内置下拉时间选择器和内置下拉时间范围选择器，由于下拉选择时间的场景实在太多，我们直接将时间选择与组合下拉集成好，详见[这里](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/date-time-select)和[这里](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/range-date-time-select)。
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] 控件在赋了初始值时，默认不触发change事件，**这个破坏性很轻微，基本上可无视**，涉及到的组件有级联选择、组合下拉选择、自动补齐输入框、单行输入框、多行输入框、数字输入框、下拉选择
+- [破坏性修改] [优化] 重新实现日期时间控件，无依赖，全新交互，全新UI。
+
+我们对日期时间组件进行了全新的改版，全新UI，全新交互，但是也引入了一些破坏性，全部列举如下：
+
+#### selector变更/新增
+
+我们给新组件设计了一套全新的selector：
+
+- 增加[jigsaw-time-picker](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo)用于选择时间（不带日期）；
+- 增加[jigsaw-date-time-select](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/date-time-select)和[jigsaw-range-date-time-select](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/range-date-time-select)控件用于下拉选择时间的场景；
+- 原[jigsaw-time](https://jigsaw-zte.gitee.io/v8.0/#/components/time/demo)控件改为[jigsaw-date-time-picker](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo)；
+- 原[jigsaw-range-time](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo)控件改为[jigsaw-range-date-time-picker](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo)；
+
+#### 输入属性变更
+
+> 这里的描述适用于时刻选择和时间范围选择两个组件。
+
+- 去掉了原组件的[`recommendedBegin`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/recommended)、[`recommendedEnd`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/recommended)、[`recommendedLabel`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/recommended)属性，请使用新增的[`markDates`](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/mark)属性替代；
+- 去掉了原组件`weekDayStart`属性，现在设置[weekStart](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/week-start)不需要`weekDayStart`属性配合了；
+- 去掉了原组件[`refreshInterval`](https://jigsaw-zte.gitee.io/v8.0/#/components/range-time/demo/refresh-interval)属性，现在通过宏实时更新limit不需要通过`refreshInterval`属性配合了，现在根据宏更新limit改为交互时实时计算，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd
+- [`gr`](https://jigsaw-zte.gitee.io/v8.0/#/components/time/demo/gr)属性去掉了`'time'|'time_hour_minute'|'time_minute_second'`选项，需要使用时间选择器的，请改用[`jigsaw-time-picker`](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo)；
+
+
+###  优化 / Modified
+- [优化] 对话框按钮栏显示机制，避免在对话框内部使用按钮时，按钮栏意外出现
+- [优化] 弹出顶部进度条现在会销毁之前的，修复组件实例给status赋值无法更新视图
+- [优化] 优化不同状态下进度条的布局，小问题修复
+- [优化] 时间控件通过实例操作输入属性方式的问题
+- [优化] @RequireMarkForCheck装饰器兼容多级父类中的getter/setter
+- [优化] 其余的组件变更检测策略改为onpush以提升组件性能
+
+### 修复 / Fixes
+- [故障] 修复TreeData无法通过ajax获取数据
+- [故障] 修复menu直接fromXML报错以及xml数据支持远程获取，以及select下拉框点击下拉选项报错的问题
+- [故障] tab宽度缩小到比title还窄时页面卡死问题
+- [故障] 解决折叠的手风琴模式不生效的问题
+- [故障] 新增输入属性装饰器，修复OnPush策略带来的部分视图未及时更新的问题
+- [故障] 修复部分日期时间组件没有白背景，date-select组件无法设置尺寸
+- [故障] 处理无效的weekDate，以及提前设置weekStart
+- [故障] 修复日期控件limitEnd小于limitEnd时页面卡死
+- [故障] 修复没有初始值gr为分钟或小时，选了日期后value值依旧为00:00:00
+- [故障] 修复没有初始值时，时间范围选择器显示limitStart&limitEnd不正确
+- [故障] 修复日期范围选择器limit和周粒度一起用时无法发送change事件
+- [故障] 连续弹出多个消息框时位置计算错误
+
+## v9.1.0 (2020-06-5)
+
+### 新特性 / New Features
+- [新增] jigsaw-menu菜单组件和jigsaw-cascading-menu级联菜单指令
+- [新增] 增加进度条组件
+- [新增] 增加树形表格渲染器，用于模拟出树型表格的效果，表格支持展示级联关系数据
+- [新增] cascade增加对内部tile option宽度的配置
+- [新建] 上传组件和指令支持file-verify字段以及其他自定义字段，服务端可通过这些字段做安全相关校验
+- [新增] 增加表格的编辑单元格jigsaw-auto-complete-input渲染器，jigsaw-auto-complete-input组件交互过程优化
+- [新增] 增加switch组件的只读模式，优化表格渲染初始值的更新过程
+- [新增] float指令增加reposition方法，优化下拉打开逻辑，单击宿主不关闭下拉
+- [新增] 分页组件的简单模式增加选择分页记录数功能
+- [新增] PopupOptions添加一个新属性showShadow用于控制是否自动添加阴影
+- [新增] float下拉视图指令支持添加三角形指向宿主
+- [新增] float指令暴露openFloat和closeFloat方法，auto-complete-input支持编程方式开关提示列表
+- [新增] SimpleTreeData支持xml作为数据源格式
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- [优化] 性能优化：优化所有组件的异步操作，提升组件性能
+- [优化] 性能优化：变更检查策略由默认改为onpush
+- [优化] tile-lite / tile 组件添加showBoder属性，用于控制是否显示边框，默认为true
+- [优化] 升级echarts到4.7.0
+- [优化] 调整graph颜色，增加不同系列的对比，fixes #1109
+- [优化] 在把Jigsaw与服务端一起编译时，直接使用window对象，会导致后端编译失败
+- [优化] table header使用html渲染器同时也可以设置排序功能
+- [优化] PopupService.setPosition中增加参数非空保护，避免报错
+- [优化] 表格select渲染器退出编辑优化，支持通过ESC和鼠标点击其他区域退出
+- [优化] 去掉data.refresh的setTimeout，优化鱼骨图的异步操作，组件剩余setTimeout改造
+- [优化] 编辑表格更新优化
+- [优化] auto-complete-input组件下拉列表优化，在条目过滤后，自动调整下拉到正确的位置
+- [优化] 使用en/decodeURIComponent对HTTP的GET请求参数做编解码器，避免angular原生编解码未能处理=+等几个字符，导致服务端处理数据失败的问题
+- [优化] 使用正常模式引入jszip，避免APP在编译时ng报warn日志
+- [优化] 解决node环境下引用lib.dom中类型时报undefined问题
+- [优化] 优化float和cascading-menu指令的实现，菜单功能支持更多的场景
+- [优化] 当xml格式存在错误的时候，在控制台上打印出错误的位置
+- [优化] 去掉root组件对notification的引用，提升aot摇树成功率
+- [优化] 进度条动画优化，提升动画性能
+
+### 修复 / Fixes
+- [修复] 修复window获取不到echarts对象的破坏性，fixes #1111
+- [修复] 上传组件和指令在additionalFields属性值未初始化时报错的问题
+- [修复] 修复auto-complete的没有下拉数据时会报错
+- [故障] 解决在某些情况下下拉视图意外弹出的问题
+- [故障] 修复Demo元素之间默认边距消失的问题
+- [故障] 修复由于ng9组件继承元数据导致autoCompleteInput样式出现问题
+- [故障] 修复float指令在不设置option的时候弹出报错的问题
+- [故障] 修改图形下载指令获取jigsaw-graph节点的方式，以解决在一些情况下无法获取echarts实例的问题
+- [故障] select设置多选和初始值时，页面首次加载显示异常的问题
+- [故障] 修改tab-pane的title属性实现方式，解决cascade组件无法及时更新标题显示的问题
+
+## v9.0.5-beta1 (2020-3-17)
+
+### 新特性 / New Features
+- [新增] time和rangeTime组件增加weekDayStart属性，用于配合weekStart选择周粒度时间,fixes #1040
+- [新增] 分页控件的simple模式支持搜索框
+- [新增] table在columnDefine中的表头现在可以设置html作为表头的渲染器
+- [新增] ModeledMapGraphData增加缩放属性
+- [新增] upload组件的start事件加上数据
+- [新增] 新增一套paletx风格的皮肤
+- [新增] 弹出选项新增可以配置 top / right / left / bottom 四个绝对位置
+- [新增] tile-lite和button-bar增加title提示文字
+- [新增] 弹出选项新增可以配置 leftTop/ leftBottom/ rightTop/ rightBottom 四个位置
+- [新增] 表格单元格编辑器新增数字编辑渲染器
+- [新增] upload组件新增文件大小限制，并在上传列表中将非法文件显示出来
+
+### 破坏性修改 / Breaking Changes
+- [破坏性修改] icon控件的iconSize和textSize属性的默认值从14px改为"inherit"
+
+###  优化 / Modified
+- [优化] 调整图形组件导出图片按钮弹出位置
+- [优化] 修改图形下载指令按钮的弹出方式，以解决在宿主有滚动条情况下的位置异常
+- [优化] select组件高度不够时跟combo一样撑出滚动条
+- [优化] 优化所有组件的异步操作，提升组件性能
+- [优化] 采用Stackblitz作为新的demo代码演示和编辑测试方式
+- [优化] 修改默认tree的皮肤
+- [优化] 性能优化：变更检查策略由默认改为onpush，提升组件性能
+- [优化] 当graph的宿主没有尺寸时，缩放浏览器不自动resize
+- [优化] 分页的跳转输入框，失去焦点时也跳转
+- [优化] 图形组件增加echarts的getMap方法，隐藏掉getMapMap方法（笔误）
+- [优化] 将echarts的弹出z-index值归入jigsaw的z-index体系中，让它弹出在适当的层次
+- [优化] box-resize-line高度计算改为callLater执行
+- [优化] Checkbox的label为变量的时候，在ngAfterContentInit中获取不到而导致增加了padding:0的样式
+- [优化] 添加三个时间粒度，以设置不带日期的时间
+
+### 修复 / Fixes
+- [故障] 修复日期选择周粒度时与combo配合使用有问题,废弃weekStart和weekDayStart的配置
+- [故障] 修复抽屉的offsetLeft和offsetRight同时出现时，抽屉宽度计算错误
+- [故障] cascade组件出现异常子级数据的问题
+- [故障] 弹出视图中包含tabs时，通过下拉列表切换tab页导致弹出视图意外关闭的问题
+- [故障] 修复表格在没有数据的时候，宽度计算异常的问题
+
+
+## v9.0.0-beta1 (2019-12-30)
+
+### 新特性 / New Features
+- [新增] 重大更新：Jigsaw支持Angular9版本
+
+### 破坏性修改 / Breaking Changes
+- 无
+
+###  优化 / Modified
+- 无
+
+### 修复 / Fixes
+- 无
+
 ## v8.0.9 (2020-03-17)
 
 ### 新特性 / New Features

@@ -1,7 +1,5 @@
 import {Component} from "@angular/core";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+import {TableData, TableCellRendererBase, CommonUtils} from "jigsaw/public_api";
 
 export class CalendarTableData extends TableData {
     year: number = new Date().getFullYear();
@@ -50,14 +48,13 @@ export class TableCalendarDemoComponent {
             <p class="date-text">{{date}}</p>
             <p class="status" [ngClass]="status" *ngIf="date">
                 <span *ngIf="cellData < 100">{{cellData}}%</span>
-                <span *ngIf="cellData >= 100" class="fa fa-check status-done"></span>
+                <span *ngIf="cellData >= 100" class="iconfont iconfont-e13f status-done"></span>
             </p>
         </div>
     `,
     styles: [`
         .date-cell {
             height: 70px;
-            margin: 0 -9px 0 -9px;
             color: #ababab;
         }
 
@@ -68,7 +65,6 @@ export class TableCalendarDemoComponent {
 
         .status {
             padding-top: 22px;
-            padding-left: 24px;
             font-size: 20px;
             color: #c7220f;
         }
@@ -79,10 +75,6 @@ export class TableCalendarDemoComponent {
 
         .status-less-well {
             color: #c7220f;
-        }
-        
-        .status-done {
-            margin-left: 12px;
         }
 
         .weekEnd {

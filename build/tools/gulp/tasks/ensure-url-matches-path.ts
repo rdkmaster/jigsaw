@@ -9,7 +9,7 @@ import {getRouterConfig} from "../util/get-router-config";
  */
 task('ensure-url-matches-path', () => {
     const demoHome = join(__dirname, '../../../../src/app/demo');
-    let unmatchedUrls: string[] = [];
+    const mismatchUrls: string[] = [], invalidPaths: string[] = [];
 
     routerConfig.forEach((router: any) => {
         const childRouters = getRouterConfig(join(demoHome, router.path, 'demo-set.module.ts'));
@@ -17,16 +17,25 @@ task('ensure-url-matches-path', () => {
             .forEach((child: any) => {
                 const modulePath = join(demoHome, router.path, child.path);
                 if (!existsSync(join(modulePath, 'demo.module.ts'))) {
-                    unmatchedUrls.push(modulePath);
+                    mismatchUrls.push(modulePath);
+                }
+                if (/[^a-z-0-9]/.test(child.path)) {
+                    invalidPaths.push(`${router.path}/${child.path}`);
                 }
             });
     });
-    if (unmatchedUrls.length > 0) {
+    if (mismatchUrls.length > 0) {
         console.log('these urls do NOT match there file path:');
-        console.log(unmatchedUrls);
+        console.log(mismatchUrls);
         process.exit(1);
-    } else {
-        console.log('great! all urls match their path!');
+    }
+    if (invalidPaths.length > 0) {
+        console.log('these demo folder name are invalid, only lower case letters, numbers and dash(-) are allowed:');
+        console.log(invalidPaths);
+        process.exit(1);
+    }
+    if (invalidPaths.length == 0 && mismatchUrls.length == 0) {
+        console.log('great! all urls match their paths!');
     }
 });
 

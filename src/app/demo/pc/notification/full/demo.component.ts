@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {JigsawNotification} from "jigsaw/pc-components/notification/notification";
+import {JigsawNotification} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -14,35 +14,35 @@ import {JigsawNotification} from "jigsaw/pc-components/notification/notification
             margin: 6px;
         }
 
-        h4 {
+        .wrapper h4 {
             margin: 6px 0 18px 6px;
         }
-        
-        jigsaw-button {
+
+        .wrapper jigsaw-button {
             margin: 0 6px 6px 6px;
         }
-        
-        label {
+
+        .wrapper label {
             width: 30px;
         }
-        
-        jigsaw-input {
+
+        .wrapper jigsaw-input {
             width: 300px;
         }
 
-        jigsaw-slider {
+        .wrapper jigsaw-slider {
             width: 270px;
         }
     `]
 })
 export class NotificationFullDemoComponent {
     message = '这是一个 <b>很棒的</b> 消息提示框！';
-    caption = undefined;  // this is the default value
-    position = undefined; // this is the default value
-    icon = undefined;     // this is the default value
-    timeout = 8;          // this is the default value
-    width = 350;          // this is the default value
-    height = 0;           // this is the default value
+    caption = undefined;   // this is the default value
+    position = 'rightTop'; // this is the default value
+    icon = undefined;      // this is the default value
+    timeout = 8;           // this is the default value
+    width = 350;           // this is the default value
+    height = 0;            // this is the default value
 
     showWithOptions() {
         JigsawNotification.show(this.message, {
@@ -70,7 +70,7 @@ export class NotificationFullDemoComponent {
             {
                 callback: answer => alert(answer ? '你的答案是：' + answer.label : '看来对于这个问题你很犹豫...'),
                 // 支持 jigsaw-button 的所有选项
-                buttons: [{label: '同意！', type: 'primary'}, {label: '不好说'}], icon: 'fa fa-question'
+                buttons: [{label: '同意！', type: 'primary'}, {label: '不好说'}], icon: 'iconfont iconfont-e9ee'
             });
     }
 
@@ -96,6 +96,22 @@ export class NotificationFullDemoComponent {
                 // 推荐将这些函数都定义在当前组件内，因此他的值一般设置为 this 即可
                 innerHtmlContext: this
             });
+    }
+
+    showSuccess() {
+        JigsawNotification.showSuccess('这是一条成功的提示消息', {timeout: 8000});
+    }
+
+    showError() {
+        JigsawNotification.showError('这是一条错误的提示消息', {timeout: 8000});
+    }
+
+    showWarn() {
+        JigsawNotification.showWarn('这是一条警告的提示消息', {timeout: 8000});
+    }
+
+    showInfo() {
+        JigsawNotification.showInfo('这是一条消息的提示消息', {timeout: 8000});
     }
 
     // ====================================================================

@@ -1,0 +1,27 @@
+.container {
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    margin: 0 0 16px;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    padding: 10px;
+}
+
+.items {
+    margin-bottom: 20px;
+}
+
+.tabs-box {
+    border: 1px solid #eee;
+    margin: 20px;
+    padding: 10px;
+}
+
+::ng-deep .tab-icon-more {
+    width: 20px;
+    text-align: center;
+    position: relative;
+    right: -20px;
+}

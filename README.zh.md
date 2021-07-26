@@ -5,6 +5,14 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rdkmaster/jigsaw) 
 
+## Jigsaw的优势
+
+Jigsaw是一套完整强大的Web组件集，当前的版本里包含了43个组件、6个容器、5个服务、5个指令，基本上覆盖了Web应用的方方面面。简单的说，其他组件集有的，Jigsaw都有，而且功能更强大性能更好。因此完全没有必要担心Jigsaw的功能缺失的问题。
+
+Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开发就能同时支持多种Ux规范**。
+
+这是业界首创！[点击这里](https://jigsaw-zte.gitee.io/latest/#/components/guide/supports-multiple-ux-specifications)了解更多。
+
 ## 可用清单
 
 ### 组件 / Components
@@ -18,34 +26,42 @@
 5 | Button Bar | 一个按钮栏，支持选择状态，单个或多个选择，它可以用作表单控件或导航器。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/button-bar/demo/basic)
 6 | Cascade | 用于收集或者展示具有从属关系的数据的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/cascade/demo/search-and-paging)
 7 | Check Box | 用于收集多项选择的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/checkbox/demo/full)
-8 | Fish Bone | 鱼骨图通常用于以鱼骨的方式呈现具有从属关系的一些数据。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/fish-bone/demo/full)
-9 | Graph | 以图形方式呈现任何数据，包括条形图，折线图，饼图，仪表等任何图形，基于 [echarts](echarts.baidu.com) 实现。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/pie)
-10 | Icon | 一个字体图标，可作为链接按钮来用。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/icon/demo/basic)
-11 | Input | 一个用于收集文本信息的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full)
-12 | List Lite | 用于将一组数据以文本列表方式呈现，支持单选和多选。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full)
-13 | List | 用于将一组数据渲染为任意形式的列表 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list/demo/full)
-14 | Loading | 显示一段简单的动画以缓解用户在等执行某些操作期间的焦虑感。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
-15 | Notification | 在UI的角落里弹出一些不重要的消息，或收集一些不重要的用户选择。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/notification/demo/full)
-16 | Numeric Input | 用于收集数字的表单控件，支持整数和浮点数。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/numeric-input/demo/step)
-17 | Pagination | 用于将大量数据分成多个页面显示的控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/pagination/demo/basic)
-18 | Radio Group | 用于收集单个选项的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
-19 | Range Time | 用于收集日期开始和结束日期时间的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
-20 | Rate | 一个用于打分的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/rate/demo/full)
-21 | Scrollbar | 给任意容器添加一个自定义滚动条，基于 [perfect scrollbar](https://github.com/utatti/perfect-scrollbar)。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/scrollbar/demo/basic)
-22 | Select | 用于通过下拉列表来收集选项的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-23 | Slider | 用于通过滑动收集数字信息的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-24 | Steps | 显示一系列具有某些预定义状态的自定义步骤。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-25 | Switch | 用于收集 是/否 开/关 的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-26 | Table | 一个非常非常强大的数据表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer)
-27 | Tag | 一个标签控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
-28 | Textarea | 用于收集多行文本的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
-29 | Tile | 通过平铺方式显示数据列表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile/demo/full)
-30 | TileLite | 通过平铺方式显示数据列表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo)
-31 | Time | 用于收集日期时间的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time/demo/full)
-32 | Tooltip | 一个自定义的 tooltip。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tooltip/demo/inline)
-33 | Tree | 以树的方式渲染一些具有从属关系的数据，基于 [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo)。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/editable)
-34 | Upload | 打开文件选择器挑选一些文件并上传到服务器。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
-35 | Viewport | 表示一个抽象视图的一部分。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
+8 | Color Select | 用于挑选一个颜色。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/color-select/demo/basic)
+9 | Combo Select | 一个通用的下拉视图组合选择器，用于将复杂视图以下拉方式收纳起来。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/trigger)
+10 | Date Time (Single) | 用于收集日期时间的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/basic)
+11 | Date Time (Range) | 用于收集日期开始和结束日期时间的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/basic)
+12 | Fish Bone | 鱼骨图通常用于以鱼骨的方式呈现具有从属关系的一些数据。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/fish-bone/demo/full)
+13 | Graph | 以图形方式呈现任何数据，包括条形图，折线图，饼图，仪表等任何图形，基于 [echarts](echarts.baidu.com) 实现。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/pie)
+14 | Icon | 一个字体图标，可作为链接按钮来用。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/icon/demo/basic)
+15 | Input | 一个用于收集文本信息的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full)
+16 | List Lite | 用于将一组数据以文本列表方式呈现，支持单选和多选。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full)
+17 | List | 用于将一组数据渲染为任意形式的列表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list/demo/full)
+18 | Loading | 显示一段简单的动画以缓解用户在等执行某些操作期间的焦虑感。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
+19 | Menu | 多级菜单，常常用于功能导航。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/navigation)
+20 | Notification | 在UI的角落里弹出一些不重要的消息，或收集一些不重要的用户选择。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/notification/demo/full)
+21 | Numeric Input | 用于收集数字的表单控件，支持整数和浮点数。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/numeric-input/demo/step)
+22 | Pagination | 用于将大量数据分成多个页面显示的控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/pagination/demo/basic)
+23 | Progress bar | 一个进度条。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo)
+24 | Radio Group | 用于收集单个选项的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
+25 | Rate | 一个用于打分的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/rate/demo/full)
+26 | Scrollbar | 给任意容器添加一个自定义滚动条，基于 [perfect scrollbar](https://github.com/utatti/perfect-scrollbar)。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/scrollbar/demo/basic)
+27 | Select | 用于通过下拉列表来收集选项的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
+28 | Slider | 用于通过滑动收集数字信息的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
+29 | Steps | 显示一系列具有某些预定义状态的自定义步骤。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
+30 | Switch | 用于收集 是/否 开/关 的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
+31 | Table | 一个非常非常强大的数据表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer)
+32 | Tab Bar | [Tabs容器](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api)的页签部分。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/tab-bar)
+33 | Tag | 一个标签控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
+34 | Textarea | 用于收集多行文本的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
+35 | Tile | 通过平铺方式显示数据列表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile/demo/full)
+36 | TileLite | 通过平铺方式显示数据列表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo)
+37 | Time | 一个时间选择器，用于选择时分秒。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo/basic)
+38 | Time Section | 一个时间规则选择器，可设置用于匹配时间的规则。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-section/demo/basic)
+39 | Tooltip | 一个自定义的 tooltip。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tooltip/demo/inline)
+40 | Transfer | 一个复杂选择器，用于大量条目的选择，支持分页。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/transfer/demo/basic)
+41 | Tree | 以树的方式渲染一些具有从属关系的数据，基于 [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo)。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/editable)
+42 | Upload | 打开文件选择器挑选一些文件并上传到服务器。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
+43 | Viewport | 表示一个抽象视图的一部分。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
 
 ### 容器 / Containers
 
@@ -53,9 +69,10 @@
 ---|------|-------------|------
 1 | Collapse | 可以折叠或打开给定视图的容器。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/collapse/demo/full)
 2 | Combo Select | 一个可以隐藏任何给定视图的容器，用户可以向下拉以显示此视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/searchable)
-3 | Dialog | 将任意给定视图以对话框的形式展示的容器。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo)
-4 | Drawer | 一个可以隐藏任何给定视图的容器，用户可以滑动打开此视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo)
-5 | Tab | 在同一区域堆叠多个视图，同时只显示其中一个视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api)
+3 | Dialog | 一个对话框组件，常常与PopupService配合弹出使用。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo)
+4 | Drawer | 一个抽屉，常常用于收纳复杂视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drawer/demo/drawer-in-drawer)
+5 | Tab | 一个多页折叠容器，可将多个视图叠加在一起。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api)
+6 | ViewStack | 一个多页折叠容器，与Tabs类似但没有标签栏。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/headless)
 
 ### 服务 / Services
 
@@ -75,6 +92,7 @@
 2 | Trusted Html | 与Angular的innerHtml指令功能相似，但不会删除给定的html片段中的敏感信息。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/trusted-html/demo)
 3 | Draggable | 赋予宿主支持拖拽的能力。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drag-drop/demo)
 4 | Upload | 赋予宿主支持上传文件能力。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
+5 | Menu | 多级菜单指令，常常用于功能导航。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/usage)
 
 ## 名字的内涵
 Jigsaw原意是七巧板，一种拼图游戏。游戏的过程和现代web页面开发过程很类似，游戏者按照既定的蓝图将杂乱的碎片组合成一幅图，我们使用这个名字正是为了让web页面开发者能够像玩Jigsaw游戏一样，边玩边开发你的页面。

@@ -40,7 +40,10 @@ export function createTask(packageName: string) {
 
     task(`:build:${packageName}-all-theme-file`,function () {
         return src([allThemingStyleGlob])
-            .pipe(gulpSass().on('error', gulpSass.logError))
+            .pipe(gulpSass().on('error', (err: any) => {
+                console.error('Failed to build theme, detail:\n', err.stack);
+                throw err;
+            }))
             .pipe(gulpCleanCss())
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
     });

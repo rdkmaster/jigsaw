@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule} from "jigsaw/pc-components/table/table";
+import {JigsawTableModule, JigsawPaginationModule, JigsawButtonModule} from "jigsaw/public_api";
 import {TableSetHeaderSortDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawPaginationModule} from "jigsaw/pc-components/pagination/pagination";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
+
+import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawButtonModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawButtonModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [TableSetHeaderSortDemoComponent],
     exports: [TableSetHeaderSortDemoComponent]
 })

@@ -1,12 +1,22 @@
 import {
-    AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, OnInit, Optional, Output, ViewChild, OnDestroy
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter, Injector,
+    Input,
+    NgModule,
+    OnDestroy,
+    OnInit,
+    Optional,
+    Output,
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs";
-import {JigsawTabsModule} from "../tabs/index";
+import {Observable, Subscription} from "rxjs";
+import {JigsawTab, JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
-import {JigsawTab} from "../tabs/tab";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
@@ -15,6 +25,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 import {JigsawInputModule} from "../input/input";
 import {JigsawPaginationModule} from "../pagination/pagination";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class CascadeData {
     /**
@@ -78,17 +89,21 @@ export class CascadeTabContentInitData {
     host: {
         '[class.jigsaw-cascade]': 'true',
         '[style.width]': 'width',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCascade extends AbstractJigsawComponent implements AfterViewInit, OnInit {
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
     /**
      * @internal
      */
-    @ViewChild(JigsawTab, {static: false}) public _tabs: JigsawTab;
+    @ViewChild(JigsawTab)
+    public _tabs: JigsawTab;
 
     /**
      * @internal
@@ -101,6 +116,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
      */
+    @RequireMarkForCheck()
     @Input()
     public dataGenerator: CascadeDateGenerator;
 
@@ -109,6 +125,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * 忽略此值时，`dataGenerator`函数中的`this`将指向一个空对象。
      *
      * 注意，如果`data`属性的值是一个函数，则该函数的执行上下文也是此属性指定的对象。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
@@ -123,6 +141,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * - 可以是一个生产数据的函数，参考`dataGenerator`
      * - 也可以是一个有层级关系的静态数据，参考`SimpleTreeData`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/basic
      * $demo = cascade/lazy-load
      */
@@ -131,7 +151,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         return this._data;
     }
 
-    public set data(value: CascadeDateGenerator | SimpleTreeData| TreeData) {
+    public set data(value: CascadeDateGenerator | SimpleTreeData | TreeData) {
         this._data = value;
         if (value instanceof Function) {
             this.dataGenerator = value;
@@ -165,9 +185,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 级联选择的数据
-     *
      * $demo = cascade/selected-items
      */
+    @RequireMarkForCheck()
     @Input()
     public get selectedItems(): any[] {
         return this._selectedItems;
@@ -194,6 +214,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * 数据要显示的文本key
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
      */
@@ -204,6 +226,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     /**
      * 数据的标识，用于判断是否为同一个数据，默认是`labelField`的值
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = cascade/track-item-by
      */
@@ -222,6 +246,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     /**
      * 配置叶子节点是否可多选
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = cascade/multiple-select
      */
     @Input()
@@ -235,21 +261,27 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * $demo = cascade/cross-select
      * $demo = cascade/preset-multi-dimensional-data
      */
-        // @Input()
     public allowCrossSelect: boolean = false;
 
     /**
      * 是否可搜索
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public searchable: boolean;
 
     /**
      * 设置数据分页存储数，默认不分页
+     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public pageSize: number = Infinity;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public optionWidth: number | string;
 
@@ -281,7 +313,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         } else {
             this._selectedItems.splice(level, this.selectedItems.length - level, [...selectedItems]);
         }
-
+        this._changeDetectorRef.markForCheck();
         // 多选的tab是级联结束的地方，在这更新选中的数据
         this.selectedItemsChange.emit(this._selectedItems);
     }
@@ -297,6 +329,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         } else {
             this._cascading(level + 1, selectedItem);
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -310,6 +343,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         this._removeCascadingTabs(level);
         this._tabs.selectedIndex = this._tabs.length - 1;
         this._selectedItems = this._selectedItems.slice(0, level);
+        this._changeDetectorRef.markForCheck();
         this.selectedItemsChange.emit(this._selectedItems);
     }
 
@@ -351,7 +385,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             // 这里需要清除掉多余的tab页
             this._removeCascadingTabs(level);
             // 更新选中的数据
-            this.selectedItemsChange.emit(this._selectedItems);
+            if (this._cascadeDataList.length > 0) {
+                this.selectedItemsChange.emit(this._selectedItems);
+            }
             return;
         }
         this._cascadeDataList.splice(level, this._cascadeDataList.length - level, levelData);
@@ -391,13 +427,13 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     template: `
         <div class="jigsaw-cascade-tile-wrapper">
             <div *ngIf="_$showLoading; else tile" class="jigsaw-cascade-loading">
-                <span class="iconfont iconfont-e8dd jigsaw-am-rotation"></span>
+                <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
             </div>
             <ng-template #tile>
                 <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
                     <j-input class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
                              (valueChange)="_$handleSearching($event)">
-                        <span jigsaw-prefix-icon class="fa fa-search"></span>
+                        <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
                     </j-input>
                 </div>
                 <j-tile [(selectedItems)]="_$currentPageSelectedItems" (selectedItemsChange)="_$handleSelect()"
@@ -406,7 +442,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                          (click)="_$cascade?._selectAll(initData.level)">
                         {{'cascade.all' | translate}}
                     </div>
-                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item" [width]="initData.optionWidth" (click)="_$handleOptionClick()">
+                    <j-tile-option *ngFor="let item of _$list; trackBy: _$trackByFn" [value]="item"
+                                   [width]="initData.optionWidth" (click)="_$handleOptionClick()">
                         <span [title]="item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item">
                             {{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>
@@ -416,10 +453,20 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                 </div>
             </ng-template>
         </div>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InternalTabContent extends AbstractJigsawComponent implements IDynamicInstantiatable, OnInit, OnDestroy {
-    constructor(@Optional() public _$cascade: JigsawCascade) {
+    constructor(
+        /**
+         * @internal
+         */
+        @Optional()
+        public _$cascade: JigsawCascade,
+        private _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector
+    ) {
         super();
     }
 
@@ -454,28 +501,29 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     /**
      * @internal
      */
+    @RequireMarkForCheck()
     public get _$list() {
         return this._list;
     }
 
     public set _$list(value: any) {
-        if(!value || this._list == value) return;
+        if (!value || this._list == value) return;
         if (value instanceof LocalPageableArray && value.pagingInfo) {
             this._list = value;
-            if(this._removeListRefreshListener) {
+            if (this._removeListRefreshListener) {
                 this._removeListRefreshListener();
                 this._removeListRefreshListener = null;
             }
             // 用于刷新分页
             this._removeListRefreshListener = this._list.onRefresh(this._$updateCurrentPageSelectedItems, this);
-        } else if(value instanceof Array || value instanceof ArrayCollection) {
+        } else if (value instanceof Array || value instanceof ArrayCollection) {
             const data = new LocalPageableArray();
             data.pagingInfo.pageSize = this._$cascade.pageSize;
             data.fromArray(value);
             const removeDataOnRefresh = data.onRefresh(() => {
                 removeDataOnRefresh();
                 this._list = data;
-                if(this._removeListRefreshListener) {
+                if (this._removeListRefreshListener) {
                     this._removeListRefreshListener();
                     this._removeListRefreshListener = null;
                 }
@@ -522,6 +570,8 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         }
     }
 
+    private _removeFilterSubscribe: Subscription;
+
     /**
      * @internal
      */
@@ -534,12 +584,15 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         }
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this._$list).filter(filterKey, [this._$cascade.labelField]);
+        this._removeFilterSubscribe = (<LocalPageableArray<any> | PageableArray>this._$list).pagingInfo.subscribe(() => {
+            this._cdr.markForCheck();
+        });
     }
 
     private _updateSelectedItemsByCurrent() {
         this._$currentPageSelectedItems = this._$currentPageSelectedItems ? this._$currentPageSelectedItems : [];
         this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
-        if(this.initData.multipleSelect) {
+        if (this.initData.multipleSelect) {
             this._$selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
                 !this._$selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))));
             const currentUnselectedItems = this._$list.concat().filter(item =>
@@ -549,21 +602,23 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         } else {
             this._$selectedItems = this._$currentPageSelectedItems;
         }
+        this._cdr.markForCheck();
     }
 
     /**
      * @internal
      */
     public _$updateCurrentPageSelectedItems() {
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 初始化时触发变更检查
             this._$selectedItems = this._$selectedItems ? this._$selectedItems : [];
-            if(this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
+            if (this._$list instanceof LocalPageableArray && this._$list.pagingInfo.pageSize != Infinity) {
                 this._$currentPageSelectedItems = this._$selectedItems.filter(item => (<any[]>this._$list).some(it =>
                     CommonUtils.compareWithKeyProperty(it, item, <string[]>this._$cascade.trackItemBy)));
             } else {
                 this._$currentPageSelectedItems = this._$selectedItems;
             }
+            this._cdr.markForCheck();
         });
     }
 
@@ -571,7 +626,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         this._$list = data;
         if (allSelectedData instanceof Array || (allSelectedData as any) instanceof ArrayCollection) {
             // 等待根据list数据渲染option后回填数据
-            this.callLater(() => {
+            this.runMicrotask(() => {
                 this._$currentPageSelectedItems = allSelectedData.filter(item => {
                     return this._$list.find(it =>
                         CommonUtils.compareWithKeyProperty(item, it, <string[]>this._$cascade.trackItemBy))
@@ -583,6 +638,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
                 });
             })
         }
+        this._cdr.markForCheck();
     }
 
     ngOnInit() {
@@ -607,6 +663,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
                 subscriber.unsubscribe();
                 this.callLater(() => {
                     this._$showLoading = false;
+                    this._cdr.markForCheck();
                 }, 300);
             }, () => subscriber.unsubscribe());
         } else if (list instanceof Array) {
@@ -615,9 +672,13 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     }
 
     ngOnDestroy() {
-        if(this._removeListRefreshListener) {
+        if (this._removeListRefreshListener) {
             this._removeListRefreshListener();
             this._removeListRefreshListener = null;
+        }
+        if (this._removeFilterSubscribe) {
+            this._removeFilterSubscribe.unsubscribe();
+            this._removeFilterSubscribe = null;
         }
     }
 }
@@ -626,8 +687,7 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
     imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule, CommonModule, JigsawInputModule, JigsawPaginationModule],
     declarations: [JigsawCascade, InternalTabContent],
     exports: [JigsawCascade],
-    providers: [TranslateService],
-    entryComponents: [InternalTabContent]
+    providers: [TranslateService]
 })
 export class JigsawCascadeModule {
     constructor(ts: TranslateService) {

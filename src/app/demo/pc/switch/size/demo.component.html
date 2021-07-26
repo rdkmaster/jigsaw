@@ -1,0 +1,32 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="demo-container">
+    <jigsaw-header> size:default </jigsaw-header>
+    <div>
+        <jigsaw-switch [checked]="false"></jigsaw-switch>
+        <jigsaw-switch [checked]="true"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" [disabled]="true"></jigsaw-switch>
+        <jigsaw-switch [checked]="true" [disabled]="true"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
+    </div>
+
+    <jigsaw-header> size:medium </jigsaw-header>
+    <div>
+        <jigsaw-switch [checked]="false" size="medium"></jigsaw-switch>
+        <jigsaw-switch [checked]="true" size="medium"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" [disabled]="true" size="medium"></jigsaw-switch>
+        <jigsaw-switch [checked]="true" [disabled]="true" size="medium"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!" size="medium"></jigsaw-switch>
+    </div>
+
+    <jigsaw-header> size:small </jigsaw-header>
+    <div>
+        <jigsaw-switch [checked]="false" size="small"></jigsaw-switch>
+        <jigsaw-switch [checked]="true" size="small"></jigsaw-switch>
+        <jigsaw-switch [checked]="false" [disabled]="true" size="small"></jigsaw-switch>
+        <jigsaw-switch [checked]="true" [disabled]="true" size="small"></jigsaw-switch>
+    </div>
+</div>

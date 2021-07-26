@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
-import {JigsawInput} from "jigsaw/pc-components/input/input";
+import {JigsawInput} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -23,7 +23,7 @@ export class InputFullComponent {
 
     // demo-4
     focusMessage: string;
-    @ViewChild('myInput', {static: false}) myInput:JigsawInput;
+    @ViewChild('myInput') myInput:JigsawInput;
     focusInput() {
         this.myInput.focus();
     }
@@ -44,4 +44,3 @@ export class InputFullComponent {
     summary: string = '';
     description: string = '';
 }
-

@@ -3,8 +3,9 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html'
 })
+
 export class ButtonDisableDemoComponent {
-    disabled: boolean;
+    disabled: boolean = true;
     clickCount: number = 0;
     click() {
         //alert('nothing happened!')
@@ -17,4 +18,3 @@ export class ButtonDisableDemoComponent {
     summary: string = '演示了如何动态设置按钮的`disabled`属性';
     description: string = '';
 }
-

@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <p>是否支持透明度</p>
+    <jigsaw-color-select [enableOpacity]="true" color="#e43232" width="40"></jigsaw-color-select>
+    <jigsaw-color-select [enableOpacity]="false" width="40"></jigsaw-color-select>
+
+    <p>是否需要确认</p>
+    <jigsaw-color-select [enableConfirm]="true" color="#e43232" width="40"></jigsaw-color-select>
+    <jigsaw-color-select [enableConfirm]="false" width="40"></jigsaw-color-select>
+
+    <p>限定颜色</p>
+    <jigsaw-color-select mode="limited" color="#ba1621" width="92"
+                         [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']">
+    </jigsaw-color-select>
+</div>

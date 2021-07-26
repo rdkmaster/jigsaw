@@ -1,4 +1,16 @@
-import {Component, Input, NgModule, Output, EventEmitter, OnInit, ElementRef, ViewChild, HostBinding} from "@angular/core";
+import {
+    Component,
+    Input,
+    NgModule,
+    Output,
+    EventEmitter,
+    OnInit,
+    ElementRef,
+    ViewChild,
+    HostBinding,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
+} from "@angular/core";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -13,11 +25,14 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html',
     host: {
-        '[class.jigsaw-drawer-in-dom]': '!floating'
-    }
+        '[class.jigsaw-drawer-in-dom]': '!floating',
+        '[class.jigsaw-drawer-auto-size]': '!floating && autoSize'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
-    constructor(private _elementRef: ElementRef) {
+    constructor(private _elementRef: ElementRef,
+                private _changeDetector: ChangeDetectorRef) {
         super();
         this._width = 'auto';
         this._height = 'auto';
@@ -27,6 +42,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 用于设置抽屉的位置，支持上下左右4个方向。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = drawer/basic
      */
@@ -48,6 +65,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
 
     /**
      * 代表了抽屉的状态，`true`为打开状态，`false`为关闭状态。在双绑模式下，改变此属性的值可以打开或者关闭抽屉。
+     *
+     * @NoMarkForCheckRequired
      *
      * $demo = drawer/basic
      */
@@ -74,6 +93,8 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
      * 向上寻找离抽屉最近的匹配节点作为抽屉的容器
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = drawer/with-div
      * $demo = drawer/with-scrollbar
      * $demo = drawer/with-tab
@@ -87,6 +108,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     private _offsetBottom: string;
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -100,6 +122,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -113,6 +136,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -126,6 +150,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -139,6 +164,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -152,6 +178,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/with-div
      */
     @Input()
@@ -165,12 +192,22 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     /**
+     * @NoMarkForCheckRequired
      * $demo = drawer/in-dom
      */
     @Input()
     public floating: boolean = true;
 
-    @ViewChild('drawer', {static: false})
+    /**
+     * 用于设置当抽屉是in-dom时，尺寸是否自动设为auto
+     *
+     * @NoMarkForCheckRequired
+     * $demo = drawer/in-dom
+     */
+    @Input()
+    public autoSize: boolean = true;
+
+    @ViewChild('drawer')
     private _drawerEl: ElementRef;
 
     @HostBinding('style.width')
@@ -265,9 +302,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             return this.width;
         }
         if (this.width == "auto") {
-            let left = this.offsetLeft ? `- ${this.offsetLeft}` : '';
-            let right = this.offsetRight ? `- ${this.offsetRight}` : '';
-            return `calc(100% ${left} ${right})`;
+            const left = this.offsetLeft ? `- ${this.offsetLeft}` : '';
+            const right = this.offsetRight ? `- ${this.offsetRight}` : '';
+            const bar = (this.position == "left" || this.position == "right") ? ' - 14px' : '';
+            return `calc(100%${bar} ${left} ${right})`;
         }
         return undefined;
     }
@@ -286,9 +324,10 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             return this.height;
         }
         if (this.height == "auto") {
-            let top = this.offsetTop ? `- ${this.offsetTop}` : '';
-            let bottom = this.offsetBottom ? `- ${this.offsetBottom}` : '';
-            return `calc(100% ${top} ${bottom})`;
+            const top = this.offsetTop ? `- ${this.offsetTop}` : '';
+            const bottom = this.offsetBottom ? `- ${this.offsetBottom}` : '';
+            const bar = (this.position == "top" || this.position == "bottom") ? ' - 14px' : '';
+            return `calc(100%${bar} ${top} ${bottom})`;
         }
         return undefined;
     }
@@ -325,6 +364,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
     }
 
+    /**
+     * @internal
+     */
     public _$toggleOpen(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -333,22 +375,21 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     }
 
     private _setContainer() {
-        if (this.container && this.floating) {
-            const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
-            if (containerEl) {
-                const containerStyle = getComputedStyle(containerEl);
-                if (!containerStyle.position || containerStyle.position == 'static') {
-                    containerEl.style.position = 'relative';
-                }
-                if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden') {
-                    containerEl.style.overflowX = 'hidden';
-                }
-                if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden') {
-                    containerEl.style.overflowY = 'hidden';
-                }
-            } else {
-                console.error('Can not find drawer container.');
+        if (!this.initialized || !this.container || !this.floating) return;
+        const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
+        if (containerEl) {
+            const containerStyle = getComputedStyle(containerEl);
+            if (!containerStyle.position || containerStyle.position == 'static') {
+                containerEl.style.position = 'relative';
             }
+            if ((this.position == 'left' || this.position == 'right') && containerStyle.overflowX != 'hidden') {
+                containerEl.style.overflowX = 'hidden';
+            }
+            if ((this.position == 'top' || this.position == 'bottom') && containerStyle.overflowY != 'hidden') {
+                containerEl.style.overflowY = 'hidden';
+            }
+        } else {
+            console.error('Can not find drawer container.');
         }
     }
 
@@ -358,16 +399,17 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         }
         this._setStyle();
         this._setClass();
-        this.callLater(() => {
+        this._changeDetector.markForCheck();
+        this.runMicrotask(() => {
             // 等待抽屉的尺寸渲染完毕
             this._setHostSize();
-        })
+        });
     }
 
     ngOnInit() {
         super.ngOnInit();
         this._update();
-        this.callLater(() => {
+        this.runMicrotask(() => {
             // 等待视图初始化完成，获取computedStyle
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作

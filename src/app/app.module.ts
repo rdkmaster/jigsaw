@@ -3,9 +3,9 @@ import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
-    JigsawBoxModule, JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
+    JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTheme, JigsawTreeExtModule, JigsawButtonBarModule
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
@@ -31,7 +31,8 @@ import {DemoCodeComponent} from "./demo-code.component";
                 ]},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
-        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawBoxModule, JigsawTreeExtModule
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
+        TranslateModule.forRoot()
     ],
     providers: [
         {
@@ -39,11 +40,12 @@ import {DemoCodeComponent} from "./demo-code.component";
             useClass: AjaxInterceptor,
             multi: true,
         },
+        TranslateService
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
     constructor() {
-        //JigsawTheme.majorStyle = 'purple';
+        JigsawTheme.majorStyle = 'light';
     }
 }

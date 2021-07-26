@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "jigsaw/common/core/data/array-collection";
-import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {CommonUtils} from "jigsaw/common/core/utils/common-utils";
+import {
+    ArrayCollection, LocalPageableArray, PageableArray, GroupOptionValue,
+    TableData, CommonUtils
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -82,6 +82,8 @@ export class SelectSearchableDemoComponent {
         // RDK的服务端返回的数据多数是TableData格式，直接调用对应api做转换就行了
         // 如果服务端返回的就是一个数组，则就无需写这些代码了
         this.lpaCountries.dataReviser = (td: TableData) => TableData.toArray(td);
+        // 我们这里不演示本地分页功能，因此只给一页数据就好
+        this.lpaCountries.pagingInfo.pageSize = Infinity;
         // 如果需要设置默认值，则可以放开下面这几行代码
         // this.lpaCountries.onAjaxComplete(() => {
         //     this.selectedCountries = this.lpaCountries.get(17);
@@ -94,7 +96,7 @@ export class SelectSearchableDemoComponent {
             params: {someData: 'this param is not necessary in this example.'},
         });
         // 我们这里不演示服务端分页功能，因此只给一页数据就好
-        this.spaCountries.pagingInfo.pageSize = 1000;
+        this.spaCountries.pagingInfo.pageSize = Infinity;
         this.spaCountries.fromAjax();
     }
 
@@ -104,4 +106,3 @@ export class SelectSearchableDemoComponent {
     summary: string = '';
     description: string = '';
 }
-

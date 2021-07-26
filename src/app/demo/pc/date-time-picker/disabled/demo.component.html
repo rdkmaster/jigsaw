@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<h4 style="font-size: 20px; margin-bottom: 20px;">是否可用 Disabled</h4>
+
+<jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
+<br><br>
+
+<jigsaw-time-picker [disabled]="disabled"></jigsaw-time-picker>
+<br><br>
+<jigsaw-date-picker [disabled]="disabled"></jigsaw-date-picker>
+<jigsaw-date-time-picker gr="second" [disabled]="disabled"></jigsaw-date-time-picker>
+<br><br>
+<jigsaw-range-date-time-picker [disabled]="disabled"></jigsaw-range-date-time-picker>

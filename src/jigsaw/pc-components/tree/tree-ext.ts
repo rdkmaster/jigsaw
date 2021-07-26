@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
@@ -21,7 +21,8 @@ export class TreeEventData {
             display: inline-block;
             vertical-align: middle;
         }
-    `]
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
     constructor() {
@@ -42,6 +43,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
      */
     private _setting: ZTreeSettingSetting = this._defaultSetting();
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get setting(): ZTreeSettingSetting {
         return this._setting;
@@ -62,6 +66,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     private _data: SimpleTreeData | TreeData;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): SimpleTreeData | TreeData {
         return this._data;
@@ -248,7 +255,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             },
             view: {
                 fontCss: undefined,
-                showLine: false
+                showLine: true
             }
         };
 

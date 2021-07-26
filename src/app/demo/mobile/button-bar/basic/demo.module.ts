@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
+import {JigsawMobileButtonBarModule, JigsawMobileRadioLiteModule, JigsawMobileSwitchModule} from "jigsaw/mobile_public_api";
 import {ButtonBarBasicDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawMobileButtonBarModule} from "jigsaw/mobile-components/list-and-tile/button-bar";
-import {JigsawMobileRadioLiteModule} from "jigsaw/mobile-components/radio/radio-lite";
-import {JigsawMobileSwitchModule} from "jigsaw/mobile-components/switch/index";
+
+import {JigsawMobileHeaderModule} from "jigsaw/mobile_public_api";
 
 @NgModule({
-    imports: [JigsawMobileButtonBarModule, JigsawMobileRadioLiteModule, JigsawDemoDescriptionModule, JigsawMobileSwitchModule],
+    imports: [JigsawMobileButtonBarModule, JigsawMobileRadioLiteModule, JigsawDemoDescriptionModule, JigsawMobileSwitchModule, JigsawMobileHeaderModule],
     declarations: [ButtonBarBasicDemoComponent],
     exports: [ButtonBarBasicDemoComponent]
 })

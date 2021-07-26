@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/pc-components/table/table-renderer";
+import {TableCellRendererBase} from "jigsaw/public_api";
 
 @Component({
     template: `
@@ -41,7 +41,7 @@ export class OfficeHeaderRenderer extends TableCellRendererBase {
 
 @Component({
     template: `
-        <span class="fa fa-edit"></span> {{cellData}}
+        <span class="iconfont iconfont-e105"></span> {{cellData}}
     `
 })
 export class OfficeCellRenderer extends TableCellRendererBase {

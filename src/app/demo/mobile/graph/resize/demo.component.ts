@@ -1,14 +1,7 @@
-/**
- * Created by 10177553 on 2017/3/28.
- */
-
 import {debounceTime} from "rxjs/operators";
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {combineLatest} from "rxjs";
-import {AbstractGraphData} from "jigsaw/common/core/data/graph-data";
-import {EchartOptions} from "jigsaw/common/core/data/echart-types";
-import {JigsawMobileGraph} from "jigsaw/mobile-components/graph/graph";
-import {JigsawMobileInput} from "jigsaw/mobile-components/input/input";
+import {AbstractGraphData, EchartOptions, JigsawMobileGraph, JigsawMobileInput} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -19,11 +12,11 @@ export class GraphResizeComponent implements OnInit {
     graphWidth: string = '100%';
     graphHeight: string = '300';
 
-    @ViewChild("graph", {static: false}) graph: JigsawMobileGraph;
+    @ViewChild("graph") graph: JigsawMobileGraph;
 
-    @ViewChild("widthInput", {static: false}) widthInput: JigsawMobileInput;
+    @ViewChild("widthInput") widthInput: JigsawMobileInput;
 
-    @ViewChild("heightInput", {static: false}) heightInput: JigsawMobileInput;
+    @ViewChild("heightInput") heightInput: JigsawMobileInput;
 
     resizeGraph() {
         this.graph.resize();
@@ -128,4 +121,3 @@ export class GraphDataDemo extends AbstractGraphData {
         };
     }
 }
-

@@ -4,7 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<form #form="ngForm" (ngSubmit)="submit(form.value)">
+<form class="form-container" #form="ngForm" (ngSubmit)="submit(form.value)">
     <fieldset ngModelGroup="name">
         <div class="field">
             <label>First Name</label>
@@ -32,7 +32,7 @@
     </div>
     <div class="field">
         <label>Birthday</label>
-        <jigsaw-time name="birthday" [(ngModel)]="birthday" width="250px"></jigsaw-time>
+        <jigsaw-time name="birthday" [(ngModel)]="birthday"></jigsaw-time>
     </div>
     <div class="field">
         <label>A Range Time</label>
@@ -100,7 +100,7 @@
 
     <div class="field separated">
         <label></label>
-        <button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</button>
+        <j-button jigsaw-button type="submit" colorType="primary" [disabled]="!form.valid">Submit</j-button>
     </div>
 </form>
 

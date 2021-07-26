@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/common/core/data/table-data";
-import {JigsawTable} from "jigsaw/pc-components/table/table";
-import {CallbackRemoval} from "jigsaw/common/core/utils/common-utils";
+import {TableData, JigsawTable, CallbackRemoval} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -23,8 +21,8 @@ export class TableScrollListenDemoComponent implements AfterViewInit, OnDestroy 
 
     arr = new Array(200);
 
-    @ViewChild(JigsawTable, {static: false}) table: JigsawTable;
-    @ViewChild('content', {static: false}) content: ElementRef;
+    @ViewChild(JigsawTable) table: JigsawTable;
+    @ViewChild('content') content: ElementRef;
     private _removeHorizontalScrollListener: CallbackRemoval;
 
     ngAfterViewInit() {
@@ -48,6 +46,3 @@ export class TableScrollListenDemoComponent implements AfterViewInit, OnDestroy 
     summary: string = '';
     description: string = '';
 }
-
-
-

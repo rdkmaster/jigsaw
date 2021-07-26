@@ -11,14 +11,33 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         text-align: center;
         table-layout: fixed;
         td {
-            border: 1px solid $border-color-base;
+            color: $font-color-default;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $border-color-default;
         }
         thead {
-            color: $heading-color;
+            color: $font-color-heading-bold;
+            font-weight: bold;
             tr {
                 td {
                     height: 40px;
-                    background: $background-color-base;
+                    background: $bg-header;
+                    
+                    .#{$table-prefix-cls}-header-cell{
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+
+                        .iconfont{
+                            margin-right: 2px;
+                        }
+
+                        ng-component{
+                            width: 100%;
+                        }
+                    }
                 }
             }
         }
@@ -33,23 +52,23 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
             tr {
                 height: 30px;
                 &:nth-child(2n) {
-                    background: $default-color;
+                    background: $bg-component;
                 }
                 &:nth-child(2n-1) {
-                    background: $default-color;
+                    background: $bg-component;
                 }
                 &:hover {
                     td:not([rowspan]) {
-                        background: $item-hover-bg;
+                        background: $bg-hover;
                     }
                 }
                 &.#{$table-prefix-cls}-row-selected {
                     td:not([rowspan]) {
-                        background: $item-active-bg;
+                        background: $brand-active-lighten;
                     }
                 }
                 td[rowspan] {
-                    background: $default-color;
+                    background: $bg-component;
                 }
             }
         }
@@ -66,7 +85,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     z-index: $zindex-level-1;
 }
 
-.#{$table-prefix-cls}-range{
+.#{$table-prefix-cls}-range {
     height: 100%;
     padding-top: 40px;
     &.#{$table-prefix-cls}-hide-head {
@@ -74,34 +93,42 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
-.#{$table-prefix-cls}-body-range{
+.#{$table-prefix-cls}-body-range {
     height: 100%;
     &.#{$table-prefix-cls}-no-data {
         height: 160px;
-        border: 1px solid $border-color-base;
+        border: 1px solid $border-color-default;
     }
 
     .#{$table-prefix-cls}-ff & {
-        border-left: 1px solid $border-color-base;
-        border-right: 1px solid $border-color-base;
+        border-left: 1px solid $border-color-default;
+        border-right: 1px solid $border-color-default;
     }
 }
 
 .#{$table-prefix-cls}-auto-width {
-    .#{$table-prefix-cls}-cell-content, jigsaw-table-header {
+    .#{$table-prefix-cls}-cell-content,
+    jigsaw-table-header {
         white-space: nowrap;
     }
 }
 
 .#{$table-prefix-cls}-no-data-img {
+    flex-direction: column;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
+    .#{$table-prefix-cls}-no-data-text{
+        color: #83B4E5;
+        font-weight: bold;
+    }
 }
 
 .#{$table-prefix-cls}-body {
-    > thead td{
+    > thead td {
         height: 0 !important;
         border: none;
     }
@@ -114,4 +141,21 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
+.#{$table-prefix-cls} {
+    &-tree-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 
+    &-tree-bar {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 2px;
+        font-size: $icon-size-sm;
+        color: $primary-default;
+        cursor: pointer;
+    }
+}

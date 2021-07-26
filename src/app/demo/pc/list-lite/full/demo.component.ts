@@ -1,46 +1,44 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/common/core/data/array-collection";
-import {GroupOptionValue} from "jigsaw/pc-components/list-and-tile/group-common";
-import {JigsawListLite} from "jigsaw/pc-components/list-and-tile/list-lite";
+import {ArrayCollection, GroupOptionValue, JigsawListLite} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class ListLiteFullDemoComponent {
-    goodsStrList=['bicycle','camera','car','futbol-o','book','puzzle-piece'];
+    goodsStrList=['bicycle','camera','car','football','book','puzzle-piece'];
 
     goodsList: GroupOptionValue[] = [
         {
-            logo: 'bicycle',
+            icon: 'iconfont iconfont-e187',
             name: 'bicycle',
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
         },
         JigsawListLite.SEPARATOR,
         {
-            logo: 'camera',
+            icon: 'iconfont iconfont-e2e7',
             name: 'camera',
             desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
         },
         {
-            logo: 'car',
+            icon: 'iconfont iconfont-e18a',
             name: 'car',
             desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.',
             disabled: true
         },
         {
-            logo: 'futbol-o',
+            icon: 'iconfont iconfont-e534',
             name: 'football',
             desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
         },
         JigsawListLite.SEPARATOR,
         {
-            logo: 'book',
+            icon: 'iconfont iconfont-e565',
             name: 'book',
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
         {
-            logo: 'puzzle-piece',
+            icon: 'iconfont iconfont-e6ca',
             name: 'puzzle-piece',
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
@@ -60,12 +58,12 @@ export class ListLiteFullDemoComponent {
 
     selectedItems3 = [
         {
-            logo: 'bicycle',
+            icon: 'iconfont iconfont-bicycle',
             name: 'bicycle',
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
         },
         {
-            logo: 'book',
+            icon: 'iconfont iconfont-book',
             name: 'book',
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
@@ -87,7 +85,7 @@ export class ListLiteFullDemoComponent {
         this.goodsList5 = [...this.goodsList];
         [1, 2, 3, 4, 5, 6].forEach((item, index) => {
             this.goodsList5.push({
-                logo: 'bicycle',
+                icon: 'iconfont iconfont-bicycle',
                 name: 'bicycle' + index,
                 desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
             })
@@ -103,7 +101,7 @@ export class ListLiteFullDemoComponent {
 
     selectedItems6 = new ArrayCollection([
         {
-            logo: 'book',
+            icon: 'iconfont iconfont-book',
             name: 'book',
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },

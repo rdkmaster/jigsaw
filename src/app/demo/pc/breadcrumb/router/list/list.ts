@@ -1,16 +1,19 @@
 import {Component} from "@angular/core";
 import {map} from "rxjs/operators";
-import {ProductService} from "../product.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ProductService} from "../product.service";
 
 @Component({
     template: `
-        <ul>
-            <li *ngFor="let product of productList"><a routerLink="/pc/breadcrumb/router/detail/{{product.id}}">{{product.name}}</a></li>
+        <ul class="demo-container">
+            <li *ngFor="let product of productList">
+                <a routerLink="/pc/breadcrumb/router/detail/{{product.id}}">{{product.name}}
+                </a>
+            </li>
         </ul>
     `,
     styles: [`
-        li:focus {
+        .demo-container li:focus {
             outline: none;
         }
     `]

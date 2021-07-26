@@ -1,4 +1,5 @@
-import {Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
+import { IJigsawTabTitleRenderer } from './tab-renderer';
 import {IDynamicInstantiatable} from "../../common/common";
 
 @Component({
@@ -8,20 +9,47 @@ import {IDynamicInstantiatable} from "../../common/common";
             {{title}}
             <ng-content select="[jigsaw-title]"></ng-content>
         </ng-template>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTabPane {
-    @Input()
-    public title: string;
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {
+    }
 
+    private _title: string = '';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get title(): string {
+        return this._title;
+    }
+
+    public set title(newValue: string) {
+        if (this._title === newValue) {
+            return;
+        }
+        this._title = newValue;
+        this._changeDetectorRef.markForCheck();
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public disabled: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public hidden: boolean = false;
 
     /**
      * @deprecated use `lazy` instead
+     *
+     * @NoMarkForCheckRequired
      *
      * @internal
      */
@@ -31,16 +59,21 @@ export class JigsawTabPane {
     /**
      * 为true时，Tab页的视图延将被迟到该Tab页被打开的时候才被初始化。
      *
-     *
+     * @NoMarkForCheckRequired
      */
     @Input()
     public lazy: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public initData: Object;
 
-    @ViewChild('label', {static: true}) label: TemplateRef<any> | Type<IDynamicInstantiatable>;
-    @ContentChild(TemplateRef, {static: true}) content: TemplateRef<any> | Type<IDynamicInstantiatable>;
+    @ViewChild('label', {static: true})
+    public label: TemplateRef<any> | Type<IJigsawTabTitleRenderer>;
+    @ContentChild(TemplateRef, {static: true})
+    public content: TemplateRef<any> | Type<IDynamicInstantiatable>;
 }
 
 

@@ -1,12 +1,14 @@
 import {NgModule} from "@angular/core";
+import {JigsawTransferModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {TransferArrayDemoComponent} from "./demo.component";
-import {JigsawTransferModule} from "jigsaw/pc-components/transfer/transfer";
+
+import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     declarations: [TransferArrayDemoComponent],
     exports: [ TransferArrayDemoComponent ],
-    imports: [JigsawDemoDescriptionModule, JigsawTransferModule]
+    imports: [JigsawDemoDescriptionModule, JigsawTransferModule, JigsawHeaderModule]
 })
 export class TransferArrayDemoModule{
 

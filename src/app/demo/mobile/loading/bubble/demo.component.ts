@@ -1,14 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/common/service/loading.service";
-import {PopupInfo} from "jigsaw/common/service/popup.service";
-import {JigsawBubbleLoading} from "jigsaw/common/components/loading/loading";
+import {LoadingService, PopupInfo, JigsawBubbleLoading} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class BubbleLoadingDemoComponent {
-    @ViewChild('block', {static: false}) block: ElementRef;
+    @ViewChild('block') block: ElementRef;
 
     constructor(public loadingService: LoadingService) {
     }

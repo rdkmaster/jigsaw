@@ -1,16 +1,16 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/common/service/loading.service";
+import {LoadingService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class LoadingFullDemoComponent {
-    @ViewChild('block', {static: false})
+    @ViewChild('block')
     private _block: ElementRef;
 
     public isLoading: boolean = false;
-    public label:string = 'submit';
+    public label:string = 'Submit';
 
     constructor(public loadingService: LoadingService) {
     }
@@ -24,10 +24,10 @@ export class LoadingFullDemoComponent {
 
     startToLoad() {
         this.isLoading = true;
-        this.label = 'loading...';
+        this.label = 'Loading...';
         setTimeout(() => {
             this.isLoading = false;
-            this.label = 'submit';
+            this.label = 'Submit';
         }, 3000)
     }
 

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {StripColorGraphData, StripGraphData, StripSequenceGraphData} from "jigsaw/common/core/data/graph-data";
-import {AjaxInterceptor} from "../../../../app.interceptor";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {StripColorGraphData, StripGraphData, StripSequenceGraphData} from "jigsaw/mobile_public_api";
+import {AjaxInterceptor} from "../../../../app.interceptor";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -59,7 +59,7 @@ export class StripGraphComponent {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '这个demo展示了如何使用条形图';
-    description: string = require('!!raw-loader!./readme.md');
+    description: string = require('!!raw-loader!./readme.md').default;
 }
 
 

@@ -1,0 +1,59 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-slider min="-30" max="30" [(value)]="hOffset1" width="300px"></jigsaw-slider>
+    <br><br>
+    <div style="display: inline-block;margin-right: 30px">
+        <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
+                     style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
+                     jigsawBadge jigsawBadgePosition="rightTop" jigsawBadgeValue="dot" [jigsawBadgeHorizontalOffset]="hOffset1">
+        </jigsaw-icon>
+    </div>
+    <div style="display: inline-block;margin-right: 30px">
+        <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
+                     style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
+                     jigsawBadge jigsawBadgePosition="right" jigsawBadgeValue="dot" [jigsawBadgeHorizontalOffset]="hOffset1">
+        </jigsaw-icon>
+    </div>
+    <div style="display: inline-block;margin-right: 30px">
+        <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
+                     style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
+                     jigsawBadge jigsawBadgePosition="rightBottom" jigsawBadgeValue="dot" [jigsawBadgeHorizontalOffset]="hOffset1">
+        </jigsaw-icon>
+    </div>
+    <div style="display: inline-block;margin-right: 30px">
+        <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
+                     style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
+                     jigsawBadge jigsawBadgePosition="leftTop" jigsawBadgeValue="dot" [jigsawBadgeHorizontalOffset]="hOffset1">
+        </jigsaw-icon>
+    </div>
+    <div style="display: inline-block;margin-right: 30px">
+        <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
+                     style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
+                     jigsawBadge jigsawBadgePosition="left" jigsawBadgeValue="dot" [jigsawBadgeHorizontalOffset]="hOffset1">
+        </jigsaw-icon>
+    </div>
+    <div style="display: inline-block;margin-right: 30px">
+        <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
+                     style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
+                     jigsawBadge jigsawBadgePosition="leftBottom" jigsawBadgeValue="dot" [jigsawBadgeHorizontalOffset]="hOffset1">
+        </jigsaw-icon>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <jigsaw-slider min="-30" max="30" [(value)]="hOffset2" width="300px"></jigsaw-slider>
+    <br><br>
+    <jigsaw-list width="250">
+        <j-list-option *ngFor="let item of list" [value]="item">
+            <div style="width: 140px" jigsawBadge [jigsawBadgeValue]="item" jigsawBadgePosition="right"
+                 [jigsawBadgeHorizontalOffset]="-hOffset2" [jigsawBadgeStyle]="'border'">{{item}}</div>
+        </j-list-option>
+    </jigsaw-list>
+</div>

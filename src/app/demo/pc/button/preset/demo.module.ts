@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
-import {JigsawButtonModule} from "jigsaw/pc-components/button/button";
+import {JigsawButtonModule, JigsawHeaderModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {ButtonPresetDemoComponent} from "./demo.component";
 
 @NgModule({
     declarations: [ButtonPresetDemoComponent],
     exports: [ButtonPresetDemoComponent],
-    imports: [JigsawButtonModule, JigsawDemoDescriptionModule]
+    imports: [JigsawButtonModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
 })
 export class ButtonPresetDemoModule {
 

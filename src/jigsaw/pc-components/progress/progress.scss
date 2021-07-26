@@ -1,0 +1,176 @@
+@import "../../common/assets/scss/core/base";
+
+$progress-prefix-cls: #{$jigsaw-prefix}-progress;
+
+.#{$progress-prefix-cls} {
+    @include inline-block();
+    width: 200px;
+
+    &-bar {
+        display: flex;
+        line-height: 1;
+        align-items: center;
+
+        &-track {
+            flex: 1;
+            height: 6px;
+            border-radius: 2px;
+            background: $splitline-default;
+            overflow: hidden;
+
+            .#{$progress-prefix-cls}-default & {
+                height: 6px;
+                border-radius: 2px;
+            }
+
+            .#{$progress-prefix-cls}-small & {
+                height: 2px;
+                border-radius: 1px;
+            }
+
+            .#{$progress-prefix-cls}-large & {
+                height: 64px;
+                border-radius: 4px;
+            }
+
+            &-value {
+                height: 100%;
+                background: $brand-default;
+                position: relative;
+                transition: width 0.3s linear;
+
+                i {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background: $brand-hover;
+                    z-index: $zindex-level-1;
+                }
+
+                .#{$progress-prefix-cls}-processing & {
+                    background: $primary-default;
+                }
+
+                .#{$progress-prefix-cls}-block & {
+                    background: $warning-default;
+                }
+
+                .#{$progress-prefix-cls}-error & {
+                    background: $error-default;
+                }
+
+                .#{$progress-prefix-cls}-success & {
+                    background: $success-default;
+                }
+            }
+
+            &-label-wrapper {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                font-size: 24px;
+                padding: 0 8px;
+                z-index: $zindex-level-2;
+                .#{$progress-prefix-cls}-bar-icon {
+                    font-size: inherit;
+                }
+            }
+
+            &-label-left {
+                color: $font-color-white;
+                .#{$progress-prefix-cls}-bar-icon {
+                    color: inherit !important;
+                }
+            }
+
+            &-label-right {
+                transform: translate(100%, -50%);
+                color: $primary-default;
+
+                .#{$progress-prefix-cls}-processing & {
+                    color: $primary-default;
+                }
+
+                .#{$progress-prefix-cls}-block & {
+                    color: $warning-default;
+                }
+
+                .#{$progress-prefix-cls}-error & {
+                    color: $error-default;
+                }
+
+                .#{$progress-prefix-cls}-success & {
+                    color: $success-default;
+                }
+            }
+        }
+
+        &-label-wrapper {
+            width: 40px;
+            text-align: center;
+        }
+
+        &-label {
+            padding: 2px 0;
+            color: $font-color-default;
+        }
+
+        &-icon {
+            font-size: $icon-size-sm;
+
+            .#{$progress-prefix-cls}-processing & {
+                color: $primary-default;
+            }
+
+            .#{$progress-prefix-cls}-block & {
+                color: $warning-default;
+            }
+
+            .#{$progress-prefix-cls}-error & {
+                color: $error-default;
+            }
+
+            .#{$progress-prefix-cls}-success & {
+                color: $success-default;
+            }
+        }
+    }
+
+    &-top-label-wrapper {
+        text-align: center;
+        padding-bottom: 4px;
+
+        .#{$progress-prefix-cls}-processing & {
+            color: $primary-default;
+        }
+
+        .#{$progress-prefix-cls}-block & {
+            color: $warning-default;
+        }
+
+        .#{$progress-prefix-cls}-error & {
+            color: $error-default;
+        }
+
+        .#{$progress-prefix-cls}-success & {
+            color: $success-default;
+        }
+    }
+
+    &-top-label {
+        font-size: 14px;
+    }
+
+    &-top-icon {
+        font-size: 16px;
+        margin-bottom: -4px;
+    }
+
+    &-mark {
+        padding-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        color: $font-color-hint;
+    }
+}

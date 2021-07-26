@@ -1,0 +1,324 @@
+/* paletx-pro-light */
+$blue-1: #E6F5FF;
+$blue-2: #B3E2FC;
+$blue-3: #9AD8FC;
+$blue-4: #5EBCF2;
+$blue-5: #24A7F2;
+$blue-6: #029AF2;
+$blue-7: #027BC2;
+$blue-8: #015C91;
+$blue-9: #013E61;
+$blue-10: #001F30;
+$blue-1-dark: #192738;
+$blue-2-dark: #1e3a59;
+$blue-3-dark: #1f4b7a;
+$blue-4-dark: #1c5c9c;
+$blue-5-dark: #196dbd;
+$blue-6-dark: #1681de;
+$blue-7-dark: #3c99e6;
+$blue-8-dark: #64b2ed;
+$blue-9-dark: #8ecaf5;
+$blue-10-dark: #bbe2fc;
+
+$cyan-1: #EBF8FA;
+$cyan-2: #C8F3FA;
+$cyan-3: #98E0EB;
+$cyan-4: #73D6E5;
+$cyan-5: #4CC6D9;
+$cyan-6: #26ABBF;
+$cyan-7: #1F8999;
+$cyan-8: #176773;
+$cyan-9: #0F444C;
+$cyan-10: #072226;
+
+$green-1: #DAFAED;
+$green-2: #B6FAE0;
+$green-3: #73E5BA;
+$green-4: #4AD49F;
+$green-5: #28C78A;
+$green-6: #07BB75;
+$green-7: #07A367;
+$green-8: #068C59;
+$green-9: #05754A;
+$green-10: #045E3C;
+
+$lime-1: #F3FFD9;
+$lime-2: #DFFAA0;
+$lime-3: #BEE36B;
+$lime-4: #A9DE2C;
+$lime-5: #93CC0E;
+$lime-6: #86BA07;
+$lime-7: #719E06;
+$lime-8: #5B8005;
+$lime-9: #496604;
+$lime-10: #364C03;
+
+$yellow-1: #FCF1DE;
+$yellow-2: #FAE2BB;
+$yellow-3: #F5CF93;
+$yellow-4: #F2BB61;
+$yellow-5: #EDA42F;
+$yellow-6: #EA9715;
+$yellow-7: #D48A14;
+$yellow-8: #B87811;
+$yellow-9: #99640E;
+$yellow-10: #7A500B;
+
+$orange-1: #FFEBDE;
+$orange-2: #FAD9C3;
+$orange-3: #FAB98C;
+$orange-4: #FA8C41;
+$orange-5: #EB782A;
+$orange-6: #EA6B15;
+$orange-7: #D66213;
+$orange-8: #C45A11;
+$orange-9: #A64C0E;
+$orange-10: #873E0C;
+
+$red-1: #FBDADA;
+$red-2: #FBBFBF;
+$red-3: #FA9696;
+$red-4: #FA7D7D;
+$red-5: #FA6464;
+$red-6: #E94F4F;
+$red-7: #D14747;
+$red-8: #BA3F3F;
+$red-9: #AB3A3A;
+$red-10: #943232;
+
+$magenta-1: #EFDEF7;
+$magenta-2: #EAC8FA;
+$magenta-3: #DCA1F7;
+$magenta-4: #CE7AF5;
+$magenta-5: #C256F5;
+$magenta-6: #B630F3;
+$magenta-7: #9829CC;
+$magenta-8: #7C21A6;
+$magenta-9: #5F1A80;
+$magenta-10: #431259;
+
+$purple-1: #EFE8FF;
+$purple-2: #DAC9FF;
+$purple-3: #C3A9FC;
+$purple-4: #AB88F7;
+$purple-5: #9468F2;
+$purple-6: #7E4AED;
+$purple-7: #6334C9;
+$purple-8: #4C23A6;
+$purple-9: #381582;
+$purple-10: #250A5E;
+
+$navy-1: #EDEFFA;
+$navy-2: #DFE3FA;
+$navy-3: #CED4F2;
+$navy-4: #9DACF2;
+$navy-5: #788CF0;
+$navy-6: #516AEB;
+$navy-7: #455CCC;
+$navy-8: #384BA6;
+$navy-9: #2B3980;
+$navy-10: #1E2859;
+
+$gray-1: #FFFFFF;
+$gray-2: #F5F5F5;
+$gray-3: #EEEEEE;
+$gray-4: #E5E5E5;
+$gray-5: #D9D9D9;
+$gray-6: #BFBFBF;
+$gray-7: #999999;
+$gray-8: #737373;
+$gray-9: #4D4D4D;
+$gray-10: #333333;
+$gray-1-dark: #0f111a;
+$gray-2-dark: #1b1d26;
+$gray-3-dark: #22242e;
+$gray-4-dark: #2a2c38;
+$gray-5-dark: #323543;
+$gray-6-dark: #474a59;
+$gray-7-dark: #7b7e8c;
+$gray-8-dark: #a4a7b3;
+$gray-9-dark: #d9d9d9;
+$gray-10-dark: #e5e5e5;
+
+/* 线型色 */
+$line-blue: $blue-6;
+$line-green: $green-5;
+$line-yellow: $yellow-6;
+$line-red: $red-6;
+$line-cyan: $cyan-5;
+$line-purple: $purple-6;
+$line-orange: $orange-6;
+$line-navy: $navy-6;
+$line-lime: $lime-5;
+$line-magenta: $magenta-6;
+
+/* 面型色 */
+$surf-blue: $blue-5;
+$surf-green: $green-4;
+$surf-yellow: $yellow-5;
+$surf-red: $red-5;
+$surf-cyan: $cyan-4;
+$surf-purple: $purple-4;
+$surf-orange: $orange-5;
+$surf-navy: $navy-5;
+$surf-lime: $lime-4;
+$surf-magenta: $magenta-5;
+
+/* 面透明（基本用于hover） */
+$surf-tp-blue: $blue-1;
+$surf-tp-green: $green-1;
+$surf-tp-uellow: $yellow-1;
+$surf-tp-red: $red-1;
+$surf-tp-cyan: $cyan-1;
+$surf-tp-purple: $purple-1;
+$surf-tp-orange: $orange-1;
+$surf-tp-navy: $navy-1;
+$surf-tp-lime: $lime-1;
+$surf-tp-magenta: $magenta-1;
+
+/* 功能色-基础 */
+$status-primary: $blue-6;
+$status-success: $green-6;
+$status-warning: $yellow-6;
+$status-danger: $orange-6;
+$status-error: $red-6;
+
+/* ******************************************************************* */
+
+/* 功能色-primary */
+$primary-default: $blue-6;
+$primary-hover: $blue-7;
+$primary-active: $blue-8;
+$primary-disabled: $blue-2;
+
+/* 功能色-success */
+$success-default: $green-6;
+$success-hover: $green-7;
+$success-active: $green-8;
+$success-disabled: $green-2;
+
+/* 功能色-warning */
+$warning-default: $yellow-6;
+$warning-hover: $yellow-7;
+$warning-active: $yellow-8;
+$warning-disabled: $yellow-2;
+
+/* 功能色-error */
+$error-default: $red-6;
+$error-hover: $red-7;
+$error-active: $red-8;
+$error-disabled: $red-2;
+
+/* 功能色-danger */
+$danger-default: $orange-6;
+$danger-hover: $orange-7;
+$danger-active: $orange-8;
+$danger-disabled: $orange-2;
+
+/* brand 品牌色 */
+$brand-default: $blue-6;
+$brand-hover: $blue-7;
+$brand-active: $blue-8;
+$brand-disabled: $blue-2;
+$brand-lighten: $blue-1;
+$brand-active-lighten: $blue-2;
+// 支持组件内部实现明暗皮肤
+$brand-default-light: $blue-6;
+$brand-hover-light: $blue-7;
+$brand-lighten-light: $blue-1;
+$brand-active-lighten-light: $blue-2;
+$brand-default-dark: $blue-6-dark;
+$brand-hover-dark: $blue-7-dark;
+$brand-lighten-dark: $blue-1-dark;
+$brand-active-dark: $blue-8-dark;
+
+/* background 背景色
+    $bg-body => 背景、页面背景
+    $bg-component => 组件背景
+    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
+    $bg-disabled => 组件禁用背景
+    $bg-header => 表头
+    $bg-gray => tag
+    $bg-body-light => 组件内部实现亮色模式
+    $bg-body-dark => 组件内部实现暗色模式
+*/
+$bg-body: $gray-1;
+$bg-component: transparent;
+$bg-container: $gray-2;
+$bg-disabled: $gray-3;
+$bg-header: $gray-3;
+$bg-gray: $gray-3;
+$bg-hover: $blue-1;
+$bg-active: $blue-2;
+// 支持组件内部实现明暗皮肤
+$bg-body-light: $gray-1;
+$bg-container-light: $gray-2;
+$bg-gray-light: $gray-3;
+$bg-hover-light: $blue-1;
+$bg-container-dark: $gray-2-dark;
+$bg-body-dark: $gray-3-dark;
+$bg-gray-dark: $gray-3-dark;
+$bg-hover-dark: $gray-4-dark;
+
+/* font 字体颜色
+    $font-color-default => 正文
+    $font-color-disabled => 禁用文字
+    $font-color-hint => 提示
+    $font-color-watermark => 水印文字
+    $font-color-heading => 非加粗标题
+    $font-color-heading-bold => 加粗标题
+    $font-color-tag => 标签文字
+    $font-color-white => 深底白字，纯白色（此变量色值不会变）
+    $font-color-white-darken => 深底白字，暗白色
+    $font-color-default-light => 组件内部实现亮色模式
+    $font-color-disabled-light => 组件内部实现亮色模式
+    $font-color-disabled-dark => 组件内部实现暗色模式
+*/
+$font-color-default: $gray-9;
+$font-color-disabled: $gray-6;
+$font-color-disabled-spec: $gray-6;
+$font-color-hint: $gray-7;
+$font-color-watermark: $gray-7;
+$font-color-heading: $gray-10;
+$font-color-heading-bold: $gray-9;
+$font-color-tag: $gray-8;
+$font-color-white: hsl(0, 0%, 100%);
+$font-color-white-darken: $gray-6;
+// 支持组件内部实现明暗皮肤
+$font-color-default-light: $gray-9;
+$font-color-disabled-light: $gray-6;
+$font-color-hint-light: $gray-7;
+$font-color-white-darken-light: $gray-6;
+$font-color-heading-bold-light: $gray-9;
+$font-color-default-dark: $gray-9-dark;
+$font-color-disabled-dark: $gray-8-dark;
+$font-color-white-darken-dark: $gray-8-dark;
+
+/* border 边框 
+    $border-color-default => 边框颜色
+    $border-color-disabled => 边框禁用
+    $border-color-default-dark => 组件内部实现暗色模式
+*/
+$border-color-default: $gray-5;
+$border-color-disabled: $gray-4;
+$border-color-default-light: $gray-5;
+$border-color-default-dark: $gray-5-dark;
+
+/* split line 分割线 */
+$splitline-default: $gray-4;
+
+/* icon 图标 */
+$icon-color-default: $gray-6;
+$icon-color-disabled: $gray-4;
+$icon-color-stress: $gray-8;
+
+/* box-shadow 阴影（基于altitude）
+    $box-shadow-lv0 => 背景
+    $box-shadow-lv1 => 页内卡片
+    $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
+    $box-shadow-lv3 => 及时消息、模态弹框、alert
+*/
+$box-shadow-lv0: none;
+$box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
+$box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
+$box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);

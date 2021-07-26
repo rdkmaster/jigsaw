@@ -1,0 +1,49 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="condition">
+    <label>粒度 Gr: </label>
+    <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']" [(selectedItems)]="gr"></jigsaw-button-bar>
+</div>
+<div class="condition">
+    <label>是否显示确认按钮 showConfirmButton: </label>
+    <jigsaw-switch [disabled]="['hour', 'minute', 'second'].indexOf(gr[0]) == -1" [(checked)]="showConfirmButton">
+    </jigsaw-switch>
+    <span style="color: #999; margin-left: 12px;">仅在粒度为 'hour', 'minute', 'second' 时才有效。</span>
+</div>
+
+<div class="live-demo-wrap">
+    <div class="demo-1 live-demo block">
+        <jigsaw-header [level]="2">jigsaw-date-time-picker</jigsaw-header>
+        <jigsaw-date-time-picker [(date)]="date1" [gr]="gr[0]" [showConfirmButton]="showConfirmButton"></jigsaw-date-time-picker>
+        <br>
+        <p class="message">选择的时间是：{{date1 | json}}</p>
+    </div>
+
+    <div class="demo-2 live-demo block">
+        <jigsaw-header [level]="2">jigsaw-range-date-time-picker</jigsaw-header>
+        <jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
+                                       [showConfirmButton]="showConfirmButton"></jigsaw-range-date-time-picker>
+        <br>
+        <p class="message">选择的时间是：BeginDate : {{beginDate | json}} , EndDate : {{endDate| json}}</p>
+    </div>
+</div>
+
+<div class="live-demo-wrap">
+    <div class="demo-3 live-demo block">
+        <jigsaw-header [level]="2">jigsaw-date-time-select</jigsaw-header>
+        <jigsaw-date-time-select [(date)]="date2" [gr]="gr[0]" [showConfirmButton]="showConfirmButton"></jigsaw-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date2 | json}}</p>
+    </div>
+
+    <div class="demo-4 live-demo block">
+        <jigsaw-header [level]="2">jigsaw-range-date-time-select</jigsaw-header>
+        <jigsaw-range-date-time-select [(date)]="date3" [gr]="gr[0]" [showConfirmButton]="showConfirmButton"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">选择的时间是：{{date3 | json}}</p>
+    </div>
+</div>

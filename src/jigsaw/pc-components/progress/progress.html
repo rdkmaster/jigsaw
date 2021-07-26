@@ -1,0 +1,42 @@
+<div class="jigsaw-progress-top-label-wrapper" *ngIf="labelPosition == 'top'">
+    <div *ngIf="status == 'processing'; else iconStatus" class="jigsaw-progress-top-label">{{value}}%</div>
+    <ng-template #iconStatus>
+        <div class="jigsaw-progress-top-icon iconfont " [class.iconfont-e9f9]="status == 'block'"
+             [class.iconfont-e9b9]="status == 'error'" [class.iconfont-ea38]="status == 'success'"></div>
+    </ng-template>
+</div>
+<div class="jigsaw-progress-bar">
+    <div class="jigsaw-progress-bar-label-wrapper" *ngIf="labelPosition == 'left'">
+        <div class="jigsaw-progress-bar-label" *ngIf="status == 'processing'; else iconStatus">{{value}}%</div>
+        <ng-template #iconStatus>
+            <div class="jigsaw-progress-bar-icon iconfont " [class.iconfont-e9f9]="status == 'block'"
+                 [class.iconfont-e9b9]="status == 'error'" [class.iconfont-ea38]="status == 'success'"></div>
+        </ng-template>
+    </div>
+    <div class="jigsaw-progress-bar-track">
+        <div class="jigsaw-progress-bar-track-value" [style.width]="value + '%'">
+            <div class="jigsaw-progress-bar-track-label-wrapper"
+                 [class.jigsaw-progress-bar-track-label-left]="_$followingLabelPosition == 'followLeft'"
+                 [class.jigsaw-progress-bar-track-label-right]="_$followingLabelPosition == 'followRight'"
+                 *ngIf="labelPosition == 'followLeft' || labelPosition == 'followRight'">
+                <div *ngIf="status == 'processing'; else iconStatus" class="jigsaw-progress-bar-track-label">{{value}}%</div>
+                <ng-template #iconStatus>
+                    <div class="jigsaw-progress-bar-icon iconfont " [class.iconfont-e9f9]="status == 'block'"
+                         [class.iconfont-e9b9]="status == 'error'" [class.iconfont-ea38]="status == 'success'"></div>
+                </ng-template>
+            </div>
+            <i *ngIf="status == 'processing' && animate" class="jigsaw-am-processing"></i>
+        </div>
+    </div>
+    <div class="jigsaw-progress-bar-label-wrapper" *ngIf="labelPosition == 'right'">
+        <div class="jigsaw-progress-bar-label" *ngIf="status == 'processing'; else iconStatus">{{value}}%</div>
+        <ng-template #iconStatus>
+            <div class="jigsaw-progress-bar-icon iconfont " [class.iconfont-e9f9]="status == 'block'"
+                 [class.iconfont-e9b9]="status == 'error'" [class.iconfont-ea38]="status == 'success'"></div>
+        </ng-template>
+    </div>
+</div>
+<ul class="jigsaw-progress-mark" *ngIf="showMarker">
+    <li *ngFor="let num of [0, 20, 40, 60, 80, 100]">{{num + '%'}}</li>
+</ul>
+
