@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+
+<div class="live-demo">
+    <p class="message">
+        Slider组件本身不会自动处理多个值的顺序，因此多个值可以被拖动改变顺序，这提供了灵活性，
+        但给需要有顺序的场合却带来了一些麻烦，这里给出了处理这个情形问题的几个可能办法。
+    </p>
+
+    <jigsaw-header [level]="2">对值排序</jigsaw-header>
+    <jigsaw-slider width="500px" [(value)]="rangeValue1" [max]="100"></jigsaw-slider>
+    <p class="message">原始值是：{{rangeValue1.join('-')}}，排序后的值是{{sortedValue}}</p>
+
+    <jigsaw-header [level]="2">自动调整</jigsaw-header>
+    <jigsaw-slider width="500px" [(value)]="rangeValue2" [max]="100" (change)="handleChange()"></jigsaw-slider>
+    <p class="message">原始值是：{{rangeValue2.join('-')}}，自动调整相邻的值，让他们保持顺序</p>
+
+</div>
