@@ -22,9 +22,8 @@ export const routerConfig = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), NotificationFullDemoModule,
-        RouterModule.forChild(routerConfig), NotificationBasicDemoModule,
-        RouterModule.forChild(routerConfig), NotificationDisposeOnRouterDemoModule,
+        RouterModule.forChild(routerConfig), NotificationFullDemoModule, 
+        NotificationBasicDemoModule, NotificationDisposeOnRouterDemoModule,
     ],
 })
 export class NotificationDemoModule {
