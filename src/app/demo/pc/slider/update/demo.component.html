@@ -10,7 +10,7 @@
     <div class="demo-4 live-demo">
         <jigsaw-header [level]="2">更新value</jigsaw-header>
         <j-button (click)="updateValue()">update value</j-button><br>
-        <jigsaw-slider [(value)]="rangeValue" [max]="rangeMax" (change)="handleChange($event)"></jigsaw-slider>
-        <p class="message">取值范围：{{rangeValueStr}}</p>
+        <jigsaw-slider width="80%" [(value)]="rangeValue" [max]="rangeMax"></jigsaw-slider>
+        <p class="message">原始取值范围：{{rangeValue.join('-')}}；提示：可对多个值排序再使用，排序后的值是{{sortedValue}}</p>
     </div>
 </div>
