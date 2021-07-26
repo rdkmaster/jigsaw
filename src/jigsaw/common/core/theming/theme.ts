@@ -10,12 +10,14 @@ declare const document;
 export class JigsawTheme {
     private static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
     private static _majorStyle: MajorStyle = null;
+    private static _usingTheme: SupportedTheme;
 
     public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
         majorStyle = majorStyle || this.majorStyle;
         if (majorStyle != this.majorStyle) {
             this.majorStyle = majorStyle;
         }
+        this._usingTheme = theme;
 
         const cssHref = `themes/${theme}-${majorStyle}.css`;
         const head = document.getElementsByTagName("head")[0];
@@ -54,5 +56,37 @@ export class JigsawTheme {
 
     public static getGraphTheme(): any {
         return this._popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
+    }
+
+    private static _themeProperties = {
+        'paletx-pro': {
+            light: {
+                //...
+            },
+            dark: {
+                //...
+            }
+        },
+        'vmax': {
+            light: {
+                //...
+            }
+        }
+    }
+
+    private static _paletxProLightProperties = {
+        'font-size-sm': '12px',
+    }
+
+    private static _paletxProDarkProperties = {
+        'font-size-sm': '12px',
+    }
+
+    private static _vmaxLightProperties = {
+        'font-size-sm': '12px',
+    }
+
+    public static getThemeProperties(prop: string, theme?: SupportedTheme, majorStyle?: MajorStyle): string {
+        return this._themeProperties[theme || this._usingTheme][majorStyle || this.majorStyle][prop];
     }
 }
