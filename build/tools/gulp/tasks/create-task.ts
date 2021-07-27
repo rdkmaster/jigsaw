@@ -90,7 +90,7 @@ export function createTask(packageName: string) {
 
     task(`build:${packageName}:clean`, sequenceTask(
         'clean',
-        'extract-css-...',
+        'extract-theme-variables',
         `build:${packageName}`
     ));
 
@@ -103,8 +103,8 @@ export function createTask(packageName: string) {
         `:publish:${packageName}`
     ));
 
-    task('extract-css-...', () => {
-        console.log('hello-extractor');
+    task('extract-theme-variables', () => {
+        gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
     });
 }
 

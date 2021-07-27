@@ -32,7 +32,7 @@ export class JigsawTheme {
             head.appendChild(style);
 
             style.onload = () => {
-                this.getCSSCustomProps();
+                this.getThemeProperties();
             };
         }
     }
@@ -72,7 +72,7 @@ export class JigsawTheme {
         }
     }
 
-    public static getCSSCustomProps():[] {
+    public static getThemeProperties():[] {
         const styleSheet = [...document.styleSheets].filter(this.isThemeFile)[0];
         const styleRules = [...styleSheet.cssRules].filter(this.isStyleRule);
         let propNames: any = [];
@@ -87,37 +87,5 @@ export class JigsawTheme {
             propArrs.push(...propArr);
         });
         return propArrs;
-    }
-
-    private static _themeProperties = {
-        'paletx-pro': {
-            light: {
-                //...
-            },
-            dark: {
-                //...
-            }
-        },
-        'vmax': {
-            light: {
-                //...
-            }
-        }
-    }
-
-    private static _paletxProLightProperties = {
-        'font-size-sm': '12px',
-    }
-
-    private static _paletxProDarkProperties = {
-        'font-size-sm': '12px',
-    }
-
-    private static _vmaxLightProperties = {
-        'font-size-sm': '12px',
-    }
-
-    public static getThemeProperties(prop: string, theme?: SupportedTheme, majorStyle?: MajorStyle): string {
-        return this._themeProperties[theme || this._usingTheme][majorStyle || this.majorStyle][prop];
     }
 }

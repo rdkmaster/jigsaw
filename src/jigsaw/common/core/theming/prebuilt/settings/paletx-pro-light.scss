@@ -1,14 +1,14 @@
 /* paletx-pro-light */
-$blue-1: #e6f5ff;
-$blue-2: #bde4ff;
-$blue-3: #94d2ff;
-$blue-4: #6bbfff;
-$blue-5: #42aaff;
-$blue-6: #1a93ff;
-$blue-7: #1178d9;
-$blue-8: #0b5fb3;
-$blue-9: #06478c;
-$blue-10: #023166;
+/*@public*/ $blue-1: #e6f5ff;
+/*@public*/ $blue-2: #bde4ff;
+/*@public*/ $blue-3: #94d2ff;
+/*@public*/ $blue-4: #6bbfff;
+/*@public*/ $blue-5: #42aaff;
+/*@public*/ $blue-6: #1a93ff;
+/*@public*/ $blue-7: #1178d9;
+/*@public*/ $blue-8: #0b5fb3;
+/*@public*/ $blue-9: #06478c;
+/*@public*/ $blue-10: #023166;
 $blue-1-dark: #192738;
 $blue-2-dark: #1e3a59;
 $blue-3-dark: #1f4b7a;
@@ -216,12 +216,12 @@ $danger-active: $orange-8;
 $danger-disabled: $orange-2;
 
 /* brand 品牌色 */
-$brand-default: $blue-6;
-$brand-hover: $blue-7;
-$brand-active: $blue-8;
-$brand-disabled: $blue-2;
-$brand-lighten: $blue-1;
-$brand-active-lighten: $blue-2;
+/*@public*/ $brand-default: $blue-6;
+/*@public*/ $brand-hover: $blue-7;
+/*@public*/ $brand-active: $blue-8;
+/*@public*/ $brand-disabled: $blue-2;
+/*@public*/ $brand-lighten: $blue-1;
+/*@public*/ $brand-active-lighten: $blue-2;
 // 支持组件内部实现明暗皮肤
 $brand-default-light: $blue-6;
 $brand-hover-light: $blue-7;
@@ -322,13 +322,3 @@ $box-shadow-lv0: none;
 $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
 $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
 $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
-
-/* test */
-:root {
-    --public-var-1: #f04646;
-    --public-var-2: #f08316;
-}
-
-:root {
-    --public-var-3: #964aed;
-}
