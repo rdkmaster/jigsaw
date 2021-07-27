@@ -7,10 +7,7 @@ import { JigsawTheme, JigsawNotification } from "jigsaw/public_api";
 })
 export class PublicVariablesDemoComponent implements OnInit {
     public color = getComputedStyle(document.documentElement).getPropertyValue("--public-var-1");
-    public propArr = [
-        ["--public-var-1", "#2eb240"],
-        ["--public-var-2", "#7E4AED"]
-    ];
+    public properties: {[cssVarName: string]: string}[];
 
     public copyToClipboard($event){
         const el = document.createElement("textarea");
@@ -26,7 +23,8 @@ export class PublicVariablesDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.propArr = JigsawTheme.getThemeProperties();
+        this.properties = JigsawTheme.getThemeProperties();
+        console.log('all properties:', this.properties);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

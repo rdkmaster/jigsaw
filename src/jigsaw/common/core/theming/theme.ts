@@ -6,6 +6,8 @@ export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
 
 declare const document;
 
+export type ThemeProperty = {name: string, value: string};
+
 // @dynamic
 export class JigsawTheme {
     private static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
@@ -21,7 +23,7 @@ export class JigsawTheme {
 
         const cssHref = `themes/${theme}-${majorStyle}.css`;
         const head = document.getElementsByTagName("head")[0];
-        let themeLink = document.getElementById("jigsaw-theme") as HTMLLinkElement;
+        const themeLink = document.getElementById("jigsaw-theme") as HTMLLinkElement;
         if (themeLink) {
             themeLink.href = cssHref;
         } else {
@@ -32,7 +34,7 @@ export class JigsawTheme {
             head.appendChild(style);
 
             style.onload = () => {
-                this.getThemeProperties();
+                this._readThemeProperties();
             };
         }
     }
@@ -62,30 +64,27 @@ export class JigsawTheme {
         return this._popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
     }
 
-    private static isStyleRule = (rule): boolean => {
-        return rule.type === 1 && rule.selectorText === ":root";
-    }
-    
-    private static isThemeFile = (styleSheet) => {
-        if (styleSheet.ownerNode.id === "jigsaw-theme") {
-            return true;
-        }
-    }
+    private static _themeProperties: ThemeProperty[] = [];
 
-    public static getThemeProperties():[] {
-        const styleSheet = [...document.styleSheets].filter(this.isThemeFile)[0];
-        const styleRules = [...styleSheet.cssRules].filter(this.isStyleRule);
-        let propNames: any = [];
-        let propArrs: any = [];
+    private static _readThemeProperties(): void {
+        const styleSheet = [...document.styleSheets].find(styleSheet => styleSheet.ownerNode.id === "jigsaw-theme");
+        if (!styleSheet) {
+            return;
+        }
+        const styleRules = [...styleSheet.cssRules].filter(rule => rule.type === 1 && rule.selectorText === ":root");
         styleRules.forEach(styleRule => {
             const propName = [...styleRule.style];
-            const propArr = propName.map(propName => [
-                propName.trim(),
-                styleRule.style.getPropertyValue(propName).trim()
-            ]);
-            propNames.push(...propName);
-            propArrs.push(...propArr);
+            const properties = propName.map(propName => ({name: propName.trim(), value: styleRule.style.getPropertyValue(propName).trim()}));
+            this._themeProperties.push(...properties);
         });
-        return propArrs;
+    }
+
+    public static getThemeProperty(prop: string): string {
+        const data = this._themeProperties.find(p => p.hasOwnProperty(prop));
+        return data ? data[prop] : undefined;
+    }
+
+    public static getThemeProperties(): ThemeProperty[] {
+        return this._themeProperties;
     }
 }

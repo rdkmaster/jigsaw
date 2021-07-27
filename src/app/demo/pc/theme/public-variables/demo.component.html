@@ -5,9 +5,9 @@
 <!-- start to learn the demo from here -->
 <jigsaw-header>在Js中可以使用的变量</jigsaw-header>
 <ul class="public-variables-demo-ul">
-    <li *ngFor="let prop of propArr">
-        <div [ngStyle]="{'background': prop[1]}"></div>
-        <span (click)="copyToClipboard($event)">{{prop[0]}}</span>
-        <span (click)="copyToClipboard($event)">{{prop[1]}}</span>
+    <li *ngFor="let prop of properties">
+        <div [ngStyle]="{'background': prop.value}"></div>
+        <span (click)="copyToClipboard($event)">{{prop.name}}</span>
+        <span (click)="copyToClipboard($event)">{{prop.value}}</span>
     </li>
 </ul>
