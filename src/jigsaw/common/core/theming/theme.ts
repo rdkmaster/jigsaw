@@ -72,15 +72,21 @@ export class JigsawTheme {
         }
     }
 
-    public static getCSSCustomProps(){
+    public static getCSSCustomProps():[] {
         const styleSheet = [...document.styleSheets].filter(this.isThemeFile)[0];
-        const styleRules = [...styleSheet.cssRules].filter(this.isStyleRule)[0];
-        const propName = [...styleRules.style];
-        const propArr = propName.map(propName => [
-            propName.trim(),
-            styleRules.style.getPropertyValue(propName).trim()
-        ]);
-        return propArr;
+        const styleRules = [...styleSheet.cssRules].filter(this.isStyleRule);
+        let propNames: any = [];
+        let propArrs: any = [];
+        styleRules.forEach(styleRule => {
+            const propName = [...styleRule.style];
+            const propArr = propName.map(propName => [
+                propName.trim(),
+                styleRule.style.getPropertyValue(propName).trim()
+            ]);
+            propNames.push(...propName);
+            propArrs.push(...propArr);
+        });
+        return propArrs;
     }
 
     private static _themeProperties = {

@@ -7,7 +7,7 @@
 <ul class="public-variables-demo-ul">
     <li *ngFor="let prop of propArr">
         <div [ngStyle]="{'background': prop[1]}"></div>
-        <span>{{prop[0]}}</span>
-        <span>{{prop[1]}}</span>
+        <span (click)="copyToClipboard($event)">{{prop[0]}}</span>
+        <span (click)="copyToClipboard($event)">{{prop[1]}}</span>
     </li>
 </ul>
