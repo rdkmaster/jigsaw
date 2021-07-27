@@ -24,9 +24,10 @@
 /connect.lock
 /coverage/*
 /libpeerconnection.log
+/typings
 npm-debug.log
 testem.log
-/typings
+theming/prebuilt/extraction/*
 
 # e2e
 /e2e/*.js

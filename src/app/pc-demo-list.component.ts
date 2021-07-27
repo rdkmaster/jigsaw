@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterContentInit, Inject, NgZone} from "@angular/core";
+import {Component, OnInit, AfterContentInit, Inject} from "@angular/core";
 import { DOCUMENT } from '@angular/common';
 import { ArrayCollection, JigsawTheme, PopupPositionType } from 'jigsaw/public_api';
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
@@ -127,7 +127,7 @@ import {routerConfigPC} from "./router-config";
     `]
 })
 export class PCDemoListComponent implements OnInit, AfterContentInit {
-    constructor(@Inject(DOCUMENT) private _document: Document, protected _zone: NgZone) {}
+    constructor(@Inject(DOCUMENT) private _document: Document) {}
     floatOptions = {
         posType: PopupPositionType.fixed
     };
@@ -187,7 +187,7 @@ export class PCDemoListComponent implements OnInit, AfterContentInit {
 
     ngAfterContentInit() {
         this.themeInit();
-    
+
     }
 }
 
