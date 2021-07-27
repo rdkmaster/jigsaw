@@ -5,7 +5,7 @@ import {
     Injector,
     Input,
     NgModule,
-    NgZone,
+    NgZone, OnDestroy,
     Optional,
     Renderer2
 } from "@angular/core";
@@ -131,7 +131,7 @@ const notificationInstances = {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawNotification extends AbstractDialogComponentBase {
+export class JigsawNotification extends AbstractDialogComponentBase implements OnDestroy {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector, private _translateService: TranslateService,
@@ -348,11 +348,16 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
     }
 
-    private  _listenRouterChange(): void {
+    private _routerChangeSubscription: Subscription;
+
+    private _listenRouterChange(): void {
+        if (this._routerChangeSubscription) {
+            this._routerChangeSubscription.unsubscribe();
+        }
         if (!this._router) {
             return;
         }
-        const disposerSubscription: Subscription = this._router.events
+        this._routerChangeSubscription = this._router.events
             .pipe(
                 filter(event => event instanceof NavigationEnd),
                 map(() => this._activatedRoute),
@@ -364,9 +369,17 @@ export class JigsawNotification extends AbstractDialogComponentBase {
                 })
             )
             .subscribe(() => {
-                disposerSubscription.unsubscribe();
+                this._routerChangeSubscription.unsubscribe();
+                this._routerChangeSubscription = null;
                 this._$close()
             });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._routerChangeSubscription) {
+            this._routerChangeSubscription.unsubscribe();
+        }
     }
 
     /**
