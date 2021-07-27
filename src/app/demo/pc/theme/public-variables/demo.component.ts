@@ -26,7 +26,6 @@ export class PublicVariablesDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(JigsawTheme.getCSSCustomProps());
         this.propArr = JigsawTheme.getCSSCustomProps();
     }
     // ====================================================================

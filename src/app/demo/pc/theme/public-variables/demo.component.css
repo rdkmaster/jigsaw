@@ -28,6 +28,7 @@
     width: 100%;
     height: 70%;
     border-radius: 5px;
+    border: 1px solid #fff;
 }
 
 .public-variables-demo-ul li div:hover {
