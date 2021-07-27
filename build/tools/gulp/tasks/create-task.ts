@@ -90,6 +90,7 @@ export function createTask(packageName: string) {
 
     task(`build:${packageName}:clean`, sequenceTask(
         'clean',
+        'extract-css-...',
         `build:${packageName}`
     ));
 
@@ -102,6 +103,9 @@ export function createTask(packageName: string) {
         `:publish:${packageName}`
     ));
 
+    task('extract-css-...', () => {
+        console.log('hello-extractor');
+    });
 }
 
 
