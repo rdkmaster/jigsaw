@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
-import {JigsawButtonModule, JigsawNotificationModule, PopupService} from "jigsaw/public_api";
+import {JigsawNotificationModule, PopupService} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {NotificationDisposeOnRouterDemoComponent} from "./demo.component";
 
 @NgModule({
     declarations: [NotificationDisposeOnRouterDemoComponent],
     imports: [
-        JigsawNotificationModule, JigsawDemoDescriptionModule, JigsawButtonModule
+        JigsawNotificationModule, JigsawDemoDescriptionModule
     ],
     providers: [PopupService],
     exports: [NotificationDisposeOnRouterDemoComponent]

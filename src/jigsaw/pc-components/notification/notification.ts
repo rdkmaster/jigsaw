@@ -397,7 +397,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
 
         const instances = notificationInstances[NotificationPosition[position]];
-        let initTop = 0, flag = 0;
+        let initTop: number, flag: number = 0;
         if (position == NotificationPosition.leftBottom || position == NotificationPosition.rightBottom) {
             initTop = document.body.clientHeight - element.offsetHeight - 24;
             flag = -1;
@@ -405,7 +405,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             initTop = 24;
             flag = 1;
         }
-        let top = instances.reduce(
+        const top = instances.reduce(
             (y, popupInfo) => popupInfo.element === element || popupInfo.element.offsetHeight == 0 ? y :
                 y + flag * (popupInfo.element.offsetHeight + 12), initTop);
 
@@ -488,14 +488,14 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
             buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
             callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
-            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType, 
+            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType,
             disposeOnRouterChanged: !!opt.disposeOnRouterChanged,
         };
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
-        popupInfo.instance._popupInfo = popupInfo;
+        (<JigsawNotification>popupInfo.instance)._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        let onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+        const onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             onStableSubscription.unsubscribe();
             this.reposition(opt.position);
         });

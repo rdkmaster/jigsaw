@@ -6,33 +6,39 @@ import {JigsawNotification} from "jigsaw/public_api";
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
-            width: 380px;
-            margin: auto;
-            overflow: hidden;
+            width: 450px;
         }
 
-        .wrapper jigsaw-button {
-            margin: 6px;
+        .wrapper .action {
+            font-size: 14px;
+        }
+
+        .wrapper p {
+            margin-bottom: 8px;
         }
     `]
 })
 export class NotificationDisposeOnRouterDemoComponent {
     constructor(private router:Router){
-
-    }
-    disposeOnRouter(){
-        JigsawNotification.show('这是一个会在路由变化后关掉的消息框',{disposeOnRouterChanged:true})
     }
 
-    notDisposeOnRouter(){
-        JigsawNotification.show('这是一个不会在路由变化后关掉的消息框',{disposeOnRouterChanged:false})
+    showNotification() {
+        JigsawNotification.showWarn('在路由变化后，这个消息框将<span style="color:red">会</span>自动关掉',
+            {disposeOnRouterChanged: true, timeout: 0});
+        JigsawNotification.showInfo('在路由变化后，这个消息框将<span style="color:red">不会</span>自动关掉',
+            {disposeOnRouterChanged: false, timeout: 0});
+        JigsawNotification.showWarn('在路由变化后，这个消息框将<span style="color:red">会</span>自动关掉',
+            {disposeOnRouterChanged: true, timeout: 0});
+        JigsawNotification.showInfo('在路由变化后，这个消息框将<span style="color:red">不会</span>自动关掉',
+            {disposeOnRouterChanged: false, timeout: 0});
     }
-    goToBasic(){
+
+    changeRoute() {
         this.router.navigate([`pc/notification/basic`]);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个demo介绍了控制是否在路由变化时自动关掉弹出的提示框：';
+    summary: string = '这个demo介绍了控制是否在路由变化时自动关掉弹出的提示框';
     description: string = '';
 }
