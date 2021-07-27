@@ -2,8 +2,6 @@ const fs = require("fs");
 
 process.chdir(`${__dirname}/../../src/jigsaw/common/core/theming/prebuilt/`);
 
-fs.writeFileSync('extraction', '');
-
 const scssFiles = fs.readdirSync(`./settings`);
 scssFiles.forEach(scssFile => {
     const inputPath = `./settings/${scssFile}`;

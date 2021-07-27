@@ -83,6 +83,7 @@ export function createTask(packageName: string) {
     });
 
     task(`build:${packageName}`, sequenceTask(
+        'extract-theme-variables',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
@@ -90,7 +91,6 @@ export function createTask(packageName: string) {
 
     task(`build:${packageName}:clean`, sequenceTask(
         'clean',
-        'extract-theme-variables',
         `build:${packageName}`
     ));
 

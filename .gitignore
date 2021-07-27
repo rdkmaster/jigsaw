@@ -27,7 +27,7 @@
 /typings
 npm-debug.log
 testem.log
-theming/prebuilt/extraction/*
+src/jigsaw/common/core/theming/prebuilt/extraction/*
 
 # e2e
 /e2e/*.js
