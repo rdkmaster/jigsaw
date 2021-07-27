@@ -5,11 +5,13 @@ import {
     Injector,
     Input,
     NgModule,
-    NgZone,
+    NgZone, OnDestroy,
+    Optional,
     Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {take} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
+import {Subscription} from "rxjs";
 import {TranslateService} from "@ngx-translate/core";
 import {AbstractDialogComponentBase, DialogCallback} from "../dialog/dialog";
 import {
@@ -25,6 +27,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -101,7 +104,11 @@ export class NotificationMessage {
      * $demo = notification/full
      */
     innerHtmlContext?: any;
-    iconType?: 'success' | 'error' | 'warning' | 'info'
+    iconType?: 'success' | 'error' | 'warning' | 'info';
+    /**
+     * 控制是否在路由变化时提示框是否关闭，默认不关
+     */
+    disposeOnRouterChanged?: boolean
 }
 
 /**
@@ -124,10 +131,12 @@ const notificationInstances = {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawNotification extends AbstractDialogComponentBase {
+export class JigsawNotification extends AbstractDialogComponentBase implements OnDestroy {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, private _translateService: TranslateService) {
+                protected _injector: Injector, private _translateService: TranslateService,
+                @Optional() private _router: Router,
+                @Optional() private _activatedRoute: ActivatedRoute) {
         super(renderer, elementRef, _zone, _injector);
     }
 
@@ -164,6 +173,11 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         this._timeout = value.timeout;
 
         this._$iconType = value.iconType;
+
+
+        if (value && value.hasOwnProperty('disposeOnRouterChanged') && value.disposeOnRouterChanged) {
+            this._listenRouterChange();
+        }
     }
 
     /**
@@ -334,6 +348,40 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
     }
 
+    private _routerChangeSubscription: Subscription;
+
+    private _listenRouterChange(): void {
+        if (this._routerChangeSubscription) {
+            this._routerChangeSubscription.unsubscribe();
+        }
+        if (!this._router) {
+            return;
+        }
+        this._routerChangeSubscription = this._router.events
+            .pipe(
+                filter(event => event instanceof NavigationEnd),
+                map(() => this._activatedRoute),
+                map(route => {
+                    while (route.firstChild) {
+                        route = route.firstChild;
+                    }
+                    return route;
+                })
+            )
+            .subscribe(() => {
+                this._routerChangeSubscription.unsubscribe();
+                this._routerChangeSubscription = null;
+                this._$close()
+            });
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._routerChangeSubscription) {
+            this._routerChangeSubscription.unsubscribe();
+        }
+    }
+
     /**
      * @internal
      */
@@ -362,7 +410,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
         }
 
         const instances = notificationInstances[NotificationPosition[position]];
-        let initTop = 0, flag = 0;
+        let initTop: number, flag: number = 0;
         if (position == NotificationPosition.leftBottom || position == NotificationPosition.rightBottom) {
             initTop = document.body.clientHeight - element.offsetHeight - 24;
             flag = -1;
@@ -370,7 +418,7 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             initTop = 24;
             flag = 1;
         }
-        let top = instances.reduce(
+        const top = instances.reduce(
             (y, popupInfo) => popupInfo.element === element || popupInfo.element.offsetHeight == 0 ? y :
                 y + flag * (popupInfo.element.offsetHeight + 12), initTop);
 
@@ -453,13 +501,14 @@ export class JigsawNotification extends AbstractDialogComponentBase {
             message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
             buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
             callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
-            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType
+            innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType,
+            disposeOnRouterChanged: !!opt.disposeOnRouterChanged,
         };
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
-        popupInfo.instance._popupInfo = popupInfo;
+        (<JigsawNotification>popupInfo.instance)._popupInfo = popupInfo;
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
-        let onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+        const onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             onStableSubscription.unsubscribe();
             this.reposition(opt.position);
         });
