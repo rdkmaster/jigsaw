@@ -1,0 +1,16 @@
+<jigsaw-root>
+    <div class="app-wrap">
+        <router-outlet></router-outlet>
+    </div>
+    <jigsaw-button-bar
+        class="demo-theme-button-bar"
+        height="26"
+        [(selectedItems)]="selectedTheme"
+        [data]="themes"
+        [multipleSelect]="false"
+        (selectedItemsChange)="themeSelectChange($event)"
+        trackItemBy="name,majorStyle"
+        optionWidth="140"
+    >
+    </jigsaw-button-bar>
+</jigsaw-root>
