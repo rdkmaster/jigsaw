@@ -24,10 +24,14 @@ export class JigsawTheme {
         const head = document.getElementsByTagName("head")[0];
         const linkId = 'jigsaw-theme';
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;
+        const cssHref = `themes/${theme}-${majorStyle}.css`;
+        if (themeLink && themeLink.href.endsWith(cssHref)) {
+            return;
+        }
+
         if (themeLink) {
             head.removeChild(themeLink);
         }
-        const cssHref = `themes/${theme}-${majorStyle}.css`;
         const style = document.createElement("link");
         style.id = linkId;
         style.rel = "stylesheet";
@@ -81,12 +85,12 @@ export class JigsawTheme {
         });
     }
 
-    public static getThemeProperty(prop: string): string {
-        const data = this._themeProperties.find(p => p.hasOwnProperty(prop));
-        return data ? data[prop] : undefined;
+    public static getProperty(prop: string): string {
+        const data = this._themeProperties.find(p => p.name == prop);
+        return data?.value;
     }
 
-    public static getThemeProperties(): ThemeProperty[] {
+    public static getProperties(): ThemeProperty[] {
         return [...this._themeProperties];
     }
 }

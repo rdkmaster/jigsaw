@@ -274,8 +274,8 @@ $bg-hover-dark: $gray-4-dark;
     $font-color-disabled-light => 组件内部实现亮色模式
     $font-color-disabled-dark => 组件内部实现暗色模式
 */
-$font-color-default: $gray-9;
-$font-color-disabled: $gray-6;
+/*@public*/ $font-color-default: $gray-9;
+/*@public*/ $font-color-disabled: $gray-6;
 $font-color-disabled-spec: $gray-6;
 $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
@@ -294,7 +294,7 @@ $font-color-default-dark: $gray-9-dark;
 $font-color-disabled-dark: $gray-8-dark;
 $font-color-white-darken-dark: $gray-8-dark;
 
-/* border 边框 
+/* border 边框
     $border-color-default => 边框颜色
     $border-color-disabled => 边框禁用
     $border-color-default-dark => 组件内部实现暗色模式

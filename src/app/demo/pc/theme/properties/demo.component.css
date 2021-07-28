@@ -1,0 +1,61 @@
+.public-variables-demo-ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+    padding: 10px;
+}
+
+.inline-message {
+    width: 940px;
+}
+
+.inline-message code {
+    padding: 2px 4px;
+    background: var(--brand-active-lighten);
+}
+
+.code-block {
+    background-color: var(--brand-active-lighten);
+    color: var(--font-color-default);
+    border: var(--brand-hover) 1px solid;
+    border-radius: 6px;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+    width: 600px;
+    margin: 8px 0;
+}
+
+.public-variables-demo-ul li {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 180px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #88888888;
+}
+
+.public-variables-demo-ul li:hover {
+    box-shadow: 0 5px 12px #88888888;
+}
+
+.public-variables-demo-ul li label {
+    font-size: 12px;
+    margin-top: 18px;
+    font-weight: normal;
+}
+
+.public-variables-demo-ul li span {
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 14px;
+}
+
+.public-variables-demo-ul li span:hover {
+    font-weight: bold;
+}
