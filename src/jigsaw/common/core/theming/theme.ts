@@ -21,22 +21,24 @@ export class JigsawTheme {
         }
         this._usingTheme = theme;
 
-        const cssHref = `themes/${theme}-${majorStyle}.css`;
         const head = document.getElementsByTagName("head")[0];
-        const themeLink = document.getElementById("jigsaw-theme") as HTMLLinkElement;
+        const linkId = 'jigsaw-theme';
+        const themeLink = document.getElementById(linkId) as HTMLLinkElement;
         if (themeLink) {
-            themeLink.href = cssHref;
-        } else {
-            const style = document.createElement("link");
-            style.id = "jigsaw-theme";
-            style.rel = "stylesheet";
-            style.href = cssHref;
-            head.appendChild(style);
-
-            style.onload = () => {
-                this._readThemeProperties();
-            };
+            head.removeChild(themeLink);
         }
+        const cssHref = `themes/${theme}-${majorStyle}.css`;
+        const style = document.createElement("link");
+        style.id = linkId;
+        style.rel = "stylesheet";
+        style.href = cssHref;
+        head.appendChild(style);
+
+        style.onload = () => {
+            this._themeProperties.splice(0, this._themeProperties.length);
+            this._readThemeProperties();
+            style.onload = null;
+        };
     }
 
     public static get majorStyle(): MajorStyle {
@@ -85,6 +87,6 @@ export class JigsawTheme {
     }
 
     public static getThemeProperties(): ThemeProperty[] {
-        return this._themeProperties;
+        return [...this._themeProperties];
     }
 }
