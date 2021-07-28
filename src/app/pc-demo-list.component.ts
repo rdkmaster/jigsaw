@@ -87,6 +87,7 @@ import {routerConfigPC} from "./router-config";
             [data]="themes"
             [multipleSelect]="false"
             (selectedItemsChange)="themeSelectChange($event)"
+            trackItemBy="name,majorStyle"
             optionWidth="140"
         >
         </jigsaw-button-bar>
@@ -161,17 +162,18 @@ export class PCDemoListComponent implements OnInit, AfterContentInit {
 
     themeSelectChange(themeArr: ArrayCollection<any>) {
         const themeName = themeArr[0].name, majorStyle = themeArr[0].majorStyle;
-        localStorage.setItem("jigsawDemoTheme", JSON.stringify(themeArr));
+        localStorage.setItem("jigsawDemoTheme", JSON.stringify({name: themeName, majorStyle: majorStyle}));
         JigsawTheme.changeTheme(themeName, majorStyle);
     }
 
-    themeInit(){
-        if (localStorage.getItem("jigsawDemoTheme") === null) {
-            this.selectedTheme = [{ label: "Paletx Pro Light", id: 1 }];
+    themeInit() {
+        const themeString = localStorage.getItem("jigsawDemoTheme");
+        if (themeString === null) {
+            this.selectedTheme = [{ name: "paletx-pro", majorStyle: 'light' }];
         } else {
-            const themeArr = JSON.parse(localStorage.getItem("jigsawDemoTheme"));
-            this.selectedTheme = [themeArr[0]];
-            this.themeSelectChange(themeArr);
+            const themeData = JSON.parse(themeString);
+            this.selectedTheme = [themeData];
+            JigsawTheme.changeTheme(themeData.name, themeData.majorStyle);
         }
     }
 

@@ -35,6 +35,8 @@ jobs:
                     node build/scripts/check-scss-in-demo.js
                     node build/scripts/check-tagname-selector.js
                     ./node_modules/.bin/gulp ensure-url-matches-path
+                    node build/scripts/extract-theme-variables.js
+                    node build/scripts/check-extraction.js
             - run:
                 name: Generate demo info
                 command: ./node_modules/.bin/gulp generate-demo-info

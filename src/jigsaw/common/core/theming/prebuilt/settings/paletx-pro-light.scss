@@ -1,14 +1,14 @@
 /* paletx-pro-light */
-$blue-1: #e6f5ff;
-$blue-2: #bde4ff;
-$blue-3: #94d2ff;
-$blue-4: #6bbfff;
-$blue-5: #42aaff;
-$blue-6: #1a93ff;
-$blue-7: #1178d9;
-$blue-8: #0b5fb3;
-$blue-9: #06478c;
-$blue-10: #023166;
+/*@public*/ $blue-1: #e6f5ff;
+/*@public*/ $blue-2: #bde4ff;
+/*@public*/ $blue-3: #94d2ff;
+/*@public*/ $blue-4: #6bbfff;
+/*@public*/ $blue-5: #42aaff;
+/*@public*/ $blue-6: #1a93ff;
+/*@public*/ $blue-7: #1178d9;
+/*@public*/ $blue-8: #0b5fb3;
+/*@public*/ $blue-9: #06478c;
+/*@public*/ $blue-10: #023166;
 $blue-1-dark: #192738;
 $blue-2-dark: #1e3a59;
 $blue-3-dark: #1f4b7a;
@@ -216,12 +216,12 @@ $danger-active: $orange-8;
 $danger-disabled: $orange-2;
 
 /* brand 品牌色 */
-$brand-default: $blue-6;
-$brand-hover: $blue-7;
-$brand-active: $blue-8;
-$brand-disabled: $blue-2;
-$brand-lighten: $blue-1;
-$brand-active-lighten: $blue-2;
+/*@public*/ $brand-default: $blue-6;
+/*@public*/ $brand-hover: $blue-7;
+/*@public*/ $brand-active: $blue-8;
+/*@public*/ $brand-disabled: $blue-2;
+/*@public*/ $brand-lighten: $blue-1;
+/*@public*/ $brand-active-lighten: $blue-2;
 // 支持组件内部实现明暗皮肤
 $brand-default-light: $blue-6;
 $brand-hover-light: $blue-7;
@@ -274,8 +274,8 @@ $bg-hover-dark: $gray-4-dark;
     $font-color-disabled-light => 组件内部实现亮色模式
     $font-color-disabled-dark => 组件内部实现暗色模式
 */
-$font-color-default: $gray-9;
-$font-color-disabled: $gray-6;
+/*@public*/ $font-color-default: $gray-9;
+/*@public*/ $font-color-disabled: $gray-6;
 $font-color-disabled-spec: $gray-6;
 $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
@@ -294,7 +294,7 @@ $font-color-default-dark: $gray-9-dark;
 $font-color-disabled-dark: $gray-8-dark;
 $font-color-white-darken-dark: $gray-8-dark;
 
-/* border 边框 
+/* border 边框
     $border-color-default => 边框颜色
     $border-color-disabled => 边框禁用
     $border-color-default-dark => 组件内部实现暗色模式
