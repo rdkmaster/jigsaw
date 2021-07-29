@@ -115,58 +115,58 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     private _setZTreeIcon() {
         const iconData = this.iconSuit;
         const head = document.getElementsByTagName("head")[0];
-        const zTreeIconStyle = document.getElementById("zTree-icon") as HTMLLinkElement;
+        const zTreeIconStyle = document.getElementById(this._$uniqueId + "style") as HTMLLinkElement;
         if (zTreeIconStyle) {
             head.removeChild(zTreeIconStyle);
         }
         const style = document.createElement("style");
-        style.id = "zTree-icon";
+        style.id = this._$uniqueId + "style";
         document.head.appendChild(style);
         const sheet = style.sheet as CSSStyleSheet;
-        sheet.insertRule(`.ztree li span.button.edit::after {content: "\\${iconData.edit}"}`, sheet.cssRules.length);
+        sheet.insertRule(`.ztree#${this._$uniqueId}#${this._$uniqueId} li span.button.edit::after {content: "\\${iconData.edit}"}`, sheet.cssRules.length);
         sheet.insertRule(
-            `.ztree li span.button.remove::after {content: "\\${iconData.remove}"}`,
+            `.ztree#${this._$uniqueId} li span.button.remove::after {content: "\\${iconData.remove}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.ico_open::after {content: "\\${iconData.open}"}`,
+            `.ztree#${this._$uniqueId} li span.button.ico_open::after {content: "\\${iconData.open}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.ico_close::after {content: "\\${iconData.close}"}`,
+            `.ztree#${this._$uniqueId} li span.button.ico_close::after {content: "\\${iconData.close}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.ico_docu::after {content: "\\${iconData.document}"}`,
+            `.ztree#${this._$uniqueId} li span.button.ico_docu::after {content: "\\${iconData.document}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.chk.checkbox_true_full::after,
-            .ztree li span.button.chk.checkbox_true_full_focus::after {content: "\\${iconData.checkboxChecked}"}`,
+            `.ztree#${this._$uniqueId} li span.button.chk.checkbox_true_full::after,
+            .ztree#${this._$uniqueId} li span.button.chk.checkbox_true_full_focus::after {content: "\\${iconData.checkboxChecked}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.chk.checkbox_false_full::after,
-            .ztree li span.button.chk.checkbox_false_full_focus::after {content: "\\${iconData.checkboxNotCheck}"}`,
+            `.ztree#${this._$uniqueId} li span.button.chk.checkbox_false_full::after,
+            .ztree#${this._$uniqueId} li span.button.chk.checkbox_false_full_focus::after {content: "\\${iconData.checkboxNotCheck}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.chk.checkbox_true_part::after,
-            .ztree li span.button.chk.checkbox_true_part_focus::after {content: "\\${iconData.checkboxHalf}"}`,
+            `.ztree#${this._$uniqueId} li span.button.chk.checkbox_true_part::after,
+            .ztree#${this._$uniqueId} li span.button.chk.checkbox_true_part_focus::after {content: "\\${iconData.checkboxHalf}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.switch.noline_open::after,
-            .ztree li span.button.switch.roots_open::after,
-            .ztree li span.button.switch.center_open::after,
-            .ztree li span.button.switch.bottom_open::after {content: "\\${iconData.nodeOpen}"}`,
+            `.ztree#${this._$uniqueId} li span.button.switch.noline_open::after,
+            .ztree#${this._$uniqueId} li span.button.switch.roots_open::after,
+            .ztree#${this._$uniqueId} li span.button.switch.center_open::after,
+            .ztree#${this._$uniqueId} li span.button.switch.bottom_open::after {content: "\\${iconData.nodeOpen}"}`,
             sheet.cssRules.length
         );
         sheet.insertRule(
-            `.ztree li span.button.switch.noline_close::after,
-            .ztree li span.button.switch.roots_close::after,
-            .ztree li span.button.switch.center_close::after,
-            .ztree li span.button.switch.bottom_close::after {content: "\\${iconData.nodeClose}"}`,
+            `.ztree#${this._$uniqueId} li span.button.switch.noline_close::after,
+            .ztree#${this._$uniqueId} li span.button.switch.roots_close::after,
+            .ztree#${this._$uniqueId} li span.button.switch.center_close::after,
+            .ztree#${this._$uniqueId} li span.button.switch.bottom_close::after {content: "\\${iconData.nodeClose}"}`,
             sheet.cssRules.length
         );
         this._setZTreeNodeIcon(sheet);
@@ -177,9 +177,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this._getZTreeNodeIcon(this.data, customIcon);
         customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((icon) => {
             sheet.insertRule(
-                `.ztree li span.button.${icon}_ico_open::after,
-                .ztree li span.button.${icon}_ico_close::after,
-                .ztree li span.button.${icon}_ico_docu::after {content: "\\${icon}"}`,
+                `.ztree#${this._$uniqueId} li span.button.${icon}_ico_open::after,
+                .ztree#${this._$uniqueId} li span.button.${icon}_ico_close::after,
+                .ztree#${this._$uniqueId} li span.button.${icon}_ico_docu::after {content: "\\${icon}"}`,
                 sheet.cssRules.length
             );
         });

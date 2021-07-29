@@ -10,17 +10,26 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
     public data: SimpleTreeData = new SimpleTreeData();
     public xml: SimpleTreeData = new SimpleTreeData();
 
-    public iconSuit: ZTreeIconSuit = {
+    public iconSuit1: ZTreeIconSuit = {
         edit: "e166",
         remove: "e17b",
-        // open: "e9de",
-        // close: "e9db",
+        open: "e9de",
+        close: "e9db",
         document: "e9dc",
         checkboxChecked: "e142",
         checkboxNotCheck: "e333",
         checkboxHalf: "e195",
         nodeOpen: "ea24",
         nodeClose: "ea57"
+    };
+    public iconSuit2: ZTreeIconSuit = {
+        edit: "e166",
+        remove: "e17b",
+        open: "e9de",
+        close: "e9db",
+        document: "e9dc",
+        nodeOpen: "e2b4",
+        nodeClose: "e2b3"
     };
 
     constructor() {
@@ -39,15 +48,17 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                             <node label="build.sh" iconUnicode="e494"></node>
                         </node>
                     </node>
-                    <node label="页面1" open="true" iconUnicode="e440">
+                    <node label="页面2" open="true" iconUnicode="e440">
                         <node label="src" open="true">
                             <node label="index.html" iconUnicode="e5a2"></node>
-                            <node label="styles.css" iconUnicode="e5a1"></node>
+                            <node label="styles1.css" iconUnicode="e5a1"></node>
+                            <node label="styles2.css" iconUnicode="e5a1"></node>
                             <node label="component1.ts" iconUnicode="e5a0"></node>
                             <node label="component2.ts" iconUnicode="e5a0"></node>
                         </node>
                         <node label="build" open="true">
-                            <node label="check.sh" iconUnicode="e494"></node>
+                            <node label="check1.sh" iconUnicode="e494"></node>
+                            <node label="check2.sh" iconUnicode="e494"></node>
                             <node label="build.sh" iconUnicode="e494"></node>
                         </node>
                     </node>
