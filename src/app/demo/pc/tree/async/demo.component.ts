@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ZTreeSettingSetting, SimpleTreeData} from "jigsaw/public_api";
+import {ZTreeSettings, SimpleTreeData} from "jigsaw/public_api";
 
 declare const $:any;
 
@@ -8,8 +8,8 @@ const lazyLoadUrl = '/rdk/service/app/ztree-async/server/lazy';
 @Component({
     templateUrl: 'demo.component.html'
 })
-export class ZtreeAsynDemoComponent {
-    public setting: ZTreeSettingSetting = {
+export class ZtreeAsyncDemoComponent {
+    public setting: ZTreeSettings = {
         async: {
             enable: true,
             type: 'get',

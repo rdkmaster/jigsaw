@@ -7,13 +7,13 @@ import {TreeEditableDemoModule} from "./editable/demo.module";
 import {ZtreeDemoComponent} from "./basic/demo.component";
 import {ZtreeDemoDataFromAjaxComponent} from "./data-from-ajax/demo.component";
 import {ZtreeDemoEditableComponent} from "./editable/demo.component";
-import {ZtreeAsynDemoComponent} from "./async/demo.component";
+import {ZtreeAsyncDemoComponent} from "./async/demo.component";
 import {ZtreeCustomSettingCallbackDemoComponent} from "./custom-settings-callback/demo.component";
 import {TreeCustomSettingCallbackDemoModule} from "./custom-settings-callback/demo.module";
 import {ZtreeXMLDataDemoComponent} from "./xml-data/demo.component";
 import {TreeXMLDataDemoModule} from "./xml-data/demo.module";
-import { TreeIconDemoModule } from './icon/demo.module';
-import { ZtreeIconDemoComponent } from './icon/demo.component';
+import { ZTreeIconDemoModule } from './icon/demo.module';
+import { ZTreeIconDemoComponent } from './icon/demo.component';
 
 export const routerConfig = [
     {
@@ -26,7 +26,7 @@ export const routerConfig = [
         path: 'editable', component: ZtreeDemoEditableComponent
     },
     {
-        path: 'async', component: ZtreeAsynDemoComponent
+        path: 'async', component: ZtreeAsyncDemoComponent
     },
     {
         path: 'custom-settings-callback', component: ZtreeCustomSettingCallbackDemoComponent
@@ -35,7 +35,7 @@ export const routerConfig = [
         path: 'xml-data', component: ZtreeXMLDataDemoComponent
     },
     {
-        path: 'icon', component: ZtreeIconDemoComponent
+        path: 'icon', component: ZTreeIconDemoComponent
     }
 ];
 
@@ -43,7 +43,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         TreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
-        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, TreeIconDemoModule
+        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule
     ],
     exports: [
     ],

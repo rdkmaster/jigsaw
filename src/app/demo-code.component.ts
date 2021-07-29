@@ -5,7 +5,7 @@ import {
     JigsawTreeExt,
     SimpleNode,
     SimpleTreeData,
-    ZTreeSettingSetting
+    ZTreeSettings
 } from "../jigsaw/public_api";
 import sdk from "@stackblitz/sdk";
 
@@ -138,7 +138,7 @@ export class DemoCodeComponent implements AfterViewInit, OnDestroy {
     editor: any;
     removeHashChangeHandler: any;
     fileTree: SimpleTreeData = new SimpleTreeData();
-    setting: ZTreeSettingSetting = {
+    setting: ZTreeSettings = {
         data: {
             key: {
                 children: 'nodes',
