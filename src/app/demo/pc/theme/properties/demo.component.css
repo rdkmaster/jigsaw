@@ -12,13 +12,13 @@
 
 .inline-message code {
     padding: 2px 4px;
-    background: var(--brand-active-lighten);
+    background: var(--bg-container);
 }
 
 .code-block {
-    background-color: var(--brand-active-lighten);
+    background-color: var(--bg-container);
     color: var(--font-color-default);
-    border: var(--brand-hover) 1px solid;
+    border: var(--border-color-default) 1px solid;
     border-radius: 6px;
     font-size: 85%;
     line-height: 1.45;
