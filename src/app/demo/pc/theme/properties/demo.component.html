@@ -29,10 +29,12 @@ public get codeTagBg(): string &#123;
 &#125;</code></pre>
 <jigsaw-header>所有可用皮肤属性</jigsaw-header>
 <ul class="public-variables-demo-ul">
-    <li *ngFor="let prop of properties" [ngStyle]="{background: prop.value, color: getFontColor(prop.value)}">
-        <label>属性名</label>
-        <span (click)="copyToClipboard(prop.name)" title="单击复制">{{prop.name}}</span>
-        <label>属性值</label>
-        <span (click)="copyToClipboard(prop.value)" title="单击复制">{{prop.value}}</span>
-    </li>
+    <div *ngFor="let propList of properties">
+        <li *ngFor="let prop of propList" [ngStyle]="{background: prop.bg, color: getFontColor(prop.bg)}">
+            <label>属性名</label>
+            <span (click)="copyToClipboard(prop.name)" title="单击复制">{{prop.name}}</span>
+            <label>属性值</label>
+            <span (click)="copyToClipboard(prop.value)" title="单击复制">{{prop.value}}</span>
+        </li>
+    </div>
 </ul>

@@ -28,32 +28,34 @@
     margin: 8px 0;
 }
 
+.public-variables-demo-ul div {
+    width: 100%;
+}
+
 .public-variables-demo-ul li {
     display: inline-flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    width: 180px;
+    width: 120px;
     height: 150px;
     margin: 10px;
     border-radius: 5px;
     box-shadow: 0 1px 2px #88888888;
+    padding: 12px 0;
 }
 
 .public-variables-demo-ul li:hover {
     box-shadow: 0 5px 12px #88888888;
 }
 
-.public-variables-demo-ul li label {
-    font-size: 12px;
-    margin-top: 18px;
+.public-variables-demo-ul li label:last-of-type {
     font-weight: normal;
+    margin-top: 16px;
 }
 
 .public-variables-demo-ul li span {
-    font-size: 14px;
     cursor: pointer;
-    margin-bottom: 14px;
+    text-align: center;
 }
 
 .public-variables-demo-ul li span:hover {
