@@ -1,20 +1,20 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { SimpleTreeData, JigsawTreeExt, ZTreeIcon } from "jigsaw/public_api";
+import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html"
 })
-export class ZtreeIconDemoComponent implements AfterViewInit {
+export class ZTreeIconDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
     public data2: SimpleTreeData;
 
-    public iconData: ZTreeIcon = {
+    public iconSuit: ZTreeIconSuit = {
         edit: "iconfont-e166",
         remove: "iconfont-e17b",
-        open: "iconfont-e2a2",
-        close: "iconfont-e19c",
+        open: "iconfont-e9de",
+        close: "iconfont-e9db",
         document: "iconfont-e9dc",
         checkboxChecked: "iconfont-ea38",
         checkboxNotCheck: "iconfont-e9f1",
@@ -23,7 +23,7 @@ export class ZtreeIconDemoComponent implements AfterViewInit {
         nodeClose: "iconfont-ea57"
     };
 
-    public iconData2: ZTreeIcon = {
+    public iconData2: ZTreeIconSuit = {
         edit: "iconfont-e166",
         remove: "iconfont-e17b",
         open: "iconfont-e9de",
@@ -43,14 +43,14 @@ export class ZtreeIconDemoComponent implements AfterViewInit {
         this.data.fromObject([
             {
                 label: "父节点1 - 展开",
-                iconSkin: "iconfont-e73f",
+                icon: "iconfont-e73f",
                 open: true,
                 nodes: [
                     {
                         label: "父节点11 - 折叠",
-                        iconSkin: "iconfont-e5e2",
+                        icon: "iconfont-e5e2",
                         nodes: [
-                            { label: "叶子节点111", iconSkin: "iconfont-e726" },
+                            { label: "叶子节点111", icon: "iconfont-e726" },
                             { label: "叶子节点112" },
                             { label: "叶子节点113" },
                             { label: "叶子节点114" }
@@ -70,7 +70,7 @@ export class ZtreeIconDemoComponent implements AfterViewInit {
             },
             {
                 label: "父节点2 - 折叠",
-                iconSkin: "iconfont-e5e4",
+                icon: "iconfont-e5e4",
                 nodes: [
                     {
                         label: "父节点21 - 展开",
@@ -173,7 +173,6 @@ export class ZtreeIconDemoComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         if (this.treeExt && this.treeExt.ztree) {
-            console.log(this.treeExt.ztree);
             let nodes = this.treeExt.ztree.getNodes();
             if (nodes.length > 0) {
                 this.treeExt.ztree.selectNode(nodes[0]);

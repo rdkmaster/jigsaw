@@ -2,9 +2,10 @@ import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Outp
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ZTreeSettingSetting, ZTreeIcon} from "./ztree-types";
+import {ZTreeSettings, ZTreeIconSuit, IconTransformer} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
-import { copySync } from 'fs-extra';
+
+declare const $;
 
 export class TreeEventData {
     treeId: string;
@@ -26,33 +27,25 @@ export class TreeEventData {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
-    constructor() {
-        super();
-    }
-
-    /**
-     * @internal
-     */
     private _customCallback;
+    private _setting: ZTreeSettings = this._defaultSetting();
+    private _removeRefreshCallback: CallbackRemoval;
+
     /**
      * @internal
      */
     public _$uniqueId: string = InternalUtils.createUniqueId();
-
-    /**
-     * @internal
-     */
-    private _setting: ZTreeSettingSetting = this._defaultSetting();
+    public ztree: any;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get setting(): ZTreeSettingSetting {
+    public get setting(): ZTreeSettings {
         return this._setting;
     }
 
-    public set setting(setting: ZTreeSettingSetting) {
+    public set setting(setting: ZTreeSettings) {
         if (!CommonUtils.isDefined(setting) || CommonUtils.isEmptyObject(setting)) {
             this._setting = this._defaultSetting();
         } else {
@@ -62,8 +55,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
         this._updateTree();
     }
-
-    private _removeRefreshCallback: CallbackRemoval;
 
     private _data: SimpleTreeData | TreeData;
 
@@ -88,7 +79,22 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
-    private _iconData: ZTreeIcon = {
+    /**
+     * 这个函数用于将一个图标class转为对应的unicode值，目前的动态图标的实现只支持unicode，因此如果应用需要提供其他来源的图标，则必须覆盖此函数
+     * 自行实现图标与unicode的映射关系。此函数默认支持两个风格图标的转换：
+     * - iconfont风格的class名，比如iconfont-e5e2
+     * - 不转换，即当给定的图标非iconfont风格的时候，这个函数认为图标的值即为unicode的值
+     * @param icon
+     * @NoMarkForCheckRequired
+     * $demo = tree/icon
+     */
+    @Input()
+    public iconTransformer: IconTransformer = (icon: string): string => {
+        const match = (icon || '').match(/^\s*iconfont-(\w{4})\s*$/);
+        return match ? match[1] : icon;
+    }
+
+    private _iconSuit: ZTreeIconSuit = {
         edit: "ea0c",
         remove: "e9c3",
         open: "e4e4",
@@ -105,22 +111,24 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get iconData(): ZTreeIcon {
-        return this._iconData;
+    public get iconSuit(): ZTreeIconSuit {
+        return this._iconSuit;
     }
 
-    public set iconData(data: ZTreeIcon){
+    public set iconSuit(data: ZTreeIconSuit) {
         if (!data) {
             return;
         }
         for (const key in data) {
-            this._iconData[key] = data[key].split("-")[1];
+            if (data.hasOwnProperty(key)) {
+                this._iconSuit[key] = this.iconTransformer(data[key]);
+            }
         }
-        this.setZTreeIcon();
+        this._setZTreeIcon();
     }
 
-    private setZTreeIcon(){
-        const iconData = this._iconData;
+    private _setZTreeIcon() {
+        const iconData = this.iconSuit;
         const head = document.getElementsByTagName("head")[0];
         const zTreeIconStyle = document.getElementById(this._$uniqueId + "style") as HTMLLinkElement;
         if (zTreeIconStyle) {
@@ -176,35 +184,32 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             .ztree#${this._$uniqueId} li span.button.switch.bottom_close::after {content: "\\${iconData.nodeClose}"}`,
             sheet.cssRules.length
         );
-        this.setZTreeNodeIcon(sheet);
+        this._setZTreeNodeIcon(sheet);
     }
 
-    private setZTreeNodeIcon(sheet){
-        let customIcon = [];
-        this.getZTreeNodeIcon(this._data,customIcon);
-        customIcon = customIcon.filter((val,i)=>customIcon.indexOf(val) === i);
-        customIcon.forEach((icon)=>{
-            const content = icon.split("-")[1]; 
+    private _setZTreeNodeIcon(sheet: CSSStyleSheet) {
+        const customIcon = [];
+        this._getZTreeNodeIcon(this._data, customIcon);
+        customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((icon) => {
             sheet.insertRule(
                 `.ztree#${this._$uniqueId} li span.button.${icon}_ico_open::after,
                 .ztree#${this._$uniqueId} li span.button.${icon}_ico_close::after,
-                .ztree#${this._$uniqueId} li span.button.${icon}_ico_docu::after {content: "\\${content}"}`,
+                .ztree#${this._$uniqueId} li span.button.${icon}_ico_docu::after {content: "\\${this.iconTransformer(icon)}"}`,
                 sheet.cssRules.length
             );
-        })
+        });
     }
 
-    private getZTreeNodeIcon(data,resArr){
-        if (data.hasOwnProperty("nodes")) {
-            data["nodes"].forEach(node => {
-                if (node.hasOwnProperty("iconSkin")) {
-                    resArr.push(node["iconSkin"]);
-                }
-                if (node.hasOwnProperty("nodes")) {
-                    this.getZTreeNodeIcon(node, resArr);
-                }
-            });
+    private _getZTreeNodeIcon(data: SimpleTreeData | TreeData, resArr: string[]) {
+        if (!data.nodes) {
+            return;
         }
+        data.nodes.forEach((node: SimpleTreeData | TreeData) => {
+            if (node.icon) {
+                resArr.push(node.icon);
+            }
+            this._getZTreeNodeIcon(node, resArr);
+        });
     }
 
     @Output()
@@ -273,7 +278,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     ngAfterViewInit() {
         this._updateTree();
-        this.setZTreeIcon();
+        this._setZTreeIcon();
     }
 
     ngOnDestroy() {
@@ -284,10 +289,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    public ztree: any;
-
     private _updateTree() {
-        const $ = window["$"];
         if (!this._setting || !this._data || !$) {
             return;
         }
@@ -304,26 +306,24 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    callCustomCallbackEvent(eventName, event, ...para) {
+    private _callCustomCallbackEvent(eventName, event, ...para) {
         if (CommonUtils.isDefined(this._customCallback) && CommonUtils.isDefined(this._customCallback[eventName])) {
             if (event) {
                 this._customCallback[eventName](event, ...para);
             } else {
                 return this._customCallback[eventName](...para);
             }
-
         } else {
             if (!event) {
                 return true;
             }
         }
-
     }
 
     private _defaultSetting() {
         let that = this;
 
-        let setObj: ZTreeSettingSetting = {
+        let setObj: ZTreeSettings = {
             data: {
                 key: {
                     children: 'nodes',
@@ -380,69 +380,69 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         };
 
         function before_async(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeAsync", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeAsync", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeAsync", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeAsync", undefined, treeId, treeNode);
         }
 
         function before_check(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeCheck", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeCheck", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeCheck", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeCheck", undefined, treeId, treeNode);
         }
 
         function before_click(treeId, treeNode, clickFlag) {
-            that.setTreeEvent.call(that, "beforeClick", treeId, treeNode, undefined, {"clickFlag": clickFlag});
-            return that.callCustomCallbackEvent("beforeClick", undefined, treeId, treeNode, clickFlag);
+            that._setTreeEvent.call(that, "beforeClick", treeId, treeNode, undefined, {"clickFlag": clickFlag});
+            return that._callCustomCallbackEvent("beforeClick", undefined, treeId, treeNode, clickFlag);
         }
 
         function before_collapse(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeCollapse", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeCollapse", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeCollapse", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeCollapse", undefined, treeId, treeNode);
         }
 
         function before_dblClick(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeDblClick", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeDblClick", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeDblClick", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeDblClick", undefined, treeId, treeNode);
         }
 
         function before_drag(treeId, treeNodes) {
-            that.setTreeEvent.call(that, "beforeDrag", treeId, treeNodes);
-            return that.callCustomCallbackEvent("beforeDrag", undefined, treeId, treeNodes);
+            that._setTreeEvent.call(that, "beforeDrag", treeId, treeNodes);
+            return that._callCustomCallbackEvent("beforeDrag", undefined, treeId, treeNodes);
         }
 
         function before_drag_open(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeDragOpen", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeDragOpen", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeDragOpen", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeDragOpen", undefined, treeId, treeNode);
         }
 
         function before_drop(treeId, treeNodes, targetNode, moveType, isCopy) {
             let extraInfo = {"targetNode": targetNode, "moveType": moveType, "isCopy": isCopy};
-            that.setTreeEvent.call(that, "beforeDrop", treeId, treeNodes, undefined, extraInfo);
-            return that.callCustomCallbackEvent("beforeDrop", undefined, treeId, treeNodes, targetNode, moveType, isCopy);
+            that._setTreeEvent.call(that, "beforeDrop", treeId, treeNodes, undefined, extraInfo);
+            return that._callCustomCallbackEvent("beforeDrop", undefined, treeId, treeNodes, targetNode, moveType, isCopy);
         }
 
         function before_editName(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
         }
 
         function before_expand(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeExpand", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeExpand", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeExpand", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeExpand", undefined, treeId, treeNode);
         }
 
         function before_mouseDown(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeMouseDown", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeMouseDown", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeMouseDown", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeMouseDown", undefined, treeId, treeNode);
         }
 
         function before_mouseUp(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeMouseUp", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeMouseUp", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeMouseUp", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeMouseUp", undefined, treeId, treeNode);
         }
 
         function before_remove(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeRemove", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeRemove", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeRemove", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeRemove", undefined, treeId, treeNode);
         }
 
         //todo tree before_rename事件的isCancel属性传不出来
@@ -452,130 +452,129 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 return false;
             } else {
                 let extraInfo = {"newName": newName, "isCancel": isCancel};
-                that.setTreeEvent.call(that, "beforeRename", treeId, treeNode, undefined, extraInfo);
-                return that.callCustomCallbackEvent("beforeRename", undefined, treeId, treeNode, newName, isCancel);
+                that._setTreeEvent.call(that, "beforeRename", treeId, treeNode, undefined, extraInfo);
+                return that._callCustomCallbackEvent("beforeRename", undefined, treeId, treeNode, newName, isCancel);
 
             }
 
         }
 
         function before_rightClick(treeId, treeNode) {
-            that.setTreeEvent.call(that, "beforeRightClick", treeId, treeNode);
-            return that.callCustomCallbackEvent("beforeRightClick", undefined, treeId, treeNode);
+            that._setTreeEvent.call(that, "beforeRightClick", treeId, treeNode);
+            return that._callCustomCallbackEvent("beforeRightClick", undefined, treeId, treeNode);
         }
 
 
         function on_asyncError(event, treeId, treeNode, _XMLHttpRequest, textStatus, errorThrown) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onAsyncError", treeId, treeNode, event, {
+            that._setTreeEvent.call(that, "onAsyncError", treeId, treeNode, event, {
                 XMLHttpRequest: _XMLHttpRequest,
                 textStatus: textStatus,
                 errorThrown: errorThrown
             });
-            that.callCustomCallbackEvent("onAsyncError", event, treeId, treeNode, _XMLHttpRequest, textStatus, errorThrown);
+            that._callCustomCallbackEvent("onAsyncError", event, treeId, treeNode, _XMLHttpRequest, textStatus, errorThrown);
         }
 
         function on_asyncSuccess(event, treeId, treeNode, msg) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onAsyncSuccess", treeId, treeNode, event, {msg: msg});
-            that.callCustomCallbackEvent("onAsyncSuccess", event, treeId, treeNode, msg);
+            that._setTreeEvent.call(that, "onAsyncSuccess", treeId, treeNode, event, {msg: msg});
+            that._callCustomCallbackEvent("onAsyncSuccess", event, treeId, treeNode, msg);
         }
 
         function on_check(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onCheck", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onCheck", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onCheck", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onCheck", event, treeId, treeNode);
         }
 
         function on_click(event, treeId, treeNode, clickFlag) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onClick", treeId, treeNode, event, {clickFlag: clickFlag});
-            that.callCustomCallbackEvent("onClick", event, treeId, treeNode, clickFlag);
+            that._setTreeEvent.call(that, "onClick", treeId, treeNode, event, {clickFlag: clickFlag});
+            that._callCustomCallbackEvent("onClick", event, treeId, treeNode, clickFlag);
         }
 
         function on_collapse(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onCollapse", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onCollapse", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onCollapse", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onCollapse", event, treeId, treeNode);
         }
 
         function on_dblclick(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onDblClick", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onDblClick", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onDblClick", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onDblClick", event, treeId, treeNode);
         }
 
         function on_drag(event, treeId, treeNodes) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onDrag", treeId, treeNodes, event);
-            that.callCustomCallbackEvent("onDrag", event, treeId, treeNodes);
+            that._setTreeEvent.call(that, "onDrag", treeId, treeNodes, event);
+            that._callCustomCallbackEvent("onDrag", event, treeId, treeNodes);
         }
 
         function on_dragMove(event, treeId, treeNodes) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onDragMove", treeId, treeNodes, event);
-            that.callCustomCallbackEvent("onDragMove", event, treeId, treeNodes);
+            that._setTreeEvent.call(that, "onDragMove", treeId, treeNodes, event);
+            that._callCustomCallbackEvent("onDragMove", event, treeId, treeNodes);
         }
 
         function on_drop(event, treeId, treeNodes, targetNode, moveType, isCopy) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onDrop", treeId, treeNodes, event, {targetNode: targetNode, moveType: moveType, isCopy: isCopy});
-            that.callCustomCallbackEvent("onDrop", event, treeId, treeNodes, targetNode, moveType, isCopy);
+            that._setTreeEvent.call(that, "onDrop", treeId, treeNodes, event, {targetNode: targetNode, moveType: moveType, isCopy: isCopy});
+            that._callCustomCallbackEvent("onDrop", event, treeId, treeNodes, targetNode, moveType, isCopy);
         }
 
         function on_expand(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onExpand", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onExpand", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onExpand", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onExpand", event, treeId, treeNode);
         }
 
         function on_mouseDown(event, treeId, treeNode) {
             // event.stopPropagation();
-            that.setTreeEvent.call(that, "onMouseDown", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onMouseDown", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onMouseDown", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onMouseDown", event, treeId, treeNode);
         }
 
         function on_mouseUp(event, treeId, treeNode) {
             // event.stopPropagation();
-            that.setTreeEvent.call(that, "onMouseUp", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onMouseUp", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onMouseUp", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onMouseUp", event, treeId, treeNode);
         }
 
         function on_nodeCreated(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onNodeCreated", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onNodeCreated", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onNodeCreated", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onNodeCreated", event, treeId, treeNode);
         }
 
         function on_remove(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onRemove", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onRemove", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onRemove", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onRemove", event, treeId, treeNode);
         }
 
         function on_rename(event, treeId, treeNode, isCancel) {
-            that.setTreeEvent.call(that, "onRename", treeId, treeNode, event, {isCancel: isCancel});
-            that.callCustomCallbackEvent("onRename", event, treeId, treeNode, isCancel);
+            that._setTreeEvent.call(that, "onRename", treeId, treeNode, event, {isCancel: isCancel});
+            that._callCustomCallbackEvent("onRename", event, treeId, treeNode, isCancel);
         }
 
         function on_rightClick(event, treeId, treeNode) {
             event.stopPropagation();
-            that.setTreeEvent.call(that, "onRightClick", treeId, treeNode, event);
-            that.callCustomCallbackEvent("onRightClick", event, treeId, treeNode);
+            that._setTreeEvent.call(that, "onRightClick", treeId, treeNode, event);
+            that._callCustomCallbackEvent("onRightClick", event, treeId, treeNode);
         }
 
         return setObj;
     }
 
-    public setTreeEvent(type: string, treeId: string, treeNodes: object, event?: Event, extraInfo?: object) {
-        let treeEventData = new TreeEventData();
+    private _setTreeEvent(type: string, treeId: string, treeNodes: object, event?: Event, extraInfo?: object) {
+        const treeEventData = new TreeEventData();
         treeEventData.event = event;
         treeEventData.treeId = treeId;
         treeEventData.treeNodes = treeNodes;
         treeEventData.extraInfo = extraInfo;
         this[type].emit(treeEventData);
     }
-
 }
 
 @NgModule({

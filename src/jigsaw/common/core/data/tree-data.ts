@@ -78,6 +78,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
      * 此属性的值一般用于显示在界面上
      */
     label: string;
+    icon: string;
     /**
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的
      */
