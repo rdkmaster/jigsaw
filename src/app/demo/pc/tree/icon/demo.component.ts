@@ -23,7 +23,7 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
         nodeClose: "iconfont-ea57"
     };
 
-    public iconData2: ZTreeIconSuit = {
+    public iconSuit2: ZTreeIconSuit = {
         edit: "iconfont-e166",
         remove: "iconfont-e17b",
         open: "iconfont-e9de",
