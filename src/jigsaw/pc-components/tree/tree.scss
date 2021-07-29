@@ -1,75 +1,6 @@
 .ztree li span {
     color: $font-color-default;
     &.button {
-        &.edit {
-            &::after {
-                content: "\ea0c";
-            }
-        }
-
-        &.remove {
-            &::after {
-                content: "\e9c3";
-            }
-        }
-
-        &.ico_open {
-            &::after {
-                content: "\e4e4";
-            }
-        }
-
-        &.ico_close {
-            &::after {
-                content: "\e4e3";
-            }
-        }
-
-        &.ico_docu {
-            &::after {
-                content: "\e9d5";
-            }
-        }
-
-        &.switch.noline_open,
-        &.switch.roots_open,
-        &.switch.center_open,
-        &.switch.bottom_open {
-            &::after {
-                content: "\ea09";
-            }
-        }
-
-        &.switch.noline_close,
-        &.switch.roots_close,
-        &.switch.center_close,
-        &.switch.bottom_close {
-            &::after {
-                content: "\ea1c";
-            }
-        }
-
-        &.chk.checkbox_false_full,
-        &.chk.checkbox_false_full_focus {
-            &::after {
-                content: "\e141";
-            }
-        }
-
-        &.chk.checkbox_true_full,
-        &.chk.checkbox_true_full_focus {
-            &::after {
-                content: "\e140";
-            }
-        }
-
-        &.chk.checkbox_true_part,
-        &.chk.checkbox_true_part_focus {
-            &::after {
-                content: "\e47a";
-            }
-        }
-
         &.edit,
         &.remove,
         &.ico_open,
@@ -88,7 +19,10 @@
         &.switch.bottom_open,
         &.switch.bottom_close,
         &.chk.checkbox_true_part,
-        &.chk.checkbox_true_part_focus {
+        &.chk.checkbox_true_part_focus,
+        &[class*='ico_open'],
+        &[class*='ico_close'],
+        &[class*='ico_docu'] {
             position: relative;
             background-image: none;
             &::after {

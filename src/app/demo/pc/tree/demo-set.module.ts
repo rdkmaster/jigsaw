@@ -12,6 +12,8 @@ import {ZtreeCustomSettingCallbackDemoComponent} from "./custom-settings-callbac
 import {TreeCustomSettingCallbackDemoModule} from "./custom-settings-callback/demo.module";
 import {ZtreeXMLDataDemoComponent} from "./xml-data/demo.component";
 import {TreeXMLDataDemoModule} from "./xml-data/demo.module";
+import { TreeIconDemoModule } from './icon/demo.module';
+import { ZtreeIconDemoComponent } from './icon/demo.component';
 
 export const routerConfig = [
     {
@@ -32,13 +34,16 @@ export const routerConfig = [
     {
         path: 'xml-data', component: ZtreeXMLDataDemoComponent
     },
+    {
+        path: 'icon', component: ZtreeIconDemoComponent
+    }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
         TreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
-        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule
+        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, TreeIconDemoModule
     ],
     exports: [
     ],

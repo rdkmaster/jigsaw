@@ -135,3 +135,16 @@ export class ZTreeSettingSetting {
     edit?: ZTreeSettingEdit;
     view?: ZTreeSettingView;
 }
+
+export class ZTreeIcon {
+    edit?: string;
+    remove?: string;
+    open?: string;
+    close?: string;
+    document?: string;
+    checkboxChecked?: string;
+    checkboxNotCheck?: string;
+    checkboxHalf?: string;
+    nodeOpen?: string;
+    nodeClose?: string;
+}

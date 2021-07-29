@@ -2,8 +2,9 @@ import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Outp
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ZTreeSettingSetting} from "./ztree-types";
+import {ZTreeSettingSetting, ZTreeIcon} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
+import { copySync } from 'fs-extra';
 
 export class TreeEventData {
     treeId: string;
@@ -87,6 +88,124 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
+    private _iconData: ZTreeIcon = {
+        edit: "ea0c",
+        remove: "e9c3",
+        open: "e4e4",
+        close: "e4e3",
+        document: "e9d5",
+        checkboxChecked: "e140",
+        checkboxNotCheck: "e141",
+        checkboxHalf: "e47a",
+        nodeOpen: "ea09",
+        nodeClose: "ea1c"
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get iconData(): ZTreeIcon {
+        return this._iconData;
+    }
+
+    public set iconData(data: ZTreeIcon){
+        if (!data) {
+            return;
+        }
+        for (const key in data) {
+            this._iconData[key] = data[key].split("-")[1];
+        }
+        this.setZTreeIcon();
+    }
+
+    private setZTreeIcon(){
+        const iconData = this._iconData;
+        const head = document.getElementsByTagName("head")[0];
+        const zTreeIconStyle = document.getElementById("zTree-icon") as HTMLLinkElement;
+        if (zTreeIconStyle) {
+            head.removeChild(zTreeIconStyle);
+        }
+        const style = document.createElement("style");
+        style.id = "zTree-icon";
+        document.head.appendChild(style);
+        const sheet = style.sheet as CSSStyleSheet;
+        sheet.insertRule(`.ztree li span.button.edit::after {content: "\\${iconData.edit}"}`, sheet.cssRules.length);
+        sheet.insertRule(
+            `.ztree li span.button.remove::after {content: "\\${iconData.remove}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.ico_open::after {content: "\\${iconData.open}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.ico_close::after {content: "\\${iconData.close}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.ico_docu::after {content: "\\${iconData.document}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.chk.checkbox_true_full::after,
+            .ztree li span.button.chk.checkbox_true_full_focus::after {content: "\\${iconData.checkboxChecked}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.chk.checkbox_false_full::after,
+            .ztree li span.button.chk.checkbox_false_full_focus::after {content: "\\${iconData.checkboxNotCheck}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.chk.checkbox_true_part::after,
+            .ztree li span.button.chk.checkbox_true_part_focus::after {content: "\\${iconData.checkboxHalf}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.switch.noline_open::after,
+            .ztree li span.button.switch.roots_open::after,
+            .ztree li span.button.switch.center_open::after,
+            .ztree li span.button.switch.bottom_open::after {content: "\\${iconData.nodeOpen}"}`,
+            sheet.cssRules.length
+        );
+        sheet.insertRule(
+            `.ztree li span.button.switch.noline_close::after,
+            .ztree li span.button.switch.roots_close::after,
+            .ztree li span.button.switch.center_close::after,
+            .ztree li span.button.switch.bottom_close::after {content: "\\${iconData.nodeClose}"}`,
+            sheet.cssRules.length
+        );
+        this.setZTreeNodeIcon(sheet);
+    }
+
+    private setZTreeNodeIcon(sheet){
+        let customIcon = [];
+        this.getZTreeNodeIcon(this._data,customIcon);
+        customIcon = customIcon.filter((val,i)=>customIcon.indexOf(val) === i);
+        customIcon.forEach((icon)=>{
+            const content = icon.split("-")[1]; 
+            sheet.insertRule(
+                `.ztree li span.button.${icon}_ico_open::after,
+                .ztree li span.button.${icon}_ico_close::after,
+                .ztree li span.button.${icon}_ico_docu::after {content: "\\${content}"}`,
+                sheet.cssRules.length
+            );
+        })
+    }
+
+    private getZTreeNodeIcon(data,resArr){
+        if (data.hasOwnProperty("nodes")) {
+            data["nodes"].forEach(node => {
+                if (node.hasOwnProperty("iconSkin")) {
+                    resArr.push(node["iconSkin"]);
+                }
+                if (node.hasOwnProperty("nodes")) {
+                    this.getZTreeNodeIcon(node, resArr);
+                }
+            });
+        }
+    }
 
     @Output()
     public beforeAsync = new EventEmitter<TreeEventData>();
@@ -154,6 +273,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     ngAfterViewInit() {
         this._updateTree();
+        this.setZTreeIcon();
     }
 
     ngOnDestroy() {
@@ -167,11 +287,11 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     public ztree: any;
 
     private _updateTree() {
-        const $ = window['$'];
+        const $ = window["$"];
         if (!this._setting || !this._data || !$) {
             return;
         }
-        this.ztree = $.fn.zTree.init($('#' + this._$uniqueId), this._setting, this._data.nodes);
+        this.ztree = $.fn.zTree.init($("#" + this._$uniqueId), this._setting, this._data.nodes);
     }
 
     public selectNodes(key: string, value: any, parentNode: any) {
