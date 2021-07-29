@@ -25,9 +25,11 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
     public iconSuit2: ZTreeIconSuit = {
         edit: "e166",
         remove: "e17b",
+        open: "e9de",
+        close: "e9db",
         document: "e9dc",
-        nodeOpen: "e2b4",
-        nodeClose: "e2b3"
+        nodeOpen: "ea48",
+        nodeClose: "e9e0"
     };
 
     constructor() {
