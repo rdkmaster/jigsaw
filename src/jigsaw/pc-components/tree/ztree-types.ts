@@ -154,5 +154,3 @@ export class ZTreeIconSuit {
     nodeOpen?: string;
     nodeClose?: string;
 }
-
-export type IconTransformer = (icon: string) => string;

@@ -59,9 +59,22 @@ export class TreeData extends GeneralCollection<any> {
     }
 }
 
-export type SimpleNode = {
+export class SimpleNode {
     label: string;
     nodes?: SimpleNode[];
+    iconUnicode?: string;
+
+    /**
+     * @internal
+     */
+    get iconSkin(): string {
+        return this.iconUnicode;
+    }
+
+    set iconSkin(value: string) {
+        this.iconUnicode = value;
+    }
+
     [prop: string]: any;
 }
 
@@ -78,7 +91,12 @@ export class SimpleTreeData extends GeneralCollection<any> {
      * 此属性的值一般用于显示在界面上
      */
     label: string;
+    /**
+     * 目前支持通过unicode来定制图标
+     * $demo = tree/icon
+     */
     icon: string;
+
     /**
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的
      */
@@ -106,11 +124,11 @@ export class SimpleTreeData extends GeneralCollection<any> {
             if (!data.hasOwnProperty(key)) {
                 continue;
             }
-
             this[key] = data[key];
             this.propList.push(key);
         }
 
+        this.nodes = this.nodes.map(n => _toSimpleNode(n));
         this.refresh();
         return this;
     }
@@ -119,7 +137,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
         const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(xml) : xml;
         if (xmlDoc && xmlDoc.childElementCount > 0) {
             this.nodes = [];
-            this._toSimpleNode(xmlDoc.children[0], this);
+            this._parseXmlNode(xmlDoc.children[0], this);
         }
 
         this.refresh();
@@ -136,12 +154,12 @@ export class SimpleTreeData extends GeneralCollection<any> {
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 
-    private _toSimpleNode(xmlElement: Element, target?: SimpleTreeData): SimpleNode {
-        const node = target || {
-            // 如果属性里提供了label属性，可以会覆盖这个textContent，这是没有问题的
-            label: xmlElement.textContent,
-            nodes: []
-        };
+    private _parseXmlNode(xmlElement: Element, target?: SimpleTreeData): SimpleNode {
+        const node = target || new SimpleNode();
+        if (!(node instanceof SimpleTreeData)) {
+            node.label = xmlElement.textContent;
+            node.nodes = [];
+        }
         const names: string[] = xmlElement.getAttributeNames();
         names.forEach(name => {
             node[name] = name == 'open' || name == 'isParent' || name == 'isActive' || name == 'selected' ?
@@ -155,10 +173,19 @@ export class SimpleTreeData extends GeneralCollection<any> {
                 console.error('XML node parse error, detail:', (child.children[1] || child).textContent);
                 continue;
             }
-            node.nodes.push(this._toSimpleNode(children[i]));
+            node.nodes.push(this._parseXmlNode(children[i]));
         }
-        return node;
+        return <any>node;
     }
+}
+
+function _toSimpleNode(obj: Object): SimpleNode {
+    const node = new SimpleNode();
+    Object.assign(node, obj);
+    if (node.nodes) {
+        node.nodes = node.nodes.map(n => _toSimpleNode(n));
+    }
+    return node;
 }
 
 function _isTruthy(value: any): boolean {

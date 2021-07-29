@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Outp
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ZTreeSettings, ZTreeIconSuit, IconTransformer} from "./ztree-types";
+import {ZTreeSettings, ZTreeIconSuit} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $;
@@ -79,21 +79,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
-    /**
-     * 这个函数用于将一个图标class转为对应的unicode值，目前的动态图标的实现只支持unicode，因此如果应用需要提供其他来源的图标，则必须覆盖此函数
-     * 自行实现图标与unicode的映射关系。此函数默认支持两个风格图标的转换：
-     * - iconfont风格的class名，比如iconfont-e5e2
-     * - 不转换，即当给定的图标非iconfont风格的时候，这个函数认为图标的值即为unicode的值
-     * @param icon
-     * @NoMarkForCheckRequired
-     * $demo = tree/icon
-     */
-    @Input()
-    public iconTransformer: IconTransformer = (icon: string): string => {
-        const match = (icon || '').match(/^\s*iconfont-(\w{4})\s*$/);
-        return match ? match[1] : icon;
-    }
-
     private _iconSuit: ZTreeIconSuit = {
         edit: "ea0c",
         remove: "e9c3",
@@ -121,7 +106,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
-                this._iconSuit[key] = this.iconTransformer(data[key]);
+                this._iconSuit[key] = data[key];
             }
         }
         this._setZTreeIcon();
@@ -189,12 +174,12 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     private _setZTreeNodeIcon(sheet: CSSStyleSheet) {
         const customIcon = [];
-        this._getZTreeNodeIcon(this._data, customIcon);
+        this._getZTreeNodeIcon(this.data, customIcon);
         customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((icon) => {
             sheet.insertRule(
                 `.ztree li span.button.${icon}_ico_open::after,
                 .ztree li span.button.${icon}_ico_close::after,
-                .ztree li span.button.${icon}_ico_docu::after {content: "\\${this.iconTransformer(icon)}"}`,
+                .ztree li span.button.${icon}_ico_docu::after {content: "\\${icon}"}`,
                 sheet.cssRules.length
             );
         });
@@ -205,8 +190,8 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             return;
         }
         data.nodes.forEach((node: SimpleTreeData | TreeData) => {
-            if (node.icon) {
-                resArr.push(node.icon);
+            if (node.iconUnicode) {
+                resArr.push(node.iconUnicode);
             }
             this._getZTreeNodeIcon(node, resArr);
         });
@@ -290,10 +275,10 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     private _updateTree() {
-        if (!this._setting || !this._data || !$) {
+        if (!this._setting || !this.data || !$) {
             return;
         }
-        this.ztree = $.fn.zTree.init($("#" + this._$uniqueId), this._setting, this._data.nodes);
+        this.ztree = $.fn.zTree.init($("#" + this._$uniqueId), this._setting, this.data.nodes);
     }
 
     public selectNodes(key: string, value: any, parentNode: any) {

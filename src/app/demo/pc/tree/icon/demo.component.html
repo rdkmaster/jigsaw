@@ -5,7 +5,14 @@
 
 <!-- start to learn the demo from here -->
 <jigsaw-header>自定义图标</jigsaw-header>
-<jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [iconSuit]="iconSuit">
-</jigsaw-tree-ext>
+<div style="width: 300px; display: inline-block; vertical-align: top;">
+    <jigsaw-header [level]="2">使用对象作为数据源</jigsaw-header>
+    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [iconSuit]="iconSuit">
+    </jigsaw-tree-ext>
+</div>
+<div style="width: 300px; display: inline-block; vertical-align: top;">
+    <jigsaw-header [level]="2">使用XML作为数据源（推荐）</jigsaw-header>
+    <jigsaw-tree-ext [(data)]="xml" (onClick)="onClick($event)">
+    </jigsaw-tree-ext>
+</div>
 
-<p>建议使用xml作为数据源，<a href="#/pc/tree/xml-data">详见这里</a>。</p>

@@ -7,73 +7,121 @@ import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit } from "jigsaw/public_api"
 export class ZTreeIconDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
-    public data: SimpleTreeData;
+    public data: SimpleTreeData = new SimpleTreeData();
+    public xml: SimpleTreeData = new SimpleTreeData();
+
+    public iconSuit: ZTreeIconSuit = {
+        edit: "e166",
+        remove: "e17b",
+        // open: "e9de",
+        // close: "e9db",
+        document: "e9dc",
+        checkboxChecked: "e142",
+        checkboxNotCheck: "e333",
+        checkboxHalf: "e195",
+        nodeOpen: "ea24",
+        nodeClose: "ea57"
+    };
 
     constructor() {
-        this.data = new SimpleTreeData();
+        this.xml.fromXML(`
+            <node>
+                <node label="Web代码" open="true" iconUnicode="e25c">
+                    <node label="页面1" open="false" iconUnicode="e440">
+                        <node label="src" open="true">
+                            <node label="index.html" iconUnicode="e5a2"></node>
+                            <node label="styles.css" iconUnicode="e5a1"></node>
+                            <node label="component1.ts" iconUnicode="e5a0"></node>
+                            <node label="component2.ts" iconUnicode="e5a0"></node>
+                        </node>
+                        <node label="build" open="true">
+                            <node label="check.sh" iconUnicode="e494"></node>
+                            <node label="build.sh" iconUnicode="e494"></node>
+                        </node>
+                    </node>
+                    <node label="页面1" open="true" iconUnicode="e440">
+                        <node label="src" open="true">
+                            <node label="index.html" iconUnicode="e5a2"></node>
+                            <node label="styles.css" iconUnicode="e5a1"></node>
+                            <node label="component1.ts" iconUnicode="e5a0"></node>
+                            <node label="component2.ts" iconUnicode="e5a0"></node>
+                        </node>
+                        <node label="build" open="true">
+                            <node label="check.sh" iconUnicode="e494"></node>
+                            <node label="build.sh" iconUnicode="e494"></node>
+                        </node>
+                    </node>
+                </node>
+                <node label="服务端" open="true" iconUnicode="e3a0">
+                    <node label="src" open="true">
+                        <node label="查询服务1" iconUnicode="e3c5"></node>
+                        <node label="查询服务2" iconUnicode="e3c5"></node>
+                        <node label="查询服务3" iconUnicode="e3c5"></node>
+                        <node label="查询服务4" iconUnicode="e3c5"></node>
+                    </node>
+                </node>
+            </node>
+        `);
         this.data.fromObject([
             {
-                label: "父节点1 - 展开",
-                icon: "iconfont-e73f",
-                open: true,
+                label: "Web代码", iconUnicode: "e25c", open: true,
                 nodes: [
                     {
-                        label: "父节点11 - 折叠",
-                        icon: "iconfont-e5e2",
+                        label: "页面1", iconUnicode: "e440", open: true,
                         nodes: [
-                            { label: "叶子节点111", icon: "iconfont-e726" },
-                            { label: "叶子节点112" },
-                            { label: "叶子节点113" },
-                            { label: "叶子节点114" }
+                            {
+                                label: "src", open: true, nodes: [
+                                    {label: 'index.html', iconUnicode: 'e5a2'},
+                                    {label: 'styles.css', iconUnicode: 'e5a1'},
+                                    {label: 'component1.ts', iconUnicode: 'e5a0'},
+                                    {label: 'component2.ts', iconUnicode: 'e5a0'},
+                                ]
+                            },
+                            {
+                                label: "build", open: true,
+                                nodes: [
+                                    {label: 'check.sh', iconUnicode: 'e494'},
+                                    {label: 'build.sh', iconUnicode: 'e494'},
+                                ]
+                            },
                         ]
                     },
                     {
-                        label: "父节点12 - 折叠",
+                        label: "页面2", iconUnicode: "e440",
                         nodes: [
-                            { label: "叶子节点121" },
-                            { label: "叶子节点122" },
-                            { label: "叶子节点123" },
-                            { label: "叶子节点124" }
-                        ]
-                    },
-                    { label: "父节点13 - 没有子节点", isParent: true }
-                ]
-            },
-            {
-                label: "父节点2 - 折叠",
-                icon: "iconfont-e5e4",
-                nodes: [
-                    {
-                        label: "父节点21 - 展开",
-                        open: true,
-                        nodes: [
-                            { label: "叶子节点211" },
-                            { label: "叶子节点212" },
-                            { label: "叶子节点213" },
-                            { label: "叶子节点214" }
-                        ]
-                    },
-                    {
-                        label: "父节点22 - 折叠",
-                        nodes: [
-                            { label: "叶子节点221" },
-                            { label: "叶子节点222" },
-                            { label: "叶子节点223" },
-                            { label: "叶子节点224" }
-                        ]
-                    },
-                    {
-                        label: "父节点23 - 折叠",
-                        nodes: [
-                            { label: "叶子节点231" },
-                            { label: "叶子节点232" },
-                            { label: "叶子节点233" },
-                            { label: "叶子节点234" }
+                            {
+                                label: "src", open: true, nodes: [
+                                    {label: 'index.html', iconUnicode: 'e5a2'},
+                                    {label: 'styles.css', iconUnicode: 'e5a1'},
+                                    {label: 'component1.ts', iconUnicode: 'e5a0'},
+                                    {label: 'component2.ts', iconUnicode: 'e5a0'},
+                                ]
+                            },
+                            {
+                                label: "build", open: true,
+                                nodes: [
+                                    {label: 'check.sh', iconUnicode: 'e494'},
+                                    {label: 'build.sh', iconUnicode: 'e494'},
+                                ]
+                            },
                         ]
                     }
                 ]
             },
-            { label: "父节点3 - 没有子节点", isParent: true }
+            {
+                label: "服务端", iconUnicode: "e3a0", open: true,
+                nodes: [
+                    {
+                        label: "src", open: true,
+                        nodes: [
+                            { label: "查询服务1", iconUnicode: 'e3c5' },
+                            { label: "查询服务2", iconUnicode: 'e3c5' },
+                            { label: "查询服务3", iconUnicode: 'e3c5' },
+                            { label: "查询服务4", iconUnicode: 'e3c5' },
+                        ]
+                    }
+                ]
+            }
         ]);
     }
 
@@ -81,19 +129,6 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
         console.log("click");
         console.log(msg);
     }
-
-    public iconSuit: ZTreeIconSuit = {
-        edit: "iconfont-e166",
-        remove: "iconfont-e17b",
-        open: "iconfont-e9de",
-        close: "iconfont-e9db",
-        document: "iconfont-e9dc",
-        checkboxChecked: "iconfont-ea38",
-        checkboxNotCheck: "iconfont-e9f1",
-        checkboxHalf: "iconfont-ea25",
-        nodeOpen: "iconfont-ea24",
-        nodeClose: "iconfont-ea57"
-    };
 
     ngAfterViewInit() {
         if (this.treeExt && this.treeExt.ztree) {
