@@ -8,7 +8,7 @@ const lazyLoadUrl = '/rdk/service/app/ztree-async/server/lazy';
 @Component({
     templateUrl: 'demo.component.html'
 })
-export class ZtreeAsyncDemoComponent {
+export class ZTreeAsyncDemoComponent {
     public setting: ZTreeSettings = {
         async: {
             enable: true,
