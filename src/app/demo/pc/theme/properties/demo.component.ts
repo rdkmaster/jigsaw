@@ -6,8 +6,18 @@ import {JigsawTheme, JigsawNotification, ThemeProperty, CommonUtils} from "jigsa
     styleUrls: ["./demo.component.css"]
 })
 export class ThemePropertiesDemoComponent {
-    public get properties(): ThemeProperty[] {
-        return JigsawTheme.getProperties();
+    public get properties(): ThemeProperty[][] {
+        // API给的数据是一个数组，直接平铺出来不好看，这里给归归类
+        const classified: {[type: string]: ThemeProperty[]} = {}, types = [], bg = JigsawTheme.getProperty('--bg-active');
+        JigsawTheme.getProperties().forEach(prop => {
+            let type = prop.name.split('-')[2];
+            type = type == 'splitline' ? 'border' : type;
+            classified[type] = classified[type] || [];
+            classified[type].push(prop);
+            (<any>prop).bg = /#\w{6}/.test(prop.value) ? prop.value : bg;
+            types.push(type);
+        });
+        return types.filter((t, idx, arr) => idx == arr.indexOf(t)).map(type => classified[type]);
     }
 
     public copyToClipboard(text) {
