@@ -66,6 +66,16 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         this._perfectScrollbar.update();
     }
 
+    public autoUpload:boolean = true;
+
+    /**
+     * @internal
+     */
+    public _$confirmUpload(){
+        this.uploader._$upload();
+        console.log(this.uploader.autoUpload)
+    }
+
     private _uploader: IUploader;
 
     /**
@@ -112,6 +122,8 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         this._dataSendProgressSubscription = this._uploader.dataSendProgress.subscribe(() => {
             this._cdr.markForCheck();
         });
+
+        this.autoUpload = this._uploader.autoUpload;
     }
 
     /**
@@ -136,6 +148,14 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     public _$checkRetry(file: UploadFileInfo): boolean {
         return file.message == this._fileTypeError || file.message == this._fileMinSizeError || file.message == this._fileMaxSizeError;
     }
+
+    /**
+     * 文件信息是否展示日期
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showDate:boolean = false;
 
     ngOnDestroy() {
         super.ngOnDestroy();

@@ -29,10 +29,11 @@
                   (click)="this.uploader.retryUpload(file)">重新上传</span>
             <ul>
                 <li *ngFor="let log of file.log">
-                    <span class="detail-time">{{log.time}}</span>
+                    <span class="detail-time">{{showDate ? log.time : log.time.split(" ")[1]}}</span>
                     <span class="detail-content" [title]="log.content">{{log.content}}</span>
                 </li>
             </ul>
         </div>
     </jigsaw-collapse-pane>
 </jigsaw-collapse>
+<jigsaw-button class="jigsaw-upload-result-confirm" *ngIf="!autoUpload && files.length > 0" (click)="_$confirmUpload()" colorType="primary">上传</jigsaw-button>

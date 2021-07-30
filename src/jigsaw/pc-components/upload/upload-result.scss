@@ -126,4 +126,8 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
             padding: 0 16px;
         }
     }
+
+    .#{$upload-result-prefix-cls}t-confirm {
+        min-height: 32px;
+    }
 }

@@ -17,6 +17,8 @@ export interface IUploader {
     dataSendProgress: EventEmitter<UploadFileInfo>;
     complete: EventEmitter<UploadFileInfo[]>;
     start: EventEmitter<UploadFileInfo[]>;
+    autoUpload: boolean;
+    _$upload();
 
     retryUpload(file: UploadFileInfo);
 }

@@ -6,7 +6,7 @@ import {CommonUtils} from '../../core/utils/common-utils';
 import {TimeGr, TimeService} from '../../service/time.service';
 import {IUploader, UploadFileInfo} from "./uploader-typings";
 
-const maxConcurrencyUpload = 5;
+let maxConcurrencyUpload = 5;
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
@@ -159,6 +159,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         this._cdr.markForCheck();
     }
 
+    @Input()
+    public autoUpload:boolean = true;
+
     private _selectFile($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -188,13 +191,28 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
 
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputElement, 'change', () => {
-                this._upload();
+                if (this.autoUpload) {
+                    this._$upload();
+                } else {
+                    const fileInput: any = this._fileInputElement;
+                    const files = this._checkFiles(Array.from(fileInput.files || []));
+                    if (!this.multiple) {
+                        this.files.splice(0, this.files.length);
+                        files.splice(1, files.length);
+                    }
+                    this.files.push(...files);
+                    this.start.emit(this.files);
+                    fileInput.value = null;
+                }  
             });
 
         this._fileInputElement.dispatchEvent(e);
     }
 
-    private _upload() {
+    /**
+     * @internal
+     */
+    public _$upload() {
         const fileInput: any = this._fileInputElement;
         const files = this._checkFiles(Array.from(fileInput.files || []));
         if (!this.multiple) {
