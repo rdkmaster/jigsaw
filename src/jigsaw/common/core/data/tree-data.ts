@@ -97,7 +97,6 @@ export class SimpleTreeData extends GeneralCollection<any> {
      * 子级节点，`SimpleZTreeData` 不是一个递归的结构，所以子节点是用户原生提供的
      */
     nodes?: SimpleNode[];
-    iconUnicode?: string;
 
     public static parseXML(xml: string): XMLDocument {
         if (CommonUtils.isUndefined(DOMParser)) {

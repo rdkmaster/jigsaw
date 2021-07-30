@@ -65,10 +65,10 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                 </node>
                 <node label="服务端" open="true" iconUnicode="e3a0">
                     <node label="src" open="true">
-                        <node label="查询服务1" iconUnicode="e3c5"></node>
-                        <node label="查询服务2" iconUnicode="e3c5"></node>
-                        <node label="查询服务3" iconUnicode="e3c5"></node>
-                        <node label="查询服务4" iconUnicode="e3c5"></node>
+                        <node label="查询服务1.sql" iconUnicode="e3c5"></node>
+                        <node label="查询服务2.sql" iconUnicode="e3c5"></node>
+                        <node label="查询服务3.sql" iconUnicode="e3c5"></node>
+                        <node label="查询服务4.sql" iconUnicode="e3c5"></node>
                     </node>
                 </node>
             </node>
@@ -125,10 +125,10 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                     {
                         label: "src", open: true,
                         nodes: [
-                            { label: "查询服务1", iconUnicode: 'e3c5' },
-                            { label: "查询服务2", iconUnicode: 'e3c5' },
-                            { label: "查询服务3", iconUnicode: 'e3c5' },
-                            { label: "查询服务4", iconUnicode: 'e3c5' },
+                            { label: "查询服务1.sql", iconUnicode: 'e3c5' },
+                            { label: "查询服务2.sql", iconUnicode: 'e3c5' },
+                            { label: "查询服务3.sql", iconUnicode: 'e3c5' },
+                            { label: "查询服务4.sql", iconUnicode: 'e3c5' },
                         ]
                     }
                 ]
