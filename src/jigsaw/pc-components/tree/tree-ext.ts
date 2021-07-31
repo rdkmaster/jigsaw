@@ -34,7 +34,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     /**
      * @internal
      */
-    public _$uniqueId: string = InternalUtils.createUniqueId();
+    public _$uniqueId: string = InternalUtils.createUniqueId('ztree-');
     public ztree: any;
 
     /**
@@ -112,15 +112,19 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this._setZTreeIcon();
     }
 
+    private _getStyleNodeId(): string {
+        return `internal-icon@${this._$uniqueId}`;
+    }
+
     private _setZTreeIcon() {
         const iconData = this.iconSuit;
-        const head = document.getElementsByTagName("head")[0];
-        const zTreeIconStyle = document.getElementById(this._$uniqueId + "style") as HTMLLinkElement;
+        const id = this._getStyleNodeId();
+        const zTreeIconStyle = document.getElementById(id) as HTMLLinkElement;
         if (zTreeIconStyle) {
-            head.removeChild(zTreeIconStyle);
+            document.head.removeChild(zTreeIconStyle);
         }
         const style = document.createElement("style");
-        style.id = this._$uniqueId + "style";
+        style.id = id;
         document.head.appendChild(style);
         const sheet = style.sheet as CSSStyleSheet;
         sheet.insertRule(`.ztree#${this._$uniqueId}#${this._$uniqueId} li span.button.edit::after {content: "\\${iconData.edit}"}`, sheet.cssRules.length);
@@ -271,6 +275,10 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();
             this._removeRefreshCallback = null;
+        }
+        const zTreeIconStyle = document.getElementById(this._getStyleNodeId()) as HTMLLinkElement;
+        if (zTreeIconStyle) {
+            document.head.removeChild(zTreeIconStyle);
         }
     }
 
