@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ZTreeSettingSetting, SimpleTreeData} from "jigsaw/public_api";
+import {ZTreeSettings, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -8,7 +8,7 @@ import {ZTreeSettingSetting, SimpleTreeData} from "jigsaw/public_api";
 export class ZtreeDemoDataFromAjaxComponent {
     data: SimpleTreeData;
 
-    setting: ZTreeSettingSetting = {
+    setting: ZTreeSettings = {
         data: {
             key: {
                 children: 'nodes',

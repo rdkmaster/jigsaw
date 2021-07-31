@@ -9,7 +9,6 @@ export class ZTreeSettingAsync {
     dataFilter?: Function;
 }
 
-
 export enum ZTreeSettingViewSpeedLevel {
     slow, normal, fast
 }
@@ -127,11 +126,31 @@ export class ZTreeSettingEdit {
     showRenameBtn?: boolean | Function;
 }
 
-export class ZTreeSettingSetting {
+export class ZTreeSettings {
     async ?: ZTreeSettingAsync;
     callback?: ZTreeSettingCallback;
     check?: ZTreeSettingCheck;
     data?: ZTreeSettingData;
     edit?: ZTreeSettingEdit;
     view?: ZTreeSettingView;
+}
+
+/**
+ * @internal
+ * 向下兼容原来的ZTreeSettingSetting这个奇怪的名字
+ */
+export class ZTreeSettingSetting extends ZTreeSettings {
+}
+
+export class ZTreeIconSuit {
+    edit?: string;
+    remove?: string;
+    open?: string;
+    close?: string;
+    document?: string;
+    checkboxChecked?: string;
+    checkboxNotCheck?: string;
+    checkboxHalf?: string;
+    nodeOpen?: string;
+    nodeClose?: string;
 }
