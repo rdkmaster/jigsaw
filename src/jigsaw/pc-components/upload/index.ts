@@ -13,7 +13,7 @@ import { JigsawUploadResult } from './upload-result';
 import { JigsawCollapseModule } from '../collapse/collapse';
 import { JigsawProgressModule } from '../progress/progress';
 import {JigsawLoadingModule} from "../../common/components/loading/loading";
-import { JigsawTooltipModule } from 'jigsaw/common/directive/tooltip/tooltip';
+import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
 
 @NgModule({
     imports: [
