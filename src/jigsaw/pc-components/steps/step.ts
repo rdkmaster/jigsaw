@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inp
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type StepItem = {
     /**
@@ -103,15 +104,17 @@ export class JigsawSteps extends AbstractJigsawComponent {
     /**
      * 添加一个节点
      * @param step：要添加的节点数据，简单的节点名称或者 StepItem 格式的对象
+     * @param index：可选的插入位置索引，不指定则插入在末尾
      */
-    public addStep(step: string | StepItem): void {
+    public addStep(step: string | StepItem, index?: number): void {
         if (typeof step == 'string') {
             step = {title: step};
         }
         if (!step.status) {
             step.status = 'normal';
         }
-        this.data.push(step);
+        const i = CommonUtils.isDefined(index) && typeof index == 'number' ? index : this.data.length;
+        this.data.splice(i, 0, step);
         this.add.emit(this);
         this._changeDetector.markForCheck();
     }
@@ -121,6 +124,9 @@ export class JigsawSteps extends AbstractJigsawComponent {
      * @param index：要删除的节点索引
      */
     public removeStep(index: number): void {
+        if (CommonUtils.isUndefined(index) || typeof index != "number" || index < 0 || index > this.data.length - 1) {
+            return;
+        }
         this.data.splice(index, 1);
         this.remove.emit(index);
         if (this.current == index) {
