@@ -149,14 +149,6 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         return file.message == this._fileTypeError || file.message == this._fileMinSizeError || file.message == this._fileMaxSizeError;
     }
 
-    /**
-     * 文件信息是否展示日期
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public showDate:boolean = false;
-
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._startUploadSubscription) {

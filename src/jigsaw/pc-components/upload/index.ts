@@ -13,12 +13,14 @@ import { JigsawUploadResult } from './upload-result';
 import { JigsawCollapseModule } from '../collapse/collapse';
 import { JigsawProgressModule } from '../progress/progress';
 import {JigsawLoadingModule} from "../../common/components/loading/loading";
+import { JigsawTooltipModule } from 'jigsaw/common/directive/tooltip/tooltip';
 
 @NgModule({
     imports: [
         JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
         JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule,
-        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild()
+        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild(),
+        JigsawTooltipModule
     ],
     declarations: [JigsawUploadDirective, JigsawUploadResult],
     exports: [JigsawUploadDirective, JigsawUploadResult],

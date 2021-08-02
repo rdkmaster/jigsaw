@@ -1,7 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader} from "jigsaw/public_api";
 
-@Component({ templateUrl: "./demo.component.html" })
+@Component({ templateUrl: "./demo.component.html",
+             styleUrls:["./demo.component.css"] })
 export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,

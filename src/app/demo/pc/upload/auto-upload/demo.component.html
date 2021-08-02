@@ -3,30 +3,36 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<p style="margin-bottom: 12px">
-    提示：这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。<br>
-    <a (click)="clear()">清空所有已上传的文件</a>
-</p>
-<jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
-<div>
-    <a j-upload #first [autoUpload]="false">上传</a>
-</div>
-<jigsaw-upload-result [uploader]="uploader1" width="200px" height="200px" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>
+<div class="upload-auto-upload-demo-cntr">
+    <jigsaw-header [level]="1">选择文件后不会自动上传</jigsaw-header>
+    <p class="hints">
+        <span style="display: flex">提示：</span>
+        <span>1.这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。</span>
+        <span>2.禁用自动上传后，通过指令面板的上传按钮，或者调用uspanload的上传API即可上传。</span>
+        <a (click)="clear()">清空所有已上传的文件</a>
+    </p>
 
-<jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
-<div>
-    <a j-upload #second>上传</a>
-</div>
-<jigsaw-upload-result [uploader]="uploader2" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>
+    <jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
+    <div>
+        <a j-upload #first [autoUpload]="false">选择文件</a>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader1" width="200px" height="200px" (change)="onChange('change', $event)"
+        (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
 
-<jigsaw-header>指令面板：上传按钮</jigsaw-header>
-<div>
-    <jigsaw-button j-upload #third>上传</jigsaw-button>
+    <jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
+    <div>
+        <a j-upload #second [autoUpload]="false">选择文件</a>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader2" (change)="onChange('change', $event)"
+        (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
+
+    <jigsaw-header>指令面板：上传按钮</jigsaw-header>
+    <div>
+        <jigsaw-button j-upload #third [autoUpload]="false">选择文件</jigsaw-button>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader3" (change)="onChange('change', $event)"
+        (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
 </div>
-<jigsaw-upload-result [uploader]="uploader3" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>

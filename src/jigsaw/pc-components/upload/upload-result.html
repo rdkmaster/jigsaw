@@ -29,7 +29,7 @@
                   (click)="this.uploader.retryUpload(file)">重新上传</span>
             <ul>
                 <li *ngFor="let log of file.log">
-                    <span class="detail-time">{{showDate ? log.time : log.time.split(" ")[1]}}</span>
+                    <span class="detail-time" [jigsawTooltip]="log.time">{{log.time.split(" ")[1]}}</span>
                     <span class="detail-content" [title]="log.content">{{log.content}}</span>
                 </li>
             </ul>
