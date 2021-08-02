@@ -15,12 +15,65 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
             background: $font-color-white-darken-light;
         }
+
+        table {
+            background: $bg-white;
+            td {
+                color: $font-color-default-light;
+                border-color: $border-color-default-light;
+            }
+
+            thead {
+                color: $font-color-heading-bold-light;
+
+                tr td {
+                    background: $bg-header-light;
+                }
+            }
+
+            tbody {
+                tr {
+                    &:hover {
+                        td:not([rowspan]) {
+                            background: $bg-hover-light;
+                        }
+                    }
+                }
+            }
+        }
     }
+
     &-dark {
         background: $bg-body-dark;
         color: $font-color-default-dark;
         .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
             background: $font-color-white-darken-light;
+        }
+
+        table {
+            background: $bg-body-dark;
+            td {
+                color: $font-color-default-dark;
+                border-color: $border-color-default-dark;
+            }
+
+            thead {
+                color: $font-color-heading-bold-dark;
+
+                tr td {
+                    background: $bg-header-dark;
+                }
+            }
+
+            tbody {
+                tr {
+                    &:hover {
+                        td:not([rowspan]) {
+                            background: $bg-hover-dark;
+                        }
+                    }
+                }
+            }
         }
     }
 
