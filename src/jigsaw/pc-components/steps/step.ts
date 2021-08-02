@@ -125,16 +125,37 @@ export class JigsawSteps extends AbstractJigsawComponent {
      */
     public removeStep(index: number): void {
         if (CommonUtils.isUndefined(index) || typeof index != "number" || index < 0 || index > this.data.length - 1) {
+            // +null和Number(null)都是0，并且isNaN(null)=false
+            // 这里只能直接判断是否为空
             return;
         }
         this.data.splice(index, 1);
         this.remove.emit(index);
         if (this.current == index) {
-            this.current = this.data.findIndex(item => !item.disabled);
+            this.current = this._findNeighboring(index);
         } else if (this.current > index) {
             this.current = this.current - 1;
         }
         this._changeDetector.markForCheck();
+    }
+
+    // 找删除节点附近的非disabled节点
+    private _findNeighboring(index: number): number {
+        let idx = 0;
+        // 因为data里面已经将index位置上的元素删除了，所以这里要从i=0开始计算
+        for (let i = 0, len = this.data?.length || 0; i < len && idx >= 0 && idx < len; i++) {
+            // 往后计算时，i从0开始，也就是当前位置，其实就是原来的index+1的位置
+            idx = index + i;
+            if (!!this.data[idx] && !this.data[idx].disabled) {
+                break;
+            }
+            // 往前计算时，要多减1
+            idx = index - (i + 1);
+            if (!!this.data[idx] && !this.data[idx].disabled) {
+                break;
+            }
+        }
+        return !!this.data[idx] ? idx : -1;
     }
 }
 
