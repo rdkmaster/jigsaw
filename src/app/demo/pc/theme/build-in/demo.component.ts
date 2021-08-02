@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {
     JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData,
     PopupService,
@@ -8,7 +8,8 @@ import {
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls:['demo.component.css']
+    styleUrls:['demo.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ThemeBuildInDemoComponent {
 
