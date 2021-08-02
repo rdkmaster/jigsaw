@@ -7,7 +7,7 @@ export type StepItem = {
     /**
      * 单个步骤的状态
      */
-    status: "normal" | "warning" | "error";
+    status?: "normal" | "warning" | "error";
     /**
      * 单个步骤的标题
      */
@@ -74,6 +74,12 @@ export class JigsawSteps extends AbstractJigsawComponent {
     @Output()
     public currentChange = new EventEmitter<number>();
 
+    @Output()
+    public remove = new EventEmitter<number>();
+
+    @Output()
+    public add = new EventEmitter<JigsawSteps>();
+
     /**
      * 设置步骤条的方向，支持水平方向和垂直方向
      *
@@ -92,6 +98,37 @@ export class JigsawSteps extends AbstractJigsawComponent {
             return;
         }
         this.current = idx;
+    }
+
+    /**
+     * 添加一个节点
+     * @param step：要添加的节点数据，简单的节点名称或者 StepItem 格式的对象
+     */
+    public addStep(step: string | StepItem): void {
+        if (typeof step == 'string') {
+            step = {title: step};
+        }
+        if (!step.status) {
+            step.status = 'normal';
+        }
+        this.data.push(step);
+        this.add.emit(this);
+        this._changeDetector.markForCheck();
+    }
+
+    /**
+     * 删除一个节点
+     * @param index：要删除的节点索引
+     */
+    public removeStep(index: number): void {
+        this.data.splice(index, 1);
+        this.remove.emit(index);
+        if (this.current == index) {
+            this.current = this.data.findIndex(item => !item.disabled);
+        } else if (this.current > index) {
+            this.current = this.current - 1;
+        }
+        this._changeDetector.markForCheck();
     }
 }
 
