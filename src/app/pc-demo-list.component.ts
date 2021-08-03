@@ -190,8 +190,8 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'rate', rateConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
-        this._addRouterConfig(routerConfig, 'select', selectGroupConfig);
-        this._addRouterConfig(routerConfig, 'select', selectCollapse);
+        this._addRouterConfig(routerConfig, 'select-group', selectGroupConfig);
+        this._addRouterConfig(routerConfig, 'select-collapse', selectCollapse);
         this._addRouterConfig(routerConfig, 'slider', sliderConfig);
         this._addRouterConfig(routerConfig, 'steps', stepsConfig);
         this._addRouterConfig(routerConfig, 'switch', switchConfig);
