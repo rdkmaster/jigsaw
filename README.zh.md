@@ -17,6 +17,8 @@ Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开
 
 ### 组件 / Components
 
+\# | 名称 | 简述         | 链接
+---|------|-------------|------
 1 | 警示框 | 一个简单的对话框，通常用于告诉用户一些重要的东西，它还可以收集用户的选择。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/alert/demo/popup)
 2 | 提示输入框 | 一个全功能 [Input](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full) 组件，附带一个提示可选值的下拉列表。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/auto-complete-input/demo/basic)
 3 | 面包屑 | 一个轻量级导航器，可在用户浏览时自动跟踪。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/breadcrumb/demo/router)
@@ -70,6 +72,8 @@ Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开
 
 ### 容器 / Containers
 
+\# | 名称 | 简述         | 链接
+---|------|-------------|------
 1 | 盒子布局 | 基于 flex 的强大视图布局器，将视图抽象为水平和垂直Box，并以他们的相互组合来实现复杂视图的快速布局。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/box/demo/middle-resize-line)
 2 | 折叠 | 可以折叠或打开给定视图的容器。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/collapse/demo/full)
 3 | 组合框 | 一个可以隐藏任何给定视图的容器，用户可以向下拉以显示此视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/searchable)
@@ -79,6 +83,8 @@ Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开
 
 ### 服务 / Services
 
+\# | 名称 | 简述         | 链接
+---|------|-------------|------
 1 | 前后端通信 | Jigsaw封装了许多各式数据对象来帮助应用更容易的实现数据与控件之间的对接。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
 2 | 加载中服务 | 用于弹出和管理给定的 [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) 组件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
 3 | 弹出服务 | 弹出任意给定视图到UI的顶部，非常强大。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
@@ -88,6 +94,8 @@ Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开
 
 ### 指令 / Directives
 
+\# | 名称 | 简述         | 链接
+---|------|-------------|------
 1 | 多功能徽标 | 给任意视图添加徽标以抓取用户的注意力，支持多种形式的徽标。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/badge/demo/basic)
 2 | 菜单 | 给任意视图添加多级菜单功能，或者弹出一个上下文菜单。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/options)
 3 | 图形批量下载 | 给一个图形容器添加一个将容器内所有图形的截图下载的功能。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/download-directive)

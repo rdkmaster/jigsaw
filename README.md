@@ -18,6 +18,8 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 
 ### Components
 
+\# | Name | Description | Link
+---|------|-------------|------
 1 | Alert | A simple dialog that usually used to tell the users something important, and it can also collect choice of the users. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/alert/demo/popup)
 2 | Auto Input | A full-featured [Input](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full) component with a drop-down list of suggested optional values. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/auto-complete-input/demo/basic)
 3 | Breadcrumb | A lightweight navigator which can automaticly trace while the users are browsing. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/breadcrumb/demo/router)
@@ -71,6 +73,8 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 
 ### Containers
 
+\# | Name | Description | Link
+---|------|-------------|------
 1 | Box | A powerful view layout based on flex, which abstracts the view into horizontal and vertical boxes, and uses their mutual combination to quickly make the layout of complex views. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/box/demo/middle-resize-line)
 2 | Collapse | A container which can fold or open the given view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/collapse/demo/full)
 3 | Combo Select | A container that can hide any given view, which the user can pull down to display this view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/searchable)
@@ -80,6 +84,8 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 
 ### Services
 
+\# | Name | Description | Link
+---|------|-------------|------
 1 | Data | Jigsaw encapsulates many kinds of data objects to help applications more easily to feed data to all the controls. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
 2 | LoadingService | Popups up and manages [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) component. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
 3 | PopupService | Popups any given view to the top of the UI, very powerful. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
@@ -89,6 +95,8 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 
 ### Directives
 
+\# | Name | Description | Link
+---|------|-------------|------
 1 | Badge | Add a badge to any view to grab the user's attention, and support multiple forms of badge. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/badge/demo/basic)
 2 | Menu | Add multi-level menu function to any view, or popup a context menu. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/options)
 3 | Download Graphs | Add a function of downloading screenshots of all the graphics in the host container. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/download-directive)
