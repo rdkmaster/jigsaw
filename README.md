@@ -74,6 +74,7 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 4 | Drawer | A drawer, which is often used to show/hide complex views. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drawer/demo/drawer-in-drawer)
 5 | Tabs | A multi-view folding container with tabs, which can overlay multiple views together. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api)
 6 | ViewStack | A multi-view folding container, similar to Tabs but without a tab bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/headless)
+7 | Box | A powerful view layout based on flex, which abstracts the view into horizontal and vertical boxes. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/headless)
 
 ### Services
 

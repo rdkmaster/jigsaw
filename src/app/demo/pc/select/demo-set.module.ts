@@ -25,10 +25,6 @@ import {SelectClearableDemoComponent} from "./clearable/demo.component";
 import {SelectClearableDemoModule} from "./clearable/demo.module";
 import { MultipleSelectDemoComponent } from './multiple-select/demo.component';
 import { MultipleSelectDemoModule } from './multiple-select/demo.module';
-import { SelectGroupDemoComponent } from './select-group/demo.component';
-import { SelectGroupDemoModule } from './select-group/demo.module';
-import { SelectCollapseDemoComponent } from './select-collapse/demo.component';
-import { SelectCollapseDemoModule } from './select-collapse/demo.module';
 import {SelectOptionWidthDemoComponent} from "./option-width/demo.component";
 import {SelectOptionWidthDemoModule} from "./option-width/demo.module";
 import { SelectValueChangeDemoComponent } from './value-change/demo.component';
@@ -72,12 +68,6 @@ export const routerConfig = [
         path: 'multiple-select', component: MultipleSelectDemoComponent
     },
     {
-        path: 'select-group', component: SelectGroupDemoComponent
-    },
-    {
-        path: 'select-collapse', component: SelectCollapseDemoComponent
-    },
-    {
         path: 'option-width', component: SelectOptionWidthDemoComponent
     },
     {
@@ -100,8 +90,6 @@ export const routerConfig = [
         SelectSizeDemoModule,
         SelectClearableDemoModule,
         MultipleSelectDemoModule,
-        SelectGroupDemoModule,
-        SelectCollapseDemoModule,
         SelectOptionWidthDemoModule,
         SelectValueChangeDemoModule
     ]
