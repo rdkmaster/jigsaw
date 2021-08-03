@@ -1,4 +1,4 @@
-.ztree li span {
+.ztree li span:not(.node_name) {
     color: $font-color-default;
     &.button {
         &.edit,
@@ -59,7 +59,9 @@
         }
     }
 }
+
 .ztree li a {
+    color: $font-color-default;
     &:hover {
         background: $bg-hover;
         .node_name {
