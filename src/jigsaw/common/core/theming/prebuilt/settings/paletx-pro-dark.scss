@@ -250,15 +250,18 @@ $brand-active-dark: $blue-8;
 $bg-component: transparent;
 $bg-header: $gray-4;
 $bg-gray: $gray-3;
+$bg-white: #fff;
 // 支持组件内部实现明暗皮肤
 $bg-body-light: $gray-9;
 $bg-container-light: $gray-2-light;
 $bg-gray-light: $gray-3-light;
 $bg-hover-light: $blue-1-light;
+$bg-header-light: $gray-3-light;
 $bg-container-dark: $gray-2;
 $bg-body-dark: $gray-6;
 $bg-gray-dark: $gray-3;
 $bg-hover-dark: $gray-4;
+$bg-header-dark: $gray-3;
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -288,10 +291,11 @@ $font-color-white: hsl(0, 0%, 100%);
 $font-color-white-darken: $gray-6;
 // 支持组件内部实现明暗皮肤
 $font-color-hint-light: $gray-7-light;
-$font-color-white-darken-light: $gray-6-light;
 $font-color-heading-bold-light: $gray-9-light;
+$font-color-white-darken-light: $gray-6-light;
 $font-color-default-dark: $gray-9;
 $font-color-disabled-dark: $gray-8;
+$font-color-heading-bold-dark: $gray-9;
 $font-color-white-darken-dark: $gray-8;
 
 /* border 边框

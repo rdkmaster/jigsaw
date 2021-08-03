@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {
     JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData,
     PopupService,
@@ -8,7 +8,8 @@ import {
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls:['demo.component.css']
+    styleUrls:['demo.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ThemeBuildInDemoComponent {
 
@@ -124,7 +125,7 @@ export class ThemeBuildInDemoComponent {
                                     },
                                     {
                                         label: `
-                                                <div class="jigsaw-table-host" style="width: 300px;${JigsawTheme.majorStyle == 'dark' ? 'background: #0f111a' : ''}">
+                                                <div class="jigsaw-table-host" style="width: 300px;">
                                                 <table>
                                                     <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
                                                     <tbody>
