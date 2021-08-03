@@ -106,6 +106,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             return;
         }
         this._min = Number(value);
+        if (this.min > this.value) {
+            // 最小值比当前值还要大，要更新当前值
+            this.value = this.min;
+        }
     }
 
     private _max: number = Infinity;
@@ -128,6 +132,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             return;
         }
         this._max = Number(value);
+        if (this.max < this.value) {
+            // 最大值比当前值还要小，要更新当前值
+            this.value = this.max;
+        }
     }
 
     private _precisionStep: number = 0;
