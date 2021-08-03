@@ -14,5 +14,5 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig), SelectCollapseDemoModule
     ]
 })
-export class SelectDemoModule {
+export class SelectCollapseDemoSetModule {
 }

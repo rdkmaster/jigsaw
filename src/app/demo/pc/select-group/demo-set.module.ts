@@ -15,5 +15,5 @@ export const routerConfig = [
         SelectGroupDemoModule,
     ]
 })
-export class SelectDemoModule {
+export class SelectGroupDemoSetModule {
 }
