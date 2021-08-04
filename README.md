@@ -55,19 +55,19 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 33 | Select (Group) | A form control used to collect options through a drop-down list, supports option grouping, and is often used in situations where options are more complex. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select-group/demo/select-group)
 34 | Select (Collapse) | A form control used to collect options through a drop-down list. It supports folding to group options. It is often used in situations where options are more complicated. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select-collapse/demo/select-collapse)
 35 | Signaling Chart | A signaling flow chart. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/swim-lane-diagram)
-36 | Slider | A form control for collecting numerical info by sliding. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-37 | Steps | Displays a series of custom steps which have some predefined states. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/steps/demo/goto-step)
-38 | Switch | A form control for collection yes/no or on/off choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/switch/demo/basic)
-39 | Tab Bar | A tab switcher for the [Tabs container](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab-bar/demo/type)
+36 | Slider | A form control for collecting numerical info by sliding. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/slider/demo/basic)
+37 | Steps | Displays a series of custom steps which have some predefined states. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/steps/demo/basic)
+38 | Switch | A form control for collection yes/no or on/off choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/switch/demo/size)
+39 | Tab Bar | A tab switcher for the [Tabs container](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab-bar/demo/type)
 40 | Table | A very very powerful data grid. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer)
 41 | Tag | A tag control. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
-42 | Textarea |  | [Demo]()
+42 | Textarea | A form control for collecting multi lines of text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
 43 | Tile Lite | A list that displays data by horizontal tiling, and the [List](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full) component tiling data vertically. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo/full)
 44 | Tile | An enhanced version of the [Tile](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo/full) control. | [Demo]()
 45 | Time | A time selector for selecting hours, minutes and seconds. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo/basic)
 46 | Time Section | A time rule selector, you can set the rule for matching time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-section/demo/basic)
 47 | Transfer | A complex selector, used to select a large number of entries, supports paging. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/transfer/demo/basic)
-48 | Tree | Renders some data with subordinate relationships as a tree, powered by [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/editable)
+48 | Tree | Renders some data with subordinate relationships as a tree, powered by [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/icon)
 49 | Upload Result | Opens a file explorer to select one or more files and upload to the sever. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/upload-result)
 50 | Viewport | Represents part of an abstract view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
 
@@ -89,9 +89,9 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 1 | Data | Jigsaw encapsulates many kinds of data objects to help applications more easily to feed data to all the controls. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
 2 | LoadingService | Popups up and manages [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) component. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
 3 | PopupService | Popups any given view to the top of the UI, very powerful. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
-4 | TimeService | Translate time macros like `now-1d` to real values. | [Demo](--)
+4 | TimeService | Translate time macros like `now-1d` to real values. | --
 5 | Translation | Used to create a view that supports multiple languages. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
-6 | ChartIcon | Render simple data to tiny charts. | [Demo](--)
+6 | ChartIcon | Render simple data to tiny charts. | --
 
 ### Directives
 
