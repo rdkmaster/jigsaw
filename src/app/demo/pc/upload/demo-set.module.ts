@@ -21,7 +21,7 @@ export const routerConfig = [
         path: 'upload-result', component: UploadResultDemoComponent
     },
     {
-        path: 'disable-auto-upload', component: UploadAutoUploadDemoComponent
+        path: 'auto-upload', component: UploadAutoUploadDemoComponent
     }
 ];
 
