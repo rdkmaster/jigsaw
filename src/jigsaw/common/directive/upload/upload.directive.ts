@@ -81,6 +81,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
 
+    @Output('uploadChange')
+    public change = new EventEmitter<UploadFileInfo[]>();
+
     @HostListener('click', ['$event'])
     onClick($event) {
         this._selectFile($event);
@@ -195,6 +198,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
                     this.upload();
                 } else {
                     this._appendFiles();
+                    this.change.emit(this.files);
                 }
             });
 
