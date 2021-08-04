@@ -136,6 +136,14 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/select/demo-set.module').then(m => m.SelectDemoModule),
     },
     {
+        path: "pc/select-group",
+        loadChildren: () => import('./demo/pc/select-group/demo-set.module').then(m => m.SelectGroupDemoSetModule),
+    },
+    {
+        path: "pc/select-collapse",
+        loadChildren: () => import('./demo/pc/select-collapse/demo-set.module').then(m => m.SelectCollapseDemoSetModule),
+    },
+    {
         path: "pc/slider",
         loadChildren: () => import('./demo/pc/slider/demo-set.module').then(m => m.SliderDemoModule),
     },

@@ -9,7 +9,7 @@
 
 ## Why Jigsaw?
 
-Jigsaw is a complete and powerful Web components set. The current version contains 43 components, 6 containers, 5 services, and 5 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
+Jigsaw is a complete and powerful Web components set. The current version contains 50 components, 6 containers, 6 services, and 9 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
 
 Jigsaw has an ability that other component sets do not have: **Jigsaw’s application can support multiple Ux specifications at the same time in one development**. [Click here](https://jigsaw-zte.gitee.io/latest/#/components/guide/supports-multiple-ux-specifications) to learn more about it.
 
@@ -19,81 +19,93 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 ### Components
 
 \# | Name | Description | Link
----|-----|-------------|------
+---|------|-------------|------
 1 | Alert | A simple dialog that usually used to tell the users something important, and it can also collect choice of the users. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/alert/demo/popup)
 2 | Auto Input | A full-featured [Input](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full) component with a drop-down list of suggested optional values. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/auto-complete-input/demo/basic)
 3 | Breadcrumb | A lightweight navigator which can automaticly trace while the users are browsing. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/breadcrumb/demo/router)
-4 | Button | A button. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/button/demo/full)
+4 | Button | A button with multiple states. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/button/demo/full)
 5 | Button Bar | A button bar which supports selection status, single or multiple selection, it can be used as a form control or a navigator. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/button-bar/demo/basic)
 6 | Cascade | A form control for collecting or presenting data with subordinate relationships. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/cascade/demo/search-and-paging)
-7 | Check Box | A form control for collecting multi choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/checkbox/demo/full)
-8 | Color Select | A color picker. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/color-select/demo/basic)
-9 | Combo Select | A general drop-down view combination selector for storing complex views in a drop-down manner. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/trigger)
-10 | Date Time (Single) | A form control for collecting a date time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/basic)
-11 | Date Time (Range) | A form control for collecting a start and an end of date time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/basic)
-12 | Fish Bone | A Fishbone graph are often used to present some data with subordinate relationships in the form of fish bones. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/fish-bone/demo/full)
-13 | Graph | Render any data graphically, including any graphics such as bar charts, line charts, pie charts, gauge, and more, powered by [echarts](echarts.baidu.com). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/pie)
-14 | Icon | A font icon, tells something graphicly or can be a simple link button. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/icon/demo/basic)
-15 | Input | A form control for collecting some text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full)
-16 | List Lite | Presents a set of data as a text based list, supports single and multiple selection. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full)
-17 | List | Presents a set of data as a fully customized list. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list/demo/full)
-18 | Loading | Displays an animation to ease the user's anxiety during waiting for certain operations. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
-19 | Menu | A multi-level menu, which is often used for navigation. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/navigation)
-20 | Notification | Informs some unimportant message in the corner of the UI, or to collect some unimportant choice of the users. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/notification/demo/full)
-21 | Numeric Input | A form control for collecting numbers without typing, supports floats and integers. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/numeric-input/demo/step)
-22 | Pagination | A control for dividing large amounts of data into multiple pages. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/pagination/demo/basic)
-23 | Progress bar | A progress bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo)
-24 | Radio Group | A form control for collecting single choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
-25 | Rate | A form control for the users to give his/her score of something. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/rate/demo/full)
-26 | Scrollbar | A custom scrollbar to any container, powered by [perfect scrollbar](https://github.com/utatti/perfect-scrollbar). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/scrollbar/demo/basic)
-27 | Select | A form control for collecting the choice(s) by dropping down a list. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-28 | Slider | A form control for collecting numerical info by sliding. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-29 | Steps | Displays a series of custom steps which have some predefined states. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-30 | Switch | A form control for collection yes/no on/off choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
-31 | Table | A very very powerful data grid. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer)
-32 | Tab Bar | Tab bar of the [Tabs container](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/tab-bar)
-33 | Tag | A tag control. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
-34 | Textarea | A form control for collecting multi lines of text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
-35 | Tile | Renders a list of data by tiling. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile/demo/full)
-36 | TileLite | To show a list of data by tiling. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo)
-37 | Time | A time selector for selecting hours, minutes and seconds. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo/basic)
-38 | Time Section | A time rule selector, you can set the rule for matching time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-section/demo/basic)
-39 | Tooltip | A customized tooltip. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tooltip/demo/inline)
-40 | Transfer | A complex selector, used to select a large number of entries, supports paging. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/transfer/demo/basic)
-41 | Tree | Renders some data with subordinate relationships as a tree, powered by [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/editable)
-42 | Upload | Opens a file explorer to select one or more files and upload to the sever. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
-43 | Viewport | Represents part of an abstract view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
+7 | Checkbox | A form control for collecting multi choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/checkbox/demo/full)
+8 | Color Select | A form control that provides multiple ways to pick colors. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/color-select/demo/basic)
+9 | Date Picker | A form control used to collect dates. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/date-picker/demo/basic)
+10 | Date Time (Single) | A form control for collecting date and time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/basic)
+11 | Date Time (Select) | A form control used to collect date and time, it provides choices in a drop-down manner. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/date-time-picker/demo/date-time-select)
+12 | Date Time (Range) | A form control used to collect the start and end value, including date and time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/basic)
+13 | Date Time (Select) | A form control used to collect the start and end value, including date and time, it provides choices in a drop-down manner. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/range-date-time-picker/demo/range-date-time-select)
+14 | Fish Bone | A Fishbone graph are often used to present some data with subordinate relationships in the form of fish bones. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/fish-bone/demo/full)
+15 | Graph | Render any data graphically, including any graphics such as bar charts, line charts, pie charts, gauge, and more, powered by [echarts](echarts.baidu.com). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/pie)
+16 | Header | A simple component used to prompt the topic of a certain area on the UI. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/header/demo/basic)
+17 | Icon | A font icon, which can be used as a link button, supports Font-aweasome and [Jigsaw's internal icon libraries](https://www.npmjs.com/package/@rdkmaster/icon-font). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/icon/demo/basic)
+18 | Input (Normal) | A form control used to collect a single line of text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/input/demo/full)
+19 | Input (Search) | A search box for fuzzy matching according to text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/search-input/demo/basic)
+20 | List Lite | A control for presenting a group of data in a text list, supports single selection and multiple selection, supports main title and subtitle, and supports icons. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full)
+21 | List | An enhanced version of the [List Lite](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full) control that supports the presentation of a set of data in any form. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/list/demo/full)
+22 | Loading | Displays an animation to ease the user's anxiety during waiting for certain operations. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
+23 | Menu | A multi-level menu control, which is often used for navigation. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/navigation)
+24 | Notification | Informs some unimportant message in the corner of the UI, or to collect some unimportant choice of the users. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/notification/demo/full)
+25 | Numeric Input | A form control for collecting numbers without typing, supports floats and integers. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/numeric-input/demo/step)
+26 | Pagination | A control used to divide a large amount of data into multiple pages for display, not only can cooperate with the table component, but also can realize the paging operation of any data. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/pagination/demo/basic)
+27 | Progress Bar | A horizontal progress bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/full)
+28 | Progress Circle | A circular progress bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/circle-progress)
+29 | Radio | A form control for collecting single choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
+30 | Rate | A form control for the users to give his/her score of something. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/rate/demo/full)
+31 | Scrollbar | A custom scrollbar to any container, powered by [perfect scrollbar](https://github.com/utatti/perfect-scrollbar). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/scrollbar/demo/basic)
+32 | Select (Normal) | A form control for collecting the choice(s) by dropping down a list. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select/demo/basic)
+33 | Select (Group) | A form control used to collect options through a drop-down list, supports option grouping, and is often used in situations where options are more complex. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select-group/demo/select-group)
+34 | Select (Collapse) | A form control used to collect options through a drop-down list. It supports folding to group options. It is often used in situations where options are more complicated. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/select-collapse/demo/select-collapse)
+35 | Signaling Chart | A signaling flow chart. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/swim-lane-diagram)
+36 | Slider | A form control for collecting numerical info by sliding. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/slider/demo/basic)
+37 | Steps | Displays a series of custom steps which have some predefined states. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/steps/demo/basic)
+38 | Switch | A form control for collection yes/no or on/off choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/switch/demo/size)
+39 | Tab Bar | A tab switcher for the [Tabs container](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab-bar/demo/type)
+40 | Table | A very very powerful data grid. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/renderer)
+41 | Tag | A tag control. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tag/demo/basic)
+42 | Textarea | A form control for collecting multi lines of text. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/textarea/demo/basic)
+43 | Tile Lite | A list that displays data by horizontal tiling, and the [List](https://jigsaw-zte.gitee.io/latest/#/components/list-lite/demo/full) component tiling data vertically. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo/full)
+44 | Tile | An enhanced version of the [Tile](https://jigsaw-zte.gitee.io/latest/#/components/tile-lite/demo/full) control. | [Demo]()
+45 | Time | A time selector for selecting hours, minutes and seconds. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-picker/demo/basic)
+46 | Time Section | A time rule selector, you can set the rule for matching time. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/time-section/demo/basic)
+47 | Transfer | A complex selector, used to select a large number of entries, supports paging. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/transfer/demo/basic)
+48 | Tree | Renders some data with subordinate relationships as a tree, powered by [ztree](http://www.treejs.cn/v3/main.php#_zTreeInfo). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tree/demo/icon)
+49 | Upload Result | Opens a file explorer to select one or more files and upload to the sever. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/upload-result)
+50 | Viewport | Represents part of an abstract view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/table/demo/big-table)
 
 ### Containers
 
 \# | Name | Description | Link
 ---|------|-------------|------
-1 | Collapse | A container which can fold or open the given view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/collapse/demo/full)
-2 | Combo Select | A container that can hide any given view, which the user can pull down to display this view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/searchable)
-3 | Dialog | A dialog box component which is often used in conjunction with PopupService. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo)
-4 | Drawer | A drawer, which is often used to show/hide complex views. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drawer/demo/drawer-in-drawer)
-5 | Tabs | A multi-view folding container with tabs, which can overlay multiple views together. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api)
-6 | ViewStack | A multi-view folding container, similar to Tabs but without a tab bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/headless)
+1 | Box | A powerful view layout based on flex, which abstracts the view into horizontal and vertical boxes, and uses their mutual combination to quickly make the layout of complex views. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/box/demo/middle-resize-line)
+2 | Collapse | A container which can fold or open the given view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/collapse/demo/full)
+3 | Combo Select | A container that can hide any given view, which the user can pull down to display this view. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/combo-select/demo/searchable)
+4 | Dialog | A dialog box component which is often used in conjunction with [PopupService](https://jigsaw-zte.gitee.io/latest/#/components/api/injectable/PopupService). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
+5 | Drawer | A drawer, which is often used to show/hide complex views. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drawer/demo/drawer-in-drawer)
+6 | Tabs | A multi-view folding container with tabs, which can overlay multiple views together. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tab/demo/api)
 
 ### Services
 
 \# | Name | Description | Link
 ---|------|-------------|------
-1 | Translation | Used to create a view that supports multiple languages. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
-2 | TimeService | Translate time macros like `now-1d` to real values. | --
-3 | PopupService | Popups any given view to the top of the UI, very powerful | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/popup/demo/dialog)
-4 | LoadingService | Popups up [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) component. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
-5 | ChartIconFactory | Render simple data to tiny charts. | --
+1 | Data | Jigsaw encapsulates many kinds of data objects to help applications more easily to feed data to all the controls. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
+2 | LoadingService | Popups up and manages [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) component. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
+3 | PopupService | Popups any given view to the top of the UI, very powerful. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
+4 | TimeService | Translate time macros like `now-1d` to real values. | --
+5 | Translation | Used to create a view that supports multiple languages. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
+6 | ChartIcon | Render simple data to tiny charts. | --
 
 ### Directives
 
 \# | Name | Description | Link
 ---|------|-------------|------
-1 | Float | Drop down any given view near the host, many positions supported. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/float/demo/pos-reviser)
-2 | Trusted Html | Similar to Angular's innerHtml directive, without sanitizing the given trusted html | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/trusted-html/demo)
-3 | Draggable | Makes the host draggable and droppable. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drag-drop/demo)
-4 | Upload | Give the host the ability to support uploading files. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/basic)
-5 | Menu | A multi-level menu directive, which is often used for navigation. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/usage)
+1 | Badge | Add a badge to any view to grab the user's attention, and support multiple forms of badge. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/badge/demo/basic)
+2 | Menu | Add multi-level menu function to any view, or popup a context menu. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/menu/demo/options)
+3 | Download Graphs | Add a function of downloading screenshots of all the graphics in the host container. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/graph/demo/download-directive)
+4 | Drag and Drop | Makes the host draggable and droppable. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/drag-drop/demo)
+5 | Float | Drop down any given view near the host, many positions supported. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/float/demo/pos-reviser)
+6 | Movable | The ability to add to any view so that the view can be dragged by the mouse and follow the movement of the mouse. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/badge/demo/move)
+7 | Tooltip | Add a context prompt to any view, support rich text, and support interaction. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/tooltip/demo/html-renderer)
+8 | Trusted HTML | Similar to Angular's innerHtml directive, without sanitizing the given trusted html, support interaction. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/trusted-html/demo/full)
+9 | Upload | Adding the file upload function to any view, needs to be used in conjunction with the [upload result](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/upload-result) control. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/upload/demo/upload-result)
 
 ## Meaning Of Name
 We name this suite of components from a puzzle game. The process of this game, during which the player combine the messy pieces into a picture in accordance with the established blueprint, is similar to the development process of modern web page. We use Jigsaw as this component set’s name, hoping to make web page developers to combine the messy pieces of functions into your web page, just like playing jigsaw puzzle.
