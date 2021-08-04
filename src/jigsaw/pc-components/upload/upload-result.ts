@@ -66,16 +66,6 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         this._perfectScrollbar.update();
     }
 
-    public autoUpload:boolean = true;
-
-    /**
-     * @internal
-     */
-    public _$confirmUpload(){
-        this.uploader._$upload();
-        console.log(this.uploader.autoUpload)
-    }
-
     private _uploader: IUploader;
 
     /**
@@ -122,8 +112,6 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         this._dataSendProgressSubscription = this._uploader.dataSendProgress.subscribe(() => {
             this._cdr.markForCheck();
         });
-
-        this.autoUpload = this._uploader.autoUpload;
     }
 
     /**

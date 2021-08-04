@@ -6,7 +6,7 @@ import {CommonUtils} from '../../core/utils/common-utils';
 import {TimeGr, TimeService} from '../../service/time.service';
 import {IUploader, UploadFileInfo} from "./uploader-typings";
 
-let maxConcurrencyUpload = 5;
+const maxConcurrencyUpload = 5;
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
@@ -124,6 +124,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         this._maxSize = value;
     }
 
+    @Input('uploadImmediately')
+    public uploadImmediately:boolean = true;
+
     private _fileInputElement: Element;
     private _removeFileChangeEvent: Function;
 
@@ -159,9 +162,6 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         this._cdr.markForCheck();
     }
 
-    @Input()
-    public autoUpload:boolean = true;
-
     private _selectFile($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -191,28 +191,17 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
 
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputElement, 'change', () => {
-                if (this.autoUpload) {
-                    this._$upload();
+                if (this.uploadImmediately) {
+                    this.upload();
                 } else {
-                    const fileInput: any = this._fileInputElement;
-                    const files = this._checkFiles(Array.from(fileInput.files || []));
-                    if (!this.multiple) {
-                        this.files.splice(0, this.files.length);
-                        files.splice(1, files.length);
-                    }
-                    this.files.push(...files);
-                    this.start.emit(this.files);
-                    fileInput.value = null;
-                }  
+                    this._appendFiles();
+                }
             });
 
         this._fileInputElement.dispatchEvent(e);
     }
 
-    /**
-     * @internal
-     */
-    public _$upload() {
+    private _appendFiles() {
         const fileInput: any = this._fileInputElement;
         const files = this._checkFiles(Array.from(fileInput.files || []));
         if (!this.multiple) {
@@ -220,19 +209,22 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
             files.splice(1, files.length);
         }
         this.files.push(...files);
+        fileInput.value = null;
+    }
+
+    public upload() {
+        this._appendFiles();
+
         this.start.emit(this.files);
         const pendingFiles = this.files.filter(file => file.state == 'pause');
         if (pendingFiles.length == 0) {
             this.complete.emit(this.files);
             return;
         }
-
         for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
             // 最多前maxConcurrencyUpload个文件同时上传给服务器
             this._sequenceUpload(pendingFiles[i]);
         }
-
-        fileInput.value = null;
     }
 
     private _testFileType(fileName: string, type: string): boolean {
