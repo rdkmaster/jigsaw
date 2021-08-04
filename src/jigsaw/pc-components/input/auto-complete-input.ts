@@ -229,6 +229,10 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
                 this._zone.run(() => {
                     this._dropdownFloat.reposition();
                     this._cdr.markForCheck();
+                    const dropdown = document.querySelector(".jigsaw-auto-complete-input-list-box");
+                    if (dropdown) {
+                        dropdown.scrollTop = 0; 
+                    }
                 })
             });
         }
