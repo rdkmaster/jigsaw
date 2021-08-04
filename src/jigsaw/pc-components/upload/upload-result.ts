@@ -148,6 +148,9 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
 
     ngOnDestroy() {
         super.ngOnDestroy();
+        if (this._changeUploadSubscription) {
+            this._changeUploadSubscription.unsubscribe();
+        }
         if (this._startUploadSubscription) {
             this._startUploadSubscription.unsubscribe();
         }

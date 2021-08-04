@@ -197,16 +197,20 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
-                    this._appendFiles();
-                    this.change.emit(this.files);
+                    if (this._appendFiles()) {
+                        this.change.emit(this.files);
+                    }
                 }
             });
 
         this._fileInputElement.dispatchEvent(e);
     }
 
-    private _appendFiles() {
+    private _appendFiles(): boolean {
         const fileInput: any = this._fileInputElement;
+        if (!fileInput) {
+            return false;
+        }
         const files = this._checkFiles(Array.from(fileInput.files || []));
         if (!this.multiple) {
             this.files.splice(0, this.files.length);
@@ -214,10 +218,13 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         }
         this.files.push(...files);
         fileInput.value = null;
+        return this.files.length > 0;
     }
 
     public upload() {
-        this._appendFiles();
+        if (!this._appendFiles()) {
+            return;
+        }
 
         this.start.emit(this.files);
         const pendingFiles = this.files.filter(file => file.state == 'pause');

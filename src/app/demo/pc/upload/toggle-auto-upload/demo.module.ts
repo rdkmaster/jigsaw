@@ -6,7 +6,8 @@ import {
     JigsawRadioLiteModule,
     JigsawSwitchModule,
     JigsawNumericInputModule,
-    JigsawButtonModule
+    JigsawButtonModule,
+    JigsawButtonBarModule
 } from "jigsaw/public_api";
 import { UploadAutoUploadDemoComponent } from "./demo.component";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
@@ -22,7 +23,8 @@ import { JigsawDemoDescriptionModule } from "app/demo-description/demo-descripti
         JigsawRadioLiteModule,
         JigsawSwitchModule,
         JigsawNumericInputModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        JigsawButtonBarModule
     ]
 })
 export class UploadAutoUploadDemoModule {}

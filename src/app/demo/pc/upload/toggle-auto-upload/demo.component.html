@@ -5,15 +5,21 @@
 <!-- start to learn the demo from here -->
 <div class="upload-auto-upload-demo-cntr">
     <jigsaw-header [level]="1">选择文件后不会自动上传</jigsaw-header>
-    <p class="hints">
-        提示：uploadImmediately为false时，选中文件后，不会立即执行上传，需要应用自行调用j-upload指令的
+    <div>
+        <label>文件上传方式：</label>
+        <jigsaw-button-bar [data]="['自动', '手动']" [selectedItems]="'手动'"
+                           (selectedItemsChange)="uploadImmediately = $event[0] == '自动'">
+        </jigsaw-button-bar>
         <a (click)="clear()">清空所有已上传的文件</a>
+    </div>
+    <p class="hints">
+        提示：uploadImmediately为false时，选中文件后，不会立即执行上传，需要应用自行调用j-upload指令的<br>
     </p>
 
     <jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
     <div>
-        <a j-upload #first [uploadImmediately]="false">选择文件</a>
-        <a style="margin-left: 12px;" (click)="uploader1.upload()">开始上传</a>
+        <a j-upload #first [uploadImmediately]="uploadImmediately">选择文件</a>
+        <a style="margin-left: 12px;" (click)="uploader1.upload()" *ngIf="!uploadImmediately">开始上传</a>
     </div>
     <jigsaw-upload-result [uploader]="uploader1" width="200px" height="200px" (change)="onChange('change', $event)"
         (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
@@ -21,8 +27,8 @@
 
     <jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
     <div>
-        <a j-upload #second [uploadImmediately]="false">选择文件</a>
-        <a style="margin-left: 12px;" (click)="uploader2.upload()">开始上传</a>
+        <a j-upload #second [uploadImmediately]="uploadImmediately">选择文件</a>
+        <a style="margin-left: 12px;" (click)="uploader2.upload()" *ngIf="!uploadImmediately">开始上传</a>
     </div>
     <jigsaw-upload-result [uploader]="uploader2" (change)="onChange('change', $event)"
         (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
@@ -30,8 +36,8 @@
 
     <jigsaw-header>指令面板：上传按钮</jigsaw-header>
     <div>
-        <jigsaw-button j-upload #third [uploadImmediately]="false">选择文件</jigsaw-button>
-        <j-button colorType="primary" (click)="uploader3.upload()">开始上传</j-button>
+        <jigsaw-button j-upload #third [uploadImmediately]="uploadImmediately">选择文件</jigsaw-button>
+        <j-button colorType="primary" (click)="uploader3.upload()" *ngIf="!uploadImmediately">开始上传</j-button>
     </div>
     <jigsaw-upload-result [uploader]="uploader3" (change)="onChange('change', $event)"
         (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
