@@ -17,6 +17,8 @@ export interface IUploader {
     dataSendProgress: EventEmitter<UploadFileInfo>;
     complete: EventEmitter<UploadFileInfo[]>;
     start: EventEmitter<UploadFileInfo[]>;
-
+    change: EventEmitter<UploadFileInfo[]>;
+    uploadImmediately: boolean;
+    upload();
     retryUpload(file: UploadFileInfo);
 }

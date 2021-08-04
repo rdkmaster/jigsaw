@@ -1,10 +1,7 @@
 import {TranslateService, TranslateModule} from "@ngx-translate/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawButtonModule} from "../button/button";
-import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
 import {JigsawUploadDirective} from "../../common/directive/upload/upload.directive";
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -13,12 +10,12 @@ import { JigsawUploadResult } from './upload-result';
 import { JigsawCollapseModule } from '../collapse/collapse';
 import { JigsawProgressModule } from '../progress/progress';
 import {JigsawLoadingModule} from "../../common/components/loading/loading";
+import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
 
 @NgModule({
     imports: [
-        JigsawButtonModule, PerfectScrollbarModule, JigsawDraggableModule,
-        JigsawDroppableModule, CommonModule, FormsModule, JigsawCollapseModule,
-        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild()
+        PerfectScrollbarModule, JigsawTooltipModule, CommonModule, JigsawCollapseModule,
+        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild(),
     ],
     declarations: [JigsawUploadDirective, JigsawUploadResult],
     exports: [JigsawUploadDirective, JigsawUploadResult],

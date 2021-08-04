@@ -81,6 +81,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
 
+    @Output('uploadChange')
+    public change = new EventEmitter<UploadFileInfo[]>();
+
     @HostListener('click', ['$event'])
     onClick($event) {
         this._selectFile($event);
@@ -123,6 +126,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         }
         this._maxSize = value;
     }
+
+    @Input('uploadImmediately')
+    public uploadImmediately:boolean = true;
 
     private _fileInputElement: Element;
     private _removeFileChangeEvent: Function;
@@ -188,33 +194,48 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
 
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputElement, 'change', () => {
-                this._upload();
+                if (this.uploadImmediately) {
+                    this.upload();
+                } else {
+                    if (this._appendFiles()) {
+                        this.change.emit(this.files);
+                    }
+                }
             });
 
         this._fileInputElement.dispatchEvent(e);
     }
 
-    private _upload() {
+    private _appendFiles(): boolean {
         const fileInput: any = this._fileInputElement;
+        if (!fileInput) {
+            return false;
+        }
         const files = this._checkFiles(Array.from(fileInput.files || []));
         if (!this.multiple) {
             this.files.splice(0, this.files.length);
             files.splice(1, files.length);
         }
         this.files.push(...files);
+        fileInput.value = null;
+        return this.files.length > 0;
+    }
+
+    public upload() {
+        if (!this._appendFiles()) {
+            return;
+        }
+
         this.start.emit(this.files);
         const pendingFiles = this.files.filter(file => file.state == 'pause');
         if (pendingFiles.length == 0) {
             this.complete.emit(this.files);
             return;
         }
-
         for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
             // 最多前maxConcurrencyUpload个文件同时上传给服务器
             this._sequenceUpload(pendingFiles[i]);
         }
-
-        fileInput.value = null;
     }
 
     private _testFileType(fileName: string, type: string): boolean {
