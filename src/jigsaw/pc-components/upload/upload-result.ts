@@ -32,6 +32,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     private readonly _fileMaxSizeError = this._translateService.instant(`upload.fileMaxSizeError`);
     private _dataSendProgressSubscription: Subscription;
     private _startUploadSubscription: Subscription;
+    private _changeUploadSubscription: Subscription;
     private _completeSubscription: Subscription;
     private _progressSubscription: Subscription;
 
@@ -86,6 +87,14 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
             this._startUploadSubscription.unsubscribe();
         }
         this._startUploadSubscription = this._uploader.start.subscribe(() => {
+            this.change.emit(this.files);
+            this._cdr.markForCheck();
+        });
+
+        if (this._changeUploadSubscription) {
+            this._changeUploadSubscription.unsubscribe();
+        }
+        this._changeUploadSubscription = this._uploader.change.subscribe(() => {
             this.change.emit(this.files);
             this._cdr.markForCheck();
         });
