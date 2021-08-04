@@ -161,6 +161,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         );
         sheet.insertRule(
             `.ztree#${this._$uniqueId} li span.button.switch.noline_open::after,
+            .ztree#${this._$uniqueId} li span.button.switch.root_open::after,
             .ztree#${this._$uniqueId} li span.button.switch.roots_open::after,
             .ztree#${this._$uniqueId} li span.button.switch.center_open::after,
             .ztree#${this._$uniqueId} li span.button.switch.bottom_open::after {content: "\\${iconData.nodeOpen}"}`,
@@ -168,6 +169,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         );
         sheet.insertRule(
             `.ztree#${this._$uniqueId} li span.button.switch.noline_close::after,
+            .ztree#${this._$uniqueId} li span.button.switch.root_close::after,
             .ztree#${this._$uniqueId} li span.button.switch.roots_close::after,
             .ztree#${this._$uniqueId} li span.button.switch.center_close::after,
             .ztree#${this._$uniqueId} li span.button.switch.bottom_close::after {content: "\\${iconData.nodeClose}"}`,
@@ -287,6 +289,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             return;
         }
         this.ztree = $.fn.zTree.init($("#" + this._$uniqueId), this._setting, this.data.nodes);
+        this._setZTreeIcon()
     }
 
     public selectNodes(key: string, value: any, parentNode: any) {

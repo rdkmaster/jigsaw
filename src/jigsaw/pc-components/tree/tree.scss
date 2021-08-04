@@ -1,4 +1,4 @@
-.ztree li span {
+.ztree li span:not(.node_name) {
     color: $font-color-default;
     &.button {
         &.edit,
@@ -12,6 +12,8 @@
         &.chk.checkbox_true_full_focus,
         &.switch.noline_open,
         &.switch.noline_close,
+        &.switch.root_open,
+        &.switch.root_close,
         &.switch.roots_open,
         &.switch.roots_close,
         &.switch.center_open,
@@ -57,7 +59,9 @@
         }
     }
 }
+
 .ztree li a {
+    color: $font-color-default;
     &:hover {
         background: $bg-hover;
         .node_name {
