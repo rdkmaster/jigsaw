@@ -4,17 +4,7 @@ import {GrItem, RangeTimeDataRanges, Shortcut, TimeGr} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        h4 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        h5 {
-            font-size: 16px;
-            margin-bottom: 10px
-        }
-
-        p {
+        .message {
             font-size: 14px;
             margin: 10px 0 20px 0
         }

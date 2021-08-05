@@ -15,9 +15,8 @@ import {
 import {CommonModule} from "@angular/common";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {Observable, Subscription} from "rxjs";
-import {JigsawTabsModule} from "../tabs/index";
+import {JigsawTab, JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
-import {JigsawTab} from "../tabs/tab";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";

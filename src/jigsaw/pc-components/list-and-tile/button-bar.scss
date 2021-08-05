@@ -1,0 +1,104 @@
+@import "../../common/assets/scss/core/base";
+
+$tile-prefix-cls: #{$jigsaw-prefix}-tile;
+$tile-option-prefix-cls: #{$tile-prefix-cls}-option;
+$button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
+
+.#{$button-bar-prefix-cls} {
+    @include inline-block;
+}
+
+.#{$button-bar-prefix-cls} {
+    height: $height-base;
+
+    .#{$tile-prefix-cls} {
+        padding: 0 0;
+        border: none;
+
+        &.#{$tile-prefix-cls}-error {
+            border-color: $error-default;
+        }
+    }
+
+    .#{$tile-option-prefix-cls} {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        min-width: 60px;
+        margin: 0;
+        padding: 0 8px;
+        border-radius: 0;
+
+        &:first-child {
+            border-radius: 3px 0 0 3px;
+        }
+
+        &:last-child {
+            border-radius: 0 3px 3px 0;
+        }
+
+        &:not(:first-child) {
+            margin-left: -1px;
+        }
+
+        &.#{$tile-option-prefix-cls}-active {
+            position: relative;
+        }
+
+        & > p {
+            max-width: 120px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .iconfont {
+            margin-right: 3px;
+
+            &.jigsaw-button-bar-icon-only {
+                margin-left: 3px;
+            }
+        }
+    }
+
+    &-default .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
+    &-primary .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+        position: relative;
+        border-color: $primary-default;
+    }
+
+    &-warning .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+        position: relative;
+        border-color: $warning-default;
+        color: $warning-default;
+    }
+
+    &-error .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+        position: relative;
+        border-color: $error-default;
+        color: $error-default;
+    }
+
+    &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+        border-color: $primary-default;
+        background-color: $primary-default;
+        color: $font-color-white;
+    }
+
+    &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+        border-color: $warning-default;
+        background-color: $warning-default;
+        color: $font-color-white !important;
+    }
+
+    &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+        border-color: $error-default;
+        background-color: $error-default;
+        color: $font-color-white !important;
+    }
+
+    &-one-option {
+        border-radius: 4px !important;
+    }
+}

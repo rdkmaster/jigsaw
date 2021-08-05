@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<jigsaw-header [level]="2">演示步骤条的添加和删除节点的方法</jigsaw-header>
+<jigsaw-steps #jigsawSteps class="steps" [data]="data" (add)="addHandler($event)" (remove)="removeHandler($event)"></jigsaw-steps>
+
+<div style="margin-top: 10px;">
+    节点索引：<jigsaw-numeric-input [(value)]="deleteIndex" min="0" [max]="data.length - 1"></jigsaw-numeric-input>
+    <jigsaw-button (click)="delete()" colorType="warning">删除</jigsaw-button>
+    <jigsaw-button (click)="add()" colorType="primary" style="margin-left: 20px;">添加</jigsaw-button>
+</div>

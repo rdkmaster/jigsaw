@@ -13,8 +13,8 @@ import {ButtonDisableDemoComponent} from "./disabled/demo.component";
 import {ButtonWidthHeightDemoComponent} from "./width-height/demo.component";
 import {ButtonPresetDemoComponent} from "./preset/demo.component";
 import {ButtonWithLoadingComponent} from "./with-loading/demo.component";
-import { ButtonIconDemoComponent } from './icon/demo.component';
-import { ButtonIconDemoModule } from './icon/demo.module';
+import { ButtonIconDemoComponent } from './with-icon/demo.component';
+import { ButtonIconDemoModule } from './with-icon/demo.module';
 
 export const routerConfig = [
     {

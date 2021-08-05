@@ -29,10 +29,18 @@ export enum CollapseMode {
 @Component({
     selector: 'jigsaw-collapse-pane, j-collapse-pane',
     templateUrl: './collapse-pane.html',
+    host: {'[class.jigsaw-collapse-pane]': 'true'},
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawCollapsePane extends AbstractJigsawComponent {
+
+    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
+                private _changeDetector: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
+        super();
+    }
 
     private _isActive: boolean = false;
 
@@ -60,13 +68,6 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 
     @Output()
     public isActiveChange = new EventEmitter<boolean>();
-
-    constructor(@Host() @Inject(forwardRef(() => JigsawCollapse)) private _collapse,
-                private _changeDetector: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
-        super();
-    }
 
     @Input('header')
     @RequireMarkForCheck()
@@ -107,13 +108,29 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',
-        '[class.jigsaw-collapse-host]': 'true'
+        '[class.jigsaw-collapse-host]': 'true',
+        '[class.jigsaw-collapse-arrow-position-right]': 'arrowPosition === "right"',
+        '[class.jigsaw-collapse-arrow-position-left]': 'arrowPosition === "left"'
     },
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
 
-    @ContentChildren(JigsawCollapsePane) panes: QueryList<JigsawCollapsePane>;
+    constructor(
+    // @RequireMarkForCheck 需要用到，勿删
+    private _injector: Injector) {
+        super();
+    }
+
+    @ContentChildren(JigsawCollapsePane)
+    public panes: QueryList<JigsawCollapsePane>;
+
+    /**
+     * 箭头位置(默认值 "left")
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public arrowPosition: "right" | "left" = "left";
 
     /**
      * 组件模式(默认值 "default",可同时展开多个面板; 手风琴, 只可展开一个活动的面板;)
@@ -127,7 +144,6 @@ export class JigsawCollapse extends AbstractJigsawComponent {
      * @internal
      */
     public _selectedIndex: number = 0;
-
 }
 
 /**

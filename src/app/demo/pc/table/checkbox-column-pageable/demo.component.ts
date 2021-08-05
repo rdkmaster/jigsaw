@@ -8,7 +8,7 @@ import {
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        j-tag {
+        .live-demo-wrap j-tag {
             margin: 6px;
         }
     `]
@@ -17,14 +17,15 @@ export class TableAddCheckboxColumnPageableDemoComponent {
     pageable: LocalPageableTableData | PageableTableData;
 
     constructor(http: HttpClient) {
-        this.pageable = new LocalPageableTableData();
-        /*//切换成服务端分页
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
-        });*/
+        });
+        this.pageable.pagingInfo.pageSize = 10;
+        //切换成本地分页
+        /*this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;
-        this.pageable.fromAjax('mock-data/hr-list');
+        this.pageable.fromAjax('mock-data/hr-list');*/
         this.pageable.onAjaxComplete(() => {
             setTimeout(() => {
                 if(this.additionalData) console.log(this.additionalData.data);
@@ -38,6 +39,7 @@ export class TableAddCheckboxColumnPageableDemoComponent {
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
+        width: 20,
         header: {
             renderer: TableHeadCheckboxRenderer,
         },
@@ -95,6 +97,14 @@ export class TableAddCheckboxColumnPageableDemoComponent {
         this.selectedRows = '';
     }
 
+    onSearch(reg) {
+        console.log(reg);
+        const filter = function(item) {
+            return item[0].match(new RegExp(this.reg, 'g'));
+        };
+        const context = {reg};
+        this.pageable.filter(filter, context);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

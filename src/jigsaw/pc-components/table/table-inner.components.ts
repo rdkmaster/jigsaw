@@ -54,7 +54,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     }
 
     public set renderer(value: Type<TableCellRendererBase> | TemplateRef<any> | 'html') {
-        if (this._customRenderer == value) {
+        if (this._customRenderer == value || (!value && this._customRenderer == DefaultCellRenderer)) {
             return;
         }
         this._customRenderer = value;

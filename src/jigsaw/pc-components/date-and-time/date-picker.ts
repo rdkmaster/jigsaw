@@ -23,8 +23,6 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-declare const moment: any;
-
 export type DayCell = {
     day: number;
     isToday?: boolean;
@@ -127,9 +125,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
                 this._createCalendar(this._$curYear, this._$curMonth.month);
             }
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
-        TimeService.setLocale(browserLang);
+        const currentLang = _translateService.currentLang ? _translateService.currentLang : _translateService.getBrowserLang();
+        _translateService.setDefaultLang(currentLang);
+        TimeService.setLocale(currentLang);
     }
 
     /**
@@ -164,6 +162,14 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$selectMode: 'day' | 'month' | 'year' = 'day';
+
+    /**
+     * @internal
+     *
+     * 标记是否有过交互，当时间组件存在确认按钮时，只有在人为交互之后，才需要点击确认来更新时间
+     * 而有些自动操作，比如设置limit时间之后的自动修正，是不需要点击确认按钮直接更新的
+     */
+    public _$touched: boolean;
 
     private _langChangeSubscriber: Subscription;
     private _weekPos: number[];
@@ -253,6 +259,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             this._createCalendar(yearCell.year, this._$curMonth.month);
         }
         this._$selectMode = this.gr == TimeGr.month ? 'month' : 'day';
+        this._$touched = true;
     }
 
     private _createMonthCal(year: number) {
@@ -306,6 +313,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
+        if (monthCell.isSelected && TimeGr[this._gr] === 'month') {
+            this.clearDate();
+            return;
+        }
         if (this.date || this.gr == TimeGr.month) {
             let date = TimeService.getRealDateOfMonth(this._$curYear, monthCell.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.writeValue(date);
@@ -315,6 +326,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.gr != TimeGr.month) {
             this._$selectMode = 'day';
         }
+        this._$touched = true;
     }
 
     private _createDayCal(year: number, month: number) {
@@ -464,12 +476,28 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (dayCell.isDisabled) {
             return;
         }
+        if (dayCell.isSelected) {
+            this.clearDate();
+            return;
+        }
         let [year, month, day] = [this._$curYear, this._$curMonth.month, dayCell.day];
         if (dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth) {
             let date = TimeService.addDate(`${year}-${month}`, dayCell.isOwnPrevMonth ? -1 : 1, TimeUnit.M);
             [year, month] = [TimeService.getYear(date), TimeService.getMonth(date)];
         }
         this.writeValue(`${year}-${month}-${day}`);
+        this._$touched = true;
+    }
+
+    public clearDate() {
+        let [year, month] = [this._$curYear, this._$curMonth.month];
+        this._date = "";
+        this.runMicrotask(() => {
+            this.dateChange.emit(this._date);
+            this._propagateChange(this._date);
+            this._changeDetectorRef.markForCheck();
+        });
+        this._createCalendar(year, month);
     }
 
     /**

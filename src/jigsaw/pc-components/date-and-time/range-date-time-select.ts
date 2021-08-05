@@ -3,7 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
-    forwardRef,
+    forwardRef, HostListener,
     Injector,
     Input,
     NgModule,
@@ -32,11 +32,13 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
     template: `
         <jigsaw-combo-select [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200">
+                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200"
+                             (openChange)="_$onComboOpenChange($event)">
             <ng-template>
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
                                                [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
                                                [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
+                                               [showConfirmButton]="showConfirmButton"
                                                (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
                 </jigsaw-range-date-time-picker>
             </ng-template>
@@ -213,6 +215,13 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
     /**
+     * 是否显示确认按钮
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showConfirmButton: boolean = false;
+
+    /**
      * @internal
      */
     public _$grChange($event) {
@@ -299,14 +308,27 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched();
     }
 
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
+    }
+
+    /**
+     * @internal
+     */
+    public _$onComboOpenChange(optionState: boolean) {
+        this._onTouched();
+    }
 }
 
 @NgModule({

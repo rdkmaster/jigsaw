@@ -31,6 +31,9 @@ export class TimeSectionBasicDemoComponent {
     curTime = '2020-02';
     multipleHour = true;
     multipleDate = true;
+    showDate = true;
+    showWeek = true;
+    showEveryday = true;
 
     toggleLayout() {
         this.layout = this.layout == 'horizontal' ? 'vertical' : 'horizontal';

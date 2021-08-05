@@ -12,15 +12,23 @@ import {Component} from "@angular/core";
         a {
             width: 160px;
             height: 160px;
-            border: 1px solid #aaa;
-            border-radius: 4px;
+            border: 1px solid var(--border-color-default);
+            border-radius: 5px;
             display: inline-block;
             text-align: center;
             line-height: 150px;
             font-size: 50px;
             margin: 16px;
-            background-color: #ddd;
-            box-shadow: 2px 2px 5px #ccc;
+            background-color: var(--bg-disabled);
+            box-shadow: var(--box-shadow-lv1);
+        }
+
+        a .iconfont {
+            color: var(--brand-default);
+        }
+
+        a:hover .iconfont {
+            color: var(--brand-hover);
         }
         
         div {

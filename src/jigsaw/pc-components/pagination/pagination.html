@@ -1,33 +1,32 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchDefault>
-        <jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="160" [(value)]="_$searchKey"
-                      [placeholder]="placeholder" (valueChange)="_$searchKeyChange($event)"
-                      (keydown.enter)="_$enterSearch($event)">
-            <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
-        </jigsaw-input>
-
-        <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
+        <jigsaw-search-input class="jigsaw-paging-search" *ngIf="searchable" width="160"
+                             (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
+                             [autoSearch]="autoSearch">
+        </jigsaw-search-input>
+        <div *ngIf="mode == 'complex'" class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)">
         </div>
         <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02e"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()">
         </div>
-        <jigsaw-paging-item *ngFor="let pageNumber of _$pageNumbers" [pageNumber]="pageNumber">
+        <jigsaw-paging-item *ngFor="let pageNumber of _$pageNums" [pageNumber]="pageNumber">
         </jigsaw-paging-item>
         <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02f"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_$pageNext()">
         </div>
-        <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
+        <div *ngIf="mode == 'complex'" class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02d"
              [class.jigsaw-paging-disabled]="_$nextDisabled" (click)="_goto(data?.pagingInfo?.totalPage)">
         </div>
 
         <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
                        [value]="_$pageSize"
                        (valueChange)="_changePageSize($event)"
-                       trackItemBy="value"
+                       [trackItemBy]="['value','label']"
                        labelField="label"
                        width="80"
-                       [data]="pageSizeOptions">
+                       [data]="pageSizeOptions"
+                       class="jigsaw-paging-page-size">
         </jigsaw-select>
 
         <div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
@@ -37,10 +36,10 @@
         </div>
     </ng-container>
     <ng-container *ngSwitchCase="'simple'">
-        <jigsaw-input class="jigsaw-paging-search" *ngIf="searchable" width="100" height="22"
-                      [placeholder]="placeholder" (valueChange)="search.emit($event)">
-            <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
-        </jigsaw-input>
+        <jigsaw-search-input class="jigsaw-paging-search" *ngIf="searchable" width="100"
+                             (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
+                             [autoSearch]="autoSearch">
+        </jigsaw-search-input>
         <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e02c"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_goto(1)">
         </div>
@@ -48,7 +47,7 @@
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="_$pagePrev()">
         </div>
         <jigsaw-input class="jigsaw-paging-current-page" #input [value]="current" (keyup.enter)="_goto(input.value)"
-                      width="50" height="22" (blur)="_goto(input.value)" [clearable]="false">
+                      width="50" (blur)="_goto(input.value)" [clearable]="false">
         </jigsaw-input>
         <span class="jigsaw-paging-total-page-number">&nbsp;/&nbsp;&nbsp;{{data?.pagingInfo?.totalPage}}</span>
         <div class="jigsaw-paging-next jigsaw-paging-page iconfont iconfont-e02f"
@@ -61,10 +60,9 @@
                        class="jigsaw-paging-page-size"
                        [value]="_$pageSize"
                        (valueChange)="_changePageSize($event)"
-                       trackItemBy="value"
+                       [trackItemBy]="['value','label']"
                        labelField="label"
                        width="80"
-                       maxHeight="22"
                        [data]="pageSizeOptions">
         </jigsaw-select>
     </ng-container>

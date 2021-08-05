@@ -59,12 +59,12 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 }
                 &:hover {
                     td:not([rowspan]) {
-                        background: $brand-light;
+                        background: $bg-hover;
                     }
                 }
                 &.#{$table-prefix-cls}-row-selected {
                     td:not([rowspan]) {
-                        background: $brand-active-light;
+                        background: $brand-active-lighten;
                     }
                 }
                 td[rowspan] {
@@ -114,10 +114,17 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 }
 
 .#{$table-prefix-cls}-no-data-img {
+    flex-direction: column;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
+    .#{$table-prefix-cls}-no-data-text{
+        color: #83B4E5;
+        font-weight: bold;
+    }
 }
 
 .#{$table-prefix-cls}-body {

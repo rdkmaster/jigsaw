@@ -18,18 +18,18 @@ export class WithComboSelectDemoComponent {
         {label: this.endDate, closable: false}
     ]);
 
-    handleDateChange(value) {
-        this.singleTimeComboValue[0].label = this.date;
+    handleDateChange() {
+        if (this.date === "") {
+            this.singleTimeComboValue.splice(0, this.singleTimeComboValue.length);
+        } else {
+            this.singleTimeComboValue = new ArrayCollection([{
+                label: this.date,
+                closable: false
+            }]);
+        }
         this.singleTimeComboValue.refresh();
     }
-
-    handleRangeDateChange() {
-        this.rangeTimeComboValue[0].label = this.beginDate;
-        this.rangeTimeComboValue[1].label = this.endDate;
-        this.rangeTimeComboValue.refresh();
-    }
-
-    // ====================================================================
+// ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '';

@@ -3,16 +3,17 @@ import {JigsawTag} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.scss']
+    styleUrls: ['./demo.component.css']
 })
 export class TagBasicDemoComponent {
     handleClose(tag) {
         console.log(tag)
     }
 
-    @ViewChildren(JigsawTag) tags: QueryList<JigsawTag>;
+    @ViewChildren(JigsawTag)
+    tags: QueryList<JigsawTag>;
 
-    showAllTags() {
+    resetAllTags() {
         console.log(this.tags);
         this.tags.forEach(tag => tag.show());
     }

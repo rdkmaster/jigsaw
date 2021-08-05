@@ -23,6 +23,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "extractCss": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -33,7 +34,22 @@
               "node_modules/@rdkmaster/icon-font/iconfont.css",
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/mbo.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
+                "bundleName": "themes/paletx-pro-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-dark.scss",
+                "bundleName": "themes/paletx-pro-dark",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/vmax-light.scss",
+                "bundleName": "themes/vmax-light",
+                "inject": false
+              }
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -206,6 +222,38 @@
             "tsConfig": [
               "src/jigsaw/tsconfig.lib.json",
               "src/jigsaw/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@ngx-formly/jigsaw": {
+      "root": "src/ngx-formly/jigsaw",
+      "sourceRoot": "src/ngx-formly/jigsaw/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "src/ngx-formly/jigsaw/tsconfig.lib.json",
+            "project": "src/ngx-formly/jigsaw/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "src/ngx-formly/jigsaw/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/ngx-formly/jigsaw/tsconfig.lib.json",
+              "src/ngx-formly/jigsaw/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -46,7 +46,9 @@ export class GraphDataDemo extends AbstractGraphData {
                 trigger: 'axis'
             },
             legend: {
-                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+                top: 20,
+                left: 'center'
             },
             toolbox: {
                 feature: {

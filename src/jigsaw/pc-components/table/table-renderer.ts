@@ -5,6 +5,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
+import {take} from 'rxjs/operators';
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -13,11 +14,10 @@ import {TableData, PageableTreeTableData} from "../../common/core/data/table-dat
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/index";
-import {JigsawSelectModule} from "../select/select";
+import {JigsawSelectModule} from "../select/index";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {take} from 'rxjs/operators';
 import { DragDropInfo } from "../../common/directive/dragdrop/types";
 import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
 
@@ -148,28 +148,23 @@ export class DefaultCellRenderer extends TableCellRendererBase {
         </jigsaw-input>
     `,
     styles: [`
-        .table-cell-password-renderer.jigsaw-input {
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper {
             border: none;
-        }
-
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper {
             background: transparent;
         }
 
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-wrapper input {
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper,
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper input {
             cursor: inherit;
         }
 
-        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-wrapper input {
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-container .jigsaw-input-wrapper input {
             color: #666;
         }
 
-        .table-cell-password-renderer.jigsaw-input:hover, .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
+        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper:hover,
+        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused .jigsaw-input-container .jigsaw-input-wrapper {
             border: none;
-        }
-
-        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused {
-            box-shadow: none;
         }
     `],
     encapsulation: ViewEncapsulation.None,
@@ -305,7 +300,8 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked"></jigsaw-checkbox>`,
+        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"
+                         [valid]="_$valid" mode="minimalist"></jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -315,6 +311,21 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_injector);
+    }
+
+    private _initDataJson: any;
+
+    private _updateInitData() {
+        this._initDataJson = this.initData instanceof Function ?
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
+    public get _$disabled() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
     }
 
     public get checked(): CheckBoxStatus {
@@ -349,6 +360,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             default:
                 this._checked = CheckBoxStatus.unchecked;
         }
+        this._updateInitData();
         this._changeDetectorRef.markForCheck();
     }
 }
@@ -358,7 +370,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-checkbox [checked]="checked" (checkedChange)="onChange($event)">
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
+                         (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -367,6 +380,22 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
+        this._updateInitData();
+    }
+
+    private _initDataJson: any;
+
+    private _updateInitData() {
+        this._initDataJson = this.initData instanceof Function ?
+            this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
+
+    public get _$disabled() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
     }
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
@@ -433,8 +462,17 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
-    public get _$readonly() {
-        return this.initData && this.initData.readonly;
+    /**
+     * @internal
+     */
+    public _$readonly: boolean;
+
+    set initData(value: any) {
+        if (!value || !value.hasOwnProperty('readonly')) {
+            return;
+        }
+        this._$readonly = value.readonly;
+        this._changeDetectorRef.markForCheck();
     }
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
@@ -455,7 +493,9 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     template: `
         <jigsaw-select [value]="selected" [data]="data"
                        (valueChange)="_$handleValueChange($event)"
-                       [optionCount]="5" width="100%" height="20">
+                       [optionCount]="5" width="100%" height="20"
+                       openTrigger="mouseenter"
+                       closeTrigger="mouseleave">
         </jigsaw-select>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -607,6 +647,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
         <div class="jigsaw-table-option-box"
             jigsaw-draggable
             jigsaw-droppable
+            [title]="_$title"
             (jigsawDragStart)="_$dragStartHandle($event)"
             (jigsawDragEnd)="_$dragEndHandle()">
             <span class="drop-top"

@@ -1,9 +1,8 @@
-import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawTag} from "jigsaw/public_api";
+import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.scss']
+    styleUrls: ['./demo.component.css']
 })
 export class TagPresetColorDemoComponent {
 

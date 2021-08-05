@@ -3,8 +3,10 @@ import {JigsawSelectModule, JigsawCheckBoxModule, JigsawNumericInputModule} from
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SelectMultipleDemoComponent} from './demo.component';
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
-    imports: [JigsawSelectModule, JigsawCheckBoxModule, JigsawNumericInputModule, JigsawDemoDescriptionModule],
+    imports: [JigsawSelectModule, JigsawCheckBoxModule, JigsawNumericInputModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [SelectMultipleDemoComponent],
     exports: [SelectMultipleDemoComponent]
 })

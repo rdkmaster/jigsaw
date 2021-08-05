@@ -91,7 +91,7 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
 
     /**
      * 超过这个值的时候面包屑会折叠中间的部分
-     * @internal
+     * @NoMarkForCheckRequired
      */
     @Input()
     public foldThreshold: number = Infinity;

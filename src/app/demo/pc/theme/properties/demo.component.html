@@ -1,0 +1,40 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>在CSS中使用皮肤属性</jigsaw-header>
+<p class="inline-message">
+    请关注里的 <code>code</code> 标签的用法，在 <code>code</code> 标签的样式中有这样的代码：
+    <code>background: var(--brand-active-lighten)</code>，这里使用了皮肤中的 <code>--brand-active-lighten</code>
+    属性来渲染它的 <code>background</code>。这样在切换皮肤的时候，无论是深色还是浅色下，都可以显示的很好。
+    如果应用希望实现一个可以完美适应深浅色系皮肤的APP，那么应该多多使用这个方法。
+
+</p>
+<jigsaw-header>在Js中使用皮肤属性</jigsaw-header>
+<p class="inline-message">
+    在JS中可以使用 <code [ngStyle]="{background: codeTagBg}">JigsawTheme.getProperty(property)</code> 来读取
+    <code [ngStyle]="{background: codeTagBg}">property</code> 当前皮肤的各个属性值。
+    虽然多数情况下在CSS里使用样式皮肤就足够了，但是在一些特殊情况下需要通过JS操作DOM节点时，就需要用到这个API了。注意观察这段文字中的
+    <code [ngStyle]="{background: codeTagBg}">code</code> 标签的用法：
+</p>
+<pre class="code-block"><code>// HTML代码：
+&lt;code [ngStyle]="&#123;background: codeTagBg&#125;"&gt;
+    some text
+&lt;/code&gt;
+
+// TS代码：
+public get codeTagBg(): string &#123;
+    return JigsawTheme.getProperty('--blue-2');
+&#125;</code></pre>
+<jigsaw-header>所有可用皮肤属性</jigsaw-header>
+<ul class="public-variables-demo-ul">
+    <div *ngFor="let propList of properties">
+        <li *ngFor="let prop of propList" [ngStyle]="{background: prop.bg, color: getFontColor(prop.bg)}">
+            <label>属性名</label>
+            <span (click)="copyToClipboard(prop.name)" title="单击复制">{{prop.name}}</span>
+            <label>属性值</label>
+            <span (click)="copyToClipboard(prop.value)" title="单击复制">{{prop.value}}</span>
+        </li>
+    </div>
+</ul>

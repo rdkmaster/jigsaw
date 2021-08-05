@@ -1,0 +1,80 @@
+<jigsaw-combo-select
+    width="100%"
+    [autoWidth]="!optionWidth"
+    [maxHeight]="maxHeight"
+    [(value)]="_$selectedItems"
+    [clearable]="clearable"
+    [labelField]="labelField"
+    [valid]="valid"
+    [disabled]="disabled"
+    [placeholder]="placeholder"
+    [openTrigger]="openTrigger"
+    [closeTrigger]="closeTrigger"
+    [autoClose]="!multipleSelect"
+    (openChange)="_$onComboOpenChange($event)"
+    (clear)="_$handleClearable()"
+    (remove)="_$onTagRemove($event)"
+>
+    <ng-template>
+        <div [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
+            <jigsaw-list width="100%"
+                         [ngClass]="{'jigsaw-select-show-selected': _$showSelected,
+                        'jigsaw-select-multiple-list': multipleSelect,
+                        'jigsaw-select-single-list': !multipleSelect}"
+                         [trackItemBy]="trackItemBy"
+                         [(selectedItems)]="_$selectedItems"
+                         (selectedItemsChange)="_$handleSelectChange($event)"
+                         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+                         [ngStyle]="{'max-height': _$listHeight}"
+                         [multipleSelect]="multipleSelect">
+                <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
+                    <jigsaw-checkbox
+                        [(checked)]="_$selectAllChecked"
+                        *ngIf="!_$showSelected"
+                        (checkedChange)="_$selectAll()">
+                        <span>{{'select.selectAll' | translate}}</span>
+                    </jigsaw-checkbox>
+                    <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected" (click)="_$showSelected = true">
+                        <span>{{'select.checkSelected' | translate}}</span>
+                    </div>
+                    <div class="jigsaw-select-show-all" *ngIf="_$showSelected" (click)="_$showSelected = false">
+                        <i class="iconfont iconfont-e9ac"></i>
+                        <span>{{'select.return' | translate}}</span>
+                    </div>
+                </div>
+                <jigsaw-collapse
+                    [ngClass]="{'jigsaw-group-select-option-cntr': _$type == 'group', 'jigsaw-collapse-select-option-cntr': _$type =='collapse'}"
+                    arrowPosition="right">
+                    <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data">
+                        <div j-title class="jigsaw-select-option-title">{{group[groupField]}}</div>
+                        <div j-body>
+                            <jigsaw-list-option
+                                #listItem
+                                *ngFor="let item of group.data"
+                                [value]="item"
+                                [disabled]="item.disabled"
+                                [height]="optionHeight">
+                                <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected" mode="minimalist"></jigsaw-checkbox>
+                                <span class="select-option-label" title="{{item && item[labelField] ? item[labelField] : item}}">
+                                    {{item && item[labelField] ? item[labelField] : item}}
+                                </span>
+                            </jigsaw-list-option>
+                        </div>
+                    </jigsaw-collapse-pane>
+                </jigsaw-collapse>
+            </jigsaw-list>
+        </div>
+    </ng-template>
+    <div
+        *ngIf="_$showAllStatistics()"
+        class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
+    >
+        {{'select.allSelected' | translate}}
+    </div>
+    <div
+        *ngIf="_$showNumStatistics()"
+        class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
+    >
+        {{'select.selected' | translate:{num: _$selectedItems?.length} }}
+    </div>
+</jigsaw-combo-select>

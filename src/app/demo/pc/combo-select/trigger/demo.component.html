@@ -10,7 +10,7 @@
     <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
     <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<jigsaw-button *ngIf="openTrigger=='none'" (click)="openCombo()">open</jigsaw-button>
+<jigsaw-button *ngIf="openTrigger=='none'" (click)="openCombo($event)">open</jigsaw-button>
 
 <br><br>
 触发关闭：
@@ -19,7 +19,7 @@
     <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
     <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
 </jigsaw-radios>
-<jigsaw-button *ngIf="closeTrigger=='none'" (click)="closeCombo()">close</jigsaw-button>
+<jigsaw-button *ngIf="closeTrigger=='none'" (click)="closeCombo($event)">close</jigsaw-button>
 
 <br><br>
 由于 <code>open</code> 属性默认值为true，因此combo的下拉视图默认会直接打开

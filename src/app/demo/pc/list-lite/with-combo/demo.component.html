@@ -5,11 +5,11 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>List lite</h2>
+    <jigsaw-header [level]="1">List lite</jigsaw-header>
 
     <div class="live-demo">
-        <h3>与combo-select组合使用</h3>
-        <j-combo-select [(value)]="selectedItems6" [clearable]="true" maxWidth="500" labelField="name">
+        <jigsaw-header [level]="2">与combo-select组合使用</jigsaw-header>
+        <j-combo-select [(value)]="selectedItems6" [clearable]="true" maxWidth="500" labelField="name" [autoWidth]="true">
             <ng-template>
                 <j-list-lite [data]="goodsList" labelField="name" [(selectedItems)]="selectedItems6"
                              [multipleSelect]="true" [searchable]="true"></j-list-lite>

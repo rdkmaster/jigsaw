@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
-    Injector,
     Component,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
     OnInit,
@@ -18,6 +18,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'preset-magenta' |
     'preset-orange' | 'preset-red' | 'preset-purple' | 'preset-gray';
+
 @Component({
     selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',
@@ -27,8 +28,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.line-height]': 'height',
         '[style.background]': '_$realColor',
         '[style.border-color]': '_$realColor',
-        '[class.jigsaw-tag-without-border]': '!showBorder',
-        '[class.jigsaw-tag-closable]': 'closable && showBorder',
+        '[class.jigsaw-tag-closable]': 'closable && !isAdd',
         '[class.jigsaw-tag-disabled]': 'disabled',
         '[class.jigsaw-tag-add]': 'isAdd',
         '[class.jigsaw-tag-color]': '_$realColor?.startsWith("preset-")',
@@ -46,6 +46,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[class.jigsaw-tag-selected]': 'select',
         '[@AnimationDestroy]': '_state',
         '(@AnimationDestroy.done)': '_animationDone($event)',
+        '(click)': '_$click($event)',
     },
     animations: [
         AnimationDestroy
@@ -63,7 +64,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public isAdd:boolean = false;
+    public isAdd: boolean = false;
 
     /**
      * @NoMarkForCheckRequired
@@ -90,6 +91,14 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public selectedColor: string | PresetColor;
 
     /**
+     * 配置按钮图标
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
+
+    /**
      * @internal
      */
     public get _$realColor(): string {
@@ -113,14 +122,6 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public set closable(value: boolean) {
         this._closable = CommonUtils.isDefined(value) ? value : true;
     }
-
-    /**
-     * 是否显示tag的边框和删除按钮，默认显示
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public showBorder: boolean = true;
 
     /**
      * @internal
@@ -149,6 +150,9 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public _$close(event) {
         event.preventDefault();
         event.stopPropagation();
+        if (this.disabled) {
+            return;
+        }
         this._state = 'inactive';
     }
 
@@ -158,19 +162,31 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input()
     public select: boolean = false;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public toggleSelect: boolean = false;
+
     @Output()
     public selectChange = new EventEmitter<boolean>();
 
     /**
      * @internal
      */
-    public _$select(event) {
+    public _$click(event) {
         event.preventDefault();
         event.stopPropagation();
         if (this.disabled) {
             return;
         }
-        this.select  = !this.select;
+        if (this.isAdd) {
+            this.add.emit(this);
+            return;
+        }
+        if (!this.toggleSelect) {
+            this.select = !this.select;
+        }
         this.selectChange.emit(this.select);
     }
 

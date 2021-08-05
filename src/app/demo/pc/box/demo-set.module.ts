@@ -12,6 +12,10 @@ import {BoxMiddleResizeLineDemoComponent} from "./middle-resize-line/demo.compon
 import {BoxMiddleResizeLineDemoModule} from "./middle-resize-line/demo.module";
 import {BoxViewInitDemoComponent} from "./view-init/demo.component";
 import {BoxViewInitDemoModule} from "./view-init/demo.module";
+import {BoxPerformanceDemoComponent} from "./performance/demo.component";
+import {BoxPerformanceDemoModule} from "./performance/demo.module";
+import {BoxNgIfNgForDemoComponent} from "./ng-if-ng-for/demo.component";
+import {BoxNgIfNgForDemoModule} from "./ng-if-ng-for/demo.module";
 
 export const routerConfig = [
     {
@@ -32,6 +36,12 @@ export const routerConfig = [
     {
         path: 'view-init', component: BoxViewInitDemoComponent
     },
+    {
+        path: 'performance', component: BoxPerformanceDemoComponent
+    },
+    {
+        path: 'ng-if-ng-for', component: BoxNgIfNgForDemoComponent
+    },
 ];
 
 @NgModule({
@@ -42,7 +52,9 @@ export const routerConfig = [
         FormDemoModule,
         BoxLayoutScrollDemoModule,
         BoxMiddleResizeLineDemoModule,
-        BoxViewInitDemoModule
+        BoxViewInitDemoModule,
+        BoxPerformanceDemoModule,
+        BoxNgIfNgForDemoModule
     ]
 })
 export class BoxDemoModule {

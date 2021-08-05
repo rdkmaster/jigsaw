@@ -1,16 +1,76 @@
-.ztree li span {
+.ztree li span:not(.node_name) {
     color: $font-color-default;
+    &.button {
+        &.edit,
+        &.remove,
+        &.ico_open,
+        &.ico_close,
+        &.ico_docu,
+        &.chk.checkbox_false_full,
+        &.chk.checkbox_false_full_focus,
+        &.chk.checkbox_true_full,
+        &.chk.checkbox_true_full_focus,
+        &.switch.noline_open,
+        &.switch.noline_close,
+        &.switch.root_open,
+        &.switch.root_close,
+        &.switch.roots_open,
+        &.switch.roots_close,
+        &.switch.center_open,
+        &.switch.center_close,
+        &.switch.bottom_open,
+        &.switch.bottom_close,
+        &.chk.checkbox_true_part,
+        &.chk.checkbox_true_part_focus,
+        &[class*='ico_open'],
+        &[class*='ico_close'],
+        &[class*='ico_docu'] {
+            position: relative;
+            background-image: none;
+            &::after {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                font-family: "iconfont" !important;
+                font-size: $font-size-lg;
+                color: $icon-color-default;
+                cursor: pointer;
+                overflow: hidden;
+            }
+
+            &:hover {
+                &::after {
+                    color: $brand-default;
+                }
+            }
+        }
+
+        &.chk.checkbox_false_full_focus,
+        &.chk.checkbox_true_full,
+        &.chk.checkbox_true_full_focus,
+        &.chk.checkbox_true_part,
+        &.chk.checkbox_true_part_focus {
+            &::after {
+                color: $brand-default;
+            }
+        }
+    }
 }
+
 .ztree li a {
+    color: $font-color-default;
     &:hover {
-        background: $brand-light;
+        background: $bg-hover;
         .node_name {
             text-decoration: none;
         }
     }
     &.curSelectedNode {
-        background: $brand-light;
-        border-color: $brand-light;
+        background: $bg-hover;
+        border-color: $bg-hover;
         color: $brand-default;
         opacity: 1;
 

@@ -1,4 +1,15 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, Injector, Input, Output, ViewChild} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -73,6 +84,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     constructor(
+        private _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super();
@@ -80,12 +92,13 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
-        if (CommonUtils.isUndefined(value)) {
-            return;
-        }
-        this._value = value.toString();
+        this._value = CommonUtils.isDefined(value) ? value.toString() : '';
+        // 不加这个的话，非法的红框无法正确渲染
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -93,6 +106,11 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 
     private _value: string = ''; //textarea表单值
@@ -111,13 +129,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (CommonUtils.isUndefined(newValue) || this._value === newValue) {
             return;
         }
-
-        if (!isNaN(this.maxLength) && this.maxLength > 0) {
-            // 只有合法的正整数才计算限制字符数
-            newValue = this._updateValue(newValue);
-            this._$currentLength = this.includesCRLF ? newValue.length : this._getLengthWithoutCRLF(newValue);
-        }
-
+        newValue = this._updateCurrentLength(newValue);
         const currentValue = this._value;
         this._value = newValue;
         this._propagateChange(newValue);
@@ -125,6 +137,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
             this.valueChange.emit(this._value);
         }
+    }
+
+    private _updateCurrentLength(value: string): string {
+        if (!isNaN(this.maxLength) && this.maxLength > 0) {
+            // 只有合法的正整数才计算限制字符数
+            value = this._updateValue(value);
+            this._$currentLength = this.includesCRLF ? value.length : this._getLengthWithoutCRLF(value);
+        }
+        return value;
     }
 
     /**
@@ -189,6 +210,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             return;
         }
         this._maxLength = Number(value);
+        // 因为有效字符数的计算，依赖于maxLength。当先设置value，再修改maxLength时，需要及时更新当前的value以及当前字符数
+        this._value = this._updateCurrentLength(this.value);
     }
 
     private _updateValue(value: string): string {
@@ -201,7 +224,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
                 value = this._getValue(value);
             }
         }
-        this._textareaElement.nativeElement.value = value;
+        if (this._textareaElement) {
+            this._textareaElement.nativeElement.value = value;
+        }
         return value;
     }
 
@@ -278,7 +303,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     /**
      * @internal
      */
-    public _$handleFocus(event: FocusEvent) {
+    public _$handleFocus(event: FocusEvent): void {
         this._focused = true;
         this._focusEmitter.emit(event);
     }
@@ -286,8 +311,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     /**
      * @internal
      */
-    public _$handleBlur($event: FocusEvent) {
+    public _$handleBlur(event: FocusEvent): void {
+        this._onTouched();
         this._focused = false;
-        this.blur.emit($event)
+        this.blur.emit(event);
     }
 }

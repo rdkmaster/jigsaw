@@ -291,7 +291,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * @internal
      */
     public _$onHostClick() {
-        if (this.jigsawFloatOpenTrigger == 'click' && this.jigsawFloatOpen == false) {
+        if (this.jigsawFloatOpenTrigger == 'click' && !this.jigsawFloatOpen) {
             this.jigsawFloatOpen = true;
         }
     }
@@ -578,11 +578,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             ele.style.backgroundColor = 'inherit';
             this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
             popupElement.appendChild(ele);
-        }  
-    } 
+        }
+    }
 
     private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 5;
+        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
         if (delta < 4) {
             delta = 4;
         } else if (delta > popupElement.offsetWidth - 13) {
@@ -592,7 +592,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 5;
+        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
         if (delta < 4) {
             delta = 4;
         } else if (delta > popupElement.offsetHeight - 13) {
@@ -602,8 +602,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
+        const arrowOffset = options.showBorder ? 7 / 2 + 1 : 7 / 2;
         if (popupElement.offsetTop >= position.y + host.offsetHeight) {
-            ele.style.top = '-4px';
+            // 箭头在上
+            ele.style.top = `-${arrowOffset}px`;
             if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
                 popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
             }
@@ -613,8 +615,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 ele.style.borderRight = "1px solid #dcdcdc";
             }
         } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
-            const differ = options.showBorder ? 5 : 3;
-            ele.style.top = popupElement.offsetHeight - differ + 'px';
+            // 箭头在下
+            ele.style.bottom = `-${arrowOffset}px`;
             if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
                 popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
             }
@@ -624,7 +626,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
         } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
-            ele.style.left = '-4px';
+            // 箭头在右
+            ele.style.left = `-${arrowOffset}px`;
             if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
                 popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
             }
@@ -634,13 +637,22 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 ele.style.borderLeft = "1px solid #dcdcdc";
             }
         } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
-            ele.style.left = popupElement.offsetWidth - 3 + 'px';
+            // 箭头在左
+            ele.style.right = `-${arrowOffset}px`;
             if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
                 popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
             }
             ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderRight = "1px solid #dcdcdc";
+                ele.style.borderBottom = "1px solid #dcdcdc";
+            }
+        } else {
+            // 覆盖在host上面，默认箭头在下
+            ele.style.left = '6px';
+            ele.style.bottom = `-${arrowOffset}px`;
+            if (options.showBorder) {
+                ele.style.borderLeft = "1px solid #dcdcdc";
                 ele.style.borderBottom = "1px solid #dcdcdc";
             }
         }

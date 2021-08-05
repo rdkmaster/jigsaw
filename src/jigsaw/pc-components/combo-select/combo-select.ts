@@ -1,11 +1,14 @@
 import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     Component,
     ContentChild,
     ElementRef,
     EventEmitter,
     forwardRef,
+    Injector,
     Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -14,9 +17,7 @@ import {
     TemplateRef,
     ViewChild,
     ViewChildren,
-    NgZone,
-    ChangeDetectionStrategy,
-    Injector
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
@@ -56,7 +57,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 private _popupService: PopupService,
                 protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+                private _injector: Injector,
+                private _cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -119,7 +121,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     @RequireMarkForCheck()
     public get openTrigger(): 'mouseenter' | 'click' | 'none' | DropDownTrigger {
-        return this._openTrigger;
+        return this.disabled ? 'none' : this._openTrigger;
     }
 
     public set openTrigger(value: 'mouseenter' | 'click' | 'none' | DropDownTrigger) {
@@ -196,7 +198,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 this._editor.select();
             }
         }
-
+        this._onTouched();
         this.openChange.emit(value);
     }
 
@@ -244,7 +246,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @ViewChild('editor')
     private _editor: JigsawInput;
 
-    @ViewChild('editor', { read: ElementRef })
+    @ViewChild('editor', {read: ElementRef})
     private _editorElementRef: ElementRef;
 
     @ViewChildren(JigsawTag)
@@ -276,13 +278,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public searchKeywordChange = new EventEmitter<any>();
 
     /**
-     * 是否显示tag的边框和删除按钮，默认显示
-     */
-    @Input()
-    @RequireMarkForCheck()
-    public showValueBorder: boolean = true;
-
-    /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
      *
      * @NoMarkForCheckRequired
@@ -296,6 +291,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return CommonUtils.toTrackByFunction(this.labelField);
     };
 
+    @Output()
+    public clear = new EventEmitter<any>();
+
     /**
      * @internal
      */
@@ -303,6 +301,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         this._value.splice(0, this._value.length);
         this._value.refresh();
         this._autoWidth();
+        this.clear.emit();
     }
 
     /**
@@ -327,6 +326,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 return;
             }
             this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
+            this._renderer.setStyle(this._jigsawFloat.popupElement, 'min-width', this._elementRef.nativeElement.offsetWidth + 'px');
         });
     }
 
@@ -358,7 +358,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _autoPopupPos() {
         if (!this.autoClose && this._jigsawFloat) {
-            this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            this.runAfterMicrotasks(() => {
+                this._popupService.setPosition(this._jigsawFloat._getPopupOption(), this._jigsawFloat.popupElement)
+            })
         }
     }
 
@@ -421,13 +423,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _propagateChange: any = () => {
     };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any, emit = true): void {
+        if (value && this._value != value) {
+            // 初始表单值的赋值
+            this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+            this._cdr.markForCheck();
+        }
         if (emit) {
             this.runMicrotask(() => this.valueChange.emit(this._value));
         }
         this._autoWidth();
         this._autoClose();
+        this._autoPopupPos();
 
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback()
@@ -446,5 +456,19 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    /**
+     * @internal
+     */
+    public _$onClick($event: Event): void {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

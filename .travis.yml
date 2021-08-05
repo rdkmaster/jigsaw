@@ -5,9 +5,7 @@ node_js:
 
 branches:
   - master
-  - v1.1
-  - v5.0
-  - v8.0
+  - v9.3
 
 env:
   global:
@@ -35,20 +33,16 @@ script:
   - node build/scripts/check-mark-for-check.js
   - node build/scripts/check-public-variables.js
   - node build/scripts/check-html-element-type.js
+  - node build/scripts/check-import-path.js
   - gulp ensure-url-matches-path
   - gulp generate-demo-info
   - gulp build:jigsaw
-  - ng test jigsaw  --code-coverage false --watch false
-  - # cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - gulp build:formly:clean
+  - npm test
   - sh build/scripts/doc-generator/generate.sh ./temp/doc/
-  - sh build/scripts/build-tourist.sh
-  - sh build/scripts/integrate-with-seed.sh
+  - sh build/scripts/build-with-tourist.sh
+  - sh build/scripts/clone-seed.sh
   - node build/scripts/patch-demos.js
-  - git checkout src
-  - # sh build/scripts/sauce_connect_block.sh
-  - cd $SEED_DIR # run e2e in seed directory
-  - travis_wait 30 node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --aot
-  - #ng e2e
 
 after_script:
   - # sh ./build/scripts/sauce_connect_teardown.sh

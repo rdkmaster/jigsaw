@@ -3,18 +3,18 @@
  */
 
 import {
-    Component,
-    Input,
-    EventEmitter,
-    Output,
-    OnInit,
-    AfterContentInit,
-    Renderer2,
-    ElementRef,
-    forwardRef,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Injector,
+    Input,
     NgZone,
-    Injector
+    OnInit,
+    Output,
+    Renderer2
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
@@ -46,7 +46,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterContentInit {
+export class JigsawCheckBox extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
 
     private _enableIndeterminate: boolean = false;
 
@@ -58,11 +58,10 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
      * 编程模式赋值复选框状态时，不受此开关的影响，即即使`enableIndeterminate`被设置为false，
      * 应用依然可以在代码中直接将组件的状态设置为`CheckBoxStatus.indeterminate`。
      *
-     * @NoMarkForCheckRequired
-     *
      * $demo = checkbox/basic
      */
     @Input()
+    @RequireMarkForCheck()
     public get enableIndeterminate(): boolean {
         return this._enableIndeterminate;
     }
@@ -72,6 +71,11 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         this._valueCandidates = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
         if (value) {
             this._valueCandidates.push(CheckBoxStatus.indeterminate);
+        } else if (this._checked === CheckBoxStatus.indeterminate) {
+            this._checked = CheckBoxStatus.unchecked;
+            this.writeValue(CheckBoxStatus.unchecked);
+            this._propagateChange(CheckBoxStatus.unchecked);
+            this.checkedChange.emit(this._checked);
         }
     }
 
@@ -79,11 +83,11 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     /**
      * 用于设置复选框的状态，支持的所有状态参考`CheckBoxStatus`，默认值是`CheckBoxStatus.unchecked`
+     * @NoMarkForCheckRequired
      *
      * $demo = checkbox/basic
      */
     @Input()
-    @RequireMarkForCheck()
     public get checked(): CheckBoxValue {
         return this._checked
     }
@@ -93,7 +97,12 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
             return;
         }
         this.writeValue(value);
+        this._propagateChange(value);
     }
+
+    @Input()
+    @RequireMarkForCheck()
+    public mode: 'minimalist' | 'normal' = 'normal';
 
     /**
      * 选中状态变化时发出此事件，此事件可以简化为`change`
@@ -135,7 +144,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     @Input()
     public valid: boolean = true;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone,
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super(_zone);
@@ -143,15 +152,6 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
 
     public ngOnInit() {
         this._setCheckBoxClass();
-    }
-
-    public ngAfterContentInit() {
-        this.runAfterMicrotasks(() => {
-            const labelEl = this._elementRef.nativeElement.querySelector('.jigsaw-checkbox-label');
-            if (labelEl.innerText.trim() === '') {
-                this._renderer.setStyle(labelEl, 'padding', '0');
-            }
-        })
     }
 
     private _valueCandidates: CheckBoxStatus[] = [CheckBoxStatus.unchecked, CheckBoxStatus.checked];
@@ -192,6 +192,7 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         if (!this.disabled) {
             this._toggle();
             this._setCheckBoxClass();
+            this._onTouched();
         }
     }
 
@@ -210,11 +211,15 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
         }
     }
 
-    private _propagateChange:any = () => {};
+    private _propagateChange: any = () => {
+    };
+    private _onTouched: any = () => {
+    };
 
     public writeValue(value: any): void {
         this._checked = this._fixCheckValue(value);
         this._setCheckBoxClass();
+        this._cdr.markForCheck();
     }
 
     public registerOnChange(fn: any): void {
@@ -222,5 +227,10 @@ export class JigsawCheckBox extends AbstractJigsawComponent implements ControlVa
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

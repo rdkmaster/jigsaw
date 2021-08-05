@@ -5,6 +5,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ComponentRef,
     ContentChildren,
     Directive,
     ElementRef,
@@ -26,6 +27,7 @@ import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {IJigsawTabTitleRenderer} from "./tab-renderer";
 
 export type TabBarData = {
     /**
@@ -169,6 +171,16 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     public titleChange = new EventEmitter<TabTitleInfo>();
 
     /**
+     * 控制tab显示为标签式 or 页签式
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = tab-bar/type
+     */
+    @Input()
+    public tabType: 'label' | 'page' = 'label';
+
+    /**
      * @internal
      */
     public _$selectTabStyle: object = {};
@@ -265,6 +277,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
             let title = "";
             let rootNodes = label._tabItemRef ? (<EmbeddedViewRef<any>>label._tabItemRef).rootNodes : null;
             if (rootNodes) {
+                // 模板类型
                 for (let i = 0; i < rootNodes.length; i++) {
                     if (rootNodes[i] instanceof HTMLElement) {
                         title += " " + rootNodes[i].outerHTML;
@@ -272,6 +285,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
                         title += " " + rootNodes[i].textContent.trim();
                     }
                 }
+            } else if (label._tabItemRef && label._tabItemRef instanceof ComponentRef) {
+                // 动态加载的自定义类型：渲染器
+                title = (<IJigsawTabTitleRenderer>label._tabItemRef.instance).title;
             } else if (typeof label.tabItem == 'string') {
                 title = label.tabItem;
             }
@@ -302,7 +318,6 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         }
 
         this._$inkBarStyle = {
-            'display': 'block',
             'transform': 'translate3d(' + (labelPos.offSet + this._tabLeftMap.get(this.selectedIndex)) + 'px, 0px, 0px)',
             'width': labelPos.width + 'px'
         };
@@ -341,7 +356,11 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
 
     // 注意此方法会被频繁调用，性能要求高
     ngAfterViewChecked() {
-        if (!this.tabsInkBar || this.tabLabels.length == 0) return;
+        if (!this.tabsInkBar || this.tabLabels.length == 0) {
+            // ngFor的数据更新了需要markForCheck
+            this._changeDetector.markForCheck();
+            return;
+        }
         this._createTabList();
         const labelPos = this._getLabelOffsetByKey(this.selectedIndex);
         if (!labelPos) {
@@ -366,6 +385,77 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     @HostListener('window:resize')
     onResize() {
         this._createTabList();
+    }
+}
+
+@Component({
+    selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
+    templateUrl: 'tab-bar.html',
+    host: {
+        '[class.jigsaw-tabs]': 'true',
+        '[class.jigsaw-tabs-host]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[class.jigsaw-tabs-page]': 'tabType == "page"',
+        '[class.jigsaw-tabs-editable]': 'editable'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawTabBar extends JigsawTabBase {
+
+    constructor(private _cfr: ComponentFactoryResolver,
+                protected _changeDetector: ChangeDetectorRef,
+                private _viewContainer: ViewContainerRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
+        super(_changeDetector, _injector);
+    }
+
+    /**
+     * tab页点击
+     * @internal
+     */
+    public _$tabClick(index) {
+        this.selectedIndex = index;
+        this._updateTitlePosition(index);
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleAdd() {
+        this.add.emit();
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleRemove(index) {
+        this.remove.emit(index);
+    }
+
+    /**
+     * @internal
+     */
+    public _$listOptionClick(index) {
+        if (this.data[index].disabled) return;
+        this.selectedIndex = index;
+    }
+
+    protected get tabsInkBar(): ElementRef {
+        return this._tabsInkBar;
+    }
+
+    protected get tabsNavWrap(): ElementRef {
+        return this._tabsNavWrap;
+    }
+
+    protected get tabsNav(): ElementRef {
+        return this._tabsNav;
+    }
+
+    protected get tabLabels(): QueryList<JigsawTabLabel> {
+        return this._tabLabels;
     }
 }
 
@@ -516,7 +606,7 @@ export class JigsawTab extends JigsawTabBase {
      * @param initData
      * @param activateImmediately
      */
-    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentTemplate: TemplateRef<any>,
+    public addTab(titleComponent: Type<IJigsawTabTitleRenderer>, contentTemplate: TemplateRef<any>,
                   initData?: Object, activateImmediately?: boolean);
     /**
      * @param titleString
@@ -541,12 +631,12 @@ export class JigsawTab extends JigsawTabBase {
      * @param initData
      * @param activateImmediately
      */
-    public addTab(titleComponent: Type<IDynamicInstantiatable>, contentComponent: Type<IDynamicInstantiatable>,
+    public addTab(titleComponent: Type<IJigsawTabTitleRenderer>, contentComponent: Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately?: boolean);
     /**
      * @internal
      */
-    public addTab(title: string | TemplateRef<any> | Type<IDynamicInstantiatable>,
+    public addTab(title: string | TemplateRef<any> | Type<IJigsawTabTitleRenderer>,
                   content: TemplateRef<any> | Type<IDynamicInstantiatable>,
                   initData?: Object, activateImmediately: boolean = true) {
         const factory = this._cfr.resolveComponentFactory(JigsawTabPane);
@@ -642,74 +732,5 @@ export class JigsawTab extends JigsawTabBase {
 
     protected get tabLabels(): QueryList<JigsawTabLabel> {
         return this._tabBar ? this._tabBar._tabLabels : this._tabLabels;
-    }
-}
-
-@Component({
-    selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
-    templateUrl: 'tab-bar.html',
-    host: {
-        '[class.jigsaw-tabs]': 'true',
-        '[class.jigsaw-tabs-host]': 'true',
-        '[style.width]': 'width',
-        '[style.height]': 'height'
-    },
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class JigsawTabBar extends JigsawTabBase {
-
-    constructor(private _cfr: ComponentFactoryResolver,
-                protected _changeDetector: ChangeDetectorRef,
-                private _viewContainer: ViewContainerRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_changeDetector, _injector);
-    }
-
-    /**
-     * tab页点击
-     * @internal
-     */
-    public _$tabClick(index) {
-        this.selectedIndex = index;
-        this._updateTitlePosition(index);
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleAdd() {
-        this.add.emit();
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleRemove(index) {
-        this.remove.emit(index);
-    }
-
-    /**
-     * @internal
-     */
-    public _$listOptionClick(index) {
-        if (this.data[index].disabled) return;
-        this.selectedIndex = index;
-    }
-
-    protected get tabsInkBar(): ElementRef {
-        return this._tabsInkBar;
-    }
-
-    protected get tabsNavWrap(): ElementRef {
-        return this._tabsNavWrap;
-    }
-
-    protected get tabsNav(): ElementRef {
-        return this._tabsNav;
-    }
-
-    protected get tabLabels(): QueryList<JigsawTabLabel> {
-        return this._tabLabels;
     }
 }

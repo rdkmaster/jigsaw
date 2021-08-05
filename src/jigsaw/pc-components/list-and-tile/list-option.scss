@@ -5,23 +5,51 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     position: relative;
     width: 100%;
     min-height: $height-base;
-    padding: 5px 8px;
+    padding: 7px 8px;
     cursor: pointer;
     box-sizing: border-box;
+    background: $bg-body;
 
     &:hover {
-        background: $brand-light;
+        background: $bg-hover;
+
+        .#{$list-option-prefix-cls}-title-box .#{$list-option-prefix-cls}-title {
+            color: $brand-default;
+        }
     }
+
     &.#{$list-option-prefix-cls}-active {
-        background: $brand-active-light;
+        background: $bg-active;
+        color: $brand-default;
+
+        .#{$list-option-prefix-cls}-title,
+        .#{$list-option-prefix-cls}-sub-title{
+            color: $brand-default;
+        }
     }
+
     &.#{$list-option-prefix-cls}-disabled {
-        background: $bg-disabled;
         color: $font-color-disabled;
         cursor: not-allowed;
+
+        &:hover {
+            background: none;
+        }
+
+        .#{$list-option-prefix-cls}-title,
+        .#{$list-option-prefix-cls}-sub-title{
+            color: $font-color-disabled;
+        }
+
+        &:hover {
+            .#{$list-option-prefix-cls}-title,
+            .#{$list-option-prefix-cls}-sub-title{
+                color: $font-color-disabled;
+            } 
+        }
     }
+
     &-title-box {
-        @include clearfix();
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -33,15 +61,12 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         justify-content: flex-start;
         align-items: center;
         color: $font-color-heading;
-        width: 100%;
+        overflow: hidden;
     }
 
     &-sub-title {
         font-size: $font-size-base;
         color: $font-color-hint;
-        p {
-            height: 18px;
-        }
     }
 
     &-block {

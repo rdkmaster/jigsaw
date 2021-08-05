@@ -80,6 +80,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/numeric-input/demo-set.module').then(m => m.NumericInputDemoModule),
     },
     {
+        path: "pc/search-input",
+        loadChildren: () => import('./demo/pc/search-input/demo-set.module').then(m => m.SearchInputDemoModule),
+    },
+    {
         path: "pc/list",
         loadChildren: () => import('./demo/pc/list/demo-set.module').then(m => m.ListDemoModule),
     },
@@ -132,6 +136,14 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/select/demo-set.module').then(m => m.SelectDemoModule),
     },
     {
+        path: "pc/select-group",
+        loadChildren: () => import('./demo/pc/select-group/demo-set.module').then(m => m.SelectGroupDemoSetModule),
+    },
+    {
+        path: "pc/select-collapse",
+        loadChildren: () => import('./demo/pc/select-collapse/demo-set.module').then(m => m.SelectCollapseDemoSetModule),
+    },
+    {
         path: "pc/slider",
         loadChildren: () => import('./demo/pc/slider/demo-set.module').then(m => m.SliderDemoModule),
     },
@@ -150,6 +162,10 @@ export const routerConfigPC = [
     {
         path: "pc/tab",
         loadChildren: () => import('./demo/pc/tab/demo-set.module').then(m => m.TabsDemoModule),
+    },
+    {
+        path: "pc/tab-bar",
+        loadChildren: () => import('./demo/pc/tab-bar/demo-set.module').then(m => m.TabBarDemoModule),
     },
     {
         path: "pc/tag",
@@ -234,6 +250,10 @@ export const routerConfigPC = [
     {
         path: "pc/header",
         loadChildren: () => import('./demo/pc/header/demo-set.module').then(m => m.HeaderDemoModule),
+    },
+    {
+        path: "pc/theme",
+        loadChildren: () => import('./demo/pc/theme/demo-set.module').then(m => m.ThemeDemoModule),
     }
 ];
 export const routerConfigMobile = [
@@ -249,7 +269,6 @@ export const routerConfigMobile = [
         path: "mobile/button-bar",
         loadChildren: () => import('./demo/mobile/button-bar/demo-set.module').then(m => m.ButtonBarMobileDemoModule),
     },
-
     {
         path: "mobile/checkbox",
         loadChildren: () => import('./demo/mobile/checkbox/demo-set.module').then(m => m.CheckBoxMobileDemoModule),

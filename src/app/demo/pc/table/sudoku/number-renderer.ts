@@ -5,18 +5,20 @@ import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, P
 
 @Component({
     template: `
-        <div (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
+        <div class="demo-container" (click)="onClick($event)" [style.background]="bgColor" [style.color]="fontColor"
              (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
             {{cellData}}
         </div>
     `,
     styles: [`
-        div {
+        .demo-container {
+            color: var(--font-color-default);
             font-size: 22px;
             text-align: center;
             line-height: 48px;
             cursor: pointer;
             height: 48px;
+            width: 48px;
         }
     `]
 })
@@ -25,7 +27,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
         super(_injector);
     }
 
-    bgColor = '#ddd';
+    bgColor = '#bfbfbf';
     fontColor = '#33a5dd';
     popupInfo = null;
     conflicted = false;
@@ -97,7 +99,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
         }
         const groupedCol = Math.floor(this.column / 3);
         const groupedRow = Math.floor(this.row / 3);
-        return (groupedCol + groupedRow) % 2 == 0 ? '#fff' : '#ddd';
+        return (groupedCol + groupedRow) % 2 == 0 ? '#fff' : '#bfbfbf';
     }
 
     ngOnInit() {
@@ -105,7 +107,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
 
         this.bgColor = this.getBgColor();
         this.frozen = this.cellData.match(/^\d$/);
-        this.fontColor = this.frozen ? '#33a5dd' : '';
+        this.fontColor = this.frozen ? '#33a5dd' : '#4D4D4D';
 
         this.tableData.subscribe(event => {
             switch (event) {
@@ -121,7 +123,7 @@ export class NumberRenderer extends TableCellRendererBase implements OnInit, OnD
                         this.conflicted = false;
                         this.bgColor = this.getBgColor();
                         this.frozen = this.cellData.match(/^\d$/);
-                        this.fontColor = this.frozen ? '#33a5dd' : '';
+                        this.fontColor = this.frozen ? '#33a5dd' : '#4D4D4D';
                     });
                     break;
             }

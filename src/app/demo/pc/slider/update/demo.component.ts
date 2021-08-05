@@ -7,19 +7,18 @@ import {ArrayCollection} from "jigsaw/public_api";
 })
 export class SliderUpdateDemoComponent {
     rangeMax = 100;
-
     rangeValue = new ArrayCollection([30, 50, 60]);
-
-    rangeValueStr = '30-50-60';
-
-    updateValue() {
-        this.rangeMax = 200;
-        this.rangeValue.set(2, 200);
-        this.rangeValue.refresh();
+    get sortedValue(): string {
+        return [...this.rangeValue].sort((a, b) => a - b).join('-');
     }
 
-    handleChange($event) {
-        this.rangeValueStr = this.rangeValue[0] + '-' + this.rangeValue[1] + '-' + this.rangeValue[2];
+    updateValue() {
+        // max是绑定变量，赋值给组件会有延迟，所以后面刷新视图需要加延迟
+        this.rangeMax = 200;
+        setTimeout(() => {
+            this.rangeValue.set(2, 200);
+            this.rangeValue.refresh();
+        })
     }
 
     // ====================================================================

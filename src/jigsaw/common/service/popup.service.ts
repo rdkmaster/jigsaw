@@ -108,6 +108,15 @@ export class PopupOptions {
     showShadow?: boolean = true;
 
     /**
+     * 阴影深度（基于altitude），默认为default
+     * - inline: 适用于页面内联元素，比如页内卡片
+     * - default: 适用于Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker等悬浮类视图弹出场景
+     * - dialog: 适用于及时消息、模态弹框等对话框场景
+     * - alert: 适用于警示框等重要对话框场景
+     */
+    shadowType?: 'inline' | 'default' | 'dialog' | 'alert' = 'default';
+
+    /**
      * 是否要自动给弹出视图加上边框。默认`PopupService`会检测弹出的视图是否有边框，如果有则不加，如果没有则自动加上边框和阴影。
      * 设置了true/false之后，则`PopupService`不再自动检测，而是根据这个属性的值决定是否要还是不加边框&阴影。
      */
@@ -121,6 +130,10 @@ export class PopupOptions {
      * pointer表示弹出的模块带指向的三角
      */
     borderType?: 'default' | 'pointer';
+    /**
+     * borderRadius表示弹框的边框圆角
+     */
+    borderRadius?: string | number;
 }
 
 export type AbsolutePosition =
@@ -557,11 +570,21 @@ export class PopupService {
     private _setBackground(options: PopupOptions, element: HTMLElement): void {
         // 这里的逻辑有点绕，主要是因为showShadow的默认值必须是true
         if (!this._isModal(options) && this._isShowShadow(options)) {
-            InternalUtils.renderer.setStyle(element, 'box-shadow', '0px 2px 12px hsla(0, 0%, 0%, 0.15)');
+            const shadow = {
+                inline: "0px 1px 2px hsla(0, 0%, 0%, 0.2)",
+                default: "0px 2px 12px hsla(0, 0%, 0%, 0.15)",
+                dialog: "0px 5px 15px hsla(0, 0%, 0%, 0.12)",
+                alert: "0px 5px 15px hsla(0, 0%, 0%, 0.12)"
+            };
+            const shadowValue = shadow[options.shadowType] || shadow.default;
+            InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);
         }
         if (options && options.showBorder) {
-            InternalUtils.renderer.setStyle(element, 'border', '1px solid #dcdcdc');
-            InternalUtils.renderer.setStyle(element, 'border-radius', '4px');
+            InternalUtils.renderer.setStyle(element, "border", "1px solid #dcdcdc");
+            InternalUtils.renderer.setStyle(element, "border-radius", "4px");
+        }
+        if (options && options.borderRadius) {
+            InternalUtils.renderer.setStyle(element, "border-radius", CommonUtils.getCssValue(options.borderRadius));
         }
     }
 

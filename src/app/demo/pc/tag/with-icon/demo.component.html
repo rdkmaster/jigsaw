@@ -2,17 +2,45 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-tag>
-    <i class="iconfont iconfont-e0a0"></i>
-    Icon Tag
-</jigsaw-tag>
+<div class="demo-container">
+    <jigsaw-header [level]="2">图标+文字的状态（包含两种不同尺寸）</jigsaw-header>
+    <p>
+        <jigsaw-tag>
+            <i class="iconfont iconfont-e0a0"></i>
+            Icon Tag
+        </jigsaw-tag>
 
-<jigsaw-tag [closable]="true" [size]="'medium'">
-    <i class="iconfont iconfont-e0a4"></i>
-    Closable Tag
-</jigsaw-tag>
+        <jigsaw-tag [closable]="true" [size]="'medium'" icon="iconfont iconfont-e0a4">
+            Closable Tag
+        </jigsaw-tag>
 
-<jigsaw-tag [closable]="true" [size]="'small'">
-    <i class="iconfont iconfont-e0d4"></i>
-    Small Size Tag
-</jigsaw-tag>
+        <jigsaw-tag [closable]="true" [size]="'small'" icon="iconfont iconfont-e0d4">
+            Small Size Tag
+        </jigsaw-tag>
+
+        <jigsaw-tag [closable]="true" icon="iconfont iconfont-ea1b">
+            A very very very very very very very long tag
+        </jigsaw-tag>
+    </p>
+    <jigsaw-header [level]="2">仅图标的状态（包含两种不同尺寸）</jigsaw-header>
+    <p>
+        <jigsaw-tag [size]="'small'">
+            <i class="iconfont iconfont-e0a0"></i>
+        </jigsaw-tag>
+        <jigsaw-tag [size]="'medium'">
+            <span class="iconfont iconfont-e0d4"></span>
+        </jigsaw-tag>
+        <jigsaw-tag icon="iconfont iconfont-ea1b">
+        </jigsaw-tag>
+
+        <jigsaw-tag [closable]="true" [size]="'small'">
+            <i class="iconfont iconfont-e0a0"></i>
+        </jigsaw-tag>
+        <jigsaw-tag [closable]="true" [size]="'medium'">
+            <span class="iconfont iconfont-e0d4"></span>
+        </jigsaw-tag>
+        <jigsaw-tag [closable]="true" icon="iconfont iconfont-ea1b">
+        </jigsaw-tag>
+    </p>
+    <j-button (click)="resetAllTags()">Reset all tags</j-button>
+</div>

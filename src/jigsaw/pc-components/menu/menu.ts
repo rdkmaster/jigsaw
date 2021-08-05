@@ -16,8 +16,9 @@ import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
+import {JigsawTheme} from "../../common/core/theming/theme";
 
-export type MenuTheme = 'light' | 'dark' | 'black' | 'navigation';
+export type MenuTheme = 'light' | 'dark' | 'navigation';
 
 export class MenuOptions {
     data?: SimpleTreeData;
@@ -128,7 +129,6 @@ export class JigsawMenuHelper implements IPopupable {
         '(click)': "_$onClick($event)",
         '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
         '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
-        '[class.jigsaw-menu-black]': "_$realTheme == 'black'",
         '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -212,7 +212,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @NoMarkForCheckRequired
      */
     @Input()
-    public theme: MenuTheme = 'light';
+    public theme: MenuTheme = JigsawTheme.majorStyle || 'light';
 
     /**
      * @internal
@@ -334,8 +334,8 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             return {maxWidth: 'auto'};
         }
         const wrapElement = titleElement.parentElement;
-        // 5是给有子节点时，留下的箭头；
-        const minWidth = node.nodes && node.nodes.length > 0 ? 5 : 0;
+        // 14是给有子节点时，留下的箭头；
+        const minWidth = node.nodes && node.nodes.length > 0 ? 14 : 0;
         if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
             return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
         } else {

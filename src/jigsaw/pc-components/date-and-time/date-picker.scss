@@ -53,7 +53,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &.active {
-                background-color: $brand-light;
+                background-color: $brand-lighten;
                 color: $brand-default;
                 border-color: $brand-default;
             }
@@ -136,6 +136,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             thead {
                 padding: 0 8px;
                 height: $height-med;
+                border-bottom: 1px solid $border-color-disabled;
                 line-height: $height-med;
                 background: $bg-container;
                 vertical-align: initial;
@@ -143,7 +144,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 th {
                     text-align: center;
                     font-weight: normal;
-                    color: $font-color-heading;
+                    color: $font-color-tag;
                 }
             }
 
@@ -179,7 +180,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             & span:hover {
-                background: $brand-light;
+                background: $bg-hover;
             }
 
             &-today span:before {
@@ -194,11 +195,11 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 border-color: $brand-default;
                 border-radius: $border-radius-sm;
                 box-sizing: border-box;
-                z-index: $zindex-popover-level-1;
+                z-index: 1;
             }
 
             &-prev-next span {
-                color: $font-color-hint;
+                color: $font-color-disabled;
             }
 
             &-selected {
@@ -243,7 +244,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             }
 
             &-inRange {
-                background: $brand-light;
+                background: $brand-lighten;
                 &.#{$date-prefix-cls}-content-day-cell-selected {
                     background: none;
                 }
@@ -289,7 +290,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 cursor: pointer;
 
                 &:hover {
-                    background: $brand-light;
+                    background: $bg-hover;
                 }
             }
 

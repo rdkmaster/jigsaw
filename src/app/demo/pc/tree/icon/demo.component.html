@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>自定义图标</jigsaw-header>
+<div style="width: 300px; display: inline-block; vertical-align: top;">
+    <jigsaw-header [level]="2">使用对象作为数据源</jigsaw-header>
+    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [iconSuit]="iconSuit1">
+    </jigsaw-tree-ext>
+</div>
+<div style="width: 300px; display: inline-block; vertical-align: top;">
+    <jigsaw-header [level]="2">使用XML作为数据源（推荐）</jigsaw-header>
+    <jigsaw-tree-ext [(data)]="xml" (onClick)="onClick($event)" [iconSuit]="iconSuit2">
+    </jigsaw-tree-ext>
+</div>
+

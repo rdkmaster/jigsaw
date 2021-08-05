@@ -7,10 +7,10 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     justify-content: center;
     align-items: center;
     position: relative;
+    min-width: 0;
     max-width: 200px;
     padding: 2px 8px;
     height: 22px;
-    line-height: 20px;
     font-size: $font-size-base;
     border-radius: $border-radius-base;
     color: inherit;
@@ -21,10 +21,6 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
 
     &.#{$tag-prefix-cls}-color {
         color: $font-color-white;
-    }
-
-    &.#{$tag-prefix-cls}-without-border {
-        border: none;
     }
 
     &.#{$tag-prefix-cls}-preset {
@@ -134,12 +130,27 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         }
     }
 
+    &.#{$tag-prefix-cls}-disabled {
+        cursor: not-allowed;
+        color: $font-color-disabled;
+
+        .#{$tag-prefix-cls}-close-bar {
+            color: $font-color-disabled;
+
+            &:hover {
+                color: $font-color-disabled;
+            }
+        }
+    }
+
     .#{$tag-prefix-cls}-close-bar {
+        display: inline-flex;
+        align-items: center;
         position: absolute;
-        left: calc(100% - 16px);
-        line-height: 18px;
+        left: calc(100% - 18px);
         font-size: 16px;
         width: auto;
+        height: 100%;
 
         &:hover {
             color: $brand-default;
@@ -149,16 +160,21 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     .#{$tag-prefix-cls}-content {
         display: flex;
         align-items: center;
+        min-width: 0;
 
         i {
             margin-right: 3px;
         }
-    }
 
-    & > span {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 100%;
+        .#{$tag-prefix-cls}-text {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+
+            i {
+                margin-right: 0;
+            }
+        }
     }
 }

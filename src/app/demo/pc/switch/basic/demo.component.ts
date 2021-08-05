@@ -2,11 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        jigsaw-switch {
-            margin-right: 20px;
-        }
-    `]
+    styleUrls:['./demo.component.css']
 })
 export class SwitchBasicDemoComponent {
     checked: boolean;

@@ -5,13 +5,13 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>cascade</h2>
+    <jigsaw-header [level]="1">cascade</jigsaw-header>
 
     <div class="demo-1 live-demo">
-        <h3>单选</h3>
+        <jigsaw-header [level]="2">单选</jigsaw-header>
         <j-combo-select [value]="comboValue1">
             <ng-template>
-                <j-cascade [(selectedItems)]="selectedItems1" [dataGenerator]="generator"
+                <j-cascade style="min-height: 335px" [(selectedItems)]="selectedItems1" [dataGenerator]="generator"
                            [generatorContext]="this" labelField="name"
                            (selectedItemsChange)="parseMessage($event)" width="418">
                 </j-cascade>
@@ -20,10 +20,10 @@
     </div>
 
     <div class="demo-2 live-demo">
-        <h3>多选</h3>
+        <jigsaw-header [level]="2">多选</jigsaw-header>
         <j-combo-select [value]="comboValue2">
             <ng-template>
-                <j-cascade [(selectedItems)]="selectedItems2" [dataGenerator]="generator"
+                <j-cascade style="min-height: 335px" [(selectedItems)]="selectedItems2" [dataGenerator]="generator"
                            [generatorContext]="this" labelField="name" [multipleSelect]="true"
                            (selectedItemsChange)="parseMultipleMessage($event)" width="418">
                 </j-cascade>

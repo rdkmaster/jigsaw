@@ -1,82 +1,79 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Input,
-    OnDestroy,
-    Optional,
-    Output,
-    Renderer2
-} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {
-    ButtonInfo,
-    IPopupable,
-    PopupEffect,
-    PopupInfo,
-    PopupOptions,
-    PopupPositionType,
-    PopupPositionValue,
-    PopupService
-} from "../../service/popup.service";
-import {JigsawUploadBase, UploadFileInfo} from "../../../pc-components/upload/upload.base";
-import {AbstractJigsawComponent} from "../../common";
+import {AbstractJigsawComponent} from '../../common';
+import {CommonUtils} from '../../core/utils/common-utils';
+import {TimeGr, TimeService} from '../../service/time.service';
+import {IUploader, UploadFileInfo} from "./uploader-typings";
+
+const maxConcurrencyUpload = 5;
 
 @Directive({
     selector: '[j-upload], [jigsaw-upload]'
 })
-export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy {
-    constructor(@Optional() protected _http: HttpClient,
-                protected _renderer: Renderer2,
-                protected _elementRef: ElementRef,
-                private _popupService: PopupService,
-                @Optional() protected _translateService: TranslateService,
-                protected _cdr: ChangeDetectorRef) {
-        super(_http, _renderer, _elementRef, _translateService, _cdr);
+export class JigsawUploadDirective extends AbstractJigsawComponent implements IUploader, OnDestroy {
+    constructor(@Optional() private _http: HttpClient,
+                    private _renderer: Renderer2,
+                    @Optional() private _translateService: TranslateService,
+                    private _cdr: ChangeDetectorRef) {
+        super();
     }
 
-    private _removeMouseOverHandler: Function;
-    private _removeMouseOutHandler: Function;
-    private _rollOutDenouncesTimer: any = null;
-    private _rollInDenouncesTimer: any = null;
-
+    /**
+    * @NoMarkForCheckRequired
+    */
     @Input('uploadTargetUrl')
     public targetUrl: string = '/rdk/service/common/upload';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadFileType')
     public fileType: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadMultiple')
     public multiple: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadContentField')
     public contentField: string = 'file';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadFileNameField')
     public fileNameField: string = 'filename';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadFileVerify')
     public fileVerify: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadAdditionalFields')
     public additionalFields: { [prop: string]: string };
 
-    @Input('uploadMinSize')
-    public minSize: number;
+    public files: UploadFileInfo[] = [];
 
-    @Input('uploadMaxSize')
-    public maxSize: number;
-
+    /**
+     * 每个文件上传完成（无论成功还是失败）之后发出
+     */
     @Output('uploadProgress')
     public progress = new EventEmitter<UploadFileInfo>();
 
-    @Output('uploadRemove')
-    public remove = new EventEmitter<UploadFileInfo>();
+    /**
+     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此时可以获取到此文件的真实进度
+     */
+    @Output('uploadDataSendProgress')
+    public dataSendProgress = new EventEmitter<UploadFileInfo>();
 
     @Output('uploadComplete')
     public complete = new EventEmitter<UploadFileInfo[]>();
@@ -84,195 +81,295 @@ export class JigsawUploadDirective extends JigsawUploadBase implements OnDestroy
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
 
-    @Output('uploadUpdate')
-    public update = new EventEmitter<UploadFileInfo[]>();
-
-    @Input()
-    public uploadOptionCount: number;
-
-    @Input()
-    public uploadShowFileList: boolean = true;
+    @Output('uploadChange')
+    public change = new EventEmitter<UploadFileInfo[]>();
 
     @HostListener('click', ['$event'])
     onClick($event) {
-        this._$selectFile($event);
+        this._selectFile($event);
     }
 
-    @HostListener('mouseenter', ['$event'])
-    onMouseEnter() {
-        if (!this.uploadShowFileList || this._$validFiles.length + this._$invalidFiles.length == 0) {
+    private _minSize: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input('uploadMinSize')
+    public get minSize(): number {
+        return this._minSize;
+    }
+
+    public set minSize(value: number) {
+        value = parseInt(<any>value);
+        if (isNaN(value)) {
+            console.error('minSize property must be a number, please input a number or number string');
             return;
         }
-        this.clearCallLater(this._rollOutDenouncesTimer);
-        this._addRollInDenouncesTimer();
+        this._minSize = value;
     }
 
-    @HostListener('mouseleave', ['$event'])
-    onMouseLeave() {
-        if (!this.uploadShowFileList) {
+    private _maxSize: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input('uploadMaxSize')
+    public get maxSize(): number {
+        return this._maxSize;
+    }
+
+    public set maxSize(value: number) {
+        value = parseInt(<any>value);
+        if (isNaN(value)) {
+            console.error('maxSize property must be a number, please input a number or number string');
             return;
         }
-        this.clearCallLater(this._rollInDenouncesTimer);
-        this._addRollOutDenouncesTimer();
+        this._maxSize = value;
     }
 
-    private _addRollInDenouncesTimer() {
-        this._rollInDenouncesTimer = this.callLater(() => {
-            if (this._popupInfo) {
-                return;
-            }
-            this._popupInfo = this._popupService.popup(JigsawUploadFileInfoList, this._getNonModelOptions(), this._$allFiles);
+    @Input('uploadImmediately')
+    public uploadImmediately:boolean = true;
 
-            if (!this._popupInfo || !this._popupInfo.element || !this._popupInfo.instance) {
-                console.error('unable to popup drop down, unknown error!');
-                return;
-            }
+    private _fileInputElement: Element;
+    private _removeFileChangeEvent: Function;
 
-            if (this._popupInfo.instance instanceof JigsawUploadFileInfoList) {
-                this._popupInfo.instance.uploader = this;
-                this._popupInfo.instance.optionCount = this.uploadOptionCount;
-                this._popupInfo.instance.removable = false;
-            }
-
-            this._closeAllListener();
-            this._removeMouseOverHandler = this._renderer.listen(
-                this._popupInfo.element, 'mouseenter',
-                () => this.clearCallLater(this._rollOutDenouncesTimer));
-            this._removeMouseOutHandler = this._renderer.listen(
-                this._popupInfo.element, 'mouseleave', () => {
-                    this._addRollOutDenouncesTimer();
-                });
-        }, 100);
-    }
-
-    private _addRollOutDenouncesTimer() {
-        this._rollOutDenouncesTimer = this.callLater(() => {
-            this._closePopup();
-        }, 400);
-    }
-
-    private _popupInfo: PopupInfo;
-
-    private _getNonModelOptions(): PopupOptions {
-        return {
-            modal: false,
-            showEffect: PopupEffect.fadeIn,
-            hideEffect: PopupEffect.fadeOut,
-            pos: this._elementRef,
-            posOffset: {
-                top: this._elementRef.nativeElement.offsetHeight
-            },
-            posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
-                return this._popupService.positionReviser(pos, popupElement, {
-                    offsetWidth: this._elementRef.nativeElement.offsetWidth,
-                    offsetHeight: this._elementRef.nativeElement.offsetHeight
-                });
-            },
-            size: {width: 300},
-            posType: PopupPositionType.absolute
-        };
-    }
-
-    private _closePopup() {
-        if (this._popupInfo) {
-            this._popupInfo.dispose();
-            this._popupInfo = null;
+    public retryUpload(fileInfo: UploadFileInfo) {
+        if (!fileInfo || !fileInfo.file) {
+            console.error('invalid retry upload file:', fileInfo);
+            return;
         }
-        this._closeAllListener();
-    }
-
-    private _closeAllListener() {
-        if (this._removeMouseOverHandler) {
-            this._removeMouseOverHandler();
-            this._removeMouseOverHandler = null;
+        if (!this.files.find(file => file === fileInfo)) {
+            console.error('invalid retry upload file: the file is in our file list, maybe it was removed from our file list:', fileInfo);
+            return;
         }
-        if (this._removeMouseOutHandler) {
-            this._removeMouseOutHandler();
-            this._removeMouseOutHandler = null;
+        if (!this._isFileUploaded(fileInfo)) {
+            console.error('invalid retry upload file, this file is still pending:', fileInfo);
+            return;
         }
-    }
 
-    protected _upload() {
-        super._upload();
-        this._recalculatePopupPosition();
+        const uploadingCount = this.files.filter(file => file.state == 'loading').length;
+        if (uploadingCount < maxConcurrencyUpload) {
+            this._sequenceUpload(fileInfo);
+        } else {
+            // 排队，后面上传线程有空了，会再来上传它的。
+            fileInfo.state = 'pause';
+            fileInfo.message = this._translateService.instant(`upload.waiting`);
+        }
     }
 
     /**
-     * @internal
+     * 清空所有已上传的文件
      */
-    public _$removeFile(file) {
-        super._$removeFile(file);
-        this._recalculatePopupPosition();
+    public clear() {
+        this.files.splice(0, this.files.length);
+        this._cdr.markForCheck();
     }
 
-    private _recalculatePopupPosition() {
-        this.runMicrotask(() => {
-            if (this._popupInfo) {
-                this._popupService.setPosition(this._getNonModelOptions(), this._popupInfo.element);
+    private _selectFile($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        if (!this._http) {
+            console.error('Jigsaw upload pc-components must inject HttpClientModule, please import it to the module!');
+            return;
+        }
+
+        const e = document.createEvent("MouseEvent");
+        e.initEvent("click", true, true);
+        if (!this._fileInputElement) {
+            this._fileInputElement = document.createElement('input');
+            this._fileInputElement.setAttribute('type', 'file');
+            if (CommonUtils.isIE()) {
+                //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
+                this._fileInputElement.setAttribute('display', 'none');
+                document.body.appendChild(this._fileInputElement);
             }
+        }
+        if (this.multiple) {
+            this._fileInputElement.setAttribute('multiple', 'true');
+        } else {
+            this._fileInputElement.removeAttribute('multiple');
+        }
+        this._fileInputElement.setAttribute('accept', this.fileType);
+
+        this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
+            this._renderer.listen(this._fileInputElement, 'change', () => {
+                if (this.uploadImmediately) {
+                    this.upload();
+                } else {
+                    if (this._appendFiles()) {
+                        this.change.emit(this.files);
+                    }
+                }
+            });
+
+        this._fileInputElement.dispatchEvent(e);
+    }
+
+    private _appendFiles(): boolean {
+        const fileInput: any = this._fileInputElement;
+        if (!fileInput) {
+            return false;
+        }
+        const files = this._checkFiles(Array.from(fileInput.files || []));
+        if (!this.multiple) {
+            this.files.splice(0, this.files.length);
+            files.splice(1, files.length);
+        }
+        this.files.push(...files);
+        fileInput.value = null;
+        return this.files.length > 0;
+    }
+
+    public upload() {
+        if (!this._appendFiles()) {
+            return;
+        }
+
+        this.start.emit(this.files);
+        const pendingFiles = this.files.filter(file => file.state == 'pause');
+        if (pendingFiles.length == 0) {
+            this.complete.emit(this.files);
+            return;
+        }
+        for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
+            // 最多前maxConcurrencyUpload个文件同时上传给服务器
+            this._sequenceUpload(pendingFiles[i]);
+        }
+    }
+
+    private _testFileType(fileName: string, type: string): boolean {
+        if (type == '*') {
+            return true;
+        }
+        const re = new RegExp(`.+\\${type.trim()}$`, 'i');
+        return re.test(fileName);
+    }
+
+    private _checkFiles(files: File[]): UploadFileInfo[] {
+        const fileTypes = this.fileType ? this.fileType.trim().split(/\s*,\s*/) : ['*'];
+        return files.map(file => {
+            const fileInfo: UploadFileInfo = {
+                name: file.name, state: "error", url: "", file: file, progress: 0,
+                message: this._translateService.instant(`upload.unknownStatus`)
+            }
+            if (!fileTypes.find(type => this._testFileType(file.name, type))) {
+                fileInfo.message = this._translateService.instant(`upload.fileTypeError`);
+                this._statusLog(fileInfo, fileInfo.message);
+                return fileInfo;
+            }
+            if (!isNaN(this.minSize) && file.size < this.minSize * 1024 * 1024) {
+                fileInfo.message = this._translateService.instant(`upload.fileMinSizeError`);
+                this._statusLog(fileInfo, fileInfo.message);
+                return fileInfo;
+            }
+            if (!isNaN(this.maxSize) && file.size > this.maxSize * 1024 * 1024) {
+                fileInfo.message = this._translateService.instant(`upload.fileMaxSizeError`);
+                this._statusLog(fileInfo, fileInfo.message);
+                return fileInfo;
+            }
+
+            fileInfo.state = 'pause';
+            fileInfo.message = this._translateService.instant(`upload.waiting`);
+            this._statusLog(fileInfo, fileInfo.message);
+            return fileInfo;
         });
+    }
+
+    private _isAllFilesUploaded(): boolean {
+        return !this.files.find(f => !this._isFileUploaded(f));
+    }
+
+    private _isFileUploaded(fileInfo: UploadFileInfo): boolean {
+        return fileInfo.state !== 'loading' && fileInfo.state !== 'pause'
+    }
+
+    private _sequenceUpload(fileInfo: UploadFileInfo) {
+        fileInfo.state = 'loading';
+        fileInfo.message = this._translateService.instant(`upload.uploading`);
+        this._statusLog(fileInfo, fileInfo.message);
+        const formData = new FormData();
+        formData.append(this.contentField, fileInfo.file);
+        this._appendAdditionalFields(formData, fileInfo.file.name);
+        this._http.post(this.targetUrl, formData,
+            {
+                responseType: 'text',
+                reportProgress: true,
+                observe: 'events'
+            }).subscribe((res: any) => {
+                if (res.type === 1) {
+                    fileInfo.progress = res.loaded / res.total * 100;
+                    this.dataSendProgress.emit(fileInfo);
+                    return;
+                }
+                if (res.type === 3) {
+                    fileInfo.url = res.partialText;
+                    return;
+                }
+                if (res.type === 4) {
+                    fileInfo.state = 'success';
+                    fileInfo.message = '';
+                    const resp: HttpResponse<string> = <HttpResponse<string>>res;
+                    fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
+                    this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
+                    this._afterCurFileUploaded(fileInfo);
+                }
+            }, (e) => {
+                fileInfo.state = 'error';
+                const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
+                this._statusLog(fileInfo, message);
+                fileInfo.message = message;
+                this._afterCurFileUploaded(fileInfo);
+            });
+    }
+
+    private _appendAdditionalFields(formData: FormData, fileName: string): void {
+        const additionalFields = CommonUtils.shallowCopy(this.additionalFields || {});
+
+        // 为了避免引入破坏性，这里按照顺序append
+        const fileNameField = this.fileNameField ? this.fileNameField.trim() : '';
+        if (fileNameField) {
+            formData.append(fileNameField, encodeURIComponent(fileName));
+            delete additionalFields[fileNameField];
+        }
+
+        const fileVerify = this.fileVerify ? this.fileVerify.trim() : '';
+        if (fileVerify) {
+            formData.append('file-verify', encodeURIComponent(fileVerify));
+            delete additionalFields['file-verify'];
+        }
+
+        for (let prop in this.additionalFields) {
+            formData.append(prop, encodeURIComponent(this.additionalFields[prop]));
+        }
+    }
+
+    private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
+        this.progress.emit(fileInfo);
+
+        const waitingFile = this.files.find(f => f.state == 'pause');
+        if (waitingFile) {
+            this._sequenceUpload(waitingFile)
+        } else if (this._isAllFilesUploaded()) {
+            this.complete.emit(this.files);
+        }
+        this._cdr.markForCheck();
+    }
+
+    private _statusLog(fileInfo: UploadFileInfo, content: string) {
+        if (!fileInfo.log) {
+            fileInfo.log = [];
+        }
+        const log = { time: TimeService.convertValue(new Date(), TimeGr.second), content: content };
+        fileInfo.log.push(log);
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._closePopup();
+        if (this._removeFileChangeEvent) {
+            this._removeFileChangeEvent();
+            this._removeFileChangeEvent = null;
+        }
+        this._fileInputElement = null;
     }
-}
-
-@Component({
-    selector: 'jigsaw-upload-file-list, j-upload-file-list',
-    template: `
-        <ul class="jigsaw-upload-file-list" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
-            [style.width]="width" [style.maxHeight.px]="optionCount > 0 ? 40*optionCount : ''">
-            <li *ngFor="let file of initData" class="jigsaw-upload-file">
-                <div class="jigsaw-upload-file-left">
-                    <span class="jigsaw-upload-file-icon iconfont iconfont-e4f0"></span>
-                    <span class="jigsaw-upload-file-name" title="{{file.name}}">{{file.name}}</span>
-                </div>
-                <div [ngSwitch]="file.state" class="jigsaw-upload-file-right">
-                    <ng-container *ngSwitchCase="'pause'">
-                        <span>{{'upload.waiting' | translate}}</span>
-                        <span class="jigsaw-upload-pause iconfont iconfont-e2e9"></span>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'loading'">
-                        <span>{{'upload.uploading' | translate}}</span>
-                        <span class="jigsaw-upload-loading iconfont iconfont-e67d jigsaw-am-rotation"></span>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'success'">
-                        <span>{{'upload.done' | translate}}</span>
-                        <span class="jigsaw-upload-success iconfont iconfont-e13f"></span>
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'error'">
-                        <div [title]="file.reason">
-                            <span>{{'upload.failed' | translate}}</span>
-                            <span class="jigsaw-upload-error iconfont iconfont-e9b8"></span>
-                        </div>
-                    </ng-container>
-                </div>
-                <span *ngIf="removable" class="jigsaw-upload-file-remove iconfont iconfont-e179"
-                      (click)="uploader?._$removeFile(file)"></span>
-            </li>
-        </ul>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class JigsawUploadFileInfoList extends AbstractJigsawComponent implements IPopupable {
-    public answer: EventEmitter<ButtonInfo>;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public initData: UploadFileInfo[];
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public uploader: JigsawUploadDirective;
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public optionCount: number = 5;
-
-    public removable: boolean = true;
 }

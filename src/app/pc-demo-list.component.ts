@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {PopupPositionType} from 'jigsaw/public_api';
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
 import {routerConfig as autoCompleteInputConfig} from "./demo/pc/auto-complete-input/demo-set.module";
 import {routerConfig as arrayCollectionConfig} from "./demo/pc/data-encapsulation/demo-set.module";
@@ -19,6 +20,7 @@ import {routerConfig as graphConfig} from "./demo/pc/graph/demo-set.module";
 import {routerConfig as i18nConfig} from "./demo/pc/i18n/demo-set.module";
 import {routerConfig as inputConfig} from "./demo/pc/input/demo-set.module";
 import {routerConfig as numericInputConfig} from "./demo/pc/numeric-input/demo-set.module";
+import {routerConfig as searchInputConfig} from "./demo/pc/search-input/demo-set.module";
 import {routerConfig as listConfig} from "./demo/pc/list/demo-set.module";
 import {routerConfig as listLiteConfig} from "./demo/pc/list-lite/demo-set.module";
 import {routerConfig as loadingConfig} from "./demo/pc/loading/demo-set.module";
@@ -32,11 +34,14 @@ import {routerConfig as radioLiteConfig} from "./demo/pc/radio-lite/demo-set.mod
 import {routerConfig as rateConfig} from "./demo/pc/rate/demo-set.module";
 import {routerConfig as scrollbarConfig} from "./demo/pc/scrollbar/demo-set.module";
 import {routerConfig as selectConfig} from "./demo/pc/select/demo-set.module";
+import {routerConfig as selectGroupConfig} from "./demo/pc/select-group/demo-set.module";
+import {routerConfig as selectCollapse} from "./demo/pc/select-collapse/demo-set.module";
 import {routerConfig as sliderConfig} from "./demo/pc/slider/demo-set.module";
 import {routerConfig as stepsConfig} from "./demo/pc/steps/demo-set.module";
 import {routerConfig as switchConfig} from "./demo/pc/switch/demo-set.module";
 import {routerConfig as tableConfig} from "./demo/pc/table/demo-set.module";
 import {routerConfig as tabsConfig} from "./demo/pc/tab/demo-set.module";
+import {routerConfig as tabBarConfig} from "./demo/pc/tab-bar/demo-set.module";
 import {routerConfig as tagConfig} from "./demo/pc/tag/demo-set.module";
 import {routerConfig as textareaConfig} from "./demo/pc/textarea/demo-set.module";
 import {routerConfig as tileConfig} from "./demo/pc/tile/demo-set.module";
@@ -58,23 +63,23 @@ import {routerConfig as colorSelectConfig} from "./demo/pc/color-select/demo-set
 import {routerConfig as badgeConfig} from "./demo/pc/badge/demo-set.module";
 import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set.module";
 import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
+import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfigPC} from "./router-config";
-import {PopupPositionType} from "../jigsaw/common/service/popup.service";
 
 @Component({
     template: `
         <p jigsaw-float class="select-demo" [jigsawFloatTarget]="list" jigsawFloatPosition="bottomRight"
            [jigsawFloatOptions]="floatOptions">
             显示隐藏Demo集
-            <ng-template #list>
-                <div style="padding: 6px">
-                    <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
-                    <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
-                                      [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
-                    </jigsaw-list-lite>
-                </div>
-            </ng-template>
         </p>
+        <ng-template #list>
+            <div style="padding: 6px">
+                <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
+                <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
+                                  [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
+                </jigsaw-list-lite>
+            </div>
+        </ng-template>
         <div *ngFor="let router of routes">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
@@ -90,7 +95,7 @@ import {PopupPositionType} from "../jigsaw/common/service/popup.service";
         .select-demo {
             color: white;
             position: fixed;
-            right: 16px;
+            right: 430px;
             background-color: #3b9cc6;
             padding: 4px 12px;
             border-radius: 4px;
@@ -171,6 +176,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'i18n', i18nConfig);
         this._addRouterConfig(routerConfig, 'input', inputConfig);
         this._addRouterConfig(routerConfig, 'numeric-input', numericInputConfig);
+        this._addRouterConfig(routerConfig, 'search-input', searchInputConfig);
         this._addRouterConfig(routerConfig, 'list', listConfig);
         this._addRouterConfig(routerConfig, 'list-lite', listLiteConfig);
         this._addRouterConfig(routerConfig, 'loading', loadingConfig);
@@ -184,11 +190,14 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'rate', rateConfig);
         this._addRouterConfig(routerConfig, 'scrollbar', scrollbarConfig);
         this._addRouterConfig(routerConfig, 'select', selectConfig);
+        this._addRouterConfig(routerConfig, 'select-group', selectGroupConfig);
+        this._addRouterConfig(routerConfig, 'select-collapse', selectCollapse);
         this._addRouterConfig(routerConfig, 'slider', sliderConfig);
         this._addRouterConfig(routerConfig, 'steps', stepsConfig);
         this._addRouterConfig(routerConfig, 'switch', switchConfig);
         this._addRouterConfig(routerConfig, 'table', tableConfig);
         this._addRouterConfig(routerConfig, 'tab', tabsConfig);
+        this._addRouterConfig(routerConfig, 'tab-bar', tabBarConfig);
         this._addRouterConfig(routerConfig, 'tag', tagConfig);
         this._addRouterConfig(routerConfig, 'textarea', textareaConfig);
         this._addRouterConfig(routerConfig, 'tile', tileConfig);
@@ -210,6 +219,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'badge', badgeConfig);
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
         this._addRouterConfig(routerConfig, 'header', headerConfig);
+        this._addRouterConfig(routerConfig, 'theme', themeConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

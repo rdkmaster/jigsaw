@@ -5,7 +5,14 @@ import {RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {
-    JigsawFloatModule, JigsawListLiteModule, JigsawRootModule, JigsawTreeExtModule
+    JigsawFloatModule,
+    JigsawListLiteModule,
+    JigsawRootModule,
+    JigsawTheme,
+    JigsawTreeExtModule,
+    JigsawButtonBarModule,
+    SupportedTheme,
+    MajorStyle
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
@@ -31,7 +38,7 @@ import {DemoCodeComponent} from "./demo-code.component";
                 ]},
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
-        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule,
+        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         TranslateModule.forRoot()
     ],
     providers: [
@@ -46,6 +53,16 @@ import {DemoCodeComponent} from "./demo-code.component";
 })
 export class AppModule {
     constructor() {
-        //JigsawTheme.majorStyle = 'purple';
+        let themeName: SupportedTheme, majorStyle: MajorStyle;
+        const themeString = localStorage.getItem("jigsawDemoTheme");
+        if (themeString === null) {
+            themeName = 'paletx-pro';
+            majorStyle = 'light';
+        } else {
+            const themeData = JSON.parse(themeString);
+            themeName = themeData.name;
+            majorStyle = themeData.majorStyle;
+        }
+        JigsawTheme.changeTheme(themeName, majorStyle);
     }
 }

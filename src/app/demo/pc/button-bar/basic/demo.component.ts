@@ -21,7 +21,7 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         {label: "成功", id: 1, icon: 'iconfont iconfont-e142'},
         {label: "错误", id: 2, icon: 'iconfont iconfont-e132'},
         {label: "警告", id: 3, icon: 'iconfont iconfont-e1a5'},
-        {label: "信息", id: 4, icon: 'iconfont iconfont-e23e'}
+        {label: "信息", id: 4, icon: 'iconfont iconfont-e22c'}
     ]);
     unlabeledTypes = this.types.map(t => ({id: t.id, icon: t.icon, label: ''}));
     selectedTypes = [{id: 4}];

@@ -1,0 +1,68 @@
+import {ChangeDetectionStrategy, Component, forwardRef, OnInit} from "@angular/core";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {JigsawSelectGroupBase} from "./select-base";
+import { CommonUtils } from '../../common/core/utils/common-utils';
+
+@Component({
+    selector: "jigsaw-group-select, j-group-select",
+    templateUrl: "select-group.html",
+    host: {
+        "[class.jigsaw-group-select-host]": "true",
+        "[class.jigsaw-select-single-select]": "!multipleSelect",
+        "[class.jigsaw-select-multiple-select]": "multipleSelect",
+        "[class.jigsaw-select-show-statistics]": "useStatistics",
+        "[style.min-width]": 'multipleSelect ? minWidth : "none"',
+        "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
+        "[style.width]": '!multipleSelect ? width : "none"'
+    },
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelectGroup), multi: true }],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
+    /**
+     * select分组下拉的类型，用于给float添加class进行样式控制
+     * @internal
+     */
+    public _$type = "group";
+
+    ngOnInit() {
+        super.ngOnInit();
+        // 设置默认选中的初始值
+        if (CommonUtils.isDefined(this.value)) {
+            this.writeValue(this.value, false);
+            this._$checkSelectAll();
+        }
+    }
+}
+
+@Component({
+    selector: "jigsaw-collapse-select, j-select-collapse",
+    templateUrl: "select-group.html",
+    host: {
+        "[class.jigsaw-collapse-select-host]": "true",
+        "[class.jigsaw-select-single-select]": "!multipleSelect",
+        "[class.jigsaw-select-multiple-select]": "multipleSelect",
+        "[class.jigsaw-select-show-statistics]": "useStatistics",
+        "[style.min-width]": 'multipleSelect ? minWidth : "none"',
+        "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
+        "[style.width]": '!multipleSelect ? width : "none"'
+    },
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelectCollapse), multi: true }],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class JigsawSelectCollapse extends JigsawSelectGroupBase implements OnInit {
+    /**
+     * select分组下拉的类型，用于给float添加class进行样式控制
+     * @internal
+     */
+    public _$type = "collapse";
+
+    ngOnInit() {
+        super.ngOnInit();
+        // 设置默认选中的初始值
+        if (CommonUtils.isDefined(this.value)) {
+            this.writeValue(this.value, false);
+            this._$checkSelectAll();
+        }
+    }
+}

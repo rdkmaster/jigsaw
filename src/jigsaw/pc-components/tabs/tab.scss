@@ -92,6 +92,14 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             }
         }
 
+        .#{$tab-prefix}-bar-add-option {
+            display: flex;
+            justify-content: center;
+            span {
+                margin-right: 6px;
+            }
+        }
+
         .jigsaw-list-option {
             .span-margin {
                 margin: 0 4px;
@@ -124,6 +132,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
         .#{$tab-prefix}-ink-bar {
             position: absolute;
+            display: block;
             z-index: $zindex-level-1;
             left: 0;
             bottom: -1px;
@@ -160,9 +169,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
 
                 .#{$tab-prefix}-tab-disabled {
-                    pointer-events: none;
-                    cursor: default;
                     color: $font-color-disabled;
+                    cursor: not-allowed !important;
+                    pointer-events: none;
                 }
 
                 jigsaw-tab-label {
@@ -202,6 +211,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
                     span.iconfont {
                         margin-right: 6px;
+                        line-height: 50%;
                     }
 
                     a:hover {
@@ -239,6 +249,69 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
             &-hidden {
                 display: none;
+            }
+        }
+    }
+}
+
+.#{$tab-prefix}-page {
+    .#{$tab-prefix}-bar {
+        position: relative;
+        border: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 1px;
+            width: 100%;
+            background: $border-color-default;
+            z-index: -1;
+        }
+    }
+
+    .#{$tab-prefix}-nav-container {
+        .#{$tab-prefix}-ink-bar {
+            visibility: hidden;
+        }
+
+        .#{$tab-prefix}-nav-wrap {
+            .#{$tab-prefix}-nav {
+                .#{$tab-prefix}-tab {
+                    border-width: 1px;
+                    border-style: solid;
+                    border-color: $border-color-default;
+                    border-radius: $border-radius-base;
+                    margin-right: 2px;
+                    padding: 0 16px;
+                    line-height: 32px;
+
+                    &-active {
+                        border-top-width: 2px;
+                        border-top-color: $brand-default;
+                        border-bottom-color: $bg-body;
+                    }
+                }
+
+                .#{$tab-prefix}-tab-disabled {
+                    background: $bg-disabled;
+                }
+            }
+        }
+    }
+
+    &.#{$tab-prefix}-editable {
+        .#{$tab-prefix}-remove-bar {
+            right: 4px;
+        }
+
+        .#{$tab-prefix}-nav-container {
+            .#{$tab-prefix}-nav-wrap {
+                .#{$tab-prefix}-nav {
+                    .#{$tab-prefix}-tab {
+                        padding-right: 20px;
+                    }
+                }
             }
         }
     }

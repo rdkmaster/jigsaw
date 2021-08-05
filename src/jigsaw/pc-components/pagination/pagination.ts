@@ -1,19 +1,32 @@
 import {
-    NgModule, Component, Input, Output, EventEmitter, OnInit,
-    QueryList, ViewChildren, Optional, forwardRef, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Injector
-} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+    NgModule,
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    QueryList,
+    ViewChildren,
+    Optional,
+    forwardRef,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Injector
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import {JigsawSelectModule} from '../select/select';
-import {JigsawInput, JigsawInputModule} from '../input/input';
-import {AbstractJigsawComponent} from "../../common/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {IPageable, PagingInfo} from "../../common/core/data/component-data";
-import {CommonUtils} from "../../common/core/utils/common-utils";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import { JigsawSelectModule } from "../select/index";
+import { JigsawInputModule } from "../input/input";
+import { AbstractJigsawComponent } from "../../common/common";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
+import { TranslateHelper } from "../../common/core/utils/translate-helper";
+import { IPageable, PagingInfo } from "../../common/core/data/component-data";
+import { CommonUtils } from "../../common/core/utils/common-utils";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { JigsawSearchInputModule, JigsawSearchInput } from "../input/search-input";
 
 export class PageSizeData {
     value: number;
@@ -21,41 +34,49 @@ export class PageSizeData {
 }
 
 @Component({
-    selector: 'jigsaw-pagination, j-pagination',
-    templateUrl: 'pagination.html',
+    selector: "jigsaw-pagination, j-pagination",
+    templateUrl: "pagination.html",
     host: {
-        '[style.width]': 'width',
-        '[style.height]': 'height',
-        '[class.jigsaw-paging]': 'true',
-        '[class.jigsaw-paging-small]': 'mode == "simple"'
+        "[style.width]": "width",
+        "[style.height]": "height",
+        "[class.jigsaw-paging]": "true",
+        "[class.jigsaw-paging-simple]": 'mode == "simple"',
+        "[class.jigsaw-paging-complex]": 'mode == "complex" || mode == "folding"',
+        "[class.jigsaw-paging-small]": 'size == "small"',
+        "[class.jigsaw-paging-medium]": 'size == "medium"',
+        "[class.jigsaw-paging-large]": 'size == "large"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawPagination extends AbstractJigsawComponent implements OnInit, AfterViewInit {
-    constructor(private _translateService: TranslateService,
-                private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
-        super()
+    constructor(
+        private _translateService: TranslateService,
+        private _changeDetectorRef: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector
+    ) {
+        super();
     }
 
     private _totalRecord: number; // 数据总数
     private _totalPage: number;
-    private _showPages: number[] = [];
     private _firstPage: JigsawPagingItem;
     private _lastPage: JigsawPagingItem;
     private _pageSizeOptions: any[];
 
     /**
      * @internal
+     * 需要显示的分页按钮数字集合
      */
-    public _$pageSize: PageSizeData = {
-        value: null, label: 'null/' + this._translateService.instant('pagination.page')
-    };
+    public _$pageNums: number[] = [];
+
     /**
      * @internal
      */
-    public _$pageNumbers: number[] = [];
+    public _$pageSize: PageSizeData = {
+        value: null,
+        label: "null/" + this._translateService.instant("pagination.page")
+    };
 
     /**
      * @internal
@@ -80,7 +101,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public set data(value: IPageable) {
         if (CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
         this._data = value;
-        if (typeof this._data.onRefresh == 'function') {
+        if (typeof this._data.onRefresh == "function") {
             this._data.onRefresh(() => {
                 this._renderPages();
             });
@@ -94,16 +115,16 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     @Input()
     public get pageSizeOptions() {
-        return this._pageSizeOptions
+        return this._pageSizeOptions;
     }
 
     public set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
         (newValue || []).forEach(num => {
-            let option = {value: num, label: num + '/' + this._translateService.instant('pagination.page')};
+            let option = { value: num, label: num + "/" + this._translateService.instant("pagination.page") };
             this._pageSizeOptions.push(option);
         });
-    };
+    }
 
     /**
      * 搜索功能开关
@@ -117,29 +138,53 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @RequireMarkForCheck()
     @Input()
     public showQuickJumper: boolean = false;
+
     /**
-     * 当为「small」时，是小尺寸分页
+     * 当为「simple」时，是小尺寸分页
      */
     @RequireMarkForCheck()
     @Input()
-    public mode: 'complex' | 'simple' = 'complex';
+    public mode: "complex" | "simple" | "folding" = "complex";
+
     /**
-     * 搜索框的提示信息
+     * 设置分页的size大小
+     *
+     * @NoMarkForCheckRequired
      */
-    @RequireMarkForCheck()
     @Input()
-    public placeholder: string = '';
+    public size: "small" | "medium" | "large" = "medium";
+
+    /**
+     * search事件
+     */
+    @Output()
+    public search = new EventEmitter<string>();
+
+    /**
+     * @internal
+     * @param $event
+     */
+    public _$searchEvent($event) {
+        this.search.emit($event);
+    }
 
     /**
      * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
      * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
+     *
+     * @NoMarkForCheckRequired
      */
-    @RequireMarkForCheck()
     @Input()
-    public searchDebounce: number | 'none' = NaN;
+    public searchDebounce: number | "none" = NaN;
 
-    @Output()
-    public search = new EventEmitter<string>();
+    /**
+     * 设置搜索模式（自动/手动）
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public autoSearch: boolean = true;
+
     /**
      * 页码改变的事件
      */
@@ -154,57 +199,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @ViewChildren(forwardRef(() => JigsawPagingItem))
     private _pages: QueryList<JigsawPagingItem> = null;
 
-    @ViewChildren(JigsawInput)
-    public inputs: QueryList<JigsawInput>;
-
-    /**
-     * @internal
-     */
-    public _$searchKeyChange($event) {
-        if (this._isValidSearchDebounce()) {
-            // 输入3000ms没有回车也会发一次事件
-            this._debounceSearch($event);
-        } else {
-            this.search.emit($event)
-        }
-    }
-
-    private _isValidSearchDebounce() {
-        return this.searchDebounce && this.searchDebounce != 'none' && !isNaN(this.searchDebounce) && Number(this.searchDebounce) > 0
-    }
-
-    /**
-     * @internal
-     */
-    public _$searchKey: string;
-
-    /**
-     * @internal
-     */
-    public _$enterSearch($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        if (this._isValidSearchDebounce()) {
-            this._clearSearchTimer();
-            this.search.emit(this._$searchKey);
-        }
-    }
-
-    private _searchTimer: number;
-
-    private _debounceSearch(key: string) {
-        this._clearSearchTimer();
-        this._searchTimer = this.callLater(() => {
-            this.search.emit(key);
-        }, this.searchDebounce)
-    }
-
-    private _clearSearchTimer() {
-        if (this._searchTimer) {
-            clearTimeout(this._searchTimer);
-            this._searchTimer = null;
-        }
-    }
+    @ViewChildren(JigsawSearchInput)
+    private _inputs: QueryList<JigsawSearchInput>;
 
     private _current: number;
 
@@ -212,8 +208,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 当前页
      */
     public get current(): number {
-        return this._current
-    };
+        return this._current;
+    }
 
     public set current(newValue: number) {
         newValue = newValue ? newValue : 1; //双绑初始值为undefined或null时，设默认值为1
@@ -239,7 +235,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         if (this.pageSize != newValue) {
             this._$pageSize = {
                 value: newValue,
-                label: newValue + '/' + this._translateService.instant('pagination.page')
+                label: newValue + "/" + this._translateService.instant("pagination.page")
             };
             this.pageSizeChange.emit(newValue);
             if (this.data.pagingInfo.pageSize != newValue) {
@@ -250,21 +246,17 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     /**
-     * 根据current设置page按钮的显示，上一页，下一页，上五页，下五页的显示
+     * 根据current更新PageItem组件的显示，上一页，下一页，上五页，下五页，当前页
      * */
-    private _setCurrentShow() {
-        //page显示形式
-        this._pageShow();
-
+    private _updatePageItems() {
+        // 找到第一个和最后一个PageItem组件
+        this._setFirstLastPageItem();
         //prevPages nextPages 显示
         this._showPrevAndNextBtn();
-
         //prevPage nextPage 不可点
         this._updatePrevAndNextStatus();
-
         //设置当前页
         this._setCurrentPage();
-
     }
 
     /**
@@ -273,29 +265,53 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _setCurrentPage(): void {
         this._pages.forEach(page => {
             page.current = page.pageNumber == this.current;
+            page._changeDetectorRef.markForCheck();
         });
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
      * 根据current控制page显示
      * */
-    private _pageShow(): void {
-        if (this._totalPage > 10) {
-            if (this.current <= 3) {
-                this._showPages = [1, 2, 3, 4, 5, this._totalPage];
-            } else if (this.current >= this._totalPage - 2) {
-                this._showPages = [1, this._totalPage - 4, this._totalPage - 3, this._totalPage - 2, this._totalPage - 1, this._totalPage];
+    private _setPageNums(): void {
+        if (this.mode === "folding") {
+            if (this._totalPage > 10) {
+                if (this.current <= 3) {
+                    this._$pageNums = [1, 2, 3, 4, 5, this._totalPage];
+                } else if (this.current >= this._totalPage - 2) {
+                    this._$pageNums = [
+                        1,
+                        this._totalPage - 4,
+                        this._totalPage - 3,
+                        this._totalPage - 2,
+                        this._totalPage - 1,
+                        this._totalPage
+                    ];
+                } else {
+                    this._$pageNums = [1, this.current - 1, this.current, this.current + 1, this._totalPage];
+                }
             } else {
-                this._showPages = [1, this.current - 2, this.current - 1, this.current, this.current + 1, this.current + 2, this._totalPage];
+                // 小于10页不需要省略显示
+                this._$pageNums = Array.from(new Array(this._totalPage)).map((item, index) => ++index);
             }
-            this._pages.forEach(page => {
-                this._showPages.indexOf(page.pageNumber) != -1 ? page.show() : page.hide();
-            });
         } else {
-            this._pages.forEach(page => {
-                page.show();
-            });
+            if (this._totalPage > 5) {
+                if (this.current >= this._totalPage - 2) {
+                    this._$pageNums = [
+                        this._totalPage - 4,
+                        this._totalPage - 3,
+                        this._totalPage - 2,
+                        this._totalPage - 1,
+                        this._totalPage
+                    ];
+                } else if (this.current <= 3) {
+                    this._$pageNums = [1, 2, 3, 4, 5];
+                } else {
+                    this._$pageNums = [this.current - 2, this.current - 1, this.current, this.current + 1, this.current + 2];
+                }
+            } else {
+                // 小于10页不需要省略显示
+                this._$pageNums = Array.from(new Array(this._totalPage)).map((item, index) => ++index);
+            }
         }
         this._changeDetectorRef.markForCheck();
     }
@@ -305,19 +321,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pagePrev(): void {
-        if (this.mode == 'simple') {
-            if (this.current == 1) return;
-            this.current--;
-        } else {
-            let pageCur = this._pages.find(page => page.current == true);
-            if (!pageCur) return;
-            let pageNum = pageCur.pageNumber;
-            if (pageNum == 1) return;
-            pageCur.cancelCurrent();
-            pageNum -= 1;
-            this._pages.find(page => page.pageNumber == pageNum).setCurrent();
-            this.current = pageNum;
+        if (this.current == 1) {
+            return;
         }
+        this.current--;
         this._changeDetectorRef.markForCheck();
     }
 
@@ -326,19 +333,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      */
     public _$pageNext(): void {
-        if (this.mode == 'simple') {
-            if (this.current == this._totalPage) return;
-            this.current++;
-        } else {
-            let pageCur = this._pages.find(page => page.current == true);
-            if (!pageCur) return;
-            let pageNum = pageCur.pageNumber;
-            if (pageNum == this._totalPage) return;
-            pageCur.cancelCurrent();
-            pageNum += 1;
-            this._pages.find(page => page.pageNumber == pageNum).setCurrent();
-            this.current = pageNum;
+        if (this.current == this._totalPage) {
+            return;
         }
+        this.current++;
         this._changeDetectorRef.markForCheck();
     }
 
@@ -346,13 +344,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 下五页
      * */
     public pagesNext(): void {
-        let pageCur = this._pages.find(page => page.current == true);
-        if (!pageCur) return;
-        pageCur.cancelCurrent();
-        let pageNum = pageCur.pageNumber;
-        pageNum = pageNum + 5;
-        if (pageNum > this._totalPage) pageNum = this._totalPage;
-        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
+        let pageNum = this.current + 5;
+        pageNum = pageNum > this._totalPage ? this._totalPage : pageNum;
         this.current = pageNum;
         this._changeDetectorRef.markForCheck();
     }
@@ -361,13 +354,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 上五页
      * */
     public pagesPrev(): void {
-        let pageCur = this._pages.find(page => page.current == true);
-        if (!pageCur) return;
-        pageCur.cancelCurrent();
-        let pageNum = pageCur.pageNumber;
-        pageNum = pageNum - 5;
-        if (pageNum < 1) pageNum = 1;
-        this._pages.find(page => page.pageNumber == pageNum).setCurrent();
+        let pageNum = this.current - 5;
+        pageNum = pageNum < 1 ? 1 : pageNum;
         this.current = pageNum;
         this._changeDetectorRef.markForCheck();
     }
@@ -376,29 +364,38 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 显示上五页、下五页按钮
      * */
     private _showPrevAndNextBtn(): void {
-        if (this._totalPage <= 10) {
-            if (this._firstPage) this._firstPage.showPrev = false;
-            if (this._lastPage) this._lastPage.showNext = false;
-        } else if (this.current <= 4) {
-            if (this._firstPage) this._firstPage.showPrev = false;
-            if (this._lastPage) this._lastPage.showNext = true;
-        } else if (this.current >= this._totalPage - 3) {
-            if (this._firstPage) this._firstPage.showPrev = true;
-            if (this._lastPage) this._lastPage.showNext = false;
-        } else {
-            if (this._firstPage) this._firstPage.showPrev = true;
-            if (this._lastPage) this._lastPage.showNext = true;
+        if (!this._firstPage || !this._lastPage) {
+            return;
         }
-        this._changeDetectorRef.markForCheck();
+        if (this._totalPage <= 10) {
+            this._firstPage.showPrev = false;
+            this._lastPage.showNext = false;
+        } else if (this.current == 4) {
+            this._firstPage.showPrev = true;
+            this._lastPage.showNext = true;
+        } else if (this.current < 4) {
+            this._firstPage.showPrev = false;
+            this._lastPage.showNext = true;
+        } else if (this.current > this._totalPage - 3) {
+            this._firstPage.showPrev = true;
+            this._lastPage.showNext = false;
+        } else if (this.current == this._totalPage - 3) {
+            this._firstPage.showPrev = true;
+            this._lastPage.showNext = true;
+        } else {
+            this._firstPage.showPrev = true;
+            this._lastPage.showNext = true;
+        }
+        this._firstPage._changeDetectorRef.markForCheck();
+        this._lastPage._changeDetectorRef.markForCheck();
     }
 
     /**
      * 获取第一个和最后一个page组件实例
      * */
-    private _getFirstAndLastPage(): void {
+    private _setFirstLastPageItem(): void {
         this._firstPage = this._pages.find(page => page.pageNumber == 1);
         this._lastPage = this._pages.find(page => page.pageNumber == this._totalPage);
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -428,10 +425,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public _goto(pageNum): void {
         pageNum = parseInt(pageNum);
         if (pageNum <= this._totalPage && pageNum >= 1) {
-            if (this.mode != 'simple') {
-                this._pages.find(page => page.current == true).cancelCurrent();
-                this._pages.find(page => page.pageNumber == pageNum).setCurrent();
-            }
             this.current = pageNum;
         }
         this._changeDetectorRef.markForCheck();
@@ -453,8 +446,15 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 渲染page按钮
      * */
     private _renderPages(): void {
-        if (!this.data || !this.data.pagingInfo) return;
+        if (!this.data || !this.data.pagingInfo) {
+            return;
+        }
+        this._calcPagingInfo();
+        this._showPages();
+        this._changeDetectorRef.markForCheck();
+    }
 
+    private _calcPagingInfo() {
         this.current = this.data.pagingInfo.currentPage;
         this._totalRecord = this.data.pagingInfo.totalRecord;
         this.pageSize = this.data.pagingInfo.pageSize;
@@ -465,19 +465,21 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             this._totalPage = 0;
         }
 
-        let pageNumbers = [];
-        for (let i = 0; i < this._totalPage; i++) {
-            pageNumbers.push(i + 1);
-        }
-        this._$pageNumbers = pageNumbers;
-
         //验证current合法性
         if (this.current <= 0 || this.current > this._totalPage) {
             this.current = 1;
         }
+    }
+
+    /**
+     * 根据数据显示分页按钮
+     * @private
+     */
+    private _showPages() {
+        this._setPageNums();
         this.runMicrotask(() => {
-            this._getFirstAndLastPage();
-            this._setCurrentShow();
+            // 等待_$pageNums渲染组件
+            this._updatePageItems();
         });
         this._changeDetectorRef.markForCheck();
     }
@@ -486,8 +488,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * 刷新数据时清空搜索框
      */
     public reset() {
-        if (!this.inputs) return;
-        this.inputs.forEach(input => input.value = '');
+        if (!this._inputs) {
+            return;
+        }
+        this._inputs.forEach(input => (input.value = ""));
     }
 
     ngOnInit() {
@@ -506,8 +510,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
             if (this._$pageSize) {
                 this._$pageSize = {
                     value: this._$pageSize.value,
-                    label: this._$pageSize.value + '/' + this._translateService.instant('pagination.page')
-                }
+                    label: this._$pageSize.value + "/" + this._translateService.instant("pagination.page")
+                };
             }
         });
     }
@@ -520,10 +524,10 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                     page.showPrev = false;
                     page.showNext = false;
                     page.current = false;
+                    page._changeDetectorRef.markForCheck();
                 });
-
-                this._getFirstAndLastPage();
-                this._setCurrentShow();
+                // 需要用到PageItem组件
+                this._updatePageItems();
             });
         });
     }
@@ -533,13 +537,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
  * @internal
  */
 @Component({
-    selector: 'jigsaw-paging-item, j-paging-item',
-    templateUrl: 'pagination-item.html',
+    selector: "jigsaw-paging-item, j-paging-item",
+    templateUrl: "pagination-item.html",
     host: {
-        '(click)': '_onClick()',
-        '[class.jigsaw-page-current]': 'current',
-        '[class.jigsaw-page-hidden]': '!_isShow',
-        '[class.jigsaw-page-item]': 'true'
+        "(click)": "_onClick()",
+        "[class.jigsaw-page-current]": "current",
+        "[class.jigsaw-page-item]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -548,10 +551,6 @@ export class JigsawPagingItem {
     public showPrev: boolean = false;
     public showNext: boolean = false;
 
-    /**
-     * @internal
-     */
-    public _isShow: boolean = false;
     private _pagination: JigsawPagination;
 
     /**
@@ -560,7 +559,11 @@ export class JigsawPagingItem {
     @Input()
     public pageNumber: number;
 
-    constructor(@Optional() pagination: JigsawPagination, private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(@Optional() pagination: JigsawPagination,
+                /**
+                 * @internal
+                 */
+                public _changeDetectorRef: ChangeDetectorRef) {
         this._pagination = pagination;
     }
 
@@ -572,26 +575,6 @@ export class JigsawPagingItem {
             this._pagination.current = this.pageNumber;
             this._changeDetectorRef.markForCheck();
         }
-    }
-
-    public setCurrent(): void {
-        this.current = true;
-        this._changeDetectorRef.markForCheck();
-    }
-
-    public cancelCurrent(): void {
-        this.current = false;
-        this._changeDetectorRef.markForCheck();
-    }
-
-    public show(): void {
-        this._isShow = true;
-        this._changeDetectorRef.markForCheck();
-    }
-
-    public hide(): void {
-        this._isShow = false;
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -612,28 +595,30 @@ export class JigsawPagingItem {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawSelectModule, JigsawInputModule, TranslateModule.forChild()],
+    imports: [
+        CommonModule,
+        FormsModule,
+        JigsawSelectModule,
+        JigsawInputModule,
+        JigsawSearchInputModule,
+        TranslateModule.forChild()
+    ],
     declarations: [JigsawPagination, JigsawPagingItem],
     exports: [JigsawPagination],
-    providers: [TranslateService],
+    providers: [TranslateService]
 })
 export class JigsawPaginationModule {
-
     constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'pagination', {
+        InternalUtils.initI18n(translateService, "pagination", {
             zh: {
                 page: "页",
-                goto: '前往'
+                goto: "前往"
             },
             en: {
-                page: 'Page',
-                goto: 'Goto'
+                page: "Page",
+                goto: "Goto"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
     }
-
 }
-
-
-

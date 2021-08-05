@@ -4,8 +4,11 @@
 
 
 <!-- start to learn the demo from here -->
-<h4>step</h4>
+<h4 style="font-size: 20px; margin-bottom: 20px;">step</h4>
 
-<jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" gr="second" [step]="5"></jigsaw-range-date-time-picker><br>
+<jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" gr="second" [step]="5">
+</jigsaw-range-date-time-picker><br>
 
-<p>BeginDate : {{beginDate | json}} , EndDate : {{endDate| json}}</p>
+<p style="font-size: 14px; margin: 10px 0 20px 0">
+    BeginDate : {{beginDate | json}} , EndDate : {{endDate| json}}
+</p>

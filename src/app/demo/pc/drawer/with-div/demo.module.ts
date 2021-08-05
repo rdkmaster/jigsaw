@@ -7,11 +7,13 @@ import {
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DrawerWithDivDemoComponent} from "./demo.component";
 
+import {JigsawHeaderModule} from "jigsaw/public_api";
+
 @NgModule({
     imports: [
         JigsawDrawerModule, JigsawRadioModule, JigsawButtonModule, CommonModule,
         JigsawDemoDescriptionModule, JigsawTabsModule, JigsawInputModule
-    ],
+    , JigsawHeaderModule],
     declarations: [DrawerWithDivDemoComponent],
     exports: [DrawerWithDivDemoComponent]
 })

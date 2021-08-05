@@ -25,9 +25,6 @@ export const routerConfig = [
         path: 'add-remove', component: TagAddRemoveDemoComponent
     },
     {
-        path: 'disabled', component: TagSelectableDemoComponent
-    },
-    {
         path: 'with-icon', component: TagWithIconDemoComponent
     },
 ];

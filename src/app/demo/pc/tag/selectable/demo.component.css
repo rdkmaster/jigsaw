@@ -1,0 +1,12 @@
+.section-container {
+    margin-bottom: 10px;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+
+}
+.align-center jigsaw-tag {
+    margin-right: 10px;
+}

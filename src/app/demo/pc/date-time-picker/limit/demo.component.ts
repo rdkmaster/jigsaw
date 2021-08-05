@@ -3,18 +3,14 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
-        h4 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        p {
+        .live-demo-wrap p {
             font-size: 14px;
             margin: 10px 0 20px 0
         }
     `]
 })
 export class DateTimePickerLimitComponent {
+    showConfirmButton = false;
     date1 = "now";
     limitStartList = ['now-1d', 'now-5d', 'now-10d'];
     limitEndList = ['now', 'now+5d', 'now+10d'];

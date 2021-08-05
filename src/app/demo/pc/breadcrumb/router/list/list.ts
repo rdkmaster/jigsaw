@@ -5,7 +5,7 @@ import {ProductService} from "../product.service";
 
 @Component({
     template: `
-        <ul>
+        <ul class="demo-container">
             <li *ngFor="let product of productList">
                 <a routerLink="/pc/breadcrumb/router/detail/{{product.id}}">{{product.name}}
                 </a>
@@ -13,7 +13,7 @@ import {ProductService} from "../product.service";
         </ul>
     `,
     styles: [`
-        li:focus {
+        .demo-container li:focus {
             outline: none;
         }
     `]

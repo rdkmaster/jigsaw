@@ -60,7 +60,7 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             }
 
             &.active {
-                background-color: $brand-light;
+                background-color: $brand-lighten;
                 color: $brand-default;
                 border-color: $brand-default;
             }
@@ -85,5 +85,9 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
             z-index: $zindex-level-1;
             cursor: not-allowed;
         }
+    }
+
+    &-confirm {
+        max-width: 60px;
     }
 }

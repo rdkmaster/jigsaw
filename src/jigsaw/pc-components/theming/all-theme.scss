@@ -6,6 +6,7 @@
 @import "../alert/common-alert";
 @import "../../common/components/block/block";
 @import "../button/button";
+@import "../list-and-tile/button-bar.scss";
 @import "../checkbox/checkbox";
 @import "../collapse/collapse";
 @import "../combo-select/combo-select";
@@ -14,6 +15,7 @@
 @import "../input/input";
 @import "../input/numeric-input";
 @import "../input/prefix-suffix-widget";
+@import "../input/search-input";
 @import "../../common/components/loading/loading-ring";
 @import "../../common/components/loading/loading-font";
 @import "../../common/components/loading/loading-bubble";
@@ -44,7 +46,7 @@
 @import "../drawer/drawer";
 @import "../cascade/cascade";
 @import "../input/auto-complete-input";
-@import "../upload/upload";
+@import "../upload/upload-result";
 @import "../icon/icon";
 @import "../transfer/transfer";
 @import "../textarea/textarea";
@@ -63,5 +65,12 @@
 @import "../../common/directive/badge/badge";
 @import "../../common/directive/tooltip/tooltip";
 @import "../menu/navigation-menu";
-@import "../date-and-time/time-section";
+@import "../date-and-time/time-section"; 
 @import "../header/header";
+@import "../tree/tree";
+
+/* fall back components */
+@import "../fallback/steps/steps.scss";
+@import "../fallback/steps/steps-multiline";
+@import "../fallback/upload/upload";
+

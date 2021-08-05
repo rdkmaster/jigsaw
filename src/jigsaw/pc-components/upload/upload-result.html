@@ -1,0 +1,38 @@
+<jigsaw-collapse class="jigsaw-upload-result-collapse" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+    <jigsaw-collapse-pane
+        *ngFor="let file of files"
+        class="jigsaw-upload-result-log"
+        [class.jigsaw-upload-result-error]="file.state === 'error'" (transitionend)="_$paneAnimationEnd($event)"
+    >
+        <div jigsaw-title class="jigsaw-upload-result-log-header">
+            <i class="iconfont iconfont-e9d5 file-icon"></i>
+            <span class="file-name">
+                {{file.name}}
+            </span>
+            <jigsaw-font-loading *ngIf="file.state == 'loading' || file.state == 'pause'"
+                                 width="16px" height="16px" color="#666">
+            </jigsaw-font-loading>
+            <i
+                *ngIf="file.state === 'error'"
+                class="iconfont iconfont-ea4e error-icon"
+            ></i>
+            <i class="iconfont iconfont-e9b8 delete-icon" (click)="this._$removeFile(file)"></i>
+        </div>
+        <div jigsaw-body class="jigsaw-upload-result-log-detail">
+            <jigsaw-progress
+                class="jigsaw-upload-result-log-progress"
+                [value]="file.progress ? file.progress : 0"
+                preSize="small"
+                status="processing"
+            ></jigsaw-progress>
+            <span class="jigsaw-upload-result-re-upload" *ngIf="!_$checkRetry(file) && file.state === 'error'"
+                  (click)="this.uploader.retryUpload(file)">重新上传</span>
+            <ul>
+                <li *ngFor="let log of file.log">
+                    <span class="detail-time" [jigsawTooltip]="log.time">{{log.time.split(" ")[1]}}</span>
+                    <span class="detail-content" [title]="log.content">{{log.content}}</span>
+                </li>
+            </ul>
+        </div>
+    </jigsaw-collapse-pane>
+</jigsaw-collapse>

@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {JigsawSwitchModule} from "jigsaw/public_api";
+import {JigsawSwitchModule, JigsawHeaderModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {SwitchBasicDemoComponent} from './demo.component';
 
 @NgModule({
-    imports: [JigsawSwitchModule, JigsawDemoDescriptionModule],
+    imports: [JigsawSwitchModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
     declarations: [SwitchBasicDemoComponent],
     exports: [SwitchBasicDemoComponent]
 })

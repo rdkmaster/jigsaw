@@ -1,6 +1,6 @@
 <div class="jigsaw-combo-select"
      [class.jigsaw-combo-select-disabled]="disabled"
-     (click)="$event.preventDefault();$event.stopPropagation();"
+     (click)="_$onClick($event)"
      jigsaw-float
      [jigsawFloatOpenTrigger]="openTrigger"
      [jigsawFloatCloseTrigger]="closeTrigger"
@@ -14,8 +14,7 @@
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"
                         [closable]='tagItem?.closable'
-                        [showBorder]="showValueBorder"
-                        (select)="_$tagClick(tagItem)"
+                        (selectChange)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
                 {{tagItem && tagItem[labelField] ? tagItem[labelField] : tagItem}}
             </jigsaw-tag>

@@ -1,0 +1,8 @@
+@import "../../../common/core/theming/prebuilt/settings/paletx-pro-base.scss";
+@import "../../../common/core/theming/prebuilt/settings/vmax-base.scss";
+@import "../../../common/core/theming/prebuilt/settings/vmax-light.scss";
+@import "../all-theme";
+// 下面这些文件使用npm start或者编译的时候，会自动被extract-theme-variables.js创建出来
+@import "../../../common/core/theming/prebuilt/extraction/paletx-pro-base.scss";
+@import "../../../common/core/theming/prebuilt/extraction/vmax-base.scss";
+@import "../../../common/core/theming/prebuilt/extraction/vmax-light.scss";

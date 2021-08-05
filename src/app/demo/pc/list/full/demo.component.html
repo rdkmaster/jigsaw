@@ -5,11 +5,11 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <h2>List</h2>
+    <jigsaw-header [level]="1">List</jigsaw-header>
 
     <div class="clearfix">
         <div class="demo-1 live-demo live-demo-block">
-            <h3>基础用法</h3>
+            <jigsaw-header [level]="2">基础用法</jigsaw-header>
             <j-list width="200" trackItemBy="name" (selectedItemsChange)="handleSelect($event)">
                 <j-list-option *ngFor="let goods of goodsList" [value]="goods">
                     {{goods.name}}
@@ -18,7 +18,7 @@
             <p class="message">选中的条目是: <span>{{selectedItems1}}</span></p>
         </div>
         <div class="demo-2 live-demo live-demo-block">
-            <h3>伪装成菜单</h3>
+            <jigsaw-header [level]="2">伪装成菜单</jigsaw-header>
             <j-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect2($event)">
                 <j-list-option *ngFor="let title of titles" [value]="title">
                     <span j-title>{{title.title}}</span>
@@ -32,12 +32,12 @@
 
     <div class="clearfix">
         <div class="demo-3 live-demo live-demo-block">
-            <h3>多组件复合用法</h3>
+            <jigsaw-header [level]="2">多组件复合用法</jigsaw-header>
             <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems3"
                     (selectedItemsChange)="handleSelect3($event)" #listGroup>
                 <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
                     <div class="goods-box">
-                        <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"
+                        <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled" mode="minimalist"
                                     (checkedChange)="listGroup.update(goods, $event)"></j-checkbox>
                         <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                         <p>{{goods.desc}}</p>
@@ -47,14 +47,14 @@
             <p class="message">选中的菜单是: <span>{{selectedItemsStr3}}</span></p>
         </div>
         <div class="demo-4 live-demo live-demo-block">
-            <h3>与combo-select组合使用</h3>
+            <jigsaw-header [level]="2">与combo-select组合使用</jigsaw-header>
             <j-combo-select [(value)]="selectedItems4" [clearable]="true" maxWidth="500" labelField="name">
                 <ng-template>
                     <j-list [multipleSelect]="true" trackItemBy="name" [(selectedItems)]="selectedItems4">
                         <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods"
                                        [disabled]="goods.disabled">
                             <div class="goods-box">
-                                <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"></j-checkbox>
+                                <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled" mode="minimalist"></j-checkbox>
                                 <span class="logo iconfont iconfont-{{goods.logo}}"></span>
                                 <p>{{goods.desc}}</p>
                             </div>
@@ -64,7 +64,7 @@
             </j-combo-select>
         </div>
         <div class="demo-5 live-demo live-demo-block">
-            <h3>disabled属性为true</h3>
+            <jigsaw-header [level]="2">disabled属性为true</jigsaw-header>
             <j-list width="200" trackItemBy="name" (selectedItemsChange)="handleSelect($event)" [disabled]="true">
                 <j-list-option *ngFor="let goods of goodsList" [value]="goods">
                     {{goods.name}}

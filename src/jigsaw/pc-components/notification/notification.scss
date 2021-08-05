@@ -55,9 +55,11 @@
                 font-size: $font-title-med;
                 color: $font-color-heading;
                 margin-bottom: 6px;
+                padding-right: 8px;
             }
 
             .jigsaw-notification-message {
+                padding-right: 8px;
                 word-wrap: break-word;
                 font-size: $font-size-base;
                 color: $font-color-tag;

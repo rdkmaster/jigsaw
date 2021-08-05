@@ -14,7 +14,7 @@ export class CheckBoxFullComponent {
     demo2Checked = CheckBoxStatus.indeterminate;
 
     //demo-3
-    demo3Checked = CheckBoxStatus.unchecked;
+    demo3Checked = CheckBoxStatus.checked;
     enabled: boolean;
 
     // ====================================================================

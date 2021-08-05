@@ -2,10 +2,18 @@
  * Created by 10177553 on 2017/4/13.
  */
 import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
-    EventEmitter, forwardRef, Host, Inject,
-    Input, NgZone,
+    EventEmitter,
+    forwardRef,
+    Host,
+    HostListener,
+    Inject,
+    Injector,
+    Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -13,14 +21,11 @@ import {
     Renderer2,
     ViewChildren,
     ViewEncapsulation,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Injector, ViewChild
+    ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {CommonUtils} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTooltip} from "../../common/directive/tooltip/tooltip";
@@ -46,6 +51,11 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
     private _value: number;
 
     /**
+     * @internal
+     */
+    public _$tooltipRenderHtml: string;
+
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -62,6 +72,7 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
     public set value(value) {
         this._value = this._slider._verifyValue(value);
         this._valueToPos();
+        this._$tooltipRenderHtml = `<div style="word-break: normal;">${this._value}</div>`
     }
 
     /**
@@ -89,23 +100,21 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
         if (isNaN(this._offset)) {
             return;
         }
-        this._zone.runOutsideAngular(() => {
-            // 兼容垂直滑动条;
-            if (this._slider.vertical) {
-                this._$handleStyle = {
-                    bottom: this._offset + "%"
-                }
-            } else {
-                this._$handleStyle = {
-                    left: this._offset + "%"
-                }
+        if (this._slider.vertical) {
+            this._$handleStyle = {
+                bottom: this._offset + "%"
             }
-        })
+        } else {
+            this._$handleStyle = {
+                left: this._offset + "%"
+            }
+        }
+        this._cdr.markForCheck();
     }
 
     private _dragging: boolean = false;
 
-    private _transformPosToValue(pos: {x: number, y: number}): number {
+    private _transformPosToValue(pos: { x: number, y: number }): number {
         // 更新取得的滑动条尺寸.
         this._slider._refresh();
         const dimensions = this._slider._dimensions;
@@ -185,7 +194,8 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
      */
     private _slider: JigsawSlider;
 
-    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any, protected _zone: NgZone) {
+    constructor(private _render: Renderer2, @Host() @Inject(forwardRef(() => JigsawSlider)) slider: any,
+                protected _zone: NgZone, private _cdr: ChangeDetectorRef) {
         super();
         this._slider = slider;
     }
@@ -341,11 +351,15 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get min() {
+    public get min():number {
         return this._min;
     }
 
     public set min(min: number) {
+        min = Number(min);
+        if (isNaN(min)) {
+            return;
+        }
         this._min = min;
     }
 
@@ -357,12 +371,16 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get max() {
+    public get max():number {
         return this._max;
     }
 
     public set max(max: number) {
-        this._max = max;
+        max = Number(max);
+        if (isNaN(max)) {
+            return;
+        }
+        this._max = Number(max);
     }
 
     private _step: number = 1;
@@ -418,28 +436,20 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
      */
     public _$trackStyle = {};
 
-    private _setTrackStyle(value?) {
-        // 兼容双触点.
+    private _setTrackStyle() {
         let startPos: number = 0;
-        let trackSize: number = CommonUtils.isDefined(value) ? this._transformValueToPos(value) : this._transformValueToPos(this.value); // 默认单触点位置
-
+        let trackSize: number = 0;
         if (this._$value.length > 1) {
-            let max: number = this._$value[0];
-            let min: number = this._$value[0];
-
-            this._$value.map(item => {
-                if (max - item < 0) {
-                    max = item;
-                } else if (item - min < 0) {
-                    min = item;
-                }
-            });
-
+            // 多触点
+            let min: number = Math.min(...this._$value);
+            let max: number = Math.max(...this._$value);
             startPos = this._transformValueToPos(min);
             trackSize = Math.abs(this._transformValueToPos(max) - this._transformValueToPos(min));
+        } else {
+            // 单触点
+            trackSize = this._transformValueToPos(this.value);
         }
-
-        if (this.vertical) { // 垂直和水平两种
+        if (this.vertical) {
             this._$trackStyle = {
                 bottom: startPos + "%",
                 height: trackSize + "%"
@@ -471,6 +481,20 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     public set marks(value: SliderMark[]) {
         this._marks = value;
         this._calcMarks();
+    }
+
+    /**
+     * @internal
+     * @param markVal
+     */
+    public _$isDotActive(markVal: number): boolean {
+        if (this._$value.length == 1) {
+            return markVal < this.value;
+        } else {
+            const min = Math.min(...this._$value);
+            const max = Math.max(...this._$value);
+            return markVal >= min && markVal <= max;
+        }
     }
 
     private _calcMarks() {
@@ -506,6 +530,7 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
             // 如果用户自定义了样式, 要进行样式的合并;
             CommonUtils.extendObject(richMark.labelStyle, mark.style);
             richMark.label = mark.label;
+            richMark.value = mark.value;
             this._$marks.push(richMark);
         });
     }
@@ -563,14 +588,28 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
 
     private _getRemoveRefreshCallback() {
         return this._$value.onRefresh(() => {
-            this._zone.runOutsideAngular(() => this._setTrackStyle(this.value));
+            this._zone.runOutsideAngular(() => this._setTrackStyle());
+            this._updateSliderHandleValue();
             this.valueChange.emit(this.value);
             this._propagateChange(this.value);
             this._changeDetectorRef.markForCheck();
         });
     }
 
+    /**
+     * 手动更新handle的值，通过ngFor更新必须value发生变化，如max变化也需要调整位置
+     * @private
+     */
+    private _updateSliderHandleValue() {
+        if(!this._sliderHandle || !this._$value) {
+            return;
+        }
+        this._sliderHandle.forEach((item, index) => item.value = this._$value[index])
+    }
+
     private _propagateChange: any = () => {
+    };
+    private _onTouched: any = () => {
     };
 
     // ngModel触发的writeValue方法，只会在ngOnInit,ngAfterContentInit,ngAfterViewInit这些生命周期之后才调用
@@ -601,5 +640,18 @@ export class JigsawSlider extends AbstractJigsawComponent implements ControlValu
     }
 
     public registerOnTouched(fn: any): void {
+        this._onTouched = fn;
+    }
+
+    @HostListener('click')
+    onClickTrigger(): void {
+        if (this.disabled) {
+            return;
+        }
+        this._onTouched();
+    }
+
+    public setDisabledState(disabled: boolean): void {
+        this.disabled = disabled;
     }
 }

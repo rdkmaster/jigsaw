@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.scss"]
+    styleUrls: ["./demo.component.css"]
 })
 export class CollapseBasicDemoComponent {
     public _$isActiveChange(isActive: boolean) {
@@ -10,6 +10,7 @@ export class CollapseBasicDemoComponent {
     }
 
     public isActive = true;
+    public arrowPos: 'left' | 'right' = 'left';
 
     public _$click() {
         this.isActive = !this.isActive;

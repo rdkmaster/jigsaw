@@ -2,14 +2,13 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
-    CommonUtils, SortAs, SortOrder
+    CommonUtils, SortAs, SortOrder, JigsawTheme
 } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TableHtmlRendererDemoComponent {
-
     tableData: TableData;
 
     constructor(http: HttpClient) {
@@ -28,6 +27,9 @@ export class TableHtmlRendererDemoComponent {
         }
     }
 
+    // 这里为了能让demo同时适配深浅色系才做的这么复杂，如果应用没有深浅色系前的需求，则无需搞这么复杂
+    readonly optionStyle = `background-color: ${JigsawTheme.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
+
     columns: ColumnDefine[] = [
         {
             target: 'desc',
@@ -40,9 +42,15 @@ export class TableHtmlRendererDemoComponent {
             header: {
                 renderer: 'html',
                 data: (data, col) => `${data.header[col]}
-                    <select onchange="changeUnit()" id="unitSelect">
-                        <option value="￥">￥</option>
-                        <option value="$">$</option>
+                    <select style="padding: 4px 8px;
+                                    margin-left: 4px;
+                                    font-size: 12px;
+                                    background: transparent;
+                                    -webkit-appearance: none;
+                                    border-radius: 4px;"
+                            onchange="changeUnit()" id="unitSelect">
+                        <option style="${this.optionStyle}" value="￥">￥</option>
+                        <option style="${this.optionStyle}" value="$">$</option>
                     </select>`,
                 innerHtmlContext: this,
                 sortable: true,
