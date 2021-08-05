@@ -1,7 +1,8 @@
 # Jigsaw-七巧板
 
-- 桌面版 **@rdkmaster/jigsaw**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw) [![Jigsaw](https://circleci.com/gh/rdkmaster/jigsaw.svg?style=svg)](https://app.circleci.com/pipelines/github/rdkmaster)
-- 移动版 **@rdkmaster/jigsaw-mobile** [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw-mobile.svg)](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw-mobile) [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=v1.1)](https://travis-ci.org/rdkmaster/jigsaw)
+- 桌面版 **@rdkmaster/jigsaw**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://www.npmjs.com/package/@rdkmaster/jigsaw) [![Jigsaw](https://circleci.com/gh/rdkmaster/jigsaw.svg?style=svg)](https://app.circleci.com/pipelines/github/rdkmaster)
+- 移动版 **@rdkmaster/jigsaw-mobile** [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw-mobile.svg)](https://www.npmjs.com/package/@rdkmaster/jigsaw-mobile) [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=v1.1)](https://travis-ci.org/rdkmaster/jigsaw)
+- 图标库 **@rdkmaster/icon-font** [![npm version](https://badge.fury.io/js/%40rdkmaster%2Ficon-font.svg)](https://www.npmjs.com/package/@rdkmaster/icon-font) [![图标数](https://badgen.net/badge/Amount/2428/green)](https://www.npmjs.com/package/@rdkmaster/icon-font)
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rdkmaster/jigsaw) 
 
