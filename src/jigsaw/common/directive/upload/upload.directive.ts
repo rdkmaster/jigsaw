@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2, NgZone} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from '../../common';
@@ -15,7 +15,8 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     constructor(@Optional() private _http: HttpClient,
                     private _renderer: Renderer2,
                     @Optional() private _translateService: TranslateService,
-                    private _cdr: ChangeDetectorRef) {
+                    private _cdr: ChangeDetectorRef,
+                    protected _zone: NgZone) {
         super();
     }
 
@@ -222,20 +223,21 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     }
 
     public upload() {
-        if (!this._appendFiles()) {
-            return;
-        }
-
-        this.start.emit(this.files);
-        const pendingFiles = this.files.filter(file => file.state == 'pause');
-        if (pendingFiles.length == 0) {
-            this.complete.emit(this.files);
-            return;
-        }
-        for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
-            // 最多前maxConcurrencyUpload个文件同时上传给服务器
-            this._sequenceUpload(pendingFiles[i]);
-        }
+        this.runAfterMicrotasks(() => {
+            if (!this._appendFiles()) {
+                return;
+            }
+            this.start.emit(this.files);
+            const pendingFiles = this.files.filter(file => file.state == 'pause');
+            if (pendingFiles.length == 0) {
+                this.complete.emit(this.files);
+                return;
+            }
+            for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
+                // 最多前maxConcurrencyUpload个文件同时上传给服务器
+                this._sequenceUpload(pendingFiles[i]);
+            }
+        });
     }
 
     private _testFileType(fileName: string, type: string): boolean {
@@ -291,6 +293,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         const formData = new FormData();
         formData.append(this.contentField, fileInfo.file);
         this._appendAdditionalFields(formData, fileInfo.file.name);
+        debugger;
         this._http.post(this.targetUrl, formData,
             {
                 responseType: 'text',

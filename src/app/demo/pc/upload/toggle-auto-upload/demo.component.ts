@@ -28,6 +28,12 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     maxSize: number = 1024;
     minSize: number = 0;
 
+    toBeChangedUrl = "";
+    uploadConfirm(){
+        this.toBeChangedUrl = "/rdk/service/common/upload"
+        this.uploader1.upload()
+    }
+
     clear() {
         this.results.toArray().forEach(r => r.clear());
     }
