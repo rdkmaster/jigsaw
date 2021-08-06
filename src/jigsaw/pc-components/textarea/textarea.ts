@@ -39,6 +39,29 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
     /**
+     * 宽度
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get width(): string {
+        return this._width;
+    }
+
+    public set width(value: string) {
+        this._width = CommonUtils.getCssValue(value);
+            //  this.runAfterMicrotasks(() => {
+            //      this._zone.run(() => {
+            //          if (this.multipleSelect) {
+            //              this.minWidth = CommonUtils.getCssValue(value);
+            //              this.maxWidth = CommonUtils.getCssValue(value);
+            //          }
+            //      });
+            //  });
+        console.log(this._width)
+    }
+
+    /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
      * $demo = textarea/clearable

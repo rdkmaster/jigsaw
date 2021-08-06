@@ -17,14 +17,12 @@
 
 <div class="container">
 <jigsaw-header>纵向可伸缩</jigsaw-header>
-    <jigsaw-textarea [resize]="'vertical'"
-                     width="300px" height="80px"
-                     placeholder="这是纵向可伸缩的文本输入框（固定尺寸）">
+    <jigsaw-textarea [resize]="'vertical'" width="300px" height="80px" placeholder="这是纵向可伸缩的文本输入框（固定尺寸）">
     </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'vertical'"
-                     width="calc(60% - 310px)" height="100%"
-                     placeholder="这是纵向可伸缩的文本输入框（相对尺寸）">
-    </jigsaw-textarea>
+    <div class="sub-container">
+        <jigsaw-textarea [resize]="'vertical'" width="calc(60% - 10px)" height="100%" placeholder="这是纵向可伸缩的文本输入框（相对尺寸）">
+        </jigsaw-textarea>
+    </div>
 </div>
 
 <div class="container">

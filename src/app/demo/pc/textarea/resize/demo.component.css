@@ -1,0 +1,14 @@
+jigsaw-header:not(:first-of-type) {
+    margin-top: 20px;
+}
+
+.container {
+    width: 100%;
+    height: fit-content;
+}
+
+.container .sub-container {
+    display: inline-block;
+    width: 400px;
+    height: 100%;
+}
