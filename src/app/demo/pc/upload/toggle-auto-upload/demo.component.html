@@ -18,8 +18,8 @@
 
     <jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
     <div>
-        <a j-upload #first [uploadImmediately]="uploadImmediately" [uploadTargetUrl]="toBeChangedUrl">选择文件</a>
-        <a style="margin-left: 12px;" (click)="uploadConfirm()" *ngIf="!uploadImmediately">开始上传</a>
+        <a j-upload #first [uploadImmediately]="uploadImmediately">选择文件</a>
+        <a style="margin-left: 12px;" (click)="uploader1.upload()" *ngIf="!uploadImmediately">开始上传</a>
     </div>
     <jigsaw-upload-result [uploader]="uploader1" width="200px" height="200px" (change)="onChange('change', $event)"
         (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
