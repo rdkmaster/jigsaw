@@ -9,6 +9,7 @@ import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements AfterContentInit {
+    public demoCodePage = location.hash.split('/').find(item => item === 'demo-code');
     ngAfterContentInit() {
         this.themeInit();
     }
