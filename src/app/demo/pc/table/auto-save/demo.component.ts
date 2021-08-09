@@ -18,10 +18,7 @@ export class TableAutoSaveDemoComponent {
 
     constructor(private popupService: PopupService) {
         this.tableData = new TableData(
-            [
-                ["Tiger Nixon1", "System Architect", 7000, "Edinburgh", "一些描述信息"],
-                ["Garrett Winflters1", "Accountant", 8000, "Tokyo", "一些描述信息"]
-            ],
+            [["Garrett Winflters1", "Accountant", 8000, "Tokyo", "一些描述信息"]],
             ["name", "position", "salary", "office", "extn"],
             ["姓名", "职位", "薪资", "部门", "其他"]
         );
@@ -81,14 +78,12 @@ export class TableAutoSaveDemoComponent {
     }
 
     editConfirm() {
-        alert(`当前数据为：${this.tableData.data}`)
+        alert(`当前数据为：${this.tableData.data}`);
         this.dialogInfo.dispose();
-        console.log(this.tableData.data);
     }
 
     cancelClick() {
         this.dialogInfo.dispose();
-        console.log(this.tableData.data);
     }
 
     dialogInfo: PopupInfo;
@@ -100,6 +95,7 @@ export class TableAutoSaveDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "";
+    summary: string =
+        "点击按钮打开表单，尝试编辑表单，在单元格不失去焦点的情况下点击修改按钮，即可看到数据已经修改的提示。";
     description: string = "";
 }
