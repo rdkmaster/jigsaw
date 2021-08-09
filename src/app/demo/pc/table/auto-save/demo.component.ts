@@ -81,6 +81,7 @@ export class TableAutoSaveDemoComponent {
     }
 
     editConfirm() {
+        alert(`当前数据为：${this.tableData.data}`)
         this.dialogInfo.dispose();
         console.log(this.tableData.data);
     }
