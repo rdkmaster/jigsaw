@@ -147,6 +147,29 @@ export class JigsawSteps extends AbstractJigsawComponent {
         this._changeDetector.markForCheck();
     }
 
+    /**
+     * 修改步骤信息
+     * @param step: 可以只传入字符串修改title，也可以传入一个节点对象，修改整个节点信息
+     * @param index
+     */
+    public renameStep(step: string | StepItem, index: number): void {
+        let target = this.data[index];
+        if (CommonUtils.isUndefined(target)) {
+            return;
+        }
+        if (typeof step == 'string') {
+            target.title = step;
+        } else {
+            this.data.splice(index, 1, step);
+            target = step;
+        }
+        this.titleChange.emit({
+            title: target.title,
+            index: index
+        });
+        this._changeDetector.markForCheck();
+    }
+
     // 找删除节点附近的非disabled节点
     private _findNeighboring(index: number): number {
         let idx = 0;
