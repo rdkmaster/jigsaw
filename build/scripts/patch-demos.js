@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const childProcess = require('child_process');
-const os = require('os');
 
 const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../../../jigsaw-seed';
 checkBranch(seedPath);
@@ -160,10 +159,21 @@ function checkDemoModuleCode(modulePath) {
 }
 
 function checkBranch(seedPath) {
-    if (os.hostname().indexOf('travis') !== -1) {
-        return;
+    if (!fs.existsSync(seedPath)) {
+        console.error(`Jigsaw seed dir not exists! Run the following command and try again:\n` +
+            `git clone https://github.com/rdkmaster/jigsaw-seed.git ${seedPath}`);
+        process.exit(1);
     }
-    const seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
+
+    let seedResult;
+    try {
+        seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
+    } catch(e) {
+        console.error(`Jigsaw seed dir ${seedPath} is NOT a git repo!\n` +
+            `Backup data in this dir and remove it, then run the following command and try again:\n` +
+            `git clone https://github.com/rdkmaster/jigsaw-seed.git ${seedPath}`);
+        process.exit(1);
+    }
     const jigsawResult = childProcess.execSync('git status', {cwd: __dirname}).toString();
     const seedBranch = seedResult.match(/^On branch (.*)/)[1];
     const jigsawBranch = jigsawResult.match(/^On branch (.*)/)[1];

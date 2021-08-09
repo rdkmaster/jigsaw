@@ -2,7 +2,7 @@
 
 - For the desktop: **@rdkmaster/jigsaw**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://www.npmjs.com/package/@rdkmaster/jigsaw) [![Jigsaw](https://circleci.com/gh/rdkmaster/jigsaw.svg?style=svg)](https://app.circleci.com/pipelines/github/rdkmaster)
 - For mobile: **@rdkmaster/jigsaw-mobile** [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw-mobile.svg)](https://www.npmjs.com/package/@rdkmaster/jigsaw-mobile) [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=v1.1)](https://travis-ci.org/rdkmaster/jigsaw)
-- Font Icons: **@rdkmaster/icon-font**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/%40rdkmaster%2Ficon-font.svg)](https://www.npmjs.com/package/@rdkmaster/icon-font) [![Amount](https://badgen.net/badge/Amount/2428/green)](https://www.npmjs.com/package/@rdkmaster/icon-font)
+- Font Icons: **@rdkmaster/icon-font**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/%40rdkmaster%2Ficon-font.svg)](https://www.npmjs.com/package/@rdkmaster/icon-font) [![Amount](https://badgen.net/badge/Amount/2428/green)](https://jigsaw-zte.gitee.io/latest/assets/icon-font/iconfont.html)
 - Online IDE: Edit Jigsaw in one click&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rdkmaster/jigsaw) 
 
 [README中文版](README.zh.md)

@@ -2,7 +2,7 @@
 
 - 桌面版 **@rdkmaster/jigsaw**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw.svg)](https://www.npmjs.com/package/@rdkmaster/jigsaw) [![Jigsaw](https://circleci.com/gh/rdkmaster/jigsaw.svg?style=svg)](https://app.circleci.com/pipelines/github/rdkmaster)
 - 移动版 **@rdkmaster/jigsaw-mobile** [![npm version](https://badge.fury.io/js/%40rdkmaster%2Fjigsaw-mobile.svg)](https://www.npmjs.com/package/@rdkmaster/jigsaw-mobile) [![Build Status](https://travis-ci.org/rdkmaster/jigsaw.svg?branch=v1.1)](https://travis-ci.org/rdkmaster/jigsaw)
-- 图标库 **@rdkmaster/icon-font**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/%40rdkmaster%2Ficon-font.svg)](https://www.npmjs.com/package/@rdkmaster/icon-font) [![图标数](https://badgen.net/badge/%E5%9B%BE%E6%A0%87%E6%95%B0/2428/green)](https://www.npmjs.com/package/@rdkmaster/icon-font)
+- 图标库 **@rdkmaster/icon-font**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/%40rdkmaster%2Ficon-font.svg)](https://www.npmjs.com/package/@rdkmaster/icon-font) [![图标数](https://badgen.net/badge/%E5%9B%BE%E6%A0%87%E6%95%B0/2428/green)](https://jigsaw-zte.gitee.io/latest/assets/icon-font/iconfont.html)
 - 在线IDE - 在线一键直接修改Jigsaw&nbsp;&nbsp;[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rdkmaster/jigsaw) 
 
 ## Jigsaw的优势
