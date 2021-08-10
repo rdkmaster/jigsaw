@@ -50,6 +50,6 @@ export class JigsawStepManyStepsDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "";
+    summary: string = "演示当步骤数较多和较少等极端情况下展示效果";
     description: string = "";
 }

@@ -2,14 +2,16 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<jigsaw-header [level]="2">演示当步骤数较多时的用法</jigsaw-header>
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="2">步骤数量</jigsaw-header>
+<jigsaw-button-bar [data]="[5, 10, 30, 50]" [(selectedItems)]="count" (selectedItemsChange)="changeData()"
+                   style="margin-bottom: 16px">
+</jigsaw-button-bar>
+
+<jigsaw-header [level]="2">观察不同步骤数量下步骤条的展示效果</jigsaw-header>
 <jigsaw-steps #hScrollbar class="steps-horizontal" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
               [data]="data" [(current)]="current"></jigsaw-steps>
 <br>
 <jigsaw-steps #vScrollbar class="steps-vertical" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
               [data]="data" [(current)]="current" direction="vertical"></jigsaw-steps>
 
-<div>
-    <label>步骤数量：</label>
-    <jigsaw-button-bar [data]="[5, 10, 30, 50]" [(selectedItems)]="count" (selectedItemsChange)="changeData()"></jigsaw-button-bar>
-</div>
