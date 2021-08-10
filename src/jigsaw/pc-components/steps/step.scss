@@ -32,7 +32,7 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
 
             .#{$steps-prefix-cls}-title {
                 max-width: calc(100% - 32px);
-                margin-right: 10px;
+                padding-right: 10px;
                 font-size: $font-size-lg;
                 white-space: nowrap;
                 overflow: hidden;
