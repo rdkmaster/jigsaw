@@ -154,10 +154,8 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      * 一般来说，是否失去焦点关系不大，但是在一些特定场合，却有很大关系。`JigsawTable`的默认单元格编辑渲染就是`JigsawInput`组件，
      * 按照`JigsawTable`的交互逻辑，单元格编辑器一旦失去焦点，就必须退回到单元格显示渲染器。
      * 在这个情况下，用户单击了清除文本按钮时就不能让输入框失去焦点。
-     * 
-     * @internal
      */
-    public _$blurOnClear: boolean = true;
+    protected _blurOnClear: boolean = true;
 
     /**
      * @internal
@@ -165,7 +163,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
-        if (!this._$blurOnClear){
+        if (!this._blurOnClear){
             return;
         }
         this._blurEmitter.emit(event);
@@ -372,11 +370,11 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$clearValue(): void {
-        this._$blurOnClear = false;
+        this._blurOnClear = false;
         this.value = '';
         this.callLater(() => {
             this.focus();
-            this._$blurOnClear = true; 
+            this._blurOnClear = true; 
         }, 0);
     }
 
