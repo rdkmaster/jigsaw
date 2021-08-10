@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {InternalUtils, JigsawSteps} from "jigsaw/public_api";
+import {InternalUtils, JigsawSteps, StepItem} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -37,12 +37,20 @@ export class JigsawStepEventsDemoComponent {
         this._jigsawSteps.addStep(`新节点-${this.index++}`);
     }
 
+    rename() {
+        this._jigsawSteps.renameStep(`新节点-${this.index++}`, 0);
+    }
+
     removeHandler(index: number) {
         console.log(`第 ${index + 1} 个节点被删除了`);
     }
 
     addHandler(step: JigsawSteps) {
         console.log(`添加节点事件：`, step);
+    }
+
+    titleChangeHandler(step: StepItem) {
+        console.log(`节点被修改为：`, step);
     }
 
     // ====================================================================
