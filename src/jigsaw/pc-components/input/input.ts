@@ -171,13 +171,6 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         this._blurEmitter.emit(event);
     }
 
-    public blurHandler(){
-        this._$blurOnClear = false;
-        this.callLater(() => {
-            this._$blurOnClear = true; 
-        }, 150);
-    }
-
     /**
      * @internal
      */
@@ -379,8 +372,12 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$clearValue(): void {
+        this._$blurOnClear = false;
         this.value = '';
-        this.focus();
+        this.callLater(() => {
+            this.focus();
+            this._$blurOnClear = true; 
+        }, 0);
     }
 
     /**

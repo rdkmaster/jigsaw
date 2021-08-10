@@ -20,7 +20,7 @@
                [type]="type"
                [autocomplete]="autocomplete">
         <div class="jigsaw-input-icon-end">
-            <i *ngIf="clearable && !disabled" (click)="_$clearValue()" (mousedown)="blurHandler()" [hidden]="!value" class="jigsaw-input-clear-bar iconfont iconfont-e9b8"></i>
+            <i *ngIf="clearable && !disabled" (mousedown)="_$clearValue()" [hidden]="!value" class="jigsaw-input-clear-bar iconfont iconfont-e9b8"></i>
             <ng-content select="[jigsaw-icon], [j-icon]"></ng-content>
             <ng-container *ngFor="let icon of _$icon;">
                 <span [ngClass]="icon" class="jigsaw-input-icon-item" (click)="iconSelect.emit(icon)"></span>
