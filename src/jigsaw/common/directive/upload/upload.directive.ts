@@ -16,6 +16,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
                     private _renderer: Renderer2,
                     @Optional() private _translateService: TranslateService,
                     private _cdr: ChangeDetectorRef,
+                    // _zone给runAfterMicrotasks用的
                     protected _zone: NgZone) {
         super();
     }
@@ -293,7 +294,6 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         const formData = new FormData();
         formData.append(this.contentField, fileInfo.file);
         this._appendAdditionalFields(formData, fileInfo.file.name);
-        debugger;
         this._http.post(this.targetUrl, formData,
             {
                 responseType: 'text',

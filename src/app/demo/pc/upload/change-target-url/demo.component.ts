@@ -51,5 +51,5 @@ export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = "这个demo复现了在动态修改目标URL时上传指令的一个问题";
-    description: string;
+    description: string = '';
 }
