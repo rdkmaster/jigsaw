@@ -34,8 +34,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     constructor(private _elementRef: ElementRef,
                 private _changeDetector: ChangeDetectorRef) {
         super();
-        this._width = 'auto';
-        this._height = 'auto';
     }
 
     private _position: "left" | "right" | "top" | "bottom" = "left";
