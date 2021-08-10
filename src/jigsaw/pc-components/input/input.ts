@@ -151,7 +151,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
 
     /**
      * 这属性已经废弃，设置后没有任何效果，请及时删除对它的引用
-     *
+     * @NoMarkForCheckRequired
      * @internal
      * @deprecated
      */
