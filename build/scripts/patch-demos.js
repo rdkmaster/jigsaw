@@ -53,6 +53,10 @@ function patchDemoTs(demoPath) {
 
     const match1 = cmpCode.match(/\b(summary:\s*string\s*=\s*)([\s\S]*)/);
     const match2 = cmpCode.match(/\b(description:\s*string\s*=\s*)([\s\S]*)/);
+    if (!match1 || !match2) {
+        console.error('Error: invalid demo ts file:', demoPath);
+        process.exit(1);
+    }
     const match = match1.index > match2.index ? match1 : match2;
     let end = match ? findQuoteEnd(match[2]) : -1;
     if (end === -1) {
