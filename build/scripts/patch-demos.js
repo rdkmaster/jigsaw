@@ -175,8 +175,9 @@ function checkBranch(seedPath) {
         process.exit(1);
     }
     const jigsawResult = childProcess.execSync('git status', {cwd: __dirname}).toString();
-    const seedBranch = seedResult.match(/^On branch (.*)/)[1];
-    const jigsawBranch = jigsawResult.match(/^On branch (.*)/)[1];
+    const gitOutputRegExp = /^(On branch|位于分支)\s+(.*)/;
+    const seedBranch = seedResult.match(gitOutputRegExp)[2];
+    const jigsawBranch = jigsawResult.match(gitOutputRegExp)[2];
     const isMaster = (jigsawBranch === 'v9.0' || jigsawBranch === 'master') && seedBranch === 'master';
     const isV5orV1 = seedBranch === jigsawBranch;
     if (!isMaster && !isV5orV1) {

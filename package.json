@@ -4,8 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "s": "ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
-        "start": "node build/scripts/extract-theme-variables.js && ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
+        "start": "node build/scripts/extract-theme-variables.js && node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
         "build": "gulp build:jigsaw:clean",
         "build-mobile": "gulp build:jigsaw-mobile:clean",
         "build-app": "ng build --prod --aot --delete-output-path",
