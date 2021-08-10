@@ -12,10 +12,10 @@
     <jigsaw-header>手动上传时，修改URL</jigsaw-header>
     <div>
         <span>当前url地址为:</span>
-        <span class="urlAdd">{{toBeChangedUrl}}</span>
+        <span class="urlAdd">{{toBeChangedUrl1}}</span>
     </div>
     <div>
-        <a j-upload #first [uploadImmediately]="false" [uploadTargetUrl]="toBeChangedUr2">选择文件</a>
+        <a j-upload #first [uploadImmediately]="false" [uploadTargetUrl]="toBeChangedUrl1">选择文件</a>
         <a style="margin-left: 12px;" (click)="uploadConfirm()">开始上传</a>
     </div>
     <jigsaw-upload-result [uploader]="uploader1" (change)="onChange('change', $event)"

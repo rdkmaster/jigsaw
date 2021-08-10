@@ -23,9 +23,9 @@ export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
     maxSize: number = 1024;
     minSize: number = 0;
 
-    toBeChangedUrl = "/rdk/service/common";
+    toBeChangedUrl1 = "/rdk/service/common";
     uploadConfirm() {
-        this.toBeChangedUrl = "/rdk/service/common/upload";
+        this.toBeChangedUrl1 = "/rdk/service/common/upload";
         this.uploader1.upload();
     }
 
