@@ -224,7 +224,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     }
 
     public upload() {
-        this.runMicrotask(() => {
+        this.runAfterMicrotasks(() => {
             if (!this._appendFiles()) {
                 return;
             }
