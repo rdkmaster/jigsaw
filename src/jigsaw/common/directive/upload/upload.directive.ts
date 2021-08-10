@@ -225,19 +225,21 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
 
     public upload() {
         this.runAfterMicrotasks(() => {
-            if (!this._appendFiles()) {
-                return;
-            }
-            this.start.emit(this.files);
-            const pendingFiles = this.files.filter(file => file.state == 'pause');
-            if (pendingFiles.length == 0) {
-                this.complete.emit(this.files);
-                return;
-            }
-            for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
-                // 最多前maxConcurrencyUpload个文件同时上传给服务器
-                this._sequenceUpload(pendingFiles[i]);
-            }
+            this._zone.run(()=>{
+                if (!this._appendFiles()) {
+                    return;
+                }
+                this.start.emit(this.files);
+                const pendingFiles = this.files.filter(file => file.state == 'pause');
+                if (pendingFiles.length == 0) {
+                    this.complete.emit(this.files);
+                    return;
+                }
+                for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
+                    // 最多前maxConcurrencyUpload个文件同时上传给服务器
+                    this._sequenceUpload(pendingFiles[i]);
+                }
+            })
         });
     }
 
