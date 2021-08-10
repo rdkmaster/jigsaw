@@ -187,7 +187,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
-    constructor( private _elementRef: ElementRef, protected _injector: Injector) {
+    constructor( protected _injector: Injector) {
         super(_injector);
     }
 
@@ -216,8 +216,6 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngAfterViewInit() {
         this.input.focus();
-        const table = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "jigsaw-input" );
-        console.log(table)
     }
 }
 
