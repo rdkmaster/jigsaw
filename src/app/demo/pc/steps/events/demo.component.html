@@ -2,6 +2,7 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
+<!-- start to learn the demo from here -->
 <jigsaw-header [level]="2">演示步骤条的添加和删除节点的方法</jigsaw-header>
 <jigsaw-steps #jigsawSteps class="steps" [data]="data" (add)="addHandler($event)" (remove)="removeHandler($event)"
               (titleChange)="titleChangeHandler($event)"></jigsaw-steps>
