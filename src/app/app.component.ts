@@ -37,4 +37,7 @@ export class AppComponent implements AfterContentInit {
             JigsawTheme.changeTheme(themeData.name, themeData.majorStyle);
         }
     }
+    public get shortDemoPage(): boolean {
+        return document.body.clientWidth < 1000
+    }
 }

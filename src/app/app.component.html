@@ -3,7 +3,7 @@
         <router-outlet></router-outlet>
     </div>
     <jigsaw-button-bar
-        *ngIf='!demoCodePage'
+        *ngIf='!demoCodePage && !shortDemoPage'
         class="demo-theme-button-bar"
         height="26"
         [(selectedItems)]="selectedTheme"
@@ -11,7 +11,7 @@
         [multipleSelect]="false"
         (selectedItemsChange)="themeSelectChange($event)"
         trackItemBy="name,majorStyle"
-        optionWidth="140"
+        optionWidth="110"
     >
     </jigsaw-button-bar>
 </jigsaw-root>
