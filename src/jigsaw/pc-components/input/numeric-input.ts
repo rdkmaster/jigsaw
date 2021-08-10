@@ -352,12 +352,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public blurOnClear: boolean = true;
-
-    /**
      * @internal
      */
     public _$handleBlur(event: FocusEvent) {
@@ -367,15 +361,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
         }
-        if (this.blurOnClear) {
-            this._blurEmitter.emit(event);
-        } else {
-            this.callLater(() => {
-                if (!this._focused) {
-                    this._blurEmitter.emit(event);
-                }
-            }, 150);
-        }
+        this._blurEmitter.emit(event);
     }
 
     /**

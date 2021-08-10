@@ -57,7 +57,10 @@ export const routerConfig = [
     },
     {
         path: 'prefix-suffix', component: InputPrefixSuffixDemoComponent
-    }
+    },
+    {
+        desc: 'ignore-blur-on-clear', url: '/pc/table/auto-save', path: ''
+    },
 ];
 
 @NgModule({

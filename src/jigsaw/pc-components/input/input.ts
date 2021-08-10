@@ -150,17 +150,22 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     }
 
     /**
-     * 在单击了清除文本按钮时，是否让文本失去焦点，默认为失去焦点。
-     * 一般来说，是否失去焦点关系不大，但是在一些特定场合，却有很大关系。`JigsawTable`的默认单元格编辑渲染就是`JigsawInput`组件，
-     * 按照`JigsawTable`的交互逻辑，单元格编辑器一旦失去焦点，就必须退回到单元格显示渲染器。
-     * 在这个情况下，用户单击了清除文本按钮时就不能让输入框失去焦点。参考[这个demo]($demo=table/update-column-define)的职位列
-     *
+     * 这属性已经废弃，设置后没有任何效果，请及时删除对它的引用
      * @NoMarkForCheckRequired
-     *
-     * $demo = table/update-column-define
+     * @internal
+     * @deprecated
      */
     @Input()
     public blurOnClear: boolean = true;
+
+    /**
+     * 本组件的清除文本按钮是我们自己通过其他dom元素实现的，在默认情况下，点击这个清除按钮，必然导致原生input节点发生blur事件。
+     * 但是清除按钮作为本组件的一部分，当它被点击时，本组件不应该发出blur事件。为了实现这个功能，引入了这个标志位来辅助表示当前blur事件是否需要被忽略，
+     * 为true时表示这是一个普通的blur事件，应该采用默认行为，一旦为false，表示这是一个点击清楚按钮后引入的事件，应该被忽略
+     *
+     * $demo = table/auto-save
+     */
+    protected _isNormalBlur: boolean = true;
 
     /**
      * @internal
@@ -168,15 +173,10 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
-        if (this.blurOnClear) {
-            this._blurEmitter.emit(event);
-        } else {
-            this.callLater(() => {
-                if (!this._focused) {
-                    this._blurEmitter.emit(event);
-                }
-            }, 150);
+        if (!this._isNormalBlur) {
+            return;
         }
+        this._blurEmitter.emit(event);
     }
 
     /**
@@ -380,8 +380,12 @@ export class JigsawInput extends JigsawInputBase {
      * @internal
      */
     public _$clearValue(): void {
+        this._isNormalBlur = false;
         this.value = '';
-        this.focus();
+        this.callLater(() => {
+            this.focus();
+            this._isNormalBlur = true;
+        }, 0);
     }
 
     /**

@@ -14,7 +14,6 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
             [clearable]="to.clearable"
             [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
-            [blurOnClear]="to.blurOnClear"
             [preIcon]="to.preIcon"
             [icon]="to.icon"
             [password]="to.password"
@@ -42,7 +41,6 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
                 [valid]="to.valid && !showError"
                 [placeholder]="to.placeholder"
                 [size]="to.size"
-                [blurOnClear]="to.blurOnClear"
                 [showOption]="to.showOption"
                 [suffix]="to.suffix"
                 [suffixWidth]="to.suffixWidth"
@@ -61,7 +59,6 @@ export class FormlyFieldInput extends FieldType implements AfterViewInit {
             width: '100%',
             valid: true,
             clearable: true,
-            blurOnClear: true,
             min: -Infinity,
             max: Infinity,
             step: 1

@@ -9,7 +9,7 @@
     <jigsaw-tag *ngIf="!adding" isAdd="true" size="medium" [disabled]="tags.length >= 5"
                 (add)="showInput()"></jigsaw-tag>
     <jigsaw-input *ngIf="adding" #input width="120" icon="iconfont iconfont-e142" value="New Tag"
-                  (iconSelect)="addTag(input.value)" (blur)="addTag(input.value)" [blurOnClear]="false">
+                  (iconSelect)="addTag(input.value)" (blur)="addTag(input.value)">
     </jigsaw-input>
 </section>
 {{message}}

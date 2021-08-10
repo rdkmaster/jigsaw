@@ -179,7 +179,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+        <jigsaw-input #input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
                       [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
@@ -187,6 +187,9 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+    constructor( protected _injector: Injector) {
+        super(_injector);
+    }
 
     @ViewChild(JigsawInput)
     protected input: JigsawInput;
@@ -223,7 +226,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     template: `
         <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
-                                    [filterOnFocus]="false" [blurOnClear]="false"
+                                    [filterOnFocus]="false"
                                     [maxDropDownHeight]="_$maxDropDownHeight"
                                     [closeDropDownOnSelect]="false">
         </jigsaw-auto-complete-input>
@@ -263,7 +266,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%"
                               [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>

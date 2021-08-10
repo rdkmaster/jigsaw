@@ -95,6 +95,8 @@ import {TableCellEditablePropertyDemoComponent} from "./cell-editable-property/d
 import {TableCellEditablePropertyDemoModule} from "./cell-editable-property/demo.module";
 import {TableUpdateColumnDefinesDemoModule} from "./update-column-defines/demo.module";
 import {TableUpdateColumnDefinesDemoComponent} from "./update-column-defines/demo.component";
+import { TableAutoSaveDemoComponent } from './auto-save/demo.component';
+import { TableAutoSaveDemoModule } from './auto-save/demo.module';
 
 export const routerConfig = [
     {
@@ -237,6 +239,9 @@ export const routerConfig = [
     },
     {
         path: "update-column-defines", component: TableUpdateColumnDefinesDemoComponent
+    },
+    {
+        path: "auto-save", component: TableAutoSaveDemoComponent
     }
 ];
 
@@ -253,7 +258,7 @@ export const routerConfig = [
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
-        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule
+        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule
     ]
 })
 export class TableDemoModule {
