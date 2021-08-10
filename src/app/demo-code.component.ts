@@ -109,7 +109,7 @@ const defaultOpen = 'src/app/demo.component.html';
         }
 
         .ztree li a {
-            color: #fff;
+            color: #fff !important;
         }
 
         .jigsaw-box-resize-line:hover {
