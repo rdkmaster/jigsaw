@@ -18,13 +18,9 @@ export type StepItem = {
      */
     subTitle?: string;
     context?: any;
-    disabled?: boolean
+    disabled?: boolean;
+    index?: number;
 };
-
-export class StepTitleInfo {
-    index: number;
-    title: string;
-}
 
 @Component({
     selector: "jigsaw-steps,j-steps",
@@ -87,7 +83,7 @@ export class JigsawSteps extends AbstractJigsawComponent {
     public add = new EventEmitter<JigsawSteps>();
 
     @Output()
-    public titleChange = new EventEmitter<StepTitleInfo>();
+    public titleChange = new EventEmitter<StepItem>();
 
     /**
      * 设置步骤条的方向，支持水平方向和垂直方向

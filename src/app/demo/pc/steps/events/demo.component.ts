@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {InternalUtils, JigsawSteps, StepTitleInfo} from "jigsaw/public_api";
+import {InternalUtils, JigsawSteps, StepItem} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -49,7 +49,7 @@ export class JigsawStepEventsDemoComponent {
         console.log(`添加节点事件：`, step);
     }
 
-    titleChangeHandler(step: StepTitleInfo) {
+    titleChangeHandler(step: StepItem) {
         console.log(`节点被修改为：`, step);
     }
 
