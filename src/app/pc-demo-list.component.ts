@@ -95,7 +95,8 @@ import {routerConfigPC} from "./router-config";
         .select-demo {
             color: white;
             position: fixed;
-            right: 430px;
+            right: 340px;
+            top:5px;
             background-color: #3b9cc6;
             padding: 4px 12px;
             border-radius: 4px;

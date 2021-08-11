@@ -29,7 +29,7 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
         }
     `],
     template: `
-        <div>
+        <div style="max-width: calc(100vw - 340px)">
             <span class="summary" [innerHtml]="summary"></span>
             <span class="links">
                 <span *ngIf="!!content">|</span>
@@ -44,8 +44,8 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
                 <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
                 <a (click)="openDemoCode()">查看本DEMO源码</a>
             </span>
-            <hr>
         </div>
+        <hr>
     `
 })
 export class JigsawDemoDescription implements OnInit {

@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ViewEncapsulation} from "@angular/core";
+import {AfterContentInit, Component, ViewEncapsulation,ChangeDetectorRef} from "@angular/core";
 import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
 import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
 
@@ -9,6 +9,7 @@ import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements AfterContentInit {
+    public demoCodePage = location.hash.split('/').find(item => item === 'demo-code');
     ngAfterContentInit() {
         this.themeInit();
     }
