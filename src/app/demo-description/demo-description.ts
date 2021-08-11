@@ -29,7 +29,7 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
         }
     `],
     template: `
-        <div style="max-width:640px">
+        <div style="max-width: calc(100vw - 340px)">
             <span class="summary" [innerHtml]="summary"></span>
             <span class="links">
                 <span *ngIf="!!content">|</span>

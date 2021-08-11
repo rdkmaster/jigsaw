@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ViewEncapsulation} from "@angular/core";
+import {AfterContentInit, Component, ViewEncapsulation,ChangeDetectorRef} from "@angular/core";
 import {ArrayCollection} from "../jigsaw/common/core/data/array-collection";
 import {JigsawTheme} from "../jigsaw/common/core/theming/theme";
 
@@ -36,8 +36,5 @@ export class AppComponent implements AfterContentInit {
             this.selectedTheme = [themeData];
             JigsawTheme.changeTheme(themeData.name, themeData.majorStyle);
         }
-    }
-    public get shortDemoPage(): boolean {
-        return document.body.clientWidth < 1000
     }
 }
