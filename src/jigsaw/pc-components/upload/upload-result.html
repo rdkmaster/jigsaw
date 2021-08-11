@@ -9,9 +9,8 @@
             <span class="file-name">
                 {{file.name}}
             </span>
-            <jigsaw-font-loading *ngIf="file.state == 'loading' || file.state == 'pause'"
-                                 width="16px" height="16px" color="#666">
-            </jigsaw-font-loading>
+            <span *ngIf="file.state == 'loading' || file.state == 'pause'" style="font-size: 16px;"
+                  class="iconfont iconfont-e7c6"></span>
             <i
                 *ngIf="file.state === 'error'"
                 class="iconfont iconfont-ea4e error-icon"
