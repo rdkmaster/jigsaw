@@ -68,10 +68,8 @@ import {routerConfigPC} from "./router-config";
 
 @Component({
     template: `
-        <p jigsaw-float class="select-demo" [jigsawFloatTarget]="list" jigsawFloatPosition="bottomRight"
-           [jigsawFloatOptions]="floatOptions">
-            显示隐藏Demo集
-        </p>
+        <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)" placeholder="显示隐藏Demo集"
+                       [multipleSelect]="true" [searchable]="true" class="select-demo" style="min-width:160px"></jigsaw-select>
         <ng-template #list>
             <div style="padding: 6px">
                 <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
@@ -93,11 +91,9 @@ import {routerConfigPC} from "./router-config";
     `,
     styles: [`
         .select-demo {
-            color: white;
             position: fixed;
             right: 340px;
-            top:5px;
-            background-color: #3b9cc6;
+            top:-4px;
             padding: 4px 12px;
             border-radius: 4px;
             cursor: pointer;
@@ -118,11 +114,24 @@ export class PCDemoListComponent implements OnInit {
     };
     routes: any[] = DemoListManager.fullRouterConfig;
     selectedItems: any[];
+    public jComponents: string[] = this.routes.map(item => item.path)
 
-    showHideDemos(selectedItems): void {
-        this.routes.forEach(item => item.hidden = selectedItems.length > 0 && selectedItems.indexOf(item) == -1);
-        localStorage.setItem('jigsaw-demo-show-list', JSON.stringify(selectedItems.map(item => item.path)));
+    showHideDemos(selectedItems: string[]) {
+        this.routes.forEach(item => {
+            item.hidden = !selectedItems.find(component => component === item.path)
+        })
+        if(!selectedItems.length){
+            this.routes.forEach(item => {
+                item.hidden = false
+            })
+        }
+        localStorage.setItem('jigsaw-demo-show-list', JSON.stringify(selectedItems));
     }
+
+    // showHideDemos(selectedItems): void {
+    //     this.routes.forEach(item => item.hidden = selectedItems.length > 0 && selectedItems.indexOf(item) == -1);
+    //     localStorage.setItem('jigsaw-demo-show-list', JSON.stringify(selectedItems.map(item => item.path)));
+    // }
 
     showAll() {
         this.selectedItems = [];
@@ -139,7 +148,7 @@ export class PCDemoListComponent implements OnInit {
 
     ngOnInit(): void {
         const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
-        this.selectedItems = this.routes.filter(item => !item.hidden && stored.indexOf(item.path) != -1);
+        this.selectedItems = this.routes.filter(item => !item.hidden && stored.indexOf(item) != -1);
         if (this.selectedItems.length == this.routes.length) {
             // 全显示表示这是第一次打开此页面
             this.selectedItems = null;
