@@ -69,7 +69,8 @@ import {routerConfigPC} from "./router-config";
 @Component({
     template: `
         <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)" placeholder="显示隐藏Demo集"
-                       [multipleSelect]="true" [searchable]="true" class="select-demo" style="min-width:160px"></jigsaw-select>
+                       [multipleSelect]="true" [searchable]="true" class="select-demo">
+        </jigsaw-select>
         <ng-template #list>
             <div style="padding: 6px">
                 <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
@@ -92,11 +93,13 @@ import {routerConfigPC} from "./router-config";
     styles: [`
         .select-demo {
             position: fixed;
-            right: 340px;
-            top:-4px;
+            right: 334px;
+            top: 1px;
             padding: 4px 12px;
             border-radius: 4px;
             cursor: pointer;
+            background-color: var(--bg-body);
+            width: 240px;
         }
 
         a {
