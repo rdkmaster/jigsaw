@@ -86,8 +86,8 @@ import {routerConfigPC} from "./router-config";
         .select-demo {
             position: fixed;
             right: 334px;
-            top: -4px;
-            margin: 4px 12px;
+            top: 1px;
+            padding: 4px 12px;
             border-radius: 4px;
             cursor: pointer;
             background-color: var(--bg-body);
