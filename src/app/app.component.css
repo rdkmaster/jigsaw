@@ -1,5 +1,6 @@
 .demo-theme-button-bar {
     position: fixed;
     right: 6px;
-    top: 5px;
+    top: 4px;
+    background-color: var(--bg-body);
 }
