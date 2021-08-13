@@ -179,7 +179,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
+        <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
                       [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
@@ -224,7 +224,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
  */
 @Component({
     template: `
-        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
+        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
                                     [filterOnFocus]="false"
                                     [maxDropDownHeight]="_$maxDropDownHeight"
@@ -266,7 +266,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%"
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" height="28px"
                               [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>

@@ -19,7 +19,7 @@ export class MyTableCell extends TableCellRendererBase {
  * */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" [clearable]="false"
+        <jigsaw-input #input [(value)]="cellData" [clearable]="false" height="28px"
                       (blur)="dispatchChangeEvent(cellData)" [placeholder]="_$placeholder"></jigsaw-input>`
 })
 export class MyTableCellEditor extends TableCellRendererBase implements AfterViewInit {
