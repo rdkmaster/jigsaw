@@ -494,13 +494,28 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 // @dynamic
 @Component({
     template: `
-        <jigsaw-select [value]="selected" [data]="data"
+        <jigsaw-select [value]="selected" [data]="data" height="28px"
                        (valueChange)="_$handleValueChange($event)"
-                       [optionCount]="5" width="100%" height="20"
+                       [optionCount]="5" width="100%"
                        openTrigger="mouseenter"
                        closeTrigger="mouseleave">
         </jigsaw-select>
     `,
+    styles: [
+        `
+        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
+            min-height: 28px;
+            height: 28px;
+            border-color: transparent;
+        }
+
+        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
+            min-height: 26px;
+            height: 26px;
+        }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
