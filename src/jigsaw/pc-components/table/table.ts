@@ -302,6 +302,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
             }
         });
+
+        this._updateFillUpBlankLine();
+    }
+
+    private _updateFillUpBlankLine() {
+        console.log(this._$cellSettings)
+        console.log(this._$cellSettings.length)
+        console.log(this._maxHeight, this._height)
+        
     }
 
     /**
