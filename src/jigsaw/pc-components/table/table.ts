@@ -304,6 +304,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    /**
+     * @internal
+     */
     public _$autoFillCellSettings: TableCellSetting[][] = [];
     private _updateFillUpBlankLine():void {
         this._$autoFillCellSettings = [];
