@@ -17,7 +17,7 @@ export class TableAutoFillUpDemoComponent {
 
     _$updateData() {
         const _data = [];
-        for (let i = 1; i < Math.floor(Math.random() * 8) + 2; i++) {
+        for (let i = 1; i < Math.floor(Math.random() * 7) + 2; i++) {
             _data.push(["Tiger Nixon" + i, "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"]);
             _data.push(["Garrett Winflters" + i, "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"]);
         }
@@ -35,9 +35,9 @@ export class TableAutoFillUpDemoComponent {
                 ["Tiger Nixon1", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
                 ["Garrett Winflters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
                 ["Tiger Nixon2", "System Arcfhitect", "$320,8000", "2011/04/25", "Edinburgh", "5421"],
-                ["Garrett Winslters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
-                ["Tiger Nixon2", "System Arcfhitect", "$320,8000", "2011/04/25", "Edinburgh", "5421"],
-                ["Garrett Winflters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"]
+                ["Garrett Winslters2", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon3", "System Arcfhitect", "$320,8000", "2011/04/25", "Edinburgh", "5421"],
+                ["Garrett Winflters3", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"]
             ],
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]
