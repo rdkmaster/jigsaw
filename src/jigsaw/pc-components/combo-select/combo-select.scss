@@ -12,7 +12,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 .#{$jigsaw-combo-select} {
     position: relative;
     color: $icon-color-default;
-    font-size: $font-size-base;
+    font-size: $font-size-text-base;
     cursor: pointer;
 
     .#{$jigsaw-combo-select}-arrow {
@@ -65,8 +65,9 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         font-size: 0;
 
         .jigsaw-tag-host {
-            vertical-align: middle;
             margin: 2px 4px 2px 0px;
+            font-size: $font-size-text-base;
+            vertical-align: middle;
         }
 
         .#{$input-prefix-cls} {
@@ -77,7 +78,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             }
             input {
                 padding: 0 !important;
-                font-size: $font-size-base;
+                font-size: $font-size-text-base;
             }
         }
     }
@@ -85,7 +86,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     &-placeholder {
         display: inline-flex;
         align-items: center;
-        font-size: $font-size-base;
+        font-size: $font-size-text-base;
         color: $font-color-hint;
         height: $height-base - 6;
     }

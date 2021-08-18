@@ -51,7 +51,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 }
 
                 .file-name {
-                    font-size: $font-size-base;
+                    font-size: $font-size-text-base;
                     color: $font-color-default;
                     padding-right: 10px;
                     overflow: hidden;
@@ -107,7 +107,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                     align-items: center;
                     height: 28px;
                     line-height: 28px;
-                    font-size: $font-size-base;
+                    font-size: $font-size-text-base;
                     color: $font-color-hint;
                     .detail-time {
                         margin-right: 8px;

@@ -85,7 +85,7 @@ import {routerConfigPC} from "./router-config";
     styles: [`
         .select-demo {
             position: fixed;
-            right: 334px;
+            right: 372px;
             top: 0;
             padding: 4px 12px;
             border-radius: 4px;
