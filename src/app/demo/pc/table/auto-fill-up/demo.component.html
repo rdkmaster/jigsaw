@@ -4,4 +4,20 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="tableData" ></jigsaw-table>
+<jigsaw-button (click)="_$updateData()" colorType="primary">更新数据</jigsaw-button>
+<jigsaw-button (click)="_$noData()" colorType="primary">无数据</jigsaw-button>
+<jigsaw-header>高度设置为百分比</jigsaw-header>
+<div style="height: 400px;">
+    <jigsaw-table [data]="tableData" height="100%"></jigsaw-table>
+</div>
+
+<jigsaw-header>高度设置为固定值</jigsaw-header>
+<jigsaw-table [data]="tableData" height="400px"></jigsaw-table>
+
+<jigsaw-header>高度设置为固定值</jigsaw-header>
+<div style="height: 400px;">
+    <jigsaw-table [data]="tableData" height="calc(100% - 30px)"></jigsaw-table>
+</div>
+
+<jigsaw-header>不设置高度</jigsaw-header>
+<jigsaw-table [data]="tableData"></jigsaw-table>

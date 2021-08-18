@@ -76,6 +76,16 @@
                     </ng-container>
                 </td>
             </tr>
+            <tr #tableRow *ngFor="let row of this._$autoFillCellSettings; index as rowIndex">
+                <td *ngFor="let cell of row;" [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
+                    [style.display]="cell.rowSpan ? 'table-cell' : 'none'" class="{{cell.clazz}}">
+                    <ng-container [ngSwitch]="cell.renderer">
+                        <div *ngSwitchCase="null || undefined" class="jigsaw-table-cell-content">
+                            <span class="jigsaw-table-cell-text" title="{{cell.tooltip ? cell.tooltip : ''}}">{{cell.cellData}}</span>
+                        </div>
+                    </ng-container>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

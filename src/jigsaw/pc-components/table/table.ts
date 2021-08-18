@@ -302,15 +302,29 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
             }
         });
-
-        this._updateFillUpBlankLine();
     }
 
-    private _updateFillUpBlankLine() {
-        console.log(this._$cellSettings)
-        console.log(this._$cellSettings.length)
-        console.log(this._maxHeight, this._height)
-        
+    public _$autoFillCellSettings: TableCellSetting[][] = [];
+    private _updateFillUpBlankLine():void {
+        this._$autoFillCellSettings = [];
+        this._changeDetectorRef.detectChanges();
+        if (this.height === undefined || this._$cellSettings.length === 0) {
+            return
+        }
+        const height = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range").offsetHeight - 1;
+        const lineGap = Math.floor(height / 30) - this._$cellSettings.length;
+        if (lineGap <= 0) {
+            return;
+        }
+        const _blankCell = [];
+        this._$cellSettings[0].forEach(() => {
+            _blankCell.push({ cellData: "--", rowSpan: 1 });
+        });
+
+        for (let i = 0; i < lineGap; i++) {
+            this._$autoFillCellSettings.push(_blankCell);
+        }
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
@@ -361,6 +375,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
 
         this.runMicrotask(() => {
+            // 自动添加空白行
+            this._updateFillUpBlankLine();
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
