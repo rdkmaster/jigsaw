@@ -1,0 +1,66 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Box</jigsaw-header>
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="4">布局</jigsaw-header>
+        <jigsaw-button-bar [(selectedItems)]="selectedType" [data]="types"></jigsaw-button-bar>
+        <br>
+        <br>
+        <j-box direction="v" [resizable]="true" height="400" width="800">
+            <j-box grow="2">
+               <!-- <div class="box-content">
+                    <div class="border-content">
+
+                    </div>
+                </div>-->
+                <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
+                <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
+                <j-box></j-box>
+                <j-box></j-box>
+                <j-box>
+                    <!--<jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
+                    <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
+                    <j-box></j-box>
+                    <j-box></j-box>
+                    <j-box direction="v" [resizable]="true">
+                        <!--<jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
+                        <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
+                        <j-box>
+                            <j-box></j-box>
+                            <j-box></j-box>
+                        </j-box>
+                        <j-box>
+                            <j-box></j-box>
+                            <j-box></j-box>
+                        </j-box>
+                    </j-box>
+                </j-box>
+            </j-box>
+            <j-box [resizable]="true" grow="2">
+                <j-box>
+                    <div class="box-content">
+                        <div class="border-content"></div>
+                    </div>
+                </j-box>
+                <j-box grow="4">
+                    <div class="box-content">
+                        <div class="border-content"></div>
+                    </div>
+                </j-box>
+            </j-box>
+            <j-box>
+                <div class="box-content">
+                    <div class="border-content"></div>
+                </div>
+            </j-box>
+        </j-box>
+    </div>
+</div>
+
+
+

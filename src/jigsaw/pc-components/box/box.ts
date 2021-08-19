@@ -5,6 +5,7 @@ import {
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -13,12 +14,36 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
         '[class.jigsaw-box-flicker]': '_$isFlicker',
+        '[class.jigsaw-box-laying]': 'laying',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '(mouseover)': '_$handleLayoutStart($event)',
+        '(mouseout)': '_$handleLayoutEnd($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, OnDestroy {
+
+    public static clearLayout = new EventEmitter();
+    public static showLayout = new EventEmitter();
+
+    public laying: boolean;
+
+    public _$handleLayoutStart(e) {
+        console.log('enter ....',e);
+        e.preventDefault();
+        e.stopPropagation();
+        JigsawBox.showLayout.emit(this);
+
+    }
+
+    public _$handleLayoutEnd(e) {
+        console.log('out ...', e);
+        e.preventDefault();
+        e.stopPropagation();
+        JigsawBox.clearLayout.emit(this);
+    }
+
     constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone,
                 /**
                  * @internal
