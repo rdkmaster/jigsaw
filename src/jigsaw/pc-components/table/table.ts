@@ -520,6 +520,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _selectRow(rowIndex: number, suppressEvent: boolean = false) {
+        if (!this._$cellSettings.length || rowIndex > this._$cellSettings.length) {
+            return;
+        }
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
