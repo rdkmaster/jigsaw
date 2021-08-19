@@ -304,10 +304,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    public _$blankRow:string[] = [];
     /**
      * @internal
      */
+    public _$blankRow:string[] = [];
+
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
