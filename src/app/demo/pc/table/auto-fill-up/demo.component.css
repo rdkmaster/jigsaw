@@ -1,6 +1,6 @@
 .viewport {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 100%;
     height: 100%;
 }

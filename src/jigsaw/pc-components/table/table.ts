@@ -314,8 +314,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this.height === undefined || this._$cellSettings.length === 0) {
             return;
         }
-        const height = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range").offsetHeight - 1;
-        const rowGap = Math.floor(height / 30) - this._$cellSettings.length;
+        const bodyBottom = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range").getBoundingClientRect().bottom;
+        const vaildBottom = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr")[this._$cellSettings.length - 1].getBoundingClientRect().bottom;
+        const height = bodyBottom - vaildBottom - 1;
+        const rowGap = Math.floor(height / 30);
         if (rowGap <= 0) {
             return;
         }
@@ -559,6 +561,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._fixHeaderTop();
         this._handleScrollBar();
         this._setVerticalScrollbarOffset();
+        this._updateFillUpBlankRow();
     }
 
     private _tableHeaderElement: HTMLElement;
