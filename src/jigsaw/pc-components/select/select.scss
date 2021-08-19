@@ -39,6 +39,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 width: 100%;
                 height: 100%;
                 padding-left: 8px;
+                font-size: $font-size-text-base;
                 pointer-events: none;
 
                 &.#{$select-prefix-cls}-statistics-disabled {

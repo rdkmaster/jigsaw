@@ -29,6 +29,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         margin: 0;
         padding: 0 8px;
         border-radius: 0;
+        font-size: $font-size-base;
 
         &:first-child {
             border-radius: 3px 0 0 3px;
