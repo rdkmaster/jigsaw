@@ -14,34 +14,32 @@ import { debounceTime } from 'rxjs/operators';
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
         '[class.jigsaw-box-flicker]': '_$isFlicker',
-        '[class.jigsaw-box-laying]': 'laying',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '(mouseover)': '_$handleLayoutStart($event)',
-        '(mouseout)': '_$handleLayoutEnd($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, OnDestroy {
 
-    public static clearLayout = new EventEmitter();
-    public static showLayout = new EventEmitter();
+    private _laying: boolean;
 
-    public laying: boolean;
-
-    public _$handleLayoutStart(e) {
-        console.log('enter ....',e);
-        e.preventDefault();
-        e.stopPropagation();
-        JigsawBox.showLayout.emit(this);
-
+    public set laying(value: boolean) {
+        if(this._laying == value) {
+            return;
+        }
+        this._laying = value;
+        this._setLayout(value);
     }
 
-    public _$handleLayoutEnd(e) {
-        console.log('out ...', e);
-        e.preventDefault();
-        e.stopPropagation();
-        JigsawBox.clearLayout.emit(this);
+    private _setLayout(laying: boolean) {
+        if(laying) {
+            let scalePX = 24;
+            const [width, height] = [this.element.offsetWidth, this.element.offsetHeight];
+            const [scaleX, scaleY] = [1 - scalePX/width, 1 - scalePX/height];
+            this.renderer.setStyle(this.element, 'transform', `scale(${scaleX}, ${scaleY})`);
+        } else {
+            this.renderer.removeStyle(this.element, 'transform');
+        }
     }
 
     constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone,

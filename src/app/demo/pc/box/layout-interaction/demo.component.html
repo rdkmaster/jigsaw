@@ -11,54 +11,50 @@
         <jigsaw-button-bar [(selectedItems)]="selectedType" [data]="types"></jigsaw-button-bar>
         <br>
         <br>
-        <j-box direction="v" [resizable]="true" height="400" width="800">
-            <j-box grow="2">
-               <!-- <div class="box-content">
-                    <div class="border-content">
+        <div class="box-layout" style="display: inline-block" (mousemove)="laying.emit($event)" (mouseenter)="layoutStart.emit()" (mouseleave)="layoutEnd.emit()">
+            <j-box #rootBox direction="v" [resizable]="true" height="400" width="800">
+                <j-box grow="2">
+                    <!-- <div class="box-content">
+                         <div class="border-content">
 
-                    </div>
-                </div>-->
-                <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
-                <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
-                <j-box></j-box>
-                <j-box></j-box>
-                <j-box>
-                    <!--<jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
+                         </div>
+                     </div>-->
+                    <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
                     <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
                     <j-box></j-box>
                     <j-box></j-box>
-                    <j-box direction="v" [resizable]="true">
+                    <j-box>
                         <!--<jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
                         <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
-                        <j-box>
-                            <j-box></j-box>
-                            <j-box></j-box>
-                        </j-box>
-                        <j-box>
-                            <j-box></j-box>
-                            <j-box></j-box>
+                        <j-box></j-box>
+                        <j-box></j-box>
+                        <j-box direction="v" [resizable]="true">
+                            <!--<jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
+                            <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
+                            <j-box>
+                                <j-box></j-box>
+                                <j-box></j-box>
+                            </j-box>
+                            <j-box>
+                                <j-box></j-box>
+                                <j-box></j-box>
+                            </j-box>
                         </j-box>
                     </j-box>
                 </j-box>
-            </j-box>
-            <j-box [resizable]="true" grow="2">
+                <j-box [resizable]="true" grow="2">
+                    <j-box>
+
+                    </j-box>
+                    <j-box grow="4">
+
+                    </j-box>
+                </j-box>
                 <j-box>
-                    <div class="box-content">
-                        <div class="border-content"></div>
-                    </div>
-                </j-box>
-                <j-box grow="4">
-                    <div class="box-content">
-                        <div class="border-content"></div>
-                    </div>
+
                 </j-box>
             </j-box>
-            <j-box>
-                <div class="box-content">
-                    <div class="border-content"></div>
-                </div>
-            </j-box>
-        </j-box>
+        </div>
     </div>
 </div>
 

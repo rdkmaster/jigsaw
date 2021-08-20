@@ -46,9 +46,6 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
     &-flicker {
         visibility: hidden;
     }
-    &-laying {
-        transform: scale(0.9);
-    }
 }
 
 .#{$flex-prefix-cls} {
