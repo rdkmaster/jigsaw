@@ -2,10 +2,17 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 110px);
+    margin-top: 22px;
 }
 
 .viewport .demo-cntr {
+    position: relative;
     width: 23%;
     height: 100%;
+}
+
+.viewport .demo-cntr .demo-header {
+    position: absolute;
+    top: -22px;
 }

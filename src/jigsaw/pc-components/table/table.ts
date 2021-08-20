@@ -315,9 +315,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this.height === undefined || this._$cellSettings.length === 0) {
             return;
         }
-        const bodyBottom = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range").getBoundingClientRect().bottom;
-        const vaildBottom = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr")[this._$cellSettings.length - 1].getBoundingClientRect().bottom;
-        const height = bodyBottom - vaildBottom - 1;
+        const bodyRangeEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range");
+        const lastRowEle = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr")[this._$cellSettings.length - 1];
+        if (bodyRangeEle === undefined || lastRowEle === undefined) {
+            return;
+        }
+        const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
+        const validBottom = lastRowEle.getBoundingClientRect().bottom;
+        const height = bodyBottom - validBottom - 1;
         const rowGap = Math.floor(height / 30);
         if (rowGap <= 0) {
             return;
