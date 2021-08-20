@@ -143,8 +143,8 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 
 @Component({
     template: `
-        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" [password]="true" [clearable]="false"
-            [disabled]="true">
+        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
+        [password]="true" [clearable]="false" [disabled]="true" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `,
     styles: [`
