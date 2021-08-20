@@ -12,17 +12,20 @@
         <br>
         <br>
         <div class="box-layout" style="display: inline-block" (mousemove)="laying.emit($event)" (mouseenter)="layoutStart.emit()" (mouseleave)="layoutEnd.emit()">
-            <j-box #rootBox direction="v" [resizable]="true" height="400" width="800">
+            <j-box #rootBox direction="v" [resizable]="true" height="600" width="800">
                 <j-box grow="2">
-                    <!-- <div class="box-content">
-                         <div class="border-content">
-
-                         </div>
-                     </div>-->
                     <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
                     <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
-                    <j-box></j-box>
-                    <j-box></j-box>
+                    <div style="flex: 1;overflow: auto;">
+                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                    </div>
+
+                    <!--<j-box>
+                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                    </j-box>-->
+                    <j-box>
+                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                    </j-box>
                     <j-box>
                         <!--<jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
                         <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
@@ -47,7 +50,7 @@
 
                     </j-box>
                     <j-box grow="4">
-
+                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
                     </j-box>
                 </j-box>
                 <j-box>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, ViewChild} from "@angular/core";
-import {JigsawBox} from "jigsaw/public_api";
+import {GraphData, JigsawBox} from "jigsaw/public_api";
 import {debounceTime} from 'rxjs/operators';
 
 @Component({
@@ -53,6 +53,12 @@ export class BoxLayoutInteractionDemoComponent {
                 currentBox = enterBox;
                 this.setBoxLaying(currentBox, true)
             }
+        });
+
+        JigsawBox.viewInit.subscribe(() => {
+            let e = document.createEvent("Event");
+            e.initEvent("resize", true, true);
+            window.dispatchEvent(e);
         })
     }
 
@@ -110,6 +116,34 @@ export class BoxLayoutInteractionDemoComponent {
         box.laying = type;
         this.setAllBoxLaying(box.parent, type);
     }
+
+    graphData = new GraphData({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            extraCssText: 'z-index: 999'
+        },
+        grid:{
+            top:10,
+            bottom: 20,
+            right:0,
+            left:48,
+            show: false
+        },
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+        }]
+    });
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
