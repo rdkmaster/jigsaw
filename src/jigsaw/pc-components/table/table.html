@@ -76,7 +76,7 @@
                     </ng-container>
                 </td>
             </tr>
-            <tr #tableRow *ngFor="let row of this._$blankRow" (click)="_$clickRow(rowIndex)">
+            <tr #tableRow *ngFor="let row of this._$blankRow">
                 <td *ngFor="let cell of this._$headerSettings;" attr.rowspan="1" style="display: 'table-cell';">
                     <ng-container>
                         <div class="jigsaw-table-cell-content">
