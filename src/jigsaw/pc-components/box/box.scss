@@ -8,7 +8,6 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
     display: block;
     flex: 1 0 0;
     overflow: auto;
-    transition: transform .3s ease;;
     &-relative {
         position: relative;
         display: block;

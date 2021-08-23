@@ -43,6 +43,7 @@
 @import "../viewport/viewport";
 @import "../../common/components/scrollbar/scrollbar";
 @import "../box/box";
+@import "../box/editable-box";
 @import "../drawer/drawer";
 @import "../cascade/cascade";
 @import "../input/auto-complete-input";
@@ -65,7 +66,7 @@
 @import "../../common/directive/badge/badge";
 @import "../../common/directive/tooltip/tooltip";
 @import "../menu/navigation-menu";
-@import "../date-and-time/time-section"; 
+@import "../date-and-time/time-section";
 @import "../header/header";
 @import "../tree/tree";
 

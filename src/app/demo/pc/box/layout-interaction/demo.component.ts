@@ -33,7 +33,7 @@ export class BoxLayoutInteractionDemoComponent {
                 currentBox = null;
             }
         });
-        this.laying.pipe(debounceTime(100)).subscribe(e => {
+        this.laying.pipe(debounceTime(200)).subscribe(e => {
             console.log('laying', isLaying);
             if (!isLaying) {
                 if (currentBox) {
@@ -45,14 +45,18 @@ export class BoxLayoutInteractionDemoComponent {
             const mousePos = {x: e.clientX, y: e.clientY};
             const boxList = this.getAllBox(this.rootBox);
             const enterBox = this.getMouseEnterBox(mousePos, boxList);
-            if (enterBox && enterBox != currentBox) {
+            if (!enterBox) {
+                return;
+            }
+            if (enterBox != currentBox) {
+                // 切换选中box
                 console.log('enter box: ', enterBox);
                 if (currentBox) {
                     this.setBoxLaying(currentBox, false)
                 }
                 currentBox = enterBox;
-                this.setBoxLaying(currentBox, true)
             }
+            this.setBoxLaying(currentBox, true, mousePos)
         });
 
         JigsawEditableBox.viewInit.subscribe(() => {
@@ -62,7 +66,7 @@ export class BoxLayoutInteractionDemoComponent {
         })
     }
 
-    getAllBox(box, list = []): JigsawEditableBox[] {
+    getAllBox(box: JigsawEditableBox, list = []): JigsawEditableBox[] {
         if (!box) {
             return list;
         }
@@ -81,11 +85,10 @@ export class BoxLayoutInteractionDemoComponent {
         })
     }
 
-    setBoxLaying(box, type: boolean) {
-        if(!box) {
+    setBoxLaying(box: JigsawEditableBox, type: boolean, mousePos?: { x: number, y: number }) {
+        if (!box) {
             return;
         }
-        box.element.style.borderColor = type ? 'red' : '#ccc';
         switch (this.selectedType[0]) {
             case '所有父BOX':
                 this.setAllBoxLaying(box, type);
@@ -97,9 +100,10 @@ export class BoxLayoutInteractionDemoComponent {
                 box.laying = type;
                 break;
         }
+        box.showInertLineByOffset(type, mousePos);
     }
 
-    setNeighboringBoxLaying(box, type: boolean) {
+    setNeighboringBoxLaying(box: JigsawEditableBox, type: boolean) {
         box._$childrenBox.forEach(childBox => childBox.laying = type);
         if (box.parent && box.parent._$childrenBox) {
             box.parent._$childrenBox.forEach(childBox => childBox.laying = type);
@@ -109,7 +113,7 @@ export class BoxLayoutInteractionDemoComponent {
         }
     }
 
-    setAllBoxLaying(box, type: boolean) {
+    setAllBoxLaying(box: JigsawEditableBox, type: boolean) {
         if (!box || !box.parent) {
             return
         }
@@ -125,11 +129,11 @@ export class BoxLayoutInteractionDemoComponent {
             },
             extraCssText: 'z-index: 999'
         },
-        grid:{
-            top:10,
+        grid: {
+            top: 10,
             bottom: 20,
-            right:0,
-            left:48,
+            right: 0,
+            left: 48,
             show: false
         },
         xAxis: {
