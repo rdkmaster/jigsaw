@@ -18,7 +18,7 @@ export class AppComponent implements AfterContentInit {
     themes = new ArrayCollection([
         { label: "Paletx Pro Light", name: 'paletx-pro', majorStyle: 'light' },
         { label: "Paletx Pro Dark", name: 'paletx-pro', majorStyle: 'dark' },
-        { label: "Vmax Light", name: 'vmax', majorStyle: 'light' }
+        { label: "Vmax Pro Light", name: 'vmax-pro', majorStyle: 'light' }
     ]);
 
     themeSelectChange(themeArr: ArrayCollection<any>) {
