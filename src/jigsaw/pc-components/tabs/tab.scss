@@ -255,24 +255,11 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 }
 
 .#{$tab-prefix}-page {
-    .#{$tab-prefix}-bar {
-        position: relative;
-        border: none;
-
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            height: 1px;
-            width: 100%;
-            background: $border-color-default;
-            z-index: -1;
-        }
-    }
-
     .#{$tab-prefix}-nav-container {
         .#{$tab-prefix}-ink-bar {
-            visibility: hidden;
+            height: 1px;
+            background-color: $bg-body;
+            transition: unset;
         }
 
         .#{$tab-prefix}-nav-wrap {
@@ -281,7 +268,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     border-width: 1px;
                     border-style: solid;
                     border-color: $border-color-default;
-                    border-radius: $border-radius-base;
+                    border-radius: $border-radius-base $border-radius-base 0 0;
+                    border-bottom:none;
                     margin-right: 2px;
                     padding: 0 16px;
                     line-height: 32px;
@@ -289,7 +277,6 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     &-active {
                         border-top-width: 2px;
                         border-top-color: $brand-default;
-                        border-bottom-color: $bg-body;
                     }
                 }
 
