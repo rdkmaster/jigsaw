@@ -183,6 +183,6 @@ export class TableAutoFillUpDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "";
+    summary: string = "此Demo展示了表格在不同数据场景，设置高度属性后，自动填满空白行的功能。";
     description: string = "";
 }
