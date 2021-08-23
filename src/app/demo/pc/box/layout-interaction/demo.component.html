@@ -11,10 +11,16 @@
         <jigsaw-button-bar [(selectedItems)]="selectedType" [data]="types"></jigsaw-button-bar>
         <br>
         <br>
-        <div class="box-layout" style="display: inline-block" (mousemove)="laying.emit($event)" (mouseenter)="layoutStart.emit()" (mouseleave)="layoutEnd.emit()">
+        <j-button jigsaw-draggable (jigsawDragStart)="layoutStart.emit($event)" (jigsawDragEnd)="layoutEnd.emit($event)">表格</j-button>
+        <j-button jigsaw-draggable (jigsawDragStart)="layoutStart.emit($event)" (jigsawDragEnd)="layoutEnd.emit($event)">图形</j-button>
+        <br>
+        <br>
+        <div #boxWrapper class="box-layout" style="display: inline-block"
+             jigsaw-droppable (jigsawDragOver)="laying.emit($event)" (jigsawDrop)="layoutEnd.emit($event)">
             <j-editable-box #rootBox direction="v" [resizable]="true" height="600" width="800">
                 <j-editable-box grow="2">
-                    <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>
+                    <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40"
+                                 text="编辑"></jigsaw-icon>
                     <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
                     <div style="flex: 1;overflow: auto;">
                         <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>

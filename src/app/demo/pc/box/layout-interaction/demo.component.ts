@@ -1,6 +1,6 @@
-import {Component, EventEmitter, ViewChild} from "@angular/core";
-import {GraphData, JigsawEditableBox} from "jigsaw/public_api";
-import {debounceTime} from 'rxjs/operators';
+import {Component, EventEmitter, ViewChild, ElementRef} from "@angular/core";
+import {DragDropInfo, GraphData, JigsawEditableBox} from "jigsaw/public_api";
+import {debounceTime, throttleTime} from 'rxjs/operators';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,35 +11,36 @@ export class BoxLayoutInteractionDemoComponent {
     types = ['所有父BOX', '相邻BOX', 'BOX本身'];
     selectedType = ['相邻BOX'];
 
-    laying = new EventEmitter<MouseEvent>();
+    laying = new EventEmitter();
     layoutStart = new EventEmitter();
     layoutEnd = new EventEmitter();
 
     @ViewChild('rootBox')
     rootBox: JigsawEditableBox;
 
+    @ViewChild('boxWrapper')
+    boxWrapper: ElementRef;
+
     constructor() {
         let currentBox: JigsawEditableBox;
-        let isLaying: boolean;
-        this.layoutStart.subscribe(() => {
-            console.log('mouse enter...');
-            isLaying = true
+        this.layoutStart.subscribe((dragInfo: DragDropInfo) => {
+            console.log('layout start...');
+            dragInfo.dragDropData = dragInfo.element.innerText;
+            dragInfo.event.dataTransfer.setDragImage(dragInfo.element.querySelector('.jigsaw-button-content'), -20, 10);
+            dragInfo.event.dataTransfer.effectAllowed = 'link';
         });
         this.layoutEnd.subscribe(() => {
-            console.log('mouse leave...');
-            isLaying = false;
+            console.log('layout end...');
             if (currentBox) {
                 this.setBoxLaying(currentBox, false);
                 currentBox = null;
             }
         });
-        this.laying.pipe(debounceTime(200)).subscribe(e => {
-            console.log('laying', isLaying);
-            if (!isLaying) {
-                if (currentBox) {
-                    this.setBoxLaying(currentBox, false);
-                    currentBox = null;
-                }
+        this.laying.pipe(throttleTime(200)).subscribe((dropInfo: DragDropInfo) => {
+            dropInfo.event.dataTransfer.dropEffect = 'link';
+            console.log('laying');
+            const e = dropInfo.event;
+            if (!e) {
                 return;
             }
             const mousePos = {x: e.clientX, y: e.clientY};

@@ -61,7 +61,8 @@ export class JigsawEditableBox extends JigsawBox {
         if (laying) {
             let scalePX = this._insertGap * 2;
             const [width, height] = [this.element.offsetWidth, this.element.offsetHeight];
-            this._scale = [1 - scalePX / width, 1 - scalePX / height];
+            // 防止宽高比insert gap还要小
+            this._scale = [Math.max(0, 1 - scalePX / width), Math.max(0, 1 - scalePX / height)];
             this.renderer.setStyle(this.element, 'transform', `scale(${this._scale[0]}, ${this._scale[1]})`);
         } else {
             this.renderer.removeStyle(this.element, 'transform');
@@ -91,12 +92,9 @@ export class JigsawEditableBox extends JigsawBox {
         this.childrenBox = v;
     }
 
-    @RequireMarkForCheck()
-    public showInsertLine: boolean;
-
     public showInertLineByOffset(type: boolean, mousePos?: { x: number, y: number }) {
         this.element.style.borderColor = type ? 'red' : '#ccc';
-        this.showInsertLine = type;
+        this.renderer.setStyle(this._insertLine.nativeElement, 'display', type ? 'block' : 'none');
         if (!type) {
             return;
         }
