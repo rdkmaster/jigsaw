@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBox} from "./box";
+import {JigsawEditableBox} from './editable-box';
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 
 @Directive()
@@ -158,7 +159,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     protected removeBoxChangeListener: Subscription;
 
-    protected childrenBox: QueryList<JigsawBoxBase> | JigsawBox[];
+    protected childrenBox: QueryList<JigsawBoxBase> | JigsawBox[] | JigsawEditableBox[];
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, ViewChild} from "@angular/core";
-import {GraphData, JigsawBox} from "jigsaw/public_api";
+import {GraphData, JigsawEditableBox} from "jigsaw/public_api";
 import {debounceTime} from 'rxjs/operators';
 
 @Component({
@@ -16,10 +16,10 @@ export class BoxLayoutInteractionDemoComponent {
     layoutEnd = new EventEmitter();
 
     @ViewChild('rootBox')
-    rootBox: JigsawBox;
+    rootBox: JigsawEditableBox;
 
     constructor() {
-        let currentBox: JigsawBox;
+        let currentBox: JigsawEditableBox;
         let isLaying: boolean;
         this.layoutStart.subscribe(() => {
             console.log('mouse enter...');
@@ -55,14 +55,14 @@ export class BoxLayoutInteractionDemoComponent {
             }
         });
 
-        JigsawBox.viewInit.subscribe(() => {
+        JigsawEditableBox.viewInit.subscribe(() => {
             let e = document.createEvent("Event");
             e.initEvent("resize", true, true);
             window.dispatchEvent(e);
         })
     }
 
-    getAllBox(box, list = []): JigsawBox[] {
+    getAllBox(box, list = []): JigsawEditableBox[] {
         if (!box) {
             return list;
         }
@@ -74,7 +74,7 @@ export class BoxLayoutInteractionDemoComponent {
         return list;
     }
 
-    getMouseEnterBox(mousePos: { x: number, y: number }, boxList: JigsawBox[]): JigsawBox {
+    getMouseEnterBox(mousePos: { x: number, y: number }, boxList: JigsawEditableBox[]): JigsawEditableBox {
         return boxList.find(box => {
             const rect = box.element.getBoundingClientRect();
             return mousePos.x > rect.x && mousePos.x < rect.x + rect.width && mousePos.y > rect.y && mousePos.y < rect.y + rect.height

@@ -5,7 +5,6 @@ import {
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -20,28 +19,6 @@ import { debounceTime } from 'rxjs/operators';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBox extends JigsawResizableBoxBase implements AfterContentInit, OnDestroy {
-
-    private _laying: boolean;
-
-    public set laying(value: boolean) {
-        if(this._laying == value) {
-            return;
-        }
-        this._laying = value;
-        this._setLayout(value);
-    }
-
-    private _setLayout(laying: boolean) {
-        if(laying) {
-            let scalePX = 24;
-            const [width, height] = [this.element.offsetWidth, this.element.offsetHeight];
-            const [scaleX, scaleY] = [1 - scalePX/width, 1 - scalePX/height];
-            this.renderer.setStyle(this.element, 'transform', `scale(${scaleX}, ${scaleY})`);
-        } else {
-            this.renderer.removeStyle(this.element, 'transform');
-        }
-    }
-
     constructor(elementRef: ElementRef, renderer: Renderer2, zone: NgZone,
                 /**
                  * @internal
@@ -88,7 +65,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     public parent: JigsawBox;
 
     @ContentChildren(JigsawBox)
-    private _childrenBoxRaw: QueryList<JigsawBox>;
+    protected _childrenBoxRaw: QueryList<JigsawBox>;
 
     @ViewChild('resizeLine')
     private _resizeLine: ElementRef;
