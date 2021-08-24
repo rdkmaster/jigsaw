@@ -5,7 +5,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
 .#{$input-prefix-cls} {
     @include inline-block();
     height: $height-base;
-    font-size: $font-size-base;
+    font-size: $font-size-text-base;
     overflow: hidden;
 
     &-container {

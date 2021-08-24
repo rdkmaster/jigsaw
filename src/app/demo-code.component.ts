@@ -257,6 +257,7 @@ export class DemoCodeComponent implements AfterViewInit, OnDestroy {
         this.fileTree.refresh();
         setTimeout(() => {
             this.tree.selectNodes('label', 'demo.component.html', null);
+            this.editor.refresh();
         }, 100)
     }
 

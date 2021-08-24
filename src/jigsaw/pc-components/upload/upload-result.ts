@@ -146,6 +146,15 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         return file.message == this._fileTypeError || file.message == this._fileMinSizeError || file.message == this._fileMaxSizeError;
     }
 
+    /**
+     * @internal
+     *
+     */
+    public _$retryUpload(file) {
+        file.progress = 0;
+        this.uploader.retryUpload(file);
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._changeUploadSubscription) {

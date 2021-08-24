@@ -12,6 +12,9 @@ import {
     JigsawTreeExtModule,
     JigsawButtonBarModule,
     SupportedTheme,
+    JigsawCheckBoxModule, 
+    JigsawNumericInputModule,
+    JigsawSelectModule,
     MajorStyle
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
@@ -39,6 +42,7 @@ import {DemoCodeComponent} from "./demo-code.component";
             {path: '**', redirectTo: '/'}
         ], {useHash: true}),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
+        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule,
         TranslateModule.forRoot()
     ],
     providers: [
