@@ -315,9 +315,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this.height === undefined || this._$cellSettings.length === 0) {
             return;
         }
+        const tableRows = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr");
+        if (!tableRows) {
+            return;
+        }
+        const lastRowEle = tableRows[this._$cellSettings.length - 1];
+        if (!lastRowEle) {
+            return;
+        }
         const bodyRangeEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range");
-        const lastRowEle = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr")[this._$cellSettings.length - 1];
-        if (bodyRangeEle === undefined || lastRowEle === undefined) {
+        if (!bodyRangeEle) {
             return;
         }
         const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
@@ -330,7 +337,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._$blankRow = Array(rowGap).fill("");
         this._changeDetectorRef.detectChanges();
     }
-    
+
     /**
      * 生成混合后的列定义序列
      *
@@ -903,7 +910,7 @@ export class JigsawTableModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, "table", {
             zh: {
-                noData: "暂无数据", 
+                noData: "暂无数据",
             },
             en: {
                 noData: "NO DATA"
