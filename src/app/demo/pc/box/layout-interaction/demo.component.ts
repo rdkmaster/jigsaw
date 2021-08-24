@@ -44,8 +44,9 @@ export class BoxLayoutInteractionDemoComponent {
                 this.setBoxLaying(currentBox, false);
                 currentBox = null;
             }
+            console.log('insert component:', dragInfo.dragDropData);
             console.log('parent:', insertInfo.parent.element, insertInfo.parent.element.id);
-            console.log('insertBefore:', insertInfo.before?.element, insertInfo.before.element?.id);
+            console.log('insertBefore:', insertInfo.before?.element, insertInfo.before?.element.id);
         });
         this.laying.pipe(throttleTime(200)).subscribe((dragInfo: DragDropInfo) => {
             dragInfo.event.dataTransfer.dropEffect = 'link';
@@ -62,7 +63,7 @@ export class BoxLayoutInteractionDemoComponent {
             }
             if (enterBox != currentBox) {
                 // 切换选中box
-                console.log('enter box: ', enterBox);
+                //console.log('enter box: ', enterBox);
                 if (currentBox) {
                     this.setBoxLaying(currentBox, false)
                 }
