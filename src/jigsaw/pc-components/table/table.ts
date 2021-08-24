@@ -306,8 +306,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 生成混合后的列定义序列
-     *
-     *
      */
     private _getMixedColumnDefines(): ColumnDefine[] {
         if (!this.data) {
@@ -870,7 +868,7 @@ export class JigsawTableModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, "table", {
             zh: {
-                noData: "暂无数据", 
+                noData: "暂无数据",
             },
             en: {
                 noData: "NO DATA"
