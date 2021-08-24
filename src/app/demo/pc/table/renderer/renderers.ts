@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from "@angular/core";
 import {Subscription} from "rxjs";
 import {TableCellRendererBase, TableData, DropDownTrigger} from "jigsaw/public_api";
 
@@ -12,7 +12,7 @@ export class OfficeRendererBase extends TableCellRendererBase {
 
 @Component({
     template: `
-        <j-combo-select [placeholder]="cellData" width="100%" height="30"
+        <j-combo-select [placeholder]="cellData" width="100%" height="28px" class="renderer-demo-header-select"
                         [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" (openChange)="onChange($event)">
             <ng-template>
                 <div style="width: 182px; background-color: #fff;">
@@ -29,7 +29,16 @@ export class OfficeRendererBase extends TableCellRendererBase {
                 </div>
             </ng-template>
         </j-combo-select>
-    `
+    `,
+    styles: [
+        `.renderer-demo-header-select .jigsaw-combo-select-selection {
+            display: flex;
+            min-height: 38px;
+            border-color: transparent;
+        }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class OfficeHeaderRenderer extends OfficeRendererBase {
     openTrigger = DropDownTrigger.click;
@@ -58,10 +67,25 @@ export class OfficeHeaderRenderer extends OfficeRendererBase {
 
 @Component({
     template: `
-        <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)"
-                       [data]="officeList" width="100%" height="25">
+        <jigsaw-select [value]="selected" (valueChange)="dispatchChangeEvent($event.label)" class="renderer-demo-select"
+                       [data]="officeList" width="100%" height="28px">
         </jigsaw-select>
-    `
+    `,
+    styles: [
+        `
+        .renderer-demo-select .jigsaw-combo-select-selection {
+            display: flex;
+            height: 28px;
+            min-height: 28px;
+            border-color: transparent;
+        }
+
+        .renderer-demo-select .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
+            height: 28px;
+        }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnInit, OnDestroy {
     selected: any;
@@ -113,10 +137,19 @@ export class OfficeCellRenderer extends TableCellRendererBase {
 
 @Component({
     template: `
-        <jigsaw-select placeholder="{{cellData}}" (valueChange)="onChange($event)"
+        <jigsaw-select placeholder="{{cellData}}" (valueChange)="onChange($event)" class="renderer-demo-header-select"
                        [data]="listItems" width="80%" height="25">
         </jigsaw-select>
-    `
+    `,
+    styles: [
+        `.renderer-demo-header-select .jigsaw-combo-select-selection {
+            display: flex;
+            min-height: 38px;
+            border-color: transparent;
+        }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class PositionHeaderRenderer extends TableCellRendererBase {
     listItems = [{label: 'All Positions'}, {label: 'Developer'}, {label: 'System Architect'}, {label: 'Test Engineer'}];

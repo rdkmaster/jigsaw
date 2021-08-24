@@ -340,8 +340,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 生成混合后的列定义序列
-     *
-     *
      */
     private _getMixedColumnDefines(): ColumnDefine[] {
         if (!this.data) {
