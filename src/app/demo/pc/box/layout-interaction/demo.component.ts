@@ -31,21 +31,21 @@ export class BoxLayoutInteractionDemoComponent {
             dragInfo.event.dataTransfer.setDragImage(dragInfo.element.querySelector('.jigsaw-button-content'), -20, 10);
             dragInfo.event.dataTransfer.effectAllowed = 'link';
         });
-        this.layoutEnd.subscribe((dragInfo: DragDropInfo)  => {
+        this.layoutEnd.subscribe((dragInfo: DragDropInfo) => {
             console.log('layout end...');
             if (currentBox) {
                 this.setBoxLaying(currentBox, false);
                 currentBox = null;
             }
         });
-        this.insert.subscribe((dragInfo: DragDropInfo)  => {
+        this.insert.subscribe((dragInfo: DragDropInfo) => {
             console.log('insert and layout end...');
             if (currentBox) {
                 this.setBoxLaying(currentBox, false);
                 currentBox = null;
             }
-            console.log('parent:',insertInfo.parent.element, insertInfo.parent.element.id);
-            console.log('insertBefore:',insertInfo.before.element, insertInfo.before.element.id);
+            console.log('parent:', insertInfo.parent.element, insertInfo.parent.element.id);
+            console.log('insertBefore:', insertInfo.before?.element, insertInfo.before.element?.id);
         });
         this.laying.pipe(throttleTime(200)).subscribe((dragInfo: DragDropInfo) => {
             dragInfo.event.dataTransfer.dropEffect = 'link';
