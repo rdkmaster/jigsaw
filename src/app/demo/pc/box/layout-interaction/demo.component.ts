@@ -1,5 +1,5 @@
 import {Component, EventEmitter, ViewChild, ElementRef} from "@angular/core";
-import {DragDropInfo, GraphData, JigsawEditableBox} from "jigsaw/public_api";
+import {DragDropInfo, GraphData, InsertInfo, JigsawEditableBox} from "jigsaw/public_api";
 import {debounceTime, throttleTime} from 'rxjs/operators';
 
 @Component({
@@ -14,6 +14,7 @@ export class BoxLayoutInteractionDemoComponent {
     laying = new EventEmitter();
     layoutStart = new EventEmitter();
     layoutEnd = new EventEmitter();
+    insert = new EventEmitter();
 
     @ViewChild('rootBox')
     rootBox: JigsawEditableBox;
@@ -23,23 +24,33 @@ export class BoxLayoutInteractionDemoComponent {
 
     constructor() {
         let currentBox: JigsawEditableBox;
+        let insertInfo: InsertInfo;
         this.layoutStart.subscribe((dragInfo: DragDropInfo) => {
             console.log('layout start...');
             dragInfo.dragDropData = dragInfo.element.innerText;
             dragInfo.event.dataTransfer.setDragImage(dragInfo.element.querySelector('.jigsaw-button-content'), -20, 10);
             dragInfo.event.dataTransfer.effectAllowed = 'link';
         });
-        this.layoutEnd.subscribe(() => {
+        this.layoutEnd.subscribe((dragInfo: DragDropInfo)  => {
             console.log('layout end...');
             if (currentBox) {
                 this.setBoxLaying(currentBox, false);
                 currentBox = null;
             }
         });
-        this.laying.pipe(throttleTime(200)).subscribe((dropInfo: DragDropInfo) => {
-            dropInfo.event.dataTransfer.dropEffect = 'link';
+        this.insert.subscribe((dragInfo: DragDropInfo)  => {
+            console.log('insert and layout end...');
+            if (currentBox) {
+                this.setBoxLaying(currentBox, false);
+                currentBox = null;
+            }
+            console.log('parent:',insertInfo.parent.element, insertInfo.parent.element.id);
+            console.log('insertBefore:',insertInfo.before.element, insertInfo.before.element.id);
+        });
+        this.laying.pipe(throttleTime(200)).subscribe((dragInfo: DragDropInfo) => {
+            dragInfo.event.dataTransfer.dropEffect = 'link';
             console.log('laying');
-            const e = dropInfo.event;
+            const e = dragInfo.event;
             if (!e) {
                 return;
             }
@@ -57,7 +68,7 @@ export class BoxLayoutInteractionDemoComponent {
                 }
                 currentBox = enterBox;
             }
-            this.setBoxLaying(currentBox, true, mousePos)
+            insertInfo = this.setBoxLaying(currentBox, true, mousePos);
         });
 
         JigsawEditableBox.viewInit.subscribe(() => {
@@ -86,7 +97,7 @@ export class BoxLayoutInteractionDemoComponent {
         })
     }
 
-    setBoxLaying(box: JigsawEditableBox, type: boolean, mousePos?: { x: number, y: number }) {
+    setBoxLaying(box: JigsawEditableBox, type: boolean, mousePos?: { x: number, y: number }): InsertInfo {
         if (!box) {
             return;
         }
@@ -101,7 +112,7 @@ export class BoxLayoutInteractionDemoComponent {
                 box.laying = type;
                 break;
         }
-        box.showInertLineByOffset(type, mousePos);
+        return box.showInertLine(type, mousePos);
     }
 
     setNeighboringBoxLaying(box: JigsawEditableBox, type: boolean) {

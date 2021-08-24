@@ -11,7 +11,8 @@ import {
     ViewChild,
     Injector
 } from '@angular/core';
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+
+export type InsertInfo = { parent: JigsawEditableBox, before: JigsawEditableBox };
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -92,7 +93,7 @@ export class JigsawEditableBox extends JigsawBox {
         this.childrenBox = v;
     }
 
-    public showInertLineByOffset(type: boolean, mousePos?: { x: number, y: number }) {
+    public showInertLine(type: boolean, mousePos?: { x: number, y: number }): InsertInfo {
         this.element.style.borderColor = type ? 'red' : '#ccc';
         this.renderer.setStyle(this._insertLine.nativeElement, 'display', type ? 'block' : 'none');
         if (!type) {
@@ -109,9 +110,11 @@ export class JigsawEditableBox extends JigsawBox {
             return childBoxRect[directProp] > mouseDirectValue
         });
         const insertGapOffset = this._getInsertGapOffset();
+        let boxInsertBefore: JigsawEditableBox;
         if (endBoxIndex == 0) {
             // 插在最前面
             insertOffset = insertGapOffset;
+            boxInsertBefore = this._$childrenBox[0];
         } else if (endBoxIndex < 0) {
             // 插在最后面
             if (this._$childrenBox.length) {
@@ -121,13 +124,19 @@ export class JigsawEditableBox extends JigsawBox {
                 //没有子集则居中显示
                 insertOffset = (curBoxRect[directSizeProp] - this._insertLineWidth) / 2;
             }
+            boxInsertBefore = null;
         } else {
             // 插在中间
             const startBoxRect = this._$childrenBox[endBoxIndex - 1].element.getBoundingClientRect();
             insertOffset = startBoxRect[directProp] + startBoxRect[directSizeProp] - curBoxRect[directProp] + insertGapOffset * 2;
+            boxInsertBefore = this._$childrenBox[endBoxIndex];
         }
         // offset值需要设置缩放之前的值
         this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', insertOffset / this._getDirectScale() + 'px');
+        return {
+            parent: this,
+            before: boxInsertBefore
+        }
     }
 
     private _getInsertGapOffset() {
