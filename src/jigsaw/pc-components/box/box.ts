@@ -141,11 +141,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
         this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
         this.checkFlex();
-        this._showResizeLine();
+        this._setChildrenBox();
         this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
             this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
             this.checkFlexByChildren();
-            this._showResizeLine();
+            this._setChildrenBox();
             this.runAfterMicrotasks(() => {
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
                 if (!this.parent) {
@@ -167,7 +167,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         });
     }
 
-    private _showResizeLine() {
+    protected _setChildrenBox() {
         if (!this._$childrenBox) {
             return;
         }

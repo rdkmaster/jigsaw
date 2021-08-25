@@ -9,8 +9,10 @@ import {
     ContentChildren,
     QueryList,
     ViewChild,
-    Injector
+    Injector,
+    Input
 } from '@angular/core';
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type InsertInfo = { parent: JigsawEditableBox, before: JigsawEditableBox };
 
@@ -24,6 +26,8 @@ export type InsertInfo = { parent: JigsawEditableBox, before: JigsawEditableBox 
         '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[style.margin]': 'margin',
+        '[style.padding]': 'padding'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -39,14 +43,53 @@ export class JigsawEditableBox extends JigsawBox {
         super(elementRef, renderer, zone, _cdr);
     }
 
+    private _gap: string;
+    /**
+     * 设置内容box的间隙
+     */
+    @Input()
+    public get gap(): string {
+        return this._gap;
+    }
+
+    public set gap(value: string) {
+        this._gap = CommonUtils.getCssValue(value);
+    }
+
+    private _margin: string;
+    /**
+     * 设置当前box的外边距
+     */
+    @Input()
+    public get margin(): string {
+        return this._margin;
+    }
+
+    public set margin(value: string) {
+        this._margin = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
+    }
+
+    private _padding: string;
+    /**
+     * 设置当前box的内边距
+     */
+    @Input()
+    public get padding(): string {
+        return this._padding;
+    }
+
+    public set padding(value: string) {
+        this._padding = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
+    }
+
     /**
      * @internal
      */
     public _scale: number[] = [];
 
-    private _insertGap: number = 12;
+    private static readonly _insertGap: number = 12;
 
-    private _insertLineWidth: number = 4;
+    private static readonly _insertLineWidth: number = 4;
 
     private _laying: boolean;
 
@@ -60,7 +103,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _setLayout(laying: boolean) {
         if (laying) {
-            let scalePX = this._insertGap * 2;
+            let scalePX = JigsawEditableBox._insertGap * 2;
             const [width, height] = [this.element.offsetWidth, this.element.offsetHeight];
             // 防止宽高比insert gap还要小
             this._scale = [Math.max(0, 1 - scalePX / width), Math.max(0, 1 - scalePX / height)];
@@ -93,14 +136,26 @@ export class JigsawEditableBox extends JigsawBox {
         this.childrenBox = v;
     }
 
-    public showInertLine(type: boolean, mousePos?: { x: number, y: number }): InsertInfo {
-        this.element.style.borderColor = type ? 'red' : '#ccc';
-        this.renderer.setStyle(this._insertLine.nativeElement, 'display', type ? 'block' : 'none');
-        if (!type) {
+    protected _setChildrenBox() {
+        super._setChildrenBox();
+        if (!this._$childrenBox || !this.gap) {
+            return;
+        }
+        this._$childrenBox.forEach((box, index) => {
+            if (box.margin) {
+                return;
+            }
+            box.margin = index == this._$childrenBox.length - 1 ? `0` : this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
+        })
+    }
+
+    public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): InsertInfo {
+        this.element.style.borderColor = laying ? 'red' : '#ccc';
+        this.renderer.setStyle(this._insertLine.nativeElement, 'display', laying ? 'block' : 'none');
+        if (!laying) {
             return;
         }
         const curBoxRect = this.element.getBoundingClientRect();
-        let insertOffset = 0;
         const directProp = this.direction == 'column' ? 'y' : 'x';
         const directSizeProp = this.direction == 'column' ? 'height' : 'width';
         const mouseDirectValue = mousePos[directProp];
@@ -110,6 +165,7 @@ export class JigsawEditableBox extends JigsawBox {
             return childBoxRect[directProp] > mouseDirectValue
         });
         const insertGapOffset = this._getInsertGapOffset();
+        let insertOffset = 0;
         let boxInsertBefore: JigsawEditableBox;
         if (endBoxIndex == 0) {
             // 插在最前面
@@ -122,7 +178,7 @@ export class JigsawEditableBox extends JigsawBox {
                 insertOffset = startBoxRect[directProp] + startBoxRect[directSizeProp] - curBoxRect[directProp] + insertGapOffset;
             } else {
                 //没有子集则居中显示
-                insertOffset = (curBoxRect[directSizeProp] - this._insertLineWidth) / 2;
+                insertOffset = (curBoxRect[directSizeProp] - JigsawEditableBox._insertLineWidth) / 2;
             }
             boxInsertBefore = null;
         } else {
@@ -140,7 +196,7 @@ export class JigsawEditableBox extends JigsawBox {
     }
 
     private _getInsertGapOffset() {
-        return (this._insertGap - this._insertLineWidth * this._getDirectScale()) / 2;
+        return (JigsawEditableBox._insertGap - JigsawEditableBox._insertLineWidth * this._getDirectScale()) / 2;
     }
 
     private _getDirectScale() {

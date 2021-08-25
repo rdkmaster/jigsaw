@@ -6,6 +6,15 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
     position: relative;
     transition: transform .3s ease;
 
+    &-relative {
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        left: 0;
+        top: 0;
+    }
+
     &-insert-line {
         position: absolute;
         width: 4px;

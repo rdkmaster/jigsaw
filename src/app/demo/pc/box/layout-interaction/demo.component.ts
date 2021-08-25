@@ -9,7 +9,7 @@ import {debounceTime, throttleTime} from 'rxjs/operators';
 export class BoxLayoutInteractionDemoComponent {
 
     types = ['所有父BOX', '相邻BOX', 'BOX本身'];
-    selectedType = ['相邻BOX'];
+    selectedType = ['所有父BOX'];
 
     laying = new EventEmitter();
     layoutStart = new EventEmitter();
@@ -18,9 +18,6 @@ export class BoxLayoutInteractionDemoComponent {
 
     @ViewChild('rootBox')
     rootBox: JigsawEditableBox;
-
-    @ViewChild('boxWrapper')
-    boxWrapper: ElementRef;
 
     constructor() {
         let currentBox: JigsawEditableBox;
@@ -48,7 +45,7 @@ export class BoxLayoutInteractionDemoComponent {
             console.log('parent:', insertInfo.parent.element, insertInfo.parent.element.id);
             console.log('insertBefore:', insertInfo.before?.element, insertInfo.before?.element.id);
         });
-        this.laying.pipe(throttleTime(200)).subscribe((dragInfo: DragDropInfo) => {
+        this.laying.pipe(throttleTime(500)).subscribe((dragInfo: DragDropInfo) => {
             dragInfo.event.dataTransfer.dropEffect = 'link';
             console.log('laying');
             const e = dragInfo.event;
@@ -98,40 +95,47 @@ export class BoxLayoutInteractionDemoComponent {
         })
     }
 
-    setBoxLaying(box: JigsawEditableBox, type: boolean, mousePos?: { x: number, y: number }): InsertInfo {
+    setBoxLaying(box: JigsawEditableBox, laying: boolean, mousePos?: { x: number, y: number }): InsertInfo {
         if (!box) {
             return;
         }
         switch (this.selectedType[0]) {
             case '所有父BOX':
-                this.setAllBoxLaying(box, type);
+                this.setAllBoxLaying(box, laying, true);
                 break;
             case '相邻BOX':
-                this.setNeighboringBoxLaying(box, type);
+                this.setNeighboringBoxLaying(box, laying);
                 break;
             case 'BOX本身':
-                box.laying = type;
+                box.laying = laying;
                 break;
         }
-        return box.showInertLine(type, mousePos);
+        return box.showInertLine(laying, mousePos);
     }
 
-    setNeighboringBoxLaying(box: JigsawEditableBox, type: boolean) {
-        box._$childrenBox.forEach(childBox => childBox.laying = type);
+    setNeighboringBoxLaying(box: JigsawEditableBox, laying: boolean) {
+        box._$childrenBox.forEach(childBox => childBox.laying = laying);
         if (box.parent && box.parent._$childrenBox) {
-            box.parent._$childrenBox.forEach(childBox => childBox.laying = type);
+            box.parent._$childrenBox.forEach(childBox => childBox.laying = laying);
         }
         if (box.parent && box.parent.parent && box.parent.parent.parent && box.parent.parent._$childrenBox) {
-            box.parent.parent._$childrenBox.forEach(childBox => childBox.laying = type);
+            box.parent.parent._$childrenBox.forEach(childBox => childBox.laying = laying);
         }
     }
 
-    setAllBoxLaying(box: JigsawEditableBox, type: boolean) {
-        if (!box || !box.parent) {
+    setAllBoxLaying(box: JigsawEditableBox, laying: boolean, current?: boolean) {
+        if (!box) {
+            return;
+        }
+        if (current && box._$childrenBox) {
+            box._$childrenBox.forEach(child => child.laying = laying)
+        }
+        if (!box.parent) {
+            // 根节点
             return
         }
-        box.laying = type;
-        this.setAllBoxLaying(box.parent, type);
+        box.laying = laying;
+        this.setAllBoxLaying(box.parent, laying);
     }
 
     graphData = new GraphData({
