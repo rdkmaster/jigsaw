@@ -9,6 +9,8 @@ import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
 import { JigsawCollapseModule } from "../collapse/collapse";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import {JigsawInputModule} from "../input/input";
+import { JigsawLoadingModule } from '../../common/components/loading/loading';
+import { LoadingService } from '../../common/service/loading.service';
 
 @NgModule({
     imports: [
@@ -18,10 +20,12 @@ import {JigsawInputModule} from "../input/input";
         JigsawCollapseModule,
         JigsawInputModule,
         PerfectScrollbarModule,
+        JigsawLoadingModule,
         TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
-    exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse]
+    exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
+    providers: [LoadingService]
 })
 export class JigsawSelectModule {
     constructor(translateService: TranslateService) {
