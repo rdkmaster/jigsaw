@@ -102,4 +102,9 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
     &-one-option {
         border-radius: 4px !important;
     }
+
+    &#{&}-size-small {
+        height: $height-sm;
+        font-size: $font-size-sm;
+    }
 }

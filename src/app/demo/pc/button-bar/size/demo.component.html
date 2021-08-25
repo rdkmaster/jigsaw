@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<jigsaw-header>这个demo演示按钮栏的两种尺寸：<code>small</code>和<code>default</code></jigsaw-header><br>
+
+<jigsaw-header level="3">small</jigsaw-header>
+<jigsaw-button-bar [(selectedItems)]="selectedTypes" [data]="cities" preSize="small"></jigsaw-button-bar><br><br>
+
+<jigsaw-header level="3">default</jigsaw-header>
+<jigsaw-button-bar [(selectedItems)]="selectedTypes" [data]="cities"></jigsaw-button-bar><br><br>
+
+<jigsaw-header level="3">直接设置height</jigsaw-header>
+<jigsaw-button-bar [(selectedItems)]="selectedTypes" [data]="cities" height="60"></jigsaw-button-bar>

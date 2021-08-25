@@ -8,11 +8,11 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `
         <j-tile [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
-                [multipleSelect]="multipleSelect" [height]="height" [valid]="valid"
+                [multipleSelect]="multipleSelect" [height]="'100%'" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                            [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
-                           [width]="optionWidth" [height]="height" [disabled]="item?.disabled"
+                           [width]="optionWidth" [height]="'100%'" [disabled]="item?.disabled"
                            title="{{item && item[labelField] ? item[labelField] : item}}">
                 <span *ngIf="item.icon" [class]="item.icon" [ngClass]="{'jigsaw-button-bar-icon-only': item === '' || item[labelField] === ''}"></span>
                 <p>{{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}</p>
@@ -24,6 +24,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
         '[class.jigsaw-button-bar-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-bar-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-bar-error]': "colorType === 'error' || colorType === 'danger'",
+        '[class.jigsaw-button-bar-size-small]': "preSize === 'small'",
         '[style.height]': 'height',
     },
     providers: [
@@ -43,6 +44,12 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
      */
     @Input()
     public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'primary';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public preSize: 'default' | 'small' = 'default';
 }
 
 @NgModule({
