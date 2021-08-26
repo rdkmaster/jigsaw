@@ -1,11 +1,17 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
 
+class ForeverBusyArrayCollection extends ArrayCollection<any> {
+    _busy = true;
+}
+
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class SelectValueChangeDemoComponent {
+    foreverBusyArray = new ForeverBusyArrayCollection();
+
     dataList = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },

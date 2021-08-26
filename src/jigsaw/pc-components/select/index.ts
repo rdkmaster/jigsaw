@@ -10,7 +10,6 @@ import { JigsawCollapseModule } from "../collapse/collapse";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import {JigsawInputModule} from "../input/input";
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
-import { LoadingService } from '../../common/service/loading.service';
 
 @NgModule({
     imports: [
@@ -34,14 +33,18 @@ export class JigsawSelectModule {
                 checkSelected: "查看已选",
                 return: "返回",
                 allSelected: "全部",
-                selected: "已选择 {{ num }} 项"
+                selected: "已选择 {{ num }} 项",
+                noData: "暂无数据",
+                loading: "数据加载中..."
             },
             en: {
                 selectAll: "All",
                 checkSelected: "Check Selected",
                 return: "All",
                 allSelected: "All Selected",
-                selected: "Selected {{ num }} item(s)"
+                selected: "Selected {{ num }} item(s)",
+                noData: "No Data",
+                loading: "Loading..."
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

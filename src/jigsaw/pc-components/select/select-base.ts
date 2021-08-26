@@ -446,10 +446,9 @@ export abstract class JigsawSelectBase
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
         if (value instanceof ArrayCollection) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === null) {
-                    value = value.splice(i, 1);
-                    --i;
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
                 }
             }
         } else {

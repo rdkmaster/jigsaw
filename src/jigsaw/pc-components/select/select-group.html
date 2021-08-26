@@ -62,10 +62,10 @@
                         </div>
                     </jigsaw-collapse-pane>
                 </jigsaw-collapse>
-                <div *ngIf="data.length === 0" class="jigsaw-select-no-data">
-                    <p *ngIf="!data['busy']">暂无数据</p>
-                    <jigsaw-circle-loading *ngIf="data['busy']" [size]="'small'"></jigsaw-circle-loading>
-                    <p *ngIf="data['busy']">数据加载中</p>
+                <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
+                    <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
+                    <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
+                    <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
                 </div>
             </jigsaw-list>
         </div>
