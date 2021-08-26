@@ -30,7 +30,8 @@ export class AppComponent implements AfterContentInit {
     changeLanguage(lang: { value: 'zh' | 'en' }) {
         TranslateHelper.changeLanguage(this._translateService, lang.value);
         // 这里别用showInfo，因为notification自身的语言此时还未被加载，导致标题发生错误
-        JigsawNotification.show('提示：Jigsaw的几乎所有demo本身都不支持中英双语切换，这个切换语言动作只能影响到组件语言，可用于测试组件在中英双语下的表现。',);
+        JigsawNotification.show('提示：Jigsaw的几乎所有demo本身，包括一些通过Input属性传给组件的文本（如placeholder），' +
+            '都未支持中英双语切换。这个切换语言动作只能影响到封装在组件内部的词条，可用于测试这些词条在中英双语下的表现。');
     }
 
     themeSelectChange(themeArr: ArrayCollection<any>) {
