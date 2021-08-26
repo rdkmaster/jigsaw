@@ -13,6 +13,10 @@ export class LocalPagingDataDemoComponent {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;
+        this.pageable.fromAjax('mock-data/hr-list-full');
+    }
+
+    changeData(){
         this.pageable.fromAjax('mock-data/hr-list');
     }
 
