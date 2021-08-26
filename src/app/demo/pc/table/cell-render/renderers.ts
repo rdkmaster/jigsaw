@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {TableCellRendererBase, TableData, DropDownTrigger} from "jigsaw/public_api";
 
 export class OfficeRendererBase extends TableCellRendererBase {
@@ -11,7 +11,7 @@ export class OfficeRendererBase extends TableCellRendererBase {
 
 @Component({
     template: `
-        <j-combo-select [placeholder]="cellData" width="100%" height="30"
+        <j-combo-select [placeholder]="cellData" width="100%" height="40px" class="cell-render-demo-header-select"
                         [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" (openChange)="onChange($event)">
             <ng-template>
                 <div style="width: 182px; background-color: #fff;">
@@ -28,7 +28,15 @@ export class OfficeRendererBase extends TableCellRendererBase {
                 </div>
             </ng-template>
         </j-combo-select>
-    `
+    `,
+    styles: [
+        `.cell-render-demo-header-select .jigsaw-combo-select-selection {
+            display: flex;
+            min-height: 38px;
+            border-color: transparent;
+        }`
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class OfficeHeaderRenderer extends OfficeRendererBase {
     openTrigger = DropDownTrigger.click;

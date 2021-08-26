@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {JigsawTableModule, JigsawPaginationModule} from "jigsaw/public_api";
+import {JigsawTableModule, JigsawPaginationModule, JigsawButtonModule} from "jigsaw/public_api";
 import {LocalPagingDataDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTableModule, JigsawPaginationModule, JigsawDemoDescriptionModule, JigsawButtonModule],
     declarations: [LocalPagingDataDemoComponent],
     exports: [LocalPagingDataDemoComponent]
 })

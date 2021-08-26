@@ -305,9 +305,41 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     /**
+     * @internal
+     */
+    public _$blankRow:string[] = [];
+
+    private _updateFillUpBlankRow(): void {
+        this._$blankRow = [];
+        this._changeDetectorRef.detectChanges();
+        if (this.height === undefined || this._$cellSettings.length === 0) {
+            return;
+        }
+        const tableRows = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr");
+        if (!tableRows) {
+            return;
+        }
+        const lastRowEle = tableRows[this._$cellSettings.length - 1];
+        if (!lastRowEle) {
+            return;
+        }
+        const bodyRangeEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range");
+        if (!bodyRangeEle) {
+            return;
+        }
+        const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
+        const validBottom = lastRowEle.getBoundingClientRect().bottom;
+        const height = bodyBottom - validBottom - 1;
+        const rowGap = Math.floor(height / 30);
+        if (rowGap <= 0) {
+            return;
+        }
+        this._$blankRow = Array(rowGap).fill("");
+        this._changeDetectorRef.detectChanges();
+    }
+
+    /**
      * 生成混合后的列定义序列
-     *
-     *
      */
     private _getMixedColumnDefines(): ColumnDefine[] {
         if (!this.data) {
@@ -352,6 +384,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
 
         this.runMicrotask(() => {
+            // 自动添加空白行
+            this._updateFillUpBlankRow();
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
@@ -496,6 +530,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _selectRow(rowIndex: number, suppressEvent: boolean = false) {
+        if (!this._$cellSettings.length || rowIndex > this._$cellSettings.length) {
+            return;
+        }
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
@@ -538,6 +575,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._fixHeaderTop();
         this._handleScrollBar();
         this._setVerticalScrollbarOffset();
+        this._updateFillUpBlankRow();
     }
 
     private _tableHeaderElement: HTMLElement;
@@ -870,7 +908,7 @@ export class JigsawTableModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, "table", {
             zh: {
-                noData: "暂无数据", 
+                noData: "暂无数据",
             },
             en: {
                 noData: "NO DATA"

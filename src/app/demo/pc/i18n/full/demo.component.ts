@@ -90,7 +90,7 @@ export class I18nFullDemoComponent {
         // 触发一次改变语言的动作。注意如果把设置国际化词条的动作移动到模块构造函数中去，
         // 则下面这行代码是不需要的。
         this.changeLang('zh');
-        this._updateNavigatonData();
+        this._updateNavigationData();
     }
 
     infoInitData = {
@@ -113,7 +113,7 @@ export class I18nFullDemoComponent {
 
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this.translateService, lang);
-        this._updateNavigatonData();
+        this._updateNavigationData();
         this._updateSelectData();
         this.infoInitData = {
             message: this.translateService.instant('alertText')
@@ -141,7 +141,7 @@ export class I18nFullDemoComponent {
         {label: this.endDate, closable: false}
     ]);
 
-    private _updateNavigatonData() {
+    private _updateNavigationData() {
         this.navigationMenuData.fromXML(`
             <node>
                 <node label="${this.translateService.instant('curWarn')}" icon="iconfont iconfont-e5fd" isActive="true" selected="true">

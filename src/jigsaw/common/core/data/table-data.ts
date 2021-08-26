@@ -1166,7 +1166,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             super.sortData(this.filteredData, this.sortInfo);
         }
 
-        this.firstPage();
+        this.changePage(this.pagingInfo.currentPage);
     }
 
     protected refreshData() {
@@ -1260,11 +1260,8 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         } else if (!isNaN(+currentPage)) {
             cp = +currentPage;
         }
-        if (cp >= 1 && cp <= this.pagingInfo.totalPage) {
-            this.pagingInfo.currentPage = cp;
-        } else {
-            console.error(`invalid currentPage[${cp}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
-        }
+        cp = Math.min(Math.max(cp, 1), this.pagingInfo.totalPage);
+        this.pagingInfo.currentPage = cp;
     }
 
     private _setDataByPageInfo() {
