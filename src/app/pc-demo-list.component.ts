@@ -71,7 +71,7 @@ import {routerConfigPC} from "./router-config";
         <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)"
                         placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
                         class="select-demo" [(value)]="selectedItems"></jigsaw-select>
-        <div *ngFor="let router of routes" style="max-width: calc(100vw - 365px)">
+        <div *ngFor="let router of routes" [ngStyle]="{'max-width': maxWidth}">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
                 <hr>
@@ -132,6 +132,10 @@ export class PCDemoListComponent implements OnInit {
     ngOnInit(): void {
         this.selectedItems = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.showHideDemos(this.selectedItems);
+    }
+
+    get maxWidth(): string {
+        return `calc(100vw - ${document.body.scrollHeight > document.body.offsetHeight ? 365 : 350}px)`;
     }
 }
 
