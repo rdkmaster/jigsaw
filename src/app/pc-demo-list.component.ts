@@ -71,7 +71,7 @@ import {routerConfigPC} from "./router-config";
         <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)"
                         placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
                         class="select-demo" [(value)]="selectedItems"></jigsaw-select>
-        <div *ngFor="let router of routes" style="max-width: calc(100vw - 350px)">
+        <div *ngFor="let router of routes" style="max-width: calc(100vw - 365px)">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
                 <hr>
