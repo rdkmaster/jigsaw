@@ -558,13 +558,6 @@ export abstract class JigsawSelectBase
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
-
-    /**
-     * @internal
-     */
-    public _$showNoDataHints(data):boolean{
-        return !!data.busy;
-    } 
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
