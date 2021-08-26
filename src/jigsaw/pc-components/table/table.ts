@@ -328,7 +328,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
-        const validBottom = lastRowEle.getBoundingClientRect().bottom;
+        const bodyScroll = bodyRangeEle.scrollTop;
+        const validBottom = lastRowEle.getBoundingClientRect().bottom + bodyScroll;
         const height = bodyBottom - validBottom - 1;
         const rowGap = Math.floor(height / 30);
         if (rowGap <= 0) {
