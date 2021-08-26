@@ -24,8 +24,7 @@ import { LoadingService } from '../../common/service/loading.service';
         TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
-    exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
-    providers: [LoadingService]
+    exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse]
 })
 export class JigsawSelectModule {
     constructor(translateService: TranslateService) {

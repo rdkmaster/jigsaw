@@ -56,9 +56,9 @@
                     </span>
                 </jigsaw-list-option>
                 <div *ngIf="data.length === 0" class="jigsaw-select-no-data">
-                    <p *ngIf="!data.busy?">暂无数据</p>
-                    <jigsaw-circle-loading *ngIf="data.busy?" [size]="'small'"></jigsaw-circle-loading>
-                    <p *ngIf="data.busy?">数据加载中</p>
+                    <p *ngIf="!_$showNoDataHints(data)">暂无数据</p>
+                    <jigsaw-circle-loading *ngIf="_$showNoDataHints(data)" [size]="'small'"></jigsaw-circle-loading>
+                    <p *ngIf="_$showNoDataHints(data)">数据加载中</p>
                 </div>
             </jigsaw-list>
         </div>
