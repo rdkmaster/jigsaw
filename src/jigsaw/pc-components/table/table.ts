@@ -312,6 +312,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
+        if (this.data['pagingInfo'] !== undefined) {
+            if (this.data['pagingInfo'].totalPage !== 1) {
+                return;
+            }
+        }
         if (this.height === undefined || this._$cellSettings.length === 0) {
             return;
         }
