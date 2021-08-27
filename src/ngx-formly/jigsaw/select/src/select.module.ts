@@ -6,9 +6,11 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyFieldSelect} from './select.type';
 import {JigsawSelectModule} from "@rdkmaster/jigsaw";
 import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyFieldSelectGroup} from "./select-group.type";
+import {FormlyFieldSelectCollapse} from "./select-collpase.type";
 
 @NgModule({
-    declarations: [FormlyFieldSelect],
+    declarations: [FormlyFieldSelect, FormlyFieldSelectGroup, FormlyFieldSelectCollapse],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -19,6 +21,16 @@ import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
                 {
                     name: 'select',
                     component: FormlyFieldSelect,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'select-group',
+                    component: FormlyFieldSelectGroup,
+                    wrappers: ['form-field'],
+                },
+                {
+                    name: 'select-collapse',
+                    component: FormlyFieldSelectCollapse,
                     wrappers: ['form-field'],
                 }
             ]
