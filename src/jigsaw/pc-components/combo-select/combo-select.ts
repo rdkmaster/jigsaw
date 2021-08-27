@@ -405,8 +405,9 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     public ngAfterViewInit() {
-        this._tags.changes.subscribe(() => {
+        const change = this._tags.changes.subscribe(() => {
             this._autoEditorWidth();
+            change.unsubscribe()
         })
     }
 
