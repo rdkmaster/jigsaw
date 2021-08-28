@@ -341,6 +341,7 @@ export abstract class JigsawSelectBase
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
+        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
@@ -516,6 +517,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$onComboOpenChange(optionState: boolean) {
+        this._onTouched();
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
