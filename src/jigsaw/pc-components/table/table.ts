@@ -37,7 +37,7 @@ import {
     TableHeadSetting
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {SortOrder} from "../../common/core/data/component-data";
+import {SortOrder, IPageable} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
@@ -312,11 +312,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
-        if (this.data['pagingInfo'] !== undefined) {
-            if (this.data['pagingInfo'].totalPage !== 1) {
-                return;
-            }
+
+        const data: IPageable = <any>this.data;
+        if (data?.hasOwnProperty('pagingInfo') && data?.pagingInfo.totalPage > 1) {
+            return;
         }
+
         if (this.height === undefined || this._$cellSettings.length === 0) {
             return;
         }
