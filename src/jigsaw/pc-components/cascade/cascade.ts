@@ -110,15 +110,23 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      */
     public _cascadeDataList: CascadeData[] = [];
 
+    private _dataGenerator: CascadeDateGenerator;
+
     /**
      * 生成级联数据的函数，一般用于需要异步加载的数据的生产
      *
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
      */
-    @RequireMarkForCheck()
     @Input()
-    public dataGenerator: CascadeDateGenerator;
+    public get dataGenerator(): CascadeDateGenerator {
+        return this._dataGenerator;
+    }
+
+    public set dataGenerator(value: CascadeDateGenerator) {
+        this._dataGenerator = value ? value : this._treeDataGenerator;
+        this._changeDetectorRef.markForCheck();
+    }
 
     /**
      * 一般配合`dataGenerator`使用，用于指明`dataGenerator`函数执行的上下文对象，
