@@ -76,5 +76,12 @@
         <p class="message">{{date6 | json}}</p>
     </div>
 
+    <div class="demo-7 live-demo">
+        <jigsaw-header [level]="2">select框宽度较长</jigsaw-header>
+        <jigsaw-range-date-time-select [(date)]="date7" (dateChange)="dateChange($event)" width="500"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date7 | json}}</p>
+    </div>
+
 </div>
 
