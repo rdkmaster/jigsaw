@@ -155,36 +155,40 @@ export class JigsawEditableBox extends JigsawBox {
         if (!laying) {
             return;
         }
-        const curBoxRect = this.element.getBoundingClientRect();
-        const directProp = this.direction == 'column' ? 'y' : 'x';
-        const directSizeProp = this.direction == 'column' ? 'height' : 'width';
-        const mouseDirectValue = mousePos[directProp];
+        const posProp = this.direction == 'column' ? 'y' : 'x';
+        const sizeProp = this.direction == 'column' ? 'height' : 'width';
+        const mouseDirectPos = mousePos[posProp];
         // 获取鼠标后面box的下标
         const endBoxIndex = this._$childrenBox.findIndex(childBox => {
             const childBoxRect = childBox.element.getBoundingClientRect();
-            return childBoxRect[directProp] > mouseDirectValue
+            return childBoxRect[posProp] > mouseDirectPos
         });
-        const insertGapOffset = this._getInsertGapOffset();
+        const insertLineScaleWidth = this._getInsertLineScaleWidth();
         let insertOffset = 0;
         let boxInsertBefore: JigsawEditableBox;
+        const parentBoxRect = this.element.getBoundingClientRect();
         if (endBoxIndex == 0) {
             // 插在最前面
-            insertOffset = insertGapOffset;
+            const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
+            insertOffset = (endBoxRect[posProp] - parentBoxRect[posProp] - insertLineScaleWidth) / 2;
             boxInsertBefore = this._$childrenBox[0];
         } else if (endBoxIndex < 0) {
             // 插在最后面
             if (this._$childrenBox.length) {
                 const startBoxRect = this._$childrenBox[this._$childrenBox.length - 1].element.getBoundingClientRect();
-                insertOffset = startBoxRect[directProp] + startBoxRect[directSizeProp] - curBoxRect[directProp] + insertGapOffset;
+                const startBoxSizePos = startBoxRect[posProp] + startBoxRect[sizeProp];
+                insertOffset = startBoxSizePos - parentBoxRect[posProp]  + (parentBoxRect[posProp] + parentBoxRect[sizeProp] - startBoxSizePos - insertLineScaleWidth) / 2;
             } else {
                 //没有子集则居中显示
-                insertOffset = (curBoxRect[directSizeProp] - JigsawEditableBox._insertLineWidth) / 2;
+                insertOffset = (parentBoxRect[sizeProp] - insertLineScaleWidth) / 2;
             }
             boxInsertBefore = null;
         } else {
             // 插在中间
             const startBoxRect = this._$childrenBox[endBoxIndex - 1].element.getBoundingClientRect();
-            insertOffset = startBoxRect[directProp] + startBoxRect[directSizeProp] - curBoxRect[directProp] + insertGapOffset * 2;
+            const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
+            const startBoxSizePos = startBoxRect[posProp] + startBoxRect[sizeProp];
+            insertOffset = startBoxSizePos - parentBoxRect[posProp] + (endBoxRect[posProp] - startBoxSizePos  - insertLineScaleWidth) / 2;
             boxInsertBefore = this._$childrenBox[endBoxIndex];
         }
         // offset值需要设置缩放之前的值
@@ -195,20 +199,22 @@ export class JigsawEditableBox extends JigsawBox {
         }
     }
 
-    private _getInsertGapOffset() {
-        return (JigsawEditableBox._insertGap - JigsawEditableBox._insertLineWidth * this._getDirectScale()) / 2;
+    private _getInsertLineScaleWidth() {
+        return JigsawEditableBox._insertLineWidth * this._getDirectScale();
     }
 
-    private _getDirectScale() {
+    private _getDirectScale(scale: number = 1, box: JigsawEditableBox = this) {
         // 两层缩放比例
-        return this._getBoxDirectScale(this.parent) * this._getBoxDirectScale(this);
+        scale = scale * this._getBoxDirectScale(box);
+        return box.parent ? this._getDirectScale(scale, box.parent) : scale;
     }
 
     private _getBoxDirectScale(box: JigsawEditableBox) {
         if (!box || !box._scale.length) {
             return 1;
         }
-        return box.direction == 'column' ? box._scale[1] : box._scale[0];
+        // 获取同一方向的缩放
+        return this.direction == 'column' ? box._scale[1] : box._scale[0];
     }
 
 }
