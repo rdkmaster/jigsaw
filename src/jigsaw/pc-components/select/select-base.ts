@@ -303,9 +303,6 @@ export abstract class JigsawSelectBase
         }
         // 表单初始值需要check
         this._changeDetector.markForCheck();
-        if (this.initialized && emit) {
-            this.valueChange.emit(this.value);
-        }
     }
 
     private _propagateChange: any = () => {
@@ -572,9 +569,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         } else {
             this._$selectedItems = [];
         }
-        if (this.initialized && emit) {
-            this.valueChange.emit(this.value);
-        }
+        this._changeDetector.markForCheck();
     }
 
     /**
