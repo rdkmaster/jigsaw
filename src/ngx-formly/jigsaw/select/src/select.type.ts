@@ -11,6 +11,7 @@ import {JigsawSelect} from "@rdkmaster/jigsaw";
             [valid]="to.valid && !showError"
             [width]="to.width"
             [height]="to.height"
+            [disabled]="to.disabled"
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
@@ -43,7 +44,8 @@ export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
             labelField: 'label',
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
-            useStatistics: true
+            useStatistics: true,
+            optionHeight: 32
         },
     };
 
