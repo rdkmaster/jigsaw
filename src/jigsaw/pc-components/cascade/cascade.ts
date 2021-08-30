@@ -118,6 +118,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * $demo = cascade/lazy-load
      * $demo = cascade/selected-items
      */
+    @RequireMarkForCheck()
     @Input()
     public get dataGenerator(): CascadeDateGenerator {
         return this._dataGenerator;
@@ -125,7 +126,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
 
     public set dataGenerator(value: CascadeDateGenerator) {
         this._dataGenerator = value ? value : this._treeDataGenerator;
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
