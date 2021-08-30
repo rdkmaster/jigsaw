@@ -35,9 +35,9 @@ import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigs
                 <jigsaw-cascade
                     [width]="to.width"
                     [height]="to.height"
-                    [dataGenerator]="to.dataGenerator"
-                    [generatorContext]="to.generatorContext"
                     [data]="to.data"
+                    [generatorContext]="to.generatorContext"
+                    [dataGenerator]="to.dataGenerator"
                     [(selectedItems)]="to.selectedItems"
                     [multipleSelect]="to.multipleSelect"
                     [labelField]="to.labelField"
