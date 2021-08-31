@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ["./demo.component.css"]
 })
 export class TableAutoFillUpDemoComponent {
+    checked: boolean = true;
+
     scenario: "common" | "tree" | "pageable" = "common";
 
     scenarioList = new ArrayCollection([

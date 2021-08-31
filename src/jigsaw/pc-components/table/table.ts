@@ -111,6 +111,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @RequireMarkForCheck()
     public hideHeader: boolean = false;
 
+    private _autoFillUp: boolean = false;
+    @Input()
+    public get autoFillUp(): boolean {
+        return this._autoFillUp;
+    }
+
+    public set autoFillUp(value: boolean) {
+        this._autoFillUp = value;
+        this._updateFillUpBlankRow();
+    }
+
     private _selectedRow: number;
 
     /**
@@ -312,6 +323,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
+
+        if (!this.autoFillUp) {
+            return;
+        }
 
         const data: IPageable = <any>this.data;
         if (data?.hasOwnProperty('pagingInfo') && data?.pagingInfo.totalPage > 1) {
