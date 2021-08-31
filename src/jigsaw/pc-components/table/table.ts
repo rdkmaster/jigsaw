@@ -112,6 +112,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public hideHeader: boolean = false;
 
     private _autoFillUp: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get autoFillUp(): boolean {
         return this._autoFillUp;
