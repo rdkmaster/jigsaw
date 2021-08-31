@@ -149,12 +149,16 @@ export class JigsawEditableBox extends JigsawBox {
         })
     }
 
+    private _insertTimer: number;
+
     public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): InsertInfo {
         this.element.style.borderColor = laying ? 'red' : '#ccc';
-        this.renderer.setStyle(this._insertLine.nativeElement, 'display', laying ? 'block' : 'none');
         if (!laying) {
+            clearTimeout(this._insertTimer);
+            this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'none');
             return;
         }
+
         const posProp = this.direction == 'column' ? 'y' : 'x';
         const sizeProp = this.direction == 'column' ? 'height' : 'width';
         const mouseDirectPos = mousePos[posProp];
@@ -163,40 +167,42 @@ export class JigsawEditableBox extends JigsawBox {
             const childBoxRect = childBox.element.getBoundingClientRect();
             return childBoxRect[posProp] > mouseDirectPos
         });
-        const insertLineScaleWidth = this._getInsertLineScaleWidth();
-        let insertOffset = 0;
-        let boxInsertBefore: JigsawEditableBox;
-        const parentBoxRect = this.element.getBoundingClientRect();
-        if (endBoxIndex == 0) {
-            // 插在最前面
-            const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
-            insertOffset = (endBoxRect[posProp] - parentBoxRect[posProp] - insertLineScaleWidth) / 2;
-            boxInsertBefore = this._$childrenBox[0];
-        } else if (endBoxIndex < 0) {
-            // 插在最后面
-            if (this._$childrenBox.length) {
-                const startBoxRect = this._$childrenBox[this._$childrenBox.length - 1].element.getBoundingClientRect();
-                const startBoxSizePos = startBoxRect[posProp] + startBoxRect[sizeProp];
-                insertOffset = startBoxSizePos - parentBoxRect[posProp]  + (parentBoxRect[posProp] + parentBoxRect[sizeProp] - startBoxSizePos - insertLineScaleWidth) / 2;
+        const boxInsertBefore = endBoxIndex >= 0 ? this._$childrenBox[endBoxIndex] : null;
+        // 计算插入线的位置，有缩放动画，需要延迟
+        this._insertTimer = this.callLater(() => {
+            const insertLineScaleWidth = this._getInsertLineScaleWidth();
+            let insertOffset = 0;
+            const parentBoxRect = this.element.getBoundingClientRect();
+            if (endBoxIndex == 0) {
+                // 插在最前面
+                const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
+                insertOffset = (endBoxRect[posProp] - parentBoxRect[posProp] - insertLineScaleWidth) / 2;
+            } else if (endBoxIndex < 0) {
+                // 插在最后面
+                if (this._$childrenBox.length) {
+                    const startBoxRect = this._$childrenBox[this._$childrenBox.length - 1].element.getBoundingClientRect();
+                    const startBoxSizePos = startBoxRect[posProp] + startBoxRect[sizeProp];
+                    insertOffset = startBoxSizePos - parentBoxRect[posProp] + (parentBoxRect[posProp] + parentBoxRect[sizeProp] - startBoxSizePos - insertLineScaleWidth) / 2;
+                } else {
+                    //没有子集则居中显示
+                    insertOffset = (parentBoxRect[sizeProp] - insertLineScaleWidth) / 2;
+                }
             } else {
-                //没有子集则居中显示
-                insertOffset = (parentBoxRect[sizeProp] - insertLineScaleWidth) / 2;
+                // 插在中间
+                const startBoxRect = this._$childrenBox[endBoxIndex - 1].element.getBoundingClientRect();
+                const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
+                const startBoxSizePos = startBoxRect[posProp] + startBoxRect[sizeProp];
+                insertOffset = startBoxSizePos - parentBoxRect[posProp] + (endBoxRect[posProp] - startBoxSizePos - insertLineScaleWidth) / 2;
             }
-            boxInsertBefore = null;
-        } else {
-            // 插在中间
-            const startBoxRect = this._$childrenBox[endBoxIndex - 1].element.getBoundingClientRect();
-            const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
-            const startBoxSizePos = startBoxRect[posProp] + startBoxRect[sizeProp];
-            insertOffset = startBoxSizePos - parentBoxRect[posProp] + (endBoxRect[posProp] - startBoxSizePos  - insertLineScaleWidth) / 2;
-            boxInsertBefore = this._$childrenBox[endBoxIndex];
-        }
-        // offset值需要设置缩放之前的值
-        this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', insertOffset / this._getDirectScale() + 'px');
+            // offset值需要设置缩放之前的值
+            this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', insertOffset / this._getDirectScale() + 'px');
+            this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'block');
+        }, 350);
+
         return {
             parent: this,
             before: boxInsertBefore
-        }
+        };
     }
 
     private _getInsertLineScaleWidth() {
