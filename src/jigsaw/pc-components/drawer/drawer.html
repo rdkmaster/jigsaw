@@ -4,7 +4,8 @@
         <ng-content></ng-content>
     </div>
     <div class="jigsaw-drawer-bar"
-         (click)="_$toggleOpen($event)">
+         (click)="_$toggleOpen($event)"
+         [ngClass]="{'emphasis-handler': emphasisHandler}">
         <span class="iconfont" [class.iconfont-e144]="!open"
               [class.iconfont-e143]="open"></span>
     </div>
