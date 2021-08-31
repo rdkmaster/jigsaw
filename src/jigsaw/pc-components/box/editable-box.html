@@ -7,6 +7,7 @@
        [effectBox]="parent?.element"
        [effectDirection]="parent?.direction"
        [range]="_$resizeRange"
+       [resizeStep]="resizeStep"
        (resize)="_$handleResize($event)"
        (resizeEnd)="_$handleResizeEnd()"
        (mousedown)="_$handleResizeStart($event)"></b>

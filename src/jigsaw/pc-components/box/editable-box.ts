@@ -83,6 +83,12 @@ export class JigsawEditableBox extends JigsawBox {
     }
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public resizeStep: number = 8;
+
+    /**
      * @internal
      */
     public _scale: number[] = [];

@@ -31,6 +31,9 @@ export class JigsawBoxResizable {
     @Input()
     public effectDirection: string;
 
+    @Input()
+    public resizeStep: number = 1;
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -52,6 +55,7 @@ export class JigsawBoxResizable {
     private _removeWindowMouseUpListener: CallbackRemoval;
     private _effectOffset: number;
     private _position: number[];
+    private _rawPosOfMouse: number[];
 
     /**
      * @internal
@@ -64,7 +68,7 @@ export class JigsawBoxResizable {
 
         const startOffsetX = AffixUtils.offset(this.parentBox).left - AffixUtils.offset(this.effectBox).left;
         const startOffsetY = AffixUtils.offset(this.parentBox).top - AffixUtils.offset(this.effectBox).top;
-
+        this._rawPosOfMouse = [event.clientX, event.clientY];
         this._position = [event.clientX - startOffsetX, event.clientY - startOffsetY];
         this._$moving = true;
         this._renderer.setStyle(document.body, 'cursor',
@@ -82,8 +86,10 @@ export class JigsawBoxResizable {
     private _dragMove = (event) => {
         if (!this._$moving || !this.range) return;
         let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
-            rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0];
-        let offset = event[eventProp] - rawPosition;
+            rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0],
+            rawPosOfMouse = this.effectDirection == 'column' ? this._rawPosOfMouse[1] : this._rawPosOfMouse[0];
+        const remainder = isNaN(this.resizeStep) ? 0 : (event[eventProp] - rawPosOfMouse) % Number(this.resizeStep);
+        let offset = event[eventProp] - rawPosition - remainder;
         if (offset < this.range[0]) {
             offset = this.range[0] + 5;
         } else if (offset > this.range[1]) {
