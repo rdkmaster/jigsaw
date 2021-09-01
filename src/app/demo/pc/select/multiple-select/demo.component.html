@@ -33,3 +33,14 @@
     width="160px"
     [useStatistics]="true"
 ></jigsaw-select>
+
+<jigsaw-header>普通数组</jigsaw-header>
+<jigsaw-select
+    [data]="arrayDataList"
+    [(value)]="selectedarrayData"
+    (valueChange)="valueChange();"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="160px"
+    [useStatistics]="false"
+></jigsaw-select>
