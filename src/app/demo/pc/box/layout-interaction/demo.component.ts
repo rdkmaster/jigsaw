@@ -90,8 +90,23 @@ export class BoxLayoutInteractionDemoComponent {
 
     getMouseEnterBox(mousePos: { x: number, y: number }, boxList: JigsawEditableBox[]): JigsawEditableBox {
         return boxList.find(box => {
+            // DOMRect对象中有只读属性，无法通过Object.assign或结构复制对象
             const rect = box.element.getBoundingClientRect();
-            return mousePos.x > rect.x && mousePos.x < rect.x + rect.width && mousePos.y > rect.y && mousePos.y < rect.y + rect.height
+            const realRect = {
+                left: rect.left,
+                top: rect.top,
+                right: rect.right,
+                bottom: rect.bottom
+            };
+            if (box.parent) {
+                // 滚动条的情况处理
+                const parentRect = box.parent.element.getBoundingClientRect();
+                realRect.left = Math.max(rect.left, parentRect.left);
+                realRect.top = Math.max(rect.top, parentRect.top);
+                realRect.right = Math.min(rect.right, parentRect.right);
+                realRect.bottom = Math.min(rect.bottom, parentRect.bottom);
+            }
+            return mousePos.x > realRect.left && mousePos.x < realRect.right && mousePos.y > realRect.top && mousePos.y < realRect.bottom
         })
     }
 

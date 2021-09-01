@@ -5,6 +5,7 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
 .#{$editable-box-prefix-cls} {
     position: relative;
     transition: transform .3s ease;
+    overflow: hidden;
 
     &-relative {
         position: absolute;
