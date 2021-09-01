@@ -48,6 +48,7 @@
             flex-grow: 1;
             width: calc(100% - 94px);
             height: 100%;
+            max-height: 500px;
 
             // 标题
             .jigsaw-notification-caption {
