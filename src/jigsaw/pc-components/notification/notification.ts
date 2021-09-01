@@ -552,7 +552,6 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };
-
 }
 
 @NgModule({
