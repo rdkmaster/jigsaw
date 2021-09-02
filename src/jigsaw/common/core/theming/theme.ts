@@ -1,6 +1,6 @@
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
-export type SupportedTheme = 'paletx-pro' | 'vmax';
+export type SupportedTheme = 'paletx-pro' | 'vmax-pro';
 export type MajorStyle = "dark" | "light";
 export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
 

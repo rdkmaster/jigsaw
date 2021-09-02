@@ -46,8 +46,8 @@
                 "inject": false
               },
               {
-                "input": "src/jigsaw/common/core/theming/themes/vmax-light.scss",
-                "bundleName": "themes/vmax-light",
+                "input": "src/jigsaw/common/core/theming/themes/vmax-pro-light.scss",
+                "bundleName": "themes/vmax-pro-light",
                 "inject": false
               }
             ],

@@ -71,7 +71,7 @@ import {routerConfigPC} from "./router-config";
         <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)"
                         placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
                         class="select-demo" [(value)]="selectedItems"></jigsaw-select>
-        <div *ngFor="let router of routes">
+        <div *ngFor="let router of routes" [ngStyle]="{'max-width': maxWidth}">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
                 <hr>
@@ -85,13 +85,13 @@ import {routerConfigPC} from "./router-config";
     styles: [`
         .select-demo {
             position: fixed;
-            right: 334px;
-            top: 0;
-            padding: 4px 12px;
+            right: 136px;
+            top: 48px;
             border-radius: 4px;
             cursor: pointer;
             background-color: var(--bg-body);
-            width: 240px;
+            width: 201px;
+            z-index: 1;
         }
 
         a {
@@ -104,12 +104,10 @@ import {routerConfigPC} from "./router-config";
     `]
 })
 export class PCDemoListComponent implements OnInit {
-    floatOptions = {
-        posType: PopupPositionType.fixed
-    };
-    routes: any[] = DemoListManager.fullRouterConfig;
-    selectedItems: any[];
-    public jComponents: string[] = this.routes.map(item => item.path)
+    public floatOptions = { posType: PopupPositionType.fixed };
+    public routes: any[] = DemoListManager.fullRouterConfig;
+    public selectedItems: any[];
+    public jComponents: string[] = this.routes.map(item => item.path);
 
     showHideDemos(selectedItems: string[]) {
         this.routes.forEach(item => {
@@ -132,9 +130,12 @@ export class PCDemoListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
-        this.selectedItems = stored;
+        this.selectedItems = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.showHideDemos(this.selectedItems);
+    }
+
+    get maxWidth(): string {
+        return `calc(100vw - ${document.body.scrollHeight > document.body.offsetHeight ? 365 : 350}px)`;
     }
 }
 

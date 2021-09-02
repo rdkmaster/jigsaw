@@ -1,17 +1,16 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
-import {JigsawSelect} from "@rdkmaster/jigsaw";
+import {JigsawSelectCollapse} from '@rdkmaster/jigsaw';
 
 @Component({
-    selector: 'formly-field-jigsaw-select',
+    selector: 'formly-field-jigsaw-select-collapse',
     template: `
-        <jigsaw-select
+        <jigsaw-collapse-select
             [formControl]="formControl"
             [formlyAttributes]="field"
             [valid]="to.valid && !showError"
             [width]="to.width"
             [height]="to.height"
-            [disabled]="to.disabled"
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
@@ -26,15 +25,16 @@ import {JigsawSelect} from "@rdkmaster/jigsaw";
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
             [useStatistics]="to.useStatistics"
+            [groupField]="to.groupField"
             [data]="to.data"
             [(value)]="to.value"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (remove)="to.remove && to.remove($event)"
-        ></jigsaw-select>
+        ></jigsaw-collapse-select>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
+export class FormlyFieldSelectCollapse extends FormlyFieldType<JigsawSelectCollapse> {
     defaultOptions = {
         templateOptions: {
             valid: true,
@@ -45,10 +45,10 @@ export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,
-            optionHeight: 32
+            groupField: "groupName"
         },
     };
 
-    @ViewChild(JigsawSelect)
-    protected _instance: JigsawSelect;
+    @ViewChild(JigsawSelectCollapse)
+    protected _instance: JigsawSelectCollapse;
 }

@@ -306,9 +306,11 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         const removeListener = this.renderer.listen(this.elementRef.nativeElement, 'animationend',
             () => {
                 removeListener();
+                if (!this._popupInfoValue) {
+                    return;
+                }
 
                 JigsawNotification.reposition(this._position);
-
                 const instances = notificationInstances[NotificationPosition[this._position]];
                 const idx = instances.indexOf(this._popupInfoValue);
                 if (idx != -1) {

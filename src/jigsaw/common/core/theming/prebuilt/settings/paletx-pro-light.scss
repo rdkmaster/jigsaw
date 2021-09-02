@@ -247,10 +247,12 @@ $brand-active-dark: $blue-8-dark;
 /*@public*/ $bg-disabled: $gray-3;
 /*@public*/ $bg-hover: $blue-1;
 /*@public*/ $bg-active: $blue-2;
+$bg-popup: $gray-1;
 $bg-component: transparent;
 $bg-header: $gray-3;
 $bg-gray: $gray-3;
 $bg-white: #fff;
+$bg-navigation: #32404e;
 $bg-scrollbar: $gray-3;
 $bg-scrollbar-lighten: $gray-7;
 // 支持组件内部实现明暗皮肤

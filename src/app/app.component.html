@@ -2,16 +2,14 @@
     <div class="app-wrap">
         <router-outlet></router-outlet>
     </div>
-    <jigsaw-button-bar
-        *ngIf='!demoCodePage'
-        class="demo-theme-button-bar"
-        height="32"
-        [(selectedItems)]="selectedTheme"
-        [data]="themes"
-        [multipleSelect]="false"
-        (selectedItemsChange)="themeSelectChange($event)"
-        trackItemBy="name,majorStyle"
-        optionWidth="110"
-    >
-    </jigsaw-button-bar>
+    <div class="demo-control-bar">
+        <jigsaw-button-bar *ngIf='!demoCodePage' [(selectedItems)]="selectedTheme" style="display: block"
+                           [data]="themes" [multipleSelect]="false" (selectedItemsChange)="themeSelectChange($event)"
+                           trackItemBy="name,majorStyle" optionWidth="110" height="32">
+        </jigsaw-button-bar>
+        <jigsaw-button-bar [data]="[{label: '中文', value: 'zh'}, {label: 'English', value: 'en'}]"
+                           [selectedItems]="[{label: '中文', value: 'zh'}]"
+                           (selectedItemsChange)="changeLanguage($event[0])">
+        </jigsaw-button-bar>
+    </div>
 </jigsaw-root>

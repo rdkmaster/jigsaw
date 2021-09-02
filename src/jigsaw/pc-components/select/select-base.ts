@@ -303,9 +303,6 @@ export abstract class JigsawSelectBase
         }
         // 表单初始值需要check
         this._changeDetector.markForCheck();
-        if (this.initialized && emit) {
-            this.valueChange.emit(this.value);
-        }
     }
 
     private _propagateChange: any = () => {
@@ -341,6 +338,7 @@ export abstract class JigsawSelectBase
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
+        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
@@ -445,8 +443,15 @@ export abstract class JigsawSelectBase
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
-        value = (value || []).filter(el => el != null);
-
+        if (value instanceof ArrayCollection) {
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
+                }
+            }
+        } else {
+            value = (value || []).filter(el => el != null);
+        }
         this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
         this._setValidData();
         if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
@@ -509,6 +514,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$onComboOpenChange(optionState: boolean) {
+        this._onTouched();
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
@@ -563,9 +569,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         } else {
             this._$selectedItems = [];
         }
-        if (this.initialized && emit) {
-            this.valueChange.emit(this.value);
-        }
+        this._changeDetector.markForCheck();
     }
 
     /**

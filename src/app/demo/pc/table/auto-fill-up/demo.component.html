@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<span>表格数据场景：</span>
+<jigsaw-select [(value)]="scenario" [data]="scenarioList"></jigsaw-select>
+
+<jigsaw-button *ngIf="scenario == 'common'" (click)="_$updateData()" colorType="primary">更新数据</jigsaw-button>
+<jigsaw-button *ngIf="scenario == 'common'" (click)="_$noData()" colorType="primary">无数据</jigsaw-button>
+<div *ngIf="scenario == 'common'" class="viewport">
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">高度设置为百分比</jigsaw-header>
+        <jigsaw-table [data]="tableData" [columnDefines]="columnsCommonRender" height="100%"></jigsaw-table>
+    </div>
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">高度设置为固定值</jigsaw-header>
+        <jigsaw-table [data]="tableData" height="400px"></jigsaw-table>
+    </div>
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">高度设置为计算值</jigsaw-header>
+        <jigsaw-table [data]="tableData" height="calc(100% - 100px)"></jigsaw-table>
+    </div>
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">不设置高度</jigsaw-header>
+        <jigsaw-table [data]="tableData"></jigsaw-table>
+    </div>
+</div>
+
+<div *ngIf="scenario == 'tree'" class="viewport">
+    <div class="demo-cntr" style="width: 100%;">
+        <jigsaw-header class="demo-header">高度设置为百分比</jigsaw-header>
+        <jigsaw-table [data]="treeTableData" [columnDefines]="columnsTree" height="100%"></jigsaw-table>
+    </div>
+</div>

@@ -1,17 +1,16 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
-import {JigsawSelect} from "@rdkmaster/jigsaw";
+import {JigsawSelectGroup} from '@rdkmaster/jigsaw';
 
 @Component({
-    selector: 'formly-field-jigsaw-select',
+    selector: 'formly-field-jigsaw-select-group',
     template: `
-        <jigsaw-select
+        <jigsaw-group-select
             [formControl]="formControl"
             [formlyAttributes]="field"
             [valid]="to.valid && !showError"
             [width]="to.width"
             [height]="to.height"
-            [disabled]="to.disabled"
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
@@ -26,15 +25,16 @@ import {JigsawSelect} from "@rdkmaster/jigsaw";
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
             [useStatistics]="to.useStatistics"
+            [groupField]="to.groupField"
             [data]="to.data"
             [(value)]="to.value"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (remove)="to.remove && to.remove($event)"
-        ></jigsaw-select>
+        ></jigsaw-group-select>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
+export class FormlyFieldSelectGroup extends FormlyFieldType<JigsawSelectGroup> {
     defaultOptions = {
         templateOptions: {
             valid: true,
@@ -45,10 +45,10 @@ export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,
-            optionHeight: 32
+            groupField: "groupName"
         },
     };
 
-    @ViewChild(JigsawSelect)
-    protected _instance: JigsawSelect;
+    @ViewChild(JigsawSelectGroup)
+    protected _instance: JigsawSelectGroup;
 }

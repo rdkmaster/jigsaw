@@ -49,6 +49,9 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
         & > p {
             max-width: 120px;
+            height: $height-sm;
+            line-height: $height-sm;
+            text-align: center;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -101,5 +104,10 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 
     &-one-option {
         border-radius: 4px !important;
+    }
+
+    &#{&}-size-small {
+        height: $height-sm;
+        font-size: $font-size-sm;
     }
 }
