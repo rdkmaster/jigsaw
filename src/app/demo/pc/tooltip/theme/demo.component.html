@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>明、暗两种主题的Tooltip</jigsaw-header>
+
+<jigsaw-button-bar [(selectedItems)]="selectedTheme" [data]="themeList"></jigsaw-button-bar>
+
+<jigsaw-button jigsawTooltipPosition="topLeft" [jigsawTooltip]="'两种主题的Tooltip'" [jigsawTooltipTheme]="selectedTheme[0]">
+    悬浮查看Tooltip
+</jigsaw-button>

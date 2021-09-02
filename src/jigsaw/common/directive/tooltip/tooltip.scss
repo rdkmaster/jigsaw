@@ -2,16 +2,28 @@ $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
 .#{$tooltip-prefix-cls} {
     $maxLineNum: 5;
-    padding: 12px;
+    height: $height-sm;
+    padding: 3px 8px;
     max-width: 400px;
     border-radius: $border-radius-sm;
-    background: $bg-body-light !important;
     color: $font-color-default-light;
+
+    &.#{$tooltip-prefix-cls}-light {
+        background: $bg-body-light;
+    }
+
+    &.#{$tooltip-prefix-cls}-dark {
+        background: #4d4d4d;
+        color: $font-color-white;
+    }
 
     > div {
         display: -webkit-box;
+        font-size: $font-size-base;
+        line-height: $height-sm - 8px;
+        text-align: center;
         word-break: break-all;
-        white-space:pre-wrap;
+        white-space: pre-wrap;
         text-overflow: ellipsis;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: $maxLineNum;

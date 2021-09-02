@@ -603,6 +603,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
     private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
         const arrowOffset = options.showBorder ? 7 / 2 + 1 : 7 / 2;
+        const boderColor = options.borderColor ? options.borderColor : '#dcdcdc';
         if (popupElement.offsetTop >= position.y + host.offsetHeight) {
             // 箭头在上
             ele.style.top = `-${arrowOffset}px`;
@@ -611,8 +612,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
             ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderTop = "1px solid #dcdcdc";
-                ele.style.borderRight = "1px solid #dcdcdc";
+                ele.style.borderTop = `1px solid ${boderColor}`;
+                ele.style.borderRight = `1px solid ${boderColor}`;
             }
         } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
             // 箭头在下
@@ -622,8 +623,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
             ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderLeft = "1px solid #dcdcdc";
-                ele.style.borderBottom = "1px solid #dcdcdc";
+                ele.style.borderLeft = `1px solid ${boderColor}`;
+                ele.style.borderBottom = `1px solid ${boderColor}`;
             }
         } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
             // 箭头在右
@@ -633,8 +634,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
             ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderTop = "1px solid #dcdcdc";
-                ele.style.borderLeft = "1px solid #dcdcdc";
+                ele.style.borderTop = `1px solid ${boderColor}`;
+                ele.style.borderLeft = `1px solid ${boderColor}`;
             }
         } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
             // 箭头在左
@@ -644,16 +645,16 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
             ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderRight = "1px solid #dcdcdc";
-                ele.style.borderBottom = "1px solid #dcdcdc";
+                ele.style.borderRight = `1px solid ${boderColor}`;
+                ele.style.borderBottom = `1px solid ${boderColor}`;
             }
         } else {
             // 覆盖在host上面，默认箭头在下
             ele.style.left = '6px';
             ele.style.bottom = `-${arrowOffset}px`;
             if (options.showBorder) {
-                ele.style.borderLeft = "1px solid #dcdcdc";
-                ele.style.borderBottom = "1px solid #dcdcdc";
+                ele.style.borderLeft = `1px solid ${boderColor}`;
+                ele.style.borderBottom = `1px solid ${boderColor}`;
             }
         }
     }
