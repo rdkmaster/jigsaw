@@ -71,9 +71,10 @@ export class MultipleSelectDemoComponent {
 
     selectedarrayData = [{ label: "文本选项1" }]
 
-    valueChange() {
-        console.log(this.selectedarrayData);
+    valueChange($event) {
+        console.log($event);
     }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

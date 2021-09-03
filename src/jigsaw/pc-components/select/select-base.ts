@@ -256,7 +256,7 @@ export abstract class JigsawSelectBase
      */
     public _$selectedItems: ArrayCollection<SelectOption> | any[];
 
-    private _value: any;
+    protected _value: any;
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
@@ -269,9 +269,15 @@ export abstract class JigsawSelectBase
     }
 
     public set value(newValue: any) {
+        if (this._$selectedItems == newValue) {
+            this._value = newValue;
+            return;
+        }
+
         if (this._value == newValue) {
             return;
         }
+
         let trackItemBy: string[];
         if (this.trackItemBy) {
             trackItemBy =
@@ -282,8 +288,18 @@ export abstract class JigsawSelectBase
         if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
             return;
         }
-        this._propagateChange(newValue);
         this._value = newValue;
+
+        this.runMicrotask(() => {
+            if (CommonUtils.isDefined(newValue)) {
+                this._$selectedItems = this.multipleSelect ? newValue : [newValue];
+            } else {
+                this._$selectedItems = new ArrayCollection([]);
+            }
+            this._$checkSelectAll();
+        })
+
+        this._propagateChange(newValue);
         this.writeValue(newValue);
     }
 
@@ -295,17 +311,12 @@ export abstract class JigsawSelectBase
     @Output()
     public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    public writeValue(value: any, emit = true): void {
-        if (CommonUtils.isDefined(value)) {
-            this._$selectedItems = this.multipleSelect ? value : [value];
-        } else {
-            this._$selectedItems = [];
-        }
+    protected writeValue(value: any, emit = true): void {
         // 表单初始值需要check
         this._changeDetector.markForCheck();
     }
 
-    private _propagateChange: any = () => {
+    protected _propagateChange: any = () => {
     };
 
     public registerOnChange(fn: any): void {
@@ -417,8 +428,8 @@ export abstract class JigsawSelectBase
     /**
      * 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
      */
-    private _searchKey: string;
-    private _searchKeyBak: string;
+    protected _searchKey: string;
+    protected _searchKeyBak: string;
 
     /**
      * 下拉显示已选选项
@@ -427,7 +438,7 @@ export abstract class JigsawSelectBase
      */
     public _$showSelected: boolean = false;
 
-    private _removeOnRefresh: CallbackRemoval;
+    protected _removeOnRefresh: CallbackRemoval;
 
     protected _data: ArrayCollection<SelectOption>;
     public validData: SelectOption[];
@@ -468,7 +479,7 @@ export abstract class JigsawSelectBase
         }
     }
 
-    private _setValidData() {
+    protected _setValidData() {
         // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
         this.validData = this._data.concat().filter(item => item["disabled"] !== true);
     }
@@ -493,8 +504,8 @@ export abstract class JigsawSelectBase
     public _$handleSelectChange(selectedItems: any[]) {
         if (!selectedItems) return;
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
-        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
+        this._propagateChange(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -559,18 +570,18 @@ export abstract class JigsawSelectBase
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
-    public writeValue(value: any, emit = true): void {
-        if (CommonUtils.isDefined(value)) {
-            let items = [];
-            value.forEach(item => {
-                items = items.concat(item["data"]);
-            });
-            this._$selectedItems = this.multipleSelect ? items : items[0];
-        } else {
-            this._$selectedItems = [];
-        }
-        this._changeDetector.markForCheck();
-    }
+    // public writeValue(value: any, emit = true): void {
+    //     if (CommonUtils.isDefined(value)) {
+    //         let items = [];
+    //         value.forEach(item => {
+    //             items = items.concat(item["data"]);
+    //         });
+    //         this._$selectedItems = this.multipleSelect ? items : items[0];
+    //     } else {
+    //         this._$selectedItems = [];
+    //     }
+    //     this._changeDetector.markForCheck();
+    // }
 
     /**
      * 设置组名的显示字段
@@ -594,11 +605,86 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
-        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        let allOptions = [];
-        value.forEach(item => {
-            allOptions = allOptions.concat(item["data"]);
-        });
+        if (value instanceof ArrayCollection) {
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
+                }
+            }
+        } else {
+            value = (value || []).filter(el => el != null);
+        }
+        this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
+        const allOptions = this._flatGroupData(value)
         this.validData = allOptions.filter(item => item["disabled"] !== true);
+    }
+
+    private _flatGroupData(value): any[] {
+        let flatData = new ArrayCollection([]);
+        value.forEach(item => {
+            if (CommonUtils.isDefined(item["data"]) && Object.prototype.toString.call(item["data"]) == "[object Array]") {
+                item["data"].forEach(el => {
+                    if (CommonUtils.isDefined(el)) {
+                        if (typeof el === 'string' || typeof el === 'number') {
+                            let option = { group: item['groupName'] }
+                            option[this.labelField] = el;
+                            flatData.push(option);
+                        } else {
+                            el["group"] = item['groupName'];
+                            flatData.push(el)
+                        }
+                    }
+                })
+            }
+        })
+        return flatData;
+    }
+
+    protected _value: any;
+
+    /**
+     * 选择的结果，单选时单个的item对象，多选时是item对象的数组
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
+        if (this._$selectedItems == newValue) {
+            this._value = newValue;
+            return;
+        }
+
+        if (this._value == newValue) {
+            return;
+        }
+
+        let trackItemBy: string[];
+        if (this.trackItemBy) {
+            trackItemBy =
+                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
+                    ? <string[]>this.trackItemBy
+                    : [this.trackItemBy.toString()];
+        }
+        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
+            return;
+        }
+        this._value = newValue;
+
+        this.runMicrotask(() => {
+
+            if (CommonUtils.isDefined(newValue)) {
+                this._$selectedItems = this._flatGroupData(newValue);
+            } else {
+                this._$selectedItems = new ArrayCollection([]);
+            }
+            this._$checkSelectAll();
+        })
+
+        this._propagateChange(newValue);
+        this.writeValue(newValue);
     }
 }

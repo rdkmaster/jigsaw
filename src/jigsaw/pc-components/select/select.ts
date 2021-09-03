@@ -4,11 +4,9 @@ import {
     Component,
     forwardRef,
     NgZone,
-    OnInit,
     Injector
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
-import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawSelectBase } from "./select-base";
 
 /**
@@ -38,7 +36,7 @@ import { JigsawSelectBase } from "./select-base";
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSelect extends JigsawSelectBase implements OnInit {
+export class JigsawSelect extends JigsawSelectBase {
     constructor(
         protected _zone: NgZone,
         protected _changeDetector: ChangeDetectorRef,
@@ -46,14 +44,5 @@ export class JigsawSelect extends JigsawSelectBase implements OnInit {
         protected _injector: Injector
     ) {
         super(_changeDetector, _injector);
-    }
-
-    ngOnInit() {
-        super.ngOnInit();
-        // 设置默认选中的初始值
-        if (CommonUtils.isDefined(this.value)) {
-            this.writeValue(this.value, false);
-            this._$checkSelectAll();
-        }
     }
 }
