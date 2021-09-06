@@ -47,6 +47,9 @@ export class SelectCollapseDemoComponent {
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
+    valueChange($event) {
+        console.log($event);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -5,11 +5,11 @@
 <jigsaw-checkbox [(checked)]="disabled">是否禁止访问</jigsaw-checkbox>
 
 <jigsaw-header>折叠下拉（单选）</jigsaw-header>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataListWithoutDisabled" placeholder="请选择" width="160px">
+<jigsaw-collapse-select [disabled]="disabled" [data]="dataListWithoutDisabled" placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" placeholder="请选择" width="160px">
+<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" [value]="singleSelectedOption" placeholder="请选择" width="160px">
+<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" [value]="singleSelectedOption" placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 
 <jigsaw-header>折叠下拉（多选）</jigsaw-header>
@@ -20,9 +20,10 @@
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 <jigsaw-collapse-select [disabled]="disabled" [data]="dataList" [multipleSelect]="true"
-                        placeholder="请选择" width="160px">
+                        placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 
 <jigsaw-header>折叠下拉（多选 & 展开结果）</jigsaw-header>
@@ -33,6 +34,7 @@
     [useStatistics]="false"
     placeholder="请选择"
     width="160px"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 <jigsaw-collapse-select
 [disabled]="disabled"
@@ -43,6 +45,7 @@
     width="160px"
     maxWidth="100%"
     minWidth="160px"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 
 <jigsaw-header>折叠下拉（自定义宽度）</jigsaw-header>
@@ -55,6 +58,7 @@
     width="160px"
     maxWidth="240px"
     minWidth="160px"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 
 <jigsaw-header>初始全选/半选</jigsaw-header>
@@ -66,6 +70,7 @@
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 <jigsaw-collapse-select
     [disabled]="disabled"
@@ -75,6 +80,7 @@
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 
 <jigsaw-header>无数据</jigsaw-header>
@@ -83,6 +89,7 @@
     placeholder="无数据"
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 <jigsaw-collapse-select
     [data]="foreverBusyArray"
@@ -90,4 +97,5 @@
     placeholder="数据获取中..."
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>

@@ -744,4 +744,15 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
+
+    /**
+    * @internal
+    */
+    public _$onTagRemove(removedItem): void {
+        this.remove.emit(removedItem);
+        this._value = this._refactoringGroupData(this._$selectedItems);
+        this.valueChange.emit(this.value);
+        this._$checkSelectAll();
+        this._changeDetector.markForCheck();
+    }
 }
