@@ -29,7 +29,6 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
         super.ngOnInit();
         // 设置默认选中的初始值
         if (CommonUtils.isDefined(this.value)) {
-            this.writeValue(this.value, false);
             this._$checkSelectAll();
         }
     }
@@ -61,7 +60,6 @@ export class JigsawSelectCollapse extends JigsawSelectGroupBase implements OnIni
         super.ngOnInit();
         // 设置默认选中的初始值
         if (CommonUtils.isDefined(this.value)) {
-            this.writeValue(this.value, false);
             this._$checkSelectAll();
         }
     }

@@ -298,9 +298,6 @@ export abstract class JigsawSelectBase
             }
             this._$checkSelectAll();
         })
-
-        this._propagateChange(newValue);
-        this.writeValue(newValue);
     }
 
     /**
@@ -313,6 +310,7 @@ export abstract class JigsawSelectBase
 
     public writeValue(value: any, emit = true): void {
         // 表单初始值需要check
+        this.value = value;
         this._changeDetector.markForCheck();
     }
 
@@ -686,9 +684,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             }
             this._$checkSelectAll();
         })
-
-        this._propagateChange(newValue);
-        this.writeValue(newValue);
     }
 
     /**
