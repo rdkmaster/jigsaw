@@ -136,8 +136,9 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         font-size: $font-size-lg;
     }
 
-    & .iconfont{
-      margin-right: 4px;
+    & .iconfont {
+        margin-right: 4px;
+        font-size: $icon-size-sm;
     }
 }
 
