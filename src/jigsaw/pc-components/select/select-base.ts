@@ -570,19 +570,6 @@ export abstract class JigsawSelectBase
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
-    // public writeValue(value: any, emit = true): void {
-    //     if (CommonUtils.isDefined(value)) {
-    //         let items = [];
-    //         value.forEach(item => {
-    //             items = items.concat(item["data"]);
-    //         });
-    //         this._$selectedItems = this.multipleSelect ? items : items[0];
-    //     } else {
-    //         this._$selectedItems = [];
-    //     }
-    //     this._changeDetector.markForCheck();
-    // }
-
     /**
      * 设置组名的显示字段
      *
