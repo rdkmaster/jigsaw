@@ -6,9 +6,10 @@ import {JigsawButtonModule, JigsawUploadModule} from "@rdkmaster/jigsaw";
 
 import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
 import {FormlyFieldUpload} from './upload.type';
+import {FormlyUploadComponent} from "./upload.component";
 
 @NgModule({
-    declarations: [FormlyFieldUpload],
+    declarations: [FormlyFieldUpload, FormlyUploadComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -23,8 +24,9 @@ import {FormlyFieldUpload} from './upload.type';
                     wrappers: ['form-field'],
                 }
             ],
-        }),
+        })
     ],
+    exports: [FormlyUploadComponent]
 })
 export class FormlyJigsawUploadModule {
 }
