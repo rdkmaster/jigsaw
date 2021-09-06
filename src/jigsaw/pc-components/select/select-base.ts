@@ -702,8 +702,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$selectedItems = new ArrayCollection(this.validData);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
-        this._value = this._$selectedItems;
-        this._refactoringGroupData(this._$selectedItems);
+        this._value = this._refactoringGroupData(this._$selectedItems);
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
