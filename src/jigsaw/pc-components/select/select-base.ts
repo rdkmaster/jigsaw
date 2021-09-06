@@ -311,7 +311,7 @@ export abstract class JigsawSelectBase
     @Output()
     public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    protected writeValue(value: any, emit = true): void {
+    public writeValue(value: any, emit = true): void {
         // 表单初始值需要check
         this._changeDetector.markForCheck();
     }
@@ -390,7 +390,7 @@ export abstract class JigsawSelectBase
         return this.searchable && this.validData.every(data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
     }
 
-    private _allSelectCheck() {
+    protected _allSelectCheck() {
         if (!this._$selectedItems || !this.validData) {
             return false;
         }
@@ -640,6 +640,22 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         return flatData;
     }
 
+    private _refactoringGroupData(value) {
+        let groupData = new ArrayCollection([]);
+        let groupNames = [];
+        value.forEach(item => {
+            let _item = CommonUtils.shallowCopy(item);
+            delete _item['group'];
+            if (groupNames.indexOf(item.group) === -1) {
+                groupNames.push(item.group);
+                groupData.push({groupName:item.group,data:[_item]})
+            } else {
+                groupData[groupNames.indexOf(item.group)].data.push(_item)
+            }
+        });
+        return groupData;
+    }
+
     protected _value: any;
 
     /**
@@ -686,5 +702,46 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
         this._propagateChange(newValue);
         this.writeValue(newValue);
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectAll() {
+        if (this._allSelectCheck()) {
+            this._$selectedItems = new ArrayCollection([]);
+            this._$selectAllChecked = CheckBoxStatus.unchecked;
+        } else {
+            this._$selectedItems = new ArrayCollection(this.validData);
+            this._$selectAllChecked = CheckBoxStatus.checked;
+        }
+        this._value = this._$selectedItems;
+        this._refactoringGroupData(this._$selectedItems);
+        this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
+    }
+
+    /**
+    * @internal
+    */
+    public _$handleSelectChange(selectedItems: any[]) {
+        if (!selectedItems) return;
+        this._value = this._refactoringGroupData(this._$selectedItems);
+        this.valueChange.emit(this.value);
+        this._propagateChange(this.value);
+        this._$checkSelectAll();
+        this._changeDetector.markForCheck();
+    }
+
+    /**
+    * @internal
+    */
+    public _$handleClearable() {
+        this._value = new ArrayCollection([]);
+        this._$selectAllChecked = CheckBoxStatus.unchecked;
+        this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
+        this._changeDetector.markForCheck();
     }
 }
