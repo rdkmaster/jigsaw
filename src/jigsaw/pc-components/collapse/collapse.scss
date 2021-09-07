@@ -19,6 +19,10 @@ $collapse-prefix: #{$jigsaw-prefix}-collapse;
             font-weight: bold;
             cursor: pointer;
 
+            &:hover{
+                background: $brand-lighten;
+            }
+
             > div {
                 display: flex;
                 align-items: center;
