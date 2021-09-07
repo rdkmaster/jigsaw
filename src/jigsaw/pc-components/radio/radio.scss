@@ -21,6 +21,7 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $bg-disabled;
+            border-color: $border-color-disabled;
             &.#{$radio-option-prefix-cls}-checked {
                 border-color: $brand-disabled;
                 background: $bg-component;
