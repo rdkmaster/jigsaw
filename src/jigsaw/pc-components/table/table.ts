@@ -628,6 +628,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._headerComponents.forEach(comp => comp.updateSortOrderClass(comp.defaultSortOrder));
     }
 
+    /**
+     * _additionalData默认是保存在组件内的，即使刷新数据了也不会重置，有些场景是需要在刷新数据后重置_additionalData的
+     */
+    public resetAdditionalData() {
+        this._additionalData.reset();
+    }
+
     private _removeAdditionalDataChangeSubscription: Subscription;
 
     private _initAdditionalData(): void {
