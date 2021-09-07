@@ -37,7 +37,7 @@ import {
     TableHeadSetting
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {SortOrder} from "../../common/core/data/component-data";
+import {SortOrder, IPageable} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
@@ -110,6 +110,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     @RequireMarkForCheck()
     public hideHeader: boolean = false;
+
+    private _autoFillUp: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get autoFillUp(): boolean {
+        return this._autoFillUp;
+    }
+
+    public set autoFillUp(value: boolean) {
+        this._autoFillUp = value;
+        this._updateFillUpBlankRow();
+    }
 
     private _selectedRow: number;
 
@@ -312,6 +327,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
+        
+        if (!this.autoFillUp) {
+            return;
+        }
+
+        const data: IPageable = <any>this.data;
+        if (data?.hasOwnProperty('pagingInfo') && data?.pagingInfo.totalPage > 1) {
+            return;
+        }
+
         if (this.height === undefined || this._$cellSettings.length === 0) {
             return;
         }
@@ -328,7 +353,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
-        const validBottom = lastRowEle.getBoundingClientRect().bottom;
+        const bodyScroll = bodyRangeEle.scrollTop;
+        const validBottom = lastRowEle.getBoundingClientRect().bottom + bodyScroll;
         const height = bodyBottom - validBottom - 1;
         const rowGap = Math.floor(height / 30);
         if (rowGap <= 0) {
