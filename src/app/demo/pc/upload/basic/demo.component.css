@@ -1,8 +1,8 @@
-jigsaw-header:not(.main-header) {
+.jigsaw-header-host:not(.main-header) {
     margin-top: 20px;
 }
 
-p.hints-text {
+.hints-text {
     margin-bottom: 6px;
 }
 
