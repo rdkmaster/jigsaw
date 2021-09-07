@@ -123,6 +123,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public set autoFillUp(value: boolean) {
         this._autoFillUp = value;
+        this._$blankRow = [];
         this._updateFillUpBlankRow();
     }
 
@@ -325,9 +326,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public _$blankRow:string[] = [];
 
     private _updateFillUpBlankRow(): void {
-        this._$blankRow = [];
-        this._changeDetectorRef.detectChanges();
-
         if (!this.autoFillUp) {
             return;
         }
