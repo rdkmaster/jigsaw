@@ -1,0 +1,17 @@
+jigsaw-header:not(.main-header) {
+    margin-top: 20px;
+}
+
+p.hints-text {
+    margin-bottom: 6px;
+}
+
+.common-param-setting h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.link-upload {
+    text-decoration: underline;
+    margin-left: 6px;
+}
