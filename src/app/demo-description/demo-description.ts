@@ -342,7 +342,7 @@ function getAngularJson(deps: any): [string, string, string] {
     }
     const options = json.projects['jigsaw-seed'].architect.build.options;
     const toUnpkgUrl = (entry: string): string => {
-        const re = entry.indexOf('@') == -1 ? /.*?\/node_modules\/(.*?)\/(.*)/ : /.*?\/node_modules\/(.*?\/.*?)\/(.*)/;
+        const re = entry.indexOf('@') == -1 ? /.*?(\/)?node_modules\/(.*?)\/(.*)/ : /.*?(\/)?node_modules\/(.*?\/.*?)\/(.*)/;
         const match = entry.match(re);
         let version = deps[match[1]];
         version = !!version ? `@${version}` : '';
