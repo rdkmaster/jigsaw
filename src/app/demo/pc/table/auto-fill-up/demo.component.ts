@@ -194,6 +194,10 @@ export class TableAutoFillUpDemoComponent {
         this.pageable.fromAjax('mock-data/hr-list-short');
     }
 
+    _$updateMoreData() {
+        this.pageable.fromAjax('mock-data/hr-list');
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
