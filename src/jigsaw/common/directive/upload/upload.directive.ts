@@ -217,9 +217,10 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         if (!this.multiple) {
             this.files.splice(0, this.files.length);
             files.splice(1, files.length);
+        } else {
+            fileInput.value = null;
         }
         this.files.push(...files);
-        fileInput.value = null;
         return this.files.length > 0;
     }
 
