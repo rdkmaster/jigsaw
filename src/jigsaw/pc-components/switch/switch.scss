@@ -10,7 +10,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
 }
 
 .#{$switch-prefix} {
-    --switch-height: 24px;
+    --switch-height: 20px;
     @include inline-block;
     position: relative;
     height: var(--switch-height);
