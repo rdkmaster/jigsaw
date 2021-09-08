@@ -222,6 +222,16 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     .#{$jigsaw-collapse}-header {
                         padding-left: 8px;
 
+                        &:hover {
+                            .#{$select-prefix-cls}-option-title {
+                                color: $brand-default;
+                            }
+
+                            .#{$jigsaw-collapse}-arrow {
+                                color: $brand-default;
+                            }
+                        }
+
                         .#{$select-prefix-cls}-option-title {
                             font-size: $font-title-med;
                             color: $font-color-heading;
