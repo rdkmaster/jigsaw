@@ -28,6 +28,7 @@ import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -551,11 +552,10 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };
-
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule],
+    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule],
     declarations: [JigsawNotification],
     exports: [JigsawNotification],
     providers: [TranslateService]

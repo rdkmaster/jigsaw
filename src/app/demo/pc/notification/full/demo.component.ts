@@ -27,7 +27,7 @@ import {JigsawNotification} from "jigsaw/public_api";
         }
 
         .wrapper jigsaw-input {
-            width: 300px;
+            width: 290px;
         }
 
         .wrapper jigsaw-slider {
@@ -72,6 +72,15 @@ export class NotificationFullDemoComponent {
                 // 支持 jigsaw-button 的所有选项
                 buttons: [{label: '同意！', type: 'primary'}, {label: '不好说'}], icon: 'iconfont iconfont-e9ee'
             });
+    }
+
+    makeLongContent(prop) {
+        let value = '';
+        for (let i = 0; i < 40; i++) {
+            value += `当 ${prop} 的内容很多时的效果。`;
+        }
+        this[prop] = value;
+        this.showWithOptions();
     }
 
     investigate(result) {
