@@ -291,7 +291,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     ngOnInit() {
         super.ngOnInit();
-        this._changeRangeDateByGr();
+        this._multipleInputsChange.emit();
     }
 
     ngOnDestroy() {
