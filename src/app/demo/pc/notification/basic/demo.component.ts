@@ -21,7 +21,7 @@ import {JigsawNotification} from "jigsaw/public_api";
 })
 export class NotificationBasicDemoComponent {
     showWithOptions() {
-        JigsawNotification.show('这是消息框的默认样子！');
+        JigsawNotification.show('这是消息框的默认样子！', {timeout: 80000});
     }
 
     showSuccess() {
