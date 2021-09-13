@@ -61,6 +61,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                 &:hover {
                     td:not([rowspan]) {
                         background: $bg-hover;
+                        background: red;
                     }
                 }
                 &.#{$table-prefix-cls}-row-selected {
@@ -123,9 +124,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     transform: translate(-50%, -50%);
     
     .#{$table-prefix-cls}-no-data-text{
-        color: #83B4E5;
+        color: $font-color-hint;
         font-size: $font-size-text-base;
-        font-weight: bold;
     }
 }
 
