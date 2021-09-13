@@ -453,7 +453,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         }
 
         .#{$nav-menu-prefix-cls}-toggle-button {
-            background: $bg-container;
+            background: $bg-container-light;
             border-top: 1px solid $border-color-default-light;
             &:hover {
                 color: $brand-default-light;
