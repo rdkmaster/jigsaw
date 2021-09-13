@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>预设状态</jigsaw-header>
+
+<jigsaw-status [status]="'success'">成功</jigsaw-status>
+<jigsaw-status [status]="'warning'">警告</jigsaw-status>
+<jigsaw-status [status]="'error'">错误</jigsaw-status>
+<jigsaw-status [status]="'finish'">完成</jigsaw-status>
+<jigsaw-status [status]="'disabled'">停用</jigsaw-status>
+<jigsaw-status [status]="'process'">运行中</jigsaw-status>
+
+<jigsaw-header>自定义状态</jigsaw-header>
+<jigsaw-status [status]="'custom'" [iconColor]="'purple'" [icon]="'iconfont iconfont-e75c'">自定义</jigsaw-status>
