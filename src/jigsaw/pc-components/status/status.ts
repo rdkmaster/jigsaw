@@ -1,7 +1,7 @@
 import { Component, NgModule, Input, ChangeDetectionStrategy, Injector } from "@angular/core";
-import { AbstractJigsawComponent } from 'jigsaw/common/common';
+import { AbstractJigsawComponent } from '../../common/common';
 import { CommonModule } from '@angular/common';
-import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
+import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 
 @Component({
     selector: 'jigsaw-status, j-status',
