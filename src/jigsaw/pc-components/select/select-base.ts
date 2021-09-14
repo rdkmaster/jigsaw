@@ -14,9 +14,7 @@ type SelectOption = {
 };
 
 @Directive()
-export abstract class JigsawSelectBase
-    extends AbstractJigsawComponent
-    implements IJigsawFormControl, ControlValueAccessor {
+export abstract class JigsawSelectBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
@@ -269,13 +267,28 @@ export abstract class JigsawSelectBase
     }
 
     public set value(newValue: any) {
+        const changed = this._setValue(newValue);
+        if (!changed) {
+            return;
+        }
+        this.runMicrotask(() => {
+            if (CommonUtils.isDefined(newValue)) {
+                this._$selectedItems = this.multipleSelect ? newValue : [newValue];
+            } else {
+                this._$selectedItems = new ArrayCollection([]);
+            }
+            this._$checkSelectAll();
+        })
+    }
+
+    protected _setValue(newValue: any): boolean {
         if (this._$selectedItems == newValue) {
             this._value = newValue;
-            return;
+            return false;
         }
 
         if (this._value == newValue) {
-            return;
+            return false;
         }
 
         let trackItemBy: string[];
@@ -286,18 +299,10 @@ export abstract class JigsawSelectBase
                     : [this.trackItemBy.toString()];
         }
         if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
-            return;
+            return false;
         }
         this._value = newValue;
-
-        this.runMicrotask(() => {
-            if (CommonUtils.isDefined(newValue)) {
-                this._$selectedItems = this.multipleSelect ? newValue : [newValue];
-            } else {
-                this._$selectedItems = new ArrayCollection([]);
-            }
-            this._$checkSelectAll();
-        })
+        return true;
     }
 
     /**
@@ -452,16 +457,7 @@ export abstract class JigsawSelectBase
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
-        if (value instanceof ArrayCollection) {
-            for (let i = value.length - 1; i >= 0; i--) {
-                if (CommonUtils.isUndefined(value[i])) {
-                    value.splice(i, 1);
-                }
-            }
-        } else {
-            value = (value || []).filter(el => el != null);
-        }
-        this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
+        this._setData(value);
         this._setValidData();
         if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
@@ -475,6 +471,19 @@ export abstract class JigsawSelectBase
                 this._changeDetector.markForCheck();
             })
         }
+    }
+
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+        if (value instanceof ArrayCollection) {
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
+                }
+            }
+        } else {
+            value = (value || []).filter(el => el != null);
+        }
+        this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
     }
 
     protected _setValidData() {
@@ -590,52 +599,40 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
-        if (value instanceof ArrayCollection) {
-            for (let i = value.length - 1; i >= 0; i--) {
-                if (CommonUtils.isUndefined(value[i])) {
-                    value.splice(i, 1);
-                }
-            }
-        } else {
-            value = (value || []).filter(el => el != null);
-        }
-        this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
+        this._setData(value);
         const allOptions = this._flatGroupData(value)
         this.validData = allOptions.filter(item => item["disabled"] !== true);
     }
 
-    private _flatGroupData(value): any[] {
-        let flatData = new ArrayCollection([]);
-        value.forEach(item => {
-            if (CommonUtils.isDefined(item["data"]) && Object.prototype.toString.call(item["data"]) == "[object Array]") {
-                item["data"].forEach(el => {
-                    if (CommonUtils.isDefined(el)) {
-                        if (typeof el === 'string' || typeof el === 'number') {
-                            let option = { group: item['groupName'] }
-                            option[this.labelField] = el;
-                            flatData.push(option);
-                        } else {
-                            el["group"] = item['groupName'];
-                            flatData.push(el)
-                        }
+    private _flatGroupData(value): ArrayCollection<any> {
+        const flatData = new ArrayCollection([]);
+        value.filter(item => CommonUtils.isDefined(item["data"]) && Object.prototype.toString.call(item["data"]) == "[object Array]")
+            .forEach(item => {
+                item.data.filter(el => CommonUtils.isDefined(el)).forEach(el => {
+                    if (typeof el === 'string' || typeof el === 'number') {
+                        const option = { group: item.groupName };
+                        option[this.labelField] = el;
+                        flatData.push(option);
+                    } else {
+                        el.group = item.groupName;
+                        flatData.push(el)
                     }
-                })
-            }
-        })
+                });
+            });
         return flatData;
     }
 
     private _refactoringGroupData(value) {
-        let groupData = new ArrayCollection([]);
-        let groupNames = [];
+        const groupData = new ArrayCollection([]);
+        const groupNames = [];
         value.forEach(item => {
-            let _item = CommonUtils.shallowCopy(item);
-            delete _item['group'];
+            const itemBak = CommonUtils.shallowCopy(item);
+            delete itemBak['group'];
             if (groupNames.indexOf(item.group) === -1) {
                 groupNames.push(item.group);
-                groupData.push({groupName:item.group,data:[_item]})
+                groupData.push({groupName: item.group, data: [itemBak]})
             } else {
-                groupData[groupNames.indexOf(item.group)].data.push(_item)
+                groupData[groupNames.indexOf(item.group)].data.push(itemBak)
             }
         });
         return groupData;
@@ -654,26 +651,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public set value(newValue: any) {
-        if (this._$selectedItems == newValue) {
-            this._value = newValue;
+        const changed = this._setValue(newValue);
+        if (!changed) {
             return;
         }
-
-        if (this._value == newValue) {
-            return;
-        }
-
-        let trackItemBy: string[];
-        if (this.trackItemBy) {
-            trackItemBy =
-                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
-                    ? <string[]>this.trackItemBy
-                    : [this.trackItemBy.toString()];
-        }
-        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
-            return;
-        }
-        this._value = newValue;
 
         this.runMicrotask(() => {
 
