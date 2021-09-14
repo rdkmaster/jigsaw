@@ -1,17 +1,10 @@
-import { Component, AfterContentInit } from "@angular/core";
-import { ArrayCollection } from 'jigsaw/public_api';
+import { Component } from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html'
 })
-export class TooltipThemeDemoComponent implements AfterContentInit {
-    themeList = new ArrayCollection(['light', 'dark'])
+export class TooltipThemeDemoComponent {
 
-    selectedTheme: any[];
-
-    ngAfterContentInit() {
-        this.selectedTheme = ['light']
-    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
