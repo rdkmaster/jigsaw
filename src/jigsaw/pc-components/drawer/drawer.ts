@@ -209,7 +209,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * 用于设置抽屉的把手，默认灰色，增强后为主色
      *
      * @NoMarkForCheckRequired
-     * $demo = drawer/in-dom
+     * $demo = drawer/basic
      */
     @Input()
     public emphasisHandler : boolean = false;
