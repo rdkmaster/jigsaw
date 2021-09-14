@@ -32,7 +32,7 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'",
-        '[class.jigsaw-button-color-transparent]': "colorType === 'transparent'",
+        '[class.jigsaw-button-color-transparent]': "colorType === 'none'",
         '[class.jigsaw-button-icon-left]': "iconPosition === 'left'",
         '[class.jigsaw-button-icon-right]': "iconPosition === 'right'"
     },
@@ -64,7 +64,7 @@ export class JigsawButton extends AbstractJigsawComponent implements AfterViewIn
      * $demo = button/full
      */
     @Input()
-    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' | 'transparent' = 'default';
+    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' | 'none' = 'default';
 
     /**
      * 按钮预设尺寸 `default` , `small` , `large`
