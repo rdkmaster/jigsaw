@@ -585,7 +585,6 @@ export class PopupService {
         }
         if (options && options.showBorder) {
             const borderColor = options.borderColor ? options.borderColor : '#dcdcdc';
-            InternalUtils.renderer.setStyle(element, "border", "1px solid #dcdcdc");
             InternalUtils.renderer.setStyle(element, "border-width", "1px");
             InternalUtils.renderer.setStyle(element, "border-style", "solid");
             InternalUtils.renderer.setStyle(element, "border-color", borderColor);
