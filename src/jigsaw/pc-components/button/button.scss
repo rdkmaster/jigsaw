@@ -162,7 +162,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         font-size: $font-size-lg;
     }
 
-    &#{&}-color-transparent {
+    &#{&}-color-none {
         min-width: 0;
         border: none;
         padding: 0;
@@ -204,7 +204,7 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
             border-color: $border-color-disabled;
             color: $font-color-disabled;
 
-            &.#{$btn-prefix-cls}-color-transparent {
+            &.#{$btn-prefix-cls}-color-none {
                 background: none;
                 border:none;
             }

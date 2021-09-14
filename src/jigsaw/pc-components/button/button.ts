@@ -32,7 +32,7 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'",
-        '[class.jigsaw-button-color-transparent]': "colorType === 'none'",
+        '[class.jigsaw-button-color-none]': "colorType === 'none'",
         '[class.jigsaw-button-icon-left]': "iconPosition === 'left'",
         '[class.jigsaw-button-icon-right]': "iconPosition === 'right'"
     },
