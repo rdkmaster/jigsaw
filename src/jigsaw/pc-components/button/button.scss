@@ -30,7 +30,8 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     }
 
     &:hover {
-        border-color: $brand-default;
+        color: $brand-default;
+        border-color: $brand-hover;
         @include prefixer(transition, animation 0.3s $ease-in-out);
     }
 
@@ -56,6 +57,31 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
     &-content {
         display: inline-flex;
         align-items: center;
+
+        .#{$btn-prefix-cls}-text {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    &-icon-left {
+        .#{$btn-prefix-cls}-content .iconfont {
+            margin-right: 4px;
+        }
+    }
+
+    &-icon-right {
+        .#{$btn-prefix-cls}-content {
+            flex-direction: row-reverse;
+
+            .iconfont {
+                margin-left: 4px;
+            }
+        }
+    }
+
+    &-content .iconfont {
+        font-size: $icon-size-sm;
     }
 
     &#{&}-disabled {
@@ -136,8 +162,61 @@ $btn-prefix-cls: #{$jigsaw-prefix}-button;
         font-size: $font-size-lg;
     }
 
-    & .iconfont{
-      margin-right: 4px;
+    &#{&}-color-none {
+        min-width: 0;
+        border: none;
+        padding: 0;
+
+        &:hover {
+            .#{$btn-prefix-cls}-text {
+                text-decoration: underline;
+            }
+        }
+        &.#{$btn-prefix-cls}-clicked:after {
+            content: none;
+        }
+    }
+
+    &#{&}-icon {
+        width: $height-base;
+        min-width: 0;
+        padding: 0;
+        color: $font-color-default;
+
+        .#{$btn-prefix-cls}-content .iconfont {
+            margin-right: 0;
+        }
+
+        &.#{$btn-prefix-cls}-size-small {
+            width: $height-sm;
+        }
+
+        &.#{$btn-prefix-cls}-size-medium {
+            width: $height-med;
+        }
+
+        &.#{$btn-prefix-cls}-size-large {
+            width: $height-lg;
+        }
+
+        &.#{$btn-prefix-cls}-disabled {
+            background: $bg-disabled;
+            border-color: $border-color-disabled;
+            color: $font-color-disabled;
+
+            &.#{$btn-prefix-cls}-color-none {
+                background: none;
+                border:none;
+            }
+        }
+
+        &:hover {
+            color: $brand-hover;
+        }
+
+        &:active {
+            color: $brand-active;
+        }
     }
 }
 
