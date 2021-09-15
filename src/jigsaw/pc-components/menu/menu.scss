@@ -6,7 +6,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
     .#{$jigsaw-prefix}-list {
         background: $bg-body-dark;
         border: $border-color-default-dark 1px solid;
-        font-size: 14px;
+        font-size: $font-size-base;
 
         .#{$list-option-prefix-cls} {
             line-height: 32px;
@@ -108,7 +108,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
     .#{$jigsaw-prefix}-list {
         background: $bg-body-light;
         border: #D9D9D9 1px solid;
-        font-size: 14px;
+        font-size: $font-size-base;
 
         .#{$list-option-prefix-cls} {
             color: #4D4D4D;
@@ -209,7 +209,7 @@ $menu-prefix-cls: #{$jigsaw-prefix}-menu;
     .#{$jigsaw-prefix}-list {
         background: $bg-body-dark;
         border: none;
-        font-size: 14px;
+        font-size: $font-size-base;
 
         .#{$list-option-prefix-cls} {
             color: $font-color-white;
