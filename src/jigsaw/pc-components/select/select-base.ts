@@ -587,6 +587,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _data: ArrayCollection<SelectOption>;
     public validData: any[];
+    public _$shadowData: any[] = [];
 
     /**
      * 提供选择的数据集合
@@ -600,22 +601,35 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
         this._setData(value);
-        const allOptions = this._flatGroupData(value)
+        const allOptions = this._flatGroupData(value, true);
         this.validData = allOptions.filter(item => item["disabled"] !== true);
     }
 
-    private _flatGroupData(value): ArrayCollection<any> {
+    private _flatGroupData(value, createShadowData: boolean): ArrayCollection<any> {
+        if (createShadowData) {
+            this._$shadowData = [];
+            for (let i = 0; i < value.length; i++) {
+                this._$shadowData[i] = [];
+            }
+        }
         const flatData = new ArrayCollection([]);
         value.filter(item => CommonUtils.isDefined(item["data"]) && Object.prototype.toString.call(item["data"]) == "[object Array]")
-            .forEach(item => {
+            .forEach((item, i) => {
                 item.data.filter(el => CommonUtils.isDefined(el)).forEach(el => {
                     if (typeof el === 'string' || typeof el === 'number') {
                         const option = { group: item.groupName };
                         option[this.labelField] = el;
                         flatData.push(option);
+                        if (createShadowData) {
+                            this._$shadowData[i].push(option);
+                        }
                     } else {
-                        el.group = item.groupName;
-                        flatData.push(el)
+                        const dupEl = CommonUtils.shallowCopy(el);
+                        dupEl['group'] = item.groupName;
+                        flatData.push(dupEl);
+                        if (createShadowData) {
+                            this._$shadowData[i].push(dupEl);
+                        }
                     }
                 });
             });
@@ -626,13 +640,13 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         const groupData = new ArrayCollection([]);
         const groupNames = [];
         value.forEach(item => {
-            const itemBak = CommonUtils.shallowCopy(item);
-            delete itemBak['group'];
+            const srcGroupData = this._data.find(dataItem => dataItem[this.groupField] === item.group)['data'];
+            const srcData = srcGroupData.find(groupDataItem => groupDataItem[this.labelField] === item[this.labelField])
             if (groupNames.indexOf(item.group) === -1) {
                 groupNames.push(item.group);
-                groupData.push({groupName: item.group, data: [itemBak]})
+                groupData.push({ groupName: item.group, data: [srcData] })
             } else {
-                groupData[groupNames.indexOf(item.group)].data.push(itemBak)
+                groupData[groupNames.indexOf(item.group)].data.push(srcData)
             }
         });
         return groupData;
@@ -659,7 +673,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this.runMicrotask(() => {
 
             if (CommonUtils.isDefined(newValue)) {
-                this._$selectedItems = this._flatGroupData(newValue);
+                this._$selectedItems = this._flatGroupData(newValue, false);
             } else {
                 this._$selectedItems = new ArrayCollection([]);
             }
