@@ -587,6 +587,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _data: ArrayCollection<SelectOption>;
     public validData: any[];
+
+    /**
+     * 真正渲染界面用的影子数据
+     *
+     * @internal
+     */
     public _$shadowData: any[] = [];
 
     /**
