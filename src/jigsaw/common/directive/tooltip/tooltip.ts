@@ -122,7 +122,7 @@ export class JigsawTooltip extends JigsawFloatBase {
 
     protected _init(): void {
         this.jigsawFloatTarget = JigsawTooltipComponent;
-        this.jigsawFloatOptions = { borderType: 'pointer', size: { minWidth: 30 }, showBorder: true, borderColor: '#e5e5e5', useCustomizedBackground: true };
+        this.jigsawFloatOptions = { borderType: 'pointer', size: { minWidth: 30 }, showBorder: true, borderColor: '#e5e5e5', borderRadius: '2px',useCustomizedBackground: true };
         this.jigsawFloatCloseTrigger = 'mouseleave';
         this.jigsawFloatOpenTrigger = 'mouseenter';
     }
