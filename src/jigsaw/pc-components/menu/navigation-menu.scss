@@ -578,6 +578,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             background: $bg-container-dark;
             border-top: 1px solid $border-color-default-dark;
             color: $font-color-default-dark;
+
             &:hover {
                 color: $brand-default;
             }
