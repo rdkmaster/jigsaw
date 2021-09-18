@@ -11,9 +11,9 @@
 <jigsaw-group-select [disabled]="disabled" [data]="dataList" placeholder="请选择" width="160px"
     (valueChange)="valueChange($event)">
 </jigsaw-group-select>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" [value]="singleSelectedOption" placeholder="请选择"
+<jigsaw-group-select [disabled]="disabled" [data]="dataList" [value]="singleSelectedOption" placeholder="请选择"
     width="160px" (valueChange)="valueChange($event)">
-</jigsaw-collapse-select>
+</jigsaw-group-select>
 
 <jigsaw-header>分组下拉（多选）</jigsaw-header>
 <jigsaw-group-select
@@ -97,6 +97,23 @@
     [data]="foreverBusyArray"
     [disabled]="disabled"
     placeholder="数据获取中..."
+    width="160px"
+    [useStatistics]="true"
+></jigsaw-group-select>
+
+<jigsaw-header>分组无数据</jigsaw-header>
+<jigsaw-group-select
+    [data]="dataListWithEmptyGroup"
+    [disabled]="disabled"
+    placeholder="请选择"
+    width="160px"
+    [useStatistics]="true"
+></jigsaw-group-select>
+<jigsaw-group-select
+    [data]="dataListWithEmptyGroup"
+    [multipleSelect]="true"
+    [disabled]="disabled"
+    placeholder="请选择"
     width="160px"
     [useStatistics]="true"
 ></jigsaw-group-select>

@@ -44,8 +44,11 @@ export class SelectGroupEditResultDemoComponent {
     }
 
     changeData() {
-        // 把第一数据更新
+        // 数据更新
         this.dataList[0].data[0].label = "修改数据";
+        this.dataList[0].groupName = '测试';
+        this.dataList.push({ groupName: "分组标题4", data: [{ label: "文本选项10" }, { label: "文本选项11" }] })
+        this.dataList.refresh();
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
