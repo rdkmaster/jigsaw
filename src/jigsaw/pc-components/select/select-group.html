@@ -31,7 +31,7 @@
                 arrowPosition="right"
                 [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
                 [ngStyle]="{'max-height': _$listHeight}">
-                <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data; let i = index;" [ngStyle]="{'display': _$showSelected && value[i].data.length === 0 ? 'none' : flex}">
+                <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data; let i = index;" [ngStyle]="{'display': _$showSelected && value[i].data.length === 0 ? 'none' : 'flex'}">
                     <div j-title class="jigsaw-select-option-title">{{group[groupField]}}</div>
                     <div j-body>
                         <span *ngIf="data[i].data.length === 0"
