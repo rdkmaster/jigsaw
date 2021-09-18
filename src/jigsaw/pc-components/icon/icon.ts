@@ -1,4 +1,4 @@
-import {Component, Input, NgModule,ChangeDetectionStrategy, Injector} from '@angular/core';
+import {Component, Input, NgModule,ChangeDetectionStrategy, Injector, OnInit, Renderer2, ElementRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
@@ -6,7 +6,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 const defaultHrefValue = 'javascript:void(0);';
-
+type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
 /**
  * 图标控件，支持输入@rdkmaster/icon-font等符号图标
  *
@@ -22,7 +22,8 @@ const defaultHrefValue = 'javascript:void(0);';
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawIcon extends AbstractJigsawComponent {
+
+export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
     /**
      * @internal
      */
@@ -55,21 +56,21 @@ export class JigsawIcon extends AbstractJigsawComponent {
      */
     @RequireMarkForCheck()
     @Input()
-    public iconSize: number | 'inherit' = 'inherit';
+    public iconSize: number | 'inherit';
 
     /**
      * 图标颜色
      */
     @RequireMarkForCheck()
     @Input()
-    public iconColor: string = 'inherit';
+    public iconColor: string;
 
     /**
      * 图标的文本
      */
     @RequireMarkForCheck()
     @Input()
-    public text: string = '';
+    public text: string;
 
     /**
      * 文字的字号，单位是px
@@ -124,11 +125,84 @@ export class JigsawIcon extends AbstractJigsawComponent {
         this._target = value;
     }
 
-    constructor(private _sanitizer: DomSanitizer,
+    public _status: StatusType;
+    /** 
+     * 预设状态 'success' , 'warning' , 'error' , 'finish' , 'disabled' , 'process', 'custom'
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public get status(): StatusType {
+        return this._status;
+    }
+
+    public set status(value: StatusType) {
+        if (CommonUtils.isUndefined(value)) {
+            return;
+        }
+        this._status = value;
+        switch (value) {
+            case 'success':
+                this._setStautsStyle();
+                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--success-default)';
+                this.text = !!this.text ? this.text : '成功';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-success');
+                break;
+            case 'warning':
+                this._setStautsStyle();
+                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--danger-default)';
+                this.text = !!this.text ? this.text : '警告';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-warning');
+                break;
+            case 'error':
+                this._setStautsStyle();
+                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--error-default)';
+                this.text = !!this.text ? this.text : '错误';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-error');
+                break;
+            case 'finish':
+                this._setStautsStyle();
+                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--primary-default)';
+                this.text = !!this.text ? this.text : '完成';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-finish');
+                break;
+            case 'disabled':
+                this._setStautsStyle();
+                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--font-color-disabled)';
+                this.text = !!this.text ? this.text : '停用';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-disabled');
+                break;
+            case 'process':
+                this._setStautsStyle();
+                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--process-default)';
+                this.text = !!this.text ? this.text : '运行中';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-process');
+                break;
+            case 'custom':
+                this._setStautsStyle();
+                this.text = !!this.text ? this.text : '自定义';
+                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-custom');
+                break;
+            default:
+                break;
+        }
+    }
+
+    private _setStautsStyle() {
+        this.icon = !!this.icon ? this.icon : 'iconfont iconfont-e9f1';
+        this.iconSize = !!this.iconSize ? this.iconSize : 10;
+    }
+
+    constructor(private _sanitizer: DomSanitizer, private _renderer: Renderer2, public element: ElementRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
+    }
+
+    ngOnInit () {
+        this.iconSize = !!this.iconSize ? this.iconSize : 'inherit';
+        this.iconColor = !!this.iconColor ? this.iconColor : 'inherit';
+        this.text = !!this.text ? this.text : '';
     }
 }
 
