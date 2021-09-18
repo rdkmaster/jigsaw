@@ -254,10 +254,6 @@ export const routerConfigPC = [
     {
         path: "pc/theme",
         loadChildren: () => import('./demo/pc/theme/demo-set.module').then(m => m.ThemeDemoModule),
-    },
-    {
-        path: "pc/status",
-        loadChildren: () => import('./demo/pc/status/demo-set.module').then(m => m.SwitchDemoModule),
     }
 ];
 export const routerConfigMobile = [

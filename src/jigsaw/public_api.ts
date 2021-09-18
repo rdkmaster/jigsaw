@@ -87,7 +87,6 @@ export * from "./pc-components/upload/index";
 export * from "./pc-components/viewport/viewport";
 export * from "./pc-components/menu/index";
 export * from "./pc-components/color-select/index";
-export * from "./pc-components/status/status";
 
 /* fallback components */
 export * from "./pc-components/fallback/steps/index";
