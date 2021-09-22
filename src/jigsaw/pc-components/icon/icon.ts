@@ -30,7 +30,6 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
     public _$secureUrl;
     private _href: string = defaultHrefValue;
     private _target: string = '_blank';
-    public _status: StatusType;
 
     @RequireMarkForCheck()
     @Input()
@@ -125,6 +124,11 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
         }
         this._target = value;
     }
+
+    /**
+     * @internal
+     */
+        public _status: StatusType;
 
     /** 
      * 预设状态 'success' , 'warning' , 'error' , 'finish' , 'disabled' , 'process', 'custom'
