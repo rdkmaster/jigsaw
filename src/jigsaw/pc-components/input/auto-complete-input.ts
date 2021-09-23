@@ -297,8 +297,10 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
         this._keydownSubscription = this._keydownEvent
             .pipe(debounceTime(300))
-            .subscribe(() => {
-                this._getFilteredDropDownData(true);
+            .subscribe((res) => {
+                if(res.keyCode !== 13) {
+                    this._getFilteredDropDownData(true);
+                }
             });
     }
 
