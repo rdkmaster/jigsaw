@@ -5,7 +5,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { TranslateService } from '@ngx-translate/core';
-import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
+import { InternalUtils } from '../../common/core/utils/internal-utils';
 
 const defaultHrefValue = 'javascript:void(0);';
 type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
