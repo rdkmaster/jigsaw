@@ -8,7 +8,7 @@
                            trackItemBy="name,majorStyle" optionWidth="110" height="32">
         </jigsaw-button-bar>
         <jigsaw-button-bar [data]="[{label: '中文', value: 'zh'}, {label: 'English', value: 'en'}]"
-                           [selectedItems]="[{label: '中文', value: 'zh'}]"
+                           [selectedItems]="[{label: '中文', value: 'zh'}]" *ngIf='!demoCodePage'
                            (selectedItemsChange)="changeLanguage($event[0])">
         </jigsaw-button-bar>
     </div>
