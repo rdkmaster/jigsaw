@@ -1,9 +1,11 @@
-import {Component, Input, NgModule,ChangeDetectionStrategy, Injector, OnInit, Renderer2, ElementRef} from '@angular/core';
+import {Component, Input, NgModule,ChangeDetectionStrategy, Injector, OnInit, Renderer2, ElementRef, Optional} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import { TranslateService } from '@ngx-translate/core';
+import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
 
 const defaultHrefValue = 'javascript:void(0);';
 type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
@@ -148,42 +150,42 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
             case 'success':
                 this._setStautsStyle();
                 this.iconColor = !!this.iconColor ? this.iconColor : 'var(--success-default)';
-                this.text = !!this.text ? this.text : '成功';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.success`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-success');
                 break;
             case 'warning':
                 this._setStautsStyle();
                 this.iconColor = !!this.iconColor ? this.iconColor : 'var(--danger-default)';
-                this.text = !!this.text ? this.text : '警告';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.warning`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-warning');
                 break;
             case 'error':
                 this._setStautsStyle();
                 this.iconColor = !!this.iconColor ? this.iconColor : 'var(--error-default)';
-                this.text = !!this.text ? this.text : '错误';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.error`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-error');
                 break;
             case 'finish':
                 this._setStautsStyle();
                 this.iconColor = !!this.iconColor ? this.iconColor : 'var(--primary-default)';
-                this.text = !!this.text ? this.text : '完成';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.finish`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-finish');
                 break;
             case 'disabled':
                 this._setStautsStyle();
                 this.iconColor = !!this.iconColor ? this.iconColor : 'var(--font-color-disabled)';
-                this.text = !!this.text ? this.text : '停用';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.disabled`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-disabled');
                 break;
             case 'process':
                 this._setStautsStyle();
                 this.iconColor = !!this.iconColor ? this.iconColor : 'var(--process-default)';
-                this.text = !!this.text ? this.text : '运行中';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.process`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-process');
                 break;
             case 'custom':
                 this._setStautsStyle();
-                this.text = !!this.text ? this.text : '自定义';
+                this.text = !!this.text ? this.text : this._translateService.instant(`icon.custom`);
                 this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-custom');
                 break;
             default:
@@ -198,7 +200,8 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
 
     constructor(private _sanitizer: DomSanitizer, private _renderer: Renderer2, public element: ElementRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+                private _injector: Injector,
+                @Optional() private _translateService: TranslateService,) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }
@@ -216,4 +219,27 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
     exports: [JigsawIcon]
 })
 export class JigsawIconModule {
+    constructor(translateService: TranslateService) {
+        InternalUtils.initI18n(translateService, "icon", {
+            zh: {
+                success: "成功",
+                warning: "警告",
+                error: "错误",
+                finish: "完成",
+                disabled: "停用",
+                process: "运行中",
+                custom: "成自定义功"
+            },
+            en: {
+                success: "Success",
+                warning: "Warning",
+                error: "Error",
+                finish: "Finish",
+                disabled: "Disabled",
+                process: "Process",
+                custom: "Custom"
+            }
+        });
+        translateService.setDefaultLang(translateService.getBrowserLang());
+    }
 }
