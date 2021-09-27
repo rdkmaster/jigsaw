@@ -638,13 +638,22 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
             </span>
             <span>{{cellData.data}}</span>
         </div>
-    `
+    `,
+    styles: [
+        `
+        .jigsaw-table-tree-cell {
+            justify-content: flex-start;
+            margin-left: 8px;
+        }
+        `
+    ],
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
     public cellData: TreeTableCellData;
     public tableData: PageableTreeTableData;
 
     public get indent(): string {
+        console.log((this.cellData.id.length - 1) * 20 + 'px')
         return (this.cellData.id.length - 1) * 20 + 'px';
     }
 
