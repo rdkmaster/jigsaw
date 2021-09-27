@@ -302,6 +302,19 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
+    public findNodes(key: string, value: string, parentNode: any) {
+        if (!this.ztree) {
+            return;
+        }
+        let nodes = this.ztree.getNodesByParamFuzzy(key, value, parentNode);
+        nodes.forEach(item => {
+            item.highlight = true;
+            console.log(item)
+            console.log(item.highlight)
+        });
+        console.log(nodes);
+    }
+
     private _callCustomCallbackEvent(eventName, event, ...para) {
         if (CommonUtils.isDefined(this._customCallback) && CommonUtils.isDefined(this._customCallback[eventName])) {
             if (event) {
