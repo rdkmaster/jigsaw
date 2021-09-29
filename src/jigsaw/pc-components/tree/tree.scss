@@ -1,3 +1,5 @@
+$jigsaw-tree: #{$jigsaw-prefix}-tree;
+
 .ztree li span:not(.node_name) {
     color: $font-color-default;
     &.button {
@@ -61,8 +63,10 @@
 }
 
 .ztree li {
-    span.button.switch {
-        height: 24px !important;
+    span {
+        &.button.switch {
+            height: 24px !important;
+        }
     }
 
     a {
@@ -86,6 +90,68 @@
             .node_name {
                 color: $brand-default;
             }
+        }
+    }
+}
+
+.#{$jigsaw-tree}-default {
+    .ztree li {
+        span {
+            &.button.switch {
+                height: 24px !important;
+            }
+        }
+
+        a {
+            height: 24px !important;
+        }
+    }
+}
+
+.#{$jigsaw-tree}-medium {
+    .ztree li {
+        span {
+            &.button.switch {
+                height: 28px !important;
+            }
+
+            &.button.center_docu {
+                background-position: -56px -13px;
+            }
+
+            &.button.bottom_docu {
+                background-position: -56px -31px;
+            }
+        }
+
+        a {
+            height: 28px !important;
+        }
+    }
+}
+
+.#{$jigsaw-tree}-large {
+    .ztree * {
+        font-size: $font-size-lg;
+    }
+    
+    .ztree li {
+        span {
+            &.button.switch {
+                height: 32px !important;
+            }
+
+            &.button.center_docu {
+                background-position: -56px -12px;
+            }
+
+            &.button.bottom_docu {
+                background-position: -56px -30px;
+            }
+        }
+
+        a {
+            height: 32px !important;
         }
     }
 }
