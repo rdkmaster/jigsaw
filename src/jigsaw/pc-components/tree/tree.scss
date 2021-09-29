@@ -22,9 +22,9 @@
         &.switch.bottom_close,
         &.chk.checkbox_true_part,
         &.chk.checkbox_true_part_focus,
-        &[class*='ico_open'],
-        &[class*='ico_close'],
-        &[class*='ico_docu'] {
+        &[class*="ico_open"],
+        &[class*="ico_close"],
+        &[class*="ico_docu"] {
             position: relative;
             background-image: none;
             &::after {
@@ -60,22 +60,32 @@
     }
 }
 
-.ztree li a {
-    color: $font-color-default;
-    &:hover {
-        background: $bg-hover;
-        .node_name {
-            text-decoration: none;
-        }
+.ztree li {
+    span.button.switch {
+        height: 24px !important;
     }
-    &.curSelectedNode {
-        background: $bg-hover;
-        border-color: $bg-hover;
-        color: $brand-default;
-        opacity: 1;
 
-        .node_name {
+    a {
+        display: inline-flex;
+        align-items: center;
+        height: 24px !important;
+        color: $font-color-default;
+
+        &:hover {
+            background: $bg-hover;
+            .node_name {
+                text-decoration: none;
+            }
+        }
+        &.curSelectedNode {
+            background: $bg-hover;
+            border-color: $bg-hover;
             color: $brand-default;
+            opacity: 1;
+
+            .node_name {
+                color: $brand-default;
+            }
         }
     }
 }

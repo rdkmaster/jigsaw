@@ -47,7 +47,7 @@ export class ZtreeFindNodeComponent implements AfterViewInit {
     }
 
     search(value: string): void {
-        this.treeExt.fuzzySearch("label", value, true, false);
+        this.treeExt.fuzzySearch("label", value);
     }
 
     ngAfterViewInit() {
