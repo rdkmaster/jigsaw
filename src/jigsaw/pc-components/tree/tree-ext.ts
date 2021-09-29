@@ -302,19 +302,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    public findNodes(key: string, value: string, parentNode: any) {
-        if (!this.ztree) {
-            return;
-        }
-        let nodes = this.ztree.getNodesByParamFuzzy(key, value, parentNode);
-        nodes.forEach(item => {
-            item.highlight = true;
-            console.log(item)
-            console.log(item.highlight)
-        });
-        console.log(nodes);
-    }
-
     private _callCustomCallbackEvent(eventName, event, ...para) {
         if (CommonUtils.isDefined(this._customCallback) && CommonUtils.isDefined(this._customCallback[eventName])) {
             if (event) {
@@ -583,6 +570,42 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         treeEventData.treeNodes = treeNodes;
         treeEventData.extraInfo = extraInfo;
         this[type].emit(treeEventData);
+    }
+
+    public fuzzySearch(key: string, value: string, isHighLight: boolean, isExpand: boolean) {
+        const metaChar = '[\\[\\]\\\\\^\\$\\.\\|\\?\\*\\+\\(\\)]';
+        const rexMeta = new RegExp(metaChar, 'gi');
+        this.ztree.setting.view.nameIsHTML = isHighLight;
+
+        const nodes = this.ztree.transformToArray(this.ztree.getNodes());
+        console.log(nodes)
+        nodes.forEach(node => {
+            if (node && node.oldname && node.oldname.length > 0) {
+                node[key] = node.oldname;
+            }
+            this.ztree.updateNode(node);
+            if (value.length == 0) {
+                return;
+            }
+            if (node[key] && node[key].toLowerCase().indexOf(value.toLowerCase()) != -1) {
+                if (isHighLight) {
+                    const newKeywords = value.replace(rexMeta, function (matchStr) {
+                        return '\\' + matchStr;
+                    });
+                    node.oldname = node[key];
+                    const rexGlobal = new RegExp(newKeywords, 'gi');
+                    node[key] = node.oldname.replace(rexGlobal, function (originalText) {
+                        const highLightText =
+                            '<span style="background-color: var(--primary-disabled);">'
+                            + originalText
+                            + '</span>';
+                        return highLightText;
+                    });
+                    this.ztree.updateNode(node);
+                }
+                this.ztree.showNode(node);
+            }
+        });
     }
 }
 

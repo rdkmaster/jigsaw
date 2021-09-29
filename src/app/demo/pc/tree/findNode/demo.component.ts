@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {SimpleTreeData, JigsawTreeExt} from "jigsaw/public_api";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { SimpleTreeData, JigsawTreeExt } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -46,9 +46,8 @@ export class ZtreeFindNodeComponent implements AfterViewInit {
         `)
     }
 
-    test() {
-        console.log('xxxxx')
-        this.treeExt.findNodes("label", "1", null);
+    search(value: string): void {
+        this.treeExt.fuzzySearch("label", value, true, false);
     }
 
     ngAfterViewInit() {
