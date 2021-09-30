@@ -8,15 +8,11 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
 
-type SelectOption = {
-    (labelField: string): string;
+export type SelectOption = {
     disabled?: boolean;
+    label?: string;
+    [field: string]: string | boolean | SelectOption[];
 };
-
-type GroupSelectOption = {
-    (groupField: string): string;
-    data: SelectOption[]
-}
 
 @Directive()
 export abstract class JigsawSelectBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
@@ -579,6 +575,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
+}
+
+export type GroupSelectOption = {
+    data: SelectOption[]
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
