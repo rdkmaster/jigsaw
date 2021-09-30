@@ -20,10 +20,9 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 })
 export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
     /**
-     * select分组下拉的类型，用于给float添加class进行样式控制
      * @internal
      */
-    public _$type = "group";
+    public _$type: "collapse" | "group" = "group";
 
     ngOnInit() {
         super.ngOnInit();
@@ -51,10 +50,9 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
 })
 export class JigsawSelectCollapse extends JigsawSelectGroupBase implements OnInit {
     /**
-     * select分组下拉的类型，用于给float添加class进行样式控制
      * @internal
      */
-    public _$type = "collapse";
+    public _$type: "collapse" | "group" = "collapse";
 
     ngOnInit() {
         super.ngOnInit();
