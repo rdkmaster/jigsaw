@@ -587,7 +587,7 @@ export type GroupSelectOption = {
     data: SelectOption[]
 }
 
-export abstract class JigsawSelectGroupBase extends JigsawSelectBase implements OnDestroy {
+export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * 设置组名的显示字段
      *

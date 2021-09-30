@@ -9,9 +9,9 @@
                     'jigsaw-select-multiple-list': multipleSelect,
                     'jigsaw-select-single-list': !multipleSelect}">
             <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
-                <p *ngIf="!data || !data.busy">{{'select.noData' | translate}}</p>
-                <jigsaw-circle-loading *ngIf="data && data.busy" [size]="'small'"></jigsaw-circle-loading>
-                <p *ngIf="data && data.busy">{{'select.loading' | translate}}</p>
+                <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
+                <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
+                <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
             </div>
             <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
                 <jigsaw-checkbox [(checked)]="_$selectAllChecked" *ngIf="!_$showSelected"
