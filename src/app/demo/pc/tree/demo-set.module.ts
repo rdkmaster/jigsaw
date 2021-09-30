@@ -14,8 +14,8 @@ import {ZtreeXMLDataDemoComponent} from "./xml-data/demo.component";
 import {TreeXMLDataDemoModule} from "./xml-data/demo.module";
 import { ZTreeIconDemoModule } from './icon/demo.module';
 import { ZTreeIconDemoComponent } from './icon/demo.component';
-import { ZtreeFuzzySearchComponent } from './findNode/demo.component';
-import { TreeFuzzySearchDemoModule } from './findNode/demo.module';
+import { ZtreeFuzzySearchComponent } from './fuzzySearch/demo.component';
+import { TreeFuzzySearchDemoModule } from './fuzzySearch/demo.module';
 import { ZtreeSizeComponent } from './size/demo.component';
 import { TreeSizeDemoModule } from './size/demo.module';
 
