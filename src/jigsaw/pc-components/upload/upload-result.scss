@@ -37,7 +37,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 align-items: center;
                 width: 100%;
                 height: 28px;
-                padding: 0 20px 0 10px;
+                padding: 0 28px 0 10px;
                 line-height: 28px;
 
                 .file-icon,
@@ -45,7 +45,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding-right: 10px;
+                    padding-right: 6px;
                     font-size: $icon-size-sm - 2px;
                     color: $icon-color-stress;
                 }
@@ -53,7 +53,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 .file-name {
                     font-size: $font-size-text-base;
                     color: $font-color-default;
-                    padding-right: 10px;
+                    padding-right: 4px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
@@ -76,8 +76,6 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 }
 
                 &:hover {
-                    background: $brand-active-lighten;
-
                     .delete-icon {
                         display: flex;
                     }
