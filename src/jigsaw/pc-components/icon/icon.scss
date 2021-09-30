@@ -1,6 +1,7 @@
 @import "../../common/assets/scss/core/base";
 
 $icon-prefix-cls: #{$jigsaw-prefix}-icon;
+$jigsaw-status: #{$jigsaw-prefix}-status;
 
 .#{$icon-prefix-cls} {
     @include inline-block();
@@ -62,4 +63,33 @@ $icon-prefix-cls: #{$jigsaw-prefix}-icon;
     padding-bottom: 0;
     margin-bottom: 0;
     line-height: 1;
+}
+
+.#{$jigsaw-status}-success,
+.#{$jigsaw-status}-warning,
+.#{$jigsaw-status}-error,
+.#{$jigsaw-status}-finish,
+.#{$jigsaw-status}-disabled,
+.#{$jigsaw-status}-process,
+.#{$jigsaw-status}-custom {
+    i {
+        margin: 0 4px;
+    }
+}
+
+.#{$jigsaw-status}-process {
+    i::before {
+        border-radius: 50%;
+        animation: jigsaw-status-process-animation 1.2s 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+    }
+}
+
+@keyframes jigsaw-status-process-animation {
+    0% {
+        box-shadow: 0px 0px 0px 0px #6e7feb80;
+    }
+
+    100% {
+        box-shadow: 0px 0px 0px 5px #6e7feb00;
+    }
 }

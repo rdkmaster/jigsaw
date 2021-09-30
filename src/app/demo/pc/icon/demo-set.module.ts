@@ -4,6 +4,8 @@ import {IconBasicDemoComponent} from "./basic/demo.component";
 import {IconIconsDemoComponent} from "./icons/demo.component";
 import {IconBasicDemoModule} from "./basic/demo.module";
 import {IconIconsDemoModule} from "./icons/demo.module";
+import { IconStatusDemoComponent } from './status/demo.component';
+import { IconStatusDemoModule } from './status/demo.module';
 
 export const routerConfig = [
     {
@@ -11,13 +13,16 @@ export const routerConfig = [
     },
     {
         path: 'icons', component: IconIconsDemoComponent
+    },
+    {
+        path: 'status', component: IconStatusDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        IconBasicDemoModule, IconIconsDemoModule
+        IconBasicDemoModule, IconIconsDemoModule, IconStatusDemoModule
     ]
 })
 export class IconDemoModule {
