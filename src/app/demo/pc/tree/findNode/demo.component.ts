@@ -4,7 +4,7 @@ import { SimpleTreeData, JigsawTreeExt } from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class ZtreeFindNodeComponent implements AfterViewInit {
+export class ZtreeFuzzySearchComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
