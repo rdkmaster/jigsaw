@@ -104,6 +104,8 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
                 .#{$jigsaw-prefix}-combo-select-selection {
                     height: 100%;
                     min-height: unset;
+                    padding: 0 8px;
+
                     .#{$jigsaw-prefix}-combo-select-selection-rendered {
                         display: flex;
                         align-items: center;
