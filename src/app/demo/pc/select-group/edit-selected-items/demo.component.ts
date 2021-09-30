@@ -34,13 +34,14 @@ export class SelectGroupEditResultDemoComponent {
         console.log($event);
     }
 
-    editResult() {
+    editSelectedItems() {
         this.selectedOption.forEach((groupItem, i) => {
             groupItem.data.forEach((item, j) => {
                 item.label = '修改结果' + i + j
                 this._changeDetector.markForCheck();
-            })
-        })
+            });
+        });
+        this.selectedOption.refresh();
     }
 
     changeData() {
