@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { InternalUtils } from '../../common/core/utils/internal-utils';
 
 const defaultHrefValue = 'javascript:void(0);';
-type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
+export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
 /**
  * 图标控件，支持输入@rdkmaster/icon-font等符号图标
  *
@@ -132,7 +132,7 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
      */
         public _status: StatusType;
 
-    /** 
+    /**
      * 预设状态 'success' , 'warning' , 'error' , 'finish' , 'disabled' , 'process', 'custom'
      */
     @Input()
@@ -228,7 +228,7 @@ export class JigsawIconModule {
                 finish: "完成",
                 disabled: "停用",
                 process: "运行中",
-                custom: "成自定义功"
+                custom: "自定义"
             },
             en: {
                 success: "Success",
