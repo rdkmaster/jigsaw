@@ -1,5 +1,3 @@
-$jigsaw-tree: #{$jigsaw-prefix}-tree;
-
 .ztree li span:not(.node_name) {
     color: $font-color-default;
     &.button {
@@ -24,9 +22,9 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
         &.switch.bottom_close,
         &.chk.checkbox_true_part,
         &.chk.checkbox_true_part_focus,
-        &[class*="ico_open"],
-        &[class*="ico_close"],
-        &[class*="ico_docu"] {
+        &[class*='ico_open'],
+        &[class*='ico_close'],
+        &[class*='ico_docu'] {
             position: relative;
             background-image: none;
             &::after {
@@ -62,96 +60,22 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
     }
 }
 
-.ztree li {
-    span {
-        &.button.switch {
-            height: 24px !important;
+.ztree li a {
+    color: $font-color-default;
+    &:hover {
+        background: $bg-hover;
+        .node_name {
+            text-decoration: none;
         }
     }
+    &.curSelectedNode {
+        background: $bg-hover;
+        border-color: $bg-hover;
+        color: $brand-default;
+        opacity: 1;
 
-    a {
-        display: inline-flex;
-        align-items: center;
-        height: 24px !important;
-        color: $font-color-default;
-
-        &:hover {
-            background: $bg-hover;
-            .node_name {
-                text-decoration: none;
-            }
-        }
-        &.curSelectedNode {
-            background: $bg-hover;
-            border-color: $bg-hover;
+        .node_name {
             color: $brand-default;
-            opacity: 1;
-
-            .node_name {
-                color: $brand-default;
-            }
-        }
-    }
-}
-
-.#{$jigsaw-tree}-default {
-    .ztree li {
-        span {
-            &.button.switch {
-                height: 24px !important;
-            }
-        }
-
-        a {
-            height: 24px !important;
-        }
-    }
-}
-
-.#{$jigsaw-tree}-medium {
-    .ztree li {
-        span {
-            &.button.switch {
-                height: 28px !important;
-            }
-
-            &.button.center_docu {
-                background-position: -56px -13px;
-            }
-
-            &.button.bottom_docu {
-                background-position: -56px -31px;
-            }
-        }
-
-        a {
-            height: 28px !important;
-        }
-    }
-}
-
-.#{$jigsaw-tree}-large {
-    .ztree * {
-        font-size: $font-size-lg;
-    }
-    
-    .ztree li {
-        span {
-            &.button.switch {
-                height: 32px !important;
-            }
-
-            &.button.center_docu {
-                background-position: -56px -12px;
-            }
-
-            &.button.bottom_docu {
-                background-position: -56px -30px;
-            }
-        }
-
-        a {
-            height: 32px !important;
         }
     }
 }
