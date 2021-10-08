@@ -6,10 +6,10 @@ import {JigsawEditableTabTitleRenderer, TabTitleInfo} from "jigsaw/public_api";
 })
 export class TabsTitleRendererComponent {
     selectedIndex = 0;
-    editorTitleRenderer = JigsawEditableTabTitleRenderer;
+    titleEditorRenderer = JigsawEditableTabTitleRenderer;
     tabData = [
-        {label: "Tab11"},
-        {label: "自定义title", renderer: JigsawEditableTabTitleRenderer},
+        {label: "不可编辑"},
+        {label: "标题可编辑的", renderer: JigsawEditableTabTitleRenderer},
         {renderer: JigsawEditableTabTitleRenderer}
     ];
 
