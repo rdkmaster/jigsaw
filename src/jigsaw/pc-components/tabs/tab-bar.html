@@ -6,7 +6,8 @@
                 <jigsaw-tab-label class="jigsaw-tabs-tab"
                                   *ngFor="let tab of _$tabPanes; let i = index"
                                   [key]="i"
-                                  [tabItem]="tab.label ? tab.label : (tab.html ? tab.html : tab)"
+                                  [tabItem]="tab.renderer ? tab.renderer : (tab.label ? tab.label : (tab.html ? tab.html : tab))"
+                                  [title]="tab.renderer ? tab.label : tab.title"
                                   [editable]="editable"
                                   [icon]="tab.icon"
                                   [htmlContext]="tab.htmlContext"
@@ -15,7 +16,7 @@
                                   [class.jigsaw-tabs-tab-hidden]="tab.hidden"
                                   (click)="_$tabClick(i)"
                                   (remove)="_$handleRemove($event)"
-                                  (change)="titleChange.emit($event)">
+                                  (labelChange)="titleChange.emit($event)">
                 </jigsaw-tab-label>
                 <span class="iconfont iconfont-ea1d jigsaw-tabs-add-bar" *ngIf="editable"
                       (click)="_$handleAdd()"></span>

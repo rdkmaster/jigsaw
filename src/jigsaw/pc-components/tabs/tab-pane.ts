@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, TemplateRef, Type, ViewChild} from '@angular/core';
-import { IJigsawTabTitleRenderer } from './tab-renderer';
+import {IJigsawTabTitleRenderer} from './tab-renderer';
 import {IDynamicInstantiatable} from "../../common/common";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-tab-pane, j-tab-pane',
@@ -31,6 +32,21 @@ export class JigsawTabPane {
             return;
         }
         this._title = newValue;
+        this._changeDetectorRef.markForCheck();
+    }
+
+    private _titleRenderer: Type<IJigsawTabTitleRenderer>;
+
+    @Input()
+    public get titleRenderer() {
+        return this._titleRenderer;
+    }
+
+    public set titleRenderer(value: Type<IJigsawTabTitleRenderer>) {
+        if (this._titleRenderer === value || CommonUtils.isUndefined(value)) {
+            return;
+        }
+        this.label = value;
         this._changeDetectorRef.markForCheck();
     }
 

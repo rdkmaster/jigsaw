@@ -15,7 +15,7 @@ import {JigsawInputModule} from "../input/input";
 import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
 @NgModule({
     imports: [CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule, JigsawFloatModule, JigsawTrustedHtmlModule,
@@ -41,3 +41,4 @@ export class JigsawTabsModule {
 export * from './tab';
 export * from './tab-pane';
 export * from './tab-renderer';
+export * from './tab-item';

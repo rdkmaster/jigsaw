@@ -1,7 +1,8 @@
 import {AbstractJigsawViewBase, IDynamicInstantiatable} from "../../common/common";
-import {ChangeDetectorRef, Component, ViewChild, ChangeDetectionStrategy, NgZone} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, ViewChild} from "@angular/core";
 import {JigsawInput} from "../input/input";
 import {JigsawTabLabel} from "./tab-item";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 /**
  * 自定义Tab标题渲染器需要实现该接口，并将界面显示的标题放在title属性上
@@ -15,13 +16,12 @@ export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
  */
 @Component({
     template: `
-        <div *ngIf="!_$editable">
+        <div *ngIf="!_$editable" style="display: flex; align-items: center;">
             <span>{{title}}</span>
-            <span class="iconfont iconfont-e105 jigsaw-editable-tab-title-bar" (click)="_handleEditable($event)"></span>
+            <span class="iconfont iconfont-ea0c" style="margin-left: 5px;" (click)="_handleEditable($event)"></span>
         </div>
-        <j-input *ngIf="_$editable" [(value)]="title" (blur)="_$handleTitleChange()" style="height: 100%;"
-                 class="jigsaw-editable-tab-title-input">
-        </j-input>
+        <j-input *ngIf="_$editable" [(value)]="title" [icon]="'iconfont iconfont-ea18'"
+                 (blur)="_$handleTitleChange()" (iconSelect)="_$handleTitleChange()"></j-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,7 +31,20 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
     }
 
     public initData: any;
-    public title: string = 'New Tab';
+
+    private _title: string = 'New Tab';
+
+    public get title(): string {
+        return this._title;
+    }
+
+    public set title(newValue: string) {
+        if (this._title === newValue || CommonUtils.isUndefined(newValue) || newValue === '') {
+            return;
+        }
+        this._title = newValue;
+        this._changeDetectorRef.markForCheck();
+    }
 
     @ViewChild(JigsawInput)
     public input: JigsawInput;
@@ -59,7 +72,7 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
      */
     public _$handleTitleChange() {
         this._$editable = !this._$editable;
-        this._tabLabel.change.emit({key: this._tabLabel.key, title: this.title});
+        this._tabLabel.labelChange.emit({key: this._tabLabel.key, title: this.title});
         this._changeDetectorRef.detectChanges();
     }
 }
