@@ -37,6 +37,9 @@ export class JigsawTabPane {
 
     private _titleRenderer: Type<IJigsawTabTitleRenderer>;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get titleRenderer() {
         return this._titleRenderer;
