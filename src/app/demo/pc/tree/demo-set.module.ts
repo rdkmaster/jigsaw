@@ -14,8 +14,8 @@ import {ZtreeXMLDataDemoComponent} from "./xml-data/demo.component";
 import {TreeXMLDataDemoModule} from "./xml-data/demo.module";
 import { ZTreeIconDemoModule } from './icon/demo.module';
 import { ZTreeIconDemoComponent } from './icon/demo.component';
-import { ZtreeFuzzySearchComponent } from './fuzzySearch/demo.component';
-import { TreeFuzzySearchDemoModule } from './fuzzySearch/demo.module';
+import { ZtreeFuzzySearchComponent } from './fuzzy-search/demo.component';
+import { TreeFuzzySearchDemoModule } from './fuzzy-search/demo.module';
 
 export const routerConfig = [
     {
