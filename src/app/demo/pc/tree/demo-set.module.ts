@@ -14,6 +14,8 @@ import {ZtreeXMLDataDemoComponent} from "./xml-data/demo.component";
 import {TreeXMLDataDemoModule} from "./xml-data/demo.module";
 import { ZTreeIconDemoModule } from './icon/demo.module';
 import { ZTreeIconDemoComponent } from './icon/demo.component';
+import { ZtreeSizeComponent } from './size/demo.component';
+import { TreeSizeDemoModule } from './size/demo.module';
 
 export const routerConfig = [
     {
@@ -36,6 +38,9 @@ export const routerConfig = [
     },
     {
         path: 'icon', component: ZTreeIconDemoComponent
+    },
+    {
+        path: 'size', component: ZtreeSizeComponent
     }
 ];
 
@@ -43,7 +48,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         ZTreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
-        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule
+        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule, TreeSizeDemoModule
     ],
     exports: [
     ],
