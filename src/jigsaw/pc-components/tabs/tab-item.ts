@@ -17,7 +17,8 @@ import {
     ViewChild,
     ViewContainerRef
 } from '@angular/core';
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
+import {AbstractJigsawComponent} from "../../common/common";
+import {IJigsawTabTitleRenderer} from "./tab-renderer";
 
 /**
  * 改变tab标题时发送事件的携带数据类型。
@@ -46,7 +47,7 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
      * @NoMarkForCheckRequired
      */
     @Input()
-    public tabItem: TemplateRef<any> | Type<IDynamicInstantiatable> | string;
+    public tabItem: TemplateRef<any> | Type<IJigsawTabTitleRenderer> | string;
 
     /**
      * @NoMarkForCheckRequired
@@ -54,20 +55,27 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
     @Input()
     public initData: Object;
 
+    /**
+     * 这个title属性，用于接收在使用渲染器标题时，传入的初始值
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public title: string;
+
     @ViewChild('body', {read: ViewContainerRef})
     protected _body: ViewContainerRef;
 
     /**
      * @internal
      */
-    public _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable>;
+    public _tabItemRef: EmbeddedViewRef<any> | ComponentRef<IJigsawTabTitleRenderer>;
 
     protected _insert(): void {
         if (this._$isSimpleTabItem || !!this._tabItemRef) {
             return;
         }
         // 这里tabItem不可能是字符串
-        const tabItem = <TemplateRef<any> | Type<IDynamicInstantiatable>>this.tabItem;
+        const tabItem = <TemplateRef<any> | Type<IJigsawTabTitleRenderer>>this.tabItem;
         this._tabItemRef = this._createTab(tabItem, this.initData);
         this._changeDetector.detectChanges();
     }
@@ -79,8 +87,8 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
         }
     }
 
-    protected _createTab(what: Type<IDynamicInstantiatable> | TemplateRef<any>,
-                         initData: Object): EmbeddedViewRef<any> | ComponentRef<IDynamicInstantiatable> {
+    protected _createTab(what: Type<IJigsawTabTitleRenderer> | TemplateRef<any>,
+                         initData: Object): EmbeddedViewRef<any> | ComponentRef<IJigsawTabTitleRenderer> {
         if (this._$isSimpleTabItem) {
             return undefined;
         }
@@ -91,6 +99,7 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
             const factory = this._componentFactory.resolveComponentFactory(what);
             const componentRef = this._body.createComponent(factory);
             componentRef.instance.initData = initData;
+            componentRef.instance.title = this.title;
             return componentRef;
         }
     }
@@ -152,7 +161,7 @@ export class JigsawTabLabel extends JigsawTabItemBase implements AfterViewInit {
     public remove = new EventEmitter<number>();
 
     @Output()
-    public change = new EventEmitter<TabTitleInfo>();
+    public labelChange = new EventEmitter<TabTitleInfo>();
 
     // label 左侧的距离
     public getOffsetLeft(): number {
