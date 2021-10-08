@@ -37,7 +37,7 @@ import {
     TableHeadSetting
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {SortOrder} from "../../common/core/data/component-data";
+import {SortOrder, IPageable} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
@@ -110,6 +110,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     @RequireMarkForCheck()
     public hideHeader: boolean = false;
+
+    private _autoFillUp: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get autoFillUp(): boolean {
+        return this._autoFillUp;
+    }
+
+    public set autoFillUp(value: boolean) {
+        this._autoFillUp = value;
+        this._updateFillUpBlankRow();
+    }
 
     private _selectedRow: number;
 
@@ -305,9 +320,52 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     /**
+     * @internal
+     */
+    public _$blankRow:string[] = [];
+
+    private _updateFillUpBlankRow(): void {
+        this._$blankRow = [];
+        this._changeDetectorRef.detectChanges();
+        
+        if (!this.autoFillUp) {
+            return;
+        }
+
+        const data: IPageable = <any>this.data;
+        if (data?.hasOwnProperty('pagingInfo') && data?.pagingInfo.totalPage > 1) {
+            return;
+        }
+
+        if (this.height === undefined || this._$cellSettings.length === 0) {
+            return;
+        }
+        const tableRows = this._elementRef.nativeElement.querySelectorAll(".jigsaw-table-body-range > .jigsaw-table-body > tbody > tr");
+        if (!tableRows) {
+            return;
+        }
+        const lastRowEle = tableRows[this._$cellSettings.length - 1];
+        if (!lastRowEle) {
+            return;
+        }
+        const bodyRangeEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range");
+        if (!bodyRangeEle) {
+            return;
+        }
+        const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
+        const bodyScroll = bodyRangeEle.scrollTop;
+        const validBottom = lastRowEle.getBoundingClientRect().bottom + bodyScroll;
+        const height = bodyBottom - validBottom - 1;
+        const rowGap = Math.floor(height / 30);
+        if (rowGap <= 0) {
+            return;
+        }
+        this._$blankRow = Array(rowGap).fill("");
+        this._changeDetectorRef.detectChanges();
+    }
+
+    /**
      * 生成混合后的列定义序列
-     *
-     *
      */
     private _getMixedColumnDefines(): ColumnDefine[] {
         if (!this.data) {
@@ -352,6 +410,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
 
         this.runMicrotask(() => {
+            // 自动添加空白行
+            this._updateFillUpBlankRow();
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
@@ -496,6 +556,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _selectRow(rowIndex: number, suppressEvent: boolean = false) {
+        if (!this._$cellSettings.length || rowIndex > this._$cellSettings.length) {
+            return;
+        }
         this._rowElementRefs.forEach((row, index) => {
             if (index === rowIndex) {
                 this._renderer.addClass(row.nativeElement, 'jigsaw-table-row-selected');
@@ -538,6 +601,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._fixHeaderTop();
         this._handleScrollBar();
         this._setVerticalScrollbarOffset();
+        this._updateFillUpBlankRow();
     }
 
     private _tableHeaderElement: HTMLElement;
@@ -588,6 +652,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     public resetSort() {
         this._headerComponents.forEach(comp => comp.updateSortOrderClass(comp.defaultSortOrder));
+    }
+
+    /**
+     * _additionalData默认是保存在组件内的，即使刷新数据了也不会重置，有些场景是需要在刷新数据后重置_additionalData的
+     */
+    public resetAdditionalData() {
+        this._additionalData.reset();
     }
 
     private _removeAdditionalDataChangeSubscription: Subscription;
@@ -870,7 +941,7 @@ export class JigsawTableModule {
     constructor(translateService: TranslateService) {
         InternalUtils.initI18n(translateService, "table", {
             zh: {
-                noData: "暂无数据", 
+                noData: "暂无数据",
             },
             en: {
                 noData: "NO DATA"

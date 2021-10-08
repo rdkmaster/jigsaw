@@ -6,7 +6,7 @@ export enum ColorType {
     default = 'default', primary = 'primary', warning = 'warning', error = 'error', danger = 'danger'
 }
 
-enum SizeType {
+export enum SizeType {
     default = 'default', small = 'small', medium = 'medium', large = 'large'
 }
 

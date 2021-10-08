@@ -15,6 +15,8 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     public uploader2: IUploader;
     @ViewChild("third", { read: JigsawUploadDirective })
     public uploader3: IUploader;
+    @ViewChild("forth", { read: JigsawUploadDirective })
+    public uploader4: IUploader;
 
     @ViewChildren(JigsawUploadResult)
     results: QueryList<JigsawUploadResult>;

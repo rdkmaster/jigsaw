@@ -14,13 +14,14 @@ $radio-option-prefix-cls: #{$jigsaw-prefix}-radio-option;
 .#{$radio-option-prefix-cls} {
     display: inline-flex;
     align-items: center;
-    font-size: $font-size-base;
+    font-size: $font-size-text-base;
     margin-right: 16px;
     cursor: pointer;
     &.#{$radio-option-prefix-cls}-disabled {
         cursor: not-allowed;
         .#{$radio-option-prefix-cls}-inner {
             background: $bg-disabled;
+            border-color: $border-color-disabled;
             &.#{$radio-option-prefix-cls}-checked {
                 border-color: $brand-disabled;
                 background: $bg-component;

@@ -9,7 +9,11 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
     &-list-box{
         overflow: auto;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
         border-radius: 4px;
+
         ul{
             margin: 0;
             padding: 0;

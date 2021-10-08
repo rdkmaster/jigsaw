@@ -57,7 +57,7 @@
     minWidth="160px"
 ></jigsaw-collapse-select>
 
-<jigsaw-header>初始全选</jigsaw-header>
+<jigsaw-header>初始全选/半选</jigsaw-header>
 <jigsaw-collapse-select
     [disabled]="disabled"
     [data]="dataListWithoutDisabled"
@@ -67,14 +67,27 @@
     width="160px"
     [useStatistics]="true"
 ></jigsaw-collapse-select>
-
-<jigsaw-header>初始半选</jigsaw-header>
 <jigsaw-collapse-select
     [disabled]="disabled"
     [data]="dataListWithoutDisabled"
     [value]="selectedOption"
     [multipleSelect]="true"
     placeholder="请选择"
+    width="160px"
+    [useStatistics]="true"
+></jigsaw-collapse-select>
+
+<jigsaw-header>无数据</jigsaw-header>
+<jigsaw-collapse-select
+    [disabled]="disabled"
+    placeholder="无数据"
+    width="160px"
+    [useStatistics]="true"
+></jigsaw-collapse-select>
+<jigsaw-collapse-select
+    [data]="foreverBusyArray"
+    [disabled]="disabled"
+    placeholder="数据获取中..."
     width="160px"
     [useStatistics]="true"
 ></jigsaw-collapse-select>

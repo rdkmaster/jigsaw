@@ -13,13 +13,16 @@ import {ButtonInfo, IPopupable, PopupService} from "../../service/popup.service"
 import {FloatPosition, JigsawFloatBase} from "../float/float";
 import {JigsawTrustedHtmlModule} from "../trusted-html/trusted-html";
 import {CommonUtils} from "../../core/utils/common-utils";
+import { CommonModule } from '@angular/common';
 
-export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any };
+export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any, theme?:'light' | 'dark'};
 export type TooltipRenderAs = 'plain-text' | 'html';
 
 @Component({
     template: `
-        <div class="jigsaw-tooltip">
+        <div class="jigsaw-tooltip"
+            [ngClass]="{'jigsaw-tooltip-light':initData?.theme == 'light',
+                        'jigsaw-tooltip-dark':initData?.theme == 'dark'}">
             <div [trustedHtml]="tooltip" [trustedHtmlContext]="initData?.context"></div>
         </div>
     `,
@@ -84,12 +87,32 @@ export class JigsawTooltip extends JigsawFloatBase {
         this.jigsawFloatInitData.tooltip = CommonUtils.isDefined(value) ? value.toString() : undefined;
         this.jigsawFloatInitData.renderAs = this.renderAs;
         this.jigsawFloatInitData.context = this.context;
+        this.jigsawFloatInitData.theme = this._theme;
         this.runAfterMicrotasks(() => {
             // 这if等于在做非空判断
             if (this.popupInstance instanceof JigsawTooltipComponent) {
                 this.popupInstance.changeDetector.markForCheck();
             }
         });
+    }
+
+    private _theme: 'light' | 'dark' = 'light';
+
+    @Input()
+    public get jigsawTooltipTheme(): 'light' | 'dark' {
+        return this._theme;
+    }
+
+    public set jigsawTooltipTheme(value: 'light' | 'dark') {
+        if (value === 'dark') {
+            this._theme = 'dark';
+            this.jigsawFloatOptions.borderColor = 'transparent';
+            this.jigsawFloatInitData.theme = 'dark';
+        } else {
+            this._theme = 'light';
+            this.jigsawFloatOptions.borderColor = '#e5e5e5';
+            this.jigsawFloatInitData.theme = 'light';
+        }
     }
 
     /**
@@ -99,7 +122,7 @@ export class JigsawTooltip extends JigsawFloatBase {
 
     protected _init(): void {
         this.jigsawFloatTarget = JigsawTooltipComponent;
-        this.jigsawFloatOptions = {borderType: 'pointer', size: {minWidth: 30}};
+        this.jigsawFloatOptions = { borderType: 'pointer', size: { minWidth: 30 }, showBorder: true, borderColor: '#e5e5e5', borderRadius: '2px', useCustomizedBackground: true };
         this.jigsawFloatCloseTrigger = 'mouseleave';
         this.jigsawFloatOpenTrigger = 'mouseenter';
     }
@@ -107,7 +130,7 @@ export class JigsawTooltip extends JigsawFloatBase {
 
 @NgModule({
     declarations: [JigsawTooltip, JigsawTooltipComponent],
-    exports: [JigsawTooltip], imports: [JigsawTrustedHtmlModule],
+    exports: [JigsawTooltip], imports: [JigsawTrustedHtmlModule, CommonModule],
     providers: [PopupService]
 })
 export class JigsawTooltipModule {

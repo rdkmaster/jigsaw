@@ -6,7 +6,7 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
     @include inline-block();
     position: relative;
     height: $height-base;
-    font-size: $font-size-base;
+    font-size: $font-size-text-base;
     user-select: none;
 
     &-container {

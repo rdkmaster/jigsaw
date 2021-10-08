@@ -40,6 +40,10 @@ export class NotificationBasicDemoComponent {
         JigsawNotification.showInfo('这是一条消息的提示消息', {timeout: 8000});
     }
 
+    showInfo2() {
+        JigsawNotification.showInfo('这是一条消息的提示消息', '带有标题的提示消息');
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

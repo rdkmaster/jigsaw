@@ -6,7 +6,7 @@
 
 .jigsaw-notification {
     border-radius: $border-radius-base;
-    background: $bg-component;
+    background: $bg-popup;
     box-shadow: $box-shadow-lv3;
     padding: 18px 22px 18px 18px;
     height: 100%;
@@ -52,8 +52,9 @@
             // 标题
             .jigsaw-notification-caption {
                 @include line-ellipsis-style();
-                font-size: $font-title-med;
-                color: $font-color-heading;
+                font-size: $font-size-lg;
+                color: $font-color-default;
+                font-weight: bold;
                 margin-bottom: 6px;
                 padding-right: 8px;
             }
@@ -62,7 +63,9 @@
                 padding-right: 8px;
                 word-wrap: break-word;
                 font-size: $font-size-base;
-                color: $font-color-tag;
+                color: $font-color-default;
+                height: 100%;
+                max-height: 300px;
             }
         }
     }

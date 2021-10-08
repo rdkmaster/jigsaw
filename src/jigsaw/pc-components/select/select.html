@@ -55,6 +55,11 @@
                         {{item && item[labelField] ? item[labelField] : item}}
                     </span>
                 </jigsaw-list-option>
+                <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
+                    <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
+                    <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
+                    <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
+                </div>
             </jigsaw-list>
         </div>
     </ng-template>

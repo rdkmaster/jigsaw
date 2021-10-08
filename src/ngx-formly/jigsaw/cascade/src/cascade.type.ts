@@ -1,58 +1,69 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
-import {ArrayCollection, JigsawComboSelect} from "@rdkmaster/jigsaw";
+import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-cascade',
     template: `
         <jigsaw-combo-select
+            *ngIf="!!to.dataGenerator; else dataTmp"
             [formControl]="formControl"
             [formlyAttributes]="field"
             [width]="to.width"
-            [height]="to.height"
             [(value)]="_$comboValue"
             [labelField]="to.labelField"
             [placeholder]="to.placeholder"
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
-            [maxWidth]="to.maxWidth"
-            [(open)]="to.open"
-            [showBorder]="to.showBorder"
-            [autoClose]="to.autoClose"
-            [autoWidth]="to.autoWidth"
-            [clearable]="to.clearable"
-            [searchable]="to.searchable"
-            [searching]="to.searching"
-            [searchKeyword]="to.searchKeyword"
-            [searchBoxMinWidth]="to.searchBoxMinWidth"
             [valid]="to.valid && !showError"
-            (valueChange)="to.valueChange && to.valueChange($event)"
-            (select)="to.select && to.select($event)"
-            (openChange)="to.openChange && to.openChange($event)"
-            (searchKeywordChange)="to.searchKeywordChange && to.searchKeywordChange($event)"
-            (remove)="to.remove && to.remove($event)">
+            [autoWidth]="to.autoWidth">
             <ng-template>
                 <jigsaw-cascade
                     [width]="to.width"
                     [height]="to.height"
-                    [dataGenerator]="to.dataGenerator"
                     [generatorContext]="to.generatorContext"
-                    [data]="to.data"
+                    [dataGenerator]="to.dataGenerator"
                     [(selectedItems)]="to.selectedItems"
                     [multipleSelect]="to.multipleSelect"
                     [labelField]="to.labelField"
                     [trackItemBy]="to.trackItemBy"
                     [searchable]="to.searchable"
-                    [pageSize]="to.pageSize"
                     [optionWidth]="to.optionWidth"
                     (selectedItemsChange)="_$selectItemsChange($event)">
                 </jigsaw-cascade>
             </ng-template>
         </jigsaw-combo-select>
+        <ng-template #dataTmp>
+            <jigsaw-combo-select
+                [formControl]="formControl"
+                [formlyAttributes]="field"
+                [width]="to.width"
+                [(value)]="_$comboValue"
+                [labelField]="to.labelField"
+                [placeholder]="to.placeholder"
+                [openTrigger]="to.openTrigger"
+                [closeTrigger]="to.closeTrigger"
+                [valid]="to.valid && !showError"
+                [autoWidth]="to.autoWidth">
+                <ng-template>
+                    <jigsaw-cascade
+                        [width]="to.width"
+                        [data]="to.data"
+                        [(selectedItems)]="to.selectedItems"
+                        [multipleSelect]="to.multipleSelect"
+                        [labelField]="to.labelField"
+                        [trackItemBy]="to.trackItemBy"
+                        [searchable]="to.searchable"
+                        [optionWidth]="to.optionWidth"
+                        (selectedItemsChange)="_$selectItemsChange($event)">
+                    </jigsaw-cascade>
+                </ng-template>
+            </jigsaw-combo-select>
+        </ng-template>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormlyFieldCascade extends FormlyFieldType<JigsawComboSelect> implements OnInit {
+export class FormlyFieldCascade extends FormlyFieldType<FormlyFieldCascade> implements OnInit {
     defaultOptions = {
         templateOptions: {
             width: '100%',
@@ -71,7 +82,9 @@ export class FormlyFieldCascade extends FormlyFieldType<JigsawComboSelect> imple
     public _$comboValue: any[];
 
     @ViewChild(JigsawComboSelect)
-    protected _instance: JigsawComboSelect;
+    public comboSelectInstance: JigsawComboSelect;
+    @ViewChild(JigsawCascade)
+    public cascadeInstance: JigsawCascade;
 
     constructor(private _cdr: ChangeDetectorRef) {
         super();
@@ -81,11 +94,11 @@ export class FormlyFieldCascade extends FormlyFieldType<JigsawComboSelect> imple
         if (this.to.selectedItemsChange) {
             this.to.selectedItemsChange(selectedItems);
         }
-        this._parseSelectItems(selectedItems);
+        this.parseSelectItems(selectedItems);
     }
 
     // 动态计算combo中显示的数据
-    private _parseSelectItems(selectedItems: any[]): void {
+    public parseSelectItems(selectedItems: any[]): void {
         if (this.to.multipleSelect) {
             // 多选
             const selectedItemsStr = selectedItems.reduce((result, item) => {
@@ -120,7 +133,11 @@ export class FormlyFieldCascade extends FormlyFieldType<JigsawComboSelect> imple
     ngOnInit(): void {
         if (this.to.selectedItems) {
             // 如果设置了默认值，需要同步combo
-            this._parseSelectItems(this.to.selectedItems);
+            this.parseSelectItems(this.to.selectedItems);
         }
+    }
+
+    ngAfterViewInit(): void {
+        this.to.componentRef = this;
     }
 }

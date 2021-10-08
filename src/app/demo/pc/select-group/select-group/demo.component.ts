@@ -1,11 +1,16 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
 
+class ForeverBusyArrayCollection extends ArrayCollection<any> {
+    _busy = true;
+}
+
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class SelectGroupDemoComponent {
+    foreverBusyArray = new ForeverBusyArrayCollection();
     selectedCityForSelect: any;
     disabled: boolean = false;
 

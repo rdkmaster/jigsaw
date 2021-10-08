@@ -4,6 +4,7 @@ $select-prefix-cls: #{$jigsaw-prefix}-select;
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 $jigsaw-collapse-select: #{$jigsaw-prefix}-collapse-select;
 $jigsaw-group-select: #{$jigsaw-prefix}-group-select;
+$jigsaw-loading: #{$jigsaw-prefix}-circle-loading;
 $jigsaw-tag: #{$jigsaw-prefix}-tag;
 $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
 $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
@@ -39,6 +40,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 width: 100%;
                 height: 100%;
                 padding-left: 8px;
+                font-size: $font-size-text-base;
                 pointer-events: none;
 
                 &.#{$select-prefix-cls}-statistics-disabled {
@@ -220,6 +222,16 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     .#{$jigsaw-collapse}-header {
                         padding-left: 8px;
 
+                        &:hover {
+                            .#{$select-prefix-cls}-option-title {
+                                color: $brand-default;
+                            }
+
+                            .#{$jigsaw-collapse}-arrow {
+                                color: $brand-default;
+                            }
+                        }
+
                         .#{$select-prefix-cls}-option-title {
                             font-size: $font-title-med;
                             color: $font-color-heading;
@@ -253,6 +265,18 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     }
                 }
             }
+        }
+    }
+
+    .#{$select-prefix-cls}-no-data {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+
+        #{$jigsaw-loading} {
+            transform: scale(0.5);
         }
     }
 }
