@@ -16,8 +16,6 @@ import { ZTreeIconDemoModule } from './icon/demo.module';
 import { ZTreeIconDemoComponent } from './icon/demo.component';
 import { ZtreeFuzzySearchComponent } from './fuzzySearch/demo.component';
 import { TreeFuzzySearchDemoModule } from './fuzzySearch/demo.module';
-import { ZtreeSizeComponent } from './size/demo.component';
-import { TreeSizeDemoModule } from './size/demo.module';
 
 export const routerConfig = [
     {
@@ -43,9 +41,6 @@ export const routerConfig = [
     },
     {
         path: 'fuzzy-search', component: ZtreeFuzzySearchComponent
-    },
-    {
-        path: 'size', component: ZtreeSizeComponent
     }
 ];
 
@@ -53,7 +48,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         ZTreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
-        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule, TreeFuzzySearchDemoModule, TreeSizeDemoModule
+        TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule, TreeFuzzySearchDemoModule
     ],
     exports: [
     ],

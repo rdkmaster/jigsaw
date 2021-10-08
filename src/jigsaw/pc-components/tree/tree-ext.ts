@@ -24,11 +24,6 @@ export class TreeEventData {
             vertical-align: middle;
         }
     `],
-    host: {
-        '[class.jigsaw-tree-large]': 'size === "large"',
-        '[class.jigsaw-tree-medium]': 'size === "medium"',
-        '[class.jigsaw-tree-default]': 'size === "default"',
-    },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
@@ -83,12 +78,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             this._updateTree();
         });
     }
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public size: "default" | "medium" | "large" = "default";
 
     private _iconSuit: ZTreeIconSuit = {
         edit: "ea0c",
