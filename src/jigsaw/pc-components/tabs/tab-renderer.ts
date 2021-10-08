@@ -72,9 +72,9 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
         e.stopPropagation();
         this._$editable = !this._$editable;
         // 计算输入框的宽度：1：取文字宽度时，需要加上input的图标和内边距等元素的尺寸；2：取整个tab页宽度时，要去除标题之间的边距和右侧可能出现的下拉列表的宽度
-        this._$width = this._titleElement.nativeElement.offsetWidth < (this._tabsBar.elementRef.nativeElement.offsetWidth - 80) ?
+        this._$width = this._titleElement.nativeElement.offsetWidth < (this._tabsBar._elementRef.nativeElement.offsetWidth - 80) ?
             this._titleElement.nativeElement.offsetWidth + 42 :
-            this._tabsBar.elementRef.nativeElement.offsetWidth - 80;
+            this._tabsBar._elementRef.nativeElement.offsetWidth - 80;
         this._$width = this._$width + 'px'
         this.runAfterMicrotasks(() => {
             // 等待input渲染

@@ -409,7 +409,10 @@ export class JigsawTabBar extends JigsawTabBase {
                 private _viewContainer: ViewContainerRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector,
-                public elementRef: ElementRef) {
+                /**
+                 * @internal
+                 */
+                public _elementRef: ElementRef) {
         super(_changeDetector, _injector);
     }
 
