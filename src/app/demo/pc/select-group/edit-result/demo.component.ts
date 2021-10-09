@@ -35,12 +35,13 @@ export class SelectGroupEditResultDemoComponent {
     }
 
     editResult() {
-        this.selectedOption.forEach((groupItem, i) => {
-            groupItem.data.forEach((item, j) => {
-                item.label = '修改结果' + i + j
-                this._changeDetector.markForCheck();
-            })
-        })
+        // this.selectedOption.forEach((groupItem, i) => {
+        //     groupItem.data.forEach((item, j) => {
+        //         item.label = '修改结果' + i + j
+        //         this._changeDetector.markForCheck();
+        //     })
+        // })
+        console.log(this.selectedOption)
     }
 
     changeData() {

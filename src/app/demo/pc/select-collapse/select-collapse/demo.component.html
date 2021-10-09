@@ -37,7 +37,7 @@
     (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 <jigsaw-collapse-select
-[disabled]="disabled"
+    [disabled]="disabled"
     [data]="dataList"
     [multipleSelect]="true"
     [useStatistics]="false"
@@ -48,6 +48,19 @@
     (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 
+<jigsaw-header>折叠下拉（多选 & 展开结果 & 固定高度）</jigsaw-header>
+<jigsaw-collapse-select
+    [disabled]="disabled"
+    [data]="dataListWithoutDisabled"
+    [value]="selectedOption"
+    [multipleSelect]="false"
+    placeholder="请选择"
+    width="160px"
+    maxHeight="32px"
+    [useStatistics]="true"
+    (valueChange)="valueChange($event)"
+></jigsaw-collapse-select>
+
 <jigsaw-header>折叠下拉（自定义宽度）</jigsaw-header>
 <jigsaw-collapse-select
     [disabled]="disabled"
@@ -55,7 +68,7 @@
     [multipleSelect]="true"
     [useStatistics]="false"
     placeholder="请选择"
-    width="160px"
+    width="240px"
     maxWidth="240px"
     minWidth="160px"
     (valueChange)="valueChange($event)"

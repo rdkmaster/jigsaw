@@ -165,6 +165,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
         &.#{$jigsaw-list-option}-active {
             background: none;
+
+            &:hover {
+                background: $bg-hover;
+            }
         }
     }
     &.#{$select-prefix-cls}-show-selected {
@@ -223,7 +227,9 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     .#{$jigsaw-group-select}-option-cntr {
         .#{$jigsaw-collapse} {
             .#{$jigsaw-collapse}-pane {
+                width: 100%;
                 .#{$jigsaw-collapse}-item {
+                    width: 100%;
                     .#{$jigsaw-collapse}-header {
                         padding-left: 8px;
 
