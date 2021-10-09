@@ -1,15 +1,18 @@
 <!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+<jigsaw-demo-description [summary]="summary" [content]="description"></jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
 <jigsaw-checkbox [(checked)]="disabled">是否禁止访问</jigsaw-checkbox>
 
 <jigsaw-header>折叠下拉（单选）</jigsaw-header>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataListWithoutDisabled" placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
+<jigsaw-collapse-select [disabled]="disabled" [data]="dataListWithoutDisabled" placeholder="请选择" width="160px"
+                        (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
+<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" placeholder="请选择" width="160px"
+                        (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
-<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" [value]="singleSelectedOption" placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
+<jigsaw-collapse-select [disabled]="disabled" [data]="dataList" [value]="singleSelectedOption"
+                        placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 
 <jigsaw-header>折叠下拉（多选）</jigsaw-header>
@@ -34,6 +37,7 @@
     [useStatistics]="false"
     placeholder="请选择"
     width="160px"
+    height="32px"
     (valueChange)="valueChange($event)"
 ></jigsaw-collapse-select>
 <jigsaw-collapse-select
