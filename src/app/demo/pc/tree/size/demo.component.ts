@@ -2,10 +2,18 @@ import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { SimpleTreeData, JigsawTreeExt } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styles: [`
+        .sized-tree {
+            display: inline-block;
+            vertical-align: top;
+            width: 220px;
+        }
+    `]
 })
 export class ZtreeSizeComponent implements AfterViewInit {
-    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
+    @ViewChild(JigsawTreeExt)
+    public treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
 
