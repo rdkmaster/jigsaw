@@ -26,8 +26,7 @@ export class SelectGroupEditResultDemoComponent {
 
     selectedOption = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项2" }, { label: "文本选项3" }] },
-        { groupName: "分组标题2", data: [{ label: "文本选项6" }] },
-        { groupName: "分组标题3", data: [{ label: "文本选项7" }] }
+        { groupName: "分组标题2", data: [{ label: "文本选项6" }] }
     ]);
 
     valueChange($event) {

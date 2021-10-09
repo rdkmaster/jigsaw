@@ -634,9 +634,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     private _setEmptyValue(value): void {
-        this._value = new ArrayCollection([]);
+        this._$value = new ArrayCollection([]);
         value.forEach(groupData => {
-            this._value.push({ [this.groupField]: groupData[this.groupField], data: new ArrayCollection([]) })
+            this._$value.push({ [this.groupField]: groupData[this.groupField], data: new ArrayCollection([]) })
         });
         this._$selectedItems = [];
     }
@@ -647,6 +647,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             group.data.filter(item => !item.disabled).forEach(item => this.validData.push(item));
         });
     }
+
+    public _$value;
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
@@ -669,7 +671,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this.runMicrotask(() => {
             newValue.forEach((groupData: GroupSelectOption) => {
                 const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
-                const targetData = this._value.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
+                const targetData = this._$value.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
                 groupData.data.forEach(item => {
                     const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
                     if (srcDataItem) {
@@ -695,9 +697,14 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     private _updateSelectedItems(): void {
         this._$selectedItems = [];
-        this._value.forEach((groupData: GroupSelectOption) => {
+        this._value = new ArrayCollection([]);
+        this._$value.forEach((groupData: GroupSelectOption) => {
             this._$selectedItems = [...this._$selectedItems, ...groupData.data];
+            if (groupData.data.length > 0) {
+                this._value.push(groupData);
+            }
         });
+        this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -710,9 +717,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             this._data.forEach((groupData: GroupSelectOption, index) => {
-                this._value[index].data = groupData.data.filter(item => !item.disabled)
+                this._$value[index].data = groupData.data.filter(item => !item.disabled)
             })
-            this._value = this._value.filter((item: GroupSelectOption) => item.data.length > 0);
+            this._$value = this._$value.filter((item: GroupSelectOption) => item.data.length > 0);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._updateSelectedItems();
@@ -737,7 +744,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     * @internal
     */
     public _$onTagRemove(removedItem): void {
-        this._value.forEach((groupData: GroupSelectOption) => {
+        this._$value.forEach((groupData: GroupSelectOption) => {
             const itemIndex = groupData.data.findIndex(item => item == removedItem);
             if (itemIndex !== -1) {
                 groupData.data.splice(itemIndex, 1)
