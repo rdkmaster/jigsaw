@@ -99,6 +99,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 选项高度
      *
      * @NoMarkForCheckRequired
+     * @internal
      */
     @Input()
     public optionHeight = 32;
@@ -594,7 +595,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public groupField: string = "groupName";
+    public groupField: string = "group";
     public validData: SelectOption[];
 
     protected _data: ArrayCollection<GroupSelectOption>;
@@ -647,7 +648,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             group.data.filter(item => !item.disabled).forEach(item => this.validData.push(item));
         });
     }
-    
+
     /**
      * @internal
      */
