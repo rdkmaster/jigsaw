@@ -647,7 +647,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             group.data.filter(item => !item.disabled).forEach(item => this.validData.push(item));
         });
     }
-
+    
+    /**
+     * @internal
+     */
     public _$value;
 
     /**
