@@ -578,12 +578,14 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this.ztree.setting.view.nameIsHTML = true;
 
         const nodes = this.ztree.transformToArray(this.ztree.getNodes());
+        this.ztree.hideNodes(nodes);
         nodes.forEach(node => {
             if (node && node.oldname && node.oldname.length > 0) {
                 node[key] = node.oldname;
             }
             this.ztree.updateNode(node);
-            if (value.length == 0) {
+            if (value.length === 0) {
+                this.ztree.showNodes(nodes);
                 return;
             }
             if (node[key] && node[key].toLowerCase().indexOf(value.toLowerCase()) != -1) {
@@ -600,6 +602,14 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                     return highLightText;
                 });
                 this.ztree.updateNode(node);
+                this.ztree.showNode(node);
+                const path = node.getPath();
+                if (path && path.length > 0) {
+                    for (let i = 0; i < path.length - 1; i++) {
+                        this.ztree.showNode(path[i]);
+                        this.ztree.expandNode(path[i], true);
+                    }
+                }
             }
         });
     }
