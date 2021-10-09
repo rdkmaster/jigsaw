@@ -95,10 +95,22 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 }
 
 .#{$jigsaw-tree}-default {
+    .ztree * {
+        font-size: $font-size-base;
+    }
+
     .ztree li {
         span {
             &.button.switch {
                 height: 24px !important;
+            }
+
+            &.button.center_docu {
+                background-position: -56px -16px;
+            }
+
+            &.button.bottom_docu {
+                background-position: -56px -34px;
             }
         }
 
@@ -109,6 +121,10 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 }
 
 .#{$jigsaw-tree}-medium {
+    .ztree * {
+        font-size: $font-size-base;
+    }
+
     .ztree li {
         span {
             &.button.switch {
