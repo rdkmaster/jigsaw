@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ZTreeSettings, ZTreeIconSuit} from "./ztree-types";
+import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $;
@@ -572,46 +572,44 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this[type].emit(treeEventData);
     }
 
-    public fuzzySearch(key: string, value: string) {
-        const metaChar = '[\\[\\]\\\\\^\\$\\.\\|\\?\\*\\+\\(\\)]';
-        const rexMeta = new RegExp(metaChar, 'gi');
+    public fuzzySearch(keyword: string, field: string = 'label') {
+        const rexMeta = /[\[\]\\^$.|?*+()]/g;
         this.ztree.setting.view.nameIsHTML = true;
-
         const nodes = this.ztree.transformToArray(this.ztree.getNodes());
+
+        // reset node label
+        nodes.filter(node => CommonUtils.isDefined(node?.oldname) && node?.oldname != node[field])
+            .forEach(node => {
+                node[field] = node.oldname;
+                this.ztree.updateNode(node);
+            });
+
+        keyword = (keyword || '').trim();
+        if (keyword.length === 0) {
+            this.ztree.showNodes(nodes);
+            return;
+        }
+
         this.ztree.hideNodes(nodes);
-        nodes.forEach(node => {
-            if (node && node.oldname && node.oldname.length > 0) {
-                node[key] = node.oldname;
-            }
-            this.ztree.updateNode(node);
-            if (value.length === 0) {
-                this.ztree.showNodes(nodes);
-                return;
-            }
-            if (node[key] && node[key].toLowerCase().indexOf(value.toLowerCase()) != -1) {
-                const newKeywords = value.replace(rexMeta, function (matchStr) {
-                    return '\\' + matchStr;
-                });
-                node.oldname = node[key];
-                const rexGlobal = new RegExp(newKeywords, 'gi');
-                node[key] = node.oldname.replace(rexGlobal, function (originalText) {
-                    const highLightText =
-                        '<span style="background-color: var(--primary-disabled);">'
-                        + originalText
-                        + '</span>';
-                    return highLightText;
-                });
+        nodes.filter(node => CommonUtils.isDefined(node[field]) && node[field].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
+            .forEach(node => {
+                const regKeywords = keyword.replace(rexMeta, matchStr => `\\${matchStr}`);
+                node.oldname = node[field];
+                const rexGlobal = new RegExp(regKeywords, 'gi');
+                node[field] = node.oldname.replace(rexGlobal, originalText =>
+                    `<span style="background-color: var(--primary-disabled);">${originalText}</span>`);
                 this.ztree.updateNode(node);
                 this.ztree.showNode(node);
+
                 const path = node.getPath();
-                if (path && path.length > 0) {
-                    for (let i = 0; i < path.length - 1; i++) {
-                        this.ztree.showNode(path[i]);
-                        this.ztree.expandNode(path[i], true);
-                    }
+                if (!path || path.length == 0) {
+                    return;
                 }
-            }
-        });
+                for (let i = 0; i < path.length - 1; i++) {
+                    this.ztree.showNode(path[i]);
+                    this.ztree.expandNode(path[i], true);
+                }
+            });
     }
 }
 

@@ -3,6 +3,7 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-input (valueChange)="search($event)" placeholder="输入搜索内容"></jigsaw-input>
+<jigsaw-input (valueChange)="treeExt.fuzzySearch($event)" placeholder="输入搜索内容"></jigsaw-input>
 <br>
 <jigsaw-tree-ext [(data)]="data"></jigsaw-tree-ext>
+
