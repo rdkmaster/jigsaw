@@ -142,7 +142,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      *
      * @NoMarkForCheckRequired
      */
-    private _trackItemBy: string | string[];
+    private _trackItemBy: string[];
 
     /**
      * 设置对象的标识
@@ -350,7 +350,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = new ArrayCollection(this.validData);
+            this._$selectedItems = new ArrayCollection(this._getValidData());
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
@@ -379,32 +379,33 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 搜索过滤的时候会存在当前已选不在当期列表中的情况
      */
     private _validDataAllNotSelected(): boolean {
-        if (!this._$selectedItems || !this.validData) {
+        if (!this._$selectedItems || !this._getValidData()) {
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !this.validData.find(data => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+            item => !this._getValidData().find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
     }
 
     /**
      * 搜索过滤的时候会存在当前已选不在当期列表中的情况
      */
     protected _validDataAllSelected(): boolean {
-        if (!this._$selectedItems || !this.validData) {
+        if (!this._$selectedItems || !this._getValidData()) {
             return false;
         }
-        return this.searchable && this.validData.every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+        return this.searchable && this._getValidData().every(
+            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
     }
 
     protected _allSelectCheck() {
-        if (!this._$selectedItems || !this.validData) {
+        const validData = this._getValidData();
+        if (!this._$selectedItems || !validData) {
             return false;
         }
         if (this.searchable) {
             return this._validDataAllSelected();
         } else {
-            return this._$selectedItems.length === this.validData.length;
+            return this._$selectedItems.length === validData.length
         }
     }
 
@@ -412,13 +413,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showAllStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this.validData || !this._$selectedItems.length) {
+        const validData = this._getValidData();
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !validData || !this._$selectedItems.length) {
             return false
         }
         if (this.searchable) {
-            return this._$selectedItems.length === this.validData.length && CommonUtils.isUndefined(this._searchKey);
+            return this._$selectedItems.length === validData.length && !this._searchKey;
         } else {
-            return this._$selectedItems.length === this.validData.length;
+            return this._$selectedItems.length === validData.length
         }
     }
 
@@ -426,7 +428,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showNumStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this.validData || !this._$selectedItems.length) {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._getValidData() || !this._$selectedItems.length) {
             return false
         }
         return !this._$showAllStatistics();
@@ -444,7 +446,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showSelected: boolean = false;
-    public validData: SelectOption[];
 
     protected _data: ArrayCollection<SelectOption>;
     protected _removeOnRefresh: CallbackRemoval;
@@ -468,13 +469,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
         this._setData(value);
-        this._setValidData();
         if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
-                this._setValidData();
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
@@ -496,9 +495,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
     }
 
-    protected _setValidData() {
+    protected _getValidData(){
         // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
-        this.validData = this._data.concat().filter(item => !item.disabled);
+        return this._data.concat().filter(item => !item.disabled);
     }
 
     /**
@@ -508,9 +507,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     @Output()
     public remove: EventEmitter<any> = new EventEmitter<any>();
-
-    @ViewChild(JigsawListLite)
-    private _listCmp: JigsawListLite;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
@@ -598,7 +594,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      */
     @Input()
     public groupField: string = "group";
-    public validData: SelectOption[];
 
     protected _data: ArrayCollection<GroupSelectOption>;
     /**
@@ -620,14 +615,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray) {
         this._setData(value);
         this._setEmptyValue(value);
-        this._setValidData();
         if (this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
-                this._setEmptyValue(this._data);
-                this._setValidData();
+                this._setEmptyValue(value);
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
@@ -644,11 +637,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$selectedItems = [];
     }
 
-    protected _setValidData() {
-        this.validData = [];
+    protected _getValidData() {
+        const validData = [];
         this._data.forEach((group: GroupSelectOption) => {
-            group.data.filter(item => !item.disabled).forEach(item => this.validData.push(item));
+            group.data.filter(item => !item.disabled).forEach(item => validData.push(item));
         });
+        return validData;
     }
 
     /**
