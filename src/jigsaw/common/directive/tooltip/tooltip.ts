@@ -14,6 +14,7 @@ import {FloatPosition, JigsawFloatBase} from "../float/float";
 import {JigsawTrustedHtmlModule} from "../trusted-html/trusted-html";
 import {CommonUtils} from "../../core/utils/common-utils";
 import { CommonModule } from '@angular/common';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any, theme?:'light' | 'dark'};
 export type TooltipRenderAs = 'plain-text' | 'html';
@@ -23,7 +24,7 @@ export type TooltipRenderAs = 'plain-text' | 'html';
         <div class="jigsaw-tooltip"
             [ngClass]="{'jigsaw-tooltip-light':initData?.theme == 'light',
                         'jigsaw-tooltip-dark':initData?.theme == 'dark'}">
-            <div [trustedHtml]="tooltip" [trustedHtmlContext]="initData?.context"></div>
+            <div [trustedHtml]="tooltip" [trustedHtmlContext]="initData?.context" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"></div>
         </div>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -130,7 +131,7 @@ export class JigsawTooltip extends JigsawFloatBase {
 
 @NgModule({
     declarations: [JigsawTooltip, JigsawTooltipComponent],
-    exports: [JigsawTooltip], imports: [JigsawTrustedHtmlModule, CommonModule],
+    exports: [JigsawTooltip], imports: [JigsawTrustedHtmlModule, CommonModule, PerfectScrollbarModule],
     providers: [PopupService]
 })
 export class JigsawTooltipModule {

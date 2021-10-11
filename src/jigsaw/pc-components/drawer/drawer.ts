@@ -212,7 +212,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * $demo = drawer/basic
      */
     @Input()
-    public emphasisHandler : boolean = false;
+    public emphasisHandler : boolean = true;
 
     @ViewChild('drawer')
     private _drawerEl: ElementRef;
