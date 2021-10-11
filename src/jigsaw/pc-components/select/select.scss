@@ -139,6 +139,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             align-items: center;
             padding: 0 0 0 8px;
             color: $brand-default;
+            cursor: pointer;
 
             i {
                 margin-right: 4px;
@@ -180,6 +181,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
 .#{$select-prefix-cls}-single-list,
 .#{$select-prefix-cls}-multiple-list {
+    border: 1px solid $border-color-default;
     #{$jigsaw-list-option} {
         display: flex;
         align-items: center;
@@ -226,7 +228,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     .#{$jigsaw-collapse-select}-option-cntr,
     .#{$jigsaw-group-select}-option-cntr {
         .#{$jigsaw-collapse} {
-            border: 1px solid $border-color-default;
             .#{$jigsaw-collapse}-pane {
                 width: 100%;
                 .#{$jigsaw-collapse}-item {
