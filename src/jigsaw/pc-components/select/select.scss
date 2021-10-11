@@ -181,7 +181,12 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
 .#{$select-prefix-cls}-single-list,
 .#{$select-prefix-cls}-multiple-list {
-    border: 1px solid $border-color-default;
+    border: 1px solid $border-color-shadow-cntr;
+
+    &.#{$jigsaw-list} {
+        border: 1px solid $border-color-shadow-cntr;
+    }
+
     #{$jigsaw-list-option} {
         display: flex;
         align-items: center;
@@ -232,6 +237,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 width: 100%;
                 .#{$jigsaw-collapse}-item {
                     width: 100%;
+                    .#{$jigsaw-list} {
+                        border: none;
+                    }
+                    
                     .#{$jigsaw-collapse}-header {
                         padding-left: 8px;
 
@@ -244,11 +253,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                         .#{$jigsaw-collapse}-padding {
                             padding: 0px;
                         }
-
-                        .#{$jigsaw-list} {
-                            border: none;
-                        }
-
                         .#{$select-prefix-cls}-option-no-data {
                             display: flex;
                             align-items: center;
