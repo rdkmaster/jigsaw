@@ -3,21 +3,7 @@ import {UploadFileInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .common-param-setting {
-            margin-bottom: 30px;
-        }
-
-        .common-param-setting h3 {
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .link-upload {
-            text-decoration: underline;
-            margin-left: 6px
-        }
-    `]
+    styleUrls: ['./demo.component.css']
 })
 export class UploadBasicDemoComponent {
     fileType = '.png';

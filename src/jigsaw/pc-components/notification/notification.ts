@@ -28,6 +28,7 @@ import {JigsawButtonModule} from "../button/button";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -160,8 +161,8 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             warning: 'notification.warning',
             info: 'notification.info'
         };
-        this.caption = iconType2Caption.hasOwnProperty(value.iconType) ?
-            this._translateService.instant(iconType2Caption[value.iconType]) : value.caption;
+
+        this.caption = value.caption ? value.caption : (iconType2Caption.hasOwnProperty(value.iconType) ? this._translateService.instant(iconType2Caption[value.iconType]) : undefined)
         this.message = value.message || 'the "message" property in the initData goes here.';
         this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;
@@ -484,6 +485,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             return;
         }
         const opt = <NotificationMessage>(typeof options == 'string' ? {caption: options} : options || {});
+        
         opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
         opt.position = typeof opt.position === 'string' ? NotificationPosition[<string>opt.position] : opt.position;
@@ -551,11 +553,10 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         opt.iconType = 'info';
         return JigsawNotification.show(message, opt);
     };
-
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule],
+    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule],
     declarations: [JigsawNotification],
     exports: [JigsawNotification],
     providers: [TranslateService]

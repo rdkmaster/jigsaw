@@ -12,7 +12,8 @@
             <div class="jigsaw-notification-caption" title="{{caption}}" *ngIf="!!caption">
                 {{caption}}
             </div>
-            <div class="jigsaw-notification-message" [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
+            <div class="jigsaw-notification-message" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"
+                 [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
         </div>
     </div>
 

@@ -10,6 +10,7 @@ export class DrawerBasicDemoComponent {
     touched = false;
     width: string = '30%';
     height: string = '100%';
+    emphasisHandler:boolean = false;
 
     toggle() {
         this.isOpen = !this.isOpen;

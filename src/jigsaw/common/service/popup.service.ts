@@ -134,6 +134,10 @@ export class PopupOptions {
      * borderRadius表示弹框的边框圆角
      */
     borderRadius?: string | number;
+    /**
+     * borderRadius表示弹框的边框颜色
+     */
+    borderColor?: string;
 }
 
 export type AbsolutePosition =
@@ -459,8 +463,8 @@ export class PopupService {
     private _setPopup(options: PopupOptions, element: HTMLElement) {
         if (element) {
             this._setSize(options, element);
-            this.setPosition(options, element);
             this._setBackground(options, element);
+            this.setPosition(options, element);
             this._setShowAnimate(options, element);
         }
     }
@@ -580,7 +584,10 @@ export class PopupService {
             InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);
         }
         if (options && options.showBorder) {
-            InternalUtils.renderer.setStyle(element, "border", "1px solid #dcdcdc");
+            const borderColor = options.borderColor ? options.borderColor : '#dcdcdc';
+            InternalUtils.renderer.setStyle(element, "border-width", "1px");
+            InternalUtils.renderer.setStyle(element, "border-style", "solid");
+            InternalUtils.renderer.setStyle(element, "border-color", borderColor);
             InternalUtils.renderer.setStyle(element, "border-radius", "4px");
         }
         if (options && options.borderRadius) {

@@ -71,11 +71,10 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
     }
 
     &.#{$bc-prefix-cls}-dark {
-        background: $bg-body-dark;
+        background: $bg-navigation;
         font-size: $font-title-med;
         .#{$bc-prefix-cls}-item {
             color: $font-color-white-darken-dark;
-            font-size: $font-size-lg;
             &:hover {
                 color: $font-color-white;
             }
@@ -99,7 +98,10 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
             .#{$bc-prefix-cls}-label {
                 color: $brand-default;
                 &:hover {
-                    color: $brand-hover;
+                    text-decoration: underline;
+                }
+                &:active {
+                    color: $brand-active;
                 }
             }
             &.#{$bc-prefix-cls}-current {

@@ -1,20 +1,25 @@
 import { Component } from "@angular/core";
-import { TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer, ArrayCollection, TreeTableData, TreeTableCellRenderer } from "jigsaw/public_api";
+import { TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer, ArrayCollection, TreeTableData, TreeTableCellRenderer, LocalPageableTableData } from "jigsaw/public_api";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class TableAutoFillUpDemoComponent {
-    scenario: "common" | "tree" = "common";
+    checked: boolean = true;
+
+    scenario: "common" | "tree" | "pageable" = "common";
 
     scenarioList = new ArrayCollection([
         "common",
-        "tree"
+        "tree",
+        "pageable"
     ]);
 
     tableData: TableData;
     treeTableData: TreeTableData;
+    pageable: LocalPageableTableData;
 
     _$noData() {
         this.tableData.fromObject({
@@ -92,7 +97,7 @@ export class TableAutoFillUpDemoComponent {
         }
     ];
 
-    constructor() {
+    constructor(http: HttpClient) {
         this.tableData = new TableData(
             [
                 ["Tiger Nixon1", "System Architect", "8000"],
@@ -178,6 +183,19 @@ export class TableAutoFillUpDemoComponent {
                 { isParent: true, data: this.getRow(3) }
             ]
         });
+
+        this.pageable = new LocalPageableTableData();
+        this.pageable.http = http;
+        this.pageable.pagingInfo.pageSize = 10;
+        this.pageable.fromAjax('mock-data/hr-list');
+    }
+
+    _$updateLessData() {
+        this.pageable.fromAjax('mock-data/hr-list-short');
+    }
+
+    _$updateMoreData() {
+        this.pageable.fromAjax('mock-data/hr-list');
     }
 
     // ====================================================================

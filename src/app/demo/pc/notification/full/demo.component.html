@@ -9,12 +9,14 @@
 
     <div class="row">
         <label>消息</label>
-        <jigsaw-input [(value)]="message"></jigsaw-input>
+        <jigsaw-input [(value)]="message" placeholder="输入消息内容"></jigsaw-input>
+        <a (click)="makeLongContent('message')">长内容</a>
     </div>
 
     <div class="row">
         <label>标题</label>
         <jigsaw-input [(value)]="caption" placeholder="输入标题（可选）"></jigsaw-input>
+        <a (click)="makeLongContent('caption')">长内容</a>
     </div>
 
     <div class="row">
@@ -32,7 +34,7 @@
         <jigsaw-input [(value)]="icon" width="calc(100% - 67px)" placeholder="输入图标（可选）"
                       title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
         </jigsaw-input>
-        <p style="margin-left: 34px;">例如：iconfont iconfont-e23e</p>
+        <p style="margin-left: 34px;">例如：iconfont iconfont-e23e <a href="/#/pc/icon/icons">所有可用图标</a></p>
     </div>
 
     <div class="row">
@@ -58,14 +60,14 @@
     <hr><br>
 
     <h4>常见用法：</h4>
-    <jigsaw-button (click)="showNormal()">最简洁的用法</jigsaw-button>
-    <jigsaw-button (click)="showCaption()">带标题的简洁用法</jigsaw-button>
-    <jigsaw-button (click)="showButtons()">带交互按钮用法</jigsaw-button>
+    <jigsaw-button width="166px" (click)="showNormal()">最简洁的用法</jigsaw-button>
+    <jigsaw-button width="167px" (click)="showCaption()">带标题的简洁用法</jigsaw-button>
+    <jigsaw-button width="166px" (click)="showButtons()">带交互按钮用法</jigsaw-button>
+    <jigsaw-button width="167px" (click)="customizeInteractive()">自定义交互用法</jigsaw-button>
     <br>
     <jigsaw-button width="166px" (click)="showSuccess()">弹出成功消息框</jigsaw-button>
     <jigsaw-button width="167px" (click)="showError()">弹出错误消息框</jigsaw-button>
     <jigsaw-button width="166px" (click)="showWarn()">弹出警告消息框</jigsaw-button>
     <jigsaw-button width="167px" (click)="showInfo()">弹出消息提示框</jigsaw-button>
     <br>
-    <jigsaw-button width="350px" (click)="customizeInteractive()">自定义交互用法</jigsaw-button>
 </div>

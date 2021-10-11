@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, NgModule, NgZone} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, NgModule, NgZone, ViewChild, AfterViewInit, Renderer2} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractJigsawComponent} from '../../common/common';
 
@@ -31,14 +31,20 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
-        '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
+        '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'",
+        '[class.jigsaw-button-color-none]': "colorType === 'none'",
+        '[class.jigsaw-button-icon-left]': "iconPosition === 'left'",
+        '[class.jigsaw-button-icon-right]': "iconPosition === 'right'"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawButton extends AbstractJigsawComponent {
-    constructor(public element: ElementRef, protected _zone: NgZone) {
+export class JigsawButton extends AbstractJigsawComponent implements AfterViewInit{
+    constructor(public element: ElementRef, protected _zone: NgZone, private _renderer: Renderer2) {
         super(_zone);
     }
+
+    @ViewChild('text')
+    text: ElementRef;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
@@ -58,7 +64,7 @@ export class JigsawButton extends AbstractJigsawComponent {
      * $demo = button/full
      */
     @Input()
-    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
+    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' | 'none' = 'default';
 
     /**
      * 按钮预设尺寸 `default` , `small` , `large`
@@ -81,6 +87,14 @@ export class JigsawButton extends AbstractJigsawComponent {
     public icon: string;
 
     /**
+     * 图标的位置
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public iconPosition: 'left' | 'right' = 'left';
+
+    /**
      * 按钮动画执行状态
      * @internal
      */
@@ -94,6 +108,16 @@ export class JigsawButton extends AbstractJigsawComponent {
             this._$clicked = true;
             this.callLater(() => this._$clicked = false, 360);
         }
+    }
+
+    ngAfterViewInit() {
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                if (!this.text.nativeElement.innerText) {
+                    this._renderer.addClass(this.element.nativeElement, 'jigsaw-button-icon');
+                }
+            });
+        });
     }
 }
 

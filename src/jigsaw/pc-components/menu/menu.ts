@@ -176,7 +176,11 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realTheme(): MenuTheme {
-        return this.initData && this.initData.theme ? this.initData.theme : this.theme;
+        let theme = this.initData && this.initData.theme ? this.initData.theme : this.theme;
+        if (theme !== 'light' && theme !== 'dark' && theme !== 'navigation') {
+            theme = 'light';
+        }
+        return theme;
     }
 
     /**

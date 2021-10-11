@@ -95,6 +95,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         .#{$tab-prefix}-bar-add-option {
             display: flex;
             justify-content: center;
+
             span {
                 margin-right: 6px;
             }
@@ -300,6 +301,27 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                     }
                 }
             }
+        }
+    }
+}
+
+.#{$tab-prefix} {
+    &-title-editor {
+        display: flex;
+        align-items: center;
+
+        &-bar {
+            margin-left: 5px;
+        }
+    }
+
+    &-title-editor-input {
+        margin: -4px 0;
+        height: 26px;
+
+        .jigsaw-input-icon-item {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
         }
     }
 }

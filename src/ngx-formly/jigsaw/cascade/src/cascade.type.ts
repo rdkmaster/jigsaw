@@ -6,49 +6,60 @@ import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigs
     selector: 'formly-field-jigsaw-cascade',
     template: `
         <jigsaw-combo-select
+            *ngIf="!!to.dataGenerator; else dataTmp"
             [formControl]="formControl"
             [formlyAttributes]="field"
             [width]="to.width"
-            [height]="to.height"
             [(value)]="_$comboValue"
             [labelField]="to.labelField"
             [placeholder]="to.placeholder"
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
-            [maxWidth]="to.maxWidth"
-            [(open)]="to.open"
-            [showBorder]="to.showBorder"
-            [autoClose]="to.autoClose"
-            [autoWidth]="to.autoWidth"
-            [clearable]="to.clearable"
-            [searchable]="to.searchable"
-            [searching]="to.searching"
-            [searchKeyword]="to.searchKeyword"
-            [searchBoxMinWidth]="to.searchBoxMinWidth"
             [valid]="to.valid && !showError"
-            (valueChange)="to.valueChange && to.valueChange($event)"
-            (select)="to.select && to.select($event)"
-            (openChange)="to.openChange && to.openChange($event)"
-            (searchKeywordChange)="to.searchKeywordChange && to.searchKeywordChange($event)"
-            (remove)="to.remove && to.remove($event)">
+            [autoWidth]="to.autoWidth">
             <ng-template>
                 <jigsaw-cascade
                     [width]="to.width"
                     [height]="to.height"
-                    [dataGenerator]="to.dataGenerator"
                     [generatorContext]="to.generatorContext"
-                    [data]="to.data"
+                    [dataGenerator]="to.dataGenerator"
                     [(selectedItems)]="to.selectedItems"
                     [multipleSelect]="to.multipleSelect"
                     [labelField]="to.labelField"
                     [trackItemBy]="to.trackItemBy"
                     [searchable]="to.searchable"
-                    [pageSize]="to.pageSize"
                     [optionWidth]="to.optionWidth"
                     (selectedItemsChange)="_$selectItemsChange($event)">
                 </jigsaw-cascade>
             </ng-template>
         </jigsaw-combo-select>
+        <ng-template #dataTmp>
+            <jigsaw-combo-select
+                [formControl]="formControl"
+                [formlyAttributes]="field"
+                [width]="to.width"
+                [(value)]="_$comboValue"
+                [labelField]="to.labelField"
+                [placeholder]="to.placeholder"
+                [openTrigger]="to.openTrigger"
+                [closeTrigger]="to.closeTrigger"
+                [valid]="to.valid && !showError"
+                [autoWidth]="to.autoWidth">
+                <ng-template>
+                    <jigsaw-cascade
+                        [width]="to.width"
+                        [data]="to.data"
+                        [(selectedItems)]="to.selectedItems"
+                        [multipleSelect]="to.multipleSelect"
+                        [labelField]="to.labelField"
+                        [trackItemBy]="to.trackItemBy"
+                        [searchable]="to.searchable"
+                        [optionWidth]="to.optionWidth"
+                        (selectedItemsChange)="_$selectItemsChange($event)">
+                    </jigsaw-cascade>
+                </ng-template>
+            </jigsaw-combo-select>
+        </ng-template>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -638,7 +638,15 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
             </span>
             <span>{{cellData.data}}</span>
         </div>
-    `
+    `,
+    styles: [
+        `
+        .jigsaw-table-tree-cell {
+            justify-content: flex-start;
+            margin-left: 8px;
+        }
+        `
+    ],
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
     public cellData: TreeTableCellData;

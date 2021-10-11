@@ -1,0 +1,76 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-checkbox [(checked)]="disabled">
+    禁用 / 正常
+</jigsaw-checkbox>
+
+<jigsaw-radios-lite [(value)]="selectedSize" [data]="sizes">
+</jigsaw-radios-lite>
+
+<jigsaw-header>普通按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" colorType="default"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    普通按钮
+</jigsaw-button>
+
+<jigsaw-header>登录按钮</jigsaw-header>
+<jigsaw-button colorType="primary" width="280px" height="36px" style="font-size: 16px"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    登录
+</jigsaw-button>
+
+<jigsaw-header>功能按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" colorType="primary"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    主导按钮
+</jigsaw-button>
+<jigsaw-button (click)="onClick()" colorType="error"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    错误按钮
+</jigsaw-button>
+<jigsaw-button (click)="onClick()" colorType="warning"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    警告按钮
+</jigsaw-button>
+
+<jigsaw-header>关键按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" icon="iconfont iconfont-e0a1" colorType="primary"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    关键按钮
+</jigsaw-button>
+
+<jigsaw-header>次级按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" icon="iconfont iconfont-e0a1" colorType="default"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    次级按钮
+</jigsaw-button>
+
+<jigsaw-header>下拉按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" icon="iconfont iconfont-e24c" colorType="default"
+               iconPosition="right" [(disabled)]="disabled" [(preSize)]="selectedSize">
+    更多
+</jigsaw-button>
+
+<jigsaw-header>图标+文字按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" icon="iconfont iconfont-e0a1" colorType="none"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+    新增参数
+</jigsaw-button>
+
+<jigsaw-header>文字按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" colorType="none" [(disabled)]="disabled"
+               [(preSize)]="selectedSize">
+    文字
+</jigsaw-button>
+
+<jigsaw-header>图标按钮</jigsaw-header>
+<jigsaw-button (click)="onClick()" icon="iconfont iconfont-e35b" colorType="default"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+</jigsaw-button>
+<jigsaw-button (click)="onClick()" icon="iconfont iconfont-e35b" colorType="none"
+               [(disabled)]="disabled" [(preSize)]="selectedSize">
+</jigsaw-button>
