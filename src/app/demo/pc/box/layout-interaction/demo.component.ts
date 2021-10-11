@@ -1,5 +1,5 @@
 import {Component, EventEmitter, ViewChild, ElementRef} from "@angular/core";
-import {DragDropInfo, GraphData, InsertInfo, JigsawEditableBox} from "jigsaw/public_api";
+import {DragDropInfo, GraphData, BoxInsertInfo, JigsawEditableBox} from "jigsaw/public_api";
 import {debounceTime, throttleTime} from 'rxjs/operators';
 
 @Component({
@@ -21,7 +21,7 @@ export class BoxLayoutInteractionDemoComponent {
 
     constructor() {
         let currentBox: JigsawEditableBox;
-        let insertInfo: InsertInfo;
+        let insertInfo: BoxInsertInfo;
         this.layoutStart.subscribe((dragInfo: DragDropInfo) => {
             console.log('layout start...');
             dragInfo.dragDropData = dragInfo.element.innerText;
@@ -110,7 +110,7 @@ export class BoxLayoutInteractionDemoComponent {
         })
     }
 
-    setBoxLaying(box: JigsawEditableBox, laying: boolean, mousePos?: { x: number, y: number }): InsertInfo {
+    setBoxLaying(box: JigsawEditableBox, laying: boolean, mousePos?: { x: number, y: number }): BoxInsertInfo {
         if (!box) {
             return;
         }

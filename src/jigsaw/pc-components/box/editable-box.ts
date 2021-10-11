@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-export type InsertInfo = { parent: JigsawEditableBox, before: JigsawEditableBox };
+export type BoxInsertInfo = { parent: JigsawEditableBox, before: JigsawEditableBox };
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -163,7 +163,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _insertTimer: number;
 
-    public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): InsertInfo {
+    public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): BoxInsertInfo {
         this.element.style.borderColor = laying ? 'red' : '#ccc';
         if (!laying) {
             clearTimeout(this._insertTimer);
