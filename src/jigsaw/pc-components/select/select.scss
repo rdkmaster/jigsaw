@@ -93,10 +93,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         align-items: center;
         height: 32px;
         border-bottom: 1px solid $splitline-default;
-        cursor: pointer;
 
         .#{$jigsaw-checkbox}-host {
             margin: 0 16px 0 8px;
+            cursor: pointer;
             .#{$jigsaw-checkbox}-wrapper {
                 display: flex;
                 align-items: center;
@@ -226,6 +226,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     .#{$jigsaw-collapse-select}-option-cntr,
     .#{$jigsaw-group-select}-option-cntr {
         .#{$jigsaw-collapse} {
+            border: 1px solid $border-color-default;
             .#{$jigsaw-collapse}-pane {
                 width: 100%;
                 .#{$jigsaw-collapse}-item {
