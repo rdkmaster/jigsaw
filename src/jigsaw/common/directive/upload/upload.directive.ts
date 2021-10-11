@@ -388,7 +388,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._removeFileChangeEvent();
             this._removeFileChangeEvent = null;
         }
-        this._fileInputElement = null;
         document.body.removeChild(this._fileInputElement);
+        this._fileInputElement = null;
     }
 }
