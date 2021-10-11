@@ -374,7 +374,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !this._getValidData().find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy as any)))
+            item => !this._getValidData().find(data => CommonUtils.compareWithKeyProperty(item, data, <string[]>this._trackItemBy)))
     }
 
     /**
@@ -385,7 +385,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._getValidData().every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy as any)))
+            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this._trackItemBy)))
     }
 
     protected _allSelectCheck() {
@@ -745,10 +745,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             }
         });
         this._updateSelectedItems();
-        this.remove.emit(removedItem);
         this._$checkSelectAll();
-        this._changeDetector.markForCheck();
-        console.log(11111,this._$listValue)
-        this.valueChange.emit(this.value);
+        this.remove.emit(removedItem);
     }
 }
