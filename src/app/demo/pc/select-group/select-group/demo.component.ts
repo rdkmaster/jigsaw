@@ -29,7 +29,7 @@ export class SelectGroupDemoComponent {
     ]);
 
     dataListWithEmptyGroup = new ArrayCollection([
-        { group: "分组标题1", data: [{ label: "文本选项2" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+        { group: "分组标题1", data: [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
         {
             group: "分组标题2",
             data: [
