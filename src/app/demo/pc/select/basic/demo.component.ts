@@ -20,10 +20,17 @@ export class SelectBasicDemoComponent {
 
     selectedCityName: string;
 
-    cityList3;
-    selectedCityForSelect3;
+    cityList3 = new ArrayCollection([
+        {name: "北京", value: 'bj'},
+        {name: "上海", value: 'sh'},
+        {name: "南京", value: 'nj'},
+        {name: "深圳", value: 'sz'},
+        {name: "长沙", value: 'cs'},
+        {name: "西安", value: 'xa'}
+    ]);
+    selectedCityForSelect3 = {name: '北京', value: 'bj'};
+    labelField='name';
     selectedCityName3: string;
-    labelField: string;
 
     public selectChange(selectedItem: any) {
         console.log("select city is:" + selectedItem.label);
@@ -38,19 +45,6 @@ export class SelectBasicDemoComponent {
     public selectChange3(selectedItem: any) {
         console.log("select city is:" + selectedItem);
         this.selectedCityName3 = selectedItem.name;
-    }
-
-    ngOnInit() {
-        this.cityList3 = new ArrayCollection([
-            {name: "北京", value: 'bj'},
-            {name: "上海", value: 'sh'},
-            {name: "南京", value: 'nj'},
-            {name: "深圳", value: 'sz'},
-            {name: "长沙", value: 'cs'},
-            {name: "西安", value: 'xa'}
-        ]);
-        this.selectedCityForSelect3 = {name: '北京', value: 'bj'};
-        this.labelField = 'name';
     }
 
     // ====================================================================
