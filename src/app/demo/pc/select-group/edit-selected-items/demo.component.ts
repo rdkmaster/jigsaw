@@ -6,21 +6,21 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 export class SelectGroupEditResultDemoComponent {
     dataList = new ArrayCollection([
-        { group: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+        { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
         {
-            group: "分组标题2",
+            groupName: "分组标题2",
             data: [
                 { label: "禁用选项4", disabled: true },
                 { label: "禁用选项5", disabled: true },
                 { label: "文本选项6" }
             ]
         },
-        { group: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
+        { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
     selectedOption = new ArrayCollection([
-        { group: "分组标题1", data: [{ label: "文本选项2" }, { label: "文本选项3" }] },
-        { group: "分组标题2", data: [{ label: "文本选项6" }] }
+        { groupName: "分组标题1", data: [{ label: "文本选项2" }, { label: "文本选项3" }] },
+        { groupName: "分组标题2", data: [{ label: "文本选项6" }] }
     ]);
 
     valueChange($event) {
@@ -39,8 +39,8 @@ export class SelectGroupEditResultDemoComponent {
     changeData() {
         // 数据更新
         this.dataList[0].data[0].label = "修改数据";
-        this.dataList[0].group = '测试';
-        this.dataList.push({ group: "新增分组", data: [{ label: "新增选项10" }, { label: "新增选项11" }] });
+        this.dataList[0].groupName = '测试';
+        this.dataList.push({ groupName: "新增分组", data: [{ label: "新增选项10" }, { label: "新增选项11" }] });
         this.dataList.refresh();
     }
     // ====================================================================

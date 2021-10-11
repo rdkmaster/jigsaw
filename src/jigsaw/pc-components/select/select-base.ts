@@ -413,14 +413,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showAllStatistics(): boolean {
-        const validData = this._getValidData();
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !validData || !this._$selectedItems.length) {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
         if (this.searchable) {
-            return this._$selectedItems.length === validData.length && !this._searchKey;
+            return this._$selectedItems.length === this._getValidData().length && !this._searchKey;
         } else {
-            return this._$selectedItems.length === validData.length
+            return this._$selectedItems.length === this._getValidData().length
         }
     }
 
@@ -593,7 +592,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public groupField: string = "group";
+    public groupField: string = "groupName";
 
     protected _data: ArrayCollection<GroupSelectOption>;
     /**
@@ -620,7 +619,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
-                this._setEmptyValue(value);
+                this._setEmptyValue(this._data);
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
@@ -695,9 +694,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
         this._updateSelectedItems();
         this._$checkSelectAll();
-        this.valueChange.emit(this.value);
         this._propagateChange(this.value);
         this._changeDetector.markForCheck();
+        this.valueChange.emit(this.value);
     }
 
     private _updateSelectedItems(): void {
@@ -709,8 +708,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 this._value.push(groupData);
             }
         });
-        this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
+        this.valueChange.emit(this.value);
     }
 
     /**
@@ -728,8 +727,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
         this._updateSelectedItems();
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
+        this.valueChange.emit(this.value);
     }
 
     /**
@@ -740,8 +739,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._updateSelectedItems();
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
+        this.valueChange.emit(this.value);
     }
 
     /**
@@ -754,9 +753,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 groupData.data.splice(itemIndex, 1);
             }
         });
+        this._updateSelectedItems();
         this.remove.emit(removedItem);
-        this.valueChange.emit(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
+        console.log(11111,this._$listValue)
+        this.valueChange.emit(this.value);
     }
 }
