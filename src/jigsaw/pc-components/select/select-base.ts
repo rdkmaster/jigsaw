@@ -137,11 +137,6 @@ export abstract class JigsawSelectBase
      */
     public _$listHeight: string;
 
-    /**
-     * 设置对象的标识
-     *
-     * @NoMarkForCheckRequired
-     */
     private _trackItemBy: string | string[];
 
     /**
@@ -151,12 +146,8 @@ export abstract class JigsawSelectBase
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        if (this.data && (typeof this.data[0] == 'string' || typeof this.data[0] == 'number')) {
-            this._trackItemBy = null;
-        } else if (CommonUtils.isUndefined(this._trackItemBy) && this.data && typeof this.data[0] !== 'string') {
-            this._trackItemBy = [this.labelField];
-        }
-        return this._trackItemBy;
+        const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
+        return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField]) : null;
     }
 
     public set trackItemBy(value: string | string[]) {

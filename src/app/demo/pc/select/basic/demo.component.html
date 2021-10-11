@@ -24,4 +24,12 @@
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityForSelect2}}</span></p>
     </div>
+    <div class="live-demo">
+        <jigsaw-header [level]="2">动态labelField</jigsaw-header>
+        <p><a (click)="changeLabelField()">修改labelField</a></p>
+        <jigsaw-select [data]="cityList3" [(value)]="selectedCityForSelect3" placeholder="请选择城市"
+                       [labelField]="labelField" (valueChange)="selectChange3($event)">
+        </jigsaw-select>
+        <p class="message">选择的城市是 <span>{{selectedCityName3}}</span></p>
+    </div>
 </div>
