@@ -29,8 +29,18 @@ export class SelectBasicDemoComponent {
         {name: "西安", value: 'xa'}
     ]);
     selectedCityForSelect3 = {name: '北京', value: 'bj'};
-    labelField='name';
+    labelField = 'name';
     selectedCityName3: string;
+
+    public changeLabelField() {
+        const last = this.labelField;
+        this.labelField = 'name' + (+new Date);
+        this.cityList3.forEach(item => {
+            item[this.labelField] = item[last];
+            delete item[last];
+        });
+        this.cityList3.refresh();
+    }
 
     public selectChange(selectedItem: any) {
         console.log("select city is:" + selectedItem.label);
@@ -43,7 +53,7 @@ export class SelectBasicDemoComponent {
     }
 
     public selectChange3(selectedItem: any) {
-        console.log("select city is:" + selectedItem);
+        console.log("select city is:", selectedItem);
         this.selectedCityName3 = selectedItem.name;
     }
 
