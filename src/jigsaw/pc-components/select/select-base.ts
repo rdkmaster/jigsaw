@@ -693,11 +693,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      */
     public _$handleGroupSelectChange(groupIndex: number): void {
         if (!this.multipleSelect) {
-            this._$listValue.forEach((group: GroupSelectOption, index: number) => {
-                if (index !== groupIndex && group.data.length > 0) {
-                    group.data = new ArrayCollection([]);
-                }
-            });
+            this._$listValue
+                .filter((group: GroupSelectOption, index: number) => index !== groupIndex && group.data.length > 0)
+                .forEach((group: GroupSelectOption) => group.data = new ArrayCollection([]));
         }
         this._updateSelectedItems();
         this._$checkSelectAll();
