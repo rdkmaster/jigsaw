@@ -64,7 +64,7 @@ export class CommonUtils {
      * @param trackItemBy 待比较的属性列表
      *
      */
-    public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string | string[]): boolean {
+    public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
             for (let i = 0; i < trackItemBy.length; i++) {
                 if (!item1 || !item2) {

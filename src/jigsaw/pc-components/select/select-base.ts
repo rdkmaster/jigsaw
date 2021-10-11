@@ -374,7 +374,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !this._getValidData().find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
+            item => !this._getValidData().find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy as any)))
     }
 
     /**
@@ -385,7 +385,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._getValidData().every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
+            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy as any)))
     }
 
     protected _allSelectCheck() {
