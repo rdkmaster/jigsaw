@@ -666,6 +666,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         if (CommonUtils.isUndefined(newValue)) {
             return;
         }
+        if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
+            return;
+        }
 
         this.runMicrotask(() => {
             newValue.forEach((groupData: GroupSelectOption) => {
