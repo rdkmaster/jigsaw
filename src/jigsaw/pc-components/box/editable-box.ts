@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-export type BoxInsertInfo = { parent: JigsawEditableBox, before: JigsawEditableBox };
+export type BoxInsertInfo = { parent: JigsawEditableBox, before?: JigsawEditableBox, direction?: string };
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -170,27 +170,87 @@ export class JigsawEditableBox extends JigsawBox {
             this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'none');
             return;
         }
-        const posProp = this.direction == 'column' ? 'y' : 'x';
-        const sizeProp = this.direction == 'column' ? 'height' : 'width';
-        const mouseDirectPos = mousePos[posProp];
-        // 获取鼠标后面box的下标
-        const endBoxIndex = this._$childrenBox.findIndex(childBox => {
-            const childBoxRect = childBox.element.getBoundingClientRect();
-            return childBoxRect[posProp] > mouseDirectPos
-        });
-        const boxInsertBefore = endBoxIndex >= 0 ? this._$childrenBox[endBoxIndex] : null;
-        // 计算插入线的位置，有缩放动画，需要延迟
-        this._insertTimer = this.callLater(() => {
-            const insertOffset = this._getInsertOffset(endBoxIndex, posProp, sizeProp);
-            // offset值需要设置缩放之前的值
-            this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', insertOffset / this._getDirectScale() + 'px');
-            this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'block');
-        }, 350);
 
-        return {
-            parent: this,
-            before: boxInsertBefore
-        };
+        const [insertDirection, lineOffset] = this._getInsertDirection(mousePos);
+
+        if (insertDirection) {
+            this._insertTimer = this.callLater(() => {
+                if (this.direction == 'column') {
+                    this.renderer.removeClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                } else {
+                    this.renderer.addClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                }
+                // offset值需要设置缩放之前的值
+                this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'left' : 'top', lineOffset / this._getDirectScale(true) + 'px');
+                this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', (this.direction == 'column' ? this.element.scrollTop : this.element.scrollLeft) + 'px');
+                this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'block');
+            }, 350);
+            return {
+                parent: this,
+                direction: insertDirection
+            };
+        } else {
+            const posProp = this.direction == 'column' ? 'y' : 'x';
+            const sizeProp = this.direction == 'column' ? 'height' : 'width';
+            const mouseDirectPos = mousePos[posProp];
+            // 获取鼠标后面box的下标
+            const endBoxIndex = this._$childrenBox.findIndex(childBox => {
+                const childBoxRect = childBox.element.getBoundingClientRect();
+                return childBoxRect[posProp] > mouseDirectPos
+            });
+            const boxInsertBefore = endBoxIndex >= 0 ? this._$childrenBox[endBoxIndex] : null;
+            // 计算插入线的位置，有缩放动画，需要延迟
+            this._insertTimer = this.callLater(() => {
+                if (this.direction == 'column') {
+                    this.renderer.addClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                } else {
+                    this.renderer.removeClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                }
+                const insertOffset = this._getInsertOffset(endBoxIndex, posProp, sizeProp);
+                // offset值需要设置缩放之前的值
+                this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', insertOffset / this._getDirectScale() + 'px');
+                this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'left' : 'top', (this.direction == 'column' ? this.element.scrollLeft : this.element.scrollTop) + 'px');
+                this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'block');
+            }, 350);
+            return {
+                parent: this,
+                before: boxInsertBefore
+            };
+        }
+    }
+
+    /**
+     * 判断插入方向，如果和父box是一个方向，则为''，如果不是，则分'left', 'right', 'top', 'bottom'
+     * @private
+     */
+    private _getInsertDirection(mousePos: { x: number, y: number }): [string, number] {
+        let insertDirection = '';
+        let lineOffset = 0;
+        if (!this._$childrenBox.length) {
+            return [insertDirection, lineOffset];
+        }
+        const insertLineScaleWidth = this._getInsertLineScaleWidth(true);
+        const parentBoxScrollOffset = (this.direction == 'column' ? this.element.scrollLeft : this.element.scrollTop) * this._getDirectScale();
+        const firstChildRect = this._$childrenBox[0].element.getBoundingClientRect();
+        const parentRect = this.element.getBoundingClientRect();
+        if (!this.direction || this.direction == 'row') {
+            if (mousePos.y < firstChildRect.top) {
+                insertDirection = 'top';
+                lineOffset = (firstChildRect.top - parentRect.top - insertLineScaleWidth) / 2 + parentBoxScrollOffset;
+            } else if (mousePos.y > firstChildRect.bottom) {
+                insertDirection = 'bottom';
+                lineOffset = firstChildRect.bottom - parentRect.top + (parentRect.bottom - firstChildRect.bottom - insertLineScaleWidth) / 2 + parentBoxScrollOffset;
+            }
+        } else if (this.direction == 'column') {
+            if (mousePos.x < firstChildRect.left) {
+                insertDirection = 'left';
+                lineOffset = (firstChildRect.left - parentRect.left - insertLineScaleWidth) / 2 + parentBoxScrollOffset;
+            } else if (mousePos.x > firstChildRect.right) {
+                insertDirection = 'right';
+                lineOffset = firstChildRect.right - parentRect.left + (parentRect.right - firstChildRect.right - insertLineScaleWidth) / 2 + parentBoxScrollOffset;
+            }
+        }
+        return [insertDirection, lineOffset];
     }
 
     private _getInsertOffset(endBoxIndex: number, posProp: string, sizeProp: string): number {
@@ -199,7 +259,6 @@ export class JigsawEditableBox extends JigsawBox {
         const parentBoxRect = this.element.getBoundingClientRect();
         // 滚动距离需要添加缩放
         const parentBoxScrollOffset = (this.direction == 'column' ? this.element.scrollTop : this.element.scrollLeft) * this._getDirectScale();
-        console.log(parentBoxScrollOffset);
         if (endBoxIndex == 0) {
             // 插在最前面
             const endBoxRect = this._$childrenBox[endBoxIndex].element.getBoundingClientRect();
@@ -224,22 +283,26 @@ export class JigsawEditableBox extends JigsawBox {
         return insertOffset + parentBoxScrollOffset;
     }
 
-    private _getInsertLineScaleWidth() {
-        return JigsawEditableBox._insertLineWidth * this._getDirectScale();
+    private _getInsertLineScaleWidth(reverse: boolean = false) {
+        return JigsawEditableBox._insertLineWidth * this._getDirectScale(reverse);
     }
 
-    private _getDirectScale(scale: number = 1, box: JigsawEditableBox = this) {
+    private _getDirectScale(reverse: boolean = false, scale: number = 1, box: JigsawEditableBox = this) {
         // 两层缩放比例
-        scale = scale * this._getBoxDirectScale(box);
-        return box.parent ? this._getDirectScale(scale, box.parent) : scale;
+        scale = scale * this._getBoxDirectScale(box, reverse);
+        return box.parent ? this._getDirectScale(reverse, scale, box.parent) : scale;
     }
 
-    private _getBoxDirectScale(box: JigsawEditableBox) {
+    private _getBoxDirectScale(box: JigsawEditableBox, reverse: boolean = false) {
         if (!box || !box._scale.length) {
             return 1;
         }
         // 获取同一方向的缩放
-        return this.direction == 'column' ? box._scale[1] : box._scale[0];
+        if(reverse) {
+            return this.direction == 'column' ? box._scale[0] : box._scale[1];
+        } else {
+            return this.direction == 'column' ? box._scale[1] : box._scale[0];
+        }
     }
 
 }

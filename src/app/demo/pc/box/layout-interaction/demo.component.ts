@@ -43,7 +43,12 @@ export class BoxLayoutInteractionDemoComponent {
             }
             console.log('insert component:', dragInfo.dragDropData);
             console.log('parent:', insertInfo.parent.element, insertInfo.parent.element.id);
-            console.log('insertBefore:', insertInfo.before?.element, insertInfo.before?.element.id);
+            if(insertInfo.before) {
+                console.log('insertBefore:', insertInfo.before.element, insertInfo.before.element.id);
+            }
+            if(insertInfo.direction) {
+                console.log('direction:', insertInfo.direction);
+            }
         });
         this.laying.pipe(throttleTime(500)).subscribe((dragInfo: DragDropInfo) => {
             dragInfo.event.dataTransfer.dropEffect = 'link';
