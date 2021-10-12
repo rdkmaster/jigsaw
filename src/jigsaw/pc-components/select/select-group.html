@@ -14,7 +14,7 @@
                 <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
             </div>
             <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
-                <jigsaw-checkbox [(checked)]="_$selectAllChecked" *ngIf="!_$showSelected"
+                <jigsaw-checkbox [(checked)]="_$selectAllChecked" *ngIf="!_$showSelected"  [disabled]="_$disableSelectAll()"
                                  (checkedChange)="_$selectAll()">
                     <span>{{'select.selectAll' | translate}}</span>
                 </jigsaw-checkbox>

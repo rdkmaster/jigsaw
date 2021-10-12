@@ -637,6 +637,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         return validData;
     }
 
+    public _$disableSelectAll(): boolean {
+        return this._getValidData().length === 0;
+    }
+
     /**
      * @internal
      */
