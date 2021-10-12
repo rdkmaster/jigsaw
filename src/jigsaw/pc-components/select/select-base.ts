@@ -420,8 +420,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showNumStatistics(): boolean {
-        const validData = this._getValidData();
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !validData.length || !this._$selectedItems.length) {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._getValidData().length || !this._$selectedItems.length) {
             return false
         }
         return !this._$showAllStatistics();
@@ -690,7 +689,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$checkSelectAll();
         this._propagateChange(this.value);
         this._changeDetector.markForCheck();
-        this.valueChange.emit(this.value);
     }
 
     private _updateSelectedItems(): void {
@@ -722,7 +720,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._updateSelectedItems();
         this._propagateChange(this.value);
         this._changeDetector.markForCheck();
-        this.valueChange.emit(this.value);
     }
 
     /**
@@ -734,7 +731,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._propagateChange(this.value);
         this._changeDetector.markForCheck();
-        this.valueChange.emit(this.value);
     }
 
     /**
