@@ -46,8 +46,8 @@ export class BoxLayoutInteractionDemoComponent {
             if(insertInfo.before) {
                 console.log('insertBefore:', insertInfo.before.element, insertInfo.before.element.id);
             }
-            if(insertInfo.direction) {
-                console.log('direction:', insertInfo.direction);
+            if(insertInfo.reverse) {
+                console.log('reverse:', insertInfo.reverse);
             }
         });
         this.laying.pipe(throttleTime(500)).subscribe((dragInfo: DragDropInfo) => {
