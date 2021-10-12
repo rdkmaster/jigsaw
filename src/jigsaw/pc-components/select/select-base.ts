@@ -573,7 +573,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 }
 
 export type GroupSelectOption = {
-    data: SelectOption[]
+    data: ArrayCollection<SelectOption>
 }
 
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
@@ -712,7 +712,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             this._data.forEach((groupData: GroupSelectOption, index) => {
-                this._$listValue[index].data = groupData.data.filter(item => !item.disabled)
+                this._$listValue[index].data = new ArrayCollection(groupData.data.filter(item => !item.disabled))
             })
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
@@ -742,6 +742,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             const itemIndex = groupData.data.findIndex(item => item == removedItem);
             if (itemIndex !== -1) {
                 groupData.data.splice(itemIndex, 1);
+                groupData.data.refresh();
             }
         });
         this._updateSelectedItems();
