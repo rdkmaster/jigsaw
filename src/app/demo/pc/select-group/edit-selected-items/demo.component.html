@@ -3,7 +3,8 @@
 
 <!-- start to learn the demo from here -->
 <jigsaw-group-select [data]="dataList" [(value)]="selectedOption" [multipleSelect]="true" [clearable]="true"
-                     placeholder="请选择" width="160px" [useStatistics]="true" (valueChange)="valueChange($event)">
+                     placeholder="请选择" width="160px" [useStatistics]="true" (valueChange)="valueChange($event)"
+                     optionCount="20">
 </jigsaw-group-select>
 
 <jigsaw-button (click)="editSelectedItems()">修改选中条目</jigsaw-button>

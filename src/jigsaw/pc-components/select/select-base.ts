@@ -632,7 +632,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     protected _getValidData(): GroupSelectOption[] {
         const validData = [];
         (this._data || []).forEach((group: GroupSelectOption) => {
-            group.data.filter(item => !item.disabled).forEach(item => validData.push(item));
+            (group.data || []).filter(item => !item.disabled).forEach(item => validData.push(item));
         });
         return validData;
     }
@@ -664,7 +664,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             newValue.forEach((groupData: GroupSelectOption) => {
                 const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
                 const targetData = this._$listValue.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
-                groupData.data.forEach(item => {
+                (groupData.data || []).forEach(item => {
                     const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
                     if (srcDataItem) {
                         targetData.push(srcDataItem);
@@ -696,7 +696,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._value = new ArrayCollection([]);
         this._$listValue.forEach((groupData: GroupSelectOption) => {
             this._$selectedItems = [...this._$selectedItems, ...groupData.data];
-            if (groupData.data.length > 0) {
+            if (groupData.data?.length > 0) {
                 this._value.push(groupData);
             }
         });
@@ -713,7 +713,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             this._data.forEach((groupData: GroupSelectOption, index) => {
-                this._$listValue[index].data = new ArrayCollection(groupData.data.filter(item => !item.disabled))
+                this._$listValue[index].data = new ArrayCollection((groupData.data || []).filter(item => !item.disabled))
             })
             this._$selectAllChecked = CheckBoxStatus.checked;
         }

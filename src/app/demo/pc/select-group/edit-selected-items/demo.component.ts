@@ -36,11 +36,17 @@ export class SelectGroupEditResultDemoComponent {
         this.selectedOption.refresh();
     }
 
+    index = 0;
+
     changeData() {
         // 数据更新
-        this.dataList[0].data[0].label = "修改数据";
-        this.dataList[0].groupName = '测试';
-        this.dataList.push({ groupName: "新增分组", data: [{ label: "新增选项10" }, { label: "新增选项11" }] });
+        this.index++;
+        this.dataList[0].data[0].label = "数据已修改1-" + this.index;
+        this.dataList[0].data[0].disabled = !!(this.index % 2);
+        this.dataList[0].data[1].label = "数据已修改2-" + this.index;
+        this.dataList[0].data[1].disabled = !!(this.index % 2);
+        this.dataList[0].groupName = "标题已修改 " + this.index;
+        this.dataList.push({ groupName: "新增分组 " + this.index, data: [{ label: "新增选项10" }, { label: "新增选项11" }] });
         this.dataList.refresh();
     }
     // ====================================================================

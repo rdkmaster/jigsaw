@@ -36,10 +36,10 @@
                                       [ngStyle]="{'display': _$showSelected && _$listValue[i].data.length === 0 ? 'none' : 'flex'}">
                     <div j-title class="jigsaw-select-option-title">{{group[groupField]}}</div>
                     <div j-body>
-                        <span *ngIf="data[i].data.length === 0" class="jigsaw-select-option-no-data">
+                        <span *ngIf="!data[i]?.data || data[i].data.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}
                         </span>
-                        <jigsaw-list *ngIf="data[i].data.length !== 0" width="100%" [trackItemBy]="trackItemBy"
+                        <jigsaw-list *ngIf="data[i]?.data?.length > 0" width="100%" [trackItemBy]="trackItemBy"
                                      [(selectedItems)]="_$listValue[i].data" (selectedItemsChange)="_$handleGroupSelectChange(i)"
                                      [multipleSelect]="multipleSelect">
                             <jigsaw-list-option #listItem *ngFor="let item of group.data" [value]="item"
