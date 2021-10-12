@@ -32,10 +32,10 @@
                          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
                          [ngStyle]="{'max-height': _$listHeight}"
                          [multipleSelect]="multipleSelect">
-                <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
+                <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
-                        [(checked)]="_$selectAllChecked"
                         *ngIf="!_$showSelected"
+                        [(checked)]="_$selectAllChecked"
                         (checkedChange)="_$selectAll()"
                         [enableIndeterminate]="true">
                         <span>{{'select.selectAll' | translate}}</span>

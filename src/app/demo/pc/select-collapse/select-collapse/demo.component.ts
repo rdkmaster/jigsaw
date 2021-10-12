@@ -48,6 +48,11 @@ export class SelectCollapseDemoComponent {
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
+    dataListWithEmptyGroup = new ArrayCollection([
+        {}, {groupName: null}, {groupName: null, data: null},
+        { groupName: "分组标题", data: [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] }
+    ]);
+
     valueChange($event) {
         console.log($event);
     }

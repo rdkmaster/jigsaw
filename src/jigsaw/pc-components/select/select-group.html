@@ -13,9 +13,9 @@
                 <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
                 <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
             </div>
-            <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
-                <jigsaw-checkbox [(checked)]="_$selectAllChecked" *ngIf="!_$showSelected"  [disabled]="_$disableSelectAll()"
-                                 (checkedChange)="_$selectAll()">
+            <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
+                <jigsaw-checkbox *ngIf="!_$showSelected" [(checked)]="_$selectAllChecked"
+                                 [disabled]="_$disableSelectAll()" (checkedChange)="_$selectAll()">
                     <span>{{'select.selectAll' | translate}}</span>
                 </jigsaw-checkbox>
                 <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()"
@@ -34,7 +34,7 @@
                              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
                 <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data; let i = index;"
                                       [ngStyle]="{'display': _$showSelected && _$listValue[i].data.length === 0 ? 'none' : 'flex'}">
-                    <div j-title class="jigsaw-select-option-title">{{group[groupField]}}</div>
+                    <div j-title class="jigsaw-select-option-title">{{group[groupField] || '--'}}</div>
                     <div j-body>
                         <span *ngIf="!data[i]?.data || data[i].data.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}

@@ -29,9 +29,8 @@ export class SelectGroupDemoComponent {
     ]);
 
     dataListWithEmptyGroup = new ArrayCollection([
-        { groupName: "分组标题1" },
-        { groupName: "分组标题2" },
-        { groupName: "分组标题3", data: [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] }
+        {}, {groupName: null},
+        { groupName: "分组标题", data: [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] }
     ]);
 
     singleSelectedOption = [{ groupName: "分组标题1", data: [{ label: "文本选项3" }] }]
