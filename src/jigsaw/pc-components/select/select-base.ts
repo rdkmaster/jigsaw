@@ -136,7 +136,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$listHeight: string;
 
-    private _trackItemBy: string | string[];
+    private _trackItemBy: string[];
 
     /**
      * 设置对象的标识
@@ -369,33 +369,35 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 搜索过滤的时候会存在当前已选不在当期列表中的情况
      */
     private _validDataAllNotSelected(): boolean {
-        if (!this._$selectedItems || !this._getValidData()) {
+        const validData = this._getValidData();
+        if (!this._$selectedItems || !validData.length) {
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !this._getValidData().find(data => CommonUtils.compareWithKeyProperty(item, data, <string[]>this._trackItemBy)))
+            item => !validData.find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
     }
 
     /**
      * 搜索过滤的时候会存在当前已选不在当期列表中的情况
      */
     protected _validDataAllSelected(): boolean {
-        if (!this._$selectedItems || !this._getValidData()) {
+        const validData = this._getValidData();
+        if (!this._$selectedItems || !validData.length) {
             return false;
         }
-        return this.searchable && this._getValidData().every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this._trackItemBy)))
+        return this.searchable && validData.every(
+            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
     }
 
     protected _allSelectCheck() {
         const validData = this._getValidData();
-        if (!this._$selectedItems || !validData) {
+        if (!this._$selectedItems || !validData.length) {
             return false;
         }
         if (this.searchable) {
             return this._validDataAllSelected();
         } else {
-            return this._$selectedItems.length === validData.length
+            return this._$selectedItems.length === validData.length;
         }
     }
 
@@ -406,10 +408,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
+        const validData = this._getValidData();
         if (this.searchable) {
-            return this._$selectedItems.length === this._getValidData().length && !this._searchKey;
+            return this._$selectedItems.length === validData.length && !this._searchKey;
         } else {
-            return this._$selectedItems.length === this._getValidData().length
+            return this._$selectedItems.length === validData.length;
         }
     }
 
@@ -417,7 +420,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showNumStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._getValidData() || !this._$selectedItems.length) {
+        const validData = this._getValidData();
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !validData.length || !this._$selectedItems.length) {
             return false
         }
         return !this._$showAllStatistics();
@@ -484,7 +488,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
     }
 
-    protected _getValidData(){
+    protected _getValidData(): SelectOption[] {
         // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
         return this._data.concat().filter(item => !item.disabled);
     }
@@ -626,9 +630,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$selectedItems = [];
     }
 
-    protected _getValidData() {
+    protected _getValidData(): GroupSelectOption[] {
         const validData = [];
-        this._data.forEach((group: GroupSelectOption) => {
+        (this._data || []).forEach((group: GroupSelectOption) => {
             group.data.filter(item => !item.disabled).forEach(item => validData.push(item));
         });
         return validData;
