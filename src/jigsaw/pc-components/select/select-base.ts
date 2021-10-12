@@ -3,7 +3,6 @@ import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {JigsawListLite} from "../list-and-tile/list-lite";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
