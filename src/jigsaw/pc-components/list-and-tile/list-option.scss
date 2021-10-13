@@ -33,7 +33,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         cursor: not-allowed;
 
         &:hover {
-            background: none;
+            background: $bg-body;
         }
 
         .#{$list-option-prefix-cls}-title,
