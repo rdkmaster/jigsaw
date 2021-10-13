@@ -87,6 +87,7 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     public _$handleSelectChange(items) {
         this.selectedItemsChange.emit(items);
         this._propagateChange(items);
+        this._cdr.markForCheck();
     }
 
     ngOnInit() {
