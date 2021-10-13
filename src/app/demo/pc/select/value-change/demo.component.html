@@ -26,3 +26,8 @@
 <jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="true"
     (valueChange)="valueChange($event)" [clearable]="true">
 </jigsaw-select>
+
+<jigsaw-header>结果展开多选</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="false"
+    (valueChange)="valueChange($event)">
+</jigsaw-select>

@@ -12,6 +12,7 @@
     placeholder="请选择"
     width="160px"
     [useStatistics]="false"
+    (valueChange)="valueChange($event)"
 ></jigsaw-select>
 
 <jigsaw-header>初始全选</jigsaw-header>
@@ -22,6 +23,7 @@
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
 ></jigsaw-select>
 
 <jigsaw-header>初始半选</jigsaw-header>
@@ -32,4 +34,16 @@
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
+    (valueChange)="valueChange($event)"
+></jigsaw-select>
+
+<jigsaw-header>普通数组</jigsaw-header>
+<jigsaw-select
+    [data]="arrayDataList"
+    [(value)]="selectedarrayData"
+    (valueChange)="valueChange($event)"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="160px"
+    [useStatistics]="false"
 ></jigsaw-select>
