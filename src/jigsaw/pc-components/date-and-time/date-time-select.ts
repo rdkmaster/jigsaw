@@ -288,7 +288,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     ngAfterViewInit() {
-        this._comboSelect._$options['size'] = { "minWidth": 0 };
+        this._comboSelect._$options.size = { "minWidth": 0 };
     }
 
     ngOnDestroy() {

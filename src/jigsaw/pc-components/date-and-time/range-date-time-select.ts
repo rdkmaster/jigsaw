@@ -3,7 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
-    forwardRef, HostListener,
+    forwardRef,
     Injector,
     Input,
     NgModule,
@@ -300,7 +300,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     ngAfterViewInit() {
-        this._comboSelect._$options['size'] = { "minWidth": 0 };
+        this._comboSelect._$options.size = { "minWidth": 0 };
     }
 
     ngOnDestroy() {
