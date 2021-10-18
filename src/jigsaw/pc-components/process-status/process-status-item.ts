@@ -1,21 +1,19 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import { AbstractJigsawComponent } from "../../../common/common";
+import {ChangeDetectionStrategy, Component, Input, OnInit} from "@angular/core";
+import {AbstractJigsawComponent} from "../../common/common";
 
 /**
- * 代表了`JigsawSteps`组件的一个步骤，需要配合`JigsawSteps`组件一起使用
+ * 代表了`JigsawProcessStatus`组件的一个步骤，需要配合`JigsawProcessStatus`组件一起使用
  * @internal
- *
- * $since = v1.1.7
  */
 @Component({
-    selector: "jigsaw-step-item,j-step-item",
-    templateUrl: "step-item.html",
+    selector: "jigsaw-process-status-item,j-process-status-item",
+    templateUrl: "process-status-item.html",
     host: {
-        "[class.jigsaw-step-item]": "true"
+        "[class.jigsaw-process-status-item]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawStepItemFallback extends AbstractJigsawComponent implements OnInit {
+export class JigsawProcessStatusItem extends AbstractJigsawComponent implements OnInit {
     private _status: "waiting" | "done" | "error" | "warning" | "skipped" | "processing" = "waiting";
 
     /**
@@ -23,8 +21,8 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/basic
-     * $demo = steps/step-interactive
+     * $demo = process-status/basic
+     * $demo = process-status/process-status-interactive
      */
     @Input()
     public get status(): "waiting" | "done" | "error" | "warning" | "skipped" | "processing" {
@@ -42,7 +40,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
     /**
      * 设置`waiting`状态的图标，仅支持font-awesome和Jigsaw自研的iconfont图标
      *
-     * $demo = steps/custom-icons
+     * $demo = process-status/custom-icons
      */
     private _waitingIcon: string = "iconfont-e9d5";
 
@@ -67,7 +65,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/custom-icons
+     * $demo = process-status/custom-icons
      */
     @Input()
     public get doneIcon(): string {
@@ -87,7 +85,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/custom-icons
+     * $demo = process-status/custom-icons
      */
     @Input()
     public get processingIcon(): string {
@@ -107,7 +105,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/custom-icons
+     * $demo = process-status/custom-icons
      */
     @Input()
     public get errorIcon(): string {
@@ -127,11 +125,11 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/custom-icons
+     * $demo = process-status/custom-icons
      */
     @Input()
     public get skippedIcon(): string {
-        return this._waitingIcon;
+        return this._skippedIcon;
     }
 
     public set skippedIcon(value: string) {
@@ -139,6 +137,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
             this._skippedIcon = value;
         }
     }
+
     private _warningIcon: string = "iconfont-e34a";
 
     /**
@@ -146,7 +145,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
      *
      * @NoMarkForCheckRequired
      *
-     * $demo = steps/custom-icons
+     * $demo = process-status/custom-icons
      */
     @Input()
     public get warningIcon(): string {
@@ -169,7 +168,7 @@ export class JigsawStepItemFallback extends AbstractJigsawComponent implements O
     public _$stepStatusIconClass: string;
 
     private _setStepStatusClass() {
-        this._$stepStatusClass = "jigsaw-step-item-" + this._status;
+        this._$stepStatusClass = "jigsaw-process-status-item-" + this._status;
         switch (this._status) {
             case "waiting":
                 this._$stepStatusIconClass = this.waitingIcon;

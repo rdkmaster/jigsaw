@@ -1,15 +1,14 @@
-$steps-fallback: #{$jigsaw-prefix}-steps-fallback;
-$steps-prefix-cls: #{$jigsaw-prefix}-steps;
-$step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
+$process-status-prefix-cls: #{$jigsaw-prefix}-process-status;
+$process-status-item-prefix-cls: #{$jigsaw-prefix}-process-status-item;
 
-.#{$steps-fallback} {
+.#{$process-status-prefix-cls} {
     display: inline-block;
     *zoom: 1;
     *display: inline;
     vertical-align: middle;
     width: 100%;
     height: 100%;
-    .#{$jigsaw-prefix}-steps-container {
+    .#{$jigsaw-prefix}-process-status-container {
         display: flex;
         width: 100%;
         height: 100%;
@@ -20,7 +19,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
             height: 10px;
             min-width: 60px;
         }
-        .#{$step-item-prefix-cls} {
+        .#{$process-status-item-prefix-cls} {
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -100,7 +99,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                     width: 200%;
                 }
             }
-            .#{$step-item-prefix-cls}-processing {
+            .#{$process-status-item-prefix-cls}-processing {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #41addc;
                 }
@@ -109,7 +108,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            .#{$step-item-prefix-cls}-done {
+            .#{$process-status-item-prefix-cls}-done {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #7aca6b;
                 }
@@ -118,7 +117,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            .#{$step-item-prefix-cls}-error {
+            .#{$process-status-item-prefix-cls}-error {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #e67877;
                 }
@@ -127,7 +126,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            .#{$step-item-prefix-cls}-warning {
+            .#{$process-status-item-prefix-cls}-warning {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: orange;
                 }
@@ -137,7 +136,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            .#{$step-item-prefix-cls}-skipped {
+            .#{$process-status-item-prefix-cls}-skipped {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #999;
                 }
@@ -147,7 +146,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            .#{$step-item-prefix-cls}-waiting {
+            .#{$process-status-item-prefix-cls}-waiting {
                 .#{$jigsaw-prefix}-step-status-logo {
                     background-color: #666;
                 }
@@ -159,8 +158,8 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 
-    &.#{$steps-prefix-cls}-direction-vertical {
-        .#{$jigsaw-prefix}-steps-container {
+    &.#{$process-status-prefix-cls}-direction-vertical {
+        .#{$jigsaw-prefix}-process-status-container {
             overflow-x: hidden;
             overflow-y: auto;
             flex-direction: column;
@@ -172,7 +171,7 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 min-width: 0;
                 height: 0;
             }
-            .#{$step-item-prefix-cls} {
+            .#{$process-status-item-prefix-cls} {
                 display: flex;
                 flex: 1;
                 min-height: 140px;
@@ -237,8 +236,8 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 
-    &.#{$steps-prefix-cls}-size-large {
-        .#{$step-item-prefix-cls} {
+    &.#{$process-status-prefix-cls}-size-large {
+        .#{$process-status-item-prefix-cls} {
             min-width: 150px !important;
 
             .#{$jigsaw-prefix}-step-title {
@@ -267,12 +266,12 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 padding-right: 30px !important;
             }
         }
-        &.#{$steps-prefix-cls}-direction-vertical {
+        &.#{$process-status-prefix-cls}-direction-vertical {
             .#{$jigsaw-prefix}-step-title,
             .#{$jigsaw-prefix}-sub-title-v {
                 padding-left: 0 !important;
             }
-            .#{$step-item-prefix-cls} {
+            .#{$process-status-item-prefix-cls} {
                 min-width: 0 !important;
             }
             &:nth-last-child(3) {
@@ -281,8 +280,8 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 
-    &.#{$steps-prefix-cls}-size-small {
-        .#{$step-item-prefix-cls} {
+    &.#{$process-status-prefix-cls}-size-small {
+        .#{$process-status-item-prefix-cls} {
             min-width: 140px !important;
 
             .#{$jigsaw-prefix}-step-title {
@@ -311,12 +310,12 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 padding-right: 20px !important;
             }
         }
-        &.#{$steps-prefix-cls}-direction-vertical {
+        &.#{$process-status-prefix-cls}-direction-vertical {
             .#{$jigsaw-prefix}-step-title,
             .#{$jigsaw-prefix}-sub-title-v {
                 padding-left: 0 !important;
             }
-            .#{$step-item-prefix-cls} {
+            .#{$process-status-item-prefix-cls} {
                 min-width: 0 !important;
             }
             .#{$jigsaw-prefix}-step-title {
