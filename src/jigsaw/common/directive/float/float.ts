@@ -581,81 +581,107 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         }
     }
 
-    private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
-        if (delta < 4) {
-            delta = 4;
-        } else if (delta > popupElement.offsetWidth - 13) {
-            delta = popupElement.offsetWidth - 13;
-        }
-        return delta;
-    }
-
-    private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
-        if (delta < 4) {
-            delta = 4;
-        } else if (delta > popupElement.offsetHeight - 13) {
-            delta = popupElement.offsetHeight - 13;
-        }
-        return delta;
-    }
-
     private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
         const arrowOffset = options.showBorder ? 7 / 2 + 1 : 7 / 2;
         const boderColor = options.borderColor ? options.borderColor : '#dcdcdc';
         if (popupElement.offsetTop >= position.y + host.offsetHeight) {
             // 箭头在上
-            ele.style.top = `-${arrowOffset}px`;
             if (popupElement.offsetTop - position.y - host.offsetHeight < 7) {
                 popupElement.style.top = 7 + position.y + host.offsetHeight + 'px';
             }
-            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderTop = `1px solid ${boderColor}`;
-                ele.style.borderRight = `1px solid ${boderColor}`;
+                _createTopArrow();
             }
         } else if (popupElement.offsetTop + popupElement.offsetHeight <= position.y) {
             // 箭头在下
-            ele.style.bottom = `-${arrowOffset}px`;
             if (position.y - popupElement.offsetTop - popupElement.offsetHeight < 7) {
                 popupElement.style.top = position.y - 7 - popupElement.offsetHeight + 'px';
             }
-            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderLeft = `1px solid ${boderColor}`;
-                ele.style.borderBottom = `1px solid ${boderColor}`;
+                _createBottomArrow();
             }
         } else if (popupElement.offsetLeft >= position.x + host.offsetWidth) {
             // 箭头在右
-            ele.style.left = `-${arrowOffset}px`;
             if (popupElement.offsetLeft - position.x - host.offsetWidth < 7) {
                 popupElement.style.left = position.x + host.offsetWidth + 7 + 'px';
             }
-            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderTop = `1px solid ${boderColor}`;
-                ele.style.borderLeft = `1px solid ${boderColor}`;
+                _createRightArrow();
             }
         } else if (popupElement.offsetLeft + popupElement.offsetWidth <= position.x) {
             // 箭头在左
-            ele.style.right = `-${arrowOffset}px`;
             if (position.x - popupElement.offsetLeft - popupElement.offsetWidth < 7) {
                 popupElement.style.left = position.x - popupElement.offsetWidth - 7 + 'px';
             }
-            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
-                ele.style.borderRight = `1px solid ${boderColor}`;
-                ele.style.borderBottom = `1px solid ${boderColor}`;
+                _createLeftArrow();
             }
         } else {
-            // 覆盖在host上面，默认箭头在下
-            ele.style.left = '6px';
-            ele.style.bottom = `-${arrowOffset}px`;
-            if (options.showBorder) {
-                ele.style.borderLeft = `1px solid ${boderColor}`;
-                ele.style.borderBottom = `1px solid ${boderColor}`;
+            // 覆盖在host上面，根据float配置渲染箭头位置，默认箭头在下
+            if (this.jigsawFloatPosition.indexOf('bottom') !== -1) {
+                _createTopArrow();
+            } else if (this.jigsawFloatPosition.indexOf('top') !== -1) {
+                _createBottomArrow();
+            } else if (this.jigsawFloatPosition.indexOf('left') !== -1) {
+                _createLeftArrow();
+            } else if (this.jigsawFloatPosition.indexOf('right') !== -1) {
+                _createRightArrow();
+            } else {
+                ele.style.left = '6px';
+                ele.style.bottom = `-${arrowOffset}px`;
+                if (options.showBorder) {
+                    ele.style.borderLeft = `1px solid ${boderColor}`;
+                    ele.style.borderBottom = `1px solid ${boderColor}`;
+                }
             }
+        }
+
+        function _createTopArrow() {
+            ele.style.top = `-${arrowOffset}px`;
+            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.borderTop = `1px solid ${boderColor}`;
+            ele.style.borderRight = `1px solid ${boderColor}`;
+        }
+
+        function _createBottomArrow() {
+            ele.style.bottom = `-${arrowOffset}px`;
+            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.borderLeft = `1px solid ${boderColor}`;
+            ele.style.borderBottom = `1px solid ${boderColor}`;
+        }
+
+        function _createRightArrow() {
+            ele.style.left = `-${arrowOffset}px`;
+            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.borderTop = `1px solid ${boderColor}`;
+            ele.style.borderLeft = `1px solid ${boderColor}`;
+        }
+
+        function _createLeftArrow() {
+            ele.style.right = `-${arrowOffset}px`;
+            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.borderRight = `1px solid ${boderColor}`;
+            ele.style.borderBottom = `1px solid ${boderColor}`;
+        }
+
+        function _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+            let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
+            if (delta < 4) {
+                delta = 4;
+            } else if (delta > popupElement.offsetWidth - 13) {
+                delta = popupElement.offsetWidth - 13;
+            }
+            return delta;
+        }
+    
+        function _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+            let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
+            if (delta < 4) {
+                delta = 4;
+            } else if (delta > popupElement.offsetHeight - 13) {
+                delta = popupElement.offsetHeight - 13;
+            }
+            return delta;
         }
     }
 
