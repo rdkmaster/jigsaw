@@ -305,7 +305,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    public writeValue(value: any, emit = true): void {
+    public writeValue(value: any): void {
         // 表单初始值需要check
         this.value = value;
         this._changeDetector.markForCheck();
@@ -509,8 +509,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSelectChange(selectedItems: any[]) {
         if (!selectedItems) return;
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
-        this.valueChange.emit(this.value);
         this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -541,6 +541,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
+        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
@@ -552,7 +553,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if(this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -624,7 +625,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
         this._$listValue = new ArrayCollection([]);
         value.forEach(groupData => {
-            this._$listValue.push({ [this.groupField]: groupData[this.groupField], data: new ArrayCollection([]) })
+            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
         });
         this._$selectedItems = [];
     }
@@ -660,6 +661,16 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public set value(newValue: any) {
+        this._setValue(newValue);
+    }
+
+    public writeValue(value: any): void {
+        // 表单初始值需要
+        this._setValue(value, false);
+        this._changeDetector.markForCheck();
+    }
+
+    protected _setValue(newValue: any, emit = true): boolean {
         if (this._value == newValue) {
             return;
         }
@@ -676,12 +687,15 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 const targetData = this._$listValue.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
                 (groupData.data || []).forEach(item => {
                     const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
-                    if (srcDataItem) {
+                    if (srcDataItem && targetData.findIndex(item => item[this.labelField] === srcDataItem[this.labelField]) == -1) {
                         targetData.push(srcDataItem);
                     }
                 });
             });
-            this._updateSelectedItems();
+            this._updateValue();
+            if (emit) {
+                this.valueChange.emit(this.value);
+            }
             this._$checkSelectAll();
         });
     }
@@ -697,11 +711,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
         this._updateSelectedItems();
         this._$checkSelectAll();
-        this._propagateChange(this.value);
         this._changeDetector.markForCheck();
     }
 
-    private _updateSelectedItems(): void {
+    private _updateValue(): void {
         this._$selectedItems = [];
         this._value = new ArrayCollection([]);
         this._$listValue.forEach((groupData: GroupSelectOption) => {
@@ -710,7 +723,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 this._value.push(groupData);
             }
         });
-        this._changeDetector.markForCheck();
+    }
+
+    private _updateSelectedItems(): void {
+        this._updateValue();
+        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
     }
 
@@ -728,7 +745,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._updateSelectedItems();
-        this._propagateChange(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -739,13 +755,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._setEmptyValue(this._data);
         this._updateSelectedItems();
         this._$selectAllChecked = CheckBoxStatus.unchecked;
-        this._propagateChange(this.value);
         this._changeDetector.markForCheck();
     }
 
     /**
-    * @internal
-    */
+     * @internal
+     */
     public _$onTagRemove(removedItem): void {
         this._$listValue.forEach((groupData: GroupSelectOption) => {
             const itemIndex = groupData.data.findIndex(item => item == removedItem);
