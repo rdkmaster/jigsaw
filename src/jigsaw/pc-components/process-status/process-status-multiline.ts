@@ -6,17 +6,10 @@ import {
     EventEmitter,
     HostListener,
     Input,
-    NgModule,
     Output,
     ViewChild
 } from "@angular/core";
-
-import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent} from "../../common/common";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
-import {LoadingService} from "../../common/service/loading.service";
-import {JigsawProcessStatusModule} from "./index";
 
 /**
  * @internal
@@ -374,13 +367,4 @@ export class JigsawProcessStatusMultiline extends AbstractJigsawComponent {
         }
         this._changeDetectorRef.markForCheck();
     }
-}
-
-@NgModule({
-    imports: [CommonModule, JigsawProcessStatusModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
-    declarations: [JigsawProcessStatusMultiline],
-    exports: [JigsawProcessStatusMultiline],
-    providers: [LoadingService]
-})
-export class JigsawProcessStatusMultilineModule {
 }

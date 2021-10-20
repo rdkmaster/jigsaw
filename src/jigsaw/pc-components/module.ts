@@ -61,7 +61,7 @@ import {JigsawColorSelectModule} from "./color-select/index";
 import {JigsawBadgeModule} from "../common/directive/badge/index";
 import {JigsawTimeSectionModule} from "./date-and-time/time-section";
 import {JigsawHeaderModule} from "./header/header";
-import {JigsawProcessStatusMultilineModule} from "./process-status/process-status-multiline";
+import {JigsawProcessStatusModule} from "./process-status/index";
 import {JigsawUploadFallbackModule} from './fallback/upload/index';
 import {JigsawSearchInputModule} from './input/search-input';
 
@@ -129,7 +129,7 @@ const JIGSAW_MODULE = [
     JigsawBadgeModule,
     JigsawMenuModule,
     JigsawTimeSectionModule,
-    JigsawProcessStatusMultilineModule,
+    JigsawProcessStatusModule,
     JigsawUploadFallbackModule,
     JigsawSearchInputModule
 ];
