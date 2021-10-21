@@ -84,11 +84,14 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 
     &-placeholder {
-        display: inline-flex;
-        align-items: center;
+        width: 100%;
+        height: $height-base - 6;
+        line-height: $height-base - 6;
         font-size: $font-size-text-base;
         color: $font-color-hint;
-        height: $height-base - 6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     &-disabled {
@@ -104,7 +107,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
                 }
             }
         }
-        
+
         .iconfont {
             color: $icon-color-disabled;
             pointer-events: none;

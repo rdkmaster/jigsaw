@@ -128,6 +128,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
 
             span {
+                font-size: $font-size-text-base;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -138,6 +139,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             display: flex;
             align-items: center;
             padding: 0 0 0 8px;
+            font-size: $font-size-text-base;
             color: $brand-default;
             cursor: pointer;
 
@@ -201,6 +203,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             .select-option-label {
                 display: block;
                 width: 100%;
+                font-size: $font-size-text-base;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -269,6 +272,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                             width: 100%;
                             height: 32px;
                             padding-left: 16px;
+                            font-size: $font-size-text-base;
                             user-select: none;
                         }
                     }
