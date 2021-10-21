@@ -1,0 +1,21 @@
+<div class="jigsaw-upload-drop-area"
+    jigsaw-droppable
+    (jigsawDragEnter)="_$fileDragEnterHandle($event)"
+    (jigsawDrop)="_$fileDropHandle($event)"
+    >
+    <div class="jigsaw-upload-drop-icon">
+        <i class="iconfont iconfont-e153"></i>
+    </div>
+    <div class="jigsaw-upload-drop-text">
+        <p>
+            <span>请拖入或</span>
+            <a j-upload #uploadEle>点击上传</a>
+        </p>
+        <p>
+            <span>支持xxx等类型的文件</span>
+        </p>
+    </div>
+</div>
+<div>
+    <jigsaw-upload-result [uploader]="uploader"></jigsaw-upload-result>
+</div>

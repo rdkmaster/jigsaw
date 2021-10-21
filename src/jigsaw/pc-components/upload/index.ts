@@ -11,14 +11,17 @@ import { JigsawCollapseModule } from '../collapse/collapse';
 import { JigsawProgressModule } from '../progress/progress';
 import {JigsawLoadingModule} from "../../common/components/loading/loading";
 import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
+import { JigsawUpload } from './upload';
+import { JigsawDroppableModule, JigsawDraggableModule } from '../../common/directive/dragdrop';
 
 @NgModule({
     imports: [
         PerfectScrollbarModule, JigsawTooltipModule, CommonModule, JigsawCollapseModule,
-        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild(),
+        JigsawProgressModule, JigsawLoadingModule, JigsawDraggableModule,
+        JigsawDroppableModule, TranslateModule.forChild(),
     ],
-    declarations: [JigsawUploadDirective, JigsawUploadResult],
-    exports: [JigsawUploadDirective, JigsawUploadResult],
+    declarations: [JigsawUploadDirective, JigsawUploadResult, JigsawUpload],
+    exports: [JigsawUploadDirective, JigsawUploadResult, JigsawUpload],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {
@@ -150,4 +153,5 @@ export class JigsawUploadModule {
 
 export * from '../../common/directive/upload/upload.directive';
 export * from '../../common/directive/upload/uploader-typings';
+export * from './upload'
 export * from './upload-result';

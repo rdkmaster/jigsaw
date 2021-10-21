@@ -6,34 +6,7 @@ import {UploadFileInfo} from "jigsaw/public_api";
     styleUrls: ['./demo.component.css']
 })
 export class UploadBasicDemoComponent {
-    fileType = '.png';
-    multiple: boolean;
-    isButtonUploadWaiting: boolean;
-    isLinkUploadWaiting: boolean;
-    uploadedFile: string = '';
-    maxSize: number = 1024;
-    minSize: number = 0;
-
-    getUploadFile(fileInfo: UploadFileInfo) {
-        console.log('one file uploaded', fileInfo);
-    }
-
-    getAllUploadFiles(fileInfoList: UploadFileInfo[], mode?: string) {
-        console.log('all files uploaded', fileInfoList);
-        switch (mode) {
-            case 'button':
-                this.isButtonUploadWaiting = false;
-                break;
-            case 'link':
-                this.isLinkUploadWaiting = false;
-        }
-    }
-
-    showUploadFileName(files?: UploadFileInfo[]) {
-        console.log(files);
-        this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
-    }
-
+    
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

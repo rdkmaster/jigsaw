@@ -1,0 +1,25 @@
+$jigsaw-upload: #{$jigsaw-prefix}-upload;
+
+.#{$jigsaw-upload}-host {
+    display: inline-flex;
+    flex-direction: column;
+    width: 400px;
+    border: 1px dashed $border-color-default;
+
+    .#{$jigsaw-upload}-drop-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 116px;
+
+        .#{$jigsaw-upload}-drop-icon {
+            height: 50%;
+            font-size: $icon-size-lg;
+        }
+
+        .#{$jigsaw-upload}-drop-text {
+            height: 50%;
+        }
+    }
+}
