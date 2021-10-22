@@ -4,7 +4,7 @@ import { JigsawUploadDirective, JigsawUploadBase } from '../../common/directive/
 import { DragDropInfo } from '../../common/directive/dragdrop/types';
 import { JigsawNotification } from '../notification/notification';
 import { TranslateService } from '@ngx-translate/core';
-import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
+import { CommonUtils } from '../../common/core/utils/common-utils';
 
 @Component({
     selector: "jigsaw-upload, j-upload",
