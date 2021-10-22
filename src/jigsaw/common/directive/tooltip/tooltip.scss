@@ -1,10 +1,10 @@
 $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
 .#{$tooltip-prefix-cls} {
-    $maxLineNum: 5;
-    height: $height-sm;
+    min-height: $height-sm;
     padding: 3px 8px;
-    max-width: 400px;
+    max-width: 320px;
+    
     border-radius: $border-radius-sm;
     color: $font-color-default-light;
 
@@ -18,15 +18,13 @@ $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
     }
 
     > div {
+        max-height: 180px;
         display: -webkit-box;
         font-size: $font-size-base;
         line-height: $height-sm - 8px;
-        text-align: center;
+        text-align: left;
         word-break: break-all;
         white-space: pre-wrap;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: $maxLineNum;
         overflow: hidden;
     }
 }

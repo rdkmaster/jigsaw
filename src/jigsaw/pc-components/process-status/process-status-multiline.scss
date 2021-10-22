@@ -1,13 +1,13 @@
-$steps-prefix-cls: #{$jigsaw-prefix}-steps;
-$steps-multiline-prefix-cls: #{$jigsaw-prefix}-steps-multiline;
-$step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
+$process-status-prefix-cls: #{$jigsaw-prefix}-process-status;
+$process-status-multiline-prefix-cls: #{$jigsaw-prefix}-process-status-multiline;
+$process-status-item-prefix-cls: #{$jigsaw-prefix}-process-status-item;
 
-.#{$steps-multiline-prefix-cls} {
+.#{$process-status-multiline-prefix-cls} {
     &-odd {
-        .#{$steps-prefix-cls}-container {
+        .#{$process-status-prefix-cls}-container {
             flex-direction: row-reverse !important;
 
-            .#{$step-item-prefix-cls} {
+            .#{$process-status-item-prefix-cls} {
                 .#{$jigsaw-prefix}-logo-line-container {
                     flex-direction: row-reverse !important;
                     .#{$jigsaw-prefix}-step-status-logo {
@@ -37,11 +37,11 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 }
             }
 
-            .#{$step-item-prefix-cls}-overflow {
+            .#{$process-status-item-prefix-cls}-overflow {
                 visibility: hidden;
             }
 
-            .#{$step-item-prefix-cls}-last {
+            .#{$process-status-item-prefix-cls}-last {
                 .#{$jigsaw-prefix}-step-line {
                     display: none;
                 }
@@ -54,12 +54,12 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
                 cursor: pointer;
             }
         }
-        .#{$steps-prefix-cls}-container {
-            .#{$step-item-prefix-cls}-overflow {
+        .#{$process-status-prefix-cls}-container {
+            .#{$process-status-item-prefix-cls}-overflow {
                 visibility: hidden;
             }
 
-            .#{$step-item-prefix-cls}-last {
+            .#{$process-status-item-prefix-cls}-last {
                 .#{$jigsaw-prefix}-step-line {
                     display: none;
                 }
@@ -67,9 +67,9 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 
-    &-odd.#{$steps-prefix-cls}-size-large {
-        .#{$steps-prefix-cls}-container {
-            .#{$step-item-prefix-cls} {
+    &-odd.#{$process-status-prefix-cls}-size-large {
+        .#{$process-status-prefix-cls}-container {
+            .#{$process-status-item-prefix-cls} {
                 &:nth-last-child(3) {
                     padding-left: 30px !important;
                     .#{$jigsaw-prefix}-step-title,
@@ -86,11 +86,11 @@ $step-item-prefix-cls: #{$jigsaw-prefix}-step-item;
         }
     }
 
-    &-odd.#{$steps-prefix-cls}-size-small {
-        .#{$steps-prefix-cls}-container {
+    &-odd.#{$process-status-prefix-cls}-size-small {
+        .#{$process-status-prefix-cls}-container {
             flex-direction: row-reverse !important;
 
-            .#{$step-item-prefix-cls} {
+            .#{$process-status-item-prefix-cls} {
                 &:nth-last-child(3) {
                     padding-left: 20px !important;
                     .#{$jigsaw-prefix}-step-title,

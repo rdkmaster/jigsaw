@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ZTreeSettings, ZTreeIconSuit} from "./ztree-types";
+import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $;
@@ -24,6 +24,11 @@ export class TreeEventData {
             vertical-align: middle;
         }
     `],
+    host: {
+        '[class.jigsaw-tree-large]': 'size === "large"',
+        '[class.jigsaw-tree-medium]': 'size === "medium"',
+        '[class.jigsaw-tree-default]': 'size === "default"',
+    },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
@@ -78,6 +83,12 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             this._updateTree();
         });
     }
+
+    /**
+    * @NoMarkForCheckRequired
+    */
+    @Input()
+    public size: "default" | "medium" | "large" = "default";
 
     private _iconSuit: ZTreeIconSuit = {
         edit: "ea0c",
@@ -570,6 +581,46 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         treeEventData.treeNodes = treeNodes;
         treeEventData.extraInfo = extraInfo;
         this[type].emit(treeEventData);
+    }
+
+    public fuzzySearch(keyword: string, field: string = 'label') {
+        const rexMeta = /[\[\]\\^$.|?*+()]/g;
+        this.ztree.setting.view.nameIsHTML = true;
+        const nodes = this.ztree.transformToArray(this.ztree.getNodes());
+
+        // reset node label
+        nodes.filter(node => CommonUtils.isDefined(node?.oldname) && node?.oldname != node[field])
+            .forEach(node => {
+                node[field] = node.oldname;
+                this.ztree.updateNode(node);
+            });
+
+        keyword = (keyword || '').trim();
+        if (keyword.length === 0) {
+            this.ztree.showNodes(nodes);
+            return;
+        }
+
+        this.ztree.hideNodes(nodes);
+        nodes.filter(node => CommonUtils.isDefined(node[field]) && node[field].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
+            .forEach(node => {
+                const regKeywords = keyword.replace(rexMeta, matchStr => `\\${matchStr}`);
+                node.oldname = node[field];
+                const rexGlobal = new RegExp(regKeywords, 'gi');
+                node[field] = node.oldname.replace(rexGlobal, originalText =>
+                    `<span style="background-color: var(--primary-disabled);">${originalText}</span>`);
+                this.ztree.updateNode(node);
+                this.ztree.showNode(node);
+
+                const path = node.getPath();
+                if (!path || path.length == 0) {
+                    return;
+                }
+                for (let i = 0; i < path.length - 1; i++) {
+                    this.ztree.showNode(path[i]);
+                    this.ztree.expandNode(path[i], true);
+                }
+            });
     }
 }
 

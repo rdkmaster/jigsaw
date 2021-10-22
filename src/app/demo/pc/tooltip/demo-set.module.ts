@@ -12,6 +12,8 @@ import {TooltipShowDemoComponent} from "./programmatic-show/demo.component";
 import {TooltipShowDemoModule} from "./programmatic-show/demo.module";
 import { TooltipThemeDemoComponent } from './theme/demo.component';
 import { TooltipThemeDemoModule } from './theme/demo.module';
+import { TooltipScenesDemoComponent } from './scenes/demo.component';
+import { TooltipScenesDemoModule } from './scenes/demo.module';
 
 export const routerConfig = [
     {
@@ -29,12 +31,15 @@ export const routerConfig = [
     {
         path: 'theme', component: TooltipThemeDemoComponent
     },
+    {
+        path: 'scenes', component: TooltipScenesDemoComponent
+    }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), TooltipBasicDemoModule, TooltipHtmlDemoModule, MovingTooltipDemoModule,
-        TooltipShowDemoModule, TooltipThemeDemoModule
+        TooltipShowDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule
     ],
     providers: [PopupService]
 })

@@ -1,27 +1,20 @@
 import {
-    Component,
-    Input,
-    NgModule,
-    EventEmitter,
-    Output,
-    ViewChild,
-    ElementRef,
-    HostListener,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    Output,
+    ViewChild
 } from "@angular/core";
-
-import { CommonModule } from "@angular/common";
-import { AbstractJigsawComponent } from "../../../common/common";
-import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { JigsawTrustedHtmlModule } from "../../../common/directive/trusted-html/trusted-html";
-import { LoadingService } from "../../../common/service/loading.service";
-import { JigsawStepsFallbackModule } from "./index";
+import {AbstractJigsawComponent} from "../../common/common";
 
 /**
  * @internal
  */
-type StepsData = {
+type ProcessStatusData = {
     status: string;
     title?: string;
     subTitle: string;
@@ -35,7 +28,7 @@ type StepsData = {
 };
 
 @Component({
-    selector: "jigsaw-steps-multiline, j-steps-multiline",
+    selector: "jigsaw-process-status-multiline, j-process-status-multiline",
     template: `
         <div [perfectScrollbar]="{ wheelSpeed: 0.5, wheelPropagation: true }" style="width: 100%;height: 100%">
             <div #step>
@@ -43,11 +36,11 @@ type StepsData = {
                     *ngFor="let rowIndex of _$rowIndexes; odd as odd; even as even; index as index; last as last"
                     style="width: 100%;height: 100%"
                 >
-                    <jigsaw-steps-fallback
+                    <jigsaw-process-status
                         [preSize]="preSize"
-                        [ngClass]="{ 'jigsaw-steps-multiline-odd': odd, 'jigsaw-steps-multiline-even': even }"
+                        [ngClass]="{ 'jigsaw-process-status-multiline-odd': odd, 'jigsaw-process-status-multiline-even': even }"
                     >
-                        <jigsaw-step-item
+                        <jigsaw-process-status-item
                             *ngFor="let step of _$getData(index); index as ind"
                             [status]="step.status"
                             [waitingIcon]="step.waitingIcon"
@@ -58,11 +51,11 @@ type StepsData = {
                             [skippedIcon]="step.skippedIcon"
                             (click)="_$handleItemClick($event, step)"
                             [ngClass]="{
-                                'jigsaw-step-item-overflow': data && index * _$numInlineActual + ind >= data.length,
-                                'jigsaw-step-item-last': data && index * _$numInlineActual + ind == data.length - 1
+                                'jigsaw-process-status-item-overflow': data && index * _$numInlineActual + ind >= data.length,
+                                'jigsaw-process-status-item-last': data && index * _$numInlineActual + ind == data.length - 1
                             }"
                         >
-                            <div jigsaw-title class="jigsaw-steps-multiline-title" [title]="step.title">
+                            <div jigsaw-title class="jigsaw-process-status-multiline-title" [title]="step.title">
                                 {{ step.title }}
                             </div>
                             <div
@@ -70,11 +63,11 @@ type StepsData = {
                                 trustedHtml="{{ step.subTitle }}"
                                 [trustedHtmlContext]="step.context"
                             ></div>
-                        </jigsaw-step-item>
-                    </jigsaw-steps-fallback>
+                        </jigsaw-process-status-item>
+                    </jigsaw-process-status>
                     <div *ngIf="!last" style="width: 100%;height: 50px;position: relative">
                         <div
-                            class="jigsaw-steps-multiline-v"
+                            class="jigsaw-process-status-multiline-v"
                             style="width: 2px;height: 100%;position: absolute;"
                             [style.backgroundColor]="_$getColor(rowIndex)"
                         ></div>
@@ -89,13 +82,13 @@ type StepsData = {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawStepsMultilineFallback extends AbstractJigsawComponent {
+export class JigsawProcessStatusMultiline extends AbstractJigsawComponent {
     constructor(public _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
     private _originWidth: number;
-    private _dataInSteps: StepsData[] = [];
+    private _dataInSteps: ProcessStatusData[] = [];
 
     private _preSize: "small" | "default" | "large" = "default";
 
@@ -116,17 +109,17 @@ export class JigsawStepsMultilineFallback extends AbstractJigsawComponent {
         }
     }
 
-    private _data: StepsData[] = [];
+    private _data: ProcessStatusData[] = [];
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): StepsData[] {
+    public get data(): ProcessStatusData[] {
         return this._data;
     }
 
-    public set data(value: StepsData[]) {
+    public set data(value: ProcessStatusData[]) {
         if (value && value != this._data) {
             this._data = value;
             this._initData();
@@ -181,7 +174,7 @@ export class JigsawStepsMultilineFallback extends AbstractJigsawComponent {
     /**
      * @internal
      */
-    public _$getData(index): StepsData[] {
+    public _$getData(index): ProcessStatusData[] {
         let stepsItemData = [];
         for (let i = 0; i < this._$numInlineActual; i++) {
             if (index * this._$numInlineActual + i < this._dataInSteps.length) {
@@ -287,28 +280,28 @@ export class JigsawStepsMultilineFallback extends AbstractJigsawComponent {
 
             this.runMicrotask(() => {
                 let oddStepsSpaces = this._step.nativeElement.querySelectorAll(
-                    ".jigsaw-steps-multiline-odd .jigsaw-steps-container .jigsaw-step-left-space"
+                    ".jigsaw-process-status-multiline-odd .jigsaw-process-status-container .jigsaw-step-left-space"
                 );
                 let evenStepsSpaces = this._step.nativeElement.querySelectorAll(
-                    ".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-left-space"
+                    ".jigsaw-process-status-multiline-even .jigsaw-process-status-container .jigsaw-step-left-space"
                 );
-                let oddSteps = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-odd");
-                let evenSteps = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-even");
-                let vLines = this._step.nativeElement.querySelectorAll(".jigsaw-steps-multiline-v");
+                let oddSteps = this._step.nativeElement.querySelectorAll(".jigsaw-process-status-multiline-odd");
+                let evenSteps = this._step.nativeElement.querySelectorAll(".jigsaw-process-status-multiline-even");
+                let vLines = this._step.nativeElement.querySelectorAll(".jigsaw-process-status-multiline-v");
                 let oddItems = this._step.nativeElement.querySelectorAll(
-                    ".jigsaw-steps-multiline-odd .jigsaw-steps-container .jigsaw-step-item"
+                    ".jigsaw-process-status-multiline-odd .jigsaw-process-status-container .jigsaw-process-status-item"
                 );
                 let evenItems = this._step.nativeElement.querySelectorAll(
-                    ".jigsaw-steps-multiline-even .jigsaw-steps-container .jigsaw-step-item"
+                    ".jigsaw-process-status-multiline-even .jigsaw-process-status-container .jigsaw-process-status-item"
                 );
-                let items = this._step.nativeElement.querySelectorAll(".jigsaw-steps-container .jigsaw-step-item");
+                let items = this._step.nativeElement.querySelectorAll(".jigsaw-process-status-container .jigsaw-process-status-item");
 
                 if (evenItems[this._$numInlineActual - 1].offsetWidth == minWidth) {
                     oddStepsSpaces &&
-                        oddStepsSpaces.forEach((space, index) => {
-                            space.style.flex = 0;
-                            space.style.minWidth = minWidth - logoWidth + "px";
-                        });
+                    oddStepsSpaces.forEach((space, index) => {
+                        space.style.flex = 0;
+                        space.style.minWidth = minWidth - logoWidth + "px";
+                    });
 
                     if (
                         oddSteps &&
@@ -320,10 +313,10 @@ export class JigsawStepsMultilineFallback extends AbstractJigsawComponent {
                     }
                 } else {
                     oddStepsSpaces &&
-                        oddStepsSpaces.forEach((space, index) => {
-                            space.style.flex = 0.5;
-                            space.style.minWidth = MARGIN_WIDTH + "px";
-                        });
+                    oddStepsSpaces.forEach((space, index) => {
+                        space.style.flex = 0.5;
+                        space.style.minWidth = MARGIN_WIDTH + "px";
+                    });
                 }
 
                 if (oddItems && oddItems.length > 0) {
@@ -348,38 +341,30 @@ export class JigsawStepsMultilineFallback extends AbstractJigsawComponent {
 
                 if (this._$numInlineActual == 1) {
                     vLines &&
-                        vLines.forEach((line, index) => {
-                            line.style.left = items[0].offsetWidth - logoWidth / 2 - 1 + "px";
-                        });
+                    vLines.forEach((line, index) => {
+                        line.style.left = items[0].offsetWidth - logoWidth / 2 - 1 + "px";
+                    });
                 } else {
                     vLines &&
-                        vLines.forEach((line, index) => {
-                            if (index % 2 == 1) {
-                                line.style.left =
-                                    items[index * this._$numInlineActual + this._$numInlineActual - 1].offsetWidth -
-                                    logoWidth / 2 -
-                                    2 +
-                                    "px";
-                            } else {
-                                line.style.left = "";
-                                line.style.right =
-                                    items[index * this._$numInlineActual + this._$numInlineActual - 1].offsetWidth -
-                                    logoWidth / 2 -
-                                    2 +
-                                    "px";
-                            }
-                        });
+                    vLines.forEach((line, index) => {
+                        if (index % 2 == 1) {
+                            line.style.left =
+                                items[index * this._$numInlineActual + this._$numInlineActual - 1].offsetWidth -
+                                logoWidth / 2 -
+                                2 +
+                                "px";
+                        } else {
+                            line.style.left = "";
+                            line.style.right =
+                                items[index * this._$numInlineActual + this._$numInlineActual - 1].offsetWidth -
+                                logoWidth / 2 -
+                                2 +
+                                "px";
+                        }
+                    });
                 }
             });
         }
         this._changeDetectorRef.markForCheck();
     }
 }
-
-@NgModule({
-    imports: [CommonModule, JigsawStepsFallbackModule, PerfectScrollbarModule, JigsawTrustedHtmlModule],
-    declarations: [JigsawStepsMultilineFallback],
-    exports: [JigsawStepsMultilineFallback],
-    providers: [LoadingService]
-})
-export class JigsawStepsMultilineFallbackModule {}

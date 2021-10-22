@@ -463,8 +463,8 @@ export class PopupService {
     private _setPopup(options: PopupOptions, element: HTMLElement) {
         if (element) {
             this._setSize(options, element);
-            this.setPosition(options, element);
             this._setBackground(options, element);
+            this.setPosition(options, element);
             this._setShowAnimate(options, element);
         }
     }

@@ -195,11 +195,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         if (!this._fileInputElement) {
             this._fileInputElement = document.createElement('input');
             this._fileInputElement.setAttribute('type', 'file');
-            if (CommonUtils.isIE()) {
-                //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
-                this._fileInputElement.setAttribute('display', 'none');
-                document.body.appendChild(this._fileInputElement);
-            }
+            //指令模式动态创建的input不在dom中的时候，此处将其加入body中，设置其不可见
+            (<HTMLElement>this._fileInputElement).style.display = 'none';
+            document.body.appendChild(this._fileInputElement);
         }
         if (this.multiple) {
             this._fileInputElement.setAttribute('multiple', 'true');
@@ -390,6 +388,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._removeFileChangeEvent();
             this._removeFileChangeEvent = null;
         }
+        document.body.removeChild(this._fileInputElement);
         this._fileInputElement = null;
     }
 }

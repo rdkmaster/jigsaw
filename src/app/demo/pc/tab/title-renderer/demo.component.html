@@ -1,0 +1,40 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <div class="live-demo">
+        <jigsaw-header [level]="2">标题渲染器的基本用法</jigsaw-header>
+        <jigsaw-tabs (titleChange)="titleChanged($event)" [(selectedIndex)]="selectedIndex" width="500px">
+            <jigsaw-tab-pane>
+                <div jigsaw-title>不可编辑</div>
+                <ng-template>This is the body of the first tab 1</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane [titleRenderer]="titleEditorRenderer" [title]="'标题可编辑的'">
+                <ng-template>This is the body of the first tab 2</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane [titleRenderer]="titleEditorRenderer">
+                <ng-template>This is the body of the first tab 3</ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
+    <div class="live-demo">
+        <jigsaw-header [level]="2">配合data属性实现标题渲染器的用法</jigsaw-header>
+
+        <jigsaw-tabs (titleChange)="titleChanged($event)" [(selectedIndex)]="selectedIndex" width="500px">
+            <ng-container *ngFor="let tabData of tabData">
+                <jigsaw-tab-pane [titleRenderer]="tabData.renderer" [title]="tabData.label">
+                    <ng-template>This is the body of the first tab {{selectedIndex + 1}}</ng-template>
+                </jigsaw-tab-pane>
+            </ng-container>
+        </jigsaw-tabs>
+    </div>
+
+    <div class="live-demo">
+        <jigsaw-header [level]="2">在TabBar中使用标题渲染器</jigsaw-header>
+        <jigsaw-tabs-bar [data]="tabData" [(selectedIndex)]="selectedIndex" width="500px"
+                         (titleChange)="titleChanged($event)">
+        </jigsaw-tabs-bar>
+    </div>
+</div>

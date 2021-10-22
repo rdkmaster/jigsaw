@@ -31,20 +31,22 @@ export class JigsawSelectModule {
             zh: {
                 selectAll: "全选",
                 checkSelected: "查看已选",
-                return: "返回",
+                checkAll: "查看全部",
                 allSelected: "全部",
                 selected: "已选择 {{ num }} 项",
                 noData: "暂无数据",
-                loading: "数据加载中..."
+                loading: "数据加载中...",
+                groupNoData: "无数据"
             },
             en: {
                 selectAll: "All",
                 checkSelected: "Check Selected",
-                return: "All",
+                checkAll: "Check All",
                 allSelected: "All Selected",
                 selected: "Selected {{ num }} item(s)",
                 noData: "No Data",
-                loading: "Loading..."
+                loading: "Loading...",
+                groupNoData: "No Data"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

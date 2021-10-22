@@ -3,15 +3,17 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
-    forwardRef, HostListener,
+    forwardRef,
     Injector,
     Input,
     NgModule,
     OnDestroy,
     OnInit,
-    Output
+    Output,
+    AfterViewInit,
+    ViewChild
 } from '@angular/core';
-import {ComboSelectValue, JigsawComboSelectModule} from "../combo-select/index";
+import {ComboSelectValue, JigsawComboSelectModule, JigsawComboSelect} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
@@ -31,7 +33,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
     template: `
-        <jigsaw-combo-select [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
+        <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
@@ -53,7 +55,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
     constructor(private _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
@@ -67,6 +69,9 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             this._changeRangeDateByGr();
         })
     }
+
+    @ViewChild('comboSelect')
+    private _comboSelect: JigsawComboSelect;
 
     @Input()
     @RequireMarkForCheck()
@@ -292,6 +297,10 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     ngOnInit() {
         super.ngOnInit();
         this._multipleInputsChange.emit();
+    }
+
+    ngAfterViewInit() {
+        this._comboSelect._$options.size = { "minWidth": 0 };
     }
 
     ngOnDestroy() {
