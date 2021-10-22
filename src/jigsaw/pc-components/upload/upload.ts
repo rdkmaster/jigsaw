@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, ViewChild, Input, Renderer2, ElementRef, Optional } from '@angular/core';
 import { IUploader } from '../../common/directive/upload/uploader-typings';
 import { JigsawUploadDirective, JigsawUploadBase } from '../../common/directive/upload/upload.directive';
-import { CommonUtils, DragDropInfo } from 'jigsaw/public_api';
+import { DragDropInfo } from '../../common/directive/dragdrop/types';
 import { JigsawNotification } from '../notification/notification';
 import { TranslateService } from '@ngx-translate/core';
+import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
 
 @Component({
     selector: "jigsaw-upload, j-upload",
