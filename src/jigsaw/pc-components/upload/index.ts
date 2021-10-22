@@ -83,7 +83,13 @@ export class JigsawUploadModule {
                 "Network connect timeout error": "错误详情：网络连接超时错误",
                 "fileTypeError": "错误详情：文件类型错误",
                 "fileMinSizeError": "错误详情：文件尺寸小于最小限制",
-                "fileMaxSizeError": "错误详情：文件尺寸大于最大限制"
+                "fileMaxSizeError": "错误详情：文件尺寸大于最大限制",
+                "fileAmountError": "错误详情：文件数量超过一个",
+
+                "or": "或",
+                "dragHere": "请拖入",
+                "singleDrop": "仅支持上传一个文件",
+                "clickToUpload": "点击上传"
             },
             en: {
                 "waiting": "Waiting",
@@ -141,7 +147,13 @@ export class JigsawUploadModule {
                 "Network connect timeout error": "Error detail: Network connect timeout error",
                 "fileTypeError": "Error detail: File type error",
                 "fileMinSizeError": "Error detail: Size of the file is less than the minSize",
-                "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize"
+                "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize",
+                "fileAmountError": "Error detail: The number of files is greater than 1",
+
+                "or": "OR",
+                "dragHere": "Drop file here",
+                "singleDrop": "Accept one file ONLY",
+                "clickToUpload": "Click To Upload"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

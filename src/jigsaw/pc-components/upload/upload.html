@@ -7,19 +7,21 @@
         </div>
         <div class="jigsaw-upload-drop-text">
             <p class="drop-text-hint">
-                <span>请拖入或</span>
+                <span *ngIf="!multiple">{{'upload.singleDrop' | translate}},</span>
+                <span>{{'upload.dragHere' | translate}}</span>
+                <span>{{'upload.or' | translate}}</span>
                 <a j-upload #uploadEle [uploadTargetUrl]="targetUrl" [uploadFileType]="fileType"
                     [uploadMultiple]="multiple" [uploadContentField]="contentField"
                     [uploadFileNameField]="fileNameField" [uploadFileVerify]="fileVerify"
                     [uploadAdditionalFields]="additionalFields" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
-                    [uploadImmediately]="uploadImmediately">点击上传</a>
+                    [uploadImmediately]="uploadImmediately">{{'upload.clickToUpload' | translate}}</a>
             </p>
             <p class="drop-text-type">
-                <span>支持{{fileType ? fileType : "所有"}}类型的文件</span>
+                <span>仅支持{{fileType ? fileType : "所有"}}类型的文件</span>
             </p>
         </div>
     </div>
-    <div class="jigsaw-upload-results">
+    <div class="jigsaw-upload-results" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
         <jigsaw-upload-result *ngIf="showResult" [uploader]="uploader" width="90%"></jigsaw-upload-result>
     </div>
 </div>
