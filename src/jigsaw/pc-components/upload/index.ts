@@ -12,7 +12,7 @@ import { JigsawProgressModule } from '../progress/progress';
 import {JigsawLoadingModule} from "../../common/components/loading/loading";
 import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
 import { JigsawUpload } from './upload';
-import { JigsawDroppableModule, JigsawDraggableModule } from '../../common/directive/dragdrop';
+import { JigsawDroppableModule, JigsawDraggableModule } from 'jigsaw/public_api';
 
 @NgModule({
     imports: [

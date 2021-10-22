@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, ViewChild, Input, Renderer2, ElementRef, Optional } from '@angular/core';
 import { IUploader } from '../../common/directive/upload/uploader-typings';
 import { JigsawUploadDirective, JigsawUploadBase } from '../../common/directive/upload/upload.directive';
-import { CommonUtils } from '../../common/core/utils/common-utils';
+import { CommonUtils, DragDropInfo } from 'jigsaw/public_api';
 import { JigsawNotification } from '../notification/notification';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -56,28 +56,28 @@ export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
     /**
      * @internal
      */
-    public _$fileDragEnterHandle(dragInfo) {
+    public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
         this._renderer.addClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
     }
 
     /**
      * @internal
      */
-    public _$fileDragOverHandle(dragInfo) {
+    public _$fileDragOverHandle(dragInfo: DragDropInfo) {
         this._renderer.addClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
     }
 
     /**
      * @internal
      */
-    public _$fileDragLeaveHandle(dragInfo) {
+    public _$fileDragLeaveHandle(dragInfo: DragDropInfo) {
         this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
     }
 
     /**
      * @internal
      */
-    public _$fileDropHandle(dragInfo) {
+    public _$fileDropHandle(dragInfo: DragDropInfo) {
         const fileList = dragInfo.event.dataTransfer.files;
         if (!this.multiple && fileList.length > 1) {
             JigsawNotification.showError(this._translateService.instant(`upload.fileAmountError`), { timeout: 8000 });
