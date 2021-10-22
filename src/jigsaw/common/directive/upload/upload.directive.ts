@@ -63,7 +63,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Input('uploadAdditionalFields')
     public additionalFields: { [prop: string]: string };
 
-    private _minSize: number;
+    protected _minSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -82,7 +82,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
         this._minSize = value;
     }
 
-    private _maxSize: number;
+    protected _maxSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -244,7 +244,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     public upload() {
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
-                if (!this._appendFiles()) {
+                if (!this._appendFiles() && this.files.length === 0) {
                     return;
                 }
                 this.start.emit(this.files);

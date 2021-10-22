@@ -1,21 +1,25 @@
-<div class="jigsaw-upload-drop-area"
-    jigsaw-droppable
-    (jigsawDragEnter)="_$fileDragEnterHandle($event)"
-    (jigsawDrop)="_$fileDropHandle($event)"
-    >
-    <div class="jigsaw-upload-drop-icon">
-        <i class="iconfont iconfont-e153"></i>
+<div class="jigsaw-upload-drop-area" jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle($event)"
+    (jigsawDragOver)="_$fileDragOverHandle($event)" (jigsawDragLeave)="_$fileDragLeaveHandle($event)"
+    (jigsawDrop)="_$fileDropHandle($event)">
+    <div class="jigsaw-upload-hints">
+        <div class="jigsaw-upload-drop-icon">
+            <i class="iconfont iconfont-e153"></i>
+        </div>
+        <div class="jigsaw-upload-drop-text">
+            <p class="drop-text-hint">
+                <span>请拖入或</span>
+                <a j-upload #uploadEle [uploadTargetUrl]="targetUrl" [uploadFileType]="fileType"
+                    [uploadMultiple]="multiple" [uploadContentField]="contentField"
+                    [uploadFileNameField]="fileNameField" [uploadFileVerify]="fileVerify"
+                    [uploadAdditionalFields]="additionalFields" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
+                    [uploadImmediately]="uploadImmediately">点击上传</a>
+            </p>
+            <p class="drop-text-type">
+                <span>支持{{fileType ? fileType : "所有"}}类型的文件</span>
+            </p>
+        </div>
     </div>
-    <div class="jigsaw-upload-drop-text">
-        <p>
-            <span>请拖入或</span>
-            <a j-upload #uploadEle>点击上传</a>
-        </p>
-        <p>
-            <span>支持xxx等类型的文件</span>
-        </p>
+    <div class="jigsaw-upload-results">
+        <jigsaw-upload-result *ngIf="showResult" [uploader]="uploader" width="90%"></jigsaw-upload-result>
     </div>
-</div>
-<div>
-    <jigsaw-upload-result [uploader]="uploader"></jigsaw-upload-result>
 </div>
