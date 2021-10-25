@@ -562,9 +562,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return;
         }
         const hostPosition = this._getElementPos();
-        const position: PopupPoint = { x: Math.round(hostPosition.x), y: Math.round(hostPosition.y) };
+        const position: PopupPoint = {x: Math.round(hostPosition.x), y: Math.round(hostPosition.y)};
         const arrowPosition = this._getElementPos(this.jigsawFloatArrowElement);
-        const arrowPoint: PopupPoint = { x: Math.round(arrowPosition.x), y: Math.round(arrowPosition.y) };
+        const arrowPoint: PopupPoint = {x: Math.round(arrowPosition.x), y: Math.round(arrowPosition.y)};
         const host = this.jigsawFloatArrowElement ? this.jigsawFloatArrowElement : this._elementRef.nativeElement;
         let ele = <HTMLElement>this.popupElement.querySelector('.jigsaw-float-arrow');
         if (ele) {
@@ -581,26 +581,6 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             this._setArrowPosition(ele, popupElement, position, host, arrowPoint, options)
             popupElement.appendChild(ele);
         }
-    }
-
-    private _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
-        if (delta < 4) {
-            delta = 4;
-        } else if (delta > popupElement.offsetWidth - 13) {
-            delta = popupElement.offsetWidth - 13;
-        }
-        return delta;
-    }
-
-    private _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-        let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
-        if (delta < 4) {
-            delta = 4;
-        } else if (delta > popupElement.offsetHeight - 13) {
-            delta = popupElement.offsetHeight - 13;
-        }
-        return delta;
     }
 
     private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
@@ -646,7 +626,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.top = 7 + hostBottom + 'px';
             }
             ele.style.top = `-${arrowOffset}px`;
-            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = `1px solid ${borderColor}`;
                 ele.style.borderRight = `1px solid ${borderColor}`;
@@ -659,7 +639,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.top = hostTop - popupElement.offsetHeight - 7 + 'px';
             }
             ele.style.bottom = `-${arrowOffset}px`;
-            ele.style.left = this._getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderLeft = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
@@ -668,11 +648,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         /* 箭头在左 */
         function _createLeftArrow() {
-            if (adjustPopup && (popupEleLeft- hostRight < 7)) {
+            if (adjustPopup && (popupEleLeft - hostRight < 7)) {
                 popupElement.style.left = hostRight + 7 + 'px';
             }
             ele.style.left = `-${arrowOffset}px`;
-            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = `1px solid ${borderColor}`;
                 ele.style.borderLeft = `1px solid ${borderColor}`;
@@ -685,7 +665,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.left = hostLeft - popupElement.offsetWidth - 7 + 'px';
             }
             ele.style.right = `-${arrowOffset}px`;
-            ele.style.top = this._getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
             if (options.showBorder) {
                 ele.style.borderRight = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
@@ -700,6 +680,26 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 ele.style.borderLeft = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
             }
+        }
+
+        function _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+            let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
+            if (delta < 4) {
+                delta = 4;
+            } else if (delta > popupElement.offsetWidth - 13) {
+                delta = popupElement.offsetWidth - 13;
+            }
+            return delta;
+        }
+
+        function _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
+            let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
+            if (delta < 4) {
+                delta = 4;
+            } else if (delta > popupElement.offsetHeight - 13) {
+                delta = popupElement.offsetHeight - 13;
+            }
+            return delta;
         }
     }
 
