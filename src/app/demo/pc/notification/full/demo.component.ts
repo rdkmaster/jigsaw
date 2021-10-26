@@ -70,7 +70,7 @@ export class NotificationFullDemoComponent {
             {
                 callback: answer => alert(answer ? '你的答案是：' + answer.label : '看来对于这个问题你很犹豫...'),
                 // 支持 jigsaw-button 的所有选项
-                buttons: [{label: '同意！', type: 'primary'}, {label: '不好说'}], icon: 'iconfont iconfont-e9ee'
+                buttons: [{label: '同意！'}, {label: '不好说'}], icon: 'iconfont iconfont-e9ee'
             });
     }
 
