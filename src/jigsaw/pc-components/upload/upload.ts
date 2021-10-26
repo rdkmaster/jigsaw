@@ -18,15 +18,15 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 })
 export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
     constructor(
-        protected _renderer: Renderer2,
-        protected _elementRef: ElementRef,
+        private _renderer: Renderer2,
+        private _elementRef: ElementRef,
         @Optional() private _translateService: TranslateService
     ) {
         super();
     }
 
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
-    public uploader: IUploader;
+    private _$uploader: IUploader;
 
     protected _width: string = "400px";
 
@@ -57,14 +57,14 @@ export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
     /**
      * @internal
      */
-    public _$fileDragEnterHandle(dragInfo: DragDropInfo) {
+    public _$fileDragEnterHandle() {
         this._renderer.addClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
     }
 
     /**
      * @internal
      */
-    public _$fileDragOverHandle(dragInfo: DragDropInfo) {
+    public _$fileDragOverHandle() {
         this._renderer.addClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
     }
 
@@ -72,7 +72,11 @@ export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
      * @internal
      */
     public _$fileDragLeaveHandle(dragInfo: DragDropInfo) {
-        this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
+        let target = dragInfo.event.relatedTarget as HTMLElement;
+        const el = CommonUtils.getParentNodeBySelector(target, ".jigsaw-upload-drop-area")
+        if (el === null) {
+            this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
+        }
     }
 
     /**
@@ -85,8 +89,8 @@ export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
             this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
             return;
         }
-        this.uploader.appendFiles(fileList);
-        this.uploader.upload();
+        this._$uploader.appendFiles(fileList);
+        this._$uploader.upload();
         this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
     }
 

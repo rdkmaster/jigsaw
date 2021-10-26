@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { UploadFileInfo } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,6 +10,6 @@ export class UploadBasicDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo展示了`jigsaw-upload`组件的基本用法';
     description: string = '';
 }

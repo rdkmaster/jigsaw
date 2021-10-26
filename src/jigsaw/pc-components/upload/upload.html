@@ -1,5 +1,5 @@
-<div class="jigsaw-upload-drop-area" jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle($event)"
-    (jigsawDragOver)="_$fileDragOverHandle($event)" (jigsawDragLeave)="_$fileDragLeaveHandle($event)"
+<div class="jigsaw-upload-drop-area" jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle()"
+    (jigsawDragOver)="_$fileDragOverHandle()" (jigsawDragLeave)="_$fileDragLeaveHandle($event)"
     (jigsawDrop)="_$fileDropHandle($event)">
     <div class="jigsaw-upload-hints">
         <div class="jigsaw-upload-drop-icon">
@@ -17,11 +17,12 @@
                     [uploadImmediately]="uploadImmediately">{{'upload.clickToUpload' | translate}}</a>
             </p>
             <p class="drop-text-type">
-                <span>仅支持{{fileType ? fileType : "所有"}}类型的文件</span>
+                <span *ngIf="!fileType">{{'upload.acceptAllTypes' | translate}}</span>
+                <span *ngIf="!!fileType">{{'upload.acceptSpecificTypes' | translate:{file: fileType} }}</span>
             </p>
         </div>
     </div>
     <div class="jigsaw-upload-results" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-        <jigsaw-upload-result *ngIf="showResult" [uploader]="uploader" width="90%"></jigsaw-upload-result>
+        <jigsaw-upload-result *ngIf="showResult" [uploader]="_$uploader" width="90%"></jigsaw-upload-result>
     </div>
 </div>

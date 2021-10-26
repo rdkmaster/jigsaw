@@ -89,7 +89,9 @@ export class JigsawUploadModule {
                 "or": "或",
                 "dragHere": "请拖入",
                 "singleDrop": "仅支持上传一个文件",
-                "clickToUpload": "点击上传"
+                "clickToUpload": "点击上传",
+                "acceptAllTypes": "支持所有类型的文件",
+                "acceptSpecificTypes": "仅支持 {{ file }} 类型的文件"
             },
             en: {
                 "waiting": "Waiting",
@@ -153,7 +155,9 @@ export class JigsawUploadModule {
                 "or": "OR",
                 "dragHere": "Drop file here",
                 "singleDrop": "Accept one file ONLY",
-                "clickToUpload": "Click To Upload"
+                "clickToUpload": "Click To Upload",
+                "acceptAllTypes": "Accept all types of files",
+                "acceptSpecificTypes": "Accept {{ file }} files ONLY"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());

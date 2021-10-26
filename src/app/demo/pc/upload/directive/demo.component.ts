@@ -37,6 +37,6 @@ export class UploadDirectiveDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo展示了`jigsaw-upload`指令的基本用法';
     description: string = '';
 }
