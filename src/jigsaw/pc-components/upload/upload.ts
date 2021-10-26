@@ -88,7 +88,8 @@ export class JigsawUpload extends JigsawUploadBase {
     public _$fileDropHandle(dragInfo: DragDropInfo) {
         const fileList = dragInfo.event.dataTransfer.files;
         if (!this.multiple && fileList.length > 1) {
-            JigsawNotification.showError(this._translateService.instant(`upload.fileAmountError`), { timeout: 8000 });
+            this._$uploader.appendFiles(Array.from(fileList)[0]);
+            console.warn(this._translateService.instant(`upload.fileAmountError`));
             this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
             return;
         }
