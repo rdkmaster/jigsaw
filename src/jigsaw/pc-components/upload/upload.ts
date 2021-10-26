@@ -16,7 +16,7 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
+export class JigsawUpload extends JigsawUploadBase {
     constructor(
         private _renderer: Renderer2,
         private _elementRef: ElementRef,
@@ -25,8 +25,11 @@ export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
         super();
     }
 
+    /**
+     * @internal
+     */
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
-    private _$uploader: IUploader;
+    public _$uploader: IUploader;
 
     protected _width: string = "400px";
 
@@ -92,9 +95,5 @@ export class JigsawUpload extends JigsawUploadBase implements OnDestroy {
         this._$uploader.appendFiles(fileList);
         this._$uploader.upload();
         this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 }

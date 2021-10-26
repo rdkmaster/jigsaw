@@ -86,10 +86,9 @@ export class JigsawUploadModule {
                 "fileMaxSizeError": "错误详情：文件尺寸大于最大限制",
                 "fileAmountError": "错误详情：文件数量超过一个",
 
-                "or": "或",
-                "dragHere": "请拖入",
-                "singleDrop": "仅支持上传一个文件",
-                "clickToUpload": "点击上传",
+                "select": "选择",
+                "singleFile": "或拖入文件，限单个文件。",
+                "multipleFiles": "或拖入文件，支持多个文件。",
                 "acceptAllTypes": "支持所有类型的文件",
                 "acceptSpecificTypes": "仅支持 {{ file }} 类型的文件"
             },
@@ -152,10 +151,9 @@ export class JigsawUploadModule {
                 "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize",
                 "fileAmountError": "Error detail: The number of files is greater than 1",
 
-                "or": "OR",
-                "dragHere": "Drop file here",
-                "singleDrop": "Accept one file ONLY",
-                "clickToUpload": "Click To Upload",
+                "select": "Select",
+                "singleFile": "or drop file here, single file accepted.",
+                "multipleFiles": "or drop files here, multiple files accepted.",
                 "acceptAllTypes": "Accept all types of files",
                 "acceptSpecificTypes": "Accept {{ file }} files ONLY"
             }
