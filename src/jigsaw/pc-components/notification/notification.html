@@ -19,7 +19,7 @@
 
     <div class="jigsaw-notification-button-bar" *ngIf="buttons && buttons.length > 0">
         <jigsaw-button *ngFor="let button of buttons"
-                       [colorType]="button.type"
+                       [colorType]="button.type ? button.type : 'none'"
                        [disabled]="button.disabled"
                        [preSize]="button.preSize ? button.preSize : 'small'"
                        (click)="answer.emit(button)"
