@@ -1,10 +1,9 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, ViewChild, Input, Renderer2, ElementRef, Optional } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { IUploader } from '../../common/directive/upload/uploader-typings';
-import { JigsawUploadDirective, JigsawUploadBase } from '../../common/directive/upload/upload.directive';
-import { DragDropInfo } from '../../common/directive/dragdrop/types';
-import { JigsawNotification } from '../notification/notification';
-import { CommonUtils } from '../../common/core/utils/common-utils';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer2, ViewChild} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {IUploader} from '../../common/directive/upload/uploader-typings';
+import {JigsawUploadBase, JigsawUploadDirective} from '../../common/directive/upload/upload.directive';
+import {DragDropInfo} from '../../common/directive/dragdrop/types';
+import {CommonUtils} from '../../common/core/utils/common-utils';
 
 @Component({
     selector: "jigsaw-upload, j-upload",
@@ -89,7 +88,7 @@ export class JigsawUpload extends JigsawUploadBase {
         const fileList = dragInfo.event.dataTransfer.files;
         if (!this.multiple && fileList.length > 1) {
             this._$uploader.appendFiles(Array.from(fileList)[0]);
-            console.warn(this._translateService.instant(`upload.fileAmountError`));
+            console.warn('Uploader Warning: The number of files is greater than 1');
             this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
             return;
         }

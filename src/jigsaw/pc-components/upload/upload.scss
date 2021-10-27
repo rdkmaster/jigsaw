@@ -25,7 +25,7 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
             height: 120px;
 
             .#{$jigsaw-upload}-drop-icon {
-                height: 60%;
+                height: 55%;
                 font-size: $icon-size-lg;
                 color: $icon-color-default;
             }
@@ -36,7 +36,6 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
                 justify-content: flex-start;
                 align-items: center;
                 width: 100%;
-                height: 40%;
 
                 .drop-text-hint {
                     color: $font-color-default;
