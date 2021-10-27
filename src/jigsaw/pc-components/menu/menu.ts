@@ -141,6 +141,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realData(): SimpleTreeData {
+        this._getZTreeNodeIcon(this.initData && this.initData.data ? this.initData.data : this.data);
         return this.initData && this.initData.data ? this.initData.data : this.data;
     }
 
@@ -243,6 +244,18 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     public _$onClick(event: any) {
         event.stopPropagation();
         event.preventDefault();
+    }
+
+    private _getZTreeNodeIcon(data: SimpleTreeData) {
+        if (!data.nodes) {
+            return;
+        }
+        data.nodes.forEach((node: SimpleTreeData) => {
+            if (node.iconUnicode) {
+                node.icon = 'iconfont iconfont-' + node.iconUnicode;
+            }
+            this._getZTreeNodeIcon(node);
+        });
     }
 
     ngAfterViewInit() {
