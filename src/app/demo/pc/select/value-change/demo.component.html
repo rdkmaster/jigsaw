@@ -8,7 +8,7 @@
 
 <jigsaw-header>单选/多选</jigsaw-header>
 <jigsaw-select [data]="dataList" [multipleSelect]="false" placeholder="请选择" width="160px"
-               (valueChange)="valueChange($event)"></jigsaw-select>
+    (valueChange)="valueChange($event)"></jigsaw-select>
 <jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="true"
     (valueChange)="valueChange($event)">
 </jigsaw-select>
@@ -31,3 +31,12 @@
 <jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px" [useStatistics]="false"
     (valueChange)="valueChange($event)">
 </jigsaw-select>
+
+<jigsaw-header>联动</jigsaw-header>
+<jigsaw-select [data]="simpleDataList" [multipleSelect]="false" placeholder="请选择" width="160px"
+    (valueChange)="relateSelectChange($event)"></jigsaw-select>
+<div style="height: 8px;"></div>
+<jigsaw-select [data]="relatedDataList" [multipleSelect]="true" [value]="relatedValue" placeholder="根据前置选项改变"
+    (valueChange)="valueChange($event)"></jigsaw-select>
+<jigsaw-select [data]="relatedDataList" [multipleSelect]="false" [value]="relatedSingleValue" placeholder="根据前置选项改变"
+    (valueChange)="valueChange($event)"></jigsaw-select>

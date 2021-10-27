@@ -259,10 +259,16 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     public set value(newValue: any) {
-        const changed = this._setValue(newValue);
-        if (!changed) {
+        if (this._value === newValue) {
             return;
         }
+
+        if (this._$selectedItems === newValue) {
+            this._value = newValue;
+            return;
+        }
+
+        this._value = newValue;
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
                 this._$selectedItems = this.multipleSelect ? newValue : [newValue];
@@ -271,30 +277,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             }
             this._$checkSelectAll();
         })
-    }
-
-    protected _setValue(newValue: any): boolean {
-        if (this._$selectedItems == newValue) {
-            this._value = newValue;
-            return false;
-        }
-
-        if (this._value == newValue) {
-            return false;
-        }
-
-        let trackItemBy: string[];
-        if (this.trackItemBy) {
-            trackItemBy =
-                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
-                    ? <string[]>this.trackItemBy
-                    : [this.trackItemBy.toString()];
-        }
-        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
-            return false;
-        }
-        this._value = newValue;
-        return true;
     }
 
     /**
