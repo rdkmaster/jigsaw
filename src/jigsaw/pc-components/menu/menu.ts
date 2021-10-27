@@ -141,8 +141,9 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realData(): SimpleTreeData {
-        this._getZTreeNodeIcon(this.initData && this.initData.data ? this.initData.data : this.data);
-        return this.initData && this.initData.data ? this.initData.data : this.data;
+        const realData = this.initData && this.initData.data ? this.initData.data : this.data;
+        this._getZTreeNodeIcon(realData);
+        return realData;
     }
 
     /**
