@@ -1,0 +1,77 @@
+$jigsaw-upload: #{$jigsaw-prefix}-upload;
+$jigsaw-collapse: #{$jigsaw-prefix}-collapse;
+
+.#{$jigsaw-upload}-host {
+    display: flex;
+
+    &.jigsaw-upload-drag-over {
+        .#{$jigsaw-upload}-drop-area {
+            border-color: $brand-default;
+        }
+    }
+
+    .#{$jigsaw-upload}-drop-area {
+        width: 100%;
+        height: 100%;
+        border-width: 1px;
+        border-style: dashed;
+        border-color: $border-color-default;
+
+        .#{$jigsaw-upload}-hints {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 120px;
+
+            .#{$jigsaw-upload}-drop-icon {
+                height: 55%;
+                font-size: $icon-size-lg;
+                color: $icon-color-default;
+            }
+
+            .#{$jigsaw-upload}-drop-text {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+
+                .drop-text-hint {
+                    color: $font-color-default;
+                }
+
+                .drop-text-type {
+                    display: inline-flex;
+                    justify-content: center;
+                    width: 100%;
+                    padding: 0 5px;
+
+                    span {
+                        color: $font-color-hint;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+
+        .#{$jigsaw-upload}-results {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: calc(100% - 120px);
+
+            .#{$jigsaw-upload}-result-host {
+                .#{$jigsaw-collapse} {
+                    .#{$jigsaw-collapse}-pane:first-of-type {
+                        .#{$jigsaw-collapse}-item:first-child {
+                            border-top: 1px dashed $border-color-default;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

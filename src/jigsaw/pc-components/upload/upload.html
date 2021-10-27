@@ -1,0 +1,27 @@
+<div class="jigsaw-upload-drop-area" jigsaw-droppable (jigsawDragEnter)="_$fileDragEnterHandle()"
+    (jigsawDragOver)="_$fileDragOverHandle()" (jigsawDragLeave)="_$fileDragLeaveHandle($event)"
+    (jigsawDrop)="_$fileDropHandle($event)">
+    <div class="jigsaw-upload-hints">
+        <div class="jigsaw-upload-drop-icon">
+            <i class="iconfont iconfont-e153"></i>
+        </div>
+        <div class="jigsaw-upload-drop-text">
+            <p class="drop-text-hint">
+                <a j-upload #uploadEle [uploadTargetUrl]="targetUrl" [uploadFileType]="fileType"
+                    [uploadMultiple]="multiple" [uploadContentField]="contentField"
+                    [uploadFileNameField]="fileNameField" [uploadFileVerify]="fileVerify"
+                    [uploadAdditionalFields]="additionalFields" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
+                    [uploadImmediately]="uploadImmediately">{{'upload.select' | translate}}</a>
+                <span *ngIf="!multiple">{{'upload.singleFile' | translate }}</span>
+                <span *ngIf="multiple">{{'upload.multipleFiles' | translate }}</span>
+            </p>
+            <p class="drop-text-type">
+                <span *ngIf="!fileType">{{'upload.acceptAllTypes' | translate}}</span>
+                <span *ngIf="!!fileType">{{'upload.acceptSpecificTypes' | translate:{file: fileType} }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="jigsaw-upload-results" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+        <jigsaw-upload-result *ngIf="showResult" [uploader]="_$uploader" width="90%"></jigsaw-upload-result>
+    </div>
+</div>

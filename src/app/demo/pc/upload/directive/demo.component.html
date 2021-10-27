@@ -1,0 +1,62 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header class="main-header" [level]="1">Upload指令</jigsaw-header>
+
+    <div class="common-param-setting">
+        <jigsaw-header [level]="2">配置参数</jigsaw-header>
+        文件数目：
+        <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
+        <br>
+        <br>
+        文件类型：
+        <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg']">
+        </jigsaw-radios-lite>
+        <br>
+        <br>
+        文件大小：
+         最小限制 <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input> MB
+         最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
+        <br>
+        <br>
+        <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
+            (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
+            [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
+            上传
+        </j-button>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <jigsaw-header>极简模式1</jigsaw-header>
+        <div>
+            <p class="hints-text">给上传组件添加Loading（符合规范的Loading信息请<a href="/#/pc/upload/upload-result">参考这个demo</a>）</p>
+            <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
+                (uploadComplete)="getAllUploadFiles($event, 'button')" [uploadMultiple]="multiple"
+                [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
+                <j-font-loading *ngIf="isButtonUploadWaiting" width="16px" height="16px" color="#41addc">
+                </j-font-loading>
+                Upload
+            </j-button>
+        </div>
+
+        <jigsaw-header>极简模式2</jigsaw-header>
+        <div>
+            <p class="hints-text">指令可以自由赋予普通组件上传功能</p>
+            <a j-upload (uploadStart)="isLinkUploadWaiting = true" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
+                [uploadFileType]="fileType" [uploadMultiple]="multiple" (uploadProgress)="getUploadFile($event)"
+                (uploadComplete)="getAllUploadFiles($event, 'link')" class="link-upload">上传文件</a>
+            <j-font-loading *ngIf="isLinkUploadWaiting" width="16px" height="16px" color="#41addc"></j-font-loading>
+        </div>
+
+        <jigsaw-header [level]="2">极简模式3</jigsaw-header>
+        <p class="hints-text">展示结果（符合规范的结果展示请<a href="/#/pc/upload/upload-result">参考这个demo</a>）</p>
+        <a j-upload (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
+            [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType" [uploadMultiple]="multiple"
+            class="link-upload">上传文件</a>
+            <span>{{uploadedFile}}</span>
+    </div>
+</div>

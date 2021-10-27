@@ -11,14 +11,17 @@ import { JigsawCollapseModule } from '../collapse/collapse';
 import { JigsawProgressModule } from '../progress/progress';
 import {JigsawLoadingModule} from "../../common/components/loading/loading";
 import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
+import { JigsawUpload } from './upload';
+import { JigsawDroppableModule, JigsawDraggableModule } from '../../common/directive/dragdrop/index';
 
 @NgModule({
     imports: [
         PerfectScrollbarModule, JigsawTooltipModule, CommonModule, JigsawCollapseModule,
-        JigsawProgressModule, JigsawLoadingModule, TranslateModule.forChild(),
+        JigsawProgressModule, JigsawLoadingModule, JigsawDraggableModule,
+        JigsawDroppableModule, TranslateModule.forChild(),
     ],
-    declarations: [JigsawUploadDirective, JigsawUploadResult],
-    exports: [JigsawUploadDirective, JigsawUploadResult],
+    declarations: [JigsawUploadDirective, JigsawUploadResult, JigsawUpload],
+    exports: [JigsawUploadDirective, JigsawUploadResult, JigsawUpload],
     providers: [PopupService, TranslateService],
 })
 export class JigsawUploadModule {
@@ -80,7 +83,13 @@ export class JigsawUploadModule {
                 "Network connect timeout error": "错误详情：网络连接超时错误",
                 "fileTypeError": "错误详情：文件类型错误",
                 "fileMinSizeError": "错误详情：文件尺寸小于最小限制",
-                "fileMaxSizeError": "错误详情：文件尺寸大于最大限制"
+                "fileMaxSizeError": "错误详情：文件尺寸大于最大限制",
+
+                "select": "选择",
+                "singleFile": "或拖入文件，限单个文件。",
+                "multipleFiles": "或拖入文件，支持多个文件。",
+                "acceptAllTypes": "支持所有类型的文件",
+                "acceptSpecificTypes": "仅支持 {{ file }} 类型的文件"
             },
             en: {
                 "waiting": "Waiting",
@@ -138,7 +147,13 @@ export class JigsawUploadModule {
                 "Network connect timeout error": "Error detail: Network connect timeout error",
                 "fileTypeError": "Error detail: File type error",
                 "fileMinSizeError": "Error detail: Size of the file is less than the minSize",
-                "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize"
+                "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize",
+
+                "select": "Select",
+                "singleFile": "or drop file here, single file accepted.",
+                "multipleFiles": "or drop files here, multiple files accepted.",
+                "acceptAllTypes": "Accept all types of files",
+                "acceptSpecificTypes": "Accept {{ file }} files ONLY"
             }
         });
         translateService.setDefaultLang(translateService.getBrowserLang());
@@ -150,4 +165,5 @@ export class JigsawUploadModule {
 
 export * from '../../common/directive/upload/upload.directive';
 export * from '../../common/directive/upload/uploader-typings';
+export * from './upload'
 export * from './upload-result';
