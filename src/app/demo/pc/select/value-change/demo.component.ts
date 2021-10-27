@@ -150,6 +150,10 @@ export class SelectValueChangeDemoComponent {
     relatedValue = this.relateValueA;
     relatedSingleValue = this.relateSingleValueA;
 
+    bindValue = new ArrayCollection([
+        { label: "文本选项4" }
+    ]);
+
     public valueChange(selectedItem: any) {
         console.log("valueChange事件触发了", selectedItem);
     }
@@ -186,6 +190,20 @@ export class SelectValueChangeDemoComponent {
 
     public relateSelectChange2(selectedItem) {
         console.log(selectedItem)
+    }
+
+    public bindValueChange(selectedItem) {
+        console.log('双绑valueChange触发')
+        this.bindValue = new ArrayCollection([
+            { label: "文本选项10" },
+            { label: "文本选项11" }
+        ]);
+    }
+
+    public resetBindValue() {
+        this.bindValue = new ArrayCollection([
+            { label: "文本选项4" }
+        ]);
     }
 
     // ====================================================================
