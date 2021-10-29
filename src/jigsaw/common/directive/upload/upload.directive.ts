@@ -239,6 +239,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     public appendFiles(fileList) {
         const files = this._checkFiles(Array.from(fileList || []));
         this.files.push(...files);
+        this.change.emit(this.files);
     }
 
     public upload() {
