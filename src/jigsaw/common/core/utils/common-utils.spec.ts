@@ -75,6 +75,98 @@ describe('Unit Test for common-utils', () => {
         expect(r).toEqual(true);
         done();
     });
+    it('compareValue - with trackItemBy', (done) => {
+        expect(CommonUtils.compareValue(null, 0)).toEqual(false);
+        expect(CommonUtils.compareValue(undefined, 0)).toEqual(false);
+        expect(CommonUtils.compareValue(null, 1)).toEqual(false);
+        expect(CommonUtils.compareValue(undefined, 1)).toEqual(false);
+        expect(CommonUtils.compareValue('', null)).toEqual(false);
+        expect(CommonUtils.compareValue('', undefined)).toEqual(false);
+        expect(CommonUtils.compareValue('a', null)).toEqual(false);
+        expect(CommonUtils.compareValue('a', undefined)).toEqual(false);
+
+        expect(CommonUtils.compareValue('aa', {})).toEqual(false);
+        expect(CommonUtils.compareValue(1234, {})).toEqual(false);
+        expect(CommonUtils.compareValue(true, {})).toEqual(false);
+        expect(CommonUtils.compareValue('', {})).toEqual(false);
+        expect(CommonUtils.compareValue(0, {})).toEqual(false);
+        expect(CommonUtils.compareValue(false, {})).toEqual(false);
+        expect(CommonUtils.compareValue({}, 'aa')).toEqual(false);
+        expect(CommonUtils.compareValue({}, 1234)).toEqual(false);
+        expect(CommonUtils.compareValue({}, true)).toEqual(false);
+        expect(CommonUtils.compareValue({}, '')).toEqual(false);
+        expect(CommonUtils.compareValue({}, 0)).toEqual(false);
+        expect(CommonUtils.compareValue({}, false)).toEqual(false);
+        expect(CommonUtils.compareValue('aa', 'aa')).toEqual(true);
+        expect(CommonUtils.compareValue(1234, 1234)).toEqual(true);
+        expect(CommonUtils.compareValue(true, true)).toEqual(true);
+        // 基本类型不做严格比较
+        expect(CommonUtils.compareValue('', 0)).toEqual(true);
+        expect(CommonUtils.compareValue('', false)).toEqual(true);
+        expect(CommonUtils.compareValue(false, 0)).toEqual(true);
+
+        expect(CommonUtils.compareValue([], 'aa')).toEqual(false);
+        expect(CommonUtils.compareValue(123, [1, 2])).toEqual(false);
+        expect(CommonUtils.compareValue([123], [1, 2])).toEqual(false);
+        expect(CommonUtils.compareValue([], [])).toEqual(true);
+        expect(CommonUtils.compareValue([1, 2], ['1', 2])).toEqual(true);
+        expect(CommonUtils.compareValue([1, 2], ['1', 3])).toEqual(false);
+        expect(CommonUtils.compareValue([[1], [2]], [['1'], [2]])).toEqual(true);
+
+        const a = {a:1, b:2, c:3};
+        expect(CommonUtils.compareValue(a, a)).toEqual(true);
+        expect(CommonUtils.compareValue(a, a, [])).toEqual(true);
+        expect(CommonUtils.compareValue({a:1}, {a:1})).toEqual(false);
+        expect(CommonUtils.compareValue({a:1}, {a:1}, [])).toEqual(false);
+
+        expect(CommonUtils.compareValue(a, a, 'a')).toEqual(true);
+        expect(CommonUtils.compareValue(a, a, ['a'])).toEqual(true);
+        expect(CommonUtils.compareValue(a, a, 'a , b')).toEqual(true);
+        expect(CommonUtils.compareValue({a:1, b:2, c:3}, {a:1, b:2, c:{}}, 'a , b'))
+            .toEqual(true);
+        expect(CommonUtils.compareValue({a:1, b:2, c:3}, {a:1, b:1, c:3}, 'a , b'))
+            .toEqual(false);
+        expect(CommonUtils.compareValue(a, a, 'aaa , bbb'))
+            .toEqual(true);
+        expect(CommonUtils.compareValue({a:1, b:2, c:3}, {a:1, b:2, c:{}}, 'aaa , bbb'))
+            .toEqual(true);
+        expect(CommonUtils.compareValue({a:1, b:2, c:3}, {a:1, b:2, c:{}}, 'c'))
+            .toEqual(false);
+
+        // 兼容compareWithKeyProperty用例
+        let r = CommonUtils.compareValue({a: 1, b: 2, c: 3}, {a: 1, b: 2, c: {}}, ['a', 'b']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareValue({a: 1, b: 2, c: 3}, {a: 1, b: 2, c: {}}, ['c']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue(null, {a: 1, b: 2, c: {}}, ['a', 'b']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue({}, null, ['a', 'b']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue({a: 1}, 1, ['a']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue(1, {a: 1}, ['a']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue(2, 2, ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareValue(2, '2', ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareValue(true, true, ['prop']);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareValue('true', true, ['prop']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue('abc', 'efg', ['prop']);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue({}, {}, null);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue({}, {}, []);
+        expect(r).toEqual(false);
+        r = CommonUtils.compareValue("aa", "aa", null);
+        expect(r).toEqual(true);
+        r = CommonUtils.compareValue("123", 123, null);
+        expect(r).toEqual(true);
+
+        done();
+    });
     it('isEmptyObject', (done) => {
         let r = CommonUtils.isEmptyObject({});
         expect(r).toEqual(true);
@@ -123,15 +215,15 @@ describe('Unit Test for common-utils', () => {
         r =  CommonUtils.hslToRGB('hsl(0,0%,0%)');
         expect(r === "rgb(0,0,0)").toEqual(true);
         r =  CommonUtils.hslAToRGBA('hsla(0,0%,0%,0.5)');
-        expect(r === "rgba(0,0,0,0.5)").toEqual(true); 
+        expect(r === "rgba(0,0,0,0.5)").toEqual(true);
         r =  CommonUtils.hslAToRGBA('hsla(0, 0%, 0%, .5)');
-        expect(r === "rgba(0,0,0,0.5)").toEqual(true); 
+        expect(r === "rgba(0,0,0,0.5)").toEqual(true);
         r =  CommonUtils.anyToRGB('#000');
-        expect(r === "rgb(0,0,0)").toEqual(true); 
+        expect(r === "rgb(0,0,0)").toEqual(true);
         r =  CommonUtils.adjustFontColor('#000');
-        expect(r === "dark").toEqual(true); 
+        expect(r === "dark").toEqual(true);
         r =  CommonUtils.adjustFontColor('#fff');
-        expect(r === "light").toEqual(true); 
+        expect(r === "light").toEqual(true);
         done();
     });
 });
