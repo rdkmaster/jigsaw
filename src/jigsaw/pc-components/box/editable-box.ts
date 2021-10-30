@@ -149,7 +149,22 @@ export class JigsawEditableBox extends JigsawBox {
     }
 
     protected _setChildrenBox() {
-        super._setChildrenBox();
+        if (!this._$childrenBox) {
+            return;
+        }
+        this._$childrenBox.forEach((box, index) => {
+            box.parent = this;
+            this._supportSetSize(box, this);
+            if (this.resizable && index != 0) {
+                // 第一个child box没有resize line
+                // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
+                // 异步消除变更检查报错
+                this.runMicrotask(() => {
+                    box.showResizeLine = true;
+                    box._cdr.markForCheck();
+                });
+            }
+        });
         if (!this._$childrenBox || !this.gap) {
             return;
         }
@@ -313,4 +328,33 @@ export class JigsawEditableBox extends JigsawBox {
         }
     }
 
+    protected _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
+        const curIndex = this._getCurrentIndex();
+        this._rawOffsets.splice(curIndex, 1, updateOffset);
+
+        const sizes = this._rawOffsets.reduce((ss, offset, index) => {
+            if(index > 0) {
+                ss.push(offset - this._rawOffsets[index - 1])
+            }
+            return ss;
+        }, []);
+
+        return sizes.map(size => size / (this.parent.element[sizeProp]) * 100);
+    }
+
+    public _$handleResize(offset: number, emitEvent: boolean = false) {
+        if (!this.parent) return;
+
+        const sizeProp = this._getPropertyByDirection()[1];
+        const sizeRatios = this._computeSizeRatios(sizeProp, offset);
+        this.parent.childrenBox.forEach((box, index) => {
+            if(box._isFixedSize) {
+                // 固定尺寸的设置basis，而不是grow
+                box.element.style.flexBasis = this.parent.element[this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth'] * sizeRatios[index] / 100 + 'px';
+                box.element.style.flexGrow = '0';
+            } else {
+                box.grow = sizeRatios[index];
+            }
+        });
+    }
 }

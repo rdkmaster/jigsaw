@@ -197,7 +197,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
 
-    private _rawOffsets: number[];
+    protected _rawOffsets: number[];
 
     /**
      * @internal
@@ -253,7 +253,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         }
     }
 
-    private _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
+    protected _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
         const curIndex = this._getCurrentIndex();
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
@@ -297,7 +297,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         return offsets;
     }
 
-    private _getCurrentIndex(): number {
+    protected _getCurrentIndex(): number {
         let index: number;
         if (this.parent.childrenBox instanceof QueryList) {
             index = this.parent.childrenBox.toArray().findIndex(box => box == this);
@@ -307,7 +307,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         return index;
     }
 
-    private _getPropertyByDirection(): string[] {
+    protected _getPropertyByDirection(): string[] {
         return [this.parent.direction == 'column' ? 'top' : 'left',
             this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth']
     }
