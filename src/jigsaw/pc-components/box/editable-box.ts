@@ -347,10 +347,25 @@ export class JigsawEditableBox extends JigsawBox {
 
         const sizeProp = this._getPropertyByDirection()[1];
         const sizeRatios = this._computeSizeRatios(sizeProp, offset);
+        const length = this.parent.childrenBox.length;
         this.parent.childrenBox.forEach((box, index) => {
             if(box._isFixedSize) {
                 // 固定尺寸的设置basis，而不是grow
-                box.element.style.flexBasis = this.parent.element[this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth'] * sizeRatios[index] / 100 + 'px';
+                let offsetParam, paddingSize, gapSize;
+                const parentStyle = getComputedStyle(this.parent.element);
+                const boxStyle = getComputedStyle(box.element);
+                if(this.parent.direction == 'column') {
+                    offsetParam = 'offsetHeight';
+                    paddingSize = index == 0 ? Number(parentStyle.paddingTop.replace('px', '')) :
+                        index == length -1 ? Number(parentStyle.paddingBottom.replace('px', '')) : 0;
+                    gapSize = index == length -1 ? 0 : Number(boxStyle.marginBottom.replace('px', ''));
+                } else {
+                    offsetParam = 'offsetWidth';
+                    paddingSize = index == 0 ? Number(parentStyle.paddingLeft.replace('px', '')) :
+                        index == length -1 ? Number(parentStyle.paddingRight.replace('px', '')) : 0;
+                    gapSize = index == length -1 ? 0 : Number(boxStyle.marginRight.replace('px', ''));
+                }
+                box.element.style.flexBasis = (this.parent.element[offsetParam] - paddingSize) * sizeRatios[index] / 100 - gapSize + 'px';
                 box.element.style.flexGrow = '0';
             } else {
                 box.grow = sizeRatios[index];
