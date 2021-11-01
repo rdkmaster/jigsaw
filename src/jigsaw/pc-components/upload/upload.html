@@ -26,6 +26,6 @@
     </div>
     <div class="jigsaw-upload-results"
         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-        <jigsaw-upload-result *ngIf="showResult" [uploader]="_$uploader" width="90%"></jigsaw-upload-result>
+        <jigsaw-upload-result *ngIf="showResult" [uploader]="_$uploader" width="90%" (remove)="remove.emit($event)"></jigsaw-upload-result>
     </div>
 </div>

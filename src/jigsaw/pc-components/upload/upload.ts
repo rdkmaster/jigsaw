@@ -45,6 +45,9 @@ export class JigsawUpload extends JigsawUploadBase {
     @Output('uploadChange')
     public change = new EventEmitter<UploadFileInfo[]>();
 
+    @Output('uploadRemove')
+    public remove = new EventEmitter<UploadFileInfo>();
+
     /**
      * @internal
      */

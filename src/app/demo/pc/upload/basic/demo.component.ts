@@ -27,6 +27,10 @@ export class UploadBasicDemoComponent {
         console.log("uploadChange触发了", $event)
     }
 
+    uploadRemove($event) {
+        console.log("uploadRemove触发了", $event)
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

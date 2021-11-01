@@ -211,9 +211,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
-                    if (this._appendFiles()) {
-                        this.change.emit(this.files);
-                    }
+                    this._appendFiles();
                 }
             });
 
@@ -233,6 +231,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             fileInput.value = null;
         }
         this.files.push(...files);
+        if (files.length > 0) {
+            this.change.emit(files);
+        }
         return this.files.length > 0;
     }
 
