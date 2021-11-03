@@ -2,10 +2,10 @@ import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-  templateUrl: './demo.component.html',
+    templateUrl: './demo.component.html',
 })
 export class SelectPresetDemoComponent {
-    cityListForSelect = new ArrayCollection([
+    cities = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},
         {label: "南京"},
@@ -13,18 +13,20 @@ export class SelectPresetDemoComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
-    selectedCityForSelect = this.cityListForSelect[0];
+    selectedCity = this.cities[0];
 
-    selectedCityName: string = this.selectedCityForSelect.label;
-
-    public selectChange(selectedItem:any){
-        this.selectedCityName = selectedItem.label;
+    get selectedCityName(): string {
+        return this.selectedCity?.label;
     }
 
-    public changePreset(){
-        this.selectedCityForSelect = this.cityListForSelect[Math.floor(Math.random()*this.cityListForSelect.length)];
+    public changePreset() {
+        this.selectedCity = this.cities[Math.floor(Math.random() * this.cities.length)];
     }
-    
+
+    public selectNone() {
+        this.selectedCity = undefined;
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
