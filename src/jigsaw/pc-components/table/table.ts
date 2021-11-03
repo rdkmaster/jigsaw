@@ -372,14 +372,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             if (!headerEle) {
                 return;
             }
-            const bodyRangeEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-body-range");
-            if (!bodyRangeEle) {
+            const tableEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-range");
+            if (!tableEle) {
                 return;
             }
             const headerBottom = headerEle.getBoundingClientRect().bottom;
-            const bodyBottom = bodyRangeEle.getBoundingClientRect().bottom;
+            const bodyBottom = tableEle.getBoundingClientRect().bottom;
             const containerSize = bodyBottom - headerBottom - 1;
-            console.log(bodyRangeEle,headerEle)
+            console.log(tableEle,headerEle)
             console.log(bodyBottom,headerBottom,containerSize)
             if (!!data.pagingInfo.containerSize && data.pagingInfo.containerSize === containerSize) {
                 return
@@ -922,6 +922,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
             'max-height', this._maxHeight);
         this._tableHeaderElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
+        // 自动分页
+        this._updateAutoPaging();
     }
 
     ngOnDestroy() {
