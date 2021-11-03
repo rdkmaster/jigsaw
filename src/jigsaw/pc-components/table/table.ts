@@ -364,6 +364,30 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
     }
 
+    private _updateAutoPaging(): void {
+        console.log(1)
+        const data: IPageable = <any>this.data;
+        if (data?.hasOwnProperty('pagingInfo') && data?.pagingInfo.autoPaging) {
+            const headerEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
+            if (!headerEle) {
+                return;
+            }
+            const tableEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-range");
+            if (!tableEle) {
+                return;
+            }
+            const headerBottom = headerEle.getBoundingClientRect().bottom;
+            const bodyBottom = tableEle.getBoundingClientRect().bottom;
+            const containerSize = bodyBottom - headerBottom - 1;
+            console.log(tableEle,headerEle)
+            console.log(bodyBottom,headerBottom,containerSize)
+            if (!!data.pagingInfo.containerSize && data.pagingInfo.containerSize === containerSize) {
+                return
+            }
+            data.pagingInfo.containerSize = containerSize;
+        }
+    }
+
     /**
      * 生成混合后的列定义序列
      */
@@ -412,6 +436,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.runMicrotask(() => {
             // 自动添加空白行
             this._updateFillUpBlankRow();
+            // 自动分页
+            this._updateAutoPaging();
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
@@ -602,6 +628,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._handleScrollBar();
         this._setVerticalScrollbarOffset();
         this._updateFillUpBlankRow();
+        this._updateAutoPaging();
     }
 
     private _tableHeaderElement: HTMLElement;
@@ -895,6 +922,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
             'max-height', this._maxHeight);
         this._tableHeaderElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
+        // 自动分页
+        this._updateAutoPaging();
     }
 
     ngOnDestroy() {

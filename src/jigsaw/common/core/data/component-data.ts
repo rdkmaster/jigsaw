@@ -1,8 +1,8 @@
-import {debounceTime} from "rxjs/operators";
-import {Subscription} from "rxjs";
-import {HttpHeaders, HttpParams, HttpParameterCodec} from "@angular/common/http";
-import {EventEmitter} from "@angular/core";
-import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
+import { debounceTime } from "rxjs/operators";
+import { Subscription } from "rxjs";
+import { HttpHeaders, HttpParams, HttpParameterCodec } from "@angular/common/http";
+import { EventEmitter } from "@angular/core";
+import { CallbackRemoval, CommonUtils } from "../utils/common-utils";
 
 /**
  * 参考 `IAjaxComponentData.dataReviser`的说明
@@ -29,7 +29,7 @@ export class HttpClientOptions {
      *
      * $demo = /data-encapsulation/array-ssp
      */
-    public params?: { [key: string]: any | any [] } | HttpParams;
+    public params?: { [key: string]: any | any[] } | HttpParams;
     public reportProgress?: boolean;
     public responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     public withCredentials?: boolean;
@@ -54,7 +54,7 @@ export class HttpClientOptions {
             return;
         }
         if (typeof options === 'string') {
-            options = {url: options, method: 'get'};
+            options = { url: options, method: 'get' };
         }
         if (!options.hasOwnProperty('url')) {
             console.error('invalid http options, need a url property!');
@@ -92,7 +92,7 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
             }
             result[p] = typeof params[p] === 'object' ? JSON.stringify(params[p]) : params[p];
         }
-        return new HttpParams({encoder: httpParameterEncoder, fromObject: result});
+        return new HttpParams({ encoder: httpParameterEncoder, fromObject: result });
     }
 }
 
@@ -252,7 +252,7 @@ export interface IAjaxComponentData extends IComponentData {
      * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
-    onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
+    onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval;
 
     /**
      * Ajax请求失败的时候，执行`callback`函数，一般需要在这个函数里停止loading效果。
@@ -502,28 +502,28 @@ export interface ISlicedData extends IComponentData {
 
 export class DataRefreshCallback {
     constructor(public fn: (thisData: IComponentData) => void,
-                public context?: any) {
+        public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
 
 export class AjaxSuccessCallback {
     constructor(public fn: (data: any) => void,
-                public context?: any) {
+        public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
 
 export class AjaxErrorCallback {
     constructor(public fn: (error: Response) => void,
-                public context?: any) {
+        public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
 
 export class AjaxCompleteCallback {
     constructor(public fn: () => void,
-                public context?: any) {
+        public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
@@ -627,9 +627,9 @@ export class PagingInfo implements IEmittable {
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
     constructor(currentPage: number = 1,
-                pageSize: number = 20,
-                totalPage: number = 1,
-                totalRecord: number = 0) {
+        pageSize: number = 20,
+        totalPage: number = 1,
+        totalRecord: number = 0) {
         this._currentPage = currentPage;
         this._pageSize = pageSize;
         this._totalPage = totalPage;
@@ -639,6 +639,10 @@ export class PagingInfo implements IEmittable {
     private _currentPage: number = 1;
     private _pageSize: number = 20;
     private _totalPage: number = 1;
+
+    private _autoPaging: boolean = false;
+    private _containerSize: number;
+    private _itemSize: number;
 
     /**
      * 总记录数
@@ -658,7 +662,10 @@ export class PagingInfo implements IEmittable {
     }
 
     public set pageSize(value: number) {
-        if (isNaN(value) || value < 1) return;
+        console.log(2222222222222, value)
+        if (isNaN(value) || value < 1 || this.autoPaging || this._pageSize === value) {
+            return;
+        };
         this._pageSize = value;
         this.emit();
     }
@@ -691,13 +698,76 @@ export class PagingInfo implements IEmittable {
         return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
 
+    /* 
+     * 自动分页
+     *
+     * 自动分页的开关，开启时，会依据containerSize 和 itemSize 参数计算pageSize
+     * 在自动分页开启时，直接操作pageSize无效
+     */
+    public get autoPaging(): boolean {
+        return this._autoPaging;
+    }
+
+    public set autoPaging(value: boolean) {
+        if (this._autoPaging == !!value) {
+            return;
+        }
+        if (!!value) {
+            this._calcAutoPageSize();
+        }
+        this._autoPaging = !!value;
+    }
+
+    /* 
+     * 容器大小
+     * 如：table组件内容高度
+     */
+    public get containerSize(): number {
+        return this._containerSize;
+    }
+
+    public set containerSize(value: number) {
+        if (isNaN(value) || value < 1) {
+            return;
+        }
+        this._containerSize = value;
+        this._calcAutoPageSize();
+    }
+
+    /* 
+     * 单个数据大小
+     * 如：table组件单行高度
+     */
+    public get itemSize(): number {
+        return this._itemSize;
+    }
+
+    public set itemSize(value: number) {
+        if (isNaN(value) || value < 1) {
+            return;
+        }
+        this._itemSize = value;
+        this._calcAutoPageSize();
+    }
+
+    private _calcAutoPageSize(): void {
+        console.log("计算", this.autoPaging, isNaN(this.containerSize), isNaN(this.itemSize))
+        if (!this.autoPaging || isNaN(this.containerSize) || isNaN(this.itemSize)) {
+            return;
+        }
+        const newPageSize = Math.floor(this.containerSize / this.itemSize) ? Math.floor(this.containerSize / this.itemSize) : 1;
+        this._pageSize = newPageSize;
+        this.emit();
+        console.log(111111111, Math.floor(this.containerSize / this.itemSize))
+    }
+
     private _emitter = new EventEmitter<any>();
 
     public emit(value?: any): void {
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: (value:any) => void): Subscription {
+    public subscribe(callback?: (value: any) => void): Subscription {
         return this._emitter.pipe(debounceTime(300)).subscribe(callback);
     }
 
@@ -729,20 +799,20 @@ export class DataFilterInfo {
                  *
                  *
                  */
-                public key: string = '',
-                /**
-                 * 在这些字段中过滤
-                 */
-                public field?: string[] | number[],
-                /**
-                 * 过滤函数源码，主要是传给服务端做自定义过滤用的
-                 */
-                public rawFunction?: string,
-                /**
-                 * `rawFunction`执行时的上下文
-                 */
-                public context?: any
-                ) {
+        public key: string = '',
+        /**
+         * 在这些字段中过滤
+         */
+        public field?: string[] | number[],
+        /**
+         * 过滤函数源码，主要是传给服务端做自定义过滤用的
+         */
+        public rawFunction?: string,
+        /**
+         * `rawFunction`执行时的上下文
+         */
+        public context?: any
+    ) {
     }
 }
 
@@ -801,8 +871,8 @@ export enum SortOrder {
  */
 export class DataSortInfo {
     constructor(public as: SortAs | string = SortAs.string,
-                public order: SortOrder | string = SortOrder.asc,
-                public field: string | number) {
+        public order: SortOrder | string = SortOrder.asc,
+        public field: string | number) {
     }
 }
 
@@ -845,7 +915,7 @@ export interface IEmittable {
      * @param callback 事件回调函数
      * @returns 返回当前订阅的回执，利用它可以取消本次订阅
      */
-    subscribe(callback?: (value:any) => void): Subscription;
+    subscribe(callback?: (value: any) => void): Subscription;
 
     /**
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
