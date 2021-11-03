@@ -352,7 +352,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !validData.find(data => CommonUtils.compareValue(item, data, this._trackItemBy)))
+            item => !validData.find(data => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
     /**
@@ -364,7 +364,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && validData.every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this._trackItemBy)))
+            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
     protected _allSelectCheck() {
@@ -444,10 +444,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
+                this._changeDetector.markForCheck();
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
-                this._changeDetector.markForCheck();
             })
         }
     }
