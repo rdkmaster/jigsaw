@@ -443,7 +443,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
-                this._changeDetector.markForCheck();
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
