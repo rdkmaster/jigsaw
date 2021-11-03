@@ -330,9 +330,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$checkSelectAll() {
+        this._changeDetector.markForCheck();
         if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
-            this._changeDetector.markForCheck();
             return;
         }
         if (this._allSelectCheck()) {
@@ -340,7 +340,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
-        this._changeDetector.markForCheck();
     }
 
     /**
