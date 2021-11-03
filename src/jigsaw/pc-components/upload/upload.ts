@@ -54,10 +54,12 @@ export class JigsawUpload extends JigsawUploadBase {
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
     public _$uploader: IUploader;
 
+    public get files(): UploadFileInfo[] {
+        return this._$uploader.files;
+    }
+
     protected _width: string = "400px";
-
     protected _minSize: number = 0;
-
     protected _maxSize: number = 16384;
 
     /**
