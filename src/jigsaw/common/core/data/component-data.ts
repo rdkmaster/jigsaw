@@ -1,8 +1,8 @@
-import { debounceTime } from "rxjs/operators";
-import { Subscription } from "rxjs";
-import { HttpHeaders, HttpParams, HttpParameterCodec } from "@angular/common/http";
-import { EventEmitter } from "@angular/core";
-import { CallbackRemoval, CommonUtils } from "../utils/common-utils";
+import {debounceTime} from "rxjs/operators";
+import {Subscription} from "rxjs";
+import {HttpHeaders, HttpParams, HttpParameterCodec} from "@angular/common/http";
+import {EventEmitter} from "@angular/core";
+import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 
 /**
  * 参考 `IAjaxComponentData.dataReviser`的说明
@@ -29,7 +29,7 @@ export class HttpClientOptions {
      *
      * $demo = /data-encapsulation/array-ssp
      */
-    public params?: { [key: string]: any | any[] } | HttpParams;
+    public params?: { [key: string]: any | any [] } | HttpParams;
     public reportProgress?: boolean;
     public responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     public withCredentials?: boolean;
@@ -54,7 +54,7 @@ export class HttpClientOptions {
             return;
         }
         if (typeof options === 'string') {
-            options = { url: options, method: 'get' };
+            options = {url: options, method: 'get'};
         }
         if (!options.hasOwnProperty('url')) {
             console.error('invalid http options, need a url property!');
@@ -92,7 +92,7 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
             }
             result[p] = typeof params[p] === 'object' ? JSON.stringify(params[p]) : params[p];
         }
-        return new HttpParams({ encoder: httpParameterEncoder, fromObject: result });
+        return new HttpParams({encoder: httpParameterEncoder, fromObject: result});
     }
 }
 
@@ -252,7 +252,7 @@ export interface IAjaxComponentData extends IComponentData {
      * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
      */
-    onAjaxSuccess(callback: (data: any) => void, context?: any): CallbackRemoval;
+    onAjaxSuccess (callback: (data: any) => void, context?: any): CallbackRemoval;
 
     /**
      * Ajax请求失败的时候，执行`callback`函数，一般需要在这个函数里停止loading效果。
@@ -502,28 +502,28 @@ export interface ISlicedData extends IComponentData {
 
 export class DataRefreshCallback {
     constructor(public fn: (thisData: IComponentData) => void,
-        public context?: any) {
+                public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
 
 export class AjaxSuccessCallback {
     constructor(public fn: (data: any) => void,
-        public context?: any) {
+                public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
 
 export class AjaxErrorCallback {
     constructor(public fn: (error: Response) => void,
-        public context?: any) {
+                public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
 
 export class AjaxCompleteCallback {
     constructor(public fn: () => void,
-        public context?: any) {
+                public context?: any) {
         this.context = !!context ? context : fn;
     }
 }
@@ -627,9 +627,9 @@ export class PagingInfo implements IEmittable {
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
     constructor(currentPage: number = 1,
-        pageSize: number = 20,
-        totalPage: number = 1,
-        totalRecord: number = 0) {
+                pageSize: number = 20,
+                totalPage: number = 1,
+                totalRecord: number = 0) {
         this._currentPage = currentPage;
         this._pageSize = pageSize;
         this._totalPage = totalPage;
@@ -662,7 +662,6 @@ export class PagingInfo implements IEmittable {
     }
 
     public set pageSize(value: number) {
-        console.log(2222222222222, value)
         if (isNaN(value) || value < 1 || this.autoPaging || this._pageSize === value) {
             return;
         };
@@ -767,7 +766,7 @@ export class PagingInfo implements IEmittable {
         this._emitter.emit(value);
     }
 
-    public subscribe(callback?: (value: any) => void): Subscription {
+    public subscribe(callback?: (value:any) => void): Subscription {
         return this._emitter.pipe(debounceTime(300)).subscribe(callback);
     }
 
@@ -799,20 +798,20 @@ export class DataFilterInfo {
                  *
                  *
                  */
-        public key: string = '',
-        /**
-         * 在这些字段中过滤
-         */
-        public field?: string[] | number[],
-        /**
-         * 过滤函数源码，主要是传给服务端做自定义过滤用的
-         */
-        public rawFunction?: string,
-        /**
-         * `rawFunction`执行时的上下文
-         */
-        public context?: any
-    ) {
+                public key: string = '',
+                /**
+                 * 在这些字段中过滤
+                 */
+                public field?: string[] | number[],
+                /**
+                 * 过滤函数源码，主要是传给服务端做自定义过滤用的
+                 */
+                public rawFunction?: string,
+                /**
+                 * `rawFunction`执行时的上下文
+                 */
+                public context?: any
+                ) {
     }
 }
 
@@ -871,8 +870,8 @@ export enum SortOrder {
  */
 export class DataSortInfo {
     constructor(public as: SortAs | string = SortAs.string,
-        public order: SortOrder | string = SortOrder.asc,
-        public field: string | number) {
+                public order: SortOrder | string = SortOrder.asc,
+                public field: string | number) {
     }
 }
 
@@ -915,7 +914,7 @@ export interface IEmittable {
      * @param callback 事件回调函数
      * @returns 返回当前订阅的回执，利用它可以取消本次订阅
      */
-    subscribe(callback?: (value: any) => void): Subscription;
+    subscribe(callback?: (value:any) => void): Subscription;
 
     /**
      * 取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。
