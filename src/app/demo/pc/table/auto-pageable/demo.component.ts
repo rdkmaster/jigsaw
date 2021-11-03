@@ -17,7 +17,6 @@ export class TableAutoPageableDemoComponent {
         });
         this.pageable.pagingInfo.autoPaging = true;
         this.pageable.pagingInfo.itemSize = 30;
-        // this.pageable.pagingInfo.containerSize = 30;
     }
 
     // ====================================================================

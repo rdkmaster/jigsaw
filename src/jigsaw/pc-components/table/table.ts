@@ -365,22 +365,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _updateAutoPaging(): void {
-        console.log(1)
         const data: IPageable = <any>this.data;
         if (data?.hasOwnProperty('pagingInfo') && data?.pagingInfo.autoPaging) {
-            const headerEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
-            if (!headerEle) {
-                return;
-            }
             const tableEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-range");
             if (!tableEle) {
                 return;
             }
-            const headerBottom = headerEle.getBoundingClientRect().bottom;
-            const bodyBottom = tableEle.getBoundingClientRect().bottom;
-            const containerSize = bodyBottom - headerBottom - 1;
-            console.log(tableEle,headerEle)
-            console.log(bodyBottom,headerBottom,containerSize)
+            const bodyHeight = tableEle.getBoundingClientRect().bottom - tableEle.getBoundingClientRect().top;
+            const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 41;
+
             if (!!data.pagingInfo.containerSize && data.pagingInfo.containerSize === containerSize) {
                 return
             }
