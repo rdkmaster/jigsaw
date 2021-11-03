@@ -332,6 +332,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$checkSelectAll() {
         if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
+            this._changeDetector.markForCheck();
             return;
         }
         if (this._allSelectCheck()) {
