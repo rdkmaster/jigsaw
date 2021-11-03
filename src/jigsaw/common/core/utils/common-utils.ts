@@ -1,6 +1,6 @@
-// @dynamic
 import {JigsawArray} from "./data-collection-utils";
 
+// @dynamic
 export class CommonUtils {
 
     // to avoid compodoc generation error
