@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
 import {ArrayCollection} from "jigsaw/public_api";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
@@ -9,15 +8,15 @@ import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 })
 export class SelectAsyncComponent {
     constructor(public http: HttpClient) {
-        this.citys = new ArrayCollection();
-        this.citys.http = http;
-        this.citys.fromAjax({url: '/mock-data/select/async/area', params: {provinceId: '10'}});
-        this.citys.onAjaxComplete(() => {
-            console.log(this.citys);
+        this.cities = new ArrayCollection();
+        this.cities.http = http;
+        this.cities.fromAjax({url: '/mock-data/select/async/area', params: {provinceId: '10'}});
+        this.cities.onAjaxComplete(() => {
+            console.log(this.cities);
         });
     }
 
-    citys: ArrayCollection<any>;
+    cities: ArrayCollection<any>;
     selectedCity: any;
     selectedCityName: string;
 

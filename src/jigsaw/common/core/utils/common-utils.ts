@@ -1,6 +1,6 @@
-import { ArrayCollection } from '../data/array-collection';
-
 // @dynamic
+import {JigsawArray} from "./data-collection-utils";
+
 export class CommonUtils {
 
     // to avoid compodoc generation error
@@ -69,7 +69,8 @@ export class CommonUtils {
         }
 
         // 对数组类型，认为应该比较各自包含的元素，即不把数组当做对象去比较，因此数组与非数组的比较没有意义
-        const isArr1 = item1 instanceof Array || item1 instanceof ArrayCollection, isArr2 = item2 instanceof Array || item2 instanceof ArrayCollection;
+        const isArr1 = item1 instanceof Array || item1 instanceof JigsawArray;
+        const isArr2 = item2 instanceof Array || item2 instanceof JigsawArray;
         if ((isArr1 && !isArr2) || (!isArr1 && isArr2)) {
             return false;
         }

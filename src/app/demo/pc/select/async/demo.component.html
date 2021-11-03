@@ -9,11 +9,11 @@
     <div class="live-demo">
         <jigsaw-header [level]="2">服务端取数据</jigsaw-header>
         <j-select [(value)]="selectedCity"
-                       (valueChange)="selectChange($event)"
-                       labelField="name"
-                       placeholder="请选择城市"
-                       [optionCount]="4"
-                       [data]="citys">
+                  (valueChange)="selectChange($event)"
+                  labelField="name"
+                  placeholder="请选择城市"
+                  [optionCount]="4"
+                  [data]="cities">
         </j-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>

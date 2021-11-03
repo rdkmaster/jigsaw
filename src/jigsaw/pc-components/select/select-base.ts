@@ -259,15 +259,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     public set value(newValue: any) {
-        let trackItemBy: string[];
-        if (this.trackItemBy) {
-            trackItemBy =
-                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
-                    ? <string[]>this.trackItemBy
-                    : [this.trackItemBy.toString()];
-        }
-        
-        if (this.initialized && CommonUtils.compareValue(this._value, newValue, trackItemBy)) {
+        if (this.initialized && CommonUtils.compareValue(this._value, newValue, this.trackItemBy)) {
             return;
         }
 
@@ -359,7 +351,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !validData.find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
+            item => !validData.find(data => CommonUtils.compareValue(item, data, this._trackItemBy)))
     }
 
     /**
@@ -371,7 +363,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && validData.every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
+            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this._trackItemBy)))
     }
 
     protected _allSelectCheck() {
