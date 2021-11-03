@@ -259,12 +259,15 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     public set value(newValue: any) {
-        if (this._value === newValue) {
-            return;
+        let trackItemBy: string[];
+        if (this.trackItemBy) {
+            trackItemBy =
+                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
+                    ? <string[]>this.trackItemBy
+                    : [this.trackItemBy.toString()];
         }
-
-        if (this._$selectedItems === newValue) {
-            this._value = newValue;
+        
+        if (this.initialized && CommonUtils.compareValue(this._value, newValue, trackItemBy)) {
             return;
         }
 
