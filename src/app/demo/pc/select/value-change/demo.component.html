@@ -43,5 +43,5 @@
 
 <jigsaw-header>value双向绑定</jigsaw-header>
 <jigsaw-select [data]="dataList" [multipleSelect]="true" [(value)]="bindValue" placeholder="选择选项后更改值"
-    (valueChange)="bindValueChange($event)"></jigsaw-select>
+    (valueChange)="bindValueChange()"></jigsaw-select>
 <jigsaw-button (click)="resetBindValue()">重置数据</jigsaw-button>
