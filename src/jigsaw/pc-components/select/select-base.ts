@@ -259,10 +259,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     public set value(newValue: any) {
-        const changed = this._setValue(newValue);
-        if (!changed) {
+        if (this.initialized && CommonUtils.compareValue(this._value, newValue, this.trackItemBy)) {
             return;
         }
+
+        this._value = newValue;
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
                 this._$selectedItems = this.multipleSelect ? newValue : [newValue];
@@ -271,30 +272,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             }
             this._$checkSelectAll();
         })
-    }
-
-    protected _setValue(newValue: any): boolean {
-        if (this._$selectedItems == newValue) {
-            this._value = newValue;
-            return false;
-        }
-
-        if (this._value == newValue) {
-            return false;
-        }
-
-        let trackItemBy: string[];
-        if (this.trackItemBy) {
-            trackItemBy =
-                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
-                    ? <string[]>this.trackItemBy
-                    : [this.trackItemBy.toString()];
-        }
-        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
-            return false;
-        }
-        this._value = newValue;
-        return true;
     }
 
     /**
@@ -353,6 +330,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$checkSelectAll() {
+        this._changeDetector.markForCheck();
         if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
@@ -362,7 +340,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
-        this._changeDetector.markForCheck();
     }
 
     /**
@@ -374,7 +351,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && this._$selectedItems.every(
-            item => !validData.find(data => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
+            item => !validData.find(data => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
     /**
@@ -386,7 +363,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false;
         }
         return this.searchable && validData.every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, this._trackItemBy)))
+            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
     protected _allSelectCheck() {
@@ -469,7 +446,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
-                this._changeDetector.markForCheck();
             })
         }
     }

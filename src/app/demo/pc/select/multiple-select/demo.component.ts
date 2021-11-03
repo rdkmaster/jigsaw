@@ -69,7 +69,17 @@ export class MultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]
 
-    selectedarrayData = [{ label: "文本选项1" }]
+    selectedArrayData = [{ label: "文本选项1" }];
+    selectedArrayData1 = null;
+    selectedArrayData2 = undefined;
+
+    clearSelection() {
+        this.selectedArrayData = null;
+        this.selectedArrayData1 = null;
+        this.selectedArrayData2 = null;
+        this.selectedOption = null;
+        this.fullSelectedOption = null;
+    }
 
     valueChange($event) {
         console.log($event);

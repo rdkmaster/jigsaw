@@ -28,7 +28,7 @@ export class SelectBasicDemoComponent {
         {name: "长沙", value: 'cs'},
         {name: "西安", value: 'xa'}
     ]);
-    selectedCityForSelect3 = {name: '北京', value: 'bj'};
+    selectedCityForSelect3 = this.cityList3[0];
     labelField = 'name';
     selectedCityName3: string;
 
@@ -40,15 +40,16 @@ export class SelectBasicDemoComponent {
             delete item[last];
         });
         this.cityList3.refresh();
+        console.log('the new label field is:', this.labelField);
     }
 
     public selectChange(selectedItem: any) {
-        console.log("select city is:" + selectedItem.label);
+        console.log("the select city is:", selectedItem.label);
         this.selectedCityName = selectedItem.label;
     }
 
     public selectChange2(selectedItem: any) {
-        console.log("select city is:" + selectedItem);
+        console.log("the select city is:", selectedItem);
         this.selectedCityForSelect2 = selectedItem;
     }
 
