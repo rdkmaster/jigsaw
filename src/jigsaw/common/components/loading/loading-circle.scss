@@ -62,6 +62,12 @@ $circle-loading-prefix-cls: #{$jigsaw-prefix}-circle-loading;
             }
         }
     }
+    
+    &.#{$circle-loading-prefix-cls}-svg-large{
+        .#{$circle-loading-prefix-cls}-percent{
+            font-size: $font-size-text-base;
+        }
+    }
 
     &.#{$circle-loading-prefix-cls}-svg-medium{
         .#{$circle-loading-prefix-cls}-percent{

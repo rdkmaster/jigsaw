@@ -64,23 +64,15 @@ import {routerConfig as badgeConfig} from "./demo/pc/badge/demo-set.module";
 import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set.module";
 import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
+import {routerConfig as processStatusConfig} from "./demo/pc/process-status/demo-set.module";
 import {routerConfigPC} from "./router-config";
 
 @Component({
     template: `
-        <p jigsaw-float class="select-demo" [jigsawFloatTarget]="list" jigsawFloatPosition="bottomRight"
-           [jigsawFloatOptions]="floatOptions">
-            显示隐藏Demo集
-        </p>
-        <ng-template #list>
-            <div style="padding: 6px">
-                <p style="margin:0 0 4px 4px; text-align:right;"><a (click)="showAll()">显示所有</a></p>
-                <jigsaw-list-lite [height]="300" [(selectedItems)]="selectedItems" (selectedItemsChange)="showHideDemos($event)"
-                                  [data]="routes" labelField="path" [multipleSelect]="true" [searchable]="true">
-                </jigsaw-list-lite>
-            </div>
-        </ng-template>
-        <div *ngFor="let router of routes">
+        <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)"
+                        placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
+                        class="select-demo" [(value)]="selectedItems"></jigsaw-select>
+        <div *ngFor="let router of routes" [ngStyle]="{'max-width': maxWidth}">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
                 <hr>
@@ -93,13 +85,14 @@ import {routerConfigPC} from "./router-config";
     `,
     styles: [`
         .select-demo {
-            color: white;
             position: fixed;
-            right: 430px;
-            background-color: #3b9cc6;
-            padding: 4px 12px;
+            right: 136px;
+            top: 48px;
             border-radius: 4px;
             cursor: pointer;
+            background-color: var(--bg-body);
+            width: 201px;
+            z-index: 1;
         }
 
         a {
@@ -112,20 +105,21 @@ import {routerConfigPC} from "./router-config";
     `]
 })
 export class PCDemoListComponent implements OnInit {
-    floatOptions = {
-        posType: PopupPositionType.fixed
-    };
-    routes: any[] = DemoListManager.fullRouterConfig;
-    selectedItems: any[];
+    public floatOptions = { posType: PopupPositionType.fixed };
+    public routes: any[] = DemoListManager.fullRouterConfig;
+    public selectedItems: any[];
+    public jComponents: string[] = this.routes.map(item => item.path);
 
-    showHideDemos(selectedItems): void {
-        this.routes.forEach(item => item.hidden = selectedItems.length > 0 && selectedItems.indexOf(item) == -1);
-        localStorage.setItem('jigsaw-demo-show-list', JSON.stringify(selectedItems.map(item => item.path)));
-    }
-
-    showAll() {
-        this.selectedItems = [];
-        this.showHideDemos(this.selectedItems);
+    showHideDemos(selectedItems: string[]) {
+        this.routes.forEach(item => {
+            item.hidden = !selectedItems.find(component => component === item.path)
+        })
+        if(!selectedItems.length){
+            this.routes.forEach(item => {
+                item.hidden = false
+            })
+        }
+        localStorage.setItem('jigsaw-demo-show-list', JSON.stringify([...selectedItems]));
     }
 
     getUrl(router, childRouter): string {
@@ -137,13 +131,12 @@ export class PCDemoListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const stored: string[] = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
-        this.selectedItems = this.routes.filter(item => !item.hidden && stored.indexOf(item.path) != -1);
-        if (this.selectedItems.length == this.routes.length) {
-            // 全显示表示这是第一次打开此页面
-            this.selectedItems = null;
-        }
+        this.selectedItems = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.showHideDemos(this.selectedItems);
+    }
+
+    get maxWidth(): string {
+        return `calc(100vw - ${document.body.scrollHeight > document.body.offsetHeight ? 365 : 350}px)`;
     }
 }
 
@@ -220,6 +213,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
         this._addRouterConfig(routerConfig, 'header', headerConfig);
         this._addRouterConfig(routerConfig, 'theme', themeConfig);
+        this._addRouterConfig(routerConfig, 'process-status', processStatusConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

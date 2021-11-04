@@ -215,6 +215,12 @@ $status-error: $red-6;
 /*@public*/ $danger-active: $orange-8;
 /*@public*/ $danger-disabled: $orange-2;
 
+/* 功能色-process */
+/*@public*/ $process-default: $navy-6;
+/*@public*/ $process-hover: $navy-7;
+/*@public*/ $process-active: $navy-8;
+/*@public*/ $process-disabled: $navy-2;
+
 /* brand 品牌色 */
 /*@public*/ $brand-default: $blue-6;
 /*@public*/ $brand-hover: $blue-7;
@@ -247,10 +253,14 @@ $brand-active-dark: $blue-8;
 /*@public*/ $bg-disabled: $gray-6;
 /*@public*/ $bg-hover: $gray-4;
 /*@public*/ $bg-active: $gray-5;
+$bg-popup: $gray-2;
 $bg-component: transparent;
 $bg-header: $gray-4;
 $bg-gray: $gray-3;
 $bg-white: #fff;
+$bg-navigation: #32404e;
+$bg-scrollbar: $gray-5;
+$bg-scrollbar-lighten: $gray-7;
 // 支持组件内部实现明暗皮肤
 $bg-body-light: $gray-9;
 $bg-container-light: $gray-2-light;
@@ -305,6 +315,7 @@ $font-color-white-darken-dark: $gray-8;
 */
 /*@public*/ $border-color-default: $gray-6;
 /*@public*/ $border-color-disabled: $gray-5;
+$border-color-shadow-cntr: $gray-6;
 $border-color-default-light: $gray-5-light;
 $border-color-default-dark: $gray-5;
 

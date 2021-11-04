@@ -31,9 +31,10 @@ import {JigsawDateTimeSelect, TimeGr} from '@rdkmaster/jigsaw';
 export class FormlyFieldDateTimeSelect extends FormlyFieldType<JigsawDateTimeSelect> {
     defaultOptions = {
         templateOptions: {
+            width: '100%',
             valid: true,
             gr: TimeGr.date,
-            openTrigger: 'mouseenter',
+            openTrigger: 'click',
             closeTrigger: 'mouseleave'
         },
     };

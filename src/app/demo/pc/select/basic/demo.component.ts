@@ -20,14 +20,42 @@ export class SelectBasicDemoComponent {
 
     selectedCityName: string;
 
+    cityList3 = new ArrayCollection([
+        {name: "北京", value: 'bj'},
+        {name: "上海", value: 'sh'},
+        {name: "南京", value: 'nj'},
+        {name: "深圳", value: 'sz'},
+        {name: "长沙", value: 'cs'},
+        {name: "西安", value: 'xa'}
+    ]);
+    selectedCityForSelect3 = this.cityList3[0];
+    labelField = 'name';
+    selectedCityName3: string;
+
+    public changeLabelField() {
+        const last = this.labelField;
+        this.labelField = 'name' + (+new Date);
+        this.cityList3.forEach(item => {
+            item[this.labelField] = item[last];
+            delete item[last];
+        });
+        this.cityList3.refresh();
+        console.log('the new label field is:', this.labelField);
+    }
+
     public selectChange(selectedItem: any) {
-        console.log("select city is:" + selectedItem.label);
+        console.log("the select city is:", selectedItem.label);
         this.selectedCityName = selectedItem.label;
     }
 
     public selectChange2(selectedItem: any) {
-        console.log("select city is:" + selectedItem);
+        console.log("the select city is:", selectedItem);
         this.selectedCityForSelect2 = selectedItem;
+    }
+
+    public selectChange3(selectedItem: any) {
+        console.log("select city is:", selectedItem);
+        this.selectedCityName3 = selectedItem.name;
     }
 
     // ====================================================================

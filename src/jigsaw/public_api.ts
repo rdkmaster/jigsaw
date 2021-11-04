@@ -18,6 +18,7 @@ export * from "./common/core/data/table-data";
 export * from "./common/core/data/tree-data";
 export * from "./common/core/theming/theme";
 export * from "./common/core/utils/common-utils";
+export * from "./common/core/utils/data-collection-utils";
 export * from "./common/core/utils/internal-utils";
 export * from "./common/core/utils/translate-helper";
 export * from "./common/directive/dragdrop/index";
@@ -87,8 +88,7 @@ export * from "./pc-components/upload/index";
 export * from "./pc-components/viewport/viewport";
 export * from "./pc-components/menu/index";
 export * from "./pc-components/color-select/index";
+export * from "./pc-components/process-status/index";
 
 /* fallback components */
-export * from "./pc-components/fallback/steps/index";
-export * from "./pc-components/fallback/steps/steps-multiline";
 export * from "./pc-components/fallback/upload/index";

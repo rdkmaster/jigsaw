@@ -47,6 +47,8 @@ export class DateTimeSelectDemoComponent {
 
     date10;
 
+    date11='2021-08-23';
+
     onDateChange($event) {
         console.log($event);
     }

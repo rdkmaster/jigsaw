@@ -7,6 +7,7 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
     .#{$steps-prefix-cls}-item {
         flex-grow: 1;
         flex-basis: 0;
+        min-width: 100px;
         .#{$steps-prefix-cls}-title-cntr {
             display: flex;
             justify-content: flex-start;
@@ -32,7 +33,7 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
 
             .#{$steps-prefix-cls}-title {
                 max-width: calc(100% - 32px);
-                margin-right: 10px;
+                padding-right: 10px;
                 font-size: $font-size-lg;
                 white-space: nowrap;
                 overflow: hidden;
@@ -46,16 +47,6 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
                 height: 2px;
                 margin-right: 10px;
                 background: $border-color-default;
-
-                @at-root .#{$steps-prefix-cls}-host
-                        .#{$steps-prefix-cls}-item:last-of-type {
-                    .#{$steps-prefix-cls}-bar {
-                        flex-grow: 0;
-                        min-width: 0px;
-                        margin-right: 0px;
-                        opacity: 0;
-                    }
-                }
             }
         }
 

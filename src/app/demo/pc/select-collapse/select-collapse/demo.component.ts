@@ -1,13 +1,19 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
 
+class ForeverBusyArrayCollection extends ArrayCollection<any> {
+    _busy = true;
+}
+
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class SelectCollapseDemoComponent {
+    foreverBusyArray = new ForeverBusyArrayCollection();
     selectedCityForSelect: any;
     disabled: boolean = false;
+    valid: boolean = true;
 
     dataList = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
@@ -42,6 +48,14 @@ export class SelectCollapseDemoComponent {
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
+    dataListWithEmptyGroup = new ArrayCollection([
+        {}, {groupName: null}, {groupName: null, data: null},
+        { groupName: "分组标题", data: [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] }
+    ]);
+
+    valueChange($event) {
+        console.log($event);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -1,3 +1,61 @@
+## v10.9.1 (2021-8-9)
+
+重要说明：
+- Jigsaw在这个版本中更新了Ux规范，并由此引入了大量的修改，新增了大量功能，废弃了部分老旧功能；
+- 使用了全新的皮肤系统，并暴露出了部分皮肤变量，可以帮助应用实现非常完善的深浅色系切换的效果；所有demo也都支持动态切换皮肤和色系；
+- 由于修改过大，开发过程中我们并未对破坏性修改做管控，因此9.x版本到10.x版本会有大量的破坏性变更，升级需谨慎；
+- 当前10.x版本依然使用angular9.x版本；
+- v9.x版本进入lts状态，后续有bug将会继续在9.x版本上发布，但原则上不再合入新功能；
+
+### 新特性 / New Features
+
+新增的特性非常多，无法一一列出，下面仅列出部分新增功能
+
+- jigsaw-auto-complete-input组件支持前缀后缀功能
+- 新增了jigsaw-header组件
+- jigsaw组件内部使用的图标全部改用我们[自研的图标库](https://www.npmjs.com/package/@rdkmaster/icon-font)，全面抛弃font-aweasome
+- jigsaw-input组件支持前缀后缀功能
+- 新增了jigsaw-search-input组件
+- 采用新的默认loading效果
+- 增加4中常见的jigsaw-notification场景：成功、失败、警告、错误
+- jigsaw-numeric-input组件支持前缀后缀功能
+- 支持了圆形进度条jigsaw-circle-progress
+- 新增了jigsaw-group-select和jigsaw-group-select组件，用于展示更加复杂的下拉选择场景，分别支持归类和折叠
+- 重写了jigsaw-steps组件，采用全新的外观和交互方式
+- 新增了jigsaw-tab-bar组件，将tabs的页签部分拆出来独立成组件
+- 重写了jigsaw-tag组件，支持更多功能，外观基本没有大变化
+- 大大增强了jigsaw-tree-ext树组件的功能，提供了完善的图标定制api和对符号图标的良好支持
+- 重新设计了上传指令的api，重写了指令的部分实现，现在上传文件指令只专注于实现文件上传功能，砍掉了它原来的显示文件上传结果的功能
+- 新增了jigsaw-upload-result组件用于配合文件上传指令一起使用，在支持各种场景的文件上传功能的同时，获得应用界面的最大灵活性；同时，这个组件和文件上传指令之间保持送耦合状态，仅通过 `IUploader` 接口作为接口约定，这样应用可以自行开发适合自己的文件上传结果展示组件来与上传指令结合使用，也可以使用jigsaw-upload-result组件与其他文件上传指令配合工作
+- 新增了jigsaw-badge徽标指令，这个指令非常强大，基本上现在市面上可看到的各种徽标花样都可以支持
+- float指令做了较大优化，现在可以用它来替代`PopupService`了，`PopupService`则专注于更加底层的弹出功能
+- 新增了jigsaw-tooltip指令，用于实现各种tooltip，支持富文本，支持交互，废弃原来的jigsaw-tooltip组件
+
+### 破坏性修改 / Breaking Changes
+
+由于修改过大，开发过程中我们并未对破坏性修改做管控，因此9.x版本到10.x版本会有大量的破坏性变更，升级需谨慎。下面列出的破坏性基本上已经覆盖完整了，请参考对齐。
+
+- combo-select：去除 showValueBorder 输入属性	
+- collapse：新增arrowPosition属性，并且箭头默认在左侧了
+- button：padding由原来的10px改为16px，能显示的内容变少了
+- tag：原 select 事件更名为 selectChange
+- tag：去除showBorder属性
+- radios-lite：value的类型变了，应用在直接引用value.label的时候，编译会报错
+- input：writeValue方法在值为undefined或null时，设为空字符串
+- input：input设置display:block后width默认是100%，而不是原来的120px
+- textarea：writeValue方法在值为undefined或null时，设为空字符串
+- auto-complete-input：获得焦点后自动执行过滤默认值由原来的true改为false
+- upload指令：重新设计了上传指令的api
+- 废弃了jigsaw-steps，使用jigsaw-numeric-steps替代，这是一个全新组件，有完全不同的外观和操作方式
+- breadcurmb：新增了separatorType属性，默认值是icon，应该要升级成text
+- breadcurmb：separator属性的默认值默认变成了图标，原来的默认值是 '/'
+- dialog：新增了padding：18px，应用内容缩小了，需要调整布局
+- fish bone：皮肤参数white改为light
+- 组件用到的图标，原来用的font-aweasome全部改为我们自研的图标库里对应的图标，含义保持一致，但是外观有可能与原来有差异
+- 皮肤的引入方式与原来不同，需要修正文件路径，参考最新的[jigsaw-seed](https://github.com/rdkmaster/jigsaw-seed.git)
+
+
+
 ## v9.1.7 (2020-07-15)
 
 ### 新特性 / New Features

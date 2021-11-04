@@ -143,8 +143,8 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 
 @Component({
     template: `
-        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" [password]="true" [clearable]="false"
-            [disabled]="true">
+        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
+        [password]="true" [clearable]="false" [disabled]="true" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `,
     styles: [`
@@ -179,7 +179,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" [blurOnClear]="false" [placeholder]="_$placeholder"
+        <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
                       [preIcon]="_$preIcon" [clearable]="_$clearable" >
         </jigsaw-input>
@@ -187,6 +187,9 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
+    constructor( protected _injector: Injector) {
+        super(_injector);
+    }
 
     @ViewChild(JigsawInput)
     protected input: JigsawInput;
@@ -221,9 +224,9 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
  */
 @Component({
     template: `
-        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" [placeholder]="_$placeholder"
+        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
-                                    [filterOnFocus]="false" [blurOnClear]="false"
+                                    [filterOnFocus]="false"
                                     [maxDropDownHeight]="_$maxDropDownHeight"
                                     [closeDropDownOnSelect]="false">
         </jigsaw-auto-complete-input>
@@ -263,7 +266,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" [blurOnClear]="false"
+        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" height="28px"
                               [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>
@@ -491,13 +494,28 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 // @dynamic
 @Component({
     template: `
-        <jigsaw-select [value]="selected" [data]="data"
+        <jigsaw-select [value]="selected" [data]="data" height="28px"
                        (valueChange)="_$handleValueChange($event)"
-                       [optionCount]="5" width="100%" height="20"
+                       [optionCount]="5" width="100%"
                        openTrigger="mouseenter"
                        closeTrigger="mouseleave">
         </jigsaw-select>
     `,
+    styles: [
+        `
+        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
+            min-height: 28px;
+            height: 28px;
+            border-color: transparent;
+        }
+
+        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
+            min-height: 26px;
+            height: 26px;
+        }
+        `
+    ],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
@@ -620,7 +638,15 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
             </span>
             <span>{{cellData.data}}</span>
         </div>
-    `
+    `,
+    styles: [
+        `
+        .jigsaw-table-tree-cell {
+            justify-content: flex-start;
+            margin-left: 8px;
+        }
+        `
+    ],
 })
 export class TreeTableCellRenderer extends TableCellRendererBase {
     public cellData: TreeTableCellData;

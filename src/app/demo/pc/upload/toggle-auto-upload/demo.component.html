@@ -34,12 +34,21 @@
         (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
     </jigsaw-upload-result>
 
-    <jigsaw-header>指令面板：上传按钮</jigsaw-header>
+    <jigsaw-header>指令面板：上传按钮(单选)</jigsaw-header>
     <div>
-        <jigsaw-button j-upload #third [uploadImmediately]="uploadImmediately">选择文件</jigsaw-button>
+        <jigsaw-button j-upload #third [uploadImmediately]="uploadImmediately" [uploadMultiple]="false">选择文件</jigsaw-button>
         <j-button colorType="primary" (click)="uploader3.upload()" *ngIf="!uploadImmediately">开始上传</j-button>
     </div>
     <jigsaw-upload-result [uploader]="uploader3" (change)="onChange('change', $event)"
+        (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
+
+    <jigsaw-header>指令面板：上传按钮（多选）</jigsaw-header>
+    <div>
+        <jigsaw-button j-upload #forth [uploadImmediately]="uploadImmediately">选择文件</jigsaw-button>
+        <j-button colorType="primary" (click)="uploader4.upload()" *ngIf="!uploadImmediately">开始上传</j-button>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader4" (change)="onChange('change', $event)"
         (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
     </jigsaw-upload-result>
 

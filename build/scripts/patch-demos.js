@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const childProcess = require('child_process');
-const os = require('os');
 
 const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../../../jigsaw-seed';
 checkBranch(seedPath);
@@ -54,6 +53,10 @@ function patchDemoTs(demoPath) {
 
     const match1 = cmpCode.match(/\b(summary:\s*string\s*=\s*)([\s\S]*)/);
     const match2 = cmpCode.match(/\b(description:\s*string\s*=\s*)([\s\S]*)/);
+    if (!match1 || !match2) {
+        console.error('Error: invalid demo ts file:', demoPath);
+        process.exit(1);
+    }
     const match = match1.index > match2.index ? match1 : match2;
     let end = match ? findQuoteEnd(match[2]) : -1;
     if (end === -1) {
@@ -160,13 +163,25 @@ function checkDemoModuleCode(modulePath) {
 }
 
 function checkBranch(seedPath) {
-    if (os.hostname().indexOf('travis') !== -1) {
-        return;
+    if (!fs.existsSync(seedPath)) {
+        console.error(`Jigsaw seed dir not exists! Run the following command and try again:\n` +
+            `git clone https://github.com/rdkmaster/jigsaw-seed.git ${seedPath}`);
+        process.exit(1);
     }
-    const seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
+
+    let seedResult;
+    try {
+        seedResult = childProcess.execSync('git status', {cwd: seedPath}).toString();
+    } catch(e) {
+        console.error(`Jigsaw seed dir ${seedPath} is NOT a git repo!\n` +
+            `Backup data in this dir and remove it, then run the following command and try again:\n` +
+            `git clone https://github.com/rdkmaster/jigsaw-seed.git ${seedPath}`);
+        process.exit(1);
+    }
     const jigsawResult = childProcess.execSync('git status', {cwd: __dirname}).toString();
-    const seedBranch = seedResult.match(/^On branch (.*)/)[1];
-    const jigsawBranch = jigsawResult.match(/^On branch (.*)/)[1];
+    const gitOutputRegExp = /^(On branch|位于分支)\s+(.*)/;
+    const seedBranch = seedResult.match(gitOutputRegExp)[2];
+    const jigsawBranch = jigsawResult.match(gitOutputRegExp)[2];
     const isMaster = (jigsawBranch === 'v9.0' || jigsawBranch === 'master') && seedBranch === 'master';
     const isV5orV1 = seedBranch === jigsawBranch;
     if (!isMaster && !isV5orV1) {

@@ -73,11 +73,10 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
-     * @NoMarkForCheckRequired
-     *
      * $demo = textarea/disabled
      */
     @Input()
+    @RequireMarkForCheck()
     public disabled: boolean = false;
 
     /**

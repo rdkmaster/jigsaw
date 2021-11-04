@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
-import { JigsawSelectModule, JigsawHeaderModule } from "jigsaw/public_api";
+import { JigsawSelectModule, JigsawHeaderModule, JigsawButtonModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { SelectValueChangeDemoComponent } from "./demo.component";
 
 @NgModule({
-    imports: [JigsawSelectModule, JigsawDemoDescriptionModule, JigsawHeaderModule],
+    imports: [JigsawSelectModule, JigsawDemoDescriptionModule, JigsawHeaderModule, JigsawButtonModule],
     declarations: [SelectValueChangeDemoComponent],
     exports: [SelectValueChangeDemoComponent]
 })

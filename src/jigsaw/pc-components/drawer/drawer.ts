@@ -34,8 +34,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     constructor(private _elementRef: ElementRef,
                 private _changeDetector: ChangeDetectorRef) {
         super();
-        this._width = 'auto';
-        this._height = 'auto';
     }
 
     private _position: "left" | "right" | "top" | "bottom" = "left";
@@ -206,6 +204,15 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
     @Input()
     public autoSize: boolean = true;
+
+    /**
+     * 用于设置抽屉的把手，默认灰色，增强后为主色
+     *
+     * @NoMarkForCheckRequired
+     * $demo = drawer/basic
+     */
+    @Input()
+    public emphasisHandler : boolean = true;
 
     @ViewChild('drawer')
     private _drawerEl: ElementRef;

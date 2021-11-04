@@ -33,8 +33,7 @@ type Styles = {
             <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
             <div *ngIf="!_$isUnique" class="jigsaw-prefix-suffix-list" [ngStyle]="{'cursor': disabled ? 'not-allowed' : 'pointer'}"
                  jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
-                 [jigsawFloatOpenTrigger]="disabled ? 'none' : 'click'" jigsawFloatCloseTrigger="click"
-                 (jigsawFloatOpenChange)="_$autoWidth($event)">
+                 [jigsawFloatOpenTrigger]="disabled ? 'none' : 'click'" jigsawFloatCloseTrigger="click">
                 <div class="jigsaw-prefix-suffix-list-selected">
                     <span *ngIf="_$selected?.icon" class="{{_$selected?.icon}}"></span>
                     <span class="jigsaw-prefix-suffix-list-selected-text" *ngIf="_$showLabel(_$selected)">
@@ -46,7 +45,7 @@ type Styles = {
             </div>
         </div>
         <ng-template #dropdownTemplate>
-            <jigsaw-list [selectedItems]="_$selected" (selectedItemsChange)="_$selectedChange($event)">
+            <jigsaw-list [width]="_elementRef?.nativeElement.offsetWidth" [selectedItems]="_$selected" (selectedItemsChange)="_$selectedChange($event)">
                 <j-list-option *ngFor="let item of data" [value]="item">
                     <p j-title>
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="position: relative; top: 2px;"></span>
@@ -65,7 +64,11 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone?: NgZone) {
+    constructor(private _renderer: Renderer2,
+                /**
+                 * @internal
+                 */
+                public _elementRef: ElementRef, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -164,20 +167,6 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
         this.change.emit(this._$selected);
     }
 
-    /**
-     * @internal
-     */
-    public _$autoWidth(event: boolean): void {
-        if (!event || !this.data || !this._jigsawFloat || !this._jigsawFloat.popupElement) {
-            return;
-        }
-        this.runAfterMicrotasks(() => {
-            if (!this._jigsawFloat || !this._jigsawFloat.popupElement) {
-                return;
-            }
-            this._renderer.setStyle(this._jigsawFloat.popupElement, 'width', this._elementRef.nativeElement.offsetWidth + 'px');
-        });
-    }
 }
 
 /**

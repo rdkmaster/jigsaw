@@ -1,3 +1,5 @@
+import {JigsawArray} from "./data-collection-utils";
+
 // @dynamic
 export class CommonUtils {
 
@@ -55,6 +57,52 @@ export class CommonUtils {
         return CommonUtils.copy(source, true);
     }
 
+    public static compareValue(item1: any, item2: any, trackItemBy?: string[] | string): boolean {
+        // 排除掉非法值和基础类型，如果比对的值是这两种之一的，则采用简单比较方式
+        if (this.isUndefined(item1) || this.isUndefined(item2)) {
+            return item1 == item2;
+        }
+        const typeOfItem1 = typeof item1, typeOfItem2 = typeof item2;
+        if (typeOfItem1 == 'string' || typeOfItem1 == 'boolean' || typeOfItem1 == 'number' ||
+            typeOfItem2 == 'string' || typeOfItem2 == 'boolean' || typeOfItem2 == 'number') {
+            return item1 == item2;
+        }
+
+        // 对数组类型，认为应该比较各自包含的元素，即不把数组当做对象去比较，因此数组与非数组的比较没有意义
+        const isArr1 = item1 instanceof Array || item1 instanceof JigsawArray;
+        const isArr2 = item2 instanceof Array || item2 instanceof JigsawArray;
+        if ((isArr1 && !isArr2) || (!isArr1 && isArr2)) {
+            return false;
+        }
+        if (isArr1 && isArr2) {
+            if (item1.length != item2.length) {
+                // 不等长的数组必然不相等
+                return false;
+            }
+            for (let i = 0, len = item1.length; i < len; i++) {
+                if (!this.compareValue(item1[i], item2[i], trackItemBy)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 到这里说明item1和item2都是非数组的json对象了
+        if (item1 === item2) {
+            return true;
+        }
+        const trackBy: string[] = typeof trackItemBy == 'string' ? trackItemBy.split(/\s*,\s*/) : trackItemBy;
+        if (!trackBy || trackBy.length == 0) {
+            return item1 == item2;
+        }
+        for (let i = 0, len = trackBy.length; i < len; i++) {
+            if (item1[trackBy[i]] != item2[trackBy[i]]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * 比较两个对象是否相等，如果提供`trackItemBy`参数，则只比较`trackItemBy`数组列出的属性是否相等；
      * 如果未提供`trackItemBy`，则按值比较两个对象是否相等。
@@ -62,7 +110,6 @@ export class CommonUtils {
      * @param item1 待比较的值1
      * @param item2 待比较的值2
      * @param trackItemBy 待比较的属性列表
-     *
      */
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
@@ -383,7 +430,7 @@ export class CommonUtils {
         /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i;
     private static _hslATest =
         /^hsla\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)(((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2},\s?)|((\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}\s\/\s))((0?\.\d+)|[01]|(([1-9]?\d(\.\d+)?)|100|(\.\d+))%)\)$/i;
-    
+
     public static adjustFontColor(bg: string): "light" | "dark" {
         /*
          * sRGB Luma (ITU Rec. 709)标准

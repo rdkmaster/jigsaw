@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
-import {JigsawSelect} from "@rdkmaster/jigsaw";
+import {ArrayCollection, JigsawSelect} from "@rdkmaster/jigsaw";
 
 @Component({
     selector: 'formly-field-jigsaw-select',
@@ -11,6 +11,7 @@ import {JigsawSelect} from "@rdkmaster/jigsaw";
             [valid]="to.valid && !showError"
             [width]="to.width"
             [height]="to.height"
+            [disabled]="to.disabled"
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
@@ -27,7 +28,7 @@ import {JigsawSelect} from "@rdkmaster/jigsaw";
             [useStatistics]="to.useStatistics"
             [data]="to.data"
             [(value)]="to.value"
-            (valueChange)="to.valueChange && to.valueChange($event)"
+            (valueChange)="_$valueChange($event)"
             (remove)="to.remove && to.remove($event)"
         ></jigsaw-select>
     `,
@@ -43,10 +44,21 @@ export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
             labelField: 'label',
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
-            useStatistics: true
+            useStatistics: true,
+            optionHeight: 32
         },
     };
 
     @ViewChild(JigsawSelect)
     protected _instance: JigsawSelect;
+
+    public _$valueChange($event): void {
+        if (this._instance.multipleSelect) {
+            // 解决下拉框在多选时，有时表单model不更新的问题
+            this.formControl.setValue(new ArrayCollection($event));
+        }
+        if (this.to.valueChange) {
+            this.to.valueChange($event);
+        }
+    }
 }

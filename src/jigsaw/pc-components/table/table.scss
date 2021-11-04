@@ -10,6 +10,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
         width: 100%;
         text-align: center;
         table-layout: fixed;
+        font-size: $font-size-text-base;
         td {
             color: $font-color-default;
             border-width: 1px;
@@ -122,8 +123,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     transform: translate(-50%, -50%);
     
     .#{$table-prefix-cls}-no-data-text{
-        color: #83B4E5;
-        font-weight: bold;
+        color: $font-color-hint;
+        font-size: $font-size-text-base;
     }
 }
 

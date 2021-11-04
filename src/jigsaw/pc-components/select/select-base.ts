@@ -1,22 +1,20 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {JigsawListLite} from "../list-and-tile/list-lite";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
 
-type SelectOption = {
-    (labelField: string): string;
+export type SelectOption = {
     disabled?: boolean;
+    label?: string;
+    [field: string]: string | boolean | SelectOption[];
 };
 
 @Directive()
-export abstract class JigsawSelectBase
-    extends AbstractJigsawComponent
-    implements IJigsawFormControl, ControlValueAccessor {
+export abstract class JigsawSelectBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, OnDestroy {
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
@@ -100,6 +98,7 @@ export abstract class JigsawSelectBase
      * 选项高度
      *
      * @NoMarkForCheckRequired
+     * @internal
      */
     @Input()
     public optionHeight = 32;
@@ -137,12 +136,7 @@ export abstract class JigsawSelectBase
      */
     public _$listHeight: string;
 
-    /**
-     * 设置对象的标识
-     *
-     * @NoMarkForCheckRequired
-     */
-    private _trackItemBy: string | string[];
+    private _trackItemBy: string[];
 
     /**
      * 设置对象的标识
@@ -151,12 +145,8 @@ export abstract class JigsawSelectBase
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        if (this.data && (typeof this.data[0] == 'string' || typeof this.data[0] == 'number')) {
-            this._trackItemBy = null;
-        } else if (CommonUtils.isUndefined(this._trackItemBy) && this.data && typeof this.data[0] !== 'string') {
-            this._trackItemBy = [this.labelField];
-        }
-        return this._trackItemBy;
+        const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
+        return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField]) : null;
     }
 
     public set trackItemBy(value: string | string[]) {
@@ -256,7 +246,7 @@ export abstract class JigsawSelectBase
      */
     public _$selectedItems: ArrayCollection<SelectOption> | any[];
 
-    private _value: any;
+    protected _value: any;
 
     /**
      * 选择的结果，单选时单个的item对象，多选时是item对象的数组
@@ -269,22 +259,19 @@ export abstract class JigsawSelectBase
     }
 
     public set value(newValue: any) {
-        if (this._value == newValue) {
+        if (this.initialized && CommonUtils.compareValue(this._value, newValue, this.trackItemBy)) {
             return;
         }
-        let trackItemBy: string[];
-        if (this.trackItemBy) {
-            trackItemBy =
-                Object.prototype.toString.call(this.trackItemBy) == "[object Array]"
-                    ? <string[]>this.trackItemBy
-                    : [this.trackItemBy.toString()];
-        }
-        if (this.initialized && CommonUtils.compareWithKeyProperty(this._value, newValue, trackItemBy)) {
-            return;
-        }
-        this._propagateChange(newValue);
+
         this._value = newValue;
-        this.writeValue(newValue);
+        this.runMicrotask(() => {
+            if (CommonUtils.isDefined(newValue)) {
+                this._$selectedItems = this.multipleSelect ? newValue : [newValue];
+            } else {
+                this._$selectedItems = new ArrayCollection([]);
+            }
+            this._$checkSelectAll();
+        })
     }
 
     /**
@@ -295,20 +282,13 @@ export abstract class JigsawSelectBase
     @Output()
     public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    public writeValue(value: any, emit = true): void {
-        if (CommonUtils.isDefined(value)) {
-            this._$selectedItems = this.multipleSelect ? value : [value];
-        } else {
-            this._$selectedItems = [];
-        }
+    public writeValue(value: any): void {
         // 表单初始值需要check
+        this.value = value;
         this._changeDetector.markForCheck();
-        if (this.initialized && emit) {
-            this.valueChange.emit(this.value);
-        }
     }
 
-    private _propagateChange: any = () => {
+    protected _propagateChange: any = () => {
     };
 
     public registerOnChange(fn: any): void {
@@ -337,10 +317,11 @@ export abstract class JigsawSelectBase
             this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = new ArrayCollection(this.validData);
+            this._$selectedItems = new ArrayCollection(this._getValidData());
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
+        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
         this._changeDetector.markForCheck();
     }
@@ -349,6 +330,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$checkSelectAll() {
+        this._changeDetector.markForCheck();
         if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
@@ -358,37 +340,41 @@ export abstract class JigsawSelectBase
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
-        this._changeDetector.markForCheck();
     }
 
     /**
      * 搜索过滤的时候会存在当前已选不在当期列表中的情况
      */
     private _validDataAllNotSelected(): boolean {
-        if (!this._$selectedItems || !this.validData) {
+        const validData = this._getValidData();
+        if (!this._$selectedItems || !validData.length) {
             return false;
         }
-        return this.searchable && this._$selectedItems.every(item => !this.validData.find(data => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+        return this.searchable && this._$selectedItems.every(
+            item => !validData.find(data => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
     /**
      * 搜索过滤的时候会存在当前已选不在当期列表中的情况
      */
-    private _validDataAllSelected(): boolean {
-        if (!this._$selectedItems || !this.validData) {
+    protected _validDataAllSelected(): boolean {
+        const validData = this._getValidData();
+        if (!this._$selectedItems || !validData.length) {
             return false;
         }
-        return this.searchable && this.validData.every(data => !!this._$selectedItems.find(item => CommonUtils.compareWithKeyProperty(item, data, <string[]>this.trackItemBy)))
+        return this.searchable && validData.every(
+            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
-    private _allSelectCheck() {
-        if (!this._$selectedItems || !this.validData) {
+    protected _allSelectCheck() {
+        const validData = this._getValidData();
+        if (!this._$selectedItems || !validData.length) {
             return false;
         }
         if (this.searchable) {
             return this._validDataAllSelected();
         } else {
-            return this._$selectedItems.length === this.validData.length
+            return this._$selectedItems.length === validData.length;
         }
     }
 
@@ -396,13 +382,14 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$showAllStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this.validData || !this._$selectedItems.length) {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
+        const validData = this._getValidData();
         if (this.searchable) {
-            return this._$selectedItems.length === this.validData.length && !this._searchKey;
+            return this._$selectedItems.length === validData.length && !this._searchKey;
         } else {
-            return this._$selectedItems.length === this.validData.length
+            return this._$selectedItems.length === validData.length;
         }
     }
 
@@ -410,7 +397,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$showNumStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this.validData || !this._$selectedItems.length) {
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._getValidData().length || !this._$selectedItems.length) {
             return false
         }
         return !this._$showAllStatistics();
@@ -419,8 +406,8 @@ export abstract class JigsawSelectBase
     /**
      * 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
      */
-    private _searchKey: string;
-    private _searchKeyBak: string;
+    protected _searchKey: string;
+    protected _searchKeyBak: string;
 
     /**
      * 下拉显示已选选项
@@ -429,10 +416,15 @@ export abstract class JigsawSelectBase
      */
     public _$showSelected: boolean = false;
 
-    private _removeOnRefresh: CallbackRemoval;
-
     protected _data: ArrayCollection<SelectOption>;
-    public validData: SelectOption[];
+    protected _removeOnRefresh: CallbackRemoval;
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+        }
+    }
 
     /**
      * 提供选择的数据集合
@@ -445,27 +437,35 @@ export abstract class JigsawSelectBase
     }
 
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
-        value = (value || []).filter(el => el != null);
-
-        this._data = (value instanceof ArrayCollection || value instanceof LocalPageableArray || value instanceof PageableArray) ? value : new ArrayCollection(value);
-        this._setValidData();
+        this._setData(value);
         if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
-                this._setValidData();
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
-                this._changeDetector.markForCheck();
             })
         }
     }
 
-    private _setValidData() {
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+        if (value instanceof ArrayCollection) {
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
+                }
+            }
+        } else {
+            value = (value || []).filter(el => el != null);
+        }
+        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
+    }
+
+    protected _getValidData(): SelectOption[] {
         // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
-        this.validData = this._data.concat().filter(item => item["disabled"] !== true);
+        return this._data.concat().filter(item => !item.disabled);
     }
 
     /**
@@ -475,9 +475,6 @@ export abstract class JigsawSelectBase
      */
     @Output()
     public remove: EventEmitter<any> = new EventEmitter<any>();
-
-    @ViewChild(JigsawListLite)
-    private _listCmp: JigsawListLite;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
@@ -509,6 +506,7 @@ export abstract class JigsawSelectBase
      * @internal
      */
     public _$onComboOpenChange(optionState: boolean) {
+        this._onTouched();
         if (optionState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
@@ -519,6 +517,7 @@ export abstract class JigsawSelectBase
      */
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
+        this._propagateChange(this.value);
         this.valueChange.emit(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
@@ -530,7 +529,7 @@ export abstract class JigsawSelectBase
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if(this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -552,22 +551,11 @@ export abstract class JigsawSelectBase
     }
 }
 
-export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
-    public writeValue(value: any, emit = true): void {
-        if (CommonUtils.isDefined(value)) {
-            let items = [];
-            value.forEach(item => {
-                items = items.concat(item["data"]);
-            });
-            this._$selectedItems = this.multipleSelect ? items : items[0];
-        } else {
-            this._$selectedItems = [];
-        }
-        if (this.initialized && emit) {
-            this.valueChange.emit(this.value);
-        }
-    }
+export type GroupSelectOption = {
+    data: ArrayCollection<SelectOption>
+}
 
+export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * 设置组名的显示字段
      *
@@ -576,8 +564,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
-    protected _data: ArrayCollection<SelectOption>;
-    public validData: any[];
+    protected _data: ArrayCollection<GroupSelectOption>;
+    /**
+     * select分组下拉的类型，用于给float添加class进行样式控制
+     * @internal
+     */
+    public _$type: "collapse" | "group";
 
     /**
      * 提供选择的数据集合
@@ -585,16 +577,176 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] {
+    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[]) {
-        this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        let allOptions = [];
-        value.forEach(item => {
-            allOptions = allOptions.concat(item["data"]);
+    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray) {
+        this._setData(value);
+        this._setEmptyValue(value);
+        if (this._data instanceof ArrayCollection) {
+            if (this._removeOnRefresh) {
+                this._removeOnRefresh();
+            }
+            this._removeOnRefresh = this._data.onRefresh(() => {
+                this._setEmptyValue(this._data);
+                this._$checkSelectAll();
+                // 等待数据处理完成赋值，消除统计的闪动
+                this._searchKey = this._searchKeyBak;
+                this._changeDetector.markForCheck();
+            })
+        }
+    }
+
+    private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
+        this._$listValue = new ArrayCollection([]);
+        value.forEach(groupData => {
+            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
         });
-        this.validData = allOptions.filter(item => item["disabled"] !== true);
+        this._$selectedItems = [];
+    }
+
+    protected _getValidData(): GroupSelectOption[] {
+        const validData = [];
+        (this._data || []).forEach((group: GroupSelectOption) => {
+            (group.data || []).filter(item => !item.disabled).forEach(item => validData.push(item));
+        });
+        return validData;
+    }
+
+    /**
+     * @internal
+     */
+    public _$disableSelectAll(): boolean {
+        return !(this._data || []).find((group: GroupSelectOption) => (group.data || []).find(item => !item.disabled));
+    }
+
+    /**
+     * @internal
+     */
+    public _$listValue: ArrayCollection<GroupSelectOption>;
+
+    /**
+     * 选择的结果，单选时单个的item对象，多选时是item对象的数组
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
+        this._setValue(newValue);
+    }
+
+    public writeValue(value: any): void {
+        // 表单初始值需要
+        this._setValue(value, false);
+        this._changeDetector.markForCheck();
+    }
+
+    protected _setValue(newValue: any, emit = true): boolean {
+        if (this._value == newValue) {
+            return;
+        }
+        if (CommonUtils.isUndefined(newValue)) {
+            return;
+        }
+        if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
+            return;
+        }
+
+        this.runMicrotask(() => {
+            newValue.forEach((groupData: GroupSelectOption) => {
+                const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
+                const targetData = this._$listValue.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
+                (groupData.data || []).forEach(item => {
+                    const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
+                    if (srcDataItem && targetData.findIndex(item => item[this.labelField] === srcDataItem[this.labelField]) == -1) {
+                        targetData.push(srcDataItem);
+                    }
+                });
+            });
+            this._updateValue();
+            if (emit) {
+                this.valueChange.emit(this.value);
+            }
+            this._$checkSelectAll();
+        });
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleGroupSelectChange(groupIndex: number): void {
+        if (!this.multipleSelect) {
+            this._$listValue
+                .filter((group: GroupSelectOption, index: number) => index !== groupIndex && group.data.length > 0)
+                .forEach((group: GroupSelectOption) => group.data = new ArrayCollection([]));
+        }
+        this._updateSelectedItems();
+        this._$checkSelectAll();
+        this._changeDetector.markForCheck();
+    }
+
+    private _updateValue(): void {
+        this._$selectedItems = [];
+        this._value = new ArrayCollection([]);
+        this._$listValue.forEach((groupData: GroupSelectOption) => {
+            this._$selectedItems = [...this._$selectedItems, ...groupData.data];
+            if (groupData.data?.length > 0) {
+                this._value.push(groupData);
+            }
+        });
+    }
+
+    private _updateSelectedItems(): void {
+        this._updateValue();
+        this._propagateChange(this.value);
+        this.valueChange.emit(this.value);
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectAll() {
+        if (this._allSelectCheck()) {
+            this._setEmptyValue(this._data);
+            this._$selectAllChecked = CheckBoxStatus.unchecked;
+        } else {
+            this._data.forEach((groupData: GroupSelectOption, index) => {
+                this._$listValue[index].data = new ArrayCollection((groupData.data || []).filter(item => !item.disabled))
+            })
+            this._$selectAllChecked = CheckBoxStatus.checked;
+        }
+        this._updateSelectedItems();
+        this._changeDetector.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleClearable(): void {
+        this._setEmptyValue(this._data);
+        this._updateSelectedItems();
+        this._$selectAllChecked = CheckBoxStatus.unchecked;
+        this._changeDetector.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    public _$onTagRemove(removedItem): void {
+        this._$listValue.forEach((groupData: GroupSelectOption) => {
+            const itemIndex = groupData.data.findIndex(item => item == removedItem);
+            if (itemIndex !== -1) {
+                groupData.data.splice(itemIndex, 1);
+                groupData.data.refresh();
+            }
+        });
+        this._updateSelectedItems();
+        this._$checkSelectAll();
+        this.remove.emit(removedItem);
     }
 }

@@ -1,0 +1,51 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<span>表格数据场景：</span>
+<jigsaw-select [(value)]="scenario" [data]="scenarioList"></jigsaw-select>
+
+<span>是否开启自动填充：</span>
+<jigsaw-switch [(checked)]="checked"></jigsaw-switch>
+
+<jigsaw-button *ngIf="scenario == 'common'" (click)="_$updateData()" colorType="primary">更新数据</jigsaw-button>
+<jigsaw-button *ngIf="scenario == 'common'" (click)="_$noData()" colorType="primary">无数据</jigsaw-button>
+<jigsaw-button *ngIf="scenario == 'pageable'" (click)="_$updateLessData()" colorType="primary">更新为短数据</jigsaw-button>
+<jigsaw-button *ngIf="scenario == 'pageable'" (click)="_$updateMoreData()" colorType="primary">更新为长数据</jigsaw-button>
+<div *ngIf="scenario == 'common'" class="viewport">
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">高度设置为百分比</jigsaw-header>
+        <jigsaw-table [data]="tableData" [columnDefines]="columnsCommonRender" height="100%" [autoFillUp]="checked"></jigsaw-table>
+    </div>
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">高度设置为固定值</jigsaw-header>
+        <jigsaw-table [data]="tableData" height="400px" [autoFillUp]="checked"></jigsaw-table>
+    </div>
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">高度设置为计算值</jigsaw-header>
+        <jigsaw-table [data]="tableData" height="calc(100% - 100px)" [autoFillUp]="checked"></jigsaw-table>
+    </div>
+    <div class="demo-cntr">
+        <jigsaw-header class="demo-header">不设置高度</jigsaw-header>
+        <jigsaw-table [data]="tableData" [autoFillUp]="checked"></jigsaw-table>
+    </div>
+</div>
+
+<div *ngIf="scenario == 'tree'" class="viewport">
+    <div class="demo-cntr" style="width: 100%;">
+        <jigsaw-header class="demo-header">高度设置为百分比</jigsaw-header>
+        <jigsaw-table [data]="treeTableData" [columnDefines]="columnsTree" height="100%" [autoFillUp]="checked"></jigsaw-table>
+    </div>
+</div>
+
+<div *ngIf="scenario == 'pageable'" class="viewport">
+    <div class="demo-cntr" style="width:100%;">
+        <jigsaw-header class="demo-header">高度设置为固定值（分页数据只有在总页数仅有1页且已有数据还未填满表格高度时启用自动填充）</jigsaw-header>
+        <jigsaw-table [data]="pageable" height="600px" [autoFillUp]="checked"></jigsaw-table>
+        <jigsaw-pagination style="margin-top: 8px" [data]="pageable" [pageSizeOptions]="[10, 20, 30, 50]" [searchable]="true"
+            [showQuickJumper]="true" (search)="_$search($event)">
+        </jigsaw-pagination>
+    </div>
+</div>

@@ -96,6 +96,12 @@
         <br>
         <p class="message">选择的时间是：{{date10 | json}}</p>
     </div>
+
+    <div class="demo-11 live-demo">
+        <jigsaw-header [level]="2">下拉时间框宽度设置较长</jigsaw-header>
+        <jigsaw-date-time-select [(date)]="date11" [gr]="'week'" (dateChange)="onDateChange($event)" width="250"></jigsaw-date-time-select>
+        <p class="message">选择的时间是：{{date11 | json}}</p>
+    </div>
 </div>
 
 

@@ -15,6 +15,7 @@
         </jigsaw-button-bar>
         <p class="message">选择的城市是：{{selectedCityStr}}</p>
     </div>
+
     <div class="demo-2 live-demo">
         <jigsaw-header [level]="2">字符串数组</jigsaw-header>
         <jigsaw-button-bar [(selectedItems)]="selectedCity2" [data]="cities2" [multipleSelect]="multiple"
@@ -23,7 +24,7 @@
         <p class="message">选择的城市是：{{selectedCityStr2}}</p>
     </div>
 
-    <div class="demo-2 live-demo">
+    <div class="demo-3 live-demo">
         <jigsaw-header [level]="2">colorType</jigsaw-header>
         <jigsaw-radios-lite [data]="colorTypeList" [(value)]="colorType">
         </jigsaw-radios-lite><br>
@@ -32,20 +33,13 @@
         </jigsaw-button-bar>
     </div>
 
-    <div class="demo-2 live-demo">
+    <div class="demo-4 live-demo">
         <jigsaw-header [level]="2">Icons</jigsaw-header>
         <p>Icon + Label</p>
         <jigsaw-button-bar [data]="types" [(selectedItems)]="selectedTypes" [multipleSelect]="multiple" trackItemBy="id">
         </jigsaw-button-bar>
         <p>Icon Only</p>
         <jigsaw-button-bar [data]="unlabeledTypes" [multipleSelect]="multiple" trackItemBy="id">
-        </jigsaw-button-bar>
-    </div>
-
-    <div class="demo-2 live-demo">
-        <jigsaw-header [level]="2">height</jigsaw-header>
-        <jigsaw-button-bar [data]="cities2" [(selectedItems)]="selectedCity4" height="22"
-                           [multipleSelect]="multiple">
         </jigsaw-button-bar>
     </div>
 </div>

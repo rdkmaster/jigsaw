@@ -1,5 +1,11 @@
-.demo-theme-button-bar {
+.demo-control-bar {
     position: fixed;
-    right: 6px;
-    top: 5px;
+    right: 8px;
+    top: 0;
+    background-color: var(--bg-body);
+    text-align: right;
+}
+
+.demo-control-bar jigsaw-button-bar {
+    margin-top: 8px;
 }

@@ -10,6 +10,8 @@ import {JigsawStepContextDemoComponent} from "./context/demo.component";
 import {JigsawStepContextDemoModule} from "./context/demo.module";
 import {JigsawStepEventsDemoModule} from "./events/demo.module";
 import {JigsawStepEventsDemoComponent} from "./events/demo.component";
+import {JigsawStepManyStepsDemoComponent} from "./many-steps/demo.component";
+import {JigsawStepManyStepsDemoModule} from "./many-steps/demo.module";
 
 export const routerConfig = [
     {path: "basic", component: JigsawStepBasicDemoComponent},
@@ -17,6 +19,7 @@ export const routerConfig = [
     {path: "context", component: JigsawStepContextDemoComponent},
     {path: "goto-step", component: JigsawStepGotoDemoComponent},
     {path: "events", component: JigsawStepEventsDemoComponent},
+    {path: "many-steps", component: JigsawStepManyStepsDemoComponent},
 ];
 
 @NgModule({
@@ -26,7 +29,8 @@ export const routerConfig = [
         JigsawStepOverLengthDemoModule,
         JigsawStepContextDemoModule,
         JigsawStepGotoDemoModule,
-        JigsawStepEventsDemoModule
+        JigsawStepEventsDemoModule,
+        JigsawStepManyStepsDemoModule,
     ]
 })
 export class StepsDemoModule {

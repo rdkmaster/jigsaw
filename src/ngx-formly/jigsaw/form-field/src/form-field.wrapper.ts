@@ -39,7 +39,6 @@ import {FieldWrapper} from '@ngx-formly/core';
         .jigsaw-formly-field-wrapper-control {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             flex: 1;
             height: 100%;
         }

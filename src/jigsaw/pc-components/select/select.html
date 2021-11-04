@@ -32,10 +32,10 @@
                          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
                          [ngStyle]="{'max-height': _$listHeight}"
                          [multipleSelect]="multipleSelect">
-                <div *ngIf="multipleSelect" class="jigsaw-select-select-all">
+                <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
-                        [(checked)]="_$selectAllChecked"
                         *ngIf="!_$showSelected"
+                        [(checked)]="_$selectAllChecked"
                         (checkedChange)="_$selectAll()"
                         [enableIndeterminate]="true">
                         <span>{{'select.selectAll' | translate}}</span>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="jigsaw-select-show-all" *ngIf="_$showSelected" (click)="_$showSelected = false">
                         <i class="iconfont iconfont-e9ac"></i>
-                        <span>{{'select.return' | translate}}</span>
+                        <span>{{'select.checkAll' | translate}}</span>
                     </div>
                 </div>
                 <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item"
@@ -55,6 +55,11 @@
                         {{item && item[labelField] ? item[labelField] : item}}
                     </span>
                 </jigsaw-list-option>
+                <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
+                    <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
+                    <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
+                    <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
+                </div>
             </jigsaw-list>
         </div>
     </ng-template>

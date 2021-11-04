@@ -56,9 +56,8 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
     /**
      * 文本框中当前的文本
-     *
-     * @NoMarkForCheckRequired
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): string {
         return this._value;

@@ -12,13 +12,14 @@
             <div class="jigsaw-notification-caption" title="{{caption}}" *ngIf="!!caption">
                 {{caption}}
             </div>
-            <div class="jigsaw-notification-message" [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
+            <div class="jigsaw-notification-message" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}"
+                 [trustedHtml]="message" [trustedHtmlContext]="innerHtmlContext"></div>
         </div>
     </div>
 
     <div class="jigsaw-notification-button-bar" *ngIf="buttons && buttons.length > 0">
         <jigsaw-button *ngFor="let button of buttons"
-                       [colorType]="button.type"
+                       [colorType]="button.type ? button.type : 'none'"
                        [disabled]="button.disabled"
                        [preSize]="button.preSize ? button.preSize : 'small'"
                        (click)="answer.emit(button)"

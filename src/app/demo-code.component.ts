@@ -109,7 +109,7 @@ const defaultOpen = 'src/app/demo.component.html';
         }
 
         .ztree li a {
-            color: #fff;
+            color: #fff !important;
         }
 
         .jigsaw-box-resize-line:hover {
@@ -257,6 +257,7 @@ export class DemoCodeComponent implements AfterViewInit, OnDestroy {
         this.fileTree.refresh();
         setTimeout(() => {
             this.tree.selectNodes('label', 'demo.component.html', null);
+            this.editor.refresh();
         }, 100)
     }
 

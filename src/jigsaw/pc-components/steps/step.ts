@@ -18,7 +18,8 @@ export type StepItem = {
      */
     subTitle?: string;
     context?: any;
-    disabled?: boolean
+    disabled?: boolean;
+    index?: number;
 };
 
 @Component({
@@ -81,6 +82,9 @@ export class JigsawSteps extends AbstractJigsawComponent {
     @Output()
     public add = new EventEmitter<JigsawSteps>();
 
+    @Output()
+    public titleChange = new EventEmitter<StepItem>();
+
     /**
      * 设置步骤条的方向，支持水平方向和垂直方向
      *
@@ -136,6 +140,29 @@ export class JigsawSteps extends AbstractJigsawComponent {
         } else if (this.current > index) {
             this.current = this.current - 1;
         }
+        this._changeDetector.markForCheck();
+    }
+
+    /**
+     * 修改步骤信息
+     * @param step: 可以只传入字符串修改title，也可以传入一个节点对象，修改整个节点信息
+     * @param index
+     */
+    public renameStep(step: string | StepItem, index: number): void {
+        let target = this.data[index];
+        if (CommonUtils.isUndefined(target)) {
+            return;
+        }
+        if (typeof step == 'string') {
+            target.title = step;
+        } else {
+            this.data.splice(index, 1, step);
+            target = step;
+        }
+        this.titleChange.emit({
+            title: target.title,
+            index: index
+        });
         this._changeDetector.markForCheck();
     }
 
