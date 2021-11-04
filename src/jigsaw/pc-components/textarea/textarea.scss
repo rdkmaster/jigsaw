@@ -20,20 +20,13 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         box-shadow: none;
         outline: none;
         border: none;
+        width: 100%;
         padding: 10px;
         background: $bg-component;
         border-radius: $border-radius-base;
     }
 
-    &-resize-both textarea{
-        resize: both;
-    }
-
-    &-resize-horizontal textarea{
-        resize: horizontal;
-    }
-
-    &-resize-vertical textarea{
+    &-resize textarea{
         resize: vertical;
     }
 

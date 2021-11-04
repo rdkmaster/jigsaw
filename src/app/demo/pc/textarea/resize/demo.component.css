@@ -1,14 +1,15 @@
-jigsaw-header:not(:first-of-type) {
+.jigsaw-header-host:not(:first-of-type) {
     margin-top: 20px;
 }
 
 .container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
     height: fit-content;
 }
 
-.container .sub-container {
-    display: inline-block;
-    width: 400px;
-    height: 100%;
+.container .jigsaw-textarea:first-of-type {
+    margin-right: 10px;
 }

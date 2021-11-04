@@ -24,12 +24,12 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-textarea, j-textarea',
     templateUrl: './textarea.html',
     host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
         '[class.jigsaw-textarea]': 'true',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
-        '[class.jigsaw-textarea-resize-both]':'resize == "both"',
-        '[class.jigsaw-textarea-resize-horizontal]':'resize == "horizontal"',
-        '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"'
+        '[class.jigsaw-textarea-resize]':'resize'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
@@ -38,29 +38,6 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 })
 
 export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-    /**
-     * 宽度
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get width(): string {
-        return this._width;
-    }
-
-    public set width(value: string) {
-        this._width = CommonUtils.getCssValue(value);
-            //  this.runAfterMicrotasks(() => {
-            //      this._zone.run(() => {
-            //          if (this.multipleSelect) {
-            //              this.minWidth = CommonUtils.getCssValue(value);
-            //              this.maxWidth = CommonUtils.getCssValue(value);
-            //          }
-            //      });
-            //  });
-        console.log(this._width)
-    }
-
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
@@ -87,7 +64,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      * $demo = textarea/resize
      */
     @Input()
-    public resize: "both" | "horizontal" | "vertical" | "none" = "none";
+    public resize: boolean = false;
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
