@@ -26,7 +26,8 @@
                        labelField="label"
                        width="80"
                        [data]="pageSizeOptions"
-                       class="jigsaw-paging-page-size">
+                       class="jigsaw-paging-page-size"
+                       [disabled]="data?.pagingInfo?.autoPaging">
         </jigsaw-select>
 
         <div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
@@ -63,7 +64,8 @@
                        [trackItemBy]="['value','label']"
                        labelField="label"
                        width="80"
-                       [data]="pageSizeOptions">
+                       [data]="pageSizeOptions"
+                       [disabled]="data?.pagingInfo?.autoPaging">
         </jigsaw-select>
     </ng-container>
 </ng-container>

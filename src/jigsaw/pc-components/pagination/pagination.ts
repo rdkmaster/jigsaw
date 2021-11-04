@@ -220,6 +220,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 // pagingInfo.currentPage采用的getter&setter，不可随便赋值
                 this.data.pagingInfo.currentPage = newValue;
             }
+            this._changeDetectorRef.detectChanges();
         }
     }
 
@@ -265,8 +266,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _setCurrentPage(): void {
         this._pages.forEach(page => {
             page.current = page.pageNumber == this.current;
-            page._changeDetectorRef.markForCheck();
         });
+        this._changeDetectorRef.detectChanges();
     }
 
     /**

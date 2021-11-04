@@ -17,14 +17,6 @@ export class TableAutoPageableDemoComponent {
         this.pageable.pagingInfo.itemSize = 30;
     }
 
-    clickTest(){
-        this.pageable.pagingInfo.containerSize = 40;
-    }
-
-    resizeTest(){
-        this.tableCmp.resize();
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
