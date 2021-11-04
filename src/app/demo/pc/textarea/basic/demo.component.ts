@@ -6,7 +6,9 @@ import {JigsawTextarea} from "jigsaw/public_api";
 })
 export class TextareaBasicDemoComponent {
     textareaValue: any;
-    
+
+    @ViewChild('myTextarea') myTextarea: JigsawTextarea;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
