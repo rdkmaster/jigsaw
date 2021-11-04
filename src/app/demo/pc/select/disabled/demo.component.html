@@ -12,7 +12,7 @@
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"
                        [data]="cityListForSelect"
-                       [disabled]="false">
+                       [disabled]="disabled">
         </jigsaw-select>
         <j-button (click)="disabled = !disabled">toggle disabled</j-button>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
