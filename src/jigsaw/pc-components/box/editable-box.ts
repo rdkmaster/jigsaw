@@ -333,7 +333,7 @@ export class JigsawEditableBox extends JigsawBox {
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
         const sizes = this._rawOffsets.reduce((ss, offset, index) => {
-            if(index > 0) {
+            if (index > 0) {
                 ss.push(offset - this._rawOffsets[index - 1])
             }
             return ss;
@@ -349,21 +349,21 @@ export class JigsawEditableBox extends JigsawBox {
         const sizeRatios = this._computeSizeRatios(sizeProp, offset);
         const length = this.parent.childrenBox.length;
         this.parent.childrenBox.forEach((box, index) => {
-            if(box._isFixedSize) {
+            if (box._isFixedSize) {
                 // 固定尺寸的设置basis，而不是grow
                 let offsetParam, paddingSize, gapSize;
                 const parentStyle = getComputedStyle(this.parent.element);
                 const boxStyle = getComputedStyle(box.element);
-                if(this.parent.direction == 'column') {
+                if (this.parent.direction == 'column') {
                     offsetParam = 'offsetHeight';
                     paddingSize = index == 0 ? Number(parentStyle.paddingTop.replace('px', '')) :
-                        index == length -1 ? Number(parentStyle.paddingBottom.replace('px', '')) : 0;
-                    gapSize = index == length -1 ? 0 : Number(boxStyle.marginBottom.replace('px', ''));
+                        index == length - 1 ? Number(parentStyle.paddingBottom.replace('px', '')) : 0;
+                    gapSize = index == length - 1 ? 0 : Number(boxStyle.marginBottom.replace('px', ''));
                 } else {
                     offsetParam = 'offsetWidth';
                     paddingSize = index == 0 ? Number(parentStyle.paddingLeft.replace('px', '')) :
-                        index == length -1 ? Number(parentStyle.paddingRight.replace('px', '')) : 0;
-                    gapSize = index == length -1 ? 0 : Number(boxStyle.marginRight.replace('px', ''));
+                        index == length - 1 ? Number(parentStyle.paddingRight.replace('px', '')) : 0;
+                    gapSize = index == length - 1 ? 0 : Number(boxStyle.marginRight.replace('px', ''));
                 }
                 box.element.style.flexBasis = (this.parent.element[offsetParam] - paddingSize) * sizeRatios[index] / 100 - gapSize + 'px';
                 box.element.style.flexGrow = '0';
@@ -371,5 +371,23 @@ export class JigsawEditableBox extends JigsawBox {
                 box.grow = sizeRatios[index];
             }
         });
+    }
+
+    protected _emitResizeEvent(eventType: string) {
+        if (eventType == 'resize') {
+            if (this.parent && this.parent.resizable && this.parent._$childrenBox.length) {
+                // editable box需要在resize结束后所有的子级box发送事件，以可以保存grow的值
+                this.parent._$childrenBox.forEach(box => box[eventType].emit(box));
+            }
+        } else {
+            this[eventType].emit(this);
+            if (this.parent && this.parent.resizable && this.parent._$childrenBox.length) {
+                const index = this.parent._$childrenBox.findIndex(box => box == this);
+                const previousBox = this.parent._$childrenBox[index - 1];
+                if (previousBox) {
+                    previousBox[eventType].emit(previousBox);
+                }
+            }
+        }
     }
 }

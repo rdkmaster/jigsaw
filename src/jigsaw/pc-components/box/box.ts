@@ -126,7 +126,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this._emitResizeEvent('resize');
     }
 
-    private _emitResizeEvent(eventType: string) {
+    protected _emitResizeEvent(eventType: string) {
         this[eventType].emit(this);
         if (this.parent && this.parent.resizable && this.parent._$childrenBox.length) {
             const index = this.parent._$childrenBox.findIndex(box => box == this);
