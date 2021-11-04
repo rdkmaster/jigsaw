@@ -25,27 +25,27 @@ export class JigsawUpload extends JigsawUploadBase {
     }
 
     /**
-    * 每个文件上传完成（无论成功还是失败）之后发出
+    * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
     */
-    @Output('uploadProgress')
+    @Output()
     public progress = new EventEmitter<UploadFileInfo>();
 
     /**
-     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此时可以获取到此文件的真实进度
+     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此事件给出的进度为单文件数据上传进度
      */
-    @Output('uploadDataSendProgress')
+    @Output()
     public dataSendProgress = new EventEmitter<UploadFileInfo>();
 
-    @Output('uploadComplete')
+    @Output()
     public complete = new EventEmitter<UploadFileInfo[]>();
 
-    @Output('uploadStart')
+    @Output()
     public start = new EventEmitter<UploadFileInfo[]>();
 
-    @Output('uploadChange')
+    @Output()
     public change = new EventEmitter<UploadFileInfo[]>();
 
-    @Output('uploadRemove')
+    @Output()
     public remove = new EventEmitter<UploadFileInfo>();
 
     /**
