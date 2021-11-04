@@ -750,14 +750,12 @@ export class PagingInfo implements IEmittable {
     }
 
     private _calcAutoPageSize(): void {
-        console.log("计算", this.autoPaging, isNaN(this.containerSize), isNaN(this.itemSize))
         if (!this.autoPaging || isNaN(this.containerSize) || isNaN(this.itemSize)) {
             return;
         }
         const newPageSize = Math.floor(this.containerSize / this.itemSize) ? Math.floor(this.containerSize / this.itemSize) : 1;
         this._pageSize = newPageSize;
         this.emit();
-        console.log(111111111, Math.floor(this.containerSize / this.itemSize))
     }
 
     private _emitter = new EventEmitter<any>();

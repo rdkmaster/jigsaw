@@ -313,7 +313,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 this._$pageNums = Array.from(new Array(this._totalPage)).map((item, index) => ++index);
             }
         }
-        this._changeDetectorRef.markForCheck();
+        this._changeDetectorRef.detectChanges();
     }
 
     /**

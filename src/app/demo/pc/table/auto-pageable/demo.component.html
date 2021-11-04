@@ -4,8 +4,10 @@
 
 
 <!-- start to learn the demo from here -->
-<div style="height: 80vh;">
-    <jigsaw-table style="margin-bottom: 10px;" height="100%" [data]="pageable"></jigsaw-table>
+<jigsaw-button (click)="clicTest()">click</jigsaw-button>
+<jigsaw-button (click)="resizeTest()">resize</jigsaw-button>
+<div style="height: 78vh; margin-bottom: 10px;">
+    <jigsaw-table #tableCmp style="margin-bottom: 10px;" height="100%" [data]="pageable"></jigsaw-table>
     <jigsaw-pagination [data]="pageable"></jigsaw-pagination>
     <span>共{{pageable.pagingInfo.totalRecord}}条记录</span>
 </div>
