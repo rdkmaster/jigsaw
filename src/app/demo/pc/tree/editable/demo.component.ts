@@ -1,11 +1,14 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ZTreeSettings, SimpleTreeData} from "jigsaw/public_api";
+import {ZTreeSettings, SimpleTreeData, JigsawTreeExt} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoEditableComponent {
+    @ViewChild(JigsawTreeExt)
+    public treeExt: JigsawTreeExt;
+
     data: SimpleTreeData;
 
     setting: ZTreeSettings = {
@@ -30,6 +33,10 @@ export class ZtreeDemoEditableComponent {
         this.data.http = http;
         this.data.fromAjax("mock-data/tree-data");
         this.data.refresh();
+    }
+
+    editFirstNode() {
+        this.treeExt.ztree.editName(this.treeExt.ztree.getNodes()[0])
     }
 
     // ====================================================================

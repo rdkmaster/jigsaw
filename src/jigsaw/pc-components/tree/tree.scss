@@ -94,6 +94,15 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
     }
 }
 
+.ztree li a input.rename {
+    width: 120px;
+    height: 100%;
+
+    &:focus{
+        outline: none;
+    }
+}
+
 .#{$jigsaw-tree}-default {
     .ztree * {
         font-size: $font-size-base;
