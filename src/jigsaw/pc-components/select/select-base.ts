@@ -271,6 +271,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 this._$selectedItems = new ArrayCollection([]);
             }
             this._$checkSelectAll();
+            this._changeDetector.detectChanges();
         })
     }
 
