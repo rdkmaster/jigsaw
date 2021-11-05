@@ -5,16 +5,16 @@
 <!-- start to learn the demo from here -->
 <jigsaw-header>不可伸缩（默认）</jigsaw-header>
 <div class="container">
-    <jigsaw-textarea [resize]="false" width="300px" height="80px" placeholder="这是不可伸缩的文本输入框（固定尺寸）">
+    <jigsaw-textarea [resize]="'none'" width="300px" height="80px" placeholder="这是不可伸缩的文本输入框（固定尺寸）">
     </jigsaw-textarea>
-    <jigsaw-textarea [resize]="false" width="30%" height="80px" placeholder="这是不可伸缩的文本输入框（相对尺寸）">
+    <jigsaw-textarea [resize]="'none'" width="30%" height="80px" placeholder="这是不可伸缩的文本输入框（相对尺寸）">
     </jigsaw-textarea>
 </div>
 
 <jigsaw-header>可伸缩</jigsaw-header>
 <div class="container">
-    <jigsaw-textarea [resize]="true" width="300px" height="80px" placeholder="这是可伸缩的文本输入框（固定尺寸）">
+    <jigsaw-textarea [resize]="'vertical'" width="300px" height="80px" placeholder="这是可伸缩的文本输入框（固定尺寸）">
     </jigsaw-textarea>
-    <jigsaw-textarea [resize]="true" width="30%" height="80px" placeholder="这是可伸缩的文本输入框（相对尺寸）">
+    <jigsaw-textarea [resize]="'vertical'" width="30%" height="80px" placeholder="这是可伸缩的文本输入框（相对尺寸）">
     </jigsaw-textarea>
 </div>

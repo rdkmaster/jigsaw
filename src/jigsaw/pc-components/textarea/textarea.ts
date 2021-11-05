@@ -29,7 +29,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-textarea]': 'true',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
-        '[class.jigsaw-textarea-resize]':'resize'
+        '[class.jigsaw-textarea-resize]':'resize === "vertical"'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
@@ -56,15 +56,27 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @RequireMarkForCheck()
     public disabled: boolean = false;
 
+
+    private _resize: "both" | "horizontal" | "vertical" | "none" = "none";
     /**
-     * 设置文本输入框是否可以拉伸，为true则不可交互，为false则可交互。
+     * 设置文本输入框是否可以拉伸
      *
      * @NoMarkForCheckRequired
      *
      * $demo = textarea/resize
      */
     @Input()
-    public resize: boolean = false;
+    public get resize(): "both" | "horizontal" | "vertical" | "none" {
+        return this._resize;
+    }
+
+    public set resize(value: "both" | "horizontal" | "vertical" | "none") {
+        if (value === "vertical" || value === "none") {
+            this._resize = value;
+        } else {
+            console.warn("Resize only accepts 'vertical' and 'none'");
+        }
+    }
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
