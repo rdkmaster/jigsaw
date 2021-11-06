@@ -328,7 +328,7 @@ export class JigsawEditableBox extends JigsawBox {
         }
     }
 
-    protected _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
+    private _computeSizeRatios_(sizeProp: string, updateOffset: number): [number[], number[]] {
         const curIndex = this._getCurrentIndex();
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
@@ -338,34 +338,38 @@ export class JigsawEditableBox extends JigsawBox {
             }
             return ss;
         }, []);
-
-        return sizes.map(size => size / (this.parent.element[sizeProp]) * 100);
+        // 根据padding和gap纠正尺寸
+        let fixedSize = 0;
+        const length = this.parent.childrenBox.length;
+        this.parent.childrenBox.forEach((box, index) => {
+            let paddingSize, gapSize;
+            const parentStyle = getComputedStyle(this.parent.element);
+            const boxStyle = getComputedStyle(box.element);
+            if (this.parent.direction == 'column') {
+                paddingSize = index == 0 ? Number(parentStyle.paddingTop.replace('px', '')) :
+                    index == length - 1 ? Number(parentStyle.paddingBottom.replace('px', '')) : 0;
+                gapSize = index == length - 1 ? 0 : Number(boxStyle.marginBottom.replace('px', ''));
+            } else {
+                paddingSize = index == 0 ? Number(parentStyle.paddingLeft.replace('px', '')) :
+                    index == length - 1 ? Number(parentStyle.paddingRight.replace('px', '')) : 0;
+                gapSize = index == length - 1 ? 0 : Number(boxStyle.marginRight.replace('px', ''));
+            }
+            fixedSize += paddingSize + gapSize;
+            sizes[index] = sizes[index] - paddingSize - gapSize;
+        });
+        // 采用四舍五入法去掉小数点，不然有些box计算出的grow会递增
+        return [sizes, sizes.map(size => Math.round(size / (this.parent.element[sizeProp] - fixedSize) * 100))];
     }
 
     public _$handleResize(offset: number, emitEvent: boolean = false) {
         if (!this.parent) return;
 
         const sizeProp = this._getPropertyByDirection()[1];
-        const sizeRatios = this._computeSizeRatios(sizeProp, offset);
-        const length = this.parent.childrenBox.length;
+        const [sizes, sizeRatios] = this._computeSizeRatios_(sizeProp, offset);
         this.parent.childrenBox.forEach((box, index) => {
             if (box._isFixedSize) {
                 // 固定尺寸的设置basis，而不是grow
-                let offsetParam, paddingSize, gapSize;
-                const parentStyle = getComputedStyle(this.parent.element);
-                const boxStyle = getComputedStyle(box.element);
-                if (this.parent.direction == 'column') {
-                    offsetParam = 'offsetHeight';
-                    paddingSize = index == 0 ? Number(parentStyle.paddingTop.replace('px', '')) :
-                        index == length - 1 ? Number(parentStyle.paddingBottom.replace('px', '')) : 0;
-                    gapSize = index == length - 1 ? 0 : Number(boxStyle.marginBottom.replace('px', ''));
-                } else {
-                    offsetParam = 'offsetWidth';
-                    paddingSize = index == 0 ? Number(parentStyle.paddingLeft.replace('px', '')) :
-                        index == length - 1 ? Number(parentStyle.paddingRight.replace('px', '')) : 0;
-                    gapSize = index == length - 1 ? 0 : Number(boxStyle.marginRight.replace('px', ''));
-                }
-                box.element.style.flexBasis = (this.parent.element[offsetParam] - paddingSize) * sizeRatios[index] / 100 - gapSize + 'px';
+                box.element.style.flexBasis = sizes[index] + 'px';
                 box.element.style.flexGrow = '0';
             } else {
                 box.grow = sizeRatios[index];
