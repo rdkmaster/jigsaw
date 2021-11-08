@@ -428,6 +428,28 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
 
         function before_editName(treeId, treeNode) {
+            const tree = document.getElementById(treeId);
+            const fontSize = window.getComputedStyle(tree, null).getPropertyValue('font-size');
+            const text = document.createElement("div");
+            text.style.display = 'inline-block';
+            text.style.visibility = "hidden";
+            text.style.whiteSpace = "nowrap";
+            text.style.fontSize = fontSize;
+            document.body.appendChild(text);
+            text.innerText = treeNode.label;
+            const inputWidth = text.offsetWidth + 8;
+            document.body.removeChild(text);
+            const id = treeId + "input";
+            const zTreeIconStyle = document.getElementById(id) as HTMLLinkElement;
+            if (zTreeIconStyle) {
+                document.head.removeChild(zTreeIconStyle);
+            }
+            const style = document.createElement("style");
+            style.id = id;
+            document.head.appendChild(style);
+            const sheet = style.sheet as CSSStyleSheet;
+            sheet.insertRule(`.ztree#${treeId} li a input.rename{ width: ${inputWidth}px}`);
+            
             that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
         }
