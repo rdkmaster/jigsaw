@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer2, ViewChild, Output, EventEmitter} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {IUploader} from '../../common/directive/upload/uploader-typings';
+import {IUploader, UploadFileInfo} from '../../common/directive/upload/uploader-typings';
 import {JigsawUploadBase, JigsawUploadDirective} from '../../common/directive/upload/upload.directive';
 import {DragDropInfo} from '../../common/directive/dragdrop/types';
 import {CommonUtils} from '../../common/core/utils/common-utils';
@@ -25,15 +25,41 @@ export class JigsawUpload extends JigsawUploadBase {
     }
 
     /**
+    * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
+    */
+    @Output()
+    public progress = new EventEmitter<UploadFileInfo>();
+
+    /**
+     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此事件给出的进度为单文件数据上传进度
+     */
+    @Output()
+    public dataSendProgress = new EventEmitter<UploadFileInfo>();
+
+    @Output()
+    public complete = new EventEmitter<UploadFileInfo[]>();
+
+    @Output()
+    public start = new EventEmitter<UploadFileInfo[]>();
+
+    @Output()
+    public change = new EventEmitter<UploadFileInfo[]>();
+
+    @Output()
+    public remove = new EventEmitter<UploadFileInfo>();
+
+    /**
      * @internal
      */
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
     public _$uploader: IUploader;
 
+    public get files(): UploadFileInfo[] {
+        return this._$uploader.files;
+    }
+
     protected _width: string = "400px";
-
     protected _minSize: number = 0;
-
     protected _maxSize: number = 16384;
 
     /**
