@@ -96,9 +96,8 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
 .ztree li a input.rename {
     width: 120px;
-    height: 100%;
 
-    &:focus{
+    &:focus {
         outline: none;
     }
 }
@@ -125,6 +124,12 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
         a {
             height: 24px !important;
+
+            input.rename {
+                height: 16px;
+                font-size: $font-size-base;
+                letter-spacing: 0;
+            }
         }
     }
 }
@@ -151,6 +156,12 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
         a {
             height: 28px !important;
+
+            input.rename {
+                height: 16px;
+                font-size: $font-size-base;
+                letter-spacing: 0;
+            }
         }
     }
 }
@@ -177,6 +188,12 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
         a {
             height: 32px !important;
+
+            input.rename {
+                height: 20px;
+                font-size: $font-size-lg;
+                letter-spacing: 0;
+            }
         }
     }
 }

@@ -428,16 +428,21 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
 
         function before_editName(treeId, treeNode) {
-            const tree = document.getElementById(treeId);
-            const fontSize = window.getComputedStyle(tree, null).getPropertyValue('font-size');
+            const tree = document.getElementById(treeId).parentElement;
+            let fontSize = '12px';
+            if (tree.classList.contains("jigsaw-tree-large")) {
+                fontSize = '14px';
+            }
             const text = document.createElement("div");
             text.style.display = 'inline-block';
-            text.style.visibility = "hidden";
+            text.style.position = 'absolute';
             text.style.whiteSpace = "nowrap";
+            text.style.letterSpacing = "0";
             text.style.fontSize = fontSize;
+            text.style.fontFamily = "Verdana, Arial, Helvetica, AppleGothic, sans-serif";
             document.body.appendChild(text);
-            text.innerText = treeNode.label;
-            const inputWidth = text.offsetWidth + 8;
+            text.innerHTML = treeNode.label;
+            const inputWidth = (text.offsetWidth + 16) >= 120 ? (text.offsetWidth + 16) : 120;
             document.body.removeChild(text);
             const id = treeId + "input";
             const zTreeIconStyle = document.getElementById(id) as HTMLLinkElement;
@@ -448,7 +453,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             style.id = id;
             document.head.appendChild(style);
             const sheet = style.sheet as CSSStyleSheet;
-            sheet.insertRule(`.ztree#${treeId} li a input.rename{ width: ${inputWidth}px}`);
+            sheet.insertRule(`.ztree#${treeId} li a input.rename{ width: ${inputWidth}px;}`);
             
             that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
