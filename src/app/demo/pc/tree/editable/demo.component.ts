@@ -28,6 +28,10 @@ export class ZtreeDemoEditableComponent {
         }
     };
 
+    editNode() {
+        this.treeExt.editName(this.treeExt.ztree.getSelectedNodes()[0]);
+    }
+
     constructor(http: HttpClient) {
         this.data = new SimpleTreeData();
         this.data.http = http;
