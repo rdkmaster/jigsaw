@@ -333,7 +333,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
      * @private
      */
     private _updateInputWidth(node): void {
-        // 根据节点label宽度设置编辑状态下input的宽度
         const spanEl = document.getElementById(`${node.tId}_span`);
         const inputWidth = (spanEl.offsetWidth + 16) >= 120 ? (spanEl.offsetWidth + 16) : 120;
         document.documentElement.style.setProperty("--jigsaw-zTree-input-width", `${inputWidth}px`);
