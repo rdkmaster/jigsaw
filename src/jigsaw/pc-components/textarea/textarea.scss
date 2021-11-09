@@ -2,6 +2,10 @@
 
 $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
 
+:root {
+    --jigsaw-textarea-resize-height: 100%;
+}
+
 .#{$textarea-prefix-cls} {
     @include inline-block();
     position: relative;
@@ -21,12 +25,14 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         outline: none;
         border: none;
         width: 100%;
+        height: 100%;
+        height: var(--jigsaw-textarea-resize-height);
         padding: 10px;
         background: $bg-component;
         border-radius: $border-radius-base;
     }
 
-    &-resize textarea{
+    &-resize textarea {
         resize: vertical;
     }
 
@@ -36,6 +42,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
 
     &-container {
         width: 100%;
+        height: 100%;
         background: $bg-component;
         border: 1px solid $border-color-default;
         border-radius: $border-radius-base;

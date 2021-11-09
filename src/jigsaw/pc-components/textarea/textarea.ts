@@ -73,6 +73,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public set resize(value: "both" | "horizontal" | "vertical" | "none") {
         if (value === "vertical" || value === "none") {
             this._resize = value;
+            if (value === "vertical") {
+                document.documentElement.style.setProperty('--jigsaw-textarea-resize-height', this.height);
+            }
         } else {
             console.warn("Resize only accepts 'vertical' and 'none'");
         }
