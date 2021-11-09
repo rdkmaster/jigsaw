@@ -444,16 +444,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             text.innerHTML = treeNode.label;
             const inputWidth = (text.offsetWidth + 16) >= 120 ? (text.offsetWidth + 16) : 120;
             document.body.removeChild(text);
-            const id = treeId + "input";
-            const zTreeIconStyle = document.getElementById(id) as HTMLLinkElement;
-            if (zTreeIconStyle) {
-                document.head.removeChild(zTreeIconStyle);
-            }
-            const style = document.createElement("style");
-            style.id = id;
-            document.head.appendChild(style);
-            const sheet = style.sheet as CSSStyleSheet;
-            sheet.insertRule(`.ztree#${treeId} li a input.rename{ width: ${inputWidth}px;}`);
+            document.documentElement.style.setProperty("--jigsaw-zTree-input-width",`${inputWidth}px`);
             
             that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);

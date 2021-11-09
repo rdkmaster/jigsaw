@@ -1,4 +1,7 @@
 $jigsaw-tree: #{$jigsaw-prefix}-tree;
+:root {
+    --jigsaw-zTree-input-width: 120px;
+}
 
 .ztree li span:not(.node_name) {
     color: $font-color-default;
@@ -96,6 +99,7 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
 .ztree li a input.rename {
     width: 120px;
+    width: var(--jigsaw-zTree-input-width);
 
     &:focus {
         outline: none;
