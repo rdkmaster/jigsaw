@@ -30,6 +30,10 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         resize: vertical;
     }
 
+    &-resize {
+        height: auto !important;
+    }
+
     &-container {
         width: 100%;
         background: $bg-component;
