@@ -137,15 +137,41 @@ export class JigsawEditableBox extends JigsawBox {
      */
     public parent: JigsawEditableBox;
 
+    @ContentChildren(JigsawEditableBox)
+    protected childrenBox: QueryList<JigsawEditableBox>;
+
     /**
      * @internal
      */
-    public get _$childrenBox(): JigsawEditableBox[] {
-        return <JigsawEditableBox[]>this.childrenBox;
+    public _$childrenBox: JigsawEditableBox[];
+
+    getGapOffset(parentBox: JigsawEditableBox, index: number): number {
+        const posParam = parentBox.direction == 'column' ? 'top' : 'left';
+        const posSizeParam = parentBox.direction == 'column' ? 'bottom' : 'right';
+        const parentBoxRect = JigsawEditableBox.getBoxRealRect(parentBox);
+        const prevBoxRect = JigsawEditableBox.getBoxRealRect(parentBox._$childrenBox[index - 1]);
+        const curBoxRect = JigsawEditableBox.getBoxRealRect(parentBox._$childrenBox[index]);
+        return (curBoxRect[posParam] - prevBoxRect[posSizeParam]) / 2 + prevBoxRect[posSizeParam] - parentBoxRect[posParam] - 2;
     }
 
-    public set _$childrenBox(v: JigsawEditableBox[]) {
-        this.childrenBox = v;
+    public static getBoxRealRect(box: JigsawEditableBox) {
+        // DOMRect对象中有只读属性，无法通过Object.assign或结构复制对象
+        const rect = box.element.getBoundingClientRect();
+        const realRect = {
+            left: rect.left,
+            top: rect.top,
+            right: rect.right,
+            bottom: rect.bottom
+        };
+        if (box.parent) {
+            // 滚动条的情况处理
+            const parentRect = box.parent.element.getBoundingClientRect();
+            realRect.left = Math.max(rect.left, parentRect.left);
+            realRect.top = Math.max(rect.top, parentRect.top);
+            realRect.right = Math.min(rect.right, parentRect.right);
+            realRect.bottom = Math.min(rect.bottom, parentRect.bottom);
+        }
+        return realRect;
     }
 
     protected _setChildrenBox() {
@@ -163,6 +189,10 @@ export class JigsawEditableBox extends JigsawBox {
                     box.showResizeLine = true;
                     box._cdr.markForCheck();
                 });
+                this.runAfterMicrotasks(() => {
+                    this.updateResizeLineOffset(box, index);
+                    this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
+                })
             }
         });
         if (!this._$childrenBox || !this.gap) {
@@ -174,6 +204,32 @@ export class JigsawEditableBox extends JigsawBox {
             }
             box.margin = index == this._$childrenBox.length - 1 ? `0` : this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
         })
+    }
+
+    public updateResizeLineOffset(box: JigsawEditableBox, index) {
+        const parentBox = box.parent;
+        const offsetParam = parentBox.direction == 'column' ? 'top' : 'left';
+        box._resizeLineParent.nativeElement.style[offsetParam] = this.getGapOffset(parentBox, index) + 'px';
+    }
+
+    public static updateAllResizeLineOffset(parentBox: JigsawEditableBox) {
+        if (!(parentBox._$childrenBox instanceof Array)) {
+            return;
+        }
+        parentBox._$childrenBox.forEach((box: JigsawEditableBox, index) => {
+            if (parentBox.resizable && index != 0) {
+                box.updateResizeLineOffset(box, index)
+            }
+            this.updateAllResizeLineOffset(box);
+        })
+    }
+
+    protected _computeResizeLineWidth() {
+        this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', '100%');
+    }
+
+    public setResizeLineSize() {
+        return;
     }
 
     private _insertTimer: number;
@@ -340,8 +396,8 @@ export class JigsawEditableBox extends JigsawBox {
         }, []);
         // 根据padding和gap纠正尺寸
         let fixedSize = 0;
-        const length = this.parent.childrenBox.length;
-        this.parent.childrenBox.forEach((box, index) => {
+        const length = this.parent._$childrenBox.length;
+        this.parent._$childrenBox.forEach((box, index) => {
             let paddingSize, gapSize;
             const parentStyle = getComputedStyle(this.parent.element);
             const boxStyle = getComputedStyle(box.element);
@@ -366,13 +422,18 @@ export class JigsawEditableBox extends JigsawBox {
 
         const sizeProp = this._getPropertyByDirection()[1];
         const [sizes, sizeRatios] = this._computeSizeRatios_(sizeProp, offset);
-        this.parent.childrenBox.forEach((box, index) => {
+        this.parent._$childrenBox.forEach((box, index) => {
             if (box._isFixedSize) {
                 // 固定尺寸的设置basis，而不是grow
                 box.element.style.flexBasis = sizes[index] + 'px';
                 box.element.style.flexGrow = '0';
             } else {
                 box.grow = sizeRatios[index];
+            }
+            if (this.parent.resizable && index != 0) {
+                this.runMicrotask(() => {
+                    this.updateResizeLineOffset(box, index);
+                })
             }
         });
     }

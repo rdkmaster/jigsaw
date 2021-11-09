@@ -1,4 +1,4 @@
-import {Component, EventEmitter, ViewChild, ElementRef} from "@angular/core";
+import {Component, EventEmitter, ViewChild, ElementRef, Renderer2} from "@angular/core";
 import {DragDropInfo, GraphData, BoxInsertInfo, JigsawEditableBox} from "jigsaw/public_api";
 import {debounceTime, throttleTime} from 'rxjs/operators';
 
@@ -16,10 +16,12 @@ export class BoxLayoutInteractionDemoComponent {
     layoutEnd = new EventEmitter();
     insert = new EventEmitter();
 
+    _resizeEventRemoval: Function;
+
     @ViewChild('rootBox')
     rootBox: JigsawEditableBox;
 
-    constructor() {
+    constructor(private _renderer: Renderer2) {
         let currentBox: JigsawEditableBox;
         let insertInfo: BoxInsertInfo;
         this.layoutStart.subscribe((dragInfo: DragDropInfo) => {
@@ -43,10 +45,10 @@ export class BoxLayoutInteractionDemoComponent {
             }
             console.log('insert component:', dragInfo.dragDropData);
             console.log('parent:', insertInfo.parent.element, insertInfo.parent.element.id);
-            if(insertInfo.before) {
+            if (insertInfo.before) {
                 console.log('insertBefore:', insertInfo.before.element, insertInfo.before.element.id);
             }
-            if(insertInfo.reverse) {
+            if (insertInfo.reverse) {
                 console.log('reverse:', insertInfo.reverse);
             }
         });
@@ -78,7 +80,15 @@ export class BoxLayoutInteractionDemoComponent {
             let e = document.createEvent("Event");
             e.initEvent("resize", true, true);
             window.dispatchEvent(e);
-        })
+        });
+
+        JigsawEditableBox.resizeEnd.subscribe(() => {
+            JigsawEditableBox.updateAllResizeLineOffset(this.rootBox);
+        });
+
+        this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+            JigsawEditableBox.updateAllResizeLineOffset(this.rootBox);
+        });
     }
 
     getAllBox(box: JigsawEditableBox, list = []): JigsawEditableBox[] {
@@ -95,22 +105,7 @@ export class BoxLayoutInteractionDemoComponent {
 
     getMouseEnterBox(mousePos: { x: number, y: number }, boxList: JigsawEditableBox[]): JigsawEditableBox {
         return boxList.find(box => {
-            // DOMRect对象中有只读属性，无法通过Object.assign或结构复制对象
-            const rect = box.element.getBoundingClientRect();
-            const realRect = {
-                left: rect.left,
-                top: rect.top,
-                right: rect.right,
-                bottom: rect.bottom
-            };
-            if (box.parent) {
-                // 滚动条的情况处理
-                const parentRect = box.parent.element.getBoundingClientRect();
-                realRect.left = Math.max(rect.left, parentRect.left);
-                realRect.top = Math.max(rect.top, parentRect.top);
-                realRect.right = Math.min(rect.right, parentRect.right);
-                realRect.bottom = Math.min(rect.bottom, parentRect.bottom);
-            }
+            const realRect = JigsawEditableBox.getBoxRealRect(box);
             return mousePos.x > realRect.left && mousePos.x < realRect.right && mousePos.y > realRect.top && mousePos.y < realRect.bottom
         })
     }

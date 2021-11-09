@@ -1,5 +1,5 @@
 import {
-    AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter,
+    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter,
     Input, NgZone, OnDestroy, QueryList, Renderer2, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
@@ -64,25 +64,22 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public parent: JigsawBox;
 
-    @ContentChildren(JigsawBox)
-    protected _childrenBoxRaw: QueryList<JigsawBox>;
-
     @ViewChild('resizeLine')
-    private _resizeLine: ElementRef;
+    protected _resizeLine: ElementRef;
 
     @ViewChild('resizeLineParent')
-    private _resizeLineParent: ElementRef;
+    protected _resizeLineParent: ElementRef;
 
     /**
      * @internal
      */
-    public get _$childrenBox(): JigsawBox[] {
-        return <JigsawBox[]>this.childrenBox;
-    }
+    @ContentChildren(JigsawBox)
+    protected childrenBox: QueryList<JigsawBox>;
 
-    public set _$childrenBox(v: JigsawBox[]) {
-        this.childrenBox = v;
-    }
+    /**
+     * @internal
+     */
+    public _$childrenBox: JigsawBox[];
 
     private _removeResizeStartListener: Subscription;
     private _removeResizeEndListener: Subscription;
@@ -90,7 +87,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     private _isCurrentResizingBox: boolean;
 
-    private _computeResizeLineWidth() {
+    protected _computeResizeLineWidth() {
         if (!this._resizeLine) return;
         this.zone.runOutsideAngular(() => {
             if (this.parent.direction == 'column') {
@@ -139,11 +136,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     ngAfterContentInit() {
         // 映射同一组件实例，ContentChildren会包含自己，https://github.com/angular/angular/issues/21148
-        this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
+        this._$childrenBox = this.childrenBox.toArray();
         this.checkFlex();
         this._setChildrenBox();
-        this.removeBoxChangeListener = this._childrenBoxRaw.changes.subscribe(() => {
-            this._$childrenBox = this._childrenBoxRaw.filter(box => box != this);
+        this.removeBoxChangeListener = this.childrenBox.changes.subscribe(() => {
+            this._$childrenBox = this.childrenBox.toArray();
             this.checkFlexByChildren();
             this._setChildrenBox();
             this.runAfterMicrotasks(() => {

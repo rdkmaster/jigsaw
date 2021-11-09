@@ -1,7 +1,8 @@
-<i class="jigsaw-editable-box-relative" #resizeLineParent *ngIf="_$showResizeLine">
+<i class="jigsaw-editable-box-resize-line-wrapper" #resizeLineParent *ngIf="_$showResizeLine"
+   [class.jigsaw-editable-box-resize-line-wrapper-column]="parent?.direction == 'column'">
     <b #resizeLine
-       class="jigsaw-box-resize-line"
-       [class.jigsaw-box-resize-line-column]="parent?.direction == 'column'"
+       class="jigsaw-editable-box-resize-line"
+       [class.jigsaw-editable-box-resize-line-column]="parent?.direction == 'column'"
        j-resizable
        [parentBox]="element"
        [effectBox]="parent?.element"
