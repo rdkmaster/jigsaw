@@ -35,10 +35,6 @@ export class ZtreeDemoEditableComponent {
         this.data.refresh();
     }
 
-    editFirstNode() {
-        this.treeExt.ztree.editName(this.treeExt.ztree.getNodes()[0])
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
