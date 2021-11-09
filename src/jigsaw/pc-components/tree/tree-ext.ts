@@ -428,23 +428,10 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
 
         function before_editName(treeId, treeNode) {
-            const tree = document.getElementById(treeId).parentElement;
-            let fontSize = '12px';
-            if (tree.classList.contains("jigsaw-tree-large")) {
-                fontSize = '14px';
-            }
-            const text = document.createElement("div");
-            text.style.display = 'inline-block';
-            text.style.position = 'absolute';
-            text.style.whiteSpace = "nowrap";
-            text.style.letterSpacing = "0";
-            text.style.fontSize = fontSize;
-            text.style.fontFamily = "Verdana, Arial, Helvetica, AppleGothic, sans-serif";
-            document.body.appendChild(text);
-            text.innerHTML = treeNode.label;
-            const inputWidth = (text.offsetWidth + 16) >= 120 ? (text.offsetWidth + 16) : 120;
-            document.body.removeChild(text);
-            document.documentElement.style.setProperty("--jigsaw-zTree-input-width",`${inputWidth}px`);
+            // 根据节点label宽度设置编辑状态下input的宽度
+            const spanEl = document.getElementById(`${treeNode.tId}_span`);
+            const inputWidth = (spanEl.offsetWidth + 16) >= 120 ? (spanEl.offsetWidth + 16) : 120;
+            document.documentElement.style.setProperty("--jigsaw-zTree-input-width", `${inputWidth}px`);
             
             that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
