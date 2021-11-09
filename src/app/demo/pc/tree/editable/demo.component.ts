@@ -1,11 +1,14 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ZTreeSettings, SimpleTreeData} from "jigsaw/public_api";
+import {ZTreeSettings, SimpleTreeData, JigsawTreeExt} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoEditableComponent {
+    @ViewChild(JigsawTreeExt)
+    public treeExt: JigsawTreeExt;
+
     data: SimpleTreeData;
 
     setting: ZTreeSettings = {
@@ -24,6 +27,10 @@ export class ZtreeDemoEditableComponent {
             chkboxType: { "Y": "ps", "N": "ps" }
         }
     };
+
+    editNode() {
+        this.treeExt.editName(this.treeExt.ztree.getSelectedNodes()[0]);
+    }
 
     constructor(http: HttpClient) {
         this.data = new SimpleTreeData();

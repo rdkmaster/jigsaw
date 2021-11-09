@@ -327,6 +327,24 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
+    /**
+     * 根据节点label宽度设置编辑状态下input的宽度
+     * @param node
+     */
+    private _updateInputWidth(node): void {
+        const spanEl = document.getElementById(`${node.tId}_span`);
+        const inputWidth = (spanEl.offsetWidth + 16) >= 120 ? (spanEl.offsetWidth + 16) : 120;
+        document.documentElement.style.setProperty("--jigsaw-zTree-input-width", `${inputWidth}px`);
+    }
+
+    public editName(node): void {
+        if (!node) {
+            return;
+        }
+        this._updateInputWidth(node);
+        this.ztree.editName(node);
+    }
+
     private _defaultSetting() {
         let that = this;
 
@@ -428,6 +446,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
 
         function before_editName(treeId, treeNode) {
+            that._updateInputWidth(treeNode);
             that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
         }
