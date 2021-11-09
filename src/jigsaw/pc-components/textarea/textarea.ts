@@ -8,7 +8,9 @@ import {
     Injector,
     Input,
     Output,
-    ViewChild
+    ViewChild,
+    OnInit,
+    AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
@@ -37,7 +39,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
+export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, AfterViewInit {
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
@@ -73,9 +75,6 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public set resize(value: "both" | "horizontal" | "vertical" | "none") {
         if (value === "vertical" || value === "none") {
             this._resize = value;
-            if (value === "vertical") {
-                document.documentElement.style.setProperty('--jigsaw-textarea-resize-height', this.height);
-            }
         } else {
             console.warn("Resize only accepts 'vertical' and 'none'");
         }
@@ -329,5 +328,11 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         this._onTouched();
         this._focused = false;
         this.blur.emit(event);
+    }
+
+    ngAfterViewInit() {
+        if (this.height && this.resize === "vertical") {
+            this._textareaElement.nativeElement.style.height = this.height;
+        }
     }
 }
