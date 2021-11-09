@@ -10,6 +10,15 @@
     height: fit-content;
 }
 
-.container .jigsaw-textarea:first-of-type {
+.container-v {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100px;
+}
+
+.container .jigsaw-textarea:first-of-type,
+.container-v .jigsaw-textarea:first-of-type {
     margin-right: 10px;
 }

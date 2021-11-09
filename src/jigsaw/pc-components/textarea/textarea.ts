@@ -31,7 +31,9 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-textarea]': 'true',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
-        '[class.jigsaw-textarea-resize]':'resize === "vertical"'
+        '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"',
+        '[class.jigsaw-textarea-resize-horizontal]':'resize === "horizontal"',
+        '[class.jigsaw-textarea-resize-both]':'resize === "both"',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
@@ -73,10 +75,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     public set resize(value: "both" | "horizontal" | "vertical" | "none") {
-        if (value === "vertical" || value === "none") {
+        if (CommonUtils.isDefined(value)) {
             this._resize = value;
-        } else {
-            console.warn("Resize only accepts 'vertical' and 'none'");
         }
     }
 
@@ -333,6 +333,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     ngAfterViewInit() {
         if (this.height && this.resize === "vertical") {
             this._textareaElement.nativeElement.style.height = this.height;
+        } else if (this.width && this.resize === "horizontal") {
+            this._textareaElement.nativeElement.style.width = this.width;
+        } else if (this.resize === "both") {
+            if (this.width) {
+                this._textareaElement.nativeElement.style.width = this.width;
+            }
+            if (this.height) {
+                this._textareaElement.nativeElement.style.height = this.height;
+            }
         }
     }
 }
