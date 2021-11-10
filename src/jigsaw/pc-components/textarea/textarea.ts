@@ -273,6 +273,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @ViewChild('textarea')
     private _textareaElement: ElementRef;
 
+    @ViewChild('host')
+    private _hostElement: ElementRef;
+
     /**
      * 调用此方法可以通过编程方式使得文本获得焦点。
      * 当确信用户需要在文本框中输入时，自动让文本框获得焦点可以提升体验。
@@ -331,17 +334,19 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     ngAfterViewInit() {
-        if (this.height && this.resize === "vertical") {
-            this._textareaElement.nativeElement.style.height = this.height;
-        } else if (this.width && this.resize === "horizontal") {
-            this._textareaElement.nativeElement.style.width = this.width;
-        } else if (this.resize === "both") {
-            if (this.width) {
-                this._textareaElement.nativeElement.style.width = this.width;
-            }
-            if (this.height) {
+        if (this.height && (this.resize === "vertical" || this.resize === "both")) {
+            if (this.height.trim().endsWith("px") || this.height.trim().endsWith("vh")) {
                 this._textareaElement.nativeElement.style.height = this.height;
+            } else {
+                console.warn("Resizeable JigsawTextarea only accepts height in 'px' and 'vh' format.")
             }
+        } else if (this.width && (this.resize === "horizontal" || this.resize === "both")) {
+            if (this.width.trim().endsWith("px") || this.width.trim().endsWith("vh")) {
+                this._textareaElement.nativeElement.style.width = this.width;
+            } else {
+                console.warn("Resizeable JigsawTextarea only accepts width in 'px' and 'vh' format.")
+            }
+            this._textareaElement.nativeElement.style.width = this.width;
         }
     }
 }
