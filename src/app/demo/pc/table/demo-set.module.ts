@@ -101,8 +101,8 @@ import { TableCellRenderFullComponent } from "./cell-render-full/demo.component"
 import { TableCellRenderFullDemoModule } from "./cell-render-full/demo.module";
 import { TableAutoFillUpDemoComponent } from "./auto-fill-up/demo.component";
 import { TableAutoFillUpDemoModule } from "./auto-fill-up/demo.module";
-import { TableAutoPageableDemoComponent } from "./auto-pageable/demo.component"
-import { TableAutoPageableDemoModule } from "./auto-pageable/demo.module"
+import { TableAutoPageableDemoComponent } from "./auto-page-sizing/demo.component"
+import { TableAutoPageableDemoModule } from "./auto-page-sizing/demo.module"
 
 
 export const routerConfig = [
@@ -257,7 +257,7 @@ export const routerConfig = [
         path: "auto-fill-up", component: TableAutoFillUpDemoComponent
     },
     {
-        path: "auto-pageable", component: TableAutoPageableDemoComponent
+        path: "auto-page-sizing", component: TableAutoPageableDemoComponent
     }
 ];
 

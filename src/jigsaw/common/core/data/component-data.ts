@@ -636,19 +636,16 @@ export class PagingInfo implements IEmittable {
         this.totalRecord = totalRecord;
     }
 
-    private _currentPage: number = 1;
-    private _pageSize: number = 20;
     private _totalPage: number = 1;
-
-    private _autoPaging: boolean = false;
-    private _containerSize: number;
-    private _itemSize: number;
 
     /**
      * 总记录数
      *
      */
     public totalRecord: number = 0;
+    
+
+    private _pageSize: number = 20;
 
     /**
      * 当前单页记录数
@@ -660,14 +657,16 @@ export class PagingInfo implements IEmittable {
     public get pageSize(): number {
         return this._pageSize;
     }
-
+    
     public set pageSize(value: number) {
-        if (isNaN(value) || value < 1 || this.autoPaging || this._pageSize === value) {
+        if (isNaN(value) || value < 1 || this.autoPageSizing || this._pageSize === value) {
             return;
         };
         this._pageSize = value;
         this.emit();
     }
+
+    private _currentPage: number = 1;
 
     /**
      * 当前页索引，从1开始计数。修改此属性后，`PagingInfo`会发出获取对应页数据的事件，通过`subscribe`添加监听器可处理此事件。
@@ -679,13 +678,13 @@ export class PagingInfo implements IEmittable {
     public get currentPage(): number {
         return this._currentPage;
     }
-
+    
     public set currentPage(value: number) {
         if (isNaN(value) || value < 1 || value > this.totalPage) return;
         this._currentPage = value;
         this.emit();
     }
-
+    
     /**
      * 总页数
      *
@@ -696,28 +695,33 @@ export class PagingInfo implements IEmittable {
     public get totalPage(): number {
         return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
+    
+    private _autoPageSizing: boolean = false;
 
-    /* 
+    /** 
      * 自动分页
      *
      * 自动分页的开关，开启时，会依据containerSize 和 itemSize 参数计算pageSize
      * 在自动分页开启时，直接操作pageSize无效
      */
-    public get autoPaging(): boolean {
-        return this._autoPaging;
+    public get autoPageSizing(): boolean {
+        return this._autoPageSizing;
     }
-
-    public set autoPaging(value: boolean) {
-        if (this._autoPaging == !!value) {
+    
+    public set autoPageSizing(value: boolean) {
+        if (this._autoPageSizing == !!value) {
             return;
         }
         if (!!value) {
             this._calcAutoPageSize();
         }
-        this._autoPaging = !!value;
+        this._autoPageSizing = !!value;
+        this.emit();
     }
 
-    /* 
+    private _containerSize: number;
+
+    /** 
      * 容器大小
      * 如：table组件内容高度
      */
@@ -731,9 +735,12 @@ export class PagingInfo implements IEmittable {
         }
         this._containerSize = value;
         this._calcAutoPageSize();
+        this.emit();
     }
 
-    /* 
+    private _itemSize: number;
+
+    /**
      * 单个数据大小
      * 如：table组件单行高度
      */
@@ -747,15 +754,15 @@ export class PagingInfo implements IEmittable {
         }
         this._itemSize = value;
         this._calcAutoPageSize();
+        this.emit();
     }
 
     private _calcAutoPageSize(): void {
-        if (!this.autoPaging || isNaN(this.containerSize) || isNaN(this.itemSize)) {
+        if (!this.autoPageSizing || isNaN(this.containerSize) || isNaN(this.itemSize)) {
             return;
         }
-        const newPageSize = Math.floor(this.containerSize / this.itemSize) ? Math.floor(this.containerSize / this.itemSize) : 1;
-        this._pageSize = newPageSize;
-        this.emit();
+        const newPageSize = Math.floor(this.containerSize / this.itemSize);
+        this._pageSize = newPageSize || 1;
     }
 
     private _emitter = new EventEmitter<any>();
