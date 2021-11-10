@@ -18,7 +18,7 @@
     height: 100px;
 }
 
-.container .jigsaw-textarea:first-of-type,
-.container-v .jigsaw-textarea:first-of-type {
+.container .jigsaw-textarea,
+.container-v .jigsaw-textarea {
     margin-right: 10px;
 }

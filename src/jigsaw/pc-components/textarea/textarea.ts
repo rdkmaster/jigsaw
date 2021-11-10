@@ -334,19 +334,19 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     ngAfterViewInit() {
-        if (this.height && (this.resize === "vertical" || this.resize === "both")) {
-            if (this.height.trim().endsWith("px") || this.height.trim().endsWith("vh")) {
+        if (this.resize === "vertical" || this.resize === "both") {
+            if (/.+(px|vh)\s*$/i.test(this.height)) {
                 this._textareaElement.nativeElement.style.height = this.height;
             } else {
                 console.warn("Resizeable JigsawTextarea only accepts height in 'px' and 'vh' format.")
             }
-        } else if (this.width && (this.resize === "horizontal" || this.resize === "both")) {
-            if (this.width.trim().endsWith("px") || this.width.trim().endsWith("vh")) {
+        }
+        if (this.resize === "horizontal" || this.resize === "both") {
+            if (/.+(px|vw)\s*$/i.test(this.width)) {
                 this._textareaElement.nativeElement.style.width = this.width;
             } else {
                 console.warn("Resizeable JigsawTextarea only accepts width in 'px' and 'vh' format.")
             }
-            this._textareaElement.nativeElement.style.width = this.width;
         }
     }
 }
