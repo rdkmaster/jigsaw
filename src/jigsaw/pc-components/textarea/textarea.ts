@@ -273,9 +273,6 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @ViewChild('textarea')
     private _textareaElement: ElementRef;
 
-    @ViewChild('host')
-    private _hostElement: ElementRef;
-
     /**
      * 调用此方法可以通过编程方式使得文本获得焦点。
      * 当确信用户需要在文本框中输入时，自动让文本框获得焦点可以提升体验。
