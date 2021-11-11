@@ -84,6 +84,8 @@ export class JigsawBoxResizable {
     };
 
     private _dragMove = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (!this._$moving || !this.range) return;
         let eventProp = this.effectDirection == 'column' ? 'clientY' : 'clientX',
             rawPosition = this.effectDirection == 'column' ? this._position[1] : this._position[0],
@@ -99,7 +101,9 @@ export class JigsawBoxResizable {
         this.resize.emit(offset);
     };
 
-    private _dragEnd = () => {
+    private _dragEnd = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         this._$moving = false;
         this._position = null;
         this._removeWindowListener();
