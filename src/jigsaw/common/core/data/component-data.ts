@@ -643,7 +643,7 @@ export class PagingInfo implements IEmittable {
      *
      */
     public totalRecord: number = 0;
-    
+
 
     private _pageSize: number = 20;
 
@@ -657,7 +657,7 @@ export class PagingInfo implements IEmittable {
     public get pageSize(): number {
         return this._pageSize;
     }
-    
+
     public set pageSize(value: number) {
         if (isNaN(value) || value < 1 || this.autoPageSizing || this._pageSize === value) {
             return;
@@ -678,13 +678,13 @@ export class PagingInfo implements IEmittable {
     public get currentPage(): number {
         return this._currentPage;
     }
-    
+
     public set currentPage(value: number) {
         if (isNaN(value) || value < 1 || value > this.totalPage) return;
         this._currentPage = value;
         this.emit();
     }
-    
+
     /**
      * 总页数
      *
@@ -695,19 +695,19 @@ export class PagingInfo implements IEmittable {
     public get totalPage(): number {
         return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
     }
-    
+
     private _autoPageSizing: boolean = false;
 
-    /** 
+    /**
      * 自动分页
      *
-     * 自动分页的开关，开启时，会依据containerSize 和 itemSize 参数计算pageSize
+     * 自动分页的开关，开启时，会依据 containerHeight 和 itemHeight 参数计算pageSize
      * 在自动分页开启时，直接操作pageSize无效
      */
     public get autoPageSizing(): boolean {
         return this._autoPageSizing;
     }
-    
+
     public set autoPageSizing(value: boolean) {
         if (this._autoPageSizing == !!value) {
             return;
@@ -719,49 +719,55 @@ export class PagingInfo implements IEmittable {
         this.emit();
     }
 
-    private _containerSize: number;
+    private _containerHeight: number;
 
-    /** 
-     * 容器大小
+    /**
+     * 本属性用于实现动态分页记录数的功能，它指明了用于显示分页数据的容器总高度，配合 `itemHeight` 属性可计算出当前最佳单页记录数
+     *
      * 如：table组件内容高度
+     *
+     * $demo=table/auto-page-sizing
      */
-    public get containerSize(): number {
-        return this._containerSize;
+    public get containerHeight(): number {
+        return this._containerHeight;
     }
 
-    public set containerSize(value: number) {
+    public set containerHeight(value: number) {
         if (isNaN(value) || value < 1) {
             return;
         }
-        this._containerSize = value;
+        this._containerHeight = value;
         this._calcAutoPageSize();
         this.emit();
     }
 
-    private _itemSize: number;
+    private _itemHeight: number;
 
     /**
-     * 单个数据大小
-     * 如：table组件单行高度
+     * 本属性用于实现动态分页记录数的功能，它指明了单条记录的高度，配合 `containerHeight` 属性可计算出当前最佳单页记录数
+     *
+     * 如：table组件内容高度
+     *
+     * $demo=table/auto-page-sizing
      */
-    public get itemSize(): number {
-        return this._itemSize;
+    public get itemHeight(): number {
+        return this._itemHeight;
     }
 
-    public set itemSize(value: number) {
+    public set itemHeight(value: number) {
         if (isNaN(value) || value < 1) {
             return;
         }
-        this._itemSize = value;
+        this._itemHeight = value;
         this._calcAutoPageSize();
         this.emit();
     }
 
     private _calcAutoPageSize(): void {
-        if (!this.autoPageSizing || isNaN(this.containerSize) || isNaN(this.itemSize)) {
+        if (!this.autoPageSizing || isNaN(this.containerHeight) || isNaN(this.itemHeight)) {
             return;
         }
-        const newPageSize = Math.floor(this.containerSize / this.itemSize);
+        const newPageSize = Math.floor(this.containerHeight / this.itemHeight);
         this._pageSize = newPageSize || 1;
     }
 

@@ -327,7 +327,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
-        
+
         if (!this.autoFillUp) {
             return;
         }
@@ -366,7 +366,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _updateAutoPageSizing(): void {
         const data: IPageable = <any>this.data;
-        if (!(data?.pagingInfo instanceof PagingInfo && data?.pagingInfo.autoPageSizing)) {
+        if (!(data?.pagingInfo instanceof PagingInfo) || !data?.pagingInfo.autoPageSizing) {
             return;
         }
         const tableEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-range");
@@ -374,12 +374,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         const bodyHeight = tableEle.getBoundingClientRect().bottom - tableEle.getBoundingClientRect().top;
-        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 41;
-
-        if (!isNaN(data.pagingInfo.containerSize) && data.pagingInfo.containerSize === containerSize) {
+        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 42;
+        if (!isNaN(data.pagingInfo.containerHeight) && data.pagingInfo.containerHeight === containerSize) {
             return
         }
-        data.pagingInfo.containerSize = containerSize;
+        data.pagingInfo.containerHeight = containerSize;
     }
 
     /**
