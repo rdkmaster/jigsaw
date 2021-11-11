@@ -135,7 +135,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     public set grow(value: number) {
-        if (CommonUtils.isUndefined(value)) return;
+        if (CommonUtils.isUndefined(value) || this._grow == value) return;
         this._grow = value;
         this.zone.runOutsideAngular(() => {
             this.renderer.setStyle(this.element, 'flex-grow', Number(value));
@@ -154,6 +154,9 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         this._shrink = value;
         this.renderer.setStyle(this.element, 'flex-shrink', Number(value));
     }
+
+    @Output()
+    public growChange = new EventEmitter<number>();
 
     protected removeBoxChangeListener: Subscription;
 

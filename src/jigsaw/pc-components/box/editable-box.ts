@@ -429,6 +429,7 @@ export class JigsawEditableBox extends JigsawBox {
                 box.element.style.flexGrow = '0';
             } else {
                 box.grow = sizeRatios[index];
+                box.growChange.emit(sizeRatios[index]);
             }
             if (this.parent.resizable && index != 0) {
                 this.runMicrotask(() => {
