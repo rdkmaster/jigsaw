@@ -701,8 +701,8 @@ export class PagingInfo implements IEmittable {
     /**
      * 自动分页
      *
-     * 自动分页的开关，开启时，会依据 containerHeight 和 itemHeight 参数计算pageSize
-     * 在自动分页开启时，直接操作pageSize无效
+     * 自动分页的开关，开启时，会依据 `containerHeight` 和 `itemHeight` 参数计算 `pageSize`，
+     * 注意：在本属性为true时，直接操作`pageSize`无效
      */
     public get autoPageSizing(): boolean {
         return this._autoPageSizing;
