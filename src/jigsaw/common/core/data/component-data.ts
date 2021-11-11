@@ -272,7 +272,7 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/ajax-events
      *
-     * param callback 回调函数
+     * @param callback 回调函数
      * @param context 回调函数`callback`执行的上下文
      * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
@@ -661,7 +661,7 @@ export class PagingInfo implements IEmittable {
     public set pageSize(value: number) {
         if (isNaN(value) || value < 1 || this.autoPageSizing || this._pageSize === value) {
             return;
-        };
+        }
         this._pageSize = value;
         this.emit();
     }
@@ -806,8 +806,6 @@ export class PagingInfo implements IEmittable {
 export class DataFilterInfo {
     constructor(/**
                  * 过滤关键字
-                 *
-                 *
                  */
                 public key: string = '',
                 /**
