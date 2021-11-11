@@ -435,9 +435,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      * select组件改变pageSize
      * */
-    public _changePageSize(pageSize) {
-        if (this.pageSize != pageSize.value) {
-            this.pageSize = pageSize.value;
+    public _$changePageSize(pageSize: {value?: number}): void {
+        const value = pageSize?.value;
+        if (isNaN(value)) {
+            return;
+        }
+        if (this.pageSize != value) {
+            this.pageSize = value;
             this.current = 1;
         }
         this._changeDetectorRef.markForCheck();
