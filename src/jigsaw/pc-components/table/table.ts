@@ -37,7 +37,7 @@ import {
     TableHeadSetting
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {SortOrder, IPageable} from "../../common/core/data/component-data";
+import {SortOrder, IPageable, PagingInfo} from "../../common/core/data/component-data";
 import {
     DefaultCellRenderer,
     JigsawTableRendererModule,
@@ -327,7 +327,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
         this._changeDetectorRef.detectChanges();
-        
+
         if (!this.autoFillUp) {
             return;
         }
@@ -362,6 +362,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         this._$blankRow = Array(rowGap).fill("");
         this._changeDetectorRef.detectChanges();
+    }
+
+    private _updateAutoPageSizing(): void {
+        const data: IPageable = <any>this.data;
+        if (!(data?.pagingInfo instanceof PagingInfo) || !data?.pagingInfo.autoPageSizing) {
+            return;
+        }
+        const tableEle = this._elementRef.nativeElement.querySelector(".jigsaw-table-range");
+        if (!tableEle) {
+            return;
+        }
+        const bodyHeight = tableEle.getBoundingClientRect().bottom - tableEle.getBoundingClientRect().top;
+        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 42;
+        if (!isNaN(data.pagingInfo.containerHeight) && data.pagingInfo.containerHeight === containerSize) {
+            return
+        }
+        data.pagingInfo.containerHeight = containerSize;
     }
 
     /**
@@ -412,6 +429,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.runMicrotask(() => {
             // 自动添加空白行
             this._updateFillUpBlankRow();
+            // 自动分页
+            this._updateAutoPageSizing();
             // 等待additionalTableData在renderer更新完成
             this.additionalDataChange.emit(this.additionalData);
             // 等待滚动条初始化
@@ -602,6 +621,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._handleScrollBar();
         this._setVerticalScrollbarOffset();
         this._updateFillUpBlankRow();
+        this._updateAutoPageSizing();
     }
 
     private _tableHeaderElement: HTMLElement;
@@ -895,6 +915,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(this._elementRef.nativeElement.querySelector('.jigsaw-table-body-range'),
             'max-height', this._maxHeight);
         this._tableHeaderElement = this._elementRef.nativeElement.querySelector(".jigsaw-table-header");
+        // 自动分页
+        this._updateAutoPageSizing();
     }
 
     ngOnDestroy() {
