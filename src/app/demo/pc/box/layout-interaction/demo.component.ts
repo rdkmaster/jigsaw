@@ -81,14 +81,6 @@ export class BoxLayoutInteractionDemoComponent {
             e.initEvent("resize", true, true);
             window.dispatchEvent(e);
         });
-
-        JigsawEditableBox.resizeEnd.subscribe(() => {
-            JigsawEditableBox.updateAllResizeLineOffset(this.rootBox);
-        });
-
-        this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
-            JigsawEditableBox.updateAllResizeLineOffset(this.rootBox);
-        });
     }
 
     getAllBox(box: JigsawEditableBox, list = []): JigsawEditableBox[] {

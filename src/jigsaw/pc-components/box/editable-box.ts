@@ -190,7 +190,7 @@ export class JigsawEditableBox extends JigsawBox {
                     box._cdr.markForCheck();
                 });
                 this.runAfterMicrotasks(() => {
-                    this.updateResizeLineOffset(box, index);
+                    this._setResizeLineOffset(box, index);
                     this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
                 })
             }
@@ -206,22 +206,16 @@ export class JigsawEditableBox extends JigsawBox {
         })
     }
 
-    public updateResizeLineOffset(box: JigsawEditableBox, index) {
+    private _setResizeLineOffset(box: JigsawEditableBox, index) {
+        const resizeLineWidth = 3;
         const parentBox = box.parent;
+        const prevBox = parentBox._$childrenBox[index - 1];
         const offsetParam = parentBox.direction == 'column' ? 'top' : 'left';
-        box._resizeLineParent.nativeElement.style[offsetParam] = this.getGapOffset(parentBox, index) + 'px';
-    }
-
-    public static updateAllResizeLineOffset(parentBox: JigsawEditableBox) {
-        if (!(parentBox._$childrenBox instanceof Array)) {
-            return;
-        }
-        parentBox._$childrenBox.forEach((box: JigsawEditableBox, index) => {
-            if (parentBox.resizable && index != 0) {
-                box.updateResizeLineOffset(box, index)
-            }
-            this.updateAllResizeLineOffset(box);
-        })
+        const prevGapParam = parentBox.direction == 'column' ? 'marginBottom' : 'marginRight';
+        const curGapParam = parentBox.direction == 'column' ? 'marginTop' : 'marginLeft';
+        const gapSize = Number(getComputedStyle(prevBox.element)[prevGapParam].replace('px', '')) +
+            Number(getComputedStyle(box.element)[curGapParam].replace('px', ''));
+        box._resizeLineParent.nativeElement.style[offsetParam] = - (gapSize + resizeLineWidth) / 2 + 'px';
     }
 
     protected _computeResizeLineWidth() {
@@ -430,11 +424,6 @@ export class JigsawEditableBox extends JigsawBox {
             } else {
                 box.grow = sizeRatios[index];
                 box.growChange.emit(sizeRatios[index]);
-            }
-            if (this.parent.resizable && index != 0) {
-                this.runMicrotask(() => {
-                    this.updateResizeLineOffset(box, index);
-                })
             }
         });
     }
