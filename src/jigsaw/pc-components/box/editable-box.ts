@@ -10,7 +10,8 @@ import {
     QueryList,
     ViewChild,
     Injector,
-    Input
+    Input,
+    ViewContainerRef
 } from '@angular/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
@@ -93,6 +94,9 @@ export class JigsawEditableBox extends JigsawBox {
      */
     @Input()
     public resizeStep: number = 8;
+
+    @ViewChild("renderPoint", {read: ViewContainerRef})
+    public renderPoint: ViewContainerRef;
 
     /**
      * @internal
