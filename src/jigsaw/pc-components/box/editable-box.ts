@@ -149,15 +149,6 @@ export class JigsawEditableBox extends JigsawBox {
      */
     public _$childrenBox: JigsawEditableBox[];
 
-    getGapOffset(parentBox: JigsawEditableBox, index: number): number {
-        const posParam = parentBox.direction == 'column' ? 'top' : 'left';
-        const posSizeParam = parentBox.direction == 'column' ? 'bottom' : 'right';
-        const parentBoxRect = JigsawEditableBox.getBoxRealRect(parentBox);
-        const prevBoxRect = JigsawEditableBox.getBoxRealRect(parentBox._$childrenBox[index - 1]);
-        const curBoxRect = JigsawEditableBox.getBoxRealRect(parentBox._$childrenBox[index]);
-        return (curBoxRect[posParam] - prevBoxRect[posSizeParam]) / 2 + prevBoxRect[posSizeParam] - parentBoxRect[posParam] - 2;
-    }
-
     public static getBoxRealRect(box: JigsawEditableBox) {
         // DOMRect对象中有只读属性，无法通过Object.assign或结构复制对象
         const rect = box.element.getBoundingClientRect();
