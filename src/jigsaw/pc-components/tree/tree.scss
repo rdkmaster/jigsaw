@@ -1,4 +1,7 @@
 $jigsaw-tree: #{$jigsaw-prefix}-tree;
+:root {
+    --jigsaw-zTree-input-width: 120px;
+}
 
 .ztree li span:not(.node_name) {
     color: $font-color-default;
@@ -94,6 +97,16 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
     }
 }
 
+.ztree li a input.rename {
+    width: 120px;
+    width: var(--jigsaw-zTree-input-width);
+    letter-spacing: 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
 .#{$jigsaw-tree}-default {
     .ztree * {
         font-size: $font-size-base;
@@ -116,6 +129,11 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
         a {
             height: 24px !important;
+
+            input.rename {
+                height: 16px;
+                font-size: $font-size-base;
+            }
         }
     }
 }
@@ -142,6 +160,11 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
         a {
             height: 28px !important;
+
+            input.rename {
+                height: 16px;
+                font-size: $font-size-base;
+            }
         }
     }
 }
@@ -168,6 +191,11 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
         a {
             height: 32px !important;
+
+            input.rename {
+                height: 20px;
+                font-size: $font-size-lg;
+            }
         }
     }
 }

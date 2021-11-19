@@ -21,12 +21,13 @@
 
         <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
                        [value]="_$pageSize"
-                       (valueChange)="_changePageSize($event)"
+                       (valueChange)="_$changePageSize($event)"
                        [trackItemBy]="['value','label']"
                        labelField="label"
                        width="80"
                        [data]="pageSizeOptions"
-                       class="jigsaw-paging-page-size">
+                       class="jigsaw-paging-page-size"
+                       [disabled]="data?.pagingInfo?.autoPageSizing">
         </jigsaw-select>
 
         <div class="jigsaw-paging-goto" *ngIf="showQuickJumper">
@@ -59,11 +60,12 @@
         <jigsaw-select *ngIf="pageSizeOptions && pageSizeOptions.length > 0"
                        class="jigsaw-paging-page-size"
                        [value]="_$pageSize"
-                       (valueChange)="_changePageSize($event)"
+                       (valueChange)="_$changePageSize($event)"
                        [trackItemBy]="['value','label']"
                        labelField="label"
                        width="80"
-                       [data]="pageSizeOptions">
+                       [data]="pageSizeOptions"
+                       [disabled]="data?.pagingInfo?.autoPageSizing">
         </jigsaw-select>
     </ng-container>
 </ng-container>

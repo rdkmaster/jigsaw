@@ -63,7 +63,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Input('uploadAdditionalFields')
     public additionalFields: { [prop: string]: string };
 
-    private _minSize: number;
+    protected _minSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -82,7 +82,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
         this._minSize = value;
     }
 
-    private _maxSize: number;
+    protected _maxSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -105,13 +105,13 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     public uploadImmediately: boolean = true;
 
     /**
-     * 每个文件上传完成（无论成功还是失败）之后发出
+     * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
      */
     @Output('uploadProgress')
     public progress = new EventEmitter<UploadFileInfo>();
 
     /**
-     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此时可以获取到此文件的真实进度
+     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此事件给出的进度为单文件数据上传进度
      */
     @Output('uploadDataSendProgress')
     public dataSendProgress = new EventEmitter<UploadFileInfo>();
@@ -146,7 +146,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         this._selectFile($event);
     }
 
-    private _fileInputElement: Element;
+    private _fileInputElement: HTMLElement;
     private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
@@ -196,7 +196,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._fileInputElement = document.createElement('input');
             this._fileInputElement.setAttribute('type', 'file');
             //指令模式动态创建的input不在dom中的时候，此处将其加入body中，设置其不可见
-            (<HTMLElement>this._fileInputElement).style.display = 'none';
+            this._fileInputElement.style.display = 'none';
             document.body.appendChild(this._fileInputElement);
         }
         if (this.multiple) {
@@ -211,9 +211,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
-                    if (this._appendFiles()) {
-                        this.change.emit(this.files);
-                    }
+                    this._appendFiles();
                 }
             });
 
@@ -233,13 +231,22 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             fileInput.value = null;
         }
         this.files.push(...files);
+        if (files.length > 0) {
+            this.change.emit(this.files);
+        }
         return this.files.length > 0;
+    }
+
+    public appendFiles(fileList) {
+        const files = this._checkFiles(Array.from(fileList || []));
+        this.files.push(...files);
+        this.change.emit(this.files);
     }
 
     public upload() {
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
-                if (!this._appendFiles()) {
+                if (!this._appendFiles() && this.files.length === 0) {
                     return;
                 }
                 this.start.emit(this.files);
@@ -388,7 +395,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._removeFileChangeEvent();
             this._removeFileChangeEvent = null;
         }
-        document.body.removeChild(this._fileInputElement);
-        this._fileInputElement = null;
+        if (CommonUtils.isDefined(this._fileInputElement)){
+            document.body.removeChild(this._fileInputElement);
+            this._fileInputElement = null;
+        }
     }
 }

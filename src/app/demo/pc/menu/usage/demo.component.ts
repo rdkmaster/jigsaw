@@ -28,12 +28,12 @@ export class MenuUsageDemo {
         ];
         data[0].data.fromXML(`
             <node>
-                <node label="新建" icon="iconfont iconfont-e9dd">
+                <node label="新建" iconUnicode="e9dd">
                     <node label="工程..." subTitle="Ctrl+Shift+P"></node>
                     <node></node>
-                    <node label="HTML文件" icon="iconfont iconfont-e5a2" subTitle="Ctrl+Shift+H"></node>
-                    <node label="CSS文件" icon="iconfont iconfont-e5a1" subTitle="Ctrl+Shift+C"></node>
-                    <node label="JS文件" icon="iconfont iconfont-e6a6" subTitle="Ctrl+Shift+J"></node>
+                    <node label="HTML文件" iconUnicode="e5a2" subTitle="Ctrl+Shift+H"></node>
+                    <node label="CSS文件" iconUnicode="e5a1" subTitle="Ctrl+Shift+C"></node>
+                    <node label="JS文件" iconUnicode="e6a6" subTitle="Ctrl+Shift+J"></node>
                     <node></node>
                     <node label="退出"></node>
                 </node>

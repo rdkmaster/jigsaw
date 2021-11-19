@@ -101,6 +101,9 @@ import { TableCellRenderFullComponent } from "./cell-render-full/demo.component"
 import { TableCellRenderFullDemoModule } from "./cell-render-full/demo.module";
 import { TableAutoFillUpDemoComponent } from "./auto-fill-up/demo.component";
 import { TableAutoFillUpDemoModule } from "./auto-fill-up/demo.module";
+import { TableAutoPageableDemoComponent } from "./auto-page-sizing/demo.component"
+import { TableAutoPageableDemoModule } from "./auto-page-sizing/demo.module"
+
 
 export const routerConfig = [
     {
@@ -252,6 +255,9 @@ export const routerConfig = [
     },
     {
         path: "auto-fill-up", component: TableAutoFillUpDemoComponent
+    },
+    {
+        path: "auto-page-sizing", component: TableAutoPageableDemoComponent
     }
 ];
 
@@ -269,7 +275,7 @@ export const routerConfig = [
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
-        TableCellRenderFullDemoModule, TableAutoFillUpDemoModule
+        TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule
     ]
 })
 export class TableDemoModule {

@@ -1,42 +1,39 @@
-import {Component} from "@angular/core";
-import {UploadFileInfo} from "jigsaw/public_api";
+import { Component } from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class UploadBasicDemoComponent {
-    fileType = '.png';
-    multiple: boolean;
-    isButtonUploadWaiting: boolean;
-    isLinkUploadWaiting: boolean;
-    uploadedFile: string = '';
-    maxSize: number = 1024;
-    minSize: number = 0;
+    fileType = '.txt';
 
-    getUploadFile(fileInfo: UploadFileInfo) {
-        console.log('one file uploaded', fileInfo);
+    uploadStart($event) {
+        console.log("uploadStart触发了", $event)
     }
 
-    getAllUploadFiles(fileInfoList: UploadFileInfo[], mode?: string) {
-        console.log('all files uploaded', fileInfoList);
-        switch (mode) {
-            case 'button':
-                this.isButtonUploadWaiting = false;
-                break;
-            case 'link':
-                this.isLinkUploadWaiting = false;
-        }
+    uploadDataSendProgress($event) {
+        console.log("uploadDataSendProgress触发了", $event)
     }
 
-    showUploadFileName(files?: UploadFileInfo[]) {
-        console.log(files);
-        this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
+    uploadProgress($event) {
+        console.log("uploadProgress触发了", $event)
+    }
+
+    uploadComplete($event) {
+        console.log("uploadComplete触发了", $event)
+    }
+
+    uploadChange($event) {
+        console.log("uploadChange触发了", $event)
+    }
+
+    uploadRemove($event) {
+        console.log("uploadRemove触发了", $event)
     }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '本demo展示了`jigsaw-upload`组件的基本用法';
     description: string = '';
 }

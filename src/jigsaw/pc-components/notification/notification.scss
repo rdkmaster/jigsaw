@@ -85,12 +85,12 @@
     }
 
     .jigsaw-notification-button-bar {
-        text-align: right;
+        text-align: left;
         flex: none;
-        margin: 18px -8px -6px 0;
+        margin: 18px -8px -6px 41px;
 
         jigsaw-button {
-            margin-left: 6px;
+            margin-right: 6px;
         }
     }
 
