@@ -7,6 +7,10 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
     transition: transform .3s ease;
     overflow: hidden;
 
+    &-inserting {
+        border: 1px solid red !important;
+    }
+
     &-resize-line-wrapper {
         position: relative;
         display: block;

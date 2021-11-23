@@ -224,7 +224,11 @@ export class JigsawEditableBox extends JigsawBox {
     private _insertTimer: number;
 
     public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): BoxInsertInfo {
-        this.element.style.borderColor = laying ? 'red' : '#ccc';
+        if (laying) {
+            this.renderer.addClass(this.element, 'jigsaw-editable-box-inserting')
+        } else {
+            this.renderer.removeClass(this.element, 'jigsaw-editable-box-inserting')
+        }
         if (!laying || !mousePos) {
             clearTimeout(this._insertTimer);
             this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'none');
