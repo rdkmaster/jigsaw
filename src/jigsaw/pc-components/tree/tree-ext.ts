@@ -333,6 +333,12 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
      */
     private _updateInputWidth(node): void {
         const spanEl = document.getElementById(`${node.tId}_span`);
+        const zTree = this;
+        $(`#${node.tId}_span`).on('focus', 'input', function () {
+            zTree.runAfterMicrotasks(() => {
+                this.select();
+            });
+        });
         const inputWidth = (spanEl.offsetWidth + 16) >= 120 ? (spanEl.offsetWidth + 16) : 120;
         document.documentElement.style.setProperty("--jigsaw-zTree-input-width", `${inputWidth}px`);
     }
