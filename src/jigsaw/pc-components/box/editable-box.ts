@@ -388,26 +388,31 @@ export class JigsawEditableBox extends JigsawBox {
             return ss;
         }, []);
         // 根据padding和gap纠正尺寸
-        let fixedSize = 0;
         const length = this.parent._$childrenBox.length;
+        const parentStyle = getComputedStyle(this.parent.element);
+        const [parentPaddingTop, parentPaddingBottom, parentPaddingLeft, parentPaddingRight] = [
+            this._pxToNumber(parentStyle.paddingTop) + this._pxToNumber(parentStyle.borderTopWidth),
+            this._pxToNumber(parentStyle.paddingBottom) + this._pxToNumber(parentStyle.borderBottomWidth),
+            this._pxToNumber(parentStyle.paddingLeft) + this._pxToNumber(parentStyle.borderLeftWidth),
+            this._pxToNumber(parentStyle.paddingRight) + this._pxToNumber(parentStyle.borderRightWidth)
+        ];
+        const growSizes = sizes.concat();
         this.parent._$childrenBox.forEach((box, index) => {
-            let paddingSize, gapSize;
-            const parentStyle = getComputedStyle(this.parent.element);
+            let paddingSize = 0, gapSize = 0, borderSize = 0;
             const boxStyle = getComputedStyle(box.element);
             if (this.parent.direction == 'column') {
-                paddingSize = index == 0 ? Number(parentStyle.paddingTop.replace('px', '')) :
-                    index == length - 1 ? Number(parentStyle.paddingBottom.replace('px', '')) : 0;
-                gapSize = index == length - 1 ? 0 : Number(boxStyle.marginBottom.replace('px', ''));
+                paddingSize = index == 0 ? parentPaddingTop : index == length - 1 ? parentPaddingBottom : 0;
+                gapSize = index == length - 1 ? 0 : this._pxToNumber(boxStyle.marginBottom);
+                borderSize = this._pxToNumber(boxStyle.borderTopWidth) + this._pxToNumber(boxStyle.borderBottomWidth);
             } else {
-                paddingSize = index == 0 ? Number(parentStyle.paddingLeft.replace('px', '')) :
-                    index == length - 1 ? Number(parentStyle.paddingRight.replace('px', '')) : 0;
-                gapSize = index == length - 1 ? 0 : Number(boxStyle.marginRight.replace('px', ''));
+                paddingSize = index == 0 ? parentPaddingLeft : index == length - 1 ? parentPaddingRight : 0;
+                gapSize = index == length - 1 ? 0 : this._pxToNumber(boxStyle.marginRight);
+                borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
             }
-            fixedSize += paddingSize + gapSize;
-            sizes[index] = sizes[index] - paddingSize - gapSize;
+            // 计算grow要剔除边框的尺寸才能计算准确
+            growSizes[index] = growSizes[index] - paddingSize - gapSize - borderSize;
         });
-        // 采用四舍五入法去掉小数点，不然有些box计算出的grow会递增
-        return [sizes, sizes.map(size => Math.round(size / (this.parent.element[sizeProp] - fixedSize) * 100))];
+        return [sizes, growSizes.map(size => size / this.parent.element[sizeProp] * 100)];
     }
 
     public _$handleResize(offset: number, emitEvent: boolean = false) {
