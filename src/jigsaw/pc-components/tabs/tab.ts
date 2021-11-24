@@ -29,7 +29,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/comm
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
-import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
+import { CommonUtils } from '../../common/core/utils/common-utils';
 
 export type TabBarData = {
     /**
