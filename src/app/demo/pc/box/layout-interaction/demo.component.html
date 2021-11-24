@@ -18,7 +18,7 @@
         <div class="box-layout" style="display: inline-block"
              jigsaw-droppable (jigsawDragOver)="laying.emit($event)" (jigsawDrop)="insert.emit($event)">
             <j-editable-box #rootBox direction="v" height="600" width="800" [padding]="10" [gap]="10" id="box_0">
-                <j-editable-box grow="2" id="box_0_0" [gap]="10">
+                <j-editable-box style="min-height: 50px" grow="2" id="box_0_0" [gap]="10">
                     <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40"
                                  text="编辑"></jigsaw-icon>
                     <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
@@ -46,7 +46,7 @@
                         </j-editable-box>
                     </j-editable-box>
                 </j-editable-box>
-                <j-editable-box grow="2" id="box_0_1" [gap]="10">
+                <j-editable-box style="min-height: 100px" grow="2" id="box_0_1" [gap]="10">
                     <j-editable-box id="box_0_1_0">
 
                     </j-editable-box>

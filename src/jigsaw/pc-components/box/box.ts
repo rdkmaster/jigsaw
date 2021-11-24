@@ -254,14 +254,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         });
     }
 
-    protected _pxToNumber(px: string): number {
-        if (CommonUtils.isUndefined(px) || typeof px == 'number') {
-            return <any>px;
-        }
-        px = px.replace(/(px|PX)$/, '');
-        return Number(px);
-    }
-
     private _removeAllResizeLineListener() {
         if (this._removeResizeStartListener) {
             this._removeResizeStartListener.unsubscribe();

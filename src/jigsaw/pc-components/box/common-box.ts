@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive } from "@angular/core";
+import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive} from "@angular/core";
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
@@ -218,6 +218,14 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     @Output()
     public resize = new EventEmitter();
 
+    protected _pxToNumber(px: string): number {
+        if (CommonUtils.isUndefined(px) || typeof px == 'number') {
+            return <any>px;
+        }
+        px = px.replace(/(px|PX)$/, '');
+        return Number(px);
+    }
+
     /**
      * @internal
      */
@@ -237,7 +245,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const sizeProp = this._getPropertyByDirection()[1];
         const sizeRatios = this._computeSizeRatios(sizeProp, offset);
         this.parent.childrenBox.forEach((box, index) => {
-            if(box._isFixedSize) return;
+            if (box._isFixedSize) return;
             box.grow = sizeRatios[index];
             if (emitEvent) {
                 box.growChange.emit(sizeRatios[index]);
@@ -259,7 +267,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
         const sizes = this._rawOffsets.reduce((ss, offset, index) => {
-            if(index > 0) {
+            if (index > 0) {
                 ss.push(offset - this._rawOffsets[index - 1])
             }
             return ss;
@@ -268,7 +276,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const fixedSize = sizes.reduce((fs, size, index) => {
             const box = this.parent.childrenBox instanceof QueryList ?
                 this.parent.childrenBox.toArray()[index] : this.parent.childrenBox[index];
-            if(box._isFixedSize) {
+            if (box._isFixedSize) {
                 fs += size;
             }
             return fs;
@@ -316,7 +324,33 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const curIndex = this._getCurrentIndex();
-        return [this._rawOffsets[curIndex - 1], this._rawOffsets[curIndex + 1]];
+        const [prevBox, curBox] = [
+            this.parent.childrenBox.toArray()[curIndex - 1],
+            this.parent.childrenBox.toArray()[curIndex]
+        ];
+        return [
+            this._rawOffsets[curIndex] - this._getBoxGrowSize(prevBox),
+            this._rawOffsets[curIndex] + this._getBoxGrowSize(curBox)
+        ];
+    }
+
+    private _getBoxGrowSize(box: JigsawResizableBoxBase): number {
+        const boxStyle = getComputedStyle(box.element);
+        const sizeParams = {
+            minParam: this.parent.direction == 'column' ? 'minHeight' : 'minWidth',
+            paddingLeftParam: this.parent.direction == 'column' ? 'paddingTop' : 'paddingLeft',
+            paddingRightParam: this.parent.direction == 'column' ? 'paddingBottom' : 'paddingRight',
+            borderLeftParam: this.parent.direction == 'column' ? 'borderTopWidth' : 'borderLeftWidth',
+            borderRightParam: this.parent.direction == 'column' ? 'borderBottomWidth' : 'borderRightWidth',
+            sizeParam: this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth'
+        };
+        const sizeInfo = {
+            minSize: this._pxToNumber(boxStyle[sizeParams.minParam]) || 0,
+            padding: this._pxToNumber(boxStyle[sizeParams.paddingLeftParam]) + this._pxToNumber(boxStyle[sizeParams.paddingRightParam]),
+            border: this._pxToNumber(boxStyle[sizeParams.borderLeftParam]) + this._pxToNumber(boxStyle[sizeParams.borderRightParam]),
+            size: box.element[sizeParams.sizeParam]
+        };
+        return sizeInfo.size - Math.max(sizeInfo.minSize, sizeInfo.padding + sizeInfo.border)
     }
 
     private _updateResizeRange() {
