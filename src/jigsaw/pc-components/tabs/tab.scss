@@ -30,7 +30,6 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         border-bottom-width: 1px;
         border-bottom-style: solid;
         border-bottom-color: $splitline-default;
-        margin-bottom: 6px;
         outline: none;
     }
 
@@ -66,6 +65,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         right: 0;
         width: 40px;
         height: 100%;
+        background-color: var(--jigsaw-nav-background, $bg-body);
         font-size: 24px;
         color: $icon-color-default;
         text-align: center;
@@ -162,6 +162,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         .#{$tab-prefix}-nav-wrap {
             @include clearfix();
             width: calc(100% - 40px);
+            background-color: var(--jigsaw-nav-background, transparent);
             overflow: hidden;
 
             .#{$tab-prefix}-nav {
@@ -234,6 +235,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
     &-content {
         width: 100%;
+        padding-top: 6px;
+        background-color: var(--jigsaw-nav-background, transparent);
 
         .#{$tab-prefix}-tabpane {
             display: block;
@@ -259,13 +262,16 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     .#{$tab-prefix}-nav-container {
         .#{$tab-prefix}-ink-bar {
             height: 1px;
-            background-color: $bg-body;
+            background-color: var(--jigsaw-nav-background, $bg-body);
             transition: unset;
         }
 
         .#{$tab-prefix}-nav-wrap {
+            background-color: transparent;
+
             .#{$tab-prefix}-nav {
                 .#{$tab-prefix}-tab {
+                    background-color: var(--jigsaw-nav-background, transparent);
                     border-width: 1px;
                     border-style: solid;
                     border-color: $border-color-default;
