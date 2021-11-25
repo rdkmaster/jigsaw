@@ -420,6 +420,12 @@ export class JigsawEditableBox extends JigsawBox {
         return [sizes, sizes.map(size => size / this.parent.element[sizeProp] * 100)];
     }
 
+    /**
+     * @internal
+     * @param offset
+     * @param emitEvent
+     * @private
+     */
     public _$handleResize(offset: number, emitEvent: boolean = false) {
         if (!this.parent) return;
 
