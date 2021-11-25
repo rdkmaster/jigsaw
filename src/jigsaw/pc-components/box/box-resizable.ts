@@ -31,6 +31,9 @@ export class JigsawBoxResizable {
     @Input()
     public effectDirection: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public resizeStep: number = 1;
 

@@ -51,6 +51,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _gap: string;
     /**
+     * @NoMarkForCheckRequired
      * 设置内容box的间隙
      */
     @Input()
@@ -64,6 +65,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _margin: string;
     /**
+     * @NoMarkForCheckRequired
      * 设置当前box的外边距
      */
     @Input()
@@ -78,6 +80,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _padding: string;
     /**
+     * @NoMarkForCheckRequired
      * 设置当前box的内边距
      */
     @Input()
