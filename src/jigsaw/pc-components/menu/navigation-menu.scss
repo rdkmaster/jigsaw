@@ -622,6 +622,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                 .#{$nav-menu-prefix-cls}-item-selected-top {
                     background-color: #212a33;
+                    color: $font-color-default-dark;
                 }
             }
 
