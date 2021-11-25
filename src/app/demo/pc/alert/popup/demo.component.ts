@@ -43,6 +43,14 @@ export class AlertPopupDemoComponent {
             [{label: 'alert.button.yes'}, {label: 'alert.button.no'}, {label: "不知道"}]);
     }
 
+    contentWrap() {
+        this.answer = 'waiting for an answer';
+        const info = {header: this.header, message: 'This is very long regular text in English. This is very long regular text in English. This is very long abnormall texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxt in English. 这是一长串数字123456789012345678901234567890123456789012345678901234567890'};
+        JigsawInfoAlert.show(info, answer => {
+            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
+        });
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

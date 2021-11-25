@@ -87,6 +87,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
             p {
                 font-size: $font-size-base;
                 color: $font-color-hint;
+                word-break: break-word;
             }
         }
     }
