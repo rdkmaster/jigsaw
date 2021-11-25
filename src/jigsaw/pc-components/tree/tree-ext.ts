@@ -337,7 +337,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         $(`#${node.tId}_span`).on('focus', 'input', function () {
             zTree.runAfterMicrotasks(() => {
                 this.select();
-                $(`#${node.tId}_span`).on('focus', 'input');
+                $(`#${node.tId}_span`).off('focus', 'input');
             });
         });
         const inputWidth = (spanEl.offsetWidth + 16) >= 120 ? (spanEl.offsetWidth + 16) : 120;
