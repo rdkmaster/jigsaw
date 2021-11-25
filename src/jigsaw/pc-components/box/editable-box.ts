@@ -27,7 +27,6 @@ export type BoxInsertInfo = { parent: JigsawEditableBox, before?: JigsawEditable
         '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.margin]': 'margin',
         '[style.padding]': 'padding'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -74,6 +73,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     public set margin(value: string) {
         this._margin = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
+        this.element.style.margin = this._margin;
     }
 
     private _padding: string;
@@ -195,9 +195,10 @@ export class JigsawEditableBox extends JigsawBox {
         }
         this._$childrenBox.forEach((box, index) => {
             if (box.margin) {
+                // 自身通过输入属性设置过margin，就不通过gap设置
                 return;
             }
-            box.margin = index == this._$childrenBox.length - 1 ? `0` : this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
+            box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` : this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
         })
     }
 

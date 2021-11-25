@@ -19,12 +19,6 @@
              jigsaw-droppable (jigsawDragOver)="laying.emit($event)" (jigsawDrop)="insert.emit($event)">
             <j-editable-box #rootBox direction="v" height="600" width="800" [padding]="10" [gap]="10" id="box_0">
                 <j-editable-box style="min-height: 50px" grow="2" id="box_0_0" [gap]="10">
-                    <!--<jigsaw-icon style="width:200px" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40"
-                                 text="编辑"></jigsaw-icon>
-                    <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" text="编辑"></jigsaw-icon>-->
-                    <!--<div style="flex: 1;overflow: auto;">
-                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
-                    </div>-->
                     <j-editable-box id="box_0_0_">
                         <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
                     </j-editable-box>

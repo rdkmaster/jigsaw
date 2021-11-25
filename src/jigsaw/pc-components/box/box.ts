@@ -200,11 +200,14 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     protected _supportSetSize(box: JigsawBox, parent: JigsawBox) {
         if (!parent) return;
         if (box.width && parent.direction != 'column') {
+            // 同步grow属性
+            box.grow = 0;
             box.renderer.setStyle(box.element, 'flex-grow', '0');
             box.renderer.setStyle(box.element, 'flex-basis', box.width);
             box._isFixedSize = true;
         }
         if (box.height && parent.direction == 'column') {
+            box.grow = 0;
             box.renderer.setStyle(box.element, 'flex-grow', '0');
             box.renderer.setStyle(box.element, 'flex-basis', box.height);
             box._isFixedSize = true;
