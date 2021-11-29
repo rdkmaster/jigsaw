@@ -131,13 +131,6 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 
     &.#{$paging-prefix-cls}-simple {
-        &:before {
-            content: "";
-            display: inline-block;
-            vertical-align: middle;
-            height: var(--height-paging);
-        }
-
         .#{$paging-prefix-cls}-page {
             height: var(--height-paging);
             line-height: var(--height-paging);
