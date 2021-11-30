@@ -26,7 +26,6 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawBlockModule} from "../../common/components/block/block";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html"
 
 export interface IDialog extends IPopupable {
     buttons: ButtonInfo[];
@@ -71,6 +70,23 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         this._caption = value;
         if (this.dialog) {
             this.dialog.caption = value;
+        }
+    }
+
+    private _icon: string = '';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get icon(): string {
+        return this._icon;
+    }
+
+    public set icon(value: string) {
+        this._icon = value;
+        if (this.dialog) {
+            this.dialog.icon = value;
         }
     }
 
@@ -221,6 +237,12 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
     public caption: string;
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
+
+    /**
      * @internal
      */
     @ContentChildren(JigsawButton, {descendants: true})
@@ -252,7 +274,7 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonModule, JigsawMovableModule, JigsawBlockModule, JigsawTrustedHtmlModule],
+    imports: [CommonModule, JigsawButtonModule, JigsawMovableModule, JigsawBlockModule],
     declarations: [JigsawDialog],
     exports: [JigsawDialog]
 })
