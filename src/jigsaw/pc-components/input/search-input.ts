@@ -9,7 +9,7 @@ import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawInputModule } from "./input";
 import { TranslateHelper } from '../../common/core/utils/translate-helper';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
-import { JigsawFloatModule } from 'jigsaw/common/directive/float/float';
+import { JigsawFloatModule } from '../../common/directive/float/float';
 import { CommonModule } from '@angular/common';
 import { JigsawListModule } from '../list-and-tile/list';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
