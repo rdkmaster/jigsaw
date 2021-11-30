@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy, Injector } from "@angular/core";
+import { Component, NgModule, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy, Injector, ViewChild, TemplateRef } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
@@ -9,6 +9,10 @@ import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawInputModule } from "./input";
 import { TranslateHelper } from '../../common/core/utils/translate-helper';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
+import { JigsawFloatModule } from 'jigsaw/common/directive/float/float';
+import { CommonModule } from '@angular/common';
+import { JigsawListModule } from '../list-and-tile/list';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
@@ -25,10 +29,11 @@ import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 })
 export class JigsawSearchInput extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(private _translateService: TranslateService,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
     }
+    
     /**
      * 设置搜索模式（自动/手动）
      *
@@ -93,11 +98,80 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this.search.emit(this.value);
     }
 
+    @ViewChild('jigsawFloatArea')
+    public _$jigsawFloatArea: TemplateRef<any>;
+
+    /**
+     * historyId
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public historyId: string = '';
+
+    /**
+     * @internal
+     */
+    public _$historyOpen: boolean = false;
+
+    private _history = [];
+
+    /**
+     * @internal
+     */
+    public _$filteredHistory = [];
+
+    /**
+     * @internal
+     */
+    public _$searchHistorySelected(value: string) {
+        this._$historyOpen = false;
+        this.value = value;
+        this.search.emit(this.value);
+        this.isHistorySelected=true;
+    }
+
+    private isHistorySelected= false;
+
+    private _filterHistoryByKey(value: string) {
+        if (CommonUtils.isUndefined(value) || value.trim().length === 0) {
+            this._$filteredHistory = this._history;
+            return
+        }
+        this._$filteredHistory = this._history.filter((item) => {
+            return item.indexOf(value.trim()) !== -1;
+        })
+    }
+
+    private _saveSearchHistory(value:string){
+        if (CommonUtils.isUndefined(value) || value.trim().length === 0) {
+            return;
+        }
+
+        if (this._history.indexOf(value.trim()) !== -1) {
+            return;
+        }
+
+        this._history.unshift(value.trim());
+        localStorage.setItem('jigsawSearchInputHistory' + this.historyId, JSON.stringify(this._history));
+    }
+
+    public _$deleteHistoryItem(value: string) {
+        this._$filteredHistory.splice(this._$filteredHistory.indexOf(value), 1)
+        this._history.splice(this._history.indexOf(value), 1);
+    }
+
     /**
      * @internal
      */
     public _$valueChange($event) {
         if (!this.autoSearch) {
+            if (this.isHistorySelected){
+                this.isHistorySelected = !this.isHistorySelected;
+                return; 
+            }
+            this._filterHistoryByKey($event);
+            this._$historyOpen = true;
             return;
         }
         if (this._isValidSearchDebounce()) {
@@ -151,6 +225,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     public _$searchBtnClicked() {
         this.search.emit(this.value);
+        this._saveSearchHistory(this.value);
     }
 
     public writeValue(value: any): void {
@@ -160,13 +235,13 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     /**
      * 组件表单友好需支持接口
      */
-    private _propagateChange: any = () => {};
+    private _propagateChange: any = () => { };
 
     public registerOnChange(fn: any): void {
         this._propagateChange = fn;
     }
 
-    private _onTouched: any = () => {};
+    private _onTouched: any = () => { };
 
     public registerOnTouched(fn: any): void {
         this._onTouched = fn;
@@ -180,6 +255,11 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     ngOnInit() {
         super.ngOnInit();
 
+        const history = localStorage.getItem('jigsawSearchInputHistory' + this.historyId);
+        if (CommonUtils.isDefined(history)) {
+            this._history = JSON.parse(history);
+        }
+
         //国际化
         TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._translateService.use(langInfo.curLang);
@@ -189,7 +269,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 }
 
 @NgModule({
-    imports: [JigsawInputModule, TranslateModule.forChild()],
+    imports: [CommonModule, JigsawInputModule, JigsawFloatModule, JigsawListModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawSearchInput],
     exports: [JigsawSearchInput],
     providers: [TranslateService]

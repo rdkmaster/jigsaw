@@ -1,13 +1,19 @@
-<div class="jigsaw-search-input">
-    <jigsaw-input
-        [placeholder]="placeholder"
-        [disabled]="disabled"
-        [(value)]="value"
-        (valueChange)="_$valueChange($event)"
-        (keydown.enter)="_$enterSearch()"
-        (blur)="_$onBlur()"
-    >
-        <a jigsaw-prefix-icon><span class="iconfont iconfont-ea03"></span></a>
+<div class="jigsaw-search-input" jigsaw-float [jigsawFloatTarget]="_$jigsawFloatArea"
+    [(jigsawFloatOpen)]="_$historyOpen" [jigsawFloatOpenTrigger]="'none'">
+    <jigsaw-input [placeholder]="placeholder" [disabled]="disabled" [(value)]="value"
+        (valueChange)="_$valueChange($event)" (keydown.enter)="_$enterSearch()" (blur)="_$onBlur()">
+        <a jigsaw-prefix-icon><span class="jigsaw-search-input-icon iconfont iconfont-ea03"></span></a>
     </jigsaw-input>
     <span class="iconfont iconfont-ea03 jigsaw-search-input-button" (click)="_$searchBtnClicked()"></span>
 </div>
+<ng-template #jigsawFloatArea>
+    <ul class="jigsaw-search-input-history" [ngStyle]="{'width': width ? width : '100%'}"
+        [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+        <li *ngFor="let history of _$filteredHistory;" class="jigsaw-search-input-history-item"
+            (click)="_$searchHistorySelected(history)">
+            <span>{{history}}</span>
+            <i class="jigsaw-search-input-history-delete iconfont iconfont-e9b8"
+                (click)="_$deleteHistoryItem(history)"></i>
+        </li>
+    </ul>
+</ng-template>

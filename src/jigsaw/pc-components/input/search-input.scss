@@ -19,6 +19,10 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 
                 .#{$jigsaw-input}-icon-front {
                     display: none;
+
+                    .#{$jigsaw-search}-icon {
+                        color: $icon-color-stress;
+                    }
                 }
             }
         }
@@ -32,7 +36,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         align-items: center;
         width: 32px;
         height: 32px;
-        color: $icon-color-default;
+        color: $icon-color-stress;
         border-width: 1px;
         border-style: solid;
         border-color: $border-color-default;
@@ -73,6 +77,41 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             &:hover {
                 color: $icon-color-default;
             }
+        }
+    }
+}
+
+.#{$jigsaw-search}-history {
+    max-height: 288px;
+    border: 1px solid $border-color-shadow-cntr;
+
+    &-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: $height-base;
+        padding: 7px 16px 7px 8px;
+        background: $bg-body;
+        color: $font-color-default;
+        cursor: pointer;
+
+        &:hover {
+            color: $brand-default;
+            background: $bg-hover;
+
+            .#{$jigsaw-search}-history-delete {
+                display: flex;
+            }
+        }
+
+        > span {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .#{$jigsaw-search}-history-delete {
+            display: none;
         }
     }
 }
