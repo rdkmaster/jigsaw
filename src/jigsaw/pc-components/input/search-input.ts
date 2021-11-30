@@ -98,6 +98,9 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this.search.emit(this.value);
     }
 
+    /**
+     * @internal
+     */
     @ViewChild('jigsawFloatArea')
     public _$jigsawFloatArea: TemplateRef<any>;
 
@@ -156,6 +159,9 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         localStorage.setItem('jigsawSearchInputHistory' + this.historyId, JSON.stringify(this._history));
     }
 
+    /**
+     * @internal
+     */
     public _$deleteHistoryItem(value: string) {
         this._$filteredHistory.splice(this._$filteredHistory.indexOf(value), 1)
         this._history.splice(this._history.indexOf(value), 1);
