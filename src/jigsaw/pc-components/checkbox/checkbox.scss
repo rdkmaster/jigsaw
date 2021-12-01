@@ -3,7 +3,8 @@
 $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
 
 .#{$checkbox-prefix-cls}-host {
-    @include inline-block;
+    display: inline-flex;
+
     &.#{$checkbox-prefix-cls}-error .#{$checkbox-prefix-cls}-wrapper {
         &:hover {
             > .#{$checkbox-prefix-cls} {
@@ -20,8 +21,8 @@ $checkbox-prefix-cls: #{$jigsaw-prefix}-checkbox;
     position: relative;
     left: 0;
     margin: 0;
-    display: inline-block;
-    vertical-align: text-bottom;
+    display: inline-flex;
+    align-items: center;
     outline: none;
     font-size: $font-size-text-base;
     line-height: 1;
