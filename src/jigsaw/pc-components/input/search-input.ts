@@ -105,12 +105,12 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     public _$jigsawFloatArea: TemplateRef<any>;
 
     /**
-     * historyId
+     * historyKey
      *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public historyId: string = '';
+    public historyKey: string = 'jigsawSearchInputHistory';
 
     /**
      * @internal
@@ -156,7 +156,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }
 
         this._history.unshift(value.trim());
-        localStorage.setItem('jigsawSearchInputHistory' + this.historyId, JSON.stringify(this._history));
+        localStorage.setItem(this.historyKey, JSON.stringify(this._history));
     }
 
     /**
@@ -261,7 +261,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     ngOnInit() {
         super.ngOnInit();
 
-        const history = localStorage.getItem('jigsawSearchInputHistory' + this.historyId);
+        const history = localStorage.getItem(this.historyKey);
         if (CommonUtils.isDefined(history)) {
             this._history = JSON.parse(history);
         }
