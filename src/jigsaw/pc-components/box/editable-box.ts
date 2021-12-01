@@ -1,4 +1,3 @@
-import {JigsawBox} from "./box";
 import {
     ChangeDetectionStrategy,
     Component,
@@ -13,9 +12,13 @@ import {
     Input,
     ViewContainerRef
 } from '@angular/core';
+import {JigsawBox} from "./box";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type BoxInsertInfo = { parent: JigsawEditableBox, before?: JigsawEditableBox, reverse?: 'before' | 'after' };
+
+const insertionGap: number = 12;
+const insertionLineWidth: number = 4;
 
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
@@ -106,10 +109,6 @@ export class JigsawEditableBox extends JigsawBox {
      */
     public _scale: number[] = [];
 
-    private static readonly _insertGap: number = 12;
-
-    private static readonly _insertLineWidth: number = 4;
-
     private _laying: boolean;
 
     public set laying(value: boolean) {
@@ -122,7 +121,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _setLayout(laying: boolean) {
         if (laying) {
-            let scalePX = JigsawEditableBox._insertGap * 2;
+            const scalePX = insertionGap * 2;
             const [width, height] = [this.element.offsetWidth, this.element.offsetHeight];
             // 防止宽高比insert gap还要小
             this._scale = [Math.max(0, 1 - scalePX / width), Math.max(0, 1 - scalePX / height)];
@@ -136,8 +135,8 @@ export class JigsawEditableBox extends JigsawBox {
     @ContentChildren(JigsawEditableBox)
     protected _childrenBoxRaw: QueryList<JigsawEditableBox>;
 
-    @ViewChild('insertLine')
-    private _insertLine: ElementRef;
+    @ViewChild('insertionLine')
+    private _insertionLine: ElementRef;
 
     /**
      * @internal
@@ -196,16 +195,16 @@ export class JigsawEditableBox extends JigsawBox {
         if (!this._$childrenBox || !this.gap) {
             return;
         }
-        this._$childrenBox.forEach((box, index) => {
-            if (box.margin) {
-                // 自身通过输入属性设置过margin，就不通过gap设置
-                return;
-            }
-            box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` : this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
-        })
+        this._$childrenBox
+            // 自身通过输入属性设置过margin，就不通过gap设置
+            .filter(box => !box.margin)
+            .forEach((box, index) => {
+                box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` :
+                    this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
+            })
     }
 
-    private _setResizeLineOffset(box: JigsawEditableBox, index) {
+    private _setResizeLineOffset(box: JigsawEditableBox, index: number): void {
         const resizeLineWidth = 3;
         const parentBox = box.parent;
         const prevBox = parentBox._$childrenBox[index - 1];
@@ -235,7 +234,7 @@ export class JigsawEditableBox extends JigsawBox {
         }
         if (!laying || !mousePos) {
             clearTimeout(this._insertTimer);
-            this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'none');
+            this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'none');
             return;
         }
         const reverseInsertResult = this._reverseInsert(mousePos);
@@ -284,14 +283,14 @@ export class JigsawEditableBox extends JigsawBox {
 
         this._insertTimer = this.callLater(() => {
             if (this.direction == 'column') {
-                this.renderer.removeClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                this.renderer.removeClass(this._insertionLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
             } else {
-                this.renderer.addClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                this.renderer.addClass(this._insertionLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
             }
             // offset值需要设置缩放之前的值
-            this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'left' : 'top', lineOffset / this._getDirectScale(true) + 'px');
-            this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', (this.direction == 'column' ? this.element.scrollTop : this.element.scrollLeft) + 'px');
-            this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'block');
+            this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'left' : 'top', lineOffset / this._getDirectScale(true) + 'px');
+            this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'top' : 'left', (this.direction == 'column' ? this.element.scrollTop : this.element.scrollLeft) + 'px');
+            this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'block');
         }, 350);
 
         return {
@@ -313,15 +312,17 @@ export class JigsawEditableBox extends JigsawBox {
         // 计算插入线的位置，有缩放动画，需要延迟
         this._insertTimer = this.callLater(() => {
             if (this.direction == 'column') {
-                this.renderer.addClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                this.renderer.addClass(this._insertionLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
             } else {
-                this.renderer.removeClass(this._insertLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
+                this.renderer.removeClass(this._insertionLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
             }
             const insertOffset = this._getInsertOffset(endBoxIndex, posProp, sizeProp);
             // offset值需要设置缩放之前的值
-            this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'top' : 'left', insertOffset / this._getDirectScale() + 'px');
-            this.renderer.setStyle(this._insertLine.nativeElement, this.direction == 'column' ? 'left' : 'top', (this.direction == 'column' ? this.element.scrollLeft : this.element.scrollTop) + 'px');
-            this.renderer.setStyle(this._insertLine.nativeElement, 'display', 'block');
+            this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'top' : 'left',
+                (insertOffset / this._getDirectScale()) + 'px');
+            this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'left' : 'top',
+                (this.direction == 'column' ? this.element.scrollLeft : this.element.scrollTop) + 'px');
+            this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'block');
         }, 350);
         return {
             parent: this,
@@ -331,7 +332,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _getInsertOffset(endBoxIndex: number, posProp: string, sizeProp: string): number {
         const insertLineScaleWidth = this._getInsertLineScaleWidth();
-        let insertOffset = 0;
+        let insertOffset: number;
         const parentBoxRect = this.element.getBoundingClientRect();
         // 滚动距离需要添加缩放
         const parentBoxScrollOffset = (this.direction == 'column' ? this.element.scrollTop : this.element.scrollLeft) * this._getDirectScale();
@@ -360,7 +361,7 @@ export class JigsawEditableBox extends JigsawBox {
     }
 
     private _getInsertLineScaleWidth(reverse: boolean = false) {
-        return JigsawEditableBox._insertLineWidth * this._getDirectScale(reverse);
+        return insertionLineWidth * this._getDirectScale(reverse);
     }
 
     private _getDirectScale(reverse: boolean = false, scale: number = 1, box: JigsawEditableBox = this) {
@@ -369,7 +370,7 @@ export class JigsawEditableBox extends JigsawBox {
         return box.parent ? this._getDirectScale(reverse, scale, box.parent) : scale;
     }
 
-    private _getBoxDirectScale(box: JigsawEditableBox, reverse: boolean = false) {
+    private _getBoxDirectScale(box: JigsawEditableBox, reverse: boolean = false): number {
         if (!box || !box._scale.length) {
             return 1;
         }
@@ -427,7 +428,9 @@ export class JigsawEditableBox extends JigsawBox {
      * @private
      */
     public _$handleResize(offset: number, emitEvent: boolean = false) {
-        if (!this.parent) return;
+        if (!this.parent) {
+            return;
+        }
 
         const sizeProp = this._getPropertyByDirection()[1];
         const [sizes, sizeRatios] = this._computeSizeRatios_(sizeProp, offset);
@@ -450,14 +453,7 @@ export class JigsawEditableBox extends JigsawBox {
                 this.parent._$childrenBox.forEach(box => box[eventType].emit(box));
             }
         } else {
-            this[eventType].emit(this);
-            if (this.parent && this.parent.resizable && this.parent._$childrenBox.length) {
-                const index = this.parent._$childrenBox.findIndex(box => box == this);
-                const previousBox = this.parent._$childrenBox[index - 1];
-                if (previousBox) {
-                    previousBox[eventType].emit(previousBox);
-                }
-            }
+            super._emitResizeEvent(eventType);
         }
     }
 

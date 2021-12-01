@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import {CallbackRemoval} from "../../common/core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-box, j-box',

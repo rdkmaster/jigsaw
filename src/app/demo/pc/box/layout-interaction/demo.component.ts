@@ -1,13 +1,12 @@
-import {Component, EventEmitter, ViewChild, ElementRef, Renderer2} from "@angular/core";
+import {Component, EventEmitter, ViewChild, Renderer2} from "@angular/core";
+import {throttleTime} from 'rxjs/operators';
 import {DragDropInfo, GraphData, BoxInsertInfo, JigsawEditableBox} from "jigsaw/public_api";
-import {debounceTime, throttleTime} from 'rxjs/operators';
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class BoxLayoutInteractionDemoComponent {
-
     types = ['所有父BOX', '相邻BOX', 'BOX本身'];
     selectedType = ['所有父BOX'];
 
@@ -15,8 +14,6 @@ export class BoxLayoutInteractionDemoComponent {
     layoutStart = new EventEmitter();
     layoutEnd = new EventEmitter();
     insert = new EventEmitter();
-
-    _resizeEventRemoval: Function;
 
     @ViewChild('rootBox')
     rootBox: JigsawEditableBox;
