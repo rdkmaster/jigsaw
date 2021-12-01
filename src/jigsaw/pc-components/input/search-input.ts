@@ -105,24 +105,24 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     public _$jigsawFloatArea: TemplateRef<any>;
 
     /**
-     * historyKey
+     * historyStorageKey
      *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public historyKey: string = 'jigsawSearchInputHistory';
+    public historyStorageKey: string = 'jigsawSearchInputHistory';
 
     /**
      * @internal
      */
     public _$historyOpen: boolean = false;
 
-    private _history = [];
+    private _history: string[] = [];
 
     /**
      * @internal
      */
-    public _$filteredHistory = [];
+    public _$filteredHistory: string[] = [];
 
     /**
      * @internal
@@ -131,10 +131,10 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         this._$historyOpen = false;
         this.value = value;
         this.search.emit(this.value);
-        this.isHistorySelected=true;
+        this._isHistorySelected = true;
     }
 
-    private isHistorySelected= false;
+    private _isHistorySelected = false;
 
     private _filterHistoryByKey(value: string) {
         if (CommonUtils.isUndefined(value) || value.trim().length === 0) {
@@ -156,7 +156,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }
 
         this._history.unshift(value.trim());
-        localStorage.setItem(this.historyKey, JSON.stringify(this._history));
+        localStorage.setItem(this.historyStorageKey, JSON.stringify(this._history));
     }
 
     /**
@@ -172,8 +172,8 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     public _$valueChange($event) {
         if (!this.autoSearch) {
-            if (this.isHistorySelected){
-                this.isHistorySelected = !this.isHistorySelected;
+            if (this._isHistorySelected){
+                this._isHistorySelected = !this._isHistorySelected;
                 return; 
             }
             this._filterHistoryByKey($event);
@@ -261,7 +261,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     ngOnInit() {
         super.ngOnInit();
 
-        const history = localStorage.getItem(this.historyKey);
+        const history = localStorage.getItem(this.historyStorageKey);
         if (CommonUtils.isDefined(history)) {
             this._history = JSON.parse(history);
         }
