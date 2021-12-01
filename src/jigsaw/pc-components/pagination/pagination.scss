@@ -17,8 +17,8 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 }
 
 .#{$paging-prefix-cls} {
-    @include inline-block();
-
+    display: inline-flex;
+    align-items: center;
     font-size: $font-size-base;
     user-select: none;
 
@@ -96,6 +96,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 
     &-search {
+        margin-right: 8px;
         height: var(--height-paging);
 
         .#{$jigsaw-input} {
