@@ -45,6 +45,7 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         border-style: solid;
         border-color: $border-color-default;
         border-radius: $border-radius-sm;
+        font-style: normal;
         cursor: pointer;
         &:after {
             display: block;
@@ -67,6 +68,14 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
             &.#{$page-prefix-cls}-prevs:after,
             &.#{$page-prefix-cls}-nexts:after {
                 color: $brand-default;
+            }
+
+            &.#{$page-prefix-cls}-prevs:after {
+                content: "\e4c0";
+            }
+
+            &.#{$page-prefix-cls}-nexts:after {
+                content: "\e4c1";
             }
         }
     }
