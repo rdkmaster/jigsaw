@@ -25,10 +25,7 @@
 </jigsaw-button>
 
 <ng-template #tpDialog>
-    <jigsaw-dialog width="400px" (close)="closeDialog()">
-        <div jigsaw-title>
-            <span class="iconfont iconfont-e3f0"></span>一个对话框
-        </div>
+    <jigsaw-dialog width="400px" (close)="closeDialog()" icon="iconfont iconfont-e3f0" caption="一个对话框">
         <div jigsaw-body>
             <p class="dialog-content">
                 这是一个普通的对话框，请关注它的弹出位置

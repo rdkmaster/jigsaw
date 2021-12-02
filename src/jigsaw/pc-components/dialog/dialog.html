@@ -1,7 +1,7 @@
 <div class="jigsaw-dialog">
     <div class="jigsaw-dialog-head jigsaw-dialog-base-head" jigsaw-movable jigsawMovableTargetSelector="jigsaw-dialog">
         <ng-content select="[jigsaw-title]"></ng-content>
-        <span [class]="icon">{{caption}}</span>
+        <div class="title"><span [class]="icon"></span><span>{{caption}}</span></div>
         <span class="jigsaw-dialog-close jigsaw-popup-close" (click)='dispose()'>&times;</span>
     </div>
     <div class="jigsaw-dialog-content">
