@@ -106,6 +106,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
     /**
      * historyStorageKey
+     * 用户用于设置存在localStorage中历史记录的key值
      *
      * @NoMarkForCheckRequired
      */
