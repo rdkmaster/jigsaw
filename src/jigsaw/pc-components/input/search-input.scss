@@ -81,38 +81,3 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         }
     }
 }
-
-// .#{$jigsaw-search}-history {
-//     max-height: 288px;
-//     border: 1px solid $border-color-shadow-cntr;
-
-//     &-item {
-//         display: flex;
-//         justify-content: space-between;
-//         align-items: center;
-//         min-height: $height-base;
-//         padding: 7px 16px 7px 8px;
-//         background: $bg-body;
-//         color: $font-color-default;
-//         cursor: pointer;
-
-//         &:hover {
-//             color: $brand-default;
-//             background: $bg-hover;
-
-//             .#{$jigsaw-search}-history-delete {
-//                 display: flex;
-//             }
-//         }
-
-//         > span {
-//             text-overflow: ellipsis;
-//             white-space: nowrap;
-//             overflow: hidden;
-//         }
-
-//         .#{$jigsaw-search}-history-delete {
-//             display: none;
-//         }
-//     }
-// }
