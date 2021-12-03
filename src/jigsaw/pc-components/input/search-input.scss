@@ -1,14 +1,16 @@
 $jigsaw-search: #{$jigsaw-prefix}-search-input;
 $jigsaw-input: #{$jigsaw-prefix}-input;
+$jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
 .#{$jigsaw-search}-host {
-    @include inline-block();
+    display: inline-flex;
 
     .#{$jigsaw-search} {
         display: inline-flex;
         align-items: center;
         width: 100%;
-        #{$jigsaw-input} {
+
+        #{$jigsaw-auto-complete-input} {
             width: 100%;
 
             .#{$jigsaw-input}-wrapper {
@@ -19,39 +21,36 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 
                 .#{$jigsaw-input}-icon-front {
                     display: none;
-
-                    .#{$jigsaw-search}-icon {
-                        color: $icon-color-stress;
-                    }
                 }
             }
         }
-    }
 
-    .#{$jigsaw-search}-button {
-        display: inline-flex;
-        flex-shrink: 0;
-        flex-grow: 0;
-        justify-content: center;
-        align-items: center;
-        width: 32px;
-        height: 32px;
-        color: $icon-color-stress;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $border-color-default;
-        border-radius: 0 $border-radius-base $border-radius-base 0;
-        border-left: none;
-        cursor: pointer;
+        .#{$jigsaw-search}-button {
+            display: inline-flex;
+            flex-shrink: 0;
+            flex-grow: 0;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            color: $icon-color-stress;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $border-color-default;
+            border-radius: 0 $border-radius-base $border-radius-base 0;
+            border-left: none;
+            line-height: 1;
+            cursor: pointer;
 
-        &:hover {
-            color: $brand-default;
+            &:hover {
+                color: $brand-default;
+            }
         }
     }
 
     &.#{$jigsaw-search}-auto {
         .#{$jigsaw-search} {
-            #{$jigsaw-input} {
+            .#{$jigsaw-auto-complete-input} {
                 .#{$jigsaw-input}-wrapper {
                     border-top-right-radius: $border-radius-base;
                     border-bottom-right-radius: $border-radius-base;
@@ -63,6 +62,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
                 }
             }
         }
+
         .#{$jigsaw-search}-button {
             display: none;
         }
@@ -73,6 +73,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             background: $bg-disabled;
             border-color: $border-color-disabled;
             color: $icon-color-default;
+            cursor: not-allowed;
 
             &:hover {
                 color: $icon-color-default;
@@ -81,37 +82,37 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 }
 
-.#{$jigsaw-search}-history {
-    max-height: 288px;
-    border: 1px solid $border-color-shadow-cntr;
+// .#{$jigsaw-search}-history {
+//     max-height: 288px;
+//     border: 1px solid $border-color-shadow-cntr;
 
-    &-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-height: $height-base;
-        padding: 7px 16px 7px 8px;
-        background: $bg-body;
-        color: $font-color-default;
-        cursor: pointer;
+//     &-item {
+//         display: flex;
+//         justify-content: space-between;
+//         align-items: center;
+//         min-height: $height-base;
+//         padding: 7px 16px 7px 8px;
+//         background: $bg-body;
+//         color: $font-color-default;
+//         cursor: pointer;
 
-        &:hover {
-            color: $brand-default;
-            background: $bg-hover;
+//         &:hover {
+//             color: $brand-default;
+//             background: $bg-hover;
 
-            .#{$jigsaw-search}-history-delete {
-                display: flex;
-            }
-        }
+//             .#{$jigsaw-search}-history-delete {
+//                 display: flex;
+//             }
+//         }
 
-        > span {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+//         > span {
+//             text-overflow: ellipsis;
+//             white-space: nowrap;
+//             overflow: hidden;
+//         }
 
-        .#{$jigsaw-search}-history-delete {
-            display: none;
-        }
-    }
-}
+//         .#{$jigsaw-search}-history-delete {
+//             display: none;
+//         }
+//     }
+// }

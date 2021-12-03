@@ -6,13 +6,13 @@ import { debounceTime } from "rxjs/operators";
 import { AbstractJigsawComponent } from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { CommonUtils } from "../../common/core/utils/common-utils";
-import { JigsawInputModule } from "./input";
 import { TranslateHelper } from '../../common/core/utils/translate-helper';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { JigsawFloatModule } from '../../common/directive/float/float';
 import { CommonModule } from '@angular/common';
 import { JigsawListModule } from '../list-and-tile/list';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { JigsawAutoCompleteInputModule } from './auto-complete-input';
 
 @Component({
     selector: "jigsaw-search-input, j-search-input",
@@ -49,6 +49,14 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     @Input()
     public disabled: boolean = false;
+
+    /**
+     * 设置是否可以清除
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearable: boolean = false;
 
     /**
      * 输入框的placeholder
@@ -96,6 +104,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     public _$enterSearch() {
         this.search.emit(this.value);
+        this._saveSearchHistory(this.value);
     }
 
     /**
@@ -118,12 +127,10 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      */
     public _$historyOpen: boolean = false;
 
-    private _history: string[] = [];
-
     /**
      * @internal
      */
-    public _$filteredHistory: string[] = [];
+    public _$history: string[] = [];
 
     /**
      * @internal
@@ -137,35 +144,22 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
     private _isHistorySelected = false;
 
-    private _filterHistoryByKey(value: string) {
-        if (CommonUtils.isUndefined(value) || value.trim().length === 0) {
-            this._$filteredHistory = this._history;
-            return
-        }
-        this._$filteredHistory = this._history.filter((item) => {
-            return item.indexOf(value.trim()) !== -1;
-        })
-    }
-
     private _saveSearchHistory(value:string){
         if (CommonUtils.isUndefined(value) || value.trim().length === 0) {
             return;
         }
 
-        if (this._history.indexOf(value.trim()) !== -1) {
-            return;
+        const index = this._$history.indexOf(value.trim());
+        if (index !== -1) {
+            this._$history.splice(index, 1)
         }
 
-        this._history.unshift(value.trim());
-        localStorage.setItem(this.historyStorageKey, JSON.stringify(this._history));
-    }
+        this._$history.unshift(value.trim());
 
-    /**
-     * @internal
-     */
-    public _$deleteHistoryItem(value: string) {
-        this._$filteredHistory.splice(this._$filteredHistory.indexOf(value), 1)
-        this._history.splice(this._history.indexOf(value), 1);
+        if (this._$history.length > 20) {
+            this._$history = this._$history.slice(0, 20)
+        }
+        localStorage.setItem(this.historyStorageKey, JSON.stringify(this._$history));
     }
 
     /**
@@ -177,7 +171,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
                 this._isHistorySelected = !this._isHistorySelected;
                 return; 
             }
-            this._filterHistoryByKey($event);
             this._$historyOpen = true;
             return;
         }
@@ -223,6 +216,9 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$onBlur() {
+        if (this.autoSearch) {
+            this._saveSearchHistory(this.value);
+        }
         // 表单友好接口
         this._onTouched();
     }
@@ -264,7 +260,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
         const history = localStorage.getItem(this.historyStorageKey);
         if (CommonUtils.isDefined(history)) {
-            this._history = JSON.parse(history);
+            this._$history = JSON.parse(history);
         }
 
         //国际化
@@ -276,7 +272,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawInputModule, JigsawFloatModule, JigsawListModule, PerfectScrollbarModule, TranslateModule.forChild()],
+    imports: [CommonModule, JigsawAutoCompleteInputModule, JigsawFloatModule, JigsawListModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawSearchInput],
     exports: [JigsawSearchInput],
     providers: [TranslateService]
