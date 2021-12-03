@@ -149,6 +149,10 @@ export abstract class AbstractDialogComponentBase
     @Input()
     public caption: string;
 
+    @RequireMarkForCheck()
+    @Input()
+    public icon: string;
+
     /**
      * @NoMarkForCheckRequired
      */
