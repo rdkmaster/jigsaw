@@ -303,8 +303,8 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"
-                         [valid]="_$valid" mode="minimalist"></jigsaw-checkbox>`,
+        <p style="display:flex;align-items:center;justify-content: center"><span style="margin-right:8px">{{_$text}}</span>
+            <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"[valid]="_$valid" mode="minimalist"></jigsaw-checkbox></p>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -333,6 +333,10 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
 
     public get checked(): CheckBoxStatus {
         return this._checked;
+    }
+
+    public get _$text() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('text') ? this._initDataJson.text : '';
     }
 
     public set checked(value: CheckBoxStatus) {
