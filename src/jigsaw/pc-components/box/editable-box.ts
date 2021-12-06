@@ -457,6 +457,41 @@ export class JigsawEditableBox extends JigsawBox {
         }
     }
 
+    /**
+     * 用于外部直接调用函数设置box固定尺寸
+     */
+    public manualSetFixedSize(property: 'width' | 'height', value: string): void {
+        this[property] = value;
+        this._supportSetSize(this, this.parent);
+    }
+
+    /**
+     * 用于外部直接调用函数设置box grow
+     */
+    public manualSetGrow(): number[] {
+        this.width = null;
+        this.height = null;
+        this._isFixedSize = false;
+        const [offsetProp, sizeProp] = this._getPropertyByDirection();
+        this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
+        const [, sizeRatios] = this._computeSizeRatios_(this._getPropertyByDirection()[1], this._rawOffsets[this._getCurrentIndex()]);
+        this.parent?._$childrenBox?.forEach((box, index) => {
+            const grow = sizeRatios[index];
+            box.grow = grow;
+            box.element.style.flexGrow = grow + '';
+            box.growChange.emit(grow);
+            box.element.style.flexBasis = '0';
+        });
+        return sizeRatios;
+    }
+
+    /**
+     * 用于外部直接调用函数更新子box的状态，resize-line / gap 等
+     */
+    public manualUpdateChildren() {
+        this._setChildrenBox();
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
         if (this._resizeLineParent) {

@@ -292,7 +292,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      *
      *
      */
-    private _getOffsets(offsetProp: string, sizeProp: string): number[] {
+    protected _getOffsets(offsetProp: string, sizeProp: string): number[] {
         const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
             if (index == 0) {
                 arr.push(0);
