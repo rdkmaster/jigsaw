@@ -15,7 +15,7 @@ import {
 import {JigsawBox} from "./box";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-export type BoxInsertInfo = { parent: JigsawEditableBox, before?: JigsawEditableBox, reverse?: 'before' | 'after' };
+export type BoxInsertPosition = { parent: JigsawEditableBox, before?: JigsawEditableBox, reverse?: 'before' | 'after' };
 
 const insertionGap: number = 12;
 const insertionLineWidth: number = 4;
@@ -226,7 +226,7 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _insertTimer: number;
 
-    public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): BoxInsertInfo {
+    public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): BoxInsertPosition {
         if (laying) {
             this.renderer.addClass(this.element, 'jigsaw-editable-box-inserting')
         } else {
@@ -248,7 +248,7 @@ export class JigsawEditableBox extends JigsawBox {
      * 判断插入方向，如果和父box不是一个方向，则分'before', 'after'
      * @private
      */
-    private _reverseInsert(mousePos: { x: number, y: number }): BoxInsertInfo {
+    private _reverseInsert(mousePos: { x: number, y: number }): BoxInsertPosition {
         let insertPos: 'before' | 'after';
         let lineOffset: number;
         if (!this._$childrenBox.length) {

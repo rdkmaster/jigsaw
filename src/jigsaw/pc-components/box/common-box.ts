@@ -222,7 +222,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         if (CommonUtils.isUndefined(px) || typeof px == 'number') {
             return <any>px;
         }
-        px = px.replace(/(px|PX)$/, '');
+        px = px.replace(/(.*)px$/i, '$1');
         return Number(px);
     }
 
@@ -324,10 +324,8 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const curIndex = this._getCurrentIndex();
-        const [prevBox, curBox] = [
-            this.parent.childrenBox.toArray()[curIndex - 1],
-            this.parent.childrenBox.toArray()[curIndex]
-        ];
+        const childrenBox = this.parent.childrenBox.toArray();
+        const prevBox = childrenBox[curIndex - 1], curBox = childrenBox[curIndex];
         return [
             this._rawOffsets[curIndex] - this._getBoxGrowSize(prevBox),
             this._rawOffsets[curIndex] + this._getBoxGrowSize(curBox)
@@ -335,22 +333,33 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     }
 
     private _getBoxGrowSize(box: JigsawResizableBoxBase): number {
+        let minParam;
+        let paddingLeftParam;
+        let paddingRightParam;
+        let borderLeftParam;
+        let borderRightParam;
+        let sizeParam;
+        if (this.parent.direction == 'column') {
+            minParam = 'minHeight';
+            paddingLeftParam = 'paddingTop';
+            paddingRightParam = 'paddingBottom';
+            borderLeftParam = 'borderTopWidth' ;
+            borderRightParam = 'borderBottomWidth';
+            sizeParam = 'offsetHeight';
+        } else {
+            minParam = 'minWidth';
+            paddingLeftParam = 'paddingLeft';
+            paddingRightParam = 'paddingRight';
+            borderLeftParam = 'borderLeftWidth';
+            borderRightParam = 'borderRightWidth';
+            sizeParam = 'offsetWidth';
+        }
         const boxStyle = getComputedStyle(box.element);
-        const sizeParams = {
-            minParam: this.parent.direction == 'column' ? 'minHeight' : 'minWidth',
-            paddingLeftParam: this.parent.direction == 'column' ? 'paddingTop' : 'paddingLeft',
-            paddingRightParam: this.parent.direction == 'column' ? 'paddingBottom' : 'paddingRight',
-            borderLeftParam: this.parent.direction == 'column' ? 'borderTopWidth' : 'borderLeftWidth',
-            borderRightParam: this.parent.direction == 'column' ? 'borderBottomWidth' : 'borderRightWidth',
-            sizeParam: this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth'
-        };
-        const sizeInfo = {
-            minSize: this._pxToNumber(boxStyle[sizeParams.minParam]) || 0,
-            padding: this._pxToNumber(boxStyle[sizeParams.paddingLeftParam]) + this._pxToNumber(boxStyle[sizeParams.paddingRightParam]),
-            border: this._pxToNumber(boxStyle[sizeParams.borderLeftParam]) + this._pxToNumber(boxStyle[sizeParams.borderRightParam]),
-            size: box.element[sizeParams.sizeParam]
-        };
-        return sizeInfo.size - Math.max(sizeInfo.minSize, sizeInfo.padding + sizeInfo.border)
+        let minSize = this._pxToNumber(boxStyle[minParam]) || 0;
+        let padding = this._pxToNumber(boxStyle[paddingLeftParam]) + this._pxToNumber(boxStyle[paddingRightParam]);
+        let border = this._pxToNumber(boxStyle[borderLeftParam]) + this._pxToNumber(boxStyle[borderRightParam]);
+        let size = box.element[sizeParam];
+        return size - Math.max(minSize, padding + border);
     }
 
     private _updateResizeRange() {
