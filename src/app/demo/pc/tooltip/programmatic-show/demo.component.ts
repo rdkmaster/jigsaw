@@ -4,7 +4,17 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class TooltipShowDemoComponent {
-    open = false;
+    public openTrigger = "mouseenter";
+    public closeTrigger = "mouseleave";
+    public open = false;
+
+    public openFloat() {
+        this.open = true;
+    }
+
+    public closeFloat() {
+        this.open = false;
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

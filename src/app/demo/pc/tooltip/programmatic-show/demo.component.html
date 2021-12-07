@@ -4,13 +4,28 @@
 
 
 <!-- start to learn the demo from here -->
-<p>
+触发打开：
+<jigsaw-radios [(value)]="openTrigger">
+    <jigsaw-radio-option id="openByClick" value="click">鼠标单击</jigsaw-radio-option>
+    <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
+    <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
+</jigsaw-radios>
+<a *ngIf="openTrigger=='none'" (click)="openFloat()">open</a>
+
+<br><br>
+触发关闭：
+<jigsaw-radios [(value)]="closeTrigger">
+    <jigsaw-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-radio-option>
+    <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
+    <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
+</jigsaw-radios>
+<a *ngIf="closeTrigger=='none'" (click)="closeFloat()">close</a>
+
+<p style="margin-top: 16px;">
     <a [(jigsawTooltipOpen)]="open" jigsawTooltipRenderAs="html"
-       jigsawTooltipOpenTrigger="none" jigsawTooltipCloseTrigger="none"
+       [jigsawTooltipOpenTrigger]="openTrigger" [jigsawTooltipCloseTrigger]="closeTrigger"
        jigsawTooltip="一个<span style='color:red'>支持富文本</span>的提示" style="margin-right: 24px">
         一个超链
     </a>
     <span style="margin-left: 24px">Tooltip状态：{{open ? '开' : '关'}}</span>
-
-    <jigsaw-switch [(checked)]="open" offLabel="显示Tooltip" onLabel="关闭Tooltip" style="margin-left: 24px;"></jigsaw-switch>
 </p>
