@@ -3,7 +3,7 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class TooltipShowDemoComponent {
+export class TooltipTriggerDemoComponent {
     public openTrigger = "mouseenter";
     public closeTrigger = "mouseleave";
     public open = false;
