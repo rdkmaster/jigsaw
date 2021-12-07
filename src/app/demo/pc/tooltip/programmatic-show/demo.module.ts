@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {JigsawButtonModule, JigsawInputModule, PopupService, JigsawTooltipModule} from "jigsaw/public_api";
+import {JigsawInputModule, JigsawSwitchModule, JigsawTooltipModule, PopupService} from "jigsaw/public_api";
 import {TooltipShowDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 
 @NgModule({
-    imports: [JigsawInputModule, JigsawTooltipModule, JigsawButtonModule, JigsawDemoDescriptionModule],
+    imports: [JigsawInputModule, JigsawTooltipModule, JigsawSwitchModule, JigsawDemoDescriptionModule],
     declarations: [TooltipShowDemoComponent],
     exports: [TooltipShowDemoComponent],
     providers: [PopupService]

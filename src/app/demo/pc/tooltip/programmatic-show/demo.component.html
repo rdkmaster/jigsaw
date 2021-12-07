@@ -6,12 +6,11 @@
 <!-- start to learn the demo from here -->
 <p>
     <a [(jigsawTooltipOpen)]="open" jigsawTooltipRenderAs="html"
+       jigsawTooltipOpenTrigger="none" jigsawTooltipCloseTrigger="none"
        jigsawTooltip="一个<span style='color:red'>支持富文本</span>的提示" style="margin-right: 24px">
         一个超链
     </a>
     <span style="margin-left: 24px">Tooltip状态：{{open ? '开' : '关'}}</span>
-</p>
 
-<jigsaw-button style="margin-top: 12px" (click)="open = true">
-    显示Tooltip
-</jigsaw-button>
+    <jigsaw-switch [(checked)]="open" offLabel="显示Tooltip" onLabel="关闭Tooltip" style="margin-left: 24px;"></jigsaw-switch>
+</p>
