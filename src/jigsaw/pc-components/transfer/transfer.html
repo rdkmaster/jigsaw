@@ -5,9 +5,10 @@
         <div *ngIf="_$data?.busy" class="jigsaw-transfer-loading" @loading>
             <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
         </div>
-        <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
+        <!-- <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
                          [subLabelField]="subLabelField" [searchable]="searchable"
-                         [(selectedItems)]="_$sourceSelectedItems"></j-transfer-list>
+                         [(selectedItems)]="_$sourceSelectedItems"></j-transfer-list> -->
+        <ng-template jigsaw-renderer-host></ng-template>
     </div>
     <div class="jigsaw-transfer-option-box">
         <a class="jigsaw-transfer-to-right-bar jigsaw-transfer-option-bar"
@@ -26,4 +27,4 @@
                          [subLabelField]="subLabelField" [searchable]="searchable"
                          [(selectedItems)]="_$targetSelectedItems" [isTarget]="true"></j-transfer-list>
     </div>
-</div>
+ </div>

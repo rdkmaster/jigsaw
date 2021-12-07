@@ -7,7 +7,12 @@ import {
     OnDestroy,
     Optional,
     ViewChild,
-    Injector
+    Injector,
+    AfterViewInit,
+    ComponentFactoryResolver,
+    TemplateRef,
+    ViewContainerRef,
+    ElementRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {animate, keyframes, style, transition, trigger} from "@angular/animations"
@@ -26,6 +31,8 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import { JigsawRendererHost, JigsawCommonModule } from 'jigsaw/common/common';
+import { TransferListRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -123,11 +130,12 @@ const transferServerFilterFunction = function (item) {
 
 })
 
-export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
+export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
     constructor(
         protected _cdr: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+        protected _injector: Injector,
+        protected componentFactoryResolver: ComponentFactoryResolver) {
         super(_cdr, _injector);
     }
 
@@ -135,6 +143,20 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
+
+    @ViewChild(JigsawRendererHost)
+    protected rendererHost: JigsawRendererHost;
+
+    // @ViewChild('rendererHost') rendererHost: ElementRef;
+
+    // @ViewChild('rendererHost', {read: ViewContainerRef})
+    // protected rendererHost: ViewContainerRef;
+
+    ngAfterViewInit(): void {
+        console.log(this.rendererHost)
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
+        let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
+    }
 
     /**
      * @internal
@@ -342,7 +364,6 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             this._$searchKey = '';
         });
     }
-
     /**
      * @NoMarkForCheckRequired
      */
@@ -567,7 +588,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 }
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule],
     declarations: [JigsawTransfer, JigsawTransferInternalList],
     exports: [JigsawTransfer],
     providers: [TranslateService, LoadingService]
