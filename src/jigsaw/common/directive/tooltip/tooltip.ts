@@ -72,6 +72,10 @@ export class JigsawTooltip extends JigsawFloatBase {
     public context: any;
     @Input('jigsawTooltipOpen')
     public jigsawFloatOpen: boolean;
+    @Input('jigsawTooltipOpenTrigger')
+    public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
+    @Input('jigsawTooltipCloseTrigger')
+    public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
 
     @Output('jigsawTooltipOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -124,8 +128,6 @@ export class JigsawTooltip extends JigsawFloatBase {
     protected _init(): void {
         this.jigsawFloatTarget = JigsawTooltipComponent;
         this.jigsawFloatOptions = { borderType: 'pointer', size: { minWidth: 30 }, showBorder: true, borderColor: '#e5e5e5', borderRadius: '2px', useCustomizedBackground: true };
-        this.jigsawFloatCloseTrigger = 'mouseleave';
-        this.jigsawFloatOpenTrigger = 'mouseenter';
     }
 }
 

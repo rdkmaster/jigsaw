@@ -8,8 +8,8 @@ import {TooltipHtmlDemoComponent} from "./html-renderer/demo.component";
 import {TooltipHtmlDemoModule} from "./html-renderer/demo.module";
 import {MovingTooltipDemoComponent} from "./moving-tooltip/demo.component";
 import {MovingTooltipDemoModule} from "./moving-tooltip/demo.module";
-import {TooltipShowDemoComponent} from "./programmatic-show/demo.component";
-import {TooltipShowDemoModule} from "./programmatic-show/demo.module";
+import {TooltipTriggerDemoComponent} from "./trigger/demo.component";
+import {TooltipTriggerDemoModule} from "./trigger/demo.module";
 import { TooltipThemeDemoComponent } from './theme/demo.component';
 import { TooltipThemeDemoModule } from './theme/demo.module';
 import { TooltipScenesDemoComponent } from './scenes/demo.component';
@@ -26,7 +26,7 @@ export const routerConfig = [
         path: 'moving-tooltip', component: MovingTooltipDemoComponent
     },
     {
-        path: 'programmatic-show', component: TooltipShowDemoComponent
+        path: 'trigger', component: TooltipTriggerDemoComponent
     },
     {
         path: 'theme', component: TooltipThemeDemoComponent
@@ -39,7 +39,7 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), TooltipBasicDemoModule, TooltipHtmlDemoModule, MovingTooltipDemoModule,
-        TooltipShowDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule
+        TooltipTriggerDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule
     ],
     providers: [PopupService]
 })

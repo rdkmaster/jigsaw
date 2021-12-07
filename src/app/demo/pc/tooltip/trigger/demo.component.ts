@@ -3,8 +3,18 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class TooltipShowDemoComponent {
-    open = false;
+export class TooltipTriggerDemoComponent {
+    public openTrigger = "mouseenter";
+    public closeTrigger = "mouseleave";
+    public open = false;
+
+    public openFloat() {
+        this.open = true;
+    }
+
+    public closeFloat() {
+        this.open = false;
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
