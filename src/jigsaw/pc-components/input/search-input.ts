@@ -114,7 +114,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     public _$jigsawFloatArea: TemplateRef<any>;
 
     /**
-     * historyStorageKey
      * 用户用于设置存在localStorage中历史记录的key值
      *
      * @NoMarkForCheckRequired
@@ -131,6 +130,14 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
      * @internal
      */
     public _$history: string[] = [];
+
+    /**
+     * 用户用于设置存在localStorage中历史记录的记录条数
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public historyStorageSize: number = 20;
 
     /**
      * @internal
@@ -156,8 +163,8 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
         this._$history.unshift(value.trim());
 
-        if (this._$history.length > 20) {
-            this._$history = this._$history.slice(0, 20)
+        if (this._$history.length > this.historyStorageSize) {
+            this._$history = this._$history.slice(0, this.historyStorageSize)
         }
         localStorage.setItem(this.historyStorageKey, JSON.stringify(this._$history));
     }
