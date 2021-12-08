@@ -124,11 +124,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$historyOpen: boolean = false;
-
-    /**
-     * @internal
-     */
     public _$history: string[] = [];
 
     /**
@@ -139,16 +134,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public historyStorageSize: number = 20;
 
-    /**
-     * @internal
-     */
-    public _$searchHistorySelected(value: string) {
-        this._$historyOpen = false;
-        this.value = value;
-        this.search.emit(this.value);
-        this._isHistorySelected = true;
-    }
-
     private _isHistorySelected = false;
 
     private _saveSearchHistory(value:string){
@@ -156,17 +141,22 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
             return;
         }
 
-        const index = this._$history.indexOf(value.trim());
-        if (index !== -1) {
-            this._$history.splice(index, 1)
-        }
+        if (this._$history.length === 0) {
+            this._$history = new Array(value.trim());
+        } else {
+            const index = this._$history.indexOf(value.trim());
+            if (index !== -1) {
+                this._$history.splice(index, 1)
+            }
 
-        this._$history.unshift(value.trim());
+            this._$history.unshift(value.trim());
+        }
 
         if (this._$history.length > this.historyStorageSize) {
             this._$history = this._$history.slice(0, this.historyStorageSize)
         }
         localStorage.setItem(this.historyStorageKey, JSON.stringify(this._$history));
+
     }
 
     /**
@@ -178,7 +168,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
                 this._isHistorySelected = !this._isHistorySelected;
                 return; 
             }
-            this._$historyOpen = true;
             return;
         }
         if (this._isValidSearchDebounce()) {
