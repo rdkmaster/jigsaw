@@ -14,25 +14,25 @@ import {
     ViewContainerRef,
     ElementRef
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {animate, keyframes, style, transition, trigger} from "@angular/animations"
-import {Subscription} from "rxjs/internal/Subscription";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawListModule} from "../list-and-tile/list";
-import {JigsawCheckBoxModule} from "../checkbox/index";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {JigsawInputModule} from "../input/input";
-import {GroupOptionValue} from "../list-and-tile/group-common";
-import {AbstractJigsawGroupLiteComponent} from "../list-and-tile/group-lite-common";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawPaginationModule} from "../pagination/pagination";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {LoadingService} from "../../common/service/loading.service";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import { CommonModule } from "@angular/common";
+import { animate, keyframes, style, transition, trigger } from "@angular/animations"
+import { Subscription } from "rxjs/internal/Subscription";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { JigsawListModule } from "../list-and-tile/list";
+import { JigsawCheckBoxModule } from "../checkbox/index";
+import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
+import { JigsawInputModule } from "../input/input";
+import { GroupOptionValue } from "../list-and-tile/group-common";
+import { AbstractJigsawGroupLiteComponent } from "../list-and-tile/group-lite-common";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { JigsawPaginationModule } from "../pagination/pagination";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
+import { LoadingService } from "../../common/service/loading.service";
+import { TranslateHelper } from "../../common/core/utils/translate-helper";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { JigsawRendererHost, JigsawCommonModule } from 'jigsaw/common/common';
-import { TransferListRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
+import { TransferSourceListRenderer, JigsawTransferRendererModule, listOption } from './renderer/transfer-renderer';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -115,14 +115,14 @@ const transferServerFilterFunction = function (item) {
         trigger('loading', [
             transition('void => *', [
                 animate(300, keyframes([
-                    style({opacity: 0}),
-                    style({opacity: 0.6})
+                    style({ opacity: 0 }),
+                    style({ opacity: 0.6 })
                 ]))
             ]),
             transition('* => void', [
                 animate(300, keyframes([
-                    style({opacity: 0.6}),
-                    style({opacity: 0})
+                    style({ opacity: 0.6 }),
+                    style({ opacity: 0 })
                 ]))
             ])
         ])],
@@ -138,30 +138,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         protected componentFactoryResolver: ComponentFactoryResolver) {
         super(_cdr, _injector);
     }
-
-    private _removePageableCallbackListener: CallbackRemoval;
-    private _removeArrayCallbackListener: CallbackRemoval;
-    private _removeSelectedArrayCallbackListener: CallbackRemoval;
-    private _filterFunction: (item: any) => boolean;
-
-    @ViewChild(JigsawRendererHost)
-    protected rendererHost: JigsawRendererHost;
-
-    // @ViewChild('rendererHost') rendererHost: ElementRef;
-
-    // @ViewChild('rendererHost', {read: ViewContainerRef})
-    // protected rendererHost: ViewContainerRef;
-
-    ngAfterViewInit(): void {
-        console.log(this.rendererHost)
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
-        let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
-    }
-
-    /**
-     * @internal
-     */
-    public _$data: LocalPageableArray<GroupOptionValue> | PageableArray;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
@@ -188,76 +164,116 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$transferClass: {};
 
+    private _removePageableCallbackListener: CallbackRemoval;
+    private _removeArrayCallbackListener: CallbackRemoval;
+    private _removeSelectedArrayCallbackListener: CallbackRemoval;
+    private _filterFunction: (item: any) => boolean;
+
+    @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
+    protected sourceRendererHost: ViewContainerRef;
+
+    @ViewChild('transferTargetRendererHost', { read: ViewContainerRef })
+    protected targetRendererHost: ViewContainerRef;
+
+    ngAfterViewInit(): void {
+        // console.log(this.rendererHost)
+        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferSourceListRenderer);
+        let componentRef = this.sourceRendererHost.createComponent(componentFactory);
+        componentRef.instance.data = this.data;
+    }
+
+    /**
+     * @internal
+     */
+    public _data: ArrayCollection<listOption> | any;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public get data() {
-        return this._$data;
+        return this._data;
     }
 
-    public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
-        if (!value || value == this.data) return;
-        if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
-            this._$data = value;
-            this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
-            this.runMicrotask(() => {
-                // 等待输入属性初始化
-                this._filterDataBySelectedItems();
-            });
-            if (value instanceof LocalPageableArray) {
-                if (this._removePageableCallbackListener) {
-                    this._removePageableCallbackListener();
-                }
-                this._removePageableCallbackListener = value.onAjaxComplete(() => {
-                    this._filterDataBySelectedItems();
-                })
-            }
-        } else if (value instanceof Array || value instanceof ArrayCollection) {
-            this._$data = new LocalPageableArray();
-            this._$data.pagingInfo.pageSize = Infinity;
-            this._$data.fromArray(value);
-            this._filterFunction = transferFilterFunction;
-            this.runMicrotask(() => {
-                // 等待输入属性初始化
-                this._filterDataBySelectedItems();
-            });
-            if (value instanceof ArrayCollection) {
-                if (this._removeArrayCallbackListener) {
-                    this._removeArrayCallbackListener();
-                }
-                this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
-                    (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(res);
-                    this._filterDataBySelectedItems();
-                })
-            }
-        } else {
-            console.error('data type error, data support Array, ArrayCollection, LocalPageableArray and PageableArray.')
-        }
+    public set data(value) {
+        this._data = value;
     }
 
-    private _selectedItems: ArrayCollection<any> | any[] = [];
+    // /**
+    //  * @internal
+    //  */
+    // public _$data: LocalPageableArray<GroupOptionValue> | PageableArray | any;
 
-    @RequireMarkForCheck()
-    @Input()
-    public get selectedItems() {
-        return this._selectedItems;
-    }
+    // /**
+    //  * @NoMarkForCheckRequired
+    //  */
+    // @Input()
+    // public get data() {
+    //     return this._$data;
+    // }
 
-    public set selectedItems(value: ArrayCollection<any> | any[]) {
-        if (!value || this._selectedItems == value) return;
-        if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
-            console.error('selectedItems type error, selectedItems support Array and ArrayCollection');
-            return;
-        }
-        this._selectedItems = value;
-        if (value instanceof ArrayCollection) {
-            if (this._removeSelectedArrayCallbackListener) {
-                this._removeSelectedArrayCallbackListener();
-            }
-            this._removeSelectedArrayCallbackListener = value.onAjaxComplete(this._filterDataBySelectedItems, this);
-        }
-    }
+    // public set data(value: any[] | ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray) {
+    //     if (!value || value == this.data) return;
+    //     if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
+    //         this._$data = value;
+    //         this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
+    //         this.runMicrotask(() => {
+    //             // 等待输入属性初始化
+    //             this._filterDataBySelectedItems();
+    //         });
+    //         if (value instanceof LocalPageableArray) {
+    //             if (this._removePageableCallbackListener) {
+    //                 this._removePageableCallbackListener();
+    //             }
+    //             this._removePageableCallbackListener = value.onAjaxComplete(() => {
+    //                 this._filterDataBySelectedItems();
+    //             })
+    //         }
+    //     } else if (value instanceof Array || value instanceof ArrayCollection) {
+    //         this._$data = new LocalPageableArray();
+    //         this._$data.pagingInfo.pageSize = Infinity;
+    //         this._$data.fromArray(value);
+    //         this._filterFunction = transferFilterFunction;
+    //         this.runMicrotask(() => {
+    //             // 等待输入属性初始化
+    //             this._filterDataBySelectedItems();
+    //         });
+    //         if (value instanceof ArrayCollection) {
+    //             if (this._removeArrayCallbackListener) {
+    //                 this._removeArrayCallbackListener();
+    //             }
+    //             this._removeArrayCallbackListener = value.onAjaxSuccess(res => {
+    //                 (<LocalPageableArray<GroupOptionValue>>this._$data).fromArray(res);
+    //                 this._filterDataBySelectedItems();
+    //             })
+    //         }
+    //     } else {
+    //         console.error('data type error, data support Array, ArrayCollection, LocalPageableArray and PageableArray.')
+    //     }
+    // }
+
+    // private _selectedItems: ArrayCollection<any> | any[] = [];
+
+    // @RequireMarkForCheck()
+    // @Input()
+    // public get selectedItems() {
+    //     return this._selectedItems;
+    // }
+
+    // public set selectedItems(value: ArrayCollection<any> | any[]) {
+    //     if (!value || this._selectedItems == value) return;
+    //     if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
+    //         console.error('selectedItems type error, selectedItems support Array and ArrayCollection');
+    //         return;
+    //     }
+    //     this._selectedItems = value;
+    //     if (value instanceof ArrayCollection) {
+    //         if (this._removeSelectedArrayCallbackListener) {
+    //             this._removeSelectedArrayCallbackListener();
+    //         }
+    //         this._removeSelectedArrayCallbackListener = value.onAjaxComplete(this._filterDataBySelectedItems, this);
+    //     }
+    // }
 
     /**
      * @NoMarkForCheckRequired
@@ -280,23 +296,23 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
-    private _filterDataBySelectedItems() {
-        if (this._$data.busy) {
-            const removeAjaxCallback = this._$data.onAjaxComplete(() => {
-                removeAjaxCallback();
-                this._filterData();
-            })
-        } else {
-            this._filterData();
-        }
-    }
+    // private _filterDataBySelectedItems() {
+    //     if (this._$data.busy) {
+    //         const removeAjaxCallback = this._$data.onAjaxComplete(() => {
+    //             removeAjaxCallback();
+    //             this._filterData();
+    //         })
+    //     } else {
+    //         this._filterData();
+    //     }
+    // }
 
-    private _filterData() {
-        this._$data.filter(this._filterFunction, {
-            selectedItems: [].concat(...this.selectedItems),
-            trackItemBy: this.trackItemBy
-        });
-    }
+    // private _filterData() {
+    //     this._$data.filter(this._filterFunction, {
+    //         selectedItems: [].concat(...this.selectedItems),
+    //         trackItemBy: this.trackItemBy
+    //     });
+    // }
 
     /**
      * @internal
@@ -306,29 +322,29 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @param from
      *
      */
-    public _$transferTo(from: string) {
-        if (this.disabled) return;
-        if (from == 'target') {
-            if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
-            this.selectedItems = this.selectedItems ? this.selectedItems : [];
-            this.selectedItems.push(...this._$sourceSelectedItems);
-            this.selectedItems = this.selectedItems.concat();
-            if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
-                this._filterDataBySelectedItems();
-            }
-            this._$sourceSelectedItems = [];
-        }
-        if (from == 'source') {
-            if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
-            this.selectedItems = this.selectedItems.filter(item =>
-                !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
-            if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
-                this._filterDataBySelectedItems();
-            }
-            this._$targetSelectedItems = [];
-        }
-        this.selectedItemsChange.emit(this.selectedItems);
-    }
+    // public _$transferTo(from: string) {
+    //     if (this.disabled) return;
+    //     if (from == 'target') {
+    //         if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
+    //         this.selectedItems = this.selectedItems ? this.selectedItems : [];
+    //         this.selectedItems.push(...this._$sourceSelectedItems);
+    //         this.selectedItems = this.selectedItems.concat();
+    //         if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
+    //             this._filterDataBySelectedItems();
+    //         }
+    //         this._$sourceSelectedItems = [];
+    //     }
+    //     if (from == 'source') {
+    //         if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
+    //         this.selectedItems = this.selectedItems.filter(item =>
+    //             !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
+    //         if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
+    //             this._filterDataBySelectedItems();
+    //         }
+    //         this._$targetSelectedItems = [];
+    //     }
+    //     this.selectedItemsChange.emit(this.selectedItems);
+    // }
 
     ngOnDestroy() {
         super.ngOnDestroy();
@@ -357,8 +373,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(@Optional() private _transfer: JigsawTransfer, protected _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_cdr, _injector);
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';

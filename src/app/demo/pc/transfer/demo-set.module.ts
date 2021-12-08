@@ -14,6 +14,10 @@ import {TransferArrayValidDemoComponent} from "./valid/demo.component";
 import {TransferArrayValidDemoModule} from "./valid/demo.module";
 import {TransferArrayI18nDemoComponent} from "./i18n/demo.component";
 import {TransferArrayI18nDemoModule} from "./i18n/demo.module";
+import { TransferTreeDemoModule } from './transfer-tree/demo.module';
+import { TransferTreeDemoComponent } from './transfer-tree/demo.component';
+import { TransferTableDemoComponent } from './transfer-table/demo.component';
+import { TransferTableDemoModule } from './transfer-table/demo.module';
 
 export const routerConfig = [
     {
@@ -36,6 +40,12 @@ export const routerConfig = [
     },
     {
         path: 'i18n', component: TransferArrayI18nDemoComponent
+    },
+    {
+        path: 'transfer-tree', component: TransferTreeDemoComponent
+    },
+    {
+        path: 'transfer-table', component: TransferTableDemoComponent
     }
 ];
 
@@ -48,7 +58,9 @@ export const routerConfig = [
         TransferItemDisabledDemoModule,
         TransferArrayDisabledDemoModule,
         TransferArrayValidDemoModule,
-        TransferArrayI18nDemoModule
+        TransferArrayI18nDemoModule,
+        TransferTreeDemoModule,
+        TransferTableDemoModule
     ]
 })
 export class TransferDemoModule {

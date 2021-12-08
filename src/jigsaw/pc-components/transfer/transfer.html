@@ -1,30 +1,28 @@
 <div *ngIf="disabled" class="jigsaw-transfer-disabled">
 </div>
 <div class="jigsaw-transfer-wrapper" [ngClass]="_$transferClass">
-    <div  class="jigsaw-transfer-left-box jigsaw-transfer-box">
+    <div class="jigsaw-transfer-left-box jigsaw-transfer-box">
         <div *ngIf="_$data?.busy" class="jigsaw-transfer-loading" @loading>
             <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
         </div>
         <!-- <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
                          [subLabelField]="subLabelField" [searchable]="searchable"
                          [(selectedItems)]="_$sourceSelectedItems"></j-transfer-list> -->
-        <ng-template jigsaw-renderer-host></ng-template>
+        <ng-template #transferSourceRendererHost></ng-template>
     </div>
     <div class="jigsaw-transfer-option-box">
         <a class="jigsaw-transfer-to-right-bar jigsaw-transfer-option-bar"
-           [class.jigsaw-transfer-option-disabled]="!_$sourceSelectedItems || !_$sourceSelectedItems.length"
-           (click)="_$transferTo('target')">
+            [class.jigsaw-transfer-option-disabled]="!_$sourceSelectedItems || !_$sourceSelectedItems.length"
+            (click)="_$transferTo('target')">
             <i class="iconfont iconfont-e144"></i>
         </a>
         <a class="jigsaw-transfer-to-left-bar jigsaw-transfer-option-bar"
-           [class.jigsaw-transfer-option-disabled]="!_$targetSelectedItems || !_$targetSelectedItems.length"
-           (click)="_$transferTo('source')">
+            [class.jigsaw-transfer-option-disabled]="!_$targetSelectedItems || !_$targetSelectedItems.length"
+            (click)="_$transferTo('source')">
             <i class="iconfont iconfont-e143"></i>
         </a>
     </div>
     <div class="jigsaw-transfer-right-box jigsaw-transfer-box">
-        <j-transfer-list [data]="selectedItems" [trackItemBy]="trackItemBy" [labelField]="labelField"
-                         [subLabelField]="subLabelField" [searchable]="searchable"
-                         [(selectedItems)]="_$targetSelectedItems" [isTarget]="true"></j-transfer-list>
+        <ng-template #transferTargetRendererHost></ng-template>
     </div>
- </div>
+</div>
