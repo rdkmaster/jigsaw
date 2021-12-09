@@ -461,7 +461,7 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
  * switch renderer
  */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)" [readonly]="_$readonly"></j-switch>',
+    template: '<j-switch [(checked)]="cellData" (checkedChange)="onChange(cellData)" [readonly]="_$readonly"></j-switch>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellRendererBase {
@@ -480,8 +480,24 @@ export class TableCellSwitchRenderer extends TableCellRendererBase {
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+                protected _injector: Injector, private _zone: NgZone) {
         super(_injector);
+    }
+    
+    onChange(value) {
+        this.cellData = value;
+        this._additionalData.touchValueByRow(this.field, this.row, value);
+        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
+            this.targetData.data[this.row][this.column] = this.cellData;
+            this._changeDetectorRef.markForCheck();
+        }
+        this.dispatchChangeEvent(value);
+        this._changeDetectorRef.markForCheck();
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            this._zone.run(() => {
+                this.targetData.refresh();
+            });
+        })
     }
 }
 
