@@ -32,7 +32,11 @@ import { LoadingService } from "../../common/service/loading.service";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { JigsawRendererHost, JigsawCommonModule } from 'jigsaw/common/common';
-import { TransferSourceListRenderer, JigsawTransferRendererModule, listOption } from './renderer/transfer-renderer';
+import { JigsawTransferRendererModule, listOption, TransferListRenderer, TransferTreeRenderer, TransferTableRenderer } from './renderer/transfer-renderer';
+import { createHostListener } from '@angular/compiler/src/core';
+import { SimpleTreeData } from 'jigsaw/common/core/data/tree-data';
+import { TableData } from 'jigsaw/common/core/data/table-data';
+import { TransferTableDemoComponent } from 'app/demo/pc/transfer/transfer-table/demo.component';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -132,11 +136,11 @@ const transferServerFilterFunction = function (item) {
 
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
     constructor(
-        protected _cdr: ChangeDetectorRef,
+        protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector,
         protected componentFactoryResolver: ComponentFactoryResolver) {
-        super(_cdr, _injector);
+        super(_changeDetectorRef, _injector);
     }
 
     /**
@@ -159,15 +163,15 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     /**
-     * 更新transfer的样式信息
      * @internal
      */
-    public _$transferClass: {};
+    public _$sourceButton: boolean = false;
 
-    private _removePageableCallbackListener: CallbackRemoval;
-    private _removeArrayCallbackListener: CallbackRemoval;
-    private _removeSelectedArrayCallbackListener: CallbackRemoval;
-    private _filterFunction: (item: any) => boolean;
+    /**
+     * @internal
+     */
+    public _$targetButton: boolean = false;
+
 
     @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
     protected sourceRendererHost: ViewContainerRef;
@@ -175,11 +179,42 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     @ViewChild('transferTargetRendererHost', { read: ViewContainerRef })
     protected targetRendererHost: ViewContainerRef;
 
+    public sourceComponent;
+    public targetComponent;
+
+    public sourceToggleButtonSubscribe: Subscription;
+    public targetToggleButtonSubscribe: Subscription;
+
     ngAfterViewInit(): void {
-        // console.log(this.rendererHost)
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferSourceListRenderer);
-        let componentRef = this.sourceRendererHost.createComponent(componentFactory);
-        componentRef.instance.data = this.data;
+        let sourceComponentFactory;
+        let targetComponentFactory;
+        if (this.data instanceof ArrayCollection) {
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
+        } else if (this.data instanceof SimpleTreeData) {
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
+        } else if (this.data instanceof TableData) {
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableRenderer);
+        }
+
+        const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
+        const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
+        this.sourceComponent = sourceComponentRef.instance;
+        this.targetComponent = targetComponentRef.instance;
+        this.sourceComponent.type = "source";
+        this.targetComponent.type = "target";
+        this.sourceComponent.data = this.data;
+        this.targetComponent.data = this.data;
+        this.sourceComponent.transferSelectedItems = this.selectedItems;
+        this.targetComponent.transferSelectedItems = this.selectedItems;
+        this.sourceToggleButtonSubscribe = this.sourceComponent.toggleButton.subscribe((toggleButton) => {
+            this._$sourceButton = toggleButton;
+        });
+        this.sourceToggleButtonSubscribe = this.targetComponent.toggleButton.subscribe((toggleButton) => {
+            this._$targetButton = toggleButton;
+        });
     }
 
     /**
@@ -197,6 +232,28 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     public set data(value) {
         this._data = value;
+    }
+
+    private _selectedItems: ArrayCollection<listOption> | any[] = [];
+
+    @RequireMarkForCheck()
+    @Input()
+    public get selectedItems() {
+        return this._selectedItems;
+    }
+
+    public set selectedItems(value: ArrayCollection<listOption> | any[]) {
+        this._selectedItems = value;
+    }
+
+    public _$sourceTransfer() {
+        this.sourceComponent.transfer();
+        this._changeDetectorRef.detectChanges();
+    }
+
+    public _$targetTransfer() {
+        this.targetComponent.transfer();
+        this._changeDetectorRef.detectChanges();
     }
 
     // /**
@@ -274,6 +331,17 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     //         this._removeSelectedArrayCallbackListener = value.onAjaxComplete(this._filterDataBySelectedItems, this);
     //     }
     // }
+
+    /**
+ * 更新transfer的样式信息
+ * @internal
+ */
+    public _$transferClass: {};
+
+    private _removePageableCallbackListener: CallbackRemoval;
+    private _removeArrayCallbackListener: CallbackRemoval;
+    private _removeSelectedArrayCallbackListener: CallbackRemoval;
+    private _filterFunction: (item: any) => boolean;
 
     /**
      * @NoMarkForCheckRequired
@@ -372,10 +440,10 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, protected _cdr: ChangeDetectorRef,
+    constructor(@Optional() private _transfer: JigsawTransfer, protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
-        super(_cdr, _injector);
+        super(_changeDetectorRef, _injector);
         this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
             this._$searchKey = '';
         });
@@ -411,7 +479,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
-                this._cdr.markForCheck();
+                this._changeDetectorRef.markForCheck();
             });
             this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
         } else if (value instanceof Array || value instanceof ArrayCollection) {
@@ -494,10 +562,10 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                     this.selectedItems = this.selectedItems.concat();
                     this._$updateCurrentPageSelectedItems();
                 }
-                this._cdr.markForCheck();
+                this._changeDetectorRef.markForCheck();
             });
             this._data.refresh();
-            this._cdr.detectChanges();
+            this._changeDetectorRef.detectChanges();
         })
     }
 
@@ -530,7 +598,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
             fields: [field]
         });
         this._removeFilterSubscribe = this._data.pagingInfo.subscribe(() => {
-            this._cdr.markForCheck();
+            this._changeDetectorRef.markForCheck();
         });
     }
 
@@ -553,7 +621,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
                 !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
         }
         this.selectedItemsChange.emit(this.selectedItems);
-        this._cdr.markForCheck();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**

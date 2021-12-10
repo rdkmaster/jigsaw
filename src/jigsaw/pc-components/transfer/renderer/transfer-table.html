@@ -1,0 +1,23 @@
+<div class="jigsaw-transfer-renderer jigsaw-transfer-table-renderer">
+    <div class="jigsaw-transfer-renderer-header">
+        <div class="jigsaw-transfer-renderer-select-all">
+            <span class="jigsaw-transfer-renderer-header-middle-title">
+                {{_$selectedItems ?
+                _$selectedItems.length : 0}} / {{_$viewData ? _$viewData .length : 0}} {{'transfer-renderer.items' |
+                translate}}
+            </span>
+        </div>
+        <div class="jigsaw-transfer-renderer-search-cntr">
+            <jigsaw-search-input width="100%" (search)="_$handleSearching($event)">
+            </jigsaw-search-input>
+        </div>
+    </div>
+    <div class="jigsaw-transfer-renderer-body">
+        <div class="jigsaw-transfer-renderer-cntr"
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+            <jigsaw-table #tableC [data]="_$viewData" [additionalColumnDefines]="additionalColumns"
+                [(additionalData)]="additionalData" (additionalDataChange)="additionalDataChange($event)">
+            </jigsaw-table>
+        </div>
+    </div>
+</div>

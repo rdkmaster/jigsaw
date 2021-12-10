@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SimpleTreeData, TableData } from "jigsaw/public_api";
+import { TableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -11,159 +11,83 @@ export class TransferTableDemoComponent {
             [
                 [
                     "Tiger Nixon1",
-                    "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542"
+                    "System Architect"
                 ],
                 [
                     "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
+                    "Accountant"
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "System Arcfhitect"
                 ],
                 [
-                    "Garrett Winslters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Wintsers2",
-                    "Accountant",
-                    "$170,50",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tigser Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "Garrett Winslters2",
+                    "Accountant"
                 ],
                 [
                     "Tiger Nixon3",
-                    "System Architect",
-                    "$3,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "System Arcfhitect"
                 ],
                 [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "Garrett Winflters3",
+                    "Accountant"
                 ],
                 [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,80",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542111"
+                    "Tiger Nixon4",
+                    "System Arcfhitect"
                 ],
                 [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,750",
-                    "2011/07/25",
-                    "Tokyo",
-                    "84212"
+                    "Garrett Winflters4",
+                    "Accountant"
                 ],
                 [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "Tiger Nixon5",
+                    "System Arcfhitect"
                 ],
                 [
-                    "Tigesr Nixon1",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "Garrett Wintsers5",
+                    "Accountant"
                 ],
                 [
-                    "Garretst Winters1",
-                    "Accountant",
-                    "$170,750",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
+                    "Tigser Nixon6",
+                    "System Architect"
                 ],
                 [
-                    "Tigers Nixon2",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "Tiger Nixon9",
+                    "System Architect"
+                ],
+                [
+                    "Tiger Nixon7",
+                    "System Architect"
+                ],
+                [
+                    "Tiger Nixon8",
+                    "System Architect"
+                ],
+                [
+                    "Garrett Winters12",
+                    "Accountant"
+                ],
+                [
+                    "Tiger Nixon24",
+                    "System Architect"
+                ],
+                [
+                    "Tigesr Nixon13",
+                    "System Architect"
+                ],
+                [
+                    "Garretst Winters12",
+                    "Accountant"
+                ],
+                [
+                    "Tigers Nixon21",
+                    "System Architect"
                 ]
             ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["name", "position"],
+            ["姓名", "职位"]);
     }
 
     data: TableData;

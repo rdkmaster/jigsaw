@@ -26,10 +26,8 @@ export class TransferArrayDemoComponent {
     //     this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
     // }
 
-
-
-    constructor(private _http: HttpClient) {
-        this.data = new ArrayCollection([{ label: '文本选项1' }, { label: '文本选项2' }]);
+    constructor() {
+        this.data = new ArrayCollection([{ label: '文本选项1' }, { label: '文本选项2' }, { label: '文本选项3' }, { label: '文本选项4' }, { label: '文本选项5' }]);
     }
 
     data: ArrayCollection<any>;

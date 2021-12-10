@@ -1,0 +1,57 @@
+@import "../../common/assets/scss/core/base";
+
+$jigsaw-transfer: #{$jigsaw-prefix}-transfer;
+$jigsaw-list: #{$jigsaw-prefix}-list;
+$transfer-renderer: #{$jigsaw-prefix}-transfer-renderer;
+$list-renderer: #{$jigsaw-prefix}-transfer-list-renderer;
+$tree-renderer: #{$jigsaw-prefix}-transfer-tree-renderer;
+$table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
+
+.#{$transfer-renderer} {
+    $cntr-padding-top: 4px;
+    $header-padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    padding: $cntr-padding-top 8px;
+
+    .#{$transfer-renderer}-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 8px;
+
+        .#{$transfer-renderer}-select-all {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 32px;
+        }
+
+        .#{$transfer-renderer}-search-cntr {
+            width: 100%;
+        }
+    }
+
+    .#{$transfer-renderer}-body {
+        height: calc(100% - 64px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom});
+        .#{$transfer-renderer}-cntr {
+            height: 100%;
+        }
+    }
+
+    .#{$transfer-renderer}-footer {
+    }
+}
+
+.#{$list-renderer} {
+    .#{$transfer-renderer}-body {
+        .#{$transfer-renderer}-cntr {
+            .#{$jigsaw-list} {
+                border: none;
+            }
+        }
+    }
+}
