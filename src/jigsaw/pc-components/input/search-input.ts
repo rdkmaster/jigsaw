@@ -1,17 +1,17 @@
 import { Component, NgModule, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy, Injector, ViewChild, TemplateRef } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { CommonModule } from '@angular/common';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AbstractJigsawComponent } from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { TranslateHelper } from '../../common/core/utils/translate-helper';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { JigsawFloatModule } from '../../common/directive/float/float';
-import { CommonModule } from '@angular/common';
 import { JigsawListModule } from '../list-and-tile/list';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { JigsawAutoCompleteInputModule } from './auto-complete-input';
 
 @Component({
@@ -33,7 +33,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         private _injector: Injector) {
         super();
     }
-    
+
     /**
      * 设置搜索模式（自动/手动）
      *
@@ -166,7 +166,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         if (!this.autoSearch) {
             if (this._isHistorySelected){
                 this._isHistorySelected = !this._isHistorySelected;
-                return; 
+                return;
             }
             return;
         }
