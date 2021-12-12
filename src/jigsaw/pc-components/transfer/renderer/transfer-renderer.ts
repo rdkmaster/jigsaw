@@ -74,13 +74,15 @@ export class TransferListRenderer implements transferRenderer {
         if (this.type === "source") {
             if (this._$viewData instanceof LocalPageableArray || this._$viewData instanceof PageableArray) {
                 this._data = value;
+                this._$viewData = this.data
             } else {
                 const data = new LocalPageableArray<listOption>();
                 data.pagingInfo.pageSize = Infinity;
                 const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
                     // 在新建data准备好再赋值给组件data，防止出现闪动的情况
                     removeUpdateSubscriber.unsubscribe();
-                    this._$viewData = data;
+                    this._data = data;
+                    this._$viewData = this.data
                 });
                 data.fromArray(value);
             }
@@ -99,13 +101,14 @@ export class TransferListRenderer implements transferRenderer {
     }
 
     public set transferSelectedItems(value: ArrayCollection<listOption>) {
+        console.log(1)
         this._transferSelectedItems = value;
         if (this.type === "target") {
             this._$viewData = value;
         }
     }
 
-    public _$selectedItems: ArrayCollection<listOption>;
+    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
 
     /**
      * 设置数据的显示字段
@@ -189,6 +192,7 @@ export class TransferListRenderer implements transferRenderer {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
         this._filterData(filterKey);
+        this._changeDetectorRef.detectChanges();
     }
 
     private _filterData(filterKey?: string) {
@@ -206,7 +210,17 @@ export class TransferListRenderer implements transferRenderer {
 
     public transfer() {
         if (this.type === "source") {
-            this.transferSelectedItems.push(...this._$selectedItems)
+            this._$viewData = this._$viewData.filter((item) => {
+                let isExist = true;
+                this._$selectedItems.forEach((selectedItem) => {
+                    if (selectedItem[this.labelField] === item[this.labelField]) {
+                        isExist = false;
+                    }
+                })
+                return isExist;
+            })
+            this.transferSelectedItems.push(...this._$selectedItems);
+            this._$selectedItems = new ArrayCollection([]);
         }
         if (this.type === "target") {
             this._$selectedItems.forEach(selectedItem => {
@@ -218,10 +232,31 @@ export class TransferListRenderer implements transferRenderer {
                 })
             })
             this._$selectedItems = new ArrayCollection([]);
-            console.log(this._$selectedItems)
-            console.log(this.transferSelectedItems)
         }
+        this.toggleButton.emit(this._$selectedItems.length > 0);
+        this._checkSelectAll();
     };
+
+    // public update() {
+    //     // this.data.filter((item) => {
+    //     //     let isExist = true;
+    //     //     this.transferSelectedItems.forEach((selectedItem) => {
+    //     //         if (selectedItem[this.labelField] === item[this.labelField]) {
+    //     //             isExist = false;
+    //     //         }
+    //     //     })
+    //     //     return isExist;
+    //     // })
+    //     if (this.type === "source") {
+    //         if (!this.transferSelectedItems) {
+    //             this._$viewData = this.data;
+    //         } else {
+    //             this._$viewData = this.data.filter(item => this.transferSelectedItems.some(it =>
+    //                 CommonUtils.compareWithKeyProperty(it, item, ['label'])));
+    //         }
+    //         this.toggleButton.emit(this._$selectedItems.length > 0);
+    //     }
+    // }
 
     /**
      * @internal
