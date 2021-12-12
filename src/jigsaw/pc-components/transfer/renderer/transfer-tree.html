@@ -17,7 +17,7 @@
     <div class="jigsaw-transfer-renderer-body">
         <div class="jigsaw-transfer-renderer-cntr"
             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <jigsaw-tree-ext [(data)]="_$viewData" size="large"></jigsaw-tree-ext>
+            <jigsaw-tree-ext [(data)]="_$viewData" size="large" (onCheck)="onCheck($event)"></jigsaw-tree-ext>
         </div>
     </div>
 </div>

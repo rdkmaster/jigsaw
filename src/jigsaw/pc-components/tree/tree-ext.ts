@@ -345,6 +345,31 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this.ztree.editName(node);
     }
 
+    public getCheckedNodes(checked:boolean){
+        if (!this.ztree) {
+            return;
+        }
+        return this.ztree.getCheckedNodes(checked);
+    }
+
+    public updateNode(node){
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.updateNode(node);
+        this._updateTree();
+    }
+
+    public hideNodes(nodes){
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.hideNodes(nodes);
+        this._updateTree();
+    }
+
+
+
     private _defaultSetting() {
         let that = this;
 

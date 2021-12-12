@@ -101,7 +101,6 @@ export class TransferListRenderer implements transferRenderer {
     }
 
     public set transferSelectedItems(value: ArrayCollection<listOption>) {
-        console.log(1)
         this._transferSelectedItems = value;
         if (this.type === "target") {
             this._$viewData = value;
@@ -237,26 +236,33 @@ export class TransferListRenderer implements transferRenderer {
         this._checkSelectAll();
     };
 
-    // public update() {
-    //     // this.data.filter((item) => {
-    //     //     let isExist = true;
-    //     //     this.transferSelectedItems.forEach((selectedItem) => {
-    //     //         if (selectedItem[this.labelField] === item[this.labelField]) {
-    //     //             isExist = false;
-    //     //         }
-    //     //     })
-    //     //     return isExist;
-    //     // })
-    //     if (this.type === "source") {
-    //         if (!this.transferSelectedItems) {
-    //             this._$viewData = this.data;
-    //         } else {
-    //             this._$viewData = this.data.filter(item => this.transferSelectedItems.some(it =>
-    //                 CommonUtils.compareWithKeyProperty(it, item, ['label'])));
-    //         }
-    //         this.toggleButton.emit(this._$selectedItems.length > 0);
-    //     }
-    // }
+    public update() {
+        // this.data.filter((item) => {
+        //     let isExist = true;
+        //     this.transferSelectedItems.forEach((selectedItem) => {
+        //         if (selectedItem[this.labelField] === item[this.labelField]) {
+        //             isExist = false;
+        //         }
+        //     })
+        //     return isExist;
+        // })
+        if (this.type === "source") {
+            if (!this.transferSelectedItems) {
+                this._$viewData = this.data;
+            } else {
+                this._$viewData = this.data.filter((item) => {
+                    let isExist = true;
+                    this.transferSelectedItems.forEach((selectedItem) => {
+                        if (selectedItem[this.labelField] === item[this.labelField]) {
+                            isExist = false;
+                        }
+                    })
+                    return isExist;
+                })
+            }
+            this.toggleButton.emit(this._$selectedItems.length > 0);
+        }
+    }
 
     /**
      * @internal
@@ -386,16 +392,28 @@ export class TransferTreeRenderer implements transferRenderer {
     public transfer() {
         if (this.type === "source") {
             this.transferSelectedItems.push(...this._$selectedItems)
+            console.log(this._$selectedItems)
+            this.treeExt.hideNodes(this._$selectedItems)
+            this._$selectedItems = new ArrayCollection([]);
         }
-        // if (this.type === "target") {
-        //     this.transferSelectedItems.push(...this.selectedItems)
-        // }
+        this.toggleButton.emit(this._$selectedItems.length > 0);
+        this._changeDetectorRef.markForCheck();
     };
 
-    /**
-     * @internal
-     */
-    public _$infinity = Infinity;
+    public onCheck($event) {
+        const allCheckedNodes = this.treeExt.getCheckedNodes(true);
+        const checkedNodes = allCheckedNodes.filter(node => {
+            return !node.isParent && !node.isHidden;
+        })
+        console.log(checkedNodes)
+        this._$selectedItems = new ArrayCollection(checkedNodes);
+        this.toggleButton.emit(this._$selectedItems.length > 0);
+    }
+
+    public update() {
+        
+        this.treeExt.hideNodes(this.transferSelectedItems)
+    }
 }
 
 @Component({
@@ -557,7 +575,6 @@ export class TransferTableRenderer implements transferRenderer {
     }];
 
     additionalDataChange(value) {
-        console.log(value);
         this.selectedRows = this.getSelectedRows(this.additionalData);
     }
 

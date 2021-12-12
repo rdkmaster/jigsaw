@@ -253,6 +253,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     public _$targetTransfer() {
         this.targetComponent.transfer();
+        this.sourceComponent.update();
         this._changeDetectorRef.detectChanges();
     }
 
