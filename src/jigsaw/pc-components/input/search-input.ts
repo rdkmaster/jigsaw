@@ -80,7 +80,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         if (this._value === newValue) {
             return;
         }
-        this._value = newValue;
+        this._value = newValue.trim();
         // 表单友好接口
         this._propagateChange(this._value);
     }
@@ -134,22 +134,28 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public historyStorageSize: number = 20;
 
+    /**
+     * 用户用于设置存在localStorage中历史记录的记录条数
+     */
+    private _historyItemSize: number = 200;
+
     private _isHistorySelected = false;
 
+
     private _saveSearchHistory(value:string){
-        if (CommonUtils.isUndefined(value) || value.trim().length === 0) {
+        if (CommonUtils.isUndefined(value) || value.length === 0 || value.length > this._historyItemSize) {
             return;
         }
 
         if (this._$history.length === 0) {
-            this._$history = new Array(value.trim());
+            this._$history = new Array(value);
         } else {
-            const index = this._$history.indexOf(value.trim());
+            const index = this._$history.indexOf(value);
             if (index !== -1) {
                 this._$history.splice(index, 1)
             }
 
-            this._$history.unshift(value.trim());
+            this._$history.unshift(value);
         }
 
         if (this._$history.length > this.historyStorageSize) {
@@ -166,7 +172,6 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         if (!this.autoSearch) {
             if (this._isHistorySelected){
                 this._isHistorySelected = !this._isHistorySelected;
-                return; 
             }
             return;
         }
