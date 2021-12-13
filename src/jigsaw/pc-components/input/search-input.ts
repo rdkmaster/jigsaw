@@ -135,7 +135,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     public historyStorageSize: number = 20;
 
     /**
-     * 用户用于设置存在localStorage中历史记录的记录条数
+     * 用户用于设置存在localStorage中历史记录的单条文本长度
      */
     private _historyItemSize: number = 200;
 
