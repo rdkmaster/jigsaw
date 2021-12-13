@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Injector, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, forwardRef, ViewEncapsulation, ViewChild } from "@angular/core";
+import { Component, ChangeDetectionStrategy, Injector, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, forwardRef, ViewEncapsulation, ViewChild, AfterViewInit } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { ArrayCollection, LocalPageableArray, PageableArray } from '../../../common/core/data/array-collection';
 import { JigsawListModule } from '../../../pc-components/list-and-tile/list';
@@ -274,7 +274,7 @@ export class TransferListRenderer implements transferRenderer {
     templateUrl: './transfer-tree.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TransferTreeRenderer implements transferRenderer {
+export class TransferTreeRenderer implements transferRenderer, AfterViewInit {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
@@ -334,6 +334,13 @@ export class TransferTreeRenderer implements transferRenderer {
 
     public _$selectedItems: ArrayCollection<listOption>;
 
+    /**
+     * 视图数据
+     * @internal
+     */
+    @RequireMarkForCheck()
+    public _$validItems;
+
     @Output()
     public toggleButton = new EventEmitter<boolean>();
 
@@ -353,7 +360,7 @@ export class TransferTreeRenderer implements transferRenderer {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._$selectedItems.length === this._$viewData.length) {
+        if (this._$selectedItems.length === this._$validItems.length) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
@@ -364,14 +371,27 @@ export class TransferTreeRenderer implements transferRenderer {
      * @internal
      */
     public _$selectAll() {
-        if (this._$selectedItems && this._$selectedItems.length === this._$viewData.length) {
+        if (this._$selectedItems && this._$selectedItems.length === this._$validItems.length) {
+            this.treeExt.checkAllNodes(false);
             this._$selectedItems = new ArrayCollection([]);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
+            this.treeExt.checkAllNodes(true);
             this._$selectedItems = new ArrayCollection(this._$viewData);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
+        this.onCheck();
         this._changeDetectorRef.markForCheck();
+    }
+
+    /**
+     * @internal
+     */
+    private _updateValidItems() {
+        const childNodes = this.treeExt.getNodesByParam("isParent", false);
+        this._$validItems = childNodes.filter(node => {
+            return !node['isHidden'];
+        })
     }
 
     /**
@@ -392,27 +412,43 @@ export class TransferTreeRenderer implements transferRenderer {
     public transfer() {
         if (this.type === "source") {
             this.transferSelectedItems.push(...this._$selectedItems)
-            console.log(this._$selectedItems)
-            this.treeExt.hideNodes(this._$selectedItems)
+            this._$selectedItems.forEach(node => {
+                this.treeExt.checkNode(node, false, true)
+                this.treeExt.hideNode(node)
+            })
             this._$selectedItems = new ArrayCollection([]);
         }
         this.toggleButton.emit(this._$selectedItems.length > 0);
+        this._updateValidItems();
         this._changeDetectorRef.markForCheck();
     };
 
-    public onCheck($event) {
+    public onCheck() {
         const allCheckedNodes = this.treeExt.getCheckedNodes(true);
         const checkedNodes = allCheckedNodes.filter(node => {
             return !node.isParent && !node.isHidden;
         })
-        console.log(checkedNodes)
         this._$selectedItems = new ArrayCollection(checkedNodes);
+        this._checkSelectAll();
         this.toggleButton.emit(this._$selectedItems.length > 0);
     }
 
     public update() {
-        
-        this.treeExt.hideNodes(this.transferSelectedItems)
+        const nodes = this.treeExt.getNodesByParam("isHidden", true);
+        nodes.forEach(node => {
+            if (!this.transferSelectedItems.some(selectedItem => {
+                return selectedItem['label'] === node['label'] && selectedItem['parentTId'] === node['parentTId']
+            })) {
+                this.treeExt.showNode(node);
+            }
+        });
+        this._updateValidItems();
+    }
+
+    ngAfterViewInit() {
+        this.treeExt.setEditable(false);
+        this._updateValidItems();
+        this._changeDetectorRef.markForCheck();
     }
 }
 
