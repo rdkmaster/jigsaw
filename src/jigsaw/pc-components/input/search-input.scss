@@ -1,14 +1,16 @@
 $jigsaw-search: #{$jigsaw-prefix}-search-input;
 $jigsaw-input: #{$jigsaw-prefix}-input;
+$jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
 .#{$jigsaw-search}-host {
-    @include inline-block();
+    display: inline-flex;
 
     .#{$jigsaw-search} {
         display: inline-flex;
         align-items: center;
         width: 100%;
-        #{$jigsaw-input} {
+
+        #{$jigsaw-auto-complete-input} {
             width: 100%;
 
             .#{$jigsaw-input}-wrapper {
@@ -22,32 +24,33 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
                 }
             }
         }
-    }
 
-    .#{$jigsaw-search}-button {
-        display: inline-flex;
-        flex-shrink: 0;
-        flex-grow: 0;
-        justify-content: center;
-        align-items: center;
-        width: 32px;
-        height: 32px;
-        color: $icon-color-default;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $border-color-default;
-        border-radius: 0 $border-radius-base $border-radius-base 0;
-        border-left: none;
-        cursor: pointer;
+        .#{$jigsaw-search}-button {
+            display: inline-flex;
+            flex-shrink: 0;
+            flex-grow: 0;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            color: $icon-color-stress;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $border-color-default;
+            border-radius: 0 $border-radius-base $border-radius-base 0;
+            border-left: none;
+            line-height: 1;
+            cursor: pointer;
 
-        &:hover {
-            color: $brand-default;
+            &:hover {
+                color: $brand-default;
+            }
         }
     }
 
     &.#{$jigsaw-search}-auto {
         .#{$jigsaw-search} {
-            #{$jigsaw-input} {
+            .#{$jigsaw-auto-complete-input} {
                 .#{$jigsaw-input}-wrapper {
                     border-top-right-radius: $border-radius-base;
                     border-bottom-right-radius: $border-radius-base;
@@ -59,6 +62,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
                 }
             }
         }
+
         .#{$jigsaw-search}-button {
             display: none;
         }
@@ -69,6 +73,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             background: $bg-disabled;
             border-color: $border-color-disabled;
             color: $icon-color-default;
+            cursor: not-allowed;
 
             &:hover {
                 color: $icon-color-default;
