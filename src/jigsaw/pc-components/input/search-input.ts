@@ -8,7 +8,8 @@ import {
     ChangeDetectionStrategy,
     Injector,
     ViewChild,
-    TemplateRef
+    TemplateRef,
+    ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from '@angular/common';
@@ -39,7 +40,9 @@ import {JigsawAutoCompleteInputModule} from './auto-complete-input';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSearchInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _translateService: TranslateService,
+    constructor(
+        protected _changeDetectorRef: ChangeDetectorRef,
+        private _translateService: TranslateService,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
@@ -116,7 +119,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
             return;
         }
         localStorage.removeItem(this.historyStorageKey);
-        this._$history = [];
+        this._$history.length = 0;
         this.value = '';
     }
 
@@ -168,13 +171,14 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }
 
         if (this._$history.length === 0) {
+            /* 当历史记录为空时，auto-complete-input无法绑定_$history */
             this._$history = new Array(value);
+            this._changeDetectorRef.detectChanges();
         } else {
             const index = this._$history.indexOf(value);
             if (index !== -1) {
                 this._$history.splice(index, 1)
             }
-
             this._$history.unshift(value);
         }
 
