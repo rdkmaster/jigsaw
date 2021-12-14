@@ -385,6 +385,7 @@ export class MockData {
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
         this.dataSet['big-data-for-paging'] = this.createBigTableData(50000, 4);
+        this.dataSet['no-data-for-paging'] = this.createBigTableData(0, 0);
 
         // 静态文件引用数据
         this.dataSet['provinces.json'] = require('mock-data/provinces.json');
