@@ -18,6 +18,7 @@ import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-compone
 import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../pc-components/table/table-renderer';
 import { JigsawTableModule } from 'jigsaw/pc-components/table/table';
 import { filter } from 'rxjs/operators';
+import { ChartIconCustomPieLegend } from 'jigsaw/pc-components/chart-icon/chart-icon-factory';
 
 
 export type listOption = {
@@ -30,7 +31,7 @@ export type listOption = {
 export interface transferRenderer {
     type: "source" | "target";
     data: any;
-    transferSelectedItems: ArrayCollection<listOption>;
+    transferSelectedItems: ArrayCollection<listOption> | any;
     toggleButton: EventEmitter<boolean>;
     transfer();
 }
@@ -471,6 +472,14 @@ export class TransferTableRenderer implements transferRenderer {
     public type: "source" | "target";
 
     /**
+     * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = "label";
+
+    /**
      * 视图数据
      * @internal
      */
@@ -572,6 +581,7 @@ export class TransferTableRenderer implements transferRenderer {
         if (this.type === "source") {
             this.transferSelectedItems.push(...this._$selectedItems)
         }
+        console.log(this.transferSelectedItems)
         // if (this.type === "target") {
         //     this.transferSelectedItems.push(...this.selectedItems)
         // }
@@ -611,7 +621,11 @@ export class TransferTableRenderer implements transferRenderer {
     }];
 
     additionalDataChange(value) {
-        this.selectedRows = this.getSelectedRows(this.additionalData);
+        this.selectedRows = this.getSelectedRows(value);
+        this._$selectedItems = this.getAllSelectedRows(value);
+        this.toggleButton.emit(this._$selectedItems.length > 0);
+        console.log(this._$selectedItems)
+        this._$handleSearching
     }
 
     /**
@@ -625,6 +639,20 @@ export class TransferTableRenderer implements transferRenderer {
             }
             return selectedRows;
         }, []).join(',');
+    }
+
+    /**
+ * 获取所有选中的行
+ * @param additionalData
+ */
+    getAllSelectedRows(additionalData) {
+        return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
+            if (item.value) {
+                console.log(item)
+                selectedRows.push({ [this.labelField]: item.data[0], key: item.key });
+            }
+            return selectedRows;
+        }, []);
     }
 }
 

@@ -147,7 +147,6 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
      * 渲染器制造工厂
      */
     protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>, initData: any): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
-        console.log(this.rendererHost)
         if (renderer instanceof TemplateRef) {
             return this.rendererHost.viewContainerRef.createEmbeddedView(renderer, {
                 context: {
