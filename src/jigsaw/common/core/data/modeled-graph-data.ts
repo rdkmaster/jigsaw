@@ -346,6 +346,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['barWidth'] = dim.barWidth;
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
+                    this._autoRangeForYAxis(seriesData, options);
                 }
                 return seriesData;
             });
@@ -365,6 +366,40 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 })
             ]
         }
+    }
+
+    private _autoRangeForYAxis(seriesData: EchartSeriesItem, options: EchartOptions) {
+        const yAxisItem = options.yAxis instanceof Array ? options.yAxis[seriesData.yAxisIndex || 0] : options.yAxis;
+        if (!yAxisItem || !yAxisItem.autoRange) {
+            return;
+        }
+        ModeledRectangularGraphData.autoRangeForYAxis(seriesData.data, yAxisItem);
+    }
+
+    public static autoRangeForYAxis(data: number[], yAxisItem: EchartYAxis): void {
+        function _getRangeNum(num: number, add: number): number {
+            const pointLength = (num + '').split('.')[1]?.length;
+            return Number((num*add).toFixed(pointLength));
+        }
+
+        function _isNumber(num: any): boolean {
+            return CommonUtils.isDefined(num) && num !== '' && !isNaN(num)
+        }
+
+        if (!data || isNaN(data[0]) || !yAxisItem) {
+            // 允许出现''或null的数据
+            return;
+        }
+        let min = Math.min(...data), max = Math.max(...data);
+        min = _getRangeNum(min, 0.8);
+        max = _getRangeNum(max, 1.2);
+        if (_isNumber(yAxisItem.min)) {
+            min = Math.min(min, yAxisItem.min);
+        }
+        if (_isNumber(yAxisItem.max)) {
+            max = Math.max(max, yAxisItem.max);
+        }
+        Object.assign(yAxisItem, {min, max});
     }
 
     /**
