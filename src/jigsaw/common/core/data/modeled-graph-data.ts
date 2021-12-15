@@ -346,6 +346,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['barWidth'] = dim.barWidth;
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
+                    this._autoRange(seriesData, options);
                 }
                 return seriesData;
             });
@@ -365,6 +366,50 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 })
             ]
         }
+    }
+
+    private _autoRange(seriesData: EchartSeriesItem, options: EchartOptions) {
+        const yAxisItem = options.yAxis instanceof Array ? options.yAxis[seriesData.yAxisIndex || 0] : options.yAxis;
+        if (!yAxisItem || !yAxisItem.autoRange) {
+            return;
+        }
+        ModeledRectangularGraphData.autoRange(seriesData.data, yAxisItem);
+    }
+
+    /**
+     * 自动计算y坐标轴的最大最小值，并按照差值的10%来放大范围，这样可以避免在指标值差异很小时时，图形看起来像是一个直线的问题
+     * @param data
+     * @param yAxisItem
+     */
+    public static autoRange(data: number[], yAxisItem: EchartYAxis): void {
+        // 避免js直接加减后浮点数变成一长串的问题
+        function _getRangeNum(num: number, delta: number): number {
+            const pointLength = String(num).split('.')[1]?.length || 1;
+            return Number((num + delta).toFixed(pointLength));
+        }
+
+        function _isNumber(num: any): boolean {
+            return CommonUtils.isDefined(num) && num !== '' && !isNaN(num)
+        }
+
+        if (!data || isNaN(data[0]) || !yAxisItem) {
+            // 允许出现''或null的数据
+            return;
+        }
+        let min = Math.min(...data), max = Math.max(...data);
+        if (min == max) {
+            return;
+        }
+        const range = (max - min) * 0.1;
+        min = _getRangeNum(min, -range);
+        max = _getRangeNum(max, range);
+        if (_isNumber(yAxisItem.min)) {
+            min = Math.min(min, yAxisItem.min);
+        }
+        if (_isNumber(yAxisItem.max)) {
+            max = Math.max(max, yAxisItem.max);
+        }
+        Object.assign(yAxisItem, {min, max});
     }
 
     /**
