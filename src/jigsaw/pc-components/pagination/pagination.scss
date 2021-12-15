@@ -17,8 +17,8 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 }
 
 .#{$paging-prefix-cls} {
-    @include inline-block();
-
+    display: inline-flex;
+    align-items: center;
     font-size: $font-size-base;
     user-select: none;
 
@@ -37,6 +37,11 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         cursor: pointer;
         vertical-align: top;
         @include prefixer(transition, all 0.3s ease);
+
+        &.#{$paging-prefix-cls}-prev,
+        &.#{$paging-prefix-cls}-next {
+            font-size: $icon-size-sm;
+        }
 
         &.#{$paging-prefix-cls}-disabled {
             border-color: $border-color-disabled;
@@ -72,22 +77,26 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 
     &-goto {
-        @include inline-block;
+        display: inline-flex;
+        align-items: center;
         height: var(--height-paging);
-        vertical-align: top;
 
         jigsaw-input {
             width: var(--height-paging);
             height: var(--height-paging);
         }
 
-        > span {
-            margin-right: 8px;
-            vertical-align: middle;
+        > span:first-of-type {
+            margin-right: 4px;
+        }
+
+        > span:last-of-type {
+            margin-left: 4px;
         }
     }
 
     &-search {
+        margin-right: 8px;
         height: var(--height-paging);
 
         .#{$jigsaw-input} {
@@ -123,13 +132,6 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 
     &.#{$paging-prefix-cls}-simple {
-        &:before {
-            content: "";
-            display: inline-block;
-            vertical-align: middle;
-            height: var(--height-paging);
-        }
-
         .#{$paging-prefix-cls}-page {
             height: var(--height-paging);
             line-height: var(--height-paging);

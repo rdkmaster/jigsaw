@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+
+<jigsaw-header>History key 1</jigsaw-header>
+<jigsaw-search-input #search1 width="200px" historyStorageKey="History key 1" historyStorageSize="3"></jigsaw-search-input>
+<a (click)="search1.clearHistory()">清理历史记录</a>
+
+<jigsaw-header>History key 2</jigsaw-header>
+<jigsaw-search-input #search2 width="200px" historyStorageKey="History key 2" historyStorageSize="10"></jigsaw-search-input>
+<a (click)="search2.clearHistory()">清理历史记录</a>

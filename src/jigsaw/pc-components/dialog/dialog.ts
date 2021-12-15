@@ -73,6 +73,23 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         }
     }
 
+    private _icon: string = '';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get icon(): string {
+        return this._icon;
+    }
+
+    public set icon(value: string) {
+        this._icon = value;
+        if (this.dialog) {
+            this.dialog.icon = value;
+        }
+    }
+
     private _buttons: ButtonInfo[];
 
     /**
@@ -131,6 +148,10 @@ export abstract class AbstractDialogComponentBase
     @RequireMarkForCheck()
     @Input()
     public caption: string;
+
+    @RequireMarkForCheck()
+    @Input()
+    public icon: string;
 
     /**
      * @NoMarkForCheckRequired
@@ -218,6 +239,12 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
      */
     @Input()
     public caption: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
 
     /**
      * @internal
