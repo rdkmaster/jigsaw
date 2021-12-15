@@ -376,6 +376,12 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         ModeledRectangularGraphData.autoRangeForYAxis(seriesData.data, yAxisItem);
     }
 
+    /**
+     * 计算y坐标轴的最大最小值
+     * 设置成静态的可以让通用的图形也可以调用此api
+     * @param data
+     * @param yAxisItem
+     */
     public static autoRangeForYAxis(data: number[], yAxisItem: EchartYAxis): void {
         function _getRangeNum(num: number, add: number): number {
             const pointLength = (num + '').split('.')[1]?.length;
