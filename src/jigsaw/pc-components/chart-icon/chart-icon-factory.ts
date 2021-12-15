@@ -72,7 +72,7 @@ export enum ChartType {
 }
 
 export class ChartIconFactory {
-    public static create(selector: string, chartType: ChartType, options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie) {
+    public static create(selector: string | HTMLElement, chartType: ChartType, options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie) {
         $(selector).peity(this._chartTypeMap.get(chartType), options);
     }
 

@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<j-button (click)="changeData()" colorType="primary">改变数据</j-button>
+
+<j-button-bar [data]="['pie', 'donut', 'line', 'bar', 'customPie']" (selectedItemsChange)="changeChartType($event)"></j-button-bar>
+
+<span jigsaw-chart-icon #chartIcon1 [chartType]="chartType" [options]="options">{{data}}</span>
+
+

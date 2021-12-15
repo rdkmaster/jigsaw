@@ -28,6 +28,7 @@ export * from "./common/directive/movable/index";
 export * from "./common/directive/trusted-html/trusted-html";
 export * from "./common/directive/badge/index";
 export * from "./common/directive/tooltip/tooltip";
+export * from "./common/directive/chart-icon/chart-icon";
 export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
