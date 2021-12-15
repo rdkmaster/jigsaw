@@ -75,7 +75,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     public _$pageSize: PageSizeData = {
         value: null,
-        label: "null/" + this._translateService.instant("pagination.page")
+        label: "0/" + this._translateService.instant("pagination.page")
     };
 
     /**
