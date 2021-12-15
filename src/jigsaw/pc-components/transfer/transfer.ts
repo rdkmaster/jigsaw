@@ -32,7 +32,7 @@ import { LoadingService } from "../../common/service/loading.service";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { JigsawRendererHost, JigsawCommonModule } from 'jigsaw/common/common';
-import { JigsawTransferRendererModule, listOption, TransferListRenderer, TransferTreeRenderer, TransferTableRenderer } from './renderer/transfer-renderer';
+import { JigsawTransferRendererModule, listOption, TransferTreeSourceRenderer, TransferListSourceRenderer, TransferListTargetRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer } from './renderer/transfer-renderer';
 import { createHostListener } from '@angular/compiler/src/core';
 import { SimpleTreeData } from 'jigsaw/common/core/data/tree-data';
 import { TableData } from 'jigsaw/common/core/data/table-data';
@@ -189,22 +189,21 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         let sourceComponentFactory;
         let targetComponentFactory;
         if (this.data instanceof ArrayCollection) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
         } else if (this.data instanceof SimpleTreeData) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListRenderer);
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
         } else if (this.data instanceof TableData) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableRenderer);
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
+            this.selectedItems = new TableData([], this.data.field, this.data.header);
         }
 
         const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
         const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
         this.sourceComponent = sourceComponentRef.instance;
         this.targetComponent = targetComponentRef.instance;
-        this.sourceComponent.type = "source";
-        this.targetComponent.type = "target";
         this.sourceComponent.data = this.data;
         this.targetComponent.data = this.data;
         this.sourceComponent.transferSelectedItems = this.selectedItems;
@@ -234,7 +233,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         this._data = value;
     }
 
-    private _selectedItems: ArrayCollection<listOption> | any[] = [];
+    private _selectedItems: ArrayCollection<listOption> | any = [];
 
     @RequireMarkForCheck()
     @Input()
@@ -242,12 +241,13 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         return this._selectedItems;
     }
 
-    public set selectedItems(value: ArrayCollection<listOption> | any[]) {
+    public set selectedItems(value: ArrayCollection<listOption> | any) {
         this._selectedItems = value;
     }
 
     public _$sourceTransfer() {
         this.sourceComponent.transfer();
+        this.targetComponent.update();
         this._changeDetectorRef.detectChanges();
     }
 

@@ -30,8 +30,7 @@ export class TransferTreeDemoComponent {
                             { label: "叶子节点123" },
                             { label: "叶子节点124" }
                         ]
-                    },
-                    { label: "父节点13 - 没有子节点", isParent: true }
+                    }
                 ]
             },
             {
@@ -65,9 +64,7 @@ export class TransferTreeDemoComponent {
                         ]
                     }
                 ]
-            },
-            { label: "父节点3 - 没有子节点", isParent: true }
-
+            }
         ])
     }
 
