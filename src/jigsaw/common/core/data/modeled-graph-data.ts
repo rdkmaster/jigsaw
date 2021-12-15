@@ -376,10 +376,16 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         ModeledRectangularGraphData.autoRangeForYAxis(seriesData.data, yAxisItem);
     }
 
+    /**
+     * 计算y坐标轴的最大最小值
+     * 设置成静态的可以让通用的图形也可以调用此api
+     * @param data
+     * @param yAxisItem
+     */
     public static autoRangeForYAxis(data: number[], yAxisItem: EchartYAxis): void {
-        function _getRangeNum(num: number, add: number): number {
+        function _getRangeNum(num: number, range: number): number {
             const pointLength = (num + '').split('.')[1]?.length;
-            return Number((num*add).toFixed(pointLength));
+            return Number((num + range).toFixed(pointLength));
         }
 
         function _isNumber(num: any): boolean {
@@ -391,8 +397,12 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
             return;
         }
         let min = Math.min(...data), max = Math.max(...data);
-        min = _getRangeNum(min, 0.8);
-        max = _getRangeNum(max, 1.2);
+        if (min == max) {
+            return;
+        }
+        const range = max - min;
+        min = _getRangeNum(min, -range * 0.1);
+        max = _getRangeNum(max, +range * 0.1);
         if (_isNumber(yAxisItem.min)) {
             min = Math.min(min, yAxisItem.min);
         }
