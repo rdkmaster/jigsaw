@@ -346,7 +346,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     seriesData['barWidth'] = dim.barWidth;
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
-                    this._autoRangeForYAxis(seriesData, options);
+                    this._autoRange(seriesData, options);
                 }
                 return seriesData;
             });
@@ -368,24 +368,23 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
     }
 
-    private _autoRangeForYAxis(seriesData: EchartSeriesItem, options: EchartOptions) {
+    private _autoRange(seriesData: EchartSeriesItem, options: EchartOptions) {
         const yAxisItem = options.yAxis instanceof Array ? options.yAxis[seriesData.yAxisIndex || 0] : options.yAxis;
         if (!yAxisItem || !yAxisItem.autoRange) {
             return;
         }
-        ModeledRectangularGraphData.autoRangeForYAxis(seriesData.data, yAxisItem);
+        ModeledRectangularGraphData.autoRange(seriesData.data, yAxisItem);
     }
 
     /**
-     * 计算y坐标轴的最大最小值
-     * 设置成静态的可以让通用的图形也可以调用此api
+     * 自动计算y坐标轴的最大最小值，并按照差值的10%来放大范围，这样可以避免在指标值差异很小时时，图形看起来像是一个直线的问题
      * @param data
      * @param yAxisItem
      */
-    public static autoRangeForYAxis(data: number[], yAxisItem: EchartYAxis): void {
-        function _getRangeNum(num: number, range: number): number {
-            const pointLength = (num + '').split('.')[1]?.length;
-            return Number((num + range).toFixed(pointLength));
+    public static autoRange(data: number[], yAxisItem: EchartYAxis): void {
+        function _getRangeNum(num: number, delta: number): number {
+            const pointLength = String(num).split('.')[1]?.length || 1;
+            return Number((num + delta).toFixed(pointLength));
         }
 
         function _isNumber(num: any): boolean {
@@ -400,9 +399,9 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         if (min == max) {
             return;
         }
-        const range = max - min;
-        min = _getRangeNum(min, -range * 0.1);
-        max = _getRangeNum(max, +range * 0.1);
+        const range = (max - min) * 0.1;
+        min = _getRangeNum(min, -range);
+        max = _getRangeNum(max, range);
         if (_isNumber(yAxisItem.min)) {
             min = Math.min(min, yAxisItem.min);
         }
