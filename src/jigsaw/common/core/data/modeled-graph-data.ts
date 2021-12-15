@@ -382,6 +382,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
      * @param yAxisItem
      */
     public static autoRange(data: number[], yAxisItem: EchartYAxis): void {
+        // 避免js直接加减后浮点数变成一长串的问题
         function _getRangeNum(num: number, delta: number): number {
             const pointLength = String(num).split('.')[1]?.length || 1;
             return Number((num + delta).toFixed(pointLength));
