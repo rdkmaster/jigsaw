@@ -13,13 +13,19 @@ export class PaginationNoDataDemoComponent {
 
     constructor(http: HttpClient) {
         this.data = new LocalPageableTableData();
-        this.data.http = http;
-        this.data.fromAjax('mock-data/no-data-for-paging');
+        this.data.fromObject({
+            header: ['header0', 'header1', 'header2', 'header3'],
+            field: ['field0', 'field1', 'field2', 'field3'],
+            data: []
+        });
 
         setTimeout(() => {
             this.delayData = new LocalPageableTableData();
-            this.delayData.http = http;
-            this.delayData.fromAjax('mock-data/no-data-for-paging');
+            this.delayData.fromObject({
+                header: ['header0', 'header1', 'header2', 'header3'],
+                field: ['field0', 'field1', 'field2', 'field3'],
+                data: []
+            });
         }, 2000);
     }
 
