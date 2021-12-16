@@ -64,7 +64,7 @@ import {JigsawHeaderModule} from "./header/header";
 import {JigsawProcessStatusModule} from "./process-status/index";
 import {JigsawUploadFallbackModule} from './fallback/upload/index';
 import {JigsawSearchInputModule} from './input/search-input';
-import {JigsawChartIconModule} from '../common/directive/chart-icon/chart-icon';
+import {JigsawChartIconModule} from './chart-icon/chart-icon';
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
