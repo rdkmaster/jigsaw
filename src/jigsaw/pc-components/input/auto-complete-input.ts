@@ -132,15 +132,13 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     }
 
     public set data(value: string[] | DropDownValue[]) {
-        if (value == this._$data || !value || value.length == 0) {
+        if (value == this._$data) {
             return;
         }
 
+        value = value || [];
         if (typeof value[0] == 'string' || typeof value[0] == 'number') {
-            this._$data = [new DropDownValue({
-                category: '',
-                items: value
-            })];
+            this._$data = [new DropDownValue({category: '', items: value})];
         } else {
             this._$data = value;
         }
@@ -231,7 +229,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
                     this._cdr.markForCheck();
                     const dropdown = document.querySelector(".jigsaw-auto-complete-input-list-box");
                     if (dropdown) {
-                        dropdown.scrollTop = 0; 
+                        dropdown.scrollTop = 0;
                     }
                 })
             });
@@ -264,6 +262,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
         this._$propertyListOpen = false;
+        this._unsubscribeKeydownEvent();
     }
 
     /**
@@ -297,8 +296,10 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
         this._keydownSubscription = this._keydownEvent
             .pipe(debounceTime(300))
-            .subscribe(() => {
-                this._getFilteredDropDownData(true);
+            .subscribe((res) => {
+                if(res.keyCode !== 13) {
+                    this._getFilteredDropDownData(true);
+                }
             });
     }
 

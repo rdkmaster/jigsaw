@@ -1,0 +1,38 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>配置栏</jigsaw-header>
+字体大小：<jigsaw-numeric-input [(value)]="fontSize" min="12"></jigsaw-numeric-input>
+<br><br>
+
+<jigsaw-header>预设状态 + 全默认值</jigsaw-header>
+<div class="icons" [ngStyle]="{'font-size': fontSize + 'px'}">
+    <jigsaw-icon [status]="'success'" [iconSize]="fontSize"></jigsaw-icon>
+    <jigsaw-icon [status]="'warning'" [iconSize]="fontSize"></jigsaw-icon>
+    <jigsaw-icon [status]="'error'" [iconSize]="fontSize"></jigsaw-icon>
+    <jigsaw-icon [status]="'finish'" [iconSize]="fontSize"></jigsaw-icon>
+    <jigsaw-icon [status]="'disabled'" [iconSize]="fontSize"></jigsaw-icon>
+    <jigsaw-icon [status]="'process'" [iconSize]="fontSize"></jigsaw-icon>
+    <jigsaw-icon [status]="'custom'" [iconSize]="fontSize"></jigsaw-icon>
+</div>
+
+<jigsaw-header>预设状态 + 自定义属性</jigsaw-header>
+<div class="icons" [ngStyle]="{'font-size': fontSize + 'px'}">
+    <jigsaw-icon [status]="'success'" [iconSize]="fontSize" [icon]="'iconfont iconfont-ea39'" [text]="'搞定了'">
+    </jigsaw-icon>
+    <jigsaw-icon [status]="'warning'" [iconSize]="fontSize" [icon]="'iconfont iconfont-ea50'" [text]="'好像有问题'">
+    </jigsaw-icon>
+    <jigsaw-icon [status]="'error'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e8e3'" [text]="'出错啦'">
+    </jigsaw-icon>
+    <jigsaw-icon [status]="'finish'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e41f'" [text]="'结束了'">
+    </jigsaw-icon>
+    <jigsaw-icon [status]="'disabled'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e473'" [text]="'不能用'">
+    </jigsaw-icon>
+    <jigsaw-icon [status]="'process'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e035'" [text]="'处理中'">
+    </jigsaw-icon>
+    <jigsaw-icon [status]="'custom'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e77d'" [text]="'自定义状态'" iconColor="purple">
+    </jigsaw-icon>
+</div>

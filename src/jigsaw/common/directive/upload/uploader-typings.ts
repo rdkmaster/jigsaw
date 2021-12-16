@@ -20,5 +20,6 @@ export interface IUploader {
     change: EventEmitter<UploadFileInfo[]>;
     uploadImmediately: boolean;
     upload();
+    appendFiles(fileList);
     retryUpload(file: UploadFileInfo);
 }

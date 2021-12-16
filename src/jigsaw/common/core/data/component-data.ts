@@ -272,7 +272,7 @@ export interface IAjaxComponentData extends IComponentData {
      *
      * $demo = data-encapsulation/ajax-events
      *
-     * param callback 回调函数
+     * @param callback 回调函数
      * @param context 回调函数`callback`执行的上下文
      * @returns 返回一个函数，调用它后，`callback`则不会再次被触发。
      * 如果你注册了这个回调，则请在组件的`ngOnDestroy()`方法中调用一下这个函数，避免内存泄露。
@@ -636,8 +636,6 @@ export class PagingInfo implements IEmittable {
         this.totalRecord = totalRecord;
     }
 
-    private _currentPage: number = 1;
-    private _pageSize: number = 20;
     private _totalPage: number = 1;
 
     /**
@@ -645,6 +643,9 @@ export class PagingInfo implements IEmittable {
      *
      */
     public totalRecord: number = 0;
+
+
+    private _pageSize: number = 20;
 
     /**
      * 当前单页记录数
@@ -658,10 +659,14 @@ export class PagingInfo implements IEmittable {
     }
 
     public set pageSize(value: number) {
-        if (isNaN(value) || value < 1) return;
+        if (isNaN(value) || value < 1 || this.autoPageSizing || this._pageSize === value) {
+            return;
+        }
         this._pageSize = value;
         this.emit();
     }
+
+    private _currentPage: number = 1;
 
     /**
      * 当前页索引，从1开始计数。修改此属性后，`PagingInfo`会发出获取对应页数据的事件，通过`subscribe`添加监听器可处理此事件。
@@ -689,6 +694,81 @@ export class PagingInfo implements IEmittable {
      */
     public get totalPage(): number {
         return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
+    }
+
+    private _autoPageSizing: boolean = false;
+
+    /**
+     * 自动分页
+     *
+     * 自动分页的开关，开启时，会依据 `containerHeight` 和 `itemHeight` 参数计算 `pageSize`，
+     * 注意：在本属性为true时，直接操作`pageSize`无效
+     */
+    public get autoPageSizing(): boolean {
+        return this._autoPageSizing;
+    }
+
+    public set autoPageSizing(value: boolean) {
+        if (this._autoPageSizing == !!value) {
+            return;
+        }
+        if (!!value) {
+            this._calcAutoPageSize();
+        }
+        this._autoPageSizing = !!value;
+        this.emit();
+    }
+
+    private _containerHeight: number;
+
+    /**
+     * 本属性用于实现动态分页记录数的功能，它指明了用于显示分页数据的容器总高度，配合 `itemHeight` 属性可计算出当前最佳单页记录数
+     *
+     * 如：table组件内容高度
+     *
+     * $demo=table/auto-page-sizing
+     */
+    public get containerHeight(): number {
+        return this._containerHeight;
+    }
+
+    public set containerHeight(value: number) {
+        if (isNaN(value) || value < 1) {
+            return;
+        }
+        this._containerHeight = value;
+        this._calcAutoPageSize();
+        this.emit();
+    }
+
+    private _itemHeight: number;
+
+    /**
+     * 本属性用于实现动态分页记录数的功能，它指明了单条记录的高度，配合 `containerHeight` 属性可计算出当前最佳单页记录数
+     *
+     * 如：table组件内容高度
+     *
+     * $demo=table/auto-page-sizing
+     */
+    public get itemHeight(): number {
+        return this._itemHeight;
+    }
+
+    public set itemHeight(value: number) {
+        if (isNaN(value) || value < 1) {
+            return;
+        }
+        this._itemHeight = value;
+        this._calcAutoPageSize();
+        this.emit();
+    }
+
+    private _calcAutoPageSize(): void {
+        if (!this.autoPageSizing || isNaN(this.containerHeight) || isNaN(this.itemHeight)) {
+            return;
+        }
+        const newPageSize = Math.floor(this.containerHeight / this.itemHeight);
+        this._pageSize = newPageSize || 1;
     }
 
     private _emitter = new EventEmitter<any>();
@@ -726,8 +806,6 @@ export class PagingInfo implements IEmittable {
 export class DataFilterInfo {
     constructor(/**
                  * 过滤关键字
-                 *
-                 *
                  */
                 public key: string = '',
                 /**

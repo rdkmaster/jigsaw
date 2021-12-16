@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, EventEmitter, Input, NgModule, OnDestroy, Output, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {ZTreeSettings, ZTreeIconSuit} from "./ztree-types";
+import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $;
@@ -24,6 +24,11 @@ export class TreeEventData {
             vertical-align: middle;
         }
     `],
+    host: {
+        '[class.jigsaw-tree-large]': 'size === "large"',
+        '[class.jigsaw-tree-medium]': 'size === "medium"',
+        '[class.jigsaw-tree-default]': 'size === "default"',
+    },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewInit, OnDestroy {
@@ -78,6 +83,12 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             this._updateTree();
         });
     }
+
+    /**
+    * @NoMarkForCheckRequired
+    */
+    @Input()
+    public size: "default" | "medium" | "large" = "default";
 
     private _iconSuit: ZTreeIconSuit = {
         edit: "ea0c",
@@ -316,6 +327,31 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
+    /**
+     * 根据节点label宽度设置编辑状态下input的宽度
+     * @param node
+     */
+    private _updateInputWidth(node): void {
+        const spanEl = document.getElementById(`${node.tId}_span`);
+        const zTree = this;
+        $(`#${node.tId}_span`).on('focus', 'input', function () {
+            zTree.runAfterMicrotasks(() => {
+                this.select();
+                $(`#${node.tId}_span`).off('focus', 'input');
+            });
+        });
+        const inputWidth = (spanEl.offsetWidth + 16) >= 120 ? (spanEl.offsetWidth + 16) : 120;
+        document.documentElement.style.setProperty("--jigsaw-zTree-input-width", `${inputWidth}px`);
+    }
+
+    public editName(node): void {
+        if (!node) {
+            return;
+        }
+        this._updateInputWidth(node);
+        this.ztree.editName(node);
+    }
+
     private _defaultSetting() {
         let that = this;
 
@@ -417,6 +453,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
 
         function before_editName(treeId, treeNode) {
+            that._updateInputWidth(treeNode);
             that._setTreeEvent.call(that, "beforeEditName", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeEditName", undefined, treeId, treeNode);
         }
@@ -570,6 +607,46 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         treeEventData.treeNodes = treeNodes;
         treeEventData.extraInfo = extraInfo;
         this[type].emit(treeEventData);
+    }
+
+    public fuzzySearch(keyword: string, field: string = 'label') {
+        const rexMeta = /[\[\]\\^$.|?*+()]/g;
+        this.ztree.setting.view.nameIsHTML = true;
+        const nodes = this.ztree.transformToArray(this.ztree.getNodes());
+
+        // reset node label
+        nodes.filter(node => CommonUtils.isDefined(node?.oldname) && node?.oldname != node[field])
+            .forEach(node => {
+                node[field] = node.oldname;
+                this.ztree.updateNode(node);
+            });
+
+        keyword = (keyword || '').trim();
+        if (keyword.length === 0) {
+            this.ztree.showNodes(nodes);
+            return;
+        }
+
+        this.ztree.hideNodes(nodes);
+        nodes.filter(node => CommonUtils.isDefined(node[field]) && node[field].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
+            .forEach(node => {
+                const regKeywords = keyword.replace(rexMeta, matchStr => `\\${matchStr}`);
+                node.oldname = node[field];
+                const rexGlobal = new RegExp(regKeywords, 'gi');
+                node[field] = node.oldname.replace(rexGlobal, originalText =>
+                    `<span style="background-color: var(--primary-disabled);">${originalText}</span>`);
+                this.ztree.updateNode(node);
+                this.ztree.showNode(node);
+
+                const path = node.getPath();
+                if (!path || path.length == 0) {
+                    return;
+                }
+                for (let i = 0; i < path.length - 1; i++) {
+                    this.ztree.showNode(path[i]);
+                    this.ztree.expandNode(path[i], true);
+                }
+            });
     }
 }
 

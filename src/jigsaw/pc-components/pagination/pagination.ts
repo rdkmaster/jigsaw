@@ -220,6 +220,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 // pagingInfo.currentPage采用的getter&setter，不可随便赋值
                 this.data.pagingInfo.currentPage = newValue;
             }
+            this._changeDetectorRef.detectChanges();
         }
     }
 
@@ -265,8 +266,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     private _setCurrentPage(): void {
         this._pages.forEach(page => {
             page.current = page.pageNumber == this.current;
-            page._changeDetectorRef.markForCheck();
         });
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
@@ -313,7 +314,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
                 this._$pageNums = Array.from(new Array(this._totalPage)).map((item, index) => ++index);
             }
         }
-        this._changeDetectorRef.markForCheck();
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
@@ -434,9 +435,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      * @internal
      * select组件改变pageSize
      * */
-    public _changePageSize(pageSize) {
-        if (this.pageSize != pageSize.value) {
-            this.pageSize = pageSize.value;
+    public _$changePageSize(pageSize: {value?: number}): void {
+        const value = pageSize?.value;
+        if (isNaN(value)) {
+            return;
+        }
+        if (this.pageSize != value) {
+            this.pageSize = value;
             this.current = 1;
         }
         this._changeDetectorRef.markForCheck();

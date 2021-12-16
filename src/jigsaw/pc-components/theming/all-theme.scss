@@ -47,6 +47,7 @@
 @import "../cascade/cascade";
 @import "../input/auto-complete-input";
 @import "../upload/upload-result";
+@import "../upload/upload";
 @import "../icon/icon";
 @import "../transfer/transfer";
 @import "../textarea/textarea";
@@ -65,12 +66,12 @@
 @import "../../common/directive/badge/badge";
 @import "../../common/directive/tooltip/tooltip";
 @import "../menu/navigation-menu";
-@import "../date-and-time/time-section"; 
+@import "../date-and-time/time-section";
 @import "../header/header";
 @import "../tree/tree";
+@import "../process-status/process-status";
+@import "../process-status/process-status-multiline";
 
 /* fall back components */
-@import "../fallback/steps/steps.scss";
-@import "../fallback/steps/steps-multiline";
 @import "../fallback/upload/upload";
 

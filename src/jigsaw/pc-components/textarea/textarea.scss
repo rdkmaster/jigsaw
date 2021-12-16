@@ -5,8 +5,6 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
 .#{$textarea-prefix-cls} {
     @include inline-block();
     position: relative;
-    width: 300px;
-    height: 100px;
     line-height: 1.2;
     font-size: $font-size-base;
 
@@ -18,18 +16,44 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
     }
 
     textarea {
-        width: 100%;
         resize: none;
         box-shadow: none;
         outline: none;
         border: none;
+        width: 100%;
+        height: 100%;
+        min-width: 120px;
+        min-height: 40px;
         padding: 10px;
         background: $bg-component;
         border-radius: $border-radius-base;
     }
 
+    &-resize-vertical {
+        height: auto !important;
+        textarea {
+            resize: vertical;
+        }
+    }
+
+    &-resize-horizontal {
+        width: auto !important;
+        textarea {
+            resize: horizontal;
+        }
+    }
+
+    &-resize-both {
+        width: auto !important;
+        height: auto !important;
+        textarea {
+            resize: both;
+        }
+    }
+
     &-container {
         width: 100%;
+        height: 100%;
         background: $bg-component;
         border: 1px solid $border-color-default;
         border-radius: $border-radius-base;

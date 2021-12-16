@@ -6,6 +6,8 @@ import { SearchInputDisabledDemoComponent } from "./disabled/demo.component";
 import { SearchInputDisabledDemoModule } from "./disabled/demo.module";
 import { SearchInputDebounceDemoComponent } from "./debounce/demo.component";
 import { SearchInputDebounceDemoModule } from "./debounce/demo.module";
+import {SearchInputHistoryStorageKeyDemoComponent} from "./history-storage-key/demo.component";
+import {SearchInputHistoryStorageKeyDemoModule} from "./history-storage-key/demo.module";
 
 export const routerConfig = [
     {
@@ -16,6 +18,9 @@ export const routerConfig = [
     },
     {
         path: "debounce", component: SearchInputDebounceDemoComponent
+    },
+    {
+        path: "history-storage-key", component: SearchInputHistoryStorageKeyDemoComponent
     }
 ];
 
@@ -24,7 +29,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         SearchInputBasicDemoModule,
         SearchInputDisabledDemoModule,
-        SearchInputDebounceDemoModule
+        SearchInputDebounceDemoModule,
+        SearchInputHistoryStorageKeyDemoModule
     ]
 })
 export class SearchInputDemoModule {}

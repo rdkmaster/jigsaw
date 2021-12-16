@@ -8,6 +8,7 @@
         [(data)]="_$tabPanes"
         [editable]="editable"
         [(selectedIndex)]="selectedIndex"
+        (titleChange)="titleChange.emit($event)"
     ></jigsaw-tab-bar>
     <div class="jigsaw-tabs-content">
         <jigsaw-tab-content

@@ -10,6 +10,8 @@ import { UploadAutoUploadDemoModule } from './toggle-auto-upload/demo.module';
 import { UploadAutoUploadDemoComponent } from './toggle-auto-upload/demo.component';
 import { ChangeTargetUrlDemoComponent } from './change-target-url/demo.component';
 import { UploadChangeTargetUrlDemoModule } from './change-target-url/demo.module';
+import { UploadDirectiveDemoComponent } from './directive/demo.component';
+import { UploadDirectiveDemoModule } from './directive/demo.module';
 
 
 export const routerConfig = [
@@ -27,6 +29,9 @@ export const routerConfig = [
     },
     {
         path: 'change-target-url', component: ChangeTargetUrlDemoComponent
+    },
+    {
+        path: 'directive', component: UploadDirectiveDemoComponent
     }
 ];
 
@@ -34,7 +39,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         UploadBasicDemoModule, UploadResultDemoModule, UploadContentFieldDemoModule, UploadAutoUploadDemoModule,
-        UploadChangeTargetUrlDemoModule
+        UploadChangeTargetUrlDemoModule, UploadDirectiveDemoModule
     ]
 })
 export class UploadDemoModule {

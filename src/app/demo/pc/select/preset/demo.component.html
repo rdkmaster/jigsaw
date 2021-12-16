@@ -8,13 +8,11 @@
     <jigsaw-header [level]="1">Select</jigsaw-header>
     <div class="live-demo">
         <jigsaw-header [level]="2">预设数值</jigsaw-header>
-        <jigsaw-select [(value)]="selectedCityForSelect"
-                       (valueChange)="selectChange($event)"
-                       placeholder="请选择城市"
-                       [data]="cityListForSelect">
+        <jigsaw-select placeholder="请选择城市" [(value)]="selectedCity" [data]="cities">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>
 </div>
 
 <jigsaw-button (click)="changePreset()">切换预设数值</jigsaw-button>
+<jigsaw-button (click)="selectNone()">不选择任何值</jigsaw-button>

@@ -13,6 +13,7 @@ import {JigsawTextarea} from "@rdkmaster/jigsaw";
             [(value)]="to.value"
             [clearable]="to.clearable"
             [placeholder]="to.placeholder"
+            [resize]="to.resize"
             [maxLength]="to.maxContentLength"
             [includesCRLF]="to.includesCRLF"
             [valid]="to.valid && !showError"

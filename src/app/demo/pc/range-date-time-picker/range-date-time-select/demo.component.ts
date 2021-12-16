@@ -38,6 +38,8 @@ export class RangeDateTimeSelectComponent {
     gr6;
     limitEnd6;
 
+    date7 = {beginDate: 'now-1D', endDate: 'now'};
+
     changeProp($event) {
         if($event == 'date') {
             this.date6 = {beginDate: '2020-05-10', endDate: '2020-06-10'};

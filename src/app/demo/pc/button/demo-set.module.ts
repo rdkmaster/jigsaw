@@ -15,6 +15,8 @@ import {ButtonPresetDemoComponent} from "./preset/demo.component";
 import {ButtonWithLoadingComponent} from "./with-loading/demo.component";
 import { ButtonIconDemoComponent } from './with-icon/demo.component';
 import { ButtonIconDemoModule } from './with-icon/demo.module';
+import { ButtonInstancesDemoComponent } from './instances/demo.component';
+import { ButtonInstancesDemoModule } from './instances/demo.module';
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     },
     {
         path: 'with-icon', component: ButtonIconDemoComponent
+    },
+    {
+        path: 'instances', component: ButtonInstancesDemoComponent
     }
 ];
 
@@ -49,7 +54,8 @@ export const routerConfig = [
         ButtonWidthHeightDemoModule,
         ButtonWithLoadingModule,
         ButtonFullModule,
-        ButtonIconDemoModule
+        ButtonIconDemoModule,
+        ButtonInstancesDemoModule
     ]
 })
 export class ButtonDemoModule {

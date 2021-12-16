@@ -23,6 +23,8 @@ import {TabHeadlessDemoComponent} from "./headless/demo.component";
 import {TabHeadlessDemoModule} from "./headless/demo.module";
 import {TabsTypeDemoComponent} from "./type/demo.component";
 import {TabsTypeDemoModule} from "./type/demo.module";
+import {TabsTitleRendererDemoModule} from "./title-renderer/demo.module";
+import {TabsTitleRendererComponent} from "./title-renderer/demo.component";
 
 export const routerConfig = [
     {
@@ -62,6 +64,9 @@ export const routerConfig = [
     },
     {
         path: 'type', component: TabsTypeDemoComponent
+    },
+    {
+        path: 'title-renderer', component: TabsTitleRendererComponent
     }
 ];
 
@@ -70,7 +75,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
         DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule,
-        TabsEditableDemoModule, TabHeadlessDemoModule, TabsTypeDemoModule
+        TabsEditableDemoModule, TabHeadlessDemoModule, TabsTypeDemoModule, TabsTitleRendererDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

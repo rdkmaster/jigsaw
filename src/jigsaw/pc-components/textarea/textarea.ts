@@ -8,7 +8,9 @@ import {
     Injector,
     Input,
     Output,
-    ViewChild
+    ViewChild,
+    OnInit,
+    AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
@@ -28,7 +30,10 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[style.height]': 'height',
         '[class.jigsaw-textarea]': 'true',
         '[class.jigsaw-textarea-error]': '!valid',
-        '[class.jigsaw-textarea-disabled]': 'disabled'
+        '[class.jigsaw-textarea-disabled]': 'disabled',
+        '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"',
+        '[class.jigsaw-textarea-resize-horizontal]':'resize === "horizontal"',
+        '[class.jigsaw-textarea-resize-both]':'resize === "both"',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
@@ -36,7 +41,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
+export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, AfterViewInit {
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
@@ -54,6 +59,26 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @Input()
     @RequireMarkForCheck()
     public disabled: boolean = false;
+
+
+    private _resize: "both" | "horizontal" | "vertical" | "none" = "none";
+    /**
+     * 设置文本输入框是否可以拉伸
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/resize
+     */
+    @Input()
+    public get resize(): "both" | "horizontal" | "vertical" | "none" {
+        return this._resize;
+    }
+
+    public set resize(value: "both" | "horizontal" | "vertical" | "none") {
+        if (CommonUtils.isDefined(value)) {
+            this._resize = value;
+        }
+    }
 
     /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
@@ -303,5 +328,22 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         this._onTouched();
         this._focused = false;
         this.blur.emit(event);
+    }
+
+    ngAfterViewInit() {
+        if (this.resize === "vertical" || this.resize === "both") {
+            if (/.+(px|vh)\s*$/i.test(this.height)) {
+                this._textareaElement.nativeElement.style.height = this.height;
+            } else {
+                console.warn("Resizeable JigsawTextarea only accepts height in 'px' and 'vh' format.")
+            }
+        }
+        if (this.resize === "horizontal" || this.resize === "both") {
+            if (/.+(px|vw)\s*$/i.test(this.width)) {
+                this._textareaElement.nativeElement.style.width = this.width;
+            } else {
+                console.warn("Resizeable JigsawTextarea only accepts width in 'px' and 'vh' format.")
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@
                     'jigsaw-steps-item-waiting': current < index,
                     'jigsaw-steps-item-progressing': current === index,
                     'jigsaw-steps-item-finished': current > index,
-                    'jigsaw-steps-item-normal': item?.status === 'normal',
+                    'jigsaw-steps-item-normal': item?.status !== 'error' && item?.status !== 'warning',
                     'jigsaw-steps-item-error': item?.status === 'error',
                     'jigsaw-steps-item-warning': item?.status === 'warning',
                     'jigsaw-steps-item-disabled': item?.disabled
@@ -13,7 +13,7 @@
             <i
                 class="iconfont"
                 *ngIf="current > index"
-                [ngClass]="{'iconfont-ea37':item?.status === 'normal',
+                [ngClass]="{'iconfont-ea37':item?.status !== 'error' && item?.status !== 'warning',
                         'iconfont-e192':item?.status === 'error',
                         'iconfont-e76c':item?.status === 'warning'
                     }"

@@ -1,4 +1,15 @@
-import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2, NgZone} from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Directive,
+    EventEmitter,
+    HostListener,
+    Input,
+    NgZone,
+    OnDestroy,
+    Optional,
+    Output,
+    Renderer2
+} from "@angular/core";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {AbstractJigsawComponent} from '../../common';
@@ -8,22 +19,11 @@ import {IUploader, UploadFileInfo} from "./uploader-typings";
 
 const maxConcurrencyUpload = 5;
 
-@Directive({
-    selector: '[j-upload], [jigsaw-upload]'
-})
-export class JigsawUploadDirective extends AbstractJigsawComponent implements IUploader, OnDestroy {
-    constructor(@Optional() private _http: HttpClient,
-                    private _renderer: Renderer2,
-                    @Optional() private _translateService: TranslateService,
-                    private _cdr: ChangeDetectorRef,
-                    // _zone给runAfterMicrotasks用的
-                    protected _zone: NgZone) {
-        super();
-    }
-
+@Directive()
+export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     /**
-    * @NoMarkForCheckRequired
-    */
+     * @NoMarkForCheckRequired
+     */
     @Input('uploadTargetUrl')
     public targetUrl: string = '/rdk/service/common/upload';
 
@@ -63,35 +63,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     @Input('uploadAdditionalFields')
     public additionalFields: { [prop: string]: string };
 
-    public files: UploadFileInfo[] = [];
-
-    /**
-     * 每个文件上传完成（无论成功还是失败）之后发出
-     */
-    @Output('uploadProgress')
-    public progress = new EventEmitter<UploadFileInfo>();
-
-    /**
-     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此时可以获取到此文件的真实进度
-     */
-    @Output('uploadDataSendProgress')
-    public dataSendProgress = new EventEmitter<UploadFileInfo>();
-
-    @Output('uploadComplete')
-    public complete = new EventEmitter<UploadFileInfo[]>();
-
-    @Output('uploadStart')
-    public start = new EventEmitter<UploadFileInfo[]>();
-
-    @Output('uploadChange')
-    public change = new EventEmitter<UploadFileInfo[]>();
-
-    @HostListener('click', ['$event'])
-    onClick($event) {
-        this._selectFile($event);
-    }
-
-    private _minSize: number;
+    protected _minSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -110,7 +82,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         this._minSize = value;
     }
 
-    private _maxSize: number;
+    protected _maxSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -130,9 +102,51 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
     }
 
     @Input('uploadImmediately')
-    public uploadImmediately:boolean = true;
+    public uploadImmediately: boolean = true;
 
-    private _fileInputElement: Element;
+    /**
+     * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
+     */
+    @Output('uploadProgress')
+    public progress = new EventEmitter<UploadFileInfo>();
+
+    /**
+     * 每个文件上传过程，服务端接收到客户端发送的数据后发出此事件，此事件给出的进度为单文件数据上传进度
+     */
+    @Output('uploadDataSendProgress')
+    public dataSendProgress = new EventEmitter<UploadFileInfo>();
+
+    @Output('uploadComplete')
+    public complete = new EventEmitter<UploadFileInfo[]>();
+
+    @Output('uploadStart')
+    public start = new EventEmitter<UploadFileInfo[]>();
+
+    @Output('uploadChange')
+    public change = new EventEmitter<UploadFileInfo[]>();
+}
+
+@Directive({
+    selector: '[j-upload], [jigsaw-upload]'
+})
+export class JigsawUploadDirective extends JigsawUploadBase implements IUploader, OnDestroy {
+    constructor(@Optional() private _http: HttpClient,
+                private _renderer: Renderer2,
+                @Optional() private _translateService: TranslateService,
+                private _cdr: ChangeDetectorRef,
+                // _zone给runAfterMicrotasks用的
+                protected _zone: NgZone) {
+        super();
+    }
+
+    public files: UploadFileInfo[] = [];
+
+    @HostListener('click', ['$event'])
+    onClick($event) {
+        this._selectFile($event);
+    }
+
+    private _fileInputElement: HTMLElement;
     private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
@@ -181,11 +195,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         if (!this._fileInputElement) {
             this._fileInputElement = document.createElement('input');
             this._fileInputElement.setAttribute('type', 'file');
-            if (CommonUtils.isIE()) {
-                //指令模式动态创建的input不在dom中的时候，ie11无法监听click事件，此处将其加入body中，设置其不可见
-                this._fileInputElement.setAttribute('display', 'none');
-                document.body.appendChild(this._fileInputElement);
-            }
+            //指令模式动态创建的input不在dom中的时候，此处将其加入body中，设置其不可见
+            this._fileInputElement.style.display = 'none';
+            document.body.appendChild(this._fileInputElement);
         }
         if (this.multiple) {
             this._fileInputElement.setAttribute('multiple', 'true');
@@ -199,9 +211,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
-                    if (this._appendFiles()) {
-                        this.change.emit(this.files);
-                    }
+                    this._appendFiles();
                 }
             });
 
@@ -221,13 +231,22 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
             fileInput.value = null;
         }
         this.files.push(...files);
+        if (files.length > 0) {
+            this.change.emit(this.files);
+        }
         return this.files.length > 0;
+    }
+
+    public appendFiles(fileList) {
+        const files = this._checkFiles(Array.from(fileList || []));
+        this.files.push(...files);
+        this.change.emit(this.files);
     }
 
     public upload() {
         this.runAfterMicrotasks(() => {
-            this._zone.run(()=>{
-                if (!this._appendFiles()) {
+            this._zone.run(() => {
+                if (!this._appendFiles() && this.files.length === 0) {
                     return;
                 }
                 this.start.emit(this.files);
@@ -303,30 +322,30 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
                 reportProgress: true,
                 observe: 'events'
             }).subscribe((res: any) => {
-                if (res.type === 1) {
-                    fileInfo.progress = res.loaded / res.total * 100;
-                    this.dataSendProgress.emit(fileInfo);
-                    return;
-                }
-                if (res.type === 3) {
-                    fileInfo.url = res.partialText;
-                    return;
-                }
-                if (res.type === 4) {
-                    fileInfo.state = 'success';
-                    fileInfo.message = '';
-                    const resp: HttpResponse<string> = <HttpResponse<string>>res;
-                    fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
-                    this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
-                    this._afterCurFileUploaded(fileInfo);
-                }
-            }, (e) => {
-                fileInfo.state = 'error';
-                const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
-                this._statusLog(fileInfo, message);
-                fileInfo.message = message;
+            if (res.type === 1) {
+                fileInfo.progress = res.loaded / res.total * 100;
+                this.dataSendProgress.emit(fileInfo);
+                return;
+            }
+            if (res.type === 3) {
+                fileInfo.url = res.partialText;
+                return;
+            }
+            if (res.type === 4) {
+                fileInfo.state = 'success';
+                fileInfo.message = '';
+                const resp: HttpResponse<string> = <HttpResponse<string>>res;
+                fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
+                this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
                 this._afterCurFileUploaded(fileInfo);
-            });
+            }
+        }, (e) => {
+            fileInfo.state = 'error';
+            const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
+            this._statusLog(fileInfo, message);
+            fileInfo.message = message;
+            this._afterCurFileUploaded(fileInfo);
+        });
     }
 
     private _appendAdditionalFields(formData: FormData, fileName: string): void {
@@ -366,7 +385,7 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
         if (!fileInfo.log) {
             fileInfo.log = [];
         }
-        const log = { time: TimeService.convertValue(new Date(), TimeGr.second), content: content };
+        const log = {time: TimeService.convertValue(new Date(), TimeGr.second), content: content};
         fileInfo.log.push(log);
     }
 
@@ -376,6 +395,9 @@ export class JigsawUploadDirective extends AbstractJigsawComponent implements IU
             this._removeFileChangeEvent();
             this._removeFileChangeEvent = null;
         }
-        this._fileInputElement = null;
+        if (CommonUtils.isDefined(this._fileInputElement)){
+            document.body.removeChild(this._fileInputElement);
+            this._fileInputElement = null;
+        }
     }
 }
