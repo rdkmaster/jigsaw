@@ -3,7 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class PaginationNoDataDemoComponent {
     data: LocalPageableTableData;
