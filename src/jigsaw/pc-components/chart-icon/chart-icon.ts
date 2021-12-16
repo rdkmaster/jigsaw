@@ -14,7 +14,10 @@ import {AbstractJigsawViewBase} from "../../common/common";
     selector: 'jigsaw-chart-icon, j-chart-icon',
     template: `
         <span>{{data}}</span>
-    `
+    `,
+    host: {
+        '[class.jigsaw-chart-icon]': 'true',
+    }
 })
 export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
 
