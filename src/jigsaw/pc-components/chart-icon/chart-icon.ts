@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, NgModule, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, NgModule, OnInit, Injector} from '@angular/core';
 import {
     ChartIconBar,
     ChartIconCustomPie,
@@ -22,7 +22,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 })
 export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
 
-    constructor(private _elementRef: ElementRef, private _cdr: ChangeDetectorRef) {
+    constructor(private _elementRef: ElementRef, private _cdr: ChangeDetectorRef, private _injector: Injector) {
         super();
     }
 
