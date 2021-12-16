@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<j-table width="calc(100vw - 400px)" [data]="tableData" [columnDefines]="columns">
+</j-table>
+
+<ng-template #pieRenderer let-context="context">
+    <jigsaw-chart-icon [data]="context.cellData" chartType="pie" [options]="options1">
+    </jigsaw-chart-icon>
+</ng-template>
+<ng-template #lineRenderer let-context="context">
+    <jigsaw-chart-icon [data]="context.cellData" chartType="line" [options]="options2">
+    </jigsaw-chart-icon>
+</ng-template>
+
+

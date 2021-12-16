@@ -4,14 +4,20 @@ import {
     ChartIconDonut,
     ChartIconLine,
     ChartIconPie,
-    ChartIconCustomPie,
+    ChartIconCustomPie, InternalUtils,
 } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class ChartIconBasicDemoComponent {
-    data = [5,3,9,6,5,9,7,3,5,2];
+    constructor() {
+        setInterval(() => {
+            this.data = this.data.map(x => InternalUtils.randomNumber(0, 10));
+        }, 1000);
+    }
+
+    data = [5, 3, 9, 6, 5, 9, 7, 3, 5, 2];
 
     options1: ChartIconPie = {
         fill: function (_, i, all) {
@@ -27,7 +33,7 @@ export class ChartIconBasicDemoComponent {
         width: 100
     };
 
-    options3: ChartIconLine ={
+    options3: ChartIconLine = {
         height: 80,
         width: 100
     };
@@ -50,7 +56,7 @@ export class ChartIconBasicDemoComponent {
             data: ['苹果', '华为', '小米', '中兴', '三星', 'oppo', 'vivo', '荣耀', '一加'],
             marginLeft: 5
         },
-        series: {ggg:111},
+        series: {ggg: 111},
         link: this.handleLink,
         title: [],
         context: this,
@@ -62,13 +68,6 @@ export class ChartIconBasicDemoComponent {
     handleLink(data, index) {
         console.log(this);
         console.log(index, data);
-    }
-
-    changeData() {
-        function getRandomArbitrary(min, max) {
-            return parseInt(Math.random() * (max - min) + min);
-        }
-        this.data = this.data.map(x => getRandomArbitrary(0, 10));
     }
 
     // ====================================================================

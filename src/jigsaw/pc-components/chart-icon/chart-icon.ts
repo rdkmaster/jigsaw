@@ -14,7 +14,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 @Component({
     selector: 'jigsaw-chart-icon, j-chart-icon',
     template: `
-        <span>{{data.join(',')}}</span>
+        <span>{{data?.join(',')}}</span>
     `,
     host: {
         '[class.jigsaw-chart-icon]': 'true',
@@ -96,5 +96,4 @@ export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
     exports: [JigsawChartIcon]
 })
 export class JigsawChartIconModule {
-
 }
