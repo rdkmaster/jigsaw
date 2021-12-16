@@ -45,7 +45,7 @@ export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
     }
 
     set chartType(value: ChartType | string) {
-        // chartType类型只能设置一次，后面修改会是图形渲染不出来
+        // chartType类型只能设置一次，后面修改会使图形渲染不出来
         if (typeof value === 'string') {
             value = ChartType[value];
         }

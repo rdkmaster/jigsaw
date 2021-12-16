@@ -71,6 +71,7 @@ export enum ChartType {
     pie, donut, line, bar, customPie
 }
 
+// @dynamic
 export class ChartIconFactory {
     public static create(selector: string | HTMLElement, chartType: ChartType, options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie): any {
         return $(selector).peity(this._chartTypeMap.get(chartType), options);
