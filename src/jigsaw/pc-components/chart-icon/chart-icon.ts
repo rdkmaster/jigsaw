@@ -9,11 +9,12 @@ import {
     ChartType
 } from "./chart-icon-factory";
 import {AbstractJigsawViewBase} from "../../common/common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 @Component({
     selector: 'jigsaw-chart-icon, j-chart-icon',
     template: `
-        <span>{{data}}</span>
+        <span>{{data.join(',')}}</span>
     `,
     host: {
         '[class.jigsaw-chart-icon]': 'true',
@@ -27,27 +28,32 @@ export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
 
     private _chartIcon: any;
 
-    private _data: string;
+    private _data: number[];
+
     @Input()
-    get data(): (string | number)[] | string {
+    @RequireMarkForCheck()
+    public get data(): number[] {
         return this._data;
     }
 
-    set data(value: (string | number)[] | string) {
-        this._data = value instanceof Array ? value.join(',') : value;
+    public set data(value: number[]) {
+        this._data = typeof value == 'string' ? (<string>value).split(',').map(v => Number(v)) : value;
         this.runMicrotask(() => {
-            this.change();
+            this._change();
         })
     }
 
     private _chartType: ChartType;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    get chartType(): ChartType | string {
+    public get chartType(): ChartType | string {
         return this._chartType;
     }
 
-    set chartType(value: ChartType | string) {
+    public set chartType(value: ChartType | string) {
         // chartType类型只能设置一次，后面修改会使图形渲染不出来
         if (typeof value === 'string') {
             value = ChartType[value];
@@ -58,25 +64,28 @@ export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie;
 
-    public refresh() {
+    private _init() {
         this._chartIcon = ChartIconFactory.create(this._elementRef.nativeElement.querySelector('span'), this._chartType, this.options);
     }
 
-    public change() {
+    private _change() {
         if (this._chartIcon) {
             this._chartIcon.change();
         } else {
-            this.refresh();
+            this._init();
         }
     }
 
     ngOnInit() {
         super.ngOnInit();
         this.runMicrotask(() => {
-            this.refresh();
+            this._init();
         })
     }
 }
