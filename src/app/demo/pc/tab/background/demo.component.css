@@ -3,7 +3,7 @@
 }
 
 .demo-container {
-    padding-bottom: 20px;
-    background: #f1f2f6;
+    height: 400px;
+    background: var(--bg-container);
     box-shadow: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
 }

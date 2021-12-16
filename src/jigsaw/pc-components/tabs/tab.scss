@@ -162,12 +162,12 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         .#{$tab-prefix}-nav-wrap {
             @include clearfix();
             width: calc(100% - 40px);
-            background-color: var(--jigsaw-nav-background, transparent);
             overflow: hidden;
 
             .#{$tab-prefix}-nav {
                 position: relative;
                 float: left; /*用于width为auto，并能撑开tab nav*/
+                background-color: var(--jigsaw-nav-background, transparent);
                 transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
 
                 .#{$tab-prefix}-tab-disabled {
@@ -190,11 +190,10 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 .#{$tab-prefix}-tab {
                     display: inline-flex;
                     align-items: center;
+                    position: relative;
+                    padding: 8px 20px;
                     height: 100%;
                     margin-right: 24px;
-                    position: relative;
-
-                    padding: 8px 20px;
                     transition: color 0.3s $ease-in-out;
                     cursor: pointer;
                     text-decoration: none;
@@ -270,6 +269,8 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             background-color: transparent;
 
             .#{$tab-prefix}-nav {
+                background-color: transparent;
+
                 .#{$tab-prefix}-tab {
                     background-color: var(--jigsaw-nav-background, transparent);
                     border-width: 1px;
@@ -289,6 +290,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
                 .#{$tab-prefix}-tab-disabled {
                     background: $bg-disabled;
+                    color: $font-color-disabled-spec;
                 }
             }
         }
