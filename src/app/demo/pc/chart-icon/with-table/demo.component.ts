@@ -26,9 +26,9 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
             ['Griffith', 'System Architect', '18000', 'Prod II', '', ''],
             ['Sarah', 'Developer', '16000', 'Prod I', '', ''],
             ['Perry', 'Test Engineer', '17700', 'Prod I', '', ''],
-            ['Ellen', 'Developer', '17300', 'Prod I', '', ''],
+            ['Ellen', 'Developer', '17300', 'Prod II', '', ''],
             ['Martha', 'Test Engineer', '15000', 'Prod I', '', ''],
-            ['Hilary', 'Developer', '12000', 'Prod I', '', ''],
+            ['Hilary', 'Developer', '12000', 'Prod III', '', ''],
         ], ['name', 'position', 'salary', 'dept', 'pie', 'line']
         , ['姓名', '职位', '薪资', '部门', '工作量', '考核']);
         this.randomData();
@@ -41,8 +41,8 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
                 data.push(InternalUtils.randomNumber(0, 10));
             }
             // chart icon 支持逗号隔开的数字字符串，也支持数字数组
-            row[4] = data.join(',');
-            row[5] = data;
+            row[4] = data.slice(6);
+            row[5] = data.join(',');
         });
     }
 
