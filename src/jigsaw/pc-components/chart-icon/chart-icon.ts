@@ -12,7 +12,6 @@ import {AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
-// @dynamic
 export class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit {
 
     constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
@@ -82,6 +81,9 @@ export class JigsawChartIconBase extends AbstractJigsawViewBase implements OnIni
     }
 })
 export class JigsawPieChartIcon extends JigsawChartIconBase {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
+        super(_elementRef, _injector);
+    }
     protected _chartType: ChartType = ChartType.pie;
     protected _options: ChartIconPie = {
         fill: JigsawTheme.getGraphTheme().color,
@@ -98,6 +100,9 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawDonutChartIcon extends JigsawChartIconBase {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
+        super(_elementRef, _injector);
+    }
     protected _chartType: ChartType = ChartType.donut;
     protected _options: ChartIconDonut = {
         fill: JigsawTheme.getGraphTheme().color,
@@ -115,6 +120,9 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawLineChartIcon extends JigsawChartIconBase {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
+        super(_elementRef, _injector);
+    }
     protected _chartType: ChartType = ChartType.line;
     protected _options: ChartIconLine = {
         fill: JigsawTheme.getGraphTheme().color[0],
@@ -132,6 +140,9 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawBarChartIcon extends JigsawChartIconBase {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
+        super(_elementRef, _injector);
+    }
     protected _chartType: ChartType = ChartType.bar;
     /**
      * @NoMarkForCheckRequired
