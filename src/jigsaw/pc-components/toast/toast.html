@@ -1,10 +1,11 @@
 <div class="jigsaw-toast">
-    <div class="jigsaw-toast-icon">
+    <div class="jigsaw-toast-icon {{icon}}">
         <i class="jigsaw-toast-icon"></i>
     </div>
-    <div class="jigsaw-toast-message"></div>
-
+    <div class="jigsaw-toast-message">
+        {{message}}
+    </div>
     <div class="jigsaw-toast-close">
-        <i class="iconfont iconfont-e9b8"></i>
+        <i class="iconfont iconfont-e9b8" (click)='_$close()'></i>
     </div>
 </div>
