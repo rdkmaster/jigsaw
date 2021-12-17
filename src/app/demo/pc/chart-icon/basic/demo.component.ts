@@ -1,10 +1,8 @@
 import {Component} from "@angular/core";
 import {
-    ChartIconBar,
-    ChartIconDonut,
-    ChartIconLine,
-    ChartIconPie,
-    ChartIconCustomPie, InternalUtils,
+    ChartIconCustomPie,
+    InternalUtils,
+    JigsawTheme,
 } from "jigsaw/public_api";
 
 @Component({
@@ -19,36 +17,8 @@ export class ChartIconBasicDemoComponent {
 
     data = [5, 3, 9, 6, 5, 9, 7, 3, 5, 2];
 
-    options1: ChartIconPie = {
-        fill: function (_, i, all) {
-            let g = (i / all.length) * 255;
-            return "rgb(255, " + g + ", 0)"
-        },
-        radius: 48,
-    };
-
-    options2: ChartIconDonut = {
-        fill: ["red", "green", "blue"],
-        height: 50,
-        width: 100
-    };
-
-    options3: ChartIconLine = {
-        height: 80,
-        width: 100
-    };
-
-    options4: ChartIconBar = {
-        fill: ["red", "green", "blue"],
-        height: 50,
-        width: 100
-    };
-
     options5: ChartIconCustomPie = {
-        fill: function (_, i, all) {
-            let g = Math.round((i / all.length) * 255);
-            return "rgb(100, " + g + ", 222)"
-        },
+        fill: JigsawTheme.getGraphTheme().color,
         radius: 60,
         legend: {
             orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置

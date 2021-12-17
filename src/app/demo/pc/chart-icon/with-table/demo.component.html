@@ -8,12 +8,12 @@
 </j-table>
 
 <ng-template #pieRenderer let-context="context">
-    <jigsaw-chart-icon [data]="context.cellData" chartType="pie" [options]="options1">
-    </jigsaw-chart-icon>
+    <jigsaw-pie-chart-icon [data]="context.cellData" [options]="options1">
+    </jigsaw-pie-chart-icon>
 </ng-template>
 <ng-template #lineRenderer let-context="context">
-    <jigsaw-chart-icon [data]="context.cellData" chartType="line" [options]="options2">
-    </jigsaw-chart-icon>
+    <jigsaw-line-chart-icon [data]="context.cellData" [options]="options2">
+    </jigsaw-line-chart-icon>
 </ng-template>
 
 

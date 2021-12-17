@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, NgModule, OnInit, Injector} from '@angular/core';
+import {Component, ElementRef, Injector, Input, NgModule, OnInit} from '@angular/core';
 import {
     ChartIconBar,
     ChartIconCustomPie,
@@ -10,19 +10,11 @@ import {
 } from "./chart-icon-factory";
 import {AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {JigsawTheme} from "../../common/core/theming/theme";
 
-@Component({
-    selector: 'jigsaw-chart-icon, j-chart-icon',
-    template: `
-        <span>{{data?.join(',')}}</span>
-    `,
-    host: {
-        '[class.jigsaw-chart-icon]': 'true',
-    }
-})
-export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
+export class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit {
 
-    constructor(private _elementRef: ElementRef, private _cdr: ChangeDetectorRef, private _injector: Injector) {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
         super();
     }
 
@@ -38,37 +30,26 @@ export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
 
     public set data(value: number[]) {
         this._data = typeof value == 'string' ? (<string>value).split(',').map(v => Number(v)) : value;
-        this.runMicrotask(() => {
-            this._change();
-        })
+        if(this.initialized) {
+            this.runMicrotask(() => {
+                this._change();
+            })
+        }
     }
 
-    private _chartType: ChartType;
+    protected _chartType: ChartType;
 
+    protected _options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie;
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get chartType(): ChartType | string {
-        return this._chartType;
+    public get options(): ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie {
+        return this._options;
     }
-
-    public set chartType(value: ChartType | string) {
-        // chartType类型只能设置一次，后面修改会使图形渲染不出来
-        if (typeof value === 'string') {
-            value = ChartType[value];
-        }
-        this._chartType = <ChartType>value;
-        if (this._chartType === ChartType.customPie) {
-            ChartIconFactory.registerCustomPie();
-        }
+    public set options(value: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie) {
+        this._options = value;
     }
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie;
 
     private _init() {
         this._chartIcon = ChartIconFactory.create(this._elementRef.nativeElement.querySelector('span'), this._chartType, this.options);
@@ -90,10 +71,112 @@ export class JigsawChartIcon extends AbstractJigsawViewBase implements OnInit {
     }
 }
 
+@Component({
+    selector: 'jigsaw-pie-chart-icon, j-pie-chart-icon',
+    templateUrl: './chart-icon.html',
+    host: {
+        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-pie-chart-icon]': 'true',
+    }
+})
+export class JigsawPieChartIcon extends JigsawChartIconBase {
+    protected _chartType: ChartType = ChartType.pie;
+    protected _options: ChartIconPie = {
+        fill: JigsawTheme.getGraphTheme().color,
+        radius: 48,
+    };
+}
+
+@Component({
+    selector: 'jigsaw-donut-chart-icon, j-donut-chart-icon',
+    templateUrl: './chart-icon.html',
+    host: {
+        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-donut-chart-icon]': 'true',
+    }
+})
+export class JigsawDonutChartIcon extends JigsawChartIconBase {
+    protected _chartType: ChartType = ChartType.donut;
+    protected _options: ChartIconDonut = {
+        fill: JigsawTheme.getGraphTheme().color,
+        height: 50,
+        width: 100
+    };
+}
+
+@Component({
+    selector: 'jigsaw-line-chart-icon, j-line-chart-icon',
+    templateUrl: './chart-icon.html',
+    host: {
+        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-line-chart-icon]': 'true',
+    }
+})
+export class JigsawLineChartIcon extends JigsawChartIconBase {
+    protected _chartType: ChartType = ChartType.line;
+    protected _options: ChartIconLine = {
+        fill: JigsawTheme.getGraphTheme().color[0],
+        height: 80,
+        width: 100
+    };
+}
+
+@Component({
+    selector: 'jigsaw-bar-chart-icon, j-bar-chart-icon',
+    templateUrl: './chart-icon.html',
+    host: {
+        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-bar-chart-icon]': 'true',
+    }
+})
+export class JigsawBarChartIcon extends JigsawChartIconBase {
+    protected _chartType: ChartType = ChartType.bar;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    protected _options: ChartIconBar = {
+        fill: JigsawTheme.getGraphTheme().color,
+        height: 50,
+        width: 100
+    };
+}
+
+@Component({
+    selector: 'jigsaw-custom-pie-chart-icon, j-custom-pie-chart-icon',
+    templateUrl: './chart-icon.html',
+    host: {
+        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-custom-pie-chart-icon]': 'true',
+    }
+})
+export class JigsawCustomPieChartIcon extends JigsawChartIconBase {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
+        super(_elementRef, _injector);
+        ChartIconFactory.registerCustomPie();
+    }
+
+    protected _chartType: ChartType = ChartType.customPie;
+    protected _options: ChartIconCustomPie = {
+        fill: JigsawTheme.getGraphTheme().color,
+        radius: 60,
+        legend: {
+            orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
+            width: 125,
+            data: ['legend1', 'legend2', 'legend3'],
+            marginLeft: 5
+        },
+        series: {ggg: 111},
+        title: [],
+        context: this,
+        after: () => {
+            console.log('a pie has been draw')
+        },
+    };
+}
 
 @NgModule({
-    declarations: [JigsawChartIcon],
-    exports: [JigsawChartIcon]
+    declarations: [JigsawPieChartIcon, JigsawDonutChartIcon, JigsawLineChartIcon, JigsawBarChartIcon, JigsawCustomPieChartIcon],
+    exports: [JigsawPieChartIcon, JigsawDonutChartIcon, JigsawLineChartIcon, JigsawBarChartIcon, JigsawCustomPieChartIcon]
 })
 export class JigsawChartIconModule {
 }
