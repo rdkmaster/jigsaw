@@ -19,7 +19,7 @@ export class ChartIconBasicDemoComponent {
 
     options5: ChartIconCustomPie = {
         fill: JigsawTheme.getGraphTheme().color,
-        radius: 60,
+        radius: 32,
         legend: {
             orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
             width: 125,

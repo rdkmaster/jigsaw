@@ -28,7 +28,6 @@ export * from "./common/directive/movable/index";
 export * from "./common/directive/trusted-html/trusted-html";
 export * from "./common/directive/badge/index";
 export * from "./common/directive/tooltip/tooltip";
-export * from "./pc-components/chart-icon/chart-icon";
 export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
@@ -38,7 +37,6 @@ export * from "./pc-components/box/index";
 export * from "./pc-components/breadcrumb/breadcrumb";
 export * from "./pc-components/button/button";
 export * from "./pc-components/cascade/cascade";
-export * from "./pc-components/chart-icon/chart-icon-factory";
 export * from "./pc-components/checkbox/index";
 export * from "./pc-components/checkbox/typings";
 export * from "./pc-components/collapse/collapse";
@@ -90,6 +88,7 @@ export * from "./pc-components/viewport/viewport";
 export * from "./pc-components/menu/index";
 export * from "./pc-components/color-select/index";
 export * from "./pc-components/process-status/index";
+export * from "./pc-components/chart-icon/chart-icon";
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";

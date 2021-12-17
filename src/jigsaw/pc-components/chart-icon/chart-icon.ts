@@ -12,6 +12,7 @@ import {AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
+// @dynamic
 export class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit {
 
     constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
@@ -30,7 +31,7 @@ export class JigsawChartIconBase extends AbstractJigsawViewBase implements OnIni
 
     public set data(value: number[]) {
         this._data = typeof value == 'string' ? (<string>value).split(',').map(v => Number(v)) : value;
-        if(this.initialized) {
+        if (this.initialized) {
             this.runMicrotask(() => {
                 this._change();
             })
@@ -47,6 +48,7 @@ export class JigsawChartIconBase extends AbstractJigsawViewBase implements OnIni
     public get options(): ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie {
         return this._options;
     }
+
     public set options(value: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie) {
         this._options = value;
     }
@@ -83,7 +85,7 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
     protected _chartType: ChartType = ChartType.pie;
     protected _options: ChartIconPie = {
         fill: JigsawTheme.getGraphTheme().color,
-        radius: 48,
+        radius: 32
     };
 }
 
@@ -99,8 +101,8 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
     protected _chartType: ChartType = ChartType.donut;
     protected _options: ChartIconDonut = {
         fill: JigsawTheme.getGraphTheme().color,
-        height: 50,
-        width: 100
+        height: 64,
+        width: 64
     };
 }
 
@@ -116,7 +118,7 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
     protected _chartType: ChartType = ChartType.line;
     protected _options: ChartIconLine = {
         fill: JigsawTheme.getGraphTheme().color[0],
-        height: 80,
+        height: 64,
         width: 100
     };
 }
@@ -136,7 +138,7 @@ export class JigsawBarChartIcon extends JigsawChartIconBase {
      */
     protected _options: ChartIconBar = {
         fill: JigsawTheme.getGraphTheme().color,
-        height: 50,
+        height: 64,
         width: 100
     };
 }
@@ -158,7 +160,7 @@ export class JigsawCustomPieChartIcon extends JigsawChartIconBase {
     protected _chartType: ChartType = ChartType.customPie;
     protected _options: ChartIconCustomPie = {
         fill: JigsawTheme.getGraphTheme().color,
-        radius: 60,
+        radius: 32,
         legend: {
             orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
             width: 125,
@@ -180,3 +182,5 @@ export class JigsawCustomPieChartIcon extends JigsawChartIconBase {
 })
 export class JigsawChartIconModule {
 }
+
+export * from './chart-icon-factory';
