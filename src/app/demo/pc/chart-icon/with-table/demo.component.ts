@@ -6,7 +6,6 @@ import {ChartIconLine, ChartIconPie, ColumnDefine, InternalUtils, TableData,} fr
 })
 export class ChartIconTableDemoComponent implements AfterViewInit {
     tableData: TableData;
-    data = [5, 3, 9, 6, 5, 9, 7, 3, 5, 2];
 
     @ViewChild("pieRenderer")
     pieRenderer: TemplateRef<any>;
@@ -19,22 +18,32 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
 
     constructor() {
         setInterval(() => {
-            this.tableData.data.forEach(row => {
-                row[4] = this.data.map(x => InternalUtils.randomNumber(0, 10));
-                row[5] = this.data.map(x => InternalUtils.randomNumber(0, 10));
-            });
+            this.randomData();
             this.tableData.refresh();
         }, 1000);
         this.tableData = new TableData([
-            ['Tony', 'Developer', '17000', 'Prod I', this.data, this.data],
-            ['Griffith', 'System Architect', '18000', 'Prod II', this.data, this.data],
-            ['Sarah', 'Developer', '16000', 'Prod I', this.data, this.data],
-            ['Perry', 'Test Engineer', '17700', 'Prod I', this.data, this.data],
-            ['Ellen', 'Developer', '17300', 'Prod I', this.data, this.data],
-            ['Martha', 'Test Engineer', '15000', 'Prod I', this.data, this.data],
-            ['Hilary', 'Developer', '12000', 'Prod I', this.data, this.data],
+            ['Tony', 'Developer', '17000', 'Prod I', '', ''],
+            ['Griffith', 'System Architect', '18000', 'Prod II', '', ''],
+            ['Sarah', 'Developer', '16000', 'Prod I', '', ''],
+            ['Perry', 'Test Engineer', '17700', 'Prod I', '', ''],
+            ['Ellen', 'Developer', '17300', 'Prod I', '', ''],
+            ['Martha', 'Test Engineer', '15000', 'Prod I', '', ''],
+            ['Hilary', 'Developer', '12000', 'Prod I', '', ''],
         ], ['name', 'position', 'salary', 'dept', 'pie', 'line']
         , ['姓名', '职位', '薪资', '部门', '工作量', '考核']);
+        this.randomData();
+    }
+
+    randomData() {
+        this.tableData.data.forEach(row => {
+            const data = [];
+            for (let i = 0; i < 10; i++) {
+                data.push(InternalUtils.randomNumber(0, 10));
+            }
+            // chart icon 支持逗号隔开的数字字符串，也支持数字数组
+            row[4] = data.join(',');
+            row[5] = data;
+        });
     }
 
     options1: ChartIconPie = {
