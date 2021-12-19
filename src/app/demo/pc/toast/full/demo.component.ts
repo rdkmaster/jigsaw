@@ -5,25 +5,19 @@ import { JigsawToast } from 'jigsaw/public_api';
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class ToastBasicDemoComponent {
+export class ToastFullDemoComponent {
+
+    message = '这是一个Toast提示框！';
+    icon = undefined;
+    timeout = 80;
+    width = 200;
+
     show() {
-        JigsawToast.show('这是Toast默认提示框')
+        JigsawToast.show(this.message, { icon: this.icon, timeout: this.timeout * 1000, width: this.width })
     }
 
-    showSuccess() {
-        JigsawToast.showSuccess('这是Toast成功提示框')
-    }
-
-    showError() {
-        JigsawToast.showError('这是Toast错误提示框')
-    }
-
-    showWarn() {
-        JigsawToast.showWarn('这是Toast警告提示框')
-    }
-
-    showInfo() {
-        JigsawToast.showInfo('这是Toast信息提示框')
+    makeLongMessage() {
+        this.message = "这是一个有长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长文本的Toast提示框！"
     }
 
     // ====================================================================

@@ -1,0 +1,66 @@
+@import "../../common/assets/scss/core/base";
+
+$jigsaw-toast: #{$jigsaw-prefix}-toast;
+
+.#{$jigsaw-toast}-host {
+    .#{$jigsaw-toast} {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-width: 200px;
+        height: $height-huge;
+
+        .#{$jigsaw-toast}-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 100%;
+            font-size: $icon-size-med;
+        }
+
+        .#{$jigsaw-toast}-message {
+            width: calc(100% - 64px);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .#{$jigsaw-toast}-close {
+            align-self: flex-end;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 100%;
+
+            i {
+                cursor: pointer;
+            }
+        }
+
+        &.#{$jigsaw-toast}-success {
+            .#{$jigsaw-toast}-icon {
+                color: $success-default;
+            }
+        }
+
+        &.#{$jigsaw-toast}-error {
+            .#{$jigsaw-toast}-icon {
+                color: $error-default;
+            }
+        }
+
+        &.#{$jigsaw-toast}-warning {
+            .#{$jigsaw-toast}-icon {
+                color: $warning-default;
+            }
+        }
+
+        &.#{$jigsaw-toast}-info {
+            .#{$jigsaw-toast}-icon {
+                color: $primary-default;
+            }
+        }
+    }
+}

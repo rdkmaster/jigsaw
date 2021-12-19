@@ -4,11 +4,7 @@ import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateService } from '@ngx-translate/core';
-import { InternalUtils } from 'jigsaw/common/core/utils/internal-utils';
-import { TranslateHelper } from 'jigsaw/common/core/utils/translate-helper';
 import { AbstractDialogComponentBase } from "../dialog/dialog";
-import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 export class ToastMessage {
     /**
@@ -51,9 +47,7 @@ const toastInstances = [];
 export class JigsawToast extends AbstractDialogComponentBase implements OnDestroy {
     constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector, private _translateService: TranslateService,
-        @Optional() private _router: Router,
-        @Optional() private _activatedRoute: ActivatedRoute) {
+        protected _injector: Injector) {
         super(renderer, elementRef, _zone, _injector);
     }
     /**
@@ -69,9 +63,29 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         this.message = value.message || 'the "message" property in the initData goes here.';
         this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this._timeout = value.timeout;
+
+        this._$iconType = value.iconType;
     }
 
     private _timeout;
+    private _timer;
+
+    /**
+     * @internal
+     */
+    public _$iconType: 'success' | 'error' | 'warning' | 'info';
+
+    /**
+     * @internal
+     */
+    public _$getClassObject(classPrefix: string): { [className: string]: boolean } {
+        return {
+            [`${classPrefix}-success`]: this._$iconType == 'success',
+            [`${classPrefix}-error`]: this._$iconType == 'error',
+            [`${classPrefix}-warning`]: this._$iconType == 'warning',
+            [`${classPrefix}-info`]: this._$iconType != 'success' && this._$iconType != 'error' && this._$iconType != 'warning'
+        };
+    }
 
     /**
      * 需要提示给用户的消息，必选。
@@ -104,10 +118,9 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             return;
         }
 
-        // this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
-        // this._$onLeave();
+        this._popupInfoValue.answer.subscribe(answer => this._$close());
+        this._$onLeave();
     }
-
 
     protected getPopupElement(): HTMLElement {
         return this.elementRef.nativeElement;
@@ -117,8 +130,8 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         if (CommonUtils.isUndefined(message)) {
             return;
         }
-        const opt = <ToastMessage>{};
-        opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
+        const opt: ToastMessage = options ? options : {};
+        opt.width = opt.hasOwnProperty('width') ? (opt.width > 200 ? opt.width : 200) : 200;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
 
         const popupOptions = {
@@ -133,7 +146,10 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         }
 
         const initData = {
-            message: message
+            message: message,
+            icon: opt.icon,
+            timeout: opt.timeout,
+            iconType: opt.iconType
         }
 
         const popupInfo = PopupService.instance.popup(JigsawToast, popupOptions, initData);
@@ -141,6 +157,54 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         toastInstances.push(popupInfo)
 
         return popupInfo;
+    }
+
+    private static _positionReviser(element: HTMLElement): PopupPositionValue {
+        const instances = toastInstances;
+        let left = (document.body.clientWidth - element.offsetWidth) / 2
+        let initTop: number = 24;
+        const top = instances.reduce(
+            (y, popupInfo) => popupInfo.element === element || popupInfo.element.offsetHeight == 0 ? y :
+                y + (popupInfo.element.offsetHeight + 12), initTop);
+        return { left, top };
+    }
+
+    public static showSuccess(message: string, options?: ToastMessage): PopupInfo {
+        const opt: ToastMessage = options ? options : {};
+        opt.icon = 'iconfont iconfont-e142';
+        opt.iconType = 'success';
+        return JigsawToast.show(message, opt);
+    };
+
+    public static showError(message: string, options?: ToastMessage): PopupInfo {
+        const opt: ToastMessage = options ? options : {};
+        opt.icon = 'iconfont iconfont-e132';
+        opt.iconType = 'error';
+        return JigsawToast.show(message, opt);
+    };
+
+    public static showWarn(message: string, options?: ToastMessage): PopupInfo {
+        const opt: ToastMessage = options ? options : {};
+        opt.icon = 'iconfont iconfont-e437';
+        opt.iconType = 'warning';
+        return JigsawToast.show(message, opt);
+    };
+
+    public static showInfo(message: string, options?: ToastMessage): PopupInfo {
+        const opt: ToastMessage = options ? options : {};
+        opt.icon = 'iconfont iconfont-e23e';
+        opt.iconType = 'info';
+        return JigsawToast.show(message, opt);
+    };
+
+    /**
+     * @internal
+     */
+    _$onEnter() {
+        if (this._timer) {
+            this.clearCallLater(this._timer);
+            this._timer = null;
+        }
     }
 
     /**
@@ -178,17 +242,17 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         })
     }
 
-    private static _positionReviser(element: HTMLElement): PopupPositionValue {
-        const instances = toastInstances;
-        let initTop: number = 24;
-        const top = instances.reduce(
-            (y, popupInfo) => popupInfo.element === element || popupInfo.element.offsetHeight == 0 ? y :
-                y + (popupInfo.element.offsetHeight + 12), initTop);
-
-        return { left: 0, top };
+    /**
+     * @internal
+     */
+    _$onLeave() {
+        if (this._timeout > 0) {
+            this.clearCallLater(this._timer);
+            this._timer = this.callLater(() => this._$close(), this._timeout);
+        }
     }
 
-    private _routerChangeSubscription: Subscription;
+
 
     ngOnDestroy() {
         super.ngOnDestroy();
@@ -201,25 +265,4 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
     exports: [JigsawToast],
     providers: [TranslateService]
 })
-export class JigsawToastModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'toast', {
-            zh: {
-                success: '成功',
-                error: '错误',
-                warning: '警告',
-                info: '消息'
-            },
-            en: {
-                success: 'Success',
-                error: 'Error',
-                warning: 'Warning',
-                info: 'Information'
-            }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
-        });
-    }
-}
+export class JigsawToastModule { }
