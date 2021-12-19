@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, NgModule, Input, Optional, Injector, Renderer2, ElementRef, NgZone } from "@angular/core";
-import { PopupInfo, PopupEffect, PopupPositionType, PopupPositionValue, PopupService } from 'jigsaw/common/service/popup.service';
-import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
+import { PopupInfo, PopupEffect, PopupPositionType, PopupPositionValue, PopupService } from '../../common/service/popup.service';
+import { CommonUtils } from '../../common/core/utils/common-utils';
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateService } from '@ngx-translate/core';
