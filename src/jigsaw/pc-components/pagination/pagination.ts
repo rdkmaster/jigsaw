@@ -75,7 +75,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     public _$pageSize: PageSizeData = {
         value: null,
-        label: "null/" + this._translateService.instant("pagination.page")
+        label: "--/" + this._translateService.instant("pagination.page")
     };
 
     /**
@@ -99,7 +99,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     public set data(value: IPageable) {
-        if (CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
+        if (CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) {
+            return;
+        }
         this._data = value;
         if (typeof this._data.onRefresh == "function") {
             this._data.onRefresh(() => {
