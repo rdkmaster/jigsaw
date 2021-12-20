@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-checkbox [(checked)]="disabled" (checkedChange)="onDisabled($event)">
+    禁用 / 正常
+</jigsaw-checkbox>
+
+<jigsaw-header>普通按钮</jigsaw-header>
+<jigsaw-button colorType="default" [(disabled)]="disabled">
+    <jigsaw-pie-chart-icon [fill]="colors" [data]="shortData" radius="8" style="margin: 4px 4px 0 0">
+    </jigsaw-pie-chart-icon>
+    普通按钮
+</jigsaw-button>
+
+<jigsaw-header>文字按钮</jigsaw-header>
+<jigsaw-button colorType="none" [(disabled)]="disabled">
+    <jigsaw-pie-chart-icon [fill]="colors" [data]="shortData" radius="8" style="margin: 4px 4px 0 0">
+    </jigsaw-pie-chart-icon>
+    文字
+</jigsaw-button>
+
+<jigsaw-header>大型按钮</jigsaw-header>
+<jigsaw-button colorType="primary" width="280px" height="36px" style="font-size: 16px"
+               [(disabled)]="disabled">
+    <jigsaw-line-chart-icon [data]="longData" width="240" height="24" style="margin-top: 4px"
+                            [fill]="fill" [stroke]="stroke">
+    </jigsaw-line-chart-icon>
+</jigsaw-button>
