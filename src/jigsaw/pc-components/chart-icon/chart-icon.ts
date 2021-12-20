@@ -154,42 +154,9 @@ export class JigsawBarChartIcon extends JigsawChartIconBase {
     };
 }
 
-@Component({
-    selector: 'jigsaw-custom-pie-chart-icon, j-custom-pie-chart-icon',
-    templateUrl: './chart-icon.html',
-    host: {
-        '[class.jigsaw-chart-icon]': 'true',
-        '[class.jigsaw-custom-pie-chart-icon]': 'true',
-    }
-})
-export class JigsawCustomPieChartIcon extends JigsawChartIconBase {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
-        super(_elementRef, _injector);
-        ChartIconFactory.registerCustomPie();
-    }
-
-    protected _chartType: ChartType = ChartType.customPie;
-    protected _options: ChartIconCustomPie = {
-        fill: JigsawTheme.getGraphTheme().color,
-        radius: 32,
-        legend: {
-            orient: 'right', // 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置
-            width: 125,
-            data: ['legend1', 'legend2', 'legend3'],
-            marginLeft: 5
-        },
-        series: {ggg: 111},
-        title: [],
-        context: this,
-        after: () => {
-            console.log('a pie has been draw')
-        },
-    };
-}
-
 @NgModule({
-    declarations: [JigsawPieChartIcon, JigsawDonutChartIcon, JigsawLineChartIcon, JigsawBarChartIcon, JigsawCustomPieChartIcon],
-    exports: [JigsawPieChartIcon, JigsawDonutChartIcon, JigsawLineChartIcon, JigsawBarChartIcon, JigsawCustomPieChartIcon]
+    declarations: [JigsawPieChartIcon, JigsawDonutChartIcon, JigsawLineChartIcon, JigsawBarChartIcon],
+    exports: [JigsawPieChartIcon, JigsawDonutChartIcon, JigsawLineChartIcon, JigsawBarChartIcon]
 })
 export class JigsawChartIconModule {
 }
