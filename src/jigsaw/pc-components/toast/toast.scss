@@ -8,13 +8,13 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
         align-items: center;
         width: 100%;
         min-width: 200px;
-        height: 48px;
+        height: $height-huge;
 
         .#{$jigsaw-toast}-icon {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 52px;
+            width: 32px;
             height: 100%;
             font-size: $icon-size-med;
         }
@@ -33,6 +33,7 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
             align-items: center;
             width: 32px;
             height: 100%;
+            font-size: $icon-size-med;
 
             i {
                 cursor: pointer;
