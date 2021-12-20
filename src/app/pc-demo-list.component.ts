@@ -66,6 +66,7 @@ import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfig as processStatusConfig} from "./demo/pc/process-status/demo-set.module";
 import {routerConfig as chartIconConfig} from "./demo/pc/chart-icon/demo-set.module";
+import {routerConfig as timelineConfig} from "./demo/pc/timeline/demo-set.module";
 import {routerConfigPC} from "./router-config";
 
 @Component({
@@ -216,6 +217,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'theme', themeConfig);
         this._addRouterConfig(routerConfig, 'process-status', processStatusConfig);
         this._addRouterConfig(routerConfig, 'chart-icon', chartIconConfig);
+        this._addRouterConfig(routerConfig, 'timeline', timelineConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {
