@@ -40,13 +40,45 @@ export class ChartIconBar {
     width?: number = 32;
 }
 
+export class ChartIconCustomPieLegend {
+    /**
+     * orient只有top和right两个值
+     * - 如果是right，图例的默认宽度是100，用户也可以自定义
+     * - 如果是top，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
+     */
+    orient: string;
+    data: string[];
+    width: number;
+    height?: number;
+    marginLeft: number;
+}
+
+export class ChartIconCustomPie {
+    delimiter?: string = null;
+    fill?: string[] | ((...any) => string) = ["#ff9900", "#fff4dd", "#ffd592"];
+    height?: number = null;
+    radius?: number = 8;
+    width?: number = null;
+    legend?: ChartIconCustomPieLegend;
+    series?: any;
+    after?: Function;
+    link?: Function | string;
+    /**
+     * 当没有title，默认使用legend.data
+     */
+    title: string[];
+    context?: object;
+}
+
 export enum ChartType {
     pie, donut, line, bar, customPie
 }
 
+export type ChartIconOptions = ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie;
+
 // @dynamic
 export class ChartIconFactory {
-    public static create(selector: string | HTMLElement, chartType: ChartType, options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar): any {
+    public static create(selector: string | HTMLElement, chartType: ChartType, options: ChartIconOptions): any {
         return $(selector).peity(this._chartTypeMap.get(chartType), options);
     }
 

@@ -9,15 +9,18 @@ import {
 export class ChartIconBasicDemoComponent {
     constructor() {
         setInterval(() => {
-            this.data = this.data.map(x => InternalUtils.randomNumber(0, 10));
+            this.shortData = this.shortData.map(_ => InternalUtils.randomNumber(0, 10));
+            this.longData.push(InternalUtils.randomNumber(0, 10));
+            this.longData = this.longData.slice(1);
         }, 1000);
     }
 
-    data = [5, 3, 9, 6, 5, 9, 7, 3, 5, 2];
+    longData = [5, 3, 9, 9, 6,7, 9, 6,7, 3, 3, 6, 5, 9, 6,9, 6,7, 3, 5, 2];
+    shortData = [5, 3, 9, 6];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了chart-icon的基本用法，注：chart-icon一般尺寸都很小，本demo为了演示方便特意将其做的很大；';
     description: string = '';
 }
