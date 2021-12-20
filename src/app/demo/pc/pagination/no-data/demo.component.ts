@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
@@ -11,22 +10,22 @@ export class PaginationNoDataDemoComponent {
     delayData: LocalPageableTableData;
 
 
-    constructor(http: HttpClient) {
+    constructor() {
         this.data = new LocalPageableTableData();
         this.data.fromObject({
             header: ['header0', 'header1', 'header2', 'header3'],
             field: ['field0', 'field1', 'field2', 'field3'],
             data: []
         });
+    }
 
-        setTimeout(() => {
-            this.delayData = new LocalPageableTableData();
-            this.delayData.fromObject({
-                header: ['header0', 'header1', 'header2', 'header3'],
-                field: ['field0', 'field1', 'field2', 'field3'],
-                data: []
-            });
-        }, 2000);
+    updateDelayData() {
+        this.delayData = new LocalPageableTableData();
+        this.delayData.fromObject({
+            header: ['header0', 'header1', 'header2', 'header3'],
+            field: ['field0', 'field1', 'field2', 'field3'],
+            data: []
+        });
     }
 
     getCurrentPage(message: any) {
