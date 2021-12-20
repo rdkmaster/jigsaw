@@ -8,13 +8,13 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
         align-items: center;
         width: 100%;
         min-width: 200px;
-        height: $height-huge;
+        height: 48px;
 
         .#{$jigsaw-toast}-icon {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 32px;
+            width: 52px;
             height: 100%;
             font-size: $icon-size-med;
         }
