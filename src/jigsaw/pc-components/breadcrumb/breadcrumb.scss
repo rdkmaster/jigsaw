@@ -59,7 +59,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
             height: $height-sm;
             color: $brand-default-light;
             font-size: $font-size-lg;
-            &:hover{
+            &:hover {
                 color: $brand-hover-light;
             }
             &.#{$bc-prefix-cls}-current {
@@ -114,6 +114,7 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
                 }
                 .#{$bc-prefix-cls}-label {
                     color: $font-color-heading-bold;
+                    text-decoration: none;
                 }
             }
         }
