@@ -4,6 +4,8 @@ import {ChartIconBasicDemoModule} from "./basic/demo.module";
 import {ChartIconBasicDemoComponent} from "./basic/demo.component";
 import {ChartIconTableDemoComponent} from "./with-table/demo.component";
 import {ChartIconTableDemoModule} from "./with-table/demo.module";
+import {ChartIconButtonDemoComponent} from "./with-button/demo.component";
+import {ChartIconButtonDemoModule} from "./with-button/demo.module";
 
 export const routerConfig = [
     {
@@ -11,6 +13,9 @@ export const routerConfig = [
     },
     {
         path: 'with-table', component: ChartIconTableDemoComponent
+    },
+    {
+        path: 'with-button', component: ChartIconButtonDemoComponent
     }
 ];
 
@@ -19,6 +24,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         ChartIconBasicDemoModule,
         ChartIconTableDemoModule,
+        ChartIconButtonDemoModule
     ]
 })
 export class ChartIconDemoModule {

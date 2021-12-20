@@ -46,19 +46,6 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
         });
     }
 
-    options1: ChartIconPie = {
-        fill: function (_, i, all) {
-            let g = (i / all.length) * 255;
-            return "rgb(255, " + g + ", 0)"
-        },
-        radius: 12,
-    };
-
-    options2: ChartIconLine = {
-        height: 24,
-        width: 80
-    };
-
     columns: ColumnDefine[] = [
         {
             target: 'pie', width: '60px',
