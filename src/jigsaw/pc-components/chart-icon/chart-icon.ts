@@ -30,10 +30,21 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
 
     protected _chartType: ChartType;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public delimiter: string = ',';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public width: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public height: number;
 
@@ -83,8 +94,15 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
     }
 })
 export class JigsawPieChartIcon extends JigsawChartIconBase {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fill: string[] | ((...any) => string) = JigsawTheme.getGraphTheme().color;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public radius: number = 12;
 
@@ -106,10 +124,21 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawDonutChartIcon extends JigsawChartIconBase {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fill: string[] = JigsawTheme.getGraphTheme().color;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public radius: number = 12;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public innerRadius: number = 0;
 
@@ -133,18 +162,46 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
 })
 export class JigsawLineChartIcon extends JigsawChartIconBase {
     protected _chartType: ChartType = ChartType.line;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fill: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public width: number = 100;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public height: number = 24;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public max: number = 0;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public min: number = 0;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public stroke: string = JigsawTheme.getGraphTheme().color[0];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public strokeWidth: number = 1;
 
@@ -166,16 +223,40 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
 })
 export class JigsawBarChartIcon extends JigsawChartIconBase {
     protected _chartType: ChartType = ChartType.bar;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public fill: string[] = JigsawTheme.getGraphTheme().color;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public max: number = 0;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public min: number = 0;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public padding: number = 0.1;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public width: number = 100;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public height: number = 24;
 
