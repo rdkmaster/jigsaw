@@ -41,7 +41,7 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
         top: 1px;
         border-radius: 50%;
         background-color: $bg-body-light;
-        box-shadow: $box-shadow-lv1;
+        box-shadow: 1px 1px 3px hsla(0, 0%, 0%, 0.2);
         content: " ";
         cursor: pointer;
         transition: all $animation-duration-slow, width $animation-duration-slow;
@@ -52,7 +52,6 @@ $switch-prefix: #{$jigsaw-prefix}-switch;
     }
 
     &:focus {
-        box-shadow: 0 0 0 2px $brand-active-lighten;
         outline: 0;
     }
 
