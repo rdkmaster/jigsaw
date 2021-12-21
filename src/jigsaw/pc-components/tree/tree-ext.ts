@@ -91,8 +91,8 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     public size: "default" | "medium" | "large" = "default";
 
     private _iconSuit: ZTreeIconSuit = {
-        edit: "ea0c",
-        remove: "e9c3",
+        edit: "e166",
+        remove: "e179",
         open: "e4e4",
         close: "e4e3",
         document: "e9d5",
