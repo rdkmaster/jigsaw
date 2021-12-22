@@ -3,15 +3,7 @@
 $jigsaw-timeline: #{$jigsaw-prefix}-timeline;
 
 .#{$jigsaw-timeline}-host {
-    .test {
-        outline: 1px solid red;
-        width: 400px;
-        height: 60px;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        padding: 5px;
-        // border-bottom-right-radius: 50px;
+    .#{$jigsaw-timeline}-node {
+        display: flex;
     }
 }
