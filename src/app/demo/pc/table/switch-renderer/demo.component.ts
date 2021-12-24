@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer} from "jigsaw/public_api";
+import {TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer, AdditionalColumnDefine} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -12,6 +12,16 @@ export class TableSwitchRendererDemoComponent {
     columns2: ColumnDefine[];
     changeMsg: string;
     editable = true;
+    additional: AdditionalColumnDefine[] = [
+        {
+            header: {
+                renderer: TableHeadCheckboxRenderer
+            },
+            cell: {
+                renderer: TableCellSwitchRenderer
+            }
+        }
+    ];
 
     constructor(http: HttpClient) {
         function dataReviser(data: TableData) {
