@@ -1,20 +1,21 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {TableData, ColumnDefine, TableCellSwitchRenderer} from "jigsaw/public_api";
+import {TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TableSwitchRendererDemoComponent {
-    tableData: TableData;
+    tableData1: TableData;
+    tableData2: TableData;
+    columns1: ColumnDefine[];
+    columns2: ColumnDefine[];
     changeMsg: string;
-    columns: ColumnDefine[];
+    editable = true;
 
     constructor(http: HttpClient) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        // 添加switch列数据
-        this.tableData.dataReviser = data => {
+        function dataReviser(data: TableData) {
+            data.data = data.data.slice(0, 12);
             data = JSON.parse(JSON.stringify(data));
             data.field.splice(-1, 0, 'marriage');
             data.header.splice(-1, 0, '婚否');
@@ -22,32 +23,58 @@ export class TableSwitchRendererDemoComponent {
                 row.splice(-1, 0, row[2] == "System Architect" ? 1 : 0);
             });
             return data;
-        };
-        this.tableData.fromAjax('mock-data/hr-list');
+
+        }
+        this.tableData1 = new TableData();
+        this.tableData1.http = http;
+        // 添加switch列数据
+        this.tableData1.dataReviser = dataReviser;
+        this.tableData1.fromAjax('mock-data/hr-list');
+        this.tableData2 = new TableData();
+        this.tableData2.http = http;
+        // 添加switch列数据
+        this.tableData2.dataReviser = dataReviser;
+        this.tableData2.fromAjax('mock-data/hr-list');
         this.createColumnDefines(false);
     }
 
     public createColumnDefines(readonly: boolean):void {
-        this.columns = [
+        this.columns1 = [
             {
                 target: 'marriage',
                 cell: {
                     renderer: TableCellSwitchRenderer,
                     rendererInitData: {readonly}
                 }
-            }
+            },
+            {target: 'position', visible: false}, {target: 'salary', visible: false},
+            {target: 'office', visible: false}, {target: 'desc', visible: false},
+            {target: 'position', visible: false}
         ];
+        this.columns2 = [...this.columns1];
+        this.columns2[0] = {
+            target: 'marriage',
+            cell: {
+                renderer: TableCellSwitchRenderer,
+                rendererInitData: {readonly}
+            },
+            header: {
+                renderer: TableHeadCheckboxRenderer,
+                rendererInitData: () => ({disabled: !this.editable})
+            }
+        }
         setTimeout(() => {
-            // 等待表格内部columnDefines更新
-            this.tableData.refresh();
-        })
+            this.tableData1.refresh();
+            this.tableData2.refresh();
+        });
     }
 
     onCellChange(value) {
         this.changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
         let rows = value.row instanceof Array ? value.row : [value.row];
         for (let row of rows) {
-            console.log(this.tableData.data[row][value.column]);
+            console.log('tableData1:', this.tableData1.data[row][value.column]);
+            console.log('tableData2:', this.tableData2.data[row][value.column]);
         }
     }
 

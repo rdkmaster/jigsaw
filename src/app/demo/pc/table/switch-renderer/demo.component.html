@@ -6,9 +6,14 @@
 <!-- start to learn the demo from here -->
 <p style="margin-bottom: 12px">
 	“婚否”列是否可编辑
-	<jigsaw-switch [checked]='true' (checkedChange)="createColumnDefines(!$event);">
+	<jigsaw-switch [(checked)]='editable' (checkedChange)="createColumnDefines(!$event);">
 	</jigsaw-switch>
+    <span style="margin-left: 16px;">更改数据的信息： {{changeMsg}}</span>
 </p>
-<jigsaw-table height="400" [data]="tableData" [columnDefines]="columns" (edit)="onCellChange($event)"></jigsaw-table>
+<jigsaw-table width="400px" height="420" [data]="tableData1" [columnDefines]="columns1"
+              (edit)="onCellChange($event)">
+</jigsaw-table>
+<jigsaw-table style="margin-left: 24px;" width="400px" height="420" [data]="tableData2"
+              [columnDefines]="columns2" (edit)="onCellChange($event)">
+</jigsaw-table>
 
-更改数据的信息： {{changeMsg}}
