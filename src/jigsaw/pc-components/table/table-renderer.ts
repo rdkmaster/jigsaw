@@ -469,6 +469,20 @@ export class TableCellSwitchRenderer extends TableCellRendererBase {
      * @internal
      */
     public _$readonly: boolean;
+    private _initDataJson: any;
+
+    protected onDataRefresh() {
+        let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
+        checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
+        this.cellData = checked;
+        this._changeDetectorRef.markForCheck();
+        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
+            this.targetData.data[this.row][this.column] = this.cellData;
+            this._changeDetectorRef.markForCheck();
+        }
+        this._initDataJson = this.initData instanceof Function ?
+        this.initData(this.tableData, this.row, this.column) : this.initData;
+    }
 
     set initData(value: any) {
         if (!value || !value.hasOwnProperty('readonly')) {
