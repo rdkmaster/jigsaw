@@ -303,8 +303,9 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"
-                         [valid]="_$valid" mode="minimalist"></jigsaw-checkbox>`,
+        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
+                         [title]="_$title" mode="minimalist">
+        </jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -329,6 +330,10 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
 
     public get _$valid() {
         return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
+
+    public get _$title() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('title') ? this._initDataJson.title : '';
     }
 
     public get checked(): CheckBoxStatus {
@@ -449,8 +454,8 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
-                         (checkedChange)="onChange($event)">
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
+                         mode="minimalist" (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush

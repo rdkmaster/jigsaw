@@ -15,7 +15,7 @@ export class TableSwitchRendererDemoComponent {
     additional: AdditionalColumnDefine[] = [
         {
             header: {
-                renderer: TableHeadCheckboxRenderer
+                renderer: TableHeadCheckboxRenderer, rendererInitData: {title: '测试扩展列'}
             },
             cell: {
                 renderer: TableCellSwitchRenderer
@@ -70,7 +70,7 @@ export class TableSwitchRendererDemoComponent {
             },
             header: {
                 renderer: TableHeadCheckboxRenderer,
-                rendererInitData: () => ({disabled: !this.editable})
+                rendererInitData: () => ({disabled: !this.editable, title: '测试内置列'})
             }
         }
         setTimeout(() => {
