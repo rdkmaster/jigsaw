@@ -450,7 +450,8 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.targetData instanceof AdditionalTableData && !this.targetData.trackRowBy && this.row == 0) { // this.row == 0 ensures print once
+        // this.row == 0 to ensures print once
+        if (this.targetData instanceof AdditionalTableData && !this.targetData.trackRowBy && this.row == 0) {
             console.warn('You may need to add a [trackRowBy="field-name"] attribute to ' +
                 'the table if using a renderer which has status.');
         }
