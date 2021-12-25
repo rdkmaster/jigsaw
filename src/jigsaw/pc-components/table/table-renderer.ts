@@ -339,7 +339,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            this._additionalData.touchValueByRow(this.field, index, value);
+            if (this.targetData instanceof AdditionalTableData) {
+                this.targetData.touchValueByRow(this.field, index, value);
+            }
         });
         this.targetData.refresh();
     }
@@ -347,7 +349,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            let value = this._additionalData.getTouchedValueByRow(this.field, index);
+            let value = this.targetData instanceof AdditionalTableData ?
+                this.targetData.getTouchedValueByRow(this.field, index) : undefined;
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
             type |= value ? 2 : 1;
         });
@@ -388,7 +391,6 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
             this.initData(this.tableData, this.row, this.column) : this.initData;
     }
 
-
     public checked: boolean;
 
     private _cellData: any;
@@ -404,7 +406,8 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
     }
 
     private _updateChecked(): void {
-        let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
+        let checked = this.targetData instanceof AdditionalTableData ?
+            this.targetData.getTouchedValueByRow(this.field, this.row) : undefined;
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
         this._changeDetectorRef.markForCheck();
@@ -419,7 +422,9 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 
     onChange(value) {
         this.checked = value;
-        this._additionalData.touchValueByRow(this.field, this.row, value);
+        if (this.targetData instanceof AdditionalTableData) {
+            this.targetData.touchValueByRow(this.field, this.row, value);
+        }
         this._updateTargetData();
         this.dispatchChangeEvent(value);
         this._changeDetectorRef.markForCheck();
@@ -432,7 +437,7 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 
     ngOnInit() {
         super.ngOnInit();
-        if (!this._additionalData.trackRowBy && this.row == 0) { // this.row == 0 ensures print once
+        if (this.targetData instanceof AdditionalTableData && !this.targetData.trackRowBy && this.row == 0) { // this.row == 0 ensures print once
             console.warn('You may need to add a [trackRowBy="field-name"] attribute to ' +
                 'the table if using a renderer which has status.');
         }
@@ -471,7 +476,7 @@ export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
  * switch renderer
  */
 @Component({
-    template: '<j-switch [(checked)]="checked" [readonly]="_$readonly" (checkedChange)="onChange($event)"></j-switch>',
+    template: '<j-switch [checked]="checked" [readonly]="_$readonly" (checkedChange)="onChange($event)"></j-switch>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellToggleRendererBase {

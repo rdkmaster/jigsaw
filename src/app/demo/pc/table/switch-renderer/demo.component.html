@@ -13,7 +13,7 @@
 <jigsaw-table width="400px" height="420" [data]="tableData1" [columnDefines]="columns1"
               (edit)="onCellChange($event)">
 </jigsaw-table>
-<jigsaw-table style="margin-left: 24px;" width="400px" height="420" [data]="tableData2"
+<jigsaw-table style="margin-left: 24px;" width="400px" height="420" [data]="tableData2" trackRowBy="name"
               [columnDefines]="columns2" [additionalColumnDefines]="additional" (edit)="onCellChange($event)">
 </jigsaw-table>
 
