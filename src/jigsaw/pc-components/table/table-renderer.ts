@@ -368,44 +368,26 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/**
- * cell checkbox renderer
- */
-@Component({
-    template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
-                         (checkedChange)="onChange($event)">
-        </jigsaw-checkbox>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class TableCellCheckboxRenderer extends TableCellRendererBase {
+export class TableCellToggleRendererBase extends TableCellRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_injector);
+    }
+
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
         this._updateInitData();
     }
 
-    private _initDataJson: any;
+    protected _initDataJson: any;
 
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
             this.initData(this.tableData, this.row, this.column) : this.initData;
     }
 
-    public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
-    }
-
-    public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
-    }
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, private _zone: NgZone) {
-        super(_injector);
-    }
 
     public checked: boolean;
 
@@ -458,60 +440,52 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 }
 
 /**
+ * cell checkbox renderer
+ */
+@Component({
+    template: `
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
+                         (checkedChange)="onChange($event)">
+        </jigsaw-checkbox>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
+
+    public get _$disabled() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
+
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
+}
+
+/**
  * switch renderer
  */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="onChange(cellData)" [readonly]="_$readonly"></j-switch>',
+    template: '<j-switch [(checked)]="checked" [readonly]="_$readonly" (checkedChange)="onChange($event)"></j-switch>',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableCellSwitchRenderer extends TableCellRendererBase {
+export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
     /**
      * @internal
      */
-    public _$readonly: boolean;
-    private _initDataJson: any;
-
-    protected onDataRefresh() {
-        let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
-        checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
-        this.cellData = checked;
-        this._changeDetectorRef.markForCheck();
-        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
-            this.targetData.data[this.row][this.column] = this.cellData;
-            this._changeDetectorRef.markForCheck();
-        }
-        this._initDataJson = this.initData instanceof Function ?
-        this.initData(this.tableData, this.row, this.column) : this.initData;
+    public get _$readonly() {
+        return this._initDataJson && this._initDataJson.hasOwnProperty('readonly') ? this._initDataJson.readonly : false;
     }
 
-    set initData(value: any) {
-        if (!value || !value.hasOwnProperty('readonly')) {
-            return;
-        }
-        this._$readonly = value.readonly;
-        this._changeDetectorRef.markForCheck();
-    }
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, private _zone: NgZone) {
-        super(_injector);
-    }
-    
-    onChange(value) {
-        this.cellData = value;
-        this._additionalData.touchValueByRow(this.field, this.row, value);
-        if (CommonUtils.isDefined(this.targetData.data[this.row])) {
-            this.targetData.data[this.row][this.column] = this.cellData;
-            this._changeDetectorRef.markForCheck();
-        }
-        this.dispatchChangeEvent(value);
-        this._changeDetectorRef.markForCheck();
-        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
-            this._zone.run(() => {
-                this.targetData.refresh();
-            });
-        })
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
     }
 }
 
