@@ -245,15 +245,15 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     public get _$placeholder() {
-        return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
+        return this._initDataJson?.placeholder ? this._initDataJson.placeholder : '';
     }
 
     public get _$dropDownData() {
-        return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
+        return this._initDataJson?.data ? this._initDataJson.data : null;
     }
 
     public get _$maxDropDownHeight() {
-        return this._initDataJson && this._initDataJson.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
+        return this._initDataJson?.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
     }
 
     ngAfterViewInit() {
@@ -325,15 +325,15 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 
     public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
     }
 
     public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
     }
 
     public get _$title() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('title') ? this._initDataJson.title : '';
+        return this._initDataJson?.hasOwnProperty('title') ? this._initDataJson.title : '';
     }
 
     public get checked(): CheckBoxStatus {
@@ -709,15 +709,15 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     public get _$icon() {
-        return this.initData && this.initData.icon ? this.initData.icon : "iconfont iconfont-e515";
+        return this.initData?.icon ? this.initData.icon : "iconfont iconfont-e515";
     }
 
     public get _$label() {
-        return this.initData && this.initData.label ? this.initData.label : '';
+        return this.initData?.label ? this.initData.label : '';
     }
 
     public get _$title() {
-        return this.initData && this.initData.title ? this.initData.title : '';
+        return this.initData?.title ? this.initData.title : '';
     }
 
     /**
