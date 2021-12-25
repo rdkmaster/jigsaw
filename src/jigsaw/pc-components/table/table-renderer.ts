@@ -391,6 +391,14 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 
     protected _initDataJson: any;
 
+    public get _$disabled() {
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
+
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
             this.initData(this.tableData, this.row, this.column) : this.initData;
@@ -461,27 +469,16 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
-
-    public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
-    }
-
-    public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
-    }
-
-    constructor(protected _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, protected _zone: NgZone) {
-        super(_changeDetectorRef, _injector, _zone);
-    }
 }
 
 /**
  * switch renderer
  */
 @Component({
-    template: '<j-switch [checked]="checked" [readonly]="_$readonly" (checkedChange)="onChange($event)"></j-switch>',
+    template: `
+        <j-switch [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
+                  (checkedChange)="onChange($event)">
+        </j-switch>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
@@ -489,13 +486,7 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
      * @internal
      */
     public get _$readonly() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('readonly') ? this._initDataJson.readonly : false;
-    }
-
-    constructor(protected _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, protected _zone: NgZone) {
-        super(_changeDetectorRef, _injector, _zone);
+        return this._initDataJson?.hasOwnProperty('readonly') ? this._initDataJson.readonly : false;
     }
 }
 
