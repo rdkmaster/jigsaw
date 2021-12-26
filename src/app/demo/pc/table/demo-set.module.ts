@@ -258,6 +258,9 @@ export const routerConfig = [
     },
     {
         path: "auto-page-sizing", component: TableAutoPageableDemoComponent
+    },
+    {
+        desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
 
