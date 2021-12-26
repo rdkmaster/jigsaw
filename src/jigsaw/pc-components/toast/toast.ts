@@ -4,7 +4,7 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateService } from '@ngx-translate/core';
-import { AbstractDialogComponentBase } from "../dialog/dialog";
+import { AbstractDialogComponentBase, DialogType } from "../dialog/dialog";
 
 export class ToastMessage {
     /**
@@ -26,7 +26,7 @@ export class ToastMessage {
     /**
      * 提示框支持的默认类型
      */
-    iconType?: 'success' | 'error' | 'warning' | 'info';
+    iconType?: DialogType;
 }
 
 
@@ -67,13 +67,13 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         this._$iconType = value.iconType;
     }
 
-    private _timeout;
-    private _timer;
+    private _timeout: number;
+    private _timer: number;
 
     /**
      * @internal
      */
-    public _$iconType: 'success' | 'error' | 'warning' | 'info';
+    public _$iconType: DialogType;
 
     /**
      * @internal
@@ -108,11 +108,11 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
     /**
      * @internal
      */
-    get _popupInfo(): PopupInfo {
+    public get popupInfo(): PopupInfo {
         return this._popupInfoValue;
     }
 
-    set _popupInfo(value: PopupInfo) {
+    public set popupInfo(value: PopupInfo) {
         this._popupInfoValue = value;
         if (!this._popupInfoValue) {
             return;
@@ -153,7 +153,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         }
 
         const popupInfo = PopupService.instance.popup(JigsawToast, popupOptions, initData);
-        (<JigsawToast>popupInfo.instance)._popupInfo = popupInfo;
+        (<JigsawToast>popupInfo.instance).popupInfo = popupInfo;
         toastInstances.push(popupInfo)
 
         return popupInfo;
@@ -198,9 +198,24 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
     };
 
     /**
+    * 用于重新定位视图上所有的Toast提示框，一般需要在视图上的提示框有变动时调用。
+    */
+    public static reposition() {
+        const instances = toastInstances;
+        const instancesCopy = instances.concat();
+        instances.splice(0, instances.length);
+        instancesCopy.forEach(popupInfo => {
+            const p = this._positionReviser(popupInfo.element);
+            const options = { posType: PopupPositionType.fixed, pos: { x: p.left, y: p.top } };
+            PopupService.instance.setPosition(options, popupInfo.element);
+            instances.push(popupInfo);
+        });
+    }
+
+    /**
      * @internal
      */
-    _$onEnter() {
+    public _$onEnter() {
         if (this._timer) {
             this.clearCallLater(this._timer);
             this._timer = null;
@@ -226,6 +241,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             if (!this._popupInfoValue) {
                 return;
             }
+            JigsawToast.reposition();
             const instances = toastInstances;
             const idx = instances.indexOf(this._popupInfoValue);
             if (idx != -1) {
@@ -245,17 +261,19 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
     /**
      * @internal
      */
-    _$onLeave() {
+    public _$onLeave() {
         if (this._timeout > 0) {
             this.clearCallLater(this._timer);
             this._timer = this.callLater(() => this._$close(), this._timeout);
         }
     }
 
-
-
     ngOnDestroy() {
         super.ngOnDestroy();
+
+        if (this._popupInfoValue.answer) {
+            this._popupInfoValue.answer.unsubscribe();
+        }
     }
 }
 

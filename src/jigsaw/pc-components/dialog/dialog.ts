@@ -36,6 +36,8 @@ export interface IDialog extends IPopupable {
 
 export type DialogCallback = (button: ButtonInfo) => void;
 
+export type DialogType = 'success' | 'error' | 'warning' | 'info';
+
 /**
  * 这个类用于应用在需要根据已有的对话框组件派生出该对话框组件的更具体的对话框的时候使用。
  * 对话框组件是具备一定抽象性的，因此他们的API一般会较多较复杂，应用在使用时需要做较多的配置。
