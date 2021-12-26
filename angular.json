@@ -49,6 +49,16 @@
                 "input": "src/jigsaw/common/core/theming/themes/vmax-pro-light.scss",
                 "bundleName": "themes/vmax-pro-light",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/pc-components/breadcrumb/breadcrumb-light.scss",
+                "bundleName": "themes/components/breadcrumb-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/pc-components/breadcrumb/breadcrumb-dark.scss",
+                "bundleName": "themes/components/breadcrumb-dark",
+                "inject": false
               }
             ],
             "scripts": [
