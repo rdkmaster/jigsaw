@@ -88,6 +88,7 @@ export * from "./pc-components/viewport/viewport";
 export * from "./pc-components/menu/index";
 export * from "./pc-components/color-select/index";
 export * from "./pc-components/process-status/index";
+export * from "./pc-components/toast/toast";
 export * from "./pc-components/chart-icon/chart-icon";
 
 /* fallback components */

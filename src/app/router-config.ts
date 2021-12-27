@@ -260,9 +260,13 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/process-status/demo-set.module').then(m => m.ProcessStatusDemoModule),
     },
     {
+        path: "pc/toast",
+        loadChildren: () => import('./demo/pc/toast/demo-set.module').then(m => m.ToastDemoModule),
+    },
+    {   
         path: "pc/chart-icon",
         loadChildren: () => import('./demo/pc/chart-icon/demo-set.module').then(m => m.ChartIconDemoModule),
-    },
+    }
 ];
 export const routerConfigMobile = [
     {

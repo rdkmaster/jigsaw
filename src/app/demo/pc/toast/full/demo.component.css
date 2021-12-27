@@ -1,0 +1,12 @@
+.toast-basic-demo-cntr {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.toast-basic-demo-cntr .jigsaw-button {
+    margin-bottom: 10px;
+}
+
+.toast-basic-demo-cntr .row {
+    margin-bottom: 10px;
+}
