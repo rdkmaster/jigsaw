@@ -2,8 +2,23 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<p style="margin-bottom: 8px;"><span>主消息</span> <j-input [(value)]="header" width="671px"></j-input></p>
-<p style="margin-bottom: 8px;"><span>副消息</span> <j-input [(value)]="message" width="671px"></j-input></p>
+<jigsaw-header>Alert</jigsaw-header>
+<div class="alert-demo-setting">
+    <span>主消息</span>
+    <j-input [(value)]="header" width="671px"></j-input>
+</div>
+
+<div class="alert-demo-setting">
+    <span>副消息</span>
+    <j-input [(value)]="message" width="671px"></j-input>
+    <a (click)="createLongText()">长文本</a>
+</div>
+
+<div class="alert-demo-setting">
+    <span>高度</span>
+    <jigsaw-slider min="80" max="600" width="400px" [(value)]="height"></jigsaw-slider>
+    <span>{{height}} px</span>
+</div>
 
 <!-- start to learn the demo from here -->
 <jigsaw-button width="175" (click)="commonInfoAlert()">
@@ -22,9 +37,4 @@
     通用确认提示框
 </jigsaw-button>
 
-<jigsaw-button width="175" (click)="contentWrap()">
-    内容换行
-</jigsaw-button>
-
 <p style="margin-top: 20px; font-size: 16px">{{answer}}</p>
-
