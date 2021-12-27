@@ -4,7 +4,7 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateService } from '@ngx-translate/core';
-import { AbstractDialogComponentBase, DialogType } from "../dialog/dialog";
+import { AbstractDialogComponentBase, NoticeLevel } from "../dialog/dialog";
 
 export class ToastMessage {
     /**
@@ -26,7 +26,7 @@ export class ToastMessage {
     /**
      * 提示框支持的默认类型
      */
-    iconType?: DialogType;
+    iconType?: NoticeLevel;
 }
 
 
@@ -73,7 +73,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
     /**
      * @internal
      */
-    public _$iconType: DialogType;
+    public _$iconType: NoticeLevel;
 
     /**
      * @internal
@@ -105,9 +105,6 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
 
     private _popupInfoValue: PopupInfo;
 
-    /**
-     * @internal
-     */
     public get popupInfo(): PopupInfo {
         return this._popupInfoValue;
     }
@@ -246,15 +243,14 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             const idx = instances.indexOf(this._popupInfoValue);
             if (idx != -1) {
                 instances.splice(idx, 1);
-            } else {
-                console.error('can find popupInfo in the notification list, this should not happen!');
-
-                this._popupInfoValue = null;
-                this._timeout = null;
-                this.buttons = null;
-                this.renderer = null;
-                this.elementRef = null;
-            };
+                return;
+            }
+            console.error('can find popupInfo in the notification list, this should not happen!');
+            this._popupInfoValue = null;
+            this._timeout = null;
+            this.buttons = null;
+            this.renderer = null;
+            this.elementRef = null;
         })
     }
 

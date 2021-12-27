@@ -13,7 +13,7 @@ import { CommonModule } from "@angular/common";
 import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { AbstractDialogComponentBase, DialogCallback, DialogType } from "../dialog/dialog";
+import { AbstractDialogComponentBase, DialogCallback, NoticeLevel } from "../dialog/dialog";
 import {
     ButtonInfo,
     PopupEffect,
@@ -105,7 +105,7 @@ export class NotificationMessage {
      * $demo = notification/full
      */
     innerHtmlContext?: any;
-    iconType?: DialogType;
+    iconType?: NoticeLevel;
     /**
      * 控制是否在路由变化时提示框是否关闭，默认不关
      */
@@ -289,7 +289,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     /**
      * @internal
      */
-    public _$iconType: DialogType;
+    public _$iconType: NoticeLevel;
 
     /**
      * @internal
