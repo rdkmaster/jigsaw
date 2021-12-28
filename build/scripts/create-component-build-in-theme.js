@@ -27,6 +27,8 @@ if (!allStyleFilePath) {
 
 console.log("creating component build-in themes");
 
+// allStyleFilePath.length = 3;
+
 allStyleFilePath.forEach((scssFile, index) => {
     const filePath = scssFile.replace(/['"]+/g, "");
     const fileName = filePath.split("/").pop();
