@@ -2,12 +2,17 @@ import {Component} from "@angular/core";
 import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class AlertPopupDemoComponent {
     header = '这是一个标题';
     message = '弹出的信息也可以直接给一个字符串，Alert会将此字符串作为主消息显示出来。';
     answer = '';
+
+    createLongText() {
+        this.message = 'This is very long regular text in English. This is very long regular text in English. This is very long abnormall texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxt in English. 这是一长串数字123456789012345678901234567890123456789012345678901234567890';
+    }
 
     commonInfoAlert() {
         this.answer = 'waiting for an answer';
@@ -30,25 +35,17 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawErrorAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, false);
+        });
     }
 
     commonConfirmAlert() {
         this.answer = 'waiting for an answer';
-        const info = {header: this.header, message: this.message};
+        const info = { header: this.header, message: this.message };
         JigsawConfirmAlert.show(info, answer => {
-                this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-            },
-            /* custom your own buttons*/
-            [{label: 'alert.button.yes'}, {label: 'alert.button.no'}, {label: "不知道"}]);
-    }
-
-    contentWrap() {
-        this.answer = 'waiting for an answer';
-        const info = {header: this.header, message: 'This is very long regular text in English. This is very long regular text in English. This is very long abnormall texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxt in English. 这是一长串数字123456789012345678901234567890123456789012345678901234567890'};
-        JigsawInfoAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        });
+        },
+            /* custom your own buttons*/
+            [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }]);
     }
 
     // ====================================================================

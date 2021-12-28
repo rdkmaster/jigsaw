@@ -5,7 +5,6 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
 .#{$alert-prefix-cls}-host {
     @include inline-block;
     width: 100%;
-    user-select: none;
 }
 
 .#{$alert-prefix-cls} {
@@ -54,7 +53,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        padding: 0 32px 0 32 + $height-sm;
+        padding: 18px 32px 10px 32 + $height-sm;
         max-height: 80vh;
         outline: red;
         overflow: hidden;
@@ -88,6 +87,7 @@ $alert-prefix-cls: #{$jigsaw-prefix}-alert;
                 font-size: $font-size-base;
                 color: $font-color-hint;
                 word-break: break-word;
+                max-height: 60vh;
             }
         }
     }
