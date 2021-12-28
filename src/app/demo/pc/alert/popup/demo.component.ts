@@ -20,7 +20,7 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawInfoAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, false, { size: { height: this.height } });
+        }, null, null, true, { size: { height: this.height } });
     }
 
     commonWarningAlert() {
@@ -28,7 +28,7 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawWarningAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, false, { size: { height: this.height } });
+        }, null, null, true, { size: { height: this.height } });
     }
 
     commonErrorAlert() {
@@ -36,7 +36,7 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawErrorAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, false, { size: { height: this.height } });
+        }, null, null, true, { size: { height: this.height } });
     }
 
     commonConfirmAlert() {

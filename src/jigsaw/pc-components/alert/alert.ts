@@ -30,6 +30,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 export enum AlertLevel {
     info, warning, error, confirm
@@ -197,6 +198,14 @@ export abstract class JigsawCommonAlert extends DialogBase {
             shadowType: 'alert',
             borderRadius: '3px'
         };
+        po.modal = CommonUtils.isUndefined(po.modal) ? modal : po.modal;
+        po.showEffect = CommonUtils.isUndefined(po.showEffect) ? PopupEffect.bubbleIn : po.showEffect;
+        po.hideEffect = CommonUtils.isUndefined(po.hideEffect) ? PopupEffect.bubbleOut : po.hideEffect;
+        po.shadowType = CommonUtils.isUndefined(po.shadowType) ? 'alert' : po.shadowType;
+        po.borderRadius = CommonUtils.isUndefined(po.borderRadius) ? '3px' : po.borderRadius;
+        if (CommonUtils.isDefined(po.size?.height)) {
+            po.size.height = Math.min.apply(Math, [Math.max.apply(Math, [po.size.height, 240]), 600])
+        }
         const popupInfo = PopupService.instance.popup(what, po,
             {message: msg.message, header: msg.header, title: caption, buttons});
         popupInfo.answer.subscribe(answer => {
@@ -424,7 +433,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forChild()],
+    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert],
     exports: [
         JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,
