@@ -2,11 +2,15 @@
 @import "../../common/assets/scss/animate.scss";
 @import "../../common/assets/scss/reset.scss";
 
+/* fall back components */
+@import "../fallback/upload/upload";
+
+/* Component Style */
 @import "../alert/alert";
 @import "../alert/common-alert";
 @import "../../common/components/block/block";
 @import "../button/button";
-@import "../list-and-tile/button-bar.scss";
+@import "../list-and-tile/button-bar";
 @import "../checkbox/checkbox";
 @import "../collapse/collapse";
 @import "../combo-select/combo-select";
@@ -31,7 +35,7 @@
 @import "../switch/switch";
 @import "../table/table";
 @import "../table/table-head";
-@import "../table/renderer.scss";
+@import "../table/renderer";
 @import "../tabs/tab";
 @import "../tag/tag";
 @import "../list-and-tile/tile";
@@ -72,7 +76,3 @@
 @import "../process-status/process-status";
 @import "../process-status/process-status-multiline";
 @import "../chart-icon/chart-icon";
-
-/* fall back components */
-@import "../fallback/upload/upload";
-

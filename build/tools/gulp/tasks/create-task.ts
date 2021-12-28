@@ -84,9 +84,11 @@ export function createTask(packageName: string) {
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
+        ':create-component-build-in-theme',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
+        ':reset-angular-json',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
@@ -106,6 +108,15 @@ export function createTask(packageName: string) {
     task(':extract-theme-variables', () => {
         gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
     });
+
+    task(':create-component-build-in-theme', () => {
+        gulpRun(`node build/scripts/create-component-build-in-theme.js`, {}).exec();
+    });
+
+    task(':reset-angular-json', () => {
+        gulpRun(`node build/scripts/create-component-build-in-theme.js clean`, {}).exec();
+    });
+
 }
 
 

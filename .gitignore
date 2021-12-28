@@ -28,6 +28,8 @@
 npm-debug.log
 testem.log
 src/jigsaw/common/core/theming/prebuilt/extraction/*
+src/jigsaw/common/core/theming/prebuilt/build-in-theme/*
+src/jigsaw/common/core/theming/prebuilt/angular.json
 
 # e2e
 /e2e/*.js
