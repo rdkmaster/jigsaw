@@ -9,7 +9,6 @@ export class AlertPopupDemoComponent {
     header = '这是一个标题';
     message = '弹出的信息也可以直接给一个字符串，Alert会将此字符串作为主消息显示出来。';
     answer = '';
-    height: number = 240;
 
     createLongText() {
         this.message = 'This is very long regular text in English. This is very long regular text in English. This is very long abnormall texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxt in English. 这是一长串数字123456789012345678901234567890123456789012345678901234567890';
@@ -20,7 +19,7 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawInfoAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, true, { size: { height: this.height } });
+        });
     }
 
     commonWarningAlert() {
@@ -28,7 +27,7 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawWarningAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, true, { size: { height: this.height } });
+        });
     }
 
     commonErrorAlert() {
@@ -36,7 +35,7 @@ export class AlertPopupDemoComponent {
         const info = {header: this.header, message: this.message};
         JigsawErrorAlert.show(info, answer => {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        }, null, null, true, { size: { height: this.height } });
+        });
     }
 
     commonConfirmAlert() {
@@ -46,7 +45,7 @@ export class AlertPopupDemoComponent {
             this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
         },
             /* custom your own buttons*/
-            [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }], null, true, { size: { height: this.height } });
+            [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }]);
     }
 
     // ====================================================================
