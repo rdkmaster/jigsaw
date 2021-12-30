@@ -88,7 +88,27 @@
             </div>
         </section>
     </li>
-    <li class="select">
+    <li class="auto-complete-input">
+        <section>
+            <jigsaw-header [theme]="darkTheme">auto-complete-input</jigsaw-header>
+            <div class="start">
+                <div class="start">
+                    <jigsaw-auto-complete-input [theme]="darkTheme" [data]="_$dropdownData"
+                        placeholder="auto complete input demo" width="280">
+                    </jigsaw-auto-complete-input>
+                </div>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">auto-complete-input</jigsaw-header>
+            <div class="start">
+                <jigsaw-auto-complete-input [theme]="lightTheme" [data]="_$dropdownData"
+                    placeholder="auto complete input demo" width="280">
+                </jigsaw-auto-complete-input>
+            </div>
+        </section>
+    </li>
+    <!-- <li class="select">
         <section>
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="start">
@@ -101,5 +121,5 @@
                 <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="cityList"></jigsaw-select>
             </div>
         </section>
-    </li>
+    </li> -->
 </ul>

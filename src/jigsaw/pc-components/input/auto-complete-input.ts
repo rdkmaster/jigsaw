@@ -14,7 +14,9 @@ import {
     Output,
     TemplateRef,
     ViewChild,
-    Injector
+    Injector,
+    Renderer2,
+    ElementRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -50,7 +52,7 @@ export class DropDownValue {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-auto-complete-input]': 'true'
+        '[class.jigsaw-auto-complete-input-host]': 'true'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
@@ -58,6 +60,12 @@ export class DropDownValue {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector,
+        protected _renderer?: Renderer2, protected _elementRef?: ElementRef) {
+        super(_cdr, _injector, _zone, _renderer, _elementRef);
+    }
     @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
@@ -192,12 +200,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
-
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_cdr, _injector, _zone);
-    }
 
     ngAfterViewInit() {
         this._subscribeKeydownEvent();

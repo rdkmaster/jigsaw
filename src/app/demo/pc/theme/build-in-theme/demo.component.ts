@@ -20,6 +20,20 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         { label: "西安" }
     ]);
 
+    _$dropdownData = [{
+        category: '事件与数据',
+        items: ['发送事件到事件总线', '更新变量']
+    }, {
+        category: '动画',
+        items: ['隐藏/显示元素', '滚动页面']
+    }, {
+        category: '弹出',
+        items: ['对话框', '提醒', '警示', '等待弹出关闭']
+    }, {
+        category: '高级',
+        items: ['自定义代码块']
+    }];
+
     ngAfterViewInit() {
         console.log(document.querySelectorAll("ul.build-in-theme-cntr li"));
     }
