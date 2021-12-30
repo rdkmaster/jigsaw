@@ -6,7 +6,7 @@ import {JigsawLoadingBase} from "jigsaw/public_api";
     styleUrls: ['./definedLoading.css']
 })
 export class DefinedLoading extends JigsawLoadingBase {
-    constructor(private renderer:Renderer2,private el:ElementRef) {
+    constructor(protected renderer:Renderer2,protected el:ElementRef) {
         super(renderer, el);
     }
 }

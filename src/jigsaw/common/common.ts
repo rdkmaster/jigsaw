@@ -1,4 +1,4 @@
-import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
 import {CommonUtils} from "./core/utils/common-utils";
 import {take} from 'rxjs/operators';
 
@@ -159,7 +159,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
  */
 @Directive()
 export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
-    constructor(protected _zone?: NgZone) {
+    constructor(protected _zone?: NgZone, protected renderer?: Renderer2, protected elementRef?: ElementRef) {
         super(_zone);
     }
 
@@ -198,6 +198,34 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
 
     public set maxHeight(value: string) {
         this._maxHeight = CommonUtils.getCssValue(value);
+    }
+
+    protected _theme;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get theme() {
+        return this._theme;
+    }
+
+    public set theme(theme: 'light' | 'dark' | string) {
+        this.renderer.setAttribute(this.elementRef.nativeElement, "data-theme", "theme")
+        let selectorName = this.elementRef.nativeElement.localName.toString();
+        selectorName = selectorName.slice(selectorName.indexOf("-") + 1);
+
+        const linkId = `${selectorName}DarkTheme`;
+        const themeLink = document.getElementById(linkId) as HTMLLinkElement;
+        if (themeLink) {
+            return;
+        }
+        const head = document.getElementsByTagName("head")[0];
+        const style = document.createElement("link");
+        style.rel = "stylesheet";
+        style.id = linkId;
+        style.href = `themes/components/${selectorName}-dark.css`;
+        head.appendChild(style);
     }
 }
 
