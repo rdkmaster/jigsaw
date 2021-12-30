@@ -31,21 +31,6 @@ export class BreadcrumbModeDemoComponent {
         ];
     }
 
-    public testLight() {
-        const head = document.getElementsByTagName("head")[0];
-        const style = document.createElement("link");
-        style.rel = "stylesheet";
-        style.href = "themes/components/breadcrumb-light.css";
-        head.appendChild(style);
-    }
-
-    public testDark() {
-        const head = document.getElementsByTagName("head")[0];
-        const style = document.createElement("link");
-        style.rel = "stylesheet";
-        style.href = "themes/components/breadcrumb-dark.css";;
-        head.appendChild(style);
-    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

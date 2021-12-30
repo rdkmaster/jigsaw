@@ -211,7 +211,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
     }
 
     public set theme(theme: 'light' | 'dark' | string) {
-        this.renderer.setAttribute(this.elementRef.nativeElement, "data-theme", "theme")
+        this.renderer.setAttribute(this.elementRef.nativeElement, "data-theme", theme)
         let selectorName = this.elementRef.nativeElement.localName.toString();
         selectorName = selectorName.slice(selectorName.indexOf("-") + 1);
 
@@ -224,7 +224,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
         const style = document.createElement("link");
         style.rel = "stylesheet";
         style.id = linkId;
-        style.href = `themes/components/${selectorName}-dark.css`;
+        style.href = `themes/components/${selectorName}-${theme}.css`;
         head.appendChild(style);
     }
 }
