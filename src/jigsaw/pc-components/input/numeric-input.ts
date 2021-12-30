@@ -8,7 +8,8 @@ import {
     Input,
     NgModule,
     Output,
-    ViewChild
+    ViewChild,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -33,7 +34,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
         '[style.width]': 'width',
         '[style.height]': 'height',
         '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-numeric-input]': 'true',
+        '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
@@ -47,8 +48,8 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _cdr: ChangeDetectorRef) {
-        super();
+    constructor(private _cdr: ChangeDetectorRef, protected _elementRef: ElementRef, protected _renderer: Renderer2) {
+        super(null, _renderer, _elementRef);
     }
     /**
      * @NoMarkForCheckRequired

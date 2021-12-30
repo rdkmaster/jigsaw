@@ -11,7 +11,8 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawButtonModule,
         JigsawSelectModule,
         JigsawTagModule,
-        JigsawInputModule
+        JigsawInputModule,
+        JigsawNumericInputModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent]

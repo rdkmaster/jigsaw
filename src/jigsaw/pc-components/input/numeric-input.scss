@@ -1,19 +1,19 @@
-$numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
+$jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
 
-.#{$numeric-input-prefix-cls} {
+.#{$jigsaw-numeric-input}-host {
     @include inline-block();
     position: relative;
     height: $height-base;
     font-size: $font-size-text-base;
     user-select: none;
 
-    &-container {
+    .#{$jigsaw-numeric-input}-container {
         display: flex;
         height: 100%;
         width: 100%;
     }
 
-    &-wrapper {
+    .#{$jigsaw-numeric-input}-wrapper {
         width: 120px;
         display: flex;
         flex: 1;
@@ -25,28 +25,22 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         border-radius: $border-radius-base;
     }
 
-    .#{$numeric-input-prefix-cls}-wrapper:hover,
-    &.#{$numeric-input-prefix-cls}-focused
-        .#{$numeric-input-prefix-cls}-wrapper {
-        @include prefixer(
-            transition,
-            (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out)
-        );
+    .#{$jigsaw-numeric-input}-wrapper:hover,
+    &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-color: $brand-default;
     }
 
-    &.#{$numeric-input-prefix-cls}-error {
-        .#{$numeric-input-prefix-cls}-wrapper,
-        .#{$numeric-input-prefix-cls}-wrapper:hover,
-        &.#{$numeric-input-prefix-cls}-focused
-            .#{$numeric-input-prefix-cls}-wrapper {
-            &.#{$numeric-input-prefix-cls}-none {
+    &.#{$jigsaw-numeric-input}-error {
+        .#{$jigsaw-numeric-input}-wrapper,
+        .#{$jigsaw-numeric-input}-wrapper:hover,
+        &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
+            &.#{$jigsaw-numeric-input}-none {
                 border-color: $error-default;
             }
 
-            &.#{$numeric-input-prefix-cls}-right {
-                border-color: $error-default $border-color-default
-                    $error-default $error-default;
+            &.#{$jigsaw-numeric-input}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
             }
 
             box-shadow: none;
@@ -65,10 +59,11 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         outline: none;
         border-radius: $border-radius-base;
         background: $bg-component;
+        color: $font-color-default;
     }
 
-    &.#{$numeric-input-prefix-cls}-disabled {
-        .#{$numeric-input-prefix-cls}-wrapper {
+    &.#{$jigsaw-numeric-input}-disabled {
+        .#{$jigsaw-numeric-input}-wrapper {
             background-color: $bg-disabled;
             border-color: $border-color-disabled;
             cursor: not-allowed;
@@ -97,24 +92,20 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
         color: $font-color-hint;
     }
 
-    &-option-box {
+    .#{$jigsaw-numeric-input}-option-box {
         width: 20px;
         height: 100%;
         display: none;
         flex-direction: column;
+    }
 
-        .#{$numeric-input-prefix-cls}:not(.#{$numeric-input-prefix-cls}-disabled):hover
-            & {
-            display: flex;
-        }
-
-        @at-root .#{$numeric-input-prefix-cls}-showOption
-                .#{$numeric-input-prefix-cls}-option-box {
+    &:not(.#{$jigsaw-numeric-input}-disabled):hover {
+        .#{$jigsaw-numeric-input}-option-box {
             display: flex;
         }
     }
 
-    &-option-bar {
+    .#{$jigsaw-numeric-input}-option-bar {
         flex: 1;
         display: flex;
         justify-content: center;
@@ -161,7 +152,7 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
             color: $brand-active;
         }
 
-        &.#{$numeric-input-prefix-cls}-option-bar-disabled {
+        &.#{$jigsaw-numeric-input}-option-bar-disabled {
             color: $font-color-disabled-spec;
             cursor: not-allowed;
 
@@ -171,9 +162,9 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
             }
         }
 
-        @at-root .#{$numeric-input-prefix-cls}-disabled.#{$numeric-input-prefix-cls}-showOption
-                .#{$numeric-input-prefix-cls}-option-box
-                .#{$numeric-input-prefix-cls}-option-bar {
+        @at-root .#{$jigsaw-numeric-input}-disabled.#{$jigsaw-numeric-input}-showOption
+                .#{$jigsaw-numeric-input}-option-box
+                .#{$jigsaw-numeric-input}-option-bar {
             color: $font-color-disabled-spec;
             border-left-color: $border-color-disabled;
             pointer-events: none;
@@ -193,18 +184,18 @@ $numeric-input-prefix-cls: #{$jigsaw-prefix}-numeric-input;
                     border-top-color: $border-color-disabled;
                 }
             }
-            
+
             &:hover {
                 border-color: $border-color-disabled;
             }
         }
     }
 
-    &.#{$numeric-input-prefix-cls}-small {
+    &.#{$jigsaw-numeric-input}-small {
         height: $height-sm;
     }
 
-    &.#{$numeric-input-prefix-cls}-large {
+    &.#{$jigsaw-numeric-input}-large {
         height: $height-lg;
     }
 }
