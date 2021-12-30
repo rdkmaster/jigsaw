@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild, Renderer2, ElementRef} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
@@ -18,9 +18,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
-        protected _zone?: NgZone
+        protected _zone?: NgZone,
+        protected _renderer?: Renderer2,
+        protected _elementRef?: ElementRef
     ) {
-        super(_zone);
+        super(_zone, _renderer, _elementRef);
     }
 
     protected _width: string = "120px";

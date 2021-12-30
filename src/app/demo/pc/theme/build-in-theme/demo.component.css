@@ -1,0 +1,48 @@
+body {
+    background: linear-gradient(to left, #ffffff, #ffffff 50%, #0f111a 50%, #0f111a);
+}
+
+ul.build-in-theme-cntr > li {
+    display: flex;
+    width: 100%;
+}
+
+ul.build-in-theme-cntr > li:not(:first-of-type) {
+    margin-bottom: 16px;
+}
+
+ul.build-in-theme-cntr > li .jigsaw-header-host .jigsaw-header-content{
+    text-transform: capitalize;
+}
+
+ul.build-in-theme-cntr > li > section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 8px;
+}
+
+ul.build-in-theme-cntr > li > section > div {
+    display: flex;
+    width: 100%;
+}
+
+ul.build-in-theme-cntr > li > section > div.center {
+    justify-content: center;
+}
+
+ul.build-in-theme-cntr > li > section > div.start {
+    justify-content: flex-start;
+}
+
+ul.build-in-theme-cntr > li > section > div.start > * {
+    margin-right: 8px;
+}
+
+ul.build-in-theme-cntr > li > section > div.space-between {
+    justify-content: space-between;
+}
+
+ul.build-in-theme-cntr > li > section > div.space-evenly {
+    justify-content: space-evenly;
+}

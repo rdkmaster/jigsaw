@@ -1,4 +1,4 @@
-$select-prefix-cls: #{$jigsaw-prefix}-select;
+$jigsaw-select: #{$jigsaw-prefix}-select;
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 $jigsaw-collapse-select: #{$jigsaw-prefix}-collapse-select;
 $jigsaw-group-select: #{$jigsaw-prefix}-group-select;
@@ -9,12 +9,12 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-.#{$select-prefix-cls}-host,
+.#{$jigsaw-select}-host,
 .#{$jigsaw-collapse-select}-host,
 .#{$jigsaw-group-select}-host {
     @include inline-block();
 
-    &.#{$select-prefix-cls}-single-select {
+    &.#{$jigsaw-select}-single-select {
         .#{$jigsaw-combo-select}-host {
             .#{$jigsaw-tag}-host {
                 padding: 0;
@@ -28,10 +28,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
-    &.#{$select-prefix-cls}-multiple-select {
+    &.#{$jigsaw-select}-multiple-select {
         .#{$jigsaw-combo-select}-host {
             position: relative;
-            .#{$select-prefix-cls}-statistics {
+            .#{$jigsaw-select}-statistics {
                 display: flex;
                 align-items: center;
                 position: absolute;
@@ -42,13 +42,13 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 font-size: $font-size-text-base;
                 pointer-events: none;
 
-                &.#{$select-prefix-cls}-statistics-disabled {
+                &.#{$jigsaw-select}-statistics-disabled {
                     color: $font-color-disabled-spec;
                 }
             }
         }
 
-        &.#{$select-prefix-cls}-with-max-width {
+        &.#{$jigsaw-select}-with-max-width {
             .#{$jigsaw-combo-select}-host {
                 .#{$jigsaw-tag}-host {
                     max-width: 100%;
@@ -56,7 +56,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
 
-        &.#{$select-prefix-cls}-show-statistics {
+        &.#{$jigsaw-select}-show-statistics {
             .#{$jigsaw-combo-select} {
                 .#{$jigsaw-combo-select}-selection {
                     .#{$jigsaw-combo-select}-selection-rendered {
@@ -76,7 +76,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     }
 }
 
-.#{$select-prefix-cls}-single-list {
+.#{$jigsaw-select}-single-list {
     .#{$jigsaw-collapse-select}-option-cntr,
     .#{$jigsaw-group-select}-option-cntr {
         #{$jigsaw-list-option} {
@@ -85,8 +85,8 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     }
 }
 
-.#{$select-prefix-cls}-multiple-list {
-    .#{$select-prefix-cls}-select-all {
+.#{$jigsaw-select}-multiple-list {
+    .#{$jigsaw-select}-select-all {
         display: flex;
         align-items: center;
         height: 32px;
@@ -114,7 +114,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
 
-        .#{$select-prefix-cls}-show-selected {
+        .#{$jigsaw-select}-show-selected {
             display: flex;
             align-items: center;
             color: $brand-default;
@@ -133,7 +133,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
 
-        .#{$select-prefix-cls}-show-all {
+        .#{$jigsaw-select}-show-all {
             display: flex;
             align-items: center;
             padding: 0 0 0 8px;
@@ -172,15 +172,15 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
     }
-    &.#{$select-prefix-cls}-show-selected {
+    &.#{$jigsaw-select}-show-selected {
         #{$jigsaw-list-option}:not(.jigsaw-list-option-active) {
             display: none;
         }
     }
 }
 
-.#{$select-prefix-cls}-single-list,
-.#{$select-prefix-cls}-multiple-list {
+.#{$jigsaw-select}-single-list,
+.#{$jigsaw-select}-multiple-list {
     border: 1px solid $border-color-shadow-cntr;
 
     &.#{$jigsaw-list} {
@@ -246,7 +246,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                         padding-left: 8px;
 
                         &:hover {
-                            .#{$select-prefix-cls}-option-title {
+                            .#{$jigsaw-select}-option-title {
                                 color: $brand-default;
                             }
 
@@ -255,7 +255,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                             }
                         }
 
-                        .#{$select-prefix-cls}-option-title {
+                        .#{$jigsaw-select}-option-title {
                             font-size: $font-title-med;
                             color: $font-color-heading;
                         }
@@ -264,7 +264,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                         .#{$jigsaw-collapse}-padding {
                             padding: 0px;
                         }
-                        .#{$select-prefix-cls}-option-no-data {
+                        .#{$jigsaw-select}-option-no-data {
                             display: flex;
                             align-items: center;
                             width: 100%;
@@ -300,7 +300,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
-    .#{$select-prefix-cls}-no-data {
+    .#{$jigsaw-select}-no-data {
         display: flex;
         justify-content: center;
         align-items: center;

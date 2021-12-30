@@ -1,0 +1,91 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="build-in-theme-cntr">
+    <li>
+        <section>
+            <div class="center">
+                <jigsaw-header [theme]="darkTheme" [level]="1">组件内置主题</jigsaw-header>
+            </div>
+        </section>
+        <section>
+            <div class="center">
+                <jigsaw-header [theme]="lightTheme" [level]="1">组件内置主题</jigsaw-header>
+            </div>
+        </section>
+    </li>
+    <li class="button">
+        <section>
+            <jigsaw-header [theme]="darkTheme">button</jigsaw-header>
+            <div class="start">
+                <jigsaw-button [theme]="darkTheme">Default</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="primary">Primary</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="warning">Warning</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="error">Error</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="danger">Danger</jigsaw-button>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">button</jigsaw-header>
+            <div class="start">
+                <jigsaw-button [theme]="lightTheme">Default</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="primary">Primary</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="warning">Warning</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="error">Error</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="danger">Danger</jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="tag">
+        <section>
+            <jigsaw-header [theme]="darkTheme">tag</jigsaw-header>
+            <div class="start">
+                <jigsaw-tag [theme]="darkTheme" [closable]="false">Tag 1</jigsaw-tag>
+                <jigsaw-tag [theme]="darkTheme" [closable]="true">Tag 2</jigsaw-tag>
+                <jigsaw-tag [theme]="darkTheme" [closable]="true">
+                    A very very very very very very very long tag
+                </jigsaw-tag>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">tag</jigsaw-header>
+            <div class="start">
+                <jigsaw-tag [theme]="lightTheme" [closable]="false">Tag 1</jigsaw-tag>
+                <jigsaw-tag [theme]="lightTheme" [closable]="true">Tag 2</jigsaw-tag>
+                <jigsaw-tag [theme]="lightTheme" [closable]="true">
+                    A very very very very very very very long tag
+                </jigsaw-tag>
+            </div>
+        </section>
+    </li>
+    <li class="input">
+        <section>
+            <jigsaw-header [theme]="darkTheme">input</jigsaw-header>
+            <div class="start">
+                <jigsaw-input [theme]="darkTheme" placeholder="请输入文本"></jigsaw-input>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">input</jigsaw-header>
+            <div class="start">
+                <jigsaw-input [theme]="lightTheme" placeholder="请输入文本"></jigsaw-input>
+            </div>
+        </section>
+    </li>
+    <li class="select">
+        <section>
+            <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
+            <div class="start">
+                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="cityList"></jigsaw-select>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
+            <div class="start">
+                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="cityList"></jigsaw-select>
+            </div>
+        </section>
+    </li>
+</ul>

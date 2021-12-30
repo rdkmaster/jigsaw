@@ -54,6 +54,16 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
+    constructor(private _renderer: Renderer2,
+        /**
+         * @internal
+         */
+        public _elementRef: ElementRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super(null, _renderer, _elementRef);
+    }
+    
     /**
      * @NoMarkForCheckRequired
      */
@@ -127,16 +137,6 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _state: string;
-
-    constructor(private _renderer: Renderer2,
-                /**
-                 * @internal
-                 */
-                public _elementRef: ElementRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
-        super();
-    }
 
     @Output()
     public close = new EventEmitter<JigsawTag>();

@@ -1,10 +1,7 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     forwardRef,
-    NgZone,
-    Injector
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { JigsawSelectBase } from "./select-base";
@@ -36,13 +33,4 @@ import { JigsawSelectBase } from "./select-base";
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSelect extends JigsawSelectBase {
-    constructor(
-        protected _zone: NgZone,
-        protected _changeDetector: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector
-    ) {
-        super(_changeDetector, _injector);
-    }
-}
+export class JigsawSelect extends JigsawSelectBase { }

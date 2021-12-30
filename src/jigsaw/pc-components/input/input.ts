@@ -11,7 +11,8 @@ import {
     NgModule,
     NgZone,
     Output,
-    ViewChild
+    ViewChild,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -28,8 +29,8 @@ type BorderRadiusValue = {
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-    public constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
-        super(_zone);
+    public constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone, protected _renderer?: Renderer2, protected _elementRef?: ElementRef) {
+        super(_zone, _renderer, _elementRef);
     }
 
     /**
@@ -310,7 +311,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         '[style.width]': 'width',
         '[style.height]': 'height',
         '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-input]': 'true',
+        '[class.jigsaw-input-host]': 'true',
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
         '[class.jigsaw-input-disabled]': 'disabled'
@@ -322,9 +323,11 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
 })
 export class JigsawInput extends JigsawInputBase {
     constructor(protected _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_cdr, _injector);
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector,
+        protected _renderer?: Renderer2,
+        protected _elementRef?: ElementRef) {
+        super(_cdr, _injector, null, _renderer, _elementRef);
     }
 
     /**

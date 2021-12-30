@@ -20,11 +20,11 @@ import {AbstractJigsawComponent} from '../../common/common';
     selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button], j-button, a[j-button], button[j-button]',
     templateUrl: 'button.html',
     host: {
-        '[class.jigsaw-button]': 'true',
-        '[class.jigsaw-button-disabled]': 'disabled',
+        '[class.jigsaw-button-host]': 'true',
         '(click)': '_onClick()',
         '[style.min-width]': 'width',
         '[style.height]': 'height',
+        '[class.jigsaw-button-disabled]': 'disabled',
         '[class.jigsaw-button-clicked]': "_$clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
         '[class.jigsaw-button-size-medium]': "preSize === 'medium'",
@@ -39,8 +39,8 @@ import {AbstractJigsawComponent} from '../../common/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawButton extends AbstractJigsawComponent implements AfterViewInit{
-    constructor(public element: ElementRef, protected _zone: NgZone, private _renderer: Renderer2) {
-        super(_zone);
+    constructor(public element: ElementRef, protected _zone: NgZone, protected _renderer: Renderer2) {
+        super(_zone, _renderer, element);
     }
 
     @ViewChild('text')

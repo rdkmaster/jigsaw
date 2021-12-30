@@ -1,18 +1,18 @@
-$input-prefix-cls: #{$jigsaw-prefix}-input;
+$jigsaw-input: #{$jigsaw-prefix}-input;
 
-.#{$input-prefix-cls} {
+.#{$jigsaw-input}-host {
     @include inline-block();
     height: $height-base;
     font-size: $font-size-text-base;
     overflow: hidden;
 
-    &-container {
+    .#{$jigsaw-input}-container {
         display: flex;
         height: 100%;
         width: 100%;
     }
 
-    &-wrapper {
+    .#{$jigsaw-input}-wrapper {
         width: 120px;
         display: flex;
         flex: 1;
@@ -25,8 +25,8 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         border-radius: $border-radius-base;
     }
 
-    &-icon-front,
-    &-icon-end {
+    .#{$jigsaw-input}-icon-front,
+    .#{$jigsaw-input}-icon-end {
         display: flex;
         align-items: center;
         flex: none;
@@ -38,7 +38,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
     }
 
-    &-icon-end {
+    .#{$jigsaw-input}-icon-end {
         a {
             margin: 5px;
         }
@@ -50,20 +50,21 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         height: 100%;
         border: none;
         outline: none;
+        color: $font-color-default;
         background: transparent;
         border-radius: $border-radius-base;
     }
 
-    .#{$input-prefix-cls}-wrapper:hover,
-    &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
+    .#{$jigsaw-input}-wrapper:hover,
+    &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-width: 1px;
         border-style: solid;
         border-color: $brand-default;
     }
 
-    &.#{$input-prefix-cls}-disabled {
-        .#{$input-prefix-cls}-wrapper {
+    &.#{$jigsaw-input}-disabled {
+        .#{$jigsaw-input}-wrapper {
             background-color: $bg-disabled;
             cursor: not-allowed;
             border-color: $border-color-disabled;
@@ -71,14 +72,14 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             input {
                 color: $font-color-disabled-spec;
                 cursor: not-allowed;
-                
+
                 &::-webkit-input-placeholder {
                     color: $font-color-disabled-spec;
                 }
             }
 
-            .#{$input-prefix-cls}-icon-front,
-            .#{$input-prefix-cls}-icon-end {
+            .#{$jigsaw-input}-icon-front,
+            .#{$jigsaw-input}-icon-end {
                 .iconfont {
                     color: $font-color-disabled-spec;
                 }
@@ -86,23 +87,23 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
     }
 
-    &.#{$input-prefix-cls}-error {
-        .#{$input-prefix-cls}-wrapper,
-        .#{$input-prefix-cls}-wrapper:hover,
-        &.#{$input-prefix-cls}-focused .#{$input-prefix-cls}-wrapper {
-            &.#{$input-prefix-cls}-none {
+    &.#{$jigsaw-input}-error {
+        .#{$jigsaw-input}-wrapper,
+        .#{$jigsaw-input}-wrapper:hover,
+        &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper {
+            &.#{$jigsaw-input}-none {
                 border-color: $error-default;
             }
 
-            &.#{$input-prefix-cls}-left {
+            &.#{$jigsaw-input}-left {
                 border-color: $error-default $error-default $error-default $border-color-default;
             }
 
-            &.#{$input-prefix-cls}-right {
+            &.#{$jigsaw-input}-right {
                 border-color: $error-default $border-color-default $error-default $error-default;
             }
 
-            &.#{$input-prefix-cls}-both {
+            &.#{$jigsaw-input}-both {
                 border-color: $error-default $border-color-default $error-default $border-color-default;
             }
 
@@ -126,7 +127,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         color: $font-color-hint;
     }
 
-    &-clear-bar {
+    .#{$jigsaw-input}-clear-bar {
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
@@ -140,7 +141,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
         }
     }
 
-    &-icon-item {
+    .#{$jigsaw-input}-icon-item {
         margin: 5px;
         cursor: pointer;
     }
