@@ -212,6 +212,9 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
 
     public set theme(theme: 'light' | 'dark' | string) {
         this.renderer.setAttribute(this.elementRef.nativeElement, "data-theme", theme)
+        if (theme !== 'light' && theme !== 'dark') {
+            return;
+        }
         let selectorName = this.elementRef.nativeElement.localName.toString();
         selectorName = selectorName.slice(selectorName.indexOf("-") + 1);
 
