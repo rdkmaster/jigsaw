@@ -16,7 +16,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
     ul {
         margin: 0;
         padding: 0;
-        
+
         li {
             padding: 6px 16px;
             cursor: pointer;
@@ -40,6 +40,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         margin: 0;
         padding: 3px 10px;
         width: 100%;
+        background: $bg-popup;
         font-size: $font-title-med;
         color: $font-color-heading;
     }

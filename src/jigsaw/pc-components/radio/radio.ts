@@ -25,7 +25,8 @@ export type RadiosGroupValue = {
     selector: 'jigsaw-radios, j-radios',
     template: '<ng-content></ng-content>',
     host: {
-        '[class.jigsaw-radios]': 'true',
+        '[attr.data-theme]':'theme',
+        '[class.jigsaw-radios-host]': 'true',
         '[class.jigsaw-radios-error]': '!valid'
     },
     providers: [

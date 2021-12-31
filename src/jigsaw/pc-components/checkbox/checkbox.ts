@@ -38,6 +38,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     templateUrl: './checkbox.html',
     host: {
         '[style.width]': 'width',
+        '[attr.data-theme]':'theme',
         '[class.jigsaw-checkbox-host]': 'true',
         '[class.jigsaw-checkbox-error]': '!valid'
     },

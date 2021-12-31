@@ -262,7 +262,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      */
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
-        this._$propertyListOpen = true;
+        this._$propertyListOpen = false;
         this._unsubscribeKeydownEvent();
     }
 

@@ -21,14 +21,15 @@ import { JigsawSelectBase } from "./select-base";
     selector: "jigsaw-select, j-select",
     templateUrl: "select.html",
     host: {
+        "[style.min-width]": 'multipleSelect ? minWidth : "none"',
+        "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
+        "[style.width]": '!multipleSelect ? width : "none"',
+        "[attr.data-theme]": "theme",
         "[class.jigsaw-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
-        "[class.jigsaw-select-with-max-width]": "!!maxWidth",
-        "[style.min-width]": 'multipleSelect ? minWidth : "none"',
-        "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
-        "[style.width]": '!multipleSelect ? width : "none"'
+        "[class.jigsaw-select-with-max-width]": "!!maxWidth"
     },
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush

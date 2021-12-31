@@ -42,8 +42,8 @@ allStyleFilePath.forEach((scssFile, index) => {
     const lightImport = `@import "../settings/paletx-pro-base.scss";
     @import "../settings/paletx-pro-light.scss";
     `;
-    const darkRes = darkImport + fileContent.replace("host", "host[data-theme='dark']");
-    const lightRes = lightImport + fileContent.replace("host", "host[data-theme='light']");
+    const darkRes = darkImport + fileContent.replace(/-host/g, "-host[data-theme='dark']");
+    const lightRes = lightImport + fileContent.replace(/-host/g, "-host[data-theme='light']");
     const darkOutputPath = `../../common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`;
     const lightOutputPath = `../../common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`;
 

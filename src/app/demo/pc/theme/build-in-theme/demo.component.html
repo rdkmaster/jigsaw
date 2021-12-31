@@ -4,7 +4,7 @@
 
 <!-- start to learn the demo from here -->
 <ul class="build-in-theme-cntr">
-    <li>
+    <li class="header">
         <section>
             <div class="center">
                 <jigsaw-header [theme]="darkTheme" [level]="1">组件内置主题</jigsaw-header>
@@ -92,11 +92,9 @@
         <section>
             <jigsaw-header [theme]="darkTheme">auto-complete-input</jigsaw-header>
             <div class="start">
-                <div class="start">
-                    <jigsaw-auto-complete-input [theme]="darkTheme" [data]="_$dropdownData"
-                        placeholder="auto complete input demo" width="280">
-                    </jigsaw-auto-complete-input>
-                </div>
+                <jigsaw-auto-complete-input [theme]="darkTheme" [data]="_$dropdownData"
+                    placeholder="auto complete input demo" width="280">
+                </jigsaw-auto-complete-input>
             </div>
         </section>
         <section>
@@ -108,17 +106,86 @@
             </div>
         </section>
     </li>
+    <li class="breadcrumb">
+        <section>
+            <jigsaw-header [theme]="darkTheme">breadcrumb</jigsaw-header>
+            <div class="start">
+                <j-breadcrumb [theme]="darkTheme" [data]="_$breadcrumbItems"></j-breadcrumb>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">breadcrumb</jigsaw-header>
+            <div class="start">
+                <j-breadcrumb [theme]="lightTheme" [data]="_$breadcrumbItems"></j-breadcrumb>
+            </div>
+        </section>
+    </li>
+    <li class="checkbox">
+        <section>
+            <jigsaw-header [theme]="darkTheme">checkbox</jigsaw-header>
+            <div class="start">
+                <jigsaw-checkbox [theme]="darkTheme" enableIndeterminate="true">
+                    click me
+                </jigsaw-checkbox>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">checkbox</jigsaw-header>
+            <div class="start">
+                <jigsaw-checkbox [theme]="lightTheme" enableIndeterminate="true">
+                    click me
+                </jigsaw-checkbox>
+            </div>
+        </section>
+    </li>
+    <li class="radio-group">
+        <section>
+            <jigsaw-header [theme]="darkTheme">radio-group</jigsaw-header>
+            <div class="start">
+                <jigsaw-radios [theme]="darkTheme" trackItemBy="id">
+                    <jigsaw-radio-option *ngFor="let item of _$cityList" [value]="item">
+                        {{item.label}}
+                    </jigsaw-radio-option>
+                </jigsaw-radios>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">radio-group</jigsaw-header>
+            <div class="start">
+                <jigsaw-radios [theme]="lightTheme" trackItemBy="id">
+                    <jigsaw-radio-option *ngFor="let item of _$cityList" [value]="item">
+                        {{item.label}}
+                    </jigsaw-radio-option>
+                </jigsaw-radios>
+            </div>
+        </section>
+    </li>
+    <li class="radio-lite">
+        <section>
+            <jigsaw-header [theme]="darkTheme">radio-lite</jigsaw-header>
+            <div class="start">
+                <jigsaw-radios-lite [theme]="darkTheme" [data]="_$cityList"></jigsaw-radios-lite>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">radio-lite</jigsaw-header>
+            <div class="start">
+                <jigsaw-radios-lite [theme]="lightTheme" [data]="_$cityList"></jigsaw-radios-lite>
+            </div>
+        </section>
+    </li>
+
     <!-- <li class="select">
         <section>
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="start">
-                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="cityList"></jigsaw-select>
+                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
             </div>
         </section>
         <section>
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="start">
-                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="cityList"></jigsaw-select>
+                <jigsaw-select [theme]="lightTheme" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
             </div>
         </section>
     </li> -->
