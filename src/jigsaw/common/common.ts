@@ -1,4 +1,4 @@
-import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone, ElementRef, Renderer2, AfterViewInit} from "@angular/core";
+import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone} from "@angular/core";
 import {CommonUtils} from "./core/utils/common-utils";
 import {take, throwIfEmpty} from 'rxjs/operators';
 
@@ -159,7 +159,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
  */
 @Directive()
 export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
-    constructor(protected _zone?: NgZone, protected renderer?: Renderer2, protected elementRef?: ElementRef) {
+    constructor(protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -215,12 +215,11 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
             return
         }
         this._theme = theme;
-        this.renderer.setAttribute(this.elementRef.nativeElement, "data-theme", theme)
         if (theme !== 'light' && theme !== 'dark') {
             return;
         }
-        let selectorName = this.elementRef.nativeElement.localName.toString();
-        selectorName = selectorName.slice(selectorName.indexOf("-") + 1);
+        const instanceName = this.constructor.name;
+        const selectorName = instanceName.replace(/[A-Z]/g, m => "-" + m.toLowerCase()).replace("-jigsaw-", "")
 
         const linkId = `${selectorName}DarkTheme`;
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;

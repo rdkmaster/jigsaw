@@ -20,10 +20,10 @@ import {AbstractJigsawComponent} from '../../common/common';
     selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button], j-button, a[j-button], button[j-button]',
     templateUrl: 'button.html',
     host: {
-        '[class.jigsaw-button-host]': 'true',
-        '(click)': '_onClick()',
         '[style.min-width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]':'theme',
+        '[class.jigsaw-button-host]': 'true',
         '[class.jigsaw-button-disabled]': 'disabled',
         '[class.jigsaw-button-clicked]': "_$clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
@@ -34,13 +34,14 @@ import {AbstractJigsawComponent} from '../../common/common';
         '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'",
         '[class.jigsaw-button-color-none]': "colorType === 'none'",
         '[class.jigsaw-button-icon-left]': "iconPosition === 'left'",
-        '[class.jigsaw-button-icon-right]': "iconPosition === 'right'"
+        '[class.jigsaw-button-icon-right]': "iconPosition === 'right'",
+        '(click)': '_onClick()'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawButton extends AbstractJigsawComponent implements AfterViewInit{
     constructor(public element: ElementRef, protected _zone: NgZone, protected _renderer: Renderer2) {
-        super(_zone, _renderer, element);
+        super(_zone);
     }
 
     @ViewChild('text')

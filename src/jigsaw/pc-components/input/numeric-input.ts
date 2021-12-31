@@ -9,7 +9,6 @@ import {
     NgModule,
     Output,
     ViewChild,
-    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -33,14 +32,15 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '(click)': '_$stopPropagation($event)',
+        '[attr.data-theme]':'theme',
         '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
         '[class.jigsaw-numeric-input-focused]': 'focused',
-        '[class.jigsaw-numeric-input-showOption]': 'showOption'
+        '[class.jigsaw-numeric-input-showOption]': 'showOption',
+        '(click)': '_$stopPropagation($event)'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
@@ -48,8 +48,8 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _cdr: ChangeDetectorRef, protected _elementRef: ElementRef, protected _renderer: Renderer2) {
-        super(null, _renderer, _elementRef);
+    constructor(private _cdr: ChangeDetectorRef) {
+        super(null);
     }
     /**
      * @NoMarkForCheckRequired

@@ -14,9 +14,7 @@ import {
     Output,
     TemplateRef,
     ViewChild,
-    Injector,
-    Renderer2,
-    ElementRef
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -52,6 +50,7 @@ export class DropDownValue {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]':'theme',
         '[class.jigsaw-auto-complete-input-host]': 'true'
     },
     providers: [
@@ -62,10 +61,10 @@ export class DropDownValue {
 export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
     constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector,
-        protected _renderer?: Renderer2, protected _elementRef?: ElementRef) {
-        super(_cdr, _injector, _zone, _renderer, _elementRef);
+        protected _injector: Injector) {
+        super(_cdr, _injector, _zone);
     }
+
     @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
@@ -186,7 +185,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     public closeDropdown(): void {
         if (this._dropdownFloat) {
-            this._dropdownFloat.closeFloat();
+            // this._dropdownFloat.closeFloat();
         }
     }
 
@@ -263,7 +262,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      */
     public _$handleBlur(event: FocusEvent) {
         super._$handleBlur(event);
-        this._$propertyListOpen = false;
+        this._$propertyListOpen = true;
         this._unsubscribeKeydownEvent();
     }
 

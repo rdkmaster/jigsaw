@@ -6,7 +6,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
     height: $height-base;
 }
 
-.#{$jigsaw-auto-complete-input}-list-box {
+.#{$jigsaw-auto-complete-input}-list-box-host {
     overflow: auto;
     border-width: 1px;
     border-style: solid;
@@ -16,28 +16,33 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
     ul {
         margin: 0;
         padding: 0;
+        
         li {
             padding: 6px 16px;
             cursor: pointer;
             font-size: 12px;
             background: $bg-body;
+
             label {
                 margin: 0;
                 color: $font-color-default;
                 font-weight: 400;
             }
+
             &:hover {
                 background: $bg-hover;
             }
         }
     }
+
+    .#{$jigsaw-auto-complete-input}-item-title {
+        font-weight: bold;
+        margin: 0;
+        padding: 3px 10px;
+        width: 100%;
+        font-size: $font-title-med;
+        color: $font-color-heading;
+    }
+    
 }
 
-.#{$jigsaw-auto-complete-input}-item-title {
-    font-weight: bold;
-    margin: 0;
-    padding: 3px 10px;
-    width: 100%;
-    font-size: $font-title-med;
-    color: $font-color-heading;
-}

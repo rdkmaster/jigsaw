@@ -11,6 +11,7 @@ import { CommonModule } from "@angular/common";
     selector: "jigsaw-header,j-header",
     templateUrl: "header.html",
     host: {
+        "[attr.data-theme]": "theme",
         "[class.jigsaw-header-host]": "true",
         "[class.jigsaw-header-level-1]": "level == 1",
         "[class.jigsaw-header-level-2]": "level == 2",

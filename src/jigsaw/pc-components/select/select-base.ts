@@ -18,11 +18,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
-        protected _zone?: NgZone,
-        protected _renderer?: Renderer2,
-        protected _elementRef?: ElementRef
+        protected _zone?: NgZone
     ) {
-        super(_zone, _renderer, _elementRef);
+        super(_zone);
     }
 
     protected _width: string = "120px";
