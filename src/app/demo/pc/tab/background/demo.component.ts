@@ -18,6 +18,6 @@ export class TabsBackgroundDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "此demo主要展示可编辑的tab";
+    summary: string = "此demo主要展示通过设置tab组件的background属性，达到更改组件背景色的功能。";
     description: string = "";
 }
