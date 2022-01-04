@@ -55,7 +55,7 @@ export type TabBarData = {
 
 @Directive()
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
-    protected constructor(protected _changeDetector: ChangeDetectorRef, protected elementRef: ElementRef,
+    protected constructor(protected _changeDetector: ChangeDetectorRef, protected _elementRef: ElementRef,
                           // @RequireMarkForCheck 需要用到，勿删
                           protected _injector: Injector) {
         super();
@@ -126,9 +126,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     /**
- * @internal
- */
-    public _background: string;
+     * @internal
+     */
+    private _background: string;
 
     /**
      * 控制tab头部是否显示
@@ -145,7 +145,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         if (!CommonUtils.isDefined(value)) {
             return;
         }
-        this.elementRef.nativeElement.style.setProperty('--jigsaw-nav-background', value.trim())
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-nav-background', value.trim())
     }
 
     /**
@@ -432,7 +432,6 @@ export class JigsawTabBar extends JigsawTabBase {
     constructor(private _cfr: ComponentFactoryResolver,
                 protected _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
-                protected renderer: Renderer2,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector,
                 /**
