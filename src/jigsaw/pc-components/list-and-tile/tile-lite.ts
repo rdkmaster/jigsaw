@@ -7,7 +7,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 @Component({
     selector: 'jigsaw-tile-lite, j-tile-lite',
     template: `
-        <j-tile [(selectedItems)]="selectedItems"
+        <j-tile [theme]="theme" [(selectedItems)]="selectedItems"
                 [trackItemBy]="trackItemBy" [valid]="valid"
                 [multipleSelect]="multipleSelect"
                 (selectedItemsChange)="_$handleSelectChange($event)"
@@ -19,8 +19,9 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
             </j-tile-option>
         </j-tile>`,
     host: {
-        '[class.jigsaw-tile-lite]': 'true',
-        '[style.width]': 'width'
+        '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tile-lite-host]': 'true'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTileLite), multi: true},

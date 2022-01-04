@@ -223,7 +223,7 @@
         <section>
             <jigsaw-header [theme]="darkTheme">tile</jigsaw-header>
             <div class="start">
-                <j-tile [multipleSelect]="true" [showBorder]="true" trackItemBy="label">
+                <j-tile [theme]="darkTheme" [multipleSelect]="true" [showBorder]="true" trackItemBy="label">
                     <j-tile-option *ngFor="let city of _$cityList2" [value]="city" [disabled]="city.disabled">
                         {{city.label}}
                     </j-tile-option>
@@ -233,7 +233,29 @@
         <section>
             <jigsaw-header [theme]="lightTheme">tile</jigsaw-header>
             <div class="start">
-
+                <j-tile [theme]="lightTheme" [multipleSelect]="true" [showBorder]="true" trackItemBy="label">
+                    <j-tile-option *ngFor="let city of _$cityList2" [value]="city" [disabled]="city.disabled">
+                        {{city.label}}
+                    </j-tile-option>
+                </j-tile>
+            </div>
+        </section>
+    </li>
+    <li class="tile-lite">
+        <section>
+            <jigsaw-header [theme]="darkTheme">tile-lite</jigsaw-header>
+            <div class="start">
+                <jigsaw-tile-lite [theme]="darkTheme" trackItemBy="id" [multipleSelect]="true" [data]="_$cityList"
+                    [showBorder]="true">
+                </jigsaw-tile-lite>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">tile</jigsaw-header>
+            <div class="start">
+                <jigsaw-tile-lite [theme]="lightTheme" trackItemBy="id" [multipleSelect]="true" [data]="_$cityList"
+                    [showBorder]="true">
+                </jigsaw-tile-lite>
             </div>
         </section>
     </li>

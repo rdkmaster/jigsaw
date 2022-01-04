@@ -9,7 +9,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
 .#{$button-bar-prefix-cls} {
     height: $height-base;
 
-    .#{$tile-prefix-cls} {
+    .#{$tile-prefix-cls}-host {
         padding: 0 0;
         border: none;
 
