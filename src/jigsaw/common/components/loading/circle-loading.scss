@@ -1,0 +1,176 @@
+$circle-loading-prefix-cls: #{$jigsaw-prefix}-circle-loading;
+
+.#{$circle-loading-prefix-cls}-host {
+    position: relative;
+
+    .#{$circle-loading-prefix-cls}-svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        box-sizing: border-box;
+
+        svg {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            transform-origin: center center;
+        }
+
+        &.#{$circle-loading-prefix-cls}-svg-large,
+        &.#{$circle-loading-prefix-cls}-svg-medium,
+        &.#{$circle-loading-prefix-cls}-svg-small {
+            .#{$circle-loading-prefix-cls}-percent {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                font-size: $font-size-base;
+                color: $font-color-heading-bold;
+            }
+
+            .#{$circle-loading-prefix-cls}-label {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 200%;
+                font-size: $font-size-base;
+                color: $font-color-heading-bold;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            @at-root .#{$circle-loading-prefix-cls}-within-mask .#{$circle-loading-prefix-cls}-svg {
+                .#{$circle-loading-prefix-cls}-percent,
+                .#{$circle-loading-prefix-cls}-label {
+                    color: $font-color-white !important;
+                }
+            }
+        }
+
+        &.#{$circle-loading-prefix-cls}-svg-large {
+            .#{$circle-loading-prefix-cls}-percent {
+                font-size: $font-size-text-base;
+            }
+        }
+
+        &.#{$circle-loading-prefix-cls}-svg-medium {
+            .#{$circle-loading-prefix-cls}-percent {
+                font-size: $font-size-sm;
+            }
+        }
+
+        &.#{$circle-loading-prefix-cls}-svg-small {
+            .#{$circle-loading-prefix-cls}-percent {
+                justify-content: flex-start;
+                left: 100%;
+                width: 200%;
+                padding-left: 5px;
+                font-size: $font-size-sm;
+                transform: none;
+            }
+        }
+    }
+
+    .#{$circle-loading-prefix-cls}-svg-bar,
+    .#{$circle-loading-prefix-cls}-svg-back {
+        fill: none;
+        stroke-miterlimit: 10;
+    }
+
+    .#{$circle-loading-prefix-cls}-svg-bar {
+        stroke: #1993ff;
+        stroke-linecap: round;
+        transform: rotate(-90deg);
+        transform-origin: center;
+
+        @at-root .#{$circle-loading-prefix-cls}-host
+                .#{$circle-loading-prefix-cls}-svg-large
+                .#{$circle-loading-prefix-cls}-svg-bar {
+            animation: loading-dashed-large 2s ease-in-out infinite;
+        }
+
+        @at-root .#{$circle-loading-prefix-cls}-host
+                .#{$circle-loading-prefix-cls}-svg-medium
+                .#{$circle-loading-prefix-cls}-svg-bar {
+            animation: loading-dashed-medium 2s ease-in-out infinite;
+        }
+
+        @at-root .#{$circle-loading-prefix-cls}-host
+                .#{$circle-loading-prefix-cls}-svg-small
+                .#{$circle-loading-prefix-cls}-svg-bar {
+            animation: loading-dashed-small 2s ease-in-out infinite;
+        }
+    }
+
+    .#{$circle-loading-prefix-cls}-svg-back {
+        stroke: $bg-disabled;
+    }
+}
+
+@keyframes loading-dashed-large {
+    /* 78 * PI ~= 244 */
+    0% {
+        stroke-dasharray: 0, 244;
+        stroke-dashoffset: 0;
+    }
+
+    25% {
+        stroke-dashoffset: 0;
+    }
+
+    75%,
+    100% {
+        stroke-dasharray: 244, 300;
+        stroke-dashoffset: -244;
+    }
+}
+
+@keyframes loading-dashed-medium {
+    /* 46 * PI ~= 144 */
+    0% {
+        stroke-dasharray: 0, 144;
+        stroke-dashoffset: 0;
+    }
+
+    25% {
+        stroke-dashoffset: 0;
+    }
+
+    75%,
+    100% {
+        stroke-dasharray: 144, 300;
+        stroke-dashoffset: -144;
+    }
+}
+
+@keyframes loading-dashed-small {
+    /* 26 * PI ~= 82 */
+    0% {
+        stroke-dasharray: 0, 82;
+        stroke-dashoffset: 0;
+    }
+
+    25% {
+        stroke-dashoffset: 0;
+    }
+
+    75%,
+    100% {
+        stroke-dasharray: 82, 300;
+        stroke-dashoffset: -82;
+    }
+}

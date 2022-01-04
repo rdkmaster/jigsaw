@@ -32,7 +32,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[attr.data-theme]':'theme',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
@@ -43,7 +43,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
         '(click)': '_$stopPropagation($event)'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

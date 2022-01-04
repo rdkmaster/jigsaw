@@ -1,77 +1,81 @@
-$collapse-prefix: #{$jigsaw-prefix}-collapse;
+$jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 
-.#{$collapse-prefix}-host {
+.#{$jigsaw-collapse}-host {
     display: block;
-}
 
-.#{$collapse-prefix} {
-    &-item {
-        .#{$collapse-prefix}-header {
-            display: flex;
-            align-items: center;
-            position: relative;
-            height: 32px;
-            line-height: 32px;
-            color: $font-color-heading-bold;
-            font-size: $font-title-med;
-            font-weight: bold;
-            cursor: pointer;
-
-            &:hover{
-                background: $brand-lighten;
-            }
-
-            > div {
+    .#{$jigsaw-collapse} {
+        .#{$jigsaw-collapse}-item {
+            .#{$jigsaw-collapse}-header {
                 display: flex;
                 align-items: center;
-            }
-
-            .#{$collapse-prefix}-arrow {
-                position: absolute;
-                color: $icon-color-stress;
-                @include prefixer(transition, all 0.3s ease);
+                position: relative;
+                height: 32px;
+                line-height: 32px;
+                color: $font-color-heading-bold;
+                font-size: $font-title-med;
+                font-weight: bold;
+                cursor: pointer;
 
                 &:hover {
-                    color: $brand-default;
+                    background: $brand-lighten;
+                }
+
+                > div {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .#{$jigsaw-collapse}-arrow {
+                    position: absolute;
+                    color: $icon-color-stress;
+                    @include prefixer(transition, all 0.3s ease);
+
+                    &:hover {
+                        color: $brand-default;
+                    }
+                }
+            }
+
+            &.#{$jigsaw-collapse}-item-inactive {
+                > .#{$jigsaw-collapse}-header {
+                    .#{$jigsaw-collapse}-arrow {
+                        @include prefixer(transform, rotate(180deg));
+                    }
                 }
             }
         }
 
-        &.#{$collapse-prefix}-item-inactive {
-            > .#{$collapse-prefix}-header {
-                .#{$collapse-prefix}-arrow {
-                    @include prefixer(transform, rotate(180deg));
+        .#{$jigsaw-collapse}-item .#{$jigsaw-collapse}-content {
+            color: $font-color-default;
+            overflow: hidden;
+
+            .#{$jigsaw-collapse}-padding {
+                padding: 0 16px;
+            }
+        }
+    }
+
+    &.#{$jigsaw-collapse}-arrow-position-left {
+        .#{$jigsaw-collapse} {
+            .#{$jigsaw-collapse}-item {
+                .#{$jigsaw-collapse}-header {
+                    padding-left: 24px;
+                    .#{$jigsaw-collapse}-arrow {
+                        left: 8px;
+                    }
                 }
             }
         }
     }
 
-    &-item &-content {
-        color: $font-color-default;
-        overflow: hidden;
-
-        .#{$collapse-prefix}-padding {
-            padding: 0 16px;
-        }
-    }
-
-    &-arrow-position-left {
-        .#{$collapse-prefix}-item {
-            .#{$collapse-prefix}-header {
-                padding-left: 24px;
-                .#{$collapse-prefix}-arrow {
-                    left: 8px;
-                }
-            }
-        }
-    }
-
-    &-arrow-position-right {
-        .#{$collapse-prefix}-item {
-            .#{$collapse-prefix}-header {
-                padding-left: 16px;
-                .#{$collapse-prefix}-arrow {
-                    right: 16px;
+    &.#{$jigsaw-collapse}-arrow-position-right {
+        .#{$jigsaw-collapse} {
+            .#{$jigsaw-collapse}-item {
+                .#{$jigsaw-collapse}-header {
+                    padding-left: 16px;
+                    .#{$jigsaw-collapse}-arrow {
+                        right: 16px;
+                    }
                 }
             }
         }

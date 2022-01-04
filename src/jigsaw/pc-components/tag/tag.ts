@@ -28,7 +28,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.line-height]': 'height',
         '[style.background]': '_$realColor',
         '[style.border-color]': '_$realColor',
-        '[attr.data-theme]':'theme',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-tag-host]': 'true',
         '[class.jigsaw-tag-closable]': 'closable && !isAdd',
         '[class.jigsaw-tag-disabled]': 'disabled',

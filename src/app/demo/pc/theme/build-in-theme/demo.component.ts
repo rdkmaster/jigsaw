@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
-import { ColorSelectConfirmDemoModule } from '../../color-select/confirm/demo.module';
-import { ArrayCollection } from 'jigsaw/public_api';
+import { ArrayCollection, JigsawListLite, GroupOptionValue } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['demo.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { '[attr.data-theme]': 'theme' }
 })
 export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
     lightTheme = "light";
@@ -18,6 +18,15 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         { label: "深圳", id: 4 },
         { label: "长沙", id: 5 },
         { label: "西安", id: 6 }
+    ]);
+
+    _$cityList2 = new ArrayCollection([
+        {label: "北京"},
+        {label: "上海", disabled: true},
+        {label: "南京"},
+        {label: "深圳"},
+        {label: "长沙", disabled: true},
+        {label: "西安"}
     ]);
 
     _$dropdownData = [{
@@ -39,6 +48,93 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         { id: 1, label: "Digital", icon: "iconfont iconfont-e12e" },
         { id: 2, label: "List", icon: "iconfont iconfont-e526" },
         { id: 3, label: "Detail", icon: "iconfont iconfont-e385" }
+    ];
+
+    _$titles = [
+        {
+            title: 'Settings',
+            subTitle: 'Ctrl+Alt+A',
+            subMenu: false
+        },
+        {
+            title: 'Print',
+            subTitle: '',
+            subMenu: true
+        },
+        {
+            title: 'Save All',
+            subTitle: 'Ctrl+S',
+            subMenu: false
+        },
+        {
+            title: 'Exit',
+            subTitle: '',
+            subMenu: true
+        }
+    ];
+
+    _$goodsList: GroupOptionValue[] = [
+        {
+            icon: 'iconfont iconfont-e187',
+            name: 'bicycle',
+            desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
+        },
+        JigsawListLite.SEPARATOR, // 配置分隔线
+        {
+            icon: 'iconfont iconfont-e2e7',
+            name: 'camera',
+            desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
+        },
+        {
+            icon: 'iconfont iconfont-e18a',
+            name: 'car',
+            desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.',
+            disabled: true // 配置不可点击
+        },
+        {
+            icon: 'iconfont iconfont-e534',
+            name: 'football',
+            desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
+        },
+        JigsawListLite.SEPARATOR,
+        {
+            icon: 'iconfont iconfont-e565',
+            name: 'book',
+            desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
+        },
+        {
+            icon: 'iconfont iconfont-e6ca',
+            name: 'puzzle-piece',
+            desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
+        },
+    ];
+
+    _$goodsList2 = [
+        {
+            name: 'bicycle',
+            desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.',
+            active: true
+        },
+        {
+            name: 'camera',
+            desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
+        },
+        {
+            name: 'car',
+            desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.',
+        },
+        {
+            name: 'football',
+            desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
+        },
+        {
+            name: 'book',
+            desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
+        },
+        {
+            name: 'puzzle-piece',
+            desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
+        },
     ];
 
     ngAfterViewInit() {

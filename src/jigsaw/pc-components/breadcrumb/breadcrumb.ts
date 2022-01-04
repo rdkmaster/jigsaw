@@ -50,7 +50,7 @@ export type BreadcrumbGenerator = (routeNode: string) => CompoundedBreadcrumbDat
     selector: "jigsaw-breadcrumb, j-breadcrumb",
     templateUrl: "breadcrumb.html",
     host: {
-        "[attr.data-theme]":"theme",
+        "[attr.data-theme]": "theme",
         "[class.jigsaw-breadcrumb-host]": "true",
         "[class.jigsaw-breadcrumb-inner]": 'theme == "inner"'
     },

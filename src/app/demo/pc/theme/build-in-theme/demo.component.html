@@ -174,6 +174,115 @@
             </div>
         </section>
     </li>
+    <li class="list">
+        <section>
+            <jigsaw-header [theme]="darkTheme">list</jigsaw-header>
+            <div class="start">
+                <j-list [theme]="darkTheme" width="200" trackItemBy="title">
+                    <j-list-option [theme]="darkTheme" *ngFor="let title of _$titles" [value]="title">
+                        <span j-title>{{title.title}}</span>
+                        <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
+                                class="iconfont iconfont-e144"></span>
+                        </div>
+                    </j-list-option>
+                </j-list>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">list</jigsaw-header>
+            <div class="start">
+                <j-list [theme]="lightTheme" width="200" trackItemBy="title">
+                    <j-list-option [theme]="lightTheme" *ngFor="let title of _$titles" [value]="title">
+                        <span j-title>{{title.title}}</span>
+                        <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
+                                class="iconfont iconfont-e144"></span>
+                        </div>
+                    </j-list-option>
+                </j-list>
+            </div>
+        </section>
+    </li>
+    <li class="list-lite">
+        <section>
+            <jigsaw-header [theme]="darkTheme">list-lite</jigsaw-header>
+            <div class="start">
+                <j-list-lite [theme]="darkTheme" width="200" [searchable]="true" [data]="_$goodsList" labelField="name">
+                </j-list-lite>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">list-lite</jigsaw-header>
+            <div class="start">
+                <j-list-lite [theme]="lightTheme" width="200" [searchable]="true" [data]="_$goodsList"
+                    labelField="name">
+                </j-list-lite>
+            </div>
+        </section>
+    </li>
+    <li class="tile">
+        <section>
+            <jigsaw-header [theme]="darkTheme">tile</jigsaw-header>
+            <div class="start">
+                <j-tile [multipleSelect]="true" [showBorder]="true" trackItemBy="label">
+                    <j-tile-option *ngFor="let city of _$cityList2" [value]="city" [disabled]="city.disabled">
+                        {{city.label}}
+                    </j-tile-option>
+                </j-tile>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">tile</jigsaw-header>
+            <div class="start">
+
+            </div>
+        </section>
+    </li>
+    <li class="circle-loading">
+        <section>
+            <jigsaw-header [theme]="darkTheme">circle-loading</jigsaw-header>
+            <div class="start">
+                <jigsaw-circle-loading [theme]="darkTheme" [size]="'large'" [label]="'这是large'" [percent]="60">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="darkTheme" [size]="'medium'" [label]="'这是medium'" [percent]="50">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="darkTheme" [size]="'small'" [label]="'这是small'" [percent]="10">
+                </jigsaw-circle-loading>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">circle-loading</jigsaw-header>
+            <div class="start">
+                <jigsaw-circle-loading [theme]="lightTheme" [size]="'large'" [label]="'这是large'" [percent]="60">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="lightTheme" [size]="'medium'" [label]="'这是medium'" [percent]="50">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="lightTheme" [size]="'small'" [label]="'这是small'" [percent]="10">
+                </jigsaw-circle-loading>
+            </div>
+        </section>
+    </li>
+    <li class="collapse">
+        <section>
+            <jigsaw-header [theme]="darkTheme">collapse</jigsaw-header>
+            <div class="start">
+                <j-collapse [theme]="darkTheme" width="100%" mode="accordion">
+                    <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of _$goodsList2">
+                        {{goods.desc}}
+                    </j-collapse-pane>
+                </j-collapse>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">collapse</jigsaw-header>
+            <div class="start">
+                <j-collapse [theme]="lightTheme" width="100%" mode="accordion">
+                    <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of _$goodsList2">
+                        {{goods.desc}}
+                    </j-collapse-pane>
+                </j-collapse>
+            </div>
+        </section>
+    </li>
 
     <!-- <li class="select">
         <section>

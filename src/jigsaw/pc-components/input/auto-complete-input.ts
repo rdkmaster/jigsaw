@@ -50,11 +50,11 @@ export class DropDownValue {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[attr.data-theme]':'theme',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-auto-complete-input-host]': 'true'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

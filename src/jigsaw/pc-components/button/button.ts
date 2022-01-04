@@ -22,7 +22,7 @@ import {AbstractJigsawComponent} from '../../common/common';
     host: {
         '[style.min-width]': 'width',
         '[style.height]': 'height',
-        '[attr.data-theme]':'theme',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-button-host]': 'true',
         '[class.jigsaw-button-disabled]': 'disabled',
         '[class.jigsaw-button-clicked]': "_$clicked",

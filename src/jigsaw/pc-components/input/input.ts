@@ -312,7 +312,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[attr.data-theme]':'theme',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-input-host]': 'true',
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
@@ -320,7 +320,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         '(click)': '_$stopPropagation($event)'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

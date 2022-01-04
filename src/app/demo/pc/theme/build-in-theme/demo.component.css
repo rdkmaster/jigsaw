@@ -25,6 +25,7 @@ ul.build-in-theme-cntr > li > section {
 ul.build-in-theme-cntr > li > section > div {
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 ul.build-in-theme-cntr > li > section > div.center {
@@ -37,6 +38,10 @@ ul.build-in-theme-cntr > li > section > div.start {
 
 ul.build-in-theme-cntr > li > section > div.start > * {
     margin-right: 8px;
+}
+
+ul.build-in-theme-cntr > li.circle-loading > section > div.start > * {
+    margin-right: 40px;
 }
 
 ul.build-in-theme-cntr > li > section > div.space-between {
