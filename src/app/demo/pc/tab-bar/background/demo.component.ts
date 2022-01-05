@@ -14,6 +14,6 @@ export class TabBarBackgroundDemoComponent implements OnInit {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = "此demo主要展示自定义背景的tab-bar";
+    summary: string = "此demo展示通过设置backgroundColor属性，达到页签与背景色完美融合在一起的效果。";
     description: string = "";
 }

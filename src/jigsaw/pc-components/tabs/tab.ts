@@ -128,7 +128,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     /**
      * @internal
      */
-    private _background: string;
+    private _backgroundColor: string;
 
     /**
      * 控制tab头部是否显示
@@ -137,15 +137,15 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
      */
     @Input()
     @RequireMarkForCheck()
-    public get background(): string {
-        return this._background;
+    public get backgroundColor(): string {
+        return this._backgroundColor;
     }
 
-    public set background(value: string) {
+    public set backgroundColor(value: string) {
         if (!CommonUtils.isDefined(value)) {
             return;
         }
-        this._elementRef.nativeElement.style.setProperty('--jigsaw-nav-background', value.trim())
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-nav-background', value.trim());
     }
 
     /**

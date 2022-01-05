@@ -4,34 +4,34 @@
 <!-- start to learn the demo from here -->
 <div class="demo-container">
     <jigsaw-header>标签式</jigsaw-header>
-    <jigsaw-tabs [background]="'var(--bg-body)'">
+    <jigsaw-tabs backgroundColor="var(--bg-body)">
         <jigsaw-tab-pane title="tab1">
-            <ng-template>tab content 1</ng-template>
+            <ng-template><p class="tab-content">tab content 1<p></ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab2" [disabled]="true">
-            <ng-template>tab content 2</ng-template>
+            <ng-template><p class="tab-content">tab content 2<p></ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab3">
-            <ng-template>tab content 3</ng-template>
+            <ng-template><p class="tab-content">tab content 3<p></ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab4">
-            <ng-template>tab content 4</ng-template>
+            <ng-template><p class="tab-content">tab content 4<p></ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tabs>
 
     <jigsaw-header>页签式</jigsaw-header>
-    <jigsaw-tabs [tabType]="'page'" [background]="'var(--bg-body)'">
+    <jigsaw-tabs [tabType]="'page'" backgroundColor="var(--bg-body)">
         <jigsaw-tab-pane title="标签名称">
-            <ng-template>tab content 1</ng-template>
+            <ng-template><p class="tab-content">tab content 1</p></ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab2" [disabled]="true">
-            <ng-template>tab content 2</ng-template>
+            <ng-template><p class="tab-content">tab content 2</p></ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab3">
-            <ng-template>tab content 3</ng-template>
+            <ng-template><p class="tab-content">tab content 3</p></ng-template>
         </jigsaw-tab-pane>
         <jigsaw-tab-pane title="tab4">
-            <ng-template>tab content 4</ng-template>
+            <ng-template><p class="tab-content">tab content 4</p></ng-template>
         </jigsaw-tab-pane>
     </jigsaw-tabs>
 </div>

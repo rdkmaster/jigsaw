@@ -3,7 +3,8 @@
 }
 
 .demo-container {
+    width: calc(100vw - 360px);
     padding-bottom: 20px;
-    background: #f1f2f6;
-    box-shadow: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
+    background: var(--bg-container);;
+    box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }

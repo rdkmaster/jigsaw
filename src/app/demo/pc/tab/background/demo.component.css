@@ -3,18 +3,15 @@
 }
 
 .demo-container {
+    width: calc(100vw - 360px);
     position: relative;
     height: 400px;
     padding: 0 16px;
     background: var(--bg-container);
-    border: 5px dashed var(--border-color-default);
-    box-shadow: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
+    box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
 
-.demo-container::after {
-    content: "虚线内为容器";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    color: var(--font-color-default);
+.tab-content {
+    height: 120px;
+    margin: 0 16px;
 }
