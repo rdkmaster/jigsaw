@@ -1,8 +1,9 @@
 $icon-prefix-cls: #{$jigsaw-prefix}-icon;
 $jigsaw-status: #{$jigsaw-prefix}-status;
 
-.#{$icon-prefix-cls} {
+.#{$icon-prefix-cls}-host {
     @include inline-block();
+    color: $font-color-default;
     overflow: hidden;
     a:link,
     a:visited,

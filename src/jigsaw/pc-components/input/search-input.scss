@@ -10,7 +10,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         align-items: center;
         width: 100%;
 
-        #{$jigsaw-auto-complete-input} {
+        .#{$jigsaw-auto-complete-input}-host {
             width: 100%;
 
             .#{$jigsaw-input}-wrapper {
@@ -50,7 +50,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
     &.#{$jigsaw-search}-auto {
         .#{$jigsaw-search} {
-            .#{$jigsaw-auto-complete-input} {
+            .#{$jigsaw-auto-complete-input}-host {
                 .#{$jigsaw-input}-wrapper {
                     border-top-right-radius: $border-radius-base;
                     border-bottom-right-radius: $border-radius-base;

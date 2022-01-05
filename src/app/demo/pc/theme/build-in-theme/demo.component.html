@@ -90,6 +90,26 @@
             </div>
         </section>
     </li>
+    <li class="search-input">
+        <section>
+            <jigsaw-header [theme]="darkTheme">search-input</jigsaw-header>
+            <div class="start">
+                <jigsaw-search-input [theme]="darkTheme" width="200px" [searchDebounce]="1000">
+                </jigsaw-search-input>
+                <jigsaw-search-input [theme]="darkTheme" width="200px" [autoSearch]="false">
+                </jigsaw-search-input>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">search-input</jigsaw-header>
+            <div class="start">
+                <jigsaw-search-input [theme]="lightTheme" width="200px" [searchDebounce]="1000">
+                </jigsaw-search-input>
+                <jigsaw-search-input [theme]="lightTheme" width="200px" [autoSearch]="false">
+                </jigsaw-search-input>
+            </div>
+        </section>
+    </li>
     <li class="numeric-input">
         <section>
             <jigsaw-header [theme]="darkTheme">numeric-input</jigsaw-header>
@@ -343,7 +363,8 @@
         <section>
             <jigsaw-header [theme]="darkTheme">combo-select</jigsaw-header>
             <div class="start">
-                <jigsaw-combo-select [theme]="darkTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true" maxWidth="500">
+                <jigsaw-combo-select [theme]="darkTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true"
+                    maxWidth="500">
                     <ng-template>
                         <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
                             <jigsaw-tile-option *ngFor="let city of _$cityList" [value]="city" width="21.4%">
@@ -357,7 +378,8 @@
         <section>
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="start">
-                <jigsaw-combo-select [theme]="lightTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true" maxWidth="500">
+                <jigsaw-combo-select [theme]="lightTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true"
+                    maxWidth="500">
                     <ng-template>
                         <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
                             <jigsaw-tile-option *ngFor="let city of _$cityList" [value]="city" width="21.4%">
@@ -412,6 +434,56 @@
             <div class="start">
                 <jigsaw-group-select [theme]="lightTheme" [data]="_$groupData" [multipleSelect]="true" placeholder="请选择"
                     width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
+            </div>
+        </section>
+    </li>
+    <li class="icon">
+        <section>
+            <jigsaw-header [theme]="darkTheme">icon</jigsaw-header>
+            <div class="start">
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" title="编辑"
+                    [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" [text]="'编辑'"
+                    title="编辑">
+                </jigsaw-icon>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">icon</jigsaw-header>
+            <div class="start">
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" title="编辑"
+                    [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" [text]="'编辑'"
+                    title="编辑">
+                </jigsaw-icon>
+            </div>
+        </section>
+    </li>
+    <li class="status">
+        <section>
+            <jigsaw-header [theme]="darkTheme">status</jigsaw-header>
+            <div class="start">
+                <jigsaw-icon [theme]="darkTheme" [status]="'success'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'warning'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'error'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'finish'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'disabled'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'process'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'custom'" [iconSize]="16"></jigsaw-icon>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">status</jigsaw-header>
+            <div class="start">
+                <jigsaw-icon [theme]="lightTheme" [status]="'success'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'warning'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'error'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'finish'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'disabled'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'process'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'custom'" [iconSize]="16"></jigsaw-icon>
             </div>
         </section>
     </li>
