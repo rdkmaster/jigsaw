@@ -1,123 +1,125 @@
-$switch-prefix: #{$jigsaw-prefix}-switch;
+$jigsaw-switch: #{$jigsaw-prefix}-switch;
 
-.#{$switch-prefix}-host {
+.#{$jigsaw-switch}-host {
     @include inline-block;
-    &.#{$switch-prefix}-error .#{$switch-prefix} {
+    &.#{$jigsaw-switch}-error .#{$jigsaw-switch} {
         border-color: $error-default;
     }
-}
 
-.#{$switch-prefix} {
-    --switch-height: 20px;
-    @include inline-block;
-    position: relative;
-    height: var(--switch-height);
-    min-width: calc(var(--switch-height) * 2);
-    line-height: calc(var(--switch-height) - 2px);
-    border-radius: calc(var(--switch-height) - 2px);
-    border: 1px solid $border-color-default;
-    background-color: $bg-body;
-    cursor: pointer;
-    transition: all $animation-duration-slow;
-    -ms-transition: none;
-    user-select: none;
-    overflow: hidden;
-
-    .#{$switch-prefix}-inner {
-        color: $font-color-default;
-        font-size: $font-size-lg;
-        margin-left: calc(var(--switch-height) + 4px);
-        margin-right: calc(var(--switch-height) / 4);
-        display: block;
-    }
-
-    &:after {
-        position: absolute;
-        width: calc(var(--switch-height) - 4px);
-        height: calc(var(--switch-height) - 4px);
-        left: 1px;
-        top: 1px;
-        border-radius: 50%;
-        background-color: $bg-body-light;
-        box-shadow: 1px 1px 3px hsla(0, 0%, 0%, 0.2);
-        content: " ";
+    .#{$jigsaw-switch} {
+        --switch-height: 20px;
+        @include inline-block;
+        position: relative;
+        height: var(--switch-height);
+        min-width: calc(var(--switch-height) * 2);
+        line-height: calc(var(--switch-height) - 2px);
+        border-radius: calc(var(--switch-height) - 2px);
+        border: 1px solid $border-color-default;
+        background-color: $bg-body;
         cursor: pointer;
-        transition: all $animation-duration-slow, width $animation-duration-slow;
-    }
+        transition: all $animation-duration-slow;
+        -ms-transition: none;
+        user-select: none;
+        overflow: hidden;
 
-    &:active:after {
-        width: calc((var(--switch-height) - 4px) * 1.3);
-    }
-
-    &:focus {
-        outline: 0;
-    }
-
-    &:focus:hover {
-        box-shadow: none;
-    }
-
-    &-checked {
-        border-color: $primary-default;
-        background-color: $primary-default;
-
-        .#{$switch-prefix}-inner {
-            color: $font-color-white;
-            margin-left: calc(var(--switch-height) / 4);
-            margin-right: calc(var(--switch-height) + 4px);
+        .#{$jigsaw-switch}-inner {
+            color: $font-color-default;
+            font-size: $font-size-lg;
+            margin-left: calc(var(--switch-height) + 4px);
+            margin-right: calc(var(--switch-height) / 4);
+            display: block;
         }
 
         &:after {
-            left: 100%;
-            margin-left: calc(3px - var(--switch-height));
+            position: absolute;
+            width: calc(var(--switch-height) - 4px);
+            height: calc(var(--switch-height) - 4px);
+            left: 1px;
+            top: 1px;
+            border-radius: 50%;
+            background-color: $bg-body-light;
+            box-shadow: 1px 1px 3px hsla(0, 0%, 0%, 0.2);
+            content: " ";
+            cursor: pointer;
+            transition: all $animation-duration-slow, width $animation-duration-slow;
         }
 
         &:active:after {
-            margin-left: calc((3px - var(--switch-height)) * 1.3);
+            width: calc((var(--switch-height) - 4px) * 1.3);
+        }
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:focus:hover {
+            box-shadow: none;
+        }
+
+        &-checked {
+            border-color: $primary-default;
+            background-color: $primary-default;
+
+            .#{$jigsaw-switch}-inner {
+                color: $font-color-white;
+                margin-left: calc(var(--switch-height) / 4);
+                margin-right: calc(var(--switch-height) + 4px);
+            }
+
+            &:after {
+                left: 100%;
+                margin-left: calc(3px - var(--switch-height));
+            }
+
+            &:active:after {
+                margin-left: calc((3px - var(--switch-height)) * 1.3);
+            }
+        }
+
+        &-checked-disabled {
+            cursor: not-allowed;
+            opacity: 0.3;
+
+            &:after {
+                cursor: not-allowed;
+            }
+        }
+
+        &-disabled {
+            cursor: not-allowed;
+            background-color: $bg-disabled;
+            border-color: $border-color-disabled;
+
+            &:after {
+                cursor: not-allowed;
+            }
+
+            .#{$jigsaw-switch}-inner {
+                color: $font-color-disabled-spec;
+            }
+        }
+
+        &-readonly {
+            cursor: not-allowed;
+            &:after {
+                cursor: not-allowed;
+            }
         }
     }
 
-    &-checked-disabled {
-        cursor: not-allowed;
-        opacity: 0.3;
-
-        &:after {
-            cursor: not-allowed;
+    .#{$jigsaw-switch}-medium {
+        --switch-height: 16px;
+        .#{$jigsaw-switch}-inner {
+            font-size: $font-size-sm;
         }
     }
-
-    &-disabled {
-        cursor: not-allowed;
-        background-color: $bg-disabled;
-        border-color: $border-color-disabled;
-
-        &:after {
-            cursor: not-allowed;
-        }
-
-        .#{$switch-prefix}-inner {
-            color: $font-color-disabled-spec;
-        }
-    }
-
-    &-readonly {
-        cursor: not-allowed;
-        &:after {
-            cursor: not-allowed;
+    
+    .#{$jigsaw-switch}-small {
+        --switch-height: 12px;
+        .#{$jigsaw-switch}-inner {
+            font-size: $font-size-sm;
         }
     }
 }
 
-.#{$switch-prefix}-medium {
-    --switch-height: 16px;
-    .#{$switch-prefix}-inner {
-        font-size: $font-size-sm;
-    }
-}
 
-.#{$switch-prefix}-small {
-    --switch-height: 12px;
-    .#{$switch-prefix}-inner {
-        font-size: $font-size-sm;
-    }
-}

@@ -55,7 +55,7 @@ $jigsaw-tile-option: #{$jigsaw-tile}-option;
 
         &.#{$jigsaw-tile-option}-disabled {
             background: $bg-disabled;
-            color: $font-color-disabled;
+            color: $font-color-disabled-spec;
             cursor: not-allowed;
         }
     }

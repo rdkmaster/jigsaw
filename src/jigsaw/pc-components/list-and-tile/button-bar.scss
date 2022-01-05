@@ -16,50 +16,50 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         &.#{$tile-prefix-cls}-error {
             border-color: $error-default;
         }
-    }
 
-    .#{$tile-option-prefix-cls} {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: auto;
-        min-width: 60px;
-        margin: 0;
-        padding: 0 8px;
-        border-radius: 0;
-        font-size: $font-size-base;
+        .#{$tile-option-prefix-cls} {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+            min-width: 60px;
+            margin: 0;
+            padding: 0 8px;
+            border-radius: 0;
+            font-size: $font-size-base;
 
-        &:first-child {
-            border-radius: 3px 0 0 3px;
-        }
+            &:first-child {
+                border-radius: 3px 0 0 3px;
+            }
 
-        &:last-child {
-            border-radius: 0 3px 3px 0;
-        }
+            &:last-child {
+                border-radius: 0 3px 3px 0;
+            }
 
-        &:not(:first-child) {
-            margin-left: -1px;
-        }
+            &:not(:first-child) {
+                margin-left: -1px;
+            }
 
-        &.#{$tile-option-prefix-cls}-active {
-            position: relative;
-        }
+            &.#{$tile-option-prefix-cls}-active {
+                position: relative;
+            }
 
-        & > p {
-            max-width: 120px;
-            height: $height-sm;
-            line-height: $height-sm;
-            text-align: center;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+            & > p {
+                max-width: 120px;
+                height: $height-sm;
+                line-height: $height-sm;
+                text-align: center;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
 
-        .iconfont {
-            margin-right: 3px;
+            .iconfont {
+                margin-right: 3px;
 
-            &.jigsaw-button-bar-icon-only {
-                margin-left: 3px;
+                &.jigsaw-button-bar-icon-only {
+                    margin-left: 3px;
+                }
             }
         }
     }

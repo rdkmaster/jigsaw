@@ -10,6 +10,7 @@ import {
     Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { AbstractJigsawComponent } from 'jigsaw/public_api';
 
 /**
  * @description 开关组件
@@ -21,6 +22,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     selector: 'jigsaw-switch, j-switch',
     templateUrl: './switch.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-switch-host]': 'true',
         '[class.jigsaw-switch-error]': '!valid'
     },
@@ -30,10 +32,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawSwitch implements ControlValueAccessor, OnInit {
+export class JigsawSwitch extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
     constructor(private _changeDetector: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super();
     }
 
     /**

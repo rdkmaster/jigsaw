@@ -174,6 +174,24 @@
             </div>
         </section>
     </li>
+    <li class="switch">
+        <section>
+            <jigsaw-header [theme]="darkTheme">switch</jigsaw-header>
+            <div class="start">
+                <jigsaw-switch [theme]="darkTheme" [checked]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="darkTheme" [checked]="true" [disabled]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="darkTheme" [checked]="false" [disabled]="true"></jigsaw-switch>
+            </div>
+        </section>
+        <section>
+            <jigsaw-header [theme]="lightTheme">switch</jigsaw-header>
+            <div class="start">
+                <jigsaw-switch [theme]="lightTheme" [checked]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="lightTheme" [checked]="true" [disabled]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="lightTheme" [checked]="false" [disabled]="true"></jigsaw-switch>
+            </div>
+        </section>
+    </li>
     <li class="list">
         <section>
             <jigsaw-header [theme]="darkTheme">list</jigsaw-header>
@@ -305,7 +323,6 @@
             </div>
         </section>
     </li>
-
     <!-- <li class="select">
         <section>
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
