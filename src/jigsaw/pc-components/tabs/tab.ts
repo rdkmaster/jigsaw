@@ -131,9 +131,10 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     private _backgroundColor: string;
 
     /**
-     * 控制tab头部是否显示
+     * 配置组件的背景颜色，使得页签部分与容器周围的背景色可以更好的融合在一起。
      *
-     * $demo = tab/headless
+     * $demo = tab/background
+     * $demo = tab-bar/background
      */
     @Input()
     @RequireMarkForCheck()
