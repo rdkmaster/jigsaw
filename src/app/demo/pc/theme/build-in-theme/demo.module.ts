@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { JigsawListModule, JigsawMenuModule, JigsawButtonBarModule, JigsawNumericInputModule, JigsawHeaderModule, JigsawBreadcrumbModule, JigsawFishBoneModule, JigsawButtonModule, JigsawSelectModule, JigsawTagModule, JigsawInputModule, JigsawAutoCompleteInputModule, JigsawCheckBoxModule, JigsawRadioModule, JigsawRadioLiteModule, JigsawListLiteModule, JigsawLoadingModule, JigsawCollapseModule, JigsawTileLiteModule, JigsawTileSelectModule, JigsawSwitchModule } from "jigsaw/public_api";
+import { JigsawListModule, JigsawMenuModule, JigsawButtonBarModule, JigsawNumericInputModule, JigsawHeaderModule, JigsawBreadcrumbModule, JigsawFishBoneModule, JigsawButtonModule, JigsawSelectModule, JigsawTagModule, JigsawInputModule, JigsawAutoCompleteInputModule, JigsawCheckBoxModule, JigsawRadioModule, JigsawRadioLiteModule, JigsawListLiteModule, JigsawLoadingModule, JigsawCollapseModule, JigsawTileLiteModule, JigsawTileSelectModule, JigsawSwitchModule, JigsawComboSelectModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
 
@@ -24,7 +24,9 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawCollapseModule,
         JigsawTileLiteModule,
         JigsawTileSelectModule,
-        JigsawSwitchModule
+        JigsawSwitchModule,
+        JigsawButtonBarModule,
+        JigsawComboSelectModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent]

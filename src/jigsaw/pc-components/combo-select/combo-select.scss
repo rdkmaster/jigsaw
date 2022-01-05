@@ -1,165 +1,165 @@
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
-$input-prefix-cls: #{$jigsaw-prefix}-input;
+$jigsaw-input: #{$jigsaw-prefix}-input;
 
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
     min-width: 240px;
     max-width: 100%;
-}
 
-.#{$jigsaw-combo-select} {
-    position: relative;
-    color: $icon-color-default;
-    font-size: $font-size-text-base;
-    cursor: pointer;
+    .#{$jigsaw-combo-select} {
+        position: relative;
+        color: $icon-color-default;
+        font-size: $font-size-text-base;
+        cursor: pointer;
 
-    .#{$jigsaw-combo-select}-arrow {
-        transition: transform 0.3s ease-in-out;
-    }
-
-    &[ng-reflect-jigsaw-float-open="true"] &-selection {
-        border-color: $brand-default;
-    }
-
-    &[ng-reflect-jigsaw-float-open="true"] {
         .#{$jigsaw-combo-select}-arrow {
-            @include prefixer(transform, translateY(-50%) rotate(180deg));
+            transition: transform 0.3s ease-in-out;
         }
-    }
 
-    &-selection {
-        min-height: $height-base;
-        padding: 0 30px 0 8px;
-        background: $bg-component;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $border-color-default;
-        border-radius: $border-radius-base;
-        user-select: none;
-
-        &:hover {
+        &[ng-reflect-jigsaw-float-open="true"] &-selection {
             border-color: $brand-default;
         }
 
-        &:active {
-            border-color: $brand-active;
+        &[ng-reflect-jigsaw-float-open="true"] {
+            .#{$jigsaw-combo-select}-arrow {
+                @include prefixer(transform, translateY(-50%) rotate(180deg));
+            }
         }
 
-        .#{$jigsaw-combo-select}-error & {
-            border-color: $error-default;
+        &-selection {
+            min-height: $height-base;
+            padding: 0 30px 0 8px;
+            background: $bg-component;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $border-color-default;
+            border-radius: $border-radius-base;
+            user-select: none;
+
             &:hover {
+                border-color: $brand-default;
+            }
+
+            &:active {
+                border-color: $brand-active;
+            }
+
+            .#{$jigsaw-combo-select}-error & {
                 border-color: $error-default;
-            }
-        }
-    }
-
-    &-selection-rendered {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        min-height: $height-base - 2;
-        padding: 1px 0;
-        overflow: hidden;
-        font-size: 0;
-
-        .jigsaw-tag-host {
-            margin: 2px 4px 2px 0px;
-            font-size: $font-size-text-base;
-            vertical-align: middle;
-        }
-
-        .#{$input-prefix-cls} {
-            height: $height-base - 8;
-            line-height: $height-base - 8;
-            .#{$input-prefix-cls}-wrapper {
-                border: none !important;
-            }
-            input {
-                padding: 0 !important;
-                font-size: $font-size-text-base;
-            }
-        }
-    }
-
-    &-placeholder {
-        width: 100%;
-        height: $height-base - 6;
-        line-height: $height-base - 6;
-        font-size: $font-size-text-base;
-        color: $font-color-hint;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    &-disabled {
-        color: $font-color-disabled-spec;
-
-        .#{$jigsaw-combo-select}-selection {
-            border-color: $border-color-disabled;
-
-            .#{$jigsaw-combo-select}-selection-rendered {
-                .jigsaw-tag-host {
-                    color: $font-color-disabled;
-                    pointer-events: none;
+                &:hover {
+                    border-color: $error-default;
                 }
             }
         }
 
-        .iconfont {
+        &-selection-rendered {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: $height-base - 2;
+            padding: 1px 0;
+            overflow: hidden;
+            font-size: 0;
+
+            .jigsaw-tag-host {
+                margin: 2px 4px 2px 0px;
+                font-size: $font-size-text-base;
+                vertical-align: middle;
+            }
+
+            .#{$jigsaw-input}-host {
+                height: $height-base - 8;
+                line-height: $height-base - 8;
+                .#{$jigsaw-input}-wrapper {
+                    border: none !important;
+                }
+                input {
+                    padding: 0 !important;
+                    font-size: $font-size-text-base;
+                }
+            }
+        }
+
+        &-placeholder {
+            width: 100%;
+            height: $height-base - 6;
+            line-height: $height-base - 6;
+            font-size: $font-size-text-base;
+            color: $font-color-hint;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &-disabled {
+            color: $font-color-disabled-spec;
+
+            .#{$jigsaw-combo-select}-selection {
+                border-color: $border-color-disabled;
+
+                .#{$jigsaw-combo-select}-selection-rendered {
+                    .jigsaw-tag-host {
+                        color: $font-color-disabled;
+                        pointer-events: none;
+                    }
+                }
+            }
+
+            .iconfont {
+                color: $icon-color-disabled;
+                pointer-events: none;
+            }
+        }
+
+        &-disabled &-placeholder {
+            color: $font-color-disabled-spec;
+        }
+
+        &-disabled &-selection {
+            background-color: $bg-disabled;
+            cursor: not-allowed;
+
+            &:hover,
+            &:active,
+            &:focus {
+                border-color: $border-color-disabled;
+                box-shadow: none;
+            }
+        }
+
+        &-opened &-arrow {
+            @include prefixer(transform, rotate(180deg));
+        }
+
+        &-arrow {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            font-size: $icon-size-med;
+            color: $icon-color-default;
+            transform: translateY(-50%);
+            &:hover {
+                color: $brand-default;
+            }
+        }
+
+        &-clear {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            font-size: $icon-size-sm;
+            color: $icon-color-default;
+            &:hover {
+                color: $brand-default;
+            }
+        }
+
+        &-disabled &-clear {
             color: $icon-color-disabled;
-            pointer-events: none;
-        }
-    }
-
-    &-disabled &-placeholder {
-        color: $font-color-disabled-spec;
-    }
-
-    &-disabled &-selection {
-        background-color: $bg-disabled;
-        cursor: not-allowed;
-
-        &:hover,
-        &:active,
-        &:focus {
-            border-color: $border-color-disabled;
-            box-shadow: none;
-        }
-    }
-
-    &-opened &-arrow {
-        @include prefixer(transform, rotate(180deg));
-    }
-
-    &-arrow {
-        position: absolute;
-        top: 50%;
-        right: 5px;
-        font-size: $icon-size-med;
-        color: $icon-color-default;
-        transform: translateY(-50%);
-        &:hover {
-            color: $brand-default;
-        }
-    }
-
-    &-clear {
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        font-size: $icon-size-sm;
-        color: $icon-color-default;
-        &:hover {
-            color: $brand-default;
-        }
-    }
-
-    &-disabled &-clear {
-        color: $icon-color-disabled;
-        &:hover {
-            color: $icon-color-disabled;
+            &:hover {
+                color: $icon-color-disabled;
+            }
         }
     }
 }

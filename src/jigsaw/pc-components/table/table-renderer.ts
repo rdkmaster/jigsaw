@@ -13,7 +13,7 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawSwitchModule} from "../switch/index";
+import {JigsawSwitchModule} from "../switch/switch";
 import {JigsawSelectModule} from "../select/index";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";

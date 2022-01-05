@@ -18,7 +18,7 @@ import {JigsawScrollbarModule} from "../common/components/scrollbar/index";
 import {JigsawSelectModule} from "./select/index";
 import {JigsawSliderModule} from "./slider/index";
 import {JigsawStepsModule} from "./steps/step";
-import {JigsawSwitchModule} from "./switch/index";
+import {JigsawSwitchModule} from "./switch/switch";
 import {JigsawTableModule} from "./table/table";
 import {JigsawTableRendererModule} from "./table/table-renderer";
 import {JigsawTabsModule} from "./tabs/index";

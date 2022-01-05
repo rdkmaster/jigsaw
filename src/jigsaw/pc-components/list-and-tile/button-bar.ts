@@ -7,7 +7,7 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 @Component({
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `
-        <j-tile [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
+        <j-tile [theme]="theme" [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
                 [multipleSelect]="multipleSelect" [height]="'100%'" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
@@ -19,16 +19,17 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
             </j-tile-option>
         </j-tile>`,
     host: {
-        '[class.jigsaw-button-bar]': 'true',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-button-bar-host]': 'true',
         '[class.jigsaw-button-bar-default]': "colorType === 'default'",
         '[class.jigsaw-button-bar-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-bar-warning]': "colorType === 'warning'",
         '[class.jigsaw-button-bar-error]': "colorType === 'error' || colorType === 'danger'",
         '[class.jigsaw-button-bar-size-small]': "preSize === 'small'",
-        '[style.height]': 'height',
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawButtonBar), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawButtonBar), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

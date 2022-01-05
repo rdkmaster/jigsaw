@@ -1,23 +1,20 @@
-$tile-prefix-cls: #{$jigsaw-prefix}-tile;
-$tile-option-prefix-cls: #{$tile-prefix-cls}-option;
-$button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
+$jigsaw-tile: #{$jigsaw-prefix}-tile;
+$jigsaw-tile-option: #{$jigsaw-tile}-option;
+$jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
 
-.#{$button-bar-prefix-cls} {
+.#{$jigsaw-button-bar}-host {
     @include inline-block;
-}
-
-.#{$button-bar-prefix-cls} {
     height: $height-base;
 
-    .#{$tile-prefix-cls}-host {
+    .#{$jigsaw-tile}-host {
         padding: 0 0;
         border: none;
 
-        &.#{$tile-prefix-cls}-error {
+        &.#{$jigsaw-tile}-error {
             border-color: $error-default;
         }
 
-        .#{$tile-option-prefix-cls} {
+        .#{$jigsaw-tile-option} {
             display: inline-flex;
             justify-content: center;
             align-items: center;
@@ -40,7 +37,7 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
                 margin-left: -1px;
             }
 
-            &.#{$tile-option-prefix-cls}-active {
+            &.#{$jigsaw-tile-option}-active {
                 position: relative;
             }
 
@@ -64,37 +61,37 @@ $button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
         }
     }
 
-    &-default .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
-    &-primary .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &-default .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover,
+    &-primary .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $primary-default;
     }
 
-    &-warning .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &-warning .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $warning-default;
         color: $warning-default;
     }
 
-    &-error .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &-error .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $error-default;
         color: $error-default;
     }
 
-    &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+    &-primary .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $primary-default;
         background-color: $primary-default;
         color: $font-color-white;
     }
 
-    &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+    &-warning .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $warning-default;
         background-color: $warning-default;
         color: $font-color-white !important;
     }
 
-    &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+    &-error .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $error-default;
         background-color: $error-default;
         color: $font-color-white !important;

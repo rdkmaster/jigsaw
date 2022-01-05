@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -6,11 +7,12 @@ import {
     forwardRef,
     Injector,
     Input,
+    NgModule,
     OnInit,
     Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import { AbstractJigsawComponent } from 'jigsaw/public_api';
+import {AbstractJigsawComponent} from '../../common/common';
 
 /**
  * @description 开关组件
@@ -243,3 +245,11 @@ export class JigsawSwitch extends AbstractJigsawComponent implements ControlValu
         this.disabled = disabled;
     }
 }
+
+@NgModule({
+    imports: [CommonModule],
+    exports: [JigsawSwitch],
+    declarations: [JigsawSwitch],
+    providers: [],
+})
+export class JigsawSwitchModule { }

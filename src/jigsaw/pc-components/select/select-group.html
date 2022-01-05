@@ -1,20 +1,21 @@
-<jigsaw-combo-select width="100%" [autoWidth]="!optionWidth" [maxHeight]="maxHeight" [(value)]="_$selectedItems"
+<jigsaw-combo-select width="100%" [theme]="theme" [autoWidth]="!optionWidth" [maxHeight]="maxHeight" [(value)]="_$selectedItems"
                      [clearable]="clearable" [labelField]="labelField" [valid]="valid" [disabled]="disabled"
                      [placeholder]="placeholder" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
                      [autoClose]="!multipleSelect" (openChange)="_$onComboOpenChange($event)"
                      (clear)="_$handleClearable()" (remove)="_$onTagRemove($event)">
     <ng-template>
         <div [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}"
-             [ngClass]="{'jigsaw-select-show-selected': _$showSelected,
+             [ngClass]="{'jigsaw-select-list-host':true,
+                    'jigsaw-select-show-selected': _$showSelected,
                     'jigsaw-select-multiple-list': multipleSelect,
                     'jigsaw-select-single-list': !multipleSelect}">
             <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
                 <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
-                <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
+                <jigsaw-circle-loading *ngIf="data && data['busy']" [theme]="theme" [size]="'small'"></jigsaw-circle-loading>
                 <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
             </div>
             <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
-                <jigsaw-checkbox *ngIf="!_$showSelected" [(checked)]="_$selectAllChecked"
+                <jigsaw-checkbox *ngIf="!_$showSelected" [theme]="theme" [(checked)]="_$selectAllChecked"
                                  [disabled]="_$disableSelectAll()" (checkedChange)="_$selectAll()">
                     <span>{{'select.selectAll' | translate}}</span>
                 </jigsaw-checkbox>
@@ -28,7 +29,7 @@
                 </div>
             </div>
 
-            <jigsaw-collapse [ngStyle]="{'max-height': _$listHeight}" arrowPosition="right"
+            <jigsaw-collapse [ngStyle]="{'max-height': _$listHeight}" [theme]="theme" arrowPosition="right"
                              [ngClass]="{'jigsaw-group-select-option-cntr': _$type == 'group',
                                             'jigsaw-collapse-select-option-cntr': _$type =='collapse'}"
                              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
@@ -39,12 +40,12 @@
                         <span *ngIf="!data[i]?.data || data[i].data.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}
                         </span>
-                        <jigsaw-list *ngIf="data[i]?.data?.length > 0" width="100%" [trackItemBy]="trackItemBy"
+                        <jigsaw-list *ngIf="data[i]?.data?.length > 0" [theme]="theme" width="100%" [trackItemBy]="trackItemBy"
                                      [(selectedItems)]="_$listValue[i].data" (selectedItemsChange)="_$handleGroupSelectChange(i)"
                                      [multipleSelect]="multipleSelect">
                             <jigsaw-list-option #listItem *ngFor="let item of group.data" [value]="item"
                                                 [disabled]="item.disabled" [height]="optionHeight">
-                                <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
+                                <jigsaw-checkbox *ngIf="multipleSelect" [theme]="theme" [disabled]="item.disabled"
                                                  [(checked)]="listItem.selected" mode="minimalist">
                                 </jigsaw-checkbox>
                                 <span class="select-option-label" title="{{item && item[labelField] ? item[labelField] : item}}">
