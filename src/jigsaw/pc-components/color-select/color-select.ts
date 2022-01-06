@@ -65,6 +65,9 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     public _$dropdownHeight = 3*24 + 'px';
     private _optionCount: number;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get optionCount(): number {
         return this._optionCount;
