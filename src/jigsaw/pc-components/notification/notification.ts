@@ -261,15 +261,15 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     }
 
     set _popupInfo(value: PopupInfo) {
-        this._popupInfoValue = value;
-        if (!this._popupInfoValue) {
+        if (!value) {
             return;
         }
-
-        if (this._popupInfoValue.answer) {
-            this._popupInfoValue.answer.unsubscribe();
+        // 如果有存在，则先取消旧的订阅
+        if (this._popupInfoValue?.answer) {
+            this._popupInfoValue.answer.complete();
         }
 
+        this._popupInfoValue = value;
         this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
         this._$onLeave();
     }
