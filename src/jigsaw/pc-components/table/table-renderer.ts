@@ -470,6 +470,10 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+        protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
 }
 
 /**
@@ -483,6 +487,10 @@ export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+        protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
     /**
      * @internal
      */
