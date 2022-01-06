@@ -25,10 +25,7 @@
 </jigsaw-button>
 
 <ng-template #tpDialog1>
-    <jigsaw-dialog width="50%" (close)="onAnswer()">
-        <div jigsaw-title>
-            <span class="iconfont iconfont-e3f0"></span>定义在template中的对话框
-        </div>
+    <jigsaw-dialog width="50%" (close)="onAnswer()" caption="定义在template中的对话框" icon="iconfont iconfont-e3f0">
         <div jigsaw-body>
             <p class="dialog-content">
                 这里演示了如何使用<code>ng-template</code>标签快速定义一个对话框模板，这个方式可以非常方便的定义一个对话框，
@@ -46,10 +43,7 @@
 </ng-template>
 
 <ng-template #tpDialog2>
-    <jigsaw-dialog width="40%" (close)="onAnswer()">
-        <div jigsaw-title>
-            <span class="iconfont iconfont-e3f0"></span>Title of the dialog
-        </div>
+    <jigsaw-dialog width="40%" (close)="onAnswer()" caption="Title of the dialog" icon="iconfont iconfont-e3f0">
         <div jigsaw-body>
             <p class="dialog-content">
                 这是另一个使用<code>ng-template</code>定义的对话框。

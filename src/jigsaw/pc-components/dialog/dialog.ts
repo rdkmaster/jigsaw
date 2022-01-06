@@ -36,6 +36,8 @@ export interface IDialog extends IPopupable {
 
 export type DialogCallback = (button: ButtonInfo) => void;
 
+export type NoticeLevel = 'success' | 'error' | 'warning' | 'info';
+
 /**
  * 这个类用于应用在需要根据已有的对话框组件派生出该对话框组件的更具体的对话框的时候使用。
  * 对话框组件是具备一定抽象性的，因此他们的API一般会较多较复杂，应用在使用时需要做较多的配置。
@@ -70,6 +72,23 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
         this._caption = value;
         if (this.dialog) {
             this.dialog.caption = value;
+        }
+    }
+
+    private _icon: string = '';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get icon(): string {
+        return this._icon;
+    }
+
+    public set icon(value: string) {
+        this._icon = value;
+        if (this.dialog) {
+            this.dialog.icon = value;
         }
     }
 
@@ -131,6 +150,10 @@ export abstract class AbstractDialogComponentBase
     @RequireMarkForCheck()
     @Input()
     public caption: string;
+
+    @RequireMarkForCheck()
+    @Input()
+    public icon: string;
 
     /**
      * @NoMarkForCheckRequired
@@ -218,6 +241,12 @@ export class JigsawDialog extends AbstractDialogComponentBase implements AfterCo
      */
     @Input()
     public caption: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public icon: string;
 
     /**
      * @internal

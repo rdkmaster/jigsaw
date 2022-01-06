@@ -245,15 +245,15 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     public get _$placeholder() {
-        return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
+        return this._initDataJson?.placeholder ? this._initDataJson.placeholder : '';
     }
 
     public get _$dropDownData() {
-        return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
+        return this._initDataJson?.data ? this._initDataJson.data : null;
     }
 
     public get _$maxDropDownHeight() {
-        return this._initDataJson && this._initDataJson.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
+        return this._initDataJson?.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
     }
 
     ngAfterViewInit() {
@@ -303,8 +303,9 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"
-                         [valid]="_$valid" mode="minimalist"></jigsaw-checkbox>`,
+        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
+                         [title]="_$title" mode="minimalist">
+        </jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -324,11 +325,15 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 
     public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
     }
 
     public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
+
+    public get _$title() {
+        return this._initDataJson?.hasOwnProperty('title') ? this._initDataJson.title : '';
     }
 
     public get checked(): CheckBoxStatus {
@@ -339,7 +344,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            this._additionalData.touchValueByRow(this.field, index, value);
+            if (this.targetData instanceof AdditionalTableData) {
+                this.targetData.touchValueByRow(this.field, index, value);
+            }
         });
         this.targetData.refresh();
     }
@@ -347,7 +354,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            let value = this._additionalData.getTouchedValueByRow(this.field, index);
+            let value = this.targetData instanceof AdditionalTableData ?
+                this.targetData.getTouchedValueByRow(this.field, index) : undefined;
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
             type |= value ? 2 : 1;
         });
@@ -368,43 +376,32 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/**
- * cell checkbox renderer
- */
-@Component({
-    template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
-                         (checkedChange)="onChange($event)">
-        </jigsaw-checkbox>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class TableCellCheckboxRenderer extends TableCellRendererBase {
+export class TableCellToggleRendererBase extends TableCellRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_injector);
+    }
+
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
         this._updateInitData();
     }
 
-    private _initDataJson: any;
+    protected _initDataJson: any;
+
+    public get _$disabled() {
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
 
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
             this.initData(this.tableData, this.row, this.column) : this.initData;
-    }
-
-    public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
-    }
-
-    public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
-    }
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, private _zone: NgZone) {
-        super(_injector);
     }
 
     public checked: boolean;
@@ -422,7 +419,8 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 
     private _updateChecked(): void {
-        let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
+        let checked = this.targetData instanceof AdditionalTableData ?
+            this.targetData.getTouchedValueByRow(this.field, this.row) : undefined;
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
         this._changeDetectorRef.markForCheck();
@@ -437,7 +435,9 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     onChange(value) {
         this.checked = value;
-        this._additionalData.touchValueByRow(this.field, this.row, value);
+        if (this.targetData instanceof AdditionalTableData) {
+            this.targetData.touchValueByRow(this.field, this.row, value);
+        }
         this._updateTargetData();
         this.dispatchChangeEvent(value);
         this._changeDetectorRef.markForCheck();
@@ -450,7 +450,8 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     ngOnInit() {
         super.ngOnInit();
-        if (!this._additionalData.trackRowBy && this.row == 0) { // this.row == 0 ensures print once
+        // this.row == 0 to ensures print once
+        if (this.targetData instanceof AdditionalTableData && !this.targetData.trackRowBy && this.row == 0) {
             console.warn('You may need to add a [trackRowBy="field-name"] attribute to ' +
                 'the table if using a renderer which has status.');
         }
@@ -458,30 +459,43 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 }
 
 /**
+ * cell checkbox renderer
+ */
+@Component({
+    template: `
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
+                         mode="minimalist" (checkedChange)="onChange($event)">
+        </jigsaw-checkbox>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+        protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
+}
+
+/**
  * switch renderer
  */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)" [readonly]="_$readonly"></j-switch>',
+    template: `
+        <j-switch [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
+                  (checkedChange)="onChange($event)">
+        </j-switch>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableCellSwitchRenderer extends TableCellRendererBase {
+export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+        protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
     /**
      * @internal
      */
-    public _$readonly: boolean;
-
-    set initData(value: any) {
-        if (!value || !value.hasOwnProperty('readonly')) {
-            return;
-        }
-        this._$readonly = value.readonly;
-        this._changeDetectorRef.markForCheck();
-    }
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_injector);
+    public get _$readonly() {
+        return this._initDataJson?.hasOwnProperty('readonly') ? this._initDataJson.readonly : false;
     }
 }
 
@@ -704,15 +718,15 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     public get _$icon() {
-        return this.initData && this.initData.icon ? this.initData.icon : "iconfont iconfont-e515";
+        return this.initData?.icon ? this.initData.icon : "iconfont iconfont-e515";
     }
 
     public get _$label() {
-        return this.initData && this.initData.label ? this.initData.label : '';
+        return this.initData?.label ? this.initData.label : '';
     }
 
     public get _$title() {
-        return this.initData && this.initData.title ? this.initData.title : '';
+        return this.initData?.title ? this.initData.title : '';
     }
 
     /**

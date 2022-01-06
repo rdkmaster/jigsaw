@@ -42,6 +42,9 @@ export const routerConfig = [
     },
     {
         path: 'instances', component: ButtonInstancesDemoComponent
+    },
+    {
+        desc: 'with-chart-icon', url: '/pc/chart-icon/with-button'
     }
 ];
 

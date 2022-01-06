@@ -1,0 +1,7 @@
+@import "../../common/assets/scss/core/base";
+
+$chart-icon-prefix-cls: #{$jigsaw-prefix}-chart-icon;
+
+.#{$chart-icon-prefix-cls} {
+    display: inline-block;
+}

@@ -20,7 +20,8 @@ import {
     Type,
     ViewChild,
     ViewChildren,
-    ViewContainerRef
+    ViewContainerRef,
+    Renderer2
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
@@ -28,6 +29,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/comm
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
+import { CommonUtils } from '../../common/core/utils/common-utils';
 
 export type TabBarData = {
     /**
@@ -53,7 +55,7 @@ export type TabBarData = {
 
 @Directive()
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
-    protected constructor(protected _changeDetector: ChangeDetectorRef,
+    protected constructor(protected _changeDetector: ChangeDetectorRef, protected _elementRef: ElementRef,
                           // @RequireMarkForCheck 需要用到，勿删
                           protected _injector: Injector) {
         super();
@@ -121,6 +123,30 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
             return;
         }
         this._$tabPanes = value;
+    }
+
+    /**
+     * @internal
+     */
+    private _backgroundColor: string;
+
+    /**
+     * 配置组件的背景颜色，使得页签部分与容器周围的背景色可以更好的融合在一起。
+     *
+     * $demo = tab/background
+     * $demo = tab-bar/background
+     */
+    @Input()
+    @RequireMarkForCheck()
+    public get backgroundColor(): string {
+        return this._backgroundColor;
+    }
+
+    public set backgroundColor(value: string) {
+        if (!CommonUtils.isDefined(value)) {
+            return;
+        }
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-nav-background', value.trim());
     }
 
     /**
@@ -413,7 +439,7 @@ export class JigsawTabBar extends JigsawTabBase {
                  * @internal
                  */
                 public _elementRef: ElementRef) {
-        super(_changeDetector, _injector);
+        super(_changeDetector, _elementRef, _injector);
     }
 
     /**
@@ -491,9 +517,10 @@ export class JigsawTab extends JigsawTabBase {
     constructor(private _cfr: ComponentFactoryResolver,
                 protected _changeDetector: ChangeDetectorRef,
                 private _viewContainer: ViewContainerRef,
+                protected _elementRef: ElementRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
-        super(_changeDetector, _injector);
+        super(_changeDetector, _elementRef, _injector);
     }
 
     /**
