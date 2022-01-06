@@ -4,6 +4,6 @@
         <p> {{header | translate}} </p>
     </div>
     <div class="content-sub">
-        <p> {{message}} </p>
+        <p [perfectScrollbar]="{suppressScrollX: true, wheelPropagation: true, wheelSpeed: 0.1, minScrollbarLength: 20}"> {{message}} </p>
     </div>
 </jigsaw-alert>

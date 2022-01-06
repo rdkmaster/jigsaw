@@ -2,29 +2,33 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<p style="margin-bottom: 8px;"><span>主消息</span> <j-input [(value)]="header" width="671px"></j-input></p>
-<p style="margin-bottom: 8px;"><span>副消息</span> <j-input [(value)]="message" width="671px"></j-input></p>
+<jigsaw-header>Alert</jigsaw-header>
+<div class="alert-demo-setting">
+    <span>主消息</span>
+    <j-input [(value)]="header" width="671px"></j-input>
+</div>
+
+<div class="alert-demo-setting">
+    <span>副消息</span>
+    <j-input [(value)]="message" width="671px"></j-input>
+    <a (click)="createLongText()">长文本</a>
+</div>
 
 <!-- start to learn the demo from here -->
-<jigsaw-button width="175" (click)="commonInfoAlert()">
+<jigsaw-button style="margin-left: 48px" width="165" (click)="commonInfoAlert()">
     通用信息提示框
 </jigsaw-button>
 
-<jigsaw-button width="175" (click)="commonWarningAlert()">
+<jigsaw-button width="165" (click)="commonWarningAlert()">
     通用警告提示框
 </jigsaw-button>
 
-<jigsaw-button width="175" (click)="commonErrorAlert()">
+<jigsaw-button width="165" (click)="commonErrorAlert()">
     通用错误提示框
 </jigsaw-button>
 
-<jigsaw-button width="175" (click)="commonConfirmAlert()">
+<jigsaw-button width="165" (click)="commonConfirmAlert()">
     通用确认提示框
 </jigsaw-button>
 
-<jigsaw-button width="175" (click)="contentWrap()">
-    内容换行
-</jigsaw-button>
-
 <p style="margin-top: 20px; font-size: 16px">{{answer}}</p>
-
