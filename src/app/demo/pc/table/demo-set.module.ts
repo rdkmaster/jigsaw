@@ -103,6 +103,8 @@ import { TableAutoFillUpDemoComponent } from "./auto-fill-up/demo.component";
 import { TableAutoFillUpDemoModule } from "./auto-fill-up/demo.module";
 import { TableAutoPageableDemoComponent } from "./auto-page-sizing/demo.component"
 import { TableAutoPageableDemoModule } from "./auto-page-sizing/demo.module"
+import {TableColumnWidthDemoModule} from "./column-width/demo.module";
+import {TableColumnWidthDemoComponent} from "./column-width/demo.component";
 
 
 export const routerConfig = [
@@ -260,6 +262,9 @@ export const routerConfig = [
         path: "auto-page-sizing", component: TableAutoPageableDemoComponent
     },
     {
+        path: 'column-width', component: TableColumnWidthDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -278,7 +283,7 @@ export const routerConfig = [
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
-        TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule
+        TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule
     ]
 })
 export class TableDemoModule {
