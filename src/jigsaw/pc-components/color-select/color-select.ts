@@ -12,7 +12,6 @@ import {
 import {AbstractJigsawComponent} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-color-select',
@@ -62,11 +61,7 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     @Input()
     public preSize: 'large' | 'normal' | 'small' = "large";
 
-    /**
-     * @internal
-     */
-    public _$dropdownHeight = 3*24 + 'px';
-    private _optionCount: number;
+    private _optionCount: number = 5;
 
     /**
      * @NoMarkForCheckRequired
@@ -77,12 +72,18 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     }
 
     public set optionCount(value: number) {
-        this._optionCount = value;
-        if (CommonUtils.isUndefined(value)) {
+        value = parseInt(<any>value);
+        if (isNaN(value)) {
             return;
         }
+        this._optionCount = value;
         this._$dropdownHeight = value * 24 + 'px';
     }
+
+    /**
+     * @internal
+     */
+    public _$dropdownHeight = this._optionCount * 24 + 'px';
 
     @Output()
     public colorChange: EventEmitter<any> = new EventEmitter<any>();
