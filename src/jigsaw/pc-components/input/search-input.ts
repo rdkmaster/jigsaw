@@ -32,6 +32,7 @@ import {JigsawAutoCompleteInputModule} from './auto-complete-input';
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-search-input-host]": "true",
         "[class.jigsaw-search-input-auto]": "autoSearch",
         "[class.jigsaw-search-input-disabled]": "disabled"
