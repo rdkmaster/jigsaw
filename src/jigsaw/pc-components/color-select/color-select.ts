@@ -61,6 +61,30 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     @Input()
     public preSize: 'large' | 'normal' | 'small' = "large";
 
+    private _optionCount: number = 5;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get optionCount(): number {
+        return this._optionCount;
+    }
+
+    public set optionCount(value: number) {
+        value = parseInt(<any>value);
+        if (isNaN(value)) {
+            return;
+        }
+        this._optionCount = value;
+        this._$dropdownHeight = value * 24 + 'px';
+    }
+
+    /**
+     * @internal
+     */
+    public _$dropdownHeight = this._optionCount * 24 + 'px';
+
     @Output()
     public colorChange: EventEmitter<any> = new EventEmitter<any>();
 
