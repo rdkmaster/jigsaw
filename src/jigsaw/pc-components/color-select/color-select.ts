@@ -62,6 +62,9 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
     @Input()
     public preSize: 'large' | 'normal' | 'small' = "large";
 
+    /**
+     * @internal
+     */
     public _$dropdownHeight = 3*24 + 'px';
     private _optionCount: number;
 
