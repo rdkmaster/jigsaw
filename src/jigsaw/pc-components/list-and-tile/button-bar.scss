@@ -61,47 +61,47 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
         }
     }
 
-    &-default .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover,
-    &-primary .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
+    &.#{$jigsaw-button-bar}-default .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover,
+    &.#{$jigsaw-button-bar}-primary .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $primary-default;
     }
 
-    &-warning .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
+    &.#{$jigsaw-button-bar}-warning .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $warning-default;
         color: $warning-default;
     }
 
-    &-error .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
+    &.#{$jigsaw-button-bar}-error .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $error-default;
         color: $error-default;
     }
 
-    &-primary .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
+    &.#{$jigsaw-button-bar}-primary .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $primary-default;
         background-color: $primary-default;
         color: $font-color-white;
     }
 
-    &-warning .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
+    &.#{$jigsaw-button-bar}-warning .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $warning-default;
         background-color: $warning-default;
         color: $font-color-white !important;
     }
 
-    &-error .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
+    &.#{$jigsaw-button-bar}-error .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $error-default;
         background-color: $error-default;
         color: $font-color-white !important;
     }
 
-    &-one-option {
+    &.#{$jigsaw-button-bar}-one-option {
         border-radius: 4px !important;
     }
 
-    &#{&}-size-small {
+    &.#{$jigsaw-button-bar}-size-small {
         height: $height-sm;
         font-size: $font-size-sm;
     }
