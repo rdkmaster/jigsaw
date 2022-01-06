@@ -53,6 +53,6 @@ export class TableColumnWidthDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '演示了设置表格列宽的效果，下表第一列固定50px，第二列按内容撑开，第三列固定100px，其他列由表格分配';
     description: string = '';
 }
