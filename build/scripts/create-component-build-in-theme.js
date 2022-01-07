@@ -16,7 +16,7 @@ fs.readFileSync(`pc-components/theming/all-theme.scss`).toString()
         styleFiles.push(file);
     });
 
-const angularJson = require(`../../angular.json`);
+const angularJson = require(`../../angular.real.json`);
 const options = angularJson.projects["jigsaw-app"].architect.build.options;
 options.styles = options.styles.filter(style => typeof style === 'string' ||
     (style.input && style.input.indexOf('/build-in-theme/')) === -1);
