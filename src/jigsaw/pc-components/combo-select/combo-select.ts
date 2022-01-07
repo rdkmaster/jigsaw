@@ -229,6 +229,35 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @NoMarkForCheckRequired
      */
     @Input()
+    public selectIconRotate: boolean = true;
+
+    private _selectIcon: string = "iconfont iconfont-e24c";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public set selectIcon(value: string) {
+        if (CommonUtils.isDefined(value)) {
+            this._selectIcon = value;
+        }
+    }
+
+    public get selectIcon(): string {
+        return this._selectIcon;
+    }
+
+    public get selectArrowClass() {
+        return {
+            [this.selectIcon]: true,
+            'jigsaw-combo-select-arrow-rotate': this.selectIconRotate
+        }
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public autoClose: boolean; //自动关闭dropdown
 
     /**

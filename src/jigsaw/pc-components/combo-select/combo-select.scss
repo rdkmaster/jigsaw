@@ -24,7 +24,7 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
     }
 
     &[ng-reflect-jigsaw-float-open="true"] {
-        .#{$jigsaw-combo-select}-arrow {
+        .#{$jigsaw-combo-select}-arrow-rotate {
             @include prefixer(transform, translateY(-50%) rotate(180deg));
         }
     }
@@ -128,10 +128,6 @@ $input-prefix-cls: #{$jigsaw-prefix}-input;
             border-color: $border-color-disabled;
             box-shadow: none;
         }
-    }
-
-    &-opened &-arrow {
-        @include prefixer(transform, rotate(180deg));
     }
 
     &-arrow {

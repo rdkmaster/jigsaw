@@ -33,7 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     template: `
         <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
-                             (openChange)="_$onComboOpenChange($event)">
+                             (openChange)="_$onComboOpenChange($event)" [selectIcon]="selectIcon" [selectIconRotate]="selectIconRotate">
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
                                          (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton"
@@ -213,6 +213,14 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @Input()
     @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
+
+    @Input()
+    @RequireMarkForCheck()
+    public selectIcon: string = "iconfont iconfont-e177";
+
+    @Input()
+    @RequireMarkForCheck()
+    public selectIconRotate: boolean = false;
 
     /**
      * 是否显示确认按钮

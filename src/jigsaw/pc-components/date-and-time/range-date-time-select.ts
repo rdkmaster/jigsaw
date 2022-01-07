@@ -35,7 +35,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
     template: `
         <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200"
-                             (openChange)="_$onComboOpenChange($event)">
+                             (openChange)="_$onComboOpenChange($event)" [selectIcon]="selectIcon" [selectIconRotate]="selectIconRotate">
             <ng-template>
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
                                                [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
@@ -218,6 +218,14 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     @Input()
     @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
+
+    @Input()
+    @RequireMarkForCheck()
+    public selectIcon: string = "iconfont iconfont-e177";
+
+    @Input()
+    @RequireMarkForCheck()
+    public selectIconRotate: boolean = false;
 
     /**
      * 是否显示确认按钮
