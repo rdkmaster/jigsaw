@@ -200,13 +200,13 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
         this._maxHeight = CommonUtils.getCssValue(value);
     }
 
-    protected _theme;
+    protected _theme: 'light' | 'dark' | string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get theme() {
+    public get theme(): 'light' | 'dark' | string {
         return this._theme;
     }
 
@@ -219,8 +219,9 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
             return;
         }
         const instanceName = this.constructor.name;
-        const selectorName = instanceName.replace(/[A-Z]/g, m => "-" + m.toLowerCase()).replace("-jigsaw-", "")
-        console.log(selectorName)
+        const selectorName = instanceName
+            .replace(/[A-Z]/g, m => "-" + m.toLowerCase())
+            .replace("-jigsaw-", "");
 
         const linkId = `${selectorName}DarkTheme`;
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;

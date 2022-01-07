@@ -1,88 +1,49 @@
 const fs = require("fs");
-const args = process.argv.slice(2);
 
-if (args[0] === "clean") {
-    process.chdir(`${__dirname}/../../src/jigsaw/common/core/theming/prebuilt/`);
-    if (!fs.existsSync(`angular.json`)) {
-        return;
-    }
-    fs.copyFileSync(`angular.json`, `${__dirname}/../../angular.json`);
-    fs.unlinkSync(`angular.json`);
-    return;
+console.log('creating component build in theme ...');
+
+process.chdir(`${__dirname}/../../src/jigsaw/`);
+if (!fs.existsSync(`common/core/theming/prebuilt/build-in-theme`)) {
+    fs.mkdirSync(`common/core/theming/prebuilt/build-in-theme`);
 }
 
-process.chdir(`${__dirname}/../../src/jigsaw/pc-components/theming`);
+const styleFiles = [];
+fs.readFileSync(`pc-components/theming/all-theme.scss`).toString()
+    .replace(/@import\s+"(.*?)"/g, (_, file) => {
+        if (file.startsWith('../../common/assets/scss/') || file.startsWith('../fallback/')) {
+            return;
+        }
+        styleFiles.push(file);
+    });
 
-const source = fs.readFileSync(`all-theme.scss`).toString().split("Component Style")[1];
+const angularJson = require(`../../angular.json`);
+const options = angularJson.projects["jigsaw-app"].architect.build.options;
+options.styles = options.styles.filter(style => typeof style === 'string' ||
+    (style.input && style.input.indexOf('/build-in-theme/')) === -1);
 
-const angularJson = fs.readFileSync(`${__dirname}/../../angular.json`).toString();
-if (!fs.existsSync(`../../common/core/theming/prebuilt/build-in-theme`)) {
-    fs.mkdirSync(`../../common/core/theming/prebuilt/build-in-theme`);
-}
-fs.copyFileSync(`${__dirname}/../../angular.json`, `../../common/core/theming/prebuilt/angular.json`);
-
-let angularString = "";
-
-const allStyleFilePath = source.match(/"(.*?)"/g);
-if (!allStyleFilePath) {
-    return;
-}
-
-console.log("creating component build-in themes");
-
-// allStyleFilePath.length = 3;
-
-allStyleFilePath.forEach((scssFile, index) => {
-    const filePath = scssFile.replace(/['"]+/g, "");
+const commonImport = `
+        @import "../settings/paletx-pro-base.scss";
+        @import "../settings/paletx-pro-$theme.scss";
+    `;
+styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
-    const fileContent = fs.readFileSync(filePath + ".scss").toString();
-    const darkImport = `@import "../settings/paletx-pro-base.scss";
-    @import "../settings/paletx-pro-dark.scss";
-    `;
-    const lightImport = `@import "../settings/paletx-pro-base.scss";
-    @import "../settings/paletx-pro-light.scss";
-    `;
-    const darkRes = darkImport + fileContent.replace(/-host/g, "-host[data-theme='dark']");
-    const lightRes = lightImport + fileContent.replace(/-host/g, "-host[data-theme='light']");
-    const darkOutputPath = `../../common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`;
-    const lightOutputPath = `../../common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`;
+    const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
+    const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/, "$1-host[data-theme='dark'] {");
+    fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`,
+        scssCode.replace('$theme', 'dark'));
+    fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`,
+        scssCode.replace('$theme', 'light'));
 
-    if (!fs.existsSync(darkOutputPath)) {
-        fs.appendFile(darkOutputPath, darkRes, function (err) {
-            if (err) throw err;
-        });
-    } else {
-        fs.writeFileSync(darkOutputPath, darkRes, function (err) {
-            if (err) throw err;
-        });
-    }
-
-    if (!fs.existsSync(lightOutputPath)) {
-        fs.appendFile(lightOutputPath, lightRes, function (err) {
-            if (err) throw err;
-        });
-    } else {
-        fs.writeFileSync(lightOutputPath, lightRes, function (err) {
-            if (err) throw err;
-        });
-    }
-    angularString += `
-    {
-        "input": "src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss",
-        "bundleName": "themes/components/${fileName}-dark",
-        "inject": false
-    },
-    {
-        "input": "src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss",
-        "bundleName": "themes/components/${fileName}-light",
-        "inject": false
-    },`;
+    options.styles.push({
+        "input": `src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`,
+        "bundleName": `themes/components/${fileName}-dark`, "inject": false
+    });
+    options.styles.push({
+        "input": `src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`,
+        "bundleName": `themes/components/${fileName}-light`, "inject": false
+    });
 });
+fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
 
-fs.writeFileSync(
-    `../../../../angular.json`,
-    angularJson.replace(`"src/styles.scss",`, `"src/styles.scss",${angularString}`),
-    function (err, file) {
-        if (err) throw err;
-    }
-);
+console.log('component build in theme created');
+
