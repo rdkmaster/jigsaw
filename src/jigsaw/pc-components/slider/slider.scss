@@ -12,149 +12,148 @@ $jigsaw-slider: #{$jigsaw-prefix}-slider;
     &.#{$jigsaw-slider}-error {
         border: 1px solid $error-default;
     }
-}
 
-.#{$jigsaw-slider} {
-    display: block;
-    position: relative;
-    height: 4px;
-    border-radius: $border-radius-base;
-    cursor: pointer;
-    background-color: $border-color-default;
-    user-select: none;
-
-    transition: background-color 0.3s ease;
-
-    &-with-marks {
-        margin-bottom: 28px;
-    }
-
-    .#{$jigsaw-slider}-track {
-        position: absolute;
-        left: 0px;
+    .#{$jigsaw-slider} {
+        display: block;
+        position: relative;
         height: 4px;
         border-radius: $border-radius-base;
-        background-color: $brand-default;
-        z-index: $zindex-level-1;
+        cursor: pointer;
+        background-color: $border-color-default;
+        user-select: none;
+
         transition: background-color 0.3s ease;
-    }
 
-    &:hover {
-        .#{$jigsaw-slider}-handle {
-            border-color: $brand-default;
+        &.#{$jigsaw-slider}-with-marks {
+            margin-bottom: 28px;
         }
-    }
 
-    &:hover {
         .#{$jigsaw-slider}-track {
+            position: absolute;
+            left: 0px;
+            height: 4px;
+            border-radius: $border-radius-base;
             background-color: $brand-default;
+            z-index: $zindex-level-1;
+            transition: background-color 0.3s ease;
         }
-    }
-
-    .#{$jigsaw-slider}-handle {
-        position: absolute;
-        margin-left: -7px;
-        margin-top: -5px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        border: 2px solid $brand-default;
-        background-color: $bg-body;
-        z-index: $zindex-level-2;
-
-        transition: border-color 0.3s ease,
-            transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
         &:hover {
-            border-color: $brand-default;
-            transform-origin: center center;
-        }
-
-        &:active {
-            box-shadow: 0 0 0 2px rgba($brand-default, 0.2);
-        }
-    }
-
-    .#{$jigsaw-slider}-mark {
-        position: absolute;
-        top: 10px;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        font-size: $font-size-base;
-        z-index: $zindex-level-3;
-
-        .#{$jigsaw-slider}-mark-text {
-            position: absolute;
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-            cursor: pointer;
-            color: $font-color-hint;
-
-            &-active {
-                color: $font-color-default;
-            }
-        }
-    }
-
-    .#{$jigsaw-slider}-step {
-        position: absolute;
-        width: 100%;
-        height: 4px;
-        background: transparent;
-        z-index: $zindex-level-1;
-
-        > .#{$jigsaw-slider}-dot {
-            position: absolute;
-            margin-left: -4px;
-            width: 8px;
-            height: 8px;
-            border-width: 2px;
-            border-style: solid;
-            border-color: $border-color-default;
-            background-color: $bg-body;
-            cursor: pointer;
-            border-radius: 50%;
-            vertical-align: middle;
-            &:first-child {
-                margin-left: -4px; 
-            }
-            &:last-child {
-                margin-left: -4px;
-            }
-            &-active {
+            .#{$jigsaw-slider}-handle {
                 border-color: $brand-default;
             }
         }
-    }
 
-    &-disabled {
-        background-color: $border-color-disabled !important;
-
-        .#{$jigsaw-slider}-track {
-            background-color: $brand-disabled !important;
+        &:hover {
+            .#{$jigsaw-slider}-track {
+                background-color: $brand-default;
+            }
         }
 
-        .#{$jigsaw-slider}-handle,
-        .#{$jigsaw-slider}-dot {
-            border-color: $brand-disabled !important;
+        .#{$jigsaw-slider}-handle {
+            position: absolute;
+            margin-left: -7px;
+            margin-top: -5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid $brand-default;
             background-color: $bg-body;
-            cursor: not-allowed;
-            box-shadow: none;
+            z-index: $zindex-level-2;
+
+            transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+            &:hover {
+                border-color: $brand-default;
+                transform-origin: center center;
+            }
+
+            &:active {
+                box-shadow: 0 0 0 2px rgba($brand-default, 0.2);
+            }
         }
 
-        .#{$jigsaw-slider}-handle:active {
-            box-shadow: none;
+        .#{$jigsaw-slider}-mark {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: $font-size-base;
+            z-index: $zindex-level-3;
+
+            .#{$jigsaw-slider}-mark-text {
+                position: absolute;
+                display: inline-block;
+                vertical-align: middle;
+                text-align: center;
+                cursor: pointer;
+                color: $font-color-hint;
+
+                &-active {
+                    color: $font-color-default;
+                }
+            }
         }
 
-        .#{$jigsaw-slider}-masr-text,
-        .#{$jigsaw-slider}-dot {
-            cursor: not-allowed !important;
+        .#{$jigsaw-slider}-step {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: $zindex-level-1;
+
+            > .#{$jigsaw-slider}-dot {
+                position: absolute;
+                margin-left: -4px;
+                width: 8px;
+                height: 8px;
+                border-width: 2px;
+                border-style: solid;
+                border-color: $border-color-default;
+                background-color: $bg-body;
+                cursor: pointer;
+                border-radius: 50%;
+                vertical-align: middle;
+                &:first-child {
+                    margin-left: -4px;
+                }
+                &:last-child {
+                    margin-left: -4px;
+                }
+                &-active {
+                    border-color: $brand-default;
+                }
+            }
+        }
+
+        &.#{$jigsaw-slider}-disabled {
+            background-color: $border-color-disabled !important;
+
+            .#{$jigsaw-slider}-track {
+                background-color: $brand-disabled !important;
+            }
+
+            .#{$jigsaw-slider}-handle,
+            .#{$jigsaw-slider}-dot {
+                border-color: $brand-disabled !important;
+                background-color: $bg-body;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+
+            .#{$jigsaw-slider}-handle:active {
+                box-shadow: none;
+            }
+
+            .#{$jigsaw-slider}-masr-text,
+            .#{$jigsaw-slider}-dot {
+                cursor: not-allowed !important;
+            }
         }
     }
 
-    &-vertical {
+    &.#{$jigsaw-slider}-vertical {
         height: 240px;
         width: auto;
         padding: 6px 0;

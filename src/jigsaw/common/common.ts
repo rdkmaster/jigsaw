@@ -223,7 +223,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
             .replace(/[A-Z]/g, m => "-" + m.toLowerCase())
             .replace("-jigsaw-", "");
 
-        const linkId = `${selectorName}DarkTheme`;
+        const linkId = `${selectorName}-${theme}-theme`;
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;
         if (themeLink) {
             return;

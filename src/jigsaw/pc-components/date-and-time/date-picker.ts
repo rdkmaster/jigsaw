@@ -101,11 +101,12 @@ export class GrItem {
     selector: 'jigsaw-date-picker, j-date-picker',
     templateUrl: './date-picker.html',
     host: {
-        '[class.jigsaw-date-picker]': 'true',
-        '[class.jigsaw-date-picker-error]': '!valid',
-        '[class.jigsaw-date-picker-disabled]': 'disabled',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-date-picker-host]': 'true',
+        '[class.jigsaw-date-picker-error]': '!valid',
+        '[class.jigsaw-date-picker-disabled]': 'disabled',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDatePicker), multi: true},
