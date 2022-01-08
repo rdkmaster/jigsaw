@@ -97,6 +97,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * @NoMarkForCheckRequired
+     * 当值为'_inner_auto_'时，会根据表头内容自动伸展，可能会自动产生横向滚动条，但无法设置列宽，列宽没有响应性
+     * 当值为'auto'或具体的值时，默认按照表格宽度平均分配列宽，当设置列宽为'byContent'时，会根据列的内容计算宽度，也可以直接设置列的宽度
      */
     @Input()
     public get contentWidth(): string {
