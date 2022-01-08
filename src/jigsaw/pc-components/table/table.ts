@@ -769,7 +769,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         this._$headerSettings.forEach((headerSetting, index) => {
-            const colWidth = headerSetting.width == 'byContent' || this.contentWidth == '_inner_auto_' ? widthStorage[index] : !!headerSetting.width ? headerSetting.width : '0*';
+            const colWidth = headerSetting.width == 'byContent' || this.contentWidth == '_inner_auto_' ? widthStorage[index] :
+                !!headerSetting.width ? headerSetting.width : '0*';
             tHeadColGroup[index] && tHeadColGroup[index].setAttribute('width', colWidth);
             tBodyColGroup[index] && tBodyColGroup[index].setAttribute('width', colWidth);
             if (this._$isFFBrowser) {
