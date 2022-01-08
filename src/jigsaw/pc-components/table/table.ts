@@ -786,6 +786,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
     }
 
     /**
