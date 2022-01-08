@@ -4,15 +4,36 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
+    <jigsaw-header [level]="1">自定义列宽用法</jigsaw-header>
     <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">自定义列宽用法</jigsaw-header>
+        <p class="comment">contentWidth默认为'auto'，默认按照表格宽度平均分配列宽，当设置列宽为'byContent'时，会根据列的内容计算宽度，也可以直接设置列的宽度</p>
+        <jigsaw-table maxHeight="400"
+                      [data]="tableData"
+                      [columnDefines]="columnDefines"
+                      [additionalColumnDefines]="additionalColumns">
+        </jigsaw-table>
 
+    </div>
+
+    <div class="demo-2 live-demo">
+        <p class="comment">contentWidth为'_inner_auto_'时，会根据表头内容自动伸展，可能会自动产生横向滚动条，但无法设置列宽，列宽没有响应性</p>
         <jigsaw-table maxHeight="400"
                       [data]="tableData"
                       [columnDefines]="columnDefines"
                       [additionalColumnDefines]="additionalColumns"
-                      [(additionalData)]="additionalData">
+                      contentWidth="_inner_auto_">
         </jigsaw-table>
     </div>
+
+    <div class="demo-3 live-demo">
+        <p class="comment">contentWidth为具体的数值时，同'auto'</p>
+        <jigsaw-table maxHeight="400"
+                      [data]="tableData"
+                      [columnDefines]="columnDefines"
+                      [additionalColumnDefines]="additionalColumns"
+                      contentWidth="2000">
+        </jigsaw-table>
+    </div>
+
 </div>
 

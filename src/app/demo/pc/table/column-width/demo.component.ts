@@ -31,7 +31,7 @@ export class TableColumnWidthDemoComponent {
     columnDefines: ColumnDefine[] = [
         {
             target: 0,
-            width: 'fromContent'
+            width: 'byContent'
         },
         {
             target: 1,
