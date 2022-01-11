@@ -23,16 +23,16 @@ options.styles = options.styles.filter(style => typeof style === 'string' ||
 
 const commonImport = `
         @import "../settings/paletx-pro-base.scss";
-        @import "../settings/paletx-pro-$theme.scss";
+        @import "../settings/paletx-pro-$THEME.scss";
     `;
 styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
-    const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/, "$1-host[data-theme='dark'] {");
+    const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/mg, "$1-host[data-theme='$THEME'] {");
     fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`,
-        scssCode.replace('$theme', 'dark'));
+        scssCode.replace(/\$THEME/g, 'dark'));
     fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`,
-        scssCode.replace('$theme', 'light'));
+        scssCode.replace(/\$THEME/g, 'light'));
 
     options.styles.push({
         "input": `src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`,
