@@ -555,7 +555,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 export type GroupSelectOption = {
     data: ArrayCollection<SelectOption>
 }
-
+@Directive()
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * 设置组名的显示字段

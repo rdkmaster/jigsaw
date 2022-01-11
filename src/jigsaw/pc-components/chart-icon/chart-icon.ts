@@ -1,4 +1,4 @@
-import {Component, ElementRef, Injector, Input, NgModule, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Injector, Input, NgModule, OnChanges, OnInit, SimpleChanges, Directive} from '@angular/core';
 import {
     ChartIconBar,
     ChartIconDonut,
@@ -11,6 +11,7 @@ import {AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
+@Directive()
 export abstract class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit, OnChanges {
     constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
         super();
