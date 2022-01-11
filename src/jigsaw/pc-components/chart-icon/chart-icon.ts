@@ -1,4 +1,4 @@
-import {Component, ElementRef, Injector, Input, NgModule, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Injector, Input, NgModule, OnChanges, OnInit, SimpleChanges, Directive} from '@angular/core';
 import {
     ChartIconBar,
     ChartIconDonut,
@@ -11,6 +11,7 @@ import {AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
+@Directive()
 export abstract class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit, OnChanges {
     constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
         super();
@@ -94,6 +95,7 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
     }
 })
 export class JigsawPieChartIcon extends JigsawChartIconBase {
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -161,19 +163,20 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawLineChartIcon extends JigsawChartIconBase {
+
     protected _chartType: ChartType = ChartType.line;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public fill: string;
+    public fill: string = JigsawTheme.getGraphTheme().color[3];
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public width: number = 100;
+    public width: number = 50;
 
     /**
      * @NoMarkForCheckRequired
@@ -222,6 +225,7 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawBarChartIcon extends JigsawChartIconBase {
+
     protected _chartType: ChartType = ChartType.bar;
 
     /**
@@ -252,7 +256,7 @@ export class JigsawBarChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public width: number = 100;
+    public width: number = 50;
 
     /**
      * @NoMarkForCheckRequired
