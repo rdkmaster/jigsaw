@@ -94,9 +94,6 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
     }
 })
 export class JigsawPieChartIcon extends JigsawChartIconBase {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
-        super(_elementRef, _injector);
-    }
 
     /**
      * @NoMarkForCheckRequired
@@ -128,9 +125,6 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawDonutChartIcon extends JigsawChartIconBase {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
-        super(_elementRef, _injector);
-    }
     /**
      * @NoMarkForCheckRequired
      */
@@ -168,9 +162,6 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawLineChartIcon extends JigsawChartIconBase {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
-        super(_elementRef, _injector);
-    }
 
     protected _chartType: ChartType = ChartType.line;
 
@@ -233,9 +224,6 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
     }
 })
 export class JigsawBarChartIcon extends JigsawChartIconBase {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
-        super(_elementRef, _injector);
-    }
 
     protected _chartType: ChartType = ChartType.bar;
 
