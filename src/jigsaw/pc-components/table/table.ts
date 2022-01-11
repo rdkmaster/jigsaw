@@ -97,6 +97,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * @NoMarkForCheckRequired
+     * 当值为'_inner_auto_'时，会根据表头内容自动伸展，可能会自动产生横向滚动条，但无法设置列宽，列宽没有响应性
+     * 当值为'auto'或具体的值时，默认按照表格宽度平均分配列宽，当设置列宽为'byContent'时，会根据列的内容计算宽度，也可以直接设置列的宽度
      */
     @Input()
     public get contentWidth(): string {
@@ -726,7 +728,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body > colgroup col');
         const tHeadTds = host.querySelectorAll('.jigsaw-table-header > thead td');
         const tBodyTds = host.querySelectorAll('.jigsaw-table-body > thead td');
-        if (this.contentWidth != 'auto' || !tHeadColGroup || !tHeadColGroup.length) return;
+        if (!tHeadColGroup || !tHeadColGroup.length) return;
 
         host.querySelectorAll('table').forEach(table => {
             this._renderer.setStyle(table, 'table-layout', 'auto');
@@ -766,9 +768,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 });
         }
 
-        widthStorage.forEach((width, index) => {
-            // columnDefine定义过的列宽不会被覆盖
-            const colWidth = this._$headerSettings && this._$headerSettings[index] && this._$headerSettings[index].width ? this._$headerSettings[index].width : width;
+        this._$headerSettings.forEach((headerSetting, index) => {
+            const colWidth = headerSetting.width == 'byContent' || this.contentWidth == '_inner_auto_' ? widthStorage[index] :
+                !!headerSetting.width ? headerSetting.width : '0*';
             tHeadColGroup[index] && tHeadColGroup[index].setAttribute('width', colWidth);
             tBodyColGroup[index] && tBodyColGroup[index].setAttribute('width', colWidth);
             if (this._$isFFBrowser) {
@@ -784,6 +786,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
     }
 
     /**

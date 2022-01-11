@@ -26,7 +26,9 @@
 
 <ng-template #limitedElem>
     <div class="jigsaw-color-select-host jigsaw-color-select-host-limited"
-         [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}">
+         [ngClass]="{'jigsaw-color-select-host-large':preSize=='large','jigsaw-color-select-host-normal':preSize=='normal' || preSize=='small'}"
+         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+         [style.maxHeight]="_$dropdownHeight">
         <div class="jigsaw-color-select-area" *ngFor="let item of limitedColors"
              [ngStyle]="{'background-color': item}"
              [ngClass]="{'jigsaw-color-select-area-large':preSize=='large',

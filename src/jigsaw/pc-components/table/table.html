@@ -3,7 +3,7 @@
      [class.jigsaw-table-hide-head]="hideHeader">
     <table class="jigsaw-table-header" [hidden]="hideHeader">
         <colgroup>
-            <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
+            <col *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
         </colgroup>
         <thead>
         <tr>
@@ -35,7 +35,7 @@
          </div>
         <table class="jigsaw-table-body">
             <colgroup>
-                <col *ngFor="let head of _$headerSettings;" width="{{head.width}}">
+                <col *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>
             <thead *ngIf="_$isFFBrowser">
             <tr>
