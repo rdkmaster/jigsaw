@@ -33,7 +33,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
     template: `
-        <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
+        <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
@@ -47,8 +47,9 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
         </jigsaw-combo-select>
     `,
     host: {
-        '[class.jigsaw-range-date-time-select]': 'true',
-        '[style.min-width]': 'width'
+        '[style.min-width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-range-date-time-select-host]': 'true',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeDateTimeSelect), multi: true},

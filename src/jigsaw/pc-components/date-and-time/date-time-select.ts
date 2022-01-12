@@ -31,7 +31,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `
-        <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
+        <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
@@ -44,8 +44,9 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         </jigsaw-combo-select>
     `,
     host: {
-        '[class.jigsaw-date-time-select]': 'true',
-        '[style.min-width]': 'width'
+        '[style.min-width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-date-time-select-host]': 'true',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimeSelect), multi: true},

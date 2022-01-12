@@ -51,12 +51,13 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
     selector: 'jigsaw-time-picker, j-time-picker',
     templateUrl: './time-picker.html',
     host: {
-        '[class.jigsaw-time-picker]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-time-picker-host]': 'true',
         '[class.jigsaw-time-picker-active]': '_$selectMode != "none"',
         '[class.jigsaw-time-picker-error]': '!valid',
         '[class.jigsaw-time-picker-disabled]': 'disabled',
-        '[style.width]': 'width',
-        '[style.height]': 'height',
         '(keydown)': '_$handleKeyDown($event)'
     },
     providers: [

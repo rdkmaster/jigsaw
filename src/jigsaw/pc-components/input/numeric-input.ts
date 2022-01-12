@@ -49,7 +49,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
     constructor(private _cdr: ChangeDetectorRef) {
-        super(null);
+        super();
     }
     /**
      * @NoMarkForCheckRequired

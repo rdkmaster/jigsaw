@@ -1,6 +1,9 @@
-$date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
+$jigsaw-date-time-picker: #{$jigsaw-prefix}-date-time-picker;
+$jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
+$jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
+$jigsaw-button: #{$jigsaw-prefix}-button;
 
-.#{$date-time-prefix-cls} {
+.#{$jigsaw-date-time-picker}-host {
     @include inline-block();
     overflow: hidden;
     border-width: 1px;
@@ -11,26 +14,26 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
     font-size: $font-size-base;
     user-select: none;
 
-    jigsaw-date-picker {
+    .#{$jigsaw-date-picker}-host {
         border: none;
     }
 
-    &-bottom {
+    .#{$jigsaw-date-time-picker}-bottom {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 8px 8px;
 
-        j-time-picker {
+        .#{$jigsaw-time-picker}-host {
             max-width: 124px;
         }
 
-        jigsaw-button {
+        .#{$jigsaw-button}-host {
             min-width: 60px;
         }
     }
 
-    &-gr-switch {
+    .#{$jigsaw-date-time-picker}-gr-switch {
         display: flex;
         justify-content: center;
         text-align: center;
@@ -65,11 +68,11 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
         }
     }
 
-    &-error {
+    &.#{$jigsaw-date-time-picker}-error {
         border-color: $error-default;
     }
 
-    &-disabled {
+    &.#{$jigsaw-date-time-picker}-disabled {
         position: relative;
         &:before {
             content: " ";
@@ -85,7 +88,7 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
         }
     }
 
-    &-confirm {
+    .#{$jigsaw-date-time-picker}-confirm {
         max-width: 60px;
     }
 }

@@ -49,6 +49,7 @@ declare const moment: any;
     selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker, jigsaw-range-time, j-range-time',
     templateUrl: './range-date-time-picker.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-range-date-time-picker-host]': 'true',
         '[class.jigsaw-range-date-time-picker-error]': '!valid',
         '[class.jigsaw-range-date-time-picker-disabled]': 'disabled'
