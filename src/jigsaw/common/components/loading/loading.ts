@@ -73,7 +73,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 })
 export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef) {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 
@@ -90,7 +90,7 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 })
 export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef) {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 
@@ -129,7 +129,7 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 })
 export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef) {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 
@@ -150,7 +150,7 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
     templateUrl: 'loading-ball.html'
 })
 export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef) {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 
@@ -173,7 +173,7 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
     }
 })
 export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef) {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
         super(renderer, elementRef);
     }
 

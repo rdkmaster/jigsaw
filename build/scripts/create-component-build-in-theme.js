@@ -8,9 +8,14 @@ if (!fs.existsSync(`common/core/theming/prebuilt/build-in-theme`)) {
 }
 
 const styleFiles = [];
+const baseFiles = [];
 fs.readFileSync(`pc-components/theming/all-theme.scss`).toString()
     .replace(/@import\s+"(.*?)"/g, (_, file) => {
         if (file.startsWith('../../common/assets/scss/') || file.startsWith('../fallback/')) {
+            return;
+        }
+        if (file.endsWith("-base")){
+            baseFiles.push(file);
             return;
         }
         styleFiles.push(file);
@@ -25,6 +30,13 @@ const commonImport = `
         @import "../settings/paletx-pro-base.scss";
         @import "../settings/paletx-pro-$THEME.scss";
     `;
+
+baseFiles.forEach(filePath => {
+    const fileName = filePath.split("/").pop();
+    const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
+    fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}.scss`, fileContent);
+});
+
 styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();

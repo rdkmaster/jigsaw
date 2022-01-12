@@ -185,7 +185,7 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     public closeDropdown(): void {
         if (this._dropdownFloat) {
-            // this._dropdownFloat.closeFloat();
+            this._dropdownFloat.closeFloat();
         }
     }
 
