@@ -15,7 +15,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
     public answer: EventEmitter<any>;
     public popupElement: HTMLElement;
 
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef) {
         super();
     }
 
