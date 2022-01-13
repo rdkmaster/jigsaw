@@ -1,10 +1,14 @@
 $jigsaw-radios: #{$jigsaw-prefix}-radios;
-$jigsaw-radios-lite: #{$jigsaw-prefix}-radios-lite;
 $jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
 
-.#{$jigsaw-radios}-host,
-.#{$jigsaw-radios-lite}-host {
+.#{$jigsaw-radios}-host {
     @include inline-block();
+    color: $font-color-default;
+
+    &.#{$jigsaw-radios}-error {
+        border: 1px solid $error-default;
+    }
+
     .#{$jigsaw-radio-option} {
         display: inline-flex;
         align-items: center;
@@ -64,17 +68,5 @@ $jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
             @include inline-block();
             color: $font-color-default;
         }
-    }
-}
-
-.#{$jigsaw-radios}-host {
-    &.#{$jigsaw-radios}-error {
-        border: 1px solid $error-default;
-    }
-}
-
-.#{$jigsaw-radios-lite}-host {
-    &.#{$jigsaw-radios-lite}-error {
-        border: 1px solid $error-default;
     }
 }
