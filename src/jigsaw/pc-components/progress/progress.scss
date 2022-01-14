@@ -45,6 +45,7 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                     height: 100%;
                     background: $brand-hover;
                     z-index: $zindex-level-1;
+                    left: 0;
                 }
 
                 .#{$progress-prefix-cls}-processing & {
