@@ -29,7 +29,7 @@ angular.json
 npm-debug.log
 testem.log
 src/jigsaw/common/core/theming/prebuilt/extraction/*
-src/jigsaw/common/core/theming/prebuilt/build-in-theme/*
+src/jigsaw/common/core/theming/prebuilt/wings-theme/*
 
 # e2e
 /e2e/*.js

@@ -24,7 +24,7 @@ export function createTask(packageName: string) {
 
     const allScssGlob = join(jigsawPath, '**/*.scss');
     const allThemingStyleGlob = join(jigsawPath, 'theming/prebuilt/*.scss');
-    const allComponentThemingStyleGlob = join(jigsawCommonPath, 'core/theming/prebuilt/build-in-theme/*.scss');
+    const allComponentThemingStyleGlob = join(jigsawCommonPath, 'core/theming/prebuilt/wings-theme/*.scss');
     const prebuiltThemeSettingsGlob = join(jigsawCommonPath, 'core/theming/prebuilt/settings/*.scss');
     const themingApiGlob = join(jigsawCommonPath, 'core/theming/theming-api.scss');
 
@@ -78,7 +78,7 @@ export function createTask(packageName: string) {
             throw err;
         }))
         .pipe(gulpCleanCss())
-        .pipe(dest(join(releasePath, 'prebuilt-themes', 'build-in-theme')));
+        .pipe(dest(join(releasePath, 'prebuilt-themes', 'wings-theme')));
     });
 
     task(`validate:check-${packageName}-bundles`, () => {
@@ -96,7 +96,7 @@ export function createTask(packageName: string) {
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
-        ':create-component-build-in-theme',
+        ':create-component-wings-theme',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
@@ -121,12 +121,12 @@ export function createTask(packageName: string) {
         gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
     });
 
-    task(':create-component-build-in-theme', () => {
-        gulpRun(`node build/scripts/create-component-build-in-theme.js`, {}).exec();
+    task(':create-component-wings-theme', () => {
+        gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
     });
 
     task(':reset-angular-json', () => {
-        gulpRun(`node build/scripts/create-component-build-in-theme.js clean`, {}).exec();
+        gulpRun(`node build/scripts/create-component-wings-theme.js clean`, {}).exec();
     });
 
 }

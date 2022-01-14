@@ -3,8 +3,8 @@ const fs = require("fs");
 console.log('creating component build in theme ...');
 
 process.chdir(`${__dirname}/../../src/jigsaw/`);
-if (!fs.existsSync(`common/core/theming/prebuilt/build-in-theme`)) {
-    fs.mkdirSync(`common/core/theming/prebuilt/build-in-theme`);
+if (!fs.existsSync(`common/core/theming/prebuilt/wings-theme`)) {
+    fs.mkdirSync(`common/core/theming/prebuilt/wings-theme`);
 }
 
 const styleFiles = [];
@@ -19,7 +19,7 @@ fs.readFileSync(`pc-components/theming/all-theme.scss`).toString()
 const angularJson = require(`../../angular.real.json`);
 const options = angularJson.projects["jigsaw-app"].architect.build.options;
 options.styles = options.styles.filter(style => typeof style === 'string' ||
-    (style.input && style.input.indexOf('/build-in-theme/')) === -1);
+    (style.input && style.input.indexOf('/wings-theme/')) === -1);
 
 const commonImport = `
         @import "../settings/paletx-pro-base.scss";
@@ -29,17 +29,17 @@ styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
     const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/mg, "$1-host[data-theme='$THEME'] {");
-    fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`,
+    fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${fileName}-dark.scss`,
         scssCode.replace(/\$THEME/g, 'dark'));
-    fs.writeFileSync(`common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`,
+    fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${fileName}-light.scss`,
         scssCode.replace(/\$THEME/g, 'light'));
 
     options.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-dark.scss`,
+        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${fileName}-dark.scss`,
         "bundleName": `themes/components/${fileName}-dark`, "inject": false
     });
     options.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/build-in-theme/${fileName}-light.scss`,
+        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${fileName}-light.scss`,
         "bundleName": `themes/components/${fileName}-light`, "inject": false
     });
 });

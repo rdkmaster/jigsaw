@@ -144,7 +144,7 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
     ]);
 
     ngAfterViewInit() {
-        console.log(document.querySelectorAll("ul.build-in-theme-cntr li"));
+        console.log(document.querySelectorAll("ul.wings-theme-cntr li"));
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

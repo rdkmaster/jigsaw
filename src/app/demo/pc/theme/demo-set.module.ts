@@ -6,8 +6,8 @@ import { AdjustFontColorDemoModule } from './adjust-font-color/demo.module';
 import { AdjustFontColorDemoComponent } from './adjust-font-color/demo.component';
 import { ThemePropertiesDemoModule } from './properties/demo.module';
 import { ThemePropertiesDemoComponent } from './properties/demo.component';
-import { ThemeBuildInThemeDemoComponent } from './build-in-theme/demo.component';
-import { ThemeBuildInThemeDemoModule } from './build-in-theme/demo.module';
+import { ThemeBuildInThemeDemoComponent } from './wings-theme/demo.component';
+import { ThemeBuildInThemeDemoModule } from './wings-theme/demo.module';
 
 export const routerConfig = [
     {
@@ -20,7 +20,7 @@ export const routerConfig = [
         path: 'properties', component: ThemePropertiesDemoComponent
     },
     {
-        path: 'build-in-theme', component: ThemeBuildInThemeDemoComponent
+        path: 'wings-theme', component: ThemeBuildInThemeDemoComponent
     }
 ];
 
