@@ -1,6 +1,6 @@
 import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone} from "@angular/core";
 import {CommonUtils} from "./core/utils/common-utils";
-import {take, throwIfEmpty} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 
 /**
  * 方便的定义一个渲染器视图的插槽
@@ -212,7 +212,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
 
     public set theme(theme: 'light' | 'dark' | string) {
         if (CommonUtils.isUndefined(theme)) {
-            return
+            return;
         }
         this._theme = theme;
         if (theme !== 'light' && theme !== 'dark') {
