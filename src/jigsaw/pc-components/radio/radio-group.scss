@@ -1,0 +1,72 @@
+$jigsaw-radios: #{$jigsaw-prefix}-radios;
+$jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
+
+.#{$jigsaw-radios}-host {
+    @include inline-block();
+    color: $font-color-default;
+
+    &.#{$jigsaw-radios}-error {
+        border: 1px solid $error-default;
+    }
+
+    .#{$jigsaw-radio-option} {
+        display: inline-flex;
+        align-items: center;
+        font-size: $font-size-text-base;
+        margin-right: 16px;
+        cursor: pointer;
+        &.#{$jigsaw-radio-option}-disabled {
+            cursor: not-allowed;
+            .#{$jigsaw-radio-option}-inner {
+                background: $bg-disabled;
+                border-color: $border-color-disabled;
+                &.#{$jigsaw-radio-option}-checked {
+                    border-color: $brand-disabled;
+                    background: $bg-component;
+                    &:hover {
+                        border-color: $brand-disabled;
+                    }
+                }
+                &:hover {
+                    border-color: $border-color-disabled;
+                }
+            }
+            .#{$jigsaw-radio-option}-content {
+                color: $font-color-disabled;
+            }
+        }
+
+        .#{$jigsaw-radio-option}-inner {
+            @include inline-block();
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 14px;
+            height: 14px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $border-color-default;
+            border-radius: 50%;
+            background-color: $bg-component;
+            margin-right: 8px;
+            -webkit-transition: border-color 0.15s linear, border-width 0.3s ease;
+            -moz-transition: border-color 0.15s linear, border-width 0.3s ease;
+            -ms-transition: border-color 0.15s linear, border-width 0.3s ease;
+            -o-transition: border-color 0.15s linear, border-width 0.3s ease;
+            transition: border-color 0.15s linear, border-width 0.3s ease;
+
+            &.#{$jigsaw-radio-option}-checked {
+                border-width: 4px;
+                border-color: $brand-default;
+            }
+            &:hover {
+                border-color: $primary-default;
+            }
+        }
+
+        .#{$jigsaw-radio-option}-content {
+            @include inline-block();
+            color: $font-color-default;
+        }
+    }
+}

@@ -249,11 +249,12 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
     selector: 'jigsaw-slider, j-slider',
     templateUrl: './slider.html',
     host: {
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-slider-host]': 'true',
         '[class.jigsaw-slider-error]': '!valid',
         '[class.jigsaw-slider-vertical]': 'vertical',
-        '[style.width]': 'width',
-        '[style.height]': 'height'
     },
     encapsulation: ViewEncapsulation.None,
     providers: [

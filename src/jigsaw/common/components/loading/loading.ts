@@ -166,7 +166,11 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
 
 @Component({
     selector: "jigsaw-circle-loading, j-circle-loading",
-    templateUrl: "loading-circle.html"
+    templateUrl: "loading-circle.html",
+    host: {
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-circle-loading-host]': 'true',
+    }
 })
 export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
@@ -174,10 +178,6 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     }
 
     ngOnInit() {
-        this.renderer.addClass(
-            this.elementRef.nativeElement,
-            "jigsaw-circle-loading-host"
-        );
         let parent = this.renderer.parentNode(this.elementRef.nativeElement);
         let sibling = parent.querySelector('jigsaw-block');
         if (sibling){

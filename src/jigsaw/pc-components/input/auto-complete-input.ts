@@ -50,14 +50,21 @@ export class DropDownValue {
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-auto-complete-input]': 'true'
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-auto-complete-input-host]': 'true'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super(_cdr, _injector, _zone);
+    }
+
     @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
@@ -192,12 +199,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
-
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_cdr, _injector, _zone);
-    }
 
     ngAfterViewInit() {
         this._subscribeKeydownEvent();

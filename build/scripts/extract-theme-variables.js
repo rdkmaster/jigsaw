@@ -26,3 +26,4 @@ function extractVariables(path) {
     });
     return variables;
 }
+console.log('css properties extracted');

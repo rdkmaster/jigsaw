@@ -38,11 +38,12 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
     templateUrl: './checkbox.html',
     host: {
         '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-checkbox-host]': 'true',
         '[class.jigsaw-checkbox-error]': '!valid'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

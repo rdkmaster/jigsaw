@@ -296,9 +296,12 @@ $font-color-disabled-spec: $gray-6;
 $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
 $font-color-heading-bold: $gray-9;
+$font-color-heading-bold-lighten: $gray-9;
 $font-color-tag: $gray-8;
 $font-color-white: hsl(0, 0%, 100%);
 $font-color-white-darken: $gray-6;
+$font-color-brand: $brand-default;
+$font-color-brand-hover: $brand-hover;
 // 支持组件内部实现明暗皮肤
 $font-color-hint-light: $gray-7;
 $font-color-heading-bold-light: $gray-9;

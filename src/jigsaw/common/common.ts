@@ -199,6 +199,42 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
     public set maxHeight(value: string) {
         this._maxHeight = CommonUtils.getCssValue(value);
     }
+
+    protected _theme: 'light' | 'dark' | string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get theme(): 'light' | 'dark' | string {
+        return this._theme;
+    }
+
+    public set theme(theme: 'light' | 'dark' | string) {
+        if (CommonUtils.isUndefined(theme)) {
+            return;
+        }
+        this._theme = theme;
+        if (theme !== 'light' && theme !== 'dark') {
+            return;
+        }
+        const instanceName = this.constructor.name;
+        const selectorName = instanceName
+            .replace(/[A-Z]/g, m => "-" + m.toLowerCase())
+            .replace("-jigsaw-", "");
+
+        const linkId = `${selectorName}-${theme}-theme`;
+        const themeLink = document.getElementById(linkId) as HTMLLinkElement;
+        if (themeLink) {
+            return;
+        }
+        const head = document.getElementsByTagName("head")[0];
+        const style = document.createElement("link");
+        style.rel = "stylesheet";
+        style.id = linkId;
+        style.href = `themes/components/${selectorName}-${theme}.css`;
+        head.appendChild(style);
+    }
 }
 
 export interface IJigsawFormControl {

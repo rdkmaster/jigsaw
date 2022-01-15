@@ -1,8 +1,6 @@
-@import "../../common/assets/scss/core/base";
-
 $transfer-prefix-cls: #{$jigsaw-prefix}-transfer;
-$list-prefix-cls: #{$jigsaw-prefix}-list;
-$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
+$jigsaw-list: #{$jigsaw-prefix}-list;
+$jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
 .#{$transfer-prefix-cls} {
     display: inline-block;
@@ -97,6 +95,8 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     }
     &-head {
         position: relative;
+        display: flex;
+        align-items: center;
         height: 32px;
         padding: 0 4px;
         border-bottom: 1px solid $border-color-default;
@@ -112,10 +112,10 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         &.#{$transfer-prefix-cls}-list-searchable {
             max-height: calc(100% - #{$height-base + 16px});
         }
-        .#{$list-prefix-cls} {
+        .#{$jigsaw-list}-host {
             border: none;
         }
-        .#{$list-option-prefix-cls} {
+        .#{$jigsaw-list-option}-host {
             &-title {
                 min-width: 50%;
                 span.#{$transfer-prefix-cls}-middle-title {

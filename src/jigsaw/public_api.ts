@@ -71,7 +71,7 @@ export * from "./pc-components/root/root";
 export * from "./pc-components/select/index";
 export * from "./pc-components/slider/index";
 export * from "./pc-components/steps/step";
-export * from "./pc-components/switch/index";
+export * from "./pc-components/switch/switch";
 export * from "./pc-components/table/table-inner.components";
 export * from "./pc-components/table/table-renderer";
 export * from "./pc-components/table/table-typings";

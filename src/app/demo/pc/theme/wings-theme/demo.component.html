@@ -1,0 +1,620 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="wings-theme-cntr">
+    <li class="list-li header">
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="darkTheme" [level]="1">组件内置主题</jigsaw-header>
+            </div>
+        </section>
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="lightTheme" [level]="1">组件内置主题</jigsaw-header>
+            </div>
+        </section>
+    </li>
+    <li class="list-li button">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">button</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme">Default</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="primary">Primary</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="warning">Warning</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="error">Error</jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" colorType="danger">Danger</jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">button</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme">Default</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="primary">Primary</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="warning">Warning</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="error">Error</jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" colorType="danger">Danger</jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li button-bar">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">button-bar</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button-bar [theme]="darkTheme" [data]="_$cityList" [multipleSelect]="true" optionWidth=60>
+                </jigsaw-button-bar>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">button</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button-bar [theme]="lightTheme" [data]="_$cityList" [multipleSelect]="true" optionWidth=60>
+                </jigsaw-button-bar>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tag">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tag</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tag [theme]="darkTheme" [closable]="false">Tag 1</jigsaw-tag>
+                <jigsaw-tag [theme]="darkTheme" [closable]="true">Tag 2</jigsaw-tag>
+                <jigsaw-tag [theme]="darkTheme" [closable]="true">
+                    A very very very very very very very long tag
+                </jigsaw-tag>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tag</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tag [theme]="lightTheme" [closable]="false">Tag 1</jigsaw-tag>
+                <jigsaw-tag [theme]="lightTheme" [closable]="true">Tag 2</jigsaw-tag>
+                <jigsaw-tag [theme]="lightTheme" [closable]="true">
+                    A very very very very very very very long tag
+                </jigsaw-tag>
+            </div>
+        </section>
+    </li>
+    <li class="list-li input">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">input</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-input [theme]="darkTheme" placeholder="请输入文本"></jigsaw-input>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">input</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-input [theme]="lightTheme" placeholder="请输入文本"></jigsaw-input>
+            </div>
+        </section>
+    </li>
+    <li class="list-li search-input">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">search-input</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-search-input [theme]="darkTheme" width="200px" [searchDebounce]="1000">
+                </jigsaw-search-input>
+                <jigsaw-search-input [theme]="darkTheme" width="200px" [autoSearch]="false">
+                </jigsaw-search-input>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">search-input</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-search-input [theme]="lightTheme" width="200px" [searchDebounce]="1000">
+                </jigsaw-search-input>
+                <jigsaw-search-input [theme]="lightTheme" width="200px" [autoSearch]="false">
+                </jigsaw-search-input>
+            </div>
+        </section>
+    </li>
+    <li class="list-li numeric-input">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">numeric-input</jigsaw-header>
+            <div class="item-div start">
+                <j-numeric-input [theme]="darkTheme" min="10" max="110" placeholder="请输入数字"></j-numeric-input>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">numeric-input</jigsaw-header>
+            <div class="item-div start">
+                <j-numeric-input [theme]="lightTheme" min="10" max="110" placeholder="请输入数字"></j-numeric-input>
+            </div>
+        </section>
+    </li>
+    <li class="list-li auto-complete-input">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">auto-complete-input</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-auto-complete-input [theme]="darkTheme" [data]="_$dropdownData"
+                    placeholder="auto complete input demo" width="280">
+                </jigsaw-auto-complete-input>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">auto-complete-input</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-auto-complete-input [theme]="lightTheme" [data]="_$dropdownData"
+                    placeholder="auto complete input demo" width="280">
+                </jigsaw-auto-complete-input>
+            </div>
+        </section>
+    </li>
+    <li class="list-li textarea">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">textarea</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-textarea [theme]="darkTheme" [clearable]="true" placeholder="basic demo">
+                </jigsaw-textarea>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">textarea</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-textarea [theme]="lightTheme" [clearable]="true" placeholder="basic demo">
+                </jigsaw-textarea>
+            </div>
+        </section>
+    </li>
+    <li class="list-li breadcrumb">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">breadcrumb</jigsaw-header>
+            <div class="item-div start">
+                <j-breadcrumb [theme]="darkTheme" [data]="_$breadcrumbItems"></j-breadcrumb>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">breadcrumb</jigsaw-header>
+            <div class="item-div start">
+                <j-breadcrumb [theme]="lightTheme" [data]="_$breadcrumbItems"></j-breadcrumb>
+            </div>
+        </section>
+    </li>
+    <li class="list-li checkbox">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">checkbox</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-checkbox [theme]="darkTheme" enableIndeterminate="true">
+                    click me
+                </jigsaw-checkbox>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">checkbox</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-checkbox [theme]="lightTheme" enableIndeterminate="true">
+                    click me
+                </jigsaw-checkbox>
+            </div>
+        </section>
+    </li>
+    <li class="list-li radio-group">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">radio-group</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-radios [theme]="darkTheme" trackItemBy="id">
+                    <jigsaw-radio-option *ngFor="let item of _$cityList" [value]="item">
+                        {{item.label}}
+                    </jigsaw-radio-option>
+                </jigsaw-radios>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">radio-group</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-radios [theme]="lightTheme" trackItemBy="id">
+                    <jigsaw-radio-option *ngFor="let item of _$cityList" [value]="item">
+                        {{item.label}}
+                    </jigsaw-radio-option>
+                </jigsaw-radios>
+            </div>
+        </section>
+    </li>
+    <li class="list-li radio-lite">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">radio-lite</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-radios-lite [theme]="darkTheme" [data]="_$cityList"></jigsaw-radios-lite>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">radio-lite</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-radios-lite [theme]="lightTheme" [data]="_$cityList"></jigsaw-radios-lite>
+            </div>
+        </section>
+    </li>
+    <li class="list-li switch">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">switch</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-switch [theme]="darkTheme" [checked]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="darkTheme" [checked]="true" [disabled]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="darkTheme" [checked]="false" [disabled]="true"></jigsaw-switch>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">switch</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-switch [theme]="lightTheme" [checked]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="lightTheme" [checked]="true" [disabled]="true"></jigsaw-switch>
+                <jigsaw-switch [theme]="lightTheme" [checked]="false" [disabled]="true"></jigsaw-switch>
+            </div>
+        </section>
+    </li>
+    <li class="list-li list">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">list</jigsaw-header>
+            <div class="item-div start">
+                <j-list [theme]="darkTheme" width="200" trackItemBy="title">
+                    <j-list-option [theme]="darkTheme" *ngFor="let title of _$titles" [value]="title">
+                        <span j-title>{{title.title}}</span>
+                        <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
+                                class="iconfont iconfont-e144"></span>
+                        </div>
+                    </j-list-option>
+                </j-list>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">list</jigsaw-header>
+            <div class="item-div start">
+                <j-list [theme]="lightTheme" width="200" trackItemBy="title">
+                    <j-list-option [theme]="lightTheme" *ngFor="let title of _$titles" [value]="title">
+                        <span j-title>{{title.title}}</span>
+                        <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
+                                class="iconfont iconfont-e144"></span>
+                        </div>
+                    </j-list-option>
+                </j-list>
+            </div>
+        </section>
+    </li>
+    <li class="list-li list-lite">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">list-lite</jigsaw-header>
+            <div class="item-div start">
+                <j-list-lite [theme]="darkTheme" width="200" [searchable]="true" [data]="_$goodsList" labelField="name">
+                </j-list-lite>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">list-lite</jigsaw-header>
+            <div class="item-div start">
+                <j-list-lite [theme]="lightTheme" width="200" [searchable]="true" [data]="_$goodsList"
+                    labelField="name">
+                </j-list-lite>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tile">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tile</jigsaw-header>
+            <div class="item-div start">
+                <j-tile [theme]="darkTheme" [multipleSelect]="true" [showBorder]="true" trackItemBy="label">
+                    <j-tile-option *ngFor="let city of _$cityList2" [value]="city" [disabled]="city.disabled">
+                        {{city.label}}
+                    </j-tile-option>
+                </j-tile>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tile</jigsaw-header>
+            <div class="item-div start">
+                <j-tile [theme]="lightTheme" [multipleSelect]="true" [showBorder]="true" trackItemBy="label">
+                    <j-tile-option *ngFor="let city of _$cityList2" [value]="city" [disabled]="city.disabled">
+                        {{city.label}}
+                    </j-tile-option>
+                </j-tile>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tile-lite">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tile-lite</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tile-lite [theme]="darkTheme" trackItemBy="id" [multipleSelect]="true" [data]="_$cityList"
+                    [showBorder]="true">
+                </jigsaw-tile-lite>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tile</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tile-lite [theme]="lightTheme" trackItemBy="id" [multipleSelect]="true" [data]="_$cityList"
+                    [showBorder]="true">
+                </jigsaw-tile-lite>
+            </div>
+        </section>
+    </li>
+    <li class="list-li circle-loading">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">circle-loading</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-circle-loading [theme]="darkTheme" [size]="'large'" [label]="'这是large'" [percent]="60">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="darkTheme" [size]="'medium'" [label]="'这是medium'" [percent]="50">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="darkTheme" [size]="'small'" [label]="'这是small'" [percent]="10">
+                </jigsaw-circle-loading>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">circle-loading</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-circle-loading [theme]="lightTheme" [size]="'large'" [label]="'这是large'" [percent]="60">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="lightTheme" [size]="'medium'" [label]="'这是medium'" [percent]="50">
+                </jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="lightTheme" [size]="'small'" [label]="'这是small'" [percent]="10">
+                </jigsaw-circle-loading>
+            </div>
+        </section>
+    </li>
+    <li class="list-li collapse">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">collapse</jigsaw-header>
+            <div class="item-div start">
+                <j-collapse [theme]="darkTheme" width="100%" mode="accordion">
+                    <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of _$goodsList2">
+                        {{goods.desc}}
+                    </j-collapse-pane>
+                </j-collapse>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">collapse</jigsaw-header>
+            <div class="item-div start">
+                <j-collapse [theme]="lightTheme" width="100%" mode="accordion">
+                    <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of _$goodsList2">
+                        {{goods.desc}}
+                    </j-collapse-pane>
+                </j-collapse>
+            </div>
+        </section>
+    </li>
+    <li class="list-li combo-select">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">combo-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-combo-select [theme]="darkTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true"
+                    maxWidth="500">
+                    <ng-template>
+                        <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
+                            <jigsaw-tile-option *ngFor="let city of _$cityList" [value]="city" width="21.4%">
+                                {{city.label}}
+                            </jigsaw-tile-option>
+                        </jigsaw-tile>
+                    </ng-template>
+                </jigsaw-combo-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-combo-select [theme]="lightTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true"
+                    maxWidth="500">
+                    <ng-template>
+                        <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
+                            <jigsaw-tile-option *ngFor="let city of _$cityList" [value]="city" width="21.4%">
+                                {{city.label}}
+                            </jigsaw-tile-option>
+                        </jigsaw-tile>
+                    </ng-template>
+                </jigsaw-combo-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li select">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-select [theme]="lightTheme" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li select-collapse">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">select-collapse</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-collapse-select [theme]="darkTheme" [data]="_$groupData" [multipleSelect]="true"
+                    placeholder="请选择" width="160px" optionCount="6" [useStatistics]="true"></jigsaw-collapse-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">select-collapse</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-collapse-select [theme]="lightTheme" [data]="_$groupData" [multipleSelect]="true"
+                    placeholder="请选择" width="160px" optionCount="6" [useStatistics]="true"></jigsaw-collapse-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li select-group">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">select-group</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-group-select [theme]="darkTheme" [data]="_$groupData" [multipleSelect]="true" placeholder="请选择"
+                    width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">select-group</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-group-select [theme]="lightTheme" [data]="_$groupData" [multipleSelect]="true" placeholder="请选择"
+                    width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li icon">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">icon</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" title="编辑"
+                    [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" [text]="'编辑'"
+                    title="编辑">
+                </jigsaw-icon>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">icon</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" title="编辑"
+                    [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" [text]="'编辑'"
+                    title="编辑">
+                </jigsaw-icon>
+            </div>
+        </section>
+    </li>
+    <li class="list-li status">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">status</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="darkTheme" [status]="'success'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'warning'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'error'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'finish'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'disabled'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'process'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [status]="'custom'" [iconSize]="16"></jigsaw-icon>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">status</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="lightTheme" [status]="'success'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'warning'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'error'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'finish'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'disabled'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'process'" [iconSize]="16"></jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [status]="'custom'" [iconSize]="16"></jigsaw-icon>
+            </div>
+        </section>
+    </li>
+    <li class="list-li slider">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">slider</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-slider [theme]="darkTheme" value="20" min="10" width="200"></jigsaw-slider>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">slider</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-slider [theme]="lightTheme" value="20" min="10" width="200"></jigsaw-slider>
+            </div>
+        </section>
+    </li>
+    <li class="list-li date-picker">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">date-picker</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-date-picker [theme]="darkTheme"></jigsaw-date-picker>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">date-picker</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-date-picker [theme]="lightTheme"></jigsaw-date-picker>
+            </div>
+        </section>
+    </li>
+    <li class="list-li time-picker">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">time-picker</jigsaw-header>
+            <div class="item-div start">
+                <j-time-picker [theme]="darkTheme"></j-time-picker>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">time-picker</jigsaw-header>
+            <div class="item-div start">
+                <j-time-picker [theme]="lightTheme"></j-time-picker>
+            </div>
+        </section>
+    </li>
+    <li class="list-li date-time-picker">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">date-time-picker</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-date-time-picker [theme]="darkTheme" [showConfirmButton]="true" gr="second">
+                </jigsaw-date-time-picker>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">date-time-picker</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-date-time-picker [theme]="lightTheme" [showConfirmButton]="true" gr="second">
+                </jigsaw-date-time-picker>
+            </div>
+        </section>
+    </li>
+    <li class="list-li date-time-select">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">date-time-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-date-time-select [theme]="darkTheme"></jigsaw-date-time-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">date-time-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-date-time-select [theme]="lightTheme"></jigsaw-date-time-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li range-date-time-picker">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">range-date-time-picker</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-range-date-time-picker [theme]="darkTheme" gr="second"></jigsaw-range-date-time-picker>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">range-date-time-picker</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-range-date-time-picker [theme]="lightTheme" gr="second"></jigsaw-range-date-time-picker>
+            </div>
+        </section>
+    </li>
+    <li class="list-li range-date-time-select">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">range-date-time-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-range-date-time-select [theme]="darkTheme"></jigsaw-range-date-time-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">range-date-time-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-range-date-time-select [theme]="lightTheme"></jigsaw-range-date-time-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li xxxx">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>
+            <div class="item-div start">
+
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>
+            <div class="item-div start">
+
+            </div>
+        </section>
+    </li>
+</ul>

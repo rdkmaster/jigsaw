@@ -8,7 +8,7 @@ import {
     Input,
     NgModule,
     Output,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -32,17 +32,18 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-numeric-input]': 'true',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
         '[class.jigsaw-numeric-input-focused]': 'focused',
-        '[class.jigsaw-numeric-input-showOption]': 'showOption'
+        '[class.jigsaw-numeric-input-showOption]': 'showOption',
+        '(click)': '_$stopPropagation($event)'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawNumericInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

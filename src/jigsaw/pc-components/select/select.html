@@ -1,5 +1,6 @@
 <jigsaw-combo-select
     width="100%"
+    [theme]="theme"
     [autoWidth]="!optionWidth"
     [maxHeight]="maxHeight"
     [(value)]="_$selectedItems"
@@ -23,7 +24,8 @@
                 <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
             </j-input>
             <jigsaw-list width="100%"
-                         [ngClass]="{'jigsaw-select-show-selected': _$showSelected,
+                         [ngClass]="{'jigsaw-select-list':true,
+                        'jigsaw-select-show-selected': _$showSelected,
                         'jigsaw-select-multiple-list': multipleSelect,
                         'jigsaw-select-single-list': !multipleSelect}"
                          [trackItemBy]="trackItemBy"

@@ -21,12 +21,13 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-tile]': 'true',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tile-host]': 'true',
         '[class.jigsaw-tile-error]': '!valid',
         '[class.jigsaw-tile-without-border]': '!showBorder'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

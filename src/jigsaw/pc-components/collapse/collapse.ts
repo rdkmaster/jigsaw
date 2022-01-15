@@ -108,6 +108,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     templateUrl: 'collapse.html',
     host: {
         '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-collapse-host]': 'true',
         '[class.jigsaw-collapse-arrow-position-right]': 'arrowPosition === "right"',
         '[class.jigsaw-collapse-arrow-position-left]': 'arrowPosition === "left"'

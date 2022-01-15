@@ -41,6 +41,7 @@ export class ComboSelectValue {
     templateUrl: 'combo-select.html',
     host: {
         '[style.min-width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid'
     },

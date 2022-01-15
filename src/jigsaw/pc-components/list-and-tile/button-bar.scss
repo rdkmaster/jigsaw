@@ -1,112 +1,107 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-tile: #{$jigsaw-prefix}-tile;
+$jigsaw-tile-option: #{$jigsaw-tile}-option;
+$jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
 
-$tile-prefix-cls: #{$jigsaw-prefix}-tile;
-$tile-option-prefix-cls: #{$tile-prefix-cls}-option;
-$button-bar-prefix-cls: #{$jigsaw-prefix}-button-bar;
-
-.#{$button-bar-prefix-cls} {
+.#{$jigsaw-button-bar}-host {
     @include inline-block;
-}
-
-.#{$button-bar-prefix-cls} {
     height: $height-base;
 
-    .#{$tile-prefix-cls} {
+    .#{$jigsaw-tile}-host {
         padding: 0 0;
         border: none;
 
-        &.#{$tile-prefix-cls}-error {
+        &.#{$jigsaw-tile}-error {
             border-color: $error-default;
         }
-    }
 
-    .#{$tile-option-prefix-cls} {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: auto;
-        min-width: 60px;
-        margin: 0;
-        padding: 0 8px;
-        border-radius: 0;
-        font-size: $font-size-base;
+        .#{$jigsaw-tile-option} {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+            min-width: 60px;
+            margin: 0;
+            padding: 0 8px;
+            border-radius: 0;
+            font-size: $font-size-base;
 
-        &:first-child {
-            border-radius: 3px 0 0 3px;
-        }
+            &:first-child {
+                border-radius: 3px 0 0 3px;
+            }
 
-        &:last-child {
-            border-radius: 0 3px 3px 0;
-        }
+            &:last-child {
+                border-radius: 0 3px 3px 0;
+            }
 
-        &:not(:first-child) {
-            margin-left: -1px;
-        }
+            &:not(:first-child) {
+                margin-left: -1px;
+            }
 
-        &.#{$tile-option-prefix-cls}-active {
-            position: relative;
-        }
+            &.#{$jigsaw-tile-option}-active {
+                position: relative;
+            }
 
-        & > p {
-            max-width: 120px;
-            height: $height-sm;
-            line-height: $height-sm;
-            text-align: center;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+            & > p {
+                max-width: 120px;
+                height: $height-sm;
+                line-height: $height-sm;
+                text-align: center;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
 
-        .iconfont {
-            margin-right: 3px;
+            .iconfont {
+                margin-right: 3px;
 
-            &.jigsaw-button-bar-icon-only {
-                margin-left: 3px;
+                &.jigsaw-button-bar-icon-only {
+                    margin-left: 3px;
+                }
             }
         }
     }
 
-    &-default .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover,
-    &-primary .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &.#{$jigsaw-button-bar}-default .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover,
+    &.#{$jigsaw-button-bar}-primary .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $primary-default;
     }
 
-    &-warning .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &.#{$jigsaw-button-bar}-warning .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $warning-default;
         color: $warning-default;
     }
 
-    &-error .#{$tile-option-prefix-cls}:not(.#{$tile-option-prefix-cls}-disabled):hover {
+    &.#{$jigsaw-button-bar}-error .#{$jigsaw-tile-option}:not(.#{$jigsaw-tile-option}-disabled):hover {
         position: relative;
         border-color: $error-default;
         color: $error-default;
     }
 
-    &-primary .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+    &.#{$jigsaw-button-bar}-primary .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $primary-default;
         background-color: $primary-default;
         color: $font-color-white;
     }
 
-    &-warning .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+    &.#{$jigsaw-button-bar}-warning .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $warning-default;
         background-color: $warning-default;
         color: $font-color-white !important;
     }
 
-    &-error .#{$tile-option-prefix-cls}.#{$tile-option-prefix-cls}-active {
+    &.#{$jigsaw-button-bar}-error .#{$jigsaw-tile-option}.#{$jigsaw-tile-option}-active {
         border-color: $error-default;
         background-color: $error-default;
         color: $font-color-white !important;
     }
 
-    &-one-option {
+    &.#{$jigsaw-button-bar}-one-option {
         border-radius: 4px !important;
     }
 
-    &#{&}-size-small {
+    &.#{$jigsaw-button-bar}-size-small {
         height: $height-sm;
         font-size: $font-size-sm;
     }

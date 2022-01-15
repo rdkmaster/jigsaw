@@ -11,7 +11,8 @@ import {
     NgModule,
     NgZone,
     Output,
-    ViewChild
+    ViewChild,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -28,7 +29,9 @@ type BorderRadiusValue = {
 
 @Directive()
 export abstract class JigsawInputBase extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor {
-    public constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
+    public constructor(protected _cdr: ChangeDetectorRef,
+        protected _injector: Injector,
+        protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -309,21 +312,22 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '(click)': '_$stopPropagation($event)',
-        '[class.jigsaw-input]': 'true',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-input-host]': 'true',
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
-        '[class.jigsaw-input-disabled]': 'disabled'
+        '[class.jigsaw-input-disabled]': 'disabled',
+        '(click)': '_$stopPropagation($event)'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInput extends JigsawInputBase {
     constructor(protected _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_cdr, _injector);
     }
 

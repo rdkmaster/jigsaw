@@ -1,17 +1,15 @@
-@import "../../common/assets/scss/core/base";
-
 $cascade-prefix-cls: #{$jigsaw-prefix}-cascade;
-$tile-prefix-cls: #{$jigsaw-prefix}-tile;
+$jigsaw-tile: #{$jigsaw-prefix}-tile;
 
 .#{$cascade-prefix-cls} {
     display: inline-block;
     border: 1px solid $border-color-default;
     border-radius: $border-radius-base;
 
-    .#{$tile-prefix-cls} {
+    .#{$jigsaw-tile}-host {
         border: none;
 
-        .#{$tile-prefix-cls}-option {
+        .#{$jigsaw-tile}-option {
             width: 70px;
             border: none;
 

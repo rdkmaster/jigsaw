@@ -18,9 +18,10 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
     selector: 'jigsaw-icon, j-icon',
     templateUrl: 'icon.html',
     host: {
-        '[class.jigsaw-icon]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-icon-host]': 'true'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

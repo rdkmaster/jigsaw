@@ -1,14 +1,12 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-textarea: #{$jigsaw-prefix}-textarea;
 
-$textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
-
-.#{$textarea-prefix-cls} {
+.#{$jigsaw-textarea}-host {
     @include inline-block();
     position: relative;
     line-height: 1.2;
     font-size: $font-size-base;
 
-    &-icon-end {
+    .#{$jigsaw-textarea}-icon-end {
         position: absolute;
         left: 2px;
         top: 0;
@@ -25,25 +23,26 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         min-width: 120px;
         min-height: 40px;
         padding: 10px;
+        color: $font-color-default;
         background: $bg-component;
         border-radius: $border-radius-base;
     }
 
-    &-resize-vertical {
+    &.#{$jigsaw-textarea}-resize-vertical {
         height: auto !important;
         textarea {
             resize: vertical;
         }
     }
 
-    &-resize-horizontal {
+    &.#{$jigsaw-textarea}-resize-horizontal {
         width: auto !important;
         textarea {
             resize: horizontal;
         }
     }
 
-    &-resize-both {
+    &.#{$jigsaw-textarea}-resize-both {
         width: auto !important;
         height: auto !important;
         textarea {
@@ -51,7 +50,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         }
     }
 
-    &-container {
+    .#{$jigsaw-textarea}-container {
         width: 100%;
         height: 100%;
         background: $bg-component;
@@ -63,12 +62,12 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
             border-color: $brand-default;
         }
 
-        &.#{$textarea-prefix-cls}-focused {
+        &.#{$jigsaw-textarea}-focused {
             border-color: $brand-default;
         }
     }
 
-    &.#{$textarea-prefix-cls}-error .#{$textarea-prefix-cls}-container {
+    &.#{$jigsaw-textarea}-error .#{$jigsaw-textarea}-container {
         border: 1px solid $error-default;
 
         &:hover {
@@ -76,7 +75,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         }
     }
 
-    &.#{$textarea-prefix-cls}-disabled .#{$textarea-prefix-cls}-container {
+    &.#{$jigsaw-textarea}-disabled .#{$jigsaw-textarea}-container {
         color: $font-color-disabled-spec;
         background-color: $bg-disabled;
         border-color: $border-color-disabled;
@@ -102,7 +101,7 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         color: $font-color-hint;
     }
 
-    &-clear-bar {
+    .#{$jigsaw-textarea}-clear-bar {
         cursor: pointer;
         font-size: 13px;
         line-height: 1;
@@ -116,11 +115,11 @@ $textarea-prefix-cls: #{$jigsaw-prefix}-textarea;
         }
     }
 
-    &-statistics {
+    .#{$jigsaw-textarea}-statistics {
         display: flex;
         justify-content: flex-end;
 
-        .#{$textarea-prefix-cls}-content {
+        .#{$jigsaw-textarea}-content {
             color: $font-color-hint;
             font-size: $font-size-base;
             font-weight: normal;

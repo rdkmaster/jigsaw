@@ -28,11 +28,12 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.line-height]': 'height',
         '[style.background]': '_$realColor',
         '[style.border-color]': '_$realColor',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tag-host]': 'true',
         '[class.jigsaw-tag-closable]': 'closable && !isAdd',
         '[class.jigsaw-tag-disabled]': 'disabled',
         '[class.jigsaw-tag-add]': 'isAdd',
         '[class.jigsaw-tag-color]': '_$realColor?.startsWith("preset-")',
-        '[class.jigsaw-tag-host]': 'true',
         '[class.jigsaw-tag-preset-blue]': '_$realColor == "preset-blue"',
         '[class.jigsaw-tag-preset-cyan]': '_$realColor == "preset-cyan"',
         '[class.jigsaw-tag-preset-green]': '_$realColor == "preset-green"',
@@ -54,6 +55,16 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
+    constructor(private _renderer: Renderer2,
+        /**
+         * @internal
+         */
+        public _elementRef: ElementRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super(null);
+    }
+    
     /**
      * @NoMarkForCheckRequired
      */
@@ -127,16 +138,6 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _state: string;
-
-    constructor(private _renderer: Renderer2,
-                /**
-                 * @internal
-                 */
-                public _elementRef: ElementRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
-        super();
-    }
 
     @Output()
     public close = new EventEmitter<JigsawTag>();

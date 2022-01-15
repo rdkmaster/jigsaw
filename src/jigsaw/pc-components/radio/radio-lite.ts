@@ -28,11 +28,12 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
             </j-radio-option>
         </j-radios>`,
     host: {
-        '[class.jigsaw-radios-lite]': 'true',
-        '[class.jigsaw-radios-error]': '!valid'
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-radios-lite-host]': 'true',
+        '[class.jigsaw-radios-lite-error]': '!valid'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
