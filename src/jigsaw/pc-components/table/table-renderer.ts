@@ -505,7 +505,8 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
  */
 @Component({
     template: `
-        <j-progress [value]="cellData" width="80%" labelPosition="top" [showMarker]="false"></j-progress>
+        <j-progress [value]="cellData.data" width="80%" [labelPosition]="cellData.labelPosition || 'none'" [showMarker]="false"
+                    [animate]="cellData.animate" [status]="cellData.status"></j-progress>
     `,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
