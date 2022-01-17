@@ -1341,8 +1341,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
         // !node.data这种情况是为了加入自动创建的根节点
         if (node.nodes && node.nodes.length && (node.open || !node.data)) {
             node.nodes.forEach((childNode, idx) => {
-                // 这样定义id值，在树层级超过10级时，会有bug
-                PageableTreeTableData._getData(childNode, field, id + idx, data);
+                PageableTreeTableData._getData(childNode, field, `${id}-${idx}`, data);
             });
         }
         return data;
