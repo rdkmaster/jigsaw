@@ -667,14 +667,15 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     public tableData: PageableTreeTableData;
 
     public get indent(): string {
-        return (this.cellData.id.length - 1) * 20 + 'px';
+        return (this.cellData.id.split("-").length - 2) * 20 + 'px';
     }
 
     /**
      * @internal
      */
     public _$toggleOpenNode() {
-        const indexes = this.cellData.id.split('');
+        const indexes = this.cellData.id.split('-');
+        indexes.shift();
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);
     }
 }

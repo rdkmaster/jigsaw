@@ -39,7 +39,17 @@ export class TreeTableDemoComponent {
                                 {data: this.getRow(111)},
                                 {data: this.getRow(112)},
                                 {data: this.getRow(113)},
-                                {data: this.getRow(114)}
+                                {data: this.getRow(114)},
+                                {data: this.getRow(115)},
+                                {data: this.getRow(116)},
+                                {data: this.getRow(117)},
+                                {data: this.getRow(118)},
+                                {data: this.getRow(119)},
+                                {data: this.getRow(120)},
+                                {data: this.getRow(121)},
+                                {data: this.getRow(122)},
+                                {data: this.getRow(123)},
+                                {data: this.getRow(124)}
                             ]
                         },
                         {
