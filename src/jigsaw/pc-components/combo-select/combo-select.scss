@@ -5,6 +5,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     @include inline-block;
     min-width: 240px;
     max-width: 100%;
+    color: $font-color-default;
 
     .#{$jigsaw-combo-select} {
         position: relative;
