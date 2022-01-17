@@ -392,7 +392,7 @@
             </div>
         </section>
         <section class="item-section">
-            <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
+            <jigsaw-header [theme]="lightTheme">combo-select</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-combo-select [theme]="lightTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true"
                     maxWidth="500">
@@ -411,13 +411,13 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="darkTheme" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="lightTheme" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
             </div>
         </section>
     </li>
