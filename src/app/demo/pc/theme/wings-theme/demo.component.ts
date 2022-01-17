@@ -8,7 +8,7 @@ import { ArrayCollection, JigsawListLite, GroupOptionValue } from 'jigsaw/public
     host: { '[attr.data-theme]': 'theme' }
 })
 export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
-    lightTheme = "light";
+    lightTheme = "dark";
     darkTheme = "dark";
 
     _$cityList = new ArrayCollection([
