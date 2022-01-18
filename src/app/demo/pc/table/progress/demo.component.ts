@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
-import { TableData, AdditionalColumnDefine, TableDragReplaceRow, ColumnDefine, TableCellProgressRenderer } from "jigsaw/public_api";
+import {TableData, ColumnDefine, TableCellProgressRenderer, InternalUtils} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "demo.component.html",
@@ -39,6 +39,13 @@ export class TableProgressDemoComponent {
             ["name", "position", "salary", "enroll-date", "office", "progress"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
         );
+        setInterval(() => {
+            this.tableData.data.forEach(row => {
+                const value = InternalUtils.randomNumber(10, 20);
+                row[5] = (row[5] + value) % 100;
+            });
+            this.tableData.refresh();
+        }, 1000);
     }
 
     // ====================================================================
