@@ -588,7 +588,7 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
             background: #516273;
 
             .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default-dark;
+                color: $font-color-white;
 
                 .#{$nav-menu-prefix-cls}-item-top {
                     &:hover {
@@ -613,14 +613,14 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
 
                         &.#{$nav-menu-prefix-cls}-sub-item-selected {
                             background-color: #212a33;
-                            color: $font-color-default-dark;
+                            color: $font-color-white;
                         }
                     }
                 }
 
                 .#{$nav-menu-prefix-cls}-item-selected-top {
                     background-color: #212a33;
-                    color: $font-color-default-dark;
+                    color: $font-color-white;
                 }
             }
 
@@ -635,13 +635,13 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-sub-item-selected:before,
         .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-item-selected-before:before,
         .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-sub-item-selected:before {
-            background-color: $brand-default-dark;
+            background-color: #029af2;
         }
 
         .#{$nav-menu-prefix-cls}-toggle-button {
             background: #516273;
             border-top: 1px solid rgba(221, 221, 221, 0.5);
-            color: $font-color-default-dark;
+            color: $font-color-white;
         }
     }
 }
