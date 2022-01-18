@@ -15,6 +15,7 @@ import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/switch";
 import {JigsawSelectModule} from "../select/index";
+import {JigsawProgressModule} from "../progress/progress";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -499,6 +500,36 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
     }
 }
 
+/**
+ * cell Progress renderer
+ */
+@Component({
+    template: `
+        <j-progress [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
+                    [animate]="_$animate" [status]="_$status"></j-progress>
+    `,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellProgressRenderer extends TableCellRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector, protected _zone: NgZone) {
+        super(_injector);
+    }
+    public get _$animate() {
+        return this.initData?.animate || '';
+    }
+
+    public get _$status() {
+        return this.initData?.status || 'processing';
+    }
+
+    public get _$labelPosition() {
+        return this.initData?.labelPosition || 'none';
+    }
+}
+
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     ArrayCollection<any> | any[] | Observable<ArrayCollection<any> | any[]>;
 
@@ -834,11 +865,12 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow,
+        TableCellProgressRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
-        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule
+        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule
     ]
 })
 export class JigsawTableRendererModule {
