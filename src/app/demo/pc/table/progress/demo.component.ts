@@ -16,36 +16,34 @@ export class TableProgressDemoComponent {
     public columns: ColumnDefine[]= [{
         target: "progress",
         cell: {
-            renderer : TableCellProgressRenderer
+            renderer: TableCellProgressRenderer,
+            rendererInitData: {
+                animate: true,
+                status: 'processing',
+                labelPosition: 'top'
+            }
         }
     }]
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
         this.tableData = new TableData(
             [
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", { data: 23, animate: true, status: 'processing', labelPosition: 'left' }],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", { data: 42, animate: false, status: 'processing', labelPosition: 'none' }],
-                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", { data: 36, animate: false, status: 'block', labelPosition: 'none' }],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", { data: 65, animate: false, status: 'block', labelPosition: 'left' }],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", { data: 71, animate: false, status: 'error', labelPosition: 'top' }],
-                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", { data: 56, animate: false, status: 'error', labelPosition: 'top' }],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", { data: 17, animate: true, status: 'processing', labelPosition: 'top' }],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", { data: 38, animate: false, status: 'processing', labelPosition: 'right' }],
-                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", { data: 9, animate: false, status: 'processing', labelPosition: 'none' }],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", { data: 100, animate: false, status: 'success', labelPosition: 'top' }],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", { data: 11, animate: true, status: 'processing', labelPosition: 'left' }],
-                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", { data: 82, animate: true, status: 'processing', labelPosition: 'top' }]
+                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 23],
+                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 42],
+                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 36],
+                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 65],
+                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 71],
+                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 56],
+                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 17],
+                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 38],
+                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 9],
+                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 100],
+                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 11],
+                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 82]
             ],
             ["name", "position", "salary", "enroll-date", "office", "progress"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
         );
-        setInterval(() => {
-            this.tableData.data.forEach(row => {
-                const value = InternalUtils.randomNumber(10, 20);
-                row[5] = (row[5] + value) % 100;
-            });
-            this.tableData.refresh();
-        }, 1000);
     }
 
     // ====================================================================

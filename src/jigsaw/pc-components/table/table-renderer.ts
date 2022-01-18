@@ -505,8 +505,8 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
  */
 @Component({
     template: `
-        <j-progress [value]="cellData.data" width="80%" [labelPosition]="cellData.labelPosition || 'none'" [showMarker]="false"
-                    [animate]="cellData.animate" [status]="cellData.status"></j-progress>
+        <j-progress [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
+                    [animate]="_$animate" [status]="_$status"></j-progress>
     `,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -517,7 +517,17 @@ export class TableCellProgressRenderer extends TableCellRendererBase {
         protected _injector: Injector, protected _zone: NgZone) {
         super(_injector);
     }
-    public progressValue = 30;
+    public get _$animate() {
+        return this.initData && this.initData.animate ? this.initData.animate : '';
+    }
+
+    public get _$status() {
+        return this.initData && this.initData.status ? this.initData.status : 'processing';
+    }
+
+    public get _$labelPosition() {
+        return this.initData && this.initData.labelPosition ? this.initData.labelPosition : 'none';
+    }
 }
 
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
