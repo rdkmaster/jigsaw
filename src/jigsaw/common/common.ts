@@ -232,7 +232,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
         const style = document.createElement("link");
         style.rel = "stylesheet";
         style.id = linkId;
-        style.href = `theme/wings-theme/${selectorName}-${theme}.css`;
+        style.href = `themes/wings-theme/${selectorName}-${theme}.css`;
         head.appendChild(style);
     }
 }
