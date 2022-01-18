@@ -36,11 +36,11 @@ styleFiles.forEach(filePath => {
 
     options.styles.push({
         "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${fileName}-dark.scss`,
-        "bundleName": `themes/components/${fileName}-dark`, "inject": false
+        "bundleName": `themes/wings-theme/${fileName}-dark`, "inject": false
     });
     options.styles.push({
         "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${fileName}-light.scss`,
-        "bundleName": `themes/components/${fileName}-light`, "inject": false
+        "bundleName": `themes/wings-theme/${fileName}-light`, "inject": false
     });
 });
 fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
