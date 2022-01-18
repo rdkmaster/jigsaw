@@ -518,15 +518,15 @@ export class TableCellProgressRenderer extends TableCellRendererBase {
         super(_injector);
     }
     public get _$animate() {
-        return this.initData && this.initData.animate ? this.initData.animate : '';
+        return this.initData?.animate || '';
     }
 
     public get _$status() {
-        return this.initData && this.initData.status ? this.initData.status : 'processing';
+        return this.initData?.status || 'processing';
     }
 
     public get _$labelPosition() {
-        return this.initData && this.initData.labelPosition ? this.initData.labelPosition : 'none';
+        return this.initData?.labelPosition || 'none';
     }
 }
 
