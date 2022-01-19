@@ -22,6 +22,7 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
+import { PopupOptions } from 'jigsaw/common/service/popup.service';
 
 export class DropDownValue {
     constructor(data = null) {
@@ -338,6 +339,13 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         // 阻止触发input框的blur
         event.preventDefault();
         event.stopPropagation();
+    }
+
+    /**
+     * @internal
+     */
+    public _$floatOptions: PopupOptions = {
+        showShadow: false
     }
 
     public ngOnDestroy() {
