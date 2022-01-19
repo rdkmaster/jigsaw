@@ -52,6 +52,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     public _items: QueryList<JigsawListOption>;
 }
 
+@WingsTheme('jigsaw-list-option')
 @Component({
     selector: 'jigsaw-list-option,j-list-option',
     templateUrl: 'list-option.html',

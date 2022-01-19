@@ -11,8 +11,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
