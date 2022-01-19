@@ -166,7 +166,7 @@ function processSelector(ci, html) {
 
 function processInputs(ci, html) {
     const inputs = [];
-    if (ci.inputsClass.length) {
+    if (ci.inputsClass && ci.inputsClass.length) {
         html = html.replace(`$inputsTable`,
             `<table style="width:100%">
                 <thead><tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr></thead>
