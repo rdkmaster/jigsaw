@@ -211,19 +211,32 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
     }
 
     public set theme(theme: 'light' | 'dark' | string) {
-        if (CommonUtils.isUndefined(theme)) {
+        const decorators: any[] = (<any>this.constructor).decorators;
+        if (CommonUtils.isUndefined(theme) || !decorators) {
             return;
         }
         this._theme = theme;
         if (theme !== 'light' && theme !== 'dark') {
             return;
         }
-        const instanceName = this.constructor.name;
-        const selectorName = instanceName
-            .replace(/[A-Z]/g, m => "-" + m.toLowerCase())
-            .replace("-jigsaw-", "");
+        let selector;
+        decorators.find(decorator => {
+            if (decorator.type.prototype.ngMetadataName != "Component") {
+                return false;
+            }
+            const selectorArg = decorator.args.find(arg => arg.hasOwnProperty('selector'));
+            if (!selectorArg) {
+                return false;
+            }
+            const selectors = selectorArg.selector;
+            selector = selectors.split(/\s*,\s*/).find(selector => selector.startsWith('jigsaw-'));
+            return !!selector;
+        });
+        if (!selector) {
+            return;
+        }
 
-        const linkId = `${selectorName}-${theme}-theme`;
+        const linkId = `${selector}-${theme}-theme`;
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;
         if (themeLink) {
             return;
@@ -232,7 +245,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
         const style = document.createElement("link");
         style.rel = "stylesheet";
         style.id = linkId;
-        style.href = `themes/wings-theme/${selectorName}-${theme}.css`;
+        style.href = `themes/wings-theme/${selector}-${theme}.css`;
         head.appendChild(style);
     }
 }

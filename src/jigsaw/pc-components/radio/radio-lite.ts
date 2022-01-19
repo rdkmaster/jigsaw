@@ -12,7 +12,7 @@ import {
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "./radio";
+import {JigsawRadioModule} from "./radios";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {AbstractJigsawComponent} from "../../common/common";

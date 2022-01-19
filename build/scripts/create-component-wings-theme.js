@@ -29,18 +29,18 @@ styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
     const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/mg, "$1-host[data-theme='$THEME'] {");
-    fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${fileName}-dark.scss`,
+    fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/jigsaw-${fileName}-dark.scss`,
         scssCode.replace(/\$THEME/g, 'dark'));
-    fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${fileName}-light.scss`,
+    fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/jigsaw-${fileName}-light.scss`,
         scssCode.replace(/\$THEME/g, 'light'));
 
     options.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${fileName}-dark.scss`,
-        "bundleName": `themes/wings-theme/${fileName}-dark`, "inject": false
+        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/jigsaw-${fileName}-dark.scss`,
+        "bundleName": `themes/wings-theme/jigsaw-${fileName}-dark`, "inject": false
     });
     options.styles.push({
-        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${fileName}-light.scss`,
-        "bundleName": `themes/wings-theme/${fileName}-light`, "inject": false
+        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/jigsaw-${fileName}-light.scss`,
+        "bundleName": `themes/wings-theme/jigsaw-${fileName}-light`, "inject": false
     });
 });
 fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
