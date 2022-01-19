@@ -49,6 +49,11 @@
                 "input": "src/jigsaw/common/core/theming/themes/vmax-pro-light.scss",
                 "bundleName": "themes/vmax-pro-light",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/idea-light.scss",
+                "bundleName": "themes/idea-light",
+                "inject": false
               }
             ],
             "scripts": [
