@@ -1,4 +1,4 @@
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -43,6 +43,7 @@ import { InternalUtils } from '../../common/core/utils/internal-utils';
  * $demo = date-time-picker/basic
  * $demo = date-time-picker/date-time-select
  */
+@WingsTheme('jigsaw-date-time-picker')
 @Component({
     selector: 'jigsaw-date-time-picker, j-date-time-picker, jigsaw-time, j-time',
     templateUrl: './date-time-picker.html',

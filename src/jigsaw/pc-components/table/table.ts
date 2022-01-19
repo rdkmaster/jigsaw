@@ -18,7 +18,7 @@
     Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent, JigsawCommonModule} from "../../common/common";
+import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 import {Subscription} from "rxjs";
@@ -49,6 +49,7 @@ import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('jigsaw-table')
 @Component({
     selector: 'jigsaw-table, j-table',
     templateUrl: 'table.html',

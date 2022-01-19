@@ -15,10 +15,11 @@ import {CommonModule} from "@angular/common";
 import {JigsawRadioModule} from "./radios";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('jigsaw-radios-lite')
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `

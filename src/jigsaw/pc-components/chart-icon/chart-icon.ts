@@ -7,7 +7,7 @@ import {
     ChartIconPie,
     ChartType
 } from "./chart-icon-factory";
-import {AbstractJigsawViewBase} from "../../common/common";
+import {AbstractJigsawViewBase, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
@@ -80,6 +80,7 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
     }
 }
 
+@WingsTheme('jigsaw-pie-chart-icon')
 @Component({
     selector: 'jigsaw-pie-chart-icon, j-pie-chart-icon',
     templateUrl: './chart-icon.html',
@@ -112,6 +113,7 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
     }
 }
 
+@WingsTheme('jigsaw-donut-chart-icon')
 @Component({
     selector: 'jigsaw-donut-chart-icon, j-donut-chart-icon',
     templateUrl: './chart-icon.html',
@@ -150,6 +152,7 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
     }
 }
 
+@WingsTheme('jigsaw-line-chart-icon')
 @Component({
     selector: 'jigsaw-line-chart-icon, j-line-chart-icon',
     templateUrl: './chart-icon.html',
@@ -213,6 +216,7 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
     }
 }
 
+@WingsTheme('jigsaw-bar-chart-icon')
 @Component({
     selector: 'jigsaw-bar-chart-icon, j-bar-chart-icon',
     templateUrl: './chart-icon.html',

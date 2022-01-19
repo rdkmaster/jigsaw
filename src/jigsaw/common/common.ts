@@ -2,6 +2,13 @@ import {Directive, OnInit, ViewContainerRef, Input, NgModule, OnDestroy, NgZone}
 import {CommonUtils} from "./core/utils/common-utils";
 import {take} from 'rxjs/operators';
 
+const wingsThemeIdProperty = '__wingsThemeId';
+export function WingsTheme(wingsThemeId: string) {
+    return function (classDefine: any) {
+        classDefine[wingsThemeIdProperty] = wingsThemeId;
+    }
+}
+
 /**
  * 方便的定义一个渲染器视图的插槽
  */
@@ -34,6 +41,23 @@ export interface IJigsawComponent {
     width: string;
     height: string;
     maxHeight: string;
+}
+
+/**
+ * Jigsaw提供了一套非常功能强大的皮肤系统
+ * - 支持多种Ux规范的皮肤
+ * - 支持深浅色系皮肤的在线热切换
+ * - 支持局部区域内使用相反色系皮肤
+ * - 同时还提供了一套css变量用于帮助应用创建支持上述各个功能的页面
+ * 详细的使用方法请参考 [这个PR](https://github.com/rdkmaster/jigsaw-seed/pull/35)
+ * 和 [这个PR](https://github.com/rdkmaster/jigsaw-seed/pull/38)。
+ *
+ * $demo=theme/wings-theme
+ * $demo=theme/properties
+ * $demo=theme/adjust-font-color
+ */
+export interface IWingsTheme {
+    theme: string;
 }
 
 /**
@@ -158,7 +182,7 @@ export abstract class AbstractJigsawViewBase implements OnInit, OnDestroy {
  * 一般来说，应用无需关注此类
  */
 @Directive()
-export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent {
+export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase implements IJigsawComponent, IWingsTheme {
     constructor(protected _zone?: NgZone) {
         super(_zone);
     }
@@ -211,32 +235,15 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
     }
 
     public set theme(theme: 'light' | 'dark' | string) {
-        const decorators: any[] = (<any>this.constructor).decorators;
-        if (CommonUtils.isUndefined(theme) || !decorators) {
+        const wingsThemeId: string = this.constructor[wingsThemeIdProperty];
+        if (CommonUtils.isUndefined(theme) || !wingsThemeId) {
             return;
         }
         this._theme = theme;
         if (theme !== 'light' && theme !== 'dark') {
             return;
         }
-        let selector;
-        decorators.find(decorator => {
-            if (decorator.type.prototype.ngMetadataName != "Component") {
-                return false;
-            }
-            const selectorArg = decorator.args.find(arg => arg.hasOwnProperty('selector'));
-            if (!selectorArg) {
-                return false;
-            }
-            const selectors = selectorArg.selector;
-            selector = selectors.split(/\s*,\s*/).find(selector => selector.startsWith('jigsaw-'));
-            return !!selector;
-        });
-        if (!selector) {
-            return;
-        }
-
-        const linkId = `${selector}-${theme}-theme`;
+        const linkId = `wings-theme-id-${wingsThemeId}-${theme}`;
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;
         if (themeLink) {
             return;
@@ -245,7 +252,7 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
         const style = document.createElement("link");
         style.rel = "stylesheet";
         style.id = linkId;
-        style.href = `themes/wings-theme/${selector}-${theme}.css`;
+        style.href = `themes/wings-theme/${wingsThemeId}-${theme}.css`;
         head.appendChild(style);
     }
 }

@@ -5,7 +5,9 @@ import {
 import {Subscription} from "rxjs/internal/Subscription";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-box')
 @Component({
     selector: 'jigsaw-box, j-box',
     templateUrl: './box.html',

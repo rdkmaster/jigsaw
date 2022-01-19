@@ -1,9 +1,11 @@
-import {Component, NgModule, forwardRef, Input, ChangeDetectionStrategy, ChangeDetectorRef} from "@angular/core";
+import {Component, NgModule, forwardRef, Input, ChangeDetectionStrategy} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawTileSelectModule} from "./tile";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {JigsawTileSelectModule} from "./tile";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-tile-lite')
 @Component({
     selector: 'jigsaw-tile-lite, j-tile-lite',
     template: `

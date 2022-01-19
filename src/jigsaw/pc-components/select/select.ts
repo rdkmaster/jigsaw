@@ -5,6 +5,7 @@ import {
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { JigsawSelectBase } from "./select-base";
+import {WingsTheme} from "../../common/common";
 
 /**
  * 选择控件
@@ -17,6 +18,7 @@ import { JigsawSelectBase } from "./select-base";
  * - 支持设置下拉触发的方式
  *
  */
+@WingsTheme('jigsaw-select')
 @Component({
     selector: "jigsaw-select, j-select",
     templateUrl: "select.html",

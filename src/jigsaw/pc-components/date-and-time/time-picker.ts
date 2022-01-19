@@ -20,7 +20,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/for
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -47,6 +47,7 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
  * $demo = time-picker/basic
  * $demo = time-picker/step
  */
+@WingsTheme('jigsaw-time-picker')
 @Component({
     selector: 'jigsaw-time-picker, j-time-picker',
     templateUrl: './time-picker.html',
@@ -735,6 +736,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
+@WingsTheme('jigsaw-time-popup')
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',

@@ -4,7 +4,9 @@ import {IUploader, UploadFileInfo} from '../../common/directive/upload/uploader-
 import {JigsawUploadBase, JigsawUploadDirective} from '../../common/directive/upload/upload.directive';
 import {DragDropInfo} from '../../common/directive/dragdrop/types';
 import {CommonUtils} from '../../common/core/utils/common-utils';
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-upload')
 @Component({
     selector: "jigsaw-upload, j-upload",
     templateUrl: "upload.html",

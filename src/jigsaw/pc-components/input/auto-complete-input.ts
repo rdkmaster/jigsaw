@@ -22,6 +22,7 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
+import {WingsTheme} from "../../common/common";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -44,6 +45,7 @@ export class DropDownValue {
  *
  * $demo = auto-complete-input/non-group
  */
+@WingsTheme('jigsaw-auto-complete-input')
 @Component({
     selector: 'jigsaw-auto-complete-input, j-auto-complete-input',
     templateUrl: 'auto-complete-input.html',

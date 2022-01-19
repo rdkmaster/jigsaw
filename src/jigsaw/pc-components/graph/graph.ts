@@ -31,6 +31,7 @@ try {
 } catch(e) {
 }
 
+@WingsTheme('jigsaw-graph')
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',

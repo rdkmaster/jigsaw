@@ -11,7 +11,7 @@ import {
     Renderer2,
     Injector
 } from '@angular/core';
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
@@ -97,6 +97,7 @@ export class GrItem {
     shortcuts?: Shortcut[];
 }
 
+@WingsTheme('jigsaw-date-picker')
 @Component({
     selector: 'jigsaw-date-picker, j-date-picker',
     templateUrl: './date-picker.html',

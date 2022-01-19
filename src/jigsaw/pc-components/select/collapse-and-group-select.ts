@@ -2,7 +2,9 @@ import {ChangeDetectionStrategy, Component, forwardRef, OnInit} from "@angular/c
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawSelectGroupBase} from "./select-base";
 import { CommonUtils } from '../../common/core/utils/common-utils';
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-group-select')
 @Component({
     selector: "jigsaw-group-select, j-group-select",
     templateUrl: "collapse-and-group-select.html",
