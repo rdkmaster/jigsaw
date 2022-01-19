@@ -318,6 +318,7 @@ $font-color-white-darken-dark: $gray-8;
 */
 /*@public*/ $border-color-default: $gray-6;
 /*@public*/ $border-color-disabled: $gray-5;
+$border-color-popup: $gray-5;
 $border-color-shadow-cntr: $gray-6;
 $border-color-default-light: $gray-5-light;
 $border-color-default-dark: $gray-5;
@@ -337,6 +338,6 @@ $border-color-default-dark: $gray-5;
     $box-shadow-lv3 => 及时消息、模态弹框、alert
 */
 /*@public*/ $box-shadow-lv0: none;
-/*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 100%, 0.12);
-/*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 100%, 0.08);
-/*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 100%, 0.06);
+/*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.12);
+/*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.08);
+/*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.06);

@@ -10,8 +10,14 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
     overflow: auto;
     border-width: 1px;
     border-style: solid;
-    border-color: $border-color-default;
+    border-color: $border-color-disabled;
     border-radius: 4px;
+    box-shadow: $box-shadow-lv2;
+
+    &.#{$jigsaw-auto-complete-input}-list-box-vacant{
+        box-shadow: $box-shadow-lv0;
+        border: none;
+    }
 
     ul {
         margin: 0;
