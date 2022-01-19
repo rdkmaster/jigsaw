@@ -165,8 +165,8 @@ function processSelector(ci, html) {
 }
 
 function processInputs(ci, html) {
-    const inputs = [];
-    if (ci.inputsClass && ci.inputsClass.length) {
+    const inputs = [], inputsClass = ci.inputsClass || [];
+    if (inputsClass.length) {
         html = html.replace(`$inputsTable`,
             `<table style="width:100%">
                 <thead><tr><th>名称</th><th>类型</th><th>默认值</th><th>说明</th><th>示例</th></tr></thead>
@@ -175,7 +175,7 @@ function processInputs(ci, html) {
     } else {
         html = html.replace(`$inputsTable`, `<p>无</p>`)
     }
-    ci.inputsClass.forEach(input => {
+    inputsClass.forEach(input => {
         fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         const dualBinding = ci.outputsClass.find(i => i.name === input.name + 'Change') ?
