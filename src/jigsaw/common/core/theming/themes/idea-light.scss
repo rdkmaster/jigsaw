@@ -100,6 +100,56 @@
     }
 }
 
+.jigsaw-auto-complete-input-list-box-host {
+    ul li {
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    .jigsaw-auto-complete-input-item-title {
+        background: #f2f2f2;
+        color: $font-color-tag;
+        font-size: $font-size-base;
+    }
+}
+
+.jigsaw-breadcrumb-host {
+    background: #f7f7f7;
+    font-size: 16px;
+
+    .jigsaw-breadcrumb-item {
+        color: $brand-default;
+        font-size: 16px;
+    }
+
+    &.jigsaw-breadcrumb-host[data-theme="dark"] {
+        background: #313131;
+
+        .jigsaw-breadcrumb-item {
+            color: $font-color-hint;
+
+            &:hover {
+                color: $font-color-white;
+            }
+        }
+    }
+
+    &.jigsaw-breadcrumb-host[data-theme="light"] {
+        background: #f7f7f7;
+
+        .jigsaw-breadcrumb-item {
+            color: $font-color-hint;
+
+            &:hover {
+                color: $font-color-heading;
+            }
+        }
+    }
+
+    &.jigsaw-breadcrumb-host-inner {
+        background: transparent;
+    }
+}
+
 .jigsaw-input-host {
     .jigsaw-input-icon-front,
     .jigsaw-input-icon-end {
@@ -107,3 +157,8 @@
     }
 }
 
+.jigsaw-list-option-host {
+    &.jigsaw-list-option-active {
+        color: $font-color-default;
+    }
+}
