@@ -9,7 +9,7 @@
 
 ## Why Jigsaw?
 
-Jigsaw is a complete and powerful Web components set. The current version contains 54 components, 6 containers, 6 services, and 9 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
+Jigsaw is a complete and powerful Web components set. The current version contains 54 components, 6 containers, 7 services, and 9 directives, basically covering all aspects of Web applications. Simply put, Jigsaw has almost all the functions of other component sets, and Jigsaw is more powerful and has better performance. Therefore, there is no need to worry about the lack of functionality with Jigsaw.
 
 Jigsaw has an ability that other component sets do not have: **Jigsaw’s application can support multiple Ux specifications at the same time in one development**. [Click here](https://jigsaw-zte.gitee.io/latest/#/components/guide/supports-multiple-ux-specifications) to learn more about it.
 
@@ -49,7 +49,7 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 27 | Pagination | A control used to divide a large amount of data into multiple pages for display, not only can cooperate with the table component, but also can realize the paging operation of any data. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/pagination/demo/basic)
 28 | Progress Bar | A horizontal progress bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/full)
 29 | Progress Circle | A circular progress bar. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/circle-progress)
-30 | Progress Status | A process status component which can be used to display various states in the process. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/basic)
+30 | Progress Status | A process status component which can be used to display various states in the process. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/process-status/demo/basic)
 31 | Radio | A form control for collecting single choices. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
 32 | Rate | A form control for the users to give his/her score of something. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/rate/demo/full)
 33 | Scrollbar | A custom scrollbar to any container, powered by [perfect scrollbar](https://github.com/utatti/perfect-scrollbar). | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/scrollbar/demo/basic)
@@ -90,12 +90,13 @@ Jigsaw has an ability that other component sets do not have: **Jigsaw’s applic
 
 \# | Name | Description | Link
 ---|------|-------------|------
-1 | Data | Jigsaw encapsulates many kinds of data objects to help applications more easily to feed data to all the controls. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
-2 | LoadingService | Popups up and manages [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) component. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
-3 | PopupService | Popups any given view to the top of the UI, very powerful. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
-4 | TimeService | Translate time macros like `now-1d` to real values. | --
-5 | Translation | Used to create a view that supports multiple languages. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
-6 | ChartIcon | Render simple data to tiny charts. | --
+1 | Theme System | Jigsaw provides a very powerful theme system, which can support a variety of Ux specification theme, support online hot switching of dark and light skins, support the use of opposite color theme in local areas, and also provide a set of CSS Variables are used to help users create pages that support each of the above features. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/theme/demo/properties)
+2 | Data | Jigsaw encapsulates many kinds of data objects to help applications more easily to feed data to all the controls. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
+3 | LoadingService | Popups up and manages [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) component. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
+4 | PopupService | Popups any given view to the top of the UI, very powerful. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
+5 | TimeService | Translate time macros like `now-1d` to real values. | --
+6 | Translation | Used to create a view that supports multiple languages. | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
+7 | ChartIcon | Render simple data to tiny charts. | --
 
 ### Directives
 
