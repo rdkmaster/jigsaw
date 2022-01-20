@@ -15,8 +15,10 @@ import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../comm
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawCircleProgress} from "./circle-progress";
 import {LabelPosition, PreSize, ProgressBase, ProgressInitData, Status} from "./base";
+import {WingsTheme} from "../../common/common";
 
 // @dynamic
+@WingsTheme('jigsaw-progress')
 @Component({
     selector: 'jigsaw-progress, j-progress',
     templateUrl: './progress.html',

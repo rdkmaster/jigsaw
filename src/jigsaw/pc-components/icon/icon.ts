@@ -1,6 +1,6 @@
 import {Component, Input, NgModule,ChangeDetectionStrategy, Injector, OnInit, Renderer2, ElementRef, Optional} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from '../../common/common';
+import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -14,6 +14,7 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
  *
  * $demo = button/basic
  */
+@WingsTheme('jigsaw-icon')
 @Component({
     selector: 'jigsaw-icon, j-icon',
     templateUrl: 'icon.html',

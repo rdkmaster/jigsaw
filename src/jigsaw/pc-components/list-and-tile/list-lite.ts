@@ -12,6 +12,7 @@ import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
+import {WingsTheme} from "../../common/common";
 
 type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[];
 
@@ -25,6 +26,7 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
  * - 可以和combo结合起来使用
  */
 // @dynamic
+@WingsTheme('jigsaw-list-lite')
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `

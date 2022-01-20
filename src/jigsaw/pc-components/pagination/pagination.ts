@@ -16,11 +16,11 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 import { JigsawSelectModule } from "../select/index";
 import { JigsawInputModule } from "../input/input";
-import { AbstractJigsawComponent } from "../../common/common";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { IPageable, PagingInfo } from "../../common/core/data/component-data";
@@ -33,6 +33,7 @@ export class PageSizeData {
     label: string;
 }
 
+@WingsTheme('jigsaw-pagination')
 @Component({
     selector: "jigsaw-pagination, j-pagination",
     templateUrl: "pagination.html",

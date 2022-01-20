@@ -26,6 +26,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -95,6 +96,7 @@ const transferServerFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
+@WingsTheme('jigsaw-transfer')
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
     templateUrl: './transfer.html',
@@ -325,6 +327,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-transfer-list, j-transfer-list',
     templateUrl: './transfer-list.html',

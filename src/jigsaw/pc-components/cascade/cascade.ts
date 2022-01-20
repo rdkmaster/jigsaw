@@ -17,7 +17,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {Observable, Subscription} from "rxjs";
 import {JigsawTab, JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
+import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -83,6 +83,7 @@ export class CascadeTabContentInitData {
  * - 支持单选和多选
  * - 支持选择全部
  */
+@WingsTheme('jigsaw-cascade')
 @Component({
     selector: 'jigsaw-cascade, j-cascade',
     template: '<j-tabs width="100%"></j-tabs>',

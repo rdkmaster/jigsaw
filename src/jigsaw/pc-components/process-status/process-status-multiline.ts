@@ -9,7 +9,7 @@ import {
     Output,
     ViewChild
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 
 /**
  * @internal
@@ -27,6 +27,7 @@ type ProcessStatusData = {
     context?: any;
 };
 
+@WingsTheme('jigsaw-process-status-multiline')
 @Component({
     selector: "jigsaw-process-status-multiline, j-process-status-multiline",
     template: `

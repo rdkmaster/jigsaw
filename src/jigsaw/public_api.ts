@@ -65,7 +65,7 @@ export * from "./pc-components/progress/progress";
 export * from "./pc-components/progress/circle-progress";
 export * from "./pc-components/progress/base";
 export * from "./pc-components/radio/radio-lite";
-export * from "./pc-components/radio/radio";
+export * from "./pc-components/radio/radios";
 export * from "./pc-components/rate/index";
 export * from "./pc-components/root/root";
 export * from "./pc-components/select/index";

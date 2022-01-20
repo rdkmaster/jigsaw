@@ -31,6 +31,7 @@ import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import {WingsTheme} from "../../common/common";
 
 export enum AlertLevel {
     info, warning, error, confirm
@@ -38,6 +39,7 @@ export enum AlertLevel {
 
 export type AlertMessage = {message?: string, header: string};
 
+@WingsTheme('jigsaw-alert')
 @Component({
     selector: 'jigsaw-alert, j-alert',
     templateUrl: 'alert.html',
@@ -239,6 +241,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
     }
 }
 
+@WingsTheme('jigsaw-info-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-info-alert, j-info-alert',
@@ -287,6 +290,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     }
 }
 
+@WingsTheme('jigsaw-warning-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-warning-alert, j-warning-alert',
@@ -335,6 +339,7 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     }
 }
 
+@WingsTheme('jigsaw-error-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-error-alert, j-error-alert',
@@ -384,6 +389,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     }
 }
 
+@WingsTheme('jigsaw-confirm-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-confirm-alert, j-confirm-alert',

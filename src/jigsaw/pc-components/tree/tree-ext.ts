@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, NgModule, OnDestroy, Output} from '@angular/core';
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
@@ -14,6 +14,7 @@ export class TreeEventData {
     extraInfo?: object;
 }
 
+@WingsTheme('jigsaw-tree-ext')
 @Component({
     selector: 'jigsaw-tree-ext, j-tree-ext',
     template: `

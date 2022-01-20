@@ -13,7 +13,7 @@ import {
     AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
+import {AbstractJigsawComponent, IJigsawFormControl, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
@@ -22,6 +22,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
  *
  * 这是一个表单友好组件
  */
+@WingsTheme('jigsaw-textarea')
 @Component({
     selector: 'jigsaw-textarea, j-textarea',
     templateUrl: './textarea.html',

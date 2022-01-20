@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
-import { ArrayCollection, JigsawListLite, GroupOptionValue } from 'jigsaw/public_api';
+import {Component, ViewEncapsulation} from "@angular/core";
+import {ArrayCollection, GroupOptionValue, JigsawListLite} from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -7,7 +7,7 @@ import { ArrayCollection, JigsawListLite, GroupOptionValue } from 'jigsaw/public
     encapsulation: ViewEncapsulation.None,
     host: { '[attr.data-theme]': 'theme' }
 })
-export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
+export class ThemeBuildInThemeDemoComponent {
     lightTheme = "light";
     darkTheme = "dark";
 
@@ -143,9 +143,6 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
-    ngAfterViewInit() {
-        console.log(document.querySelectorAll("ul.wings-theme-cntr li"));
-    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

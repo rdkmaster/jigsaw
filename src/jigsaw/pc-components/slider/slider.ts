@@ -26,7 +26,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {AbstractJigsawComponent, AbstractJigsawViewBase} from "../../common/common";
+import {AbstractJigsawComponent, AbstractJigsawViewBase, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTooltip} from "../../common/directive/tooltip/tooltip";
 import {FloatPosition} from "../../common/directive/float/float";
@@ -245,6 +245,7 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
  * 何时使用
  * 当用户需要在数值区间/自定义区间内进行选择时
  */
+@WingsTheme('jigsaw-slider')
 @Component({
     selector: 'jigsaw-slider, j-slider',
     templateUrl: './slider.html',

@@ -12,13 +12,14 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'preset-magenta' |
     'preset-orange' | 'preset-red' | 'preset-purple' | 'preset-gray';
 
+@WingsTheme('jigsaw-tag')
 @Component({
     selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',
@@ -64,7 +65,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         private _injector: Injector) {
         super(null);
     }
-    
+
     /**
      * @NoMarkForCheckRequired
      */

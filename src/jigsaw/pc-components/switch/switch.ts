@@ -12,7 +12,7 @@ import {
     Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent} from '../../common/common';
+import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 
 /**
  * @description 开关组件
@@ -20,6 +20,7 @@ import {AbstractJigsawComponent} from '../../common/common';
  * 何时使用
  * 只有两种状态切换时.
  */
+@WingsTheme('jigsaw-switch')
 @Component({
     selector: 'jigsaw-switch, j-switch',
     templateUrl: './switch.html',

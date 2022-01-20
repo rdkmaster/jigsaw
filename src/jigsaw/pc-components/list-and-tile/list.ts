@@ -14,7 +14,9 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-list')
 @Component({
     selector: 'jigsaw-list, j-list',
     template: '<div *ngIf="disabled" class="jigsaw-list-disabled"></div><ng-content></ng-content>',
@@ -50,6 +52,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     public _items: QueryList<JigsawListOption>;
 }
 
+@WingsTheme('jigsaw-list-option')
 @Component({
     selector: 'jigsaw-list-option,j-list-option',
     templateUrl: 'list-option.html',

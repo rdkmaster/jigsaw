@@ -16,7 +16,7 @@ import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 
 type CompoundedBreadcrumbData = string | BreadcrumbNode | (string | BreadcrumbNode)[];
 
@@ -46,6 +46,7 @@ export type BreadcrumbNode = {
 
 export type BreadcrumbGenerator = (routeNode: string) => CompoundedBreadcrumbData;
 
+@WingsTheme('jigsaw-breadcrumb')
 @Component({
     selector: "jigsaw-breadcrumb, j-breadcrumb",
     templateUrl: "breadcrumb.html",

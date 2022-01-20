@@ -1,8 +1,7 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
-    ContentChildren, ElementRef,
+    ContentChildren,
     forwardRef, Injector,
     Input,
     NgModule,
@@ -12,9 +11,9 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
-import {ArrayCollection} from "../../common/core/data/array-collection";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-tile')
 @Component({
     selector: 'jigsaw-tile, j-tile',
     template: '<ng-content></ng-content>',
