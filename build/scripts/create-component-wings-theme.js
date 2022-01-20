@@ -11,26 +11,78 @@ const tsFiles = [
 ];
 const ignoredComponents = [
     'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawFishBone', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot',
-    'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback'
+    'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback',
+    'JigsawCollapsePane'
 ];
 const wingsThemeIds = [], invalidComponents = [];
 tsFiles.forEach(file => {
-    const rx = /(\/\*[\s\S]*?\*\/)?\s*(^\s*@WingsTheme\s*\((.*)\))?\s*(@Component\s*\([\s\S]*?\))\s*export\s+class\s+(\w+)/mg;
-    fs.readFileSync(file).toString().replace(rx, (_1, comment, _2, wingsThemeId, componentMeta, className) => {
+    let src = fs.readFileSync(file).toString();
+    while (true) {
+        const match = src.match(/@Component\s*\(\s*{([\s\S]*?)}\)/);
+        if (!match) {
+            break;
+        }
+        const componentMeta = match[1];
+        let comment, wingsThemeId, className;
+
+        // 往前找
+        let heading = src.slice(0, match.index);
+        let match1 = heading.match(/([\s\S]*)@WingsTheme\s*\((.*?)\)\s*$/);
+        if (match1) {
+            heading = match1[1];
+            wingsThemeId = match1[2];
+        }
+        match1 = heading.match(/[\s\S]*\/\*([\s\S]*?)\*\/\s*$/);
+        if (match1) {
+            comment = match1[1];
+        }
+
+        // 往后找
+        src = src.slice(match.index + match[0].length);
+        match1 = src.match(/^\s*@WingsTheme\s*\((.*?)\)/);
+        if (match1) {
+            src = src.slice(match1[0].length);
+            // 被注释掉的不要
+            const id = match1[2];
+            if (wingsThemeId && id) {
+                console.error('一个组件不允许有两个 @WingsTheme 渲染器！');
+                console.error(`wingsThemeId=${wingsThemeId}, file=${file}`);
+                process.exit(1);
+            }
+            wingsThemeId = wingsThemeId || id;
+        }
+        match1 = src.match(/^\s*export\s+class\s+(\w+)/);
+        if (!match1) {
+            console.error('组件定义格式非法：@Component内部的值包含了“)}”！');
+            console.error(`file=${file}`);
+            process.exit(1);
+        }
+        className = match1[1];
+
         if (comment && comment.indexOf('@internal') !== -1) {
-            return;
+            if (wingsThemeId) {
+                console.error('有@internal标记的组件不应该有 @WingsTheme 渲染器！');
+                console.error(`wingsThemeId=${wingsThemeId}, file=${file}`);
+                process.exit(1);
+            }
+            continue;
         }
         if (!componentMeta || !componentMeta.match(/\bselector\s*:/)) {
-            return;
+            if (wingsThemeId) {
+                console.error('没有selector的组件不应该有 @WingsTheme 渲染器！');
+                console.error(`wingsThemeId=${wingsThemeId}, file=${file}`);
+                process.exit(1);
+            }
+            continue;
         }
         if (!wingsThemeId) {
             if (ignoredComponents.indexOf(className) === -1) {
                 invalidComponents.push(className);
             }
-            return;
+            continue;
         }
         wingsThemeIds.push(wingsThemeId.replace(/['"]/g, ''));
-    });
+    }
 });
 if (invalidComponents.length) {
     console.error('下面这些组件没有使用 @WingsTheme 装饰器指明 wings theme id，请添加！');
@@ -72,10 +124,13 @@ const commonImport = `
 styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const wingsThemeId = `jigsaw-${fileName}`;
-    if (wingsThemeIds.indexOf(wingsThemeId) === -1) {
+    const idx = wingsThemeIds.indexOf(wingsThemeId);
+    if (idx === -1) {
+        console.log('在 all-theme.scss 里有引入，但没有定义@WingsTheme的：', wingsThemeId);
         return;
     }
 
+    wingsThemeIds.splice(idx, 1);
     const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
     const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/mg, "$1-host[data-theme='$THEME'] {");
     fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
@@ -94,6 +149,7 @@ styleFiles.forEach(filePath => {
 });
 fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
 
+console.log('有@WingsTheme渲染器，但是all-theme.scss里没有引用的：', wingsThemeIds);
 console.log('component wings theme created');
 
 function styleFilesParser () {

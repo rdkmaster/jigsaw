@@ -6,7 +6,6 @@ import {
     NgModule,
     OnDestroy,
     Optional,
-    ViewChild,
     Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -96,6 +95,21 @@ const transferServerFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
+const animations = [
+    trigger('loading', [
+        transition('void => *', [
+            animate(300, keyframes([
+                style({opacity: 0}),
+                style({opacity: 0.6})
+            ]))
+        ]),
+        transition('* => void', [
+            animate(300, keyframes([
+                style({opacity: 0.6}),
+                style({opacity: 0})
+            ]))
+        ])
+    ])];
 @WingsTheme('jigsaw-transfer')
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
@@ -106,23 +120,8 @@ const transferServerFilterFunction = function (item) {
         '[style.height]': 'height',
         '[class.jigsaw-transfer-error]': '!valid'
     },
-    animations: [
-        trigger('loading', [
-            transition('void => *', [
-                animate(300, keyframes([
-                    style({opacity: 0}),
-                    style({opacity: 0.6})
-                ]))
-            ]),
-            transition('* => void', [
-                animate(300, keyframes([
-                    style({opacity: 0.6}),
-                    style({opacity: 0})
-                ]))
-            ])
-        ])],
+    animations,
     changeDetection: ChangeDetectionStrategy.OnPush
-
 })
 
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
