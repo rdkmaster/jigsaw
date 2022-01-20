@@ -22,6 +22,18 @@
             }
         }
 
+        .jigsaw-alert-content {
+            .content-main p,
+            .content-sub p {
+                color: $font-color-default;
+                font-weight: 700;
+            }
+
+            .content-main .jigsaw-alert-icon {
+                font-size: 36px;
+            }
+        }
+
         &.jigsaw-alert-info {
             .jigsaw-alert-head {
                 .jigsaw-alert-title {
@@ -87,3 +99,11 @@
         }
     }
 }
+
+.jigsaw-input-host {
+    .jigsaw-input-icon-front,
+    .jigsaw-input-icon-end {
+        font-weight: 800;
+    }
+}
+

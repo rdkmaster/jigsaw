@@ -1,14 +1,14 @@
 /* paletx-pro-light */
-$blue-1: #e6f9ff;
-$blue-2: #c3edfa;
-$blue-3: #a0def2;
-$blue-4: #7fceeb;
-$blue-5: #5fbee3;
+$blue-1: mix(#fff, #41addc, 90%);
+$blue-2: mix(#fff, #41addc, 80%);
+$blue-3: mix(#fff, #41addc, 60%);
+$blue-4: mix(#fff, #41addc, 40%);
+$blue-5: mix(#fff, #41addc, 20%);
 $blue-6: #41addc;
-$blue-7: #2f8eba;
-$blue-8: #1f7099;
-$blue-9: #125478;
-$blue-10: #093a57;
+$blue-7: mix(#000, #41addc, 10%);
+$blue-8: mix(#000, #41addc, 20%);
+$blue-9: mix(#000, #41addc, 30%);
+$blue-10: mix(#000, #41addc, 40%);
 $blue-1-dark: #192738;
 $blue-2-dark: #1e3a59;
 $blue-3-dark: #1f4b7a;
@@ -31,16 +31,16 @@ $cyan-8: #05767a;
 $cyan-9: #025c61;
 $cyan-10: #004347;
 
-$green-1: #f7fff2;
-$green-2: #e4fad7;
-$green-3: #ccf0b9;
-$green-4: #bfe69c;
-$green-5: #9edb81;
+$green-1: mix(#fff, #87d068, 90%);
+$green-2: mix(#fff, #87d068, 80%);
+$green-3: mix(#fff, #87d068, 60%);
+$green-4: mix(#fff, #87d068, 40%);
+$green-5: mix(#fff, #87d068, 20%);
 $green-6: #87d068;
-$green-7: #68b34b;
-$green-8: #4c9432;
-$green-9: #34751e;
-$green-10: #205710;
+$green-7: mix(#000, #87d068, 10%);
+$green-8: mix(#000, #87d068, 20%);
+$green-9: mix(#000, #87d068, 30%);
+$green-10: mix(#000, #87d068, 40%);
 
 $lime-1: #f7ffe0;
 $lime-2: #e0f2b3;
@@ -74,17 +74,27 @@ $orange-7: #c47139;
 $orange-8: #a15527;
 $orange-9: #7d3d18;
 $orange-10: #59270c;
+$orange-1: mix(#fff, #e78f4e, 90%);
+$orange-2: mix(#fff, #e78f4e, 80%);
+$orange-3: mix(#fff, #e78f4e, 60%);
+$orange-4: mix(#fff, #e78f4e, 40%);
+$orange-5: mix(#fff, #e78f4e, 20%);
+$orange-6: #e78f4e;
+$orange-7: mix(#000, #e78f4e, 10%);
+$orange-8: mix(#000, #e78f4e, 20%);
+$orange-9: mix(#000, #e78f4e, 30%);
+$orange-10: mix(#000, #e78f4e, 40%);
 
-$red-1: #fff6f5;
-$red-2: #ffdedb;
-$red-3: #fcc3c0;
-$red-4: #f7a6a3;
-$red-5: #f58988;
+$red-1: mix(#fff, #ec6d6d, 90%);
+$red-2: mix(#fff, #ec6d6d, 80%);
+$red-3: mix(#fff, #ec6d6d, 60%);
+$red-4: mix(#fff, #ec6d6d, 40%);
+$red-5: mix(#fff, #ec6d6d, 20%);
 $red-6: #ec6d6d;
-$red-7: #c94f51;
-$red-8: #a63539;
-$red-9: #822125;
-$red-10: #5e1116;
+$red-7: mix(#000, #ec6d6d, 10%);
+$red-8: mix(#000, #ec6d6d, 20%);
+$red-9: mix(#000, #ec6d6d, 30%);
+$red-10: mix(#000, #ec6d6d, 40%);
 
 $magenta-1: #ffe6f4;
 $magenta-2: #ffc4e8;
@@ -120,15 +130,15 @@ $navy-9: #171e80;
 $navy-10: #0b0f5e;
 
 $gray-1: #ffffff;
-$gray-2: #f5f5f5;
-$gray-3: #eeeeee;
-$gray-4: #e5e5e5;
-$gray-5: #d9d9d9;
-$gray-6: #bfbfbf;
-$gray-7: #999999;
-$gray-8: #737373;
-$gray-9: #4d4d4d;
-$gray-10: #333333;
+$gray-2: #e9e9e9;
+$gray-3: #dcdcdc;
+$gray-4: #bfbfbf;
+$gray-5: #999999;
+$gray-6: #777777;
+$gray-7: #666666;
+$gray-8: #444444;
+$gray-9: #333333;
+$gray-10: #222222;
 $gray-1-dark: #0f111a;
 $gray-2-dark: #1b1d26;
 $gray-3-dark: #22242e;
@@ -198,10 +208,10 @@ $status-error: $red-6;
 /*@public*/ $success-disabled: $green-2;
 
 /* 功能色-warning */
-/*@public*/ $warning-default: $yellow-6;
-/*@public*/ $warning-hover: $yellow-7;
-/*@public*/ $warning-active: $yellow-8;
-/*@public*/ $warning-disabled: $yellow-2;
+/*@public*/ $warning-default: $orange-6;
+/*@public*/ $warning-hover: $orange-7;
+/*@public*/ $warning-active: $orange-8;
+/*@public*/ $warning-disabled: $orange-2;
 
 /* 功能色-error */
 /*@public*/ $error-default: $red-6;
@@ -210,10 +220,10 @@ $status-error: $red-6;
 /*@public*/ $error-disabled: $red-2;
 
 /* 功能色-danger */
-/*@public*/ $danger-default: $orange-6;
-/*@public*/ $danger-hover: $orange-7;
-/*@public*/ $danger-active: $orange-8;
-/*@public*/ $danger-disabled: $orange-2;
+/*@public*/ $danger-default: $yellow-6;
+/*@public*/ $danger-hover: $yellow-7;
+/*@public*/ $danger-active: $yellow-8;
+/*@public*/ $danger-disabled: $yellow-2;
 
 /* 功能色-process */
 /*@public*/ $process-default: $navy-6;
@@ -223,8 +233,8 @@ $status-error: $red-6;
 
 /* brand 品牌色 */
 /*@public*/ $brand-default: $blue-6;
-/*@public*/ $brand-hover: $blue-7;
-/*@public*/ $brand-active: $blue-8;
+/*@public*/ $brand-hover: $blue-5;
+/*@public*/ $brand-active: $blue-7;
 /*@public*/ $brand-disabled: $blue-2;
 $brand-lighten: $blue-1;
 $brand-active-lighten: $blue-2;
@@ -287,19 +297,19 @@ $bg-header-dark: $gray-3-dark;
     $font-color-disabled-light => 组件内部实现亮色模式
     $font-color-disabled-dark => 组件内部实现暗色模式
 */
-/*@public*/ $font-color-default: $gray-9;
-/*@public*/ $font-color-disabled: $gray-6;
-/*@public*/ $font-color-heading: $gray-10;
-/*@public*/ $font-color-default-light: $gray-9;
-/*@public*/ $font-color-disabled-light: $gray-6;
-$font-color-disabled-spec: $gray-6;
-$font-color-hint: $gray-7;
-$font-color-watermark: $gray-7;
-$font-color-heading-bold: $gray-9;
+/*@public*/ $font-color-default: $gray-7;
+/*@public*/ $font-color-disabled: $gray-4;
+/*@public*/ $font-color-heading: $gray-9;
+/*@public*/ $font-color-default-light: $gray-7;
+/*@public*/ $font-color-disabled-light: $gray-4;
+$font-color-disabled-spec: $gray-4;
+$font-color-hint: $gray-5;
+$font-color-watermark: $gray-5;
+$font-color-heading-bold: $gray-10;
 $font-color-heading-bold-lighten: $gray-9;
-$font-color-tag: $gray-8;
+$font-color-tag: $gray-5;
 $font-color-white: hsl(0, 0%, 100%);
-$font-color-white-darken: $gray-6;
+$font-color-white-darken: $gray-3;
 $font-color-brand: $brand-default;
 $font-color-brand-hover: $brand-hover;
 // 支持组件内部实现明暗皮肤
@@ -316,20 +326,20 @@ $font-color-white-darken-dark: $gray-8-dark;
     $border-color-disabled => 边框禁用
     $border-color-default-dark => 组件内部实现暗色模式
 */
-/*@public*/ $border-color-default: $gray-5;
-/*@public*/ $border-color-disabled: $gray-4;
-$border-color-popup: $gray-4;
+/*@public*/ $border-color-default: $gray-3;
+/*@public*/ $border-color-disabled: $gray-2;
+$border-color-popup: $gray-2;
 $border-color-shadow-cntr: transparent;
-$border-color-default-light: $gray-5;
-$border-color-default-dark: $gray-5-dark;
+$border-color-default-light: $gray-3;
+$border-color-default-dark: $gray-3-dark;
 
 /* split line 分割线 */
-/*@public*/ $splitline-default: $gray-4;
+/*@public*/ $splitline-default: $gray-2;
 
 /* icon 图标 */
-/*@public*/ $icon-color-default: $gray-6;
+/*@public*/ $icon-color-default: $gray-7;
 /*@public*/ $icon-color-disabled: $gray-4;
-/*@public*/ $icon-color-stress: $gray-8;
+/*@public*/ $icon-color-stress: $gray-9;
 
 /* box-shadow 阴影（基于altitude）
     $box-shadow-lv0 => 背景
