@@ -20,7 +20,7 @@ import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
 import {Subscription} from 'rxjs';
@@ -30,6 +30,7 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 
 export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
+@WingsTheme('jigsaw-range-date-time-select')
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
     template: `

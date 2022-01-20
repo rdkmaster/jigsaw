@@ -9,10 +9,11 @@ import {
     ElementRef,
     Injector
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('jigsaw-color-select')
 @Component({
     selector: 'jigsaw-color-select',
     templateUrl: "./color-select.html",

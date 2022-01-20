@@ -4,9 +4,10 @@ import {
     ChangeDetectionStrategy,
     Input
 } from "@angular/core";
-import { AbstractJigsawComponent } from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import { CommonModule } from "@angular/common";
 
+@WingsTheme('jigsaw-header')
 @Component({
     selector: "jigsaw-header,j-header",
     templateUrl: "header.html",

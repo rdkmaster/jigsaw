@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
+import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../../common/common";
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
@@ -415,6 +415,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 }
 
+@WingsTheme('jigsaw-tab-bar')
 @Component({
     selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
     templateUrl: 'tab-bar.html',
@@ -502,6 +503,7 @@ export class JigsawTabBar extends JigsawTabBase {
  * $demo = tab/update-title
  * $demo = tab/with-input
  */
+@WingsTheme('jigsaw-tab')
 @Component({
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',

@@ -2,10 +2,12 @@ import {ChangeDetectionStrategy, Component, forwardRef, OnInit} from "@angular/c
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawSelectGroupBase} from "./select-base";
 import { CommonUtils } from '../../common/core/utils/common-utils';
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('jigsaw-group-select')
 @Component({
     selector: "jigsaw-group-select, j-group-select",
-    templateUrl: "select-group.html",
+    templateUrl: "collapse-and-group-select.html",
     host: {
         "[class.jigsaw-group-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
@@ -33,9 +35,10 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
     }
 }
 
+@WingsTheme('jigsaw-collapse-select')
 @Component({
     selector: "jigsaw-collapse-select, j-select-collapse",
-    templateUrl: "select-group.html",
+    templateUrl: "collapse-and-group-select.html",
     host: {
         "[class.jigsaw-collapse-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",

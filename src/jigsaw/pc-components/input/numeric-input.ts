@@ -12,7 +12,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
@@ -26,6 +26,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
  *
  * $demo = numeric-input/basic
  */
+@WingsTheme('jigsaw-numeric-input')
 @Component({
     selector: 'jigsaw-numeric-input, j-numeric-input',
     templateUrl: 'numeric-input.html',

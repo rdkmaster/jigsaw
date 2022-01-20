@@ -21,13 +21,14 @@ import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+@WingsTheme('jigsaw-date-time-select')
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateService } from '@ngx-translate/core';
 import { AbstractDialogComponentBase, NoticeLevel } from "../dialog/dialog";
+import {WingsTheme} from "../../common/common";
 
 export class ToastMessage {
     /**
@@ -36,6 +37,8 @@ export class ToastMessage {
  * @internal
  */
 const toastInstances = [];
+
+@WingsTheme('jigsaw-toast')
 @Component({
     selector: 'jigsaw-toast, j-toast',
     templateUrl: 'toast.html',

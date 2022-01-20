@@ -18,7 +18,7 @@ import {
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
@@ -31,6 +31,7 @@ try {
 } catch(e) {
 }
 
+@WingsTheme('jigsaw-graph')
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',

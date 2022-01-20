@@ -1,5 +1,5 @@
-import {AbstractJigsawComponent} from "../../common/common"
 import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common"
 
 /**
  * 用于在界面上显示一个流程状态，并且可以实时更新各个状态，需要配合`JigsawProcessStatusItem`组件一起使用。
@@ -10,6 +10,7 @@ import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
  * $demo = process-status/status-interactive
  * $demo = process-status/vertical
  */
+@WingsTheme('jigsaw-process-status')
 @Component({
     selector: 'jigsaw-process-status, j-process-status',
     template: `

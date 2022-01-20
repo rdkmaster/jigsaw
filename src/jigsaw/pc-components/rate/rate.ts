@@ -1,8 +1,9 @@
 import {Component, ViewEncapsulation, EventEmitter, Input, OnInit, Output, forwardRef,ChangeDetectionStrategy, Injector} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('jigsaw-rate')
 @Component({
     selector: 'jigsaw-rate, j-rate',
     encapsulation: ViewEncapsulation.None,

@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
 import { IPopupable } from "../../service/popup.service";
 import { CommonModule } from "@angular/common";
-import { AbstractJigsawComponent } from "../../common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common";
 import { JigsawBlock, JigsawBlockModule } from "../block/block";
 
 /**
@@ -67,6 +67,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
 }
 
+@WingsTheme('jigsaw-loading')
 @Component({
     selector: 'jigsaw-loading, j-loading',
     templateUrl: 'loading-ring.html'
@@ -84,6 +85,7 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('jigsaw-font-loading')
 @Component({
     selector: 'jigsaw-font-loading, j-font-loading',
     templateUrl: 'loading-font.html'
@@ -123,6 +125,7 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('jigsaw-bubble-loading')
 @Component({
     selector: 'jigsaw-bubble-loading, j-bubble-loading',
     templateUrl: 'loading-bubble.html'
@@ -145,6 +148,7 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('jigsaw-ball-loading')
 @Component({
     selector: 'jigsaw-ball-loading, j-ball-loading',
     templateUrl: 'loading-ball.html'
@@ -164,6 +168,7 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('jigsaw-circle-loading')
 @Component({
     selector: "jigsaw-circle-loading, j-circle-loading",
     templateUrl: "loading-circle.html",
