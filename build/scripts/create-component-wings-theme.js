@@ -34,6 +34,7 @@ tsFiles.forEach(file => {
 });
 if (invalidComponents.length) {
     console.error('下面这些组件没有使用 @WingsTheme 装饰器指明 wings theme id，请添加！');
+    console.error('提示：如果确实不需要的，请将组件的类名加入到此脚本的ignoredComponents中去。');
     console.error(invalidComponents.join(', '));
 }
 
