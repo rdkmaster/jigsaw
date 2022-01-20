@@ -1,1 +1,89 @@
 @import "jigsaw/pc-components/theming/prebuilt/idea-light.scss";
+
+.jigsaw-alert-host {
+    .jigsaw-alert {
+        .jigsaw-alert-head {
+            border-bottom: none;
+            font-size: 20px;
+            color: $brand-default;
+
+            .jigsaw-alert-title {
+                font-size: 20px;
+                color: $brand-default;
+            }
+
+            .jigsaw-alert-close {
+                font-size: 24px;
+                color: $brand-default;
+
+                &:hover {
+                    color: $brand-hover;
+                }
+            }
+        }
+
+        &.jigsaw-alert-info {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $primary-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $primary-default;
+
+                    &:hover {
+                        color: $primary-hover;
+                    }
+                }
+            }
+        }
+
+        &.jigsaw-alert-warning {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $warning-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $warning-default;
+
+                    &:hover {
+                        color: $warning-hover;
+                    }
+                }
+            }
+        }
+
+        &.jigsaw-alert-error {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $error-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $error-default;
+
+                    &:hover {
+                        color: $error-hover;
+                    }
+                }
+            }
+        }
+
+        &.jigsaw-alert-confirm {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $primary-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $primary-default;
+
+                    &:hover {
+                        color: $primary-hover;
+                    }
+                }
+            }
+        }
+    }
+}
