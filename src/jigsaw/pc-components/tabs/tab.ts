@@ -415,7 +415,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 }
 
-@WingsTheme('jigsaw-tab-bar')
+@WingsTheme('jigsaw-tab')
 @Component({
     selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
     templateUrl: 'tab-bar.html',

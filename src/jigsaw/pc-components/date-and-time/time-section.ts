@@ -52,7 +52,9 @@ export type TimeSection = {
 
 export type TimeSectionValue = TimeSection;
 
-@WingsTheme('jigsaw-time-section-picker')
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-time-section-picker, j-time-section-picker',
     template: `
@@ -250,7 +252,9 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
     }
 }
 
-@WingsTheme('jigsaw-week-section-picker')
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-week-section-picker, j-week-section-picker',
     template: `
@@ -364,7 +368,9 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
     }
 }
 
-@WingsTheme('jigsaw-day-section-picker')
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-day-section-picker, j-day-section-picker',
     template: `

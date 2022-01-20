@@ -241,7 +241,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
     }
 }
 
-@WingsTheme('jigsaw-info-alert')
+@WingsTheme('jigsaw-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-info-alert, j-info-alert',
@@ -290,7 +290,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     }
 }
 
-@WingsTheme('jigsaw-warning-alert')
+@WingsTheme('jigsaw-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-warning-alert, j-warning-alert',
@@ -339,13 +339,12 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     }
 }
 
-@WingsTheme('jigsaw-error-alert')
+@WingsTheme('jigsaw-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-error-alert, j-error-alert',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class JigsawErrorAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
@@ -389,7 +388,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     }
 }
 
-@WingsTheme('jigsaw-confirm-alert')
+@WingsTheme('jigsaw-alert')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-confirm-alert, j-confirm-alert',

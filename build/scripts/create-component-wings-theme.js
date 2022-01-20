@@ -9,12 +9,12 @@ const tsFiles = [
     ...glob('**/*.ts', {cwd: `pc-components`}).map(f => `pc-components/${f}`),
     ...glob('**/*.ts', {cwd: `common`}).map(f => `common/${f}`),
 ];
-const ignoredComponents = [
+const invalidComponents = [], ignoredComponents = [
     'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawFishBone', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot',
     'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback',
-    'JigsawCollapsePane'
+    'JigsawCollapsePane', 'JigsawPieChartIcon', 'JigsawDonutChartIcon', 'JigsawLineChartIcon', 'JigsawBarChartIcon'
 ];
-const wingsThemeIds = [], invalidComponents = [];
+let wingsThemeIds = [];
 tsFiles.forEach(file => {
     let src = fs.readFileSync(file).toString();
     while (true) {
@@ -89,20 +89,11 @@ if (invalidComponents.length) {
     console.error('提示：如果确实不需要的，请将组件的类名加入到此脚本的ignoredComponents中去。');
     console.error(invalidComponents.join(', '));
 }
-
-// wingsThemeId不允许重复
-const duplicated = wingsThemeIds.filter((id, idx, arr) => idx !== arr.indexOf(id));
-if (duplicated.length) {
-    console.error('下面这些 wings theme id 被重复使用，请修改！');
-    console.error(duplicated.join(', '));
-}
-
-if (duplicated.length + invalidComponents.length > 0) {
+if (invalidComponents.length > 0) {
     process.exit(1);
 }
 
-console.log('所有组件的 wings theme id 校验通过！');
-
+wingsThemeIds = wingsThemeIds.filter((id, idx, arr) => idx === arr.indexOf(id));
 const wingsThemeOutput = 'common/core/theming/prebuilt/wings-theme';
 if (fs.existsSync(wingsThemeOutput)) {
     glob('**/*.scss', {cwd: wingsThemeOutput})
@@ -149,7 +140,12 @@ styleFiles.forEach(filePath => {
 });
 fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
 
-console.log('有@WingsTheme渲染器，但是all-theme.scss里没有引用的：', wingsThemeIds);
+if (wingsThemeIds.length) {
+    console.error('有@WingsTheme渲染器，但是all-theme.scss里没有引用的：\n', wingsThemeIds);
+    process.exit(1);
+}
+
+console.log('所有组件的 wings theme id 校验通过！');
 console.log('component wings theme created');
 
 function styleFilesParser () {

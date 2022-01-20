@@ -736,7 +736,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
-@WingsTheme('jigsaw-time-popup')
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',
