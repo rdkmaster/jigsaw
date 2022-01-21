@@ -1,7 +1,7 @@
 const fs = require("fs");
 const glob = require('glob').sync;
 
-console.log('creating component wings theme ...');
+console.log('开始创建 wings theme ...');
 
 process.chdir(`${__dirname}/../../src/jigsaw/`);
 
@@ -9,48 +9,95 @@ const tsFiles = [
     ...glob('**/*.ts', {cwd: `pc-components`}).map(f => `pc-components/${f}`),
     ...glob('**/*.ts', {cwd: `common`}).map(f => `common/${f}`),
 ];
-const ignoredComponents = [
+const invalidComponents = [], ignoredComponents = [
     'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawFishBone', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot',
-    'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback'
+    'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback',
+    'JigsawCollapsePane', 'JigsawPieChartIcon', 'JigsawDonutChartIcon', 'JigsawLineChartIcon', 'JigsawBarChartIcon'
 ];
-const wingsThemeIds = [], invalidComponents = [];
+let wingsThemeIds = [];
 tsFiles.forEach(file => {
-    const rx = /(\/\*[\s\S]*?\*\/)?\s*(^\s*@WingsTheme\s*\((.*)\))?\s*(@Component\s*\([\s\S]*?\))\s*export\s+class\s+(\w+)/mg;
-    fs.readFileSync(file).toString().replace(rx, (_1, comment, _2, wingsThemeId, componentMeta, className) => {
+    let src = fs.readFileSync(file).toString();
+    while (true) {
+        const match = src.match(/@Component\s*\(\s*{([\s\S]*?)}\)/);
+        if (!match) {
+            break;
+        }
+        const componentMeta = match[1];
+        let comment, wingsThemeId, className;
+
+        // 往前找
+        let heading = src.slice(0, match.index);
+        let match1 = heading.match(/([\s\S]*)@WingsTheme\s*\((.*?)\)\s*$/);
+        if (match1) {
+            heading = match1[1];
+            wingsThemeId = match1[2];
+        }
+        match1 = heading.match(/[\s\S]*\/\*([\s\S]*?)\*\/\s*$/);
+        if (match1) {
+            comment = match1[1];
+        }
+
+        // 往后找
+        src = src.slice(match.index + match[0].length);
+        match1 = src.match(/^\s*@WingsTheme\s*\((.*?)\)/);
+        if (match1) {
+            src = src.slice(match1[0].length);
+            // 被注释掉的不要
+            const id = match1[2];
+            if (wingsThemeId && id) {
+                console.error('一个组件不允许有两个 @WingsTheme 渲染器！');
+                console.error(`wingsThemeId=${wingsThemeId}, file=${file}`);
+                process.exit(1);
+            }
+            wingsThemeId = wingsThemeId || id;
+        }
+        match1 = src.match(/^\s*export\s+class\s+(\w+)/);
+        if (!match1) {
+            console.error('组件定义格式非法：@Component内部的值包含了“)}”！');
+            console.error(`file=${file}`);
+            process.exit(1);
+        }
+        className = match1[1];
+
         if (comment && comment.indexOf('@internal') !== -1) {
-            return;
+            if (wingsThemeId) {
+                console.error('有@internal标记的组件不应该有 @WingsTheme 渲染器！');
+                console.error(`wingsThemeId=${wingsThemeId}, file=${file}`);
+                process.exit(1);
+            }
+            continue;
         }
         if (!componentMeta || !componentMeta.match(/\bselector\s*:/)) {
-            return;
+            if (wingsThemeId) {
+                console.error('没有selector的组件不应该有 @WingsTheme 渲染器！');
+                console.error(`wingsThemeId=${wingsThemeId}, file=${file}`);
+                process.exit(1);
+            }
+            continue;
         }
         if (!wingsThemeId) {
             if (ignoredComponents.indexOf(className) === -1) {
                 invalidComponents.push(className);
             }
-            return;
+            continue;
         }
-        wingsThemeIds.push(wingsThemeId.replace(/['"]/g, ''));
-    });
+        wingsThemeId = 'jigsaw-' + wingsThemeId.replace(/['"]/g, '')
+            .replace(/\.\w+$/, '');
+        wingsThemeIds.push(wingsThemeId);
+    }
 });
 if (invalidComponents.length) {
     console.error('下面这些组件没有使用 @WingsTheme 装饰器指明 wings theme id，请添加！');
     console.error('提示：如果确实不需要的，请将组件的类名加入到此脚本的ignoredComponents中去。');
     console.error(invalidComponents.join(', '));
 }
-
-// wingsThemeId不允许重复
-const duplicated = wingsThemeIds.filter((id, idx, arr) => idx !== arr.indexOf(id));
-if (duplicated.length) {
-    console.error('下面这些 wings theme id 被重复使用，请修改！');
-    console.error(duplicated.join(', '));
-}
-
-if (duplicated.length + invalidComponents.length > 0) {
+if (invalidComponents.length > 0) {
     process.exit(1);
 }
 
-console.log('所有组件的 wings theme id 校验通过！');
-
+console.log(`一共找到 ${wingsThemeIds.length} 处@WingsTheme渲染。`)
+wingsThemeIds = wingsThemeIds.filter((id, idx, arr) => idx === arr.indexOf(id));
+console.log(`实际需要处理 ${wingsThemeIds.length} 个组件的样式文件。`)
 const wingsThemeOutput = 'common/core/theming/prebuilt/wings-theme';
 if (fs.existsSync(wingsThemeOutput)) {
     glob('**/*.scss', {cwd: wingsThemeOutput})
@@ -72,10 +119,13 @@ const commonImport = `
 styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const wingsThemeId = `jigsaw-${fileName}`;
-    if (wingsThemeIds.indexOf(wingsThemeId) === -1) {
+    const idx = wingsThemeIds.indexOf(wingsThemeId);
+    if (idx === -1) {
+        console.log('在 all-theme.scss 里有引入，但没有定义@WingsTheme的：', wingsThemeId);
         return;
     }
 
+    wingsThemeIds.splice(idx, 1);
     const fileContent = fs.readFileSync(`pc-components/theming/${filePath}.scss`).toString();
     const scssCode = commonImport + fileContent.replace(/(^\..+)-host\s*{/mg, "$1-host[data-theme='$THEME'] {");
     fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
@@ -94,7 +144,12 @@ styleFiles.forEach(filePath => {
 });
 fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
 
-console.log('component wings theme created');
+if (wingsThemeIds.length) {
+    console.error('有@WingsTheme渲染器，但是all-theme.scss里没有引用的：\n', wingsThemeIds);
+    process.exit(1);
+}
+
+console.log('所有组件的 wings theme id 校验通过，wings theme 创建完毕！');
 
 function styleFilesParser () {
     const styleFiles = [];

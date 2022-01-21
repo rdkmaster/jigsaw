@@ -22,7 +22,7 @@ export type RadiosGroupValue = {
     [prop: string]: any
 }
 
-@WingsTheme('jigsaw-radios')
+@WingsTheme('radios.scss')
 @Component({
     selector: 'jigsaw-radios, j-radios',
     template: '<ng-content></ng-content>',

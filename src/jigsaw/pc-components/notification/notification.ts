@@ -123,7 +123,7 @@ const notificationInstances = {
 };
 
 // @dynamic
-@WingsTheme('jigsaw-notification')
+@WingsTheme('notification.scss')
 @Component({
     selector: 'jigsaw-notification,j-notification',
     templateUrl: 'notification.html',

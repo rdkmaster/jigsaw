@@ -33,7 +33,7 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
  * $demo = checkbox/full
  * $demo = checkbox/basic
  */
-@WingsTheme('jigsaw-checkbox')
+@WingsTheme('checkbox.scss')
 @Component({
     selector: 'jigsaw-checkbox, j-checkbox',
     templateUrl: './checkbox.html',

@@ -13,7 +13,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-@WingsTheme('jigsaw-color-select')
+@WingsTheme('color-select.scss')
 @Component({
     selector: 'jigsaw-color-select',
     templateUrl: "./color-select.html",

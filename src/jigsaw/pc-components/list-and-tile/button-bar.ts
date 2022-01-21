@@ -5,7 +5,7 @@ import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {WingsTheme} from "../../common/common";
 
-@WingsTheme('jigsaw-button-bar')
+@WingsTheme('button-bar.scss')
 @Component({
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `

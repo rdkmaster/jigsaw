@@ -38,7 +38,7 @@ export class ToastMessage {
  */
 const toastInstances = [];
 
-@WingsTheme('jigsaw-toast')
+@WingsTheme('toast.scss')
 @Component({
     selector: 'jigsaw-toast, j-toast',
     templateUrl: 'toast.html',

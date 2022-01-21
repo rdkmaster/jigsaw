@@ -3,7 +3,7 @@ import {ProgressBase, Status} from "./base";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {WingsTheme} from "../../common/common";
 
-@WingsTheme('jigsaw-circle-progress')
+@WingsTheme('circle-progress.scss')
 @Component({
     selector: "jigsaw-circle-progress, j-circle-progress",
     templateUrl: "circle-progress.html",

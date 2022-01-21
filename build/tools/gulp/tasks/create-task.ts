@@ -100,7 +100,6 @@ export function createTask(packageName: string) {
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
-        ':reset-angular-json',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
@@ -118,17 +117,12 @@ export function createTask(packageName: string) {
     ));
 
     task(':extract-theme-variables', () => {
-        gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
+        return gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
     });
 
     task(':create-component-wings-theme', () => {
-        gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
+        return gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
     });
-
-    task(':reset-angular-json', () => {
-        gulpRun(`node build/scripts/create-component-wings-theme.js clean`, {}).exec();
-    });
-
 }
 
 

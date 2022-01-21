@@ -45,7 +45,7 @@ declare const moment: any;
  * $demo = range-date-time-picker/basic
  * $demo = range-date-time-picker/range-date-time-select
  */
-@WingsTheme('jigsaw-range-date-time-picker')
+@WingsTheme('range-date-time-picker.scss')
 @Component({
     selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker, jigsaw-range-time, j-range-time',
     templateUrl: './range-date-time-picker.html',

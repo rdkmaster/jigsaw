@@ -415,7 +415,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 }
 
-@WingsTheme('jigsaw-tab-bar')
+@WingsTheme('tab.scss')
 @Component({
     selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
     templateUrl: 'tab-bar.html',
@@ -503,7 +503,7 @@ export class JigsawTabBar extends JigsawTabBase {
  * $demo = tab/update-title
  * $demo = tab/with-input
  */
-@WingsTheme('jigsaw-tab')
+@WingsTheme('tab.scss')
 @Component({
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',

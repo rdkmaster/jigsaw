@@ -18,7 +18,7 @@ import {WingsTheme} from "../../common/common";
  * - 支持设置下拉触发的方式
  *
  */
-@WingsTheme('jigsaw-select')
+@WingsTheme('select.scss')
 @Component({
     selector: "jigsaw-select, j-select",
     templateUrl: "select.html",

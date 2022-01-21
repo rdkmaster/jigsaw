@@ -16,7 +16,7 @@ import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
  * $demo = button/full
  * $demo = button/basic
  */
-@WingsTheme('jigsaw-button')
+@WingsTheme('button.scss')
 @Component({
     selector: 'jigsaw-button, a[jigsaw-button], button[jigsaw-button], j-button, a[j-button], button[j-button]',
     templateUrl: 'button.html',

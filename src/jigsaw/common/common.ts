@@ -3,9 +3,9 @@ import {CommonUtils} from "./core/utils/common-utils";
 import {take} from 'rxjs/operators';
 
 const wingsThemeIdProperty = '__wingsThemeId';
-export function WingsTheme(wingsThemeId: string) {
+export function WingsTheme(scss: string) {
     return function (classDefine: any) {
-        classDefine[wingsThemeIdProperty] = wingsThemeId;
+        classDefine[wingsThemeIdProperty] = `jigsaw-${scss.replace(/\.\w+$/, '')}`;
     }
 }
 

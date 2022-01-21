@@ -20,7 +20,7 @@ import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
  * 何时使用
  * 只有两种状态切换时.
  */
-@WingsTheme('jigsaw-switch')
+@WingsTheme('switch.scss')
 @Component({
     selector: 'jigsaw-switch, j-switch',
     templateUrl: './switch.html',

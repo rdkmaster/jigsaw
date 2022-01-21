@@ -12,7 +12,6 @@ import {
     NgZone,
     Output,
     ViewChild,
-    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -306,7 +305,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
  *
  * $demo = input/full
  */
-@WingsTheme('jigsaw-input')
+@WingsTheme('input.scss')
 @Component({
     selector: 'jigsaw-input, j-input',
     templateUrl: 'input.html',
