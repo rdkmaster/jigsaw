@@ -1,5 +1,6 @@
-import {debounceTime, map} from "rxjs/operators";
+import { EventEmitter } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {debounceTime, map} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {AbstractGeneralCollection} from "./general-collection";
 import {
@@ -20,7 +21,6 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
-import { EventEmitter } from '@angular/core';
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -1327,7 +1327,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
      */
     public treeField: number = 0;
 
-    public nodeOpenChange = new EventEmitter<TreeTableNodeOpenParam>();
+    public nodeOpenChange: EventEmitter<TreeTableNodeOpenParam> = new EventEmitter<TreeTableNodeOpenParam>();
 
     private static _getData(node: SimpleNode, field: number, id: string = '', data = []): any[] {
         if (!node || field == -1) {
@@ -1493,7 +1493,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
         let node = PageableTreeTableData._getNodeByIndexes(this.filteredTreeData, indexes);
         node.open = open;
         this._refreshTreeAndTable();
-        this.nodeOpenChange.emit({node, indexes, open})
+        this.nodeOpenChange.emit({node, indexes, open});
     }
 
     private _refreshTreeAndTable() {

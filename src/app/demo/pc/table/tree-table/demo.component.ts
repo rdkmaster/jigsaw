@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
+import {Subscription} from 'rxjs';
 import {
     AdditionalColumnDefine,
-    ColumnDefine, DataFilterInfo,
+    ColumnDefine,
     PageableTreeTableData,
     TableCellCheckboxRenderer,
     TableHeadCheckboxRenderer,
     TreeTableCellRenderer,
     TreeTableData
 } from "jigsaw/public_api";
-import {Subscription} from 'rxjs';
 
 @Component({
     templateUrl: './demo.component.html'
@@ -17,8 +17,8 @@ export class TreeTableDemoComponent {
 
     public treeTableData: TreeTableData;
     public localPageableTreeTableData: PageableTreeTableData;
-    _removeTreeNodeOpenSubscription1: Subscription;
-    _removeTreeNodeOpenSubscription2: Subscription;
+    private _removeTreeNodeOpenSubscription1: Subscription;
+    private _removeTreeNodeOpenSubscription2: Subscription;
 
     getRow(level: number) {
         return Array.from(new Array(4).keys()).map(num => `cell${level}-${num}`)
@@ -214,7 +214,6 @@ export class TreeTableDemoComponent {
 
     search($event) {
         this.localPageableTreeTableData.filter($event, ['field1']);
-        //this.localPageableTreeTableData.filter(new DataFilterInfo($event, ['field1']));
     }
 
     searchForRequire() {
