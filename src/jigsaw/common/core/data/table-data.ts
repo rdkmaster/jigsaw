@@ -1,5 +1,6 @@
-import {debounceTime, map} from "rxjs/operators";
+import { EventEmitter } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {debounceTime, map} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {AbstractGeneralCollection} from "./general-collection";
 import {
@@ -1296,6 +1297,8 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 }
 
+export type TreeTableNodeOpenParam = {node: SimpleNode, indexes: (number | string)[], open: boolean}
+
 /**
  * 这是一个支持浏览器内部分页的树表数据对象，树表可以实现展开后关闭某些行，从而在衣蛾表格里展示具有层次结构的数据
  */
@@ -1323,6 +1326,8 @@ export class PageableTreeTableData extends LocalPageableTableData {
      * $demo = table/tree-table
      */
     public treeField: number = 0;
+
+    public nodeOpenChange: EventEmitter<TreeTableNodeOpenParam> = new EventEmitter<TreeTableNodeOpenParam>();
 
     private static _getData(node: SimpleNode, field: number, id: string = '', data = []): any[] {
         if (!node || field == -1) {
@@ -1488,6 +1493,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
         let node = PageableTreeTableData._getNodeByIndexes(this.filteredTreeData, indexes);
         node.open = open;
         this._refreshTreeAndTable();
+        this.nodeOpenChange.emit({node, indexes, open});
     }
 
     private _refreshTreeAndTable() {
