@@ -1,7 +1,7 @@
 const fs = require("fs");
 const glob = require('glob').sync;
 
-console.log('creating component wings theme ...');
+console.log('开始创建 wings theme ...');
 
 process.chdir(`${__dirname}/../../src/jigsaw/`);
 
@@ -95,7 +95,9 @@ if (invalidComponents.length > 0) {
     process.exit(1);
 }
 
+console.log(`一共找到 ${wingsThemeIds.length} 处@WingsTheme渲染。`)
 wingsThemeIds = wingsThemeIds.filter((id, idx, arr) => idx === arr.indexOf(id));
+console.log(`实际需要处理 ${wingsThemeIds.length} 个组件的样式文件。`)
 const wingsThemeOutput = 'common/core/theming/prebuilt/wings-theme';
 if (fs.existsSync(wingsThemeOutput)) {
     glob('**/*.scss', {cwd: wingsThemeOutput})
@@ -147,8 +149,7 @@ if (wingsThemeIds.length) {
     process.exit(1);
 }
 
-console.log('所有组件的 wings theme id 校验通过！');
-console.log('component wings theme created');
+console.log('所有组件的 wings theme id 校验通过，wings theme 创建完毕！');
 
 function styleFilesParser () {
     const styleFiles = [];
