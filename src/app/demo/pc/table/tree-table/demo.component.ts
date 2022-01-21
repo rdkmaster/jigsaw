@@ -8,6 +8,7 @@ import {
     TreeTableCellRenderer,
     TreeTableData
 } from "jigsaw/public_api";
+import {Subscription} from 'rxjs';
 
 @Component({
     templateUrl: './demo.component.html'
@@ -16,6 +17,8 @@ export class TreeTableDemoComponent {
 
     public treeTableData: TreeTableData;
     public localPageableTreeTableData: PageableTreeTableData;
+    _removeTreeNodeOpenSubscription1: Subscription;
+    _removeTreeNodeOpenSubscription2: Subscription;
 
     getRow(level: number) {
         return Array.from(new Array(4).keys()).map(num => `cell${level}-${num}`)
@@ -105,6 +108,10 @@ export class TreeTableDemoComponent {
             ]
         });
 
+        this._removeTreeNodeOpenSubscription1 = this.treeTableData.nodeOpenChange.subscribe(param => {
+            console.log('tree node open change: ', param);
+        })
+
         this.localPageableTreeTableData = new PageableTreeTableData();
         this.localPageableTreeTableData.pagingInfo.pageSize = 5;
         this.localPageableTreeTableData.fromObject({
@@ -178,6 +185,10 @@ export class TreeTableDemoComponent {
                 {isParent: true, data: this.getRow(3)}
             ]
         });
+
+        this._removeTreeNodeOpenSubscription2 = this.localPageableTreeTableData.nodeOpenChange.subscribe(param => {
+            console.log('tree node open change: ', param);
+        })
     }
 
     columns: ColumnDefine[] = [
@@ -212,8 +223,15 @@ export class TreeTableDemoComponent {
         });
     }
 
-    nodeOpen($event) {
-        console.log('tree node open change: ', $event);
+    ngOnDestroy() {
+        if (this._removeTreeNodeOpenSubscription1) {
+            this._removeTreeNodeOpenSubscription1.unsubscribe();
+            this._removeTreeNodeOpenSubscription1 = null;
+        }
+        if (this._removeTreeNodeOpenSubscription2) {
+            this._removeTreeNodeOpenSubscription2.unsubscribe();
+            this._removeTreeNodeOpenSubscription2 = null;
+        }
     }
 
     // ====================================================================

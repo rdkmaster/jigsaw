@@ -1327,7 +1327,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
      */
     public treeField: number = 0;
 
-    public nodeOpen = new EventEmitter<TreeTableNodeOpenParam>();
+    public nodeOpenChange = new EventEmitter<TreeTableNodeOpenParam>();
 
     private static _getData(node: SimpleNode, field: number, id: string = '', data = []): any[] {
         if (!node || field == -1) {
@@ -1493,7 +1493,7 @@ export class PageableTreeTableData extends LocalPageableTableData {
         let node = PageableTreeTableData._getNodeByIndexes(this.filteredTreeData, indexes);
         node.open = open;
         this._refreshTreeAndTable();
-        this.nodeOpen.emit({node, indexes, open})
+        this.nodeOpenChange.emit({node, indexes, open})
     }
 
     private _refreshTreeAndTable() {

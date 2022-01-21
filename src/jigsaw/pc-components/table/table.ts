@@ -20,7 +20,7 @@
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
-import {PageableTreeTableData, TableData, TreeTableData, TreeTableNodeOpenParam} from "../../common/core/data/table-data";
+import {TableData} from "../../common/core/data/table-data";
 import {Subscription} from "rxjs";
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
@@ -477,7 +477,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _removeTableDataRefresh: CallbackRemoval;
     private _removeAdditionalDataRefresh: CallbackRemoval;
-    private _removeTreeNodeOpenSubscription: Subscription;
     private _data: TableData;
 
     /**
@@ -503,19 +502,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         this._removeTableDataRefresh = value.onRefresh(this.update, this);
 
-        if (value instanceof TreeTableData || value instanceof PageableTreeTableData) {
-            this._removeTreeNodeOpenSubscription = value.nodeOpen.subscribe(param => {
-                this.nodeOpen.emit(param);
-            })
-        }
-
         if (!this._removeAdditionalDataRefresh) {
             this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
         }
     }
-
-    @Output()
-    public nodeOpen = new EventEmitter<TreeTableNodeOpenParam>();
 
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
@@ -951,11 +941,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeAdditionalDataChangeSubscription) {
             this._removeAdditionalDataChangeSubscription.unsubscribe();
             this._removeAdditionalDataChangeSubscription = null;
-        }
-
-        if(this._removeTreeNodeOpenSubscription){
-            this._removeTreeNodeOpenSubscription.unsubscribe();
-            this._removeTreeNodeOpenSubscription = null;
         }
 
         this._removeWindowListener();
