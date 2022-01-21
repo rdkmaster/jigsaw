@@ -10,7 +10,8 @@
         <div class="demo-1 live-demo">
             <jigsaw-header [level]="2">基本用法</jigsaw-header>
             <jigsaw-table [data]="treeTableData" [columnDefines]="columns"
-                          [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+                          [additionalColumnDefines]="additionalColumns"
+                          (nodeOpen)="nodeOpen($event)"></jigsaw-table>
         </div>
         <div class="demo-2 live-demo">
             <jigsaw-header [level]="2">分页</jigsaw-header>
@@ -21,7 +22,8 @@
                                [pageSizeOptions]="[5, 10, 20]"
                                [showQuickJumper]="true"
                                [searchable]="true"
-                               (search)="search($event)"></jigsaw-pagination>
+                               (search)="search($event)"
+                               (nodeOpen)="nodeOpen($event)"></jigsaw-pagination>
         </div>
     </div>
 </div>
