@@ -14,7 +14,7 @@ export class TreeEventData {
     extraInfo?: object;
 }
 
-@WingsTheme('jigsaw-tree')
+@WingsTheme('tree.scss')
 @Component({
     selector: 'jigsaw-tree-ext, j-tree-ext',
     template: `

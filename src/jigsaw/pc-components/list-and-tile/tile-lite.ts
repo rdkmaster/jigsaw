@@ -5,7 +5,7 @@ import {JigsawTileSelectModule} from "./tile";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {WingsTheme} from "../../common/common";
 
-@WingsTheme('jigsaw-tile-lite')
+@WingsTheme('tile-lite.scss')
 @Component({
     selector: 'jigsaw-tile-lite, j-tile-lite',
     template: `

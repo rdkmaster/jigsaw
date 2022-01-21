@@ -18,7 +18,7 @@ import {LabelPosition, PreSize, ProgressBase, ProgressInitData, Status} from "./
 import {WingsTheme} from "../../common/common";
 
 // @dynamic
-@WingsTheme('jigsaw-progress')
+@WingsTheme('progress.scss')
 @Component({
     selector: 'jigsaw-progress, j-progress',
     templateUrl: './progress.html',

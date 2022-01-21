@@ -13,7 +13,7 @@ import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
 import {WingsTheme} from "../../common/common";
 
-@WingsTheme('jigsaw-tile')
+@WingsTheme('tile.scss')
 @Component({
     selector: 'jigsaw-tile, j-tile',
     template: '<ng-content></ng-content>',

@@ -4,7 +4,7 @@ import {JigsawSelectGroupBase} from "./select-base";
 import { CommonUtils } from '../../common/core/utils/common-utils';
 import {WingsTheme} from "../../common/common";
 
-@WingsTheme('jigsaw-group-select')
+@WingsTheme('group-select.scss')
 @Component({
     selector: "jigsaw-group-select, j-group-select",
     templateUrl: "collapse-and-group-select.html",
@@ -35,7 +35,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
     }
 }
 
-@WingsTheme('jigsaw-collapse-select')
+@WingsTheme('collapse-select.scss')
 @Component({
     selector: "jigsaw-collapse-select, j-select-collapse",
     templateUrl: "collapse-and-group-select.html",

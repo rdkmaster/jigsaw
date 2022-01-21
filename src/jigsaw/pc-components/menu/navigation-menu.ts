@@ -14,7 +14,7 @@ import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-@WingsTheme('jigsaw-navigation-menu')
+@WingsTheme('navigation-menu.scss')
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',

@@ -33,7 +33,7 @@ export class PageSizeData {
     label: string;
 }
 
-@WingsTheme('jigsaw-pagination')
+@WingsTheme('pagination.scss')
 @Component({
     selector: "jigsaw-pagination, j-pagination",
     templateUrl: "pagination.html",

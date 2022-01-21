@@ -22,7 +22,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
  *
  * 这是一个表单友好组件
  */
-@WingsTheme('jigsaw-textarea')
+@WingsTheme('textarea.scss')
 @Component({
     selector: 'jigsaw-textarea, j-textarea',
     templateUrl: './textarea.html',

@@ -22,7 +22,7 @@ export type StepItem = {
     index?: number;
 };
 
-@WingsTheme('jigsaw-step')
+@WingsTheme('step.scss')
 @Component({
     selector: "jigsaw-steps,j-steps",
     templateUrl: "step.html",

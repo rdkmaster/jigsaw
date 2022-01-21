@@ -81,7 +81,9 @@ tsFiles.forEach(file => {
             }
             continue;
         }
-        wingsThemeIds.push(wingsThemeId.replace(/['"]/g, ''));
+        wingsThemeId = 'jigsaw-' + wingsThemeId.replace(/['"]/g, '')
+            .replace(/\.\w+$/, '');
+        wingsThemeIds.push(wingsThemeId);
     }
 });
 if (invalidComponents.length) {

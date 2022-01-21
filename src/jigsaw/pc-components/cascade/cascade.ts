@@ -83,7 +83,7 @@ export class CascadeTabContentInitData {
  * - 支持单选和多选
  * - 支持选择全部
  */
-@WingsTheme('jigsaw-cascade')
+@WingsTheme('cascade.scss')
 @Component({
     selector: 'jigsaw-cascade, j-cascade',
     template: '<j-tabs width="100%"></j-tabs>',

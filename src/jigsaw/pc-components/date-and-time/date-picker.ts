@@ -97,7 +97,7 @@ export class GrItem {
     shortcuts?: Shortcut[];
 }
 
-@WingsTheme('jigsaw-date-picker')
+@WingsTheme('date-picker.scss')
 @Component({
     selector: 'jigsaw-date-picker, j-date-picker',
     templateUrl: './date-picker.html',

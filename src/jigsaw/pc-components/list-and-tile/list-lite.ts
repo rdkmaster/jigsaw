@@ -26,7 +26,7 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
  * - 可以和combo结合起来使用
  */
 // @dynamic
-@WingsTheme('jigsaw-list-lite')
+@WingsTheme('list-lite.scss')
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `

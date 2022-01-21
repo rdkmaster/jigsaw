@@ -3,7 +3,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-@WingsTheme('jigsaw-rate')
+@WingsTheme('rate.scss')
 @Component({
     selector: 'jigsaw-rate, j-rate',
     encapsulation: ViewEncapsulation.None,

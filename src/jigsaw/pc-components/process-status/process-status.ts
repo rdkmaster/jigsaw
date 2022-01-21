@@ -8,7 +8,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common"
  * $demo = process-status/status-interactive
  * $demo = process-status/vertical
  */
-@WingsTheme('jigsaw-process-status')
+@WingsTheme('process-status.scss')
 @Component({
     selector: 'jigsaw-process-status, j-process-status',
     template: `

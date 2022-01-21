@@ -45,7 +45,7 @@ export class DropDownValue {
  *
  * $demo = auto-complete-input/non-group
  */
-@WingsTheme('jigsaw-auto-complete-input')
+@WingsTheme('auto-complete-input.scss')
 @Component({
     selector: 'jigsaw-auto-complete-input, j-auto-complete-input',
     templateUrl: 'auto-complete-input.html',

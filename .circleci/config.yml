@@ -45,7 +45,7 @@ jobs:
                 command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
             - run:
                 name: Building jigsaw lib
-                command: ./node_modules/.bin/gulp build:jigsaw
+                command: npm run build
             - run:
                 name: Building formly lib
                 command: ./node_modules/.bin/gulp build:formly:clean

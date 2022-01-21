@@ -533,7 +533,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     }
 }
 
-@WingsTheme('jigsaw-time-section')
+@WingsTheme('time-section.scss')
 @Component({
     selector: 'jigsaw-time-section, j-time-section',
     template: `

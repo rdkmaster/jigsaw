@@ -110,7 +110,7 @@ const animations = [
             ]))
         ])
     ])];
-@WingsTheme('jigsaw-transfer')
+@WingsTheme('transfer.scss')
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
     templateUrl: './transfer.html',

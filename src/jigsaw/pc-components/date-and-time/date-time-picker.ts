@@ -43,7 +43,7 @@ import { InternalUtils } from '../../common/core/utils/internal-utils';
  * $demo = date-time-picker/basic
  * $demo = date-time-picker/date-time-select
  */
-@WingsTheme('jigsaw-date-time-picker')
+@WingsTheme('date-time-picker.scss')
 @Component({
     selector: 'jigsaw-date-time-picker, j-date-time-picker, jigsaw-time, j-time',
     templateUrl: './date-time-picker.html',

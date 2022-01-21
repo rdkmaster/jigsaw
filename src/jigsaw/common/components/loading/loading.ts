@@ -67,7 +67,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
 }
 
-@WingsTheme('jigsaw-circle-loading')
+@WingsTheme('circle-loading.scss')
 @Component({
     selector: 'jigsaw-loading, j-loading',
     templateUrl: 'loading-ring.html'
@@ -85,7 +85,7 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
-@WingsTheme('jigsaw-loading-font')
+@WingsTheme('loading-font.scss')
 @Component({
     selector: 'jigsaw-font-loading, j-font-loading',
     templateUrl: 'loading-font.html'
@@ -125,7 +125,7 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
-@WingsTheme('jigsaw-loading-bubble')
+@WingsTheme('loading-bubble.scss')
 @Component({
     selector: 'jigsaw-bubble-loading, j-bubble-loading',
     templateUrl: 'loading-bubble.html'
@@ -148,7 +148,7 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
-@WingsTheme('jigsaw-loading-ball')
+@WingsTheme('loading-ball.scss')
 @Component({
     selector: 'jigsaw-ball-loading, j-ball-loading',
     templateUrl: 'loading-ball.html'
@@ -168,7 +168,7 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
-@WingsTheme('jigsaw-circle-loading')
+@WingsTheme('circle-loading.scss')
 @Component({
     selector: "jigsaw-circle-loading, j-circle-loading",
     templateUrl: "loading-circle.html",

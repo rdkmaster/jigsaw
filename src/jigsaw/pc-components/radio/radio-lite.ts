@@ -19,7 +19,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-@WingsTheme('jigsaw-radios-lite')
+@WingsTheme('radios-lite.scss')
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `
