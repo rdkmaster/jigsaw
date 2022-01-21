@@ -162,3 +162,43 @@
         color: $font-color-default;
     }
 }
+
+.jigsaw-cascade-host {
+    .jigsaw-tile-host {
+        .jigsaw-tile-option {
+            border: 1px solid $border-color-default;
+
+            &.jigsaw-tile-option-active {
+                background: none;
+                border-color: $brand-default;
+                color: $brand-default;
+            }
+
+            &:hover {
+                color: $brand-default;
+            }
+        }
+    }
+
+    .jigsaw-tabs-host {
+        // .jigsaw-tabs-bar {
+        //     margin-bottom: 6px;
+        // }
+
+        .jigsaw-tabs-nav-container {
+            .jigsaw-tabs-ink-bar:after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                left: 50%;
+                display: block;
+                margin-left: -4px;
+                width: 0;
+                height: 0;
+                border: 4px solid transparent;
+                border-top-color: #41addc;
+            }
+        }
+    }
+}
+
