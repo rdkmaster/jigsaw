@@ -181,9 +181,9 @@
     }
 
     .jigsaw-tabs-host {
-        // .jigsaw-tabs-bar {
-        //     margin-bottom: 6px;
-        // }
+        .jigsaw-tabs-bar {
+            margin-bottom: 6px;
+        }
 
         .jigsaw-tabs-nav-container {
             .jigsaw-tabs-ink-bar:after {
@@ -202,3 +202,79 @@
     }
 }
 
+.jigsaw-collapse-host {
+    .jigsaw-collapse {
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-bottom: none;
+        border-radius: $border-radius-base;
+
+        .jigsaw-collapse-item {
+            border-bottom: 1px solid $border-color-default;
+
+            .jigsaw-collapse-header {
+                height: 38px;
+                line-height: 38px;
+                color: $font-color-heading;
+                font-weight: 400;
+                background: $bg-container;
+            }
+
+            .jigsaw-collapse-content {
+                .jigsaw-collapse-padding {
+                    padding: 16px;
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-tag-host {
+    &.jigsaw-tag-preset-gray {
+        border: 1px solid $border-color-default;
+        border-radius: $border-radius-base;
+        background: $bg-body;
+        color: $font-color-default;
+    }
+}
+
+.jigsaw-switch-host {
+    .jigsaw-switch {
+        background-color: $font-color-disabled;
+
+        .jigsaw-switch-inner {
+            color: $font-color-white;
+        }
+
+        &.jigsaw-switch-checked {
+            background-color: $brand-default;
+        }
+
+        &.jigsaw-switch-disabled {
+            background-color: #f4f4f4;
+        }
+    }
+}
+
+.jigsaw-date-picker-host {
+    .jigsaw-date-picker-header {
+        .jigsaw-date-picker-control {
+            .jigsaw-date-picker-control-year,
+            .jigsaw-date-picker-control-month {
+                color: $font-color-default;
+            }
+            .jigsaw-date-picker-control-bar {
+                color: $font-color-hint;
+            }
+        }
+    }
+
+    .jigsaw-date-picker-content {
+        .jigsaw-date-picker-content-day {
+            thead th {
+                color: $font-color-heading;
+            }
+        }
+    }
+}

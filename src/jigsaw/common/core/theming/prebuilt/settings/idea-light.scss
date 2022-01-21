@@ -20,16 +20,16 @@ $blue-8-dark: #64b2ed;
 $blue-9-dark: #8ecaf5;
 $blue-10-dark: #bbe2fc;
 
-$cyan-1: #e0fffc;
-$cyan-2: #b0f5f0;
-$cyan-3: #7fe3de;
-$cyan-4: #54d1cd;
-$cyan-5: #2ebfbd;
-$cyan-6: #0eaeae;
-$cyan-7: #099294;
-$cyan-8: #05767a;
-$cyan-9: #025c61;
-$cyan-10: #004347;
+$cyan-1: mix(#fff, #01c5c2, 90%);
+$cyan-2: mix(#fff, #01c5c2, 80%);
+$cyan-3: mix(#fff, #01c5c2, 60%);
+$cyan-4: mix(#fff, #01c5c2, 40%);
+$cyan-5: mix(#fff, #01c5c2, 20%);
+$cyan-6: #01c5c2;
+$cyan-7: mix(#000, #01c5c2, 10%);
+$cyan-8: mix(#000, #01c5c2, 20%);
+$cyan-9: mix(#000, #01c5c2, 30%);
+$cyan-10: mix(#000, #01c5c2, 40%);
 
 $green-1: mix(#fff, #87d068, 90%);
 $green-2: mix(#fff, #87d068, 80%);
@@ -259,8 +259,8 @@ $brand-active-dark: $blue-8-dark;
     $bg-body-dark => 组件内部实现暗色模式
 */
 /*@public*/ $bg-body: $gray-1;
-/*@public*/ $bg-container: $gray-2;
-/*@public*/ $bg-disabled: $gray-2;
+/*@public*/ $bg-container: #f7f7f7;
+/*@public*/ $bg-disabled: #f7f7f7;
 /*@public*/ $bg-hover: $blue-1;
 /*@public*/ $bg-active: $blue-2;
 $bg-popup: $gray-1;

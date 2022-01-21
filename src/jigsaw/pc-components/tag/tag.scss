@@ -1,6 +1,6 @@
-$tag-prefix-cls: #{$jigsaw-prefix}-tag;
+$jigsaw-tag: #{$jigsaw-prefix}-tag;
 
-.#{$tag-prefix-cls}-host {
+.#{$jigsaw-tag}-host {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -17,11 +17,11 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
     user-select: none;
     cursor: pointer;
 
-    &.#{$tag-prefix-cls}-color {
+    &.#{$jigsaw-tag}-color {
         color: $font-color-white;
     }
 
-    &.#{$tag-prefix-cls}-preset {
+    &.#{$jigsaw-tag}-preset {
         &-blue {
             color: $blue-7;
             background: $blue-1;
@@ -71,7 +71,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         }
     }
 
-    &.#{$tag-prefix-cls}-size {
+    &.#{$jigsaw-tag}-size {
         &-med {
             height: 22px;
             padding: 0 8px;
@@ -83,11 +83,11 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         }
     }
 
-    &.#{$tag-prefix-cls}-closable {
+    &.#{$jigsaw-tag}-closable {
         padding-right: 20px;
     }
 
-    &.#{$tag-prefix-cls}-add {
+    &.#{$jigsaw-tag}-add {
         background: $bg-component;
         color: $font-color-tag;
         border-width: 1px;
@@ -99,7 +99,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             border-color: $brand-hover;
         }
 
-        &.#{$tag-prefix-cls}-disabled {
+        &.#{$jigsaw-tag}-disabled {
             color: $font-color-disabled;
             border-color: $border-color-default;
             user-select: none;
@@ -117,22 +117,22 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             align-items: center;
         }
 
-        &.#{$tag-prefix-cls}-size-med {
+        &.#{$jigsaw-tag}-size-med {
             width: 84px;
             font-size: 12px;
         }
 
-        &.#{$tag-prefix-cls}-size-sm {
+        &.#{$jigsaw-tag}-size-sm {
             width: 56px;
             font-size: 12px;
         }
     }
 
-    &.#{$tag-prefix-cls}-disabled {
+    &.#{$jigsaw-tag}-disabled {
         cursor: not-allowed;
         color: $font-color-disabled;
 
-        .#{$tag-prefix-cls}-close-bar {
+        .#{$jigsaw-tag}-close-bar {
             color: $font-color-disabled;
 
             &:hover {
@@ -141,7 +141,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         }
     }
 
-    .#{$tag-prefix-cls}-close-bar {
+    .#{$jigsaw-tag}-close-bar {
         display: inline-flex;
         align-items: center;
         position: absolute;
@@ -155,7 +155,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
         }
     }
 
-    .#{$tag-prefix-cls}-content {
+    .#{$jigsaw-tag}-content {
         display: flex;
         align-items: center;
         min-width: 0;
@@ -164,7 +164,7 @@ $tag-prefix-cls: #{$jigsaw-prefix}-tag;
             margin-right: 3px;
         }
 
-        .#{$tag-prefix-cls}-text {
+        .#{$jigsaw-tag}-text {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
