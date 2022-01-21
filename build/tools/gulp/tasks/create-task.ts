@@ -117,11 +117,11 @@ export function createTask(packageName: string) {
     ));
 
     task(':extract-theme-variables', () => {
-        gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
+        return gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
     });
 
     task(':create-component-wings-theme', () => {
-        gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
+        return gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
     });
 }
 
