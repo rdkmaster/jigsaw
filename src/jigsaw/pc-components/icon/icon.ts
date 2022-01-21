@@ -14,7 +14,7 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
  *
  * $demo = button/basic
  */
-@WingsTheme('jigsaw-icon')
+@WingsTheme('icon.scss')
 @Component({
     selector: 'jigsaw-icon, j-icon',
     templateUrl: 'icon.html',

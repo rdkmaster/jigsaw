@@ -6,7 +6,7 @@ import {DragDropInfo} from '../../common/directive/dragdrop/types';
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {WingsTheme} from "../../common/common";
 
-@WingsTheme('jigsaw-upload')
+@WingsTheme('upload.scss')
 @Component({
     selector: "jigsaw-upload, j-upload",
     templateUrl: "upload.html",

@@ -26,7 +26,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
  *
  * $demo = numeric-input/basic
  */
-@WingsTheme('jigsaw-numeric-input')
+@WingsTheme('numeric-input.scss')
 @Component({
     selector: 'jigsaw-numeric-input, j-numeric-input',
     templateUrl: 'numeric-input.html',

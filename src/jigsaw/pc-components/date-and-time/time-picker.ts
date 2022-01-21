@@ -47,7 +47,7 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
  * $demo = time-picker/basic
  * $demo = time-picker/step
  */
-@WingsTheme('jigsaw-time-picker')
+@WingsTheme('time-picker.scss')
 @Component({
     selector: 'jigsaw-time-picker, j-time-picker',
     templateUrl: './time-picker.html',
@@ -736,7 +736,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
-@WingsTheme('jigsaw-time-popup')
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',

@@ -7,7 +7,7 @@ import {
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import { CommonModule } from "@angular/common";
 
-@WingsTheme('jigsaw-header')
+@WingsTheme('header.scss')
 @Component({
     selector: "jigsaw-header,j-header",
     templateUrl: "header.html",

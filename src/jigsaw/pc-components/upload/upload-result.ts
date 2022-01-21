@@ -11,7 +11,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
-@WingsTheme('jigsaw-upload-result')
+@WingsTheme('upload-result.scss')
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
     templateUrl: "upload-result.html",

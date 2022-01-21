@@ -19,7 +19,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'preset-magenta' |
     'preset-orange' | 'preset-red' | 'preset-purple' | 'preset-gray';
 
-@WingsTheme('jigsaw-tag')
+@WingsTheme('tag.scss')
 @Component({
     selector: 'jigsaw-tag, j-tag',
     templateUrl: 'tag.html',

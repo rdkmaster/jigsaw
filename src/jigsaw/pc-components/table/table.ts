@@ -49,7 +49,7 @@ import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-@WingsTheme('jigsaw-table')
+@WingsTheme('table.scss')
 @Component({
     selector: 'jigsaw-table, j-table',
     templateUrl: 'table.html',

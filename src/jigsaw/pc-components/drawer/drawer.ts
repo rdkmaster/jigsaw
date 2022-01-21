@@ -21,7 +21,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
  *
  * $since = v1.1.7
  */
-@WingsTheme('jigsaw-drawer')
+@WingsTheme('drawer.scss')
 @Component({
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html',

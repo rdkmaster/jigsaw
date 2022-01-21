@@ -27,7 +27,7 @@ type ProcessStatusData = {
     context?: any;
 };
 
-@WingsTheme('jigsaw-process-status-multiline')
+@WingsTheme('process-status-multiline.scss')
 @Component({
     selector: "jigsaw-process-status-multiline, j-process-status-multiline",
     template: `

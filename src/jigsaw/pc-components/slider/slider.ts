@@ -245,7 +245,7 @@ export class JigsawSliderHandle extends AbstractJigsawViewBase implements OnInit
  * 何时使用
  * 当用户需要在数值区间/自定义区间内进行选择时
  */
-@WingsTheme('jigsaw-slider')
+@WingsTheme('slider.scss')
 @Component({
     selector: 'jigsaw-slider, j-slider',
     templateUrl: './slider.html',

@@ -28,7 +28,7 @@ import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
-@WingsTheme('jigsaw-date-time-select')
+@WingsTheme('date-time-select.scss')
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `

@@ -31,7 +31,7 @@ try {
 } catch(e) {
 }
 
-@WingsTheme('jigsaw-graph')
+@WingsTheme('graph.scss')
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',

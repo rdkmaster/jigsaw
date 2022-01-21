@@ -46,7 +46,7 @@ export type BreadcrumbNode = {
 
 export type BreadcrumbGenerator = (routeNode: string) => CompoundedBreadcrumbData;
 
-@WingsTheme('jigsaw-breadcrumb')
+@WingsTheme('breadcrumb.scss')
 @Component({
     selector: "jigsaw-breadcrumb, j-breadcrumb",
     templateUrl: "breadcrumb.html",

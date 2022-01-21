@@ -30,7 +30,7 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 
 export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
-@WingsTheme('jigsaw-range-date-time-select')
+@WingsTheme('range-date-time-select.scss')
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
     template: `

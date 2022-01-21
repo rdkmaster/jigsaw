@@ -4,13 +4,11 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common"
 /**
  * 用于在界面上显示一个流程状态，并且可以实时更新各个状态，需要配合`JigsawProcessStatusItem`组件一起使用。
  *
- * @internal
- *
  * $demo = process-status/basic
  * $demo = process-status/status-interactive
  * $demo = process-status/vertical
  */
-@WingsTheme('jigsaw-process-status')
+@WingsTheme('process-status.scss')
 @Component({
     selector: 'jigsaw-process-status, j-process-status',
     template: `

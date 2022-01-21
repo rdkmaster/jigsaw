@@ -103,7 +103,7 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
  * 对复杂区域进行分组和隐藏，保持页面的整洁。
  * 手风琴 是一种特殊的折叠面板，只允许单个内容区域展开。
  */
-@WingsTheme('jigsaw-collapse')
+@WingsTheme('collapse.scss')
 @Component({
     selector: 'jigsaw-collapse, j-collapse',
     templateUrl: 'collapse.html',

@@ -36,7 +36,7 @@ export class ComboSelectValue {
     closable?: boolean;
 }
 
-@WingsTheme('jigsaw-combo-select')
+@WingsTheme('combo-select.scss')
 @Component({
     selector: 'jigsaw-combo-select, j-combo-select',
     templateUrl: 'combo-select.html',

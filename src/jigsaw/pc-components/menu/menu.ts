@@ -78,7 +78,7 @@ export class JigsawMenuHelper implements IPopupable {
     }
 }
 
-@WingsTheme('jigsaw-menu')
+@WingsTheme('menu.scss')
 @Component({
     selector: 'jigsaw-menu, j-menu',
     template: `

@@ -228,7 +228,7 @@ export abstract class AbstractDialogComponentBase
     }
 }
 
-@WingsTheme('jigsaw-dialog')
+@WingsTheme('dialog.scss')
 @Component({
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',

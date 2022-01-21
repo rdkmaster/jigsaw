@@ -26,7 +26,7 @@ import {JigsawFloatModule} from '../../common/directive/float/float';
 import {JigsawListModule} from '../list-and-tile/list';
 import {JigsawAutoCompleteInputModule} from './auto-complete-input';
 
-@WingsTheme('jigsaw-search-input')
+@WingsTheme('search-input.scss')
 @Component({
     selector: "jigsaw-search-input, j-search-input",
     templateUrl: "search-input.html",
