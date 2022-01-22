@@ -160,6 +160,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                         this.setResizeLineSize();
                     });
                 }
+                this._cdr.markForCheck();
             });
         });
     }
