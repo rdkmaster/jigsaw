@@ -743,7 +743,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',
     host: {
-        '[class.jigsaw-time-popup]': 'true',
+        '[class.jigsaw-time-popup-host]': 'true',
         '(mousedown)': '_$stopBlur($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush

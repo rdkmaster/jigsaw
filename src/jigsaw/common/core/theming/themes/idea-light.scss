@@ -276,5 +276,89 @@
                 color: $font-color-heading;
             }
         }
+
+        .jigsaw-date-picker-content-day-cell {
+            span {
+                border-radius: 50%;
+            }
+
+            &.jigsaw-date-picker-content-day-cell-today {
+                span {
+                    &:before {
+                        content: none;
+                    }
+
+                    &::after {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        right: 1px;
+                        top: 1px;
+                        border-top: 6px solid $brand-active;
+                        border-left: 6px solid transparent;
+                    }
+                }
+            }
+        }
+
+        .jigsaw-date-picker-content-month-cell,
+        .jigsaw-date-picker-content-year-cell {
+            span {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.jigsaw-time-popup-host {
+    .jigsaw-time-popup-content {
+        .jigsaw-time-popup-content-hour,
+        .jigsaw-time-popup-content-minute,
+        .jigsaw-time-popup-content-second {
+            li {
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.jigsaw-time-picker-host {
+    .jigsaw-time-picker-wrapper {
+        input {
+            border-radius: 0;
+
+            &.jigsaw-time-picker-input-selected {
+                background: none;
+                color: $font-color-default;
+                border-bottom: 1px solid $brand-default;
+            }
+        }
+    }
+}
+
+.jigsaw-dialog-host {
+    .jigsaw-dialog {
+        border: 1px solid $border-color-default;
+        box-shadow: $box-shadow-lv1;
+
+        .jigsaw-dialog-head {
+            border-bottom: 1px solid $border-color-default;
+            background: #f2f2f2;
+            color: $brand-default;
+
+            .jigsaw-dialog-close {
+                color: $brand-default;
+
+                &:hover {
+                    color: $brand-default;
+                }
+            }
+        }
+
+        .jigsaw-dialog-button-group {
+            justify-content: flex-end;
+        }
     }
 }

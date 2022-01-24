@@ -305,6 +305,7 @@ $jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
                 span,
                 span:hover {
                     background: none;
+                    color: $font-color-disabled;
                     cursor: not-allowed;
                 }
             }
