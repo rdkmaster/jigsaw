@@ -260,8 +260,6 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         this.itemEl = elementRef.nativeElement;
     }
 
-
-
     /**
      * @NoMarkForCheckRequired
      */
