@@ -362,3 +362,25 @@
         }
     }
 }
+
+.#{$jigsaw-drawer}-host {
+    .#{$jigsaw-drawer} {
+        &.#{$jigsaw-drawer}-left > .#{$jigsaw-drawer}-bar,
+        &.#{$jigsaw-drawer}-right > .#{$jigsaw-drawer}-bar,
+        &.#{$jigsaw-drawer}-top > .#{$jigsaw-drawer}-bar,
+        &.#{$jigsaw-drawer}-bottom > .#{$jigsaw-drawer}-bar {
+            width: 14px;
+            border: none;
+            border-radius: 0 $border-radius-base $border-radius-base 0;
+            background: $brand-default;
+
+            & > .iconfont {
+                padding: 0;
+            }
+
+            &:hover {
+                background: $brand-hover;
+            }
+        }
+    }
+}
