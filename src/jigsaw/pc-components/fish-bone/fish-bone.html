@@ -22,6 +22,7 @@
 
             <j-fish-bone-item
                 *ngFor="let itemData of data.nodes; even as isEven; odd as isOdd; index as i"
+                [theme]="theme"
                 class="jigsaw-fish-bone-item-rotate-{{isEven ? 'up' : 'down'}} jigsaw-fish-bone-{{isEven ? 'up' : 'down'}} jigsaw-fish-bone-level-0"
                 [childRotate]="isEven ? 'down' : 'up'"
                 [firstLevelRotate]="isEven ? 'up' : 'down'"

@@ -3,7 +3,7 @@ import {
     NgZone,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {fadeIn} from "../../common/components/animations/fade-in";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
@@ -14,22 +14,24 @@ import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trust
  *
  * $demo = fish-bone/full
  */
+@WingsTheme('fish-bone.scss')
 @Component({
     selector: 'j-fish-bone, jigsaw-fish-bone',
     templateUrl: './fish-bone.html',
     host: {
-        '[class.jigsaw-fish-bone]': 'true',
+        '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-fish-bone-host]': 'true',
         '[class.jigsaw-fish-bone-left]': 'direction === "left"',
         '[class.jigsaw-fish-bone-right]': 'direction === "right"',
-        '[class.jigsaw-fish-bone-light]': 'theme === "light"',
-        '[class.jigsaw-fish-bone-dark]': 'theme === "dark"',
-        '[style.width]': 'width'
     }
 })
 export class JigsawFishBone extends AbstractJigsawComponent implements AfterViewInit, OnDestroy, OnInit {
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone) {
         super(_zone);
     }
+
+    protected _theme = 'light';
 
     private _dataCallbackRemoval: CallbackRemoval;
 
@@ -76,16 +78,6 @@ export class JigsawFishBone extends AbstractJigsawComponent implements AfterView
      */
     @Input()
     public direction: 'left' | 'right' = 'left';
-
-    /**
-     * 鱼骨图的整体色调，默认是白色调
-     *
-     * @NoMarkForCheckRequired
-     *
-     * $demo = fish-bone/full
-     */
-    @Input()
-    public theme: 'light' | 'dark' = 'light';
 
     @ViewChildren(forwardRef(() => JigsawFishBoneItem))
     private _firstLevelBones: QueryList<JigsawFishBoneItem>;
@@ -267,6 +259,8 @@ export class JigsawFishBoneItem extends AbstractJigsawComponent implements After
         super(_zone);
         this.itemEl = elementRef.nativeElement;
     }
+
+
 
     /**
      * @NoMarkForCheckRequired
