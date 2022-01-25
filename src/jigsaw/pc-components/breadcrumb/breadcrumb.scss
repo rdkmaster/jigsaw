@@ -1,14 +1,12 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-breadcrumb: #{$jigsaw-prefix}-breadcrumb;
 
-$bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
-
-.#{$bc-prefix-cls} {
+.#{$jigsaw-breadcrumb}-host {
     display: flex;
     align-items: center;
-    height: 54px;
+    height: 48px;
     padding: 0 12px;
     background: $bg-container;
-    font-size: $font-size-base;
+    font-size: $font-title-med;
 
     &:after {
         height: 100%;
@@ -17,20 +15,35 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         vertical-align: middle;
     }
 
-    &-item {
+    .#{$jigsaw-breadcrumb}-item {
         display: flex;
         align-items: center;
-        .#{$bc-prefix-cls}-link {
+        height: $height-sm;
+        color: $font-color-brand;
+        font-size: $font-size-lg;
+
+        &:hover {
+            color: $font-color-brand-hover;
+        }
+
+        &.#{$jigsaw-breadcrumb}-current {
+            font-size: $font-title-med;
+            font-weight: bold;
+            color: $font-color-heading-bold-lighten;
+        }
+
+        .#{$jigsaw-breadcrumb}-link {
             display: flex;
             align-items: center;
             color: inherit;
         }
+
         &.fold:not(:nth-of-type(2)) {
             display: none;
         }
     }
 
-    &-separator {
+    .#{$jigsaw-breadcrumb}-separator {
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -39,11 +52,11 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         color: $font-color-watermark;
     }
 
-    &-icon {
+    .#{$jigsaw-breadcrumb}-icon {
         margin-right: 4px;
     }
 
-    &-hint {
+    .#{$jigsaw-breadcrumb}-hint {
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -52,50 +65,15 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
         color: inherit;
     }
 
-    &.#{$bc-prefix-cls}-light {
-        background: $bg-container-light;
-        font-size: $font-title-med;
-        .#{$bc-prefix-cls}-item {
-            height: $height-sm;
-            color: $brand-default-light;
-            font-size: $font-size-lg;
-            &:hover {
-                color: $brand-hover-light;
-            }
-            &.#{$bc-prefix-cls}-current {
-                font-size: $font-title-med;
-                font-weight: bold;
-                color: $font-color-heading-bold-light;
-            }
-        }
-    }
-
-    &.#{$bc-prefix-cls}-dark {
-        background: $bg-navigation;
-        font-size: $font-title-med;
-        .#{$bc-prefix-cls}-item {
-            color: $font-color-white-darken-dark;
-            &:hover {
-                color: $font-color-white;
-            }
-            &.#{$bc-prefix-cls}-current {
-                font-size: $font-title-med;
-                font-weight: bold;
-                color: $font-color-white;
-            }
-        }
-    }
-
-    &.#{$bc-prefix-cls}-inner {
-        height: $height-base;
+    &.#{$jigsaw-breadcrumb}-inner {
         padding: 0 8px;
         font-size: $font-size-base;
         background: $bg-body;
-        .#{$bc-prefix-cls}-item {
-            .#{$bc-prefix-cls}-icon {
+        .#{$jigsaw-breadcrumb}-item {
+            .#{$jigsaw-breadcrumb}-icon {
                 color: $brand-default;
             }
-            .#{$bc-prefix-cls}-label {
+            .#{$jigsaw-breadcrumb}-label {
                 color: $brand-default;
                 &:hover {
                     text-decoration: underline;
@@ -104,15 +82,15 @@ $bc-prefix-cls: #{$jigsaw-prefix}-breadcrumb;
                     color: $brand-active;
                 }
             }
-            &.#{$bc-prefix-cls}-current {
+            &.#{$jigsaw-breadcrumb}-current {
                 font-size: $font-title-lg;
                 font-weight: bold;
                 color: $font-color-heading-bold;
                 padding-bottom: 4px;
-                .#{$bc-prefix-cls}-icon {
+                .#{$jigsaw-breadcrumb}-icon {
                     color: $font-color-heading-bold;
                 }
-                .#{$bc-prefix-cls}-label {
+                .#{$jigsaw-breadcrumb}-label {
                     color: $font-color-heading-bold;
                     text-decoration: none;
                 }

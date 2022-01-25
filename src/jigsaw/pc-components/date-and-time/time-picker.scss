@@ -1,8 +1,6 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
 
-$time-prefix-cls: #{$jigsaw-prefix}-time-picker;
-
-.#{$time-prefix-cls} {
+.#{$jigsaw-time-picker}-host {
     @include inline-block();
     position: relative;
     width: 135px;
@@ -12,17 +10,18 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
     border-style: solid;
     border-color: $border-color-default;
     border-radius: $border-radius-sm;
+    color: $font-color-default;
     font-size: $font-size-base;
     overflow: hidden;
     padding: 4px 34px 4px 8px;
 
     &:hover,
-    &-active {
+    &.#{$jigsaw-time-picker}-active {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-color: $primary-default;
     }
 
-    &-wrapper {
+    .#{$jigsaw-time-picker}-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -45,18 +44,18 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
                 background: $bg-hover;
             }
 
-            &.#{$time-prefix-cls}-input-selected {
+            &.#{$jigsaw-time-picker}-input-selected {
                 background: $brand-default;
                 color: $font-color-white;
             }
         }
 
-        .#{$time-prefix-cls}-colon {
+        .#{$jigsaw-time-picker}-colon {
             margin: 0 4px;
         }
     }
 
-    &-ctrl {
+    .#{$jigsaw-time-picker}-ctrl {
         position: absolute;
         right: 0;
         top: 0;
@@ -109,11 +108,11 @@ $time-prefix-cls: #{$jigsaw-prefix}-time-picker;
         }
     }
 
-    &-error {
+    &.#{$jigsaw-time-picker}-error {
         border-color: $error-default;
     }
 
-    &-disabled {
+    &.#{$jigsaw-time-picker}-disabled {
         position: relative;
         &:before {
             content: " ";

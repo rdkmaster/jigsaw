@@ -68,6 +68,10 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
     }
 }
 
+.ztree li span.node_name {
+    margin-right: 16px;
+}
+
 .ztree li {
     span {
         &.button.switch {

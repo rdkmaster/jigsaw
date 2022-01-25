@@ -1,5 +1,3 @@
-@import "../../common/assets/scss/core/base";
-
 $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
 
 .#{$dialog-prefix-cls}-host {
@@ -35,7 +33,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         align-items: center;
         position: relative;
         width: 100%;
-        padding: 0 18px;
+        padding: 0 16px;
         height: $height-huge;
         min-height: $height-huge;
         background: $bg-component;
@@ -58,7 +56,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
 
     &-head &-close {
         position: absolute;
-        right: 18px;
+        right: 16px;
         font-size: 24px;
         color: $icon-color-default;
         cursor: pointer;
@@ -68,7 +66,7 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
     }
 
     &-content {
-        padding: 18px;
+        padding: 16px 16px 32px 16px;
         background: $bg-component;
     }
 
@@ -76,8 +74,8 @@ $dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        height: 50px;
-        min-height: 50px;
+        height: 56px;
+        min-height: 56px;
         background: $bg-component;
 
         & > div {

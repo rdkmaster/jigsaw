@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, NgModule, Output} from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -22,6 +22,7 @@ export type StepItem = {
     index?: number;
 };
 
+@WingsTheme('step.scss')
 @Component({
     selector: "jigsaw-steps,j-steps",
     templateUrl: "step.html",

@@ -15,21 +15,24 @@ import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {WingsTheme} from "../../common/common";
 
 export type RadiosGroupValue = {
     disabled?: boolean, label?: string,
     [prop: string]: any
 }
 
+@WingsTheme('radios.scss')
 @Component({
     selector: 'jigsaw-radios, j-radios',
     template: '<ng-content></ng-content>',
     host: {
-        '[class.jigsaw-radios]': 'true',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-radios-host]': 'true',
         '[class.jigsaw-radios-error]': '!valid'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadioGroup), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

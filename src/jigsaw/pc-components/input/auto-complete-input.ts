@@ -22,6 +22,7 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
+import {WingsTheme} from "../../common/common";
 
 export class DropDownValue {
     constructor(data = null) {
@@ -44,20 +45,28 @@ export class DropDownValue {
  *
  * $demo = auto-complete-input/non-group
  */
+@WingsTheme('auto-complete-input.scss')
 @Component({
     selector: 'jigsaw-auto-complete-input, j-auto-complete-input',
     templateUrl: 'auto-complete-input.html',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-auto-complete-input]': 'true'
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-auto-complete-input-host]': 'true'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawAutoCompleteInput), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestroy, AfterViewInit {
+    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super(_cdr, _injector, _zone);
+    }
+
     @ViewChild(JigsawFloat)
     private _dropdownFloat: JigsawFloat;
 
@@ -192,12 +201,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
 
     @Output('textSelect')
     public textSelectEvent = new EventEmitter<Event>();
-
-    constructor(protected _cdr: ChangeDetectorRef, protected _zone: NgZone,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_cdr, _injector, _zone);
-    }
 
     ngAfterViewInit() {
         this._subscribeKeydownEvent();

@@ -1,37 +1,40 @@
-$list-lite-prefix-cls: #{$jigsaw-prefix}-list-lite;
-$list-prefix-cls: #{$jigsaw-prefix}-list;
-$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
+$jigsaw-list-lite: #{$jigsaw-prefix}-list-lite;
+$jigsaw-list: #{$jigsaw-prefix}-list;
+$jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-.#{$list-lite-prefix-cls} {
+.#{$jigsaw-list-lite}-host {
     @include inline-block();
-    &-search {
+
+    .#{$jigsaw-list-lite}-search {
         display: block;
     }
-    &-wrapper {
+
+    .#{$jigsaw-list-lite}-wrapper {
         border-width: 1px;
         border-style: solid;
         border-color: $border-color-default;
         border-radius: $border-radius-base;
         background: $bg-component;
-        .#{$list-prefix-cls} {
+        
+        .#{$jigsaw-list}-host {
             border: none;
         }
     }
 
-    .#{$list-option-prefix-cls}-wrapper {
+    .#{$jigsaw-list-option}-wrapper {
         font-size: 0;
     }
-    .#{$list-option-prefix-cls}-block {
+    .#{$jigsaw-list-option}-block {
         display: none;
     }
 
-    &-text {
+    .#{$jigsaw-list-lite}-text {
         display: flex;
         align-items: center;
         font-size: $font-size-base;
         width: 100%;
 
-        .jigsaw-list-lite-text-content {
+        .#{$jigsaw-list-lite}-text-content {
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -44,7 +47,7 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         }
     }
 
-    &-error {
+    .#{$jigsaw-list-lite}-error {
         border-color: $error-default;
     }
 }

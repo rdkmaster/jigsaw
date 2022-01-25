@@ -20,7 +20,7 @@ import {
     ChangeDetectorRef
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawInput} from "../input/input";
@@ -36,11 +36,13 @@ export class ComboSelectValue {
     closable?: boolean;
 }
 
+@WingsTheme('combo-select.scss')
 @Component({
     selector: 'jigsaw-combo-select, j-combo-select',
     templateUrl: 'combo-select.html',
     host: {
         '[style.min-width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid'
     },

@@ -7,10 +7,11 @@ import {
 } from "@angular/core";
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from "rxjs";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
+@WingsTheme('upload-result.scss')
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
     templateUrl: "upload-result.html",

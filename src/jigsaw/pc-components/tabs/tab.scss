@@ -1,5 +1,3 @@
-@import "../../common/assets/scss/core/base";
-
 $tab-prefix: #{$jigsaw-prefix}-tabs;
 
 .#{$tab-prefix}-host {
@@ -101,7 +99,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             }
         }
 
-        .jigsaw-list-option {
+        .jigsaw-list-option-host {
             .span-margin {
                 margin: 0 4px;
                 width: 10px;
@@ -234,7 +232,6 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
 
     &-content {
         width: 100%;
-        padding-top: 6px;
         background-color: var(--jigsaw-nav-background, transparent);
 
         .#{$tab-prefix}-tabpane {

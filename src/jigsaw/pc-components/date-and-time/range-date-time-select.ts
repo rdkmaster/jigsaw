@@ -20,7 +20,7 @@ import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
 import {Subscription} from 'rxjs';
@@ -30,10 +30,11 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
 
 export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
+@WingsTheme('range-date-time-select.scss')
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
     template: `
-        <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
+        <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
@@ -47,8 +48,9 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
         </jigsaw-combo-select>
     `,
     host: {
-        '[class.jigsaw-range-date-time-select]': 'true',
-        '[style.min-width]': 'width'
+        '[style.min-width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-range-date-time-select-host]': 'true',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeDateTimeSelect), multi: true},

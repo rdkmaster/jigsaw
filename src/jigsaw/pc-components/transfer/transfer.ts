@@ -6,7 +6,6 @@ import {
     NgModule,
     OnDestroy,
     Optional,
-    ViewChild,
     Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -26,6 +25,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {LoadingService} from "../../common/service/loading.service";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -95,6 +95,22 @@ const transferServerFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
+const animations = [
+    trigger('loading', [
+        transition('void => *', [
+            animate(300, keyframes([
+                style({opacity: 0}),
+                style({opacity: 0.6})
+            ]))
+        ]),
+        transition('* => void', [
+            animate(300, keyframes([
+                style({opacity: 0.6}),
+                style({opacity: 0})
+            ]))
+        ])
+    ])];
+@WingsTheme('transfer.scss')
 @Component({
     selector: 'jigsaw-transfer, j-transfer',
     templateUrl: './transfer.html',
@@ -104,23 +120,8 @@ const transferServerFilterFunction = function (item) {
         '[style.height]': 'height',
         '[class.jigsaw-transfer-error]': '!valid'
     },
-    animations: [
-        trigger('loading', [
-            transition('void => *', [
-                animate(300, keyframes([
-                    style({opacity: 0}),
-                    style({opacity: 0.6})
-                ]))
-            ]),
-            transition('* => void', [
-                animate(300, keyframes([
-                    style({opacity: 0.6}),
-                    style({opacity: 0})
-                ]))
-            ])
-        ])],
+    animations,
     changeDetection: ChangeDetectionStrategy.OnPush
-
 })
 
 export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy {
@@ -325,6 +326,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-transfer-list, j-transfer-list',
     templateUrl: './transfer-list.html',

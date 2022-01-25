@@ -9,11 +9,12 @@ import {
     Output
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('navigation-menu.scss')
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',
@@ -147,7 +148,7 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             this._removeDataRefresh = null;
         }
     }
-    
+
     /**
      * @internal
      */

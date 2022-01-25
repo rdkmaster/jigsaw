@@ -2,6 +2,7 @@ import {AfterViewInit, Directive, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FieldType, FormlyModule} from '@ngx-formly/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {JigsawTrustedHtmlModule} from "@rdkmaster/jigsaw";
 import {FormlyWrapperFormField} from './form-field.wrapper';
 
 @NgModule({
@@ -9,6 +10,7 @@ import {FormlyWrapperFormField} from './form-field.wrapper';
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        JigsawTrustedHtmlModule,
         FormlyModule.forChild({
             wrappers: [{
                 name: 'form-field',

@@ -7,7 +7,7 @@
 
 ## Jigsaw的优势
 
-Jigsaw是一套完整强大的Web组件集，当前的版本里包含了54个组件、6个容器、6个服务、9个指令，基本上覆盖了Web应用的方方面面。简单的说，其他组件集有的，Jigsaw都有，而且功能更强大性能更好。因此完全没有必要担心Jigsaw的功能缺失的问题。
+Jigsaw是一套完整强大的Web组件集，当前的版本里包含了54个组件、6个容器、7个服务、9个指令，基本上覆盖了Web应用的方方面面。简单的说，其他组件集有的，Jigsaw都有，而且功能更强大性能更好。因此完全没有必要担心Jigsaw的功能缺失的问题。
 
 Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开发就能同时支持多种Ux规范**。
 
@@ -48,7 +48,7 @@ Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开
 27 | Pagination 分页 | 一个用于将大量数据分成多个页面显示的控件，不仅可以与表格组件配合，还可以实现对任意数据的分页操作。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/pagination/demo/basic)
 28 | Progress Bar 进度条 | 一个水平进度条。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/full)
 29 | Progress Circle 圆形进度条 | 一个圆形进度条。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/circle-progress)
-30 | Progress Status 流程状态 | 一个流程状态组件，可用于显示流程里的各种状态。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/progress/demo/basic)
+30 | Progress Status 流程状态 | 一个流程状态组件，可用于显示流程里的各种状态。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/process-status/demo/basic)
 31 | Radio 单选框 | 一个用于收集单个选项的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/radio-group/demo/full)
 32 | Rate 打分 | 一个用于打分的表单控件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/rate/demo/full)
 33 | Scrollbar 滚动条 | 一个用于任意容器的自定义滚动条，基于 [perfect scrollbar](https://github.com/utatti/perfect-scrollbar)。  | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/scrollbar/demo/basic)
@@ -89,12 +89,13 @@ Jigsaw拥有一个其他组件集所没有的能力：**Jigsaw的应用一次开
 
 \# | 名称 | 简述         | 链接
 ---|------|-------------|------
-1 | Data 前后端通信 | Jigsaw封装了许多各式数据对象来帮助应用更容易的实现数据与控件之间的对接。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
-2 | LoadingService 加载中服务 | 用于弹出和管理给定的 [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) 组件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
-3 | PopupService 弹出服务 | 弹出任意给定视图到UI的顶部，非常强大。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
-4 | TimeService 时间相关功能 | 将时间宏（如`now-1d`）转换为实际值。 | --
-5 | Translation 国际化 | 用于创建一个支持多语言的视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
-6 | ChartIcon 图形化图标 | 将给定的简单数据渲染成一个小图标。 | --
+1 | Theme System 皮肤系统 | Jigsaw提供了一套非常功能强大的皮肤系统，可以支持多种Ux规范的皮肤，支持深浅色系皮肤的在线热切换，支持局部区域内使用相反色系皮肤，同时还提供了一套css变量用于帮助应用创建支持上述各个功能的页面。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/theme/demo/properties)
+2 | Data 前后端通信 | Jigsaw封装了许多各式数据对象来帮助应用更容易的实现数据与控件之间的对接。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/data-encapsulation/demo/array-ssp)
+3 | LoadingService 加载中服务 | 用于弹出和管理给定的 [Loading](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full) 组件。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/loading/demo/full)
+4 | PopupService 弹出服务 | 弹出任意给定视图到UI的顶部，非常强大。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/dialog/demo/popup-option)
+5 | TimeService 时间相关功能 | 将时间宏（如`now-1d`）转换为实际值。 | --
+6 | Translation 国际化 | 用于创建一个支持多语言的视图。 | [Demo](https://jigsaw-zte.gitee.io/latest/#/components/i18n/demo/full)
+7 | ChartIcon 图形化图标 | 将给定的简单数据渲染成一个小图标。 | --
 
 ### 指令 / Directives
 

@@ -17,7 +17,7 @@ import {TranslateService, TranslateModule} from "@ngx-translate/core";
 import {Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {TranslateHelper} from '../../common/core/utils/translate-helper';
@@ -26,12 +26,14 @@ import {JigsawFloatModule} from '../../common/directive/float/float';
 import {JigsawListModule} from '../list-and-tile/list';
 import {JigsawAutoCompleteInputModule} from './auto-complete-input';
 
+@WingsTheme('search-input.scss')
 @Component({
     selector: "jigsaw-search-input, j-search-input",
     templateUrl: "search-input.html",
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-search-input-host]": "true",
         "[class.jigsaw-search-input-auto]": "autoSearch",
         "[class.jigsaw-search-input-disabled]": "disabled"
