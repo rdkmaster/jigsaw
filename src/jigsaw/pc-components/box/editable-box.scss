@@ -1,0 +1,75 @@
+@import "../../common/assets/scss/core/base";
+
+$editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
+
+.#{$editable-box-prefix-cls} {
+    position: relative;
+    transition: transform .3s ease;
+    overflow: hidden;
+
+    &-inserting {
+        border: 1px solid red !important;
+    }
+
+    &-resize-line-wrapper {
+        position: relative;
+        display: block;
+        width: 0;
+        height: 100%;
+        &-column {
+            width: 100%;
+            height: 0;
+        }
+    }
+
+    &-resize-line {
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        left: 0;
+        top: 0;
+         border: {
+             left: 3px dashed transparent;
+             top: none;
+         }
+        z-index: $zindex-ui-level-1;
+        &:hover, &.#{$box-prefix-cls}-resizing {
+            cursor: e-resize;
+            border-left-color: rgba(0, 0, 0, .2);
+        }
+        &-column {
+            width: 100%;
+            height: 3px;
+            border: {
+                left: none;
+                top: 3px dashed transparent;
+            }
+            &:hover, &.#{$box-prefix-cls}-resizing {
+                cursor: n-resize !important;
+                border-top-color: rgba(0, 0, 0, .2);
+            }
+        }
+    }
+
+    &-insert-line {
+        position: absolute;
+        width: 4px;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: $blue-3;
+        z-index: $zindex-ui-level-1;
+        display: none;
+
+        &:hover {
+            background: $blue-6;
+        }
+
+        &-column {
+            width: 100%;
+            height: 4px;
+            background: $blue-6;
+        }
+    }
+}
+

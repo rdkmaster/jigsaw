@@ -1,8 +1,7 @@
-import { ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive } from "@angular/core";
+import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive} from "@angular/core";
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawBox} from "./box";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 
 @Directive()
@@ -136,7 +135,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 
     public set grow(value: number) {
-        if (CommonUtils.isUndefined(value)) return;
+        if (CommonUtils.isUndefined(value) || this._grow == value) return;
         this._grow = value;
         this.zone.runOutsideAngular(() => {
             this.renderer.setStyle(this.element, 'flex-grow', Number(value));
@@ -156,9 +155,12 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
         this.renderer.setStyle(this.element, 'flex-shrink', Number(value));
     }
 
+    @Output()
+    public growChange = new EventEmitter<number>();
+
     protected removeBoxChangeListener: Subscription;
 
-    protected childrenBox: QueryList<JigsawBoxBase> | JigsawBox[];
+    protected childrenBox: QueryList<JigsawBoxBase>;
 
     private _checkFlexByOwnProperty(property: string) {
         if (property && this.type != 'flex') {
@@ -196,7 +198,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
 
-    private _rawOffsets: number[];
+    protected _rawOffsets: number[];
 
     /**
      * @internal
@@ -215,6 +217,14 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     @Output()
     public resize = new EventEmitter();
+
+    protected _pxToNumber(px: string): number {
+        if (CommonUtils.isUndefined(px) || typeof px == 'number') {
+            return <any>px;
+        }
+        px = px.replace(/(.*)px$/i, '$1');
+        return Number(px);
+    }
 
     /**
      * @internal
@@ -235,7 +245,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const sizeProp = this._getPropertyByDirection()[1];
         const sizeRatios = this._computeSizeRatios(sizeProp, offset);
         this.parent.childrenBox.forEach((box, index) => {
-            if(box._isFixedSize) return;
+            if (box._isFixedSize) return;
             box.grow = sizeRatios[index];
             if (emitEvent) {
                 box.growChange.emit(sizeRatios[index]);
@@ -252,12 +262,12 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         }
     }
 
-    private _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
+    protected _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
         const curIndex = this._getCurrentIndex();
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
         const sizes = this._rawOffsets.reduce((ss, offset, index) => {
-            if(index > 0) {
+            if (index > 0) {
                 ss.push(offset - this._rawOffsets[index - 1])
             }
             return ss;
@@ -266,7 +276,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const fixedSize = sizes.reduce((fs, size, index) => {
             const box = this.parent.childrenBox instanceof QueryList ?
                 this.parent.childrenBox.toArray()[index] : this.parent.childrenBox[index];
-            if(box._isFixedSize) {
+            if (box._isFixedSize) {
                 fs += size;
             }
             return fs;
@@ -282,7 +292,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      *
      *
      */
-    private _getOffsets(offsetProp: string, sizeProp: string): number[] {
+    protected _getOffsets(offsetProp: string, sizeProp: string): number[] {
         const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
             if (index == 0) {
                 arr.push(0);
@@ -296,7 +306,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         return offsets;
     }
 
-    private _getCurrentIndex(): number {
+    protected _getCurrentIndex(): number {
         let index: number;
         if (this.parent.childrenBox instanceof QueryList) {
             index = this.parent.childrenBox.toArray().findIndex(box => box == this);
@@ -306,7 +316,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         return index;
     }
 
-    private _getPropertyByDirection(): string[] {
+    protected _getPropertyByDirection(): string[] {
         return [this.parent.direction == 'column' ? 'top' : 'left',
             this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth']
     }
@@ -314,7 +324,42 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const curIndex = this._getCurrentIndex();
-        return [this._rawOffsets[curIndex - 1], this._rawOffsets[curIndex + 1]];
+        const childrenBox = this.parent.childrenBox.toArray();
+        const prevBox = childrenBox[curIndex - 1], curBox = childrenBox[curIndex];
+        return [
+            this._rawOffsets[curIndex] - this._getBoxGrowSize(prevBox),
+            this._rawOffsets[curIndex] + this._getBoxGrowSize(curBox)
+        ];
+    }
+
+    private _getBoxGrowSize(box: JigsawResizableBoxBase): number {
+        let minParam;
+        let paddingLeftParam;
+        let paddingRightParam;
+        let borderLeftParam;
+        let borderRightParam;
+        let sizeParam;
+        if (this.parent.direction == 'column') {
+            minParam = 'minHeight';
+            paddingLeftParam = 'paddingTop';
+            paddingRightParam = 'paddingBottom';
+            borderLeftParam = 'borderTopWidth' ;
+            borderRightParam = 'borderBottomWidth';
+            sizeParam = 'offsetHeight';
+        } else {
+            minParam = 'minWidth';
+            paddingLeftParam = 'paddingLeft';
+            paddingRightParam = 'paddingRight';
+            borderLeftParam = 'borderLeftWidth';
+            borderRightParam = 'borderRightWidth';
+            sizeParam = 'offsetWidth';
+        }
+        const boxStyle = getComputedStyle(box.element);
+        let minSize = this._pxToNumber(boxStyle[minParam]) || 0;
+        let padding = this._pxToNumber(boxStyle[paddingLeftParam]) + this._pxToNumber(boxStyle[paddingRightParam]);
+        let border = this._pxToNumber(boxStyle[borderLeftParam]) + this._pxToNumber(boxStyle[borderRightParam]);
+        let size = box.element[sizeParam];
+        return size - Math.max(minSize, padding + border);
     }
 
     private _updateResizeRange() {
