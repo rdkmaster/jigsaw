@@ -635,3 +635,35 @@
         }
     }
 }
+
+.jigsaw-checkbox-host {
+    .jigsaw-checkbox-wrapper {
+        .jigsaw-checkbox-indeterminate {
+            background: $brand-default;
+            border-color: $brand-default;
+
+            &::after {
+                content: none;
+            }
+
+            &::before {
+                top: 1px;
+                left: 5px;
+                width: 0;
+                border-color: $font-color-white;
+                transform: rotate(90deg) scale(1);
+            }
+
+            &.jigsaw-checkbox-disabled {
+                &.jigsaw-checkbox-disabled {
+                    background: $brand-disabled;
+                    border-color: $brand-disabled;
+
+                    &::before {
+                        border-color: $bg-disabled;
+                    }
+                }
+            }
+        }
+    }
+}
