@@ -10,7 +10,7 @@ const tsFiles = [
     ...glob('**/*.ts', {cwd: `common`}).map(f => `common/${f}`),
 ];
 const invalidComponents = [], ignoredComponents = [
-    'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawFishBone', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot',
+    'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot',
     'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback',
     'JigsawCollapsePane', 'JigsawPieChartIcon', 'JigsawDonutChartIcon', 'JigsawLineChartIcon', 'JigsawBarChartIcon'
 ];
