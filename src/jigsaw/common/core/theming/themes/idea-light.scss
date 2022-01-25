@@ -179,11 +179,11 @@
             }
         }
     }
+}
 
-    .jigsaw-tabs-host {
-        .jigsaw-tabs-bar {
-            margin-bottom: 6px;
-        }
+.jigsaw-tabs-host {
+    .jigsaw-tabs-bar {
+        margin-bottom: 6px;
 
         .jigsaw-tabs-nav-container {
             .jigsaw-tabs-ink-bar:after {
@@ -197,6 +197,14 @@
                 height: 0;
                 border: 4px solid transparent;
                 border-top-color: #41addc;
+            }
+        }
+    }
+
+    &.jigsaw-tabs-page {
+        .jigsaw-tabs-nav-container {
+            .jigsaw-tabs-ink-bar:after {
+                content: none;
             }
         }
     }
@@ -253,6 +261,9 @@
 
         &.jigsaw-switch-disabled {
             background-color: #f4f4f4;
+            &::after {
+                background-color: $font-color-disabled;
+            }
         }
     }
 }
@@ -495,6 +506,74 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+.jigsaw-slider-host {
+    .jigsaw-slider {
+        .jigsaw-slider-track {
+            background-color: $blue-3;
+        }
+
+        .jigsaw-slider-handle {
+            border-color: $blue-3;
+        }
+
+        .jigsaw-slider-step > .jigsaw-slider-dot-active {
+            border-color: $blue-3;
+        }
+    }
+}
+
+.jigsaw-tile-host {
+    .jigsaw-tile-option {
+        &.jigsaw-tile-option-active {
+            background: none;
+        }
+    }
+}
+
+.jigsaw-tile-lite-host {
+    .jigsaw-tile-host {
+        .jigsaw-tile-option {
+            &.jigsaw-tile-option-active {
+                background: none;
+            }
+        }
+    }
+}
+
+.jigsaw-select-host,
+.jigsaw-collapse-select-host,
+.jigsaw-group-select-host {
+    &.jigsaw-select-single-select {
+        .jigsaw-combo-select-host {
+            .jigsaw-tag-host {
+                border: none;
+            }
+        }
+    }
+}
+
+.jigsaw-combo-select-host {
+    .jigsaw-combo-select-disabled {
+        background: $bg-disabled;
+
+        .jigsaw-combo-select-placeholder {
+            color: $font-color-disabled;
+        }
+    }
+}
+
+.jigsaw-select-list-host {
+    .jigsaw-collapse-host {
+        .jigsaw-collapse {
+            border: none;
+
+            .jigsaw-collapse-item {
+                border: none;
             }
         }
     }
