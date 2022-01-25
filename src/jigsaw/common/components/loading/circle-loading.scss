@@ -92,7 +92,7 @@ $circle-loading-prefix-cls: #{$jigsaw-prefix}-circle-loading;
     }
 
     .#{$circle-loading-prefix-cls}-svg-bar {
-        stroke: #1993ff;
+        stroke: $brand-default;
         stroke-linecap: round;
         transform: rotate(-90deg);
         transform-origin: center;
