@@ -1,7 +1,8 @@
-$fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
+$jigsaw-fish-bone: #{$jigsaw-prefix}-fish-bone;
+$jigsaw-fish-bone-item: #{$jigsaw-prefix}-fish-bone-item;
 
 /* jigsaw-fish-bone-item 单个鱼骨的class */
-.#{$fish-bone-prefix-cls}-item {
+.#{$jigsaw-fish-bone-item} {
     position: absolute;
     /* 鱼骨的最小长度是100px */
     min-width: 100px;
@@ -11,30 +12,30 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     height: 1px;
     transition: left 1s $ease-in-out;
     transform-origin: 0 50%;
-    &:not(.#{$fish-bone-prefix-cls}-level-0) {
+
+    &:not(.#{$jigsaw-fish-bone}-level-0) {
         /* 除了最外面的父节点，其他节点先隐藏 */
         opacity: 0;
     }
-    &.#{$fish-bone-prefix-cls}-level-0 {
+
+    &.#{$jigsaw-fish-bone}-level-0 {
         /* 最外面的父节点的偏移默认是0 */
         left: 0;
     }
-    > .#{$fish-bone-prefix-cls}-item-content, > .#{$fish-bone-prefix-cls}-item-description {
+
+    > .#{$jigsaw-fish-bone-item}-content,
+    > .#{$jigsaw-fish-bone-item}-description {
         position: absolute;
         min-width: 100px;
         text-align: center;
         font-size: $font-size-base;
         line-height: 1.2;
     }
-    > .#{$fish-bone-prefix-cls}-item-description {
+
+    > .#{$jigsaw-fish-bone-item}-description {
         left: 50%;
         transform: translateX(-50%) translate3d(0, 0, 0);
-        .#{$fish-bone-prefix-cls}-light & {
-            color: $font-color-hint-light;
-        }
-        .#{$fish-bone-prefix-cls}-dark & {
-            color: $font-color-disabled-dark;
-        }
+        color: $font-color-hint;
         -webkit-font-smoothing: subpixel-antialiased;
     }
 
@@ -46,32 +47,26 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
     &-rotate-down {
         transform: rotate(60deg) translate3d(0, 0, 0);
     }
-    .#{$fish-bone-prefix-cls}-up &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
+    .#{$jigsaw-fish-bone}-up &-rotate-up > .#{$jigsaw-fish-bone-item}-content {
         bottom: 4px;
     }
-    .#{$fish-bone-prefix-cls}-up &-rotate-down:not(.#{$fish-bone-prefix-cls}-item-no-child) > .#{$fish-bone-prefix-cls}-item-content {
+    .#{$jigsaw-fish-bone}-up
+        &-rotate-down:not(.#{$jigsaw-fish-bone-item}-no-child)
+        > .#{$jigsaw-fish-bone-item}-content {
         top: 4px;
     }
     /* 没有子节点的节点文本放在上面 */
-    .#{$fish-bone-prefix-cls}-up &-rotate-down.#{$fish-bone-prefix-cls}-item-no-child > .#{$fish-bone-prefix-cls}-item-content {
+    .#{$jigsaw-fish-bone}-up &-rotate-down.#{$jigsaw-fish-bone-item}-no-child > .#{$jigsaw-fish-bone-item}-content {
         bottom: 4px;
     }
-    .#{$fish-bone-prefix-cls}-down &-rotate-up > .#{$fish-bone-prefix-cls}-item-content {
+    .#{$jigsaw-fish-bone}-down &-rotate-up > .#{$jigsaw-fish-bone-item}-content {
         bottom: 6px;
     }
-    .#{$fish-bone-prefix-cls}-down &-rotate-down > .#{$fish-bone-prefix-cls}-item-content {
+    .#{$jigsaw-fish-bone}-down &-rotate-down > .#{$jigsaw-fish-bone-item}-content {
         top: 4px;
     }
-
-    .#{$fish-bone-prefix-cls}-light & {
-        background: $font-color-white-darken-light;
-    }
-    .#{$fish-bone-prefix-cls}-dark & {
-        background: $font-color-white-darken-light;
-    }
 }
 
-.#{$fish-bone-prefix-cls}-level-0 {
+.#{$jigsaw-fish-bone}-level-0 {
     height: 2px;
 }
-

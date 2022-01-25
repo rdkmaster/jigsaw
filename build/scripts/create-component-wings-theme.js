@@ -9,8 +9,9 @@ const tsFiles = [
     ...glob('**/*.ts', {cwd: `pc-components`}).map(f => `pc-components/${f}`),
     ...glob('**/*.ts', {cwd: `common`}).map(f => `common/${f}`),
 ];
-const invalidComponents = [], ignoredComponents = [
-    'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawFishBone', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot',
+const invalidComponents = [];
+const ignoredComponents = [
+    'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot', 'JigsawEditableBox',
     'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback',
     'JigsawCollapsePane', 'JigsawPieChartIcon', 'JigsawDonutChartIcon', 'JigsawLineChartIcon', 'JigsawBarChartIcon'
 ];

@@ -1,0 +1,18 @@
+<i class="jigsaw-editable-box-resize-line-wrapper" #resizeLineParent *ngIf="_$showResizeLine"
+   [class.jigsaw-editable-box-resize-line-wrapper-column]="parent?.direction == 'column'">
+    <b #resizeLine
+       class="jigsaw-editable-box-resize-line"
+       [class.jigsaw-editable-box-resize-line-column]="parent?.direction == 'column'"
+       j-resizable
+       [parentBox]="element"
+       [effectBox]="parent?.element"
+       [effectDirection]="parent?.direction"
+       [range]="_$resizeRange"
+       [resizeStep]="resizeStep"
+       (resize)="_$handleResize($event)"
+       (resizeEnd)="_$handleResizeEnd()"
+       (mousedown)="_$handleResizeStart($event)"></b>
+</i>
+<b #insertionLine class="jigsaw-editable-box-insert-line"></b>
+<ng-container #renderPoint></ng-container>
+<ng-content></ng-content>

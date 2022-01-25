@@ -1,30 +1,20 @@
-$fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
+$jigsaw-fish-bone: #{$jigsaw-prefix}-fish-bone;
 
 /* jigsaw-fish-bone 鱼骨host class*/
-.#{$fish-bone-prefix-cls} {
+.#{$jigsaw-fish-bone}-host {
     @include inline-block();
     width: 100%;
     height: 400px;
+    background: $bg-body;
+    color: $font-color-default;
 
-    /* jigsaw-fish-bone-light jigsaw-fish-bone-dark 鱼骨主题标识 放在host上*/
-    &-light {
-        background: $bg-body-light;
-        color: $font-color-default-light;
-        .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
-            background: $font-color-white-darken-light;
-        }
-    }
-
-    &-dark {
-        background: $bg-body-dark;
-        color: $font-color-default-dark;
-        .#{$fish-bone-prefix-cls}-head p:before, .#{$fish-bone-prefix-cls}-main {
-            background: $font-color-white-darken-light;
-        }
+    .#{$jigsaw-fish-bone}-head p:before,
+    .#{$jigsaw-fish-bone}-main {
+        background: $font-color-white-darken;
     }
 
     /* jigsaw-fish-bone-main 鱼骨中轴横线*/
-    &-main {
+    .#{$jigsaw-fish-bone}-main {
         position: absolute;
         left: 146px;
         top: 200px;
@@ -32,27 +22,31 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
         background: $font-color-white-darken;
     }
 
-    &-framework {
+    .#{$jigsaw-fish-bone}-framework {
         width: 100%;
         height: 100%;
     }
-    &-range {
+
+    .#{$jigsaw-fish-bone}-range {
         position: relative;
         overflow: hidden;
     }
 
     /* jigsaw-fish-bone-up jigsaw-fish-bone-down 一个鱼骨树在上面还是在下面，放在最外层的节点上 */
-    &-up > .#{$fish-bone-prefix-cls}-item-content {
+    .#{$jigsaw-fish-bone}-up > .#{$jigsaw-fish-bone}-item-content {
         top: -16px;
     }
-    &-down > .#{$fish-bone-prefix-cls}-item-content {
+
+    .#{$jigsaw-fish-bone}-down > .#{$jigsaw-fish-bone}-item-content {
         top: 6px;
     }
 
-    &-head, &-foot {
+    .#{$jigsaw-fish-bone}-head,
+    .#{$jigsaw-fish-bone}-foot {
         position: absolute;
     }
-    &-head {
+
+    .#{$jigsaw-fish-bone}-head {
         left: 0;
         transform: translate(-104%, -50%) rotateY(180deg) translate3d(0, 0, 0);
         p {
@@ -71,37 +65,38 @@ $fish-bone-prefix-cls: #{$jigsaw-prefix}-fish-bone;
                 width: 15px;
                 height: 15px;
                 border-radius: 50%;
-                content: '';
+                content: "";
             }
         }
     }
-    &-foot {
+
+    .#{$jigsaw-fish-bone}-foot {
         right: 0;
         transform: translate(104%, -46%) rotateY(180deg) translate3d(0, 0, 0);
     }
 
     /* jigsaw-fish-bone-left jigsaw-fish-bone-left 鱼骨方向标识，放在host上*/
-    &-left {
-
+    &.#{$jigsaw-fish-bone}-left {
     }
 
-    &-right {
-        .#{$fish-bone-prefix-cls}-head {
+    &.#{$jigsaw-fish-bone}-right {
+        .#{$jigsaw-fish-bone}-head {
             p {
                 transform: translate(-50%, -50%) rotateY(0deg) translate3d(0, 0, 0);
             }
         }
-        .#{$fish-bone-prefix-cls}-range {
+        .#{$jigsaw-fish-bone}-range {
             transform: rotateY(180deg) translate3d(0, 0, 0);
-            .#{$fish-bone-prefix-cls}-item-content {
+            .#{$jigsaw-fish-bone}-item-content {
                 transform: rotateY(180deg) translate3d(0, 0, 0);
             }
-            .#{$fish-bone-prefix-cls}-item-description {
+            .#{$jigsaw-fish-bone}-item-description {
                 transform: translateX(-50%) rotateY(180deg) translate3d(0, 0, 0);
             }
         }
     }
+
+    .#{$jigsaw-fish-bone}-item {
+        background: $font-color-white-darken-light;
+    }
 }
-
-
-
