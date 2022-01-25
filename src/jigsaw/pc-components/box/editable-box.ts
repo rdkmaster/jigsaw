@@ -20,6 +20,26 @@ export type BoxInsertPosition = { parent: JigsawEditableBox, before?: JigsawEdit
 const insertionGap: number = 12;
 const insertionLineWidth: number = 4;
 
+export function getBoxRealRect(box: JigsawEditableBox) {
+    // DOMRect对象中有只读属性，无法通过Object.assign或结构复制对象
+    const rect = box.element.getBoundingClientRect();
+    const realRect = {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom
+    };
+    if (box.parent) {
+        // 滚动条的情况处理
+        const parentRect = box.parent.element.getBoundingClientRect();
+        realRect.left = Math.max(rect.left, parentRect.left);
+        realRect.top = Math.max(rect.top, parentRect.top);
+        realRect.right = Math.min(rect.right, parentRect.right);
+        realRect.bottom = Math.min(rect.bottom, parentRect.bottom);
+    }
+    return realRect;
+}
+
 @Component({
     selector: 'jigsaw-editable-box, j-editable-box',
     templateUrl: './editable-box.html',
@@ -109,18 +129,18 @@ export class JigsawEditableBox extends JigsawBox {
      */
     public _scale: number[] = [];
 
-    private _laying: boolean;
+    private _inserting: boolean;
 
-    public set laying(value: boolean) {
-        if (this._laying == value) {
+    public set inserting(value: boolean) {
+        if (this._inserting == value) {
             return;
         }
-        this._laying = value;
+        this._inserting = value;
         this._setLayout(value);
     }
 
-    private _setLayout(laying: boolean) {
-        if (laying) {
+    private _setLayout(inserting: boolean) {
+        if (inserting) {
             const scalePX = insertionGap * 2;
             const [width, height] = [this.element.offsetWidth, this.element.offsetHeight];
             // 防止宽高比insert gap还要小
@@ -132,15 +152,9 @@ export class JigsawEditableBox extends JigsawBox {
         }
     }
 
-    @ContentChildren(JigsawEditableBox)
-    protected _childrenBoxRaw: QueryList<JigsawEditableBox>;
-
     @ViewChild('insertionLine')
     private _insertionLine: ElementRef;
 
-    /**
-     * @internal
-     */
     public parent: JigsawEditableBox;
 
     @ContentChildren(JigsawEditableBox)
@@ -150,26 +164,6 @@ export class JigsawEditableBox extends JigsawBox {
      * @internal
      */
     public _$childrenBox: JigsawEditableBox[];
-
-    public static getBoxRealRect(box: JigsawEditableBox) {
-        // DOMRect对象中有只读属性，无法通过Object.assign或结构复制对象
-        const rect = box.element.getBoundingClientRect();
-        const realRect = {
-            left: rect.left,
-            top: rect.top,
-            right: rect.right,
-            bottom: rect.bottom
-        };
-        if (box.parent) {
-            // 滚动条的情况处理
-            const parentRect = box.parent.element.getBoundingClientRect();
-            realRect.left = Math.max(rect.left, parentRect.left);
-            realRect.top = Math.max(rect.top, parentRect.top);
-            realRect.right = Math.min(rect.right, parentRect.right);
-            realRect.bottom = Math.min(rect.bottom, parentRect.bottom);
-        }
-        return realRect;
-    }
 
     protected _setChildrenBox() {
         if (!this._$childrenBox) {
@@ -226,13 +220,13 @@ export class JigsawEditableBox extends JigsawBox {
 
     private _insertTimer: number;
 
-    public showInertLine(laying: boolean, mousePos?: { x: number, y: number }): BoxInsertPosition {
-        if (laying) {
+    public showInertLine(inserting: boolean, mousePos?: { x: number, y: number }): BoxInsertPosition {
+        if (inserting) {
             this.renderer.addClass(this.element, 'jigsaw-editable-box-inserting')
         } else {
             this.renderer.removeClass(this.element, 'jigsaw-editable-box-inserting')
         }
-        if (!laying || !mousePos) {
+        if (!inserting || !mousePos) {
             clearTimeout(this._insertTimer);
             this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'none');
             return;

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, ViewChild, Renderer2} from "@angular/core";
 import {throttleTime} from 'rxjs/operators';
-import {DragDropInfo, GraphData, BoxInsertPosition, JigsawEditableBox} from "jigsaw/public_api";
+import {DragDropInfo, GraphData, BoxInsertPosition, JigsawEditableBox, getBoxRealRect} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,7 +10,7 @@ export class BoxLayoutInteractionDemoComponent {
     types = ['所有父BOX', '相邻BOX', 'BOX本身'];
     selectedType = ['所有父BOX'];
 
-    laying = new EventEmitter();
+    layoutEvent = new EventEmitter();
     layoutStart = new EventEmitter();
     layoutEnd = new EventEmitter();
     insert = new EventEmitter();
@@ -30,14 +30,14 @@ export class BoxLayoutInteractionDemoComponent {
         this.layoutEnd.subscribe((dragInfo: DragDropInfo) => {
             console.log('layout end...');
             if (currentBox) {
-                this.setBoxLaying(currentBox, false);
+                this.setBoxInserting(currentBox, false);
                 currentBox = null;
             }
         });
         this.insert.subscribe((dragInfo: DragDropInfo) => {
             console.log('insert and layout end...');
             if (currentBox) {
-                this.setBoxLaying(currentBox, false);
+                this.setBoxInserting(currentBox, false);
                 currentBox = null;
             }
             console.log('insert component:', dragInfo.dragDropData);
@@ -49,9 +49,9 @@ export class BoxLayoutInteractionDemoComponent {
                 console.log('reverse:', insertInfo.reverse);
             }
         });
-        this.laying.pipe(throttleTime(500)).subscribe((dragInfo: DragDropInfo) => {
+        this.layoutEvent.pipe(throttleTime(500)).subscribe((dragInfo: DragDropInfo) => {
             dragInfo.event.dataTransfer.dropEffect = 'link';
-            console.log('laying');
+            console.log('inserting');
             const e = dragInfo.event;
             if (!e) {
                 return;
@@ -66,11 +66,11 @@ export class BoxLayoutInteractionDemoComponent {
                 // 切换选中box
                 //console.log('enter box: ', enterBox);
                 if (currentBox) {
-                    this.setBoxLaying(currentBox, false)
+                    this.setBoxInserting(currentBox, false)
                 }
                 currentBox = enterBox;
             }
-            insertInfo = this.setBoxLaying(currentBox, true, mousePos);
+            insertInfo = this.setBoxInserting(currentBox, true, mousePos);
         });
 
         JigsawEditableBox.viewInit.subscribe(() => {
@@ -94,52 +94,52 @@ export class BoxLayoutInteractionDemoComponent {
 
     getMouseEnterBox(mousePos: { x: number, y: number }, boxList: JigsawEditableBox[]): JigsawEditableBox {
         return boxList.find(box => {
-            const realRect = JigsawEditableBox.getBoxRealRect(box);
+            const realRect = getBoxRealRect(box);
             return mousePos.x > realRect.left && mousePos.x < realRect.right && mousePos.y > realRect.top && mousePos.y < realRect.bottom
         })
     }
 
-    setBoxLaying(box: JigsawEditableBox, laying: boolean, mousePos?: { x: number, y: number }): BoxInsertPosition {
+    setBoxInserting(box: JigsawEditableBox, inserting: boolean, mousePos?: { x: number, y: number }): BoxInsertPosition {
         if (!box) {
             return;
         }
         switch (this.selectedType[0]) {
             case '所有父BOX':
-                this.setAllBoxLaying(box, laying, true);
+                this.setAllBoxInserting(box, inserting, true);
                 break;
             case '相邻BOX':
-                this.setNeighboringBoxLaying(box, laying);
+                this.setNeighboringBoxInserting(box, inserting);
                 break;
             case 'BOX本身':
-                box.laying = laying;
+                box.inserting = inserting;
                 break;
         }
-        return box.showInertLine(laying, mousePos);
+        return box.showInertLine(inserting, mousePos);
     }
 
-    setNeighboringBoxLaying(box: JigsawEditableBox, laying: boolean) {
-        box._$childrenBox.forEach(childBox => childBox.laying = laying);
+    setNeighboringBoxInserting(box: JigsawEditableBox, inserting: boolean) {
+        box._$childrenBox.forEach(childBox => childBox.inserting = inserting);
         if (box.parent && box.parent._$childrenBox) {
-            box.parent._$childrenBox.forEach(childBox => childBox.laying = laying);
+            box.parent._$childrenBox.forEach(childBox => childBox.inserting = inserting);
         }
         if (box.parent && box.parent.parent && box.parent.parent.parent && box.parent.parent._$childrenBox) {
-            box.parent.parent._$childrenBox.forEach(childBox => childBox.laying = laying);
+            box.parent.parent._$childrenBox.forEach(childBox => childBox.inserting = inserting);
         }
     }
 
-    setAllBoxLaying(box: JigsawEditableBox, laying: boolean, current?: boolean) {
+    setAllBoxInserting(box: JigsawEditableBox, inserting: boolean, current?: boolean) {
         if (!box) {
             return;
         }
         if (current && box._$childrenBox) {
-            box._$childrenBox.forEach(child => child.laying = laying)
+            box._$childrenBox.forEach(child => child.inserting = inserting)
         }
         if (!box.parent) {
             // 根节点
             return
         }
-        box.laying = laying;
-        this.setAllBoxLaying(box.parent, laying);
+        box.inserting = inserting;
+        this.setAllBoxInserting(box.parent, inserting);
     }
 
     graphData = new GraphData({
