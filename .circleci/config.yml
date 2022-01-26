@@ -27,10 +27,6 @@ jobs:
             - run:
                 name: Static Tests
                 command: |
-                    echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                    echo ${CIRCLE_BRANCH}
-                    echo ${CIRCLE_PULL_REQUEST}
-                    node build/scripts/check-PR-title.js
                     node build/scripts/check-demo-import.js
                     node build/scripts/check-html-element-type.js
                     node build/scripts/check-import-path.js
@@ -61,10 +57,11 @@ jobs:
             - run:
                   name: Testing patch demo
                   command: |
-                      sh build/scripts/clone-seed.sh
-                      sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
-                      node build/scripts/patch-demos.js
-                      git checkout src
+                        sh build/scripts/clone-seed.sh
+                        sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
+                        node build/scripts/patch-demos.js
+                        # git checkout src
+                        node build/scripts/check-PR-title.js
 
 #            - when:
 #                  condition:
