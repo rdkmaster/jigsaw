@@ -8,6 +8,7 @@ function printUsageAndExit() {
     echo "  提交一个 [新增]：      sh tools/commit.sh new 本次提交的简要说明（必选），解决了 @123和@456（可选）"
     echo "  提交一个 [故障]：      sh tools/commit.sh fix 本次提交的简要说明（必选），解决了 @123和@456（可选）"
     echo "  提交一个 [优化]：      sh tools/commit.sh opt 本次提交的简要说明（必选），解决了 @123和@456（可选）"
+    echo "  提交一个 [其他]：      sh tools/commit.sh ot  本次提交的简要说明（必选），解决了 @123和@456（可选）"
     echo "  "
     echo "  提交一个 [破坏性修改]：sh tools/commit.sh bc  本次提交的简要说明（必选），解决了 @123和@456（可选）"
     echo "  "
