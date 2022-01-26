@@ -61,7 +61,10 @@ jobs:
                         sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
                         node build/scripts/patch-demos.js
                         # git checkout src
-                        node build/scripts/check-PR-title.js
+
+            - run:
+                  name: Checking PR title
+                  command: node build/scripts/check-PR-title.js
 
 #            - when:
 #                  condition:
