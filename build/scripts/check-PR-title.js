@@ -8,7 +8,7 @@ if (!match) {
     process.exit(1);
 }
 const id = match[1];
-const types = ['新增', '优化', '故障', '破坏性修改'];
+const types = ['新增', '优化', '故障', '其他', '破坏性修改'];
 
 const options = {
     hostname: 'api.github.com',
@@ -20,7 +20,7 @@ const options = {
     }
 };
 const req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`);
+    console.log(`status code: ${res.statusCode}`);
 
     let data = '';
     res.on('data', d => {
@@ -31,10 +31,10 @@ const req = https.request(options, res => {
         const pr = JSON.parse(data);
         const match = pr.title.match(/^\s*\[(.+)].+/);
         if (!match) {
-            exit('PR标题格式非法，title:', pr.title);
+            exit('PR标题格式非法，未找到类型，title:', pr.title);
         }
         if (types.indexOf(match[1]) == -1) {
-            exit('PR标题格式非法，title:', pr.title);
+            exit(`PR标题格式非法，类型 ${match[1]} 不存在，title:`, pr.title);
         }
         console.log('PR标题符合要求！');
     });
