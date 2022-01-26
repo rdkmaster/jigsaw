@@ -29,6 +29,7 @@ jobs:
                 command: |
                     echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     echo ${CIRCLE_BRANCH}
+                    node build/scripts/check-PR-title.js
                     node build/scripts/check-demo-import.js
                     node build/scripts/check-html-element-type.js
                     node build/scripts/check-import-path.js
