@@ -16,6 +16,7 @@ const req = https.request(options, res => {
 
 req.on('error', error => {
     console.error('xxxxxxxxxxxxxxxxxxxxxxxxxx', error)
+    process.exit(1);
 })
 
 req.end()
