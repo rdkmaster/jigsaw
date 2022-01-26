@@ -785,6 +785,23 @@
     }
 }
 
-.jigsaw-nav-menu-host{
-    
+.jigsaw-nav-menu-host.jigsaw-nav-menu-default {
+    .jigsaw-nav-menu-items {
+        .jigsaw-nav-menu-item {
+            .jigsaw-nav-menu-item-top {
+                font-size: 14px;
+                font-weight: 700;
+
+                &.jigsaw-nav-menu-item-selected {
+                    color: $brand-default;
+                    font-size: 14px;
+                    font-weight: 700;
+                }
+            }
+
+            .jigsaw-nav-menu-submenus {
+                background: $bg-container;
+            }
+        }
+    }
 }

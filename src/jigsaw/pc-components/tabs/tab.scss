@@ -4,6 +4,7 @@ $jigsaw-tabs: #{$jigsaw-prefix}-tabs;
     display: block;
     height: auto;
 
+    .#{$jigsaw-tabs},
     &.#{$jigsaw-tabs} {
         display: block;
         position: relative;
