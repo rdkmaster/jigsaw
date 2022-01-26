@@ -26,12 +26,13 @@ if [[ "$command" != "new" && "$command" != "fix" && "$command" != "opt" && "$com
     printUsageAndExit '未支持的指令 ['$command']，必须是 new / fix / opt / bc / push 之一'
 fi
 
+shift 1
+
 if [[ "$command" == "push" ]]; then
     git push $*
     exit 0
 fi
 
-shift 1
 message=$*
 
 if [[ "$message" == "" ]]; then
