@@ -4,12 +4,14 @@
     .jigsaw-alert {
         .jigsaw-alert-head {
             border-bottom: none;
-            font-size: 20px;
             color: $brand-default;
+            font-size: 20px;
+            font-weight: 400;
 
             .jigsaw-alert-title {
                 font-size: 20px;
                 color: $brand-default;
+                font-weight: inherit;
             }
 
             .jigsaw-alert-close {
@@ -23,6 +25,8 @@
         }
 
         .jigsaw-alert-content {
+            padding: 18px 32px 10px 64px;
+
             .content-main p,
             .content-sub p {
                 color: $font-color-default;
@@ -30,6 +34,7 @@
             }
 
             .content-main .jigsaw-alert-icon {
+                left: -32px;
                 font-size: 36px;
             }
         }
@@ -151,15 +156,39 @@
 }
 
 .jigsaw-input-host {
-    .jigsaw-input-icon-front,
-    .jigsaw-input-icon-end {
+    border-radius: $border-radius-base;
+
+    &:hover,
+    &.jigsaw-input-focused {
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
+        box-shadow: 0 0 0 2px fade-out($brand-default, 0.8);
+    }
+
+    .jigsaw-input-icon-front {
         font-weight: 800;
+    }
+}
+
+.jigsaw-numeric-input-host {
+    &:hover,
+    &.jigsaw-numeric-input-focused {
+        .jigsaw-numeric-input-wrapper {
+            box-shadow: 0 0 0 2px fade-out($brand-default, 0.8);
+        }
     }
 }
 
 .jigsaw-list-option-host {
     &.jigsaw-list-option-active {
         color: $font-color-default;
+    }
+
+    &.jigsaw-list-option-disabled {
+        background: $bg-disabled;
+
+        &:hover {
+            background: $bg-disabled;
+        }
     }
 }
 
@@ -261,6 +290,11 @@
 
         &.jigsaw-switch-disabled {
             background-color: #f4f4f4;
+
+            .jigsaw-switch-inner {
+                color: $font-color-disabled;
+            }
+
             &::after {
                 background-color: $font-color-disabled;
             }
@@ -355,9 +389,12 @@
         box-shadow: $box-shadow-lv1;
 
         .jigsaw-dialog-head {
+            height: 30px;
+            min-height: 30px;
             border-bottom: 1px solid $border-color-default;
             background: #f2f2f2;
             color: $brand-default;
+            font-weight: 400;
 
             .jigsaw-dialog-close {
                 color: $brand-default;
@@ -395,6 +432,22 @@
             &:hover {
                 background: $brand-hover;
             }
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-right > .jigsaw-drawer-bar {
+            left: -14px;
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-left > .jigsaw-drawer-bar {
+            right: -14px;
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-top > .jigsaw-drawer-bar {
+            bottom: -35px;
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-bottom > .jigsaw-drawer-bar {
+            top: -35px;
         }
     }
 }
@@ -456,6 +509,10 @@
                 .jigsaw-notification-icon-warning {
                     color: $warning-default;
                     font-size: inherit;
+
+                    &::before {
+                        content: "\e1a5";
+                    }
                 }
 
                 .jigsaw-notification-icon-info {
@@ -565,6 +622,20 @@
             color: $font-color-disabled;
         }
     }
+
+    .jigsaw-combo-select-clear {
+        color: $font-color-hint;
+        font-size: 12px;
+
+        &::before {
+            content: "\e132";
+        }
+    }
+
+    .jigsaw-combo-select-arrow {
+        color: $font-color-hint;
+        font-size: 14px;
+    }
 }
 
 .jigsaw-select-list-host {
@@ -666,4 +737,54 @@
             }
         }
     }
+}
+
+.jigsaw-tree-host {
+    .ztree {
+        li {
+            a {
+                &.curSelectedNode {
+                    border: 1px solid #ffb951;
+                    background: #ffe6b0;
+                    color: $font-color-default;
+
+                    .node_name {
+                        color: $font-color-default;
+                    }
+                }
+            }
+
+            span:not(.node_name) {
+                &.button {
+                    &.edit {
+                        &::after {
+                            color: $blue-6;
+                        }
+
+                        &:hover {
+                            &::after {
+                                color: $blue-6;
+                            }
+                        }
+                    }
+
+                    &.remove {
+                        &::after {
+                            color: $red-6;
+                        }
+
+                        &:hover {
+                            &::after {
+                                color: $red-6;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-nav-menu-host{
+    
 }

@@ -19,7 +19,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',
     host: {
-        '[class.jigsaw-nav-menu]': 'true',
+        '[class.jigsaw-nav-menu-host]': 'true',
         '[class.jigsaw-nav-menu-light]': 'theme == "light"',
         '[class.jigsaw-nav-menu-dark]': 'theme == "dark"',
         '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
