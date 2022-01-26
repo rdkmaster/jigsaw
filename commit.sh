@@ -56,4 +56,3 @@ fi
 
 echo "正在提交：$message ..."
 git commit -m "$message"
-
