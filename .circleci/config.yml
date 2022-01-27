@@ -57,10 +57,14 @@ jobs:
             - run:
                   name: Testing patch demo
                   command: |
-                      sh build/scripts/clone-seed.sh
-                      sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
-                      node build/scripts/patch-demos.js
-                      git checkout src
+                        sh build/scripts/clone-seed.sh
+                        sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
+                        node build/scripts/patch-demos.js
+                        # git checkout src
+
+            - run:
+                  name: Checking PR title
+                  command: node build/scripts/check-PR-title.js
 
 #            - when:
 #                  condition:
