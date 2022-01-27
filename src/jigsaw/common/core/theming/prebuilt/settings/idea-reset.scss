@@ -1,0 +1,805 @@
+.jigsaw-alert-host {
+    .jigsaw-alert {
+        .jigsaw-alert-head {
+            border-bottom: none;
+            color: $brand-default;
+            font-size: 20px;
+            font-weight: 400;
+
+            .jigsaw-alert-title {
+                font-size: 20px;
+                color: $brand-default;
+                font-weight: inherit;
+            }
+
+            .jigsaw-alert-close {
+                font-size: 24px;
+                color: $brand-default;
+
+                &:hover {
+                    color: $brand-hover;
+                }
+            }
+        }
+
+        .jigsaw-alert-content {
+            padding: 18px 32px 10px 64px;
+
+            .content-main p,
+            .content-sub p {
+                color: $font-color-default;
+                font-weight: 700;
+            }
+
+            .content-main .jigsaw-alert-icon {
+                left: -32px;
+                font-size: 36px;
+            }
+        }
+
+        &.jigsaw-alert-info {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $primary-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $primary-default;
+
+                    &:hover {
+                        color: $primary-hover;
+                    }
+                }
+            }
+        }
+
+        &.jigsaw-alert-warning {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $warning-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $warning-default;
+
+                    &:hover {
+                        color: $warning-hover;
+                    }
+                }
+            }
+        }
+
+        &.jigsaw-alert-error {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $error-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $error-default;
+
+                    &:hover {
+                        color: $error-hover;
+                    }
+                }
+            }
+        }
+
+        &.jigsaw-alert-confirm {
+            .jigsaw-alert-head {
+                .jigsaw-alert-title {
+                    color: $primary-default;
+                }
+
+                .jigsaw-alert-close {
+                    color: $primary-default;
+
+                    &:hover {
+                        color: $primary-hover;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-auto-complete-input-list-box-host {
+    ul li {
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    .jigsaw-auto-complete-input-item-title {
+        background: #f2f2f2;
+        color: $font-color-tag;
+        font-size: $font-size-base;
+    }
+}
+
+.jigsaw-breadcrumb-host {
+    background: $bg-container;
+    font-size: 16px;
+
+    .jigsaw-breadcrumb-item {
+        color: $brand-default;
+        font-size: 16px;
+    }
+
+    &.jigsaw-breadcrumb-host[data-theme="dark"] {
+        background: #313131;
+
+        .jigsaw-breadcrumb-item {
+            color: $font-color-hint;
+
+            &:hover {
+                color: $font-color-white;
+            }
+        }
+    }
+
+    &.jigsaw-breadcrumb-host[data-theme="light"] {
+        background: $bg-container;
+
+        .jigsaw-breadcrumb-item {
+            color: $font-color-hint;
+
+            &:hover {
+                color: $font-color-heading;
+            }
+        }
+    }
+
+    &.jigsaw-breadcrumb-host-inner {
+        background: transparent;
+    }
+}
+
+.jigsaw-input-host {
+    border-radius: $border-radius-base;
+
+    &:hover,
+    &.jigsaw-input-focused {
+        @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
+        box-shadow: 0 0 0 2px fade-out($brand-default, 0.8);
+    }
+
+    .jigsaw-input-icon-front {
+        font-weight: 800;
+    }
+}
+
+.jigsaw-numeric-input-host {
+    &:hover,
+    &.jigsaw-numeric-input-focused {
+        .jigsaw-numeric-input-wrapper {
+            box-shadow: 0 0 0 2px fade-out($brand-default, 0.8);
+        }
+    }
+}
+
+.jigsaw-list-option-host {
+    &.jigsaw-list-option-active {
+        color: $font-color-default;
+    }
+
+    &.jigsaw-list-option-disabled {
+        background: $bg-disabled;
+
+        &:hover {
+            background: $bg-disabled;
+        }
+    }
+}
+
+.jigsaw-cascade-host {
+    .jigsaw-tile-host {
+        .jigsaw-tile-option {
+            border: 1px solid $border-color-default;
+
+            &.jigsaw-tile-option-active {
+                background: none;
+                border-color: $brand-default;
+                color: $brand-default;
+            }
+
+            &:hover {
+                color: $brand-default;
+            }
+        }
+    }
+}
+
+.jigsaw-tabs-host {
+    .jigsaw-tabs-bar {
+        margin-bottom: 6px;
+
+        .jigsaw-tabs-nav-container {
+            .jigsaw-tabs-ink-bar:after {
+                content: "";
+                position: absolute;
+                top: 2px;
+                left: 50%;
+                display: block;
+                margin-left: -4px;
+                width: 0;
+                height: 0;
+                border: 4px solid transparent;
+                border-top-color: #41addc;
+            }
+        }
+    }
+
+    &.jigsaw-tabs-page {
+        .jigsaw-tabs-nav-container {
+            .jigsaw-tabs-ink-bar:after {
+                content: none;
+            }
+        }
+    }
+}
+
+.jigsaw-collapse-host {
+    .jigsaw-collapse {
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-bottom: none;
+        border-radius: $border-radius-base;
+
+        .jigsaw-collapse-item {
+            border-bottom: 1px solid $border-color-default;
+
+            .jigsaw-collapse-header {
+                height: 38px;
+                line-height: 38px;
+                color: $font-color-heading;
+                font-weight: 400;
+                background: $bg-container;
+            }
+
+            .jigsaw-collapse-content {
+                .jigsaw-collapse-padding {
+                    padding: 16px;
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-tag-host {
+    &.jigsaw-tag-preset-gray {
+        border: 1px solid $border-color-default;
+        border-radius: $border-radius-base;
+        background: $bg-body;
+        color: $font-color-default;
+    }
+}
+
+.jigsaw-switch-host {
+    .jigsaw-switch {
+        background-color: $font-color-disabled;
+
+        .jigsaw-switch-inner {
+            color: $font-color-white;
+        }
+
+        &.jigsaw-switch-checked {
+            background-color: $brand-default;
+        }
+
+        &.jigsaw-switch-disabled {
+            background-color: #f4f4f4;
+
+            .jigsaw-switch-inner {
+                color: $font-color-disabled;
+            }
+
+            &::after {
+                background-color: $font-color-disabled;
+            }
+        }
+    }
+}
+
+.jigsaw-date-picker-host {
+    .jigsaw-date-picker-header {
+        .jigsaw-date-picker-control {
+            .jigsaw-date-picker-control-year,
+            .jigsaw-date-picker-control-month {
+                color: $font-color-default;
+            }
+            .jigsaw-date-picker-control-bar {
+                color: $font-color-hint;
+            }
+        }
+    }
+
+    .jigsaw-date-picker-content {
+        .jigsaw-date-picker-content-day {
+            thead th {
+                color: $font-color-heading;
+            }
+        }
+
+        .jigsaw-date-picker-content-day-cell {
+            span {
+                border-radius: 50%;
+            }
+
+            &.jigsaw-date-picker-content-day-cell-today {
+                span {
+                    &:before {
+                        content: none;
+                    }
+
+                    &::after {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        right: 1px;
+                        top: 1px;
+                        border-top: 6px solid $brand-active;
+                        border-left: 6px solid transparent;
+                    }
+                }
+            }
+        }
+
+        .jigsaw-date-picker-content-month-cell,
+        .jigsaw-date-picker-content-year-cell {
+            span {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.jigsaw-time-popup-host {
+    .jigsaw-time-popup-content {
+        .jigsaw-time-popup-content-hour,
+        .jigsaw-time-popup-content-minute,
+        .jigsaw-time-popup-content-second {
+            li {
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.jigsaw-time-picker-host {
+    .jigsaw-time-picker-wrapper {
+        input {
+            border-radius: 0;
+
+            &.jigsaw-time-picker-input-selected {
+                background: none;
+                color: $font-color-default;
+                border-bottom: 1px solid $brand-default;
+            }
+        }
+    }
+}
+
+.jigsaw-dialog-host {
+    .jigsaw-dialog {
+        border: 1px solid $border-color-default;
+        box-shadow: $box-shadow-lv1;
+
+        .jigsaw-dialog-head {
+            height: 30px;
+            min-height: 30px;
+            border-bottom: 1px solid $border-color-default;
+            background: #f2f2f2;
+            color: $brand-default;
+            font-weight: 400;
+
+            .jigsaw-dialog-close {
+                color: $brand-default;
+
+                &:hover {
+                    color: $brand-default;
+                }
+            }
+        }
+
+        .jigsaw-dialog-button-group {
+            justify-content: flex-end;
+        }
+    }
+}
+
+.jigsaw-drawer-host {
+    .jigsaw-drawer {
+        background: $bg-body;
+        box-shadow: $box-shadow-lv1;
+
+        &.jigsaw-drawer-left > .jigsaw-drawer-bar,
+        &.jigsaw-drawer-right > .jigsaw-drawer-bar,
+        &.jigsaw-drawer-top > .jigsaw-drawer-bar,
+        &.jigsaw-drawer-bottom > .jigsaw-drawer-bar {
+            width: 14px;
+            border: none;
+            border-radius: 0 $border-radius-base $border-radius-base 0;
+            background: $brand-default;
+
+            & > .iconfont {
+                padding: 0;
+            }
+
+            &:hover {
+                background: $brand-hover;
+            }
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-right > .jigsaw-drawer-bar {
+            left: -14px;
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-left > .jigsaw-drawer-bar {
+            right: -14px;
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-top > .jigsaw-drawer-bar {
+            bottom: -35px;
+        }
+
+        &.jigsaw-drawer.jigsaw-drawer-bottom > .jigsaw-drawer-bar {
+            top: -35px;
+        }
+    }
+}
+
+.jigsaw-list-option-host {
+    &:hover {
+        .jigsaw-list-option-title-box {
+            .jigsaw-list-option-title {
+                color: $font-color-default;
+            }
+        }
+    }
+
+    &.jigsaw-list-option-active {
+        color: $font-color-default;
+
+        .jigsaw-list-option-title,
+        .jigsaw-list-option-sub-title {
+            color: $font-color-default;
+        }
+    }
+
+    &.jigsaw-list-option-disabled {
+        &:hover {
+            .jigsaw-list-option-title,
+            .jigsaw-list-option-sub-title {
+                color: $font-color-disabled;
+            }
+        }
+    }
+}
+
+.jigsaw-search-input-host {
+    .jigsaw-search-input {
+        .jigsaw-search-input-button {
+            font-weight: 800;
+        }
+    }
+}
+
+.jigsaw-notification-host {
+    .jigsaw-notification {
+        .jigsaw-notification-content {
+            .jigsaw-notification-icon {
+                align-items: center;
+                flex-grow: 0;
+                font-size: 30px;
+
+                .jigsaw-notification-icon-success {
+                    color: $success-default;
+                    font-size: inherit;
+                }
+
+                .jigsaw-notification-icon-error {
+                    color: $error-default;
+                    font-size: inherit;
+                }
+
+                .jigsaw-notification-icon-warning {
+                    color: $warning-default;
+                    font-size: inherit;
+
+                    &::before {
+                        content: "\e1a5";
+                    }
+                }
+
+                .jigsaw-notification-icon-info {
+                    color: $primary-default;
+                    font-size: inherit;
+                }
+            }
+        }
+        .jigsaw-notification-close {
+            right: 10px;
+            top: 0px;
+        }
+
+        &.jigsaw-notification-success {
+            border-left: none;
+        }
+
+        &.jigsaw-notification-error {
+            border-left: none;
+        }
+
+        &.jigsaw-notification-warning {
+            border-left: none;
+        }
+
+        &.jigsaw-notification-info {
+            border-left: none;
+        }
+    }
+}
+
+.jigsaw-page-item-host {
+    &.jigsaw-page-current span {
+        background: $brand-default;
+        border: 1px solid $brand-default;
+        color: $font-color-white;
+    }
+}
+
+.jigsaw-paging-host {
+    .jigsaw-paging-page-size {
+        .jigsaw-combo-select-host {
+            .jigsaw-combo-select {
+                .jigsaw-combo-select-selection {
+                    .jigsaw-combo-select-selection-rendered {
+                        .jigsaw-tag-host {
+                            border: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-slider-host {
+    .jigsaw-slider {
+        .jigsaw-slider-track {
+            background-color: $blue-3;
+        }
+
+        .jigsaw-slider-handle {
+            border-color: $blue-3;
+        }
+
+        .jigsaw-slider-step > .jigsaw-slider-dot-active {
+            border-color: $blue-3;
+        }
+    }
+}
+
+.jigsaw-tile-host {
+    .jigsaw-tile-option {
+        &.jigsaw-tile-option-active {
+            background: none;
+        }
+    }
+}
+
+.jigsaw-tile-lite-host {
+    .jigsaw-tile-host {
+        .jigsaw-tile-option {
+            &.jigsaw-tile-option-active {
+                background: none;
+            }
+        }
+    }
+}
+
+.jigsaw-select-host,
+.jigsaw-collapse-select-host,
+.jigsaw-group-select-host {
+    &.jigsaw-select-single-select {
+        .jigsaw-combo-select-host {
+            .jigsaw-tag-host {
+                border: none;
+            }
+        }
+    }
+}
+
+.jigsaw-combo-select-host {
+    .jigsaw-combo-select-disabled {
+        background: $bg-disabled;
+
+        .jigsaw-combo-select-placeholder {
+            color: $font-color-disabled;
+        }
+    }
+
+    .jigsaw-combo-select-clear {
+        color: $font-color-hint;
+        font-size: 12px;
+
+        &::before {
+            content: "\e132";
+        }
+    }
+
+    .jigsaw-combo-select-arrow {
+        color: $font-color-hint;
+        font-size: 14px;
+    }
+}
+
+.jigsaw-select-list-host {
+    .jigsaw-collapse-host {
+        .jigsaw-collapse {
+            border: none;
+
+            .jigsaw-collapse-item {
+                border: none;
+            }
+        }
+    }
+}
+
+.jigsaw-table-host {
+    table {
+        thead {
+            tr {
+                td {
+                    background: $bg-container;
+                    color: $blue-9;
+                    font-size: 14px;
+                    border-bottom-width: 2px;
+                    border-bottom-color: $brand-active;
+                }
+            }
+        }
+        tbody {
+            tr {
+                &:nth-child(2n) {
+                    background: $bg-container;
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-radios-host {
+    .jigsaw-radio-option {
+        .jigsaw-radio-option-inner {
+            &:after {
+                content: " ";
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                left: 3px;
+                top: 3px;
+                border-radius: 4px;
+                display: table;
+                border-top: 0;
+                border-left: 0;
+                background-color: $brand-default;
+                opacity: 0;
+                @include prefixer(transfrom, scale(0));
+                @include prefixer(transition, all 0.3s $ease-in-out-circ);
+            }
+
+            &.jigsaw-radio-option-checked {
+                border-width: 1px;
+                border-color: $brand-default;
+
+                &:after {
+                    @include prefixer(transform, scale(1));
+                    @include prefixer(transition, all 0.3s $ease-in-out-circ);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-checkbox-host {
+    .jigsaw-checkbox-wrapper {
+        .jigsaw-checkbox-indeterminate {
+            background: $brand-default;
+            border-color: $brand-default;
+
+            &::after {
+                content: none;
+            }
+
+            &::before {
+                top: 1px;
+                left: 5px;
+                width: 0;
+                border-color: $font-color-white;
+                transform: rotate(90deg) scale(1);
+            }
+
+            &.jigsaw-checkbox-disabled {
+                &.jigsaw-checkbox-disabled {
+                    background: $brand-disabled;
+                    border-color: $brand-disabled;
+
+                    &::before {
+                        border-color: $bg-disabled;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-tree-host {
+    .ztree {
+        li {
+            a {
+                &.curSelectedNode {
+                    border: 1px solid #ffb951;
+                    background: #ffe6b0;
+                    color: $font-color-default;
+
+                    .node_name {
+                        color: $font-color-default;
+                    }
+                }
+            }
+
+            span:not(.node_name) {
+                &.button {
+                    &.edit {
+                        &::after {
+                            color: $blue-6;
+                        }
+
+                        &:hover {
+                            &::after {
+                                color: $blue-6;
+                            }
+                        }
+                    }
+
+                    &.remove {
+                        &::after {
+                            color: $red-6;
+                        }
+
+                        &:hover {
+                            &::after {
+                                color: $red-6;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-nav-menu-host.jigsaw-nav-menu-default {
+    .jigsaw-nav-menu-items {
+        .jigsaw-nav-menu-item {
+            .jigsaw-nav-menu-item-top {
+                font-size: 14px;
+                font-weight: 700;
+
+                &.jigsaw-nav-menu-item-selected {
+                    color: $brand-default;
+                    font-size: 14px;
+                    font-weight: 700;
+                }
+            }
+
+            .jigsaw-nav-menu-submenus {
+                background: $bg-container;
+            }
+        }
+    }
+}
