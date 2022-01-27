@@ -1,6 +1,9 @@
 const https = require('https');
 
-const url = process.env.CIRCLE_PULL_REQUEST;
+const url = process.env.CIRCLE_PULL_REQUEST, branch = process.env.CIRCLE_BRANCH;
+if (branch === 'master') {
+    process.exit(0);
+}
 console.log('CIRCLE_PULL_REQUEST =', url);
 const match = url.match(/.*\/(\d+)$/);
 if (!match) {
@@ -33,7 +36,7 @@ const req = https.request(options, res => {
         if (!match) {
             exit('PR标题格式非法，未找到类型，title:', pr.title);
         }
-        if (types.indexOf(match[1]) == -1) {
+        if (types.indexOf(match[1]) === -1) {
             exit(`PR标题格式非法，类型 ${match[1]} 不存在，title:`, pr.title);
         }
         console.log('PR标题符合要求！');
@@ -50,6 +53,6 @@ req.end();
 function exit(...messages) {
     console.error(...messages);
     console.error('PR标题格式必须为如下格式之一：');
-    types.map(type => `[${type}] xxxxx`).forEach(item => console.error(item));
+    types.map(type => `[${type}] 任意修改描述，可选关联@123，可选解决@456`).forEach(item => console.error(item));
     process.exit(1);
 }
