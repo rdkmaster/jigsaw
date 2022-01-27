@@ -88,8 +88,8 @@ export class CascadeTabContentInitData {
     selector: 'jigsaw-cascade, j-cascade',
     template: '<j-tabs width="100%"></j-tabs>',
     host: {
-        '[class.jigsaw-cascade]': 'true',
         '[style.width]': 'width',
+        '[class.jigsaw-cascade-host]': 'true',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

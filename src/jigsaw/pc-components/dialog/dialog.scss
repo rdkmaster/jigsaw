@@ -1,90 +1,91 @@
-$dialog-prefix-cls: #{$jigsaw-prefix}-dialog;
+$jigsaw-dialog: #{$jigsaw-prefix}-dialog;
 
-.#{$dialog-prefix-cls}-host {
+.#{$jigsaw-dialog}-host {
     @include inline-block;
     width: 100%;
 
-    &.#{$dialog-prefix-cls}-fixed-height {
-        .#{$dialog-prefix-cls} {
+    .#{$jigsaw-dialog} {
+        position: relative;
+        background: $bg-component;
+        border-radius: $border-radius-base;
+        box-shadow: $box-shadow-lv3;
+
+        .#{$jigsaw-dialog}-head {
+            @include clearfix;
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            padding: 0 16px;
+            height: $height-huge;
+            min-height: $height-huge;
+            background: $bg-component;
+            font-size: $font-title-lg;
+            font-weight: bold;
+            color: $font-color-heading-bold;
+            line-height: 20px;
+            border-bottom: 1px solid $border-color-default;
+            cursor: move;
+
+            & > div {
+                display: flex;
+                align-items: center;
+
+                .iconfont {
+                    margin-right: 5px;
+                }
+            }
+
+            .#{$jigsaw-dialog}-close {
+                position: absolute;
+                right: 16px;
+                font-size: 24px;
+                color: $icon-color-default;
+                cursor: pointer;
+                &:hover {
+                    color: $brand-hover;
+                }
+            }
+        }
+
+        .#{$jigsaw-dialog}-content {
+            padding: 16px 16px 32px 16px;
+            background: $bg-component;
+        }
+
+        .#{$jigsaw-dialog}-button-group {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 56px;
+            min-height: 56px;
+            background: $bg-component;
+
+            & > div {
+                display: flex;
+                align-items: center;
+            }
+
+            jigsaw-button {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    &.#{$jigsaw-dialog}-fixed-height {
+        .#{$jigsaw-dialog} {
             display: flex;
             flex-direction: column;
             height: 100%;
-            .#{$dialog-prefix-cls}-content {
+            .#{$jigsaw-dialog}-content {
                 display: flex;
                 flex-grow: 1;
                 overflow: hidden;
-                .#{$dialog-prefix-cls}-content-inner {
+                .#{$jigsaw-dialog}-content-inner {
                     flex-grow: 1;
                     width: 100%;
                 }
             }
-        }
-    }
-}
-
-.#{$dialog-prefix-cls} {
-    position: relative;
-    background: $bg-component;
-    border-radius: $border-radius-base;
-    box-shadow: $box-shadow-lv3;
-    &-head {
-        @include clearfix;
-        display: flex;
-        align-items: center;
-        position: relative;
-        width: 100%;
-        padding: 0 16px;
-        height: $height-huge;
-        min-height: $height-huge;
-        background: $bg-component;
-        font-size: $font-title-lg;
-        font-weight: bold;
-        color: $font-color-heading-bold;
-        line-height: 20px;
-        border-bottom: 1px solid $border-color-default;
-        cursor: move;
-
-        & > div {
-            display: flex;
-            align-items: center;
-
-            .iconfont {
-                margin-right: 5px;
-            }
-        }
-    }
-
-    &-head &-close {
-        position: absolute;
-        right: 16px;
-        font-size: 24px;
-        color: $icon-color-default;
-        cursor: pointer;
-        &:hover {
-            color: $brand-hover;
-        }
-    }
-
-    &-content {
-        padding: 16px 16px 32px 16px;
-        background: $bg-component;
-    }
-
-    &-button-group {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        height: 56px;
-        min-height: 56px;
-        background: $bg-component;
-
-        & > div {
-            display: flex;
-            align-items: center;
-        }
-
-        jigsaw-button {
-            margin-right: 8px;
         }
     }
 }

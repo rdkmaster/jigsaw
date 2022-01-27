@@ -1,6 +1,6 @@
-$table-prefix-cls: #{$jigsaw-prefix}-table;
+$jigsaw-table: #{$jigsaw-prefix}-table;
 
-.#{$table-prefix-cls}-host {
+.#{$jigsaw-table}-host {
     @include inline-block;
     position: relative;
     width: 100%;
@@ -23,7 +23,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                     height: 40px;
                     background: $bg-header;
 
-                    .#{$table-prefix-cls}-header-cell{
+                    .#{$jigsaw-table}-header-cell{
                         display: inline-flex;
                         justify-content: center;
                         align-items: center;
@@ -41,8 +41,8 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
             }
         }
         tbody {
-            .#{$table-prefix-cls}-line-ellipsis {
-                .#{$table-prefix-cls}-cell-content {
+            .#{$jigsaw-table}-line-ellipsis {
+                .#{$jigsaw-table}-cell-content {
                     width: 100%;
                     @include inline-block();
                     @include line-ellipsis-style();
@@ -61,7 +61,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
                         background: $bg-hover;
                     }
                 }
-                &.#{$table-prefix-cls}-row-selected {
+                &.#{$jigsaw-table}-row-selected {
                     td:not([rowspan]) {
                         background: $brand-active-lighten;
                     }
@@ -74,45 +74,45 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
-.#{$table-prefix-cls}-hide {
+.#{$jigsaw-table}-hide {
     display: none !important;
 }
 
-.#{$table-prefix-cls}-header {
+.#{$jigsaw-table}-header {
     position: absolute;
     top: 0;
     z-index: $zindex-level-1;
 }
 
-.#{$table-prefix-cls}-range {
+.#{$jigsaw-table}-range {
     height: 100%;
     padding-top: 40px;
-    &.#{$table-prefix-cls}-hide-head {
+    &.#{$jigsaw-table}-hide-head {
         padding-top: 0 !important;
     }
 }
 
-.#{$table-prefix-cls}-body-range {
+.#{$jigsaw-table}-body-range {
     height: 100%;
-    &.#{$table-prefix-cls}-no-data {
+    &.#{$jigsaw-table}-no-data {
         height: 160px;
         border: 1px solid $border-color-default;
     }
 
-    .#{$table-prefix-cls}-ff & {
+    .#{$jigsaw-table}-ff & {
         border-left: 1px solid $border-color-default;
         border-right: 1px solid $border-color-default;
     }
 }
 
-.#{$table-prefix-cls}-auto-width {
-    .#{$table-prefix-cls}-cell-content,
+.#{$jigsaw-table}-auto-width {
+    .#{$jigsaw-table}-cell-content,
     jigsaw-table-header {
         white-space: nowrap;
     }
 }
 
-.#{$table-prefix-cls}-no-data-img {
+.#{$jigsaw-table}-no-data-img {
     flex-direction: column;
     align-items: center;
     position: absolute;
@@ -120,13 +120,13 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    .#{$table-prefix-cls}-no-data-text{
+    .#{$jigsaw-table}-no-data-text{
         color: $font-color-hint;
         font-size: $font-size-text-base;
     }
 }
 
-.#{$table-prefix-cls}-body {
+.#{$jigsaw-table}-body {
     > thead td {
         height: 0 !important;
         border: none;
@@ -140,7 +140,7 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
     }
 }
 
-.#{$table-prefix-cls} {
+.#{$jigsaw-table} {
     &-tree-cell {
         display: flex;
         justify-content: center;

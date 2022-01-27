@@ -117,12 +117,13 @@ const commonImport = `
         @import "../settings/paletx-pro-base.scss";
         @import "../settings/paletx-pro-$THEME.scss";
     `;
+const unrefScss = [];
 styleFiles.forEach(filePath => {
     const fileName = filePath.split("/").pop();
     const wingsThemeId = `jigsaw-${fileName}`;
     const idx = wingsThemeIds.indexOf(wingsThemeId);
     if (idx === -1) {
-        console.log('在 all-theme.scss 里有引入，但没有定义@WingsTheme的：', wingsThemeId);
+        unrefScss.push(`\t${fileName}.scss`);
         return;
     }
 
@@ -144,6 +145,7 @@ styleFiles.forEach(filePath => {
     });
 });
 fs.writeFileSync('../../angular.json', JSON.stringify(angularJson, null, 2));
+console.warn('警告：未被@WingsTheme引用的样式文件：\n', unrefScss.join('\n'));
 
 if (wingsThemeIds.length) {
     console.error('有@WingsTheme渲染器，但是all-theme.scss里没有引用的：\n', wingsThemeIds);

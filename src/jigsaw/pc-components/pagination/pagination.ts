@@ -40,7 +40,7 @@ export class PageSizeData {
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
-        "[class.jigsaw-paging]": "true",
+        "[class.jigsaw-paging-host]": "true",
         "[class.jigsaw-paging-simple]": 'mode == "simple"',
         "[class.jigsaw-paging-complex]": 'mode == "complex" || mode == "folding"',
         "[class.jigsaw-paging-small]": 'size == "small"',
@@ -549,8 +549,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     templateUrl: "pagination-item.html",
     host: {
         "(click)": "_onClick()",
+        "[class.jigsaw-page-item-host]": "true",
         "[class.jigsaw-page-current]": "current",
-        "[class.jigsaw-page-item]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

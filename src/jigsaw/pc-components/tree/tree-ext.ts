@@ -26,6 +26,7 @@ export class TreeEventData {
         }
     `],
     host: {
+        '[class.jigsaw-tree-host]': 'true',
         '[class.jigsaw-tree-large]': 'size === "large"',
         '[class.jigsaw-tree-medium]': 'size === "medium"',
         '[class.jigsaw-tree-default]': 'size === "default"',
