@@ -1,7 +1,8 @@
 $jigsaw-switch: #{$jigsaw-prefix}-switch;
 
 .#{$jigsaw-switch}-host {
-    @include inline-block;
+    display: inline-flex;
+
     &.#{$jigsaw-switch}-error .#{$jigsaw-switch} {
         border-color: $error-default;
     }
