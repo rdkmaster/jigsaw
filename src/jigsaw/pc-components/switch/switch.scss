@@ -114,7 +114,7 @@ $jigsaw-switch: #{$jigsaw-prefix}-switch;
             font-size: $font-size-sm;
         }
     }
-    
+
     .#{$jigsaw-switch}-small {
         --switch-height: 12px;
         .#{$jigsaw-switch}-inner {
@@ -122,5 +122,3 @@ $jigsaw-switch: #{$jigsaw-prefix}-switch;
         }
     }
 }
-
-
