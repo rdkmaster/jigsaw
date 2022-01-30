@@ -18,7 +18,8 @@ export class AppComponent implements AfterContentInit {
         { label: "Paletx Pro Light", name: 'paletx-pro', majorStyle: 'light' },
         { label: "Paletx Pro Dark", name: 'paletx-pro', majorStyle: 'dark' },
         { label: "Vmax Pro Light", name: 'vmax-pro', majorStyle: 'light' },
-        { label: "IDEA Light", name: 'idea', majorStyle: 'light' }
+        { label: "IDEA Light", name: 'idea', majorStyle: 'light' },
+        { label: "MASBD Light", name: 'masbd', majorStyle: 'light' }
     ]);
 
     constructor(private _translateService: TranslateService) {
