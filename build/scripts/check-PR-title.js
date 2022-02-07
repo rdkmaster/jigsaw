@@ -1,10 +1,10 @@
 const https = require('https');
 
 const url = process.env.CIRCLE_PULL_REQUEST, branch = process.env.CIRCLE_BRANCH;
+console.log(`CIRCLE_PULL_REQUEST = ${url}, CIRCLE_BRANCH = ${branch}`);
 if (branch === 'master') {
     process.exit(0);
 }
-console.log('CIRCLE_PULL_REQUEST =', url);
 const match = url.match(/.*\/(\d+)$/);
 if (!match) {
     console.error('unable to read PR id from env CIRCLE_PULL_REQUEST');
