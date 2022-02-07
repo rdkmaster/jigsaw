@@ -44,9 +44,10 @@ jobs:
             - run:
                 name: Generate doc
                 command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
-            - run:
-                name: Building jigsaw lib
-                command: npm run build
+                # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
+#            - run:
+#                name: Building jigsaw lib
+#                command: npm run build
             - run:
                 name: Building formly lib
                 command: ./node_modules/.bin/gulp build:formly:clean
