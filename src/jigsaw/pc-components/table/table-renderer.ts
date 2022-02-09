@@ -180,20 +180,25 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
-                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
-                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
-        </jigsaw-input>
+        <div #inputWrapper tabindex="-1" style="outline: none">
+            <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
+                          (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
+                          [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled">
+            </jigsaw-input>
+        </div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
-    constructor( protected _injector: Injector) {
+    constructor(protected _injector: Injector, private _renderer: Renderer2) {
         super(_injector);
     }
 
     @ViewChild(JigsawInput)
     protected input: JigsawInput;
+
+    @ViewChild('inputWrapper')
+    private _inputWrapper: ElementRef;
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
@@ -215,8 +220,28 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
         return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
+    public get _$disabled() {
+        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof this.initData.disabled == 'function' ?
+            !!this.initData.disabled(this.tableData, this.row, this.column) : !!this.initData.disabled : false;
+    }
+
+    private _removeListener;
+
     ngAfterViewInit() {
-        this.input.focus();
+        if (this._$disabled && this._inputWrapper) {
+            this._inputWrapper.nativeElement.focus();
+            this._removeListener = this._renderer.listen(this._inputWrapper.nativeElement, 'blur', () => this.dispatchChangeEvent(this.cellData))
+        } else {
+            this.input.focus();
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeListener) {
+            this._removeListener();
+            this._removeListener = null;
+        }
     }
 }
 
