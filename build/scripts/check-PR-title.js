@@ -41,10 +41,10 @@ const https = require('https');
     console.log('PR标题符合要求！');
 
     async function readUrl(branch) {
-        // if (process.env.CIRCLE_PULL_REQUEST) {
-        //     return Promise.resolve(process.env.CIRCLE_PULL_REQUEST);
-        // }
-
+        if (process.env.CIRCLE_PULL_REQUEST) {
+            return Promise.resolve(process.env.CIRCLE_PULL_REQUEST);
+        }
+    
         console.log('reading url from github...');
         const options = {
             hostname: 'api.github.com',
