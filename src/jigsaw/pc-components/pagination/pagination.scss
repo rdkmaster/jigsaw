@@ -1,5 +1,6 @@
 $jigsaw-paging: #{$jigsaw-prefix}-paging;
 $jigsaw-input: #{$jigsaw-prefix}-input;
+$jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
 .#{$jigsaw-paging}-small {
     --height-paging: #{$height-sm};
@@ -97,8 +98,12 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         margin-right: 8px;
         height: var(--height-paging);
 
-        .#{$jigsaw-input}-host {
+        .#{$jigsaw-auto-complete-input}-host {
             height: var(--height-paging);
+            
+            .#{$jigsaw-input}-host {
+                height: var(--height-paging);
+            }
         }
     }
 

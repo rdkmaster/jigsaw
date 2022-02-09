@@ -7,7 +7,7 @@
 </div>
 
 <ng-template #colorPickerElem>
-    <div style="height: auto;max-width: 238px" [style.maxWidth]="'238px'">
+    <div class="jigsaw-color-select-popup-host" style="height: auto;max-width: 238px" [style.maxWidth]="'238px'">
         <input style="display: none;"
                [(colorPicker)]="color"
                (colorPickerChange)="_$colorSelect($event)"
