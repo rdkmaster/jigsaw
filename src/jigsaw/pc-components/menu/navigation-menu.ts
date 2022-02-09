@@ -19,13 +19,12 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',
     host: {
-        '[class.jigsaw-nav-menu-host]': 'true',
-        '[class.jigsaw-nav-menu-light]': 'theme == "light"',
-        '[class.jigsaw-nav-menu-dark]': 'theme == "dark"',
-        '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
-        '[class.jigsaw-nav-menu-default]': 'theme == "default"',
+        '[style.width]': 'showToggleButton && collapsed ? null : width',
         '[style.height]': 'height',
-        '[style.width]': 'showToggleButton && collapsed ? null : width'
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-nav-menu-host]': 'true',
+        '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
+        '[class.jigsaw-nav-menu-default]': 'theme == "default"'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush

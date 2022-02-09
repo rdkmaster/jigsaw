@@ -411,13 +411,15 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                </jigsaw-select>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                </jigsaw-select>
             </div>
         </section>
     </li>
@@ -603,18 +605,32 @@
             </div>
         </section>
     </li>
-<!--    <li class="list-li xxxx">-->
-<!--        <section class="item-section">-->
-<!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
-<!--            <div class="item-div start">-->
+    <li class="list-li navigation-menu">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">navigation-menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-navigation-menu [theme]="darkTheme" [data]="_$navigationData"></jigsaw-navigation-menu>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">navigation-menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-navigation-menu [theme]="lightTheme" [data]="_$navigationData"></jigsaw-navigation-menu>
+            </div>
+        </section>
+    </li>
+    <!--    <li class="list-li xxxx">-->
+    <!--        <section class="item-section">-->
+    <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
+    <!--            <div class="item-div start">-->
 
-<!--            </div>-->
-<!--        </section>-->
-<!--        <section class="item-section">-->
-<!--            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>-->
-<!--            <div class="item-div start">-->
+    <!--            </div>-->
+    <!--        </section>-->
+    <!--        <section class="item-section">-->
+    <!--            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>-->
+    <!--            <div class="item-div start">-->
 
-<!--            </div>-->
-<!--        </section>-->
-<!--    </li>-->
+    <!--            </div>-->
+    <!--        </section>-->
+    <!--    </li>-->
 </ul>

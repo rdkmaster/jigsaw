@@ -1,5 +1,5 @@
-import {Component, ViewEncapsulation} from "@angular/core";
-import {ArrayCollection, GroupOptionValue, JigsawListLite} from 'jigsaw/public_api';
+import { Component, ViewEncapsulation } from "@angular/core";
+import { ArrayCollection, GroupOptionValue, JigsawListLite, SimpleTreeData } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -21,12 +21,12 @@ export class ThemeBuildInThemeDemoComponent {
     ]);
 
     _$cityList2 = new ArrayCollection([
-        {label: "北京"},
-        {label: "上海", disabled: true},
-        {label: "南京"},
-        {label: "深圳"},
-        {label: "长沙", disabled: true},
-        {label: "西安"}
+        { label: "北京" },
+        { label: "上海", disabled: true },
+        { label: "南京" },
+        { label: "深圳" },
+        { label: "长沙", disabled: true },
+        { label: "西安" }
     ]);
 
     _$dropdownData = [{
@@ -142,6 +142,29 @@ export class ThemeBuildInThemeDemoComponent {
         { groupName: "分组标题2", data: [{ label: "文本选项4" }, { label: "文本选项5" }, { label: "文本选项6" }] },
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
+
+    _$navigationData = new SimpleTreeData();
+
+    constructor() {
+        this._$navigationData.fromXML(`
+        <node>
+            <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
+                <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8"></node>
+                <node label="告警统计"></node>
+                <node label="定时导出" icon="iconfont iconfont-e601"></node>
+                <node label="告警同步"></node>
+                <node label="告警提示" icon="iconfont iconfont-e52a"></node>
+            </node>
+            <node label="历史告警" icon="iconfont iconfont-e5f7">
+                <node label="告警查询"></node>
+            </node>
+            <node label="通知" icon="iconfont iconfont-e605">
+                <node label="通知监控"></node>
+            </node>
+            <node label="告警设置" icon="iconfont iconfont-e36f"></node>
+        </node>
+    `);
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
