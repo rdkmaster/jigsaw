@@ -180,12 +180,10 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <div #inputWrapper tabindex="-1" style="outline: none">
-            <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
-                          (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
-                          [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled">
-            </jigsaw-input>
-        </div>
+        <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
+                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled" tabindex="-1" style="outline: none">
+        </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -195,10 +193,10 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 
     @ViewChild(JigsawInput)
-    protected input: JigsawInput;
+    private _input: JigsawInput;
 
-    @ViewChild('inputWrapper')
-    private _inputWrapper: ElementRef;
+    @ViewChild('input', {read: ElementRef})
+    private _inputEl: ElementRef;
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
@@ -228,11 +226,11 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     private _removeListener;
 
     ngAfterViewInit() {
-        if (this._$disabled && this._inputWrapper) {
-            this._inputWrapper.nativeElement.focus();
-            this._removeListener = this._renderer.listen(this._inputWrapper.nativeElement, 'blur', () => this.dispatchChangeEvent(this.cellData))
+        if (this._$disabled) {
+            this._inputEl.nativeElement.focus();
+            this._removeListener = this._renderer.listen(this._inputEl.nativeElement, 'blur', () => this.dispatchChangeEvent(this.cellData))
         } else {
-            this.input.focus();
+            this._input.focus();
         }
     }
 
