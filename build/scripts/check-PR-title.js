@@ -1,31 +1,25 @@
 const https = require('https');
 
-let url = process.env.CIRCLE_PULL_REQUEST;
-const branch = process.env.CIRCLE_BRANCH;
-console.log(`CIRCLE_PULL_REQUEST = ${url}, CIRCLE_BRANCH = ${branch}`);
-if (branch === 'master') {
-    process.exit(0);
-}
 
 (async () => {
-    if (!url) {
-        console.log('no valid PR url, wait a moment and retry...');
-        await sleep(30);
-        url = process.env.CIRCLE_PULL_REQUEST;
+    const branch = process.env.CIRCLE_BRANCH;
+    if (branch === 'master') {
+        process.exit(0);
     }
+
+    const url = await readUrl(branch);
+    console.log(`CIRCLE_PULL_REQUEST = ${url}, CIRCLE_BRANCH = ${branch}`);
     if (!url) {
-        console.warn('unable to read PR url after retry, rerun this job may fix this problem.');
+        console.warn('unable to read PR url, rerun this job may fix this problem.');
         process.exit(1);
     }
 
-    const match = url.match(/.*\/(\d+)$/);
-    if (!match) {
+    const urlMatch = url.match(/.*\/(\d+)$/);
+    if (!urlMatch) {
         console.error('unable to read PR id from env CIRCLE_PULL_REQUEST');
         process.exit(1);
     }
-    const id = match[1];
-    const types = ['新增', '优化', '故障', '其他', '破坏性修改'];
-
+    const id = urlMatch[1];
     const options = {
         hostname: 'api.github.com',
         port: 443,
@@ -35,33 +29,55 @@ if (branch === 'master') {
             "User-Agent": "jigsaw-checker"
         }
     };
-    const req = https.request(options, res => {
-        console.log(`status code: ${res.statusCode}`);
+    const prInfo = await readData(options);
+    const titleMatch = prInfo.title.match(/^\s*\[(.+)].+/);
+    if (!titleMatch) {
+        exit('PR标题格式非法，未找到类型，title:', prInfo.title);
+    }
+    const types = ['新增', '优化', '故障', '其他', '破坏性修改'];
+    if (types.indexOf(titleMatch[1]) === -1) {
+        exit(`PR标题格式非法，类型 ${titleMatch[1]} 不存在，title:`, prInfo.title);
+    }
+    console.log('PR标题符合要求！');
 
-        let data = '';
-        res.on('data', d => {
-            data += d.toString();
+    async function readUrl(branch) {
+        if (process.env.CIRCLE_PULL_REQUEST) {
+            return Promise.resolve(process.env.CIRCLE_PULL_REQUEST);
+        }
+
+        const options = {
+            hostname: 'api.github.com',
+            port: 443,
+            path: `/repos/rdkmaster/jigsaw/pulls?state=open`,
+            method: 'GET',
+            headers: {"User-Agent": "jigsaw-checker"}
+        };
+        const prList = await readData(options);
+        const pr = prList.find(pr => pr.head.ref === branch);
+        return pr ? pr.url : null;
+    }
+
+    async function readData(options) {
+        return new Promise(resolve => {
+            const req = https.request(options, res => {
+                console.log(`status code: ${res.statusCode}`);
+
+                let data = '';
+                res.on('data', d => {
+                    data += d.toString();
+                });
+
+                res.on('end', d => {
+                    resolve(JSON.parse(data));
+                });
+            });
+            req.on('error', error => {
+                console.error('failed to read data from github, detail:', error)
+                process.exit(1);
+            });
+            req.end();
         });
-
-        res.on('end', d => {
-            const pr = JSON.parse(data);
-            const match = pr.title.match(/^\s*\[(.+)].+/);
-            if (!match) {
-                exit('PR标题格式非法，未找到类型，title:', pr.title);
-            }
-            if (types.indexOf(match[1]) === -1) {
-                exit(`PR标题格式非法，类型 ${match[1]} 不存在，title:`, pr.title);
-            }
-            console.log('PR标题符合要求！');
-        });
-    });
-
-    req.on('error', error => {
-        console.error('failed to read data from github, detail:', error)
-        process.exit(1);
-    });
-
-    req.end();
+    }
 
     async function sleep(sec) {
         return new Promise(resolve => setTimeout(resolve, sec * 1000));
