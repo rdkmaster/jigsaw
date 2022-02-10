@@ -54,6 +54,11 @@
                 "input": "src/jigsaw/common/core/theming/themes/idea-light.scss",
                 "bundleName": "themes/idea-light",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/masbd-light.scss",
+                "bundleName": "themes/masbd-light",
+                "inject": false
               }
             ],
             "scripts": [

@@ -36,7 +36,8 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawTimePickerModule,
         JigsawDateTimeSelectModule,
         JigsawRangeDateTimePickerModule,
-        JigsawRangeDateTimeSelectModule
+        JigsawRangeDateTimeSelectModule,
+        JigsawMenuModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent]
