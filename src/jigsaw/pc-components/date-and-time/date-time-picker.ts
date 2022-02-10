@@ -1,4 +1,4 @@
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -43,18 +43,20 @@ import { InternalUtils } from '../../common/core/utils/internal-utils';
  * $demo = date-time-picker/basic
  * $demo = date-time-picker/date-time-select
  */
+@WingsTheme('date-time-picker.scss')
 @Component({
     selector: 'jigsaw-date-time-picker, j-date-time-picker, jigsaw-time, j-time',
     templateUrl: './date-time-picker.html',
     host: {
-        '[class.jigsaw-date-time-picker]': 'true',
-        '[class.jigsaw-date-time-picker-error]': '!valid',
-        '[class.jigsaw-date-time-picker-disabled]': 'disabled',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-date-time-picker-host]': 'true',
+        '[class.jigsaw-date-time-picker-error]': '!valid',
+        '[class.jigsaw-date-time-picker-disabled]': 'disabled',
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimePicker), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimePicker), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

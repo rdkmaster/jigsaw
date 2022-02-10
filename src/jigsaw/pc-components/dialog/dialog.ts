@@ -19,7 +19,7 @@ import {
     Renderer2
 } from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../common/service/popup.service";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -35,6 +35,8 @@ export interface IDialog extends IPopupable {
 }
 
 export type DialogCallback = (button: ButtonInfo) => void;
+
+export type NoticeLevel = 'success' | 'error' | 'warning' | 'info';
 
 /**
  * 这个类用于应用在需要根据已有的对话框组件派生出该对话框组件的更具体的对话框的时候使用。
@@ -226,6 +228,7 @@ export abstract class AbstractDialogComponentBase
     }
 }
 
+@WingsTheme('dialog.scss')
 @Component({
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',

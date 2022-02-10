@@ -1,44 +1,55 @@
-@import "../../common/assets/scss/core/base";
-
 $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
-.#{$jigsaw-auto-complete-input} {
+.#{$jigsaw-auto-complete-input}-host {
     @include inline-block();
     width: 120px;
     height: $height-base;
+}
 
-    &-list-box{
-        overflow: auto;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $border-color-default;
-        border-radius: 4px;
+.#{$jigsaw-auto-complete-input}-list-box-host {
+    overflow: auto;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-disabled;
+    border-radius: 4px;
+    box-shadow: $box-shadow-lv2;
 
-        ul{
-            margin: 0;
-            padding: 0;
-            li{
-                padding: 6px 16px;
-                cursor: pointer;
-                font-size: 12px;
-                background: $bg-body;
-                label{
-                    margin: 0;
-                    font-weight: 400;
-                }
-                &:hover{
-                    background: $bg-hover;
-                }
+    &.#{$jigsaw-auto-complete-input}-list-box-vacant{
+        box-shadow: $box-shadow-lv0;
+        border: none;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            padding: 6px 16px;
+            cursor: pointer;
+            font-size: 12px;
+            background: $bg-body;
+
+            label {
+                margin: 0;
+                color: $font-color-default;
+                font-weight: 400;
+            }
+
+            &:hover {
+                background: $bg-hover;
             }
         }
     }
-    &-item-title{
+
+    .#{$jigsaw-auto-complete-input}-item-title {
         font-weight: bold;
         margin: 0;
         padding: 3px 10px;
         width: 100%;
+        background: $bg-popup;
         font-size: $font-title-med;
         color: $font-color-heading;
     }
+    
 }
 

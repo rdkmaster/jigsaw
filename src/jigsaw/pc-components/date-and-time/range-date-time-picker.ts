@@ -1,4 +1,4 @@
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -45,10 +45,12 @@ declare const moment: any;
  * $demo = range-date-time-picker/basic
  * $demo = range-date-time-picker/range-date-time-select
  */
+@WingsTheme('range-date-time-picker.scss')
 @Component({
     selector: 'jigsaw-range-date-time-picker, j-range-date-time-picker, jigsaw-range-time, j-range-time',
     templateUrl: './range-date-time-picker.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-range-date-time-picker-host]': 'true',
         '[class.jigsaw-range-date-time-picker-error]': '!valid',
         '[class.jigsaw-range-date-time-picker-disabled]': 'disabled'

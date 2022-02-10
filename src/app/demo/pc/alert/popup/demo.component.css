@@ -1,0 +1,14 @@
+.alert-demo-setting {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.alert-demo-setting > span {
+    width: 40px;
+    margin-right: 8px;
+}
+
+.alert-demo-setting > a {
+    margin-left: 8px;
+}

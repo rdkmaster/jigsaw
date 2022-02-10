@@ -1,17 +1,15 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-cascade: #{$jigsaw-prefix}-cascade;
+$jigsaw-tile: #{$jigsaw-prefix}-tile;
 
-$cascade-prefix-cls: #{$jigsaw-prefix}-cascade;
-$tile-prefix-cls: #{$jigsaw-prefix}-tile;
-
-.#{$cascade-prefix-cls} {
+.#{$jigsaw-cascade}-host {
     display: inline-block;
     border: 1px solid $border-color-default;
     border-radius: $border-radius-base;
 
-    .#{$tile-prefix-cls} {
+    .#{$jigsaw-tile}-host {
         border: none;
 
-        .#{$tile-prefix-cls}-option {
+        .#{$jigsaw-tile}-option {
             width: 70px;
             border: none;
 
@@ -31,7 +29,8 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
             }
         }
     }
-    &-show-all {
+
+    .#{$jigsaw-cascade}-show-all {
         @include inline-block();
         width: 60px;
         height: $height-base;
@@ -53,7 +52,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
         }
     }
 
-    &-loading {
+    .#{$jigsaw-cascade}-loading {
         position: relative;
         width: 100%;
         height: 100px;
@@ -73,11 +72,11 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
         }
     }
 
-    &-search-wrapper {
+    .#{$jigsaw-cascade}-search-wrapper {
         padding: 0 8px;
     }
 
-    &-pagination-wrapper {
+    .#{$jigsaw-cascade}-pagination-wrapper {
         padding: 4px 0;
         text-align: center;
     }

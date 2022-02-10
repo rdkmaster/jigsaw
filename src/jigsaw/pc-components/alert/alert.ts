@@ -30,6 +30,8 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import {WingsTheme} from "../../common/common";
 
 export enum AlertLevel {
     info, warning, error, confirm
@@ -37,6 +39,7 @@ export enum AlertLevel {
 
 export type AlertMessage = {message?: string, header: string};
 
+@WingsTheme('alert.scss')
 @Component({
     selector: 'jigsaw-alert, j-alert',
     templateUrl: 'alert.html',
@@ -197,6 +200,14 @@ export abstract class JigsawCommonAlert extends DialogBase {
             shadowType: 'alert',
             borderRadius: '3px'
         };
+        po.modal = CommonUtils.isUndefined(po.modal) ? modal : po.modal;
+        po.showEffect = CommonUtils.isUndefined(po.showEffect) ? PopupEffect.bubbleIn : po.showEffect;
+        po.hideEffect = CommonUtils.isUndefined(po.hideEffect) ? PopupEffect.bubbleOut : po.hideEffect;
+        po.shadowType = CommonUtils.isUndefined(po.shadowType) ? 'alert' : po.shadowType;
+        po.borderRadius = CommonUtils.isUndefined(po.borderRadius) ? '3px' : po.borderRadius;
+        if (CommonUtils.isDefined(po.size?.height)) {
+            po.size.height = Math.min.apply(Math, [Math.max.apply(Math, [po.size.height, 240]), 600])
+        }
         const popupInfo = PopupService.instance.popup(what, po,
             {message: msg.message, header: msg.header, title: caption, buttons});
         popupInfo.answer.subscribe(answer => {
@@ -230,6 +241,7 @@ export abstract class JigsawCommonAlert extends DialogBase {
     }
 }
 
+@WingsTheme('alert.scss')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-info-alert, j-info-alert',
@@ -278,6 +290,7 @@ export class JigsawInfoAlert extends JigsawCommonAlert {
     }
 }
 
+@WingsTheme('alert.scss')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-warning-alert, j-warning-alert',
@@ -326,12 +339,12 @@ export class JigsawWarningAlert extends JigsawCommonAlert {
     }
 }
 
+@WingsTheme('alert.scss')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-error-alert, j-error-alert',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class JigsawErrorAlert extends JigsawCommonAlert {
     constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
@@ -375,6 +388,7 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     }
 }
 
+@WingsTheme('alert.scss')
 @Component({
     templateUrl: 'common-alert.html',
     selector: 'jigsaw-confirm-alert, j-confirm-alert',
@@ -424,7 +438,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
 }
 
 @NgModule({
-    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, TranslateModule.forChild()],
+    imports: [JigsawDialogModule, JigsawMovableModule, JigsawButtonModule, CommonModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawAlert, JigsawInfoAlert, JigsawWarningAlert, JigsawErrorAlert, JigsawConfirmAlert],
     exports: [
         JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,

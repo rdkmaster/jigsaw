@@ -13,12 +13,12 @@ import {JigsawAutoCompleteInputModule} from "./input/auto-complete-input";
 import {JigsawLoadingModule} from "../common/components/loading/loading";
 import {JigsawNotificationModule} from "./notification/notification";
 import {JigsawPaginationModule} from "./pagination/pagination";
-import {JigsawRadioModule} from "./radio/radio";
+import {JigsawRadioModule} from "./radio/radios";
 import {JigsawScrollbarModule} from "../common/components/scrollbar/index";
 import {JigsawSelectModule} from "./select/index";
 import {JigsawSliderModule} from "./slider/index";
 import {JigsawStepsModule} from "./steps/step";
-import {JigsawSwitchModule} from "./switch/index";
+import {JigsawSwitchModule} from "./switch/switch";
 import {JigsawTableModule} from "./table/table";
 import {JigsawTableRendererModule} from "./table/table-renderer";
 import {JigsawTabsModule} from "./tabs/index";
@@ -64,6 +64,7 @@ import {JigsawHeaderModule} from "./header/header";
 import {JigsawProcessStatusModule} from "./process-status/index";
 import {JigsawUploadFallbackModule} from './fallback/upload/index';
 import {JigsawSearchInputModule} from './input/search-input';
+import {JigsawChartIconModule} from './chart-icon/chart-icon';
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -131,7 +132,8 @@ const JIGSAW_MODULE = [
     JigsawTimeSectionModule,
     JigsawProcessStatusModule,
     JigsawUploadFallbackModule,
-    JigsawSearchInputModule
+    JigsawSearchInputModule,
+    JigsawChartIconModule
 ];
 
 @NgModule({

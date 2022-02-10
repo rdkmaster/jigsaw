@@ -1,0 +1,12 @@
+<div class="jigsaw-toast" [ngClass]="_$getClassObject('jigsaw-toast')" (mouseenter)="_$onEnter()"
+    (mouseleave)="_$onLeave()">
+    <div class="jigsaw-toast-icon">
+        <i class="{{icon}}"></i>
+    </div>
+    <div class="jigsaw-toast-message">
+        {{message}}
+    </div>
+    <div class="jigsaw-toast-close">
+        <i class="iconfont iconfont-e9b8" (click)='_$close()'></i>
+    </div>
+</div>

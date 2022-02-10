@@ -5,7 +5,7 @@ import { JigsawComboSelectModule } from "../combo-select/index";
 import { JigsawSelect } from "./select";
 import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawListModule } from "../list-and-tile/list";
-import { JigsawSelectGroup, JigsawSelectCollapse } from "./select-group";
+import { JigsawSelectGroup, JigsawSelectCollapse } from "./collapse-and-group-select";
 import { JigsawCollapseModule } from "../collapse/collapse";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import {JigsawInputModule} from "../input/input";
@@ -53,4 +53,4 @@ export class JigsawSelectModule {
     }
 }
 export * from "./select";
-export * from "./select-group";
+export * from "./collapse-and-group-select";

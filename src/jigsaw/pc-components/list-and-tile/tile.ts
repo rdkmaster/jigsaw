@@ -1,8 +1,7 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
-    ContentChildren, ElementRef,
+    ContentChildren,
     forwardRef, Injector,
     Input,
     NgModule,
@@ -12,21 +11,22 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {JigsawInputModule} from '../input/input';
 import {AbstractJigsawGroupComponent, AbstractJigsawOptionComponent} from "./group-common";
-import {ArrayCollection} from "../../common/core/data/array-collection";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('tile.scss')
 @Component({
     selector: 'jigsaw-tile, j-tile',
     template: '<ng-content></ng-content>',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-tile]': 'true',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tile-host]': 'true',
         '[class.jigsaw-tile-error]': '!valid',
         '[class.jigsaw-tile-without-border]': '!showBorder'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTile), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

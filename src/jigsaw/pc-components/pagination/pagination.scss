@@ -1,28 +1,27 @@
-@import "../../common/assets/scss/core/base";
-
-$paging-prefix-cls: #{$jigsaw-prefix}-paging;
+$jigsaw-paging: #{$jigsaw-prefix}-paging;
 $jigsaw-input: #{$jigsaw-prefix}-input;
+$jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
-.#{$paging-prefix-cls}-small {
+.#{$jigsaw-paging}-small {
     --height-paging: #{$height-sm};
 }
 
-.#{$paging-prefix-cls}-medium {
+.#{$jigsaw-paging}-medium {
     height: $height-med;
     --height-paging: #{$height-med};
 }
 
-.#{$paging-prefix-cls}-large {
+.#{$jigsaw-paging}-large {
     --height-paging: #{$height-base};
 }
 
-.#{$paging-prefix-cls} {
+.#{$jigsaw-paging}-host {
     display: inline-flex;
     align-items: center;
     font-size: $font-size-base;
     user-select: none;
 
-    &-page {
+    .#{$jigsaw-paging}-page {
         position: relative;
         @include inline-block;
         width: var(--height-paging);
@@ -38,12 +37,12 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         vertical-align: top;
         @include prefixer(transition, all 0.3s ease);
 
-        &.#{$paging-prefix-cls}-prev,
-        &.#{$paging-prefix-cls}-next {
+        &.#{$jigsaw-paging}-prev,
+        &.#{$jigsaw-paging}-next {
             font-size: $icon-size-sm;
         }
 
-        &.#{$paging-prefix-cls}-disabled {
+        &.#{$jigsaw-paging}-disabled {
             border-color: $border-color-disabled;
             color: $font-color-disabled;
             cursor: not-allowed;
@@ -60,13 +59,13 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
-    &-left {
+    .#{$jigsaw-paging}-left {
         &:before {
             content: "\f104";
         }
     }
 
-    &-right {
+    .#{$jigsaw-paging}-right {
         &:before {
             content: "\f105";
         }
@@ -76,7 +75,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         margin-right: 8px;
     }
 
-    &-goto {
+    .#{$jigsaw-paging}-goto {
         display: inline-flex;
         align-items: center;
         height: var(--height-paging);
@@ -95,16 +94,20 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
-    &-search {
+    .#{$jigsaw-paging}-search {
         margin-right: 8px;
         height: var(--height-paging);
 
-        .#{$jigsaw-input} {
+        .#{$jigsaw-auto-complete-input}-host {
             height: var(--height-paging);
+            
+            .#{$jigsaw-input}-host {
+                height: var(--height-paging);
+            }
         }
     }
 
-    &-page-size {
+    .#{$jigsaw-paging}-page-size {
         height: var(--height-paging);
         .#{$jigsaw-prefix}-combo-select-host {
             height: var(--height-paging);
@@ -131,8 +134,8 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
-    &.#{$paging-prefix-cls}-simple {
-        .#{$paging-prefix-cls}-page {
+    &.#{$jigsaw-paging}-simple {
+        .#{$jigsaw-paging}-page {
             height: var(--height-paging);
             line-height: var(--height-paging);
             border: none;
@@ -141,12 +144,12 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             margin-right: 8px;
         }
 
-        .#{$paging-prefix-cls}-total-page-number {
+        .#{$jigsaw-paging}-total-page-number {
             vertical-align: middle;
             margin-right: 4px;
         }
 
-        .#{$paging-prefix-cls}-current-page {
+        .#{$jigsaw-paging}-current-page {
             margin: 0 4px;
             vertical-align: middle;
             height: var(--height-paging);

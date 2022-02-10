@@ -42,9 +42,9 @@ export class ChartIconBar {
 
 export class ChartIconCustomPieLegend {
     /**
-     * orient只有'top'和'right'两个值
-     * - 如果是'right'，图例的默认宽度是100，用户也可以自定义
-     * - 如果是'top'，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
+     * orient只有top和right两个值
+     * - 如果是right，图例的默认宽度是100，用户也可以自定义
+     * - 如果是top，图例的高度是自动算出来的，所以height属性不需要配置，width也不用配置
      */
     orient: string;
     data: string[];
@@ -63,7 +63,10 @@ export class ChartIconCustomPie {
     series?: any;
     after?: Function;
     link?: Function | string;
-    title: string[]; // 当没有title，默认使用legend.data
+    /**
+     * 当没有title，默认使用legend.data
+     */
+    title: string[];
     context?: object;
 }
 
@@ -71,9 +74,12 @@ export enum ChartType {
     pie, donut, line, bar, customPie
 }
 
+export type ChartIconOptions = ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie;
+
+// @dynamic
 export class ChartIconFactory {
-    public static create(selector: string, chartType: ChartType, options: ChartIconPie | ChartIconDonut | ChartIconLine | ChartIconBar | ChartIconCustomPie) {
-        $(selector).peity(this._chartTypeMap.get(chartType), options);
+    public static create(selector: string | HTMLElement, chartType: ChartType, options: ChartIconOptions): any {
+        return $(selector).peity(this._chartTypeMap.get(chartType), options);
     }
 
     private static _chartTypeMap = new Map([
@@ -97,7 +103,7 @@ export class ChartIconFactory {
             },
             function (opts) {
                 if (!opts.delimiter) {
-                    let delimiter = this.$el.text().match(/[^0-9\.]/);
+                    let delimiter = this.$el.text().match(/[^0-9.]/);
                     opts.delimiter = delimiter ? delimiter[0] : ","
                 }
 

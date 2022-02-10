@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -6,10 +7,12 @@ import {
     forwardRef,
     Injector,
     Input,
+    NgModule,
     OnInit,
     Output
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 
 /**
  * @description 开关组件
@@ -17,10 +20,12 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
  * 何时使用
  * 只有两种状态切换时.
  */
+@WingsTheme('switch.scss')
 @Component({
     selector: 'jigsaw-switch, j-switch',
     templateUrl: './switch.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-switch-host]': 'true',
         '[class.jigsaw-switch-error]': '!valid'
     },
@@ -30,10 +35,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawSwitch implements ControlValueAccessor, OnInit {
+export class JigsawSwitch extends AbstractJigsawComponent implements ControlValueAccessor, OnInit {
     constructor(private _changeDetector: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super();
     }
 
     /**
@@ -240,3 +246,11 @@ export class JigsawSwitch implements ControlValueAccessor, OnInit {
         this.disabled = disabled;
     }
 }
+
+@NgModule({
+    imports: [CommonModule],
+    exports: [JigsawSwitch],
+    declarations: [JigsawSwitch],
+    providers: [],
+})
+export class JigsawSwitchModule { }

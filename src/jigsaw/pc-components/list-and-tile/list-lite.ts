@@ -12,6 +12,7 @@ import {JigsawInputModule} from "../input/input";
 import {GroupOptionValue} from "./group-common";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
+import {WingsTheme} from "../../common/common";
 
 type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<GroupOptionValue> | PageableArray | GroupOptionValue[];
 
@@ -25,19 +26,20 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
  * - 可以和combo结合起来使用
  */
 // @dynamic
+@WingsTheme('list-lite.scss')
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `
-        <j-input *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
+        <j-input [theme]="theme" *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
                  (valueChange)="_$handleSearching($event)">
             <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </j-input>
         <div class="jigsaw-list-lite-wrapper"
              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">
-            <j-list width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
+            <j-list [theme]="theme" width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
-                <j-list-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+                <j-list-option [theme]="theme" *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                                [disabled]="item?.disabled">
                     <p j-title class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
@@ -51,12 +53,13 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
         </div>
     `,
     host: {
-        '[class.jigsaw-list-lite]': 'true',
-        '[class.jigsaw-list-lite-error]': '!valid',
-        '[style.width]': 'width'
+        '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-list-lite-host]': 'true',
+        '[class.jigsaw-list-lite-error]': '!valid'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawListLite), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

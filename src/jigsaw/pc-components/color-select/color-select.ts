@@ -9,17 +9,18 @@ import {
     ElementRef,
     Injector
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('color-select.scss')
 @Component({
     selector: 'jigsaw-color-select',
     templateUrl: "./color-select.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        '[class.jigsaw-color-select]': 'true',
         '[style.width]': 'width',
+        '[class.jigsaw-color-select-host]': 'true',
         '[class.jigsaw-color-select-size-small]': "preSize === 'small'",
         '[class.jigsaw-color-select-size-large]': "preSize === 'large'",
         '[class.jigsaw-color-select-size-normal]': "preSize === 'normal'"
@@ -60,6 +61,30 @@ export class JigsawColorSelect extends AbstractJigsawComponent implements OnInit
      */
     @Input()
     public preSize: 'large' | 'normal' | 'small' = "large";
+
+    private _optionCount: number = 5;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get optionCount(): number {
+        return this._optionCount;
+    }
+
+    public set optionCount(value: number) {
+        value = parseInt(<any>value);
+        if (isNaN(value)) {
+            return;
+        }
+        this._optionCount = value;
+        this._$dropdownHeight = value * 24 + 'px';
+    }
+
+    /**
+     * @internal
+     */
+    public _$dropdownHeight = this._optionCount * 24 + 'px';
 
     @Output()
     public colorChange: EventEmitter<any> = new EventEmitter<any>();

@@ -1,131 +1,130 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-alert: #{$jigsaw-prefix}-alert;
 
-$alert-prefix-cls: #{$jigsaw-prefix}-alert;
-
-.#{$alert-prefix-cls}-host {
-    @include inline-block;
+.#{$jigsaw-alert}-host {
+    display: inline-flex;
     width: 100%;
-    user-select: none;
-}
 
-.#{$alert-prefix-cls} {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    width: 480px;
-    min-height: 240px;
-    background: $bg-body;
-    border-width: 1px;
-    border-style: solid;
-    border-color: $border-color-default;
-    border-radius: $border-radius-base;
-
-    &-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: $height-huge;
-        padding: 0 16px;
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        border-bottom-color: $splitline-default;
-        cursor: move;
-    }
-
-    &-head &-title {
-        font-size: $font-title-lg;
-        font-weight: bold;
-        color: $font-color-heading-bold;
-    }
-
-    &-head &-close {
-        text-align: right;
-        font-size: $icon-size-med;
-        color: $icon-color-default;
-        cursor: pointer;
-        &:hover {
-            color: $brand-hover;
-        }
-    }
-
-    &-content {
+    .#{$jigsaw-alert} {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 0 32px 0 32 + $height-sm;
-        max-height: 80vh;
-        outline: red;
-        overflow: hidden;
+        justify-content: space-between;
+        position: relative;
+        width: 480px;
+        min-height: 240px;
+        background: $bg-body;
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
 
-        .content-main {
-            position: relative;
-            margin-bottom: 8px;
+        .#{$jigsaw-alert}-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: $height-huge;
+            padding: 0 16px;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: $splitline-default;
+            cursor: move;
 
-            i {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                left: (0 - $height-sm);
-                width: $height-sm;
-                height: $height-sm;
-                font-size: 24px;
-            }
-
-            p {
-                font-size: $font-size-lg;
+            .#{$jigsaw-alert}-title {
+                font-size: $font-title-lg;
                 font-weight: bold;
-                line-height: $height-sm;
                 color: $font-color-heading-bold;
             }
-        }
 
-        .content-sub {
-            p {
-                font-size: $font-size-base;
-                color: $font-color-hint;
-                word-break: break-word;
-            }
-        }
-    }
-
-    &-info &-icon {
-        padding-right: 12px;
-        color: $primary-default;
-    }
-
-    &-warning &-icon {
-        padding-right: 12px;
-        color: $warning-default;
-    }
-
-    &-error &-icon {
-        padding-right: 12px;
-        color: $error-default;
-    }
-
-    &-confirm &-icon {
-        padding-right: 12px;
-        color: $primary-default;
-    }
-
-    &-button-group {
-        display: flex;
-        justify-content: center;
-        height: $height-base + 24px;
-
-        jigsaw-button {
-            margin-right: 8px;
-            &:last-child {
-                margin-right: 0;
+            .#{$jigsaw-alert}-close {
+                text-align: right;
+                font-size: $icon-size-med;
+                color: $icon-color-default;
+                cursor: pointer;
+                &:hover {
+                    color: $brand-hover;
+                }
             }
         }
 
-        div {
-            display: inline-block;
+        .#{$jigsaw-alert}-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 18px 32px 10px 32 + $height-sm;
+            max-height: 80vh;
+            outline: red;
+            overflow: hidden;
+
+            .content-main {
+                position: relative;
+                margin-bottom: 8px;
+
+                i {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute;
+                    top: 0;
+                    left: (0 - $height-sm);
+                    width: $height-sm;
+                    height: $height-sm;
+                    font-size: 24px;
+                }
+
+                p {
+                    font-size: $font-size-lg;
+                    font-weight: bold;
+                    line-height: $height-sm;
+                    color: $font-color-heading-bold;
+                }
+            }
+
+            .content-sub {
+                p {
+                    font-size: $font-size-base;
+                    color: $font-color-hint;
+                    word-break: break-word;
+                    max-height: 60vh;
+                }
+            }
+        }
+
+        .#{$jigsaw-alert}-button-group {
+            display: flex;
+            justify-content: center;
+            height: $height-base + 24px;
+
+            jigsaw-button {
+                margin-right: 8px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            div {
+                display: inline-block;
+            }
+        }
+
+        &.#{$jigsaw-alert}-info .#{$jigsaw-alert}-icon {
+            padding-right: 12px;
+            color: $primary-default;
+        }
+
+        &.#{$jigsaw-alert}-warning .#{$jigsaw-alert}-icon {
+            padding-right: 12px;
+            color: $warning-default;
+        }
+
+        &.#{$jigsaw-alert}-error .#{$jigsaw-alert}-icon {
+            padding-right: 12px;
+            color: $error-default;
+        }
+
+        &.#{$jigsaw-alert}-confirm .#{$jigsaw-alert}-icon {
+            padding-right: 12px;
+            color: $primary-default;
         }
     }
 }

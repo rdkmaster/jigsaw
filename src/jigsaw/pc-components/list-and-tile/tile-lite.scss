@@ -1,0 +1,65 @@
+$jigsaw-tile-lite: #{$jigsaw-prefix}-tile-lite;
+$jigsaw-tile: #{$jigsaw-prefix}-tile;
+$jigsaw-tile-option: #{$jigsaw-tile}-option;
+
+.#{$jigsaw-tile-lite}-host {
+    .#{$jigsaw-tile}-host {
+        @include inline-block();
+        border-width: 1px;
+        border-style: solid;
+        border-color: $border-color-default;
+        border-radius: $border-radius-base;
+        padding: 8px 0px 0px 8px;
+        background: $bg-component;
+
+        &.#{$jigsaw-tile}-error {
+            border-color: $error-default;
+        }
+
+        .#{$jigsaw-tile}-search {
+            margin-bottom: 8px;
+            margin-right: 8px;
+        }
+
+        &.#{$jigsaw-tile}-without-border {
+            border: none;
+        }
+
+        .#{$jigsaw-tile-option} {
+            @include inline-block();
+            width: 60px;
+            height: $height-base;
+            line-height: $height-base;
+            font-size: $font-size-base;
+            text-align: center;
+            color: $font-color-default;
+            margin: {
+                right: 8px;
+                bottom: 8px;
+            }
+            padding: 0 4px;
+            cursor: pointer;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $border-color-default;
+            border-radius: $border-radius-base;
+            @include line-ellipsis-style();
+
+            &:hover,
+            &.#{$jigsaw-tile-option}-active {
+                color: $brand-default;
+            }
+
+            &.#{$jigsaw-tile-option}-active {
+                border-color: $brand-default;
+                background: $brand-lighten;
+            }
+
+            &.#{$jigsaw-tile-option}-disabled {
+                background: $bg-disabled;
+                color: $font-color-disabled;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

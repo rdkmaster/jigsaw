@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from "@angular/c
 import {HttpClient} from "@angular/common/http";
 import {
     TableData, ColumnDefine, JigsawInput, TableCellRendererBase,
-    TableCellNumericEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellSwitchRenderer
+    TableCellNumericEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer
 } from "jigsaw/public_api";
 
 /*
@@ -61,6 +61,18 @@ export class TableSetCellEditableDemoComponent {
     }
 
     columns: ColumnDefine[] = [
+        {
+            target: 'name',
+            cell: {
+                editable: true,
+                editorRenderer: TableCellTextEditorRenderer,
+                editorRendererInitData: {
+                    disabled: (data, row, cell) => {
+                        return row % 2
+                    }
+                }
+            }
+        },
         {
             target: 'desc',
             cell: {

@@ -13,13 +13,14 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawSwitchModule} from "../switch/index";
+import {JigsawSwitchModule} from "../switch/switch";
 import {JigsawSelectModule} from "../select/index";
+import {JigsawProgressModule} from "../progress/progress";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { DragDropInfo } from "../../common/directive/dragdrop/types";
-import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
+import {DragDropInfo} from "../../common/directive/dragdrop/types";
+import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -144,7 +145,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
-        [password]="true" [clearable]="false" [disabled]="true" (blur)="dispatchChangeEvent(cellData)">
+                      [password]="true" [clearable]="false" [disabled]="true" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `,
     styles: [`
@@ -181,18 +182,21 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
     template: `
         <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
-                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled" tabindex="-1" style="outline: none">
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
-    constructor( protected _injector: Injector) {
+    constructor(protected _injector: Injector, private _renderer: Renderer2) {
         super(_injector);
     }
 
     @ViewChild(JigsawInput)
-    protected input: JigsawInput;
+    private _input: JigsawInput;
+
+    @ViewChild('input', {read: ElementRef})
+    private _inputEl: ElementRef;
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
@@ -214,8 +218,28 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
         return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
+    public get _$disabled() {
+        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof this.initData.disabled == 'function' ?
+            !!this.initData.disabled(this.tableData, this.row, this.column) : !!this.initData.disabled : false;
+    }
+
+    private _removeListener: Function;
+
     ngAfterViewInit() {
-        this.input.focus();
+        if (this._$disabled) {
+            this._inputEl.nativeElement.focus();
+            this._removeListener = this._renderer.listen(this._inputEl.nativeElement, 'blur', () => this.dispatchChangeEvent(this.cellData))
+        } else {
+            this._input.focus();
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeListener) {
+            this._removeListener();
+            this._removeListener = null;
+        }
     }
 }
 
@@ -245,15 +269,15 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     public get _$placeholder() {
-        return this._initDataJson && this._initDataJson.placeholder ? this._initDataJson.placeholder : '';
+        return this._initDataJson?.placeholder ? this._initDataJson.placeholder : '';
     }
 
     public get _$dropDownData() {
-        return this._initDataJson && this._initDataJson.data ? this._initDataJson.data : null;
+        return this._initDataJson?.data ? this._initDataJson.data : null;
     }
 
     public get _$maxDropDownHeight() {
-        return this._initDataJson && this._initDataJson.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
+        return this._initDataJson?.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
     }
 
     ngAfterViewInit() {
@@ -303,8 +327,9 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled"
-                         [valid]="_$valid" mode="minimalist"></jigsaw-checkbox>`,
+        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
+                         [title]="_$title" mode="minimalist">
+        </jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
@@ -324,11 +349,15 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 
     public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
     }
 
     public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
+
+    public get _$title() {
+        return this._initDataJson?.hasOwnProperty('title') ? this._initDataJson.title : '';
     }
 
     public get checked(): CheckBoxStatus {
@@ -339,7 +368,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            this._additionalData.touchValueByRow(this.field, index, value);
+            if (this.targetData instanceof AdditionalTableData) {
+                this.targetData.touchValueByRow(this.field, index, value);
+            }
         });
         this.targetData.refresh();
     }
@@ -347,7 +378,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            let value = this._additionalData.getTouchedValueByRow(this.field, index);
+            let value = this.targetData instanceof AdditionalTableData ?
+                this.targetData.getTouchedValueByRow(this.field, index) : undefined;
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
             type |= value ? 2 : 1;
         });
@@ -368,43 +400,32 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
-/**
- * cell checkbox renderer
- */
-@Component({
-    template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid" mode="minimalist"
-                         (checkedChange)="onChange($event)">
-        </jigsaw-checkbox>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class TableCellCheckboxRenderer extends TableCellRendererBase {
+export class TableCellToggleRendererBase extends TableCellRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_injector);
+    }
+
     protected onDataRefresh() {
         this._updateChecked();
         this._updateTargetData();
         this._updateInitData();
     }
 
-    private _initDataJson: any;
+    protected _initDataJson: any;
+
+    public get _$disabled() {
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
 
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
             this.initData(this.tableData, this.row, this.column) : this.initData;
-    }
-
-    public get _$disabled() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
-    }
-
-    public get _$valid() {
-        return this._initDataJson && this._initDataJson.hasOwnProperty('valid') ? this._initDataJson.valid : true;
-    }
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, private _zone: NgZone) {
-        super(_injector);
     }
 
     public checked: boolean;
@@ -422,7 +443,8 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
     }
 
     private _updateChecked(): void {
-        let checked = this._additionalData.getTouchedValueByRow(this.field, this.row);
+        let checked = this.targetData instanceof AdditionalTableData ?
+            this.targetData.getTouchedValueByRow(this.field, this.row) : undefined;
         checked = CommonUtils.isDefined(checked) ? checked : this.cellData;
         this.checked = checked;
         this._changeDetectorRef.markForCheck();
@@ -437,7 +459,9 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     onChange(value) {
         this.checked = value;
-        this._additionalData.touchValueByRow(this.field, this.row, value);
+        if (this.targetData instanceof AdditionalTableData) {
+            this.targetData.touchValueByRow(this.field, this.row, value);
+        }
         this._updateTargetData();
         this.dispatchChangeEvent(value);
         this._changeDetectorRef.markForCheck();
@@ -450,7 +474,8 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 
     ngOnInit() {
         super.ngOnInit();
-        if (!this._additionalData.trackRowBy && this.row == 0) { // this.row == 0 ensures print once
+        // this.row == 0 to ensures print once
+        if (this.targetData instanceof AdditionalTableData && !this.targetData.trackRowBy && this.row == 0) {
             console.warn('You may need to add a [trackRowBy="field-name"] attribute to ' +
                 'the table if using a renderer which has status.');
         }
@@ -458,30 +483,75 @@ export class TableCellCheckboxRenderer extends TableCellRendererBase {
 }
 
 /**
+ * cell checkbox renderer
+ */
+@Component({
+    template: `
+        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
+                         mode="minimalist" (checkedChange)="onChange($event)">
+        </jigsaw-checkbox>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
+}
+
+/**
  * switch renderer
  */
 @Component({
-    template: '<j-switch [(checked)]="cellData" (checkedChange)="dispatchChangeEvent(cellData)" [readonly]="_$readonly"></j-switch>',
+    template: `
+        <j-switch [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
+                  (checkedChange)="onChange($event)">
+        </j-switch>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableCellSwitchRenderer extends TableCellRendererBase {
+export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_changeDetectorRef, _injector, _zone);
+    }
+
     /**
      * @internal
      */
-    public _$readonly: boolean;
+    public get _$readonly() {
+        return this._initDataJson?.hasOwnProperty('readonly') ? this._initDataJson.readonly : false;
+    }
+}
 
-    set initData(value: any) {
-        if (!value || !value.hasOwnProperty('readonly')) {
-            return;
-        }
-        this._$readonly = value.readonly;
-        this._changeDetectorRef.markForCheck();
+/**
+ * cell Progress renderer
+ */
+@Component({
+    template: `
+        <j-progress [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
+                    [animate]="_$animate" [status]="_$status"></j-progress>
+    `,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellProgressRenderer extends TableCellRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_injector);
     }
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super(_injector);
+    public get _$animate() {
+        return this.initData?.animate || '';
+    }
+
+    public get _$status() {
+        return this.initData?.status || 'processing';
+    }
+
+    public get _$labelPosition() {
+        return this.initData?.labelPosition || 'none';
     }
 }
 
@@ -503,16 +573,16 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     `,
     styles: [
         `
-        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
-            min-height: 28px;
-            height: 28px;
-            border-color: transparent;
-        }
+            .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
+                min-height: 28px;
+                height: 28px;
+                border-color: transparent;
+            }
 
-        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
-            min-height: 26px;
-            height: 26px;
-        }
+            .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
+                min-height: 26px;
+                height: 26px;
+            }
         `
     ],
     encapsulation: ViewEncapsulation.None,
@@ -641,10 +711,10 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
     `,
     styles: [
         `
-        .jigsaw-table-tree-cell {
-            justify-content: flex-start;
-            margin-left: 8px;
-        }
+            .jigsaw-table-tree-cell {
+                justify-content: flex-start;
+                margin-left: 8px;
+            }
         `
     ],
 })
@@ -653,14 +723,15 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     public tableData: PageableTreeTableData;
 
     public get indent(): string {
-        return (this.cellData.id.length - 1) * 20 + 'px';
+        return (this.cellData.id.split("-").length - 2) * 20 + 'px';
     }
 
     /**
      * @internal
      */
     public _$toggleOpenNode() {
-        const indexes = this.cellData.id.split('');
+        const indexes = this.cellData.id.split('-');
+        indexes.shift();
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);
     }
 }
@@ -671,27 +742,27 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <div class="jigsaw-table-option-box"
-            jigsaw-draggable
-            jigsaw-droppable
-            [title]="_$title"
-            (jigsawDragStart)="_$dragStartHandle($event)"
-            (jigsawDragEnd)="_$dragEndHandle()">
+             jigsaw-draggable
+             jigsaw-droppable
+             [title]="_$title"
+             (jigsawDragStart)="_$dragStartHandle($event)"
+             (jigsawDragEnd)="_$dragEndHandle()">
             <span class="drop-top"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)">
+                  jigsaw-droppable
+                  (jigsawDragEnter)="_$dragEnterHandle($event)"
+                  (jigsawDrop)="_$dropHandle($event)">
             </span>
             <span class="drop-mid"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)">
+                  jigsaw-droppable
+                  (jigsawDragEnter)="_$dragEnterHandle($event)"
+                  (jigsawDrop)="_$dropHandle($event)">
                 <i [class]="_$icon"></i>
                 <p>{{_$label}}</p>
             </span>
             <span class="drop-bottom"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)">
+                  jigsaw-droppable
+                  (jigsawDragEnter)="_$dragEnterHandle($event)"
+                  (jigsawDrop)="_$dropHandle($event)">
             </span>
         </div>
     `
@@ -704,15 +775,15 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     public get _$icon() {
-        return this.initData && this.initData.icon ? this.initData.icon : "iconfont iconfont-e515";
+        return this.initData?.icon ? this.initData.icon : "iconfont iconfont-e515";
     }
 
     public get _$label() {
-        return this.initData && this.initData.label ? this.initData.label : '';
+        return this.initData?.label ? this.initData.label : '';
     }
 
     public get _$title() {
-        return this.initData && this.initData.title ? this.initData.title : '';
+        return this.initData?.title ? this.initData.title : '';
     }
 
     /**
@@ -810,7 +881,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     ngAfterViewInit() {
-        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "tr" );
+        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll("tr");
         this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
     }
 }
@@ -819,11 +890,12 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow,
+        TableCellProgressRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
-        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule
+        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule
     ]
 })
 export class JigsawTableRendererModule {

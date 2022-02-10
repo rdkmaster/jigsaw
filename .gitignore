@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+angular.json
 
 # dependencies
 /node_modules
@@ -28,6 +29,7 @@
 npm-debug.log
 testem.log
 src/jigsaw/common/core/theming/prebuilt/extraction/*
+src/jigsaw/common/core/theming/prebuilt/wings-theme/*
 
 # e2e
 /e2e/*.js

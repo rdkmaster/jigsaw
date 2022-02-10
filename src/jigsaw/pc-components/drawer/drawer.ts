@@ -11,8 +11,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
 import {CommonModule} from "@angular/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
@@ -21,10 +21,12 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
  *
  * $since = v1.1.7
  */
+@WingsTheme('drawer.scss')
 @Component({
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html',
     host: {
+        '[class.jigsaw-drawer-host]': 'true',
         '[class.jigsaw-drawer-in-dom]': '!floating',
         '[class.jigsaw-drawer-auto-size]': '!floating && autoSize'
     },

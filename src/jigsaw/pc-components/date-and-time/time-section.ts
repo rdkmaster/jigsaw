@@ -17,7 +17,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
@@ -52,6 +52,9 @@ export type TimeSection = {
 
 export type TimeSectionValue = TimeSection;
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-time-section-picker, j-time-section-picker',
     template: `
@@ -249,6 +252,9 @@ export class JigsawTimeSectionPicker extends AbstractJigsawComponent implements 
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-week-section-picker, j-week-section-picker',
     template: `
@@ -362,6 +368,9 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-day-section-picker, j-day-section-picker',
     template: `
@@ -524,6 +533,7 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
     }
 }
 
+@WingsTheme('time-section.scss')
 @Component({
     selector: 'jigsaw-time-section, j-time-section',
     template: `

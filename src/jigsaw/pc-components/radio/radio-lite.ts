@@ -12,13 +12,14 @@ import {
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "./radio";
+import {JigsawRadioModule} from "./radios";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('radios-lite.scss')
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `
@@ -28,11 +29,12 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
             </j-radio-option>
         </j-radios>`,
     host: {
-        '[class.jigsaw-radios-lite]': 'true',
-        '[class.jigsaw-radios-error]': '!valid'
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-radios-lite-host]': 'true',
+        '[class.jigsaw-radios-lite-error]': '!valid'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

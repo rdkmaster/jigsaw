@@ -1,0 +1,70 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap" style="width: 2000px; height: 1000px;">
+    <jigsaw-header [level]="1">Box</jigsaw-header>
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="4">布局</jigsaw-header>
+        <jigsaw-button-bar [(selectedItems)]="selectedType" [data]="types"></jigsaw-button-bar>
+        <br>
+        <br>
+        <j-button jigsaw-draggable (jigsawDragStart)="layoutStart.emit($event)" (jigsawDragEnd)="layoutEnd.emit($event)">表格</j-button>
+        <j-button jigsaw-draggable (jigsawDragStart)="layoutStart.emit($event)" (jigsawDragEnd)="layoutEnd.emit($event)">图形</j-button>
+        <br>
+        <br>
+        <div class="box-layout" style="display: inline-block"
+             jigsaw-droppable (jigsawDragOver)="layoutEvent.emit($event)" (jigsawDrop)="insert.emit($event)">
+            <j-editable-box #rootBox direction="v" height="600" width="800" [padding]="10" [gap]="10" id="box_0">
+                <j-editable-box style="min-height: 50px" grow="2" id="box_0_0" [gap]="10">
+                    <j-editable-box id="box_0_0_">
+                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                    </j-editable-box>
+                    <j-editable-box id="box_0_0_0">
+                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                    </j-editable-box>
+                    <j-editable-box id="box_0_0_1">
+                        <j-editable-box id="box_0_0_1_0"></j-editable-box>
+                        <j-editable-box id="box_0_0_1_1"></j-editable-box>
+                        <j-editable-box direction="v" id="box_0_0_2">
+                            <j-editable-box id="box_0_0_2_0">
+                                <j-editable-box id="box_0_0_2_0_0"></j-editable-box>
+                                <j-editable-box id="box_0_0_2_0_1"></j-editable-box>
+                            </j-editable-box>
+                            <j-editable-box id="box_0_0_2_1">
+                                <j-editable-box id="box_0_0_2_1_0"></j-editable-box>
+                                <j-editable-box id="box_0_0_2_1_1"></j-editable-box>
+                            </j-editable-box>
+                        </j-editable-box>
+                    </j-editable-box>
+                </j-editable-box>
+                <j-editable-box style="min-height: 100px" grow="2" id="box_0_1" [gap]="10">
+                    <j-editable-box id="box_0_1_0">
+
+                    </j-editable-box>
+                    <j-editable-box grow="4" id="box_0_1_1">
+                        <j-editable-box id="box_0_1_1_0_">
+                            <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                        </j-editable-box>
+                        <j-editable-box id="box_0_1_1_0" direction="v" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+                            <j-editable-box id="box_0_1_1_0_1" height="300">
+                                <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                            </j-editable-box>
+                            <j-editable-box id="box_0_1_1_0_2" height="300">
+                                <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                            </j-editable-box>
+                        </j-editable-box>
+                    </j-editable-box>
+                </j-editable-box>
+                <j-editable-box id="box_0_2" [gap]="10">
+
+                </j-editable-box>
+            </j-editable-box>
+        </div>
+    </div>
+</div>
+
+
+

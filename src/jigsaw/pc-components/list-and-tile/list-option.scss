@@ -1,6 +1,6 @@
-$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
+$jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-.#{$list-option-prefix-cls} {
+.#{$jigsaw-list-option}-host {
     display: block;
     position: relative;
     width: 100%;
@@ -13,22 +13,22 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
     &:hover {
         background: $bg-hover;
 
-        .#{$list-option-prefix-cls}-title-box .#{$list-option-prefix-cls}-title {
+        .#{$jigsaw-list-option}-title-box .#{$jigsaw-list-option}-title {
             color: $brand-default;
         }
     }
 
-    &.#{$list-option-prefix-cls}-active {
+    &.#{$jigsaw-list-option}-active {
         background: $bg-active;
         color: $brand-default;
 
-        .#{$list-option-prefix-cls}-title,
-        .#{$list-option-prefix-cls}-sub-title{
+        .#{$jigsaw-list-option}-title,
+        .#{$jigsaw-list-option}-sub-title{
             color: $brand-default;
         }
     }
 
-    &.#{$list-option-prefix-cls}-disabled {
+    &.#{$jigsaw-list-option}-disabled {
         color: $font-color-disabled;
         cursor: not-allowed;
 
@@ -36,27 +36,27 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
             background: $bg-body;
         }
 
-        .#{$list-option-prefix-cls}-title,
-        .#{$list-option-prefix-cls}-sub-title{
+        .#{$jigsaw-list-option}-title,
+        .#{$jigsaw-list-option}-sub-title{
             color: $font-color-disabled;
         }
 
         &:hover {
-            .#{$list-option-prefix-cls}-title,
-            .#{$list-option-prefix-cls}-sub-title{
+            .#{$jigsaw-list-option}-title,
+            .#{$jigsaw-list-option}-sub-title{
                 color: $font-color-disabled;
             } 
         }
     }
 
-    &-title-box {
+    .#{$jigsaw-list-option}-title-box {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
     }
 
-    &-title {
+    .#{$jigsaw-list-option}-title {
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -64,12 +64,12 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         overflow: hidden;
     }
 
-    &-sub-title {
+    .#{$jigsaw-list-option}-sub-title {
         font-size: $font-size-base;
         color: $font-color-hint;
     }
 
-    &-block {
+    .#{$jigsaw-list-option}-block {
         position: absolute;
         top: 0;
         left: 0;
@@ -77,14 +77,14 @@ $list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
         height: 100%;
         z-index: $zindex-level-1;
     }
-    &.#{$list-option-prefix-cls}-separator {
+    &.#{$jigsaw-list-option}-separator {
         display: block;
         width: 100%;
         height: 1px;
         padding: 0 8px;
         min-height: 0;
     }
-    &-separator-line {
+    .#{$jigsaw-list-option}-separator-line {
         display: block;
         width: 100%;
         height: 0;

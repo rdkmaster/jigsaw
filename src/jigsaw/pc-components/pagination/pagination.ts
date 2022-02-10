@@ -16,11 +16,11 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 import { JigsawSelectModule } from "../select/index";
 import { JigsawInputModule } from "../input/input";
-import { AbstractJigsawComponent } from "../../common/common";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { IPageable, PagingInfo } from "../../common/core/data/component-data";
@@ -33,13 +33,14 @@ export class PageSizeData {
     label: string;
 }
 
+@WingsTheme('pagination.scss')
 @Component({
     selector: "jigsaw-pagination, j-pagination",
     templateUrl: "pagination.html",
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
-        "[class.jigsaw-paging]": "true",
+        "[class.jigsaw-paging-host]": "true",
         "[class.jigsaw-paging-simple]": 'mode == "simple"',
         "[class.jigsaw-paging-complex]": 'mode == "complex" || mode == "folding"',
         "[class.jigsaw-paging-small]": 'size == "small"',
@@ -75,7 +76,7 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
      */
     public _$pageSize: PageSizeData = {
         value: null,
-        label: "null/" + this._translateService.instant("pagination.page")
+        label: "--/" + this._translateService.instant("pagination.page")
     };
 
     /**
@@ -99,7 +100,9 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 
     public set data(value: IPageable) {
-        if (CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) return;
+        if (CommonUtils.isUndefined(value) || !(value.pagingInfo instanceof PagingInfo)) {
+            return;
+        }
         this._data = value;
         if (typeof this._data.onRefresh == "function") {
             this._data.onRefresh(() => {
@@ -546,8 +549,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     templateUrl: "pagination-item.html",
     host: {
         "(click)": "_onClick()",
+        "[class.jigsaw-page-item-host]": "true",
         "[class.jigsaw-page-current]": "current",
-        "[class.jigsaw-page-item]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

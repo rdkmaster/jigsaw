@@ -20,7 +20,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/for
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 import {IPopupable} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
@@ -47,16 +47,18 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
  * $demo = time-picker/basic
  * $demo = time-picker/step
  */
+@WingsTheme('time-picker.scss')
 @Component({
     selector: 'jigsaw-time-picker, j-time-picker',
     templateUrl: './time-picker.html',
     host: {
-        '[class.jigsaw-time-picker]': 'true',
+        '[style.width]': 'width',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-time-picker-host]': 'true',
         '[class.jigsaw-time-picker-active]': '_$selectMode != "none"',
         '[class.jigsaw-time-picker-error]': '!valid',
         '[class.jigsaw-time-picker-disabled]': 'disabled',
-        '[style.width]': 'width',
-        '[style.height]': 'height',
         '(keydown)': '_$handleKeyDown($event)'
     },
     providers: [
@@ -734,11 +736,14 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',
     host: {
-        '[class.jigsaw-time-popup]': 'true',
+        '[class.jigsaw-time-popup-host]': 'true',
         '(mousedown)': '_$stopBlur($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush

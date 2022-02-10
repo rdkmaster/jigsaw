@@ -13,7 +13,7 @@ import {
 } from "@angular/core";
 import {IPopupable, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
 import {JigsawTheme} from "../../common/core/theming/theme";
@@ -78,6 +78,7 @@ export class JigsawMenuHelper implements IPopupable {
     }
 }
 
+@WingsTheme('menu.scss')
 @Component({
     selector: 'jigsaw-menu, j-menu',
     template: `

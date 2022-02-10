@@ -1,16 +1,17 @@
-$jigsaw-search: #{$jigsaw-prefix}-search-input;
+$jigsaw-search-input: #{$jigsaw-prefix}-search-input;
 $jigsaw-input: #{$jigsaw-prefix}-input;
 $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
-.#{$jigsaw-search}-host {
+.#{$jigsaw-search-input}-host {
     display: inline-flex;
+    color: $font-color-default;
 
-    .#{$jigsaw-search} {
+    .#{$jigsaw-search-input} {
         display: inline-flex;
         align-items: center;
         width: 100%;
 
-        #{$jigsaw-auto-complete-input} {
+        .#{$jigsaw-auto-complete-input}-host {
             width: 100%;
 
             .#{$jigsaw-input}-wrapper {
@@ -25,7 +26,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
             }
         }
 
-        .#{$jigsaw-search}-button {
+        .#{$jigsaw-search-input}-button {
             display: inline-flex;
             flex-shrink: 0;
             flex-grow: 0;
@@ -48,9 +49,9 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         }
     }
 
-    &.#{$jigsaw-search}-auto {
-        .#{$jigsaw-search} {
-            .#{$jigsaw-auto-complete-input} {
+    &.#{$jigsaw-search-input}-auto {
+        .#{$jigsaw-search-input} {
+            .#{$jigsaw-auto-complete-input}-host {
                 .#{$jigsaw-input}-wrapper {
                     border-top-right-radius: $border-radius-base;
                     border-bottom-right-radius: $border-radius-base;
@@ -63,13 +64,13 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
             }
         }
 
-        .#{$jigsaw-search}-button {
+        .#{$jigsaw-search-input}-button {
             display: none;
         }
     }
 
-    &.#{$jigsaw-search}-disabled {
-        .#{$jigsaw-search}-button {
+    &.#{$jigsaw-search-input}-disabled {
+        .#{$jigsaw-search-input}-button {
             background: $bg-disabled;
             border-color: $border-color-disabled;
             color: $icon-color-default;

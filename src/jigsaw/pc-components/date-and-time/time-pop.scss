@@ -1,14 +1,12 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-time-popup: #{$jigsaw-prefix}-time-popup;
 
-$time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
-
-.#{$time-select-prefix-cls} {
+.#{$jigsaw-time-popup}-host {
     @include inline-block();
     padding: 10px 6px;
     position: relative;
     border-radius: $border-radius-base;
 
-    &-content {
+    .#{$jigsaw-time-popup}-content {
         &-hour,
         &-minute,
         &-second {
@@ -31,12 +29,12 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
                     background: $bg-hover;
                 }
 
-                &.#{$time-select-prefix-cls}-isSelected {
+                &.#{$jigsaw-time-popup}-isSelected {
                     background: $brand-default;
                     color: $font-color-white;
                 }
 
-                &.#{$time-select-prefix-cls}-disabled {
+                &.#{$jigsaw-time-popup}-disabled {
                     &,
                     &:hover {
                         background: none;
@@ -48,7 +46,7 @@ $time-select-prefix-cls: #{$jigsaw-prefix}-time-popup;
         }
     }
 
-    &-control {
+    .#{$jigsaw-time-popup}-control {
         @include clearfix();
         position: absolute;
         bottom: 12px;
