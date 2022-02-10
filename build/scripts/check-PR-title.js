@@ -41,7 +41,6 @@ function readUrl(branch) {
         return process.env.CIRCLE_PULL_REQUEST;
     }
     const prList = readData('https://api.github.com/repos/rdkmaster/jigsaw/pulls?state=open');
-    console.log(prList);
     const pr = prList.find(pr => pr.head.ref === branch);
     return pr ? pr.url : null;
 }
