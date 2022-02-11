@@ -40,12 +40,13 @@ export interface transferRenderer {
 }
 
 @Directive()
-export class TransferListRendererBase implements transferRenderer {
+export class TransferListRendererBase extends AbstractJigsawComponent implements transferRenderer {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector,
         protected _zone?: NgZone) {
+        super();
     }
 
     /**
@@ -269,7 +270,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
                 // 在新建data准备好再赋值给组件data，防止出现闪动的情况
                 removeUpdateSubscriber.unsubscribe();
                 this._data = data;
-                this._$viewData = this.data;
+                this.update();
             });
             data.fromArray(value);
         }
@@ -297,6 +298,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 
     public update() {
         console.log("listSource:update");
+        console.log(this.transferSelectedItems)
         if (!this.transferSelectedItems) {
             this._$viewData = this.data;
         } else {
@@ -598,6 +600,7 @@ export class TransferTableRendererBase implements transferRenderer {
 
     public set data(value: ArrayCollection<listOption> | any) {
         this._data = value;
+
     }
 
     protected _transferSelectedItems: TableData;
@@ -694,20 +697,20 @@ export class TransferTableRendererBase implements transferRenderer {
         width: 20,
         header: {
             renderer: TableHeadCheckboxRenderer,
-            rendererInitData: (td, row, col) => {
-                return {
-                    disabled: false
-                }
-            }
+            // rendererInitData: (td, row, col) => {
+            //     return {
+            //         disabled: false
+            //     }
+            // }
         },
         cell: {
             renderer: TableCellCheckboxRenderer,
-            data: (td, row, col) => {
-                return false
-            },
-            rendererInitData: (td, row, col) => {
-                return true
-            }
+            // data: (td, row, col) => {
+            //     return false
+            // },
+            // rendererInitData: (td, row, col) => {
+            //     return true
+            // }
         }
     }];
 
@@ -768,12 +771,12 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
         }
         this._$selectedItems.length = 0;
         this.additionalData.clearTouchedValues();
-        this._changeDetectorRef.detectChanges();
+        this.additionalData.refresh();
         this.table.update();
     };
 
     public update() {
-
+        console.log(this._$viewData)
     }
 }
 @Component({
@@ -801,6 +804,7 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
             this._$viewData.data.splice(this.selectedRows.length[i], 1)
         }
         this.additionalData.clearTouchedValues();
+        this.additionalData.refresh();
         this.table.update();
     }
 
