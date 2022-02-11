@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Injector, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, forwardRef, ViewEncapsulation, ViewChild, AfterViewInit, Directive } from "@angular/core";
+import { Component, ChangeDetectionStrategy, Injector, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, forwardRef, ViewEncapsulation, ViewChild, AfterViewInit, Directive, NgZone, OnInit } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { ArrayCollection, LocalPageableArray, PageableArray } from '../../../common/core/data/array-collection';
 import { JigsawListModule } from '../../../pc-components/list-and-tile/list';
@@ -16,10 +16,11 @@ import { RequireMarkForCheck } from '../../../common/decorator/mark-for-check';
 import { JigsawTreeExtModule, JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
 import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
 import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../pc-components/table/table-renderer';
-import { JigsawTableModule, JigsawTable } from 'jigsaw/pc-components/table/table';
+import { JigsawTableModule, JigsawTable } from '../../../pc-components/table/table';
 import { filter } from 'rxjs/operators';
 import { ChartIconCustomPieLegend } from 'jigsaw/pc-components/chart-icon/chart-icon-factory';
-import { TableData, TableDataMatrix, TableMatrixRow } from 'jigsaw/common/core/data/table-data';
+import { TableData, TableDataMatrix, TableMatrixRow } from '../../../common/core/data/table-data';
+import { AbstractJigsawComponent } from '../../../common/common';
 
 
 export type listOption = {
@@ -35,6 +36,7 @@ export interface transferRenderer {
     transferSelectedItems: ArrayCollection<listOption> | any;
     toggleButton: EventEmitter<boolean>;
     transfer();
+    update();
 }
 
 @Directive()
@@ -42,7 +44,8 @@ export class TransferListRendererBase implements transferRenderer {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+        protected _injector: Injector,
+        protected _zone?: NgZone) {
     }
 
     /**
@@ -130,7 +133,8 @@ export class TransferListRendererBase implements transferRenderer {
      * @internal
      */
     protected _checkSelectAll() {
-        this._changeDetectorRef.markForCheck();
+        console.log("checkSelectAll")
+        this._changeDetectorRef.detectChanges();
         if (!this._$selectedItems || this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
@@ -146,15 +150,13 @@ export class TransferListRendererBase implements transferRenderer {
      * @internal
      */
     public _$selectAll() {
+        console.log("selectAll")
         if (this._$selectedItems && this._$selectedItems.length === this._$viewData.length) {
             this._$selectedItems = new ArrayCollection([]);
-            this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             this._$selectedItems = new ArrayCollection(this._$viewData);
-            this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this.toggleButton.emit(this._$selectedItems.length > 0);
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -180,7 +182,56 @@ export class TransferListRendererBase implements transferRenderer {
 
     private _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalPageableArray<any> | PageableArray>this._$viewData).filter(filterKey, [this.labelField]);
+        // (<LocalPageableArray<any> | PageableArray>this._$viewData).filter(filterKey, [this.labelField]);
+
+        (<LocalPageableArray<any> | PageableArray>this._$viewData).filter((item) => {
+            let isExist = true;
+            this.transferSelectedItems.forEach((selectedItem) => {
+                if (selectedItem[this.labelField] === item[this.labelField]) {
+                    isExist = false;
+                }
+            })
+
+            if (isExist) {
+                isExist = item[this.labelField].includes(filterKey)
+            }
+
+            return isExist;
+        })
+
+        // this.runAfterMicrotasks(() => this.transferSelectedItems.forEach(selectedItem => {
+        //     this._$viewData.forEach((item, i) => {
+        //         if (selectedItem[this.labelField] === item[this.labelField]) {
+        //             this._$viewData.splice(i, 1);
+        //             return
+        //         }
+        //     })
+        // }));
+
+        // this.runAfterMicrotasks(() => {
+        //     this.transferSelectedItems.forEach(selectedItem => {
+        //         this._$viewData.forEach((item, i) => {
+        //             if (selectedItem[this.labelField] === item[this.labelField]) {
+        //                 this._$viewData.splice(i, 1);
+        //                 return
+        //             }
+        //         })
+        //     })
+        // });
+
+        // setTimeout(() => {
+        //     this.transferSelectedItems.forEach(selectedItem => {
+        //         this._$viewData.forEach((item, i) => {
+        //             if (selectedItem[this.labelField] === item[this.labelField]) {
+        //                 this._$viewData.splice(i, 1);
+        //                 return
+        //             }
+        //         })
+        //     })
+        // }, 0);
+
+        console.log(this._$viewData)
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -192,6 +243,8 @@ export class TransferListRendererBase implements transferRenderer {
     }
 
     public transfer() { };
+
+    public update() { };
 }
 
 @Component({
@@ -223,23 +276,27 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
     }
 
     public transfer() {
-        this._$viewData = this._$viewData.filter((item) => {
-            let isExist = true;
-            this._$selectedItems.forEach((selectedItem) => {
+        console.log("listSource:transfer");
+        console.log(this._$selectedItems)
+
+        this._$selectedItems.forEach(selectedItem => {
+            this._$viewData.forEach((item, i) => {
                 if (selectedItem[this.labelField] === item[this.labelField]) {
-                    isExist = false;
+                    this._$viewData.splice(i, 1);
+                    return
                 }
             })
-            return isExist;
         })
+        console.log(this._$viewData)
         this.transferSelectedItems.push(...this._$selectedItems);
         this._$selectedItems = new ArrayCollection([]);
-
+        this._changeDetectorRef.markForCheck();
         this.toggleButton.emit(this._$selectedItems.length > 0);
         this._checkSelectAll();
     };
 
     public update() {
+        console.log("listSource:update");
         if (!this.transferSelectedItems) {
             this._$viewData = this.data;
         } else {
@@ -301,14 +358,17 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
         this.toggleButton.emit(this._$selectedItems.length > 0);
         this._checkSelectAll();
     };
+
+    public update() { }
 }
 
 @Directive()
-export class TransferTreeRendererBase implements transferRenderer, AfterViewInit {
+export class TransferTreeRendererBase extends AbstractJigsawComponent implements transferRenderer, AfterViewInit, OnInit {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
+        super();
     }
     @ViewChild(JigsawTreeExt)
     public treeExt: JigsawTreeExt;
@@ -418,6 +478,10 @@ export class TransferTreeRendererBase implements transferRenderer, AfterViewInit
      */
     public _$handleSearching($event) {
         this.treeExt.fuzzySearch($event)
+        this.transferSelectedItems.forEach(node => {
+            this.treeExt.hideNode(node)
+        })
+        this._updateValidItems();
     }
 
     /**
@@ -452,10 +516,14 @@ export class TransferTreeRendererBase implements transferRenderer, AfterViewInit
         this._updateValidItems();
     }
 
+    ngOnInit() {
+        this.runMicrotask(() => {
+            this._updateValidItems();
+        })
+    }
+
     ngAfterViewInit() {
         this.treeExt.setEditable(false);
-        this._updateValidItems();
-        this._changeDetectorRef.markForCheck();
     }
 }
 
@@ -465,16 +533,33 @@ export class TransferTreeRendererBase implements transferRenderer, AfterViewInit
 })
 export class TransferTreeSourceRenderer extends TransferTreeRendererBase {
     public transfer() {
-        this.transferSelectedItems.push(...this._$selectedItems)
+        console.log(this._$selectedItems)
         this._$selectedItems.forEach(node => {
             this.treeExt.checkNode(node, false, true)
             this.treeExt.hideNode(node)
+            node['realLabel'] = node.label;
         })
+        this.transferSelectedItems.push(...this._$selectedItems)
         this._$selectedItems = new ArrayCollection([]);
         this.toggleButton.emit(this._$selectedItems.length > 0);
         this._updateValidItems();
         this._changeDetectorRef.markForCheck();
     };
+}
+
+
+@Component({
+    templateUrl: './transfer-list.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class TransferTreeTargetRenderer extends TransferListTargetRenderer {
+    /**
+     * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = "realLabel";
 }
 @Directive()
 export class TransferTableRendererBase implements transferRenderer {
@@ -590,6 +675,8 @@ export class TransferTableRendererBase implements transferRenderer {
     }
 
     public transfer() { };
+
+    public update() { };
 
     /**
      * @internal
@@ -724,7 +811,7 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
 }
 
 @NgModule({
-    declarations: [TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
+    declarations: [TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTreeTargetRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
     imports: [CommonModule, JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawPaginationModule, JigsawSearchInputModule, TranslateModule, JigsawTreeExtModule, JigsawTableModule],
     providers: [TranslateService, LoadingService]
 })

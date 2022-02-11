@@ -37,6 +37,7 @@ $table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
 
     .#{$transfer-renderer}-body {
         height: calc(100% - 64px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom});
+
         .#{$transfer-renderer}-cntr {
             height: 100%;
         }
@@ -49,7 +50,7 @@ $table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
 .#{$list-renderer} {
     .#{$transfer-renderer}-body {
         .#{$transfer-renderer}-cntr {
-            .#{$jigsaw-list} {
+            .#{$jigsaw-list}-host {
                 border: none;
             }
         }

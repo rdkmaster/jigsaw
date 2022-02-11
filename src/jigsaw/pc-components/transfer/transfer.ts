@@ -12,29 +12,30 @@ import {
     ComponentFactoryResolver,
     TemplateRef,
     ViewContainerRef,
-    ElementRef
+    ElementRef,
+    OnInit
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {animate, keyframes, style, transition, trigger} from "@angular/animations"
-import {Subscription} from "rxjs/internal/Subscription";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawListModule} from "../list-and-tile/list";
-import {JigsawCheckBoxModule} from "../checkbox/index";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {JigsawInputModule} from "../input/input";
-import {GroupOptionValue} from "../list-and-tile/group-common";
-import {AbstractJigsawGroupLiteComponent} from "../list-and-tile/group-lite-common";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawPaginationModule} from "../pagination/pagination";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {LoadingService} from "../../common/service/loading.service";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {WingsTheme, JigsawCommonModule} from "../../common/common";
+import { CommonModule } from "@angular/common";
+import { animate, keyframes, style, transition, trigger } from "@angular/animations"
+import { Subscription } from "rxjs/internal/Subscription";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { JigsawListModule } from "../list-and-tile/list";
+import { JigsawCheckBoxModule } from "../checkbox/index";
+import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
+import { JigsawInputModule } from "../input/input";
+import { GroupOptionValue } from "../list-and-tile/group-common";
+import { AbstractJigsawGroupLiteComponent } from "../list-and-tile/group-lite-common";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { JigsawPaginationModule } from "../pagination/pagination";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
+import { LoadingService } from "../../common/service/loading.service";
+import { TranslateHelper } from "../../common/core/utils/translate-helper";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { WingsTheme, JigsawCommonModule } from "../../common/common";
 import { SimpleTreeData } from '../../common/core/data/tree-data';
 import { TableData } from '../../common/core/data/table-data';
-import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
+import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule, TransferTreeTargetRenderer } from './renderer/transfer-renderer';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -108,14 +109,14 @@ const animations = [
     trigger('loading', [
         transition('void => *', [
             animate(300, keyframes([
-                style({opacity: 0}),
-                style({opacity: 0.6})
+                style({ opacity: 0 }),
+                style({ opacity: 0.6 })
             ]))
         ]),
         transition('* => void', [
             animate(300, keyframes([
-                style({opacity: 0.6}),
-                style({opacity: 0})
+                style({ opacity: 0.6 }),
+                style({ opacity: 0 })
             ]))
         ])
     ])];
@@ -129,25 +130,10 @@ const animations = [
         '[style.height]': 'height',
         '[class.jigsaw-transfer-error]': '!valid'
     },
-    animations: [
-        trigger('loading', [
-            transition('void => *', [
-                animate(300, keyframes([
-                    style({ opacity: 0 }),
-                    style({ opacity: 0.6 })
-                ]))
-            ]),
-            transition('* => void', [
-                animate(300, keyframes([
-                    style({ opacity: 0.6 }),
-                    style({ opacity: 0 })
-                ]))
-            ])
-        ])],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    //changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements AfterViewInit, OnDestroy {
+export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy, OnInit {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
@@ -198,7 +184,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public sourceToggleButtonSubscribe: Subscription;
     public targetToggleButtonSubscribe: Subscription;
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
         let sourceComponentFactory;
         let targetComponentFactory;
         if (this.data instanceof ArrayCollection) {
@@ -206,12 +192,14 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
         } else if (this.data instanceof SimpleTreeData) {
             sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
         } else if (this.data instanceof TableData) {
             sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
             targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
             this.selectedItems = new TableData([], this.data.field, this.data.header);
         }
+
+        this._changeDetectorRef.detectChanges();
 
         const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
         const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
@@ -259,12 +247,18 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public _$sourceTransfer() {
+        if (!this._$sourceButton) {
+            return
+        }
         this.sourceComponent.transfer();
         this.targetComponent.update();
         this._changeDetectorRef.detectChanges();
     }
 
     public _$targetTransfer() {
+        if (!this._$targetButton) {
+            return
+        }
         this.targetComponent.transfer();
         this.sourceComponent.update();
         this._changeDetectorRef.detectChanges();
@@ -454,7 +448,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     host: {
         '[class.jigsaw-transfer-list-frame]': 'true'
     },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
     constructor(@Optional() private _transfer: JigsawTransfer, protected _changeDetectorRef: ChangeDetectorRef,
