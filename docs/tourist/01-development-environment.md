@@ -18,9 +18,9 @@ git clone https://github.com/rdkmaster/jigsaw-seed.git
  
 ```
   # for Chinese developers only
-  npm config set registry=https://registry.npm.taobao.org/
+  npm config set registry=https://registry.npmmirror.com/
   # for Chinese developers only                 
-  npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass 
+  npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass 
 ```    
 
 * clone Jigsaw Seed 的源码。假设保存到了`d:\jigsaw-seed`。

@@ -132,8 +132,8 @@ Jigsaw的组件不再是原子，它对组件的功能进行了二次抽象，�
 
 ```
 cd d:\jigsaw-seed
-npm config set registry=https://registry.npm.taobao.org/                 # for Chinese developers only
-npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass # for Chinese developers only
+npm config set registry=https://registry.npmmirror.com/                 # for Chinese developers only
+npm config set sass_binary_site https://npmmirror.com/mirrors/node-sass # for Chinese developers only
 npm install -g @angular/cli                                              # 强烈推荐，可选
 npm install
 npm start
