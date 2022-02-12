@@ -673,6 +673,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             if (emit) {
                 this.valueChange.emit(this.value);
             }
+            this._changeDetector.detectChanges();
             this._$checkSelectAll();
         });
     }
