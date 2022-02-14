@@ -477,6 +477,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public remove: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
@@ -506,9 +509,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$onComboOpenChange(optionState: boolean) {
+    public _$onComboOpenChange(openState: boolean) {
+        this.openChange.emit(openState);
         this._onTouched();
-        if (optionState || !this.searchable) return;
+        if (openState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
     }
