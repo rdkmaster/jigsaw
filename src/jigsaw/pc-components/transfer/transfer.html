@@ -1,20 +1,38 @@
 <div *ngIf="disabled" class="jigsaw-transfer-disabled">
 </div>
-<div class="jigsaw-transfer-wrapper" [ngClass]="_$transferClass">
-    <div class="jigsaw-transfer-left-box jigsaw-transfer-box">
-        <ng-template #transferSourceRendererHost></ng-template>
+<div class="jigsaw-transfer-cntr" [ngClass]="_$transferClass">
+    <div class="jigsaw-transfer-item-cntr jigsaw-transfer-source">
+        <div class="jigsaw-transfer-header">
+            <div class="jigsaw-transfer-select-all">
+                <jigsaw-checkbox [(checked)]="_$sourceSelectAllChecked" (checkedChange)="_$sourceSelectAll()">
+                </jigsaw-checkbox>
+                <span class="jigsaw-transfer-title">{{getSourceItemsCount()}}</span>
+                <span class="jigsaw-transfer-subTitle"></span>
+            </div>
+            <div class="jigsaw-transfer-search-cntr">
+                <jigsaw-search-input width="100%" [searchDebounce]="0">
+                </jigsaw-search-input>
+            </div>
+        </div>
+        <div class="jigsaw-transfer-body">
+            <ng-template #transferSourceRendererHost></ng-template>
+        </div>
+        <div class="jigsaw-transfer-footer">
+
+        </div>
+
     </div>
-    <div class="jigsaw-transfer-option-box">
-        <a class="jigsaw-transfer-to-right-bar jigsaw-transfer-option-bar"
+    <div class="jigsaw-transfer-option-cntr">
+        <a class="jigsaw-transfer-option jigsaw-transfer-option-source"
             [class.jigsaw-transfer-option-disabled]="!_$sourceButton" (click)="_$sourceTransfer()">
             <i class="iconfont iconfont-e144"></i>
         </a>
-        <a class="jigsaw-transfer-to-left-bar jigsaw-transfer-option-bar"
+        <a class="jigsaw-transfer-option jigsaw-transfer-option-target"
             [class.jigsaw-transfer-option-disabled]="!_$targetButton" (click)="_$targetTransfer()">
             <i class="iconfont iconfont-e143"></i>
         </a>
     </div>
-    <div class="jigsaw-transfer-right-box jigsaw-transfer-box">
+    <div class="jigsaw-transfer-item-cntr jigsaw-transfer-target">
         <ng-template #transferTargetRendererHost></ng-template>
     </div>
 </div>

@@ -1,8 +1,116 @@
-$transfer-prefix-cls: #{$jigsaw-prefix}-transfer;
+$jigsaw-transfer: #{$jigsaw-prefix}-transfer;
 $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-.#{$transfer-prefix-cls} {
+.#{$jigsaw-transfer}-host {
+    $cntr-padding-top: 4px;
+    $header-padding-bottom: 8px;
+
+    position: relative;
+    display: inline-flex;
+    width: 400px;
+    height: 200px;
+
+    .#{$jigsaw-transfer}-cntr {
+        display: flex;
+        flex: 1 1 0;
+        width: 100%;
+        height: 100%;
+        background-color: $bg-component;
+    }
+
+    .#{$jigsaw-transfer}-disabled {
+        position: absolute;
+        border-color: $border-color-disabled;
+        background-color: $bg-disabled;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        cursor: not-allowed;
+        z-index: $zindex-level-3;
+    }
+
+    .#{$jigsaw-transfer}-item-cntr {
+        position: relative;
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: $cntr-padding-top 8px;
+        border: 1px solid $border-color-default;
+        border-radius: $border-radius-base;
+        background-color: $bg-component;
+        overflow: hidden;
+
+        .#{$jigsaw-transfer}-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 8px;
+
+            .#{$jigsaw-transfer}-select-all {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+                height: 32px;
+            }
+
+            .#{$jigsaw-transfer}-search-cntr {
+                width: 100%;
+            }
+        }
+
+        .#{$jigsaw-transfer}-body {
+            height: calc(100% - 64px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom});
+        }
+
+        .#{$jigsaw-transfer}-footer {
+        }
+    }
+
+    .#{$jigsaw-transfer}-option-cntr {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .jigsaw-transfer-option {
+            margin: 0 8px 4px;
+            padding: 2px 12px;
+            font-size: $font-size-base;
+            border-radius: $border-radius-base;
+            border: 1px solid $brand-default;
+            background: $brand-default;
+            color: $font-color-white;
+
+            &:hover {
+                background: $brand-hover;
+                color: $font-color-white;
+            }
+
+            &:active {
+                background: $brand-active;
+                color: $font-color-white;
+            }
+
+            &.jigsaw-transfer-option-disabled {
+                border: 1px solid $border-color-default;
+                background: $bg-disabled;
+                color: $icon-color-stress;
+                cursor: not-allowed;
+
+                &:hover,
+                &:active {
+                    background: $bg-disabled;
+                    color: $icon-color-stress;
+                }
+            }
+        }
+    }
+}
+
+.#{$jigsaw-transfer}-shift {
     display: inline-block;
     width: 400px;
     height: 200px;
@@ -30,7 +138,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     & > div {
         transition-duration: 300ms;
     }
-    &.#{$transfer-prefix-cls}-error > div {
+    &.#{$jigsaw-transfer}-error > div {
         transition-duration: 300ms;
         border: 1px solid $error-default;
     }
@@ -109,7 +217,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     }
     &-list-wrapper {
         max-height: 100%;
-        &.#{$transfer-prefix-cls}-list-searchable {
+        &.#{$jigsaw-transfer}-list-searchable {
             max-height: calc(100% - #{$height-base + 16px});
         }
         .#{$jigsaw-list}-host {
@@ -118,7 +226,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         .#{$jigsaw-list-option}-host {
             &-title {
                 min-width: 50%;
-                span.#{$transfer-prefix-cls}-middle-title {
+                span.#{$jigsaw-transfer}-middle-title {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;
@@ -129,7 +237,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
-                span.#{$transfer-prefix-cls}-sub-title {
+                span.#{$jigsaw-transfer}-sub-title {
                     white-space: nowrap;
                 }
             }

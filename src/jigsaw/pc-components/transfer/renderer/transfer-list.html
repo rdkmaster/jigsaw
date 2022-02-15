@@ -1,5 +1,6 @@
-<div class="jigsaw-transfer-renderer  jigsaw-transfer-list-renderer">
-    <div class="jigsaw-transfer-renderer-header">
+<div class="jigsaw-transfer-renderer jigsaw-transfer-list-renderer"
+    [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+    <!-- <div class="jigsaw-transfer-renderer-header">
         <div class="jigsaw-transfer-renderer-select-all">
             <jigsaw-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()">
             </jigsaw-checkbox>
@@ -14,29 +15,29 @@
             <jigsaw-search-input width="100%" [searchDebounce]="0" (search)="_$handleSearching($event)">
             </jigsaw-search-input>
         </div>
-    </div>
-    <div class="jigsaw-transfer-renderer-body">
-        <div class="jigsaw-transfer-renderer-cntr"
-            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <jigsaw-list width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
-                [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$updateSelectedItems()">
-                <j-list-option #listItem *ngFor="let item of _$viewData; trackBy: _$trackByFn" [value]="item"
-                    [disabled]="item.disabled">
-                    <ng-container j-title>
-                        <j-checkbox [(checked)]="listItem.selected" [disabled]="item.disabled"></j-checkbox>
-                        <span class="jigsaw-transfer-list-renderer-title">
-                            {{item && item[labelField] ? item[labelField] : item}}
-                        </span>
-                    </ng-container>
-                    <span j-sub-title class="jigsaw-transfer-list-renderer-sub-title">
-                        {{item && item[subLabelField] ? item[subLabelField]: ''}}
-                    </span>
-                </j-list-option>
-            </jigsaw-list>
-        </div>
-    </div>
-    <div class="jigsaw-transfer-renderer-footer"
+    </div> -->
+    <!-- <div class="jigsaw-transfer-renderer-body"> -->
+    <!-- <div class="jigsaw-transfer-renderer-cntr"
+        [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"> -->
+    <jigsaw-list width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy" [(selectedItems)]="selectedItems"
+        (selectedItemsChange)="_$updateSelectedItems()">
+        <j-list-option #listItem *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
+            [disabled]="item.disabled">
+            <ng-container j-title>
+                <j-checkbox [(checked)]="listItem.selected" [disabled]="item.disabled"></j-checkbox>
+                <span class="jigsaw-transfer-list-renderer-title">
+                    {{item && item[labelField] ? item[labelField] : item}}
+                </span>
+            </ng-container>
+            <span j-sub-title class="jigsaw-transfer-list-renderer-sub-title">
+                {{item && item[subLabelField] ? item[subLabelField]: ''}}
+            </span>
+        </j-list-option>
+    </jigsaw-list>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- <div class="jigsaw-transfer-renderer-footer"
         *ngIf="data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity">
         <jigsaw-pagination [size]="'small'" mode="simple" [data]="_$viewData"></jigsaw-pagination>
-    </div>
+    </div> -->
 </div>

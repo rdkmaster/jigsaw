@@ -36,6 +36,8 @@ import { WingsTheme, JigsawCommonModule } from "../../common/common";
 import { SimpleTreeData } from '../../common/core/data/tree-data';
 import { TableData } from '../../common/core/data/table-data';
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule, TransferTreeTargetRenderer } from './renderer/transfer-renderer';
+import { JigsawSearchInputModule } from '../input/search-input';
+import { CheckBoxStatus } from '../checkbox/typings';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -126,9 +128,10 @@ const animations = [
     selector: 'jigsaw-transfer, j-transfer',
     templateUrl: './transfer.html',
     host: {
-        '[class.jigsaw-transfer]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-transfer-host]': 'true',
         '[class.jigsaw-transfer-error]': '!valid'
     },
     //changeDetection: ChangeDetectionStrategy.OnPush
@@ -185,20 +188,25 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public sourceToggleButtonSubscribe: Subscription;
     public targetToggleButtonSubscribe: Subscription;
 
+    public sourceSelectedItemsChangeSubscribe: Subscription;
+    public targetSelectedItemsChangeSubscribe: Subscription;
+
     ngOnInit(): void {
         let sourceComponentFactory;
         let targetComponentFactory;
         if (this.data instanceof ArrayCollection) {
             sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
             targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
-        } else if (this.data instanceof SimpleTreeData) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
-        } else if (this.data instanceof TableData) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
-            this.selectedItems = new TableData([], this.data.field, this.data.header);
         }
+
+        // else if (this.data instanceof SimpleTreeData) {
+        //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
+        //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
+        // } else if (this.data instanceof TableData) {
+        //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
+        //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
+        //     this.selectedItems = new TableData([], this.data.field, this.data.header);
+        // }
 
         this._changeDetectorRef.detectChanges();
 
@@ -208,15 +216,38 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         this.targetComponent = targetComponentRef.instance;
         this.sourceComponent.data = this.data;
         this.targetComponent.data = this.data;
-        this.sourceComponent.transferSelectedItems = this.selectedItems;
-        this.targetComponent.transferSelectedItems = this.selectedItems;
-        this.sourceToggleButtonSubscribe = this.sourceComponent.toggleButton.subscribe((toggleButton) => {
-            this._$sourceButton = toggleButton;
-        });
-        this.sourceToggleButtonSubscribe = this.targetComponent.toggleButton.subscribe((toggleButton) => {
-            this._$targetButton = toggleButton;
+        this._$sourceSelectedItems = this.sourceComponent.selectedItems;
+        this._$targetSelectedItems = this.targetComponent.selectedItems;
+        // this.targetComponent.data = this.data;
+
+
+        // this.sourceComponent.transferSelectedItems = this.selectedItems;
+        // this.targetComponent.transferSelectedItems = this.selectedItems;
+
+        // this._$sourceSelectAllChecked = this.sourceComponent._$selectAllChecked;
+        // this._$targetSelectAllChecked = this.targetComponent._$selectAllChecked;
+
+
+        // this.sourceToggleButtonSubscribe = this.sourceComponent.toggleButton.subscribe((toggleButton) => {
+        //     this._$sourceButton = toggleButton;
+        // });
+        // this.sourceToggleButtonSubscribe = this.targetComponent.toggleButton.subscribe((toggleButton) => {
+        //     this._$targetButton = toggleButton;
+        // });
+
+
+        this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
+            this.checkSourceSelectAll();
         });
     }
+
+    /**
+     * 全选
+     *
+     * @internal
+     */
+    public _$sourceSelectAllChecked = CheckBoxStatus.unchecked;
+    public _$targetSelectAllChecked = CheckBoxStatus.unchecked;
 
     /**
      * @internal
@@ -235,6 +266,44 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         this._data = value;
     }
 
+    public _$sourceSelectedItems: any;
+    public _$targetSelectedItems: any;
+
+    public _$sourceVaildData: any;
+    public _$targetVaildData: any;
+
+    public getSourceItemsCount() {
+        const selectedItemsCount = this._$sourceSelectedItems ? this._$sourceSelectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.data.length} 项`
+    }
+
+    public checkSourceSelectAll() {
+        console.log(1)
+        if (!this._$sourceSelectedItems || this._$sourceSelectedItems.length === 0) {
+            this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this._$sourceSelectedItems.length === this.data.length) {
+            this._$sourceSelectAllChecked = CheckBoxStatus.checked;
+        } else {
+            this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
+        }
+    }
+
+    // protected _checkSelectAll() {
+    //     console.log("checkSelectAll")
+    //     this._changeDetectorRef.detectChanges();
+    //     if (!this._$selectedItems || this._$selectedItems.length === 0) {
+    //         this._$selectAllChecked = CheckBoxStatus.unchecked;
+    //         return;
+    //     }
+    //     if (this._$selectedItems.length === this._$viewData.length) {
+    //         this._$selectAllChecked = CheckBoxStatus.checked;
+    //     } else {
+    //         this._$selectAllChecked = CheckBoxStatus.indeterminate;
+    //     }
+    // }
+
     private _selectedItems: ArrayCollection<listOption> | any = [];
 
     @RequireMarkForCheck()
@@ -245,6 +314,66 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     public set selectedItems(value: ArrayCollection<listOption> | any) {
         this._selectedItems = value;
+    }
+
+    /**
+     * @internal
+     */
+    public _$sourceSelectAll() {
+        if (this.sourceComponent.selectedItems && this.sourceComponent.selectedItems.length === this.data.length) {
+            this.sourceComponent.selectedItems = new ArrayCollection([]);
+        } else {
+            this.sourceComponent.selectedItems = new ArrayCollection(this.data);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$targetSelectAll() {
+        if (this._$targetSelectedItems.selectedItems && this._$targetSelectedItems.selectedItems.length === this.data.length) {
+            this._$targetSelectedItems.selectedItems = new ArrayCollection([]);
+        } else {
+            this._$targetSelectedItems.selectedItems = new ArrayCollection(this.data);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public _$selectAll(type) {
+        // let selectedItems = type === 'source' ? this._$sourceSelectedItems : this._$targetSelectedItems;
+        // console.log("selectAll")
+        // if (selectedItems && selectedItems.length === this.data.length) {
+        //     selectedItems.splice(0, selectedItems.length)
+        // } else {
+        //     selectedItems.splice(0, selectedItems.length).push(...this.data)
+        // }
+        // console.log(selectedItems)
+        // selectedItems.refresh();
+
+        if (type === 'source') {
+            if (this.sourceComponent.selectedItems && this.sourceComponent.selectedItems.length === this.data.length) {
+                this.sourceComponent.selectedItems = new ArrayCollection([]);
+            } else {
+                this.sourceComponent.selectedItems = new ArrayCollection(this.data);
+            }
+        } else if (type === 'target') {
+            if (this.sourceComponent.selectedItems && this.sourceComponent.selectedItems.length === this.data.length) {
+                this.sourceComponent.selectedItems = new ArrayCollection([]);
+            } else {
+                this.sourceComponent.selectedItems = new ArrayCollection(this.data);
+            }
+        }
+
+        // console.log(this.sourceComponent.selectedItems)
+
+        // if (this._$selectedItems && this._$selectedItems.length === this._$viewData.length) {
+        //     this._$selectedItems = new ArrayCollection([]);
+        // } else {
+        //     this._$selectedItems = new ArrayCollection(this._$viewData);
+        // }
+        // this.toggleButton.emit(this._$selectedItems.length > 0);
     }
 
     public _$sourceTransfer() {
@@ -364,14 +493,14 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     @Input()
     public searchable: boolean;
 
-    /**
-     * @internal
-     */
-    public _$sourceSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
-    /**
-     * @internal
-     */
-    public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+    // /**
+    //  * @internal
+    //  */
+    // public _$sourceSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+    // /**
+    //  * @internal
+    //  */
+    // public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     // private _filterDataBySelectedItems() {
     //     if (this._$data.busy) {
@@ -684,7 +813,7 @@ export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent
 }
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule, JigsawSearchInputModule],
     declarations: [JigsawTransfer, JigsawTransferInternalList],
     exports: [JigsawTransfer],
     providers: [TranslateService, LoadingService]
