@@ -27,35 +27,72 @@ export type listOption = {
     disabled?: boolean;
     label?: string;
     subLabel?: string;
-    tableData?: TableMatrixRow;
-    [field: string]: string | boolean | TableMatrixRow;
+    addtionalData?: any;
+    [field: string]: string | boolean;
+}
+
+export type transferRendererSetting = {
+    selectAll: boolean;
 }
 
 export interface transferRenderer {
-    data: any;
-    transferSelectedItems: ArrayCollection<listOption> | any;
-    toggleButton: EventEmitter<boolean>;
-    transfer();
-    update();
+    // data: any;
+    // transferSelectedItems: ArrayCollection<listOption> | any;
+    // toggleButton: EventEmitter<boolean>;
+    // transfer();
+    // update();
+    _$data: any;
+    _$selectedItems: any;
+    _$setting: transferRendererSetting;
+    selectedItemsChange: EventEmitter<boolean>;
+
 }
 
 @Directive()
-export class TransferListRendererBase extends AbstractJigsawComponent {
-    /**
-     * 宿主transfer实例
-     */
-    public hostInstance: any;
+export class TransferListRendererBase {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+    }
 
-    /* 渲染器data */
-    @RequireMarkForCheck()
+    // /**
+    //  * 宿主transfer实例
+    //  */
+    // public hostInstance: any;
+
+    private _data: any;
+
+    /* 渲染器数据 */
     @Input()
-    public data: any;
+    public get _$data(): ArrayCollection<listOption> {
+        return this._data;
+    }
+
+    public set _$data(value: ArrayCollection<listOption>) {
+        this._data = value;
+        this._$validData = value.filter(item => !item.disabled);
+    }
+
+    /**
+     * 渲染器有效数据
+     * @internal
+     */
+    public _$validData: any;
 
     /**
      * 渲染器已选数据
      * @internal
      */
-    public selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+
+    @Output()
+    public selectedItemsChange = new EventEmitter();
+
+    /**
+     * 渲染器配置
+     * @internal
+     */
+    public _$setting = { selectAll: true };
 
     /**
      * 设置数据的显示字段
@@ -90,14 +127,8 @@ export class TransferListRendererBase extends AbstractJigsawComponent {
      * @internal
      */
     public _$updateSelectedItems() {
-        // this.toggleButton.emit(this._$selectedItems.length > 0);
-        // this._checkSelectAll();
         this.selectedItemsChange.emit();
-        console.log(this.selectedItems)
     }
-
-    @Output()
-    public selectedItemsChange = new EventEmitter();
 }
 
 @Component({
@@ -115,7 +146,73 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
 }
 
 @Directive()
-export class TransferTreeRendererBase {
+export class TransferTreeRendererBase implements transferRenderer {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+    }
+
+    @ViewChild(JigsawTreeExt)
+    public treeExt: JigsawTreeExt;
+
+    private _data: any;
+
+    /* 渲染器数据 */
+    @Input()
+    public get _$data(): ArrayCollection<listOption> {
+        return this._data;
+    }
+
+    public set _$data(value: ArrayCollection<listOption>) {
+        this._data = value;
+        this._$validData = new ArrayCollection(this._getLeafNodes([value]));
+    }
+
+    /**
+     * 渲染器有效数据
+     * @internal
+     */
+    public _$validData: any;
+
+    /**
+     * 渲染器已选数据
+     * @internal
+     */
+    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+
+    @Output()
+    public selectedItemsChange = new EventEmitter();
+
+    /**
+     * 渲染器配置
+     * @internal
+     */
+    public _$setting = { selectAll: false };
+
+    /**
+     * @internal
+     */
+    public _$updateSelectedItems() {
+        const allCheckedNodes = this.treeExt.getCheckedNodes(true);
+        const checkedNodes = allCheckedNodes.filter(node => {
+            return !node.isParent && !node.isHidden;
+        })
+        // console.log(checkedNodes)
+        // console.log(checkedNodes[0].getPath())
+        this._$selectedItems = new ArrayCollection(checkedNodes);
+        this.selectedItemsChange.emit();
+    }
+
+    private _getLeafNodes(nodes, result = []) {
+        for (var i = 0, length = nodes.length; i < length; i++) {
+            if (!nodes[i].nodes || nodes[i].nodes.length === 0) {
+                result.push(nodes[i]);
+            } else {
+                result = this._getLeafNodes(nodes[i].nodes, result);
+            }
+        }
+        return result;
+    }
 }
 
 @Component({
@@ -135,6 +232,53 @@ export class TransferTreeTargetRenderer extends TransferListTargetRenderer {
 }
 @Directive()
 export class TransferTableRendererBase {
+    constructor(
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+    }
+
+    private _data: any;
+
+    /* 渲染器数据 */
+    @Input()
+    public get _$data(): any {
+        return this._data;
+    }
+
+    public set _$data(value: any) {
+        this._data = value;
+        console.log(value);
+        this._$validData = [1, 2, 3]
+    }
+
+    /**
+     * 渲染器有效数据
+     * @internal
+     */
+    public _$validData: any;
+
+    /**
+     * 渲染器已选数据
+     * @internal
+     */
+    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+
+    @Output()
+    public selectedItemsChange = new EventEmitter();
+
+    /**
+     * 渲染器配置
+     * @internal
+     */
+    public _$setting = { selectAll: false };
+
+    /**
+     * @internal
+     */
+    public _$updateSelectedItems() {
+
+    }
+
 }
 
 @Component({

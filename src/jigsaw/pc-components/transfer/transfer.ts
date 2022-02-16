@@ -175,6 +175,16 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$targetButton: boolean = false;
 
+    /**
+     * @internal
+     */
+    public _$sourceCheckbox: boolean = true;
+
+    /**
+     * @internal
+     */
+    public _$targetCheckbox: boolean = true;
+
 
     @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
     protected sourceRendererHost: ViewContainerRef;
@@ -197,16 +207,14 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         if (this.data instanceof ArrayCollection) {
             sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
             targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
+        } else if (this.data instanceof SimpleTreeData) {
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
+        } else if (this.data instanceof TableData) {
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
+            // this.selectedItems = new TableData([], this.data.field, this.data.header);
         }
-
-        // else if (this.data instanceof SimpleTreeData) {
-        //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
-        //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
-        // } else if (this.data instanceof TableData) {
-        //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
-        //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
-        //     this.selectedItems = new TableData([], this.data.field, this.data.header);
-        // }
 
         this._changeDetectorRef.detectChanges();
 
@@ -214,10 +222,13 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
         this.sourceComponent = sourceComponentRef.instance;
         this.targetComponent = targetComponentRef.instance;
-        this.sourceComponent.data = this.data;
-        this.targetComponent.data = this.data;
-        this._$sourceSelectedItems = this.sourceComponent.selectedItems;
-        this._$targetSelectedItems = this.targetComponent.selectedItems;
+        this.sourceComponent._$data = this.data;
+        this.targetComponent._$data = this.selectedItems;
+
+        this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
+        this._$targetCheckbox = this.targetComponent._$setting.selectAll;
+        // this.sourceComponent.selectedItems; = this.sourceComponent.selectedItems;
+        // this.targetComponent.selectedItems = this.targetComponent.selectedItems;
         // this.targetComponent.data = this.data;
 
 
@@ -227,17 +238,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         // this._$sourceSelectAllChecked = this.sourceComponent._$selectAllChecked;
         // this._$targetSelectAllChecked = this.targetComponent._$selectAllChecked;
 
-
-        // this.sourceToggleButtonSubscribe = this.sourceComponent.toggleButton.subscribe((toggleButton) => {
-        //     this._$sourceButton = toggleButton;
-        // });
-        // this.sourceToggleButtonSubscribe = this.targetComponent.toggleButton.subscribe((toggleButton) => {
-        //     this._$targetButton = toggleButton;
-        // });
-
-
         this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
-            this.checkSourceSelectAll();
+            this._checkSourceSelectAll();
+        });
+        this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
+            this._checkTargetSelectAll();
         });
     }
 
@@ -266,43 +271,53 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         this._data = value;
     }
 
-    public _$sourceSelectedItems: any;
-    public _$targetSelectedItems: any;
+    // public sourceComponent.selectedItems;: any;
+    // public targetComponent.selectedItems: any;
 
-    public _$sourceVaildData: any;
-    public _$targetVaildData: any;
+    // public _$sourceVaildData: any;
+    // public _$targetVaildData: any;
 
-    public getSourceItemsCount() {
-        const selectedItemsCount = this._$sourceSelectedItems ? this._$sourceSelectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.data.length} 项`
+    public getSourceItemsCount(): string {
+        if (!this.sourceComponent) {
+            return
+        }
+        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
     }
 
-    public checkSourceSelectAll() {
-        console.log(1)
-        if (!this._$sourceSelectedItems || this._$sourceSelectedItems.length === 0) {
+    public getTargetItemsCount(): string {
+        if (!this.targetComponent) {
+            return
+        }
+        const selectedItemsCount = this.targetComponent._$selectedItems ? this.targetComponent._$selectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} 项`
+    }
+
+    private _checkSourceSelectAll() {
+        this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
+        if (!this.sourceComponent._$selectedItems || this.sourceComponent._$selectedItems.length === 0) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._$sourceSelectedItems.length === this.data.length) {
+        if (this.sourceComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
             this._$sourceSelectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
         }
     }
 
-    // protected _checkSelectAll() {
-    //     console.log("checkSelectAll")
-    //     this._changeDetectorRef.detectChanges();
-    //     if (!this._$selectedItems || this._$selectedItems.length === 0) {
-    //         this._$selectAllChecked = CheckBoxStatus.unchecked;
-    //         return;
-    //     }
-    //     if (this._$selectedItems.length === this._$viewData.length) {
-    //         this._$selectAllChecked = CheckBoxStatus.checked;
-    //     } else {
-    //         this._$selectAllChecked = CheckBoxStatus.indeterminate;
-    //     }
-    // }
+    private _checkTargetSelectAll() {
+        this._$targetButton = this.targetComponent._$selectedItems.length > 0;
+        if (!this.targetComponent._$selectedItems || this.targetComponent._$selectedItems.length === 0) {
+            this._$targetSelectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this.targetComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
+            this._$targetSelectAllChecked = CheckBoxStatus.checked;
+        } else {
+            this._$targetSelectAllChecked = CheckBoxStatus.indeterminate;
+        }
+    }
 
     private _selectedItems: ArrayCollection<listOption> | any = [];
 
@@ -320,60 +335,24 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @internal
      */
     public _$sourceSelectAll() {
-        if (this.sourceComponent.selectedItems && this.sourceComponent.selectedItems.length === this.data.length) {
-            this.sourceComponent.selectedItems = new ArrayCollection([]);
+        if (this.sourceComponent._$selectedItems && this.sourceComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
+            this.sourceComponent._$selectedItems = new ArrayCollection([]);
         } else {
-            this.sourceComponent.selectedItems = new ArrayCollection(this.data);
+            this.sourceComponent._$selectedItems = new ArrayCollection(this.sourceComponent._$validData);
         }
+        this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
     }
 
     /**
      * @internal
      */
     public _$targetSelectAll() {
-        if (this._$targetSelectedItems.selectedItems && this._$targetSelectedItems.selectedItems.length === this.data.length) {
-            this._$targetSelectedItems.selectedItems = new ArrayCollection([]);
+        if (this.targetComponent._$selectedItems && this.targetComponent._$selectedItems.length === this.targetComponent._$validData.length) {
+            this.targetComponent._$selectedItems = new ArrayCollection([]);
         } else {
-            this._$targetSelectedItems.selectedItems = new ArrayCollection(this.data);
+            this.targetComponent._$selectedItems = new ArrayCollection(this.targetComponent._$validData);
         }
-    }
-
-    /**
-     * @internal
-     */
-    public _$selectAll(type) {
-        // let selectedItems = type === 'source' ? this._$sourceSelectedItems : this._$targetSelectedItems;
-        // console.log("selectAll")
-        // if (selectedItems && selectedItems.length === this.data.length) {
-        //     selectedItems.splice(0, selectedItems.length)
-        // } else {
-        //     selectedItems.splice(0, selectedItems.length).push(...this.data)
-        // }
-        // console.log(selectedItems)
-        // selectedItems.refresh();
-
-        if (type === 'source') {
-            if (this.sourceComponent.selectedItems && this.sourceComponent.selectedItems.length === this.data.length) {
-                this.sourceComponent.selectedItems = new ArrayCollection([]);
-            } else {
-                this.sourceComponent.selectedItems = new ArrayCollection(this.data);
-            }
-        } else if (type === 'target') {
-            if (this.sourceComponent.selectedItems && this.sourceComponent.selectedItems.length === this.data.length) {
-                this.sourceComponent.selectedItems = new ArrayCollection([]);
-            } else {
-                this.sourceComponent.selectedItems = new ArrayCollection(this.data);
-            }
-        }
-
-        // console.log(this.sourceComponent.selectedItems)
-
-        // if (this._$selectedItems && this._$selectedItems.length === this._$viewData.length) {
-        //     this._$selectedItems = new ArrayCollection([]);
-        // } else {
-        //     this._$selectedItems = new ArrayCollection(this._$viewData);
-        // }
-        // this.toggleButton.emit(this._$selectedItems.length > 0);
+        this._$sourceButton = this.targetComponent._$selectedItems.length > 0;
     }
 
     public _$sourceTransfer() {
@@ -496,11 +475,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     // /**
     //  * @internal
     //  */
-    // public _$sourceSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+    // public sourceComponent.selectedItems;: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
     // /**
     //  * @internal
     //  */
-    // public _$targetSelectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+    // public targetComponent.selectedItems: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
     // private _filterDataBySelectedItems() {
     //     if (this._$data.busy) {
@@ -531,23 +510,23 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     // public _$transferTo(from: string) {
     //     if (this.disabled) return;
     //     if (from == 'target') {
-    //         if (!this._$sourceSelectedItems || !this._$sourceSelectedItems.length) return;
+    //         if (!this.sourceComponent.selectedItems; || !this.sourceComponent.selectedItems;.length) return;
     //         this.selectedItems = this.selectedItems ? this.selectedItems : [];
-    //         this.selectedItems.push(...this._$sourceSelectedItems);
+    //         this.selectedItems.push(...this.sourceComponent.selectedItems;);
     //         this.selectedItems = this.selectedItems.concat();
     //         if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
     //             this._filterDataBySelectedItems();
     //         }
-    //         this._$sourceSelectedItems = [];
+    //         this.sourceComponent.selectedItems; = [];
     //     }
     //     if (from == 'source') {
-    //         if (!this._$targetSelectedItems || !this._$targetSelectedItems.length) return;
+    //         if (!this.targetComponent.selectedItems || !this.targetComponent.selectedItems.length) return;
     //         this.selectedItems = this.selectedItems.filter(item =>
-    //             !this._$targetSelectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
+    //             !this.targetComponent.selectedItems.some(i => CommonUtils.compareWithKeyProperty(item, i, <string[]>this.trackItemBy)));
     //         if ((this.data instanceof LocalPageableArray || this.data instanceof PageableArray) && this.data.pagingInfo) {
     //             this._filterDataBySelectedItems();
     //         }
-    //         this._$targetSelectedItems = [];
+    //         this.targetComponent.selectedItems = [];
     //     }
     //     this.selectedItemsChange.emit(this.selectedItems);
     // }

@@ -1,23 +1,4 @@
-<!-- <div class="jigsaw-transfer-renderer jigsaw-transfer-tree-renderer">
-    <div class="jigsaw-transfer-renderer-header">
-        <div class="jigsaw-transfer-renderer-select-all">
-            <jigsaw-checkbox [checked]="_$selectAllChecked" (checkedChange)="_$selectAll()">
-            </jigsaw-checkbox>
-            <span class="jigsaw-transfer-renderer-header-middle-title">
-                {{_$selectedItems ?
-                _$selectedItems.length : 0}} / {{_$validItems ? _$validItems.length : 0}} {{'transfer-renderer.items' |
-                translate}}
-            </span>
-        </div>
-        <div class="jigsaw-transfer-renderer-search-cntr">
-            <jigsaw-search-input width="100%" (search)="_$handleSearching($event)">
-            </jigsaw-search-input>
-        </div>
-    </div>
-    <div class="jigsaw-transfer-renderer-body">
-        <div class="jigsaw-transfer-renderer-cntr"
-            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-            <jigsaw-tree-ext [(data)]="_$viewData" size="large" (onCheck)="onCheck()"></jigsaw-tree-ext>
-        </div>
-    </div>
-</div> -->
+<div class="jigsaw-transfer-renderer jigsaw-transfer-tree-renderer"
+    [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+    <jigsaw-tree-ext [(data)]="_$data" size="large" (onCheck)="_$updateSelectedItems()"></jigsaw-tree-ext>
+</div>
