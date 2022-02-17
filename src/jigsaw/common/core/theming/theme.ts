@@ -66,7 +66,10 @@ export class JigsawTheme {
         return this._popupBackgroundColor;
     }
 
-    public static getGraphTheme(): any {
+    public static getGraphTheme(theme?: 'light' | 'dark' | string): any {
+        if (theme) {
+            return theme == 'dark' ? darkGraphTheme : lightGraphTheme;
+        }
         return this._popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
     }
 

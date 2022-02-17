@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { ArrayCollection, GroupOptionValue, JigsawListLite, SimpleTreeData } from 'jigsaw/public_api';
+import {ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData} from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -145,6 +145,10 @@ export class ThemeBuildInThemeDemoComponent {
 
     _$navigationData = new SimpleTreeData();
 
+    _$tableData;
+
+    _$graphData;
+
     constructor() {
         this._$navigationData.fromXML(`
         <node>
@@ -164,6 +168,192 @@ export class ThemeBuildInThemeDemoComponent {
             <node label="告警设置" icon="iconfont iconfont-e36f"></node>
         </node>
     `);
+
+        this._$tableData = new TableData(
+            [
+                [
+                    "Tiger Nixon1",
+                    "System Architect",
+                    "$320,00",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "542"
+                ],
+                [
+                    "Garrett Winflters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Arcfhitect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winslters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Arcfhitect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winflters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Arcfhitect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winflters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Arcfhitect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Wintsers2",
+                    "Accountant",
+                    "$170,50",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tigser Nixon3",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tiger Nixon3",
+                    "System Architect",
+                    "$3,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tiger Nixon3",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tiger Nixon1",
+                    "System Architect",
+                    "$320,80",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "542111"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,750",
+                    "2011/07/25",
+                    "Tokyo",
+                    "84212"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tigesr Nixon1",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garretst Winters1",
+                    "Accountant",
+                    "$170,750",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tigers Nixon2",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ]
+            ],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+
+        this._$graphData = new GraphData({
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                },
+                extraCssText: 'z-index: 999'
+            },
+            grid:{
+                top:10,
+                bottom: 20,
+                right:0,
+                left:48,
+                show: false
+            },
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line'
+            }]
+        });
     }
 
     // ====================================================================

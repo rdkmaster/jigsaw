@@ -133,6 +133,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    @Input()
+    public get theme(): 'light' | 'dark' | string {
+        return this._theme;
+    }
+
+    public set theme(theme: 'light' | 'dark' | string) {
+        this._wingsTheme(theme);
+        if (this._graph) {
+            this._graph._theme = JigsawTheme.getGraphTheme(theme);
+            this.data.refresh();
+        }
+    }
+
     private _globalTheme: any;
 
     /**
@@ -141,7 +154,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     @Input()
     public get globalTheme() {
         if (!this._globalTheme) {
-            this._globalTheme = JigsawTheme.getGraphTheme();
+            this._globalTheme = JigsawTheme.getGraphTheme(this.theme);
         }
         return this._globalTheme;
     };
