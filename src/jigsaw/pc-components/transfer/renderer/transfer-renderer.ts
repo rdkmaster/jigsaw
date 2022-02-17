@@ -22,7 +22,6 @@ import { ChartIconCustomPieLegend } from 'jigsaw/pc-components/chart-icon/chart-
 import { TableData, TableDataMatrix, TableMatrixRow } from '../../../common/core/data/table-data';
 import { AbstractJigsawComponent } from '../../../common/common';
 
-
 export type listOption = {
     disabled?: boolean;
     label?: string;

@@ -223,22 +223,34 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public set data(value) {
-        // this._data = value;
-        // this._$viewData = value;
-        if (value instanceof LocalPageableArray || value instanceof PageableArray) {
-            this._data = value;
-            this._$viewData = this.data;
-        } else {
-            const data = new LocalPageableArray<listOption>();
-            data.pagingInfo.pageSize = Infinity;
-            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
-                removeUpdateSubscriber.unsubscribe();
-                this._data = data;
-                this._$viewData = this._data;
-            });
-            data.fromArray(value);
-        }
+        this.runMicrotask(() => {
+            console.log(this.sourceRenderer)
+            console.log(this.sourceRenderer === TransferListSourceRenderer)
+            if (this.sourceRenderer === TransferListSourceRenderer) {
+                if (value instanceof LocalPageableArray || value instanceof PageableArray) {
+                    this._data = value;
+                    this._$viewData = this.data;
+                } else if (value instanceof ArrayCollection) {
+                    const data = new LocalPageableArray<listOption>();
+                    data.pagingInfo.pageSize = Infinity;
+                    const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                        // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+                        removeUpdateSubscriber.unsubscribe();
+                        this._data = data;
+                        this._$viewData = this._data;
+                    });
+                    data.fromArray(value);
+                } else {
+                    console.warn("输入的数据结构与渲染器不匹配")
+                }
+            }
+
+            if (this.sourceRenderer === TransferTreeSourceRenderer) {
+                console.log(111)
+                this._data = value;
+                this._$viewData = value;
+            }
+        })
     }
     /**
      * @internal
@@ -258,6 +270,18 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public set selectedItems(value: ArrayCollection<listOption> | any) {
         this._selectedItems = value;
     }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public sourceRenderer: any = TransferListSourceRenderer;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public targetRenderer: any = TransferListTargetRenderer;
 
     /**
      * @NoMarkForCheckRequired
@@ -320,17 +344,20 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         let targetComponentFactory;
 
         setTimeout(() => {
-            if (this.data instanceof ArrayCollection) {
-                sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
-                targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
-            } else if (this.data instanceof SimpleTreeData) {
-                sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
-                targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
-            } else if (this.data instanceof TableData) {
-                sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
-                targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
-                // this.selectedItems = new TableData([], this.data.field, this.data.header);
-            }
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
+            // if (this.data instanceof ArrayCollection) {
+            //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
+            //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
+            // } else if (this.data instanceof SimpleTreeData) {
+            //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
+            //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
+            // } else if (this.data instanceof TableData) {
+            //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
+            //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
+            //     // this.selectedItems = new TableData([], this.data.field, this.data.header);
+            // }
+
 
             this._changeDetectorRef.detectChanges();
 
@@ -339,11 +366,21 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this.sourceComponent = sourceComponentRef.instance;
             this.targetComponent = targetComponentRef.instance;
 
+            // if (this.sourceRenderer === TransferListSourceRenderer) {
+            //     if(this.data instanceof LocalPageableArray || value instanceof PageableArray)
+            // }
+
             this.targetComponent._$data = this.selectedItems;
-            this.data.pagingInfo.subscribe(() => {
-                this.sourceComponent._$data = new ArrayCollection(this.data)
-            })
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            if (this.sourceRenderer !== TransferTreeSourceRenderer) {
+                this.data.pagingInfo.subscribe(() => {
+                    this.sourceComponent._$data = new ArrayCollection(this.data)
+                })
+                this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            }
+
+            if (this.sourceRenderer === TransferTreeSourceRenderer) {
+                this.sourceComponent._$data = this.data;
+            }
 
             this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
             this._$targetCheckbox = this.targetComponent._$setting.selectAll;

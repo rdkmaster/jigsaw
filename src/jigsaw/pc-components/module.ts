@@ -65,6 +65,7 @@ import {JigsawProcessStatusModule} from "./process-status/index";
 import {JigsawUploadFallbackModule} from './fallback/upload/index';
 import {JigsawSearchInputModule} from './input/search-input';
 import {JigsawChartIconModule} from './chart-icon/chart-icon';
+import { JigsawTransferRendererModule } from "./transfer/renderer/transfer-renderer";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -115,6 +116,7 @@ const JIGSAW_MODULE = [
     JigsawIconModule,
     JigsawUploadModule,
     JigsawTransferModule,
+    JigsawTransferRendererModule,
     JigsawTextareaModule,
     JigsawBreadcrumbModule,
     JigsawRateModule,

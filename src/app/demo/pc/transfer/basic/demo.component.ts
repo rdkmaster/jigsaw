@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ArrayCollection, LocalPageableArray, TableData } from "jigsaw/public_api";
+import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListTargetRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -25,6 +25,8 @@ export class TransferArrayDemoComponent {
     // handleSelectChange($event) {
     //     this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
     // }
+    public sourceRenderer = TransferListSourceRenderer;
+    public targetRenderer = TransferListTargetRenderer;
 
     constructor(private _http: HttpClient) {
         this.normalData = new ArrayCollection([
@@ -58,9 +60,6 @@ export class TransferArrayDemoComponent {
             { label: '文本选项5' }
         ]);
     }
-
-
-
 
     normalData: ArrayCollection<any>;
     normalSelectedData: ArrayCollection<any>;
