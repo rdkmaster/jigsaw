@@ -389,6 +389,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$sourceSearching($event) {
         this.sourceComponent.searchFilter(this.data, this.selectedItems, $event);
+        this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
+        this._checkSourceSelectAll()
     }
 
     /**
@@ -396,6 +398,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$targetSearching($event) {
         this.targetComponent.searchFilter(this.selectedItems, $event);
+        this.targetComponent._$selectedItems.splice(0, this.targetComponent._$selectedItems.length)
+        this._checkTargetSelectAll()
     }
 
     public _$sourceTransfer() {
