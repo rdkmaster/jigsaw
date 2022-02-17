@@ -70,7 +70,8 @@ export class TransferListRendererBase {
 
     public set _$data(value: ArrayCollection<listOption>) {
         this._data = value;
-        this._$validData = value.filter(item => !item.disabled);
+
+        this.update();
     }
 
     /**
@@ -114,7 +115,7 @@ export class TransferListRendererBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public trackItemBy: string | string[];
+    public trackItemBy: string | string[] = 'label';
 
     /**
      * @internal
@@ -129,6 +130,18 @@ export class TransferListRendererBase {
     public _$updateSelectedItems() {
         this.selectedItemsChange.emit();
     }
+
+    public selectAll() {
+        if (this._$selectedItems && this._$selectedItems.length === this._$validData.length) {
+            this._$selectedItems = new ArrayCollection([]);
+        } else {
+            this._$selectedItems = new ArrayCollection(this._$validData);
+        }
+    }
+
+    public update() {
+        this._$validData = this._$data.filter(item => !item.disabled);
+    }
 }
 
 @Component({
@@ -136,6 +149,35 @@ export class TransferListRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
+    public dataFilter(data, selectedItems) {
+        if (!selectedItems || selectedItems.length === 0) {
+            data.filter((item) => { return true })
+        } else {
+            data.filter((item) => {
+                let retain = true;
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                    retain = false;
+                }
+                return retain;
+            })
+        }
+    }
+
+    public searchFilter(data, selectedItems, filterKey) {
+        if (!selectedItems || selectedItems.length === 0) {
+            data.filter((item) => { return item[this.labelField].includes(filterKey) })
+        } else {
+            data.filter((item) => {
+                let retain = true;
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                    retain = false;
+                } else {
+                    retain = item[this.labelField].includes(filterKey)
+                }
+                return retain;
+            })
+        }
+    }
 }
 
 @Component({
@@ -143,6 +185,18 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferListTargetRenderer extends TransferListRendererBase {
+
+
+    public searchFilter(selectedItems, filterKey) {
+        console.log(selectedItems)
+        filterKey = filterKey ? filterKey.trim() : '';
+        const data = selectedItems.filter(item => {
+            return item[this.labelField].includes(filterKey);
+        })
+        this._$data = data;
+    }
+
+
 }
 
 @Directive()
@@ -237,18 +291,17 @@ export class TransferTableRendererBase {
         protected _injector: Injector) {
     }
 
-    private _data: any;
+    protected _data: any;
 
     /* 渲染器数据 */
     @Input()
-    public get _$data(): any {
+    public get _$data(): TableData {
         return this._data;
     }
 
-    public set _$data(value: any) {
+    public set _$data(value: TableData) {
         this._data = value;
-        console.log(value);
-        this._$validData = [1, 2, 3]
+        this._$validData = value.data;
     }
 
     /**
@@ -273,12 +326,62 @@ export class TransferTableRendererBase {
     public _$setting = { selectAll: false };
 
     /**
+     * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = "label";
+
+    /**
      * @internal
      */
-    public _$updateSelectedItems() {
-
+    public _$updateSelectedItems(value) {
+        this.selectedRows = this._getSelectedRows(value);
+        this._$selectedItems = this._getAllSelectedRows(value);
+        console.log(this._$selectedItems)
     }
 
+    /**
+     * 获取选中的行
+     * @param additionalData
+     */
+    private _getSelectedRows(additionalData) {
+        return additionalData.data.reduce((selectedRows, item, index) => {
+            if (item[0]) {
+                selectedRows.push(index);
+            }
+            return selectedRows;
+        }, []).join(',');
+    }
+
+    /**
+     * 获取所有选中的行
+     * @param additionalData
+    */
+    private _getAllSelectedRows(additionalData) {
+        return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
+            if (item.value) {
+                selectedRows.push({ [this.labelField]: item.data[0], key: item.key });
+            }
+            return selectedRows;
+        }, []);
+    }
+
+    public selectedRows: string;
+
+    public additionalData: AdditionalTableData;
+
+    public additionalColumns: AdditionalColumnDefine[] = [{
+        pos: 0,
+        width: 20,
+        header: {
+            renderer: TableHeadCheckboxRenderer
+        },
+        cell: {
+            renderer: TableCellCheckboxRenderer
+        }
+    }];
 }
 
 @Component({
@@ -292,6 +395,19 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableTargetRenderer extends TransferTableRendererBase {
+    protected _data: any;
+
+    /* 渲染器数据 */
+    @Input()
+    public get _$data(): any {
+        return this._data;
+    }
+
+    public set _$data(value: any) {
+
+        console.log("target", value);
+        this._$validData = [1, 2, 3]
+    }
 }
 
 @NgModule({

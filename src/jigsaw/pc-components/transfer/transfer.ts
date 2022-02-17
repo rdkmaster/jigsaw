@@ -201,51 +201,6 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     public sourceSelectedItemsChangeSubscribe: Subscription;
     public targetSelectedItemsChangeSubscribe: Subscription;
 
-    ngOnInit(): void {
-        let sourceComponentFactory;
-        let targetComponentFactory;
-        if (this.data instanceof ArrayCollection) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
-        } else if (this.data instanceof SimpleTreeData) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
-        } else if (this.data instanceof TableData) {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
-            // this.selectedItems = new TableData([], this.data.field, this.data.header);
-        }
-
-        this._changeDetectorRef.detectChanges();
-
-        const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
-        const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
-        this.sourceComponent = sourceComponentRef.instance;
-        this.targetComponent = targetComponentRef.instance;
-        this.sourceComponent._$data = this.data;
-        this.targetComponent._$data = this.selectedItems;
-
-        this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
-        this._$targetCheckbox = this.targetComponent._$setting.selectAll;
-        // this.sourceComponent.selectedItems; = this.sourceComponent.selectedItems;
-        // this.targetComponent.selectedItems = this.targetComponent.selectedItems;
-        // this.targetComponent.data = this.data;
-
-
-        // this.sourceComponent.transferSelectedItems = this.selectedItems;
-        // this.targetComponent.transferSelectedItems = this.selectedItems;
-
-        // this._$sourceSelectAllChecked = this.sourceComponent._$selectAllChecked;
-        // this._$targetSelectAllChecked = this.targetComponent._$selectAllChecked;
-
-        this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
-            this._checkSourceSelectAll();
-        });
-        this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
-            this._checkTargetSelectAll();
-        });
-    }
-
     /**
      * 全选
      *
@@ -268,56 +223,29 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     public set data(value) {
-        this._data = value;
-    }
-
-    // public sourceComponent.selectedItems;: any;
-    // public targetComponent.selectedItems: any;
-
-    // public _$sourceVaildData: any;
-    // public _$targetVaildData: any;
-
-    public getSourceItemsCount(): string {
-        if (!this.sourceComponent) {
-            return
-        }
-        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
-    }
-
-    public getTargetItemsCount(): string {
-        if (!this.targetComponent) {
-            return
-        }
-        const selectedItemsCount = this.targetComponent._$selectedItems ? this.targetComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} 项`
-    }
-
-    private _checkSourceSelectAll() {
-        this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
-        if (!this.sourceComponent._$selectedItems || this.sourceComponent._$selectedItems.length === 0) {
-            this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
-            return;
-        }
-        if (this.sourceComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
-            this._$sourceSelectAllChecked = CheckBoxStatus.checked;
+        // this._data = value;
+        // this._$viewData = value;
+        if (value instanceof LocalPageableArray || value instanceof PageableArray) {
+            this._data = value;
+            this._$viewData = this.data;
         } else {
-            this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
+            const data = new LocalPageableArray<listOption>();
+            data.pagingInfo.pageSize = Infinity;
+            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+                removeUpdateSubscriber.unsubscribe();
+                this._data = data;
+                this._$viewData = this._data;
+            });
+            data.fromArray(value);
         }
     }
-
-    private _checkTargetSelectAll() {
-        this._$targetButton = this.targetComponent._$selectedItems.length > 0;
-        if (!this.targetComponent._$selectedItems || this.targetComponent._$selectedItems.length === 0) {
-            this._$targetSelectAllChecked = CheckBoxStatus.unchecked;
-            return;
-        }
-        if (this.targetComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
-            this._$targetSelectAllChecked = CheckBoxStatus.checked;
-        } else {
-            this._$targetSelectAllChecked = CheckBoxStatus.indeterminate;
-        }
-    }
+    /**
+     * @internal
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public _$viewData: any;
 
     private _selectedItems: ArrayCollection<listOption> | any = [];
 
@@ -332,14 +260,119 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     }
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public subLabelField: string;
+
+    public getSourceItemsCount(): string {
+        if (!this.sourceComponent || !this.sourceComponent._$validData) {
+            return
+        }
+        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
+    }
+
+    public getTargetItemsCount(): string {
+        if (!this.targetComponent || !this.targetComponent._$validData) {
+            return
+        }
+        const selectedItemsCount = this.targetComponent._$selectedItems ? this.targetComponent._$selectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} 项`
+    }
+
+    private _checkSourceSelectAll() {
+        this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
+        this.sourceComponent.update();
+        if (!this.sourceComponent._$selectedItems || this.sourceComponent._$selectedItems.length === 0) {
+            this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this.sourceComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
+            this._$sourceSelectAllChecked = CheckBoxStatus.checked;
+        } else {
+            this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
+        }
+    }
+
+    private _checkTargetSelectAll() {
+        this._$targetButton = this.targetComponent._$selectedItems.length > 0;
+        this.targetComponent.update();
+        if (!this.targetComponent._$selectedItems || this.targetComponent._$selectedItems.length === 0) {
+            this._$targetSelectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this.targetComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
+            this._$targetSelectAllChecked = CheckBoxStatus.checked;
+        } else {
+            this._$targetSelectAllChecked = CheckBoxStatus.indeterminate;
+        }
+    }
+
+    ngOnInit(): void {
+        let sourceComponentFactory;
+        let targetComponentFactory;
+
+        setTimeout(() => {
+            if (this.data instanceof ArrayCollection) {
+                sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
+                targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
+            } else if (this.data instanceof SimpleTreeData) {
+                sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
+                targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
+            } else if (this.data instanceof TableData) {
+                sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
+                targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
+                // this.selectedItems = new TableData([], this.data.field, this.data.header);
+            }
+
+            this._changeDetectorRef.detectChanges();
+
+            const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
+            const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
+            this.sourceComponent = sourceComponentRef.instance;
+            this.targetComponent = targetComponentRef.instance;
+
+            this.targetComponent._$data = this.selectedItems;
+            this.data.pagingInfo.subscribe(() => {
+                this.sourceComponent._$data = new ArrayCollection(this.data)
+            })
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+
+            this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
+            this._$targetCheckbox = this.targetComponent._$setting.selectAll;
+            // this.sourceComponent.selectedItems; = this.sourceComponent.selectedItems;
+            // this.targetComponent.selectedItems = this.targetComponent.selectedItems;
+            // this.targetComponent.data = this.data;
+
+
+            // this.sourceComponent.transferSelectedItems = this.selectedItems;
+            // this.targetComponent.transferSelectedItems = this.selectedItems;
+
+            // this._$sourceSelectAllChecked = this.sourceComponent._$selectAllChecked;
+            // this._$targetSelectAllChecked = this.targetComponent._$selectAllChecked;
+
+            this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
+                this._checkSourceSelectAll();
+            });
+            this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
+                this._checkTargetSelectAll();
+            });
+        }, 1000);
+
+    }
+
+    /**
      * @internal
      */
     public _$sourceSelectAll() {
-        if (this.sourceComponent._$selectedItems && this.sourceComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
-            this.sourceComponent._$selectedItems = new ArrayCollection([]);
-        } else {
-            this.sourceComponent._$selectedItems = new ArrayCollection(this.sourceComponent._$validData);
-        }
+        this.sourceComponent.selectAll();
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
     }
 
@@ -347,30 +380,67 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @internal
      */
     public _$targetSelectAll() {
-        if (this.targetComponent._$selectedItems && this.targetComponent._$selectedItems.length === this.targetComponent._$validData.length) {
-            this.targetComponent._$selectedItems = new ArrayCollection([]);
-        } else {
-            this.targetComponent._$selectedItems = new ArrayCollection(this.targetComponent._$validData);
-        }
-        this._$sourceButton = this.targetComponent._$selectedItems.length > 0;
+        this.targetComponent.selectAll();
+        this._$targetButton = this.targetComponent._$selectedItems.length > 0;
+    }
+
+    /**
+     * @internal
+     */
+    public _$sourceSearching($event) {
+        this.sourceComponent.searchFilter(this.data, this.selectedItems, $event);
+    }
+
+    /**
+     * @internal
+     */
+    public _$targetSearching($event) {
+        this.targetComponent.searchFilter(this.selectedItems, $event);
     }
 
     public _$sourceTransfer() {
         if (!this._$sourceButton) {
             return
         }
-        this.sourceComponent.transfer();
-        this.targetComponent.update();
-        this._changeDetectorRef.detectChanges();
+
+        this.selectedItems.push(...this.sourceComponent._$selectedItems)
+        this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
+        this._checkSourceSelectAll();
+        this._checkTargetSelectAll();
+        // this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        // this.sourceComponent._$selectedItems = new ArrayCollection([]);
+        // this.sourceComponent.transfer();
+        // this.targetComponent.update();
+        // this._changeDetectorRef.detectChanges();
     }
 
     public _$targetTransfer() {
         if (!this._$targetButton) {
             return
         }
-        this.targetComponent.transfer();
-        this.sourceComponent.update();
-        this._changeDetectorRef.detectChanges();
+        this.targetComponent._$selectedItems.forEach(selectedItem => {
+            this.selectedItems.forEach((item, i) => {
+                if (CommonUtils.compareValue(item, selectedItem, this.trackItemBy)) {
+                    this.selectedItems.splice(i, 1);
+                    return;
+                }
+            })
+        })
+        this.targetComponent._$selectedItems.splice(0, this.targetComponent._$selectedItems.length)
+        this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        this._checkSourceSelectAll();
+        this._checkTargetSelectAll();
+        // this.selectedItems = this.selectedItems.filter((item) => {
+        //     let retain = true;
+        //     if (this.targetComponent._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+        //         retain = false;
+        //     }
+        //     return retain;
+        // })
+        // this.targetComponent.transfer();
+        // this.sourceComponent.update();
+        // this._changeDetectorRef.detectChanges();
     }
 
     // /**
@@ -450,9 +520,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     // }
 
     /**
- * 更新transfer的样式信息
- * @internal
- */
+     * 更新transfer的样式信息
+     * @internal
+     */
     public _$transferClass: {};
 
     private _removePageableCallbackListener: CallbackRemoval;
@@ -460,11 +530,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public subLabelField: string;
+
 
     /**
      * @NoMarkForCheckRequired
