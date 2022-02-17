@@ -69,7 +69,6 @@ export class TransferListRendererBase {
 
     public set _$data(value: ArrayCollection<listOption>) {
         this._data = value;
-
         this.update();
     }
 

@@ -250,6 +250,11 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 this._data = value;
                 this._$viewData = value;
             }
+
+            if (this.sourceRenderer === TransferTableSourceRenderer) {
+                this._data = value;
+                this._$viewData = value;
+            }
         })
     }
     /**
