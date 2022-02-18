@@ -133,6 +133,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get theme(): 'light' | 'dark' | string {
         return this._theme;
@@ -153,10 +156,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     @Input()
     public get globalTheme() {
-        if (!this._globalTheme) {
-            this._globalTheme = JigsawTheme.getGraphTheme(this.theme);
-        }
-        return this._globalTheme;
+        // this._globalTheme用于保存用户自定义echart全局皮肤，jigsaw自带的皮肤不保存在this._globalTheme里
+        return this._globalTheme || JigsawTheme.getGraphTheme(this.theme);
     };
 
     public set globalTheme(value) {
