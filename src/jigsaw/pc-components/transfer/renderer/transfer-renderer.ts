@@ -114,7 +114,7 @@ export class TransferListRendererBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public trackItemBy: string | string[] = 'label';
+    public trackItemBy: string = 'label';
 
     /**
      * @internal
@@ -327,6 +327,7 @@ export class TransferTreeRendererBase implements transferRenderer {
     public dataFilter(data, selectedItems) {
         let keyMap = [];
         let result = [];
+        console.log(this.trackItemBy)
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
         })
@@ -360,6 +361,9 @@ export class TransferTableRendererBase {
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
     }
+
+    @ViewChild(JigsawTable)
+    public table: JigsawTable;
 
     protected _data: any;
 
@@ -404,12 +408,34 @@ export class TransferTableRendererBase {
     public labelField: string = "label";
 
     /**
+     * 设置数据的副显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public subLabelField: string = "subLabel";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public trackItemBy: string = 'id';
+
+    /**
      * @internal
      */
     public _$updateSelectedItems(value) {
         this.selectedRows = this._getSelectedRows(value);
         this._$selectedItems = this._getAllSelectedRows(value);
+        this.selectedItemsChange.emit();
         console.log(this._$selectedItems)
+    }
+
+    public update() {
+        // this._$validData
+        // this.additionalData.clearTouchedValues();
+        // this.additionalData.refresh();
+        // this.table.update();
     }
 
     /**
@@ -458,7 +484,26 @@ export class TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
+    public dataFilter(data, selectedItems) {
+        console.log(data.field)
+        console.log(this.trackItemBy)
+        console.log(data.field.findIndex(item => { return item === this.trackItemBy }))
+
+        if (!selectedItems || selectedItems.length === 0) {
+            data.filter((item) => { return true })
+        } else {
+            data.filter((item) => {
+                let retain = true;
+                // console.log(item)
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                    retain = false;
+                }
+                return retain;
+            })
+        }
+    }
 }
+
 @Component({
     templateUrl: './transfer-table.html',
     encapsulation: ViewEncapsulation.None

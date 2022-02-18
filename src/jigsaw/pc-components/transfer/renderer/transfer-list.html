@@ -1,7 +1,7 @@
 <div class="jigsaw-transfer-renderer jigsaw-transfer-list-renderer"
     [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-    <jigsaw-list width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy" [(selectedItems)]="_$selectedItems"
-        (selectedItemsChange)="_$updateSelectedItems()">
+    <jigsaw-list width="100%" [multipleSelect]="true" [trackItemBy]="trackItemBy"
+        [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$updateSelectedItems()">
         <j-list-option #listItem *ngFor="let item of _$data; trackBy: _$trackByFn" [value]="item"
             [disabled]="item.disabled">
             <ng-container j-title>

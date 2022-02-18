@@ -34,7 +34,7 @@ import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { WingsTheme, JigsawCommonModule } from "../../common/common";
 import { SimpleTreeData } from '../../common/core/data/tree-data';
-import { TableData } from '../../common/core/data/table-data';
+import { TableData, LocalPageableTableData, PageableTableData } from '../../common/core/data/table-data';
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
@@ -256,8 +256,25 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             }
 
             if (this.sourceRenderer === TransferTableSourceRenderer) {
-                this._data = value;
-                this._$viewData = value;
+                // this._data = value;
+                // this._$viewData = value;
+                console.log(value);
+                if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
+                    this._data = value;
+                    this._$viewData = this.data;
+                } else if (value instanceof TableData) {
+                    const data = new LocalPageableTableData();
+                    data.pagingInfo.pageSize = Infinity;
+                    const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                        // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+                        removeUpdateSubscriber.unsubscribe();
+                        this._data = data;
+                        this._$viewData = this._data;
+                    });
+                    data.fromObject({ data: value.data, field: value.field, header: value.header });
+                } else {
+                    console.warn("输入的数据结构与渲染器不匹配")
+                }
             }
         })
     }
@@ -303,6 +320,12 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input()
     public subLabelField: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public trackItemBy: string;
 
     public getSourceItemsCount(): string {
         if (!this.sourceComponent || !this.sourceComponent._$validData) {
@@ -375,22 +398,41 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             this.sourceComponent = sourceComponentRef.instance;
             this.targetComponent = targetComponentRef.instance;
 
+            this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
+            this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
+            console.log(this.labelField)
+
+            this.sourceComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.sourceComponent.subLabelField;
+            this.targetComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.targetComponent.subLabelField;
+
+            this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
+            this.targetComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.targetComponent.trackItemBy;
+            console.log(this.trackItemBy)
+            console.log(this.sourceComponent.trackItemBy)
+
             // if (this.sourceRenderer === TransferListSourceRenderer) {
             //     if(this.data instanceof LocalPageableArray || value instanceof PageableArray)
             // }
 
             this.targetComponent._$data = this.selectedItems;
-            if (this.sourceRenderer !== TransferTreeSourceRenderer) {
+            if (this.sourceRenderer === TransferListSourceRenderer) {
                 this.data.pagingInfo.subscribe(() => {
                     this.sourceComponent._$data = new ArrayCollection(this.data)
                 })
                 this.sourceComponent.dataFilter(this.data, this.selectedItems)
-            }
-
-            if (this.sourceRenderer === TransferTreeSourceRenderer) {
+            } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
                 // console.log(this.sourceComponent.dataFilter(this.data, this.selectedItems))
                 this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
                 this.sourceComponent.update();
+            } else if (this.sourceRenderer === TransferTableSourceRenderer) {
+                this.data.pagingInfo.subscribe(() => {
+                    this._$viewData = new TableData();
+                    this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
+                    this.sourceComponent._$data = this.data;
+                })
+                this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            } else {
+                this.sourceComponent._$data = this._$viewData;
             }
 
             this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
@@ -405,6 +447,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
             // this._$sourceSelectAllChecked = this.sourceComponent._$selectAllChecked;
             // this._$targetSelectAllChecked = this.targetComponent._$selectAllChecked;
+
 
             this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
                 this._checkSourceSelectAll();

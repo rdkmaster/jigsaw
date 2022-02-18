@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableData } from "jigsaw/public_api";
+import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, listOption } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -88,9 +88,17 @@ export class TransferTableDemoComponent {
             ],
             ["name", "position"],
             ["姓名", "职位"]);
+
+        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2' }]);
     }
 
     data: TableData;
+    public sourceRenderer = TransferTableSourceRenderer;
+    public targetRenderer = TransferListTargetRenderer;
+
+    selectedData: ArrayCollection<listOption>;
+    labelField = 'name';
+    trackItemBy = 'name';
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

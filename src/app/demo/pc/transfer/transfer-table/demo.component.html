@@ -8,6 +8,8 @@
     <jigsaw-header [level]="1">Transfer</jigsaw-header>
     <div class="demo-1 live-demo">
         <jigsaw-header [level]="2">普通数据</jigsaw-header>
-        <j-transfer width="100%" height="500" [data]="data"></j-transfer>
+        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"
+            [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer" [labelField]="labelField"
+            [trackItemBy]="trackItemBy"></j-transfer>
     </div>
 </div>
