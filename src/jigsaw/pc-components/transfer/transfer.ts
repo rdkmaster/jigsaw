@@ -35,7 +35,7 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { WingsTheme, JigsawCommonModule } from "../../common/common";
 import { SimpleTreeData } from '../../common/core/data/tree-data';
 import { TableData } from '../../common/core/data/table-data';
-import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule, TransferTreeTargetRenderer } from './renderer/transfer-renderer';
+import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
 
@@ -224,8 +224,8 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
     public set data(value) {
         this.runMicrotask(() => {
-            console.log(this.sourceRenderer)
-            console.log(this.sourceRenderer === TransferListSourceRenderer)
+            // console.log(this.sourceRenderer)
+            // console.log(this.sourceRenderer === TransferListSourceRenderer)
             if (this.sourceRenderer === TransferListSourceRenderer) {
                 if (value instanceof LocalPageableArray || value instanceof PageableArray) {
                     this._data = value;
@@ -246,9 +246,13 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             }
 
             if (this.sourceRenderer === TransferTreeSourceRenderer) {
-                console.log(111)
-                this._data = value;
-                this._$viewData = value;
+                // console.log(111)
+                if (value instanceof SimpleTreeData) {
+                    this._data = value;
+                    this._$viewData = this.data;
+                } else {
+                    console.warn("输入的数据结构与渲染器不匹配")
+                }
             }
 
             if (this.sourceRenderer === TransferTableSourceRenderer) {
@@ -384,7 +388,9 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             }
 
             if (this.sourceRenderer === TransferTreeSourceRenderer) {
-                this.sourceComponent._$data = this.data;
+                // console.log(this.sourceComponent.dataFilter(this.data, this.selectedItems))
+                this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+                this.sourceComponent.update();
             }
 
             this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
@@ -430,7 +436,13 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @internal
      */
     public _$sourceSearching($event) {
-        this.sourceComponent.searchFilter(this.data, this.selectedItems, $event);
+        console.log($event)
+        if (this.sourceRenderer === TransferTreeSourceRenderer) {
+            this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event));
+            this.sourceComponent.update();
+        } else {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll()
     }
@@ -450,7 +462,13 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         }
 
         this.selectedItems.push(...this.sourceComponent._$selectedItems)
-        this.sourceComponent.dataFilter(this.data, this.selectedItems);
+
+        if (this.sourceRenderer === TransferTreeSourceRenderer) {
+            this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.update();
+        } else {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
@@ -474,7 +492,12 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
             })
         })
         this.targetComponent._$selectedItems.splice(0, this.targetComponent._$selectedItems.length)
-        this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        if (this.sourceRenderer === TransferTreeSourceRenderer) {
+            this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.update();
+        } else {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        }
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
         // this.selectedItems = this.selectedItems.filter((item) => {

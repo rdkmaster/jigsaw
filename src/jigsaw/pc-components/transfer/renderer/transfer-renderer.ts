@@ -17,17 +17,18 @@ import { JigsawTreeExtModule, JigsawTreeExt } from '../../../pc-components/tree/
 import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
 import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../pc-components/table/table-renderer';
 import { JigsawTableModule, JigsawTable } from '../../../pc-components/table/table';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ChartIconCustomPieLegend } from 'jigsaw/pc-components/chart-icon/chart-icon-factory';
 import { TableData, TableDataMatrix, TableMatrixRow } from '../../../common/core/data/table-data';
 import { AbstractJigsawComponent } from '../../../common/common';
+import { SimpleTreeData } from 'jigsaw/common/core/data/tree-data';
 
 export type listOption = {
     disabled?: boolean;
     label?: string;
     subLabel?: string;
     addtionalData?: any;
-    [field: string]: string | boolean;
+    [field: string]: string | boolean | number;
 }
 
 export type transferRendererSetting = {
@@ -193,8 +194,6 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
         })
         this._$data = data;
     }
-
-
 }
 
 @Directive()
@@ -207,17 +206,16 @@ export class TransferTreeRendererBase implements transferRenderer {
     @ViewChild(JigsawTreeExt)
     public treeExt: JigsawTreeExt;
 
-    private _data: any;
+    private _data: any = new SimpleTreeData();
 
     /* 渲染器数据 */
     @Input()
-    public get _$data(): ArrayCollection<listOption> {
+    public get _$data(): SimpleTreeData {
         return this._data;
     }
 
-    public set _$data(value: ArrayCollection<listOption>) {
+    public set _$data(value: SimpleTreeData) {
         this._data = value;
-        this._$validData = new ArrayCollection(this._getLeafNodes([value]));
     }
 
     /**
@@ -242,6 +240,28 @@ export class TransferTreeRendererBase implements transferRenderer {
     public _$setting = { selectAll: false };
 
     /**
+     * 设置数据的显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public labelField: string = "label";
+
+    /**
+     * 设置数据的副显示字段
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public subLabelField: string = "subLabel";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public trackItemBy: string = 'id';
+
+    /**
      * @internal
      */
     public _$updateSelectedItems() {
@@ -257,13 +277,73 @@ export class TransferTreeRendererBase implements transferRenderer {
 
     private _getLeafNodes(nodes, result = []) {
         for (var i = 0, length = nodes.length; i < length; i++) {
-            if (!nodes[i].nodes || nodes[i].nodes.length === 0) {
+            if (!nodes[i].nodes) {
                 result.push(nodes[i]);
             } else {
                 result = this._getLeafNodes(nodes[i].nodes, result);
             }
         }
         return result;
+    }
+
+    public update() {
+        this._$validData = new ArrayCollection(this._getLeafNodes([this._$data]));
+    }
+
+    private _filterSelectedItem(nodes, key) {
+        for (var i = 0, length = nodes.length; i < length; i++) {
+            if (!nodes[i].nodes) {
+                if (nodes[i][this.trackItemBy] === key) {
+                    nodes.splice(i, 1)
+                    return;
+                }
+            } else {
+                this._filterSelectedItem(nodes[i].nodes, key);
+            }
+        }
+    }
+
+    public _filterTree(tree, keyMap, arr, searchKey) {
+        if (!tree.length) {
+            return [];
+        }
+        for (var i = 0; i < tree.length; i++) {
+            if (tree[i].nodes) {
+                let newNode = { ...tree[i], nodes: [] };
+                arr.push(newNode);
+                this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
+            } else {
+                if (!keyMap.includes(tree[i][this.trackItemBy])) {
+                    if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || !(searchKey.length > 0)) {
+                        let newNode = { ...tree[i] };
+                        arr.push(newNode);
+                    }
+                }
+            }
+        }
+        return arr;
+    }
+
+    public dataFilter(data, selectedItems) {
+        let keyMap = [];
+        let result = [];
+        selectedItems.forEach(item => {
+            keyMap.push(item[this.trackItemBy])
+        })
+
+        return this._filterTree(data.nodes, keyMap, result, '');
+    }
+
+    public searchFilter(data, selectedItems, $event) {
+        let keyMap = [];
+        let result = [];
+        let searchKey = $event.length > 0 ? $event.trim() : "";
+        selectedItems.forEach(item => {
+            keyMap.push(item[this.trackItemBy])
+        })
+
+
+        return this._filterTree(data.nodes, keyMap, result, searchKey);
     }
 }
 
@@ -273,14 +353,6 @@ export class TransferTreeRendererBase implements transferRenderer {
 })
 export class TransferTreeSourceRenderer extends TransferTreeRendererBase {
 
-}
-
-
-@Component({
-    templateUrl: './transfer-list.html',
-    encapsulation: ViewEncapsulation.None
-})
-export class TransferTreeTargetRenderer extends TransferListTargetRenderer {
 }
 @Directive()
 export class TransferTableRendererBase {
@@ -381,7 +453,6 @@ export class TransferTableRendererBase {
         }
     }];
 }
-
 @Component({
     templateUrl: './transfer-table.html',
     encapsulation: ViewEncapsulation.None
@@ -409,7 +480,7 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
 }
 
 @NgModule({
-    declarations: [TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTreeTargetRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
+    declarations: [TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
     imports: [CommonModule, JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawPaginationModule, JigsawSearchInputModule, TranslateModule, JigsawTreeExtModule, JigsawTableModule],
     providers: [TranslateService, LoadingService]
 })
