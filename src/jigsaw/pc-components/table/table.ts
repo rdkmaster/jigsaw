@@ -57,7 +57,8 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[class.jigsaw-table-host]': 'true',
-        '[class.jigsaw-table-ff]': '_$isFFBrowser'
+        '[class.jigsaw-table-ff]': '_$isFFBrowser',
+        '[attr.data-theme]': 'theme',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
