@@ -12,36 +12,21 @@ export class ThemeBuildInThemeDemoComponent {
     darkTheme = "dark";
 
     _$cityList = new ArrayCollection([
-        { label: "北京", id: 0 },
-        { label: "上海", id: 2 },
-        { label: "南京", id: 3 },
-        { label: "深圳", id: 4 },
-        { label: "长沙", id: 5 },
-        { label: "西安", id: 6 }
+        { label: "北京", id: 0 }, { label: "上海", id: 2 }, { label: "南京", id: 3 },
+        { label: "深圳", id: 4 }, { label: "长沙", id: 5 }, { label: "西安", id: 6 }
     ]);
 
     _$cityList2 = new ArrayCollection([
-        { label: "北京" },
-        { label: "上海", disabled: true },
-        { label: "南京" },
-        { label: "深圳" },
-        { label: "长沙", disabled: true },
-        { label: "西安" }
+        { label: "北京" }, { label: "上海", disabled: true }, { label: "南京" },
+        { label: "深圳" }, { label: "长沙", disabled: true }, { label: "西安" }
     ]);
 
-    _$dropdownData = [{
-        category: '事件与数据',
-        items: ['发送事件到事件总线', '更新变量']
-    }, {
-        category: '动画',
-        items: ['隐藏/显示元素', '滚动页面']
-    }, {
-        category: '弹出',
-        items: ['对话框', '提醒', '警示', '等待弹出关闭']
-    }, {
-        category: '高级',
-        items: ['自定义代码块']
-    }];
+    _$dropdownData = [
+        {category: '事件与数据', items: ['发送事件到事件总线', '更新变量']},
+        {category: '动画', items: ['隐藏/显示元素', '滚动页面']},
+        {category: '弹出', items: ['对话框', '提醒', '警示', '等待弹出关闭']},
+        {category: '高级', items: ['自定义代码块']}
+    ];
 
     _$breadcrumbItems = [
         { id: 0, label: "Home", icon: "iconfont iconfont-e647" },
@@ -51,26 +36,10 @@ export class ThemeBuildInThemeDemoComponent {
     ];
 
     _$titles = [
-        {
-            title: 'Settings',
-            subTitle: 'Ctrl+Alt+A',
-            subMenu: false
-        },
-        {
-            title: 'Print',
-            subTitle: '',
-            subMenu: true
-        },
-        {
-            title: 'Save All',
-            subTitle: 'Ctrl+S',
-            subMenu: false
-        },
-        {
-            title: 'Exit',
-            subTitle: '',
-            subMenu: true
-        }
+        {title: 'Settings', subTitle: 'Ctrl+Alt+A', subMenu: false},
+        {title: 'Print', subTitle: '', subMenu: true},
+        {title: 'Save All', subTitle: 'Ctrl+S', subMenu: false},
+        {title: 'Exit', subTitle: '', subMenu: true}
     ];
 
     _$goodsList: GroupOptionValue[] = [
@@ -187,31 +156,11 @@ export class ThemeBuildInThemeDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
 
         this._$graphData = new GraphData({
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
-                },
-                extraCssText: 'z-index: 999'
-            },
-            grid:{
-                top:10,
-                bottom: 20,
-                right:0,
-                left:48,
-                show: false
-            },
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
+            tooltip: {trigger: 'axis', axisPointer: {type: 'shadow'}, extraCssText: 'z-index: 999'},
+            grid: {top:10, bottom: 20, right:0, left:48, show: false},
+            xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},
+            yAxis: {type: 'value'},
+            series: [{data: [820, 932, 901, 934, 1290, 1330, 1320], type: 'line'}]
         });
     }
 
