@@ -11,85 +11,104 @@ export class TransferTableDemoComponent {
             [
                 [
                     "Tiger Nixon1",
-                    "System Architect"
+                    "System Architect",
+                    1
                 ],
                 [
                     "Garrett Winflters1",
-                    "Accountant"
+                    "Accountant",
+                    2
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect"
+                    "System Arcfhitect",
+                    3
                 ],
                 [
                     "Garrett Winslters2",
-                    "Accountant"
+                    "Accountant",
+                    4
                 ],
                 [
                     "Tiger Nixon3",
-                    "System Arcfhitect"
+                    "System Arcfhitect",
+                    5
                 ],
                 [
                     "Garrett Winflters3",
-                    "Accountant"
+                    "Accountant",
+                    6
                 ],
                 [
                     "Tiger Nixon4",
-                    "System Arcfhitect"
+                    "System Arcfhitect",
+                    7
                 ],
                 [
                     "Garrett Winflters4",
-                    "Accountant"
+                    "Accountant",
+                    8
                 ],
                 [
                     "Tiger Nixon5",
-                    "System Arcfhitect"
+                    "System Arcfhitect",
+                    9
                 ],
                 [
                     "Garrett Wintsers5",
-                    "Accountant"
+                    "Accountant",
+                    10
                 ],
                 [
                     "Tigser Nixon6",
-                    "System Architect"
+                    "System Architect",
+                    11
                 ],
                 [
                     "Tiger Nixon9",
-                    "System Architect"
+                    "System Architect",
+                    12
                 ],
                 [
                     "Tiger Nixon7",
-                    "System Architect"
+                    "System Architect",
+                    13
                 ],
                 [
                     "Tiger Nixon8",
-                    "System Architect"
+                    "System Architect",
+                    14
                 ],
                 [
                     "Garrett Winters12",
-                    "Accountant"
+                    "Accountant",
+                    15
                 ],
                 [
                     "Tiger Nixon24",
-                    "System Architect"
+                    "System Architect",
+                    16
                 ],
                 [
                     "Tigesr Nixon13",
-                    "System Architect"
+                    "System Architect",
+                    17
                 ],
                 [
                     "Garretst Winters12",
-                    "Accountant"
+                    "Accountant",
+                    18
                 ],
                 [
                     "Tigers Nixon21",
-                    "System Architect"
+                    "System Architect",
+                    19
                 ]
             ],
-            ["name", "position"],
-            ["姓名", "职位"]);
+            ["name", "position", "id"],
+            ["姓名", "职位", "ID"]);
 
-        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2' }]);
+        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2' }, { name: "Garrett Winslters2" }]);
     }
 
     data: TableData;

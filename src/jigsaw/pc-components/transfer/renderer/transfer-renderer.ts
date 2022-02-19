@@ -170,9 +170,11 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
                 let retain = true;
                 if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
                     retain = false;
-                } else {
+                }
+                if (retain) {
                     retain = item[this.labelField].includes(filterKey)
                 }
+
                 return retain;
             })
         }
@@ -327,7 +329,6 @@ export class TransferTreeRendererBase implements transferRenderer {
     public dataFilter(data, selectedItems) {
         let keyMap = [];
         let result = [];
-        console.log(this.trackItemBy)
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
         })
@@ -456,9 +457,22 @@ export class TransferTableRendererBase {
      * @param additionalData
     */
     private _getAllSelectedRows(additionalData) {
+        const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+        const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+
+        if (trackItemByfiledIndex === -1) {
+            console.warn("trackItemBy值在filed中未找到！")
+            return;
+        }
+
+        if (labelFieldfiledIndex === -1) {
+            console.warn("labelField值在filed中未找到！")
+            return;
+        }
+
         return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
             if (item.value) {
-                selectedRows.push({ [this.labelField]: item.data[0], key: item.key });
+                selectedRows.push({ [this.labelField]: item.data[labelFieldfiledIndex], [this.trackItemBy]: item.data[trackItemByfiledIndex] });
             }
             return selectedRows;
         }, []);
@@ -484,23 +498,48 @@ export class TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    public dataFilter(data, selectedItems) {
-        console.log(data.field)
-        console.log(this.trackItemBy)
-        console.log(data.field.findIndex(item => { return item === this.trackItemBy }))
+    private _filterTable(data, selectedItems, searchKey) {
+        const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+        const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+
+        if (trackItemByfiledIndex === -1) {
+            console.warn("trackItemBy值在filed中未找到！")
+            return;
+        }
+
+        if (labelFieldfiledIndex === -1) {
+            console.warn("labelField值在filed中未找到！")
+            return;
+        }
 
         if (!selectedItems || selectedItems.length === 0) {
-            data.filter((item) => { return true })
+            if (searchKey.length > 0) {
+                data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
+            } else {
+
+                data.filter((item) => { return true })
+            }
         } else {
             data.filter((item) => {
                 let retain = true;
-                // console.log(item)
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
                     retain = false;
+                }
+                if (retain) {
+                    retain = item[labelFieldfiledIndex].includes(searchKey);
                 }
                 return retain;
             })
         }
+    }
+
+    public dataFilter(data, selectedItems) {
+        this._filterTable(data, selectedItems, '')
+    }
+
+    public searchFilter(data, selectedItems, $event) {
+        let searchKey = $event.length > 0 ? $event.trim() : "";
+        this._filterTable(data, selectedItems, searchKey)
     }
 }
 

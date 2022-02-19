@@ -32,7 +32,7 @@ import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { LoadingService } from "../../common/service/loading.service";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { WingsTheme, JigsawCommonModule } from "../../common/common";
+import { WingsTheme, JigsawCommonModule, AbstractJigsawComponent } from "../../common/common";
 import { SimpleTreeData } from '../../common/core/data/tree-data';
 import { TableData, LocalPageableTableData, PageableTableData } from '../../common/core/data/table-data';
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
@@ -137,13 +137,13 @@ const animations = [
     //changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements OnDestroy, OnInit {
+export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy, OnInit {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector,
         protected componentFactoryResolver: ComponentFactoryResolver) {
-        super(_changeDetectorRef, _injector);
+        super();
     }
 
     /**
@@ -400,15 +400,12 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
             this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
             this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
-            console.log(this.labelField)
 
             this.sourceComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.sourceComponent.subLabelField;
             this.targetComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.targetComponent.subLabelField;
 
             this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
             this.targetComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.targetComponent.trackItemBy;
-            console.log(this.trackItemBy)
-            console.log(this.sourceComponent.trackItemBy)
 
             // if (this.sourceRenderer === TransferListSourceRenderer) {
             //     if(this.data instanceof LocalPageableArray || value instanceof PageableArray)
@@ -428,7 +425,7 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
                 this.data.pagingInfo.subscribe(() => {
                     this._$viewData = new TableData();
                     this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                    this.sourceComponent._$data = this.data;
+                    this.sourceComponent._$data = this._$viewData;
                 })
                 this.sourceComponent.dataFilter(this.data, this.selectedItems)
             } else {
@@ -479,12 +476,23 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
      * @internal
      */
     public _$sourceSearching($event) {
-        console.log($event)
-        if (this.sourceRenderer === TransferTreeSourceRenderer) {
+        if (this.sourceRenderer === TransferListSourceRenderer) {
+            this.data.pagingInfo.subscribe(() => {
+                this.sourceComponent._$data = new ArrayCollection(this.data)
+            })
+            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event)
+        } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
             this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event));
             this.sourceComponent.update();
-        } else {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        } else if (this.sourceRenderer === TransferTableSourceRenderer) {
+            this.data.pagingInfo.subscribe(() => {
+                this._$viewData = new TableData();
+                this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
+                this.sourceComponent._$data = this._$viewData;
+                this.sourceComponent.additionalData.clearTouchedValues();
+                this.sourceComponent.additionalData.refresh();
+            })
+            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event)
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll()
@@ -506,11 +514,23 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
 
         this.selectedItems.push(...this.sourceComponent._$selectedItems)
 
-        if (this.sourceRenderer === TransferTreeSourceRenderer) {
+        if (this.sourceRenderer === TransferListSourceRenderer) {
+            this.data.pagingInfo.subscribe(() => {
+                this.sourceComponent._$data = new ArrayCollection(this.data)
+            })
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
             this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
             this.sourceComponent.update();
-        } else {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        } else if (this.sourceRenderer === TransferTableSourceRenderer) {
+            this.data.pagingInfo.subscribe(() => {
+                this._$viewData = new TableData();
+                this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
+                this.sourceComponent._$data = this._$viewData;
+                this.sourceComponent.additionalData.clearTouchedValues();
+                this.sourceComponent.additionalData.refresh();
+            })
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll();
@@ -725,6 +745,22 @@ export class JigsawTransfer extends AbstractJigsawGroupLiteComponent implements 
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+/* ***************************************************** */
+
+
+
+
+
 
 /**
  * @internal
