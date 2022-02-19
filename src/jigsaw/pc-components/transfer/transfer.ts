@@ -137,7 +137,7 @@ const animations = [
     //changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy, OnInit {
+export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
@@ -224,41 +224,66 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     public set data(value) {
         this.runMicrotask(() => {
-            // console.log(this.sourceRenderer)
-            // console.log(this.sourceRenderer === TransferListSourceRenderer)
+            let sourceComponentFactory;
+            let targetComponentFactory;
+
+            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
+            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
+
+            const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
+            const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
+            this.sourceComponent = sourceComponentRef.instance;
+            this.targetComponent = targetComponentRef.instance;
+
+            this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
+            this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
+
+            this.sourceComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.sourceComponent.subLabelField;
+            this.targetComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.targetComponent.subLabelField;
+
+            this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
+            this.targetComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.targetComponent.trackItemBy;
+
+            this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
+            this._$targetCheckbox = this.targetComponent._$setting.selectAll;
+
+            this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
+                this._checkSourceSelectAll();
+            });
+            this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
+                this._checkTargetSelectAll();
+            });
+
+            this.targetComponent._$data = this.selectedItems;
+
             if (this.sourceRenderer === TransferListSourceRenderer) {
                 if (value instanceof LocalPageableArray || value instanceof PageableArray) {
                     this._data = value;
-                    this._$viewData = this.data;
                 } else if (value instanceof ArrayCollection) {
                     const data = new LocalPageableArray<listOption>();
                     data.pagingInfo.pageSize = Infinity;
                     const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                        // 在新建data准备好再赋值给组件data，防止出现闪动的情况
                         removeUpdateSubscriber.unsubscribe();
                         this._data = data;
-                        this._$viewData = this._data;
+                        const removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
+                            removeFilterSubscriber.unsubscribe();
+                            this.sourceComponent._$data = new ArrayCollection(this.data)
+                        })
+                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     });
                     data.fromArray(value);
                 } else {
                     console.warn("输入的数据结构与渲染器不匹配")
                 }
-            }
-
-            if (this.sourceRenderer === TransferTreeSourceRenderer) {
-                // console.log(111)
+            } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
                 if (value instanceof SimpleTreeData) {
                     this._data = value;
-                    this._$viewData = this.data;
+                    this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+                    this.sourceComponent.update();
                 } else {
                     console.warn("输入的数据结构与渲染器不匹配")
                 }
-            }
-
-            if (this.sourceRenderer === TransferTableSourceRenderer) {
-                // this._data = value;
-                // this._$viewData = value;
-                console.log(value);
+            } else if (this.sourceRenderer === TransferTableSourceRenderer) {
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
                     this._data = value;
                     this._$viewData = this.data;
@@ -266,15 +291,22 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     const data = new LocalPageableTableData();
                     data.pagingInfo.pageSize = Infinity;
                     const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                        // 在新建data准备好再赋值给组件data，防止出现闪动的情况
                         removeUpdateSubscriber.unsubscribe();
                         this._data = data;
-                        this._$viewData = this._data;
+                        const removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
+                            removeFilterSubscriber.unsubscribe();
+                            this._$viewData = new TableData();
+                            this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
+                            this.sourceComponent._$data = this._$viewData;
+                        })
+                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     });
                     data.fromObject({ data: value.data, field: value.field, header: value.header });
                 } else {
                     console.warn("输入的数据结构与渲染器不匹配")
                 }
+            } else {
+                this.sourceComponent._$data = value;
             }
         })
     }
@@ -327,6 +359,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     @Input()
     public trackItemBy: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public valid: boolean;
+
     public getSourceItemsCount(): string {
         if (!this.sourceComponent || !this.sourceComponent._$validData) {
             return
@@ -369,91 +407,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         } else {
             this._$targetSelectAllChecked = CheckBoxStatus.indeterminate;
         }
-    }
-
-    ngOnInit(): void {
-        let sourceComponentFactory;
-        let targetComponentFactory;
-
-        setTimeout(() => {
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
-            // if (this.data instanceof ArrayCollection) {
-            //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
-            //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListTargetRenderer);
-            // } else if (this.data instanceof SimpleTreeData) {
-            //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeSourceRenderer);
-            //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTreeTargetRenderer);
-            // } else if (this.data instanceof TableData) {
-            //     sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableSourceRenderer);
-            //     targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferTableTargetRenderer);
-            //     // this.selectedItems = new TableData([], this.data.field, this.data.header);
-            // }
-
-
-            this._changeDetectorRef.detectChanges();
-
-            const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
-            const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
-            this.sourceComponent = sourceComponentRef.instance;
-            this.targetComponent = targetComponentRef.instance;
-
-            this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
-            this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
-
-            this.sourceComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.sourceComponent.subLabelField;
-            this.targetComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.targetComponent.subLabelField;
-
-            this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
-            this.targetComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.targetComponent.trackItemBy;
-
-            // if (this.sourceRenderer === TransferListSourceRenderer) {
-            //     if(this.data instanceof LocalPageableArray || value instanceof PageableArray)
-            // }
-
-            this.targetComponent._$data = this.selectedItems;
-            if (this.sourceRenderer === TransferListSourceRenderer) {
-                this.data.pagingInfo.subscribe(() => {
-                    this.sourceComponent._$data = new ArrayCollection(this.data)
-                })
-                this.sourceComponent.dataFilter(this.data, this.selectedItems)
-            } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-                // console.log(this.sourceComponent.dataFilter(this.data, this.selectedItems))
-                this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
-                this.sourceComponent.update();
-            } else if (this.sourceRenderer === TransferTableSourceRenderer) {
-                this.data.pagingInfo.subscribe(() => {
-                    this._$viewData = new TableData();
-                    this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                    this.sourceComponent._$data = this._$viewData;
-                })
-                this.sourceComponent.dataFilter(this.data, this.selectedItems)
-            } else {
-                this.sourceComponent._$data = this._$viewData;
-            }
-
-            this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
-            this._$targetCheckbox = this.targetComponent._$setting.selectAll;
-            // this.sourceComponent.selectedItems; = this.sourceComponent.selectedItems;
-            // this.targetComponent.selectedItems = this.targetComponent.selectedItems;
-            // this.targetComponent.data = this.data;
-
-
-            // this.sourceComponent.transferSelectedItems = this.selectedItems;
-            // this.targetComponent.transferSelectedItems = this.selectedItems;
-
-            // this._$sourceSelectAllChecked = this.sourceComponent._$selectAllChecked;
-            // this._$targetSelectAllChecked = this.targetComponent._$selectAllChecked;
-
-
-            this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
-                this._checkSourceSelectAll();
-            });
-            this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
-                this._checkTargetSelectAll();
-            });
-        }, 1000);
-
     }
 
     /**
@@ -746,268 +699,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 }
 
-
-
-
-
-
-
-
-
-
-/* ***************************************************** */
-
-
-
-
-
-
-/**
- * @internal
- */
-@Component({
-    selector: 'jigsaw-transfer-list, j-transfer-list',
-    templateUrl: './transfer-list.html',
-    host: {
-        '[class.jigsaw-transfer-list-frame]': 'true'
-    },
-    //changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class JigsawTransferInternalList extends AbstractJigsawGroupLiteComponent implements OnDestroy {
-    constructor(@Optional() private _transfer: JigsawTransfer, protected _changeDetectorRef: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
-        super(_changeDetectorRef, _injector);
-        this._removeHostSubscribe = _transfer.selectedItemsChange.subscribe(() => {
-            this._$searchKey = '';
-        });
-    }
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public disabled: boolean = false;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public isTarget: boolean;
-
-    private _data: LocalPageableArray<GroupOptionValue> | PageableArray;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get data(): LocalPageableArray<GroupOptionValue> | PageableArray {
-        return this._data;
-    }
-
-    public set data(value: LocalPageableArray<GroupOptionValue> | PageableArray) {
-        if (!value || this._data == value) return;
-        if ((value instanceof LocalPageableArray || value instanceof PageableArray) && value.pagingInfo) {
-            this._data = value;
-            (<LocalPageableArray<any>>this._data).onRefresh(() => {
-                if (this.selectedItems) {
-                    this.selectedItems = this.selectedItems.concat();
-                    this._$updateCurrentPageSelectedItems();
-                }
-                this._changeDetectorRef.markForCheck();
-            });
-            this._filterFunction = value instanceof LocalPageableArray ? transferFilterFunction : transferServerFilterFunction;
-        } else if (value instanceof Array || value instanceof ArrayCollection) {
-            this._filterFunction = transferFilterFunction;
-            this._updateData(value);
-            if (value instanceof ArrayCollection) {
-                if (this._removeArrayCallbackListener) {
-                    this._removeArrayCallbackListener();
-                }
-                this._removeArrayCallbackListener = value.onAjaxSuccess(this._updateData, this);
-            }
-        }
-    }
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public subLabelField: string;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public trackItemBy: string | string[];
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public searchable: boolean;
-
-    private _removeHostSubscribe: Subscription;
-    private _filterFunction: (item: any) => boolean;
-    private _removeArrayCallbackListener: CallbackRemoval;
-
-    /**
-     * @internal
-     */
-    public _$searchKey: string;
-
-    /**
-     * @internal
-     */
-    public _$currentPageSelectedItems: any[] | ArrayCollection<any>;
-
-    /**
-     * @internal
-     */
-    public _$infinity = Infinity;
-
-    /**
-     * @internal
-     */
-    public get _$trackByFn() {
-        return CommonUtils.toTrackByFunction(this.trackItemBy);
-    };
-
-    /**
-     * 这边把transfer过来的数组转成分页数据，中间变量data主要用于消除数据闪动
-     * @param value
-     *
-     */
-    private _updateData(value: GroupOptionValue[] | ArrayCollection<GroupOptionValue>) {
-        if (!(value instanceof Array) && !(value instanceof ArrayCollection)) return;
-        const data = new LocalPageableArray();
-        if (this.isTarget && this._transfer.data && (<LocalPageableArray<GroupOptionValue>>this._transfer.data).pagingInfo) {
-            // target列同步用户给的data的pageSize
-            data.pagingInfo.pageSize = (<LocalPageableArray<GroupOptionValue>>this._transfer.data).pagingInfo.pageSize;
-        } else {
-            data.pagingInfo.pageSize = Infinity;
-        }
-        data.fromArray(value);
-        const removeDataOnRefresh = data.onRefresh(() => {
-            removeDataOnRefresh();
-            this._data = data;
-            // 用于刷新分页
-            this._data.onRefresh(() => {
-                if (this.selectedItems) {
-                    this.selectedItems = this.selectedItems.concat();
-                    this._$updateCurrentPageSelectedItems();
-                }
-                this._changeDetectorRef.markForCheck();
-            });
-            this._data.refresh();
-            this._changeDetectorRef.detectChanges();
-        })
-    }
-
-    /**
-     * @internal
-     */
-    public _$handleSearching(filterKey?: string) {
-        filterKey = filterKey ? filterKey.trim() : '';
-        let field: string | number = this.labelField;
-        if (this._data instanceof PageableArray && this._data.length && typeof this._data[0] == 'object') {
-            field = Object.keys(this._data[0]).findIndex(k => k === this.labelField);
-        }
-        if (this._data.busy) {
-            const removeAjaxCallback = this._data.onAjaxComplete(() => {
-                removeAjaxCallback();
-                this._filterData(filterKey, field);
-            })
-        } else {
-            this._filterData(filterKey, field);
-        }
-    }
-
-    private _removeFilterSubscribe: Subscription;
-
-    private _filterData(filterKey: string, field: string | number) {
-        this._data.filter(this._filterFunction, {
-            selectedItems: this.isTarget ? null : [].concat(...this._transfer.selectedItems),
-            trackItemBy: this._transfer.trackItemBy,
-            keyword: filterKey,
-            fields: [field]
-        });
-        this._removeFilterSubscribe = this._data.pagingInfo.subscribe(() => {
-            this._changeDetectorRef.markForCheck();
-        });
-    }
-
-    /**
-     * @internal
-     *
-     * 这里有几个需要注意的地方：
-     * - this.data.concat() 不仅为了浅拷贝数据，当this.data是分页数据的时候，还有一个目的是为了取出this.data的当前页数据
-     * - 在过滤选中的条目是直接用了`item.disabled`，在item的类型是字符串时，也没问题，因为字符串的时候，`item.disabled`必然是false
-     */
-    public _$handleHeadSelect(checked) {
-        this._$currentPageSelectedItems = checked ? this.data.concat().filter(item => !item.disabled) : [];
-        this.selectedItems = this.selectedItems ? this.selectedItems : [];
-        if (checked) {
-            this.selectedItems.push(...this.data.concat().filter(item =>
-                !item.disabled && !this.selectedItems.some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy))));
-            this.selectedItems = this.selectedItems.concat();
-        } else {
-            this.selectedItems = this.selectedItems.filter(item =>
-                !item.disabled && !(<any[]>this.data).some(it => CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)))
-        }
-        this.selectedItemsChange.emit(this.selectedItems);
-        this._changeDetectorRef.markForCheck();
-    }
-
-    /**
-     * @internal
-     */
-    public _$updateCurrentPageSelectedItems() {
-        this.runMicrotask(() => {
-            this.selectedItems = this.selectedItems ? this.selectedItems : [];
-            if (this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity) {
-                this._$currentPageSelectedItems = this.selectedItems.filter(item => (<any[]>this.data).some(it =>
-                    CommonUtils.compareWithKeyProperty(it, item, <string[]>this.trackItemBy)));
-            } else {
-                this._$currentPageSelectedItems = this.selectedItems;
-            }
-        });
-    }
-
-    /**
-     * @internal
-     */
-    public _$updateSelectedItemsByCurrent() {
-        this._$currentPageSelectedItems = this._$currentPageSelectedItems ? this._$currentPageSelectedItems : [];
-        this.selectedItems = this.selectedItems ? this.selectedItems : [];
-        this.selectedItems.push(...this._$currentPageSelectedItems.filter(item =>
-            !this.selectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy))));
-        const currentUnselectedItems = this.data.concat().filter(item =>
-            !this._$currentPageSelectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy)));
-        this.selectedItems = this.selectedItems.filter(item =>
-            !currentUnselectedItems.some(it => CommonUtils.compareWithKeyProperty(item, it, <string[]>this.trackItemBy)));
-        this.selectedItemsChange.emit(this.selectedItems);
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        if (this._removeHostSubscribe) {
-            this._removeHostSubscribe.unsubscribe();
-            this._removeHostSubscribe = null;
-        }
-        if (this._removeArrayCallbackListener) {
-            this._removeArrayCallbackListener();
-            this._removeArrayCallbackListener = null;
-        }
-        if (this._removeFilterSubscribe) {
-            this._removeFilterSubscribe.unsubscribe();
-            this._removeFilterSubscribe = null;
-        }
-    }
-}
-
 @NgModule({
     imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule, JigsawSearchInputModule],
-    declarations: [JigsawTransfer, JigsawTransferInternalList],
+    declarations: [JigsawTransfer],
     exports: [JigsawTransfer],
     providers: [TranslateService, LoadingService]
 })

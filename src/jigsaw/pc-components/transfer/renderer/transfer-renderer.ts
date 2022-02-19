@@ -55,10 +55,10 @@ export class TransferListRendererBase {
         protected _injector: Injector) {
     }
 
-    // /**
-    //  * 宿主transfer实例
-    //  */
-    // public hostInstance: any;
+    /**
+     * 宿主transfer实例
+     */
+    public hostInstance: any;
 
     private _data: any;
 
@@ -204,6 +204,11 @@ export class TransferTreeRendererBase implements transferRenderer {
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
     }
+
+    /**
+     * 宿主transfer实例
+     */
+    public hostInstance: any;
 
     @ViewChild(JigsawTreeExt)
     public treeExt: JigsawTreeExt;
@@ -362,6 +367,11 @@ export class TransferTableRendererBase {
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
     }
+
+    /**
+     * 宿主transfer实例
+     */
+    public hostInstance: any;
 
     @ViewChild(JigsawTable)
     public table: JigsawTable;
@@ -548,19 +558,7 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableTargetRenderer extends TransferTableRendererBase {
-    protected _data: any;
 
-    /* 渲染器数据 */
-    @Input()
-    public get _$data(): any {
-        return this._data;
-    }
-
-    public set _$data(value: any) {
-
-        console.log("target", value);
-        this._$validData = [1, 2, 3]
-    }
 }
 
 @NgModule({

@@ -4,7 +4,7 @@ import { ArrayCollection, LocalPageableArray, TransferListSourceRenderer, Transf
 @Component({
     templateUrl: './demo.component.html'
 })
-export class TransferArrayDemoComponent {
+export class TransferListDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
