@@ -24,8 +24,6 @@ import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawCheckBoxModule } from "../checkbox/index";
 import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
 import { JigsawInputModule } from "../input/input";
-import { GroupOptionValue } from "../list-and-tile/group-common";
-import { AbstractJigsawGroupLiteComponent } from "../list-and-tile/group-lite-common";
 import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawPaginationModule } from "../pagination/pagination";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
@@ -271,6 +269,14 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                             })
                             this.sourceComponent.dataFilter(value, this.selectedItems)
                         })
+                    } else {
+                        this._data = value;
+                        const removeFilterSubscriber = value.pagingInfo.subscribe(() => {
+                            removeFilterSubscriber.unsubscribe();
+                            this.sourceComponent._$data = new ArrayCollection(value)
+                            this.targetComponent._$data = this.selectedItems;
+                        })
+                        this.sourceComponent.dataFilter(value, this.selectedItems)
                     }
                 } else if (value instanceof ArrayCollection) {
                     const data = new LocalPageableArray<listOption>();
@@ -300,6 +306,22 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 }
             } else if (this.sourceRenderer === TransferTableSourceRenderer) {
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
+                    if (value instanceof LocalPageableTableData) {
+                        this._data = value;
+                        if (this._removePageableCallbackListener) {
+                            this._removePageableCallbackListener();
+                        }
+                        this._removePageableCallbackListener = value.onAjaxComplete(() => {
+                            const removeFilterSubscriber = value.pagingInfo.subscribe(() => {
+                                removeFilterSubscriber.unsubscribe();
+                                this._$viewData = new TableData();
+                                this._$viewData.fromObject({ data: value.data, field: value.field, header: value.header })
+                                this.sourceComponent._$data = this._$viewData;
+                                this.targetComponent._$data = this.selectedItems;
+                            })
+                            this.sourceComponent.dataFilter(value, this.selectedItems)
+                        })
+                    }
                     this._data = value;
                     this._$viewData = this.data;
                 } else if (value instanceof TableData) {
@@ -517,11 +539,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
         this._$sourceSearchKey = '';
-        // this.sourceComponent.dataFilter(this.data, this.selectedItems)
-        // this.sourceComponent._$selectedItems = new ArrayCollection([]);
-        // this.sourceComponent.transfer();
-        // this.targetComponent.update();
-        // this._changeDetectorRef.detectChanges();
     }
 
     public _$targetTransfer() {
@@ -545,16 +562,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
-        // this.selectedItems = this.selectedItems.filter((item) => {
-        //     let retain = true;
-        //     if (this.targetComponent._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-        //         retain = false;
-        //     }
-        //     return retain;
-        // })
-        // this.targetComponent.transfer();
-        // this.sourceComponent.update();
-        // this._changeDetectorRef.detectChanges();
     }
 
     // /**
@@ -643,8 +650,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     private _removeArrayCallbackListener: CallbackRemoval;
     private _removeSelectedArrayCallbackListener: CallbackRemoval;
     private _filterFunction: (item: any) => boolean;
-
-
 
     /**
      * @NoMarkForCheckRequired
