@@ -36,16 +36,14 @@ export type transferRendererSetting = {
 }
 
 export interface transferRenderer {
-    // data: any;
-    // transferSelectedItems: ArrayCollection<listOption> | any;
-    // toggleButton: EventEmitter<boolean>;
-    // transfer();
-    // update();
     _$data: any;
     _$selectedItems: any;
     _$setting: transferRendererSetting;
+    labelField: string;
+    subLabelField: string;
+    trackItemBy: string;
     selectedItemsChange: EventEmitter<boolean>;
-
+    update();
 }
 
 @Directive()
@@ -64,8 +62,6 @@ export class TransferListRendererBase {
     }
 
     public set _$data(value: ArrayCollection<listOption>) {
-        console.log("*********************")
-        console.log(value)
         this._data = value;
         this.update();
     }
@@ -146,13 +142,11 @@ export class TransferListRendererBase {
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data, selectedItems) {
-        console.log("!!!!!!!!!!!!!!!!!!!",data,selectedItems)
         if (!selectedItems || selectedItems.length === 0) {
             data.filter((item) => { return true })
         } else {
             data.filter((item) => {
                 let retain = true;
-                console.log(item)
                 if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
                     retain = false;
                 }
@@ -188,7 +182,6 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
 
 
     public searchFilter(selectedItems, filterKey) {
-        console.log(selectedItems)
         filterKey = filterKey ? filterKey.trim() : '';
         const data = selectedItems.filter(item => {
             return item[this.labelField].includes(filterKey);
@@ -270,8 +263,6 @@ export class TransferTreeRendererBase implements transferRenderer {
         const checkedNodes = allCheckedNodes.filter(node => {
             return !node.isParent && !node.isHidden;
         })
-        // console.log(checkedNodes)
-        // console.log(checkedNodes[0].getPath())
         this._$selectedItems = new ArrayCollection(checkedNodes);
         this.selectedItemsChange.emit();
     }
@@ -441,15 +432,9 @@ export class TransferTableRendererBase {
         this.selectedRows = this._getSelectedRows(value);
         this._$selectedItems = this._getAllSelectedRows(value);
         this.selectedItemsChange.emit();
-        console.log(this._$selectedItems)
     }
 
-    public update() {
-        // this._$validData
-        // this.additionalData.clearTouchedValues();
-        // this.additionalData.refresh();
-        // this.table.update();
-    }
+    public update() { }
 
     /**
      * 获取选中的行
