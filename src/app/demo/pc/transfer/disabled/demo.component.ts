@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, LocalPageableArray, TableData} from "jigsaw/public_api";
+import {ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListTargetRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -22,6 +22,13 @@ export class TransferArrayDisabledDemoComponent {
     data: ArrayCollection<any>;
     selectedCountries: ArrayCollection<any>;
     selectedCountriesStr: string;
+
+    public sourceRenderer = TransferListSourceRenderer;
+    public targetRenderer = TransferListTargetRenderer;
+
+    public labelField = 'zhName';
+    public subLabelField = 'enName';
+    public trackItemBy = 'shortName';
 
     handleSelectChange($event) {
         this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
