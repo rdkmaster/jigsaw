@@ -2,9 +2,8 @@ import { Component } from "@angular/core";
 import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, listOption, TransferTableTargetRenderer } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
-    
+    templateUrl: './demo.component.html'
+
 })
 export class TransferTableDemoComponent {
 
@@ -116,9 +115,9 @@ export class TransferTableDemoComponent {
     data: TableData;
     public sourceRenderer = TransferTableSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
-    public targetRenderer2 = TransferTableTargetRenderer;
 
     selectedData: ArrayCollection<listOption>;
+
     labelField = 'name';
     trackItemBy = 'name';
 

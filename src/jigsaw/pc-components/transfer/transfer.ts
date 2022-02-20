@@ -258,7 +258,20 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
             if (this.sourceRenderer === TransferListSourceRenderer) {
                 if (value instanceof LocalPageableArray || value instanceof PageableArray) {
-                    this._data = value;
+                    if (value instanceof LocalPageableArray) {
+                        this._data = value;
+                        if (this._removePageableCallbackListener) {
+                            this._removePageableCallbackListener();
+                        }
+                        this._removePageableCallbackListener = value.onAjaxComplete(() => {
+                            const removeFilterSubscriber = value.pagingInfo.subscribe(() => {
+                                removeFilterSubscriber.unsubscribe();
+                                this.sourceComponent._$data = new ArrayCollection(value)
+                                this.targetComponent._$data = this.selectedItems;
+                            })
+                            this.sourceComponent.dataFilter(value, this.selectedItems)
+                        })
+                    }
                 } else if (value instanceof ArrayCollection) {
                     const data = new LocalPageableArray<listOption>();
                     data.pagingInfo.pageSize = Infinity;
@@ -368,6 +381,17 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     @Input()
     public valid: boolean;
+
+    /**
+     * @internal
+     */
+    public _$infinity = Infinity;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    public _$sourceSearchKey: string;
+    public _$targetSearchKey: string;
 
     public getSourceItemsCount(): string {
         if (!this.sourceComponent || !this.sourceComponent._$validData) {
@@ -492,6 +516,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
+        this._$sourceSearchKey = '';
         // this.sourceComponent.dataFilter(this.data, this.selectedItems)
         // this.sourceComponent._$selectedItems = new ArrayCollection([]);
         // this.sourceComponent.transfer();

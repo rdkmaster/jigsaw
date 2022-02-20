@@ -64,6 +64,8 @@ export class TransferListRendererBase {
     }
 
     public set _$data(value: ArrayCollection<listOption>) {
+        console.log("*********************")
+        console.log(value)
         this._data = value;
         this.update();
     }
@@ -144,11 +146,13 @@ export class TransferListRendererBase {
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data, selectedItems) {
+        console.log("!!!!!!!!!!!!!!!!!!!",data,selectedItems)
         if (!selectedItems || selectedItems.length === 0) {
             data.filter((item) => { return true })
         } else {
             data.filter((item) => {
                 let retain = true;
+                console.log(item)
                 if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
                     retain = false;
                 }
@@ -556,19 +560,19 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableTargetRenderer extends TransferTableRendererBase {
-    // protected _data: any;
-    // /* 渲染器数据 */
-    // @Input()
-    // public get _$data(): ArrayCollection<listOption> {
-    //     return this._data;
-    // }
+    protected _data: any;
 
-    // public set _$data(value: ArrayCollection<listOption>) {
+    /* 渲染器数据 */
+    @Input()
+    public get _$data(): TableData {
+        return this._data;
+    }
 
-    //     this._$validData = value;
-    //     console.log(this.transferHost)
-    //     console.log(this.transferHost.data)
-    // }
+    public set _$data(value: TableData) {
+        this._data = value;
+        this._$viewData = value;
+        this._$validData = value.data;
+    }
 
     public dataFilter(data, selectedItems) {
         this._filterTable(data, selectedItems, '')

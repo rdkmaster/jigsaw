@@ -63,9 +63,19 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
         .#{$jigsaw-transfer}-body {
             height: calc(100% - 64px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom});
+
+            &.#{$jigsaw-transfer}-body-short {
+                height: calc(
+                    100% - 64px - 18px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom}
+                );
+            }
         }
 
         .#{$jigsaw-transfer}-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 24px;
         }
     }
 

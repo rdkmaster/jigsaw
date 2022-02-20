@@ -11,14 +11,17 @@
                 <span class="jigsaw-transfer-subTitle"></span>
             </div>
             <div class="jigsaw-transfer-search-cntr">
-                <jigsaw-search-input width="100%" [searchDebounce]="300" (search)="_$sourceSearching($event)">
+                <jigsaw-search-input width="100%" [searchDebounce]="300" [(value)]="_$sourceSearchKey" (search)="_$sourceSearching($event)">
                 </jigsaw-search-input>
             </div>
         </div>
-        <div class="jigsaw-transfer-body">
+        <div class="jigsaw-transfer-body"
+            [ngClass]="{'jigsaw-transfer-body-short':data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity}">
             <ng-template #transferSourceRendererHost></ng-template>
         </div>
-        <div class="jigsaw-transfer-footer"></div>
+        <div class="jigsaw-transfer-footer" *ngIf="data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity">
+            <j-pagination [size]="'small'" [data]="data" mode="simple"></j-pagination>
+        </div>
     </div>
     <div class="jigsaw-transfer-option-cntr">
         <a class="jigsaw-transfer-option jigsaw-transfer-option-source"
@@ -40,7 +43,7 @@
                 <span class="jigsaw-transfer-subTitle"></span>
             </div>
             <div class="jigsaw-transfer-search-cntr">
-                <jigsaw-search-input width="100%" [searchDebounce]="300" (search)="_$targetSearching($event)">
+                <jigsaw-search-input width="100%" [searchDebounce]="300" [(value)]="_$targetSearchKey" (search)="_$targetSearching($event)">
                 </jigsaw-search-input>
             </div>
         </div>
