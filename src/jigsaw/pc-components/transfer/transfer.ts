@@ -234,6 +234,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
             this.sourceComponent = sourceComponentRef.instance;
             this.targetComponent = targetComponentRef.instance;
+            this.sourceComponent.transferHost = this;
+            this.targetComponent.transferHost = this;
 
             this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
             this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
@@ -254,8 +256,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this._checkTargetSelectAll();
             });
 
-            this.targetComponent._$data = this.selectedItems;
-
             if (this.sourceRenderer === TransferListSourceRenderer) {
                 if (value instanceof LocalPageableArray || value instanceof PageableArray) {
                     this._data = value;
@@ -268,6 +268,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         const removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
                             removeFilterSubscriber.unsubscribe();
                             this.sourceComponent._$data = new ArrayCollection(this.data)
+                            this.targetComponent._$data = this.selectedItems;
                         })
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     });
@@ -280,6 +281,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     this._data = value;
                     this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
                     this.sourceComponent.update();
+                    this.targetComponent._$data = this.selectedItems;
                 } else {
                     console.warn("输入的数据结构与渲染器不匹配")
                 }
@@ -298,6 +300,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                             this._$viewData = new TableData();
                             this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
                             this.sourceComponent._$data = this._$viewData;
+                            this.targetComponent._$data = this.selectedItems;
                         })
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     });
@@ -307,6 +310,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 }
             } else {
                 this.sourceComponent._$data = value;
+                this.targetComponent._$data = this.selectedItems;
             }
         })
     }
