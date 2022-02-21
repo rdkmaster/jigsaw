@@ -46,10 +46,19 @@ export interface transferRenderer {
 }
 
 @Directive()
-export class TransferListRendererBase {
+export abstract class AbstractTransferRendererBase {
+    public filterFunction: (item: any) => boolean;
+
+    public abstract searchFilter(data, selectedItems, filterKey, isTarget: boolean): void;
+
+}
+
+@Directive()
+export class TransferListRendererBase extends AbstractTransferRendererBase {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
+        super();
     }
 
     // /**
@@ -138,6 +147,34 @@ export class TransferListRendererBase {
     public update() {
         this._$validData = this._$data.filter(item => !item.disabled);
     }
+
+
+    public searchFilter(data, selectedItems, filterKey) {
+        const _filterData = (filterKey: string, field: string | number) => {
+            data.filter(this.filterFunction, {
+                selectedItems: selectedItems ? [].concat(...selectedItems) : null,
+                trackItemBy: this.trackItemBy,
+                keyword: filterKey,
+                fields: [field]
+            });
+            /*this._removeFilterSubscribe = this._data.pagingInfo.subscribe(() => {
+                this._cdr.markForCheck();
+            });*/
+        }
+        filterKey = filterKey ? filterKey.trim() : '';
+        let field: string | number = this.labelField;
+        if (data instanceof PageableArray && data.length && typeof data[0] == 'object') {
+            field = Object.keys(data[0]).findIndex(k => k === this.labelField);
+        }
+        if (data.busy) {
+            const removeAjaxCallback = data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                _filterData(filterKey, field);
+            })
+        } else {
+            _filterData(filterKey, field);
+        }
+    }
 }
 
 @Component({
@@ -146,37 +183,26 @@ export class TransferListRendererBase {
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data, selectedItems) {
-        if (!data) {
+        const _filterData = (data, selectedItems, filterFunction) => {
+            data.filter(filterFunction, {
+                selectedItems: [].concat(...selectedItems),
+                trackItemBy: this.trackItemBy
+            });
+        }
+
+        if (!data || !this.filterFunction) {
             return;
         }
-        if (!selectedItems || selectedItems.length === 0) {
-            data.filter((item) => { return true })
-        } else {
-            data.filter((item) => {
-                let retain = true;
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-                    retain = false;
-                }
-                return retain;
+        if (data.busy) {
+            const removeAjaxCallback = data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                _filterData(data, selectedItems, this.filterFunction);
             })
+        } else {
+            _filterData(data, selectedItems, this.filterFunction);
         }
     }
 
-    public searchFilter(data, selectedItems, filterKey) {
-        if (!selectedItems || selectedItems.length === 0) {
-            data.filter((item) => { return item[this.labelField].includes(filterKey) })
-        } else {
-            data.filter((item) => {
-                let retain = true;
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-                    retain = false;
-                } else {
-                    retain = item[this.labelField].includes(filterKey)
-                }
-                return retain;
-            })
-        }
-    }
 }
 
 @Component({
@@ -184,8 +210,6 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferListTargetRenderer extends TransferListRendererBase {
-
-
     public searchFilter(selectedItems, filterKey) {
         filterKey = filterKey ? filterKey.trim() : '';
         const data = selectedItems.filter(item => {

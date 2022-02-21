@@ -32,13 +32,14 @@ import { TableData, LocalPageableTableData, PageableTableData } from '../../comm
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
+import {JigsawArray} from "../../common/core/utils/data-collection-utils";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
     let listResult = true;
     let keyResult = true;
     if (this.selectedItems) {
-        if (this.selectedItems.some(si => CommonUtils.compareWithKeyProperty(item, si, this.trackItemBy))) {
+        if (this.selectedItems.some(si => CommonUtils.compareValue(item, si, this.trackItemBy))) {
             listResult = false;
         }
     }
@@ -49,30 +50,55 @@ const transferFilterFunction = function (item) {
 };
 
 const transferServerFilterFunction = function (item) {
-    function compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
-        if (trackItemBy && trackItemBy.length > 0) {
-            for (let i = 0; i < trackItemBy.length; i++) {
-                if (!item1 || !item2) {
-                    // 过滤掉 typeof null == 'object'
+    function isUndefined(value) {
+        return value === undefined || value === null;
+    }
+
+    function compareValue(item1: any, item2: any, trackItemBy: string[] | string): boolean {
+
+        // 排除掉非法值和基础类型，如果比对的值是这两种之一的，则采用简单比较方式
+        if (isUndefined(item1) || isUndefined(item2)) {
+            return item1 == item2;
+        }
+        const typeOfItem1 = typeof item1, typeOfItem2 = typeof item2;
+        if (typeOfItem1 == 'string' || typeOfItem1 == 'boolean' || typeOfItem1 == 'number' ||
+            typeOfItem2 == 'string' || typeOfItem2 == 'boolean' || typeOfItem2 == 'number') {
+            return item1 == item2;
+        }
+
+        // 对数组类型，认为应该比较各自包含的元素，即不把数组当做对象去比较，因此数组与非数组的比较没有意义
+        const isArr1 = item1 instanceof Array;
+        const isArr2 = item2 instanceof Array;
+        if ((isArr1 && !isArr2) || (!isArr1 && isArr2)) {
+            return false;
+        }
+        if (isArr1 && isArr2) {
+            if (item1.length != item2.length) {
+                // 不等长的数组必然不相等
+                return false;
+            }
+            for (let i = 0, len = item1.length; i < len; i++) {
+                if (!compareValue(item1[i], item2[i], trackItemBy)) {
                     return false;
-                } else if (typeof item1 === 'object' && typeof item2 === 'object') {
-                    if (item1[trackItemBy[i]] != item2[trackItemBy[i]]) {
-                        return false;
-                    }
-                } else if (typeof item1 !== 'object' && typeof item2 === 'object') {
-                    if (item1 != item2[trackItemBy[i]]) {
-                        return false;
-                    }
-                } else if (typeof item1 === 'object' && typeof item2 !== 'object') {
-                    if (item1[trackItemBy[i]] != item2) {
-                        return false;
-                    }
                 }
             }
             return true;
-        } else {
+        }
+
+        // 到这里说明item1和item2都是非数组的json对象了
+        if (item1 === item2) {
+            return true;
+        }
+        const trackBy: string[] = typeof trackItemBy == 'string' ? trackItemBy.split(/\s*,\s*/) : trackItemBy;
+        if (!trackBy || trackBy.length == 0) {
             return item1 == item2;
         }
+        for (let i = 0, len = trackBy.length; i < len; i++) {
+            if (item1[trackBy[i]] != item2[trackBy[i]]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     let listResult = true;
@@ -82,7 +108,7 @@ const transferServerFilterFunction = function (item) {
         Object.keys(this.selectedItems[0]).forEach((k, i) => {
             itemJson[k] = item[i];
         });
-        if (this.selectedItems.some(si => compareWithKeyProperty(itemJson, si, this.trackItemBy))) {
+        if (this.selectedItems.some(si => compareValue(itemJson, si, this.trackItemBy))) {
             listResult = false;
         }
     }
@@ -179,7 +205,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$targetCheckbox: boolean = true;
 
-
     @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
     protected sourceRendererHost: ViewContainerRef;
 
@@ -252,6 +277,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
             if (this.sourceRenderer === TransferListSourceRenderer) {
                 if (value instanceof LocalPageableArray || value instanceof PageableArray) {
+                    this.sourceComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', false);
+                    this.targetComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', true);
                     if (value instanceof LocalPageableArray) {
                         this._data = value;
                         if (this._removePageableCallbackListener) {
@@ -273,6 +300,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.dataFilter(value, this.selectedItems)
                     }
                 } else if (value instanceof ArrayCollection) {
+                    this.sourceComponent.filterFunction = this._getFilterFunction('list', 'local', false);
+                    this.targetComponent.filterFunction = this._getFilterFunction('list', 'local', true);
                     const data = new LocalPageableArray<listOption>();
                     data.pagingInfo.pageSize = Infinity;
 
@@ -357,6 +386,18 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             }
         })
     }
+
+    private _getFilterFunction(rendererType: 'list' | 'table' | 'tree', pagingType: 'local' | 'server', isTarget: boolean): (item: any) => boolean {
+        if (rendererType == 'list') {
+            if (isTarget) {
+                return transferFilterFunction
+            }
+            return pagingType == 'server' ? transferServerFilterFunction : transferFilterFunction;
+        }
+        return null;
+    }
+
+
     /**
      * @internal
      */
@@ -513,12 +554,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$sourceSearching($event) {
         if (this.sourceRenderer === TransferListSourceRenderer) {
-            this.data.pagingInfo.subscribe(() => {
+            /*this.data.pagingInfo.subscribe(() => {
                 this.sourceComponent._$data = new ArrayCollection(this.data)
-            })
-            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event)
+            })*/
+            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event));
+            this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.data.pagingInfo.subscribe(() => {
@@ -528,7 +569,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this.sourceComponent.additionalData.reset();
                 this.sourceComponent.additionalData.refresh();
             })
-            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event)
+            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll()
