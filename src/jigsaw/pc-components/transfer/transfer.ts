@@ -562,6 +562,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
         this._$sourceSearchKey = '';
+        this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
     }
 
@@ -586,6 +587,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
+        this._$sourceSearchKey = '';
         this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
     }

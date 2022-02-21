@@ -308,14 +308,9 @@ export class TransferTreeRendererBase implements transferRenderer {
         }
         for (var i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
-                if (tree[i].nodes.length !== 0) {
-                    let newNode = { ...tree[i], nodes: [] };
-                    arr.push(newNode);
-                    this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
-                } else {
-                    let newNode = { ...tree[i], nodes: [{ isTransferTreeParentNode: '', isHidden: true }] };
-                    arr.push(newNode);
-                }
+                let newNode = { ...tree[i], nodes: [{ isTransferTreeParentNode: '', isHidden: true }] };
+                arr.push(newNode);
+                this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
             } else {
                 if (!keyMap.includes(tree[i][this.trackItemBy])) {
                     if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || !(searchKey.length > 0)) {
@@ -544,7 +539,6 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
         this._filterTable(data, selectedItems, searchKey)
     }
 }
-
 
 @Component({
     templateUrl: './transfer-table.html',
