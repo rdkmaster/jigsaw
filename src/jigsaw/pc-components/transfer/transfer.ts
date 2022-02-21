@@ -33,6 +33,7 @@ import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, Tra
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawArray } from "../../common/core/utils/data-collection-utils";
+import { JigsawLoadingModule } from 'jigsaw/common/components/loading/loading';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -154,6 +155,7 @@ const animations = [
         '[class.jigsaw-transfer-host]': 'true',
         '[class.jigsaw-transfer-error]': '!valid'
     },
+    animations,
     //changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -293,7 +295,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         })
                     } else {
                         this._data = value;
-                        this._removeFilterSubscriber = value.pagingInfo.subscribe(() => {
+                        value.onRefresh(() => {
                             this.sourceComponent._$data = new ArrayCollection(value)
                             this.targetComponent._$data = this.selectedItems;
                         })
@@ -665,7 +667,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 }
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule, JigsawSearchInputModule],
+    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule, JigsawSearchInputModule, JigsawLoadingModule],
     declarations: [JigsawTransfer],
     exports: [JigsawTransfer],
     providers: [TranslateService, LoadingService]

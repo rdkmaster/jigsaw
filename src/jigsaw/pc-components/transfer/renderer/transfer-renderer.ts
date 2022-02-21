@@ -193,6 +193,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
         if (!data || !this.filterFunction) {
             return;
         }
+        
         if (data.busy) {
             const removeAjaxCallback = data.onAjaxComplete(() => {
                 removeAjaxCallback();

@@ -2,8 +2,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { TransferArrayDemoComponent } from "./basic/demo.component";
 import { TransferArrayDemoModule } from "./basic/demo.module";
-import { TransferPageableArrayComponent } from "./pageable-array/demo.component";
-import { TransferPageableArrayDemoModule } from "./pageable-array/demo.module";
 import { TransferItemDisabledDemoComponent } from "./item-disabled/demo.component";
 import { TransferItemDisabledDemoModule } from "./item-disabled/demo.module";
 import { TransferArrayDisabledDemoComponent } from "./disabled/demo.component";
@@ -30,9 +28,6 @@ import { TransferTablePageableDemoModule } from './transfer-table-pageable/demo.
 export const routerConfig = [
     {
         path: 'basic', component: TransferArrayDemoComponent
-    },
-    {
-        path: 'pageable-array', component: TransferPageableArrayComponent
     },
     {
         path: 'item-disabled', component: TransferItemDisabledDemoComponent
@@ -73,7 +68,6 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         TransferArrayDemoModule,
-        TransferPageableArrayDemoModule,
         TransferItemDisabledDemoModule,
         TransferArrayDisabledDemoModule,
         TransferArrayValidDemoModule,
