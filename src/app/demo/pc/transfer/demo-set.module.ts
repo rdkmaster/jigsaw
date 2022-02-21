@@ -22,6 +22,8 @@ import { TransferListLocalPageableDemoComponent } from "./transfer-list-local-pa
 import { TransferListLocalPageableDemoModule } from "./transfer-list-local-pageable/demo.module";
 import { TransferTableLocalPageableDemoComponent } from "./transfer-table-local-pageable/demo.component";
 import { TransferTableLocalPageableDemoModule } from "./transfer-table-local-pageable/demo.module";
+import { TransferListPageableDemoComponent } from './transfer-list-pageable/demo.component';
+import { TransferListPageableDemoModule } from './transfer-list-pageable/demo.module';
 
 export const routerConfig = [
     {
@@ -56,6 +58,9 @@ export const routerConfig = [
     },
     {
         path: 'transfer-table-local-pageable', component: TransferTableLocalPageableDemoComponent
+    },
+    {
+        path: 'transfer-list-pageable', component: TransferListPageableDemoComponent
     }
 ];
 
@@ -72,7 +77,8 @@ export const routerConfig = [
         TransferTableDemoModule,
         TransferListDemoModule,
         TransferListLocalPageableDemoModule,
-        TransferTableLocalPageableDemoModule
+        TransferTableLocalPageableDemoModule,
+        TransferListPageableDemoModule
     ]
 })
 export class TransferDemoModule {

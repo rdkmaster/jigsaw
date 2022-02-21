@@ -36,14 +36,16 @@ export type transferRendererSetting = {
 }
 
 export interface transferRenderer {
+    // data: any;
+    // transferSelectedItems: ArrayCollection<listOption> | any;
+    // toggleButton: EventEmitter<boolean>;
+    // transfer();
+    // update();
     _$data: any;
     _$selectedItems: any;
     _$setting: transferRendererSetting;
-    labelField: string;
-    subLabelField: string;
-    trackItemBy: string;
     selectedItemsChange: EventEmitter<boolean>;
-    update();
+
 }
 
 @Directive()
@@ -52,6 +54,11 @@ export class TransferListRendererBase {
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
     }
+
+    // /**
+    //  * 宿主transfer实例
+    //  */
+    // public hostInstance: any;
 
     private _data: any;
 
@@ -163,11 +170,9 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
                 let retain = true;
                 if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
                     retain = false;
-                }
-                if (retain) {
+                } else {
                     retain = item[this.labelField].includes(filterKey)
                 }
-
                 return retain;
             })
         }
@@ -182,6 +187,7 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
 
 
     public searchFilter(selectedItems, filterKey) {
+        console.log(selectedItems)
         filterKey = filterKey ? filterKey.trim() : '';
         const data = selectedItems.filter(item => {
             return item[this.labelField].includes(filterKey);
@@ -263,6 +269,8 @@ export class TransferTreeRendererBase implements transferRenderer {
         const checkedNodes = allCheckedNodes.filter(node => {
             return !node.isParent && !node.isHidden;
         })
+        // console.log(checkedNodes)
+        // console.log(checkedNodes[0].getPath())
         this._$selectedItems = new ArrayCollection(checkedNodes);
         this.selectedItemsChange.emit();
     }
@@ -319,6 +327,7 @@ export class TransferTreeRendererBase implements transferRenderer {
     public dataFilter(data, selectedItems) {
         let keyMap = [];
         let result = [];
+        console.log(this.trackItemBy)
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
         })
@@ -353,12 +362,6 @@ export class TransferTableRendererBase {
         protected _injector: Injector) {
     }
 
-    /**
-     * 渲染器实例
-     * @internal
-     */
-    public transferHost: any;
-
     @ViewChild(JigsawTable)
     public table: JigsawTable;
 
@@ -372,15 +375,8 @@ export class TransferTableRendererBase {
 
     public set _$data(value: TableData) {
         this._data = value;
-        this._$viewData = value;
         this._$validData = value.data;
     }
-
-    /**
-     * 渲染器视图数据
-     * @internal
-     */
-    public _$viewData: any;
 
     /**
      * 渲染器有效数据
@@ -432,9 +428,15 @@ export class TransferTableRendererBase {
         this.selectedRows = this._getSelectedRows(value);
         this._$selectedItems = this._getAllSelectedRows(value);
         this.selectedItemsChange.emit();
+        console.log(this._$selectedItems)
     }
 
-    public update() { }
+    public update() {
+        // this._$validData
+        // this.additionalData.clearTouchedValues();
+        // this.additionalData.refresh();
+        // this.table.update();
+    }
 
     /**
      * 获取选中的行
@@ -454,22 +456,9 @@ export class TransferTableRendererBase {
      * @param additionalData
     */
     private _getAllSelectedRows(additionalData) {
-        const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
-        const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
-
-        if (trackItemByfiledIndex === -1) {
-            console.warn("trackItemBy值在filed中未找到！")
-            return;
-        }
-
-        if (labelFieldfiledIndex === -1) {
-            console.warn("labelField值在filed中未找到！")
-            return;
-        }
-
         return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
             if (item.value) {
-                selectedRows.push({ [this.labelField]: item.data[labelFieldfiledIndex], [this.trackItemBy]: item.data[trackItemByfiledIndex] });
+                selectedRows.push({ [this.labelField]: item.data[0], key: item.key });
             }
             return selectedRows;
         }, []);
@@ -495,48 +484,23 @@ export class TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    private _filterTable(data, selectedItems, searchKey) {
-        const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-        const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-
-        if (trackItemByfiledIndex === -1) {
-            console.warn("trackItemBy值在filed中未找到！")
-            return;
-        }
-
-        if (labelFieldfiledIndex === -1) {
-            console.warn("labelField值在filed中未找到！")
-            return;
-        }
+    public dataFilter(data, selectedItems) {
+        console.log(data.field)
+        console.log(this.trackItemBy)
+        console.log(data.field.findIndex(item => { return item === this.trackItemBy }))
 
         if (!selectedItems || selectedItems.length === 0) {
-            if (searchKey.length > 0) {
-                data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
-            } else {
-
-                data.filter((item) => { return true })
-            }
+            data.filter((item) => { return true })
         } else {
             data.filter((item) => {
                 let retain = true;
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
+                // console.log(item)
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
                     retain = false;
-                }
-                if (retain) {
-                    retain = item[labelFieldfiledIndex].includes(searchKey);
                 }
                 return retain;
             })
         }
-    }
-
-    public dataFilter(data, selectedItems) {
-        this._filterTable(data, selectedItems, '')
-    }
-
-    public searchFilter(data, selectedItems, $event) {
-        let searchKey = $event.length > 0 ? $event.trim() : "";
-        this._filterTable(data, selectedItems, searchKey)
     }
 }
 
@@ -549,60 +513,15 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
 
     /* 渲染器数据 */
     @Input()
-    public get _$data(): TableData {
+    public get _$data(): any {
         return this._data;
     }
 
-    public set _$data(value: TableData) {
-        this._data = value;
-        this._$viewData = value;
-        this._$validData = value.data;
+    public set _$data(value: any) {
+
+        console.log("target", value);
+        this._$validData = [1, 2, 3]
     }
-
-    public dataFilter(data, selectedItems) {
-        this._filterTable(data, selectedItems, '')
-    }
-
-    public searchFilter(data, selectedItems, $event) {
-        let searchKey = $event.length > 0 ? $event.trim() : "";
-        this._filterTable(data, selectedItems, searchKey)
-    }
-
-    private _filterTable(data, selectedItems, searchKey) {
-        const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-        const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-
-        if (trackItemByfiledIndex === -1) {
-            console.warn("trackItemBy值在filed中未找到！")
-            return;
-        }
-
-        if (labelFieldfiledIndex === -1) {
-            console.warn("labelField值在filed中未找到！")
-            return;
-        }
-
-        if (!selectedItems || selectedItems.length === 0) {
-            if (searchKey.length > 0) {
-                data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
-            } else {
-
-                data.filter((item) => { return true })
-            }
-        } else {
-            data.filter((item) => {
-                let retain = false;
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
-                    retain = true;
-                }
-                if (retain) {
-                    retain = item[labelFieldfiledIndex].includes(searchKey);
-                }
-                return retain;
-            })
-        }
-    }
-
 }
 
 @NgModule({

@@ -41,7 +41,8 @@ export class TransferTreeDemoComponent {
                 label: "父节点2 - 折叠",
                 nodes: [
                     {
-                        label: "父节点21 - 展开", open: true,
+                        label: "父节点21 - 展开",
+                        open: true,
                         nodes: [
                             { label: "叶子节点211", id: 9 },
                             { label: "叶子节点212", id: 10 },
@@ -68,8 +69,13 @@ export class TransferTreeDemoComponent {
                         ]
                     }
                 ]
+            },
+            {
+                label: "父节点3 - 折叠",
+                nodes: []
             }
         ])
+
         this.selectedData = new ArrayCollection([
             { label: "叶子节点112", id: 2 },
             { label: "叶子节点114", id: 4 }
