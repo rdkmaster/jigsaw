@@ -36,16 +36,13 @@ export type transferRendererSetting = {
 }
 
 export interface transferRenderer {
-    // data: any;
-    // transferSelectedItems: ArrayCollection<listOption> | any;
-    // toggleButton: EventEmitter<boolean>;
-    // transfer();
-    // update();
     _$data: any;
     _$selectedItems: any;
-    _$setting: transferRendererSetting;
+    labelField: string;
+    subLabelField: string;
+    trackItemBy: string;
     selectedItemsChange: EventEmitter<boolean>;
-
+    update();
 }
 
 @Directive()
@@ -149,7 +146,7 @@ export class TransferListRendererBase {
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data, selectedItems) {
-        if(!data) {
+        if (!data) {
             return;
         }
         if (!selectedItems || selectedItems.length === 0) {
@@ -190,7 +187,6 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
 
 
     public searchFilter(selectedItems, filterKey) {
-        console.log(selectedItems)
         filterKey = filterKey ? filterKey.trim() : '';
         const data = selectedItems.filter(item => {
             return item[this.labelField].includes(filterKey);
@@ -272,8 +268,6 @@ export class TransferTreeRendererBase implements transferRenderer {
         const checkedNodes = allCheckedNodes.filter(node => {
             return !node.isParent && !node.isHidden;
         })
-        // console.log(checkedNodes)
-        // console.log(checkedNodes[0].getPath())
         this._$selectedItems = new ArrayCollection(checkedNodes);
         this.selectedItemsChange.emit();
     }
@@ -281,7 +275,9 @@ export class TransferTreeRendererBase implements transferRenderer {
     private _getLeafNodes(nodes, result = []) {
         for (var i = 0, length = nodes.length; i < length; i++) {
             if (!nodes[i].nodes) {
-                result.push(nodes[i]);
+                if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
+                    result.push(nodes[i]);
+                }
             } else {
                 result = this._getLeafNodes(nodes[i].nodes, result);
             }
@@ -312,9 +308,14 @@ export class TransferTreeRendererBase implements transferRenderer {
         }
         for (var i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
-                let newNode = { ...tree[i], nodes: [] };
-                arr.push(newNode);
-                this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
+                if (tree[i].nodes.length !== 0) {
+                    let newNode = { ...tree[i], nodes: [] };
+                    arr.push(newNode);
+                    this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
+                } else {
+                    let newNode = { ...tree[i], nodes: [{ isTransferTreeParentNode: '', isHidden: true }] };
+                    arr.push(newNode);
+                }
             } else {
                 if (!keyMap.includes(tree[i][this.trackItemBy])) {
                     if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || !(searchKey.length > 0)) {
@@ -330,7 +331,6 @@ export class TransferTreeRendererBase implements transferRenderer {
     public dataFilter(data, selectedItems) {
         let keyMap = [];
         let result = [];
-        console.log(this.trackItemBy)
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
         })
@@ -378,8 +378,15 @@ export class TransferTableRendererBase {
 
     public set _$data(value: TableData) {
         this._data = value;
+        this._$viewData = value;
         this._$validData = value.data;
     }
+
+    /**
+     * 渲染器视图数据
+     * @internal
+     */
+    public _$viewData: any;
 
     /**
      * 渲染器有效数据
@@ -431,27 +438,33 @@ export class TransferTableRendererBase {
         this.selectedRows = this._getSelectedRows(value);
         this._$selectedItems = this._getAllSelectedRows(value);
         this.selectedItemsChange.emit();
-        console.log(this._$selectedItems)
     }
 
-    public update() {
-        // this._$validData
-        // this.additionalData.clearTouchedValues();
-        // this.additionalData.refresh();
-        // this.table.update();
-    }
+    public update() { }
 
     /**
      * 获取选中的行
      * @param additionalData
      */
     private _getSelectedRows(additionalData) {
-        return additionalData.data.reduce((selectedRows, item, index) => {
-            if (item[0]) {
-                selectedRows.push(index);
+        const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+        const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+
+        if (trackItemByfiledIndex === -1) {
+            console.warn("trackItemBy值在filed中未找到！")
+            return;
+        }
+
+        if (labelFieldfiledIndex === -1) {
+            console.warn("labelField值在filed中未找到！")
+            return;
+        }
+        return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
+            if (item.value) {
+                selectedRows.push({ [this.labelField]: item.data[labelFieldfiledIndex], [this.trackItemBy]: item.data[trackItemByfiledIndex] });
             }
             return selectedRows;
-        }, []).join(',');
+        }, []);
     }
 
     /**
@@ -487,19 +500,107 @@ export class TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    public dataFilter(data, selectedItems) {
-        console.log(data.field)
-        console.log(this.trackItemBy)
-        console.log(data.field.findIndex(item => { return item === this.trackItemBy }))
+    private _filterTable(data, selectedItems, searchKey) {
+        const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+        const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+
+        if (trackItemByfiledIndex === -1) {
+            console.warn("trackItemBy值在filed中未找到！")
+            return;
+        }
+
+        if (labelFieldfiledIndex === -1) {
+            console.warn("labelField值在filed中未找到！")
+            return;
+        }
 
         if (!selectedItems || selectedItems.length === 0) {
-            data.filter((item) => { return true })
+            if (searchKey.length > 0) {
+                data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
+            } else {
+
+                data.filter((item) => { return true })
+            }
         } else {
             data.filter((item) => {
                 let retain = true;
-                // console.log(item)
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
                     retain = false;
+                }
+                if (retain) {
+                    retain = item[labelFieldfiledIndex].includes(searchKey);
+                }
+                return retain;
+            })
+        }
+    }
+
+    public dataFilter(data, selectedItems) {
+        this._filterTable(data, selectedItems, '')
+    }
+
+    public searchFilter(data, selectedItems, $event) {
+        let searchKey = $event.length > 0 ? $event.trim() : "";
+        this._filterTable(data, selectedItems, searchKey)
+    }
+}
+
+
+@Component({
+    templateUrl: './transfer-table.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class TransferTableTargetRenderer extends TransferTableRendererBase {
+    /* 渲染器数据 */
+    @Input()
+    public get _$data(): TableData {
+        return this._data;
+    }
+
+    public set _$data(value: TableData) {
+        this._data = value;
+        this._$viewData = value;
+        this._$validData = value.data;
+    }
+
+    public dataFilter(data, selectedItems) {
+        this._filterTable(data, selectedItems, '')
+    }
+
+    public searchFilter(data, selectedItems, $event) {
+        let searchKey = $event.length > 0 ? $event.trim() : "";
+        this._filterTable(data, selectedItems, searchKey)
+    }
+
+    private _filterTable(data, selectedItems, searchKey) {
+        const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+        const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+
+        if (trackItemByfiledIndex === -1) {
+            console.warn("trackItemBy值在filed中未找到！")
+            return;
+        }
+
+        if (labelFieldfiledIndex === -1) {
+            console.warn("labelField值在filed中未找到！")
+            return;
+        }
+
+        if (!selectedItems || selectedItems.length === 0) {
+            if (searchKey.length > 0) {
+                data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
+            } else {
+
+                data.filter((item) => { return true })
+            }
+        } else {
+            data.filter((item) => {
+                let retain = false;
+                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
+                    retain = true;
+                }
+                if (retain) {
+                    retain = item[labelFieldfiledIndex].includes(searchKey);
                 }
                 return retain;
             })
@@ -507,25 +608,6 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
     }
 }
 
-@Component({
-    templateUrl: './transfer-table.html',
-    encapsulation: ViewEncapsulation.None
-})
-export class TransferTableTargetRenderer extends TransferTableRendererBase {
-    protected _data: any;
-
-    /* 渲染器数据 */
-    @Input()
-    public get _$data(): any {
-        return this._data;
-    }
-
-    public set _$data(value: any) {
-
-        console.log("target", value);
-        this._$validData = [1, 2, 3]
-    }
-}
 
 @NgModule({
     declarations: [TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
