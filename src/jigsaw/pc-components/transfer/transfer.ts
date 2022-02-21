@@ -279,6 +279,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
                         removeUpdateSubscriber.unsubscribe();
                         this._data = data;
+                        if (this._removeFilterSubscriber) {
+                            this._removeFilterSubscriber.unsubscribe();
+                            this._removeFilterSubscriber = null;
+                        }
                         this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
                             this.sourceComponent._$data = new ArrayCollection(this.data)
                             this.targetComponent._$data = this.selectedItems;
@@ -286,7 +290,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     });
                     data.fromArray(value);
-                    value.onRefresh(() => {
+                    if (this._removeInputDataChangeListener) {
+                        this._removeInputDataChangeListener();
+                        this._removeInputDataChangeListener = null;
+                    }
+                    this._removeInputDataChangeListener = value.onRefresh(() => {
                         data.fromArray(value)
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     })
@@ -365,7 +373,20 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     public set selectedItems(value: ArrayCollection<listOption> | any) {
+        if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
+            return;
+        }
+        if (value instanceof Array) {
+            value = new ArrayCollection(value);
+        }
         this._selectedItems = value;
+        if (this._removeSelectedItemsChangeListener) {
+            this._removeSelectedItemsChangeListener();
+            this._removeSelectedItemsChangeListener = null;
+        }
+        this._removeSelectedItemsChangeListener = this._selectedItems.onRefresh(() => {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        })
     }
 
     /**
@@ -576,6 +597,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public _$transferClass: {};
 
     private _removePageableCallbackListener: CallbackRemoval;
+    private _removeSelectedItemsChangeListener: CallbackRemoval;
+    private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
 
     ngOnDestroy() {
@@ -586,6 +609,14 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         if (this._removeFilterSubscriber) {
             this._removeFilterSubscriber.unsubscribe();
+        }
+        if (this._removeSelectedItemsChangeListener) {
+            this._removeSelectedItemsChangeListener();
+            this._removeSelectedItemsChangeListener = null;
+        }
+        if (this._removeInputDataChangeListener) {
+            this._removeInputDataChangeListener();
+            this._removeInputDataChangeListener = null;
         }
     }
 }

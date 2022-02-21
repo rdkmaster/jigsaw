@@ -149,6 +149,9 @@ export class TransferListRendererBase {
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data, selectedItems) {
+        if(!data) {
+            return;
+        }
         if (!selectedItems || selectedItems.length === 0) {
             data.filter((item) => { return true })
         } else {
