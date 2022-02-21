@@ -11,7 +11,8 @@
                 <span class="jigsaw-transfer-subTitle"></span>
             </div>
             <div class="jigsaw-transfer-search-cntr">
-                <jigsaw-search-input width="100%" [searchDebounce]="300" [(value)]="_$sourceSearchKey" (search)="_$sourceSearching($event)">
+                <jigsaw-search-input width="100%" [disabled]="!searchable" [searchDebounce]="300"
+                    [(value)]="_$sourceSearchKey" (search)="_$sourceSearching($event)">
                 </jigsaw-search-input>
             </div>
         </div>
@@ -43,7 +44,8 @@
                 <span class="jigsaw-transfer-subTitle"></span>
             </div>
             <div class="jigsaw-transfer-search-cntr">
-                <jigsaw-search-input width="100%" [searchDebounce]="300" [(value)]="_$targetSearchKey" (search)="_$targetSearching($event)">
+                <jigsaw-search-input width="100%" [disabled]="!searchable" [searchDebounce]="300"
+                    [(value)]="_$targetSearchKey" (search)="_$targetSearching($event)">
                 </jigsaw-search-input>
             </div>
         </div>

@@ -8,6 +8,7 @@ import {
     Injector,
     ComponentFactoryResolver,
     ViewContainerRef,
+    Output,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
@@ -30,6 +31,7 @@ import { TableData, LocalPageableTableData, PageableTableData } from '../../comm
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
+import { EventEmitter } from 'events';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -403,6 +405,18 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public valid: boolean;
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public searchable: boolean = true;
+
+    /**
+     * 选择结果发生变化时，向外面发送事件
+     */
+    @Output()
+    public selectedItemsChange = new EventEmitter();
+
+    /**
      * @internal
      */
     public _$infinity = Infinity;
@@ -527,6 +541,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
         this._$sourceSearchKey = '';
+        this.selectedItemsChange.emit(this.selectedItems)
     }
 
     public _$targetTransfer() {
@@ -550,6 +565,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this._checkSourceSelectAll();
         this._checkTargetSelectAll();
+        this._$targetSearchKey = '';
+        this.selectedItemsChange.emit(this.selectedItems)
     }
 
     /**
@@ -560,12 +577,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     private _removePageableCallbackListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public searchable: boolean;
 
     ngOnDestroy() {
         super.ngOnDestroy();

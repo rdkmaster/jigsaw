@@ -6,7 +6,6 @@ import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, Arr
 
 })
 export class TransferTableDemoComponent {
-
     constructor() {
         this.data = new TableData(
             [
