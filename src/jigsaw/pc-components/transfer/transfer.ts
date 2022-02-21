@@ -273,17 +273,19 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 } else if (value instanceof ArrayCollection) {
                     const data = new LocalPageableArray<listOption>();
                     data.pagingInfo.pageSize = Infinity;
+
+                    const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                        removeUpdateSubscriber.unsubscribe();
+                        this._data = data;
+                        this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
+                            this.sourceComponent._$data = new ArrayCollection(this.data)
+                            this.targetComponent._$data = this.selectedItems;
+                        })
+                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
+                    });
+                    data.fromArray(value);
                     value.onRefresh(() => {
-                        const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                            removeUpdateSubscriber.unsubscribe();
-                            this._data = data;
-                            this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
-                                this.sourceComponent._$data = new ArrayCollection(this.data)
-                                this.targetComponent._$data = this.selectedItems;
-                            })
-                            this.sourceComponent.dataFilter(this.data, this.selectedItems)
-                        });
-                        data.fromArray(value);
+                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     })
                 } else {
                     console.warn("输入的数据结构与渲染器不匹配")
