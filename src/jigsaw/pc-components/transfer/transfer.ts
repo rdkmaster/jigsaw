@@ -285,6 +285,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     });
                     data.fromArray(value);
                     value.onRefresh(() => {
+                        data.fromArray(value)
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     })
                 } else {
@@ -333,6 +334,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     });
                     data.fromObject({ data: value.data, field: value.field, header: value.header });
+                    value.onRefresh(() => {
+                        data.fromObject({ data: value.data, field: value.field, header: value.header });
+                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
+                    })
                 } else {
                     console.warn("输入的数据结构与渲染器不匹配")
                 }
@@ -485,7 +490,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this._$viewData = new TableData();
                 this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
                 this.sourceComponent._$data = this._$viewData;
-                this.sourceComponent.additionalData.clearTouchedValues();
+                this.sourceComponent.additionalData.reset();
                 this.sourceComponent.additionalData.refresh();
             })
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event)
@@ -515,7 +520,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
-            this.sourceComponent.additionalData.clearTouchedValues();
+            this.sourceComponent.additionalData.reset();
             this.sourceComponent.additionalData.refresh();
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
