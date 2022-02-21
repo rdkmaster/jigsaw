@@ -13,7 +13,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
     &.#{$jigsaw-transfer}-error {
         .#{$jigsaw-transfer}-cntr {
-            border: 1px solid $error-default;
+            outline: 1px solid $error-default;
         }
     }
 

@@ -32,7 +32,7 @@ import { TableData, LocalPageableTableData, PageableTableData } from '../../comm
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
-import {JigsawArray} from "../../common/core/utils/data-collection-utils";
+import { JigsawArray } from "../../common/core/utils/data-collection-utils";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -464,7 +464,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      * @NoMarkForCheckRequired
      */
     @Input()
-    public valid: boolean;
+    public valid: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
