@@ -9,6 +9,7 @@ import {
     ComponentFactoryResolver,
     ViewContainerRef,
     Output,
+    EventEmitter
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
@@ -31,7 +32,6 @@ import { TableData, LocalPageableTableData, PageableTableData } from '../../comm
 import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
-import { EventEmitter } from 'events';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
