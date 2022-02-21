@@ -235,6 +235,10 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
     }
 
     public set theme(theme: 'light' | 'dark' | string) {
+        this._wingsTheme(theme);
+    }
+
+    protected _wingsTheme(theme: 'light' | 'dark' | string) {
         const wingsThemeId: string = this.constructor[wingsThemeIdProperty];
         if (CommonUtils.isUndefined(theme) || !wingsThemeId) {
             return;

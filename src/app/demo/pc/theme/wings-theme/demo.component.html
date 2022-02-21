@@ -249,7 +249,7 @@
             <jigsaw-header [theme]="darkTheme">list</jigsaw-header>
             <div class="item-div start">
                 <j-list [theme]="darkTheme" width="200" trackItemBy="title">
-                    <j-list-option [theme]="darkTheme" *ngFor="let title of _$titles" [value]="title">
+                    <j-list-option *ngFor="let title of _$titles" [value]="title">
                         <span j-title>{{title.title}}</span>
                         <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
                                 class="iconfont iconfont-e144"></span>
@@ -262,7 +262,7 @@
             <jigsaw-header [theme]="lightTheme">list</jigsaw-header>
             <div class="item-div start">
                 <j-list [theme]="lightTheme" width="200" trackItemBy="title">
-                    <j-list-option [theme]="lightTheme" *ngFor="let title of _$titles" [value]="title">
+                    <j-list-option *ngFor="let title of _$titles" [value]="title">
                         <span j-title>{{title.title}}</span>
                         <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
                                 class="iconfont iconfont-e144"></span>
@@ -411,13 +411,15 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                </jigsaw-select>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                </jigsaw-select>
             </div>
         </section>
     </li>
@@ -603,18 +605,60 @@
             </div>
         </section>
     </li>
-<!--    <li class="list-li xxxx">-->
-<!--        <section class="item-section">-->
-<!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
-<!--            <div class="item-div start">-->
+    <li class="list-li navigation-menu">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">navigation-menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-navigation-menu [theme]="darkTheme" [data]="_$navigationData"></jigsaw-navigation-menu>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">navigation-menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-navigation-menu [theme]="lightTheme" [data]="_$navigationData"></jigsaw-navigation-menu>
+            </div>
+        </section>
+    </li>
+    <li class="list-li table">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">table</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-table [theme]="darkTheme" [data]="_$tableData" height="400px"></jigsaw-table>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">table</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-table [theme]="lightTheme" [data]="_$tableData" height="400px"></jigsaw-table>
+            </div>
+        </section>
+    </li>
+    <li class="list-li graph">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">graph</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-graph [theme]="darkTheme" [data]="_$graphData"></jigsaw-graph>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">graph</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-graph [theme]="lightTheme" [data]="_$graphData"></jigsaw-graph>
+            </div>
+        </section>
+    </li>
+    <!--    <li class="list-li xxxx">-->
+    <!--        <section class="item-section">-->
+    <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
+    <!--            <div class="item-div start">-->
 
-<!--            </div>-->
-<!--        </section>-->
-<!--        <section class="item-section">-->
-<!--            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>-->
-<!--            <div class="item-div start">-->
+    <!--            </div>-->
+    <!--        </section>-->
+    <!--        <section class="item-section">-->
+    <!--            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>-->
+    <!--            <div class="item-div start">-->
 
-<!--            </div>-->
-<!--        </section>-->
-<!--    </li>-->
+    <!--            </div>-->
+    <!--        </section>-->
+    <!--    </li>-->
 </ul>
