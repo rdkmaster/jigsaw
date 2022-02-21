@@ -485,7 +485,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._$targetSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this.targetComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
+        if (this.targetComponent._$selectedItems.length === this.targetComponent._$validData.length) {
             this._$targetSelectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$targetSelectAllChecked = CheckBoxStatus.indeterminate;
