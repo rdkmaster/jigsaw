@@ -55,7 +55,7 @@ const transferServerFilterFunction = function (item) {
         return value === undefined || value === null;
     }
 
-    function compareValue(item1: any, item2: any, trackItemBy: string[] | string): boolean {
+    function compareValue(item1: any, item2: any, trackItemBy?: string[] | string): boolean {
 
         // 排除掉非法值和基础类型，如果比对的值是这两种之一的，则采用简单比较方式
         if (isUndefined(item1) || isUndefined(item2)) {
@@ -124,6 +124,116 @@ const transferServerFilterFunction = function (item) {
         } else {
             keyResult = false
         }
+    }
+    return listResult && keyResult;
+};
+
+const transferTableFilterFunction = function (item) {
+    const trackItemByfiledIndex = this.field.findIndex(item => { return item === this.trackItemBy })
+    const labelFieldfiledIndex = this.field.findIndex(item => { return item === this.labelField })
+
+    if (trackItemByfiledIndex === -1) {
+        console.warn("trackItemBy值在filed中未找到！")
+        return;
+    }
+
+    if (labelFieldfiledIndex === -1) {
+        console.warn("labelField值在filed中未找到！")
+        return;
+    }
+
+    let listResult = true;
+    let keyResult = true;
+
+    if (this.selectedItems) {
+        if (this.selectedItems.some(si => CommonUtils.compareValue(item[trackItemByfiledIndex], si[this.trackItemBy]))) {
+            listResult = false;
+        }
+    }
+    if (this.keyword !== null && this.keyword !== undefined) {
+        const value: string = !item || item[labelFieldfiledIndex] === undefined || item[labelFieldfiledIndex] === null ? '' : item[labelFieldfiledIndex].toString();
+        return value.toLowerCase().includes(this.keyword.toLowerCase());
+    }
+    return listResult && keyResult;
+};
+
+const transferTableServerFilterFunction = function (item) {
+    function isUndefined(value) {
+        return value === undefined || value === null;
+    }
+
+    function compareValue(item1: any, item2: any, trackItemBy?: string[] | string): boolean {
+
+        // 排除掉非法值和基础类型，如果比对的值是这两种之一的，则采用简单比较方式
+        if (isUndefined(item1) || isUndefined(item2)) {
+            return item1 == item2;
+        }
+        const typeOfItem1 = typeof item1, typeOfItem2 = typeof item2;
+        if (typeOfItem1 == 'string' || typeOfItem1 == 'boolean' || typeOfItem1 == 'number' ||
+            typeOfItem2 == 'string' || typeOfItem2 == 'boolean' || typeOfItem2 == 'number') {
+            return item1 == item2;
+        }
+
+        // 对数组类型，认为应该比较各自包含的元素，即不把数组当做对象去比较，因此数组与非数组的比较没有意义
+        const isArr1 = item1 instanceof Array;
+        const isArr2 = item2 instanceof Array;
+        if ((isArr1 && !isArr2) || (!isArr1 && isArr2)) {
+            return false;
+        }
+        if (isArr1 && isArr2) {
+            if (item1.length != item2.length) {
+                // 不等长的数组必然不相等
+                return false;
+            }
+            for (let i = 0, len = item1.length; i < len; i++) {
+                if (!compareValue(item1[i], item2[i], trackItemBy)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 到这里说明item1和item2都是非数组的json对象了
+        if (item1 === item2) {
+            return true;
+        }
+        const trackBy: string[] = typeof trackItemBy == 'string' ? trackItemBy.split(/\s*,\s*/) : trackItemBy;
+        if (!trackBy || trackBy.length == 0) {
+            return item1 == item2;
+        }
+        for (let i = 0, len = trackBy.length; i < len; i++) {
+            if (item1[trackBy[i]] != item2[trackBy[i]]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const trackItemByfiledIndex = this.data.field.findIndex(item => { return item === this.trackItemBy })
+    const labelFieldfiledIndex = this.data.field.findIndex(item => { return item === this.labelField })
+
+    if (trackItemByfiledIndex === -1) {
+        console.warn("trackItemBy值在filed中未找到！")
+        return;
+    }
+
+    if (labelFieldfiledIndex === -1) {
+        console.warn("labelField值在filed中未找到！")
+        return;
+    }
+
+    let listResult = true;
+    let keyResult = true;
+
+    if (this.selectedItems) {
+        if (this.selectedItems.some(si => compareValue(item[trackItemByfiledIndex], si[this.trackItemBy]))) {
+            listResult = false;
+        }
+    }
+
+    if (this.keyword !== null && this.keyword !== undefined) {
+        const value: string = !item || item[labelFieldfiledIndex] === undefined || item[labelFieldfiledIndex] === null ? '' : item[labelFieldfiledIndex].toString();
+        return value.toLowerCase().includes(this.keyword.toLowerCase());
     }
     return listResult && keyResult;
 };
@@ -343,6 +453,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 }
             } else if (this.sourceRenderer === TransferTableSourceRenderer) {
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
+                    this.sourceComponent.filterFunction = this._getFilterFunction('table', value instanceof PageableTableData ? 'server' : 'local', false);
                     if (value instanceof LocalPageableTableData) {
                         this._data = value;
                         if (this._removePageableCallbackListener) {
@@ -350,17 +461,24 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         }
                         this._removePageableCallbackListener = value.onAjaxComplete(() => {
                             this._removeFilterSubscriber = value.pagingInfo.subscribe(() => {
-                                this._$viewData = new TableData();
-                                this._$viewData.fromObject({ data: value.data, field: value.field, header: value.header })
-                                this.sourceComponent._$data = this._$viewData;
+                                this.sourceComponent._$data = new TableData();
+                                this.sourceComponent._$data.fromObject({ data: value.data, field: value.field, header: value.header })
                                 this.targetComponent._$data = this.selectedItems;
                             })
                             this.sourceComponent.dataFilter(value, this.selectedItems)
                         })
+                    } else {
+                        this._data = value;
+                        value.onRefresh(() => {
+                            this._$viewData = new TableData();
+                            this._$viewData.fromObject({ data: value.data, field: value.field, header: value.header })
+                            this.sourceComponent._$data = this._$viewData;
+                            this.targetComponent._$data = this.selectedItems;
+                        })
+                        this.sourceComponent.dataFilter(value, this.selectedItems)
                     }
-                    this._data = value;
-                    this._$viewData = this.data;
                 } else if (value instanceof TableData) {
+                    this.sourceComponent.filterFunction = this._getFilterFunction('table', 'local', false);
                     const data = new LocalPageableTableData();
                     data.pagingInfo.pageSize = Infinity;
                     const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
@@ -395,6 +513,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 return transferFilterFunction
             }
             return pagingType == 'server' ? transferServerFilterFunction : transferFilterFunction;
+        }
+        if (rendererType == 'table') {
+            return pagingType == 'server' ? transferTableServerFilterFunction : transferTableFilterFunction;
         }
         return null;
     }

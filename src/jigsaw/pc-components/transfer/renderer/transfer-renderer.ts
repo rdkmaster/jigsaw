@@ -148,7 +148,6 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
         this._$validData = this._$data.filter(item => !item.disabled);
     }
 
-
     public searchFilter(data, selectedItems, filterKey) {
         const _filterData = (filterKey: string, field: string | number) => {
             data.filter(this.filterFunction, {
@@ -193,7 +192,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
         if (!data || !this.filterFunction) {
             return;
         }
-        
+
         if (data.busy) {
             const removeAjaxCallback = data.onAjaxComplete(() => {
                 removeAjaxCallback();
@@ -203,7 +202,6 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
             _filterData(data, selectedItems, this.filterFunction);
         }
     }
-
 }
 
 @Component({
@@ -379,10 +377,11 @@ export class TransferTreeSourceRenderer extends TransferTreeRendererBase {
 
 }
 @Directive()
-export class TransferTableRendererBase {
+export class TransferTableRendererBase extends AbstractTransferRendererBase {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
+        super();
     }
 
     @ViewChild(JigsawTable)
@@ -398,15 +397,8 @@ export class TransferTableRendererBase {
 
     public set _$data(value: TableData) {
         this._data = value;
-        this._$viewData = value;
         this._$validData = value.data;
     }
-
-    /**
-     * 渲染器视图数据
-     * @internal
-     */
-    public _$viewData: any;
 
     /**
      * 渲染器有效数据
@@ -461,6 +453,10 @@ export class TransferTableRendererBase {
     }
 
     public update() { }
+
+    public searchFilter(data: any, selectedItems: any, filterKey: any, isTarget: boolean): void {
+
+    }
 
     /**
      * 获取选中的行
@@ -520,48 +516,73 @@ export class TransferTableRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    private _filterTable(data, selectedItems, searchKey) {
-        const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-        const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+    // private _filterTable(data, selectedItems, searchKey) {
+    //     const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
+    //     const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
 
-        if (trackItemByfiledIndex === -1) {
-            console.warn("trackItemBy值在filed中未找到！")
-            return;
-        }
+    //     if (trackItemByfiledIndex === -1) {
+    //         console.warn("trackItemBy值在filed中未找到！")
+    //         return;
+    //     }
 
-        if (labelFieldfiledIndex === -1) {
-            console.warn("labelField值在filed中未找到！")
-            return;
-        }
+    //     if (labelFieldfiledIndex === -1) {
+    //         console.warn("labelField值在filed中未找到！")
+    //         return;
+    //     }
 
-        if (!selectedItems || selectedItems.length === 0) {
-            if (searchKey.length > 0) {
-                data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
-            } else {
+    //     if (!selectedItems || selectedItems.length === 0) {
+    //         if (searchKey.length > 0) {
+    //             data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
+    //         } else {
 
-                data.filter((item) => { return true })
-            }
-        } else {
-            data.filter((item) => {
-                let retain = true;
-                if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
-                    retain = false;
-                }
-                if (retain) {
-                    retain = item[labelFieldfiledIndex].includes(searchKey);
-                }
-                return retain;
-            })
-        }
-    }
+    //             data.filter((item) => { return true })
+    //         }
+    //     } else {
+    //         data.filter((item) => {
+    //             console.log(item)
+    //             let retain = true;
+    //             if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
+    //                 retain = false;
+    //             }
+    //             if (retain) {
+    //                 retain = item[labelFieldfiledIndex].includes(searchKey);
+    //             }
+    //             return retain;
+    //         })
+    //     }
+    // }
+
+    // public dataFilter(data, selectedItems) {
+    //     this._filterTable(data, selectedItems, '')
+    // }
+
+    // public searchFilter(data, selectedItems, $event) {
+    // let searchKey = $event.length > 0 ? $event.trim() : "";
+    // this._filterTable(data, selectedItems, searchKey)
+    // }
 
     public dataFilter(data, selectedItems) {
-        this._filterTable(data, selectedItems, '')
-    }
+        const _filterData = (data, selectedItems, filterFunction) => {
+            data.filter(filterFunction, {
+                selectedItems: [].concat(...selectedItems),
+                trackItemBy: this.trackItemBy,
+                field: data.field,
+                labelField: this.labelField
+            });
+        }
 
-    public searchFilter(data, selectedItems, $event) {
-        let searchKey = $event.length > 0 ? $event.trim() : "";
-        this._filterTable(data, selectedItems, searchKey)
+        if (!data || !this.filterFunction) {
+            return;
+        }
+
+        if (data.busy) {
+            const removeAjaxCallback = data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                _filterData(data, selectedItems, this.filterFunction);
+            })
+        } else {
+            _filterData(data, selectedItems, this.filterFunction);
+        }
     }
 }
 
@@ -578,7 +599,6 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
 
     public set _$data(value: TableData) {
         this._data = value;
-        this._$viewData = value;
         this._$validData = value.data;
     }
 
