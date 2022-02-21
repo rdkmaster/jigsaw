@@ -1,6 +1,9 @@
 <div *ngIf="disabled" class="jigsaw-transfer-disabled">
 </div>
 <div class="jigsaw-transfer-cntr" [ngClass]="_$transferClass">
+    <div *ngIf="sourceComponent?._$data?.busy" class="jigsaw-transfer-loading" @loading>
+        <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
+    </div>
     <div class="jigsaw-transfer-item-cntr jigsaw-transfer-source">
         <div class="jigsaw-transfer-header">
             <div class="jigsaw-transfer-select-all">
