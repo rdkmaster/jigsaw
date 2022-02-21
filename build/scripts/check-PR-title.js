@@ -30,7 +30,7 @@ const https = require('https');
         }
     };
     const prInfo = await readData(options);
-    const titleMatch = prInfo.title.match(/^\s*\[(.+)].+/);
+    const titleMatch = prInfo.title.match(/^\s*\[(.+?)].+/);
     if (!titleMatch) {
         exit('PR标题格式非法，未找到类型，title:', prInfo.title);
     }
@@ -44,7 +44,7 @@ const https = require('https');
         if (process.env.CIRCLE_PULL_REQUEST) {
             return Promise.resolve(process.env.CIRCLE_PULL_REQUEST);
         }
-    
+
         console.log('reading url from github...');
         const options = {
             hostname: 'api.github.com',
