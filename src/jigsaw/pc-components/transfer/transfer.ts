@@ -136,12 +136,12 @@ const transferTableFilterFunction = function (item) {
     const labelFieldfiledIndex = this.field.findIndex(item => { return item === this.labelField })
 
     if (trackItemByfiledIndex === -1) {
-        console.warn("trackItemBy值在filed中未找到！")
+        console.error("trackItemBy值在filed中未找到！")
         return;
     }
 
     if (labelFieldfiledIndex === -1) {
-        console.warn("labelField值在filed中未找到！")
+        console.error("labelField值在filed中未找到！")
         return;
     }
 
@@ -155,7 +155,7 @@ const transferTableFilterFunction = function (item) {
     }
     if (this.keyword !== null && this.keyword !== undefined) {
         const value: string = !item || item[labelFieldfiledIndex] === undefined || item[labelFieldfiledIndex] === null ? '' : item[labelFieldfiledIndex].toString();
-        return value.toLowerCase().includes(this.keyword.toLowerCase());
+        keyResult = value.toLowerCase().includes(this.keyword.toLowerCase());
     }
     return listResult && keyResult;
 };
@@ -216,12 +216,12 @@ const transferTableServerFilterFunction = function (item) {
     const labelFieldfiledIndex = this.data.field.findIndex(item => { return item === this.labelField })
 
     if (trackItemByfiledIndex === -1) {
-        console.warn("trackItemBy值在filed中未找到！")
+        console.error("trackItemBy值在filed中未找到！")
         return;
     }
 
     if (labelFieldfiledIndex === -1) {
-        console.warn("labelField值在filed中未找到！")
+        console.error("labelField值在filed中未找到！")
         return;
     }
 
@@ -416,7 +416,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     }
                 } else if (value instanceof ArrayCollection) {
                     this.sourceComponent.filterFunction = this._getFilterFunction('list', 'local', false);
-                    this.targetComponent.filterFunction = this._getFilterFunction('list', 'local', true);
                     const data = new LocalPageableArray<listOption>();
                     data.pagingInfo.pageSize = Infinity;
 
@@ -443,7 +442,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     })
                 } else {
-                    console.warn("输入的数据结构与渲染器不匹配")
+                    console.error("输入的数据结构与渲染器不匹配")
                 }
             } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
                 if (value instanceof SimpleTreeData) {
@@ -452,7 +451,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     this.sourceComponent.update();
                     this.targetComponent._$data = this.selectedItems;
                 } else {
-                    console.warn("输入的数据结构与渲染器不匹配")
+                    console.error("输入的数据结构与渲染器不匹配")
                 }
             } else if (this.sourceRenderer === TransferTableSourceRenderer) {
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
@@ -505,7 +504,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
                     })
                 } else {
-                    console.warn("输入的数据结构与渲染器不匹配")
+                    console.error("输入的数据结构与渲染器不匹配")
                 }
             } else {
                 this.sourceComponent._$data = value;

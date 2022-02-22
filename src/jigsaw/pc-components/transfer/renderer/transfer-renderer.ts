@@ -416,6 +416,12 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     public _$validData: any;
 
     /**
+     * 渲染器当前已选数据
+     * @internal
+     */
+    public _$currentSelectedItems: any;
+
+    /**
      * 渲染器已选数据
      * @internal
      */
@@ -461,7 +467,20 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
         this.selectedItemsChange.emit();
     }
 
-    public update() { }
+    public update() {
+        const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+        if (trackItemByfiledIndex === -1) {
+            console.error("trackItemBy值在filed中未找到！")
+            return;
+        }
+        this._$currentSelectedItems = this._$data.data.filter(item => {
+            let isExsit = false;
+            if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
+                isExsit = true;
+            }
+            return isExsit;
+        })
+    }
 
     /**
      * 获取选中的行
@@ -472,12 +491,12 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
         const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
 
         if (trackItemByfiledIndex === -1) {
-            console.warn("trackItemBy值在filed中未找到！")
+            console.error("trackItemBy值在filed中未找到！")
             return;
         }
 
         if (labelFieldfiledIndex === -1) {
-            console.warn("labelField值在filed中未找到！")
+            console.error("labelField值在filed中未找到！")
             return;
         }
         return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
@@ -603,12 +622,12 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
         const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
 
         if (trackItemByfiledIndex === -1) {
-            console.warn("trackItemBy值在filed中未找到！")
+            console.error("trackItemBy值在filed中未找到！")
             return;
         }
 
         if (labelFieldfiledIndex === -1) {
-            console.warn("labelField值在filed中未找到！")
+            console.error("labelField值在filed中未找到！")
             return;
         }
 
