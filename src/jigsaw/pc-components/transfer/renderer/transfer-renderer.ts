@@ -49,22 +49,17 @@ export interface transferRenderer {
 export abstract class AbstractTransferRendererBase {
     public filterFunction: (item: any) => boolean;
 
-    public abstract searchFilter(data, selectedItems, filterKey, isTarget: boolean): void;
-
+    // public abstract searchFilter(data, selectedItems, filterKey, isTarget: boolean): void;
 }
 
 @Directive()
 export class TransferListRendererBase extends AbstractTransferRendererBase {
     constructor(
+        protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
         super();
     }
-
-    // /**
-    //  * 宿主transfer实例
-    //  */
-    // public hostInstance: any;
 
     private _data: any;
 
@@ -77,6 +72,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     public set _$data(value: ArrayCollection<listOption>) {
         this._data = value;
         this.update();
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -117,6 +113,8 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     public subLabelField: string = "subLabel";
 
     /**
+     * 设置数据的id字段
+     * 
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -146,6 +144,34 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 
     public update() {
         this._$validData = this._$data.filter(item => !item.disabled);
+    }
+}
+
+@Component({
+    templateUrl: './transfer-list.html',
+    encapsulation: ViewEncapsulation.None
+})
+export class TransferListSourceRenderer extends TransferListRendererBase {
+    public dataFilter(data, selectedItems) {
+        const _filterData = (data, selectedItems, filterFunction) => {
+            data.filter(filterFunction, {
+                selectedItems: [].concat(...selectedItems),
+                trackItemBy: this.trackItemBy
+            });
+        }
+
+        if (!data || !this.filterFunction) {
+            return;
+        }
+
+        if (data.busy) {
+            const removeAjaxCallback = data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                _filterData(data, selectedItems, this.filterFunction);
+            })
+        } else {
+            _filterData(data, selectedItems, this.filterFunction);
+        }
     }
 
     public searchFilter(data, selectedItems, filterKey) {
@@ -180,34 +206,6 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     templateUrl: './transfer-list.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TransferListSourceRenderer extends TransferListRendererBase {
-    public dataFilter(data, selectedItems) {
-        const _filterData = (data, selectedItems, filterFunction) => {
-            data.filter(filterFunction, {
-                selectedItems: [].concat(...selectedItems),
-                trackItemBy: this.trackItemBy
-            });
-        }
-
-        if (!data || !this.filterFunction) {
-            return;
-        }
-
-        if (data.busy) {
-            const removeAjaxCallback = data.onAjaxComplete(() => {
-                removeAjaxCallback();
-                _filterData(data, selectedItems, this.filterFunction);
-            })
-        } else {
-            _filterData(data, selectedItems, this.filterFunction);
-        }
-    }
-}
-
-@Component({
-    templateUrl: './transfer-list.html',
-    encapsulation: ViewEncapsulation.None
-})
 export class TransferListTargetRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems, filterKey) {
         filterKey = filterKey ? filterKey.trim() : '';
@@ -219,10 +217,11 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
 }
 
 @Directive()
-export class TransferTreeRendererBase implements transferRenderer {
+export class TransferTreeRendererBase extends AbstractTransferRendererBase {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
+        super();
     }
 
     @ViewChild(JigsawTreeExt)
@@ -312,19 +311,6 @@ export class TransferTreeRendererBase implements transferRenderer {
         this._$validData = new ArrayCollection(this._getLeafNodes([this._$data]));
     }
 
-    private _filterSelectedItem(nodes, key) {
-        for (var i = 0, length = nodes.length; i < length; i++) {
-            if (!nodes[i].nodes) {
-                if (nodes[i][this.trackItemBy] === key) {
-                    nodes.splice(i, 1)
-                    return;
-                }
-            } else {
-                this._filterSelectedItem(nodes[i].nodes, key);
-            }
-        }
-    }
-
     public _filterTree(tree, keyMap, arr, searchKey) {
         if (!tree.length) {
             return [];
@@ -363,7 +349,6 @@ export class TransferTreeRendererBase implements transferRenderer {
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
         })
-
 
         return this._filterTree(data.nodes, keyMap, result, searchKey);
     }
@@ -454,10 +439,6 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
 
     public update() { }
 
-    public searchFilter(data: any, selectedItems: any, filterKey: any, isTarget: boolean): void {
-
-    }
-
     /**
      * 获取选中的行
      * @param additionalData
@@ -516,52 +497,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    // private _filterTable(data, selectedItems, searchKey) {
-    //     const trackItemByfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-    //     const labelFieldfiledIndex = data.field.findIndex(item => { return item === this.trackItemBy })
-
-    //     if (trackItemByfiledIndex === -1) {
-    //         console.warn("trackItemBy值在filed中未找到！")
-    //         return;
-    //     }
-
-    //     if (labelFieldfiledIndex === -1) {
-    //         console.warn("labelField值在filed中未找到！")
-    //         return;
-    //     }
-
-    //     if (!selectedItems || selectedItems.length === 0) {
-    //         if (searchKey.length > 0) {
-    //             data.filter((item) => { return item[labelFieldfiledIndex].includes(searchKey) })
-    //         } else {
-
-    //             data.filter((item) => { return true })
-    //         }
-    //     } else {
-    //         data.filter((item) => {
-    //             console.log(item)
-    //             let retain = true;
-    //             if (selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
-    //                 retain = false;
-    //             }
-    //             if (retain) {
-    //                 retain = item[labelFieldfiledIndex].includes(searchKey);
-    //             }
-    //             return retain;
-    //         })
-    //     }
-    // }
-
-    // public dataFilter(data, selectedItems) {
-    //     this._filterTable(data, selectedItems, '')
-    // }
-
-    // public searchFilter(data, selectedItems, $event) {
-    // let searchKey = $event.length > 0 ? $event.trim() : "";
-    // this._filterTable(data, selectedItems, searchKey)
-    // }
-
-    public dataFilter(data, selectedItems) {
+    public dataFilter(data: any, selectedItems: any) {
         const _filterData = (data, selectedItems, filterFunction) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
@@ -582,6 +518,33 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
             })
         } else {
             _filterData(data, selectedItems, this.filterFunction);
+        }
+    }
+
+    public searchFilter(data: any, selectedItems: any, filterKey: any, isTarget: boolean): void {
+        if (!isTarget) {
+            const _filterData = (data, selectedItems, filterFunction) => {
+                data.filter(filterFunction, {
+                    selectedItems: [].concat(...selectedItems),
+                    trackItemBy: this.trackItemBy,
+                    field: data.field,
+                    labelField: this.labelField,
+                    keyword: filterKey
+                });
+            }
+
+            if (!data || !this.filterFunction) {
+                return;
+            }
+
+            if (data.busy) {
+                const removeAjaxCallback = data.onAjaxComplete(() => {
+                    removeAjaxCallback();
+                    _filterData(data, selectedItems, this.filterFunction);
+                })
+            } else {
+                _filterData(data, selectedItems, this.filterFunction);
+            }
         }
     }
 }

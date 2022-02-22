@@ -9,7 +9,8 @@ import {
     ComponentFactoryResolver,
     ViewContainerRef,
     Output,
-    EventEmitter
+    EventEmitter,
+    ChangeDetectionStrategy
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
@@ -266,7 +267,7 @@ const animations = [
         '[class.jigsaw-transfer-error]': '!valid'
     },
     animations,
-    //changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy {
@@ -504,6 +505,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this.sourceComponent._$data = value;
                 this.targetComponent._$data = this.selectedItems;
             }
+
+            this._changeDetectorRef.markForCheck();
         })
     }
 
@@ -677,9 +680,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$sourceSearching($event) {
         if (this.sourceRenderer === TransferListSourceRenderer) {
-            /*this.data.pagingInfo.subscribe(() => {
-                this.sourceComponent._$data = new ArrayCollection(this.data)
-            })*/
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
             this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
@@ -728,6 +728,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._$sourceSearchKey = '';
         this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
+        // this._changeDetectorRef.markForCheck();
     }
 
     public _$targetTransfer() {
@@ -754,6 +755,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._$sourceSearchKey = '';
         this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
+    }
+
+    public _$sourcePageChanged(){
+
     }
 
     /**
