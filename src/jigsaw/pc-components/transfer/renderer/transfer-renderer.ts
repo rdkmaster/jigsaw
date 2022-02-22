@@ -1,26 +1,11 @@
-import { Component, ChangeDetectionStrategy, Injector, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, forwardRef, ViewEncapsulation, ViewChild, AfterViewInit, Directive, NgZone, OnInit } from "@angular/core";
-import { CommonModule } from '@angular/common';
-import { ArrayCollection, LocalPageableArray, PageableArray } from '../../../common/core/data/array-collection';
-import { JigsawListModule } from '../../../pc-components/list-and-tile/list';
-import { JigsawCheckBoxModule } from '../../../pc-components/checkbox';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { JigsawPaginationModule } from '../../../pc-components/pagination/pagination';
-import { JigsawSearchInputModule } from '../../../pc-components/input/search-input';
+import { Component, Injector, Input, Output, EventEmitter, ChangeDetectorRef, ViewEncapsulation, ViewChild, Directive } from "@angular/core";
+import { ArrayCollection, PageableArray } from '../../../common/core/data/array-collection';
 import { CommonUtils } from '../../../common/core/utils/common-utils';
-import { CheckBoxStatus } from '../../../pc-components/checkbox/typings';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { InternalUtils } from '../../../common/core/utils/internal-utils';
-import { TranslateHelper } from '../../../common/core/utils/translate-helper';
-import { LoadingService } from '../../../common/service/loading.service';
-import { RequireMarkForCheck } from '../../../common/decorator/mark-for-check';
-import { JigsawTreeExtModule, JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
+import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
 import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
 import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../pc-components/table/table-renderer';
-import { JigsawTableModule, JigsawTable } from '../../../pc-components/table/table';
-import { filter, map } from 'rxjs/operators';
-import { ChartIconCustomPieLegend } from 'jigsaw/pc-components/chart-icon/chart-icon-factory';
-import { TableData, TableDataMatrix, TableMatrixRow } from '../../../common/core/data/table-data';
-import { AbstractJigsawComponent } from '../../../common/common';
+import { JigsawTable } from '../../../pc-components/table/table';
+import { TableData } from '../../../common/core/data/table-data';
 import { SimpleTreeData } from 'jigsaw/common/core/data/tree-data';
 
 export type listOption = {
@@ -114,7 +99,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 
     /**
      * 设置数据的id字段
-     * 
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -610,27 +595,3 @@ export class TransferTableTargetRenderer extends TransferTableRendererBase {
     }
 }
 
-
-@NgModule({
-    declarations: [TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
-    imports: [CommonModule, JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawPaginationModule, JigsawSearchInputModule, TranslateModule, JigsawTreeExtModule, JigsawTableModule],
-    providers: [TranslateService, LoadingService]
-})
-export class JigsawTransferRendererModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'transfer-renderer', {
-            zh: {
-                items: '项',
-                total: '共',
-            },
-            en: {
-                items: 'Items',
-                total: 'Total',
-            }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
-        });
-    }
-}

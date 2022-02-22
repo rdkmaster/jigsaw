@@ -4,12 +4,11 @@ import { JigsawDemoDescriptionModule } from "app/demo-description/demo-descripti
 import { TransferArrayValidDemoComponent } from "./demo.component";
 
 import { JigsawHeaderModule } from "jigsaw/public_api";
-import { JigsawTransferRendererModule } from "jigsaw/pc-components/transfer/renderer/transfer-renderer";
 
 @NgModule({
     declarations: [TransferArrayValidDemoComponent],
     exports: [TransferArrayValidDemoComponent],
-    imports: [JigsawDemoDescriptionModule, JigsawTransferModule, JigsawHeaderModule, JigsawTransferRendererModule]
+    imports: [JigsawDemoDescriptionModule, JigsawTransferModule, JigsawHeaderModule]
 })
 export class TransferArrayValidDemoModule {
 

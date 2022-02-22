@@ -30,11 +30,12 @@ import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { WingsTheme, JigsawCommonModule, AbstractJigsawComponent } from "../../common/common";
 import { SimpleTreeData } from '../../common/core/data/tree-data';
 import { TableData, LocalPageableTableData, PageableTableData } from '../../common/core/data/table-data';
-import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer, JigsawTransferRendererModule } from './renderer/transfer-renderer';
+import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer } from './renderer/transfer-renderer';
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
-import { JigsawArray } from "../../common/core/utils/data-collection-utils";
-import { JigsawLoadingModule } from 'jigsaw/common/components/loading/loading';
+import { JigsawLoadingModule } from '../../common/components/loading/loading';
+import {JigsawTreeExtModule} from "../tree/tree-ext";
+import {JigsawTableModule} from "../table/table";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -793,8 +794,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 }
 
 @NgModule({
-    imports: [JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawTransferRendererModule, JigsawCommonModule, JigsawSearchInputModule, JigsawLoadingModule],
-    declarations: [JigsawTransfer],
+    imports: [
+        JigsawTreeExtModule, JigsawTableModule, JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule, JigsawInputModule, JigsawPaginationModule,
+        CommonModule, TranslateModule, JigsawCommonModule, JigsawSearchInputModule, JigsawLoadingModule],
+    declarations: [JigsawTransfer, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer],
     exports: [JigsawTransfer],
     providers: [TranslateService, LoadingService]
 })
