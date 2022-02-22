@@ -36,7 +36,6 @@ import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
 import { JigsawTreeExtModule } from "../tree/tree-ext";
 import { JigsawTableModule } from "../table/table";
-import { retry } from 'rxjs/operators';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -403,6 +402,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                             this._removeFilterSubscriber = value.pagingInfo.subscribe(() => {
                                 this.sourceComponent._$data = new ArrayCollection(value)
                                 this.targetComponent._$data = this.selectedItems;
+                                this._checkSourceSelectAll();
                             })
                             this.sourceComponent.dataFilter(value, this.selectedItems)
                         })
@@ -411,6 +411,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         value.onRefresh(() => {
                             this.sourceComponent._$data = new ArrayCollection(value)
                             this.targetComponent._$data = this.selectedItems;
+                            this._checkSourceSelectAll();
                         })
                         this.sourceComponent.dataFilter(value, this.selectedItems)
                     }
@@ -657,7 +658,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     private _checkSourceSelectAll() {
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
         this.sourceComponent.update();
-        if (!this.sourceComponent._$currentSelectedItems || this.sourceComponent._$currentSelectedItems.length === 0) {
+        console.log(this.sourceComponent._$currentSelectedItems)
+        if (CommonUtils.isDefined(this.sourceComponent._$currentSelectedItems) && this.sourceComponent._$currentSelectedItems.length === 0) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
