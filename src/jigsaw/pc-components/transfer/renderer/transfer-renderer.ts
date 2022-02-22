@@ -6,7 +6,7 @@ import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-compone
 import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../pc-components/table/table-renderer';
 import { JigsawTable } from '../../../pc-components/table/table';
 import { TableData } from '../../../common/core/data/table-data';
-import { SimpleTreeData } from 'jigsaw/common/core/data/tree-data';
+import { SimpleTreeData } from '../../../common/core/data/tree-data';
 
 export type listOption = {
     disabled?: boolean;
