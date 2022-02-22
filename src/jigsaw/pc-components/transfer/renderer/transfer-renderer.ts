@@ -67,6 +67,12 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     public _$validData: any;
 
     /**
+     * 渲染器当前已选数据
+     * @internal
+     */
+    public _$currentSelectedItems: any;
+
+    /**
      * 渲染器已选数据
      * @internal
      */
@@ -120,15 +126,48 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     }
 
     public selectAll() {
-        if (this._$selectedItems && this._$selectedItems.length === this._$validData.length) {
-            this._$selectedItems = new ArrayCollection([]);
+        if (this._$currentSelectedItems && this._$currentSelectedItems.length === this._$validData.length) {
+            if (this._$selectedItems.length === this._$currentSelectedItems.length) {
+                this._$selectedItems = new ArrayCollection([]);
+            } else {
+                this._$selectedItems = new ArrayCollection(this._$selectedItems.filter(item => {
+                    let retain = true;
+                    if (this._$currentSelectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                        retain = false;
+                    }
+                    return retain;
+                }))
+            }
         } else {
-            this._$selectedItems = new ArrayCollection(this._$validData);
+            if (this._$selectedItems.length === 0) {
+                this._$selectedItems = new ArrayCollection(this._$validData);
+            } else {
+                const diff = this._$validData.filter(item => {
+                    let retain = true;
+                    if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                        retain = false;
+                    }
+                    return retain;
+                })
+                this._$selectedItems = this._$selectedItems.concat(diff);
+            }
         }
+        this.update();
     }
 
     public update() {
+        if (CommonUtils.isUndefined(this._$data)) {
+            return;
+        }
+
         this._$validData = this._$data.filter(item => !item.disabled);
+        this._$currentSelectedItems = this._$data.filter(item => {
+            let isExsit = false;
+            if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
+                isExsit = true;
+            }
+            return isExsit;
+        })
     }
 }
 

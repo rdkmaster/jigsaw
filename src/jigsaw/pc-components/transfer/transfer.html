@@ -10,8 +10,8 @@
                 <jigsaw-checkbox *ngIf="_$sourceCheckbox" [(checked)]="_$sourceSelectAllChecked"
                     (checkedChange)="_$sourceSelectAll()">
                 </jigsaw-checkbox>
-                <span class="jigsaw-transfer-title">{{getSourceItemsCount()}}</span>
-                <span class="jigsaw-transfer-subTitle"></span>
+                <span class="jigsaw-transfer-title">{{getSourceTitle}}</span>
+                <span class="jigsaw-transfer-subTitle">{{getSourceSubTitle}}</span>
             </div>
             <div class="jigsaw-transfer-search-cntr">
                 <jigsaw-search-input width="100%" [disabled]="!searchable" [searchDebounce]="300"
@@ -19,12 +19,12 @@
                 </jigsaw-search-input>
             </div>
         </div>
-        <div class="jigsaw-transfer-body"
-            [ngClass]="{'jigsaw-transfer-body-short':data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity}">
+        <div class="jigsaw-transfer-body" [ngClass]="{'jigsaw-transfer-body-short': isPageable}">
             <ng-template #transferSourceRendererHost></ng-template>
         </div>
-        <div class="jigsaw-transfer-footer" *ngIf="data && data.pagingInfo && data.pagingInfo.pageSize != _$infinity">
-            <j-pagination [size]="'small'" [data]="data" mode="simple" (currentChange)="_$sourcePageChanged()"></j-pagination>
+        <div class="jigsaw-transfer-footer" *ngIf="isPageable">
+            <j-pagination [size]="'small'" [data]="data" mode="simple" (currentChange)="_$sourcePageChanged()">
+            </j-pagination>
         </div>
     </div>
     <div class="jigsaw-transfer-option-cntr">
@@ -43,7 +43,7 @@
                 <jigsaw-checkbox *ngIf="_$targetCheckbox" [(checked)]="_$targetSelectAllChecked"
                     (checkedChange)="_$targetSelectAll()">
                 </jigsaw-checkbox>
-                <span class="jigsaw-transfer-title">{{getTargetItemsCount()}}</span>
+                <span class="jigsaw-transfer-title">{{getTargetTitle}}</span>
                 <span class="jigsaw-transfer-subTitle"></span>
             </div>
             <div class="jigsaw-transfer-search-cntr">

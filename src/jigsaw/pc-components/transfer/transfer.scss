@@ -72,6 +72,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 align-items: center;
                 width: 100%;
                 height: 32px;
+
+                .#{$jigsaw-transfer}-subTitle {
+                    margin-left: auto;
+                }
             }
 
             .#{$jigsaw-transfer}-search-cntr {

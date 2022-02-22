@@ -34,8 +34,9 @@ import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, Tra
 import { JigsawSearchInputModule } from '../input/search-input';
 import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
-import {JigsawTreeExtModule} from "../tree/tree-ext";
-import {JigsawTableModule} from "../table/table";
+import { JigsawTreeExtModule } from "../tree/tree-ext";
+import { JigsawTableModule } from "../table/table";
+import { retry } from 'rxjs/operators';
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -463,7 +464,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         }
                         this._removePageableCallbackListener = value.onAjaxComplete(() => {
                             this._removeFilterSubscriber = value.pagingInfo.subscribe(() => {
-                                this.sourceComponent._$data = new TableData();
+                                if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
+                                    this.sourceComponent._$data = new TableData();
+                                }
                                 this.sourceComponent._$data.fromObject({ data: value.data, field: value.field, header: value.header })
                                 this.targetComponent._$data = this.selectedItems;
                             })
@@ -472,9 +475,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     } else {
                         this._data = value;
                         value.onRefresh(() => {
-                            this._$viewData = new TableData();
-                            this._$viewData.fromObject({ data: value.data, field: value.field, header: value.header })
-                            this.sourceComponent._$data = this._$viewData;
+                            if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
+                                this.sourceComponent._$data = new TableData();
+                            }
+                            this.sourceComponent._$data.fromObject({ data: value.data, field: value.field, header: value.header })
                             this.targetComponent._$data = this.selectedItems;
                         })
                         this.sourceComponent.dataFilter(value, this.selectedItems)
@@ -487,9 +491,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         removeUpdateSubscriber.unsubscribe();
                         this._data = data;
                         this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
-                            this._$viewData = new TableData();
-                            this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                            this.sourceComponent._$data = this._$viewData;
+                            if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
+                                this.sourceComponent._$data = new TableData();
+                            }
+                            this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
                             this.targetComponent._$data = this.selectedItems;
                         })
                         this.sourceComponent.dataFilter(this.data, this.selectedItems)
@@ -523,7 +528,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         return null;
     }
-
 
     /**
      * @internal
@@ -610,21 +614,40 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$infinity = Infinity;
 
+    public get isPageable(): boolean {
+        return this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity;
+    }
+
     /**
      * @NoMarkForCheckRequired
      */
     public _$sourceSearchKey: string;
     public _$targetSearchKey: string;
 
-    public getSourceItemsCount(): string {
+    public get getSourceTitle(): string {
         if (!this.sourceComponent || !this.sourceComponent._$validData) {
             return
         }
-        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
+
+        if (this.isPageable) {
+            const selectedItemsCount = this.sourceComponent._$currentSelectedItems ? this.sourceComponent._$currentSelectedItems.length : 0;
+            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
+        } else {
+            const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
+            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
+        }
     }
 
-    public getTargetItemsCount(): string {
+    public get getSourceSubTitle(): string {
+        if (!this.sourceComponent || !this.sourceComponent._$validData || !this.isPageable) {
+            return
+        }
+
+        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} 项`
+    }
+
+    public get getTargetTitle(): string {
         if (!this.targetComponent || !this.targetComponent._$validData) {
             return
         }
@@ -635,11 +658,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     private _checkSourceSelectAll() {
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
         this.sourceComponent.update();
-        if (!this.sourceComponent._$selectedItems || this.sourceComponent._$selectedItems.length === 0) {
+        if (!this.sourceComponent._$currentSelectedItems || this.sourceComponent._$currentSelectedItems.length === 0) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this.sourceComponent._$selectedItems.length === this.sourceComponent._$validData.length) {
+        if (this.sourceComponent._$currentSelectedItems.length === this.sourceComponent._$validData.length) {
             this._$sourceSelectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
@@ -687,9 +710,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.data.pagingInfo.subscribe(() => {
-                this._$viewData = new TableData();
-                this._$viewData.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                this.sourceComponent._$data = this._$viewData;
+                if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
+                    this.sourceComponent._$data = new TableData();
+                }
+                this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
                 this.sourceComponent.additionalData.reset();
                 this.sourceComponent.additionalData.refresh();
             })
@@ -729,7 +753,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._$sourceSearchKey = '';
         this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
-        // this._changeDetectorRef.markForCheck();
     }
 
     public _$targetTransfer() {
@@ -758,9 +781,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.selectedItemsChange.emit(this.selectedItems)
     }
 
-    public _$sourcePageChanged(){
-
-    }
+    public _$sourcePageChanged() { }
 
     /**
      * 更新transfer的样式信息
