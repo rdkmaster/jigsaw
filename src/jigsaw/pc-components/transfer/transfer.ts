@@ -235,7 +235,7 @@ const transferTableServerFilterFunction = function (item) {
 
     if (this.keyword !== null && this.keyword !== undefined) {
         const value: string = !item || item[labelFieldfiledIndex] === undefined || item[labelFieldfiledIndex] === null ? '' : item[labelFieldfiledIndex].toString();
-        return value.toLowerCase().includes(this.keyword.toLowerCase());
+        keyResult = value.toLowerCase().includes(this.keyword.toLowerCase());
     }
     return listResult && keyResult;
 };
