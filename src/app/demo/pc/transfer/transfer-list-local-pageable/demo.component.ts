@@ -17,8 +17,12 @@ export class TransferListLocalPageableDemoComponent {
         this.data = new LocalPageableArray();
         this.data.http = _http;
         this.data.pagingInfo.pageSize = 15;
+        this.data.pagingInfo.currentPage = undefined;
+        this.data.pagingInfo.itemHeight = undefined;
+        this.data.pagingInfo.autoPageSizing = false;
         this.data.fromAjax('mock-data/countries');
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
+
 
         this.selectedData = new ArrayCollection([
             {
@@ -31,6 +35,10 @@ export class TransferListLocalPageableDemoComponent {
                 zhName: '伯里兹',
                 shortName: 'blz'
             }]);
+    }
+
+    ngOnInit(){
+
     }
 
     data: LocalPageableArray<any>;

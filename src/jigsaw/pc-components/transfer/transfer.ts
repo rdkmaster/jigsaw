@@ -12,30 +12,37 @@ import {
     EventEmitter,
     ChangeDetectionStrategy
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { animate, keyframes, style, transition, trigger } from "@angular/animations"
-import { Subscription } from "rxjs/internal/Subscription";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { JigsawListModule } from "../list-and-tile/list";
-import { JigsawCheckBoxModule } from "../checkbox/index";
-import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
-import { JigsawInputModule } from "../input/input";
-import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
-import { JigsawPaginationModule } from "../pagination/pagination";
-import { InternalUtils } from "../../common/core/utils/internal-utils";
-import { LoadingService } from "../../common/service/loading.service";
-import { TranslateHelper } from "../../common/core/utils/translate-helper";
-import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { WingsTheme, JigsawCommonModule, AbstractJigsawComponent } from "../../common/common";
-import { SimpleTreeData } from '../../common/core/data/tree-data';
-import { TableData, LocalPageableTableData, PageableTableData } from '../../common/core/data/table-data';
-import { listOption, TransferListSourceRenderer, TransferListTargetRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, TransferTableTargetRenderer } from './renderer/transfer-renderer';
-import { JigsawSearchInputModule } from '../input/search-input';
-import { CheckBoxStatus } from '../checkbox/typings';
-import { JigsawLoadingModule } from '../../common/components/loading/loading';
-import { JigsawTreeExtModule } from "../tree/tree-ext";
-import { JigsawTableModule } from "../table/table";
+import {CommonModule} from "@angular/common";
+import {animate, keyframes, style, transition, trigger} from "@angular/animations"
+import {Subscription} from "rxjs/internal/Subscription";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {JigsawListModule} from "../list-and-tile/list";
+import {JigsawCheckBoxModule} from "../checkbox/index";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
+import {JigsawInputModule} from "../input/input";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawPaginationModule} from "../pagination/pagination";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {LoadingService} from "../../common/service/loading.service";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme, JigsawCommonModule, AbstractJigsawComponent} from "../../common/common";
+import {SimpleTreeData} from '../../common/core/data/tree-data';
+import {TableData, LocalPageableTableData, PageableTableData} from '../../common/core/data/table-data';
+import {
+    listOption,
+    TransferListSourceRenderer,
+    TransferListTargetRenderer,
+    TransferTreeSourceRenderer,
+    TransferTableSourceRenderer,
+    TransferTableTargetRenderer
+} from './renderer/transfer-renderer';
+import {JigsawSearchInputModule} from '../input/search-input';
+import {CheckBoxStatus} from '../checkbox/typings';
+import {JigsawLoadingModule} from '../../common/components/loading/loading';
+import {JigsawTreeExtModule} from "../tree/tree-ext";
+import {JigsawTableModule} from "../table/table";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -131,8 +138,12 @@ const transferServerFilterFunction = function (item) {
 };
 
 const transferTableFilterFunction = function (item) {
-    const trackItemByfiledIndex = this.field.findIndex(item => { return item === this.trackItemBy })
-    const labelFieldfiledIndex = this.field.findIndex(item => { return item === this.labelField })
+    const trackItemByfiledIndex = this.field.findIndex(item => {
+        return item === this.trackItemBy
+    })
+    const labelFieldfiledIndex = this.field.findIndex(item => {
+        return item === this.labelField
+    })
 
     if (trackItemByfiledIndex === -1) {
         console.error("trackItemBy值在filed中未找到！")
@@ -211,8 +222,12 @@ const transferTableServerFilterFunction = function (item) {
         return true;
     }
 
-    const trackItemByfiledIndex = this.data.field.findIndex(item => { return item === this.trackItemBy })
-    const labelFieldfiledIndex = this.data.field.findIndex(item => { return item === this.labelField })
+    const trackItemByfiledIndex = this.field.findIndex(item => {
+        return item === this.trackItemBy
+    })
+    const labelFieldfiledIndex = this.field.findIndex(item => {
+        return item === this.labelField
+    })
 
     if (trackItemByfiledIndex === -1) {
         console.error("trackItemBy值在filed中未找到！")
@@ -244,14 +259,14 @@ const animations = [
     trigger('loading', [
         transition('void => *', [
             animate(300, keyframes([
-                style({ opacity: 0 }),
-                style({ opacity: 0.6 })
+                style({opacity: 0}),
+                style({opacity: 0.6})
             ]))
         ]),
         transition('* => void', [
             animate(300, keyframes([
-                style({ opacity: 0.6 }),
-                style({ opacity: 0 })
+                style({opacity: 0.6}),
+                style({opacity: 0})
             ]))
         ])
     ])];
@@ -319,10 +334,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$targetCheckbox: boolean = true;
 
-    @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
+    @ViewChild('transferSourceRendererHost', {read: ViewContainerRef})
     protected sourceRendererHost: ViewContainerRef;
 
-    @ViewChild('transferTargetRendererHost', { read: ViewContainerRef })
+    @ViewChild('transferTargetRendererHost', {read: ViewContainerRef})
     protected targetRendererHost: ViewContainerRef;
 
     public sourceComponent;
@@ -357,91 +372,23 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     public set data(value) {
         this.runMicrotask(() => {
-            let sourceComponentFactory;
-            let targetComponentFactory;
-
-            sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
-            targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
-
-            const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
-            const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
-            this.sourceComponent = sourceComponentRef.instance;
-            this.targetComponent = targetComponentRef.instance;
-            this.sourceComponent.transferHost = this;
-            this.targetComponent.transferHost = this;
-
-            this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
-            this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
-
-            this.sourceComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.sourceComponent.subLabelField;
-            this.targetComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.targetComponent.subLabelField;
-
-            this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
-            this.targetComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.targetComponent.trackItemBy;
-
-            this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
-            this._$targetCheckbox = this.targetComponent._$setting.selectAll;
-
-            this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
-                this._checkSourceSelectAll();
-            });
-            this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
-                this._checkTargetSelectAll();
-            });
+            this._render();
 
             if (this.sourceRenderer === TransferListSourceRenderer) {
                 if (value instanceof LocalPageableArray || value instanceof PageableArray) {
                     this.sourceComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', false);
                     this.targetComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', true);
-                    if (value instanceof LocalPageableArray) {
-                        this._data = value;
-                        if (this._removePageableCallbackListener) {
-                            this._removePageableCallbackListener();
-                        }
-                        this._removePageableCallbackListener = value.onAjaxComplete(() => {
-                            this._removeFilterSubscriber = value.pagingInfo.subscribe(() => {
-                                this.sourceComponent._$data = new ArrayCollection(value)
-                                this.targetComponent._$data = this.selectedItems;
-                                this._checkSourceSelectAll();
-                            })
-                            this.sourceComponent.dataFilter(value, this.selectedItems)
-                        })
-                    } else {
-                        this._data = value;
-                        value.onRefresh(() => {
-                            this.sourceComponent._$data = new ArrayCollection(value)
-                            this.targetComponent._$data = this.selectedItems;
-                            this._checkSourceSelectAll();
-                        })
-                        this.sourceComponent.dataFilter(value, this.selectedItems)
+                    this._data = value;
+                    if (this._removePageableChangeListener) {
+                        this._removePageableChangeListener();
+                        this._removePageableChangeListener = null;
                     }
-                } else if (value instanceof ArrayCollection) {
-                    this.sourceComponent.filterFunction = this._getFilterFunction('list', 'local', false);
-                    const data = new LocalPageableArray<listOption>();
-                    data.pagingInfo.pageSize = Infinity;
-
-                    const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                        removeUpdateSubscriber.unsubscribe();
-                        this._data = data;
-                        if (this._removeFilterSubscriber) {
-                            this._removeFilterSubscriber.unsubscribe();
-                            this._removeFilterSubscriber = null;
-                        }
-                        this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
-                            this.sourceComponent._$data = new ArrayCollection(this.data)
-                            this.targetComponent._$data = this.selectedItems;
-                        })
-                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
-                    });
-                    data.fromArray(value);
-                    if (this._removeInputDataChangeListener) {
-                        this._removeInputDataChangeListener();
-                        this._removeInputDataChangeListener = null;
-                    }
-                    this._removeInputDataChangeListener = value.onRefresh(() => {
-                        data.fromArray(value)
-                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
+                    this._removePageableChangeListener = value.onChange(() => {
+                        this._refreshForPageableArray(value);
                     })
+                    this._refreshForPageableArray(value);
+                } else if (value instanceof ArrayCollection) {
+                    this._refreshForArray(value);
                 } else {
                     console.error("输入的数据结构与渲染器不匹配")
                 }
@@ -457,53 +404,17 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             } else if (this.sourceRenderer === TransferTableSourceRenderer) {
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
                     this.sourceComponent.filterFunction = this._getFilterFunction('table', value instanceof PageableTableData ? 'server' : 'local', false);
-                    if (value instanceof LocalPageableTableData) {
-                        this._data = value;
-                        if (this._removePageableCallbackListener) {
-                            this._removePageableCallbackListener();
-                        }
-                        this._removePageableCallbackListener = value.onAjaxComplete(() => {
-                            this._removeFilterSubscriber = value.pagingInfo.subscribe(() => {
-                                if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
-                                    this.sourceComponent._$data = new TableData();
-                                }
-                                this.sourceComponent._$data.fromObject({ data: value.data, field: value.field, header: value.header })
-                                this.targetComponent._$data = this.selectedItems;
-                            })
-                            this.sourceComponent.dataFilter(value, this.selectedItems)
-                        })
-                    } else {
-                        this._data = value;
-                        value.onRefresh(() => {
-                            if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
-                                this.sourceComponent._$data = new TableData();
-                            }
-                            this.sourceComponent._$data.fromObject({ data: value.data, field: value.field, header: value.header })
-                            this.targetComponent._$data = this.selectedItems;
-                        })
-                        this.sourceComponent.dataFilter(value, this.selectedItems)
+                    this._data = value;
+                    if (this._removePageableChangeListener) {
+                        this._removePageableChangeListener();
+                        this._removePageableChangeListener = null;
                     }
-                } else if (value instanceof TableData) {
-                    this.sourceComponent.filterFunction = this._getFilterFunction('table', 'local', false);
-                    const data = new LocalPageableTableData();
-                    data.pagingInfo.pageSize = Infinity;
-                    const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                        removeUpdateSubscriber.unsubscribe();
-                        this._data = data;
-                        this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
-                            if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
-                                this.sourceComponent._$data = new TableData();
-                            }
-                            this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                            this.targetComponent._$data = this.selectedItems;
-                        })
-                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
-                    });
-                    data.fromObject({ data: value.data, field: value.field, header: value.header });
-                    value.onRefresh(() => {
-                        data.fromObject({ data: value.data, field: value.field, header: value.header });
-                        this.sourceComponent.dataFilter(this.data, this.selectedItems)
+                    this._removePageableChangeListener = value.onChange(() => {
+                        this._refreshForPageableTableData(value);
                     })
+                    this._refreshForPageableTableData(value);
+                } else if (value instanceof TableData) {
+                    this._refreshForTableData(value);
                 } else {
                     console.error("输入的数据结构与渲染器不匹配")
                 }
@@ -513,6 +424,124 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             }
 
             this._changeDetectorRef.markForCheck();
+        })
+    }
+
+    private _render() {
+        let sourceComponentFactory;
+        let targetComponentFactory;
+
+        sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
+        targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
+
+        const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
+        const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
+        this.sourceComponent = sourceComponentRef.instance;
+        this.targetComponent = targetComponentRef.instance;
+        this.sourceComponent.transferHost = this;
+        this.targetComponent.transferHost = this;
+
+        this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
+        this.targetComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.targetComponent.labelField;
+
+        this.sourceComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.sourceComponent.subLabelField;
+        this.targetComponent.subLabelField = CommonUtils.isDefined(this.subLabelField) ? this.subLabelField : this.targetComponent.subLabelField;
+
+        this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
+        this.targetComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.targetComponent.trackItemBy;
+
+        this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
+        this._$targetCheckbox = this.targetComponent._$setting.selectAll;
+
+        this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
+            this._checkSourceSelectAll();
+        });
+        this.targetSelectedItemsChangeSubscribe = this.targetComponent.selectedItemsChange.subscribe(() => {
+            this._checkTargetSelectAll();
+        });
+    }
+
+    private _refreshForArray(value: ArrayCollection<any>) {
+        this.sourceComponent.filterFunction = this._getFilterFunction('list', 'local', false);
+        const data = new LocalPageableArray<listOption>();
+        data.pagingInfo.pageSize = Infinity;
+
+        const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+            removeUpdateSubscriber.unsubscribe();
+            this._data = data;
+            if (this._removeFilterSubscriber) {
+                this._removeFilterSubscriber.unsubscribe();
+                this._removeFilterSubscriber = null;
+            }
+            this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
+                this.sourceComponent._$data = new ArrayCollection(this.data)
+                this.targetComponent._$data = this.selectedItems;
+            })
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        });
+        data.fromArray(value);
+        if (this._removeInputDataChangeListener) {
+            this._removeInputDataChangeListener();
+            this._removeInputDataChangeListener = null;
+        }
+        this._removeInputDataChangeListener = value.onRefresh(() => {
+            data.fromArray(value)
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        })
+    }
+
+    private _refreshForPageableArray(data: LocalPageableArray<any> | PageableArray) {
+        if (this._removePageableRefreshListener) {
+            this._removePageableRefreshListener();
+            this._removePageableRefreshListener = null;
+        }
+        this._removePageableRefreshListener = data.onRefresh(() => {
+            this.sourceComponent._$data = new ArrayCollection(data)
+            this.targetComponent._$data = this.selectedItems;
+            this._checkSourceSelectAll();
+        })
+        this.sourceComponent.dataFilter(data, this.selectedItems)
+    }
+
+    private _refreshForPageableTableData(data: LocalPageableTableData | PageableTableData) {
+        if (this._removePageableRefreshListener) {
+            this._removePageableRefreshListener();
+            this._removePageableRefreshListener = null;
+        }
+        this._removePageableRefreshListener = data.onRefresh(() => {
+            if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
+                this.sourceComponent._$data = new TableData();
+            }
+            this.sourceComponent._$data.fromObject({data: data.data, field: data.field, header: data.header})
+            this.targetComponent._$data = this.selectedItems;
+        })
+        this.sourceComponent.dataFilter(data, this.selectedItems);
+    }
+
+    private _refreshForTableData(value: TableData) {
+        this.sourceComponent.filterFunction = this._getFilterFunction('table', 'local', false);
+        const data = new LocalPageableTableData();
+        data.pagingInfo.pageSize = Infinity;
+        const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+            removeUpdateSubscriber.unsubscribe();
+            this._data = data;
+            if (this._removeFilterSubscriber) {
+                this._removeFilterSubscriber.unsubscribe();
+                this._removeFilterSubscriber = null;
+            }
+            this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
+                if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
+                    this.sourceComponent._$data = new TableData();
+                }
+                this.sourceComponent._$data.fromObject({data: this.data.data, field: this.data.field, header: this.data.header})
+                this.targetComponent._$data = this.selectedItems;
+            })
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        });
+        data.fromObject({data: value.data, field: value.field, header: value.header});
+        value.onRefresh(() => {
+            data.fromObject({data: value.data, field: value.field, header: value.header});
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
         })
     }
 
@@ -710,14 +739,14 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
-            this.data.pagingInfo.subscribe(() => {
+            /*this.data.pagingInfo.subscribe(() => {
                 if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
                     this.sourceComponent._$data = new TableData();
                 }
                 this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
                 this.sourceComponent.additionalData.reset();
                 this.sourceComponent.additionalData.refresh();
-            })
+            })*/
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
@@ -782,7 +811,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.selectedItemsChange.emit(this.selectedItems)
     }
 
-    public _$sourcePageChanged() { }
+    public _$sourcePageChanged() {
+    }
 
     /**
      * 更新transfer的样式信息
@@ -790,16 +820,21 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$transferClass: {};
 
-    private _removePageableCallbackListener: CallbackRemoval;
+    private _removePageableChangeListener: CallbackRemoval;
+    private _removePageableRefreshListener: CallbackRemoval;
     private _removeSelectedItemsChangeListener: CallbackRemoval;
     private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this._removePageableCallbackListener) {
-            this._removePageableCallbackListener();
-            this._removePageableCallbackListener = null;
+        if (this._removePageableChangeListener) {
+            this._removePageableChangeListener();
+            this._removePageableChangeListener = null;
+        }
+        if (this._removePageableRefreshListener) {
+            this._removePageableRefreshListener();
+            this._removePageableRefreshListener = null;
         }
         if (this._removeFilterSubscriber) {
             this._removeFilterSubscriber.unsubscribe();

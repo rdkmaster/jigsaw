@@ -1,6 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, listOption, TransferTableTargetRenderer, LocalPageableTableData } from "jigsaw/public_api";
+import {
+    TransferTableSourceRenderer,
+    TransferListTargetRenderer,
+    ArrayCollection,
+    listOption,
+    PageableTableData
+} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -9,15 +15,15 @@ import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, Arr
 export class TransferTablePageableDemoComponent {
 
     constructor(http: HttpClient) {
-        this.data = new LocalPageableTableData();
+        this.data = new PageableTableData(http,'mock-data/hr-list-full');
         this.data.http = http;
         this.data.pagingInfo.pageSize = 10;
-        this.data.fromAjax('mock-data/hr-list-full');
+        this.data.fromAjax();
 
         this.selectedData = new ArrayCollection([]);
     }
 
-    data: LocalPageableTableData;
+    data: PageableTableData;
     public sourceRenderer = TransferTableSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
