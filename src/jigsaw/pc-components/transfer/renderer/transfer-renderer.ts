@@ -169,6 +169,10 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
             return isExsit;
         })
     }
+
+    public reset() {
+        this._$selectedItems.length = 0;
+    }
 }
 
 @Component({
@@ -335,6 +339,10 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
         this._$validData = new ArrayCollection(this._getLeafNodes([this._$data]));
     }
 
+    public reset() {
+
+    }
+
     public _filterTree(tree, keyMap, arr, searchKey) {
         if (!tree.length) {
             return [];
@@ -480,6 +488,11 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
             }
             return isExsit;
         })
+    }
+
+    public reset() {
+        this.additionalData.reset();
+        this.additionalData.refresh();
     }
 
     /**
