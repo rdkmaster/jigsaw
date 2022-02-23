@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData, TransferListTargetRenderer, TransferTreeSourceRenderer, ArrayCollection, listOption } from "jigsaw/public_api";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     templateUrl: './demo.component.html'
@@ -9,9 +10,13 @@ export class TransferTreeDemoComponent {
     public sourceRenderer = TransferTreeSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
-    constructor() {
+    constructor(http: HttpClient) {
         this.data = new SimpleTreeData();
-        this.data.fromObject([
+
+        this.data.http = http;
+        this.data.fromAjax("mock-data/tree-data");
+
+        /*this.data.fromObject([
             {
                 label: "父节点1 - 展开",
                 open: true,
@@ -74,7 +79,7 @@ export class TransferTreeDemoComponent {
                 label: "父节点3 - 折叠",
                 nodes: []
             }
-        ])
+        ])*/
 
         this.selectedData = new ArrayCollection([
             { label: "叶子节点112", id: 2 },
