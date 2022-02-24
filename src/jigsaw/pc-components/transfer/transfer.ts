@@ -12,24 +12,24 @@ import {
     EventEmitter,
     ChangeDetectionStrategy
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {animate, keyframes, style, transition, trigger} from "@angular/animations"
-import {Subscription} from "rxjs/internal/Subscription";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {JigsawListModule} from "../list-and-tile/list";
-import {JigsawCheckBoxModule} from "../checkbox/index";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {JigsawInputModule} from "../input/input";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawPaginationModule} from "../pagination/pagination";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {LoadingService} from "../../common/service/loading.service";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {WingsTheme, JigsawCommonModule, AbstractJigsawComponent} from "../../common/common";
-import {SimpleTreeData} from '../../common/core/data/tree-data';
-import {TableData, LocalPageableTableData, PageableTableData} from '../../common/core/data/table-data';
+import { CommonModule } from "@angular/common";
+import { animate, keyframes, style, transition, trigger } from "@angular/animations"
+import { Subscription } from "rxjs/internal/Subscription";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { JigsawListModule } from "../list-and-tile/list";
+import { JigsawCheckBoxModule } from "../checkbox/index";
+import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
+import { JigsawInputModule } from "../input/input";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { JigsawPaginationModule } from "../pagination/pagination";
+import { InternalUtils } from "../../common/core/utils/internal-utils";
+import { LoadingService } from "../../common/service/loading.service";
+import { TranslateHelper } from "../../common/core/utils/translate-helper";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { WingsTheme, JigsawCommonModule, AbstractJigsawComponent } from "../../common/common";
+import { SimpleTreeData } from '../../common/core/data/tree-data';
+import { TableData, LocalPageableTableData, PageableTableData } from '../../common/core/data/table-data';
 import {
     listOption,
     TransferListSourceRenderer,
@@ -38,11 +38,11 @@ import {
     TransferTableSourceRenderer,
     TransferTableTargetRenderer
 } from './renderer/transfer-renderer';
-import {JigsawSearchInputModule} from '../input/search-input';
-import {CheckBoxStatus} from '../checkbox/typings';
-import {JigsawLoadingModule} from '../../common/components/loading/loading';
-import {JigsawTreeExtModule} from "../tree/tree-ext";
-import {JigsawTableModule} from "../table/table";
+import { JigsawSearchInputModule } from '../input/search-input';
+import { CheckBoxStatus } from '../checkbox/typings';
+import { JigsawLoadingModule } from '../../common/components/loading/loading';
+import { JigsawTreeExtModule } from "../tree/tree-ext";
+import { JigsawTableModule } from "../table/table";
 
 // 此处不能使用箭头函数
 const transferFilterFunction = function (item) {
@@ -259,14 +259,14 @@ const animations = [
     trigger('loading', [
         transition('void => *', [
             animate(300, keyframes([
-                style({opacity: 0}),
-                style({opacity: 0.6})
+                style({ opacity: 0 }),
+                style({ opacity: 0.6 })
             ]))
         ]),
         transition('* => void', [
             animate(300, keyframes([
-                style({opacity: 0.6}),
-                style({opacity: 0})
+                style({ opacity: 0.6 }),
+                style({ opacity: 0 })
             ]))
         ])
     ])];
@@ -334,10 +334,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$targetCheckbox: boolean = true;
 
-    @ViewChild('transferSourceRendererHost', {read: ViewContainerRef})
+    @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
     protected sourceRendererHost: ViewContainerRef;
 
-    @ViewChild('transferTargetRendererHost', {read: ViewContainerRef})
+    @ViewChild('transferTargetRendererHost', { read: ViewContainerRef })
     protected targetRendererHost: ViewContainerRef;
 
     public sourceComponent;
@@ -439,8 +439,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
         targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
 
+        this.sourceRendererHost.clear();
+        this.targetRendererHost.clear();
+
         const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
         const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
+
         this.sourceComponent = sourceComponentRef.instance;
         this.targetComponent = targetComponentRef.instance;
         this.sourceComponent.transferHost = this;
@@ -492,6 +496,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._removeInputDataChangeListener = value.onRefresh(() => {
             data.fromArray(value)
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.reset();
+            this._checkSourceSelectAll();
         })
     }
 
@@ -517,7 +523,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
                 this.sourceComponent._$data = new TableData();
             }
-            this.sourceComponent._$data.fromObject({data: data.data, field: data.field, header: data.header})
+            this.sourceComponent._$data.fromObject({ data: data.data, field: data.field, header: data.header })
             this.targetComponent._$data = this.selectedItems;
         })
         this.sourceComponent.dataFilter(data, this.selectedItems);
@@ -538,14 +544,14 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
                     this.sourceComponent._$data = new TableData();
                 }
-                this.sourceComponent._$data.fromObject({data: this.data.data, field: this.data.field, header: this.data.header})
+                this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
                 this.targetComponent._$data = this.selectedItems;
             })
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         });
-        data.fromObject({data: value.data, field: value.field, header: value.header});
+        data.fromObject({ data: value.data, field: value.field, header: value.header });
         value.onRefresh(() => {
-            data.fromObject({data: value.data, field: value.field, header: value.header});
+            data.fromObject({ data: value.data, field: value.field, header: value.header });
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         })
     }
@@ -698,7 +704,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     private _checkSourceSelectAll() {
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
         this.sourceComponent.update();
-        console.log(this.sourceComponent._$currentSelectedItems)
         if (CommonUtils.isDefined(this.sourceComponent._$currentSelectedItems) && this.sourceComponent._$currentSelectedItems.length === 0) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;

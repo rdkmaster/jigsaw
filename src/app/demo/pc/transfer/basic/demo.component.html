@@ -3,9 +3,16 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-
 <jigsaw-header [level]="1">Transfer</jigsaw-header>
 
 <jigsaw-header [level]="2">普通数据</jigsaw-header>
-<j-transfer width="100%" height="500" [data]="normalData" [selectedItems]="normalSelectedData"
-    [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer"></j-transfer>
+<ul>
+    <li class="demo-item">
+        <jigsaw-button (click)="addItem()">添加一个元素</jigsaw-button>
+        <jigsaw-button (click)="removeItem()">删除最后一个元素</jigsaw-button>
+    </li>
+    <li class="demo-item">
+        <j-transfer width="100%" height="500" [data]="normalData" [selectedItems]="normalSelectedData"
+            [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer"></j-transfer>
+    </li>
+</ul>
