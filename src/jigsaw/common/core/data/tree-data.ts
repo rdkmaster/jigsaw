@@ -140,6 +140,10 @@ export class SimpleTreeData extends GeneralCollection<any> {
         return this;
     }
 
+    protected invokeChangeCallback(): void {
+        this.componentDataHelper.invokeChangeCallback();
+    }
+
     protected ajaxSuccessHandler(data: string | XMLDocument | any): void {
         if (data instanceof XMLDocument || Object.prototype.toString.call(data) == "[object String]") {
             this.fromXML(data)
@@ -147,6 +151,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
             this.fromObject(data);
         }
         this._busy = false;
+        this.invokeChangeCallback();
         this.componentDataHelper.invokeAjaxSuccessCallback(data);
     }
 

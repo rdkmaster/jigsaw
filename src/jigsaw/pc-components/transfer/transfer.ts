@@ -379,11 +379,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     this.sourceComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', false);
                     this.targetComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', true);
                     this._data = value;
-                    if (this._removePageableChangeListener) {
-                        this._removePageableChangeListener();
-                        this._removePageableChangeListener = null;
+                    if (this._removeOnChangeListener) {
+                        this._removeOnChangeListener();
+                        this._removeOnChangeListener = null;
                     }
-                    this._removePageableChangeListener = value.onChange(() => {
+                    this._removeOnChangeListener = value.onChange(() => {
                         this._refreshForPageableArray(value);
                     })
                     this._refreshForPageableArray(value);
@@ -395,9 +395,14 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
                 if (value instanceof SimpleTreeData) {
                     this._data = value;
-                    this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
-                    this.sourceComponent.update();
-                    this.targetComponent._$data = this.selectedItems;
+                    if (this._removeOnChangeListener) {
+                        this._removeOnChangeListener();
+                        this._removeOnChangeListener = null;
+                    }
+                    this._removeOnChangeListener = value.onChange(() => {
+                        this._refreshForTreeData(value);
+                    })
+                    this._refreshForTreeData(value);
                 } else {
                     console.error("输入的数据结构与渲染器不匹配")
                 }
@@ -405,11 +410,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
                     this.sourceComponent.filterFunction = this._getFilterFunction('table', value instanceof PageableTableData ? 'server' : 'local', false);
                     this._data = value;
-                    if (this._removePageableChangeListener) {
-                        this._removePageableChangeListener();
-                        this._removePageableChangeListener = null;
+                    if (this._removeOnChangeListener) {
+                        this._removeOnChangeListener();
+                        this._removeOnChangeListener = null;
                     }
-                    this._removePageableChangeListener = value.onChange(() => {
+                    this._removeOnChangeListener = value.onChange(() => {
                         this._refreshForPageableTableData(value);
                     })
                     this._refreshForPageableTableData(value);
@@ -497,11 +502,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _refreshForPageableArray(data: LocalPageableArray<any> | PageableArray) {
-        if (this._removePageableRefreshListener) {
-            this._removePageableRefreshListener();
-            this._removePageableRefreshListener = null;
+        if (this._removeOnRefreshListener) {
+            this._removeOnRefreshListener();
+            this._removeOnRefreshListener = null;
         }
-        this._removePageableRefreshListener = data.onRefresh(() => {
+        this._removeOnRefreshListener = data.onRefresh(() => {
             this.sourceComponent._$data = new ArrayCollection(data)
             this.targetComponent._$data = this.selectedItems;
             this._checkSourceSelectAll();
@@ -510,11 +515,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _refreshForPageableTableData(data: LocalPageableTableData | PageableTableData) {
-        if (this._removePageableRefreshListener) {
-            this._removePageableRefreshListener();
-            this._removePageableRefreshListener = null;
+        if (this._removeOnRefreshListener) {
+            this._removeOnRefreshListener();
+            this._removeOnRefreshListener = null;
         }
-        this._removePageableRefreshListener = data.onRefresh(() => {
+        this._removeOnRefreshListener = data.onRefresh(() => {
             if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
                 this.sourceComponent._$data = new TableData();
             }
@@ -549,6 +554,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             data.fromObject({ data: value.data, field: value.field, header: value.header });
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         })
+    }
+
+    private _refreshForTreeData(value: SimpleTreeData) {
+        this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(value, this.selectedItems));
+        this.sourceComponent.update();
+        this.targetComponent._$data = this.selectedItems;
     }
 
     private _getFilterFunction(rendererType: 'list' | 'table' | 'tree', pagingType: 'local' | 'server', isTarget: boolean): (item: any) => boolean {
@@ -827,21 +838,21 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$transferClass: {};
 
-    private _removePageableChangeListener: CallbackRemoval;
-    private _removePageableRefreshListener: CallbackRemoval;
+    private _removeOnChangeListener: CallbackRemoval;
+    private _removeOnRefreshListener: CallbackRemoval;
     private _removeSelectedItemsChangeListener: CallbackRemoval;
     private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this._removePageableChangeListener) {
-            this._removePageableChangeListener();
-            this._removePageableChangeListener = null;
+        if (this._removeOnChangeListener) {
+            this._removeOnChangeListener();
+            this._removeOnChangeListener = null;
         }
-        if (this._removePageableRefreshListener) {
-            this._removePageableRefreshListener();
-            this._removePageableRefreshListener = null;
+        if (this._removeOnRefreshListener) {
+            this._removeOnRefreshListener();
+            this._removeOnRefreshListener = null;
         }
         if (this._removeFilterSubscriber) {
             this._removeFilterSubscriber.unsubscribe();
