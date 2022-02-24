@@ -28,6 +28,9 @@ export class TransferArrayDemoComponent {
         this.normalData.refresh();
     }
 
+    resetInputData() {
+        this.normalData = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
