@@ -150,7 +150,7 @@ export class TransferListDemoComponent {
         this.normalData.fromAjax('mock-data/provinces.json');
     }
 
-    resetData() {
+    resetInputData() {
         this.normalData = new ArrayCollection(this.allData);
     }
 
