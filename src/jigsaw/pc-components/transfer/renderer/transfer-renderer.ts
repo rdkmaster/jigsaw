@@ -352,7 +352,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
     }
 
     public _filterTree(tree, keyMap, arr, searchKey) {
-        if (!tree.length) {
+        if (!tree || !tree.length) {
             return [];
         }
         for (var i = 0; i < tree.length; i++) {

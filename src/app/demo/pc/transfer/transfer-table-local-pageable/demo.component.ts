@@ -3,7 +3,8 @@ import { Component } from "@angular/core";
 import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, listOption, TransferTableTargetRenderer, LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 
 })
 export class TransferTableLocalPageableDemoComponent {
@@ -13,7 +14,21 @@ export class TransferTableLocalPageableDemoComponent {
         this.data.http = http;
         this.data.pagingInfo.pageSize = 10;
         this.data.fromAjax('mock-data/hr-list-full');
-       /* this.data.fromObject({
+
+        this.selectedData = new ArrayCollection([]);
+    }
+
+    data: LocalPageableTableData;
+    public sourceRenderer = TransferTableSourceRenderer;
+    public targetRenderer = TransferListTargetRenderer;
+
+    selectedData: ArrayCollection<listOption>;
+
+    labelField = 'name';
+    trackItemBy = 'name';
+
+    changeDataFromObject() {
+        this.data.fromObject({
             "field": [
                 "name", "gender", "position", "salary", "enroll-date", "office", "desc"
             ],
@@ -155,19 +170,17 @@ export class TransferTableLocalPageableDemoComponent {
                     "2014/9/2",
                     "Platform III",
                     "罗莎琳德，盛开的玫瑰。"
-                ]]});*/
-
-        this.selectedData = new ArrayCollection([]);
+                ]]
+        });
     }
 
-    data: LocalPageableTableData;
-    public sourceRenderer = TransferTableSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    resetInputData() {
+        this.data.fromAjax('mock-data/hr-list-full');
+    }
 
-    selectedData: ArrayCollection<listOption>;
-
-    labelField = 'name';
-    trackItemBy = 'name';
+    selectedItemsChange($event) {
+        console.log($event)
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

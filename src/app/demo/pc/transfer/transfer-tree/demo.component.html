@@ -4,11 +4,18 @@
 
 
 <!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Transfer(tree to list)</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">普通数据</jigsaw-header>
+
+<jigsaw-header [level]="1">Transfer(tree to list)</jigsaw-header>
+
+<jigsaw-header [level]="2">普通数据</jigsaw-header>
+<ul>
+    <li class="demo-item">
+        <jigsaw-button (click)="changeDataFromObject()">通过fromObject()更新</jigsaw-button>
+        <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+    </li>
+    <li class="demo-item">
         <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"
-            [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer"  (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
-    </div>
-</div>
+            [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer"
+            (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
+    </li>
+</ul>
