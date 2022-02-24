@@ -126,6 +126,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
 
         this.nodes = this.nodes.map(n => _toSimpleNode(n));
         this.refresh();
+        this.invokeChangeCallback();
         return this;
     }
 
