@@ -13,11 +13,11 @@ export class TransferTreeDemoComponent {
         this.data = new SimpleTreeData();
         this.data.fromObject([
             {
-                label: "父节点1 - 展开",
+                label: "父节点1",
                 open: true,
                 nodes: [
                     {
-                        label: "父节点11 - 展开",
+                        label: "父节点11",
                         open: true,
                         nodes: [
                             { label: "叶子节点111", id: 1 },
@@ -27,7 +27,7 @@ export class TransferTreeDemoComponent {
                         ]
                     },
                     {
-                        label: "父节点12 - 折叠",
+                        label: "父节点12",
                         nodes: [
                             { label: "叶子节点121", id: 5 },
                             { label: "叶子节点122", id: 6 },
@@ -38,10 +38,10 @@ export class TransferTreeDemoComponent {
                 ]
             },
             {
-                label: "父节点2 - 折叠",
+                label: "父节点2",
                 nodes: [
                     {
-                        label: "父节点21 - 展开",
+                        label: "父节点21",
                         open: true,
                         nodes: [
                             { label: "叶子节点211", id: 9 },
@@ -51,7 +51,7 @@ export class TransferTreeDemoComponent {
                         ]
                     },
                     {
-                        label: "父节点22 - 折叠",
+                        label: "父节点22",
                         nodes: [
                             { label: "叶子节点221", id: 13 },
                             { label: "叶子节点222", id: 14 },
@@ -60,7 +60,7 @@ export class TransferTreeDemoComponent {
                         ]
                     },
                     {
-                        label: "父节点23 - 折叠",
+                        label: "父节点23",
                         nodes: [
                             { label: "叶子节点231", id: 17 },
                             { label: "叶子节点232", id: 18 },
@@ -71,7 +71,7 @@ export class TransferTreeDemoComponent {
                 ]
             },
             {
-                label: "父节点3 - 折叠",
+                label: "父节点3",
                 nodes: []
             }
         ])
@@ -85,7 +85,9 @@ export class TransferTreeDemoComponent {
     data: SimpleTreeData;
     selectedData: ArrayCollection<listOption>;
 
-
+    selectedItemsChange($event){
+        console.log($event)
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

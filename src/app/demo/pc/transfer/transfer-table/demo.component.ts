@@ -2,7 +2,8 @@ import { Component } from "@angular/core";
 import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, listOption, TransferTableTargetRenderer } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 
 })
 export class TransferTableDemoComponent {
@@ -118,7 +119,37 @@ export class TransferTableDemoComponent {
     selectedData: ArrayCollection<listOption>;
 
     labelField = 'name';
-    trackItemBy = 'name';
+    trackItemBy = 'id';
+
+    addItem() {
+        const id = Date.now();
+        this.data.data.push(["姓名", "职位", id])
+        this.data.refresh();
+    }
+
+    removeItem() {
+        this.data.data.pop();
+        this.data.refresh();
+    }
+
+    // changeDataFromArray() {
+    //     this.normalData.fromArray(new ArrayCollection(this.allData.filter((item, i) => {
+    //         return i < 9
+    //     })))
+    // }
+
+    // changeDataFromAjax() {
+    //     this.normalData.http = this.http;
+    //     this.normalData.fromAjax('mock-data/provinces.json');
+    // }
+
+    // resetInputData() {
+    //     this.normalData = new ArrayCollection(this.allData);
+    // }
+
+    selectedItemsChange($event){
+        console.log($event)
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

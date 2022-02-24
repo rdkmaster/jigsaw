@@ -108,11 +108,6 @@ export class TransferListLocalPageableDemoComponent {
         this.data.fromArray(this.dataArray);
     }
 
-    changeDataFromAjax() {
-        // this.normalData.http = this.http;
-        // this.normalData.fromAjax('mock-data/provinces.json');
-    }
-
     resetInputData() {
         this.data = new LocalPageableArray();
         this.data.http = this._http;
@@ -122,6 +117,10 @@ export class TransferListLocalPageableDemoComponent {
         this.data.pagingInfo.autoPageSizing = false;
         this.data.fromAjax('mock-data/countries');
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
+    }
+
+    selectedItemsChange($event){
+        console.log($event)
     }
 
     data: LocalPageableArray<any>;

@@ -9,4 +9,4 @@
 <jigsaw-header [level]="2">服务端分页数据</jigsaw-header>
 <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData" [sourceRenderer]="sourceRenderer"
     [targetRenderer]="targetRenderer" [labelField]="labelField" [subLabelField]="subLabelField"
-    [trackItemBy]="trackItemBy"></j-transfer>
+    [trackItemBy]="trackItemBy"  (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>

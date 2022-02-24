@@ -127,11 +127,13 @@ export class TransferListDemoComponent {
     }
 
     addItem() {
+        let id = Date.now();
         this.normalData.push({
-            id: Date.now,
+            id: id,
             name: "添加元素", remark: "副属信息"
         });
         this.normalData.refresh();
+        console.log(this.normalData)
     }
 
     removeItem() {
@@ -154,6 +156,9 @@ export class TransferListDemoComponent {
         this.normalData = new ArrayCollection(this.allData);
     }
 
+    selectedItemsChange($event){
+        console.log($event)
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

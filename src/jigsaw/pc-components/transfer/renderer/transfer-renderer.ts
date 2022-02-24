@@ -480,7 +480,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      */
     public _$updateSelectedItems(value) {
         this.selectedRows = this._getSelectedRows(value);
-        this._$selectedItems = this._getAllSelectedRows(value);
+        this._$selectedItems = this.selectedRows
         this.selectedItemsChange.emit();
     }
 
@@ -521,6 +521,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
             console.error("labelField值在filed中未找到！")
             return;
         }
+
         return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
             if (item.value) {
                 selectedRows.push({ [this.labelField]: item.data[labelFieldfiledIndex], [this.trackItemBy]: item.data[trackItemByfiledIndex] });
@@ -529,20 +530,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
         }, []);
     }
 
-    /**
-     * 获取所有选中的行
-     * @param additionalData
-    */
-    private _getAllSelectedRows(additionalData) {
-        return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
-            if (item.value) {
-                selectedRows.push({ [this.labelField]: item.data[0], key: item.key });
-            }
-            return selectedRows;
-        }, []);
-    }
-
-    public selectedRows: string;
+    public selectedRows: ArrayCollection<listOption>;
 
     public additionalData: AdditionalTableData;
 

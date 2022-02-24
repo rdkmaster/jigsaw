@@ -18,6 +18,6 @@
     <li class="demo-item">
         <j-transfer width="100%" height="500" [data]="normalData" [selectedItems]="normalSelectedData"
             [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer" [labelField]="labelField"
-            [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"></j-transfer>
+            [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"  (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
     </li>
 </ul>
