@@ -1,15 +1,13 @@
-import {NgModule} from "@angular/core";
-import {JigsawTransferModule} from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {TransferListPageableDemoComponent} from "./demo.component";
-
-import {JigsawHeaderModule} from "jigsaw/public_api";
+import { NgModule } from "@angular/core";
+import { JigsawTransferModule, JigsawButtonModule, JigsawHeaderModule } from "jigsaw/public_api";
+import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
+import { TransferListPageableDemoComponent } from "./demo.component";
 
 @NgModule({
     declarations: [TransferListPageableDemoComponent],
-    exports: [ TransferListPageableDemoComponent ],
-    imports: [JigsawDemoDescriptionModule, JigsawTransferModule, JigsawHeaderModule]
+    exports: [TransferListPageableDemoComponent],
+    imports: [JigsawDemoDescriptionModule, JigsawTransferModule, JigsawHeaderModule, JigsawButtonModule]
 })
-export class TransferListPageableDemoModule{
+export class TransferListPageableDemoModule {
 
 }
