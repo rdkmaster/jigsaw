@@ -172,6 +172,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 
     public reset() {
         this._$selectedItems.length = 0;
+        this.selectedItemsChange.emit();
     }
 }
 
@@ -348,7 +349,8 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
     }
 
     public reset() {
-
+        this._$selectedItems.length = 0;
+        this.selectedItemsChange.emit();
     }
 
     public _filterTree(tree, keyMap, arr, searchKey) {
@@ -502,6 +504,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     public reset() {
         this.additionalData.reset();
         this.additionalData.refresh();
+        this.selectedItemsChange.emit();
     }
 
     /**

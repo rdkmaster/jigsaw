@@ -385,6 +385,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     }
                     this._removeOnChangeListener = value.onChange(() => {
                         this._refreshForPageableArray(value);
+                        this.sourceComponent.reset();
                     })
                     this._refreshForPageableArray(value);
                 } else if (value instanceof ArrayCollection) {
@@ -401,6 +402,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     }
                     this._removeOnChangeListener = value.onChange(() => {
                         this._refreshForTreeData(value);
+                        this.sourceComponent.reset();
                     })
                     this._refreshForTreeData(value);
                 } else {
@@ -416,6 +418,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     }
                     this._removeOnChangeListener = value.onChange(() => {
                         this._refreshForPageableTableData(value);
+                        this.sourceComponent.reset();
                     })
                     this._refreshForPageableTableData(value);
                 } else if (value instanceof TableData) {
@@ -496,7 +499,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._removeInputDataChangeListener = value.onRefresh(() => {
             data.fromArray(value)
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
-            this.sourceComponent.reset();
             this._checkSourceSelectAll();
         })
     }
@@ -708,7 +710,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     private _checkSourceSelectAll() {
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
         this.sourceComponent.update();
-        if (CommonUtils.isDefined(this.sourceComponent._$currentSelectedItems) && this.sourceComponent._$currentSelectedItems.length === 0) {
+        if (CommonUtils.isUndefined(this.sourceComponent._$currentSelectedItems)) {
+            this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this.sourceComponent._$currentSelectedItems.length === 0) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
