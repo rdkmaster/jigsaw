@@ -308,7 +308,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public trackItemBy: string = 'id';
+    public trackItemBy: string = 'label';
 
     /**
      * @internal
@@ -464,7 +464,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public trackItemBy: string = 'id';
+    public trackItemBy: string = 'label';
 
     /**
      * @internal
