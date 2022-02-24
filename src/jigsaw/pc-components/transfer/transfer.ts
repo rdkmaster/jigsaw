@@ -678,8 +678,17 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return
         }
 
-        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} 项`
+        const sourceSelectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
+        const selectedItemsCount = this.selectedItems ? this.selectedItems.length : 0;
+        const totalDataCount = this.data._bakData ? this.data._bakData.length : 0;
+        let sourceTotalDataCount = totalDataCount - selectedItemsCount;
+
+        if (sourceTotalDataCount < 0) {
+            console.warn("已穿梭数据(selectedItems)中出现了总数据(data)中不存在的数据。")
+            sourceTotalDataCount = 0;
+        }
+
+        return `${sourceSelectedItemsCount} / ${sourceTotalDataCount} 项`
     }
 
     public get getTargetTitle(): string {

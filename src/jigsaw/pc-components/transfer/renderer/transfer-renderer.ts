@@ -274,6 +274,13 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
     public _$validData: any;
 
     /**
+     * 渲染器当前已选数据
+     * @internal
+     */
+    public _$currentSelectedItems: any;
+
+
+    /**
      * 渲染器已选数据
      * @internal
      */
@@ -318,7 +325,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
         const checkedNodes = allCheckedNodes.filter(node => {
             return !node.isParent && !node.isHidden;
         })
-        this._$selectedItems = new ArrayCollection(checkedNodes);
+        this._$selectedItems.fromArray(checkedNodes);
         this.selectedItemsChange.emit();
     }
 
@@ -337,6 +344,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
 
     public update() {
         this._$validData = new ArrayCollection(this._getLeafNodes([this._$data]));
+        this._$currentSelectedItems = this._$selectedItems;
     }
 
     public reset() {
@@ -350,6 +358,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
         for (var i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
                 let newNode = { ...tree[i], nodes: [{ isTransferTreeParentNode: '', isHidden: true }] };
+                newNode['open'] = true;
                 arr.push(newNode);
                 this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
             } else {
