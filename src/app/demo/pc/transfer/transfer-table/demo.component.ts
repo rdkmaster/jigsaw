@@ -4,112 +4,15 @@ import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, Arr
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
-
 })
 export class TransferTableDemoComponent {
     constructor() {
         this.data = new TableData(
-            [
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    1
-                ],
-                [
-                    "Garrett Winflters1",
-                    "Accountant",
-                    2
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Arcfhitect",
-                    3
-                ],
-                [
-                    "Garrett Winslters2",
-                    "Accountant",
-                    4
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Arcfhitect",
-                    5
-                ],
-                [
-                    "Garrett Winflters3",
-                    "Accountant",
-                    6
-                ],
-                [
-                    "Tiger Nixon4",
-                    "System Arcfhitect",
-                    7
-                ],
-                [
-                    "Garrett Winflters4",
-                    "Accountant",
-                    8
-                ],
-                [
-                    "Tiger Nixon5",
-                    "System Arcfhitect",
-                    9
-                ],
-                [
-                    "Garrett Wintsers5",
-                    "Accountant",
-                    10
-                ],
-                [
-                    "Tigser Nixon6",
-                    "System Architect",
-                    11
-                ],
-                [
-                    "Tiger Nixon9",
-                    "System Architect",
-                    12
-                ],
-                [
-                    "Tiger Nixon7",
-                    "System Architect",
-                    13
-                ],
-                [
-                    "Tiger Nixon8",
-                    "System Architect",
-                    14
-                ],
-                [
-                    "Garrett Winters12",
-                    "Accountant",
-                    15
-                ],
-                [
-                    "Tiger Nixon24",
-                    "System Architect",
-                    16
-                ],
-                [
-                    "Tigesr Nixon13",
-                    "System Architect",
-                    17
-                ],
-                [
-                    "Garretst Winters12",
-                    "Accountant",
-                    18
-                ],
-                [
-                    "Tigers Nixon21",
-                    "System Architect",
-                    19
-                ]
-            ],
+            this.arrayData,
             ["name", "position", "id"],
             ["姓名", "职位", "ID"]);
 
-        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2' }, { name: "Garrett Winslters2" }]);
+        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
     }
 
     data: TableData;
@@ -132,25 +35,133 @@ export class TransferTableDemoComponent {
         this.data.refresh();
     }
 
-    // changeDataFromArray() {
-    //     this.normalData.fromArray(new ArrayCollection(this.allData.filter((item, i) => {
-    //         return i < 9
-    //     })))
-    // }
+    changeDataFromObject() {
+        const data = this.arrayData.filter((item, i) => { return i < 6 })
+        this.data.fromObject({
+            data: data,
+            field: ["name", "position", "id"],
+            header: ["姓名", "职位", "ID"]
+        })
+
+        console.log(this.arrayData)
+        console.log(data)
+        console.log(this.data)
+
+    }
 
     // changeDataFromAjax() {
     //     this.normalData.http = this.http;
     //     this.normalData.fromAjax('mock-data/provinces.json');
     // }
 
-    // resetInputData() {
-    //     this.normalData = new ArrayCollection(this.allData);
-    // }
+    resetInputData() {
+        this.data = new TableData(
+            this.arrayData,
+            ["name", "position", "id"],
+            ["姓名", "职位", "ID"]);
+    }
 
-    selectedItemsChange($event){
+    selectedItemsChange($event) {
         console.log($event)
     }
 
+    arrayData = [
+        [
+            "Tiger Nixon1",
+            "System Architect",
+            1
+        ],
+        [
+            "Garrett Winflters1",
+            "Accountant",
+            2
+        ],
+        [
+            "Tiger Nixon2",
+            "System Arcfhitect",
+            3
+        ],
+        [
+            "Garrett Winslters2",
+            "Accountant",
+            4
+        ],
+        [
+            "Tiger Nixon3",
+            "System Arcfhitect",
+            5
+        ],
+        [
+            "Garrett Winflters3",
+            "Accountant",
+            6
+        ],
+        [
+            "Tiger Nixon4",
+            "System Arcfhitect",
+            7
+        ],
+        [
+            "Garrett Winflters4",
+            "Accountant",
+            8
+        ],
+        [
+            "Tiger Nixon5",
+            "System Arcfhitect",
+            9
+        ],
+        [
+            "Garrett Wintsers5",
+            "Accountant",
+            10
+        ],
+        [
+            "Tigser Nixon6",
+            "System Architect",
+            11
+        ],
+        [
+            "Tiger Nixon9",
+            "System Architect",
+            12
+        ],
+        [
+            "Tiger Nixon7",
+            "System Architect",
+            13
+        ],
+        [
+            "Tiger Nixon8",
+            "System Architect",
+            14
+        ],
+        [
+            "Garrett Winters12",
+            "Accountant",
+            15
+        ],
+        [
+            "Tiger Nixon24",
+            "System Architect",
+            16
+        ],
+        [
+            "Tigesr Nixon13",
+            "System Architect",
+            17
+        ],
+        [
+            "Garretst Winters12",
+            "Accountant",
+            18
+        ],
+        [
+            "Tigers Nixon21",
+            "System Architect",
+            19
+        ]
+    ];
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -552,7 +552,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         data.fromObject({ data: value.data, field: value.field, header: value.header });
         value.onRefresh(() => {
             data.fromObject({ data: value.data, field: value.field, header: value.header });
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+            this.sourceComponent.additionalData.reset();
+            this.sourceComponent.additionalData.refresh();
         })
     }
 
@@ -766,6 +768,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this.sourceComponent.additionalData.refresh();
             })*/
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
+            this.sourceComponent.additionalData.reset();
+            this.sourceComponent.additionalData.refresh();
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
         this._checkSourceSelectAll()
