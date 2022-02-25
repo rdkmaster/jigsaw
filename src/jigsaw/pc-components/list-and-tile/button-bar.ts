@@ -44,6 +44,9 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
 
     private _data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): ArrayCollection<GroupOptionValue> | GroupOptionValue[] {
         return this._data;
@@ -57,6 +60,7 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
         if (this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
+                this._removeOnRefresh = null;
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
                 this._cdr.markForCheck();
