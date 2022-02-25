@@ -22,13 +22,17 @@ export class TransferArrayDemoComponent {
         data.refresh();
     }
 
-    removeItem() {
-        this.normalData.pop();
-        this.normalData.refresh();
+    removeItem(data: ArrayCollection<any>) {
+        data.pop();
+        data.refresh();
     }
 
     resetInputData() {
         this.normalData = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+    }
+
+    resetSelectedData() {
+        this.normalSelectedData = new ArrayCollection(["深圳", "长沙"]);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
