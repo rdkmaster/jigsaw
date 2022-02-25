@@ -1,9 +1,12 @@
-import {Component, NgModule, forwardRef, Input, ChangeDetectionStrategy} from "@angular/core";
+import {ChangeDetectionStrategy, Component, forwardRef, Input, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {JigsawTileSelectModule} from "./tile";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
 import {WingsTheme} from "../../common/common";
+import {ArrayCollection} from "../../common/core/data/array-collection";
+import {GroupOptionValue} from "./group-common";
+import {CallbackRemoval} from "../../common/core/utils/common-utils";
 
 @WingsTheme('button-bar.scss')
 @Component({
@@ -16,7 +19,8 @@ import {WingsTheme} from "../../common/common";
                            [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
                            [width]="optionWidth" [height]="'100%'" [disabled]="item?.disabled"
                            title="{{item && item[labelField] ? item[labelField] : item}}">
-                <span *ngIf="item.icon" [class]="item.icon" [ngClass]="{'jigsaw-button-bar-icon-only': item === '' || item[labelField] === ''}"></span>
+                <span *ngIf="item.icon" [class]="item.icon"
+                      [ngClass]="{'jigsaw-button-bar-icon-only': item === '' || item[labelField] === ''}"></span>
                 <p>{{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}</p>
             </j-tile-option>
         </j-tile>`,
@@ -31,11 +35,35 @@ import {WingsTheme} from "../../common/common";
         '[class.jigsaw-button-bar-size-small]': "preSize === 'small'",
     },
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawButtonBar), multi: true },
+        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawButtonBar), multi: true},
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
+    private _removeOnRefresh: CallbackRemoval;
+
+    private _data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+
+    @Input()
+    public get data(): ArrayCollection<GroupOptionValue> | GroupOptionValue[] {
+        return this._data;
+    }
+
+    public set data(value: ArrayCollection<GroupOptionValue> | GroupOptionValue[]) {
+        if (!value || this.data == value) {
+            return;
+        }
+        this._data = value;
+        if (this._data instanceof ArrayCollection) {
+            if (this._removeOnRefresh) {
+                this._removeOnRefresh();
+            }
+            this._removeOnRefresh = this._data.onRefresh(() => {
+                this._cdr.markForCheck();
+            })
+        }
+    }
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -53,6 +81,14 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
      */
     @Input()
     public preSize: 'default' | 'small' = 'default';
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+            this._removeOnRefresh = null;
+        }
+    }
 }
 
 @NgModule({

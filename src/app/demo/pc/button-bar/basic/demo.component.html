@@ -42,6 +42,12 @@
         <jigsaw-button-bar [data]="unlabeledTypes" [multipleSelect]="multiple" trackItemBy="id">
         </jigsaw-button-bar>
     </div>
+
+    <div class="demo-5 live-demo">
+        <jigsaw-header [level]="2">更新数据</jigsaw-header>
+        <jigsaw-button-bar [data]="types5" [(selectedItems)]="selectedTypes5" [multipleSelect]="multiple" trackItemBy="id"></jigsaw-button-bar>
+        <jigsaw-button (click)="update()">更新</jigsaw-button>
+    </div>
 </div>
 
 

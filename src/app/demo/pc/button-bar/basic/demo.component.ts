@@ -39,7 +39,7 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
     }
 
     colorType: string = 'warning';
-    colorTypeList = ['default', 'primary','warning', 'danger', 'error'];
+    colorTypeList = ['default', 'primary', 'warning', 'danger', 'error'];
     selectedCity3: any[];
 
     selectedCity4: any[];
@@ -55,6 +55,25 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         this.selectedCityStr2 = this.selectedCity2.join(',');
         this.selectedCity3 = ['南京'];
         this.selectedCity4 = ['南京'];
+    }
+
+    types5: ArrayCollection<{ label: string, id: number, icon?: string }> = new ArrayCollection([
+        {label: "成功", id: 0},
+        {label: "错误", id: 1},
+        {label: "警告", id: 2},
+        {label: "信息", id: 3}
+    ]);
+    selectedTypes5 = [{label: "成功", id: 1}];
+    icons = ['iconfont iconfont-e142', 'iconfont iconfont-e132', 'iconfont iconfont-e1a5', 'iconfont iconfont-e22c'];
+    index = 0;
+
+    update() {
+        this.types5.forEach(item => delete item.icon);
+        const type = this.types5.find(item => item.id == this.index);
+        type.icon = this.icons[this.index];
+        // 刷新数据
+        this.types5.refresh();
+        this.index = this.index >= 3 ? 0 : (this.index + 1);
     }
 
     // ====================================================================
