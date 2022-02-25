@@ -8,7 +8,8 @@
 <jigsaw-header [level]="2">普通数据</jigsaw-header>
 <ul>
     <li class="demo-item">
-        <jigsaw-button (click)="addItem()">添加一个元素</jigsaw-button>
+        <jigsaw-button (click)="addItem(normalData)">左侧添加一个元素</jigsaw-button>
+        <jigsaw-button (click)="addItem(normalSelectedData)">右侧添加一个元素</jigsaw-button>
         <jigsaw-button (click)="removeItem()">删除最后一个元素</jigsaw-button>
         <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
     </li>

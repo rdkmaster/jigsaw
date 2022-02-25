@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection, LocalPageableArray, TransferListSourceRenderer, TransferListTargetRenderer } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection, TransferListSourceRenderer, TransferListTargetRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -16,11 +16,10 @@ export class TransferArrayDemoComponent {
 
     normalData: ArrayCollection<any>;
     normalSelectedData: ArrayCollection<any>;
-    localPageableData: LocalPageableArray<any>;
 
-    addItem() {
-        this.normalData.push(`${Date.now()}`);
-        this.normalData.refresh();
+    addItem(data: ArrayCollection<any>) {
+        data.push(`${Date.now()}`);
+        data.refresh();
     }
 
     removeItem() {
