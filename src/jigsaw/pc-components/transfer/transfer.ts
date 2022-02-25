@@ -291,8 +291,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector,
-        protected componentFactoryResolver: ComponentFactoryResolver) {
+        protected componentFactoryResolver: ComponentFactoryResolver,
+        public translateService: TranslateService) {
         super();
+        translateService.use(translateService.getBrowserLang());
     }
 
     /**
@@ -361,10 +363,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$targetSelectAllChecked = CheckBoxStatus.unchecked;
 
-    /**
-     * @internal
-     */
-    public _data: ArrayCollection<listOption> | any;
+    private _data: ArrayCollection<listOption> | any;
 
     /**
      * @NoMarkForCheckRequired
@@ -503,6 +502,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._removeInputDataChangeListener = value.onRefresh(() => {
             data.fromArray(value)
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.reset();
             this._checkSourceSelectAll();
         })
     }
@@ -515,6 +515,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._removeOnRefreshListener = data.onRefresh(() => {
             this.sourceComponent._$data = new ArrayCollection(data)
             this.targetComponent._$data = this.selectedItems;
+            this.sourceComponent.reset();
             this._checkSourceSelectAll();
         })
         this.sourceComponent.dataFilter(data, this.selectedItems)
@@ -595,17 +596,30 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
             return;
         }
+
         if (value instanceof Array) {
             value = new ArrayCollection(value);
         }
+
         this._selectedItems = value;
+
+        if (this.targetComponent) {
+            this.targetComponent._$data = value;
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+        }
+
         if (this._removeSelectedItemsChangeListener) {
             this._removeSelectedItemsChangeListener();
             this._removeSelectedItemsChangeListener = null;
         }
+
         this._removeSelectedItemsChangeListener = this._selectedItems.onRefresh(() => {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.targetComponent.reset();
+            this._checkTargetSelectAll();
         })
+
+        this._changeDetectorRef.markForCheck();
     }
 
     /**
@@ -684,10 +698,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
         if (this.isPageable) {
             const selectedItemsCount = this.sourceComponent._$currentSelectedItems ? this.sourceComponent._$currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
+            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('items')}`
         } else {
             const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} 项`
+            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('items')}`
         }
     }
 
@@ -699,7 +713,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
         const totalCount = this.data.pagingInfo ? this.data.pagingInfo.totalRecord : 0;
 
-        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} 项`
+        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this.translateService.instant('items')}`
     }
 
     public get getTargetTitle(): string {
@@ -707,7 +721,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return
         }
         const selectedItemsCount = this.targetComponent._$selectedItems ? this.targetComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} 项`
+        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} ${this.translateService.instant('items')}`
     }
 
     private _checkSourceSelectAll() {

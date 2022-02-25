@@ -8,12 +8,25 @@
 <jigsaw-header [level]="2">普通数据</jigsaw-header>
 <ul>
     <li class="demo-item">
-        <jigsaw-button (click)="addItem(normalData)">左侧添加一个元素</jigsaw-button>
-        <jigsaw-button (click)="addItem(normalSelectedData)">右侧添加一个元素</jigsaw-button>
-        <jigsaw-button (click)="removeItem(normalData)">删除左侧最后一个元素</jigsaw-button>
-        <jigsaw-button (click)="removeItem(normalSelectedData)">删除右侧最后一个元素</jigsaw-button>
-        <jigsaw-button (click)="resetInputData()">重置左侧数据</jigsaw-button>
-        <jigsaw-button (click)="resetSelectedData()">重置右侧数据</jigsaw-button>
+        <div class="item-buttons">
+            <span>输入数据：</span>
+            <jigsaw-button (click)="addItem(normalData)">追加一个元素</jigsaw-button>
+            <jigsaw-button (click)="removeItem(normalData)">删除最后一个元素</jigsaw-button>
+            <jigsaw-button (click)="changeInputData()">修改数据</jigsaw-button>
+        </div>
+
+        <div class="item-buttons">
+            <span>已穿梭数据：</span>
+            <jigsaw-button (click)="addItem(normalSelectedData)">追加一个元素</jigsaw-button>
+            <jigsaw-button (click)="removeItem(normalSelectedData)">删除最后一个元素</jigsaw-button>
+            <jigsaw-button (click)="changeSelectedData()">修改数据</jigsaw-button>
+        </div>
+
+        <div class="item-buttons">
+            <span>数据重置：</span>
+            <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+        </div>
     </li>
     <li class="demo-item">
         <j-transfer width="100%" height="500" [data]="normalData" [selectedItems]="normalSelectedData"

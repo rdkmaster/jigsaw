@@ -49,8 +49,11 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 
     private _data: any;
 
-    /* 渲染器数据 */
-    @RequireMarkForCheck()
+    /** 
+     * 渲染器数据
+     * 
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get _$data(): ArrayCollection<listOption> {
         return this._data;
@@ -173,7 +176,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     }
 
     public reset() {
-        this._$selectedItems.length = 0;
+        this._$selectedItems.splice(0, this._$selectedItems.length);
         this.selectedItemsChange.emit();
     }
 }
@@ -260,8 +263,11 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
 
     private _data: any = new SimpleTreeData();
 
-    /* 渲染器数据 */
-    @RequireMarkForCheck()
+    /** 
+     * 渲染器数据
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get _$data(): SimpleTreeData {
         return this._data;
@@ -352,7 +358,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
     }
 
     public reset() {
-        this._$selectedItems.length = 0;
+        this._$selectedItems.splice(0, this._$selectedItems.length);
         this.selectedItemsChange.emit();
     }
 
@@ -423,8 +429,11 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
 
     protected _data: any;
 
-    /* 渲染器数据 */
-    @RequireMarkForCheck()
+    /** 
+     * 渲染器数据
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get _$data(): TableData {
         return this._data;
@@ -509,6 +518,9 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     }
 
     public reset() {
+        if (CommonUtils.isUndefined(this.additionalData)) {
+            return;
+        }
         this.additionalData.reset();
         this.additionalData.refresh();
         this.selectedItemsChange.emit();
