@@ -698,10 +698,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
         if (this.isPageable) {
             const selectedItemsCount = this.sourceComponent._$currentSelectedItems ? this.sourceComponent._$currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('items')}`
+            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
         } else {
             const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('items')}`
+            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
         }
     }
 
@@ -713,7 +713,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
         const totalCount = this.data.pagingInfo ? this.data.pagingInfo.totalRecord : 0;
 
-        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this.translateService.instant('items')}`
+        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this.translateService.instant('transfer.items')}`
     }
 
     public get getTargetTitle(): string {
@@ -721,7 +721,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return
         }
         const selectedItemsCount = this.targetComponent._$selectedItems ? this.targetComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} ${this.translateService.instant('items')}`
+        return `${selectedItemsCount} / ${this.targetComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
     }
 
     private _checkSourceSelectAll() {
