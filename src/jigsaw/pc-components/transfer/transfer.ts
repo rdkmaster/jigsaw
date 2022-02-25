@@ -355,7 +355,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      * @internal
      */
     public _$sourceSelectAllChecked = CheckBoxStatus.unchecked;
-    
+
     /**
      * @internal
      */
@@ -582,13 +582,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         return null;
     }
-
-    /**
-     * @internal
-     */
-    @RequireMarkForCheck()
-    @Input()
-    public _$viewData: any;
 
     private _selectedItems: ArrayCollection<listOption> | any = [];
 
