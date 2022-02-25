@@ -7,7 +7,7 @@ import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../p
 import { JigsawTable } from '../../../pc-components/table/table';
 import { TableData } from '../../../common/core/data/table-data';
 import { SimpleTreeData } from '../../../common/core/data/tree-data';
-import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
+import { RequireMarkForCheck } from '../../../common/decorator/mark-for-check';
 
 export type listOption = {
     disabled?: boolean;
