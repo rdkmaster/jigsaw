@@ -7,6 +7,7 @@ import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../p
 import { JigsawTable } from '../../../pc-components/table/table';
 import { TableData } from '../../../common/core/data/table-data';
 import { SimpleTreeData } from '../../../common/core/data/tree-data';
+import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
 
 export type listOption = {
     disabled?: boolean;
@@ -49,6 +50,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     private _data: any;
 
     /* 渲染器数据 */
+    @RequireMarkForCheck()
     @Input()
     public get _$data(): ArrayCollection<listOption> {
         return this._data;
@@ -259,6 +261,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
     private _data: any = new SimpleTreeData();
 
     /* 渲染器数据 */
+    @RequireMarkForCheck()
     @Input()
     public get _$data(): SimpleTreeData {
         return this._data;
@@ -418,6 +421,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     protected _data: any;
 
     /* 渲染器数据 */
+    @RequireMarkForCheck()
     @Input()
     public get _$data(): TableData {
         return this._data;
@@ -611,6 +615,7 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
 })
 export class TransferTableTargetRenderer extends TransferTableRendererBase {
     /* 渲染器数据 */
+    @RequireMarkForCheck()
     @Input()
     public get _$data(): TableData {
         return this._data;
