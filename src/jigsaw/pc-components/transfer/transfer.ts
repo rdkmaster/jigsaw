@@ -355,6 +355,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      * @internal
      */
     public _$sourceSelectAllChecked = CheckBoxStatus.unchecked;
+    
+    /**
+     * @internal
+     */
     public _$targetSelectAllChecked = CheckBoxStatus.unchecked;
 
     /**
@@ -669,9 +673,15 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     /**
+     * @internal
      * @NoMarkForCheckRequired
      */
     public _$sourceSearchKey: string;
+
+    /**
+     * @internal
+     * @NoMarkForCheckRequired
+     */
     public _$targetSearchKey: string;
 
     public get getSourceTitle(): string {
@@ -790,6 +800,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._checkTargetSelectAll()
     }
 
+    /**
+     * @internal
+     */
     public _$sourceTransfer() {
         if (!this._$sourceButton) {
             return
@@ -813,6 +826,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.selectedItemsChange.emit(this.selectedItems)
     }
 
+    /**
+     * @internal
+     */
     public _$targetTransfer() {
         if (!this._$targetButton) {
             return
@@ -837,9 +853,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._$sourceSearchKey = '';
         this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
-    }
-
-    public _$sourcePageChanged() {
     }
 
     /**

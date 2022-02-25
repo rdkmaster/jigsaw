@@ -356,6 +356,9 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
         this.selectedItemsChange.emit();
     }
 
+    /**
+     * @internal
+     */
     public _filterTree(tree, keyMap, arr, searchKey) {
         if (!tree || !tree.length) {
             return [];
