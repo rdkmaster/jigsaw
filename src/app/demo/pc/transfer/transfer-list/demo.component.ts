@@ -133,7 +133,6 @@ export class TransferListDemoComponent {
             name: "添加元素", remark: "副属信息"
         });
         this.normalData.refresh();
-        console.log(this.normalData)
     }
 
     removeItem() {
@@ -156,8 +155,14 @@ export class TransferListDemoComponent {
         this.normalData = new ArrayCollection(this.allData);
     }
 
-    selectedItemsChange($event){
+    selectedItemsChange($event) {
         console.log($event)
+    }
+
+    resetSelectedData() {
+        this.normalSelectedData = new ArrayCollection(this.allData.filter((item, i) => {
+            return i < 3
+        }));
     }
 
     // ====================================================================

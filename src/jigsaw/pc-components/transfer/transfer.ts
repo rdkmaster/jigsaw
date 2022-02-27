@@ -434,6 +434,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this.targetComponent._$data = this.selectedItems;
             }
 
+            if (this.sourceComponent) {
+                this.sourceComponent.reset();
+            }
+
             this._changeDetectorRef.markForCheck();
         })
     }
@@ -515,8 +519,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._removeOnRefreshListener = data.onRefresh(() => {
             this.sourceComponent._$data = new ArrayCollection(data)
             this.targetComponent._$data = this.selectedItems;
-            this.sourceComponent.reset();
-            this._checkSourceSelectAll();
         })
         this.sourceComponent.dataFilter(data, this.selectedItems)
     }
@@ -605,6 +607,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
         if (this.targetComponent) {
             this.targetComponent._$data = value;
+            this.targetComponent.reset();
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         }
 

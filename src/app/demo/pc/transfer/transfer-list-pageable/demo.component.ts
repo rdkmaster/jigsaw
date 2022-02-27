@@ -52,6 +52,10 @@ export class TransferListPageableDemoComponent {
         this.data.dataReviser = null;
     }
 
+    resetSelectedData() {
+        this.selectedData.fromAjax('mock-data/countries');
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

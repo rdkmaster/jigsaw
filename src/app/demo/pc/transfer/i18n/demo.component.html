@@ -17,15 +17,16 @@
 
     <div class="demo-1 live-demo">
         <jigsaw-header [level]="2">普通数据</jigsaw-header>
-        <j-transfer width="50%" height="200" [data]="data" labelField="zhName" subLabelField="shortName"
-                    [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
-                    [selectedItems]="selectedCountries"></j-transfer>
+        <j-transfer width="50%" height="200" [data]="data" (selectedItemsChange)="handleSelectChange($event)"
+            [selectedItems]="selectedCountries" [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer"
+            [labelField]="labelField" [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"></j-transfer>
         <p class="message">选择的地区：{{selectedCountriesStr}}</p>
 
         <jigsaw-header [level]="2">本地分页数据</jigsaw-header>
-        <j-transfer width="50%" height="200" [data]="data_page" labelField="zhName" subLabelField="shortName"
-                    [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
-                    [selectedItems]="selectedCountries"></j-transfer>
+        <j-transfer width="50%" height="200" [data]="data_page" (selectedItemsChange)="handleSelectChange($event)"
+            [selectedItems]="selectedCountries" [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer"
+            [labelField]="labelField" [subLabelField]="subLabelField" [trackItemBy]="trackItemBy">
+        </j-transfer>
         <p class="message">选择的地区：{{selectedCountriesStr}}</p>
     </div>
 </div>

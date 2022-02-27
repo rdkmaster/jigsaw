@@ -119,7 +119,21 @@ export class TransferListLocalPageableDemoComponent {
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
     }
 
-    selectedItemsChange($event){
+    resetSelectedData() {
+        this.selectedData = new ArrayCollection([
+            {
+                enName: "andorra",
+                shortName: "and",
+                zhName: "安道尔"
+            },
+            {
+                enName: 'belize',
+                zhName: '伯里兹',
+                shortName: 'blz'
+            }]);
+    }
+
+    selectedItemsChange($event) {
         console.log($event)
     }
 

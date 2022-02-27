@@ -9,8 +9,16 @@
 <jigsaw-header [level]="2">服务端分页数据</jigsaw-header>
 <ul>
     <li class="demo-item">
-        <jigsaw-button (click)="changeData()">修改数据</jigsaw-button>
-        <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+        <div class="item-buttons">
+            <span>输入数据：</span>
+            <jigsaw-button (click)="changeData()">修改数据</jigsaw-button>
+        </div>
+
+        <div class="item-buttons">
+            <span>数据重置：</span>
+            <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+        </div>
     </li>
     <li class="demo-item">
         <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"

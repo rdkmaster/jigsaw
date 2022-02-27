@@ -1,4 +1,4 @@
-import { Component, Injector, Input, Output, EventEmitter, ChangeDetectorRef, ViewEncapsulation, ViewChild, Directive } from "@angular/core";
+import { Component, Injector, Input, Output, EventEmitter, ChangeDetectorRef, ViewEncapsulation, ViewChild, Directive, OnInit, AfterViewInit } from "@angular/core";
 import { ArrayCollection, PageableArray } from '../../../common/core/data/array-collection';
 import { CommonUtils } from '../../../common/core/utils/common-utils';
 import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
@@ -251,7 +251,7 @@ export class TransferListTargetRenderer extends TransferListRendererBase {
 }
 
 @Directive()
-export class TransferTreeRendererBase extends AbstractTransferRendererBase {
+export class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
@@ -406,6 +406,10 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase {
         })
 
         return this._filterTree(data.nodes, keyMap, result, searchKey);
+    }
+
+    ngAfterViewInit() {
+        this.treeExt.setting.edit.enable = false;
     }
 }
 
