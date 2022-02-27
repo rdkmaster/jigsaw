@@ -106,6 +106,13 @@ export class TransferTreeDemoComponent {
     selectedItemsChange($event) {
         console.log($event)
     }
+
+    resetSelectedData() {
+        this.selectedData = new ArrayCollection([
+            { label: "叶子节点112", id: 2 },
+            { label: "叶子节点114", id: 4 }
+        ]);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

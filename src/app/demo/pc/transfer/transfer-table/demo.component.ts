@@ -291,6 +291,10 @@ export class TransferTableDemoComponent {
     selectedItemsChange($event) {
         console.log($event)
     }
+
+    resetSelectedData() {
+        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -182,6 +182,10 @@ export class TransferTableLocalPageableDemoComponent {
         console.log($event)
     }
 
+    resetSelectedData() {
+        this.selectedData = new ArrayCollection([]);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

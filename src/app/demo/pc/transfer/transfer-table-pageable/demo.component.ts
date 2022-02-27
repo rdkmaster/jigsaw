@@ -45,6 +45,10 @@ export class TransferTablePageableDemoComponent {
         this.data.fromAjax('mock-data/hr-list-full');
     }
 
+    resetSelectedData() {
+        this.selectedData = new ArrayCollection([]);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
