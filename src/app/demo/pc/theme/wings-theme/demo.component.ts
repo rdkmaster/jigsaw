@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation } from "@angular/core";
-import {ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData} from 'jigsaw/public_api';
+import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -7,7 +7,7 @@ import {ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTree
     encapsulation: ViewEncapsulation.None,
     host: { '[attr.data-theme]': 'theme' }
 })
-export class ThemeBuildInThemeDemoComponent {
+export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
     lightTheme = "light";
     darkTheme = "dark";
 
@@ -22,10 +22,10 @@ export class ThemeBuildInThemeDemoComponent {
     ]);
 
     _$dropdownData = [
-        {category: '事件与数据', items: ['发送事件到事件总线', '更新变量']},
-        {category: '动画', items: ['隐藏/显示元素', '滚动页面']},
-        {category: '弹出', items: ['对话框', '提醒', '警示', '等待弹出关闭']},
-        {category: '高级', items: ['自定义代码块']}
+        { category: '事件与数据', items: ['发送事件到事件总线', '更新变量'] },
+        { category: '动画', items: ['隐藏/显示元素', '滚动页面'] },
+        { category: '弹出', items: ['对话框', '提醒', '警示', '等待弹出关闭'] },
+        { category: '高级', items: ['自定义代码块'] }
     ];
 
     _$breadcrumbItems = [
@@ -36,10 +36,10 @@ export class ThemeBuildInThemeDemoComponent {
     ];
 
     _$titles = [
-        {title: 'Settings', subTitle: 'Ctrl+Alt+A', subMenu: false},
-        {title: 'Print', subTitle: '', subMenu: true},
-        {title: 'Save All', subTitle: 'Ctrl+S', subMenu: false},
-        {title: 'Exit', subTitle: '', subMenu: true}
+        { title: 'Settings', subTitle: 'Ctrl+Alt+A', subMenu: false },
+        { title: 'Print', subTitle: '', subMenu: true },
+        { title: 'Save All', subTitle: 'Ctrl+S', subMenu: false },
+        { title: 'Exit', subTitle: '', subMenu: true }
     ];
 
     _$goodsList: GroupOptionValue[] = [
@@ -141,29 +141,36 @@ export class ThemeBuildInThemeDemoComponent {
         this._$tableData = new TableData(
             [
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422" ],
+                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422" ],
+                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422" ],
+                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422" ],
+                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422" ],
+                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
             ],
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
 
         this._$graphData = new GraphData({
-            tooltip: {trigger: 'axis', axisPointer: {type: 'shadow'}, extraCssText: 'z-index: 999'},
-            grid: {top:10, bottom: 20, right:0, left:48, show: false},
-            xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},
-            yAxis: {type: 'value'},
-            series: [{data: [820, 932, 901, 934, 1290, 1330, 1320], type: 'line'}]
+            tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, extraCssText: 'z-index: 999' },
+            grid: { top: 10, bottom: 20, right: 0, left: 48, show: false },
+            xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+            yAxis: { type: 'value' },
+            series: [{ data: [820, 932, 901, 934, 1290, 1330, 1320], type: 'line' }]
         });
     }
 
+    ngAfterViewInit() {
+        const allHeaders = document.querySelectorAll(".jigsaw-header-level-2");
+        const validHeaders = Array.from(allHeaders).filter((item, i) => {
+            return i % 2 === 0;
+        })
+        console.log(validHeaders)
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
