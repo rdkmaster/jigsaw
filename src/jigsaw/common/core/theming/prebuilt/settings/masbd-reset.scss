@@ -1,7 +1,7 @@
 $bg-body: #eff3fc;
 
 .jigsaw-nav-menu-host {
-    &.jigsaw-nav-menu-default {
+    &.jigsaw-nav-menu-default:not(.jigsaw-nav-menu-inline) {
         position: relative;
         background: linear-gradient(to bottom, #1c28bc 0%, #7bc9f9 100%);
         color: $font-color-white;

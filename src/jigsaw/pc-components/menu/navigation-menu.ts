@@ -24,7 +24,8 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-nav-menu-host]': 'true',
         '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
-        '[class.jigsaw-nav-menu-default]': 'theme == "default"'
+        '[class.jigsaw-nav-menu-default]': 'theme == "default"',
+        '[class.jigsaw-nav-menu-inline]': '!showToggleButton'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
