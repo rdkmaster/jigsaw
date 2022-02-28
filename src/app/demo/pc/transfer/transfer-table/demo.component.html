@@ -14,6 +14,10 @@
             <jigsaw-button (click)="addItem()">新增行</jigsaw-button>
             <jigsaw-button (click)="removeItem()">删除行</jigsaw-button>
             <jigsaw-button (click)="changeDataFromObject()">通过fromObject()更新</jigsaw-button>
+            <span>trackItemBy：</span>
+            <jigsaw-button-bar [selectedItems]="{field: trackItemBy}" [data]="
+                    [{label:'ID', field: 'id'}, {label:'姓名', field: 'name'}, {label:'职位', field: 'position'}]
+                " trackItemBy="field" (selectedItemsChange)="trackItemBy=$event[0].field;"></jigsaw-button-bar>
         </div>
 
         <div class="item-buttons">
