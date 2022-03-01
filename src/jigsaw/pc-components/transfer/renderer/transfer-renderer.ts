@@ -536,7 +536,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      */
     private _getSelectedRows(additionalData) {
         const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
-        const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+        const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.labelField })
 
         if (trackItemByfiledIndex === -1) {
             console.error("trackItemBy值在filed中未找到！")

@@ -9,8 +9,8 @@ import { HttpClient } from '@angular/common/http';
 export class TransferListDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
-    public normalData: ArrayCollection<any>;
-    public normalSelectedData: ArrayCollection<any>;
+    public data: ArrayCollection<any>;
+    public selectedItems: ArrayCollection<any>;
     public localPageableData: LocalPageableArray<any>;
     public labelField = 'name';
     public subLabelField = 'remark'
@@ -120,39 +120,40 @@ export class TransferListDemoComponent {
     ]
 
     constructor(public http: HttpClient) {
-        this.normalData = new ArrayCollection(this.allData);
-        this.normalSelectedData = new ArrayCollection(this.allData.filter((item, i) => {
+        this.data = new ArrayCollection(this.allData);
+        this.selectedItems = new ArrayCollection(this.allData.filter((item, i) => {
             return i < 3
         }));
     }
 
     addItem() {
         let id = Date.now();
-        this.normalData.push({
+        this.data.push({
             id: id,
             name: "添加元素", remark: "副属信息"
         });
-        this.normalData.refresh();
+        this.data.refresh();
     }
 
     removeItem() {
-        this.normalData.pop();
-        this.normalData.refresh();
+        this.data.pop();
+        this.selectedItems.length = 0;
+        this.data.refresh();
     }
 
     changeDataFromArray() {
-        this.normalData.fromArray(new ArrayCollection(this.allData.filter((item, i) => {
+        this.data.fromArray(new ArrayCollection(this.allData.filter((item, i) => {
             return i < 9
         })))
     }
 
     changeDataFromAjax() {
-        this.normalData.http = this.http;
-        this.normalData.fromAjax('mock-data/provinces.json');
+        this.data.http = this.http;
+        this.data.fromAjax('mock-data/provinces.json');
     }
 
     resetInputData() {
-        this.normalData = new ArrayCollection(this.allData);
+        this.data = new ArrayCollection(this.allData);
     }
 
     selectedItemsChange($event) {
@@ -160,7 +161,7 @@ export class TransferListDemoComponent {
     }
 
     resetSelectedData() {
-        this.normalSelectedData = new ArrayCollection(this.allData.filter((item, i) => {
+        this.selectedItems = new ArrayCollection(this.allData.filter((item, i) => {
             return i < 3
         }));
     }

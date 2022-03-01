@@ -108,14 +108,14 @@ export class TransferTableDemoComponent {
             ["name", "position", "id"],
             ["姓名", "职位", "ID"]);
 
-        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
+        this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
     }
 
     data: TableData;
     public sourceRenderer = TransferTableSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
-    selectedData: ArrayCollection<listOption>;
+    selectedItems: ArrayCollection<listOption>;
 
     labelField = 'name';
     trackItemBy = 'id';
@@ -128,6 +128,7 @@ export class TransferTableDemoComponent {
 
     removeItem() {
         this.data.data.pop();
+        this.selectedItems.length = 0;
         this.data.refresh();
     }
 
@@ -293,7 +294,7 @@ export class TransferTableDemoComponent {
     }
 
     resetSelectedData() {
-        this.selectedData = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
+        this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

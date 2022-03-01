@@ -9,38 +9,51 @@ export class TransferArrayDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
-    normalData: ArrayCollection<any>;
-    normalSelectedData: ArrayCollection<any>;
+    data: ArrayCollection<any>;
+    selectedItems: ArrayCollection<any>;
 
     constructor() {
-        this.normalData = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
-        this.normalSelectedData = new ArrayCollection(["上海", "南京"]);
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
 
-    addItem(data: ArrayCollection<any>) {
-        data.push(`${Date.now()}`);
-        data.refresh();
+    addItem() {
+        this.data.push(`${Date.now()}`);
+        this.data.refresh();
     }
 
-    removeItem(data: ArrayCollection<any>) {
-        data.pop();
-        data.refresh();
+    removeItem() {
+        this.data.pop();
+        this.selectedItems.length = 0;
+        this.data.refresh();
+    }
+
+    addSelecteditem() {
+        const newLabel = Date.now();
+        this.data.push(newLabel);
+        this.data.refresh();
+        this.selectedItems.push(newLabel);
+    }
+
+    removeSelecteditem() {
+        this.selectedItems.pop();
+        this.selectedItems.refresh();
     }
 
     resetInputData() {
-        this.normalData = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
     }
 
     changeInputData() {
-        this.normalSelectedData = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安", "杭州", "广州", "香港", "澳门"]);
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安", "杭州", "广州", "香港", "澳门"]);
     }
 
     changeSelectedData() {
-        this.normalSelectedData = new ArrayCollection(["深圳", "长沙"]);
+        this.selectedItems = new ArrayCollection(["深圳", "长沙"]);
     }
 
     resetSelectedData() {
-        this.normalSelectedData = new ArrayCollection(["上海", "南京"]);
+        this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
 
     // ====================================================================
