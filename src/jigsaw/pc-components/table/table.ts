@@ -259,6 +259,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
 
+        let preColIndex;
         columnDefines.forEach(columnDefine => {
             if (columnDefine.visible === false) {
                 return;
@@ -271,11 +272,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const [realColIndex,] = this._getColumnIndex(field);
             let groupSetting: TableCellSetting;
             let settings: TableCellSetting;
+            
             for (let rowIndex = 0; rowIndex < dataLen; rowIndex++) {
                 settings = oldBackup[field] ? oldBackup[field][rowIndex] : undefined;
                 settings = TableUtils.updateCellSettings(columnDefine, settings);
                 // reset the rowSpan value, it will be recomputed later.
                 settings.rowSpan = 1;
+                settings.colSpan = 1;
                 this._cellSettingsBackup[field].push(settings);
 
                 if (!this._$cellSettings[rowIndex]) {
@@ -319,8 +322,42 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                         groupSetting = settings;
                     }
                 }
+
+                // if (rowIndex === 1) {
+                //     if (CommonUtils.isDefined(preColIndex)) {
+                //         const preSettings = this._$cellSettings[rowIndex][preColIndex];
+                //         if (preSettings.cellData == settings.cellData) {
+                //             preSettings.colSpan++;
+                //             settings.colSpan = 0;
+                //         }
+                //     }
+                // }
+                
             }
+            preColIndex = realColIndex;
         });
+
+        this._updateColspan([1], columnDefines)
+    }
+
+    private _updateColspan(rowIndexArray: [number], columnDefines: ColumnDefine[]) {
+        rowIndexArray.forEach(rowIndex => {
+            let rowSetting: TableCellSetting;
+            let preColIndex:number;
+            columnDefines.forEach(columnDefine => {
+                if (columnDefine.visible === false) {
+                    return;
+                }
+                const field = <string>columnDefine.target;
+                const [realColIndex,] = this._getColumnIndex(field);
+                console.log(columnDefine)
+                if(CommonUtils.isDefined(preColIndex)){
+                    rowSetting = this._$cellSettings[rowIndex][preColIndex];
+                    
+                }
+                preColIndex = realColIndex;
+            })
+        })
     }
 
     /**

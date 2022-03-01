@@ -121,6 +121,7 @@ export class TableCellSetting {
     group: boolean;
     field: string;
     rowSpan: number;
+    colSpan: number;
     tooltip: any;
     innerHtmlContext: any;
 }

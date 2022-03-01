@@ -47,7 +47,8 @@
                 (click)="_$clickRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
                 <td *ngFor="let cell of row;"
                     [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
-                    [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
+                    [attr.colspan]="cell.colSpan > 1 ? cell.colSpan : null"
+                    [style.display]="(cell.rowSpan && cell.colSpan) ? 'table-cell' : 'none'"
                     class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}">
                     <ng-container [ngSwitch]="cell.renderer">
                         <div *ngSwitchCase="undefined" class="jigsaw-table-cell-content">
