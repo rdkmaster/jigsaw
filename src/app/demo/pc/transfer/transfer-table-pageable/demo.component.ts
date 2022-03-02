@@ -4,7 +4,7 @@ import {
     TransferTableSourceRenderer,
     TransferListTargetRenderer,
     ArrayCollection,
-    listOption,
+    ListOption,
     PageableTableData
 } from "jigsaw/public_api";
 
@@ -28,7 +28,7 @@ export class TransferTablePageableDemoComponent {
     public sourceRenderer = TransferTableSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
-    selectedData: ArrayCollection<listOption>;
+    selectedData: ArrayCollection<ListOption>;
 
     labelField = 'name';
     trackItemBy = 'name';

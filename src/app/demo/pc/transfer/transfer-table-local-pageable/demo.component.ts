@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, listOption, TransferTableTargetRenderer, LocalPageableTableData } from "jigsaw/public_api";
+import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, ListOption, TransferTableTargetRenderer, LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -22,7 +22,7 @@ export class TransferTableLocalPageableDemoComponent {
     public sourceRenderer = TransferTableSourceRenderer;
     public targetRenderer = TransferListTargetRenderer;
 
-    selectedData: ArrayCollection<listOption>;
+    selectedData: ArrayCollection<ListOption>;
 
     labelField = 'name';
     trackItemBy = 'name';

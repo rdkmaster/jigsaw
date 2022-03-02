@@ -31,7 +31,7 @@ import { WingsTheme, JigsawCommonModule, AbstractJigsawComponent } from "../../c
 import { SimpleTreeData } from '../../common/core/data/tree-data';
 import { TableData, LocalPageableTableData, PageableTableData } from '../../common/core/data/table-data';
 import {
-    listOption,
+    ListOption,
     TransferListSourceRenderer,
     TransferListTargetRenderer,
     TransferTreeSourceRenderer,
@@ -44,7 +44,10 @@ import { JigsawLoadingModule } from '../../common/components/loading/loading';
 import { JigsawTreeExtModule } from "../tree/tree-ext";
 import { JigsawTableModule } from "../table/table";
 
-// 此处不能使用箭头函数
+/**
+ * 此处不能使用箭头函数
+ * 而且不能依赖任何外部函数、功能
+ */
 const transferFilterFunction = function (item) {
     let listResult = true;
     let keyResult = true;
@@ -59,13 +62,16 @@ const transferFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
+/**
+ * 此处不能使用箭头函数
+ * 而且不能依赖任何外部函数、功能
+ */
 const transferServerFilterFunction = function (item) {
     function isUndefined(value) {
         return value === undefined || value === null;
     }
 
     function compareValue(item1: any, item2: any, trackItemBy?: string[] | string): boolean {
-
         // 排除掉非法值和基础类型，如果比对的值是这两种之一的，则采用简单比较方式
         if (isUndefined(item1) || isUndefined(item2)) {
             return item1 == item2;
@@ -112,7 +118,6 @@ const transferServerFilterFunction = function (item) {
     }
 
     let listResult = true;
-    let keyResult = true;
     if (this.selectedItems && this.selectedItems.length && typeof this.selectedItems[0] == 'object') {
         const itemJson = Object.create(null);
         Object.keys(this.selectedItems[0]).forEach((k, i) => {
@@ -122,6 +127,7 @@ const transferServerFilterFunction = function (item) {
             listResult = false;
         }
     }
+    let keyResult = true;
     if (this.keyword !== null && this.keyword !== undefined) {
         if (typeof item == 'string') {
             keyResult = item.toLowerCase().includes(this.keyword.toLowerCase())
@@ -137,34 +143,32 @@ const transferServerFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
+/**
+ * 此处不能使用箭头函数
+ * 而且不能依赖任何外部函数、功能
+ */
 const transferTableFilterFunction = function (item) {
-    const trackItemByfiledIndex = this.field.findIndex(item => {
-        return item === this.trackItemBy
-    })
-    const labelFieldfiledIndex = this.field.findIndex(item => {
-        return item === this.labelField
-    })
-
-    if (trackItemByfiledIndex === -1) {
+    const trackItemByFiledIndex = this.field.findIndex(item => item === this.trackItemBy);
+    if (trackItemByFiledIndex === -1) {
         console.error("trackItemBy值在filed中未找到！")
         return;
     }
 
-    if (labelFieldfiledIndex === -1) {
+    const labelFieldFiledIndex = this.field.findIndex(item => item === this.labelField);
+    if (labelFieldFiledIndex === -1) {
         console.error("labelField值在filed中未找到！")
         return;
     }
 
     let listResult = true;
-    let keyResult = true;
-
     if (this.selectedItems) {
-        if (this.selectedItems.some(si => CommonUtils.compareValue(item[trackItemByfiledIndex], si[this.trackItemBy]))) {
+        if (this.selectedItems.some(si => CommonUtils.compareValue(item[trackItemByFiledIndex], si[this.trackItemBy]))) {
             listResult = false;
         }
     }
+    let keyResult = true;
     if (this.keyword !== null && this.keyword !== undefined) {
-        const value: string = !item || item[labelFieldfiledIndex] === undefined || item[labelFieldfiledIndex] === null ? '' : item[labelFieldfiledIndex].toString();
+        const value: string = !item || item[labelFieldFiledIndex] === undefined || item[labelFieldFiledIndex] === null ? '' : item[labelFieldFiledIndex].toString();
         keyResult = value.toLowerCase().includes(this.keyword.toLowerCase());
     }
     return listResult && keyResult;
@@ -176,7 +180,6 @@ const transferTableServerFilterFunction = function (item) {
     }
 
     function compareValue(item1: any, item2: any, trackItemBy?: string[] | string): boolean {
-
         // 排除掉非法值和基础类型，如果比对的值是这两种之一的，则采用简单比较方式
         if (isUndefined(item1) || isUndefined(item2)) {
             return item1 == item2;
@@ -222,34 +225,27 @@ const transferTableServerFilterFunction = function (item) {
         return true;
     }
 
-    const trackItemByfiledIndex = this.field.findIndex(item => {
-        return item === this.trackItemBy
-    })
-    const labelFieldfiledIndex = this.field.findIndex(item => {
-        return item === this.labelField
-    })
-
-    if (trackItemByfiledIndex === -1) {
+    const trackItemByFiledIndex = this.field.findIndex(item => item === this.trackItemBy);
+    if (trackItemByFiledIndex === -1) {
         console.error("trackItemBy值在filed中未找到！")
         return;
     }
-
-    if (labelFieldfiledIndex === -1) {
+    const labelFieldFiledIndex = this.field.findIndex(item => item === this.labelField);
+    if (labelFieldFiledIndex === -1) {
         console.error("labelField值在filed中未找到！")
         return;
     }
 
     let listResult = true;
-    let keyResult = true;
-
     if (this.selectedItems) {
-        if (this.selectedItems.some(si => compareValue(item[trackItemByfiledIndex], si[this.trackItemBy]))) {
+        if (this.selectedItems.some(si => compareValue(item[trackItemByFiledIndex], si[this.trackItemBy]))) {
             listResult = false;
         }
     }
 
+    let keyResult = true;
     if (this.keyword !== null && this.keyword !== undefined) {
-        const value: string = !item || item[labelFieldfiledIndex] === undefined || item[labelFieldfiledIndex] === null ? '' : item[labelFieldfiledIndex].toString();
+        const value: string = !item || item[labelFieldFiledIndex] === undefined || item[labelFieldFiledIndex] === null ? '' : item[labelFieldFiledIndex].toString();
         keyResult = value.toLowerCase().includes(this.keyword.toLowerCase());
     }
     return listResult && keyResult;
@@ -346,7 +342,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public targetComponent;
 
     public sourceToggleButtonSubscribe: Subscription;
-    public targetToggleButtonSubscribe: Subscription;
 
     public sourceSelectedItemsChangeSubscribe: Subscription;
     public targetSelectedItemsChangeSubscribe: Subscription;
@@ -363,7 +358,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$targetSelectAllChecked = CheckBoxStatus.unchecked;
 
-    private _data: ArrayCollection<listOption> | any;
+    private _data: ArrayCollection<ListOption> | any;
 
     /**
      * @NoMarkForCheckRequired
@@ -482,7 +477,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     private _refreshForArray(value: ArrayCollection<any>) {
         this.sourceComponent.filterFunction = this._getFilterFunction('list', 'local', false);
-        const data = new LocalPageableArray<listOption>();
+        const data = new LocalPageableArray<ListOption>();
         data.pagingInfo.pageSize = Infinity;
 
         const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
@@ -586,7 +581,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
-    private _selectedItems: ArrayCollection<listOption> | any = [];
+    private _selectedItems: ArrayCollection<ListOption> | any = [];
 
     @RequireMarkForCheck()
     @Input()
@@ -594,7 +589,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return this._selectedItems;
     }
 
-    public set selectedItems(value: ArrayCollection<listOption> | any) {
+    public set selectedItems(value: ArrayCollection<ListOption> | any) {
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
             return;
         }
@@ -673,11 +668,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     @Output()
     public selectedItemsChange = new EventEmitter();
 
-    /**
-     * @internal
-     */
-    public _$infinity = Infinity;
-
     public get isPageable(): boolean {
         return this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity;
     }
@@ -712,10 +702,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (!this.sourceComponent || !this.sourceComponent._$validData || !this.isPageable) {
             return
         }
-
         const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-        const totalCount = this.data.pagingInfo ? this.data.pagingInfo.totalRecord : 0;
-
         return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this.translateService.instant('transfer.items')}`
     }
 
@@ -785,14 +772,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
-            /*this.data.pagingInfo.subscribe(() => {
-                if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
-                    this.sourceComponent._$data = new TableData();
-                }
-                this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                this.sourceComponent.additionalData.reset();
-                this.sourceComponent.additionalData.refresh();
-            })*/
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
             this.sourceComponent.additionalData.reset();
             this.sourceComponent.additionalData.refresh();

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SimpleTreeData, TransferListTargetRenderer, TransferTreeSourceRenderer, ArrayCollection, listOption } from "jigsaw/public_api";
+import { SimpleTreeData, TransferListTargetRenderer, TransferTreeSourceRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -23,7 +23,7 @@ export class TransferTreeDemoComponent {
     }
 
     data: SimpleTreeData;
-    selectedData: ArrayCollection<listOption>;
+    selectedData: ArrayCollection<ListOption>;
 
     labelField = 'label';
     trackItemBy = 'label';

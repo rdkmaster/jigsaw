@@ -1,41 +1,35 @@
-import { Component, Injector, Input, Output, EventEmitter, ChangeDetectorRef, ViewEncapsulation, ViewChild, Directive, OnInit, AfterViewInit } from "@angular/core";
-import { ArrayCollection, PageableArray } from '../../../common/core/data/array-collection';
-import { CommonUtils } from '../../../common/core/utils/common-utils';
-import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
-import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
-import { TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from '../../../pc-components/table/table-renderer';
-import { JigsawTable } from '../../../pc-components/table/table';
-import { TableData } from '../../../common/core/data/table-data';
-import { SimpleTreeData } from '../../../common/core/data/tree-data';
-import { RequireMarkForCheck } from '../../../common/decorator/mark-for-check';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    Directive,
+    EventEmitter,
+    Injector,
+    Input,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from "@angular/core";
+import {ArrayCollection, PageableArray} from '../../../common/core/data/array-collection';
+import {CommonUtils} from '../../../common/core/utils/common-utils';
+import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
+import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
+import {JigsawTable} from '../../../pc-components/table/table';
+import {TableData} from '../../../common/core/data/table-data';
+import {SimpleTreeData} from '../../../common/core/data/tree-data';
 
-export type listOption = {
+export type ListOption = {
     disabled?: boolean;
     label?: string;
     subLabel?: string;
-    addtionalData?: any;
+    additionalData?: any;
     [field: string]: string | boolean | number;
-}
-
-export type transferRendererSetting = {
-    selectAll: boolean;
-}
-
-export interface transferRenderer {
-    _$data: any;
-    _$selectedItems: any;
-    labelField: string;
-    subLabelField: string;
-    trackItemBy: string;
-    selectedItemsChange: EventEmitter<boolean>;
-    update();
 }
 
 @Directive()
 export abstract class AbstractTransferRendererBase {
     public filterFunction: (item: any) => boolean;
-
-    // public abstract searchFilter(data, selectedItems, filterKey, isTarget: boolean): void;
 }
 
 @Directive()
@@ -49,17 +43,17 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 
     private _data: any;
 
-    /** 
+    /**
      * 渲染器数据
-     * 
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get _$data(): ArrayCollection<listOption> {
+    public get _$data(): ArrayCollection<ListOption> {
         return this._data;
     }
 
-    public set _$data(value: ArrayCollection<listOption>) {
+    public set _$data(value: ArrayCollection<ListOption>) {
         this._data = value;
         this.update();
         this._changeDetectorRef.markForCheck();
@@ -81,7 +75,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -167,11 +161,11 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 
         this._$validData = this._$data.filter(item => !item.disabled);
         this._$currentSelectedItems = this._$data.filter(item => {
-            let isExsit = false;
+            let isExist = false;
             if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-                isExsit = true;
+                isExist = true;
             }
-            return isExsit;
+            return isExist;
         })
     }
 
@@ -243,10 +237,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 export class TransferListTargetRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems, filterKey) {
         filterKey = filterKey ? filterKey.trim() : '';
-        const data = selectedItems.filter(item => {
-            return item[this.labelField].includes(filterKey);
-        })
-        this._$data = data;
+        this._$data = selectedItems.filter(item => item[this.labelField].includes(filterKey));
     }
 }
 
@@ -263,7 +254,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
 
     private _data: any = new SimpleTreeData();
 
-    /** 
+    /**
      * 渲染器数据
      *
      * @NoMarkForCheckRequired
@@ -294,7 +285,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -340,7 +331,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     }
 
     private _getLeafNodes(nodes, result = []) {
-        for (var i = 0, length = nodes.length; i < length; i++) {
+        for (let i = 0, length = nodes.length; i < length; i++) {
             if (!nodes[i].nodes) {
                 if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
                     result.push(nodes[i]);
@@ -369,7 +360,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         if (!tree || !tree.length) {
             return [];
         }
-        for (var i = 0; i < tree.length; i++) {
+        for (let i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
                 let newNode = { ...tree[i], nodes: [{ isTransferTreeParentNode: '', isHidden: true }] };
                 newNode['open'] = true;
@@ -388,23 +379,21 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     }
 
     public dataFilter(data, selectedItems) {
-        let keyMap = [];
-        let result = [];
+        const keyMap = [];
+        const result = [];
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
-        })
-
+        });
         return this._filterTree(data.nodes, keyMap, result, '');
     }
 
     public searchFilter(data, selectedItems, $event) {
-        let keyMap = [];
-        let result = [];
-        let searchKey = $event.length > 0 ? $event.trim() : "";
+        const keyMap = [];
+        const result = [];
+        const searchKey = $event.length > 0 ? $event.trim() : "";
         selectedItems.forEach(item => {
             keyMap.push(item[this.trackItemBy])
-        })
-
+        });
         return this._filterTree(data.nodes, keyMap, result, searchKey);
     }
 
@@ -433,7 +422,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
 
     protected _data: any;
 
-    /** 
+    /**
      * 渲染器数据
      *
      * @NoMarkForCheckRequired
@@ -464,7 +453,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<listOption> = new ArrayCollection([]);
+    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -507,17 +496,17 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     }
 
     public update() {
-        const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
-        if (trackItemByfiledIndex === -1) {
+        const trackItemByFiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+        if (trackItemByFiledIndex === -1) {
             console.error("trackItemBy值在filed中未找到！")
             return;
         }
         this._$currentSelectedItems = this._$data.data.filter(item => {
-            let isExsit = false;
-            if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByfiledIndex], selectedItem[this.trackItemBy]))) {
-                isExsit = true;
+            let isExist = false;
+            if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByFiledIndex], selectedItem[this.trackItemBy]))) {
+                isExist = true;
             }
-            return isExsit;
+            return isExist;
         })
     }
 
@@ -534,29 +523,28 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 获取选中的行
      * @param additionalData
      */
-    private _getSelectedRows(additionalData) {
-        const trackItemByfiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
-        const labelFieldfiledIndex = this._$data.field.findIndex(item => { return item === this.labelField })
-
-        if (trackItemByfiledIndex === -1) {
+    private _getSelectedRows(additionalData: AdditionalTableData) {
+        const trackItemByFiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy });
+        if (trackItemByFiledIndex === -1) {
             console.error("trackItemBy值在filed中未找到！")
             return;
         }
 
-        if (labelFieldfiledIndex === -1) {
+        const labelFieldFiledIndex = this._$data.field.findIndex(item => { return item === this.labelField });
+        if (labelFieldFiledIndex === -1) {
             console.error("labelField值在filed中未找到！")
             return;
         }
 
         return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
             if (item.value) {
-                selectedRows.push({ [this.labelField]: item.data[labelFieldfiledIndex], [this.trackItemBy]: item.data[trackItemByfiledIndex] });
+                selectedRows.push({ [this.labelField]: item.data[labelFieldFiledIndex], [this.trackItemBy]: item.data[trackItemByFiledIndex] });
             }
             return selectedRows;
         }, []);
     }
 
-    public selectedRows: ArrayCollection<listOption>;
+    public selectedRows: ArrayCollection<ListOption>;
 
     public additionalData: AdditionalTableData;
 

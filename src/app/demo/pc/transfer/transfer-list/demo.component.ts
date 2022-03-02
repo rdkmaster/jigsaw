@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { ArrayCollection, LocalPageableArray, TransferListSourceRenderer, TransferListTargetRenderer } from "jigsaw/public_api";
-import { HttpClient } from '@angular/common/http';
+import {Component} from "@angular/core";
+import {ArrayCollection, TransferListSourceRenderer, TransferListTargetRenderer} from "jigsaw/public_api";
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,7 +11,6 @@ export class TransferListDemoComponent {
     public targetRenderer = TransferListTargetRenderer;
     public data: ArrayCollection<any>;
     public selectedItems: ArrayCollection<any>;
-    public localPageableData: LocalPageableArray<any>;
     public labelField = 'name';
     public subLabelField = 'remark'
     public trackItemBy = 'id';
@@ -121,9 +120,7 @@ export class TransferListDemoComponent {
 
     constructor(public http: HttpClient) {
         this.data = new ArrayCollection(this.allData);
-        this.selectedItems = new ArrayCollection(this.allData.filter((item, i) => {
-            return i < 3
-        }));
+        this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }
 
     addItem() {
@@ -169,6 +166,6 @@ export class TransferListDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '这个Demo模拟的是采用服务端分页的情形';
     description: string = '';
 }
