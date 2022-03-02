@@ -16,7 +16,7 @@ import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
 import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
 import { TableCellCheckboxRenderer, TableHeadCheckboxRenderer } from '../../../pc-components/table/table-renderer';
 import { JigsawTable } from '../../../pc-components/table/table';
-import { TableData, LocalPageableTableData, PageableTableData } from '../../../common/core/data/table-data';
+import { TableData, LocalPageableTableData, PageableTableData, TableDataMatrix, TableMatrixRow } from '../../../common/core/data/table-data';
 import { SimpleTreeData, SimpleNode } from '../../../common/core/data/tree-data';
 
 export type ListOption = {
@@ -45,7 +45,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
         super();
     }
 
-    private _data: any;
+    private _data: ArrayCollection<ListOption>;
 
     /**
      * 渲染器数据
@@ -67,13 +67,13 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
      * 渲染器有效数据
      * @internal
      */
-    public _$validData: any;
+    public _$validData: ListOption[];
 
     /**
      * 渲染器当前已选数据
      * @internal
      */
-    public _$currentSelectedItems: any;
+    public _$currentSelectedItems: ListOption[];
 
     /**
      * 渲染器已选数据
@@ -256,7 +256,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     @ViewChild(JigsawTreeExt)
     public treeExt: JigsawTreeExt;
 
-    private _data: any = new SimpleTreeData();
+    private _data: SimpleTreeData = new SimpleTreeData();
 
     /**
      * 渲染器数据
@@ -276,13 +276,13 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      * 渲染器有效数据
      * @internal
      */
-    public _$validData: any;
+    public _$validData: ListOption[];
 
     /**
      * 渲染器当前已选数据
      * @internal
      */
-    public _$currentSelectedItems: any;
+    public _$currentSelectedItems: ListOption[];
 
 
     /**
@@ -424,7 +424,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     @ViewChild(JigsawTable)
     public table: JigsawTable;
 
-    protected _data: any;
+    protected _data: TableData;
 
     /**
      * 渲染器数据
@@ -445,13 +445,13 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 渲染器有效数据
      * @internal
      */
-    public _$validData: any;
+    public _$validData: TableDataMatrix[];
 
     /**
      * 渲染器当前已选数据
      * @internal
      */
-    public _$currentSelectedItems: any;
+    public _$currentSelectedItems: TableMatrixRow[];
 
     /**
      * 渲染器已选数据
