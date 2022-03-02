@@ -11,7 +11,8 @@ import {
     Output,
     EventEmitter,
     ChangeDetectionStrategy,
-    ComponentFactory
+    ComponentFactory,
+    ComponentRef
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
@@ -448,8 +449,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.sourceRendererHost.clear();
         this.targetRendererHost.clear();
 
-        const sourceComponentRef = this.sourceRendererHost.createComponent(sourceComponentFactory);
-        const targetComponentRef = this.targetRendererHost.createComponent(targetComponentFactory);
+        const sourceComponentRef: ComponentRef<any> = this.sourceRendererHost.createComponent(sourceComponentFactory);
+        const targetComponentRef: ComponentRef<any> = this.targetRendererHost.createComponent(targetComponentFactory);
 
         this.sourceComponent = sourceComponentRef.instance;
         this.targetComponent = targetComponentRef.instance;
