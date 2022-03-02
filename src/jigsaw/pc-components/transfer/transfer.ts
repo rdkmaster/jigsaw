@@ -50,7 +50,7 @@ import { JigsawTableModule } from "../table/table";
  * 此处不能使用箭头函数
  * 而且不能依赖任何外部函数、功能
  */
-const transferFilterFunction = function (item: any) {
+const transferFilterFunction = function (item: any): boolean {
     let listResult = true;
     let keyResult = true;
     if (this.selectedItems) {
@@ -68,7 +68,7 @@ const transferFilterFunction = function (item: any) {
  * 此处不能使用箭头函数
  * 而且不能依赖任何外部函数、功能
  */
-const transferServerFilterFunction = function (item: any) {
+const transferServerFilterFunction = function (item: any): boolean {
     function isUndefined(value: any) {
         return value === undefined || value === null;
     }
@@ -149,7 +149,7 @@ const transferServerFilterFunction = function (item: any) {
  * 此处不能使用箭头函数
  * 而且不能依赖任何外部函数、功能
  */
-const transferTableFilterFunction = function (item: any) {
+const transferTableFilterFunction = function (item: any): boolean {
     const trackItemByFiledIndex = this.field.findIndex(item => item === this.trackItemBy);
     if (trackItemByFiledIndex === -1) {
         console.error("trackItemBy值在filed中未找到！")
@@ -176,7 +176,7 @@ const transferTableFilterFunction = function (item: any) {
     return listResult && keyResult;
 };
 
-const transferTableServerFilterFunction = function (item: any) {
+const transferTableServerFilterFunction = function (item: any): boolean {
     function isUndefined(value: any) {
         return value === undefined || value === null;
     }
@@ -360,7 +360,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$targetSelectAllChecked = CheckBoxStatus.unchecked;
 
-    private _data: ArrayCollection<ListOption> | any;
+    private _data: any;
 
     /**
      * @NoMarkForCheckRequired
@@ -583,7 +583,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
-    private _selectedItems: ArrayCollection<ListOption> | any = [];
+    private _selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @RequireMarkForCheck()
     @Input()

@@ -185,7 +185,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>): void {
-        const _filterData = (data: any, selectedItems: ArrayCollection<ListOption>, filterFunction: Function) => {
+        const _filterData = (data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
                 trackItemBy: this.trackItemBy
@@ -214,9 +214,6 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
                 keyword: filterKey,
                 fields: [field]
             });
-            /*this._removeFilterSubscribe = this._data.pagingInfo.subscribe(() => {
-                this._cdr.markForCheck();
-            });*/
         }
         filterKey = filterKey ? filterKey.trim() : '';
         let field: string | number = this.labelField;
@@ -569,7 +566,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
     public dataFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>): void {
-        const _filterData = (data: any, selectedItems: ArrayCollection<ListOption>, filterFunction: Function) => {
+        const _filterData = (data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
                 trackItemBy: this.trackItemBy,
@@ -594,7 +591,7 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
 
     public searchFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterKey: string, isTarget: boolean): void {
         if (!isTarget) {
-            const _filterData = (data, selectedItems, filterFunction) => {
+            const _filterData = (data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
                 data.filter(filterFunction, {
                     selectedItems: [].concat(...selectedItems),
                     trackItemBy: this.trackItemBy,
