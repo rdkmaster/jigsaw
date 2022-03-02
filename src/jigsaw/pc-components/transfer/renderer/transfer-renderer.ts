@@ -10,14 +10,14 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import {ArrayCollection, PageableArray} from '../../../common/core/data/array-collection';
-import {CommonUtils} from '../../../common/core/utils/common-utils';
-import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
-import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
-import {JigsawTable} from '../../../pc-components/table/table';
-import {TableData} from '../../../common/core/data/table-data';
-import {SimpleTreeData} from '../../../common/core/data/tree-data';
+import { ArrayCollection, PageableArray } from '../../../common/core/data/array-collection';
+import { CommonUtils } from '../../../common/core/utils/common-utils';
+import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
+import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
+import { TableCellCheckboxRenderer, TableHeadCheckboxRenderer } from '../../../pc-components/table/table-renderer';
+import { JigsawTable } from '../../../pc-components/table/table';
+import { TableData } from '../../../common/core/data/table-data';
+import { SimpleTreeData } from '../../../common/core/data/tree-data';
 
 export type ListOption = {
     disabled?: boolean;
@@ -25,6 +25,10 @@ export type ListOption = {
     subLabel?: string;
     additionalData?: any;
     [field: string]: string | boolean | number;
+}
+
+export type rendererSetting = {
+    selectAll: boolean
 }
 
 @Directive()
@@ -84,7 +88,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
      * 渲染器配置
      * @internal
      */
-    public _$setting = { selectAll: true };
+    public _$setting: rendererSetting = { selectAll: true };
 
     /**
      * 设置数据的显示字段
@@ -113,18 +117,18 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     /**
      * @internal
      */
-    public get _$trackByFn() {
+    public get _$trackByFn(): any {
         return CommonUtils.toTrackByFunction(this.trackItemBy);
     };
 
     /**
      * @internal
      */
-    public _$updateSelectedItems() {
+    public _$updateSelectedItems(): void {
         this.selectedItemsChange.emit();
     }
 
-    public selectAll() {
+    public selectAll(): void {
         if (this._$currentSelectedItems && this._$currentSelectedItems.length === this._$validData.length) {
             if (this._$selectedItems.length === this._$currentSelectedItems.length) {
                 this._$selectedItems = new ArrayCollection([]);
@@ -154,7 +158,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
         this.update();
     }
 
-    public update() {
+    public update(): void {
         if (CommonUtils.isUndefined(this._$data)) {
             return;
         }
@@ -169,7 +173,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
         })
     }
 
-    public reset() {
+    public reset(): void {
         this._$selectedItems.splice(0, this._$selectedItems.length);
         this.selectedItemsChange.emit();
     }
@@ -180,8 +184,8 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
-    public dataFilter(data, selectedItems) {
-        const _filterData = (data, selectedItems, filterFunction) => {
+    public dataFilter(data: any, selectedItems: ArrayCollection<ListOption>): void {
+        const _filterData = (data: any, selectedItems: ArrayCollection<ListOption>, filterFunction: Function) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
                 trackItemBy: this.trackItemBy
@@ -202,7 +206,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
         }
     }
 
-    public searchFilter(data, selectedItems, filterKey) {
+    public searchFilter(data: any, selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         const _filterData = (filterKey: string, field: string | number) => {
             data.filter(this.filterFunction, {
                 selectedItems: selectedItems ? [].concat(...selectedItems) : null,
@@ -235,9 +239,9 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferListTargetRenderer extends TransferListRendererBase {
-    public searchFilter(selectedItems, filterKey) {
+    public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this._$data = selectedItems.filter(item => item[this.labelField].includes(filterKey));
+        this._$data = new ArrayCollection(selectedItems.filter(item => item[this.labelField].toString().includes(filterKey)));
     }
 }
 
@@ -294,7 +298,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      * 渲染器配置
      * @internal
      */
-    public _$setting = { selectAll: false };
+    public _$setting: rendererSetting = { selectAll: false };
 
     /**
      * 设置数据的显示字段
@@ -321,7 +325,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     /**
      * @internal
      */
-    public _$updateSelectedItems() {
+    public _$updateSelectedItems(): void {
         const allCheckedNodes = this.treeExt.getCheckedNodes(true);
         const checkedNodes = allCheckedNodes.filter(node => {
             return !node.isParent && !node.isHidden;
@@ -330,7 +334,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         this.selectedItemsChange.emit();
     }
 
-    private _getLeafNodes(nodes, result = []) {
+    private _getLeafNodes(nodes: Array<any>, result = []): Array<any> {
         for (let i = 0, length = nodes.length; i < length; i++) {
             if (!nodes[i].nodes) {
                 if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
@@ -343,12 +347,12 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         return result;
     }
 
-    public update() {
+    public update(): void {
         this._$validData = new ArrayCollection(this._getLeafNodes([this._$data]));
         this._$currentSelectedItems = this._$selectedItems;
     }
 
-    public reset() {
+    public reset(): void {
         this._$selectedItems.splice(0, this._$selectedItems.length);
         this.selectedItemsChange.emit();
     }
@@ -356,7 +360,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     /**
      * @internal
      */
-    public _filterTree(tree, keyMap, arr, searchKey) {
+    public _filterTree(tree: Array<any>, keyMap: Array<any>, arr: Array<any>, searchKey: string) {
         if (!tree || !tree.length) {
             return [];
         }
@@ -378,7 +382,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         return arr;
     }
 
-    public dataFilter(data, selectedItems) {
+    public dataFilter(data: any, selectedItems: ArrayCollection<ListOption>): Array<any> {
         const keyMap = [];
         const result = [];
         selectedItems.forEach(item => {
@@ -387,7 +391,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         return this._filterTree(data.nodes, keyMap, result, '');
     }
 
-    public searchFilter(data, selectedItems, $event) {
+    public searchFilter(data: any, selectedItems: ArrayCollection<ListOption>, $event: string) {
         const keyMap = [];
         const result = [];
         const searchKey = $event.length > 0 ? $event.trim() : "";
@@ -462,7 +466,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 渲染器配置
      * @internal
      */
-    public _$setting = { selectAll: false };
+    public _$setting: rendererSetting = { selectAll: false };
 
     /**
      * 设置数据的显示字段
@@ -489,13 +493,13 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     /**
      * @internal
      */
-    public _$updateSelectedItems(value) {
-        this.selectedRows = this._getSelectedRows(value);
+    public _$updateSelectedItems(value: AdditionalTableData): void {
+        this.selectedRows = new ArrayCollection(this._getSelectedRows(value));
         this._$selectedItems = this.selectedRows
         this.selectedItemsChange.emit();
     }
 
-    public update() {
+    public update(): void {
         const trackItemByFiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
         if (trackItemByFiledIndex === -1) {
             console.error("trackItemBy值在filed中未找到！")
@@ -510,7 +514,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
         })
     }
 
-    public reset() {
+    public reset(): void {
         if (CommonUtils.isUndefined(this.additionalData)) {
             return;
         }
@@ -564,8 +568,8 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    public dataFilter(data: any, selectedItems: any) {
-        const _filterData = (data, selectedItems, filterFunction) => {
+    public dataFilter(data: any, selectedItems: ArrayCollection<ListOption>): void {
+        const _filterData = (data: any, selectedItems: ArrayCollection<ListOption>, filterFunction: Function) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
                 trackItemBy: this.trackItemBy,
@@ -588,7 +592,7 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
         }
     }
 
-    public searchFilter(data: any, selectedItems: any, filterKey: any, isTarget: boolean): void {
+    public searchFilter(data: any, selectedItems: ArrayCollection<ListOption>, filterKey: string, isTarget: boolean): void {
         if (!isTarget) {
             const _filterData = (data, selectedItems, filterFunction) => {
                 data.filter(filterFunction, {

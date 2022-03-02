@@ -48,7 +48,7 @@ import { JigsawTableModule } from "../table/table";
  * 此处不能使用箭头函数
  * 而且不能依赖任何外部函数、功能
  */
-const transferFilterFunction = function (item) {
+const transferFilterFunction = function (item: any) {
     let listResult = true;
     let keyResult = true;
     if (this.selectedItems) {
@@ -66,8 +66,8 @@ const transferFilterFunction = function (item) {
  * 此处不能使用箭头函数
  * 而且不能依赖任何外部函数、功能
  */
-const transferServerFilterFunction = function (item) {
-    function isUndefined(value) {
+const transferServerFilterFunction = function (item: any) {
+    function isUndefined(value: any) {
         return value === undefined || value === null;
     }
 
@@ -147,7 +147,7 @@ const transferServerFilterFunction = function (item) {
  * 此处不能使用箭头函数
  * 而且不能依赖任何外部函数、功能
  */
-const transferTableFilterFunction = function (item) {
+const transferTableFilterFunction = function (item: any) {
     const trackItemByFiledIndex = this.field.findIndex(item => item === this.trackItemBy);
     if (trackItemByFiledIndex === -1) {
         console.error("trackItemBy值在filed中未找到！")
@@ -174,8 +174,8 @@ const transferTableFilterFunction = function (item) {
     return listResult && keyResult;
 };
 
-const transferTableServerFilterFunction = function (item) {
-    function isUndefined(value) {
+const transferTableServerFilterFunction = function (item: any) {
+    function isUndefined(value: any) {
         return value === undefined || value === null;
     }
 
@@ -338,8 +338,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     @ViewChild('transferTargetRendererHost', { read: ViewContainerRef })
     protected targetRendererHost: ViewContainerRef;
 
-    public sourceComponent;
-    public targetComponent;
+    public sourceComponent: any;
+    public targetComponent: any;
 
     public sourceToggleButtonSubscribe: Subscription;
 
@@ -364,11 +364,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data() {
+    public get data(): any {
         return this._data;
     }
 
-    public set data(value) {
+    public set data(value: any) {
         this.runMicrotask(() => {
             this._render();
 
@@ -437,7 +437,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         })
     }
 
-    private _render() {
+    private _render(): void {
         let sourceComponentFactory;
         let targetComponentFactory;
 
@@ -475,7 +475,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         });
     }
 
-    private _refreshForArray(value: ArrayCollection<any>) {
+    private _refreshForArray(value: ArrayCollection<any>): void {
         this.sourceComponent.filterFunction = this._getFilterFunction('list', 'local', false);
         const data = new LocalPageableArray<ListOption>();
         data.pagingInfo.pageSize = Infinity;
@@ -506,7 +506,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         })
     }
 
-    private _refreshForPageableArray(data: LocalPageableArray<any> | PageableArray) {
+    private _refreshForPageableArray(data: LocalPageableArray<any> | PageableArray): void {
         if (this._removeOnRefreshListener) {
             this._removeOnRefreshListener();
             this._removeOnRefreshListener = null;
@@ -518,7 +518,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.sourceComponent.dataFilter(data, this.selectedItems)
     }
 
-    private _refreshForPageableTableData(data: LocalPageableTableData | PageableTableData) {
+    private _refreshForPageableTableData(data: LocalPageableTableData | PageableTableData): void {
         if (this._removeOnRefreshListener) {
             this._removeOnRefreshListener();
             this._removeOnRefreshListener = null;
@@ -533,7 +533,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.sourceComponent.dataFilter(data, this.selectedItems);
     }
 
-    private _refreshForTableData(value: TableData) {
+    private _refreshForTableData(value: TableData): void {
         this.sourceComponent.filterFunction = this._getFilterFunction('table', 'local', false);
         const data = new LocalPageableTableData();
         data.pagingInfo.pageSize = Infinity;
@@ -562,7 +562,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         })
     }
 
-    private _refreshForTreeData(value: SimpleTreeData) {
+    private _refreshForTreeData(value: SimpleTreeData): void {
         this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(value, this.selectedItems));
         this.sourceComponent.update();
         this.targetComponent._$data = this.selectedItems;
@@ -585,11 +585,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     @RequireMarkForCheck()
     @Input()
-    public get selectedItems() {
+    public get selectedItems(): ArrayCollection<ListOption> {
         return this._selectedItems;
     }
 
-    public set selectedItems(value: ArrayCollection<ListOption> | any) {
+    public set selectedItems(value: ArrayCollection<ListOption>) {
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
             return;
         }
@@ -714,7 +714,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return `${selectedItemsCount} / ${this.targetComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
     }
 
-    private _checkSourceSelectAll() {
+    private _checkSourceSelectAll(): void {
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
         this.sourceComponent.update();
         if (CommonUtils.isUndefined(this.sourceComponent._$currentSelectedItems)) {
@@ -732,7 +732,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
     }
 
-    private _checkTargetSelectAll() {
+    private _checkTargetSelectAll(): void {
         this._$targetButton = this.targetComponent._$selectedItems.length > 0;
         this.targetComponent.update();
         if (!this.targetComponent._$selectedItems || this.targetComponent._$selectedItems.length === 0) {
@@ -749,7 +749,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$sourceSelectAll() {
+    public _$sourceSelectAll(): void {
         this.sourceComponent.selectAll();
         this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
     }
@@ -757,7 +757,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$targetSelectAll() {
+    public _$targetSelectAll(): void {
         this.targetComponent.selectAll();
         this._$targetButton = this.targetComponent._$selectedItems.length > 0;
     }
@@ -765,7 +765,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$sourceSearching($event) {
+    public _$sourceSearching($event: string): void {
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
@@ -783,7 +783,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$targetSearching($event) {
+    public _$targetSearching($event: string): void {
         this.targetComponent.searchFilter(this.selectedItems, $event);
         this.targetComponent._$selectedItems.splice(0, this.targetComponent._$selectedItems.length)
         this._checkTargetSelectAll()
@@ -792,7 +792,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$sourceTransfer() {
+    public _$sourceTransfer(): void {
         if (!this._$sourceButton) {
             return
         }
@@ -818,7 +818,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$targetTransfer() {
+    public _$targetTransfer(): void {
         if (!this._$targetButton) {
             return
         }
@@ -843,12 +843,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._$targetSearchKey = '';
         this.selectedItemsChange.emit(this.selectedItems)
     }
-
-    /**
-     * 更新transfer的样式信息
-     * @internal
-     */
-    public _$transferClass: {};
 
     private _removeOnChangeListener: CallbackRemoval;
     private _removeOnRefreshListener: CallbackRemoval;
