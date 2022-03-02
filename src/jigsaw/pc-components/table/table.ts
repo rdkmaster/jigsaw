@@ -34,7 +34,8 @@ import {
     SortChangeEvent,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting
+    TableHeadSetting,
+    rowInfo
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {SortOrder, IPageable, PagingInfo} from "../../common/core/data/component-data";
@@ -154,6 +155,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
     @Output()
     public selectedRowChange: EventEmitter<number> = new EventEmitter<number>();
+    @Output()
+    public rowClick: EventEmitter<rowInfo> = new EventEmitter<rowInfo>();
 
     private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
@@ -608,6 +611,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$clickRow(rowIndex: number) {
+        const rowInfo = {
+            index: rowIndex,
+            data: this.data.data[rowIndex]
+        }
+        this.rowClick.emit(rowInfo)
         if (this._selectedRow === rowIndex) {
             return;
         }
@@ -935,6 +943,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeHorizontalScrollListener = this._renderer.listen(
                 el, 'ps-scroll-x', () => this._setVerticalScrollbarOffset());
         });
+    }
+
+    /**
+     * 展开行
+     * 
+     */
+    public expand(rowIndex: number, html: any) {
+        
     }
 
     ngAfterViewInit() {

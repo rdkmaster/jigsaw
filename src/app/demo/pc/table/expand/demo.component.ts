@@ -63,6 +63,18 @@ export class TableExpandDemoComponent {
         }
     ];
 
+    selectChange($event) {
+        console.log(1, $event)
+    }
+
+    selectedRowChange($event) {
+        console.log(2, $event)
+    }
+
+    rowClick($event) {
+        console.log(3, $event)
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
