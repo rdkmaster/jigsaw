@@ -10,14 +10,14 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import { ArrayCollection, PageableArray } from '../../../common/core/data/array-collection';
+import { ArrayCollection, PageableArray, LocalPageableArray } from '../../../common/core/data/array-collection';
 import { CommonUtils } from '../../../common/core/utils/common-utils';
 import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
 import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
 import { TableCellCheckboxRenderer, TableHeadCheckboxRenderer } from '../../../pc-components/table/table-renderer';
 import { JigsawTable } from '../../../pc-components/table/table';
-import { TableData } from '../../../common/core/data/table-data';
-import { SimpleTreeData } from '../../../common/core/data/tree-data';
+import { TableData, LocalPageableTableData, PageableTableData } from '../../../common/core/data/table-data';
+import { SimpleTreeData, SimpleNode } from '../../../common/core/data/tree-data';
 
 export type ListOption = {
     disabled?: boolean;
@@ -184,7 +184,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
-    public dataFilter(data: any, selectedItems: ArrayCollection<ListOption>): void {
+    public dataFilter(data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>): void {
         const _filterData = (data: any, selectedItems: ArrayCollection<ListOption>, filterFunction: Function) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
@@ -206,7 +206,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
         }
     }
 
-    public searchFilter(data: any, selectedItems: ArrayCollection<ListOption>, filterKey: string) {
+    public searchFilter(data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         const _filterData = (filterKey: string, field: string | number) => {
             data.filter(this.filterFunction, {
                 selectedItems: selectedItems ? [].concat(...selectedItems) : null,
@@ -360,7 +360,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     /**
      * @internal
      */
-    public _filterTree(tree: Array<any>, keyMap: Array<any>, arr: Array<any>, searchKey: string) {
+    public _filterTree(tree: SimpleNode[], keyMap: Array<string>, arr: Array<any>, searchKey: string) {
         if (!tree || !tree.length) {
             return [];
         }
@@ -382,7 +382,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         return arr;
     }
 
-    public dataFilter(data: any, selectedItems: ArrayCollection<ListOption>): Array<any> {
+    public dataFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>): Array<any> {
         const keyMap = [];
         const result = [];
         selectedItems.forEach(item => {
@@ -391,7 +391,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         return this._filterTree(data.nodes, keyMap, result, '');
     }
 
-    public searchFilter(data: any, selectedItems: ArrayCollection<ListOption>, $event: string) {
+    public searchFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>, $event: string) {
         const keyMap = [];
         const result = [];
         const searchKey = $event.length > 0 ? $event.trim() : "";
@@ -568,7 +568,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTableSourceRenderer extends TransferTableRendererBase {
-    public dataFilter(data: any, selectedItems: ArrayCollection<ListOption>): void {
+    public dataFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>): void {
         const _filterData = (data: any, selectedItems: ArrayCollection<ListOption>, filterFunction: Function) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
@@ -592,7 +592,7 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
         }
     }
 
-    public searchFilter(data: any, selectedItems: ArrayCollection<ListOption>, filterKey: string, isTarget: boolean): void {
+    public searchFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterKey: string, isTarget: boolean): void {
         if (!isTarget) {
             const _filterData = (data, selectedItems, filterFunction) => {
                 data.filter(filterFunction, {

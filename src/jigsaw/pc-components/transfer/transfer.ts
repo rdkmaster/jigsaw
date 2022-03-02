@@ -10,7 +10,8 @@ import {
     ViewContainerRef,
     Output,
     EventEmitter,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    ComponentFactory
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
@@ -438,8 +439,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _render(): void {
-        let sourceComponentFactory;
-        let targetComponentFactory;
+        let sourceComponentFactory: ComponentFactory<any>;
+        let targetComponentFactory: ComponentFactory<any>;
 
         sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
         targetComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.targetRenderer);
