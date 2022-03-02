@@ -1,4 +1,4 @@
-import { TemplateRef, Type, EventEmitter } from "@angular/core";
+import { TemplateRef, Type, EventEmitter, ElementRef } from "@angular/core";
 import {
     BigTableData,
     LocalPageableTableData,
@@ -121,7 +121,6 @@ export class TableCellSetting {
     group: boolean;
     field: string;
     rowSpan: number;
-    colSpan: number;
     tooltip: any;
     innerHtmlContext: any;
 }
@@ -464,5 +463,6 @@ export class AdditionalTableData extends TableData {
 export class rowInfo {
     index: number;
     data: any;
+    rowElementRefs: ElementRef;
 }
 

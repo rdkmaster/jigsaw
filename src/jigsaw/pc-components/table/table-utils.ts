@@ -33,7 +33,7 @@ export class TableUtils {
     public static updateCellSettings(columnDefine: ColumnDefine, settings: TableCellSetting): TableCellSetting {
         if (!settings) {
             settings = {
-                cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', rowSpan: 1, colSpan: 1,
+                cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', rowSpan: 1,
                 editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null
             }
         }

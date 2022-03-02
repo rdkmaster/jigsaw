@@ -281,7 +281,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 settings = TableUtils.updateCellSettings(columnDefine, settings);
                 // reset the rowSpan value, it will be recomputed later.
                 settings.rowSpan = 1;
-                settings.colSpan = 1;
                 this._cellSettingsBackup[field].push(settings);
 
                 if (!this._$cellSettings[rowIndex]) {
@@ -324,43 +323,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     } else {
                         groupSetting = settings;
                     }
-                }
-
-                // if (rowIndex === 1) {
-                //     if (CommonUtils.isDefined(preColIndex)) {
-                //         const preSettings = this._$cellSettings[rowIndex][preColIndex];
-                //         if (preSettings.cellData == settings.cellData) {
-                //             preSettings.colSpan++;
-                //             settings.colSpan = 0;
-                //         }
-                //     }
-                // }
-                
+                } 
             }
-            preColIndex = realColIndex;
         });
-
-        this._updateColspan([1], columnDefines)
-    }
-
-    private _updateColspan(rowIndexArray: [number], columnDefines: ColumnDefine[]) {
-        rowIndexArray.forEach(rowIndex => {
-            let rowSetting: TableCellSetting;
-            let preColIndex:number;
-            columnDefines.forEach(columnDefine => {
-                if (columnDefine.visible === false) {
-                    return;
-                }
-                const field = <string>columnDefine.target;
-                const [realColIndex,] = this._getColumnIndex(field);
-                console.log(columnDefine)
-                if(CommonUtils.isDefined(preColIndex)){
-                    rowSetting = this._$cellSettings[rowIndex][preColIndex];
-                    
-                }
-                preColIndex = realColIndex;
-            })
-        })
     }
 
     /**
@@ -611,11 +576,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$clickRow(rowIndex: number) {
+        console.log(this._rowElementRefs.toArray())
         const rowInfo = {
             index: rowIndex,
-            data: this.data.data[rowIndex]
+            data: this.data.data[rowIndex],
+            rowElementRefs:this._rowElementRefs.toArray()[rowIndex]
         }
-        this.rowClick.emit(rowInfo)
+        this.rowClick.emit(rowInfo);
+        this.expand(rowInfo,`<div>test</div><button onclick="kkk()">test</button><jigsaw-button>rowIndex:${rowIndex}</jigsaw-button>`);
         if (this._selectedRow === rowIndex) {
             return;
         }
@@ -949,8 +917,25 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 展开行
      * 
      */
-    public expand(rowIndex: number, html: any) {
-        
+    public expand(rowInfo: rowInfo, html: any): void {
+        const ele = rowInfo.rowElementRefs.nativeElement;
+        console.log(ele.nextSibling)
+
+        // 需要保护
+        if (ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
+            ele.nextSibling.remove();
+        } else {
+            let text = document.createElement('tr');
+            text.innerHTML = html;
+            text.classList.add('jigsaw-table-row-expansion');
+            // let text = document.createTextNode("This is my caption.");
+            console.log(ele.parentNode)
+            ele.parentNode.insertBefore(text, ele.nextSibling)
+        }
+    }
+
+    private _removeAllExpand(): void {
+
     }
 
     ngAfterViewInit() {
