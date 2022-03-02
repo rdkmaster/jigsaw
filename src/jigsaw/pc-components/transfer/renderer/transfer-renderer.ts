@@ -241,7 +241,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 export class TransferListTargetRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this._$data = new ArrayCollection(selectedItems.filter(item => item[this.labelField].toString().includes(filterKey)));
+        this._$data = new ArrayCollection(selectedItems.filter(item => item[this.labelField].toString().toLowerCase().includes(filterKey.toLowerCase())));
     }
 }
 
