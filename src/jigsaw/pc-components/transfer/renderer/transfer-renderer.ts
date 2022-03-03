@@ -491,8 +491,8 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * @internal
      */
     public _$updateSelectedItems(value: AdditionalTableData): void {
-        this.selectedRows = new ArrayCollection(this._getSelectedRows(value));
-        this._$selectedItems = this.selectedRows
+        this.selectedRows =this._getSelectedRows(value);
+        this._$selectedItems =  new ArrayCollection(this.selectedRows);
         this.selectedItemsChange.emit();
     }
 
@@ -545,7 +545,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
         }, []);
     }
 
-    public selectedRows: ArrayCollection<ListOption>;
+    public selectedRows: any[];
 
     public additionalData: AdditionalTableData;
 
