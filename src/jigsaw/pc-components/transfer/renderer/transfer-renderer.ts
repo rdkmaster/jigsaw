@@ -18,6 +18,7 @@ import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-
 import {JigsawTable} from '../../../pc-components/table/table';
 import {TableData, LocalPageableTableData, PageableTableData, TableDataMatrix, TableMatrixRow} from '../../../common/core/data/table-data';
 import {SimpleTreeData, SimpleNode} from '../../../common/core/data/tree-data';
+import {JigsawTransfer} from "../transfer";
 
 export type ListOption = {
     disabled?: boolean;
@@ -27,17 +28,40 @@ export type ListOption = {
     [field: string]: string | boolean | number;
 }
 
-export type rendererSetting = {
+export type RendererSetting = {
     selectAll: boolean
 }
 
 @Directive()
 export abstract class AbstractTransferRendererBase {
     public filterFunction: (item: any) => boolean;
+
+    public abstract reset();
+    public abstract update();
+    public abstract selectAll();
+    public abstract dataFilter(...args): void;
+    public abstract searchFilter(...args): void
+
+    /**
+     * @internal
+     */
+    public _$data: any;
+
+    public transferHost: JigsawTransfer;
+    public labelField: string;
+    public subLabelField: string;
+    public trackItemBy: string;
+    public _$setting: RendererSetting;
+    public selectedItemsChange: EventEmitter<void>;
+    public additionalData: any;
+
+    public _$currentSelectedItems: any[];
+    public _$validData: any[];
+    public _$selectedItems: ArrayCollection<ListOption>[] | ArrayCollection<ListOption>;
 }
 
 @Directive()
-export class TransferListRendererBase extends AbstractTransferRendererBase {
+export abstract class TransferListRendererBase extends AbstractTransferRendererBase {
     constructor(
         protected _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
@@ -88,7 +112,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
      * 渲染器配置
      * @internal
      */
-    public _$setting: rendererSetting = {selectAll: true};
+    public _$setting: RendererSetting = {selectAll: true};
 
     /**
      * 设置数据的显示字段
@@ -170,7 +194,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
                 isExist = true;
             }
             return isExist;
-        })
+        });
     }
 
     public reset(): void {
@@ -235,15 +259,18 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
     templateUrl: './transfer-list.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TransferListTargetRenderer extends TransferListRendererBase {
+export class TransferListDestRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         this._$data = new ArrayCollection(selectedItems.filter(item => item[this.labelField].toString().toLowerCase().includes(filterKey.toLowerCase())));
     }
+
+    public dataFilter(...args): void {
+    }
 }
 
 @Directive()
-export class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
+export abstract class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
@@ -281,7 +308,6 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      */
     public _$currentSelectedItems: ListOption[];
 
-
     /**
      * 渲染器已选数据
      * @internal
@@ -295,7 +321,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      * 渲染器配置
      * @internal
      */
-    public _$setting: rendererSetting = {selectAll: false};
+    public _$setting: RendererSetting = {selectAll: false};
 
     /**
      * 设置数据的显示字段
@@ -324,9 +350,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      */
     public _$updateSelectedItems(): void {
         const allCheckedNodes = this.treeExt.getCheckedNodes(true);
-        const checkedNodes = allCheckedNodes.filter(node => {
-            return !node.isParent && !node.isHidden;
-        })
+        const checkedNodes = allCheckedNodes.filter(node => !node.isParent && !node.isHidden);
         this._$selectedItems.fromArray(checkedNodes);
         this.selectedItemsChange.emit();
     }
@@ -380,21 +404,15 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     }
 
     public dataFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>): Array<any> {
-        const keyMap = [];
+        const keyMap = selectedItems.map(item => item[this.trackItemBy]);
         const result = [];
-        selectedItems.forEach(item => {
-            keyMap.push(item[this.trackItemBy])
-        });
         return this._filterTree(data.nodes, keyMap, result, '');
     }
 
     public searchFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>, $event: string) {
-        const keyMap = [];
+        const keyMap = selectedItems.map(item => item[this.trackItemBy]);
         const result = [];
         const searchKey = $event.length > 0 ? $event.trim() : "";
-        selectedItems.forEach(item => {
-            keyMap.push(item[this.trackItemBy])
-        });
         return this._filterTree(data.nodes, keyMap, result, searchKey);
     }
 
@@ -408,10 +426,12 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTreeSourceRenderer extends TransferTreeRendererBase {
+    public selectAll() {
+    }
 }
 
 @Directive()
-export class TransferTableRendererBase extends AbstractTransferRendererBase {
+export abstract class TransferTableRendererBase extends AbstractTransferRendererBase {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
@@ -463,7 +483,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 渲染器配置
      * @internal
      */
-    public _$setting: rendererSetting = {selectAll: false};
+    public _$setting: RendererSetting = {selectAll: false};
 
     /**
      * 设置数据的显示字段
@@ -597,8 +617,8 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
         }
     }
 
-    public searchFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterKey: string, isTarget: boolean): void {
-        if (isTarget) {
+    public searchFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterKey: string, isDest: boolean): void {
+        if (isDest) {
             return;
         }
         const _filterData = (data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
@@ -624,12 +644,23 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
             _filterData(data, selectedItems, this.filterFunction);
         }
     }
+
+    public selectAll() {
+    }
 }
 
 @Component({
     templateUrl: './transfer-table.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TransferTableTargetRenderer extends TransferTableRendererBase {
+export class TransferTableDestRenderer extends TransferTableRendererBase {
+    public dataFilter(...args): void {
+    }
+
+    public searchFilter(...args): void {
+    }
+
+    public selectAll() {
+    }
 }
 

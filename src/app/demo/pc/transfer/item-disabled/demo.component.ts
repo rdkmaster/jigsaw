@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, TableData, TransferListSourceRenderer, TransferListTargetRenderer} from "jigsaw/public_api";
+import {ArrayCollection, TableData, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -21,7 +21,7 @@ export class TransferItemDisabledDemoComponent {
     data: ArrayCollection<any>;
 
     public sourceRenderer = TransferListSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     public labelField = 'zhName';
     public subLabelField = 'enName';

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ArrayCollection, TransferListSourceRenderer, TransferListTargetRenderer} from "jigsaw/public_api";
+import {ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class TransferListDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
     public data: ArrayCollection<any>;
     public selectedItems: ArrayCollection<any>;
     public labelField = 'name';

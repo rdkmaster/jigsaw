@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, ListOption, TransferTableTargetRenderer } from "jigsaw/public_api";
+import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, TransferTableDestRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -113,7 +113,7 @@ export class TransferTableDemoComponent {
 
     data: TableData;
     public sourceRenderer = TransferTableSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     selectedItems: ArrayCollection<ListOption>;
 

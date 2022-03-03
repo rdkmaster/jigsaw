@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ArrayCollection, TransferListSourceRenderer, TransferListTargetRenderer } from "jigsaw/public_api";
+import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -7,7 +7,7 @@ import { ArrayCollection, TransferListSourceRenderer, TransferListTargetRenderer
 })
 export class TransferArrayDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     data: ArrayCollection<any>;
     selectedItems: ArrayCollection<any>;

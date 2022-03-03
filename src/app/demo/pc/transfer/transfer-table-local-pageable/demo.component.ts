@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { TableData, TransferTableSourceRenderer, TransferListTargetRenderer, ArrayCollection, ListOption, TransferTableTargetRenderer, LocalPageableTableData } from "jigsaw/public_api";
+import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, TransferTableDestRenderer, LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -20,7 +20,7 @@ export class TransferTableLocalPageableDemoComponent {
 
     data: LocalPageableTableData;
     public sourceRenderer = TransferTableSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     selectedData: ArrayCollection<ListOption>;
 

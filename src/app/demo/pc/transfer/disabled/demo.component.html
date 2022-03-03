@@ -10,9 +10,9 @@
     <div class="demo-1 live-demo">
         <jigsaw-header [level]="2">普通数据</jigsaw-header>
         <j-transfer width="100%" height="500" [data]="data" [searchable]="true"
-            (selectedItemsChange)="handleSelectChange($event)" [selectedItems]="selectedCountries" [disabled]="!enabled"
-            [sourceRenderer]="sourceRenderer" [targetRenderer]="targetRenderer" [labelField]="labelField"
-            [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"></j-transfer>
+                    (selectedItemsChange)="handleSelectChange($event)" [selectedItems]="selectedCountries" [disabled]="!enabled"
+                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
+                    [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"></j-transfer>
         <p class="message">选择的地区：{{selectedCountriesStr}}</p>
     </div>
 </div>

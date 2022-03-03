@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import {
     TransferTableSourceRenderer,
-    TransferListTargetRenderer,
+    TransferListDestRenderer,
     ArrayCollection,
     ListOption,
     PageableTableData
@@ -26,7 +26,7 @@ export class TransferTablePageableDemoComponent {
 
     data: PageableTableData;
     public sourceRenderer = TransferTableSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     selectedData: ArrayCollection<ListOption>;
 

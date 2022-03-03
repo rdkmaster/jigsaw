@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListTargetRenderer } from "jigsaw/public_api";
+import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -8,7 +8,7 @@ import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRende
 })
 export class TransferListLocalPageableDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     public labelField = 'zhName';
     public subLabelField = 'enName';

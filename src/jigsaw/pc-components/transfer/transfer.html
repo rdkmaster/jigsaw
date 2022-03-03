@@ -33,27 +33,27 @@
             <i class="iconfont iconfont-e144"></i>
         </a>
         <a class="jigsaw-transfer-option jigsaw-transfer-option-target"
-            [class.jigsaw-transfer-option-disabled]="!_$targetButton" (click)="_$targetTransfer()">
+           [class.jigsaw-transfer-option-disabled]="!_$destButton" (click)="_$destTransfer()">
             <i class="iconfont iconfont-e143"></i>
         </a>
     </div>
     <div class="jigsaw-transfer-item-cntr jigsaw-transfer-target">
         <div class="jigsaw-transfer-header">
             <div class="jigsaw-transfer-select-all">
-                <jigsaw-checkbox *ngIf="_$targetCheckbox" [(checked)]="_$targetSelectAllChecked"
-                    (checkedChange)="_$targetSelectAll()">
+                <jigsaw-checkbox *ngIf="_$destCheckbox" [(checked)]="_$destSelectAllChecked"
+                                 (checkedChange)="_$destSelectAll()">
                 </jigsaw-checkbox>
-                <span class="jigsaw-transfer-title">{{getTargetTitle}}</span>
+                <span class="jigsaw-transfer-title">{{getDestTitle}}</span>
                 <span class="jigsaw-transfer-subTitle"></span>
             </div>
             <div class="jigsaw-transfer-search-cntr">
                 <jigsaw-search-input width="100%" [disabled]="!searchable" [searchDebounce]="300"
-                    [(value)]="_$targetSearchKey" (search)="_$targetSearching($event)">
+                                     [(value)]="_$destSearchKey" (search)="_$destSearching($event)">
                 </jigsaw-search-input>
             </div>
         </div>
         <div class="jigsaw-transfer-body">
-            <ng-template #transferTargetRendererHost></ng-template>
+            <ng-template #transferDestRendererHost></ng-template>
         </div>
         <div class="jigsaw-transfer-footer"></div>
     </div>

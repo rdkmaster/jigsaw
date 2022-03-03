@@ -8,5 +8,5 @@
 
 <jigsaw-header [level]="2">从左边列表至少选择一个条目到右边列表中</jigsaw-header>
 <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData" [sourceRenderer]="sourceRenderer"
-    [targetRenderer]="targetRenderer" [labelField]="labelField" [subLabelField]="subLabelField"
+            [destRenderer]="targetRenderer" [labelField]="labelField" [subLabelField]="subLabelField"
     [trackItemBy]="trackItemBy" [valid]="selectedData.length > 0"></j-transfer>

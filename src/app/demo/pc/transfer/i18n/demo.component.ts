@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListTargetRenderer, TranslateHelper} from "jigsaw/public_api";
+import {ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer, TranslateHelper} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TransferArrayI18nDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
     public labelField = 'zhName';
     public subLabelField = 'shortName'
     public trackItemBy = 'zhName';

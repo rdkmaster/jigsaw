@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SimpleTreeData, TransferListTargetRenderer, TransferTreeSourceRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
+import { SimpleTreeData, TransferListDestRenderer, TransferTreeSourceRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class TransferTreeDemoComponent {
 
     public sourceRenderer = TransferTreeSourceRenderer;
-    public targetRenderer = TransferListTargetRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     constructor(public http: HttpClient) {
         this.data = new SimpleTreeData();
