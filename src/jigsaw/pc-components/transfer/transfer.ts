@@ -52,12 +52,12 @@ import { JigsawTableModule } from "../table/table";
  */
 const transferFilterFunction = function (item: any): boolean {
     let listResult = true;
-    let keyResult = true;
     if (this.selectedItems) {
         if (this.selectedItems.some(si => CommonUtils.compareValue(item, si, this.trackItemBy))) {
             listResult = false;
         }
     }
+    let keyResult = true;
     if (this.keyword !== null && this.keyword !== undefined) {
         keyResult = LocalPageableArray.filterItemByKeyword(item, this.keyword, this.fields);
     }
@@ -176,6 +176,10 @@ const transferTableFilterFunction = function (item: any): boolean {
     return listResult && keyResult;
 };
 
+/**
+ * 此处不能使用箭头函数
+ * 而且不能依赖任何外部函数、功能
+ */
 const transferTableServerFilterFunction = function (item: any): boolean {
     function isUndefined(value: any) {
         return value === undefined || value === null;
@@ -779,7 +783,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.additionalData.refresh();
         }
         this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
-        this._checkSourceSelectAll()
+        this._checkSourceSelectAll();
     }
 
     /**
@@ -788,7 +792,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public _$targetSearching($event: string): void {
         this.targetComponent.searchFilter(this.selectedItems, $event);
         this.targetComponent._$selectedItems.splice(0, this.targetComponent._$selectedItems.length)
-        this._checkTargetSelectAll()
+        this._checkTargetSelectAll();
     }
 
     /**
@@ -828,10 +832,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.selectedItems.forEach((item, i) => {
                 if (CommonUtils.compareValue(item, selectedItem, this.trackItemBy)) {
                     this.selectedItems.splice(i, 1);
-                    return;
                 }
-            })
-        })
+            });
+        });
         this.targetComponent._$selectedItems.splice(0, this.targetComponent._$selectedItems.length)
         if (this.sourceRenderer === TransferTreeSourceRenderer) {
             this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));

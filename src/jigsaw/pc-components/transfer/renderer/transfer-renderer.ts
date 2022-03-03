@@ -10,14 +10,14 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import { ArrayCollection, PageableArray, LocalPageableArray } from '../../../common/core/data/array-collection';
-import { CommonUtils } from '../../../common/core/utils/common-utils';
-import { JigsawTreeExt } from '../../../pc-components/tree/tree-ext';
-import { AdditionalColumnDefine, AdditionalTableData } from '../../../pc-components/table/table-typings';
-import { TableCellCheckboxRenderer, TableHeadCheckboxRenderer } from '../../../pc-components/table/table-renderer';
-import { JigsawTable } from '../../../pc-components/table/table';
-import { TableData, LocalPageableTableData, PageableTableData, TableDataMatrix, TableMatrixRow } from '../../../common/core/data/table-data';
-import { SimpleTreeData, SimpleNode } from '../../../common/core/data/tree-data';
+import {ArrayCollection, PageableArray, LocalPageableArray} from '../../../common/core/data/array-collection';
+import {CommonUtils} from '../../../common/core/utils/common-utils';
+import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
+import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
+import {JigsawTable} from '../../../pc-components/table/table';
+import {TableData, LocalPageableTableData, PageableTableData, TableDataMatrix, TableMatrixRow} from '../../../common/core/data/table-data';
+import {SimpleTreeData, SimpleNode} from '../../../common/core/data/tree-data';
 
 export type ListOption = {
     disabled?: boolean;
@@ -88,7 +88,7 @@ export class TransferListRendererBase extends AbstractTransferRendererBase {
      * 渲染器配置
      * @internal
      */
-    public _$setting: rendererSetting = { selectAll: true };
+    public _$setting: rendererSetting = {selectAll: true};
 
     /**
      * 设置数据的显示字段
@@ -295,7 +295,7 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
      * 渲染器配置
      * @internal
      */
-    public _$setting: rendererSetting = { selectAll: false };
+    public _$setting: rendererSetting = {selectAll: false};
 
     /**
      * 设置数据的显示字段
@@ -363,14 +363,14 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
         }
         for (let i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
-                let newNode = { ...tree[i], nodes: [{ isTransferTreeParentNode: '', isHidden: true }] };
+                let newNode = {...tree[i], nodes: [{isTransferTreeParentNode: '', isHidden: true}]};
                 newNode['open'] = true;
                 arr.push(newNode);
                 this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
             } else {
                 if (!keyMap.includes(tree[i][this.trackItemBy])) {
                     if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || !(searchKey.length > 0)) {
-                        let newNode = { ...tree[i] };
+                        let newNode = {...tree[i]};
                         arr.push(newNode);
                     }
                 }
@@ -408,8 +408,8 @@ export class TransferTreeRendererBase extends AbstractTransferRendererBase imple
     encapsulation: ViewEncapsulation.None
 })
 export class TransferTreeSourceRenderer extends TransferTreeRendererBase {
-
 }
+
 @Directive()
 export class TransferTableRendererBase extends AbstractTransferRendererBase {
     constructor(
@@ -454,7 +454,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
+    public _$selectedItems: ArrayCollection<ListOption>[] = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -463,7 +463,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 渲染器配置
      * @internal
      */
-    public _$setting: rendererSetting = { selectAll: false };
+    public _$setting: rendererSetting = {selectAll: false};
 
     /**
      * 设置数据的显示字段
@@ -491,15 +491,15 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * @internal
      */
     public _$updateSelectedItems(value: AdditionalTableData): void {
-        this.selectedRows =this._getSelectedRows(value);
-        this._$selectedItems =  new ArrayCollection(this.selectedRows);
+        this.selectedRows = this._getSelectedRows(value);
+        this._$selectedItems = new ArrayCollection(this.selectedRows);
         this.selectedItemsChange.emit();
     }
 
     public update(): void {
-        const trackItemByFiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy })
+        const trackItemByFiledIndex = this._$data.field.findIndex(item => item === this.trackItemBy);
         if (trackItemByFiledIndex === -1) {
-            console.error("trackItemBy值在filed中未找到！")
+            console.error("trackItemBy值在filed中未找到！");
             return;
         }
         this._$currentSelectedItems = this._$data.data.filter(item => {
@@ -524,28 +524,35 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
      * 获取选中的行
      * @param additionalData
      */
-    private _getSelectedRows(additionalData: AdditionalTableData) {
-        const trackItemByFiledIndex = this._$data.field.findIndex(item => { return item === this.trackItemBy });
+    private _getSelectedRows(additionalData: AdditionalTableData): ArrayCollection<ListOption>[] {
+        const trackItemByFiledIndex = this._$data.field.findIndex(item => {
+            return item === this.trackItemBy
+        });
         if (trackItemByFiledIndex === -1) {
             console.error("trackItemBy值在filed中未找到！")
             return;
         }
 
-        const labelFieldFiledIndex = this._$data.field.findIndex(item => { return item === this.labelField });
+        const labelFieldFiledIndex = this._$data.field.findIndex(item => {
+            return item === this.labelField
+        });
         if (labelFieldFiledIndex === -1) {
             console.error("labelField值在filed中未找到！")
             return;
         }
 
-        return additionalData.getAllTouched(0).reduce((selectedRows, item) => {
-            if (item.value) {
-                selectedRows.push({ [this.labelField]: item.data[labelFieldFiledIndex], [this.trackItemBy]: item.data[trackItemByFiledIndex] });
-            }
-            return selectedRows;
-        }, []);
+        return additionalData.getAllTouched(0)
+            .filter(item => item.value)
+            .reduce((selectedRows: any[], item: any) => {
+                selectedRows.push({
+                    [this.labelField]: item.data[labelFieldFiledIndex],
+                    [this.trackItemBy]: item.data[trackItemByFiledIndex]
+                });
+                return selectedRows;
+            }, []);
     }
 
-    public selectedRows: any[];
+    public selectedRows: ArrayCollection<ListOption>[];
 
     public additionalData: AdditionalTableData;
 
@@ -560,6 +567,7 @@ export class TransferTableRendererBase extends AbstractTransferRendererBase {
         }
     }];
 }
+
 @Component({
     templateUrl: './transfer-table.html',
     encapsulation: ViewEncapsulation.None
@@ -590,29 +598,30 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
     }
 
     public searchFilter(data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterKey: string, isTarget: boolean): void {
-        if (!isTarget) {
-            const _filterData = (data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
-                data.filter(filterFunction, {
-                    selectedItems: [].concat(...selectedItems),
-                    trackItemBy: this.trackItemBy,
-                    field: data.field,
-                    labelField: this.labelField,
-                    keyword: filterKey
-                });
-            }
+        if (isTarget) {
+            return;
+        }
+        const _filterData = (data: LocalPageableTableData | PageableTableData, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
+            data.filter(filterFunction, {
+                selectedItems: [].concat(...selectedItems),
+                trackItemBy: this.trackItemBy,
+                field: data.field,
+                labelField: this.labelField,
+                keyword: filterKey
+            });
+        }
 
-            if (!data || !this.filterFunction) {
-                return;
-            }
+        if (!data || !this.filterFunction) {
+            return;
+        }
 
-            if (data.busy) {
-                const removeAjaxCallback = data.onAjaxComplete(() => {
-                    removeAjaxCallback();
-                    _filterData(data, selectedItems, this.filterFunction);
-                })
-            } else {
+        if (data.busy) {
+            const removeAjaxCallback = data.onAjaxComplete(() => {
+                removeAjaxCallback();
                 _filterData(data, selectedItems, this.filterFunction);
-            }
+            })
+        } else {
+            _filterData(data, selectedItems, this.filterFunction);
         }
     }
 }
