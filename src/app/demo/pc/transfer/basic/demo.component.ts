@@ -18,7 +18,7 @@ export class TransferArrayDemoComponent {
     }
 
     addItem() {
-        this.data.push(`${Date.now()}`);
+        this.data.push(`${(Date.now().toString())}`);
         this.data.refresh();
     }
 
@@ -29,10 +29,11 @@ export class TransferArrayDemoComponent {
             this.selectedItems.splice(idx, 1);
         }
         this.data.refresh();
+        this.selectedItems.refresh();
     }
 
     addSelectedItem() {
-        const newLabel = Date.now();
+        const newLabel = Date.now().toString();
         this.data.push(newLabel);
         this.data.refresh();
         this.selectedItems.push(newLabel);

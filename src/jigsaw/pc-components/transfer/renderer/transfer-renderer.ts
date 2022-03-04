@@ -255,7 +255,15 @@ export class TransferListDestRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         this._$data = new ArrayCollection(selectedItems.filter(
-            item => item[this.labelField].toString().toLowerCase().includes(filterKey.toLowerCase())));
+            item => {
+                let value: string = '';
+                if (typeof item === 'string') {
+                    value = item;
+                } else if (this.labelField) {
+                    value = !item || item[this.labelField] === undefined || item[this.labelField] === null ? '' : item[this.labelField].toString();
+                }
+                return value.toLowerCase().includes(filterKey.toLowerCase())
+            }));
     }
 
     public dataFilter(...args): void {
