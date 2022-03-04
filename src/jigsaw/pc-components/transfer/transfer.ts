@@ -299,45 +299,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         translateService.use(translateService.getBrowserLang());
     }
 
-    /**
-     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
-     *
-     * $demo = transfer/disabled
-     */
-    private _disabled: boolean = false;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get disabled(): boolean {
-        return this._disabled;
-    }
-
-    public set disabled(value: boolean) {
-        this._disabled = value;
-    }
-
-    /**
-     * @internal
-     */
-    public _$sourceButton: boolean = false;
-
-    /**
-     * @internal
-     */
-    public _$destButton: boolean = false;
-
-    /**
-     * @internal
-     */
-    public _$sourceCheckbox: boolean = true;
-
-    /**
-     * @internal
-     */
-    public _$destCheckbox: boolean = true;
-
     @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
     protected sourceRendererHost: ViewContainerRef;
 
@@ -350,18 +311,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public sourceToggleButtonSubscribe: Subscription;
     public sourceSelectedItemsChangeSubscribe: Subscription;
     public destSelectedItemsChangeSubscribe: Subscription;
-
-    /**
-     * 全选
-     *
-     * @internal
-     */
-    public _$sourceSelectAllChecked = CheckBoxStatus.unchecked;
-
-    /**
-     * @internal
-     */
-    public _$destSelectAllChecked = CheckBoxStatus.unchecked;
 
     private _data: any;
 
@@ -666,6 +615,57 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     @Input()
     public searchable: boolean = true;
+
+    /**
+     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     *
+     * $demo = transfer/disabled
+     */
+    private _disabled: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get disabled(): boolean {
+        return this._disabled;
+    }
+
+    public set disabled(value: boolean) {
+        this._disabled = value;
+    }
+
+    /**
+     * @internal
+     */
+    public _$sourceButton: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$destButton: boolean = false;
+
+    /**
+     * @internal
+     */
+    public _$sourceCheckbox: boolean = true;
+
+    /**
+     * @internal
+     */
+    public _$destCheckbox: boolean = true;
+
+    /**
+     * 全选
+     *
+     * @internal
+     */
+    public _$sourceSelectAllChecked = CheckBoxStatus.unchecked;
+
+    /**
+     * @internal
+     */
+    public _$destSelectAllChecked = CheckBoxStatus.unchecked;
 
     /**
      * 选择结果发生变化时，向外面发送事件
