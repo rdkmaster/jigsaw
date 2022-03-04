@@ -57,7 +57,7 @@ export abstract class AbstractTransferRendererBase {
 
     public _$currentSelectedItems: any[];
     public _$validData: any[];
-    public _$selectedItems: ArrayCollection<ListOption>[] | ArrayCollection<ListOption>;
+    public _$selectedItems: ArrayCollection<ListOption>;
 }
 
 @Directive()
@@ -474,7 +474,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<ListOption>[] = new ArrayCollection([]);
+    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -544,7 +544,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      * 获取选中的行
      * @param additionalData
      */
-    private _getSelectedRows(additionalData: AdditionalTableData): ArrayCollection<ListOption>[] {
+    private _getSelectedRows(additionalData: AdditionalTableData): ArrayCollection<ListOption> {
         const trackItemByFiledIndex = this._$data.field.findIndex(item => {
             return item === this.trackItemBy
         });
@@ -561,18 +561,20 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
             return;
         }
 
+        let result = new ArrayCollection([]);
+
         return additionalData.getAllTouched(0)
             .filter(item => item.value)
-            .reduce((selectedRows: any[], item: any) => {
+            .reduce((selectedRows: ArrayCollection<ListOption>, item: any) => {
                 selectedRows.push({
                     [this.labelField]: item.data[labelFieldFiledIndex],
                     [this.trackItemBy]: item.data[trackItemByFiledIndex]
                 });
                 return selectedRows;
-            }, []);
+            }, result);
     }
 
-    public selectedRows: ArrayCollection<ListOption>[];
+    public selectedRows: ArrayCollection<ListOption>;
 
     public additionalData: AdditionalTableData;
 
