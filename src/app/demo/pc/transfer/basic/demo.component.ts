@@ -23,19 +23,22 @@ export class TransferArrayDemoComponent {
     }
 
     removeItem() {
-        this.data.pop();
-        this.selectedItems.length = 0;
+        const item = this.data.pop();
+        const idx = this.selectedItems.indexOf(item);
+        if (idx != -1) {
+            this.selectedItems.splice(idx, 1);
+        }
         this.data.refresh();
     }
 
-    addSelecteditem() {
+    addSelectedItem() {
         const newLabel = Date.now();
         this.data.push(newLabel);
         this.data.refresh();
         this.selectedItems.push(newLabel);
     }
 
-    removeSelecteditem() {
+    removeSelectedItem() {
         this.selectedItems.pop();
         this.selectedItems.refresh();
     }

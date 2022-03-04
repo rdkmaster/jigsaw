@@ -37,9 +37,13 @@ export abstract class AbstractTransferRendererBase {
     public filterFunction: (item: any) => boolean;
 
     public abstract reset();
+
     public abstract update();
+
     public abstract selectAll();
+
     public abstract dataFilter(...args): void;
+
     public abstract searchFilter(...args): void
 
     /**
@@ -158,11 +162,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
                 this._$selectedItems = new ArrayCollection([]);
             } else {
                 this._$selectedItems = new ArrayCollection(this._$selectedItems.filter(item => {
-                    let retain = true;
-                    if (this._$currentSelectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-                        retain = false;
-                    }
-                    return retain;
+                    return !this._$currentSelectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
                 }))
             }
         } else {
@@ -170,12 +170,8 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
                 this._$selectedItems = new ArrayCollection(this._$validData);
             } else {
                 const diff = this._$validData.filter(item => {
-                    let retain = true;
-                    if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-                        retain = false;
-                    }
-                    return retain;
-                })
+                    return !this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
+                });
                 this._$selectedItems = this._$selectedItems.concat(diff);
             }
         }
@@ -189,11 +185,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
 
         this._$validData = this._$data.filter(item => !item.disabled);
         this._$currentSelectedItems = this._$data.filter(item => {
-            let isExist = false;
-            if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy))) {
-                isExist = true;
-            }
-            return isExist;
+            return this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
         });
     }
 
@@ -209,22 +201,22 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
 })
 export class TransferListSourceRenderer extends TransferListRendererBase {
     public dataFilter(data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>): void {
-        const _filterData = (data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>, filterFunction: (item: any) => boolean) => {
+        if (!data || !this.filterFunction) {
+            return;
+        }
+
+        const _filterData = (data: LocalPageableArray<any> | PageableArray, selectedItems: ArrayCollection<ListOption>,
+                             filterFunction: (item: any) => boolean) => {
             data.filter(filterFunction, {
                 selectedItems: [].concat(...selectedItems),
                 trackItemBy: this.trackItemBy
             });
         }
-
-        if (!data || !this.filterFunction) {
-            return;
-        }
-
         if (data.busy) {
             const removeAjaxCallback = data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 _filterData(data, selectedItems, this.filterFunction);
-            })
+            });
         } else {
             _filterData(data, selectedItems, this.filterFunction);
         }
@@ -248,7 +240,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
             const removeAjaxCallback = data.onAjaxComplete(() => {
                 removeAjaxCallback();
                 _filterData(filterKey, field);
-            })
+            });
         } else {
             _filterData(filterKey, field);
         }
@@ -262,7 +254,8 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 export class TransferListDestRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this._$data = new ArrayCollection(selectedItems.filter(item => item[this.labelField].toString().toLowerCase().includes(filterKey.toLowerCase())));
+        this._$data = new ArrayCollection(selectedItems.filter(
+            item => item[this.labelField].toString().toLowerCase().includes(filterKey.toLowerCase())));
     }
 
     public dataFilter(...args): void {
@@ -358,11 +351,11 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     private _getLeafNodes(nodes: Array<any>, result = []): Array<any> {
         for (let i = 0, length = nodes.length; i < length; i++) {
             if (!nodes[i].nodes) {
-                if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
-                    result.push(nodes[i]);
-                }
-            } else {
                 result = this._getLeafNodes(nodes[i].nodes, result);
+                continue;
+            }
+            if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
+                result.push(nodes[i]);
             }
         }
         return result;
@@ -393,9 +386,8 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
                 this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
             } else {
                 if (!keyMap.includes(tree[i][this.trackItemBy])) {
-                    if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || !(searchKey.length > 0)) {
-                        let newNode = {...tree[i]};
-                        arr.push(newNode);
+                    if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || searchKey.length == 0) {
+                        arr.push({...tree[i]});
                     }
                 }
             }

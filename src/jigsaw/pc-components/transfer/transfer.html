@@ -32,12 +32,12 @@
             [class.jigsaw-transfer-option-disabled]="!_$sourceButton" (click)="_$sourceTransfer()">
             <i class="iconfont iconfont-e144"></i>
         </a>
-        <a class="jigsaw-transfer-option jigsaw-transfer-option-target"
+        <a class="jigsaw-transfer-option jigsaw-transfer-option-dest"
            [class.jigsaw-transfer-option-disabled]="!_$destButton" (click)="_$destTransfer()">
             <i class="iconfont iconfont-e143"></i>
         </a>
     </div>
-    <div class="jigsaw-transfer-item-cntr jigsaw-transfer-target">
+    <div class="jigsaw-transfer-item-cntr jigsaw-transfer-dest">
         <div class="jigsaw-transfer-header">
             <div class="jigsaw-transfer-select-all">
                 <jigsaw-checkbox *ngIf="_$destCheckbox" [(checked)]="_$destSelectAllChecked"
