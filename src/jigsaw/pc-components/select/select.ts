@@ -28,6 +28,7 @@ import {WingsTheme} from "../../common/common";
         "[style.width]": '!multipleSelect ? width : "none"',
         "[attr.data-theme]": "theme",
         "[class.jigsaw-select-host]": "true",
+        "[class.jigsaw-select-invalid]": "!valid",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",

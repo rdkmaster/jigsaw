@@ -10,6 +10,7 @@ import {WingsTheme} from "../../common/common";
     templateUrl: "collapse-and-group-select.html",
     host: {
         "[class.jigsaw-group-select-host]": "true",
+        "[class.jigsaw-group-select-invalid]": "!valid",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
@@ -41,6 +42,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
     templateUrl: "collapse-and-group-select.html",
     host: {
         "[class.jigsaw-collapse-select-host]": "true",
+        "[class.jigsaw-collapse-select-invalid]": "!valid",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
