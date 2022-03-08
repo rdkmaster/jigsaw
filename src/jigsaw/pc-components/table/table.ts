@@ -75,8 +75,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
-        if (!window.hasOwnProperty('_jigsawInternalCallbackWrapper') || !(window['_jigsawInternalCallbackWrapper'] instanceof Function)) {
-            window['_jigsawInternalCallbackWrapper'] = JigsawTable._jigsawInternalCallbackWrapper;
+        if (!window.hasOwnProperty('_jigsawTableInternalCallbackWrapper') || !(window['_jigsawTableInternalCallbackWrapper'] instanceof Function)) {
+            window['_jigsawTableInternalCallbackWrapper'] = JigsawTable._jigsawInternalCallbackWrapper;
         }
         JigsawTable._zone = _zone;
     }
@@ -585,10 +585,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const rowInfo = {
             index: rowIndex,
             data: this.data.data[rowIndex],
-            rowElementRefs:this._rowElementRefs.toArray()[rowIndex]
+            field: this.data.field,
+            header: this.data.header,
+            rowElementRefs: this._rowElementRefs.toArray()[rowIndex]
         }
         this.rowClick.emit(rowInfo);
-        this.expand(rowInfo,`<div>test</div><button onclick="kkk()">test</button><jigsaw-button>rowIndex:${rowIndex}</jigsaw-button>`,'');
         if (this._selectedRow === rowIndex) {
             return;
         }
@@ -922,48 +923,106 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 展开行
      * 
      */
-    public expand(rowInfo: rowInfo, html: any, htmlContext:any): void {
+    public expand(rowInfo: rowInfo, rawHtml: any, rawHtmlContext:any): void {
         const ele = rowInfo.rowElementRefs.nativeElement;
-
-        // const modifiedHtml = htmlContext ? html : html
-        //     .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
-        //         (found, prefix, event, quot, funcAccessor, args) => this._replacer(`on${event}=${quot}`, funcAccessor, args, htmlContext,_registeredContexts))
-        //     .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-        //         (found, jsPrefix, funcAccessor, args) => this._replacer(jsPrefix, funcAccessor, args, htmlContext,_registeredContexts));
-
-        
+        let html = this._stripPrefixSpaces(rawHtml);
+        let htmlContext = eval(this._stripPrefixSpaces(rawHtmlContext));
 
         if (ele.nextSibling.nodeName === 'TR' && ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
+            ele.nextSibling['_registeredContexts'].forEach(ctx => {
+                JigsawTable._clearCallbacks(ctx)
+            });
             ele.nextSibling.remove();
         } else {
             let trustedEle = document.createElement('tr');
-            // text.innerHTML = html;
             trustedEle['_registeredContexts'] = ['_registeredContexts'];
-            trustedEle['_trustedHtmlContext'] = '_trustedHtmlContext';
+            trustedEle['_trustedHtmlContext'] = htmlContext;
             trustedEle['_trustedHtml'] = html;
             trustedEle['_modifiedHtml'] = '';
-            trustedEle['_safeHtml'] = '_safeHtml';
-            console.log(trustedEle)
-            console.log(trustedEle['_safeHtml'])
+            trustedEle['_safeHtml'] = '';
 
-            // trustedEle['_trustedHtml'] = CommonUtils.isUndefined(trustedEle['_trustedHtml']) ? "" : trustedEle['_trustedHtml'];
-            // const modifiedHtml = !trustedEle['_trustedHtmlContext'] ? trustedEle['_trustedHtml'] : trustedEle['_trustedHtml']
-            //     .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
-            //         (found, prefix, event, quot, funcAccessor, args) => this._replacer(`on${event}=${quot}`, funcAccessor, args, trustedEle))
-            //     .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-            //         (found, jsPrefix, funcAccessor, args) => this._replacer(jsPrefix, funcAccessor, args, trustedEle));
-            // if (modifiedHtml != trustedEle['_modifiedHtml'] || !trustedEle['_safeHtml']) {
-            //     trustedEle['_modifiedHtml'] = modifiedHtml;
-            //     trustedEle['_safeHtml'] = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
-            // }
-
-
+            trustedEle['_trustedHtml'] = CommonUtils.isUndefined(html) ? "" : html;
+            const modifiedHtml = !trustedEle['_trustedHtmlContext'] ? trustedEle['_trustedHtml'] : trustedEle['_trustedHtml']
+                .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
+                    (found, prefix, event, quot, funcAccessor, args) => this._replacer(`on${event}=${quot}`, funcAccessor, args, trustedEle))
+                .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
+                    (found, jsPrefix, funcAccessor, args) => this._replacer(jsPrefix, funcAccessor, args, trustedEle));
+            if (modifiedHtml != trustedEle['_modifiedHtml'] || !trustedEle['_safeHtml']) {
+                trustedEle['_modifiedHtml'] = modifiedHtml;
+                trustedEle['_safeHtml'] = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
+                trustedEle['innerHTML'] = trustedEle['_modifiedHtml'];
+                // trustedEle['innerHTML'] = trustedEle['_safeHtml'];
+            }
+console.log(JigsawTable._contexts);
             trustedEle.classList.add('jigsaw-table-row-expansion');
             ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
         }
     }
 
-    /* trusted-expand-html */
+    private _replacer(prefix, funcAccessor, args, trustedEle) {
+        const [realContext, callback] = this._getCallback(trustedEle['_trustedHtmlContext'], funcAccessor);
+        const magicNumber = this._registerContext(realContext,trustedEle);
+        JigsawTable._declareCallback(realContext, funcAccessor, callback);
+        const modified = `${prefix}_jigsawTableInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${magicNumber}`;
+        args = CommonUtils.isDefined(args) ? args.trim() : '';
+        return modified + (!!args ? ',' + args + ')' : ')');
+    }
+
+    private _getCallback(context: any, accessor: string | string[]): [any, HtmlCallback] {
+        if (CommonUtils.isUndefined(context) || CommonUtils.isUndefined(accessor)) {
+            return [null, null];
+        }
+        const accessors = accessor instanceof Array ? accessor : accessor.split(/\./);
+        if (accessors[0] == 'this') {
+            accessors.shift();
+        }
+
+        const tmp: any = context[accessors[0]];
+        if (accessors.length == 1) {
+            return [context, tmp];
+        }
+        accessors.shift();
+        return this._getCallback(tmp, accessors);
+    }
+
+    private _stripPrefixSpaces(source: string): string {
+        const lines = source.split(/\n/g);
+        source = '';
+        lines.forEach(line => source += line.substring(8) + '\n');
+        return source.trim();
+    }
+
+    private _registerContext(context: any,trustedEle): number {
+        if (CommonUtils.isUndefined(context)) {
+            return -1;
+        }
+
+        if (!trustedEle['_registeredContexts'].find(ctx => ctx === context)) {
+            JigsawTable._registerContext(context);
+            trustedEle['_registeredContexts'].push(context);
+        }
+        return this._getMagicNumber(context);
+    }
+
+    private _getMagicNumber(context: any): number {
+        return JigsawTable._contexts.findIndex(i => i && i.context === context);
+    }
+
+    private static _clearCallbacks(context: any) {
+        const idx = JigsawTable._contexts.findIndex(i => i && i.context === context);
+        if (idx == -1) {
+            return;
+        }
+        const info = JigsawTable._contexts[idx];
+        info.counter--;
+        if (info.counter == 0) {
+            JigsawTable._callbacks.delete(context);
+            info.context = null;
+            info.counter = -1;
+            JigsawTable._contexts[idx] = null;
+        }
+    }
+
     /**
      * @internal
      */
@@ -995,53 +1054,41 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         JigsawTable._zone.run(() => CommonUtils.safeInvokeCallback(contextInfo.context, callback, args));
     }
 
+    private static _registerContext(context: any): number {
+        if (CommonUtils.isUndefined(context)) {
+            return -1;
+        }
+        const index = JigsawTable._contexts.findIndex(i => i && i.context === context);
+        let info = JigsawTable._contexts[index];
+        if (CommonUtils.isUndefined(info)) {
+            info = { context: context, counter: 1 };
+            JigsawTable._contexts.push(info);
+        } else {
+            info.counter++;
+        }
+        return index;
+    }
 
-    // private _replacer(prefix, funcAccessor, args, trustedEle) {
-    //     const [realContext, callback] = this._getCallback(trustedEle, funcAccessor);
-    //     const magicNumber = this._registerContext(realContext, trustedEle);
-    //     JigsawTrustedHtml._declareCallback(realContext, funcAccessor, callback);
-    //     const modified = `${prefix}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${magicNumber}`;
-    //     args = CommonUtils.isDefined(args) ? args.trim() : '';
-    //     return modified + (!!args ? ',' + args + ')' : ')');
-    // }
+    private static _declareCallback(context: any, name: string, callback: HtmlCallback) {
+        if (CommonUtils.isUndefined(context)) {
+            console.error(`invalid context for callback "{$name}"`);
+            return;
+        }
+        if (CommonUtils.isUndefined(callback)) {
+            console.error(`invalid callback "${name}", it is undefined.`);
+            return;
+        }
+        if (!(callback instanceof Function)) {
+            console.error(`invalid callback "${name}", it is not a function.`);
+            return;
+        }
 
-    // private _getCallback(trustedEle: any, accessor: string | string[]): [any, HtmlCallback] {
-    //     if (CommonUtils.isUndefined(trustedEle._trustedHtmlContext) || CommonUtils.isUndefined(accessor)) {
-    //         return [null, null];
-    //     }
-    //     const accessors = accessor instanceof Array ? accessor : accessor.split(/\./);
-    //     if (accessors[0] == 'this') {
-    //         // 例如 this.aa.bb() 这里的this指context本身，要跳过
-    //         // 这里可能会误伤这样的情况 this.aa.this.bb()，因为实际情况下是不可能有这样的属性链的，因此无视这个情况
-    //         accessors.shift();
-    //     }
-
-    //     const tmp: any = trustedEle._trustedHtmlContext[accessors[0]];
-    //     if (accessors.length == 1) {
-    //         return [trustedEle._trustedHtmlContext, tmp];
-    //     }
-    //     accessors.shift();
-    //     return this._getCallback(tmp, accessors);
-    // }
-
-    // protected _registerContext(context: any, trustedEle): number {
-    //     if (CommonUtils.isUndefined(context)) {
-    //         return -1;
-    //     }
-
-    //     if (!trustedEle._registeredContexts.find(ctx => ctx === context)) {
-    //         this._registerContext(context,trustedEle);
-    //         trustedEle._registeredContexts.push(context);
-    //     }
-    //     return this._getMagicNumber(context);
-    // }
-
-    // private _getMagicNumber(context: any): number {
-    //     return JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
-    // }
-
-    private _removeAllExpand(): void {
-
+        let callbacks = JigsawTable._callbacks.get(context);
+        if (CommonUtils.isUndefined(callbacks)) {
+            callbacks = {};
+            JigsawTable._callbacks.set(context, callbacks);
+        }
+        callbacks[name] = callback;
     }
 
     ngAfterViewInit() {

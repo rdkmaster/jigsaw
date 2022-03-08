@@ -4,5 +4,4 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="tableData" [columnDefines]="columns" (selectChange)="selectChange($event)"
-    (selectedRowChange)="selectedRowChange($event)" (rowClick)="rowClick($event)"></jigsaw-table>
+<jigsaw-table #tableCmp [data]="tableData" [columnDefines]="columns" (rowClick)="rowClick($event)"></jigsaw-table>
