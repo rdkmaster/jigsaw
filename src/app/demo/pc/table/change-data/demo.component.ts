@@ -19,7 +19,7 @@ export class TableChangeDataDemoComponent {
                     "542"
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
@@ -28,7 +28,7 @@ export class TableChangeDataDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
@@ -44,14 +44,14 @@ export class TableChangeDataDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
                     "5421"
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
@@ -60,14 +60,14 @@ export class TableChangeDataDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
                     "5421"
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
@@ -76,7 +76,7 @@ export class TableChangeDataDemoComponent {
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
@@ -91,7 +91,7 @@ export class TableChangeDataDemoComponent {
                     "8422"
                 ],
                 [
-                    "Tigser Nixon3",
+                    "Tiger Nixon3",
                     "System Architect",
                     "$320,800",
                     "2011/04/25",
@@ -147,7 +147,7 @@ export class TableChangeDataDemoComponent {
                     "5421"
                 ],
                 [
-                    "Garretst Winters1",
+                    "Garrett Winters1",
                     "Accountant",
                     "$170,750",
                     "2011/07/25",

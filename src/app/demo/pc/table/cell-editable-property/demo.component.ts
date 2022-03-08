@@ -19,7 +19,7 @@ export class TableCellEditablePropertyDemoComponent {
                     ""
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "dfrt567",
                     "2011/07/25",
                     ""
@@ -43,7 +43,7 @@ export class TableCellEditablePropertyDemoComponent {
                     ""
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "ghuyio78989",
                     "2011/07/25",
                     ""
@@ -55,7 +55,7 @@ export class TableCellEditablePropertyDemoComponent {
                     ""
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "weq2345",
                     "2011/07/25",
                     ""
@@ -73,7 +73,7 @@ export class TableCellEditablePropertyDemoComponent {
                     ""
                 ],
                 [
-                    "Tigser Nixon3",
+                    "Tiger Nixon3",
                     "hjkiu78996",
                     "2011/04/25",
                     ""
