@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, TransferTableDestRenderer } from "jigsaw/public_api";
+import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -15,52 +15,52 @@ export class TransferTableDemoComponent {
                     1
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     2
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     3
                 ],
                 [
-                    "Garrett Winslters2",
+                    "Garrett Winters2",
                     "Accountant",
                     4
                 ],
                 [
                     "Tiger Nixon3",
-                    "System Arcfhitect",
+                    "System Architect",
                     5
                 ],
                 [
-                    "Garrett Winflters3",
+                    "Garrett Winters3",
                     "Accountant",
                     6
                 ],
                 [
                     "Tiger Nixon4",
-                    "System Arcfhitect",
+                    "System Architect",
                     7
                 ],
                 [
-                    "Garrett Winflters4",
+                    "Garrett Winters4",
                     "Accountant",
                     8
                 ],
                 [
                     "Tiger Nixon5",
-                    "System Arcfhitect",
+                    "System Architect",
                     9
                 ],
                 [
-                    "Garrett Wintsers5",
+                    "Garrett Winters5",
                     "Accountant",
                     10
                 ],
                 [
-                    "Tigser Nixon6",
+                    "Tiger Nixon6",
                     "System Architect",
                     11
                 ],
@@ -90,12 +90,12 @@ export class TransferTableDemoComponent {
                     16
                 ],
                 [
-                    "Tigesr Nixon13",
+                    "Tiger Nixon13",
                     "System Architect",
                     17
                 ],
                 [
-                    "Garretst Winters12",
+                    "Garrett Winters12",
                     "Accountant",
                     18
                 ],
@@ -108,7 +108,7 @@ export class TransferTableDemoComponent {
             ["name", "position", "id"],
             ["姓名", "职位", "ID"]);
 
-        this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
+        this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winters2", id: 4 }]);
     }
 
     data: TableData;
@@ -141,43 +141,43 @@ export class TransferTableDemoComponent {
                     1
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     2
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     3
                 ],
                 [
-                    "Garrett Winslters2",
+                    "Garrett Winters2",
                     "Accountant",
                     4
                 ],
                 [
                     "Tiger Nixon3",
-                    "System Arcfhitect",
+                    "System Architect",
                     5
                 ],
                 [
-                    "Garrett Winflters3",
+                    "Garrett Winters3",
                     "Accountant",
                     6
                 ],
                 [
                     "Tiger Nixon4",
-                    "System Arcfhitect",
+                    "System Architect",
                     7
                 ],
                 [
-                    "Garrett Winflters4",
+                    "Garrett Winters4",
                     "Accountant",
                     8
                 ],
                 [
                     "Tiger Nixon5",
-                    "System Arcfhitect",
+                    "System Architect",
                     9
                 ]
             ],
@@ -195,52 +195,52 @@ export class TransferTableDemoComponent {
                     1
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     2
                 ],
                 [
                     "Tiger Nixon2",
-                    "System Arcfhitect",
+                    "System Architect",
                     3
                 ],
                 [
-                    "Garrett Winslters2",
+                    "Garrett Winters2",
                     "Accountant",
                     4
                 ],
                 [
                     "Tiger Nixon3",
-                    "System Arcfhitect",
+                    "System Architect",
                     5
                 ],
                 [
-                    "Garrett Winflters3",
+                    "Garrett Winters3",
                     "Accountant",
                     6
                 ],
                 [
                     "Tiger Nixon4",
-                    "System Arcfhitect",
+                    "System Architect",
                     7
                 ],
                 [
-                    "Garrett Winflters4",
+                    "Garrett Winters4",
                     "Accountant",
                     8
                 ],
                 [
                     "Tiger Nixon5",
-                    "System Arcfhitect",
+                    "System Architect",
                     9
                 ],
                 [
-                    "Garrett Wintsers5",
+                    "Garrett Winters5",
                     "Accountant",
                     10
                 ],
                 [
-                    "Tigser Nixon6",
+                    "Tiger Nixon6",
                     "System Architect",
                     11
                 ],
@@ -270,12 +270,12 @@ export class TransferTableDemoComponent {
                     16
                 ],
                 [
-                    "Tigesr Nixon13",
+                    "Tiger Nixon13",
                     "System Architect",
                     17
                 ],
                 [
-                    "Garretst Winters12",
+                    "Garrets Winters12",
                     "Accountant",
                     18
                 ],
@@ -294,7 +294,7 @@ export class TransferTableDemoComponent {
     }
 
     resetSelectedData() {
-        this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winslters2", id: 4 }]);
+        this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winters2", id: 4 }]);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -145,13 +145,6 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     /**
      * @internal
      */
-    public get _$trackByFn(): any {
-        return CommonUtils.toTrackByFunction(this.trackItemBy);
-    };
-
-    /**
-     * @internal
-     */
     public _$updateSelectedItems(): void {
         this.selectedItemsChange.emit();
     }

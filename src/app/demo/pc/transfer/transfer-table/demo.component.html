@@ -21,13 +21,12 @@
             <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
             <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
         </div>
-
-        <div class="item-buttons">
-            <span>trackItemBy：</span>
-            <jigsaw-button-bar [selectedItems]="{field: trackItemBy}" [data]="
-                    [{label:'ID', field: 'id'}, {label:'姓名', field: 'name'}, {label:'职位', field: 'position'}]
-                " trackItemBy="field" (selectedItemsChange)="trackItemBy=$event[0].field;"></jigsaw-button-bar>
-        </div>
+<!--        <div class="item-buttons">-->
+<!--            <span>trackItemBy：</span>-->
+<!--            <jigsaw-button-bar [selectedItems]="{field: trackItemBy}" [data]="-->
+<!--                    [{label:'ID', field: 'id'}, {label:'姓名', field: 'name'}, {label:'职位', field: 'position'}]-->
+<!--                " trackItemBy="field" (selectedItemsChange)="trackItemBy=$event[0].field;"></jigsaw-button-bar>-->
+<!--        </div>-->
     </li>
     <li class="demo-item">
         <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems"
