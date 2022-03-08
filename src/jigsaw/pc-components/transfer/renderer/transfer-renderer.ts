@@ -34,34 +34,75 @@ export type RendererSetting = {
 
 @Directive()
 export abstract class AbstractTransferRendererBase {
-    public filterFunction: (item: any) => boolean;
-
+    /**
+     * @internal
+     */
     public abstract reset();
-
+    /**
+     * @internal
+     */
     public abstract update();
-
+    /**
+     * @internal
+     */
     public abstract selectAll();
-
+    /**
+     * @internal
+     */
     public abstract dataFilter(...args): void;
-
+    /**
+     * @internal
+     */
     public abstract searchFilter(...args): void
 
     /**
      * @internal
      */
-    public _$data: any;
-
+    public data: any;
+    /**
+     * @internal
+     */
+    public filterFunction: (item: any) => boolean;
+    /**
+     * @internal
+     */
     public transferHost: JigsawTransfer;
+    /**
+     * @internal
+     */
     public labelField: string;
+    /**
+     * @internal
+     */
     public subLabelField: string;
+    /**
+     * @internal
+     */
     public trackItemBy: string;
-    public _$setting: RendererSetting;
+    /**
+     * @internal
+     */
+    public setting: RendererSetting;
+    /**
+     * @internal
+     */
     public selectedItemsChange: EventEmitter<void>;
+    /**
+     * @internal
+     */
     public additionalData: any;
-
-    public _$currentSelectedItems: any[];
-    public _$validData: any[];
-    public _$selectedItems: ArrayCollection<ListOption>;
+    /**
+     * @internal
+     */
+    public validData: any[];
+    /**
+     * @internal
+     */
+    public currentSelectedItems: any[];
+    /**
+     * @internal
+     */
+    public selectedItems: ArrayCollection<ListOption>;
 }
 
 @Directive()
@@ -81,11 +122,11 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get _$data(): ArrayCollection<ListOption> {
+    public get data(): ArrayCollection<ListOption> {
         return this._data;
     }
 
-    public set _$data(value: ArrayCollection<ListOption>) {
+    public set data(value: ArrayCollection<ListOption>) {
         this._data = value;
         this.update();
         this._changeDetectorRef.markForCheck();
@@ -95,19 +136,19 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
      * 渲染器有效数据
      * @internal
      */
-    public _$validData: ListOption[];
+    public validData: ListOption[];
 
     /**
      * 渲染器当前已选数据
      * @internal
      */
-    public _$currentSelectedItems: ListOption[];
+    public currentSelectedItems: ListOption[];
 
     /**
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
+    public selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -116,7 +157,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
      * 渲染器配置
      * @internal
      */
-    public _$setting: RendererSetting = {selectAll: true};
+    public setting: RendererSetting = {selectAll: true};
 
     /**
      * 设置数据的显示字段
@@ -150,40 +191,40 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     }
 
     public selectAll(): void {
-        if (this._$currentSelectedItems && this._$currentSelectedItems.length === this._$validData.length) {
-            if (this._$selectedItems.length === this._$currentSelectedItems.length) {
-                this._$selectedItems = new ArrayCollection([]);
+        if (this.currentSelectedItems && this.currentSelectedItems.length === this.validData.length) {
+            if (this.selectedItems.length === this.currentSelectedItems.length) {
+                this.selectedItems = new ArrayCollection([]);
             } else {
-                this._$selectedItems = new ArrayCollection(this._$selectedItems.filter(item => {
-                    return !this._$currentSelectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
+                this.selectedItems = new ArrayCollection(this.selectedItems.filter(item => {
+                    return !this.currentSelectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
                 }))
             }
         } else {
-            if (this._$selectedItems.length === 0) {
-                this._$selectedItems = new ArrayCollection(this._$validData);
+            if (this.selectedItems.length === 0) {
+                this.selectedItems = new ArrayCollection(this.validData);
             } else {
-                const diff = this._$validData.filter(item => {
-                    return !this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
+                const diff = this.validData.filter(item => {
+                    return !this.selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
                 });
-                this._$selectedItems = this._$selectedItems.concat(diff);
+                this.selectedItems = this.selectedItems.concat(diff);
             }
         }
         this.update();
     }
 
     public update(): void {
-        if (CommonUtils.isUndefined(this._$data)) {
+        if (CommonUtils.isUndefined(this.data)) {
             return;
         }
 
-        this._$validData = this._$data.filter(item => !item.disabled);
-        this._$currentSelectedItems = this._$data.filter(item => {
-            return this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
+        this.validData = this.data.filter(item => !item.disabled);
+        this.currentSelectedItems = this.data.filter(item => {
+            return this.selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
         });
     }
 
     public reset(): void {
-        this._$selectedItems.splice(0, this._$selectedItems.length);
+        this.selectedItems.splice(0, this.selectedItems.length);
         this.selectedItemsChange.emit();
     }
 }
@@ -247,7 +288,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 export class TransferListDestRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this._$data = new ArrayCollection(selectedItems.filter(
+        this.data = new ArrayCollection(selectedItems.filter(
             item => {
                 let value: string = '';
                 if (typeof item === 'string') {
@@ -282,11 +323,11 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get _$data(): SimpleTreeData {
+    public get data(): SimpleTreeData {
         return this._data;
     }
 
-    public set _$data(value: SimpleTreeData) {
+    public set data(value: SimpleTreeData) {
         this._data = value;
     }
 
@@ -294,19 +335,19 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
      * 渲染器有效数据
      * @internal
      */
-    public _$validData: ListOption[];
+    public validData: ListOption[];
 
     /**
      * 渲染器当前已选数据
      * @internal
      */
-    public _$currentSelectedItems: ListOption[];
+    public currentSelectedItems: ListOption[];
 
     /**
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
+    public selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -315,7 +356,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
      * 渲染器配置
      * @internal
      */
-    public _$setting: RendererSetting = {selectAll: false};
+    public setting: RendererSetting = {selectAll: false};
 
     /**
      * 设置数据的显示字段
@@ -345,7 +386,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     public _$updateSelectedItems(): void {
         const allCheckedNodes = this.treeExt.getCheckedNodes(true);
         const checkedNodes = allCheckedNodes.filter(node => !node.isParent && !node.isHidden);
-        this._$selectedItems.fromArray(checkedNodes);
+        this.selectedItems.fromArray(checkedNodes);
         this.selectedItemsChange.emit();
     }
 
@@ -363,12 +404,12 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     }
 
     public update(): void {
-        this._$validData = new ArrayCollection(this._getLeafNodes([this._$data]));
-        this._$currentSelectedItems = this._$selectedItems;
+        this.validData = new ArrayCollection(this._getLeafNodes([this.data]));
+        this.currentSelectedItems = this.selectedItems;
     }
 
     public reset(): void {
-        this._$selectedItems.splice(0, this._$selectedItems.length);
+        this.selectedItems.splice(0, this.selectedItems.length);
         this.selectedItemsChange.emit();
     }
 
@@ -442,32 +483,32 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get _$data(): TableData {
+    public get data(): TableData {
         return this._data;
     }
 
-    public set _$data(value: TableData) {
+    public set data(value: TableData) {
         this._data = value;
-        this._$validData = value.data;
+        this.validData = value.data;
     }
 
     /**
      * 渲染器有效数据
      * @internal
      */
-    public _$validData: TableDataMatrix[];
+    public validData: TableDataMatrix[];
 
     /**
      * 渲染器当前已选数据
      * @internal
      */
-    public _$currentSelectedItems: TableMatrixRow[];
+    public currentSelectedItems: TableMatrixRow[];
 
     /**
      * 渲染器已选数据
      * @internal
      */
-    public _$selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
+    public selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
     public selectedItemsChange = new EventEmitter();
@@ -476,7 +517,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      * 渲染器配置
      * @internal
      */
-    public _$setting: RendererSetting = {selectAll: false};
+    public setting: RendererSetting = {selectAll: false};
 
     /**
      * 设置数据的显示字段
@@ -505,19 +546,19 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      */
     public _$updateSelectedItems(value: AdditionalTableData): void {
         this.selectedRows = this._getSelectedRows(value);
-        this._$selectedItems = new ArrayCollection(this.selectedRows);
+        this.selectedItems = new ArrayCollection(this.selectedRows);
         this.selectedItemsChange.emit();
     }
 
     public update(): void {
-        const trackItemByFiledIndex = this._$data.field.findIndex(item => item === this.trackItemBy);
+        const trackItemByFiledIndex = this.data.field.findIndex(item => item === this.trackItemBy);
         if (trackItemByFiledIndex === -1) {
             console.error("trackItemBy值在filed中未找到！");
             return;
         }
-        this._$currentSelectedItems = this._$data.data.filter(item => {
+        this.currentSelectedItems = this.data.data.filter(item => {
             let isExist = false;
-            if (this._$selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByFiledIndex], selectedItem[this.trackItemBy]))) {
+            if (this.selectedItems.some(selectedItem => CommonUtils.compareValue(item[trackItemByFiledIndex], selectedItem[this.trackItemBy]))) {
                 isExist = true;
             }
             return isExist;
@@ -538,7 +579,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
      * @param additionalData
      */
     private _getSelectedRows(additionalData: AdditionalTableData): ArrayCollection<ListOption> {
-        const trackItemByFiledIndex = this._$data.field.findIndex(item => {
+        const trackItemByFiledIndex = this.data.field.findIndex(item => {
             return item === this.trackItemBy
         });
         if (trackItemByFiledIndex === -1) {
@@ -546,7 +587,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
             return;
         }
 
-        const labelFieldFiledIndex = this._$data.field.findIndex(item => {
+        const labelFieldFiledIndex = this.data.field.findIndex(item => {
             return item === this.labelField
         });
         if (labelFieldFiledIndex === -1) {

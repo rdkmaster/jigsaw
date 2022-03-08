@@ -290,7 +290,7 @@ const animations = [
 
 export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy {
     constructor(
-        protected _changeDetectorRef: ChangeDetectorRef,
+        protected changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector,
         protected componentFactoryResolver: ComponentFactoryResolver,
@@ -379,15 +379,15 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     console.error("输入的数据结构与渲染器不匹配")
                 }
             } else {
-                this.sourceComponent._$data = value;
-                this.destComponent._$data = this.selectedItems;
+                this.sourceComponent.data = value;
+                this.destComponent.data = this.selectedItems;
             }
 
             if (this.sourceComponent) {
                 this.sourceComponent.reset();
             }
 
-            this._changeDetectorRef.markForCheck();
+            this.changeDetectorRef.markForCheck();
         })
     }
 
@@ -418,8 +418,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.sourceComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.sourceComponent.trackItemBy;
         this.destComponent.trackItemBy = CommonUtils.isDefined(this.trackItemBy) ? this.trackItemBy : this.destComponent.trackItemBy;
 
-        this._$sourceCheckbox = this.sourceComponent._$setting.selectAll;
-        this._$destCheckbox = this.destComponent._$setting.selectAll;
+        this._$sourceCheckbox = this.sourceComponent.setting.selectAll;
+        this._$destCheckbox = this.destComponent.setting.selectAll;
 
         this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe(() => {
             this._checkSourceSelectAll();
@@ -442,8 +442,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this._removeFilterSubscriber = null;
             }
             this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
-                this.sourceComponent._$data = new ArrayCollection(this.data)
-                this.destComponent._$data = this.selectedItems;
+                this.sourceComponent.data = new ArrayCollection(this.data)
+                this.destComponent.data = this.selectedItems;
             })
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         });
@@ -457,7 +457,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.sourceComponent.reset();
             this._checkSourceSelectAll();
-        })
+        });
     }
 
     private _refreshForPageableArray(data: LocalPageableArray<any> | PageableArray): void {
@@ -466,9 +466,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = data.onRefresh(() => {
-            this.sourceComponent._$data = new ArrayCollection(data)
-            this.destComponent._$data = this.selectedItems;
-        })
+            this.sourceComponent.data = new ArrayCollection(data)
+            this.destComponent.data = this.selectedItems;
+        });
         this.sourceComponent.dataFilter(data, this.selectedItems)
     }
 
@@ -478,12 +478,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = data.onRefresh(() => {
-            if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
-                this.sourceComponent._$data = new TableData();
+            if (CommonUtils.isUndefined(this.sourceComponent.data)) {
+                this.sourceComponent.data = new TableData();
             }
-            this.sourceComponent._$data.fromObject({ data: data.data, field: data.field, header: data.header })
-            this.destComponent._$data = this.selectedItems;
-        })
+            this.sourceComponent.data.fromObject({ data: data.data, field: data.field, header: data.header })
+            this.destComponent.data = this.selectedItems;
+        });
         this.sourceComponent.dataFilter(data, this.selectedItems);
     }
 
@@ -499,11 +499,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 this._removeFilterSubscriber = null;
             }
             this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
-                if (CommonUtils.isUndefined(this.sourceComponent._$data)) {
-                    this.sourceComponent._$data = new TableData();
+                if (CommonUtils.isUndefined(this.sourceComponent.data)) {
+                    this.sourceComponent.data = new TableData();
                 }
-                this.sourceComponent._$data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                this.destComponent._$data = this.selectedItems;
+                this.sourceComponent.data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
+                this.destComponent.data = this.selectedItems;
             })
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         });
@@ -517,9 +517,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _refreshForTreeData(value: SimpleTreeData): void {
-        this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(value, this.selectedItems));
+        this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(value, this.selectedItems));
         this.sourceComponent.update();
-        this.destComponent._$data = this.selectedItems;
+        this.destComponent.data = this.selectedItems;
     }
 
     private _getFilterFunction(rendererType: 'list' | 'table' | 'tree', pagingType: 'local' | 'server', isDest: boolean): (item: any) => boolean {
@@ -555,7 +555,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this._selectedItems = value;
 
         if (this.destComponent) {
-            this.destComponent._$data = value;
+            this.destComponent.data = value;
             this.destComponent.reset();
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         }
@@ -571,7 +571,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._checkDestSelectAll();
         })
 
-        this._changeDetectorRef.markForCheck();
+        this.changeDetectorRef.markForCheck();
     }
 
     /**
@@ -690,47 +690,47 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public _$destSearchKey: string;
 
     public get getSourceTitle(): string {
-        if (!this.sourceComponent || !this.sourceComponent._$validData) {
+        if (!this.sourceComponent || !this.sourceComponent.validData) {
             return;
         }
 
         if (this.isPageable) {
-            const selectedItemsCount = this.sourceComponent._$currentSelectedItems ? this.sourceComponent._$currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
+            const selectedItemsCount = this.sourceComponent.currentSelectedItems ? this.sourceComponent.currentSelectedItems.length : 0;
+            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this.translateService.instant('transfer.items')}`
         } else {
-            const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
+            const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
+            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this.translateService.instant('transfer.items')}`
         }
     }
 
     public get getSourceSubTitle(): string {
-        if (!this.sourceComponent || !this.sourceComponent._$validData || !this.isPageable) {
+        if (!this.sourceComponent || !this.sourceComponent.validData || !this.isPageable) {
             return
         }
-        const selectedItemsCount = this.sourceComponent._$selectedItems ? this.sourceComponent._$selectedItems.length : 0;
+        const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
         return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this.translateService.instant('transfer.items')}`
     }
 
     public get getDestTitle(): string {
-        if (!this.destComponent || !this.destComponent._$validData) {
+        if (!this.destComponent || !this.destComponent.validData) {
             return
         }
-        const selectedItemsCount = this.destComponent._$selectedItems ? this.destComponent._$selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.destComponent._$validData.length} ${this.translateService.instant('transfer.items')}`
+        const selectedItemsCount = this.destComponent.selectedItems ? this.destComponent.selectedItems.length : 0;
+        return `${selectedItemsCount} / ${this.destComponent.validData.length} ${this.translateService.instant('transfer.items')}`
     }
 
     private _checkSourceSelectAll(): void {
-        this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
+        this._$sourceButton = this.sourceComponent.selectedItems.length > 0;
         this.sourceComponent.update();
-        if (CommonUtils.isUndefined(this.sourceComponent._$currentSelectedItems)) {
+        if (CommonUtils.isUndefined(this.sourceComponent.currentSelectedItems)) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this.sourceComponent._$currentSelectedItems.length === 0) {
+        if (this.sourceComponent.currentSelectedItems.length === 0) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this.sourceComponent._$currentSelectedItems.length === this.sourceComponent._$validData.length) {
+        if (this.sourceComponent.currentSelectedItems.length === this.sourceComponent.validData.length) {
             this._$sourceSelectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
@@ -738,13 +738,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _checkDestSelectAll(): void {
-        this._$destButton = this.destComponent._$selectedItems.length > 0;
+        this._$destButton = this.destComponent.selectedItems.length > 0;
         this.destComponent.update();
-        if (!this.destComponent._$selectedItems || this.destComponent._$selectedItems.length === 0) {
+        if (!this.destComponent.selectedItems || this.destComponent.selectedItems.length === 0) {
             this._$destSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this.destComponent._$selectedItems.length === this.destComponent._$validData.length) {
+        if (this.destComponent.selectedItems.length === this.destComponent.validData.length) {
             this._$destSelectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$destSelectAllChecked = CheckBoxStatus.indeterminate;
@@ -756,7 +756,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$sourceSelectAll(): void {
         this.sourceComponent.selectAll();
-        this._$sourceButton = this.sourceComponent._$selectedItems.length > 0;
+        this._$sourceButton = this.sourceComponent.selectedItems.length > 0;
     }
 
     /**
@@ -764,7 +764,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$destSelectAll(): void {
         this.destComponent.selectAll();
-        this._$destButton = this.destComponent._$selectedItems.length > 0;
+        this._$destButton = this.destComponent.selectedItems.length > 0;
     }
 
     /**
@@ -774,14 +774,14 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent._$data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
+            this.sourceComponent.data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
             this.sourceComponent.additionalData.reset();
             this.sourceComponent.additionalData.refresh();
         }
-        this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
+        this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._checkSourceSelectAll();
     }
 
@@ -790,7 +790,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      */
     public _$destSearching($event: string): void {
         this.destComponent.searchFilter(this.selectedItems, $event);
-        this.destComponent._$selectedItems.splice(0, this.destComponent._$selectedItems.length)
+        this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length)
         this._checkDestSelectAll();
     }
 
@@ -801,18 +801,18 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (!this._$sourceButton) {
             return
         }
-        this.selectedItems.push(...this.sourceComponent._$selectedItems);
+        this.selectedItems.push(...this.sourceComponent.selectedItems);
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.sourceComponent.additionalData.reset();
             this.sourceComponent.additionalData.refresh();
         }
-        this.sourceComponent._$selectedItems.splice(0, this.sourceComponent._$selectedItems.length)
+        this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._checkSourceSelectAll();
         this._checkDestSelectAll();
         this._$sourceSearchKey = '';
@@ -827,16 +827,16 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (!this._$destButton) {
             return
         }
-        this.destComponent._$selectedItems.forEach(selectedItem => {
+        this.destComponent.selectedItems.forEach(selectedItem => {
             this.selectedItems.forEach((item, i) => {
                 if (CommonUtils.compareValue(item, selectedItem, this.trackItemBy)) {
                     this.selectedItems.splice(i, 1);
                 }
             });
         });
-        this.destComponent._$selectedItems.splice(0, this.destComponent._$selectedItems.length)
+        this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length)
         if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent._$data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
             this.sourceComponent.update();
         } else {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
