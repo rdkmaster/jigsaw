@@ -26,7 +26,7 @@ if (!urlMatch) {
 }
 const id = urlMatch[1];
 const prInfo = readData(`https://api.github.com/repos/rdkmaster/jigsaw/pulls/${id}`);
-const titleMatch = prInfo.title.match(/^\s*\[(.+)].+/);
+const titleMatch = prInfo.title.match(/^\s*\[(.+?)].+/);
 if (!titleMatch) {
     exit('PR标题格式非法，未找到类型，title:', prInfo.title);
 }
