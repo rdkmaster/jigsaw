@@ -4,10 +4,10 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-header [level]="1">Select</jigsaw-header>
+<jigsaw-header [level]="1">Group-Select</jigsaw-header>
 <jigsaw-header [level]="2">valid</jigsaw-header>
-<jigsaw-select (valueChange)="selectChange($event)" placeholder="请选择城市" [data]="cityList" [valid]="valid">
-</jigsaw-select>
+<jigsaw-group-select [valid]="valid" [data]="cityList" placeholder="请选择城市">
+</jigsaw-group-select>
 <div class="demo-setting-wrap">
     <span class="text">valid:</span>
     <jigsaw-switch [(checked)]="valid"></jigsaw-switch>

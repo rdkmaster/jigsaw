@@ -44,13 +44,6 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             &:active {
                 border-color: $brand-active;
             }
-
-            .#{$jigsaw-combo-select}-error & {
-                border-color: $error-default;
-                &:hover {
-                    border-color: $error-default;
-                }
-            }
         }
 
         &-selection-rendered {
@@ -160,6 +153,16 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             color: $icon-color-disabled;
             &:hover {
                 color: $icon-color-disabled;
+            }
+        }
+    }
+
+    &.#{$jigsaw-combo-select}-error {
+        .#{$jigsaw-combo-select}-selection {
+            border-color: $error-default;
+
+            &:hover {
+                border-color: $error-default;
             }
         }
     }
