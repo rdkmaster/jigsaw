@@ -1,17 +1,11 @@
-import {Directive, HostBinding, Input, NgModule, NgZone, OnDestroy, OnInit} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
-import {CommonUtils} from "../../core/utils/common-utils";
+import { Directive, HostBinding, Input, NgModule, NgZone, OnDestroy, OnInit } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
+import { CommonUtils } from "../../core/utils/common-utils";
 
 export type HtmlCallback = (...args) => any;
 type CallbackValues = { [callbackName: string]: HtmlCallback };
 
-export class JigsawTrustedHtmlBase {}
-
-// @dynamic
-@Directive({
-    selector: '[trustedHtml]',
-})
-export class JigsawTrustedHtml implements OnInit, OnDestroy {
+export class JigsawTrustedHtmlService {
     private static _callbacks = new Map<any, CallbackValues>();
     private static _contexts: { context: any, counter: number }[] = [];
     /**
@@ -19,32 +13,32 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
      */
     public static _zone: NgZone;
 
-    private static _getContext(magicNumber: number): any {
-        return JigsawTrustedHtml._contexts[magicNumber];
+    public static _getContext(magicNumber: number): any {
+        return JigsawTrustedHtmlService._contexts[magicNumber];
     }
 
-    private static _registerContext(context: any): number {
+    public static _registerContext(context: any): number {
         if (CommonUtils.isUndefined(context)) {
             return -1;
         }
-        const index = JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
-        let info = JigsawTrustedHtml._contexts[index];
+        const index = JigsawTrustedHtmlService._contexts.findIndex(i => i && i.context === context);
+        let info = JigsawTrustedHtmlService._contexts[index];
         if (CommonUtils.isUndefined(info)) {
-            info = {context: context, counter: 1};
-            JigsawTrustedHtml._contexts.push(info);
+            info = { context: context, counter: 1 };
+            JigsawTrustedHtmlService._contexts.push(info);
         } else {
             info.counter++;
         }
         return index;
     }
 
-    private static _jigsawInternalCallbackWrapper(callbackName: string, contextMagicNumber: number, ...args) {
-        const contextInfo = JigsawTrustedHtml._getContext(contextMagicNumber);
+    public static _jigsawInternalCallbackWrapper(callbackName: string, contextMagicNumber: number, ...args) {
+        const contextInfo = JigsawTrustedHtmlService._getContext(contextMagicNumber);
         if (CommonUtils.isUndefined(contextInfo)) {
             console.error('no context found by magic number, callbackName = ' + callbackName);
             return;
         }
-        const callbacks = JigsawTrustedHtml._callbacks.get(contextInfo.context);
+        const callbacks = JigsawTrustedHtmlService._callbacks.get(contextInfo.context);
         if (CommonUtils.isUndefined(callbacks)) {
             console.error('no callback cache info found by magic number, callbackName = ' + callbackName);
             return;
@@ -55,10 +49,10 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             console.log(`Hint: add a member method named ${callbackName} to the context object.`);
             return;
         }
-        JigsawTrustedHtml._zone.run(() => CommonUtils.safeInvokeCallback(contextInfo.context, callback, args));
+        JigsawTrustedHtmlService._zone.run(() => CommonUtils.safeInvokeCallback(contextInfo.context, callback, args));
     }
 
-    private static _declareCallback(context: any, name: string, callback: HtmlCallback) {
+    public static _declareCallback(context: any, name: string, callback: HtmlCallback) {
         if (CommonUtils.isUndefined(context)) {
             console.error(`invalid context for callback "{$name}"`);
             return;
@@ -72,36 +66,48 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             return;
         }
 
-        let callbacks = JigsawTrustedHtml._callbacks.get(context);
+        let callbacks = JigsawTrustedHtmlService._callbacks.get(context);
         if (CommonUtils.isUndefined(callbacks)) {
             callbacks = {};
-            JigsawTrustedHtml._callbacks.set(context, callbacks);
+            JigsawTrustedHtmlService._callbacks.set(context, callbacks);
         }
         callbacks[name] = callback;
     }
 
-    private static _clearCallbacks(context: any) {
-        const idx = JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
+    public static _clearCallbacks(context: any) {
+        const idx = JigsawTrustedHtmlService._contexts.findIndex(i => i && i.context === context);
         if (idx == -1) {
             return;
         }
-        const info = JigsawTrustedHtml._contexts[idx];
+        const info = JigsawTrustedHtmlService._contexts[idx];
         info.counter--;
         if (info.counter == 0) {
-            JigsawTrustedHtml._callbacks.delete(context);
+            JigsawTrustedHtmlService._callbacks.delete(context);
             info.context = null;
             info.counter = -1;
-            JigsawTrustedHtml._contexts[idx] = null;
+            JigsawTrustedHtmlService._contexts[idx] = null;
         }
     }
+
+    public static _getMagicNumber(context: any): number {
+        return JigsawTrustedHtmlService._contexts.findIndex(i => i && i.context === context);
+    }
+}
+
+// @dynamic
+@Directive({
+    selector: '[trustedHtml]',
+})
+export class JigsawTrustedHtml implements OnInit, OnDestroy {
+
 
     //====================================================
 
     constructor(private _sanitizer: DomSanitizer, zone: NgZone) {
         if (!window.hasOwnProperty('_jigsawInternalCallbackWrapper') || !(window['_jigsawInternalCallbackWrapper'] instanceof Function)) {
-            window['_jigsawInternalCallbackWrapper'] = JigsawTrustedHtml._jigsawInternalCallbackWrapper;
+            window['_jigsawInternalCallbackWrapper'] = JigsawTrustedHtmlService._jigsawInternalCallbackWrapper;
         }
-        JigsawTrustedHtml._zone = zone;
+        JigsawTrustedHtmlService._zone = zone;
     }
 
     private _trustedHtmlContext: any;
@@ -155,7 +161,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     private _replacer(prefix, funcAccessor, args) {
         const [realContext, callback] = this._getCallback(this._trustedHtmlContext, funcAccessor);
         const magicNumber = this._registerContext(realContext);
-        JigsawTrustedHtml._declareCallback(realContext, funcAccessor, callback);
+        JigsawTrustedHtmlService._declareCallback(realContext, funcAccessor, callback);
         const modified = `${prefix}_jigsawInternalCallbackWrapper(&quot;${funcAccessor}&quot;,${magicNumber}`;
         args = CommonUtils.isDefined(args) ? args.trim() : '';
         return modified + (!!args ? ',' + args + ')' : ')');
@@ -188,14 +194,14 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         }
 
         if (!this._registeredContexts.find(ctx => ctx === context)) {
-            JigsawTrustedHtml._registerContext(context);
+            JigsawTrustedHtmlService._registerContext(context);
             this._registeredContexts.push(context);
         }
         return this._getMagicNumber(context);
     }
 
     private _getMagicNumber(context: any): number {
-        return JigsawTrustedHtml._contexts.findIndex(i => i && i.context === context);
+        return JigsawTrustedHtmlService._getMagicNumber(context);
     }
 
     @HostBinding('innerHtml')
@@ -209,7 +215,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._registeredContexts.forEach(ctx => JigsawTrustedHtml._clearCallbacks(ctx));
+        this._registeredContexts.forEach(ctx => JigsawTrustedHtmlService._clearCallbacks(ctx));
         this._registeredContexts = null;
         this._trustedHtmlContext = null;
         this._trustedHtml = null;
