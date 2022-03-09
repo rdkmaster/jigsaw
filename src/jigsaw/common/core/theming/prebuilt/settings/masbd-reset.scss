@@ -42,6 +42,7 @@ $bg-body: #eff3fc;
 
                         i:not(.jigsaw-nav-menu-item-arrow) {
                             width: 35px;
+                            margin-right: 0;
                         }
                     }
                 }
@@ -69,6 +70,7 @@ $bg-body: #eff3fc;
                     }
 
                     &.jigsaw-nav-menu-sub-item-selected {
+                        background: $bg-body;
                         color: #0b7cfa;
 
                         &::before {
@@ -95,6 +97,10 @@ $bg-body: #eff3fc;
                 &.jigsaw-nav-menu-toggle-button-collapsed {
                     width: 45px;
                 }
+            }
+
+            i {
+                font-size: 18px;
             }
         }
     }
