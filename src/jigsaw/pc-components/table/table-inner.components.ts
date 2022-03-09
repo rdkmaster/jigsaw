@@ -369,12 +369,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Input()
     public rowSpan: number;
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public colSpan: number;
-
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 

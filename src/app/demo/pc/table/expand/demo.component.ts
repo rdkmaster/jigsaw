@@ -41,13 +41,24 @@ export class TableExpandDemoComponent {
             const name = $event.data[0];
             const salary = $event.data[2];
             const html = `
-            <div>详细信息：</div>
             <style>
                 .uid-expand-ul {
-                    background: red;
+                    display:flex;
+                    flex-direction: column;
+                    width:200px;
+                }
+
+                .uid-expand-ul li:hover {
+                    background: var(--bg-hover);
+                    cursor: pointer;
+                }
+
+                .uid-expand-ul li i:hover {
+                    color: var(--primary-default)
                 }
             </style>
-            <ul class="uid-expand-ul" style="display:flex; flex-direction: column; width:200px;">
+            <div>详细信息：</div>
+            <ul class="uid-expand-ul">
                 <li onclick="hello('${name}')">
                     <i class="iconfont iconfont-e748"></i>
                     <span>姓名：</span>

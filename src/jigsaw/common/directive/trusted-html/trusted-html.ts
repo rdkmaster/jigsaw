@@ -198,7 +198,6 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
         if (modifiedHtml != this._modifiedHtml || !this._safeHtml) {
             this._modifiedHtml = modifiedHtml;
             this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
-            console.log(this._safeHtml)
         }
     }
 
