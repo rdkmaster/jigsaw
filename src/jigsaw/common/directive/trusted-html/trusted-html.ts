@@ -132,6 +132,16 @@ export class JigsawTrustedHtmlBase {
         args = CommonUtils.isDefined(args) ? args.trim() : '';
         return modified + (!!args ? ',' + args + ')' : ')');
     }
+
+    public static updateHtml(trustedHtml: string, trustedHtmlContext: any, registeredContexts: any[]): string {
+        trustedHtml = CommonUtils.isUndefined(trustedHtml) ? "" : trustedHtml;
+        const modifiedHtml = !trustedHtmlContext ? trustedHtml : trustedHtml
+            .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
+                (found, prefix, event, quot, funcAccessor, args) => JigsawTrustedHtmlBase.replacer(trustedHtmlContext, registeredContexts, `on${event}=${quot}`, funcAccessor, args))
+            .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
+                (found, jsPrefix, funcAccessor, args) => JigsawTrustedHtmlBase.replacer(trustedHtmlContext, registeredContexts, jsPrefix, funcAccessor, args));
+        return modifiedHtml;
+    }
 }
 
 // @dynamic
@@ -184,11 +194,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
             return;
         }
         this._trustedHtml = CommonUtils.isUndefined(this._trustedHtml) ? "" : this._trustedHtml;
-        const modifiedHtml = !this._trustedHtmlContext ? this._trustedHtml : this._trustedHtml
-            .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
-                (found, prefix, event, quot, funcAccessor, args) => JigsawTrustedHtmlBase.replacer(this._trustedHtmlContext, this._registeredContexts, `on${event}=${quot}`, funcAccessor, args))
-            .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
-                (found, jsPrefix, funcAccessor, args) => JigsawTrustedHtmlBase.replacer(this._trustedHtmlContext, this._registeredContexts, jsPrefix, funcAccessor, args));
+        const modifiedHtml = JigsawTrustedHtmlBase.updateHtml(this._trustedHtml, this._trustedHtmlContext, this._registeredContexts)
         if (modifiedHtml != this._modifiedHtml || !this._safeHtml) {
             this._modifiedHtml = modifiedHtml;
             this._safeHtml = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
