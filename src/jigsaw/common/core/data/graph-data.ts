@@ -82,10 +82,11 @@ export abstract class AbstractGraphData extends TableDataBase {
     }
 
     public echartOptions: EchartOptions;
+    public template: EchartOptions;
 
     public get options(): EchartOptions {
         if (this.echartOptions) {
-            return this.echartOptions;
+            return CommonUtils.extendObject(this.echartOptions, this.template || {});
         }
 
         const opt = this.createChartOptions();
