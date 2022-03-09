@@ -47,7 +47,7 @@ import {
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
-import {JigsawTrustedHtmlModule, HtmlCallback, JigsawTrustedHtml, JigsawTrustedHtmlBase} from "../../common/directive/trusted-html/trusted-html";
+import {JigsawTrustedHtmlModule, HtmlCallback, JigsawTrustedHtmlBase} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -582,7 +582,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$clickRow(rowIndex: number) {
-        const rowInfo = {
+        const rowInfo: rowInfo = {
             index: rowIndex,
             data: this.data.data[rowIndex],
             field: this.data.field,

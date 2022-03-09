@@ -1,23 +1,23 @@
-import { TemplateRef, Type, EventEmitter, ElementRef } from "@angular/core";
+import {TemplateRef, Type, EventEmitter, ElementRef} from "@angular/core";
 import {
     BigTableData,
     LocalPageableTableData,
     PageableTableData, RawTableData,
     TableData
 } from "../../common/core/data/table-data";
-import { SortAs, SortOrder } from "../../common/core/data/component-data";
-import { TableCellRendererBase } from "./table-renderer";
-import { CommonUtils } from "../../common/core/utils/common-utils";
+import {SortAs, SortOrder} from "../../common/core/data/component-data";
+import {TableCellRendererBase} from "./table-renderer";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type TableColumnTarget = number | string | (number | string)[];
 export type ColumnDefineGenerator = (field: string, index: number) => ColumnDefine;
 export type TableCellDataGenerator = (tableData: TableData,
-    row: number,
-    column: number,
-    additionalData: AdditionalTableData) => any;
+                                      row: number,
+                                      column: number,
+                                      additionalData: AdditionalTableData) => any;
 export type TableHeaderDataGenerator = (tableData: TableData,
-    column: number,
-    additionalData: AdditionalTableData) => any;
+                                      column: number,
+                                      additionalData: AdditionalTableData) => any;
 
 export class TableValueGenerators {
     public static rowIndexGenerator(tableData: TableData, row: number): any {
@@ -160,7 +160,7 @@ export class TouchedValue {
 }
 export class AdditionalTableData extends TableData {
 
-    public change = new EventEmitter();
+	public change = new EventEmitter();
 
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
@@ -463,6 +463,7 @@ export class AdditionalTableData extends TableData {
 export class rowInfo {
     index: number;
     data: any;
+    field: any;
+    header: any;
     rowElementRefs: ElementRef;
 }
-
