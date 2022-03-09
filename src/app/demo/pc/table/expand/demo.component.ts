@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { TableData, ColumnDefine, JigsawTable } from "jigsaw/public_api";
+import {TableData, ColumnDefine, JigsawTable, RowExpandInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -11,21 +11,21 @@ export class TableExpandDemoComponent {
     constructor() {
         this.tableData = new TableData(
             [
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 23],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 42],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 36],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 65],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 71],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 56],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 17],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 38],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 9],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 100],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 11],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 82]
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 23],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 42],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 36],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 65],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 71],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 56],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 17],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 38],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 9],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 100],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 11],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 82]
             ],
-            ["name", "position", "salary", "enroll-date", "office", "progress"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
+            ["name", "expandable", "salary", "enroll-date", "office", "progress"],
+            ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
         );
     }
 
@@ -36,11 +36,13 @@ export class TableExpandDemoComponent {
         }
     ];
 
-    rowClick($event) {
-        if ($event.data[1] === 'Coder') {
-            const name = $event.data[0];
-            const salary = $event.data[2];
-            const html = `
+    rowClick(rowInfo: RowExpandInfo) {
+        if (rowInfo.data[1] !== '可以展开') {
+            return;
+        }
+        const name = rowInfo.data[0];
+        const salary = rowInfo.data[2];
+        const html = `
             <style>
                 .uid-expand-ul {
                     display:flex;
@@ -64,59 +66,51 @@ export class TableExpandDemoComponent {
                     <span>姓名：</span>
                     <span>${name}</span>
                 </li>
-                <li ondblclick="whoIsThis()">
+                <li>
                     <span>薪资：</span>
                     <span>${salary}</span>
                 </li>
-            </ul> 
-            `;
+            </ul>
+        `;
+        this.tableCmp.expand(rowInfo.rowIndex, html, this);
+    }
 
-            const context = `
-            this.context = {
-                hello: who => {
-                    alert('Hello' + who)
-                },
-                whoIsThis: $event => {
-                    console.log(this)
-                }
-            }
-            `;
-            this.tableCmp.expand($event, html, context);
-        }
+    hello(who) {
+        alert('Hello' + who)
     }
 
     refreshData() {
         this.tableData.fromObject({
             data: [
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 23],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 42],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 36],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 65],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 71],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 23],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 42],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 36],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 65],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 71],
             ],
-            field: ["name", "position", "salary", "enroll-date", "office", "progress"],
-            header: ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
+            field: ["name", "expandable", "salary", "enroll-date", "office", "progress"],
+            header: ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
         })
     }
 
     resetData() {
         this.tableData.fromObject({
             data: [
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 23],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 42],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 36],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 65],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 71],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 56],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 17],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 38],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 9],
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 100],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 11],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 82]
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 23],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 42],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 36],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 65],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 71],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 56],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 17],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 38],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 9],
+                ["Emily", "可以展开", "$15128", "2017/4/21", "HR II", 100],
+                ["Shirley", "不允许展开", "$11845", "2017/4/25", "R&D Dept II", 11],
+                ["Easton", "可以展开", "$17636", "2017/4/24", "Marketing I", 82]
             ],
-            field: ["name", "position", "salary", "enroll-date", "office", "progress"],
-            header: ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
+            field: ["name", "expandable", "salary", "enroll-date", "office", "progress"],
+            header: ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
         })
     }
 

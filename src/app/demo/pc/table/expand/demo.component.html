@@ -8,4 +8,4 @@
 <jigsaw-header [level]="2">expand</jigsaw-header>
 <jigsaw-button (click)="refreshData()">更新数据</jigsaw-button>
 <jigsaw-button (click)="resetData()">重置数据</jigsaw-button>
-<jigsaw-table #tableCmp [data]="tableData" [columnDefines]="columns" (rowClick)="rowClick($event)"></jigsaw-table>
+<jigsaw-table #tableCmp [data]="tableData" [columnDefines]="columns" (rowExpand)="rowClick($event)"></jigsaw-table>

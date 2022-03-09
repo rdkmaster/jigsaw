@@ -35,7 +35,7 @@ import {
     TableCellSetting,
     TableDataChangeEvent,
     TableHeadSetting,
-    rowInfo
+    RowExpandInfo
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {SortOrder, IPageable, PagingInfo} from "../../common/core/data/component-data";
@@ -161,7 +161,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public selectedRowChange: EventEmitter<number> = new EventEmitter<number>();
     @Output()
-    public rowClick: EventEmitter<rowInfo> = new EventEmitter<rowInfo>();
+    public rowExpand: EventEmitter<RowExpandInfo> = new EventEmitter<RowExpandInfo>();
 
     private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
@@ -280,7 +280,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             const [realColIndex,] = this._getColumnIndex(field);
             let groupSetting: TableCellSetting;
             let settings: TableCellSetting;
-            
+
             for (let rowIndex = 0; rowIndex < dataLen; rowIndex++) {
                 settings = oldBackup[field] ? oldBackup[field][rowIndex] : undefined;
                 settings = TableUtils.updateCellSettings(columnDefine, settings);
@@ -328,7 +328,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     } else {
                         groupSetting = settings;
                     }
-                } 
+                }
             }
         });
     }
@@ -583,14 +583,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$clickRow(rowIndex: number) {
-        const rowInfo: rowInfo = {
+        const rowInfo: RowExpandInfo = {
             index: rowIndex,
             data: this.data.data[rowIndex],
             field: this.data.field,
             header: this.data.header,
             rowElementRefs: this._rowElementRefs.toArray()[rowIndex]
         }
-        this.rowClick.emit(rowInfo);
+        this.rowExpand.emit(rowInfo);
         if (this._selectedRow === rowIndex) {
             return;
         }
@@ -922,10 +922,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 展开行
-     * 
      */
-    public expand(rowInfo: rowInfo, rawHtml: any, rawHtmlContext:any): void {
-        const ele = rowInfo.rowElementRefs.nativeElement;
+    public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object): void {
+        const ele = //rowInfo.rowElementRefs.nativeElement;
         let html = this._stripPrefixSpaces(rawHtml);
         let htmlContext = eval(this._stripPrefixSpaces(rawHtmlContext));
 

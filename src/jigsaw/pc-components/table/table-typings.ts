@@ -3,7 +3,7 @@ import {
     BigTableData,
     LocalPageableTableData,
     PageableTableData, RawTableData,
-    TableData
+    TableData, TableMatrixRow
 } from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
@@ -460,10 +460,8 @@ export class AdditionalTableData extends TableData {
     }
 }
 
-export class rowInfo {
-    index: number;
-    data: any;
-    field: any;
-    header: any;
+export class RowExpandInfo {
+    rowIndex: number;
+    rowData: TableMatrixRow;
     rowElementRefs: ElementRef;
 }
