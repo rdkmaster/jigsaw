@@ -51,7 +51,6 @@ import {JigsawTrustedHtmlModule, HtmlCallback, JigsawTrustedHtmlBase} from "../.
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { DomSanitizer } from '@angular/platform-browser';
 
-type CallbackValues = { [callbackName: string]: HtmlCallback };
 @WingsTheme('table.scss')
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -452,6 +451,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._handleScrollBar();
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
+            // 关闭所有展开行
+            this.removeAllExpansion();
         })
     }
 
@@ -932,6 +933,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             ele.nextSibling['_registeredContexts'].forEach(ctx => {
                 JigsawTrustedHtmlBase.clearCallbacks(ctx)
             });
+            const index = this.allExpansion.findIndex(i => i && i === ele.nextSibling);
+            this.allExpansion.splice(index, 1);
             ele.nextSibling.remove();
         } else {
             let trustedEle = document.createElement('tr');
@@ -949,7 +952,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             }
             trustedEle.classList.add('jigsaw-table-row-expansion');
             ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
+            this.allExpansion.push(trustedEle);
         }
+    }
+
+    private allExpansion: HTMLTableRowElement[] = [];
+
+    public removeAllExpansion() {
+        this.allExpansion.forEach(ele => {
+            ele['_registeredContexts'].forEach(ctx => {
+                JigsawTrustedHtmlBase.clearCallbacks(ctx)
+            });
+            ele.remove();
+        })
     }
 
     private _stripPrefixSpaces(source: string): string {
