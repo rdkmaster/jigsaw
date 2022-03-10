@@ -161,7 +161,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public selectedRowChange: EventEmitter<number> = new EventEmitter<number>();
     @Output()
-    public rowExpand: EventEmitter<RowExpandInfo> = new EventEmitter<RowExpandInfo>();
+    public rowExpand: EventEmitter<number> = new EventEmitter<number>();
 
     private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
@@ -583,14 +583,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$clickRow(rowIndex: number) {
-        const rowInfo: RowExpandInfo = {
-            index: rowIndex,
-            data: this.data.data[rowIndex],
-            field: this.data.field,
-            header: this.data.header,
-            rowElementRefs: this._rowElementRefs.toArray()[rowIndex]
-        }
-        this.rowExpand.emit(rowInfo);
+        this.rowExpand.emit(rowIndex);
         if (this._selectedRow === rowIndex) {
             return;
         }
@@ -924,9 +917,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 展开行
      */
     public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object): void {
-        const ele = //rowInfo.rowElementRefs.nativeElement;
-        let html = this._stripPrefixSpaces(rawHtml);
-        let htmlContext = eval(this._stripPrefixSpaces(rawHtmlContext));
+        const ele = this._rowElementRefs.toArray()[rowIndex].nativeElement;
+        let html = rawHtml;
+        let htmlContext =rawHtmlContext;
 
         if (ele.nextSibling.nodeName === 'TR' && ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
             ele.nextSibling['_registeredContexts'].forEach(ctx => {
