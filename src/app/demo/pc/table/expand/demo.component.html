@@ -6,6 +6,9 @@
 <!-- start to learn the demo from here -->
 <jigsaw-header [level]="1">Table</jigsaw-header>
 <jigsaw-header [level]="2">expand</jigsaw-header>
-<jigsaw-button (click)="refreshData()">更新数据</jigsaw-button>
-<jigsaw-button (click)="resetData()">重置数据</jigsaw-button>
+<div class="demo-buttons">
+    <jigsaw-button (click)="refreshData()">更新数据</jigsaw-button>
+    <jigsaw-button (click)="resetData()">重置数据</jigsaw-button>
+    <jigsaw-button (click)="expandRow(3)">展开/关闭第三行</jigsaw-button>
+</div>
 <jigsaw-table #tableCmp [data]="tableData" [columnDefines]="columns" (rowExpand)="rowClick($event)"></jigsaw-table>

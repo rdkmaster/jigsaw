@@ -7,7 +7,7 @@ type CallbackValues = { [callbackName: string]: HtmlCallback };
 
 export class JigsawTrustedHtmlBase {
     private static _callbacks = new Map<any, CallbackValues>();
-    private static _contexts: { context: object, counter: number }[] = [];
+    public static _contexts: { context: object, counter: number }[] = [];
     /**
      * @internal
      */

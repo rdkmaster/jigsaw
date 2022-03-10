@@ -1,9 +1,9 @@
-import {TemplateRef, Type, EventEmitter, ElementRef} from "@angular/core";
+import {TemplateRef, Type, EventEmitter} from "@angular/core";
 import {
     BigTableData,
     LocalPageableTableData,
     PageableTableData, RawTableData,
-    TableData, TableMatrixRow
+    TableData
 } from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {TableCellRendererBase} from "./table-renderer";
@@ -458,10 +458,4 @@ export class AdditionalTableData extends TableData {
         }
         return this._touchedValues[fieldString];
     }
-}
-
-export class RowExpandInfo {
-    rowIndex: number;
-    rowData: TableMatrixRow;
-    rowElementRefs: ElementRef;
 }

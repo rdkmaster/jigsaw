@@ -2,7 +2,8 @@ import { Component, ViewChild } from "@angular/core";
 import { TableData, ColumnDefine, JigsawTable } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class TableExpandDemoComponent {
     tableData: TableData;
@@ -37,7 +38,7 @@ export class TableExpandDemoComponent {
     ];
 
     rowClick(rowIndex: number) {
-        let data = this.tableData.data[rowIndex]
+        const data = this.tableData.data[rowIndex]
         if (data[1] !== '可以展开') {
             return;
         }
@@ -73,7 +74,7 @@ export class TableExpandDemoComponent {
                 </li>
             </ul>
         `;
-        this.tableCmp.expand(rowInfo.rowIndex, html, this);
+        this.tableCmp.expand(rowIndex, html, this);
     }
 
     hello(who) {
@@ -113,6 +114,30 @@ export class TableExpandDemoComponent {
             field: ["name", "expandable", "salary", "enroll-date", "office", "progress"],
             header: ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
         })
+    }
+
+    expandRow(rowIndex: number) {
+        const data = this.tableData.data[rowIndex]
+        if (data[1] !== '可以展开') {
+            return;
+        }
+        const name = data[0];
+        const salary = data[2];
+        const html = `
+        <div>展开指定行</div>
+        <ul class="uid-expand-ul">
+            <li onclick="hello('${name}')">
+                <i class="iconfont iconfont-e748"></i>
+                <span>姓名：</span>
+                <span>${name}</span>
+            </li>
+            <li>
+                <span>薪资：</span>
+                <span>${salary}</span>
+            </li>
+        </ul>
+    `;
+        this.tableCmp.expand(rowIndex, html, this);
     }
 
     // ====================================================================

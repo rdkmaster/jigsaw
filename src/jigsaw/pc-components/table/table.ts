@@ -918,52 +918,29 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object): void {
         const ele = this._rowElementRefs.toArray()[rowIndex].nativeElement;
-        let html = rawHtml;
-        let htmlContext =rawHtmlContext;
+        let trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
 
         if (ele.nextSibling.nodeName === 'TR' && ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
-            ele.nextSibling['_registeredContexts'].forEach(ctx => {
-                JigsawTrustedHtmlBase.clearCallbacks(ctx)
-            });
             const index = this.allExpansion.findIndex(i => i && i === ele.nextSibling);
             this.allExpansion.splice(index, 1);
             ele.nextSibling.remove();
         } else {
             let trustedEle = document.createElement('tr');
-            trustedEle['_registeredContexts'] = [];
-            trustedEle['_trustedHtmlContext'] = htmlContext;
-            trustedEle['_trustedHtml'] = html;
-            trustedEle['_modifiedHtml'] = '';
-
-            trustedEle['_trustedHtml'] = CommonUtils.isUndefined(html) ? "" : html;
-            const modifiedHtml = JigsawTrustedHtmlBase.updateHtml(trustedEle['_trustedHtml'],trustedEle['_trustedHtmlContext'],trustedEle['_registeredContexts'])
-            if (modifiedHtml != trustedEle['_modifiedHtml'] || !trustedEle['_safeHtml']) {
-                trustedEle['_modifiedHtml'] = modifiedHtml;
-                trustedEle['_safeHtml'] = this._sanitizer.bypassSecurityTrustHtml(modifiedHtml);
-                trustedEle['innerHTML'] = trustedEle['_modifiedHtml'];
-            }
+            trustedEle['innerHTML'] = JigsawTrustedHtmlBase.updateHtml(trustedHtml, rawHtmlContext, [])
             trustedEle.classList.add('jigsaw-table-row-expansion');
             ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
             this.allExpansion.push(trustedEle);
         }
+
+        console.log(JigsawTrustedHtmlBase._contexts)
     }
 
     private allExpansion: HTMLTableRowElement[] = [];
 
     public removeAllExpansion() {
         this.allExpansion.forEach(ele => {
-            ele['_registeredContexts'].forEach(ctx => {
-                JigsawTrustedHtmlBase.clearCallbacks(ctx)
-            });
             ele.remove();
         })
-    }
-
-    private _stripPrefixSpaces(source: string): string {
-        const lines = source.split(/\n/g);
-        source = '';
-        lines.forEach(line => source += line.substring(8) + '\n');
-        return source.trim();
     }
 
     ngAfterViewInit() {
