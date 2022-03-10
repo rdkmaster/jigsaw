@@ -1,9 +1,11 @@
 ﻿import {
     AfterViewInit,
+    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
     NgZone,
@@ -13,17 +15,15 @@
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren,
-    ChangeDetectionStrategy,
-    Injector
+    ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 import {Subscription} from "rxjs";
-import { TranslateService, TranslateModule } from "@ngx-translate/core";
-import { InternalUtils } from "../../common/core/utils/internal-utils";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
 
 import {
     _getColumnIndex,
@@ -34,22 +34,15 @@ import {
     SortChangeEvent,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting,
-    RowExpandInfo
+    TableHeadSetting
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {SortOrder, IPageable, PagingInfo} from "../../common/core/data/component-data";
-import {
-    DefaultCellRenderer,
-    JigsawTableRendererModule,
-    TableCellTextEditorRenderer
-} from "./table-renderer";
-import {AffixUtils} from "../../common/core/utils/internal-utils";
+import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
+import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {TableUtils} from "./table-utils";
-import {JigsawTrustedHtmlModule, HtmlCallback, JigsawTrustedHtmlBase} from "../../common/directive/trusted-html/trusted-html";
+import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { DomSanitizer } from '@angular/platform-browser';
 
 @WingsTheme('table.scss')
 @Component({
@@ -67,17 +60,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef, private _sanitizer: DomSanitizer,
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
         }
-        if (!window.hasOwnProperty('jigsawInternalCallbackWrapper') || !(window['jigsawInternalCallbackWrapper'] instanceof Function)) {
-            window['jigsawInternalCallbackWrapper'] = JigsawTrustedHtmlBase.jigsawInternalCallbackWrapper;
-        }
-        JigsawTrustedHtmlBase._zone = _zone;
+        TrustedHtmlHelper.init(_zone);
     }
 
     /**
@@ -267,7 +257,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let oldBackup = CommonUtils.shallowCopy(this._cellSettingsBackup);
         this._cellSettingsBackup = {};
 
-        let preColIndex;
         columnDefines.forEach(columnDefine => {
             if (columnDefine.visible === false) {
                 return;
@@ -918,29 +907,27 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object): void {
         const ele = this._rowElementRefs.toArray()[rowIndex].nativeElement;
-        let trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
+        const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
 
         if (ele.nextSibling.nodeName === 'TR' && ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
-            const index = this.allExpansion.findIndex(i => i && i === ele.nextSibling);
-            this.allExpansion.splice(index, 1);
+            const index = this._allExpandedRows.findIndex(i => i && i === ele.nextSibling);
+            this._allExpandedRows.splice(index, 1);
             ele.nextSibling.remove();
         } else {
-            let trustedEle = document.createElement('tr');
-            trustedEle['innerHTML'] = JigsawTrustedHtmlBase.updateHtml(trustedHtml, rawHtmlContext, [])
+            const trustedEle = document.createElement('tr');
+            trustedEle['innerHTML'] = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
             trustedEle.classList.add('jigsaw-table-row-expansion');
             ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
-            this.allExpansion.push(trustedEle);
+            this._allExpandedRows.push(trustedEle);
         }
-
-        console.log(JigsawTrustedHtmlBase._contexts)
     }
 
-    private allExpansion: HTMLTableRowElement[] = [];
+    private _allExpandedRows: HTMLTableRowElement[] = [];
 
     public removeAllExpansion() {
-        this.allExpansion.forEach(ele => {
+        this._allExpandedRows.forEach(ele => {
             ele.remove();
-        })
+        });
     }
 
     ngAfterViewInit() {
