@@ -27,6 +27,8 @@ import {ComboSelectFullComponent} from "./full/demo.component";
 import {ComboSelectTriggerDemo} from "./trigger/demo.component";
 import {ComboSelectMaxHeightDemo} from "./max-height/demo.component";
 import {ComboSelectMaxHeightDemoModule} from "./max-height/demo.module";
+import { ComboSelectValidDemoComponent } from './valid/demo.component';
+import { ComboSelectValidDemoModule } from './valid/demo.module';
 
 export const routerConfig = [
     {
@@ -67,6 +69,9 @@ export const routerConfig = [
     },
     {
         path: 'max-height', component: ComboSelectMaxHeightDemo
+    },
+    {
+        path: 'valid', component: ComboSelectValidDemoComponent
     }
 ];
 
@@ -86,6 +91,7 @@ export const routerConfig = [
         ComboSelectFullModule,
         ComboSelectTriggerDemoModule,
         ComboSelectMaxHeightDemoModule,
+        ComboSelectValidDemoModule
     ]
 })
 export class ComboSelectDemoModule {

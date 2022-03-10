@@ -1,9 +1,11 @@
 <jigsaw-alert [level]="level">
-    <div class="content-main">
-        <i class="jigsaw-alert-icon iconfont"></i>
-        <p> {{header | translate}} </p>
-    </div>
-    <div class="content-sub">
-        <p [perfectScrollbar]="{suppressScrollX: true, wheelPropagation: true, wheelSpeed: 0.1, minScrollbarLength: 20}"> {{message}} </p>
+    <i class="jigsaw-alert-icon content-icon iconfont" [ngClass]="{center: message === ''}"></i>
+    <div class="content-text" [ngClass]="{center: message === ''}">
+        <div class="content-main">
+            <p> {{header | translate}} </p>
+        </div>
+        <div class="content-sub">
+            <span [perfectScrollbar]="{suppressScrollX: true, wheelPropagation: true, wheelSpeed: 0.1, minScrollbarLength: 20}"> {{message}} </span>
+        </div>
     </div>
 </jigsaw-alert>

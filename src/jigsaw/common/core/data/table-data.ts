@@ -1186,7 +1186,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      */
     public filter(term, fields?: (string | number)[]): void {
         if (term instanceof Function) {
-            this.filteredData = this.originalData.filter(term);
+            this.filteredData = this.originalData.filter(term.bind(fields));
         } else {
             let key: string;
             if (term instanceof DataFilterInfo) {

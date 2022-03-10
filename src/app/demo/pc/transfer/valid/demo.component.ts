@@ -1,31 +1,30 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, LocalPageableArray, TableData} from "jigsaw/public_api";
+import { HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
+import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TransferArrayValidDemoComponent {
-    constructor(private _http: HttpClient) {
-        this.data = new ArrayCollection();
+    public sourceRenderer = TransferListSourceRenderer;
+    public targetRenderer = TransferListDestRenderer;
+
+    public labelField = 'zhName';
+    public subLabelField = 'enName';
+    public trackItemBy = 'shortName';
+
+    constructor(_http: HttpClient) {
+        this.data = new LocalPageableArray();
         this.data.http = _http;
+        this.data.pagingInfo.pageSize = 15;
         this.data.fromAjax('mock-data/countries');
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
 
-        this.selectedCountries = new ArrayCollection();
-        // this.selectedCountries.http = _http;
-        // this.selectedCountries.fromAjax('mock-data/countries');
-        // this.selectedCountries.dataReviser = (td: TableData) => TableData.toArray(td).slice(0,5);
+        this.selectedData = new ArrayCollection([]);
     }
 
-    data: ArrayCollection<any>;
-    selectedCountries: ArrayCollection<any>;
-    selectedCountriesStr: string;
-
-    handleSelectChange($event) {
-        this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
-        this.selectedCountries = $event;
-    }
+    data: LocalPageableArray<any>;
+    selectedData: ArrayCollection<any>;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

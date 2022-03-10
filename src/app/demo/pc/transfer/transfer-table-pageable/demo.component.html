@@ -1,0 +1,29 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">Transfer(table to list)</jigsaw-header>
+
+<jigsaw-header [level]="2">表格=>列表</jigsaw-header>
+
+<ul>
+    <li class="demo-item">
+        <div class="item-buttons">
+            <span>输入数据：</span>
+            <jigsaw-button (click)="changeData()">修改数据</jigsaw-button>
+        </div>
+
+        <div class="item-buttons">
+            <span>数据重置：</span>
+            <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+        </div>
+    </li>
+    <li class="demo-item">
+        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"
+                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
+                    [trackItemBy]="trackItemBy" (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
+    </li>
+</ul>

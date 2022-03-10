@@ -2,17 +2,11 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
 
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Valid属性</jigsaw-header>
-    <jigsaw-header [level]="1">从左边列表至少选择一个条目到右边列表中</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">普通数据</jigsaw-header>
-        <j-transfer width="100%" height="500" [data]="data" labelField="zhName" subLabelField="shortName"
-                    [searchable]="true" (selectedItemsChange)="handleSelectChange($event)"
-                    [selectedItems]="selectedCountries" [valid]="selectedCountries.length > 0 "></j-transfer>
-        <p class="message">选择的地区：{{selectedCountriesStr}}</p>
-    </div>
-</div>
+<jigsaw-header [level]="1">Valid属性</jigsaw-header>
+
+<jigsaw-header [level]="2">从左边列表至少选择一个条目到右边列表中</jigsaw-header>
+<j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData" [sourceRenderer]="sourceRenderer"
+            [destRenderer]="targetRenderer" [labelField]="labelField" [subLabelField]="subLabelField"
+    [trackItemBy]="trackItemBy" [valid]="selectedData.length > 0"></j-transfer>
