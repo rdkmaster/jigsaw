@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import {TableData, ColumnDefine, JigsawTable, RowExpandInfo} from "jigsaw/public_api";
+import { TableData, ColumnDefine, JigsawTable } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -36,12 +36,13 @@ export class TableExpandDemoComponent {
         }
     ];
 
-    rowClick(rowInfo: RowExpandInfo) {
-        if (rowInfo.data[1] !== '可以展开') {
+    rowClick(rowIndex: number) {
+        let data = this.tableData.data[rowIndex]
+        if (data[1] !== '可以展开') {
             return;
         }
-        const name = rowInfo.data[0];
-        const salary = rowInfo.data[2];
+        const name = data[0];
+        const salary = data[2];
         const html = `
             <style>
                 .uid-expand-ul {
