@@ -41,7 +41,8 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
         '[style.width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-checkbox-host]': 'true',
-        '[class.jigsaw-checkbox-error]': '!valid'
+        '[class.jigsaw-checkbox-error]': '!valid',
+        '[class.jigsaw-checkbox-disabled]': 'disabled',
     },
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },
