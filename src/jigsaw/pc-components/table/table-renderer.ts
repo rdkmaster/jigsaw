@@ -368,16 +368,27 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            if (this.targetData instanceof AdditionalTableData) {
+            if (this.targetData instanceof AdditionalTableData && !this._isCheckboxDisabled(index, this.column)) {
                 this.targetData.touchValueByRow(this.field, index, value);
             }
         });
         this.targetData.refresh();
     }
 
+    private _isCheckboxDisabled(rowIndex: number, columnIndex: number): boolean {
+        if(!this.hostInstance._rowElementRefs._results[rowIndex]){
+            return false;
+        }
+        const checkboxEle = this.hostInstance._rowElementRefs._results[rowIndex].nativeElement.cells[columnIndex].querySelector('.jigsaw-checkbox-host')
+        return checkboxEle.classList.contains('jigsaw-checkbox-disabled')
+    }
+
     protected onDataRefresh(): void {
         let type = 0;
         this.targetData.data.forEach((row, index) => {
+            if (this._isCheckboxDisabled(index, this.column)) {
+                return;
+            }
             let value = this.targetData instanceof AdditionalTableData ?
                 this.targetData.getTouchedValueByRow(this.field, index) : undefined;
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
