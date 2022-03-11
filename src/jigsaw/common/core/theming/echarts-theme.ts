@@ -1009,7 +1009,6 @@ export const darkGraphTheme = {
     },
 
     visualMap: {
-        more: '',
         textStyle:{
             color: 'rgba(255,255,255,0.75)'
         }
