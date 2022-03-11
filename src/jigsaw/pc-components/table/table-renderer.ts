@@ -376,7 +376,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 
     private _isCheckboxDisabled(rowIndex: number, columnIndex: number): boolean {
-        if(!this.hostInstance._rowElementRefs._results[rowIndex]){
+        if (!this.hostInstance || !this.hostInstance._rowElementRefs || !this.hostInstance._rowElementRefs._results || !this.hostInstance._rowElementRefs._results[rowIndex]) {
             return false;
         }
         const checkboxEle = this.hostInstance._rowElementRefs._results[rowIndex].nativeElement.cells[columnIndex].querySelector('.jigsaw-checkbox-host')
