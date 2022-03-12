@@ -12,8 +12,8 @@ export class TrustedHtmlHelper {
     private static _zone: NgZone;
 
     public static init(zone: NgZone) {
-        if (!window.hasOwnProperty('_jigsawInternalCallbackWrapper') || !(window['_jigsawInternalCallbackWrapper'] instanceof Function)) {
-            window['_jigsawInternalCallbackWrapper'] = TrustedHtmlHelper._jigsawInternalCallbackWrapper;
+        if (!window.hasOwnProperty('jigsawInternalCallbackWrapper') || !(window['jigsawInternalCallbackWrapper'] instanceof Function)) {
+            window['jigsawInternalCallbackWrapper'] = TrustedHtmlHelper._jigsawInternalCallbackWrapper;
         }
         this._zone = zone;
     }
@@ -22,14 +22,14 @@ export class TrustedHtmlHelper {
         return this._contexts[magicNumber];
     }
 
-
     private static _jigsawInternalCallbackWrapper(callbackName: string, contextMagicNumber: number, ...args) {
-        const contextInfo = this._getContext(contextMagicNumber);
+        // 提示，这里的TrustedHtmlHelper不能改为this，否则trusted-html指令的回调函数会失败
+        const contextInfo = TrustedHtmlHelper._getContext(contextMagicNumber);
         if (CommonUtils.isUndefined(contextInfo)) {
             console.error('no context found by magic number, callbackName = ' + callbackName);
             return;
         }
-        const callbacks = this._callbacks.get(contextInfo.context);
+        const callbacks = TrustedHtmlHelper._callbacks.get(contextInfo.context);
         if (CommonUtils.isUndefined(callbacks)) {
             console.error('no callback cache info found by magic number, callbackName = ' + callbackName);
             return;
@@ -40,7 +40,7 @@ export class TrustedHtmlHelper {
             console.log(`Hint: add a member method named ${callbackName} to the context object.`);
             return;
         }
-        this._zone.run(() => CommonUtils.safeInvokeCallback(contextInfo.context, callback, args));
+        TrustedHtmlHelper._zone.run(() => CommonUtils.safeInvokeCallback(contextInfo.context, callback, args));
     }
 
     private static _declareCallback(context: object, name: string, callback: HtmlCallback) {
