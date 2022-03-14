@@ -535,15 +535,15 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
-    private _selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
+    private _selectedItems: ArrayCollection<ListOption> | any[] = new ArrayCollection([]);
 
     @RequireMarkForCheck()
     @Input()
-    public get selectedItems(): ArrayCollection<ListOption> {
+    public get selectedItems(): ArrayCollection<ListOption> | any[] {
         return this._selectedItems;
     }
 
-    public set selectedItems(value: ArrayCollection<ListOption>) {
+    public set selectedItems(value: ArrayCollection<ListOption> | any[]) {
         if (!(value instanceof Array) && !(value instanceof ArrayCollection)) {
             return;
         }
@@ -565,7 +565,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeSelectedItemsChangeListener = null;
         }
 
-        this._removeSelectedItemsChangeListener = this._selectedItems.onRefresh(() => {
+        this._removeSelectedItemsChangeListener = (<ArrayCollection<ListOption>>this._selectedItems).onRefresh(() => {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.destComponent.reset();
             this._checkDestSelectAll();
