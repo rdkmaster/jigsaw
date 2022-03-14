@@ -29,6 +29,8 @@ import {SelectOptionWidthDemoComponent} from "./option-width/demo.component";
 import {SelectOptionWidthDemoModule} from "./option-width/demo.module";
 import { SelectValueChangeDemoComponent } from './value-change/demo.component';
 import { SelectValueChangeDemoModule } from './value-change/demo.module';
+import { SelectValidDemoComponent } from './valid/demo.component';
+import { SelectValidDemoModule } from './valid/demo.module';
 
 export const routerConfig = [
     {
@@ -72,6 +74,9 @@ export const routerConfig = [
     },
     {
         path: 'value-change', component: SelectValueChangeDemoComponent
+    },
+    {
+        path: 'valid', component: SelectValidDemoComponent
     }
 ];
 
@@ -91,7 +96,8 @@ export const routerConfig = [
         SelectClearableDemoModule,
         MultipleSelectDemoModule,
         SelectOptionWidthDemoModule,
-        SelectValueChangeDemoModule
+        SelectValueChangeDemoModule,
+        SelectValidDemoModule
     ]
 })
 export class SelectDemoModule {

@@ -73,6 +73,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             color: $font-color-disabled-spec !important;
         }
     }
+
+    .#{$jigsaw-combo-select}-invalid {
+        outline: 1px solid red;
+    }
 }
 
 .#{$jigsaw-select}-list-host {

@@ -1,0 +1,18 @@
+@import "../../common/assets/scss/core/base";
+
+$jigsaw-transfer: #{$jigsaw-prefix}-transfer;
+$jigsaw-list: #{$jigsaw-prefix}-list;
+$transfer-renderer: #{$jigsaw-prefix}-transfer-renderer;
+$list-renderer: #{$jigsaw-prefix}-transfer-list-renderer;
+$tree-renderer: #{$jigsaw-prefix}-transfer-tree-renderer;
+$table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
+
+.#{$jigsaw-transfer}-renderer {
+    height: 100%;
+}
+
+.#{$list-renderer} {
+    .#{$jigsaw-list}-host {
+        border: none;
+    }
+}

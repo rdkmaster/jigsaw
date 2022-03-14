@@ -20,7 +20,8 @@
                                      [defaultSortOrder]="head.defaultSortOrder"
                                      (sort)="_$onSort($event)"
                                      [headerTrustedHtml]="head.cellData"
-                                     [headerTrustedHtmlContext]="head.innerHtmlContext">
+                                     [headerTrustedHtmlContext]="head.innerHtmlContext"
+                                     [hostInstance]="this">
                 </jigsaw-table-header>
             </td>
         </tr>

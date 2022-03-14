@@ -1,0 +1,10 @@
+.demo-setting-wrap {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.demo-setting-wrap .text {
+    margin-right: 8px;
+    font-size: 14px;
+}

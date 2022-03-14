@@ -18,7 +18,7 @@ export class TableAutoSaveDemoComponent {
 
     constructor(private popupService: PopupService) {
         this.tableData = new TableData(
-            [["Garrett Winflters1", "Accountant", 8000, "Tokyo", "一些描述信息"]],
+            [["Garrett Winters1", "Accountant", 8000, "Tokyo", "一些描述信息"]],
             ["name", "position", "salary", "office", "extn"],
             ["姓名", "职位", "薪资", "部门", "其他"]
         );

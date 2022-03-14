@@ -33,7 +33,7 @@ export class TableAutoFillUpDemoComponent {
         const _data = [];
         for (let i = 1; i < Math.floor(Math.random() * 7) + 2; i++) {
             _data.push(["Tiger Nixon" + i, "System Architect", "8000"]);
-            _data.push(["Garrett Winflters" + i, "Accountant", "9000"]);
+            _data.push(["Garrett Winters" + i, "Accountant", "9000"]);
         }
 
         this.tableData.fromObject({
@@ -101,11 +101,11 @@ export class TableAutoFillUpDemoComponent {
         this.tableData = new TableData(
             [
                 ["Tiger Nixon1", "System Architect", "8000"],
-                ["Garrett Winflters1", "Accountant", "9000"],
-                ["Tiger Nixon2", "System Arcfhitect", "8000"],
-                ["Garrett Winslters2", "Accountant", "9000"],
-                ["Tiger Nixon3", "System Arcfhitect", "8000"],
-                ["Garrett Winflters3", "Accountant", "9000"]
+                ["Garrett Winters1", "Accountant", "9000"],
+                ["Tiger Nixon2", "System Architect", "8000"],
+                ["Garrett Winters2", "Accountant", "9000"],
+                ["Tiger Nixon3", "System Architect", "8000"],
+                ["Garrett Winters3", "Accountant", "9000"]
             ],
             ["name", "position", "salary"],
             ["姓名", "职位", "薪资"]
