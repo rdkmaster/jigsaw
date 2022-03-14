@@ -52,7 +52,7 @@ export class TableAddCheckboxColumnDemoComponent {
         }
     }];
 
-    additionalDataChange(value) {
+    additionalDataChange() {
         this.selectedRows = this.getSelectedRows(this.additionalData);
     }
 

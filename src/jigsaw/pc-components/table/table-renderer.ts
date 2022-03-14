@@ -385,19 +385,14 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         return checkboxEle.classList.contains('jigsaw-checkbox-disabled')
     }
 
-    private _getRealColumnIndex(element: any): void {
-        if (!element) {
-            return;
-        }
-        let i = -1;
-        while ((element = element.previousSibling) != null) {
-            ++i;
-        }
-        this._realColumn = i;
+    private _getRealColumnIndex(element: ElementRef): void {
+        const td = element.nativeElement.closest('td');
+        const tds = Array.from(element.nativeElement.closest('tr').querySelectorAll(':scope > td'));
+        this._realColumn = tds.findIndex(item => item === td);
     }
 
     protected onDataRefresh(): void {
-        this._getRealColumnIndex(this._elementRef.nativeElement.closest('td'))
+        this._getRealColumnIndex(this._elementRef);
         let type = 0;
         this.targetData.data.forEach((row, index) => {
             if (this._isCheckboxDisabled(index, this._realColumn)) {
