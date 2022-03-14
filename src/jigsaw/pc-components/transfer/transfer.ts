@@ -340,7 +340,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.reset();
                     })
                     this._refreshForPageableArray(value);
-                } else if (value instanceof ArrayCollection) {
+                } else if (value instanceof ArrayCollection || value instanceof Array) {
+                    value = value instanceof Array ? new ArrayCollection(value) : value;
                     this._refreshForArray(value);
                 } else {
                     console.error("输入的数据结构与渲染器不匹配")
