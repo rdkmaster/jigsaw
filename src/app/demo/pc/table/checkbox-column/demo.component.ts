@@ -6,7 +6,8 @@ import {
 } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class TableAddCheckboxColumnDemoComponent {
     constructor(http: HttpClient) {
@@ -31,7 +32,6 @@ export class TableAddCheckboxColumnDemoComponent {
         header: {
             renderer: TableHeadCheckboxRenderer,
             rendererInitData: (td, row, col) => {
-                console.log(row, col);
                 return {
                     disabled: this.headerDisabled
                 }
@@ -53,7 +53,6 @@ export class TableAddCheckboxColumnDemoComponent {
     }];
 
     additionalDataChange(value) {
-        console.log(value);
         this.selectedRows = this.getSelectedRows(this.additionalData);
     }
 

@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
-import {take, retry} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
