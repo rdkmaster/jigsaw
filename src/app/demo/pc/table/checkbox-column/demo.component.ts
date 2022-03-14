@@ -26,7 +26,7 @@ export class TableAddCheckboxColumnDemoComponent {
     headerDisabled = true;
 
     additionalColumns: AdditionalColumnDefine[] = [{
-        pos: 0,
+        pos: 1,
         width: 20,
         header: {
             renderer: TableHeadCheckboxRenderer,
