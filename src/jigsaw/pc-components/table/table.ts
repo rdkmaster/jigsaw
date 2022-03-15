@@ -18,13 +18,13 @@
     ViewChildren
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {Subscription} from "rxjs";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
-import {Subscription} from "rxjs";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
-
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -38,11 +38,10 @@ import {
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
-import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
-import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {TableUtils} from "./table-utils";
 import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
+import {TableUtils} from "./table-utils";
 
 @WingsTheme('table.scss')
 @Component({
@@ -441,7 +440,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
-            this.removeAllExpansion();
+            this._allExpandedRows.forEach(ele => {
+                ele.remove();
+            });
         })
     }
 
@@ -915,7 +916,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             ele.nextSibling.remove();
         } else {
             const trustedEle = document.createElement('tr');
-            trustedEle['innerHTML'] = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
+            trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
             trustedEle.classList.add('jigsaw-table-row-expansion');
             ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
             this._allExpandedRows.push(trustedEle);
@@ -923,12 +924,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _allExpandedRows: HTMLTableRowElement[] = [];
-
-    public removeAllExpansion() {
-        this._allExpandedRows.forEach(ele => {
-            ele.remove();
-        });
-    }
 
     ngAfterViewInit() {
         this._selectRow(this.selectedRow, true);

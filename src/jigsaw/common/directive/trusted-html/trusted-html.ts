@@ -6,14 +6,15 @@ export type HtmlCallback = (...args) => any;
 type CallbackValues = { [callbackName: string]: HtmlCallback };
 type ContextInfo = { context: object, counter: number };
 
+// @dynamic
 export class TrustedHtmlHelper {
     private static _callbacks = new Map<object, CallbackValues>();
     private static _contexts: ContextInfo[] = [];
-    private static _zone: NgZone;
+    private static _zone: NgZone = null;
 
     public static init(zone: NgZone) {
         if (!window.hasOwnProperty('jigsawInternalCallbackWrapper') || !(window['jigsawInternalCallbackWrapper'] instanceof Function)) {
-            window['jigsawInternalCallbackWrapper'] = TrustedHtmlHelper._jigsawInternalCallbackWrapper;
+            window['jigsawInternalCallbackWrapper'] = this._jigsawInternalCallbackWrapper;
         }
         this._zone = zone;
     }
@@ -138,10 +139,10 @@ export class TrustedHtmlHelper {
         return !trustedHtmlContext ? trustedHtml : trustedHtml
             .replace(/(on|\()(\w+)\)?\s*=(['"])\s*([_$a-z][_$a-z0-9.]*)\s*\((.*?)\)/ig,
                 (found, prefix, event, quot, funcAccessor, args) =>
-                    TrustedHtmlHelper._replacer(trustedHtmlContext, registeredContexts, `on${event}=${quot}`, funcAccessor, args))
+                    this._replacer(trustedHtmlContext, registeredContexts, `on${event}=${quot}`, funcAccessor, args))
             .replace(/(javascript\s*:)\s*([_$a-z][_$a-z0-9]*)\s*\((.*?)\)/ig,
                 (found, jsPrefix, funcAccessor, args) =>
-                    TrustedHtmlHelper._replacer(trustedHtmlContext, registeredContexts, jsPrefix, funcAccessor, args));
+                    this._replacer(trustedHtmlContext, registeredContexts, jsPrefix, funcAccessor, args));
     }
 }
 
