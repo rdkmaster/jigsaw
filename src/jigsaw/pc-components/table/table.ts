@@ -441,7 +441,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
-            this.removeAllExpansion();
+            this._allExpandedRows.forEach(ele => {
+                ele.remove();
+            });
         })
     }
 
@@ -915,7 +917,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             ele.nextSibling.remove();
         } else {
             const trustedEle = document.createElement('tr');
-            trustedEle['innerHTML'] = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
+            trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
             trustedEle.classList.add('jigsaw-table-row-expansion');
             ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
             this._allExpandedRows.push(trustedEle);
@@ -923,12 +925,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _allExpandedRows: HTMLTableRowElement[] = [];
-
-    public removeAllExpansion() {
-        this._allExpandedRows.forEach(ele => {
-            ele.remove();
-        });
-    }
 
     ngAfterViewInit() {
         this._selectRow(this.selectedRow, true);

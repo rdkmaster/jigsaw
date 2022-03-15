@@ -38,47 +38,51 @@ export class TableExpandDemoComponent {
     ];
 
     rowClick(rowIndex: number) {
-        const data = this.tableData.data[rowIndex]
-        if (data[1] !== '可以展开') {
+        const html = this.getExpansionHtml(rowIndex);
+        if (!html) {
             return;
         }
-        const name = data[0];
-        const salary = data[2];
-        const html = `
+        this.tableCmp.expand(rowIndex, html, this);
+    }
+
+    getExpansionHtml(rowIndex: number) {
+        const data = this.tableData.data[rowIndex]
+        if (data[1] !== '可以展开') {
+            return '';
+        }
+        const items = this.tableData.header.map((header, idx) =>
+            `<li onclick="showValue('${data[idx]}')">
+                <i class="iconfont iconfont-e748"></i>
+                <span>${header}：</span>
+                <span>${data[idx]}</span>
+            </li>`).join('');
+        return `
             <style>
+                .uid-expand-title {
+                    width: 148px;
+                }
                 .uid-expand-ul {
                     display:flex;
                     flex-direction: column;
                     width:200px;
+                    align-items: start;
+                    margin-left: 56px;
                 }
-
                 .uid-expand-ul li:hover {
                     background: var(--bg-hover);
                     cursor: pointer;
                 }
-
                 .uid-expand-ul li i:hover {
                     color: var(--primary-default)
                 }
             </style>
-            <div>详细信息：</div>
-            <ul class="uid-expand-ul">
-                <li onclick="hello('${name}')">
-                    <i class="iconfont iconfont-e748"></i>
-                    <span>姓名：</span>
-                    <span>${name}</span>
-                </li>
-                <li>
-                    <span>薪资：</span>
-                    <span>${salary}</span>
-                </li>
-            </ul>
+            <p class="uid-expand-title">详细信息：</p>
+            <ul class="uid-expand-ul">${items}</ul>
         `;
-        this.tableCmp.expand(rowIndex, html, this);
     }
 
-    hello(who) {
-        alert('Hello' + who)
+    showValue(value: string) {
+        alert('The value is ' + value);
     }
 
     refreshData() {
@@ -117,27 +121,7 @@ export class TableExpandDemoComponent {
     }
 
     expandRow(rowIndex: number) {
-        const data = this.tableData.data[rowIndex]
-        if (data[1] !== '可以展开') {
-            return;
-        }
-        const name = data[0];
-        const salary = data[2];
-        const html = `
-        <div>展开指定行</div>
-        <ul class="uid-expand-ul">
-            <li onclick="hello('${name}')">
-                <i class="iconfont iconfont-e748"></i>
-                <span>姓名：</span>
-                <span>${name}</span>
-            </li>
-            <li>
-                <span>薪资：</span>
-                <span>${salary}</span>
-            </li>
-        </ul>
-    `;
-        this.tableCmp.expand(rowIndex, html, this);
+        this.tableCmp.expand(rowIndex, this.getExpansionHtml(2), this);
     }
 
     // ====================================================================
