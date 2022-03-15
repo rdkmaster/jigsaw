@@ -459,5 +459,3 @@ export class AdditionalTableData extends TableData {
         return this._touchedValues[fieldString];
     }
 }
-
-

@@ -70,6 +70,11 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     background: $bg-component;
                 }
             }
+
+            tr.jigsaw-table-row-expansion{
+                border-left: 1px solid $border-color-default;
+                border-right: 1px solid $border-color-default;
+            }
         }
     }
 
