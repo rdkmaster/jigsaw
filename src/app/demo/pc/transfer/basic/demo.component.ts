@@ -1,29 +1,63 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, LocalPageableArray, TableData} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class TransferArrayDemoComponent {
-    constructor(private _http: HttpClient) {
-        this.data = new ArrayCollection();
-        this.data.http = _http;
-        this.data.fromAjax('mock-data/countries');
-        this.data.dataReviser = (td: TableData) => TableData.toArray(td);
-
-        this.selectedCountries = new ArrayCollection();
-        this.selectedCountries.http = _http;
-        this.selectedCountries.fromAjax('mock-data/countries');
-        this.selectedCountries.dataReviser = (td: TableData) => TableData.toArray(td).slice(0,5);
-    }
+    public sourceRenderer = TransferListSourceRenderer;
+    public targetRenderer = TransferListDestRenderer;
 
     data: ArrayCollection<any>;
-    selectedCountries: ArrayCollection<any>;
-    selectedCountriesStr: string;
+    selectedItems: ArrayCollection<any>;
 
-    handleSelectChange($event) {
-        this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
+    constructor() {
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        this.selectedItems = new ArrayCollection(["上海", "南京"]);
+    }
+
+    addItem() {
+        this.data.push(`${(Date.now().toString())}`);
+        this.data.refresh();
+    }
+
+    removeItem() {
+        const item = this.data.pop();
+        const idx = this.selectedItems.indexOf(item);
+        if (idx != -1) {
+            this.selectedItems.splice(idx, 1);
+        }
+        this.data.refresh();
+        this.selectedItems.refresh();
+    }
+
+    addSelectedItem() {
+        const newLabel = Date.now().toString();
+        this.data.push(newLabel);
+        this.data.refresh();
+        this.selectedItems.push(newLabel);
+    }
+
+    removeSelectedItem() {
+        this.selectedItems.pop();
+        this.selectedItems.refresh();
+    }
+
+    resetInputData() {
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+    }
+
+    changeInputData() {
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安", "杭州", "广州", "香港", "澳门"]);
+    }
+
+    changeSelectedData() {
+        this.selectedItems = new ArrayCollection(["深圳", "长沙"]);
+    }
+
+    resetSelectedData() {
+        this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
 
     // ====================================================================
