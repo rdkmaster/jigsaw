@@ -248,8 +248,11 @@ export abstract class JigsawCommonAlert extends DialogBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawInfoAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef, public translate:TranslateService) {
         super(_renderer, _elementRef);
+        // this.translate.currentLang= 'en';s
+        TranslateHelper.changeLanguage(this.translate, 'en');
+        console.log(this.translate.currentLang)
     }
 
     @ViewChild(JigsawAlert, {static: true})
@@ -395,8 +398,9 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawConfirmAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef, public translateService: TranslateService) {
         super(_renderer, _elementRef);
+        console.log(this.translateService.currentLang)
     }
 
     @ViewChild(JigsawAlert, {static: true})

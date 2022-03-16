@@ -647,6 +647,36 @@
             </div>
         </section>
     </li>
+    <li class="list-li header">
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="darkTheme" [level]="1">无内置主题组件</jigsaw-header>
+            </div>
+        </section>
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="lightTheme" [level]="1">无内置主题组件</jigsaw-header>
+            </div>
+        </section>
+    </li>
+    <li class="list-li alert">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">alert</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" (click)="commonInfoAlert()">
+                    通用信息提示框
+                </jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">alert</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" (click)="commonInfoAlert()">
+                    通用信息提示框
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
     <!--    <li class="list-li xxxx">-->
     <!--        <section class="item-section">-->
     <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
@@ -662,3 +692,21 @@
     <!--        </section>-->
     <!--    </li>-->
 </ul>
+<div class="demo-nav">
+    <i class="iconfont iconfont-e175"></i>
+</div>
+<div class="demo-nav-menu-cntr">
+    <div>
+        <span>{{navMenu?.length}}</span>
+        <i class="iconfont iconfont-e14b"></i>
+    </div>
+    <ul class="demo-nav-menu">
+        <li class="nav-menu-item" *ngFor="let item of navMenu">
+            <span class="icon-vis" (click)="visClick(item)">
+                <i *ngIf="item.vis" class="iconfont iconfont-e9d2"></i>
+                <i *ngIf="!item.vis" class="iconfont iconfont-e9d3"></i>
+            </span>
+            <span class="text" [title]="item.name" (click)="navClick(item)">{{item.name}}</span>
+        </li>
+    </ul>
+</div>

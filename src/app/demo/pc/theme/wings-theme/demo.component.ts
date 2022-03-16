@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData } from 'jigsaw/public_api';
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -164,16 +164,39 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         });
     }
 
+    commonInfoAlert() {
+        const info = { header: '标题', message: '描述信息' };
+        JigsawInfoAlert.show(info);
+    }
+
+    navMenu: any;
+
+    navClick(item) {
+        item.ele.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    visClick(item) {
+        item.vis = !item.vis;
+        console.log(item.ele.closest('.list-li'))
+        item.ele.closest('.list-li').style.display = item.vis ? 'flex' : 'none';
+    }
+
     ngAfterViewInit() {
         const allHeaders = document.querySelectorAll(".jigsaw-header-level-2");
         const validHeaders = Array.from(allHeaders).filter((item, i) => {
             return i % 2 === 0;
         })
-        console.log(validHeaders)
+        setTimeout(() => {
+            this.navMenu = validHeaders.map(item => {
+                return { name: item['innerText'], ele: item, vis: true };
+            }).sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            })
+        }, 1);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo演示了jigsaw-cascading-menu指令实现多级菜单，展示了各个可用配置项及其效果，事件回调效果请查看控制台';
+    summary: string = '';
     description: string = '';
 }

@@ -33,7 +33,7 @@ import {
     JigsawDateTimeSelectModule,
     JigsawRangeDateTimePickerModule,
     JigsawRangeDateTimeSelectModule,
-    JigsawTableModule, JigsawGraphModule
+    JigsawTableModule, JigsawGraphModule, JigsawAlertModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
@@ -73,7 +73,8 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawRangeDateTimeSelectModule,
         JigsawMenuModule,
         JigsawTableModule,
-        JigsawGraphModule
+        JigsawGraphModule,
+        JigsawAlertModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent]
