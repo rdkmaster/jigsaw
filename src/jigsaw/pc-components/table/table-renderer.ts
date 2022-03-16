@@ -335,13 +335,15 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+    constructor(private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_injector);
     }
 
     private _initDataJson: any;
+
+    private _realColumn: number;
 
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
@@ -368,7 +370,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            if (this.targetData instanceof AdditionalTableData && !this._isCheckboxDisabled(index, this.column)) {
+            if (this.targetData instanceof AdditionalTableData && !this._isCheckboxDisabled(index, this._realColumn)) {
                 this.targetData.touchValueByRow(this.field, index, value);
             }
         });
@@ -383,10 +385,17 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         return checkboxEle.classList.contains('jigsaw-checkbox-disabled')
     }
 
+    private _getRealColumnIndex(element: ElementRef): void {
+        const td = element.nativeElement.closest('td');
+        const tds = Array.from(element.nativeElement.closest('tr').querySelectorAll(':scope > td'));
+        this._realColumn = tds.findIndex(item => item === td);
+    }
+
     protected onDataRefresh(): void {
+        this._getRealColumnIndex(this._elementRef);
         let type = 0;
         this.targetData.data.forEach((row, index) => {
-            if (this._isCheckboxDisabled(index, this.column)) {
+            if (this._isCheckboxDisabled(index, this._realColumn)) {
                 return;
             }
             let value = this.targetData instanceof AdditionalTableData ?
