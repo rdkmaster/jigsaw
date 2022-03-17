@@ -1,12 +1,12 @@
 $jigsaw-tabs: #{$jigsaw-prefix}-tabs;
 $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
+$jigsaw-list: #{$jigsaw-prefix}-list;
 
 .#{$jigsaw-tabs}-host {
     display: block;
     height: auto;
 
-    .#{$jigsaw-tabs},
-    &.#{$jigsaw-tabs} {
+    .#{$jigsaw-tabs} {
         display: block;
         position: relative;
         overflow: hidden;
@@ -25,24 +25,6 @@ $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
             }
         }
 
-        .#{$jigsaw-tabs}-overflow-button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 100%;
-            background-color: var(--jigsaw-nav-background, $bg-body);
-            font-size: 24px;
-            color: $icon-color-default;
-            text-align: center;
-            cursor: pointer;
-
-            &:hover {
-                background-color: $brand-default;
-                color: $font-color-white;
-            }
-        }
-
         .#{$jigsaw-tabs}-content {
             width: 100%;
             background-color: var(--jigsaw-nav-background, transparent);
@@ -54,95 +36,18 @@ $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
                 height: 100%;
                 opacity: 1;
 
-                &-inactive {
+                .#{$jigsaw-tabs}-tabpane-inactive {
                     opacity: 0;
                     height: 0;
                     overflow: hidden;
                 }
 
-                &-hidden {
+                .#{$jigsaw-tabs}-tabpane-hidden {
                     display: none;
                 }
             }
         }
-
-        .#{$jigsaw-tabs}-title-editor {
-            display: flex;
-            align-items: center;
-
-            &-bar {
-                margin-left: 5px;
-            }
-        }
-
-        .#{$jigsaw-tabs}-title-editor-input {
-            margin: -4px 0;
-            height: 26px;
-
-            .jigsaw-input-icon-item {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-            }
-        }
     }
-
-    // &.#{$jigsaw-tabs}-page {
-    //     .#{$jigsaw-tabs}-bar {
-    //         .#{$jigsaw-tabs}-nav-container {
-    //             .#{$jigsaw-tabs}-ink-bar {
-    //                 height: 1px;
-    //                 background-color: var(--jigsaw-nav-background, $bg-body);
-    //                 transition: unset;
-    //             }
-
-    //             .#{$jigsaw-tabs}-nav-wrap {
-    //                 background-color: transparent;
-
-    //                 .#{$jigsaw-tabs}-nav {
-    //                     background-color: transparent;
-
-    //                     .#{$jigsaw-tabs}-tab {
-    //                         background-color: var(--jigsaw-nav-background, transparent);
-    //                         border-width: 1px;
-    //                         border-style: solid;
-    //                         border-color: $border-color-default;
-    //                         border-radius: $border-radius-base $border-radius-base 0 0;
-    //                         border-bottom: none;
-    //                         margin-right: 2px;
-    //                         padding: 0 16px;
-    //                         line-height: 32px;
-
-    //                         &-active {
-    //                             border-top-width: 2px;
-    //                             border-top-color: $brand-default;
-    //                         }
-    //                     }
-
-    //                     .#{$jigsaw-tabs}-tab-disabled {
-    //                         background: $bg-disabled;
-    //                         color: $font-color-disabled-spec;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     &.#{$jigsaw-tabs}-editable {
-    //         .#{$jigsaw-tabs}-remove-bar {
-    //             right: 4px;
-    //         }
-
-    //         .#{$jigsaw-tabs}-nav-container {
-    //             .#{$jigsaw-tabs}-nav-wrap {
-    //                 .#{$jigsaw-tabs}-nav {
-    //                     .#{$jigsaw-tabs}-tab {
-    //                         padding-right: 20px;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 .#{$jigsaw-tabs-bar}-host {
@@ -266,6 +171,25 @@ $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
                         * {
                             outline: 0;
                         }
+
+                        .#{$jigsaw-tabs}-title-editor {
+                            display: flex;
+                            align-items: center;
+
+                            .#{$jigsaw-tabs}-title-editor-bar {
+                                margin-left: 5px;
+                            }
+                        }
+
+                        .#{$jigsaw-tabs}-title-editor-input {
+                            margin: -4px 0;
+                            height: 26px;
+
+                            .jigsaw-input-icon-item {
+                                margin-left: 0 !important;
+                                margin-right: 0 !important;
+                            }
+                        }
                     }
 
                     .#{$jigsaw-tabs}-add-bar {
@@ -278,6 +202,24 @@ $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
                             color: $brand-default;
                         }
                     }
+                }
+            }
+
+            .#{$jigsaw-tabs}-overflow-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 40px;
+                height: 100%;
+                background-color: var(--jigsaw-nav-background, $bg-body);
+                font-size: 24px;
+                color: $icon-color-default;
+                text-align: center;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $brand-default;
+                    color: $font-color-white;
                 }
             }
         }
@@ -323,72 +265,6 @@ $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
             &:hover {
                 background-color: $brand-default;
                 color: $font-color-white;
-            }
-        }
-
-        .#{$jigsaw-tabs}-list {
-            box-shadow: none !important;
-            border-radius: 0;
-            border: none;
-            width: 200px !important;
-            max-height: 300px;
-
-            .#{$jigsaw-tabs}-bar-list-option {
-                display: flex;
-
-                .#{$jigsaw-tabs}-bar-list-content {
-                    display: inline-block;
-                }
-            }
-
-            .#{$jigsaw-tabs}-bar-add-option {
-                display: flex;
-                justify-content: center;
-
-                span {
-                    margin-right: 6px;
-                }
-            }
-
-            .jigsaw-list-option-host {
-                .span-margin {
-                    margin: 0 4px;
-                    width: 10px;
-                    height: 9px;
-                }
-
-                &-selected {
-                    display: flex;
-                    align-items: center;
-                    color: $brand-default;
-
-                    .check-icon {
-                        margin-right: 5px;
-                    }
-                }
-
-                &-hidden {
-                    display: none;
-                }
-            }
-        }
-
-        .#{$jigsaw-tabs}-title-editor {
-            display: flex;
-            align-items: center;
-
-            &-bar {
-                margin-left: 5px;
-            }
-        }
-
-        .#{$jigsaw-tabs}-title-editor-input {
-            margin: -4px 0;
-            height: 26px;
-
-            .jigsaw-input-icon-item {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
             }
         }
     }
@@ -447,6 +323,55 @@ $jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+.#{$jigsaw-list}-host {
+    &.#{$jigsaw-tabs}-list {
+        box-shadow: none !important;
+        border-radius: 0;
+        border: none;
+        width: 200px !important;
+        max-height: 300px;
+
+        .#{$jigsaw-tabs}-bar-list-option {
+            display: flex;
+
+            .#{$jigsaw-tabs}-bar-list-content {
+                display: inline-block;
+            }
+        }
+
+        .#{$jigsaw-tabs}-bar-add-option {
+            display: flex;
+            justify-content: center;
+
+            span {
+                margin-right: 6px;
+            }
+        }
+
+        .#{$jigsaw-list}-option-host {
+            .span-margin {
+                margin: 0 4px;
+                width: 10px;
+                height: 9px;
+            }
+
+            .#{$jigsaw-list}-option-selected {
+                display: flex;
+                align-items: center;
+                color: $brand-default;
+
+                .check-icon {
+                    margin-right: 5px;
+                }
+            }
+
+            .#{$jigsaw-list}-option-hidden {
+                display: none;
             }
         }
     }
