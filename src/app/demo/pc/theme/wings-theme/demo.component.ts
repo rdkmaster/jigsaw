@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert } from 'jigsaw/public_api';
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData } from 'jigsaw/public_api';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -118,7 +119,11 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     _$graphData;
 
-    constructor() {
+    _$cascadeData: SimpleTreeData;
+
+    _$tabbarData: TabBarData[];
+
+    constructor(http: HttpClient) {
         this._$navigationData.fromXML(`
         <node>
             <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
@@ -162,11 +167,45 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
             yAxis: { type: 'value' },
             series: [{ data: [820, 932, 901, 934, 1290, 1330, 1320], type: 'line' }]
         });
+
+        http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => this._$cascadeData = data);
+
+        this._$tabbarData = [
+            {
+                label: "Tab 1",
+                icon: "iconfont iconfont-e105"
+            },
+            {
+                label: "Tab 2",
+                disabled: true
+            },
+            {
+                html: `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`
+            },
+            {
+                html: `<span>更多</span>`
+            },
+            {
+                label: "Tab 5",
+                hidden: true
+            }
+        ];
     }
 
     commonInfoAlert() {
-        const info = { header: '标题', message: '描述信息' };
-        JigsawInfoAlert.show(info);
+        JigsawInfoAlert.show({ header: '标题', message: '描述信息' });
+    }
+
+    commonWarningAlert() {
+        JigsawWarningAlert.show({ header: '标题', message: '描述信息' });
+    }
+
+    commonErrorAlert() {
+        JigsawWarningAlert.show({ header: '标题', message: '描述信息' });
+    }
+
+    commonConfirmAlert() {
+        JigsawConfirmAlert.show({ header: '标题', message: '描述信息' }, null, [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }]);
     }
 
     navMenu: any;

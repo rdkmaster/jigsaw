@@ -664,7 +664,16 @@
             <jigsaw-header [theme]="darkTheme">alert</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-button [theme]="darkTheme" (click)="commonInfoAlert()">
-                    通用信息提示框
+                    信息提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonWarningAlert()">
+                    警告提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonErrorAlert()">
+                    错误提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonConfirmAlert()">
+                    确认提示框
                 </jigsaw-button>
             </div>
         </section>
@@ -672,8 +681,117 @@
             <jigsaw-header [theme]="lightTheme">alert</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-button [theme]="lightTheme" (click)="commonInfoAlert()">
-                    通用信息提示框
+                    信息提示框
                 </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonWarningAlert()">
+                    警告提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonErrorAlert()">
+                    错误提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonConfirmAlert()">
+                    确认提示框
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li cascade">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">cascade</jigsaw-header>
+            <div class="item-div start">
+                <j-cascade [theme]="darkTheme" [data]="_$cascadeData" [searchable]="true" [pageSize]="5"></j-cascade>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">cascade</jigsaw-header>
+            <div class="item-div start">
+                <j-cascade [theme]="lightTheme" [data]="_$cascadeData" [searchable]="true" [pageSize]="5"></j-cascade>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tabs-bar">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tabs-bar</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs-bar [theme]="darkTheme" [data]="_$tabbarData"></jigsaw-tabs-bar>
+                <jigsaw-tabs-bar [theme]="darkTheme" [data]="_$tabbarData" tabType="page"></jigsaw-tabs-bar>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tabs-bar</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs-bar [theme]="lightTheme" [data]="_$tabbarData"></jigsaw-tabs-bar>
+                <jigsaw-tabs-bar [theme]="lightTheme" [data]="_$tabbarData" tabType="page"></jigsaw-tabs-bar>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tabs">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tabs</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs [theme]="darkTheme" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
+
+                <jigsaw-tabs [theme]="darkTheme" [tabType]="'page'" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tabs</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs [theme]="lightTheme" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
+
+                <jigsaw-tabs [theme]="lightTheme" [tabType]="'page'" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
             </div>
         </section>
     </li>
