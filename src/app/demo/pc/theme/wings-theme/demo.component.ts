@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData } from 'jigsaw/public_api';
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData } from 'jigsaw/public_api';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -123,6 +123,8 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     _$tabbarData: TabBarData[];
 
+    _$pageableData: LocalPageableTableData;
+
     constructor(http: HttpClient) {
         this._$navigationData.fromXML(`
         <node>
@@ -190,6 +192,11 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
                 hidden: true
             }
         ];
+
+        this._$pageableData = new LocalPageableTableData();
+        this._$pageableData.http = http;
+        this._$pageableData.pagingInfo.pageSize = 10;
+        this._$pageableData.fromAjax('mock-data/hr-list-full');
     }
 
     commonInfoAlert() {
@@ -218,6 +225,10 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         item.vis = !item.vis;
         console.log(item.ele.closest('.list-li'))
         item.ele.closest('.list-li').style.display = item.vis ? 'flex' : 'none';
+    }
+
+    scrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     ngAfterViewInit() {

@@ -7,8 +7,8 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
     height: auto;
 
     .#{$jigsaw-tabs} {
-        display: block;
         position: relative;
+        display: block;
         overflow: hidden;
         @include clearfix;
         color: $font-color-default;
@@ -36,13 +36,13 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                 height: 100%;
                 opacity: 1;
 
-                .#{$jigsaw-tabs}-tabpane-inactive {
+                &.#{$jigsaw-tabs}-tabpane-inactive {
                     opacity: 0;
                     height: 0;
                     overflow: hidden;
                 }
 
-                .#{$jigsaw-tabs}-tabpane-hidden {
+                &.#{$jigsaw-tabs}-tabpane-hidden {
                     display: none;
                 }
             }
@@ -330,11 +330,10 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
 .#{$jigsaw-list}-host {
     &.#{$jigsaw-tabs}-list {
-        box-shadow: none !important;
-        border-radius: 0;
-        border: none;
         width: 200px !important;
         max-height: 300px;
+        border-radius: 0;
+        border: none;
 
         .#{$jigsaw-tabs}-bar-list-option {
             display: flex;

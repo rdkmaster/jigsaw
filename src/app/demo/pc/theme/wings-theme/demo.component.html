@@ -647,6 +647,36 @@
             </div>
         </section>
     </li>
+    <li class="list-li pagination">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">pagination</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <jigsaw-pagination [theme]="darkTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="complex" widh="710px" size='large'>
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="darkTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="folding" widh="710px">
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="darkTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    mode="simple" widh="710px">
+                </jigsaw-pagination>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">pagination</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <jigsaw-pagination [theme]="lightTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="complex" widh="710px" size='large'>
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="lightTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="folding" widh="710px">
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="lightTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    mode="simple" widh="710px">
+                </jigsaw-pagination>
+            </div>
+        </section>
+    </li>
     <li class="list-li header">
         <section class="item-section">
             <div class="center">
@@ -795,6 +825,7 @@
             </div>
         </section>
     </li>
+
     <!--    <li class="list-li xxxx">-->
     <!--        <section class="item-section">-->
     <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
@@ -816,6 +847,7 @@
 <div class="demo-nav-menu-cntr">
     <div>
         <span>{{navMenu?.length}}</span>
+        <i class="iconfont iconfont-e415" (click)="scrollToBottom()"></i>
         <i class="iconfont iconfont-e14b"></i>
     </div>
     <ul class="demo-nav-menu">

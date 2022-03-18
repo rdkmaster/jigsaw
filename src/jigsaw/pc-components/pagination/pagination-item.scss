@@ -4,6 +4,7 @@ $jigsaw-page: #{$jigsaw-prefix}-page;
     @include inline-block();
     margin-right: 8px;
     vertical-align: top;
+    color: $font-color-default;
 
     span {
         @include inline-block();

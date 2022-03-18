@@ -87,7 +87,7 @@ export class CascadeTabContentInitData {
 @WingsTheme('cascade.scss')
 @Component({
     selector: 'jigsaw-cascade, j-cascade',
-    template: '<j-tabs width="100%"></j-tabs>',
+    template: '<j-tabs [theme]="theme" width="100%"></j-tabs>',
     host: {
         '[style.width]': 'width',
         '[attr.data-theme]': 'theme',
