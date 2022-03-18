@@ -9,7 +9,7 @@ import {FieldWrapper} from '@ngx-formly/core';
                         'margin-bottom': to.fixMarginBottom ? to.fixMarginBottom : '16px'}">
             <div class="jigsaw-formly-field-wrapper-label" *ngIf="!to.hideLabel" [attr.for]="id">
                 <span [trustedHtml]="to.label"></span>
-                <span *ngIf="to.required && to.hideRequiredMarker !== true && to.label" class="jigsaw-formly-field-required">*</span>
+                <span *ngIf="to.required && to.label" class="jigsaw-formly-field-required">*</span>
             </div>
 
             <div class="jigsaw-formly-field-wrapper-control">
