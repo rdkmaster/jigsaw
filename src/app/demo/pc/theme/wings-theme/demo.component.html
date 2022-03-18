@@ -825,7 +825,34 @@
             </div>
         </section>
     </li>
-
+    <li class="list-li color-select">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">color-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-color-select [theme]="darkTheme" color="#e57409" enableConfirm="true"></jigsaw-color-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">color-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-color-select [theme]="lightTheme" color="#e57409" enableConfirm="true"></jigsaw-color-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li fish-bone">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">fish-bone</jigsaw-header>
+            <div class="item-div start">
+                <j-fish-bone [theme]="darkTheme" [data]="_$fishboneData"></j-fish-bone>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">fish-bone</jigsaw-header>
+            <div class="item-div start">
+                <j-fish-bone [theme]="lightTheme" [data]="_$fishboneData"></j-fish-bone>
+            </div>
+        </section>
+    </li>
     <!--    <li class="list-li xxxx">-->
     <!--        <section class="item-section">-->
     <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->

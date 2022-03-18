@@ -125,6 +125,8 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     _$pageableData: LocalPageableTableData;
 
+    _$fishboneData: SimpleTreeData;
+
     constructor(http: HttpClient) {
         this._$navigationData.fromXML(`
         <node>
@@ -197,6 +199,151 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         this._$pageableData.http = http;
         this._$pageableData.pagingInfo.pageSize = 10;
         this._$pageableData.fromAjax('mock-data/hr-list-full');
+
+        this._$fishboneData = new SimpleTreeData();
+        this._$fishboneData.label = '<span class="orange">申论万能思维体系</span>';
+        this._$fishboneData.fromObject([
+            {
+                label: '<span class="orange">实务维度</span>',
+                nodes: [
+                    {
+                        label: '主体',
+                        nodes: [
+                            {
+                                label: '构成',
+                                nodes: [
+                                    {
+                                        label: '政府',
+                                    },
+                                    {
+                                        label: '企业',
+                                    },
+                                    {
+                                        label: '民众',
+                                    }
+                                ]
+                            },
+                            {
+                                label: '方面',
+                                nodes: [
+                                    {
+                                        label: '利益',
+                                        nodes: [
+                                            {
+                                                label: '经济利益-钱'
+                                            },
+                                            {
+                                                label: '政治利益-权利和权力'
+                                            },
+                                            {
+                                                label: '文化利益-精神需求'
+                                            },
+                                            {
+                                                label: '民生利益-生活需求'
+                                            },
+                                            {
+                                                label: '生态利益'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        label: '思想',
+                                        nodes: [
+                                            {
+                                                label: '理念'
+                                            },
+                                            {
+                                                label: '意识'
+                                            },
+                                            {
+                                                label: '常识、知识'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        label: '素质',
+                                        nodes: [
+                                            {
+                                                label: '业务素质'
+                                            },
+                                            {
+                                                label: '思想道德素质'
+                                            },
+                                            {
+                                                label: '心理素质'
+                                            },
+                                            {
+                                                label: '身体素质'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                label: '<span class="orange">时间维度</span>',
+                nodes: [
+                    {
+                        label: '微观：事前、事中、事后'
+                    },
+                    {
+                        label: '宏观',
+                        nodes: [
+                            {
+                                label: '过去、历史、传统'
+                            },
+                            {
+                                label: '现在、现状、现代'
+                            },
+                            {
+                                label: '未来、将来'
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                label: '<span class="orange">空间维度</span>',
+                nodes: [
+                    {
+                        label: '物理空间',
+                        nodes: [
+                            {
+                                label: '本地、本国、民族'
+                            },
+                            {
+                                label: '外地、外国、世界'
+                            }
+                        ]
+                    },
+                    {
+                        label: '思维空间',
+                        nodes: [
+                            {
+                                label: '内因'
+                            },
+                            {
+                                label: '外因'
+                            }
+                        ]
+                    },
+                ]
+            },
+            {
+                label: '<span class="orange">价值维度</span>',
+                nodes: [
+                    {
+                        label: '利、积极、成绩、意义、经验'
+                    },
+                    {
+                        label: '弊、消极、问题、危害、教训'
+                    }
+                ]
+            }
+        ]);
     }
 
     commonInfoAlert() {

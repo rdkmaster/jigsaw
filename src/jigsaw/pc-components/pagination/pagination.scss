@@ -18,6 +18,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 .#{$jigsaw-paging}-host {
     display: inline-flex;
     align-items: center;
+    color: $font-color-default;
     font-size: $font-size-base;
     user-select: none;
 
