@@ -264,6 +264,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
 
         this._value = newValue;
+        this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
                 this._$selectedItems = this.multipleSelect ? newValue : [newValue];
@@ -677,6 +678,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             if (emit) {
                 this.valueChange.emit(this.value);
             }
+            this._propagateChange(this.value);
             this._changeDetector.detectChanges();
             this._$checkSelectAll();
         });

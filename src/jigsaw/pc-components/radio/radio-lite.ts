@@ -61,9 +61,21 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     /**
      * value的实际类型是 `string | RadiosGroupValue`，由于一些兼容性原因，保留any作为类型定义
      */
+    private _value: any;
+
     @RequireMarkForCheck()
     @Input()
-    public value: any;
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
+        if (this._value === newValue) {
+            return;
+        }
+        this._value = newValue;
+        this._propagateChange(this._value);
+    }
 
     private _trackItemBy: string | string[];
 

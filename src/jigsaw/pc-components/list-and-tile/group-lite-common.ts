@@ -1,5 +1,5 @@
 import {AbstractJigsawComponent} from "../../common/common";
-import {Directive, EventEmitter, HostListener, Injector, Input, Output, ChangeDetectorRef} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, HostListener, Injector, Input, Output} from "@angular/core";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {GroupOptionValue} from "./group-common";
 import {ControlValueAccessor} from "@angular/forms";
@@ -67,9 +67,21 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     /**
      * 选择的结果集
      */
+    protected _selectedItems: ArrayCollection<any> | any[];
+
     @RequireMarkForCheck()
     @Input()
-    public selectedItems: ArrayCollection<any> | any[];
+    public get selectedItems(): ArrayCollection<any> | any[] {
+        return this._selectedItems;
+    }
+
+    public set selectedItems(newValue: ArrayCollection<any> | any[]) {
+        if (this._selectedItems === newValue) {
+            return;
+        }
+        this._selectedItems = newValue;
+        this._propagateChange(this._selectedItems);
+    }
 
     /**
      * 选择结果发生变化时，向外面发送事件
@@ -86,7 +98,7 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
      */
     public _$handleSelectChange(items) {
         this.selectedItemsChange.emit(items);
-        this._propagateChange(items);
+        this._propagateChange(new ArrayCollection(items));
         this._cdr.markForCheck();
     }
 
