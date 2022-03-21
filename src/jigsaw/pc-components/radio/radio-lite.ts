@@ -58,11 +58,11 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
     @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
 
+    private _value: any;
+
     /**
      * value的实际类型是 `string | RadiosGroupValue`，由于一些兼容性原因，保留any作为类型定义
      */
-    private _value: any;
-
     @RequireMarkForCheck()
     @Input()
     public get value(): any {

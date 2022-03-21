@@ -64,11 +64,11 @@ export class AbstractJigsawGroupLiteComponent extends AbstractJigsawComponent im
     @Input()
     public multipleSelect: boolean;
 
+    protected _selectedItems: ArrayCollection<any> | any[];
+
     /**
      * 选择的结果集
      */
-    protected _selectedItems: ArrayCollection<any> | any[];
-
     @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<any> | any[] {
