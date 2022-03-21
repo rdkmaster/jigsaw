@@ -39,7 +39,13 @@ import {
     JigsawCascadeModule,
     JigsawTabsModule,
     JigsawPaginationModule,
-    JigsawColorSelectModule
+    JigsawColorSelectModule,
+    JigsawBadgeModule,
+    JigsawUploadModule,
+    JigsawTreeExtModule,
+    JigsawChartIconModule,
+    JigsawDialogModule,
+    PopupService
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
@@ -85,10 +91,16 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawTabsModule,
         JigsawPaginationModule,
         JigsawColorSelectModule,
-        JigsawFishBoneModule
+        JigsawFishBoneModule,
+        JigsawBadgeModule,
+        JigsawUploadModule,
+        JigsawTreeExtModule,
+        JigsawChartIconModule,
+        JigsawDialogModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
-    exports: [ThemeBuildInThemeDemoComponent]
+    exports: [ThemeBuildInThemeDemoComponent],
+    providers: [PopupService]
 })
 export class ThemeBuildInThemeDemoModule {
 }

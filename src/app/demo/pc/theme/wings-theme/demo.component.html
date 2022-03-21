@@ -677,54 +677,6 @@
             </div>
         </section>
     </li>
-    <li class="list-li header">
-        <section class="item-section">
-            <div class="center">
-                <jigsaw-header [theme]="darkTheme" [level]="1">无内置主题组件</jigsaw-header>
-            </div>
-        </section>
-        <section class="item-section">
-            <div class="center">
-                <jigsaw-header [theme]="lightTheme" [level]="1">无内置主题组件</jigsaw-header>
-            </div>
-        </section>
-    </li>
-    <li class="list-li alert">
-        <section class="item-section">
-            <jigsaw-header [theme]="darkTheme">alert</jigsaw-header>
-            <div class="item-div start">
-                <jigsaw-button [theme]="darkTheme" (click)="commonInfoAlert()">
-                    信息提示框
-                </jigsaw-button>
-                <jigsaw-button [theme]="darkTheme" (click)="commonWarningAlert()">
-                    警告提示框
-                </jigsaw-button>
-                <jigsaw-button [theme]="darkTheme" (click)="commonErrorAlert()">
-                    错误提示框
-                </jigsaw-button>
-                <jigsaw-button [theme]="darkTheme" (click)="commonConfirmAlert()">
-                    确认提示框
-                </jigsaw-button>
-            </div>
-        </section>
-        <section class="item-section">
-            <jigsaw-header [theme]="lightTheme">alert</jigsaw-header>
-            <div class="item-div start">
-                <jigsaw-button [theme]="lightTheme" (click)="commonInfoAlert()">
-                    信息提示框
-                </jigsaw-button>
-                <jigsaw-button [theme]="lightTheme" (click)="commonWarningAlert()">
-                    警告提示框
-                </jigsaw-button>
-                <jigsaw-button [theme]="lightTheme" (click)="commonErrorAlert()">
-                    错误提示框
-                </jigsaw-button>
-                <jigsaw-button [theme]="lightTheme" (click)="commonConfirmAlert()">
-                    确认提示框
-                </jigsaw-button>
-            </div>
-        </section>
-    </li>
     <li class="list-li cascade">
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">cascade</jigsaw-header>
@@ -850,6 +802,197 @@
             <jigsaw-header [theme]="lightTheme">fish-bone</jigsaw-header>
             <div class="item-div start">
                 <j-fish-bone [theme]="lightTheme" [data]="_$fishboneData"></j-fish-bone>
+            </div>
+        </section>
+    </li>
+    <li class="list-li upload">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">upload</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-upload [theme]="darkTheme"></jigsaw-upload>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">upload</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-upload [theme]="lightTheme"></jigsaw-upload>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tree">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tree</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tree-ext [theme]="darkTheme" [(data)]="_$treeData">
+                </jigsaw-tree-ext>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tree</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tree-ext [theme]="lightTheme" [(data)]="_$treeData">
+                </jigsaw-tree-ext>
+            </div>
+        </section>
+    </li>
+    <li class="list-li header">
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="darkTheme" [level]="1">无内置主题组件</jigsaw-header>
+            </div>
+        </section>
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="lightTheme" [level]="1">无内置主题组件</jigsaw-header>
+            </div>
+        </section>
+    </li>
+    <li class="list-li alert">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">alert</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" (click)="commonInfoAlert()">
+                    信息提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonWarningAlert()">
+                    警告提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonErrorAlert()">
+                    错误提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonConfirmAlert()">
+                    确认提示框
+                </jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">alert</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" (click)="commonInfoAlert()">
+                    信息提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonWarningAlert()">
+                    警告提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonErrorAlert()">
+                    错误提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonConfirmAlert()">
+                    确认提示框
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+
+    <li class="list-li badge">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">badge</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24" jigsaw-badge
+                    jigsawBadgeValue="5" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="1000" jigsawBadgeSize="small"
+                    jigsawBadgeMaxValue="999">
+                </jigsaw-icon>
+
+                <span jigsaw-badge jigsawBadgeValue="5" jigsawBadgeSize="normal" jigsawBadgePosition="right"
+                    jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]=-15 style="margin-right: 50px;">异常</span>
+                <span jigsaw-badge jigsawBadgeValue="99" jigsawBadgeSize="normal" jigsawBadgeMaxValue="1000"
+                    jigsawBadgePosition="right" jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]=-15
+                    style="margin-right: 50px;">告警</span>
+
+                <jigsaw-button [theme]="darkTheme" jigsaw-badge jigsawBadgeSize="small" jigsawBadgeValue="dot"
+                    style="margin-right: 50px">确定
+                </jigsaw-button>
+
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="HOT" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="NEW" jigsawBadgeSize="small">
+                </jigsaw-icon>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">badge</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24" jigsaw-badge
+                    jigsawBadgeValue="5" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="1000" jigsawBadgeSize="small"
+                    jigsawBadgeMaxValue="999">
+                </jigsaw-icon>
+
+                <span jigsaw-badge jigsawBadgeValue="5" jigsawBadgeSize="normal" jigsawBadgePosition="right"
+                    jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]=-15 style="margin-right: 50px;">异常</span>
+                <span jigsaw-badge jigsawBadgeValue="99" jigsawBadgeSize="normal" jigsawBadgeMaxValue="1000"
+                    jigsawBadgePosition="right" jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]=-15
+                    style="margin-right: 50px;">告警</span>
+
+                <jigsaw-button [theme]="lightTheme" jigsaw-badge jigsawBadgeSize="small" jigsawBadgeValue="dot"
+                    style="margin-right: 50px">确定
+                </jigsaw-button>
+
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="HOT" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="NEW" jigsawBadgeSize="small">
+                </jigsaw-icon>
+            </div>
+        </section>
+    </li>
+    <li class="list-li chart-icon">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">chart-icon</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-pie-chart-icon [data]="_$shortData" radius="32"></jigsaw-pie-chart-icon>
+                <jigsaw-donut-chart-icon [data]="_$shortData" radius="32"></jigsaw-donut-chart-icon>
+                <jigsaw-line-chart-icon [data]="_$longData" height="64"></jigsaw-line-chart-icon>
+                <jigsaw-bar-chart-icon [data]="_$longData" height="64"></jigsaw-bar-chart-icon>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">chart-icon</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-pie-chart-icon [data]="_$shortData" radius="32"></jigsaw-pie-chart-icon>
+                <jigsaw-donut-chart-icon [data]="_$shortData" radius="32"></jigsaw-donut-chart-icon>
+                <jigsaw-line-chart-icon [data]="_$longData" height="64"></jigsaw-line-chart-icon>
+                <jigsaw-bar-chart-icon [data]="_$longData" height="64"></jigsaw-bar-chart-icon>
+            </div>
+        </section>
+    </li>
+    <li class="list-li dialog">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">dialog</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" (click)="popupDialog(dialog1)">点击我
+                </jigsaw-button>
+                <ng-template #dialog1>
+                    <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title"
+                        icon="iconfont iconfont-e3f0" (close)="showInfo()">
+                        <ul class="dialog-content">
+                            <li>Dialog content...</li>
+                            <li>Dialog content...</li>
+                            <li>Dialog content...</li>
+                        </ul>
+
+                        <div jigsaw-button-bar>
+                            <jigsaw-button colorType="primary" (click)="showInfo()">OK</jigsaw-button>
+                            <jigsaw-button (click)="showInfo()">Cancel</jigsaw-button>
+                            <a class="button-bar-link" (click)="showInfo()">需要帮助？</a>
+                        </div>
+                    </jigsaw-dialog>
+                </ng-template>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">dialog</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" (click)="popupDialog(dialog1)">点击我
+                </jigsaw-button>
             </div>
         </section>
     </li>

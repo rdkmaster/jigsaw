@@ -13,6 +13,7 @@ import {WingsTheme} from "../../common/common";
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-upload-host]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation, AfterViewInit } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData } from 'jigsaw/public_api';
+import { Component, ViewEncapsulation, AfterViewInit, TemplateRef } from "@angular/core";
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo } from 'jigsaw/public_api';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -127,7 +127,14 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     _$fishboneData: SimpleTreeData;
 
-    constructor(http: HttpClient) {
+    _$treeData: SimpleTreeData;
+
+    _$longData = [5, 3, 9, 9, 6, 7, 9, 6, 7, 3, 3, 6, 5, 9, 6, 9, 6, 7, 3, 5, 2];
+    _$shortData = [5, 3, 9, 6];
+
+    dialogInfo: PopupInfo;
+
+    constructor(http: HttpClient, public popupService: PopupService) {
         this._$navigationData.fromXML(`
         <node>
             <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
@@ -344,6 +351,69 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
                 ]
             }
         ]);
+
+        this._$treeData = new SimpleTreeData();
+        this._$treeData.fromObject([
+            {
+                label: "父节点1 - 展开",
+                open: true,
+                nodes: [
+                    {
+                        label: "父节点11 - 折叠",
+                        nodes: [
+                            { label: "叶子节点111" },
+                            { label: "叶子节点112" },
+                            { label: "叶子节点113" },
+                            { label: "叶子节点114" }
+                        ]
+                    },
+                    {
+                        label: "父节点12 - 折叠",
+                        nodes: [
+                            { label: "叶子节点121" },
+                            { label: "叶子节点122" },
+                            { label: "叶子节点123" },
+                            { label: "叶子节点124" }
+                        ]
+                    },
+                    { label: "父节点13 - 没有子节点", isParent: true }
+                ]
+            },
+            {
+                label: "父节点2 - 折叠",
+                nodes: [
+                    {
+                        label: "父节点21 - 展开", open: true,
+                        nodes: [
+                            { label: "叶子节点211" },
+                            { label: "叶子节点212" },
+                            { label: "叶子节点213" },
+                            { label: "叶子节点214" }
+                        ]
+                    },
+                    {
+                        label: "父节点22 - 折叠",
+                        nodes: [
+                            { label: "叶子节点221" },
+                            { label: "叶子节点222" },
+                            { label: "叶子节点223" },
+                            { label: "叶子节点224" }
+                        ]
+                    },
+                    {
+                        label: "父节点23 - 折叠",
+                        nodes: [
+                            { label: "叶子节点231" },
+                            { label: "叶子节点232" },
+                            { label: "叶子节点233" },
+                            { label: "叶子节点234" }
+                        ]
+                    }
+                ]
+            },
+            { label: "父节点3 - 没有子节点", isParent: true }
+
+        ])
     }
 
     commonInfoAlert() {
@@ -360,6 +430,14 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     commonConfirmAlert() {
         JigsawConfirmAlert.show({ header: '标题', message: '描述信息' }, null, [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }]);
+    }
+
+    popupDialog(ele: TemplateRef<any>) {
+        this.dialogInfo = this.popupService.popup(ele);
+    }
+
+    showInfo() {
+        this.dialogInfo.dispose();
     }
 
     navMenu: any;
