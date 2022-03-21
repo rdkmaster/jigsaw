@@ -996,6 +996,49 @@
             </div>
         </section>
     </li>
+    <li class="list-li drawer">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">drawer</jigsaw-header>
+            <div class="item-div start">
+                <j-drawer [floating]="false" position="left" width="300" height="200" autoSize="false">
+                    <div class="drawer-content">
+                        这是一个展示内容的box
+                    </div>
+                </j-drawer>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">drawer</jigsaw-header>
+            <div class="item-div start">
+                <j-drawer [floating]="false" position="left" width="300" height="200" autoSize="false">
+                    <div class="drawer-content">
+                        这是一个展示内容的box
+                    </div>
+                </j-drawer>
+            </div>
+        </section>
+    </li>
+    <li class="list-li float">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">float</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea">Hover Me!
+                </jigsaw-button>
+                <ng-template #jigsawFloatArea>
+                    <div class="jigsawFloatArea" style="width: 150px; height: 60px;">
+                        dropdown placeholder
+                    </div>
+                </ng-template>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">float</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea">Hover Me!
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
     <!--    <li class="list-li xxxx">-->
     <!--        <section class="item-section">-->
     <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->

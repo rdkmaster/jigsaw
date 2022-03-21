@@ -45,7 +45,9 @@ import {
     JigsawTreeExtModule,
     JigsawChartIconModule,
     JigsawDialogModule,
-    PopupService
+    PopupService,
+    JigsawDrawerModule,
+    JigsawFloatModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
@@ -96,7 +98,9 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawUploadModule,
         JigsawTreeExtModule,
         JigsawChartIconModule,
-        JigsawDialogModule
+        JigsawDialogModule,
+        JigsawDrawerModule,
+        JigsawFloatModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent],
