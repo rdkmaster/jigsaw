@@ -56,6 +56,7 @@ import {FieldWrapper} from '@ngx-formly/core';
 
         .jigsaw-formly-field-required {
             color: red;
+            font-size: 12px;
         }
     `],
     changeDetection: ChangeDetectionStrategy.OnPush,
