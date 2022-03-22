@@ -31,6 +31,8 @@ import {FieldWrapper} from '@ngx-formly/core';
         }
 
         .jigsaw-formly-field-wrapper-label {
+            font-size: 14px;
+            color: #737373;
             min-height: 22px;
             display: flex;
             align-items: center;
