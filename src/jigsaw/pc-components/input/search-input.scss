@@ -27,6 +27,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         }
 
         .#{$jigsaw-search-input}-button {
+            position: relative;
             display: inline-flex;
             flex-shrink: 0;
             flex-grow: 0;
@@ -34,7 +35,8 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
             align-items: center;
             width: 32px;
             height: 32px;
-            color: $icon-color-stress;
+            color: $icon-color-default;
+            font-size: $icon-size-sm;
             border-width: 1px;
             border-style: solid;
             border-color: $border-color-default;
@@ -43,8 +45,22 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
             line-height: 1;
             cursor: pointer;
 
+            &::after {
+                content: "";
+                position: absolute;
+                left: -1px;
+                width: 1px;
+                height: calc(100% + 2px);
+                background: none;
+            }
+
             &:hover {
                 color: $brand-default;
+                border-color: $brand-default;
+
+                &::after {
+                    background: $brand-default;
+                }
             }
         }
     }
@@ -59,6 +75,8 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
                     .#{$jigsaw-input}-icon-front {
                         display: flex;
+                        color: $icon-color-default;
+                        font-size: $icon-size-sm;
                     }
                 }
             }
@@ -73,11 +91,16 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         .#{$jigsaw-search-input}-button {
             background: $bg-disabled;
             border-color: $border-color-disabled;
-            color: $icon-color-default;
+            color: $icon-color-disabled;
             cursor: not-allowed;
 
             &:hover {
-                color: $icon-color-default;
+                color: $icon-color-disabled;
+                border-color: $border-color-disabled;
+
+                &::after {
+                    background: $border-color-disabled;
+                }
             }
         }
     }
