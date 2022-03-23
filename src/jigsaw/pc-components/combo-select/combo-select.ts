@@ -44,7 +44,8 @@ export class ComboSelectValue {
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
-        '[class.jigsaw-combo-select-error]': '!valid'
+        '[class.jigsaw-combo-select-error]': '!valid',
+        '[class.jigsaw-combo-select-hideTextTag]': '!textTag'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
@@ -288,6 +289,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      */
     @Input()
     public valid: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public textTag: boolean = true;
 
     public get _$trackByFn() {
         return CommonUtils.toTrackByFunction(this.labelField);
