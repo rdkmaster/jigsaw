@@ -1039,6 +1039,90 @@
             </div>
         </section>
     </li>
+    <li class="list-li transfer">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">transfer</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-transfer [theme]="darkTheme" width="100%" height="500" [data]="_$cityList" trackItemBy="id"
+                    labelField="label" [sourceRenderer]="transferListSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+                <j-transfer [theme]="darkTheme" width="100%" height="500" [data]="_$treeData"
+                    [sourceRenderer]="transferTreeSourceRenderer" trackItemBy="label" labelField="label"
+                    [destRenderer]="transferListDestRenderer"></j-transfer>
+                <j-transfer [theme]="darkTheme" width="100%" height="500" [data]="_$tableData" trackItemBy="name"
+                    labelField="name" [sourceRenderer]="transferTableSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">transfer</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-transfer [theme]="lightTheme" width="100%" height="500" [data]="_$cityList" trackItemBy="id"
+                    labelField="label" [sourceRenderer]="transferListSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+                <j-transfer [theme]="lightTheme" width="100%" height="500" [data]="_$treeData"
+                    [sourceRenderer]="transferTreeSourceRenderer" trackItemBy="label" labelField="label"
+                    [destRenderer]="transferListDestRenderer"></j-transfer>
+                <j-transfer [theme]="lightTheme" width="100%" height="500" [data]="_$tableData" trackItemBy="name"
+                    labelField="name" [sourceRenderer]="transferTableSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+            </div>
+        </section>
+    </li>
+    <li class="list-li toast">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">toast</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" width="200" (click)="showToast()">弹出默认消息框</jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">toast</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" width="200" (click)="showToast()">弹出默认消息框</jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li toast">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">toast</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" jigsawTooltipPosition="top" jigsawTooltip="这是一个深色的的Tooltip"
+                    [jigsawTooltipTheme]="darkTheme">
+                    Tooltip
+                </jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">toast</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" jigsawTooltipPosition="top" jigsawTooltip="这是一个浅色的的Tooltip"
+                    [jigsawTooltipTheme]="lightTheme">
+                    Tooltip
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li rate">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">rate</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-rate [theme]="darkTheme" max="5" [allowHalf]="true" value="2.5" style="font-size: 20px;">
+                </jigsaw-rate>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">rate</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-rate [theme]="lightTheme" max="5" [allowHalf]="true" value="2.5" style="font-size: 20px;">
+                </jigsaw-rate>
+            </div>
+        </section>
+    </li>
     <!--    <li class="list-li xxxx">-->
     <!--        <section class="item-section">-->
     <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->

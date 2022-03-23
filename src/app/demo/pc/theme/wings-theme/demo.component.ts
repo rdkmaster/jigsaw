@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, AfterViewInit, TemplateRef } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo } from 'jigsaw/public_api';
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, JigsawToast } from 'jigsaw/public_api';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -134,6 +134,11 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     dialogInfo: PopupInfo;
 
+    transferListSourceRenderer = TransferListSourceRenderer;
+    transferListDestRenderer = TransferListDestRenderer;
+    transferTreeSourceRenderer = TransferTreeSourceRenderer;
+    transferTableSourceRenderer = TransferTableSourceRenderer;
+
     constructor(http: HttpClient, public popupService: PopupService) {
         this._$navigationData.fromXML(`
         <node>
@@ -158,15 +163,15 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
             [
                 ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
                 ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
-                ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
-                ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
-                ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
-                ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
-                ["Garrett Winters", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
-                ["Tiger Nixon", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Tiger Nixon2", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Garrett Winters2", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon3", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Garrett Winters3", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon4", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Garrett Winters4", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon5", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Garrett Winters5", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon6", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
             ],
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
@@ -438,6 +443,10 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     showInfo() {
         this.dialogInfo.dispose();
+    }
+
+    showToast() {
+        JigsawToast.show('这是Toast默认提示框')
     }
 
     navMenu: any;

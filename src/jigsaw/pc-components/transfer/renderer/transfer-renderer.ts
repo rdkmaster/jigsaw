@@ -103,6 +103,10 @@ export abstract class AbstractTransferRendererBase {
      * @internal
      */
     public selectedItems: ArrayCollection<ListOption>;
+    /**
+     * @internal
+     */
+    public theme: string;
 }
 
 @Directive()

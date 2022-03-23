@@ -13,6 +13,6 @@ $table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
 
 .#{$list-renderer} {
     .#{$jigsaw-list}-host {
-        border: none;
+        border: none !important;
     }
 }
