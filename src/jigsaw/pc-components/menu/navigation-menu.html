@@ -11,7 +11,7 @@
                 <i *ngIf="!collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'"></i>
                 <span>{{menuItem.label}}</span>
                 <i *ngIf="menuItem?.nodes?.length > 0 && !collapsed"
-                    class="iconfont iconfont-e24c jigsaw-nav-menu-item-arrow"></i>
+                    class="iconfont iconfont-e24f jigsaw-nav-menu-item-arrow"></i>
             </div>
             <div class="jigsaw-nav-menu-submenus" [ngClass]="{'jigsaw-nav-menu-submenus-actived': menuItem.isActive}"
                 [@collapseMotion]="menuItem.isActive ? 'expanded' : 'collapsed' ">
