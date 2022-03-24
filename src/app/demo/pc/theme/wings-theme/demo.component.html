@@ -1111,15 +1111,74 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">rate</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-rate [theme]="darkTheme" max="5" [allowHalf]="true" value="2.5" style="font-size: 20px;">
+                <jigsaw-rate [theme]="darkTheme" max="5" [allowHalf]="true" [value]="2.5" style="font-size: 20px;">
                 </jigsaw-rate>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">rate</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-rate [theme]="lightTheme" max="5" [allowHalf]="true" value="2.5" style="font-size: 20px;">
+                <jigsaw-rate [theme]="lightTheme" max="5" [allowHalf]="true" [value]="2.5" style="font-size: 20px;">
                 </jigsaw-rate>
+            </div>
+        </section>
+    </li>
+    <li class="list-li circle-progress">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">circle-progress</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'processing'" [value]="100">
+                </jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'success'" [value]="0"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'block'" [value]="9.9"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'error'" [value]="53.89"></jigsaw-circle-progress>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">circle-progress</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'processing'" [value]="100">
+                </jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'success'" [value]="0"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'block'" [value]="9.9"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'error'" [value]="53.89">
+                </jigsaw-circle-progress>
+            </div>
+        </section>
+    </li>
+    <li class="list-li process-status">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">process-status</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-process-status [theme]="darkTheme" width="100%">
+                    <jigsaw-process-status-item *ngFor="let step of _$processStatusData" [status]="step.status">
+                        {{step.title}}
+                    </jigsaw-process-status-item>
+                </jigsaw-process-status>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">process-status</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-process-status [theme]="lightTheme" width="100%">
+                    <jigsaw-process-status-item *ngFor="let step of _$processStatusData" [status]="step.status">
+                        {{step.title}}
+                    </jigsaw-process-status-item>
+                </jigsaw-process-status>
+            </div>
+        </section>
+    </li>
+    <li class="list-li step">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">step</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-steps [theme]="darkTheme" [data]="_$stepData"></jigsaw-steps>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">step</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-steps [theme]="lightTheme" [data]="_$stepData"></jigsaw-steps>
             </div>
         </section>
     </li>

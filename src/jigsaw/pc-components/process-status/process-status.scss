@@ -1,13 +1,15 @@
 $process-status-prefix-cls: #{$jigsaw-prefix}-process-status;
 $process-status-item-prefix-cls: #{$jigsaw-prefix}-process-status-item;
 
-.#{$process-status-prefix-cls} {
+.#{$process-status-prefix-cls}-host {
     display: inline-block;
     *zoom: 1;
     *display: inline;
     vertical-align: middle;
     width: 100%;
     height: 100%;
+    color: $font-color-default;
+
     .#{$jigsaw-prefix}-process-status-container {
         display: flex;
         width: 100%;

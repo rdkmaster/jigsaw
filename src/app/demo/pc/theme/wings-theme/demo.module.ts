@@ -50,7 +50,10 @@ import {
     JigsawFloatModule,
     JigsawTransferModule,
     JigsawTooltipModule,
-    JigsawRateModule
+    JigsawRateModule,
+    JigsawProgressModule,
+    JigsawProcessStatusModule,
+    JigsawStepsModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
@@ -106,7 +109,10 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawFloatModule,
         JigsawTransferModule,
         JigsawTooltipModule,
-        JigsawRateModule
+        JigsawRateModule,
+        JigsawProgressModule,
+        JigsawProcessStatusModule,
+        JigsawStepsModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent],

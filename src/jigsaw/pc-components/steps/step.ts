@@ -27,9 +27,10 @@ export type StepItem = {
     selector: "jigsaw-steps,j-steps",
     templateUrl: "step.html",
     host: {
-        "[class.jigsaw-steps-host]": "true",
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        "[class.jigsaw-steps-host]": "true",
         "[class.jigsaw-steps-vertical]": "direction === 'vertical'",
         "[class.jigsaw-steps-horizontal]": "direction === 'horizontal'"
     },

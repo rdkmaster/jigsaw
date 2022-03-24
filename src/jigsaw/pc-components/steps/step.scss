@@ -4,6 +4,8 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
     display: inline-flex;
     justify-content: space-between;
     width: 100%;
+    color: $font-color-default;
+
     .#{$steps-prefix-cls}-item {
         flex-grow: 1;
         flex-basis: 0;
@@ -180,56 +182,56 @@ $steps-prefix-cls: #{$jigsaw-prefix}-steps;
             }
         }
     }
-}
 
-.#{$steps-prefix-cls}-horizontal {
-    .#{$steps-prefix-cls}-item {
-        width: 0;
+    &.#{$steps-prefix-cls}-horizontal {
+        .#{$steps-prefix-cls}-item {
+            width: 0;
+        }
     }
-}
 
-.#{$steps-prefix-cls}-vertical {
-    flex-direction: column;
-    .#{$steps-prefix-cls}-item {
-        position: relative;
-        .#{$steps-prefix-cls}-bar {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            width: 24px;
-            height: calc(100% - 24px);
-            bottom: 0;
-            left: 0;
-            padding: 5px;
+    &.#{$steps-prefix-cls}-vertical {
+        flex-direction: column;
+        .#{$steps-prefix-cls}-item {
+            position: relative;
+            .#{$steps-prefix-cls}-bar {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                width: 24px;
+                height: calc(100% - 24px);
+                bottom: 0;
+                left: 0;
+                padding: 5px;
 
-            & span {
-                width: 2px;
-                height: 100%;
-                background: $border-color-default;
+                & span {
+                    width: 2px;
+                    height: 100%;
+                    background: $border-color-default;
+                }
             }
-        }
 
-        &.#{$steps-prefix-cls}-item-finished {
-            .#{$steps-prefix-cls}-bar span {
-                background: $brand-default;
+            &.#{$steps-prefix-cls}-item-finished {
+                .#{$steps-prefix-cls}-bar span {
+                    background: $brand-default;
+                }
             }
-        }
 
-        &.#{$steps-prefix-cls}-item-error {
-            .#{$steps-prefix-cls}-bar span {
-                background: $error-default;
+            &.#{$steps-prefix-cls}-item-error {
+                .#{$steps-prefix-cls}-bar span {
+                    background: $error-default;
+                }
             }
-        }
 
-        &.#{$steps-prefix-cls}-item-warning {
-            .#{$steps-prefix-cls}-bar span {
-                background: $warning-default;
+            &.#{$steps-prefix-cls}-item-warning {
+                .#{$steps-prefix-cls}-bar span {
+                    background: $warning-default;
+                }
             }
-        }
 
-        &.#{$steps-prefix-cls}-item-waiting {
-            .#{$steps-prefix-cls}-bar span {
-                background: $border-color-default;
+            &.#{$steps-prefix-cls}-item-waiting {
+                .#{$steps-prefix-cls}-bar span {
+                    background: $border-color-default;
+                }
             }
         }
     }

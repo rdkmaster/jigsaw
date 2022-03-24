@@ -134,6 +134,66 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     dialogInfo: PopupInfo;
 
+    _$processStatusData = [
+        {
+            title: 'done',
+            status: "done"
+        },
+        {
+            title: 'error',
+            status: "error"
+        },
+        {
+            title: 'processing',
+            status: "processing"
+        },
+        {
+            title: 'warning',
+            status: "warning"
+        },
+        {
+            title: 'skipped',
+            status: "skipped"
+        },
+        {
+            title: 'waiting',
+            status: "waiting"
+        },
+    ];
+
+    _$stepData = [
+        {
+            "title": "这是normal",
+            "status": "normal",
+            "subTitle": "描述信息"
+        },
+        {
+            "title": "这是normal",
+            "status": "normal",
+            "subTitle": "描述信息"
+        },
+        {
+            "title": "这是normal",
+            "status": "normal",
+            "subTitle": "描述信息"
+        },
+        {
+            "title": "这是warning",
+            "status": "warning",
+            "subTitle": "描述信息"
+        },
+        {
+            "title": "这是error",
+            "status": "error",
+            "subTitle": "描述信息"
+        },
+        {
+            "title": "这是error",
+            "status": "error",
+            "subTitle": "描述信息"
+        }
+    ]
+
     transferListSourceRenderer = TransferListSourceRenderer;
     transferListDestRenderer = TransferListDestRenderer;
     transferTreeSourceRenderer = TransferTreeSourceRenderer;
