@@ -23,7 +23,9 @@ import {WingsTheme} from "../../common/common";
     selector: 'jigsaw-progress, j-progress',
     templateUrl: './progress.html',
     host: {
-        '[class.jigsaw-progress]': 'true',
+        '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-progress-host]': 'true',
         '[class.jigsaw-progress-processing]': 'status == "processing"',
         '[class.jigsaw-progress-block]': 'status == "block"',
         '[class.jigsaw-progress-error]': 'status == "error"',
@@ -31,7 +33,6 @@ import {WingsTheme} from "../../common/common";
         '[class.jigsaw-progress-default]': 'preSize == "default"',
         '[class.jigsaw-progress-small]': 'preSize == "small"',
         '[class.jigsaw-progress-large]': 'preSize == "large"',
-        '[style.width]': 'width',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

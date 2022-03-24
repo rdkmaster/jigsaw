@@ -1087,9 +1087,9 @@
             </div>
         </section>
     </li>
-    <li class="list-li toast">
+    <li class="list-li tooltip">
         <section class="item-section">
-            <jigsaw-header [theme]="darkTheme">toast</jigsaw-header>
+            <jigsaw-header [theme]="darkTheme">tooltip</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-button [theme]="darkTheme" jigsawTooltipPosition="top" jigsawTooltip="这是一个深色的的Tooltip"
                     [jigsawTooltipTheme]="darkTheme">
@@ -1098,7 +1098,7 @@
             </div>
         </section>
         <section class="item-section">
-            <jigsaw-header [theme]="lightTheme">toast</jigsaw-header>
+            <jigsaw-header [theme]="lightTheme">tooltip</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-button [theme]="lightTheme" jigsawTooltipPosition="top" jigsawTooltip="这是一个浅色的的Tooltip"
                     [jigsawTooltipTheme]="lightTheme">
@@ -1179,6 +1179,62 @@
             <jigsaw-header [theme]="lightTheme">step</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-steps [theme]="lightTheme" [data]="_$stepData"></jigsaw-steps>
+            </div>
+        </section>
+    </li>
+    <li class="list-li progress">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">progress</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-progress [theme]="darkTheme" [value]="32" status="processing"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" status="block"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" status="error"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" status="success"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    status="block" labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    labelPosition="followLeft" showMarker="true"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    status="error" labelPosition="followLeft" showMarker="true"></j-progress>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">progress</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-progress [theme]="lightTheme" [value]="32" status="processing"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" status="block"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" status="error"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" status="success"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    status="block" labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    labelPosition="followLeft" showMarker="true"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    status="error" labelPosition="followLeft" showMarker="true"></j-progress>
+            </div>
+        </section>
+    </li>
+    <li class="list-li step">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">step</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-time-section-picker [theme]="darkTheme"></j-time-section-picker>
+                <j-week-section-picker [theme]="darkTheme"></j-week-section-picker>
+                <j-day-section-picker [theme]="darkTheme"></j-day-section-picker>
+                <j-time-section [theme]="darkTheme"></j-time-section>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">step</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-time-section-picker [theme]="lightTheme"></j-time-section-picker>
+                <j-week-section-picker [theme]="lightTheme"></j-week-section-picker>
+                <j-day-section-picker [theme]="lightTheme"></j-day-section-picker>
+                <j-time-section [theme]="lightTheme"></j-time-section>
             </div>
         </section>
     </li>
