@@ -54,7 +54,8 @@ import {
     JigsawProgressModule,
     JigsawProcessStatusModule,
     JigsawStepsModule,
-    JigsawTimeSectionModule
+    JigsawTimeSectionModule,
+    JigsawNotificationModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
@@ -114,7 +115,8 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawProgressModule,
         JigsawProcessStatusModule,
         JigsawStepsModule,
-        JigsawTimeSectionModule
+        JigsawTimeSectionModule,
+        JigsawNotificationModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
     exports: [ThemeBuildInThemeDemoComponent],

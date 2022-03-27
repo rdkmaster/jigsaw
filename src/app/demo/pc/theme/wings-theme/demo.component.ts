@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, AfterViewInit, TemplateRef } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, JigsawToast } from 'jigsaw/public_api';
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, JigsawToast, JigsawNotification } from 'jigsaw/public_api';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -193,6 +193,8 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
             "subTitle": "描述信息"
         }
     ]
+
+    _$menuData: SimpleTreeData;
 
     transferListSourceRenderer = TransferListSourceRenderer;
     transferListDestRenderer = TransferListDestRenderer;
@@ -479,6 +481,39 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
             { label: "父节点3 - 没有子节点", isParent: true }
 
         ])
+
+        this._$menuData = new SimpleTreeData();
+        this._$menuData.fromXML(`
+        <node>
+            <node label="File">
+                <node label="New">
+                    <node label="Project"></node>
+                    <node label="File"></node>
+                    <node label="Directory"></node>
+                </node>
+                <node label="Open"></node>
+                <node label="Save As"></node>
+            </node>
+            <node label="Edit">
+                <node label="Cut"></node>
+                <node label="Copy">
+                    <node label="Copy Reference"></node>
+                    <node label="Copy Path"></node>
+                </node>
+                <node label="Paste" disabled="true"></node>
+                <!-- 无label属性的node节点表示这是一个分隔符 -->
+                <node></node>
+                <node label="Delete"></node>
+            </node>
+            <node label="Run" >
+                <node label="Run" icon="iconfont iconfont-e314" subTitle="Shift+F10"></node>
+                <node label="Debug" icon="iconfont iconfont-e5e0" subTitle="Shift+F9"></node>
+            </node>
+            <!-- 无label属性的node节点表示这是一个分隔符 -->
+            <node></node>
+            <node label="Exit"></node>
+        </node>
+    `);
     }
 
     commonInfoAlert() {
@@ -507,6 +542,10 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
 
     showToast() {
         JigsawToast.show('这是Toast默认提示框')
+    }
+
+    showNotification() {
+        JigsawNotification.show('这是消息框的默认样子！', { icon: undefined });
     }
 
     navMenu: any;
