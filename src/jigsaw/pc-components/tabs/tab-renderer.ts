@@ -22,7 +22,7 @@ export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
             <span class="jigsaw-tabs-title-editor-bar iconfont iconfont-ea0c" (click)="_handleEditable($event)"></span>
         </div>
         <j-input *ngIf="_$editable" [(value)]="title" [icon]="'iconfont iconfont-ea18'" class="jigsaw-tabs-title-editor-input"
-                 (blur)="_$handleTitleChange()" (iconSelect)="_$handleTitleChange()" [width]="_$width"></j-input>
+                 (blur)="_$handleTitleChange()" (iconSelect)="_$handleTitleChange()" (valueChange)="_realTitle = $event" [width]="_$width"></j-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -35,6 +35,8 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
     public initData: any;
 
     private _title: string = 'New Tab';
+    private _originEditTitle: string;
+    private _realTitle: string;
 
     public get title(): string {
         return this._title;
@@ -71,6 +73,7 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
         e.preventDefault();
         e.stopPropagation();
         this._$editable = !this._$editable;
+        this._originEditTitle = this.title;
         // 计算输入框的宽度：1：取文字宽度时，需要加上input的图标和内边距等元素的尺寸；2：取整个tab页宽度时，要去除标题之间的边距和右侧可能出现的下拉列表的宽度
         this._$width = this._titleElement.nativeElement.offsetWidth < (this._tabsBar._elementRef.nativeElement.offsetWidth - 80) ?
             this._titleElement.nativeElement.offsetWidth + 42 :
@@ -86,6 +89,7 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
      * @internal
      */
     public _$handleTitleChange() {
+        this.title = !!this._realTitle ? this.title : this._originEditTitle;
         this._$editable = !this._$editable;
         this._tabLabel.labelChange.emit({key: this._tabLabel.key, title: this.title});
         this._changeDetectorRef.detectChanges();
