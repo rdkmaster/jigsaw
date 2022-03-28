@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, AfterViewInit, TemplateRef } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, JigsawToast, JigsawNotification } from 'jigsaw/public_api';
+import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, JigsawToast, JigsawNotification, ColumnDefine, TableCellPasswordRenderer, TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer, TableCellSelectRenderer } from 'jigsaw/public_api';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -116,6 +116,72 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
     _$navigationData = new SimpleTreeData();
 
     _$tableData;
+
+    // "", "", "", "", "office", ""
+    _$columnDefine: ColumnDefine[] = [
+        {
+            target: "extn",
+            cell: {
+                renderer: TableCellPasswordRenderer,
+                editable: true,
+                editorRenderer: TableCellTextEditorRenderer,
+                editorRendererInitData: {
+                    placeholder: "Type to edit...",
+                    password: true
+                }
+            }
+        },
+        {
+            target: "name",
+            cell: {
+                editable: true,
+                editorRenderer: TableCellTextEditorRenderer,
+                editorRendererInitData: {
+                    clearable: true
+                }
+            }
+        },
+        {
+            target: "position",
+            cell: {
+                editable: true,
+                editorRenderer: TableCellAutoCompleteEditorRenderer,
+                editorRendererInitData: () => {
+                    return {
+                        placeholder: "Try to edit...",
+                        data: ["Developer", "System Architect", "Test Engineer"]
+                    };
+                }
+            }
+        },
+        {
+            target: "salary",
+            cell: {
+                editable: true,
+                editorRenderer: TableCellNumericEditorRenderer,
+                editorRendererInitData: {
+                    placeholder: "Type to edit...",
+                    min: 0,
+                    step: 1000
+                }
+            }
+        },
+        {
+            target: "enroll-date",
+            cell: {
+                editorRenderer: TableCellSelectRenderer,
+                editorRendererInitData: (td, row, col) => {
+                    if (!this._dates) {
+                        this._dates = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
+                    }
+                    return this._dates;
+                },
+                editable: true
+            }
+        }
+    ];
+
+    _dates: any[];
 
     _$graphData;
 
@@ -236,7 +302,7 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
                 ["Tiger Nixon6", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
             ],
             ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["姓名", "职位", "薪资", "入职日期", "部门", "密码"]);
 
         this._$graphData = new GraphData({
             tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, extraCssText: 'z-index: 999' },

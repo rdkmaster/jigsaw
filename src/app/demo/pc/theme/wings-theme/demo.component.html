@@ -623,13 +623,13 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">table</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-table [theme]="darkTheme" [data]="_$tableData" height="400px"></jigsaw-table>
+                <jigsaw-table [theme]="darkTheme" [data]="_$tableData" [columnDefines]="_$columnDefine" height="400px"></jigsaw-table>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">table</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-table [theme]="lightTheme" [data]="_$tableData" height="400px"></jigsaw-table>
+                <jigsaw-table [theme]="lightTheme" [data]="_$tableData" [columnDefines]="_$columnDefine" height="400px"></jigsaw-table>
             </div>
         </section>
     </li>

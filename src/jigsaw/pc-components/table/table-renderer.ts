@@ -53,6 +53,12 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     @Input()
     public initData: any;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public theme: string;
+
     @Output()
     public cellDataChange = new EventEmitter<any>();
 
@@ -144,7 +150,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
 
 @Component({
     template: `
-        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
+        <jigsaw-input [theme]="theme" class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
                       [password]="true" [clearable]="false" [disabled]="true" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `,
@@ -180,7 +186,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
+        <jigsaw-input [theme]="theme" #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
                       [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled" tabindex="-1" style="outline: none">
         </jigsaw-input>
@@ -248,7 +254,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
  */
 @Component({
     template: `
-        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
+        <jigsaw-auto-complete-input [theme]="theme" [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
                                     [filterOnFocus]="false"
                                     [maxDropDownHeight]="_$maxDropDownHeight"
@@ -290,7 +296,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" height="28px"
+        <jigsaw-numeric-input [theme]="theme" #input [(value)]="cellData" width="100%" height="28px"
                               [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>
@@ -327,7 +333,7 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
+        <jigsaw-checkbox [theme]="theme" [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
                          [title]="_$title" mode="minimalist">
         </jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -507,7 +513,7 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
+        <jigsaw-checkbox [theme]="theme" [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
                          mode="minimalist" (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
     `,
@@ -525,7 +531,7 @@ export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
  */
 @Component({
     template: `
-        <j-switch [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
+        <j-switch [theme]="theme" [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
                   (checkedChange)="onChange($event)">
         </j-switch>`,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -549,7 +555,7 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
  */
 @Component({
     template: `
-        <j-progress [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
+        <j-progress [theme]="theme" [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
                     [animate]="_$animate" [status]="_$status"></j-progress>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -584,7 +590,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 // @dynamic
 @Component({
     template: `
-        <jigsaw-select [value]="selected" [data]="data" height="28px"
+        <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px"
                        (valueChange)="_$handleValueChange($event)"
                        [optionCount]="5" width="100%"
                        openTrigger="mouseenter"
