@@ -13,6 +13,7 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
         .#{$jigsaw-tile}-option {
             width: 70px;
             border: none;
+            color: $font-color-default;
 
             &:hover {
                 color: $font-color-default;

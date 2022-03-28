@@ -6,6 +6,7 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
 
 .#{$jigsaw-time-section}-host {
     @include inline-block();
+    color: $font-color-default;
 
     .#{$jigsaw-time-section}-time {
         padding-right: 8px;
@@ -25,6 +26,7 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
 
 .#{$jigsaw-time-section-picker}-host {
     @include inline-block();
+    color: $font-color-default;
 
     .#{$jigsaw-time-section-picker}-line {
         margin-bottom: 6px;
@@ -78,10 +80,12 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
 .#{$jigsaw-week-section-picker}-host {
     @include inline-block();
     min-width: 208px;
+    color: $font-color-default;
 }
 
 .#{$jigsaw-day-section-picker}-host {
     @include inline-block();
+    color: $font-color-default;
 
     .#{$jigsaw-day-section-picker}-wrapper {
         display: flex;
