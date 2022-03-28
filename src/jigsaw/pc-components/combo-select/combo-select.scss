@@ -168,7 +168,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         }
     }
 
-    &.#{$jigsaw-combo-select}-hideTextTag {
+    &.#{$jigsaw-combo-select}-hide-text-tag {
         .#{$jigsaw-combo-select} {
             .#{$jigsaw-combo-select}-selection-rendered {
                 .#{$jigsaw-tag}-host {

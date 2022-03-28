@@ -45,7 +45,7 @@ export class ComboSelectValue {
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid',
-        '[class.jigsaw-combo-select-hideTextTag]': '!textTag'
+        '[class.jigsaw-combo-select-hide-text-tag]': '!textTag'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
