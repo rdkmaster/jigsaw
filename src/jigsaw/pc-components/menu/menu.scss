@@ -1,45 +1,39 @@
-$menu-prefix-cls: #{$jigsaw-prefix}-menu;
+$jigsaw-menu: #{$jigsaw-prefix}-menu;
 $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-.#{$menu-prefix-cls}-dark {
-    background: none !important;
+.#{$jigsaw-menu}-host {
+    background: $bg-body !important;
 
     .#{$jigsaw-list}-host {
-        background: $bg-body-dark;
-        border: $border-color-default-dark 1px solid;
-        font-size: $font-size-base;
+        border: $border-color-default 1px solid;
 
         .#{$jigsaw-list-option}-host {
-            line-height: 32px;
             padding: 0px 8px;
             min-height: 1px;
-            background: none;
-
-            &:hover {
-                background: $brand-hover-dark;
-            }
-
-            &.#{$jigsaw-list-option}-active {
-                background: $brand-active-dark;
-            }
 
             hr {
-                border-top: 1px solid $font-color-white;
+                border-top: 1px solid $splitline-default;
                 margin: 1px 0;
                 opacity: 85%;
             }
 
             &.#{$jigsaw-list-option}-disabled {
-                background: transparent;
-
-                .#{$menu-prefix-cls}-list-title {
+                .#{$jigsaw-menu}-list-title {
                     float: left;
                     line-height: 32px;
-                    color: $font-color-disabled-dark;
+                    color: $font-color-disabled;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+
+                    i {
+                        color: $font-color-disabled;
+                    }
+
+                    span {
+                        color: $font-color-disabled;
+                    }
                 }
 
                 cursor: not-allowed;
@@ -53,10 +47,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 display: none;
             }
 
-            .#{$menu-prefix-cls}-list-title {
+            .#{$jigsaw-menu}-list-title {
                 float: left;
                 line-height: 32px;
-                color: $font-color-white;
+                color: $font-color-default;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -66,30 +60,29 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 align-content: flex-start;
 
                 i {
+                    color: $font-color-default;
                     margin-right: 4px;
                 }
 
                 span {
+                    color: $font-color-default;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
             }
 
-            .#{$menu-prefix-cls}-list-sub-title {
+            .#{$jigsaw-menu}-list-sub-title {
                 float: right;
                 line-height: 32px;
-                color: $font-color-white;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                color: $font-color-default;
                 display: flex;
                 align-items: center;
                 flex-direction: row;
                 align-content: flex-start;
                 min-height: 32px;
 
-                .#{$menu-prefix-cls}-subIcon {
+                .#{$jigsaw-menu}-subIcon {
                     overflow: hidden;
                     margin: 0px 4px;
                 }
@@ -102,164 +95,36 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
     }
-}
 
-.#{$menu-prefix-cls}-light {
-    background: none !important;
+    &.#{$jigsaw-menu}-navigation {
+        .#{$jigsaw-list}-host {
+            border: none;
 
-    .#{$jigsaw-list}-host {
-        background: $bg-body-light;
-        border: #D9D9D9 1px solid;
-        font-size: $font-size-base;
+            .#{$jigsaw-list-option}-host {
+                &.#{$jigsaw-list-option}-disabled {
+                    background: transparent;
 
-        .#{$jigsaw-list-option}-host {
-            color: #4D4D4D;
-            line-height: 32px;
-            padding: 0px 8px;
-            min-height: 1px;
-            background: none;
+                    .#{$jigsaw-menu}-navigation-title {
+                        color: $font-color-disabled;
+                        line-height: 40px;
+                        text-align: center;
+                        vertical-align: center;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
 
-            &:hover {
-                background: $brand-lighten-light;
-            }
-
-            &.#{$jigsaw-list-option}-active {
-                background: $brand-active-lighten-light;
-            }
-
-            hr {
-                border-top: 1px solid #dddddd;
-                margin: 1px 0;
-                opacity: 85%;
-            }
-
-            &.#{$jigsaw-list-option}-disabled {
-                background: $bg-body-light;
-
-                .#{$menu-prefix-cls}-list-title {
-                    float: left;
-                    line-height: 32px;
-                    color: $font-color-disabled-light;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    cursor: not-allowed;
                 }
 
-                cursor: not-allowed;
-            }
-
-            .#{$jigsaw-list-option}-title-box {
-                display: none;
-            }
-
-            .#{$jigsaw-list-option}-sub-title {
-                display: none;
-            }
-
-            .#{$menu-prefix-cls}-list-title {
-                float: left;
-                line-height: 32px;
-                color: $font-color-default-light;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-                align-content: flex-start;
-
-                i {
-                    color: $font-color-default-light;
-                    margin-right: 4px;
-                }
-
-                span {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-            }
-
-            .#{$menu-prefix-cls}-list-sub-title {
-                float: right;
-                line-height: 32px;
-                color: $font-color-default-light;
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-                align-content: flex-start;
-                min-height: 32px;
-
-                .#{$menu-prefix-cls}-subIcon {
-                    overflow: hidden;
-                    margin: 0px 4px;
-                }
-
-                span {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-            }
-        }
-    }
-}
-
-.#{$menu-prefix-cls}-navigation {
-    background: none !important;
-
-    .#{$jigsaw-list}-host {
-        background: $bg-body-dark;
-        border: none;
-        font-size: $font-size-base;
-
-        .#{$jigsaw-list-option}-host {
-            color: $font-color-white;
-            padding: 0px 8px;
-            min-height: 1px;
-            background: none;
-
-            &:hover {
-                background: $brand-hover-dark;
-            }
-
-            &.#{$jigsaw-list-option}-active {
-                background: $brand-active-dark;
-            }
-
-            hr {
-                border-top: 1px solid #ffffff;
-                margin: 1px 0;
-                opacity: 85%;
-            }
-
-            &.#{$jigsaw-list-option}-disabled {
-                background: transparent;
-
-                .#{$menu-prefix-cls}-navigation-title {
-                    color: $font-color-disabled-dark;
+                .#{$jigsaw-menu}-navigation-title {
+                    color: $font-color-default;
                     line-height: 40px;
                     text-align: center;
                     vertical-align: center;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                }
-
-                cursor: not-allowed;
-            }
-
-            .#{$menu-prefix-cls}-navigation-title {
-                color: $font-color-white;
-                line-height: 40px;
-                text-align: center;
-                vertical-align: center;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-
-                i {
-                    color: $font-color-white;
                 }
             }
         }

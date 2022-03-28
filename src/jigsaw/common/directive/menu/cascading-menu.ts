@@ -22,6 +22,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuShowBorder: boolean;
     private _jigsawCascadingMenuTheme: MenuTheme = JigsawTheme.majorStyle;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
+    private _jigsawCascadingMenuType: 'navigation' | string;
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -113,6 +114,19 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
             this.jigsawFloatInitData.position = value;
         }
     };
+
+    @Input('jigsawCascadingMenuType')
+    @Input()
+    public get jigsawCascadingMenuType(): 'navigation' | string {
+        return this._jigsawCascadingMenuType;
+    }
+
+    public set jigsawCascadingMenuType(value: 'navigation' | string) {
+        if (this._jigsawCascadingMenuType != value) {
+            this._jigsawCascadingMenuType = value;
+            this.jigsawFloatInitData.type = value;
+        }
+    }
 
     @Input('jigsawCascadingMenuOpenTrigger')
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' | DropDownTrigger = 'click';
