@@ -16,7 +16,6 @@ import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
-import {JigsawTheme} from "../../common/core/theming/theme";
 
 export type MenuTheme = 'light' | 'dark';
 
