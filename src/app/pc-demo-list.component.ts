@@ -71,10 +71,14 @@ import {routerConfigPC} from "./router-config";
 
 @Component({
     template: `
-        <jigsaw-select [optionCount]="6" [data]="jComponents" (valueChange)="showHideDemos($event)"
-                        placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
-                        class="select-demo" [(value)]="selectedItems"></jigsaw-select>
-        <div *ngFor="let router of routes" [ngStyle]="{'max-width': maxWidth}">
+        <div class="settings">
+            <span>筛选</span>
+            <jigsaw-select [optionCount]="12" [data]="jComponents" (valueChange)="showHideDemos($event)"
+                           placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
+                           [(value)]="selectedItems" width="300">
+            </jigsaw-select>
+        </div>
+        <div *ngFor="let router of routes">
             <div *ngIf="!router.hidden">
                 <h3>{{router.path.replace('pc/', '')}}</h3>
                 <hr>
@@ -86,23 +90,21 @@ import {routerConfigPC} from "./router-config";
         </div>
     `,
     styles: [`
-        .select-demo {
-            position: fixed;
-            right: 136px;
-            top: 48px;
-            border-radius: 4px;
-            cursor: pointer;
-            background-color: var(--bg-body);
-            width: 201px;
-            z-index: 1;
-        }
-
         a {
             margin-right: 12px;
         }
 
         div {
             margin-bottom: 12px;
+        }
+
+        .settings jigsaw-select {
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        .settings span {
+            font-size: 16px;
         }
     `]
 })
@@ -135,10 +137,6 @@ export class PCDemoListComponent implements OnInit {
     ngOnInit(): void {
         this.selectedItems = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.showHideDemos(this.selectedItems);
-    }
-
-    get maxWidth(): string {
-        return `calc(100vw - ${document.body.scrollHeight > document.body.offsetHeight ? 365 : 350}px)`;
     }
 }
 
