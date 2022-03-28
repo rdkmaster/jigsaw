@@ -28,7 +28,6 @@ export class FormlyFieldButton extends FormlyFieldType<JigsawButton> {
     defaultOptions = {
         templateOptions: {
             hideLabel: false,
-            content: '按钮',
             colorType: ColorType.default,
             preSize: SizeType.default
         },

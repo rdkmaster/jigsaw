@@ -35,7 +35,7 @@ $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-med: $font-size-base - 1px;
 $font-size-lg: $font-size-base + 2px;
-$font-size-text-base: 12px;
+/*@public*/ $font-size-text-base: 12px;
 
 $font-title-lg: 16px;
 $font-title-med: 14px;

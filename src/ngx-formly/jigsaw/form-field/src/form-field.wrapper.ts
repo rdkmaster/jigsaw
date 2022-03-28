@@ -8,7 +8,7 @@ import {FieldWrapper} from '@ngx-formly/core';
              [ngStyle]="{height: to.fixHeightInner ? '100%' : 'calc(100% - 16px)',
                         'margin-bottom': to.fixMarginBottom ? to.fixMarginBottom : '16px'}">
             <div class="jigsaw-formly-field-wrapper-label" *ngIf="!to.hideLabel" [attr.for]="id">
-                <span [trustedHtml]="to.label"></span>
+                <span [trustedHtml]="to.label" class="jigsaw-formly-field-wrapper-label-content"></span>
                 <span *ngIf="to.required && to.label" class="jigsaw-formly-field-required">*</span>
             </div>
 
@@ -31,10 +31,17 @@ import {FieldWrapper} from '@ngx-formly/core';
         }
 
         .jigsaw-formly-field-wrapper-label {
+            font-size: var(--font-size-text-base);
+            color: var(--font-color-default);
             min-height: 22px;
             display: flex;
             align-items: center;
             margin-bottom: 4px;
+        }
+
+        .jigsaw-formly-field-wrapper-label-content {
+            display: flex;
+            align-items: center;
         }
 
         .jigsaw-formly-field-wrapper-control {
@@ -53,7 +60,9 @@ import {FieldWrapper} from '@ngx-formly/core';
         }
 
         .jigsaw-formly-field-required {
+            margin-left: 3px;
             color: red;
+            font-size: 12px;
         }
     `],
     changeDetection: ChangeDetectionStrategy.OnPush,

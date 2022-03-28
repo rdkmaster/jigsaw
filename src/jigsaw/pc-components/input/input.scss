@@ -81,7 +81,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             .#{$jigsaw-input}-icon-front,
             .#{$jigsaw-input}-icon-end {
                 .iconfont {
-                    color: $font-color-disabled-spec;
+                    color: $icon-color-disabled;
                 }
             }
         }
