@@ -1,11 +1,11 @@
 import {AfterContentInit, Component, Input, NgModule, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {TranslateService} from "@ngx-translate/core";
 import {CommonUtils} from "../../jigsaw/common/core/utils/common-utils";
 import {JigsawMarkdownModule} from "../markdown/markdown";
 import {MockData} from "../app.interceptor";
 import {JigsawFloatModule} from "../../jigsaw/common/directive/float/float";
 import {ArrayCollection} from "../../jigsaw/common/core/data/array-collection";
-import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "../../jigsaw/common/core/utils/translate-helper";
 import {JigsawNotification} from "../../jigsaw/pc-components/notification/notification";
 import {JigsawTheme} from "../../jigsaw/common/core/theming/theme";
@@ -126,13 +126,6 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
             JigsawTheme.changeTheme(themeData.name, themeData.majorStyle);
         }
     }
-
-
-
-
-
-
-
 
     @Input()
     public showDetail: boolean = undefined;
