@@ -151,3 +151,21 @@
 .demo-nav-menu .nav-menu-item:hover .icon-vis {
     font-weight: 600;
 }
+
+.demo-nav-menu-cntr-panel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.demo-nav-menu-cntr-panel .icon-cntr {
+    margin-left: auto;
+}
+
+.demo-nav-menu-cntr-panel .icon-cntr i {
+    cursor: pointer;
+}
+
+.demo-nav-menu-cntr-panel .icon-cntr i:hover {
+    font-weight: 600;
+}

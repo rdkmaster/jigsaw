@@ -549,6 +549,7 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
     }
 
     navMenu: any;
+    navMenuVis: boolean = false;
 
     navClick(item) {
         item.ele.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -558,6 +559,14 @@ export class ThemeBuildInThemeDemoComponent implements AfterViewInit {
         item.vis = !item.vis;
         console.log(item.ele.closest('.list-li'))
         item.ele.closest('.list-li').style.display = item.vis ? 'flex' : 'none';
+    }
+
+    closeNav() {
+        this.navMenuVis = false;
+    }
+
+    openNav() {
+        this.navMenuVis = true;
     }
 
     scrollToBottom() {

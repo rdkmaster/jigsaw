@@ -1285,14 +1285,16 @@
     <!--        </section>-->
     <!--    </li>-->
 </ul>
-<div class="demo-nav">
+<div class="demo-nav" (click)="openNav()">
     <i class="iconfont iconfont-e175"></i>
 </div>
-<div class="demo-nav-menu-cntr">
-    <div>
-        <span>{{navMenu?.length}}</span>
-        <i class="iconfont iconfont-e415" (click)="scrollToBottom()"></i>
-        <i class="iconfont iconfont-e14b"></i>
+<div class="demo-nav-menu-cntr" [ngStyle]="{'display': navMenuVis ? 'flex' : 'none'}">
+    <div class="demo-nav-menu-cntr-panel">
+        <span>共{{navMenu?.length}}项</span>
+        <div class="icon-cntr">
+            <i class="iconfont iconfont-e415" (click)="scrollToBottom()"></i>
+            <i class="iconfont iconfont-e14b" (click)="closeNav()"></i>
+        </div>
     </div>
     <ul class="demo-nav-menu">
         <li class="nav-menu-item" *ngFor="let item of navMenu">
