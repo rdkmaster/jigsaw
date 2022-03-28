@@ -175,10 +175,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
                     padding: 0;
                     max-width: 100%;
                     background: none;
-
-                    .#{$jigsaw-tag}-close-bar {
-                        display: none;
-                    }
                 }
             }
         }
