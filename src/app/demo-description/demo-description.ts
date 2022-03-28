@@ -1,9 +1,15 @@
-import {Component, Input, NgModule, OnInit} from "@angular/core";
+import {AfterContentInit, Component, Input, NgModule, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import sdk from '@stackblitz/sdk';
 import {CommonUtils} from "../../jigsaw/common/core/utils/common-utils";
 import {JigsawMarkdownModule} from "../markdown/markdown";
 import {MockData} from "../app.interceptor";
+import {JigsawFloatModule} from "../../jigsaw/common/directive/float/float";
+import {ArrayCollection} from "../../jigsaw/common/core/data/array-collection";
+import {TranslateService} from "@ngx-translate/core";
+import {TranslateHelper} from "../../jigsaw/common/core/utils/translate-helper";
+import {JigsawNotification} from "../../jigsaw/pc-components/notification/notification";
+import {JigsawTheme} from "../../jigsaw/common/core/theming/theme";
+import {JigsawButtonBarModule} from "../../jigsaw/pc-components/list-and-tile/button-bar";
 
 const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
 
@@ -27,6 +33,22 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
             margin-left: 12px;
             font-size: 12px;
         }
+
+        .demo-control-bar {
+            background-color: var(--bg-body) !important;
+            padding: 16px 16px 8px 16px;
+        }
+
+        .demo-control-bar jigsaw-button-bar {
+            margin-bottom: 8px;
+            margin-left: 16px;
+            display: block;
+        }
+
+        .demo-control-bar p {
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
     `],
     template: `
         <div style="max-width: calc(100vw - 340px)">
@@ -36,6 +58,8 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
                 <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
                 |
                 <a (click)="openDemoCode()">查看本DEMO源码</a>
+                |
+                <a jigsaw-float [jigsawFloatTarget]="settingsPanel" [jigsawFloatOptions]="{borderType: 'pointer'}">设置</a>
             </span>
             <br *ngIf="showDetail">
             <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown>
@@ -46,12 +70,76 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
             </span>
         </div>
         <hr>
+
+        <ng-template #settingsPanel>
+            <div class="demo-control-bar">
+                <p>切换皮肤</p>
+                <jigsaw-button-bar [(selectedItems)]="selectedTheme" trackItemBy="name,majorStyle" [data]="themes"
+                                   [multipleSelect]="false" (selectedItemsChange)="themeSelectChange($event)">
+                </jigsaw-button-bar>
+                <p>切换语言</p>
+                <jigsaw-button-bar [data]="[{label: '中文', value: 'zh'}, {label: 'English', value: 'en'}]"
+                                   [selectedItems]="[{label: '中文', value: 'zh'}]"
+                                   (selectedItemsChange)="changeLanguage($event[0])">
+                </jigsaw-button-bar>
+            </div>
+        </ng-template>
     `
 })
-export class JigsawDemoDescription implements OnInit {
-    @Input() showDetail: boolean = undefined;
-    @Input() content: string = '';
-    @Input() codes: any;
+export class JigsawDemoDescription implements OnInit, AfterContentInit {
+    public selectedTheme: any[];
+    public themes = new ArrayCollection([
+        { label: "VMax Light", name: 'vmax-pro', majorStyle: 'light' },
+        { label: "OES Light", name: 'paletx-pro', majorStyle: 'light' },
+        { label: "OES Dark", name: 'paletx-pro', majorStyle: 'dark' },
+        { label: "Ux2.0 Light", name: 'idea', majorStyle: 'light' },
+        { label: "MASBD Light", name: 'masbd', majorStyle: 'light' }
+    ]);
+
+    constructor(private _translateService: TranslateService) {
+    }
+
+    ngAfterContentInit() {
+        this.themeInit();
+    }
+
+    changeLanguage(lang: { value: 'zh' | 'en' }) {
+        TranslateHelper.changeLanguage(this._translateService, lang.value);
+        // 这里别用showInfo，因为notification自身的语言此时还未被加载，导致标题发生错误
+        JigsawNotification.show('提示：Jigsaw的几乎所有demo本身，包括一些通过Input属性传给组件的文本（如placeholder），' +
+            '都未支持中英双语切换。这个切换语言动作只能影响到封装在组件内部的词条，可用于测试这些词条在中英双语下的表现。');
+    }
+
+    themeSelectChange(themeArr: ArrayCollection<any>) {
+        const themeName = themeArr[0].name, majorStyle = themeArr[0].majorStyle;
+        localStorage.setItem("jigsawDemoTheme", JSON.stringify({name: themeName, majorStyle: majorStyle}));
+        JigsawTheme.changeTheme(themeName, majorStyle);
+    }
+
+    themeInit() {
+        const themeString = localStorage.getItem("jigsawDemoTheme");
+        if (themeString === null) {
+            this.selectedTheme = [{ name: "paletx-pro", majorStyle: 'light' }];
+        } else {
+            const themeData = JSON.parse(themeString);
+            this.selectedTheme = [themeData];
+            JigsawTheme.changeTheme(themeData.name, themeData.majorStyle);
+        }
+    }
+
+
+
+
+
+
+
+
+    @Input()
+    public showDetail: boolean = undefined;
+    @Input()
+    public content: string = '';
+    @Input()
+    public codes: any;
 
     private _summary: string;
 
@@ -135,12 +223,11 @@ export class JigsawDemoDescription implements OnInit {
             this.showDetail = urlParams['open-desc'] == 'true';
         }
     }
-
 }
 
 @NgModule({
     declarations: [JigsawDemoDescription],
-    imports: [JigsawMarkdownModule, CommonModule],
+    imports: [JigsawMarkdownModule, CommonModule, JigsawFloatModule, JigsawButtonBarModule],
     exports: [JigsawDemoDescription]
 })
 export class JigsawDemoDescriptionModule {
@@ -175,7 +262,7 @@ function loadScript() {
             window['ngRef'].destroy();
           }
           window['ngRef'] = ref;
-        
+
           // Otherwise, log the boot error
         }).catch(err => console.error(err));
         return;
