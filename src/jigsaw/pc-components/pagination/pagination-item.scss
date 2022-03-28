@@ -1,7 +1,7 @@
 $jigsaw-page: #{$jigsaw-prefix}-page;
 
 .#{$jigsaw-page}-item-host {
-    @include inline-block();
+    display: inline-flex;
     margin-right: 8px;
     vertical-align: top;
     color: $font-color-default;
