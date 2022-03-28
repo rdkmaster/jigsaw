@@ -9,7 +9,9 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-.#{$jigsaw-select}-host {
+.#{$jigsaw-select}-host,
+.#{$jigsaw-group-select}-host,
+.#{$jigsaw-collapse-select}-host {
     @include inline-block();
     color: $font-color-default;
 
