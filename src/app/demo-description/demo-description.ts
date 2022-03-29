@@ -35,7 +35,7 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
         }
 
         .demo-control-bar {
-            background-color: var(--bg-body) !important;
+            background-color: var(--bg-container) !important;
             padding: 16px 16px 8px 16px;
         }
 
