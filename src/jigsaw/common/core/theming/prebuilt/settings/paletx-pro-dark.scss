@@ -283,3 +283,13 @@ $border-color-shadow-cntr: $gray-6;
 /*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.12);
 /*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.08);
 /*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.06);
+
+/* 导航色 */
+/*@public*/ $nav-header: $gray-2;
+$nav-navigation: $gray-2;
+$nav-navigation-darken: $gray-3;
+$nav-hover: $gray-5;
+$nav-active: $gray-4;
+$nav-color: $font-color-default;
+$nav-color-active: $brand-default;
+$nav-border: $border-color-default;

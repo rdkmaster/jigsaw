@@ -33,7 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `
         <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
+                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150" [textTag]="false"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"

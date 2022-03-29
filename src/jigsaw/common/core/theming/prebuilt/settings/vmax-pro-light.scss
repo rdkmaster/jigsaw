@@ -283,3 +283,13 @@ $border-color-shadow-cntr: transparent;
 /*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
 /*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
 /*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
+
+/* 导航色 */
+/*@public*/ $nav-header: #32404e;
+$nav-navigation: #516273;
+$nav-navigation-darken: #3c4c5a;
+$nav-hover: #2a3642;
+$nav-active: #212a33;
+$nav-color: $font-color-white;
+$nav-color-active: $font-color-white;
+$nav-border: rgba(221, 221, 221, 0.5);
