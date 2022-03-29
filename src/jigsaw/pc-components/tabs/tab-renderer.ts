@@ -22,7 +22,7 @@ export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
             <span class="jigsaw-tabs-title-editor-bar iconfont iconfont-ea0c" (click)="_handleEditable($event)"></span>
         </div>
         <j-input *ngIf="_$editable" [(value)]="title" [icon]="'iconfont iconfont-ea18'" class="jigsaw-tabs-title-editor-input"
-                 (blur)="_$handleTitleChange()" (iconSelect)="_$handleTitleChange()" (valueChange)="_realTitle = $event" [width]="_$width"></j-input>
+                 (blur)="_$handleTitleChange($event)" (iconSelect)="_$handleTitleChange($event)" [width]="_$width"></j-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -36,7 +36,6 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
 
     private _title: string = 'New Tab';
     private _originEditTitle: string;
-    private _realTitle: string;
 
     public get title(): string {
         return this._title;
@@ -88,8 +87,8 @@ export class JigsawEditableTabTitleRenderer extends AbstractJigsawViewBase imple
     /**
      * @internal
      */
-    public _$handleTitleChange() {
-        this.title = !!this._realTitle ? this.title : this._originEditTitle;
+    public _$handleTitleChange($event) {
+        this.title = !!$event.target.value ? this.title : this._originEditTitle;
         this._$editable = !this._$editable;
         this._tabLabel.labelChange.emit({key: this._tabLabel.key, title: this.title});
         this._changeDetectorRef.detectChanges();
