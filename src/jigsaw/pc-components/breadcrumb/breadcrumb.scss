@@ -28,7 +28,6 @@ $jigsaw-breadcrumb: #{$jigsaw-prefix}-breadcrumb;
 
         &.#{$jigsaw-breadcrumb}-current {
             font-size: $font-title-med;
-            font-weight: bold;
             color: $font-color-heading-bold-lighten;
         }
 
