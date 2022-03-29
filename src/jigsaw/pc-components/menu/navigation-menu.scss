@@ -12,12 +12,12 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items {
         flex: 1;
-        background: $bg-container;
+        background: $nav-navigation;
 
         .#{$jigsaw-nav-menu}-item {
             width: 100%;
             min-width: 40px;
-            color: $font-color-default;
+            color: $nav-color;
 
             .#{$jigsaw-nav-menu}-item-top {
                 display: flex;
@@ -39,7 +39,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                 }
 
                 &:hover {
-                    background: $bg-hover;
+                    background: $nav-hover;
                 }
 
                 .#{$jigsaw-nav-menu}-item-arrow {
@@ -51,22 +51,8 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
             .#{$jigsaw-nav-menu}-submenus {
                 border: none;
-                background: $bg-gray;
+                background: $nav-navigation-darken;
                 overflow: hidden;
-
-                &-actived {
-                    .#{$jigsaw-nav-menu}-sub-item:first-child {
-                        border-top-width: 1px;
-                        border-top-style: solid;
-                        border-top-color: $border-color-default;
-                    }
-
-                    .#{$jigsaw-nav-menu}-sub-item:last-child {
-                        border-bottom-width: 1px;
-                        border-bottom-style: solid;
-                        border-bottom-color: $border-color-default;
-                    }
-                }
 
                 .#{$jigsaw-nav-menu}-sub-item {
                     position: relative;
@@ -89,12 +75,12 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     }
 
                     &:hover {
-                        background: $bg-hover;
+                        background: $nav-hover;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-selected {
-                        background-color: $bg-body;
-                        color: $brand-default;
+                        background-color: $nav-active;
+                        color: $nav-color-active;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-collapsed {
@@ -114,7 +100,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$jigsaw-nav-menu}-item-selected-top {
-                background-color: $bg-body;
+                background-color: $nav-active;
                 color: $brand-default;
             }
         }
@@ -127,7 +113,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$jigsaw-nav-menu}-item-selected {
-                background-color: $bg-body !important;
+                background-color: $nav-navigation !important;
             }
 
             .#{$jigsaw-nav-menu}-item-top {
@@ -241,13 +227,13 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
         width: 100%;
         min-width: 40px;
         height: 40px;
-        background: $bg-container;
-        border-top: 1px solid $border-color-default;
-        color: $font-color-default;
+        background: $nav-navigation;
+        border-top: 1px solid $nav-border;
+        color: $nav-color;
         cursor: pointer;
 
         &:hover {
-            color: $brand-default;
+            color: $nav-color-active;
         }
 
         span {
