@@ -1,3 +1,7 @@
 .jigsaw-header-host:not(:first-of-type) {
     margin-top: 20px;
 }
+
+.demo-cntr-dark {
+    background: #000;
+}
