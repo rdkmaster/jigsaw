@@ -17,17 +17,16 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
 
-export type MenuTheme = 'light' | 'dark';
+export type MenuTheme = 'light' | 'dark' | 'navigation';
 
 export class MenuOptions {
     data?: SimpleTreeData;
     width?: string | number;
     height?: string | number;
-    theme?: 'light' | 'dark';
+    theme?: 'light' | 'dark' | 'navigation';
     options?: PopupOptions;
     showBorder?: boolean;
     select?: EventEmitter<SimpleNode>;
-    type?: 'navigation' | string;
 }
 
 /**
@@ -57,7 +56,6 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              [jigsawCascadingMenuData]="initData?.data"
              [jigsawCascadingMenuTheme]="initData?.theme"
              [jigsawCascadingMenuPosition]="'bottomLeft'"
-             [jigsawCascadingMenuType]="'initData?type'"
              [jigsawCascadingMenuOpen]="true"
              [jigsawCascadingMenuOpenTrigger]="'none'"
              [jigsawCascadingMenuCloseTrigger]="'click'"
@@ -105,14 +103,14 @@ export class JigsawMenuHelper implements IPopupable {
                            (mouseenter)="_$mouseenter(index, node)"
                            (mouseleave)="_$mouseleave(index)"
                            [style.minHeight]="_$getMinHeight(node.label)">
-                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && type != 'navigation'"
+                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
                      [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')"
                      [ngStyle]="_$getTitleWidth(node)">
                     <i class="{{node.icon}}"></i>
                     <span>{{node.label}}</span>
                 </div>
-                <hr *ngIf="!node.label && type != 'navigation'">
-                <div class="jigsaw-menu-list-sub-title" *ngIf="type != 'navigation'"
+                <hr *ngIf="!node.label && _$realTheme != 'navigation'">
+                <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
                      [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')"
                      [ngStyle]="_$getSubTitleWidth(node, index)">
                     <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
@@ -120,7 +118,7 @@ export class JigsawMenuHelper implements IPopupable {
                        *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
                 </div>
-                <div class="jigsaw-menu-navigation-title" *ngIf="type == 'navigation'">
+                <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
                     {{node.label}}
                     <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="iconfont iconfont-e144"
                        style="position: absolute;right: 10px;line-height: 40px"></i>
@@ -131,7 +129,7 @@ export class JigsawMenuHelper implements IPopupable {
     host: {
         '[attr.data-theme]': '_$realTheme',
         '[class.jigsaw-menu-host]': 'true',
-        '[class.jigsaw-menu-navigation]': "type == 'navigation'",
+        '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
         '(click)': "_$onClick($event)",
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -182,7 +180,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      */
     public get _$realTheme(): 'light' | 'dark' | string {
         let theme = this.initData && this.initData.theme ? this.initData.theme : this.theme;
-        if (theme !== 'light' && theme !== 'dark') {
+        if (theme !== 'light' && theme !== 'dark' && theme !== 'navigation') {
             theme = 'light';
         }
         return theme;
@@ -216,12 +214,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      */
     @Input()
     public showBorder: boolean = true;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public type: 'navigation' | string;
 
     /**
      * @internal
@@ -263,7 +255,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     ngAfterViewInit() {
         this._setBorder();
         this.theme = this.initData && this.initData.theme ? this.initData.theme : undefined;
-        this.type = this.initData && this.initData.type ? this.initData.type : undefined;
     }
 
     ngAfterContentInit() {

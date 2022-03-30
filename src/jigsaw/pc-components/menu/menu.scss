@@ -97,15 +97,20 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     }
 
     &.#{$jigsaw-menu}-navigation {
+        background: $nav-navigation;
+
         .#{$jigsaw-list}-host {
             border: none;
 
             .#{$jigsaw-list-option}-host {
+                background: $nav-navigation;
+                color: $font-color-white;
+
                 &.#{$jigsaw-list-option}-disabled {
-                    background: transparent;
+                    background: $nav-navigation;
 
                     .#{$jigsaw-menu}-navigation-title {
-                        color: $font-color-disabled;
+                        color: $font-color-white-darken;
                         line-height: 40px;
                         text-align: center;
                         vertical-align: center;
@@ -118,7 +123,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 }
 
                 .#{$jigsaw-menu}-navigation-title {
-                    color: $font-color-default;
+                    color: $font-color-white;
                     line-height: 40px;
                     text-align: center;
                     vertical-align: center;
@@ -126,6 +131,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                 }
+            }
+
+            hr {
+                border-top: 1px solid $nav-navigation-darken;
             }
         }
     }

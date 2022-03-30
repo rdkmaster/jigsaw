@@ -8,7 +8,6 @@
       [jigsawCascadingMenuHeight]="height"
       [jigsawCascadingMenuWidth]="width"
       [jigsawCascadingMenuTheme]='theme[0]'
-      [jigsawCascadingMenuType]="type[0]"
       (jigsawCascadingMenuSelect)="menuSelect($event)">
 菜单弹出
 </p>
@@ -21,13 +20,7 @@
 <p class="message">
     皮肤
     <jigsaw-button-bar [(selectedItems)]="theme" [multipleSelect]="false"
-                       [data]="['light', 'dark']">
-    </jigsaw-button-bar>
-</p>
-<p class="message">
-    类型
-    <jigsaw-button-bar [(selectedItems)]="type" [multipleSelect]="false"
-                        [data]="['无', 'navigation']">
+                       [data]="['light', 'dark', 'navigation']">
     </jigsaw-button-bar>
 </p>
 <p class="message">

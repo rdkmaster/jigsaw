@@ -36,7 +36,6 @@ export class MenuOptionsDemo {
 
     public data: SimpleTreeData;
     public theme: string[] = ['dark'];
-    public type: string[] = ['无'];
     public width: number = 150;
     public height: number = 0;
 
