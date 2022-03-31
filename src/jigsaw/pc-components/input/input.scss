@@ -131,6 +131,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         cursor: pointer;
         font-size: 16px;
         line-height: 1;
+        color:$icon-color-stress;
 
         &:hover {
             color: $brand-default;
