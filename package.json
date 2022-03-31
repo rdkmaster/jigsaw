@@ -84,7 +84,7 @@
         "http-rewrite-middleware": "~0.1.6",
         "jasmine-core": "~2.6.2",
         "jasmine-spec-reporter": "~4.1.0",
-        "minimist": "~1.2.5",
+        "minimist": "~1.2.6",
         "ng-packagr": "~9.1.5",
         "nyc": "~13.3.0",
         "protractor": "~5.1.2",
