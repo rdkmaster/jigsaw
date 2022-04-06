@@ -398,9 +398,8 @@ export class JigsawErrorAlert extends JigsawCommonAlert {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawConfirmAlert extends JigsawCommonAlert {
-    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef, public translateService: TranslateService) {
+    constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super(_renderer, _elementRef);
-        console.log(this.translateService.currentLang)
     }
 
     @ViewChild(JigsawAlert, {static: true})
