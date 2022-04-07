@@ -254,7 +254,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
-        this.theme = this.initData && this.initData.theme ? this.initData.theme : undefined;
+        this.theme = this.initData?.theme;
     }
 
     ngAfterContentInit() {

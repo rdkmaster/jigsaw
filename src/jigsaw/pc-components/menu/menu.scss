@@ -106,6 +106,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 background: $nav-navigation;
                 color: $font-color-white;
 
+                &:hover {
+                    background: $nav-hover;
+                }
+
                 &.#{$jigsaw-list-option}-disabled {
                     background: $nav-navigation;
 
