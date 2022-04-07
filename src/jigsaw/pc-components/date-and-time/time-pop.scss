@@ -5,6 +5,7 @@ $jigsaw-time-popup: #{$jigsaw-prefix}-time-popup;
     padding: 10px 6px;
     position: relative;
     border-radius: $border-radius-base;
+    background: $bg-body;
 
     .#{$jigsaw-time-popup}-content {
         &-hour,
@@ -21,6 +22,7 @@ $jigsaw-time-popup: #{$jigsaw-prefix}-time-popup;
                 height: 26px;
                 margin: 0 4px;
                 border-radius: $border-radius-base;
+                color: $font-color-default;
                 line-height: 26px;
                 text-align: center;
                 cursor: pointer;

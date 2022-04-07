@@ -30,7 +30,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10 | 15 | 30;
-export type TimePopupValue = { mode: TimeSelectMode | 'none', value: string, list: TimePopupItem[], showNowButton: boolean };
+export type TimePopupValue = { mode: TimeSelectMode | 'none', value: string, list: TimePopupItem[], showNowButton: boolean, theme: string };
 export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: boolean };
 
 type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour;
@@ -83,6 +83,9 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._cdr.markForCheck();
         });
     }
+
+    @ViewChild('floatEle', { read: JigsawFloat })
+    floatEle: JigsawFloat;
 
     /**
      * 参考`JigsawDateTimePicker.disabled`
@@ -368,6 +371,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             }
             this._$floatInitData = this._getFloatInitData(mode, this._$hour, this.step, this.gr);
             this._$floatArrowElement = this._hourInput.nativeElement;
+            console.log(this._$floatTarget)
         } else if (mode == 'minute') {
             if (!isTabSwitch) {
                 this._minuteInput.nativeElement.select();
@@ -676,7 +680,8 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             });
         }
         const showNowButton = gr == TimeGr.time;
-        return {mode, value, list, showNowButton}
+        const theme = this.theme;
+        return {mode, value, list, showNowButton, theme}
     }
 
     public writeValue(newValue: string): void {
@@ -736,20 +741,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
-/**
- * @internal
- */
+
+@WingsTheme('time-pop.scss')
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-time-popup-host]': 'true',
         '(mousedown)': '_$stopBlur($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimePopup implements IPopupable {
+export class JigsawTimePopup extends AbstractJigsawComponent implements IPopupable {
     constructor(private _cdr: ChangeDetectorRef) {
+        super();
     }
 
     private _value: TimePopupValue;
@@ -765,6 +771,7 @@ export class JigsawTimePopup implements IPopupable {
         Promise.resolve().then(() => {
             this._value = value;
             this._updateList(this.initData);
+            this.theme = this.initData.theme;
             this._cdr.markForCheck();
         });
     }

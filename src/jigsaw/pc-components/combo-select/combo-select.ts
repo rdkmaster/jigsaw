@@ -101,7 +101,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public set theme(theme: 'light' | 'dark') {
         this._wingsTheme(theme);
         this._$options.theme = theme;
-        console.log(1111)
     }
 
     /**
