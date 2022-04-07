@@ -139,6 +139,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 }
 
 /**
+ * @internal
  * 默认表格渲染组件
  */
 @Component({
@@ -148,6 +149,10 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
+/**
+ * @internal
+ * 表格密码单元格渲染组件
+ */
 @Component({
     template: `
         <jigsaw-input [theme]="theme" class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
@@ -182,6 +187,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
 }
 
 /**
+ * @internal
  * 编辑单元格渲染器
  */
 @Component({
@@ -250,6 +256,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 }
 
 /**
+ * @internal
  * 编辑单元格自动完成渲染器
  */
 @Component({
@@ -292,6 +299,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
 }
 
 /**
+ * @internal
  * 编辑单元格数字输入渲染器
  */
 @Component({
@@ -329,6 +337,7 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 }
 
 /**
+ * @internal
  * head checkbox renderer
  */
 @Component({
@@ -426,6 +435,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
+/**
+ * @internal
+ */
 export class TableCellToggleRendererBase extends TableCellRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
@@ -509,6 +521,7 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 }
 
 /**
+ * @internal
  * cell checkbox renderer
  */
 @Component({
@@ -527,6 +540,7 @@ export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
 }
 
 /**
+ * @internal
  * switch renderer
  */
 @Component({
@@ -551,6 +565,7 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
 }
 
 /**
+ * @internal
  * cell Progress renderer
  */
 @Component({
@@ -585,9 +600,9 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     ArrayCollection<any> | any[] | Observable<ArrayCollection<any> | any[]>;
 
 /**
+ * @internal
  * Select renderer
  */
-// @dynamic
 @Component({
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px"
@@ -722,6 +737,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
 export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, data: string };
 
+/**
+ * @internal
+ */
 @Component({
     template: `
         <div class="jigsaw-table-tree-cell">
@@ -762,9 +780,10 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     }
 }
 
-/*
+/**
+ * @internal
  * 换行
- * */
+ */
 @Component({
     template: `
         <div class="jigsaw-table-option-box"

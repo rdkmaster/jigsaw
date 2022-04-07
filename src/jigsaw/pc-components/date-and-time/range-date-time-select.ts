@@ -38,7 +38,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200" [textTag]="false"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
-                <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
+                <jigsaw-range-date-time-picker [theme]="theme" [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
                                                [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
                                                [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
                                                [showConfirmButton]="showConfirmButton"

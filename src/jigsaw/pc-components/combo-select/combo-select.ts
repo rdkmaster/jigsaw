@@ -88,6 +88,22 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     @Output() public valueChange = new EventEmitter<any[]>();
 
+    protected _theme: 'light' | 'dark';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get theme(): 'light' | 'dark' {
+        return this._theme;
+    }
+
+    public set theme(theme: 'light' | 'dark') {
+        this._wingsTheme(theme);
+        this._$options.theme = theme;
+        console.log(1111)
+    }
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -211,7 +227,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$options: PopupOptions = {};
+    public _$options: PopupOptions = { className: "jigsaw-combo-select-popup-host" };
 
     private _showBorder: boolean = true;
 

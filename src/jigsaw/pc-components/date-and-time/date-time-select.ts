@@ -36,7 +36,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150" [textTag]="false"
                              (openChange)="_$onComboOpenChange($event)">
             <ng-template>
-                <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
+                <jigsaw-date-time-picker [theme]="theme" [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
                                          (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton"
                                          [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
                                          [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains">

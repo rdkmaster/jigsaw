@@ -233,6 +233,9 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     templateUrl: './transfer-list.html',
     encapsulation: ViewEncapsulation.None
@@ -285,6 +288,9 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     templateUrl: './transfer-list.html',
     encapsulation: ViewEncapsulation.None
@@ -459,6 +465,9 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     templateUrl: './transfer-tree.html',
     encapsulation: ViewEncapsulation.None
@@ -628,6 +637,9 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
     }];
 }
 
+/**
+ * @internal
+ */
 @Component({
     templateUrl: './transfer-table.html',
     encapsulation: ViewEncapsulation.None
@@ -689,6 +701,9 @@ export class TransferTableSourceRenderer extends TransferTableRendererBase {
     }
 }
 
+/**
+ * @internal
+ */
 @Component({
     templateUrl: './transfer-table.html',
     encapsulation: ViewEncapsulation.None
