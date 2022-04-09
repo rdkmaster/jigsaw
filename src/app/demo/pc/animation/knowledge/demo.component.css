@@ -9,6 +9,14 @@
     animation: fadeIn 3s;
 }
 
+.knowledge-tips {
+    background: cyan;
+}
+
+.knowledge-qa {
+    background: cadetblue;
+}
+
 .fade-in {
     animation: fadeIn 1s;
 }
