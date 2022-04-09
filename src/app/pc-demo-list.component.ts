@@ -63,6 +63,7 @@ import {routerConfig as colorSelectConfig} from "./demo/pc/color-select/demo-set
 import {routerConfig as badgeConfig} from "./demo/pc/badge/demo-set.module";
 import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set.module";
 import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
+import {routerConfig as animationConfig} from "./demo/pc/animation/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfig as processStatusConfig} from "./demo/pc/process-status/demo-set.module";
 import {routerConfig as toastConfig} from "./demo/pc/toast/demo-set.module";
@@ -212,6 +213,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'badge', badgeConfig);
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
         this._addRouterConfig(routerConfig, 'header', headerConfig);
+        this._addRouterConfig(routerConfig, 'animation', animationConfig);
         this._addRouterConfig(routerConfig, 'theme', themeConfig);
         this._addRouterConfig(routerConfig, 'process-status', processStatusConfig);
         this._addRouterConfig(routerConfig, 'toast', toastConfig);

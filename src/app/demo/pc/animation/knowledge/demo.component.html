@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<jigsaw-header level="1">CSS 动画</jigsaw-header>
+<div class="example-box example-1">example-1</div>
+<qa index="0"></qa>
+<jigsaw-header>animation 属性</jigsaw-header>
+<ul>
+    <li *ngFor="let item of animationProperties; index as i ">
+        {{i}}.{{item.name}}
+    </li>
+</ul>

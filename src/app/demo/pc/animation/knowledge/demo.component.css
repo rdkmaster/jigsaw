@@ -1,0 +1,24 @@
+.example-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: 80px;
+    height: 40px;
+    background: var(--brand-default);
+    animation: fadeIn 3s;
+}
+
+.fade-in {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
