@@ -1,14 +1,3 @@
-.example-1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    width: 80px;
-    height: 40px;
-    background: var(--brand-default);
-    animation: fadeIn 3s;
-}
-
 .knowledge-tips {
     background: cyan;
 }
@@ -17,8 +6,24 @@
     background: cadetblue;
 }
 
-.fade-in {
-    animation: fadeIn 1s;
+.example-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 40px;
+    border-radius: 2px;
+    font-size: 16px;
+    color: #fff;
+    background: var(--brand-default);
+}
+
+.example-1 {
+    animation: fadeIn 3s;
+}
+
+.example-2 {
+    animation: fadeIn 3s, slideInRight 3s;
 }
 
 @keyframes fadeIn {
@@ -28,5 +33,15 @@
 
     to {
         opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0%);
     }
 }

@@ -1,8 +1,10 @@
 <div class="knowledge-qa">
-    <span>Q:</span>
-    <span>{{animationQA[index].question}}</span>
-</div>
-<div>
-    <span>A:</span>
-    <span>{{animationQA[index].answer}}</span>
+    <div>
+        <span>Q:</span>
+        <span [innerHtml]="animationQA[index].question"></span>
+    </div>
+    <div>
+        <span>A:</span>
+        <span [innerHtml]="animationQA[index].answer"></span>
+    </div>
 </div>
