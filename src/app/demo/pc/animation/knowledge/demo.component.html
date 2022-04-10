@@ -6,13 +6,20 @@
 <div class="example-box example-1">box-1</div>
 <qa index="0"></qa>
 <jigsaw-header>animation 属性</jigsaw-header>
-<ul>
-    <li *ngFor="let item of animationProperties; index as i ">
-        {{i}}.{{item.name}}
-    </li>
-</ul>
+<points [points]="animationPoints"></points>
 <div class="example-box example-2">box-2</div>
 <tips index="0"></tips>
 
 <jigsaw-header>@keyframes规则的语法和特性</jigsaw-header>
 <qa index="1"></qa>
+<points [points]="keyframePoints"></points>
+
+<jigsaw-header>动画命名</jigsaw-header>
+
+<jigsaw-header>负延时与即时播放</jigsaw-header>
+<jigsaw-header>reverse 和 alternate</jigsaw-header>
+
+<jigsaw-header>播放次数</jigsaw-header>
+<jigsaw-header>forwards 和 backwards</jigsaw-header>
+<jigsaw-header>暂停 和 重启</jigsaw-header>
+<jigsaw-header>steps()函数</jigsaw-header>

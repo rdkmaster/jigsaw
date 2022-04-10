@@ -1,0 +1,5 @@
+<ul>
+    <li *ngFor="let item of points; index as i " (click)="handleAnimation(item.exampleIndex,item.className)">
+        {{i}}.{{item.point}}
+    </li>
+</ul>
