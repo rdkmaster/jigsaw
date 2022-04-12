@@ -62,6 +62,7 @@ import {routerConfig as progressConfig} from "./demo/pc/progress/demo-set.module
 import {routerConfig as colorSelectConfig} from "./demo/pc/color-select/demo-set.module";
 import {routerConfig as badgeConfig} from "./demo/pc/badge/demo-set.module";
 import {routerConfig as timeSectionConfig} from "./demo/pc/time-section/demo-set.module";
+import {routerConfig as indexConfig} from "./demo/pc/index/demo-set.module";
 import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfig as processStatusConfig} from "./demo/pc/process-status/demo-set.module";
@@ -211,6 +212,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'color-select', colorSelectConfig);
         this._addRouterConfig(routerConfig, 'badge', badgeConfig);
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
+        this._addRouterConfig(routerConfig, 'index', indexConfig);
         this._addRouterConfig(routerConfig, 'header', headerConfig);
         this._addRouterConfig(routerConfig, 'theme', themeConfig);
         this._addRouterConfig(routerConfig, 'process-status', processStatusConfig);

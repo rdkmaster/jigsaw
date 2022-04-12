@@ -248,6 +248,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/time-section/demo-set.module').then(m => m.TimeSectionDemoModule),
     },
     {
+        path: "pc/index",
+        loadChildren: () => import('./demo/pc/index/demo-set.module').then(m => m.IndexDemoModule),
+    },
+    {
         path: "pc/header",
         loadChildren: () => import('./demo/pc/header/demo-set.module').then(m => m.HeaderDemoModule),
     },
