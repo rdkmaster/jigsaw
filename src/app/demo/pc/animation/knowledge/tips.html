@@ -1,3 +1,8 @@
-<div class="knowledge-tips">
-    <span [innerHtml]="animationTips[index].message"></span>
+<div class="knowledge-tools knowledge-tips">
+    <div class="flex">
+        <span style="margin-right: 4px;">Tips:</span>
+        <span [innerHtml]="animationTips[index].message"></span>
+        <i *ngIf="animationTips[index].action" class="iconfont iconfont-e6ba"
+            (click)="handleAnimation(animationTips[index].action.exampleIndex,animationTips[index].action.classList)"></i>
+    </div>
 </div>

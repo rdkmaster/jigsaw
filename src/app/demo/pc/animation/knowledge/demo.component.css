@@ -1,17 +1,57 @@
+.knowledge-cntr {}
+
+.knowledge-cntr .jigsaw-header-host .jigsaw-header-content {
+    font-size: 18px;
+}
+
+.knowledge-tools {
+    width: fit-content;
+    margin: 4px;
+    padding: 4px 8px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.knowledge-tools .iconfont {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.knowledge-tools .flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .knowledge-tips {
-    background: cyan;
+    background: var(--process-disabled);
 }
 
 .knowledge-qa {
-    background: cadetblue;
+    background: var(--success-disabled);
 }
 
-.example-box {
+.knowledge-qa .answer {
+    opacity: 0;
+}
+
+.knowledge-qa .answer.show {
+    opacity: 1;
+    transition: all 1s;
+}
+
+.knowledge-points {
+    background: var(--primary-disabled);
+}
+
+#example-0,
+#example-1 {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80px;
     height: 40px;
+    margin: 4px;
     border-radius: 2px;
     font-size: 16px;
     color: #fff;

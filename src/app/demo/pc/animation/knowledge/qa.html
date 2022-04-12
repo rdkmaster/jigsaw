@@ -1,10 +1,12 @@
-<div class="knowledge-qa">
-    <div>
-        <span>Q:</span>
+<div class="knowledge-tools knowledge-qa" (dblclick)="_$showAnswer = !_$showAnswer">
+    <div class="question flex">
+        <span style="margin-right: 4px;">Q:</span>
         <span [innerHtml]="animationQA[index].question"></span>
+        <i *ngIf="animationQA[index].action" class="iconfont iconfont-e6ba"
+            (click)="handleAnimation(animationQA[index].action.exampleIndex,animationQA[index].action.classList)"></i>
     </div>
-    <div>
-        <span>A:</span>
+    <div class="answer flex" [ngClass]="{'show' : _$showAnswer}">
+        <span style="margin-right: 4px;">A:</span>
         <span [innerHtml]="animationQA[index].answer"></span>
     </div>
 </div>
