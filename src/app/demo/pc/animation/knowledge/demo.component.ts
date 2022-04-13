@@ -1,39 +1,5 @@
 import { Component, Directive, Input, ViewEncapsulation } from "@angular/core";
 
-@Component({
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"],
-    encapsulation: ViewEncapsulation.None
-})
-export class JigsawAnimationKnowledgeDemoComponent {
-    animationPoints = [
-        { point: 'animation-name' },
-        { point: 'animation-duration' },
-        { point: 'animation-timing-function' },
-        { point: 'animation-delay' },
-        { point: 'animation-iteration-count' },
-        { point: 'animation-direction' },
-        { point: 'animation-fill-mode' },
-        { point: 'animation-play-state' }
-    ]
-
-    keyframePoints = [
-        { point: '起止关键帧可以不设置' },
-        { point: '关键帧列表可以合并' },
-        { point: '不同的关键帧选择器是无序的' },
-        { point: '重复定义的关键帧不是完全被覆盖的' },
-        { point: '关键帧中的样式可以不连续' },
-        { point: '!important无效' },
-        { point: '优先级最高' },
-    ]
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
-}
-
 @Directive()
 export abstract class KnowledgeToolsBase {
     handleAnimation(exampleIndex: number, classList?: string[]) {
@@ -48,6 +14,52 @@ export abstract class KnowledgeToolsBase {
         })
         console.log(ele)
     }
+}
+
+@Component({
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"],
+    encapsulation: ViewEncapsulation.None
+})
+export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
+    animationPoints = [
+        { point: 'animation-name' },
+        { point: 'animation-duration' },
+        { point: 'animation-timing-function' },
+        { point: 'animation-delay' },
+        { point: 'animation-iteration-count' },
+        { point: 'animation-direction' },
+        { point: 'animation-fill-mode' },
+        { point: 'animation-play-state' }
+    ]
+
+    keyframePoints = [
+        {
+            point: '起止关键帧可以不设置',
+            action: { exampleIndex: 0, classList: ['example-3'] }
+        },
+        {
+            point: '关键帧列表可以合并',
+            action: { exampleIndex: 0, classList: ['example-4'] }
+        },
+        {
+            point: '不同的关键帧选择器是无序的',
+            action: { exampleIndex: 0, classList: ['example-5'] }
+        },
+        {
+            point: '重复定义的关键帧不是完全被覆盖的',
+            action: { exampleIndex: 0, classList: ['example-6'] }
+        },
+        { point: '关键帧中的样式可以不连续' },
+        { point: '!important无效' },
+        { point: '优先级最高' },
+    ]
+
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = "";
+    description: string = "";
 }
 
 @Component({
@@ -84,7 +96,7 @@ export class KnowledgeTips extends KnowledgeToolsBase {
     animationTips = [
         {
             message: `animation属性支持同时应用多个动画规则。<br/>实现多种动画效果时，正确的做法是分隔设置。`,
-            action: { exampleIndex: 1, classList: ['example-2'] }
+            action: { exampleIndex: 0, classList: ['example-2'] }
         }
     ]
 }

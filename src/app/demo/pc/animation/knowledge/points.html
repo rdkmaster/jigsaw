@@ -1,5 +1,9 @@
 <ul class="knowledge-tools knowledge-points">
-    <li *ngFor="let item of points; index as i " (click)="handleAnimation(item.exampleIndex,item.className)">
-        {{i}}.{{item.point}}
+    <li *ngFor="let item of points; index as i " class="flex">
+        <span style="margin-right: 8px;">{{i+1}}.</span>
+        <span>{{item.point}}</span>
+        <i *ngIf="item.action" class="iconfont iconfont-e6ba"
+            (click)="handleAnimation(item.action.exampleIndex,item.action.classList)">
+        </i>
     </li>
 </ul>

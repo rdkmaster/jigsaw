@@ -46,16 +46,23 @@
 
 #example-0,
 #example-1 {
+    position: fixed;
+    top: 10vh;
+    right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
-    height: 40px;
+    width: 120px;
+    height: 80px;
     margin: 4px;
+    background: var(--brand-default);
     border-radius: 2px;
     font-size: 16px;
     color: #fff;
-    background: var(--brand-default);
+}
+
+#example-1 {
+    top: 0px;
 }
 
 .example-1 {
@@ -64,6 +71,22 @@
 
 .example-2 {
     animation: fadeIn 3s, slideInRight 3s;
+}
+
+.example-3 {
+    animation: fadeInBy 3s;
+}
+
+.example-4 {
+    animation: blink 3s;
+}
+
+.example-5 {
+    animation: fadeIn2 3s;
+}
+
+.example-6 {
+    animation: fadeIn3 3s;
 }
 
 @keyframes fadeIn {
@@ -83,5 +106,46 @@
 
     to {
         transform: translateX(0%);
+    }
+}
+
+@keyframes fadeInBy {
+    100% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    50%,
+    100% {
+        opacity: 0;
+    }
+
+    25%,
+    75% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn2 {
+    100% {
+        opacity: 1;
+    }
+
+    0% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn3 {
+    100% {
+        top: 50vh;
+        opacity: 0.5;
+    }
+
+    100% {
+        top: 20vh;
     }
 }
