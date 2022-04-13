@@ -7,7 +7,9 @@ import {
 import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
 import { CommonModule } from "@angular/common";
 import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
+import { JigsawListModule } from '../list-and-tile/list';
 
+export type alphabeticalIndexData = string[] | ArrayCollection<string>;
 @WingsTheme('alphabetical-index.scss')
 @Component({
     selector: "jigsaw-alphabetical-index,j-alphabetical-index",
@@ -19,10 +21,25 @@ import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
-    @Input()
-    data: string[] | ArrayCollection<string>;
+    _data: alphabeticalIndexData
 
-    private _letters = ['#', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'w', 'x', 'y', 'z'];
+    @Input()
+    public get data() {
+        return this._data;
+    }
+
+    public set data(value: alphabeticalIndexData) {
+        this._data = value;
+        this._$sortedData = this.sortByFirstLetter(this._data);
+        console.log(this._$sortedData)
+    }
+
+    /**
+     * @internal 
+     */
+    public _$sortedData: string[] | ArrayCollection<string>;
+
+    private _letters = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
     private _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
 
     sortByFirstLetter(arr: string[]): string[] {
@@ -36,11 +53,11 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
         this._letters.forEach((letter, i) => {
             group = { letter: letter, data: [] }
             arr.forEach(item => {
-                const word = item.trim().toLowerCase();
+                const word = item.trim().toUpperCase();
                 const reg = new RegExp(`^${letter}`);
                 if (reg.test(word)) {
                     group.data.push(item);
-                } else if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word) <= 0) && word.localeCompare(this._zhLetters[i]) == -1) {
+                } else if (/^/.test(word) && (!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word) <= 0) && word.localeCompare(this._zhLetters[i]) == -1) {
                     group.data.push(item);
                 }
             })
@@ -54,7 +71,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, JigsawListModule],
     declarations: [JigsawAlphabeticalIndex],
     exports: [JigsawAlphabeticalIndex]
 })

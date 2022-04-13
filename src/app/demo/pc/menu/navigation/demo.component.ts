@@ -38,15 +38,10 @@ export class NavigationMenuNavDemo {
         `);
         const xmlData = `
             <node>
-                <node label="图标1" icon="iconfont iconfont-e231" selected="true"></node>
-                <node label="图标2" icon="iconfont iconfont-e261"></node>
-                <node label="图标3" icon="iconfont iconfont-e2f6"></node>
-                <node label="图标4" icon="iconfont iconfont-e2d4"></node>
-                <node label="图标5" icon="iconfont iconfont-e17c"></node>
-                <node label="图标6" icon="iconfont iconfont-e0d1"></node>
-                <node label="图标7" icon="iconfont iconfont-e54a"></node>
-                <node label="图标8" icon="iconfont iconfont-e212"></node>
-                <node label="图标9" icon="iconfont iconfont-e367"></node>
+                <node label="当前告警" icon="iconfont iconfont-e5fd" selected="true"></node>
+                <node label="历史告警" icon="iconfont iconfont-e5f7"></node>
+                <node label="通知" icon="iconfont iconfont-e605"></node>
+                <node label="告警设置" icon="iconfont iconfont-e36f"></node>
             </node>
         `;
         this.data2.fromXML(xmlData);

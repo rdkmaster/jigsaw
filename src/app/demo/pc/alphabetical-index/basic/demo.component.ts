@@ -96,19 +96,19 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
     public zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
 
     ngOnInit() {
+        const mixCountries = [];
         this.countries.forEach(item => {
             this.enCountries.push(item[0]);
             this.zhCountries.push(item[1]);
-            this.mixCountries.push(item[0]);
-            this.mixCountries.push(item[1]);
-            this.mixCountries.push(item[2]);
+            mixCountries.push(item[0]);
+            mixCountries.push(item[1]);
+            mixCountries.push(item[2]);
         })
+        this.mixCountries = mixCountries;
 
         // this.enCountries.sort((a, b) => { return a.localeCompare(b) })
         // this.zhCountries.sort((a, b) => { return a.localeCompare(b) })
         // this.mixCountries.sort((a, b) => { return a.localeCompare(b) })
-
-        console.log(this.sortByFirstLetter(this.mixCountries))
     }
 
     sortByFirstLetter(arr: string[]) {
