@@ -19,7 +19,7 @@ import {
         .context-menu {
             width: 500px;
             height: 100px;
-            background-color: #ddd;
+            background-color: var(--bg-container);
         }
 
         .context-menu p {
