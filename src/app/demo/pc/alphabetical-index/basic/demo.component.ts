@@ -101,11 +101,12 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
             this.zhCountries.push(item[1]);
             this.mixCountries.push(item[0]);
             this.mixCountries.push(item[1]);
+            this.mixCountries.push(item[2]);
         })
 
-        this.enCountries.sort((a, b) => { return a.localeCompare(b) })
+        // this.enCountries.sort((a, b) => { return a.localeCompare(b) })
         // this.zhCountries.sort((a, b) => { return a.localeCompare(b) })
-        this.mixCountries.sort((a, b) => { return a.localeCompare(b) })
+        // this.mixCountries.sort((a, b) => { return a.localeCompare(b) })
 
         console.log(this.sortByFirstLetter(this.mixCountries))
     }

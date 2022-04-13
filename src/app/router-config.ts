@@ -249,7 +249,7 @@ export const routerConfigPC = [
     },
     {
         path: "pc/index",
-        loadChildren: () => import('./demo/pc/index/demo-set.module').then(m => m.IndexDemoModule),
+        loadChildren: () => import('./demo/pc/alphabetical-index/demo-set.module').then(m => m.IndexDemoModule),
     },
     {
         path: "pc/header",
