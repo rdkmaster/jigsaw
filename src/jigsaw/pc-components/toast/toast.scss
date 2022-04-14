@@ -15,7 +15,7 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
             align-items: center;
             width: 32px;
             height: 100%;
-            font-size: $icon-size-med;
+            font-size: $icon-size-status-sm;
         }
 
         .#{$jigsaw-toast}-message {

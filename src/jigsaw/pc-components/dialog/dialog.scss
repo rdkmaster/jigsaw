@@ -40,9 +40,10 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
             .#{$jigsaw-dialog}-close {
                 position: absolute;
                 right: 16px;
-                font-size: 24px;
+                font-size: $icon-size-sm;
                 color: $icon-color-default;
                 cursor: pointer;
+
                 &:hover {
                     color: $brand-hover;
                 }
