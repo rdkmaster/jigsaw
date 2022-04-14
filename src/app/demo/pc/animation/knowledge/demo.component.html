@@ -4,19 +4,26 @@
 
 <jigsaw-header level="1">CSS 动画</jigsaw-header>
 <div class="knowledge-cntr">
-    <qa index="0"></qa>
+    <qa [data]="animationQA[0]"></qa>
     <jigsaw-header>animation 属性</jigsaw-header>
     <points [points]="animationPoints"></points>
-    <tips index="0"></tips>
+    <tips [data]="animationTips[0]"></tips>
 
     <jigsaw-header>@keyframes规则的语法和特性</jigsaw-header>
-    <qa index="1"></qa>
+    <qa [data]="animationQA[1]"></qa>
     <points [points]="keyframePoints"></points>
 
-    <jigsaw-header>动画命名</jigsaw-header>
+    <jigsaw-header>动画命名 animation-name</jigsaw-header>
+    <points [points]="namePoint"></points>
 
-    <jigsaw-header>负延时与即时播放</jigsaw-header>
-    <jigsaw-header>reverse 和 alternate</jigsaw-header>
+    <jigsaw-header>延时 animation-delay</jigsaw-header>
+    <points [points]="delayPoint" [showIndex]="false"></points>
+    <tips [data]="animationTips[1]"></tips>
+    <points [points]="delayPoint2" [showIndex]="false"></points>
+    <qa [data]="animationQA[2]"></qa>
+
+    <jigsaw-header>方向 animation-direction</jigsaw-header>
+    <points [points]="directionPoint"></points>
 
     <jigsaw-header>播放次数</jigsaw-header>
     <jigsaw-header>forwards 和 backwards</jigsaw-header>
@@ -24,3 +31,6 @@
     <jigsaw-header>steps()函数</jigsaw-header>
 </div>
 <div id="example-0">box-0</div>
+<div id="example-1">
+    <i></i><i></i><i></i><i></i>
+</div>
