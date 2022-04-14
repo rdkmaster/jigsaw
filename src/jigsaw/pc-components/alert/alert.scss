@@ -55,7 +55,7 @@ $jigsaw-alert: #{$jigsaw-prefix}-alert;
 
             .content-icon {
                 margin-right: 8px;
-                font-size: 40px;
+                font-size: $icon-size-status-lg;
                 line-height: 1;
 
                 &.center {
