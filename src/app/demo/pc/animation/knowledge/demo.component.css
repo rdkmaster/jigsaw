@@ -44,7 +44,8 @@
     background: var(--success-disabled);
 }
 
-#example-0 {
+#example-0,
+#example-2 {
     position: fixed;
     top: 10vh;
     right: 0;
@@ -58,6 +59,11 @@
     border-radius: 2px;
     font-size: 20px;
     color: #fff;
+}
+
+#example-2 {
+    top: 80vh;
+    transform: rotate(90deg);
 }
 
 #example-1 {
@@ -156,7 +162,55 @@
 }
 
 .example-15 {
+    animation: spin 2s 4;
+    animation-direction: normal;
+}
+
+.example-16 {
+    animation: spin 2s 4;
+    animation-direction: reverse;
+}
+
+.example-17 {
+    animation: spin 2s 4;
+    animation-direction: alternate;
+}
+
+.example-18 {
+    animation: spin 2s 4;
+    animation-direction: alternate-reverse;
+}
+
+.example-19 {
     animation: spin 2s 2;
+}
+
+.example-20 {
+    animation: spin 2s 1.5 both;
+}
+
+.example-21 {
+    animation: spin 2s infinite;
+}
+
+.example-22 {
+    animation: spin 2s;
+    animation-fill-mode: none;
+}
+
+.example-23 {
+    animation: spin 2s;
+    animation-fill-mode: forwards;
+}
+
+.example-24 {
+    animation: spin 2s;
+    animation-fill-mode: backwards;
+}
+
+.example-25 {
+    animation: spin 2s;
+    animation-fill-mode: both;
 }
 
 @keyframes fadeIn {

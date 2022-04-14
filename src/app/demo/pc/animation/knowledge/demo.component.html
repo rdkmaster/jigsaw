@@ -16,17 +16,22 @@
     <jigsaw-header>动画命名 animation-name</jigsaw-header>
     <points [points]="namePoint"></points>
 
-    <jigsaw-header>延时 animation-delay</jigsaw-header>
+    <jigsaw-header>动画延时 animation-delay</jigsaw-header>
     <points [points]="delayPoint" [showIndex]="false"></points>
     <tips [data]="animationTips[1]"></tips>
     <points [points]="delayPoint2" [showIndex]="false"></points>
     <qa [data]="animationQA[2]"></qa>
 
-    <jigsaw-header>方向 animation-direction</jigsaw-header>
+    <jigsaw-header>动画方向 animation-direction</jigsaw-header>
     <points [points]="directionPoint"></points>
 
-    <jigsaw-header>播放次数</jigsaw-header>
-    <jigsaw-header>forwards 和 backwards</jigsaw-header>
+    <jigsaw-header>动画反复 animation-iteration-count</jigsaw-header>
+    <points [points]="iterationPoint"></points>
+    <tips [data]="animationTips[2]"></tips>
+
+    <jigsaw-header>动画填充模式 animation-fill-mode</jigsaw-header>
+    <points [points]="fillPoint"></points>
+
     <jigsaw-header>暂停 和 重启</jigsaw-header>
     <jigsaw-header>steps()函数</jigsaw-header>
 </div>
@@ -34,3 +39,4 @@
 <div id="example-1">
     <i></i><i></i><i></i><i></i>
 </div>
+<div id="example-2">box-1</div>

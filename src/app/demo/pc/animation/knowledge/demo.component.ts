@@ -109,8 +109,50 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
             action: { exampleIndex: 0, classList: ['example-15'] }
         },
         {
-            point: '<code>animation-direction</code>:normal /* 初始值 */',
-            action: { exampleIndex: 0, classList: ['example-15'] }
+            point: '<code>animation-direction</code>:reverse',
+            action: { exampleIndex: 0, classList: ['example-16'] }
+        },
+        {
+            point: '<code>animation-direction</code>:alternate',
+            action: { exampleIndex: 0, classList: ['example-17'] }
+        },
+        {
+            point: '<code>animation-direction</code>:alternate-reverse',
+            action: { exampleIndex: 0, classList: ['example-18'] }
+        },
+    ]
+
+    iterationPoint = [
+        {
+            point: '可以指定动画播放的次数',
+            action: { exampleIndex: 0, classList: ['example-19'] }
+        },
+        {
+            point: '可以无限播放',
+            action: { exampleIndex: 0, classList: ['example-21'] }
+        },
+        {
+            point: '可以用小数',
+            action: { exampleIndex: 0, classList: ['example-20'] }
+        },
+    ]
+
+    fillPoint = [
+        {
+            point: '<code>animation-fill-mode</code>:none /* 初始值 */',
+            action: { exampleIndex: 2, classList: ['example-22'] }
+        },
+        {
+            point: '<code>animation-fill-mode</code>:forwards',
+            action: { exampleIndex: 2, classList: ['example-23'] }
+        },
+        {
+            point: '<code>animation-fill-mode</code>:backwards',
+            action: { exampleIndex: 2, classList: ['example-24'] }
+        },
+        {
+            point: '<code>animation-fill-mode</code>:both',
+            action: { exampleIndex: 2, classList: ['example-25'] }
         },
     ]
 
@@ -139,7 +181,10 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         {
             message: `如果动画是无限循环的，设置的延时不会跟着循环。`,
             action: { exampleIndex: 0, classList: ['example-11'] }
-        }
+        },
+        {
+            message: `属性值不能是负数，但是可以是0。<br/>可以用animation:0来重置animation属性。`
+        },
     ]
 
     // ====================================================================
