@@ -32,11 +32,22 @@
     <jigsaw-header>动画填充模式 animation-fill-mode</jigsaw-header>
     <points [points]="fillPoint"></points>
 
-    <jigsaw-header>暂停 和 重启</jigsaw-header>
-    <jigsaw-header>steps()函数</jigsaw-header>
+    <jigsaw-header>动画播放状态 animation-play-state</jigsaw-header>
+    <points [points]="playPoint"></points>
+
+    <jigsaw-header>动画时间函数 animation-timing-function</jigsaw-header>
+    <points [points]="bezierPoint" [showIndex]="false"></points>
+    <tips [data]="animationTips[3]"></tips>
+    <points [points]="stepPoint" [showIndex]="false"></points>
+    <tips [data]="animationTips[4]"></tips>
+
+    <jigsaw-header>动画渲染原理</jigsaw-header>
+    <jigsaw-header>动画性能</jigsaw-header>
 </div>
+<br><br><br><br><br><br>
 <div id="example-0">box-0</div>
+<div id="example-2">box-1</div>
+<div id="example-3">box-2</div>
 <div id="example-1">
     <i></i><i></i><i></i><i></i>
 </div>
-<div id="example-2">box-1</div>

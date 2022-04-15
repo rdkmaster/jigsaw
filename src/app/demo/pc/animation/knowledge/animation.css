@@ -1,0 +1,315 @@
+.example-1 {
+    animation: fadeIn 3s;
+}
+
+.example-2 {
+    animation: fadeIn 3s, slideInRight 3s;
+}
+
+.example-3 {
+    animation: fadeInBy 3s;
+}
+
+.example-4 {
+    animation: blink 3s;
+}
+
+.example-5 {
+    animation: fadeIn2 3s;
+}
+
+.example-6 {
+    animation: fadeIn3 3s;
+}
+
+.example-7 {
+    animation: blink2 3s;
+}
+
+.example-8 {
+    animation: blink3 3s;
+}
+
+.example-9 {
+    animation: ☺ 3s;
+}
+
+.example-10 {
+    animation: spin 2s;
+    animation-delay: 2s;
+}
+
+.example-11 {
+    animation: spin 2s infinite;
+    animation-delay: 2s;
+}
+
+.example-12 i {
+    animation: scaleUp 4s linear infinite alternate;
+}
+
+.example-12 i:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.example-12 i:nth-child(3) {
+    animation-delay: 2s;
+}
+
+.example-12 i:nth-child(4) {
+    animation-delay: 3s;
+}
+
+.example-13 i {
+    animation: scaleUp 4s linear infinite alternate;
+}
+
+.example-13 i:nth-child(2) {
+    animation-delay: -1s;
+}
+
+.example-13 i:nth-child(3) {
+    animation-delay: -2s;
+}
+
+.example-13 i:nth-child(4) {
+    animation-delay: -3s;
+}
+
+.example-14 {
+    animation: fadeIn 1s linear -.25s
+}
+
+.example-15 {
+    animation: spin 2s 4;
+    animation-direction: normal;
+}
+
+.example-16 {
+    animation: spin 2s 4;
+    animation-direction: reverse;
+}
+
+.example-17 {
+    animation: spin 2s 4;
+    animation-direction: alternate;
+}
+
+.example-18 {
+    animation: spin 2s 4;
+    animation-direction: alternate-reverse;
+}
+
+.example-19 {
+    animation: spin 2s 2;
+}
+
+.example-20 {
+    animation: spin 2s 1.5 both;
+}
+
+.example-21 {
+    animation: spin 2s infinite;
+}
+
+.example-22 {
+    animation: spin 2s;
+    animation-fill-mode: none;
+}
+
+.example-23 {
+    animation: spin 2s;
+    animation-fill-mode: forwards;
+}
+
+.example-24 {
+    animation: spin 2s;
+    animation-fill-mode: backwards;
+}
+
+.example-25 {
+    animation: spin 2s;
+    animation-fill-mode: both;
+}
+
+.example-26 {
+    animation-play-state: paused !important;
+}
+
+.example-27 {
+    animation-play-state: running !important;
+}
+
+.example-28 {
+    animation: spin 2s;
+    animation-timing-function: ease;
+}
+
+.example-29 {
+    animation: spin 2s;
+    animation-timing-function: ease-in;
+}
+
+.example-30 {
+    animation: spin 2s;
+    animation-timing-function: ease-out;
+}
+
+.example-31 {
+    animation: spin 2s;
+    animation-timing-function: ease-in-out;
+}
+
+.example-32 {
+    animation: spin 2s;
+    animation-timing-function: linear;
+}
+
+.example-33 {
+    animation: spin 4s;
+    animation-timing-function: steps(10, end);
+}
+
+.example-34 {
+    animation: spin 2s;
+    animation-timing-function: steps(5, start);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes fadeInBy {
+    100% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    50%,
+    100% {
+        opacity: 0;
+    }
+
+    25%,
+    75% {
+        opacity: 1;
+    }
+}
+
+@keyframes blink2 {
+
+    0% {
+        opacity: 0;
+        top: 10vh;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+
+    75% {
+        opacity: 1;
+        top: 20vh;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink3 {
+
+    0% {
+        opacity: 0;
+        top: 10vh !important;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+
+    75% {
+        opacity: 1;
+        top: 20vh;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes \263a {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn2 {
+    100% {
+        opacity: 1;
+    }
+
+    0% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn3 {
+    100% {
+        top: 50vh;
+        opacity: 0.5;
+    }
+
+    100% {
+        top: 20vh;
+    }
+}
+
+@keyframes scaleUp {
+    to {
+        transform: scaleY(2);
+    }
+}

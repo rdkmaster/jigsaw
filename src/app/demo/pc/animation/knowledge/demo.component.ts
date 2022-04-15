@@ -18,19 +18,19 @@ export abstract class KnowledgeToolsBase {
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"],
+    styleUrls: ["./demo.component.css", "./animation.css"],
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
     animationPoints = [
-        { point: 'animation-name' },
-        { point: 'animation-duration' },
-        { point: 'animation-timing-function' },
-        { point: 'animation-delay' },
-        { point: 'animation-iteration-count' },
-        { point: 'animation-direction' },
-        { point: 'animation-fill-mode' },
-        { point: 'animation-play-state' }
+        { point: '<code>animation-name</code>' },
+        { point: '<code>animation-duration</code>' },
+        { point: '<code>animation-timing-function</code>' },
+        { point: '<code>animation-delay</code>' },
+        { point: '<code>animation-iteration-count</code>' },
+        { point: '<code>animation-direction</code>' },
+        { point: '<code>animation-fill-mode</code>' },
+        { point: '<code>animation-play-state</code>' }
     ]
 
     keyframePoints = [
@@ -156,6 +156,55 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
+    playPoint = [
+        {
+            point: '暂停',
+            action: { exampleIndex: 3, classList: ['example-26'] }
+        },
+        {
+            point: '继续播放',
+            action: { exampleIndex: 3, classList: ['example-27'] }
+        },
+    ]
+
+    bezierPoint = [
+        { point: `<b>贝塞尔曲线</b><a href="https://cubic-bezier.com/#.17,.67,.83,.67">调试网站</a>` },
+        { point: `通用运动函数关键字` },
+        {
+            point: 'ease',
+            action: { exampleIndex: 0, classList: ['example-28'] }
+        },
+        {
+            point: 'ease-in',
+            action: { exampleIndex: 0, classList: ['example-29'] }
+        },
+        {
+            point: 'ease-out',
+            action: { exampleIndex: 0, classList: ['example-30'] }
+        },
+        {
+            point: 'ease-in-out',
+            action: { exampleIndex: 0, classList: ['example-31'] }
+        },
+        { point: `对照` },
+        {
+            point: 'linear',
+            action: { exampleIndex: 0, classList: ['example-32'] }
+        },
+    ]
+
+    stepPoint = [
+        { point: `<b>step()函数</b>` },
+        {
+            point: 'steps(10, end)',
+            action: { exampleIndex: 0, classList: ['example-33'] }
+        },
+        {
+            point: 'steps(5, start)',
+            action: { exampleIndex: 0, classList: ['example-34'] }
+        },
+    ];
+
     animationQA = [
         {
             question: "一个CSS动画效果想要出现，必不可少的基本单元有哪些？",
@@ -185,6 +234,8 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         {
             message: `属性值不能是负数，但是可以是0。<br/>可以用animation:0来重置animation属性。`
         },
+        { message: `<code>cubic-bezier(x1 ,y1, x2, y2)</code><br/>(x1, y1)表示控制点1的坐标<br/>(x2, y2)表示控制点2的坐标` },
+        { message: `<code>step(number, position)</code><br/>number指整数，且必须为整数。<br/>position指关键字属性，可选` },
     ]
 
     // ====================================================================
