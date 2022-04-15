@@ -34,7 +34,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     align-items: center;
                     width: 40px;
                     height: 100%;
-                    margin-right: 10px;
+                    font-size: 18px;
                     text-align: center;
                 }
 
@@ -71,6 +71,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                         width: 14px;
                         height: 100%;
                         margin-right: 10px;
+                        font-size: 18px;
                         text-align: center;
                     }
 
@@ -80,7 +81,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
                     &.#{$jigsaw-nav-menu}-sub-item-selected {
                         background-color: $nav-active;
-                        color: $nav-color-active;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-collapsed {
@@ -101,7 +101,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
             .#{$jigsaw-nav-menu}-item-selected-top {
                 background-color: $nav-active;
-                color: $brand-default;
             }
         }
 
@@ -153,10 +152,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     background: $bg-hover;
                 }
 
-                &.#{$jigsaw-nav-menu}-item-selected-top {
-                    color: $brand-default;
-                }
-
                 .#{$jigsaw-nav-menu}-item-arrow {
                     position: absolute;
                     right: 16px;
@@ -183,16 +178,11 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                 }
             }
 
-            .#{$jigsaw-nav-menu}-item-selected {
-                color: $brand-default;
-            }
-
             .#{$jigsaw-nav-menu}-item-selected-top {
                 background: $bg-body;
             }
 
             .#{$jigsaw-nav-menu}-sub-item-selected {
-                color: $brand-default;
                 background: $bg-body;
             }
         }
@@ -285,7 +275,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
                         &.#{$jigsaw-nav-menu}-sub-item-selected {
                             background-color: #212a33;
-                            color: $font-color-white;
                         }
                     }
                 }
