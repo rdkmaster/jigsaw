@@ -58,7 +58,10 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
             point: '!important无效',
             action: { exampleIndex: 0, classList: ['example-8'] }
         },
-        { point: '优先级最高' },
+        {
+            point: '优先级最高',
+            link: { label: '优先级测试', address: 'https://codepen.io/Chokcoco/pen/PowaXjM' }
+        },
     ]
 
     namePoint = [

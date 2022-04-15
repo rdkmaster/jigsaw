@@ -6,6 +6,7 @@
             <i *ngIf="item.action" class="iconfont iconfont-e6ba" style="margin-left: 8px;"
                 (click)="handleAnimation(item.action.exampleIndex,item.action.classList)">
             </i>
+            <a *ngIf="item.link" style="margin-left: 8px;" [href]="item.link.address" target="_blank" rel="noopener noreferrer">{{item.link.label}}</a>
         </div>
         <div *ngIf="item.subpoint">
             <ul>
