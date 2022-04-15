@@ -275,6 +275,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
                         &.#{$jigsaw-nav-menu}-sub-item-selected {
                             background-color: #212a33;
+                            color: $font-color-white;
                         }
                     }
                 }
