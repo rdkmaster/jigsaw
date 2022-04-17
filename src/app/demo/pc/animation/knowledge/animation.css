@@ -45,7 +45,7 @@
 }
 
 .example-12 i {
-    animation: scaleUp 4s linear infinite alternate;
+    animation: scaleUp 2s linear infinite alternate;
 }
 
 .example-12 i:nth-child(2) {
@@ -60,8 +60,24 @@
     animation-delay: 3s;
 }
 
+.example-12 i:nth-child(5) {
+    animation-delay: 4s;
+}
+
+.example-12 i:nth-child(6) {
+    animation-delay: 5s;
+}
+
+.example-12 i:nth-child(7) {
+    animation-delay: 6s;
+}
+
+.example-12 i:nth-child(8) {
+    animation-delay: 7s;
+}
+
 .example-13 i {
-    animation: scaleUp 4s linear infinite alternate;
+    animation: scaleUp 2s linear infinite alternate;
 }
 
 .example-13 i:nth-child(2) {
@@ -74,6 +90,22 @@
 
 .example-13 i:nth-child(4) {
     animation-delay: -3s;
+}
+
+.example-13 i:nth-child(5) {
+    animation-delay: -4s;
+}
+
+.example-13 i:nth-child(6) {
+    animation-delay: -5s;
+}
+
+.example-13 i:nth-child(7) {
+    animation-delay: -6s;
+}
+
+.example-13 i:nth-child(8) {
+    animation-delay: -7s;
 }
 
 .example-14 {
@@ -310,6 +342,6 @@
 
 @keyframes scaleUp {
     to {
-        transform: scaleY(2);
+        transform: scaleY(1.5);
     }
 }

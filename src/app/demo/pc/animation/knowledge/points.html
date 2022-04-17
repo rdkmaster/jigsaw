@@ -1,4 +1,7 @@
 <ul class="knowledge-tools knowledge-points">
+    <div class="knowledge-title">
+        <ng-content></ng-content>
+    </div>
     <li *ngFor="let item of points; index as i ">
         <div class="flex">
             <span *ngIf="showIndex" style="margin-right: 8px;">{{i+1}}.</span>
@@ -6,11 +9,13 @@
             <i *ngIf="item.action" class="iconfont iconfont-e6ba" style="margin-left: 8px;"
                 (click)="handleAnimation(item.action.exampleIndex,item.action.classList)">
             </i>
-            <a *ngIf="item.link" style="margin-left: 8px;" [href]="item.link.address" target="_blank" rel="noopener noreferrer">{{item.link.label}}</a>
+            <a *ngIf="item.link" style="margin-left: 8px;" [href]="item.link.address" target="_blank"
+                rel="noopener noreferrer">{{item.link.label}}</a>
         </div>
         <div *ngIf="item.subpoint">
-            <ul>
-                <li *ngFor="let subItem of item.subpoint">
+            <ul class="knowledge-subpoints">
+                <li *ngFor="let subItem of item.subpoint index as j">
+                    <span *ngIf="showIndex">({{j+1}}).</span>
                     <span [innerHtml]="subItem"></span>
                 </li>
             </ul>

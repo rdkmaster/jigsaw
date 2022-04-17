@@ -5,20 +5,23 @@
 <jigsaw-header level="1">CSS 动画</jigsaw-header>
 <div class="knowledge-cntr">
     <qa [data]="animationQA[0]"></qa>
-    <jigsaw-header>animation 属性</jigsaw-header>
-    <points [points]="animationPoints"></points>
+    <jigsaw-header>animations属性</jigsaw-header>
+    <points [points]="animationPoints">Animation各属性名</points>
     <tips [data]="animationTips[0]"></tips>
 
-    <jigsaw-header>@keyframes规则的语法和特性</jigsaw-header>
+    <jigsaw-header>@keyframes</jigsaw-header>
     <qa [data]="animationQA[1]"></qa>
-    <points [points]="keyframePoints"></points>
+    <points [points]="keyframePoints">@keyframes规则的语法和特性</points>
 
     <jigsaw-header>动画命名 animation-name</jigsaw-header>
-    <points [points]="namePoint"></points>
+    <points [points]="namePoint">动画命名规则</points>
 
     <jigsaw-header>动画延时 animation-delay</jigsaw-header>
     <points [points]="delayPoint" [showIndex]="false"></points>
     <tips [data]="animationTips[1]"></tips>
+    <div id="example-1">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
     <points [points]="delayPoint2" [showIndex]="false"></points>
     <qa [data]="animationQA[2]"></qa>
 
@@ -30,9 +33,11 @@
     <tips [data]="animationTips[2]"></tips>
 
     <jigsaw-header>动画填充模式 animation-fill-mode</jigsaw-header>
+    <div id="example-2">box-1</div>
     <points [points]="fillPoint"></points>
 
     <jigsaw-header>动画播放状态 animation-play-state</jigsaw-header>
+    <div id="example-3">box-2</div>
     <points [points]="playPoint"></points>
 
     <jigsaw-header>动画时间函数 animation-timing-function</jigsaw-header>
@@ -41,13 +46,13 @@
     <points [points]="stepPoint" [showIndex]="false"></points>
     <tips [data]="animationTips[4]"></tips>
 
-    <jigsaw-header>动画渲染原理</jigsaw-header>
     <jigsaw-header>动画性能</jigsaw-header>
+    <div class="img-perform"></div>
+    <points [points]="performPoints" [showIndex]="false"></points>
+    
+    <jigsaw-header>例子</jigsaw-header>
+    <points [points]="examplePoints" [showIndex]="false"></points>
+
 </div>
 <br><br><br><br><br><br>
 <div id="example-0">box-0</div>
-<div id="example-2">box-1</div>
-<div id="example-3">box-2</div>
-<div id="example-1">
-    <i></i><i></i><i></i><i></i>
-</div>

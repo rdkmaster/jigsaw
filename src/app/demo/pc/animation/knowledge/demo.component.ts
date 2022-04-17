@@ -171,7 +171,10 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
     ]
 
     bezierPoint = [
-        { point: `<b>贝塞尔曲线</b><a href="https://cubic-bezier.com/#.17,.67,.83,.67">调试网站</a>` },
+        {
+            point: `<b>贝塞尔曲线</b>`,
+            link: { label: '调试网站', address: 'https://cubic-bezier.com/#.17,.67,.83,.67"' }
+        },
         { point: `通用运动函数关键字` },
         {
             point: 'ease',
@@ -207,6 +210,38 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
             action: { exampleIndex: 0, classList: ['example-34'] }
         },
     ];
+
+    performPoints = [
+        { point: 'CSS 动画很卡，它的本质其实是在动画过程中，浏览器刷新渲染页面的帧率过低。' },
+        { point: 'Web 动画很大一部分开销在于层的重绘。' },
+        {
+            point: 'CSS 动画（Web 动画同理）优化的第一条准则就是让需要动画的元素生成了自己独立的 GraphicsLayer，强制开始 GPU 加速。',
+            link: { label: '性能优化', address: 'https://www.cnblogs.com/coco1s/p/5439619.html' }
+        }
+    ]
+
+    examplePoints = [
+        {
+            point: '',
+            link: { label: '动画按钮', address: 'https://codepen.io/yuhomyan/pen/OJMejWJ' }
+        },
+        {
+            point: '',
+            link: { label: '动画按钮2', address: 'https://codepen.io/Madbones3/pen/xBVPdq' }
+        },
+        {
+            point: '',
+            link: { label: '文字动画', address: 'https://codepen.io/Sonick/pen/AwXJdM' }
+        },
+        {
+            point: '',
+            link: { label: '星空背景', address: 'https://codepen.io/sarazond/details/LYGbwj' }
+        },
+        {
+            point: '',
+            link: { label: 'loading', address: 'https://codepen.io/t_afif/pen/MWrXvMa' }
+        },
+    ]
 
     animationQA = [
         {

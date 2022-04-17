@@ -1,6 +1,6 @@
 <div class="knowledge-tools knowledge-tips">
+    <div class="knowledge-title">小帖士：</div>
     <div class="flex">
-        <span style="margin-right: 4px;">Tips:</span>
         <span [innerHtml]="data.message"></span>
         <i *ngIf="data.action" class="iconfont iconfont-e6ba" style="margin-left: 8px;"
             (click)="handleAnimation(data.action.exampleIndex,data.action.classList)">
