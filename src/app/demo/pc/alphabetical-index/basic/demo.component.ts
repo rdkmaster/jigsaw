@@ -85,8 +85,6 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
         ["pakistan", "巴基斯坦", "pak"],
     ]
 
-    public zhCountries = [];
-    public enCountries = [];
     public mixCountries = [];
     public zhIndex = [];
     public enIndex = [];
@@ -98,46 +96,13 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
     ngOnInit() {
         const mixCountries = [];
         this.countries.forEach(item => {
-            this.enCountries.push(item[0]);
-            this.zhCountries.push(item[1]);
             mixCountries.push(item[0]);
             mixCountries.push(item[1]);
             mixCountries.push(item[2]);
         })
         this.mixCountries = mixCountries;
-
-        // this.enCountries.sort((a, b) => { return a.localeCompare(b) })
-        // this.zhCountries.sort((a, b) => { return a.localeCompare(b) })
-        // this.mixCountries.sort((a, b) => { return a.localeCompare(b) })
     }
-
-    sortByFirstLetter(arr: string[]) {
-        if (!String.prototype.localeCompare) {
-            return null;
-        }
-
-        const result = [];
-        let group;
-
-        this.letters.forEach((letter, i) => {
-            group = { letter: letter, data: [] }
-            arr.forEach(item => {
-                const word = item.trim().toLowerCase();
-                const reg = new RegExp(`^${letter}`);
-                if (reg.test(word)) {
-                    group.data.push(item);
-                } else if ((!this.zhLetters[i - 1] || this.zhLetters[i - 1].localeCompare(word) <= 0) && word.localeCompare(this.zhLetters[i]) == -1) {
-                    group.data.push(item);
-                }
-            })
-            if (group.data.length) {
-                result.push(group);
-                group.data.sort((a, b) => { return a.localeCompare(b) })
-            }
-        })
-        return result;
-    }
-
+    
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -212,7 +212,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'color-select', colorSelectConfig);
         this._addRouterConfig(routerConfig, 'badge', badgeConfig);
         this._addRouterConfig(routerConfig, 'time-section', timeSectionConfig);
-        this._addRouterConfig(routerConfig, 'index', indexConfig);
+        this._addRouterConfig(routerConfig, 'alphabetical-index', indexConfig);
         this._addRouterConfig(routerConfig, 'header', headerConfig);
         this._addRouterConfig(routerConfig, 'theme', themeConfig);
         this._addRouterConfig(routerConfig, 'process-status', processStatusConfig);
