@@ -30,7 +30,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10 | 15 | 30;
-export type TimePopupValue = { mode: TimeSelectMode | 'none', value: string, list: TimePopupItem[], showNowButton: boolean, theme: string };
+export type TimePopupValue = { mode: TimeSelectMode | 'none', value: string, list: TimePopupItem[], showNowButton: boolean };
 export type TimePopupItem = { value: string, isSelected?: boolean, disabled?: boolean };
 
 type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_second | TimeGr.time_hour;
@@ -680,8 +680,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             });
         }
         const showNowButton = gr == TimeGr.time;
-        const theme = this.theme;
-        return {mode, value, list, showNowButton, theme}
+        return {mode, value, list, showNowButton}
     }
 
     public writeValue(newValue: string): void {
@@ -771,7 +770,6 @@ export class JigsawTimePopup extends AbstractJigsawComponent implements IPopupab
         Promise.resolve().then(() => {
             this._value = value;
             this._updateList(this.initData);
-            this.theme = this.initData.theme;
             this._cdr.markForCheck();
         });
     }

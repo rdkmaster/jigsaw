@@ -100,7 +100,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public set theme(theme: 'light' | 'dark') {
         this._wingsTheme(theme);
-        this._$options.theme = theme;
     }
 
     /**
@@ -226,7 +225,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     /**
      * @internal
      */
-    public _$options: PopupOptions = { className: "jigsaw-combo-select-popup-host" };
+    public _$options: PopupOptions = {};
 
     private _showBorder: boolean = true;
 

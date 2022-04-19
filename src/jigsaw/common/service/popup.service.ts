@@ -16,10 +16,8 @@ import {Subscription} from "rxjs";
 import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper, InternalUtils} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
-import {IDynamicInstantiatable, AbstractJigsawComponent, WingsTheme} from "../common";
-
-import {JigsawTheme} from "../core/theming/theme";
-import { setOptions } from 'marked';
+import {IDynamicInstantiatable} from "../common";
+import { JigsawTheme } from '../core/theming/theme';
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -139,14 +137,6 @@ export class PopupOptions {
      * borderRadius表示弹框的边框颜色
      */
     borderColor?: string;
-    /**
-     * theme表示弹框的主题
-     */
-    theme?: 'light' | 'dark';
-    /**
-     * className表示弹框的类名
-     */
-    className?: string | string[];
 }
 
 export type AbsolutePosition =
@@ -331,6 +321,14 @@ export class PopupService {
         this._beforePopup(options, element, disposer);
         this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             this._setPopup(options, element);
+            // 给弹出设置皮肤
+            let tagName = element.tagName.toLowerCase();
+            if ((!options || !options.useCustomizedBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
+                const backgroundColor = JigsawTheme.getPopupBackgroundColor();
+                if (backgroundColor) {
+                    InternalUtils.renderer.setStyle(element, 'background', backgroundColor);
+                }
+            }
         });
         const result = {
             instance: popupRef['instance'], element: element, dispose: disposer,
@@ -467,8 +465,6 @@ export class PopupService {
             this._setBackground(options, element);
             this.setPosition(options, element);
             this._setShowAnimate(options, element);
-            this._setPopTheme(options, element);
-            this._setClassName(options, element);
         }
     }
 
@@ -607,26 +603,6 @@ export class PopupService {
             this._eventHelper.del(element, 'animationend', removeElementListen);
         });
         this._eventHelper.put(element, 'animationend', removeElementListen);
-    }
-
-    private _setPopTheme(options: PopupOptions, element: HTMLElement){
-        if (options.theme) {
-            InternalUtils.renderer.setAttribute(element, "data-theme", options.theme);
-        }
-    }
-
-    private _setClassName(options: PopupOptions, element: HTMLElement) {
-        let className = options.className;
-        if (className) {
-            if (typeof (className) == 'string') {
-                className = [className]
-            }
-
-            className.forEach(name => {
-                InternalUtils.renderer.addClass(element, name);
-            })
-        }
-        InternalUtils.renderer.addClass(element, "jigsaw-popup-host");
     }
 
     private _setHideAnimate(options: PopupOptions, element: HTMLElement, cb: () => void) {
