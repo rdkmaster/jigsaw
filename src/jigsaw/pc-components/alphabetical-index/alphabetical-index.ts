@@ -36,7 +36,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
     public set data(value: alphabeticalIndexData) {
         this._data = value;
         this._$sortedData = this._sortByFirstLetter(this._data);
-        console.log(this._$sortedData)
     }
 
     /**
@@ -44,7 +43,8 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
      */
     public _$sortedData: string[] | ArrayCollection<string>;
 
-    public _$letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z', '#'];
+    public _$enLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'];
+    public _zhToEnletters = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
     private _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
 
     @ViewChildren('indexTitle', { read: ElementRef })
@@ -58,29 +58,33 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
             return null;
         }
 
+        const letterGroup = {}
         const result = [];
-        const letters = [...this._$letters];
-        letters.unshift(letters.pop());
-        let group: { letter: string, data: string[] };
-
-        letters.forEach((letter, i) => {
-            group = { letter: letter, data: [] }
-            arr.forEach(item => {
-                const word = item.trim().toUpperCase();
-                const reg = new RegExp(`^${letter}`);
-                if (reg.test(word)) {
-                    group.data.push(item);
-                } else if (!/^[A-Z#]/.test(word) && (!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word) <= 0) && word.localeCompare(this._zhLetters[i]) == -1) {
-                    group.data.push(item);
-                }
-            })
-            if (group.data.length) {
-                group.data.sort((a: string, b: string) => { return a.localeCompare(b) })
-            }
-            result.push(group);
+        this._$enLetters.forEach(letter => {
+            letterGroup[letter] = [];
         })
 
-        result.push(result.shift());
+        arr.forEach(item => {
+            const word = item.trim().toUpperCase();
+            if (/^[A-Z#]/.test(word)) {
+                const firstLetter = word.substr(0, 1);
+                letterGroup[firstLetter].push(item);
+            } else {
+                this._zhToEnletters.forEach((letter, i) => {
+                    if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word) <= 0) && word.localeCompare(this._zhLetters[i]) == -1) {
+                        letterGroup[letter].push(item);
+                    }
+                })
+            }
+        })
+
+        this._$enLetters.forEach(letter => {
+            if (letterGroup[letter].length) {
+                letterGroup[letter].sort((a: string, b: string) => { return a.localeCompare(b) })
+            }
+            result.push({ letter: letter, data: letterGroup[letter] })
+        })
+
         return result;
     }
 
