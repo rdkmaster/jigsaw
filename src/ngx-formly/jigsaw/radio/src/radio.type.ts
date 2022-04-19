@@ -17,6 +17,9 @@ import {JigsawRadiosLite} from "@rdkmaster/jigsaw";
         ></jigsaw-radios-lite>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[style.display]': "'flex'",
+    },
 })
 export class FormlyFieldRadio extends FormlyFieldType<JigsawRadiosLite> {
     defaultOptions = {

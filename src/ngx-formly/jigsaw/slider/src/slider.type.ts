@@ -20,6 +20,9 @@ import {JigsawSlider} from "@rdkmaster/jigsaw";
         ></jigsaw-slider>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[style.display]': "'flex'",
+    },
 })
 export class FormlyFieldSlider extends FormlyFieldType<JigsawSlider> {
     defaultOptions = {
