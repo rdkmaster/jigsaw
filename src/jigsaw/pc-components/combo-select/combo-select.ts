@@ -88,20 +88,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     @Output() public valueChange = new EventEmitter<any[]>();
 
-    protected _theme: 'light' | 'dark';
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get theme(): 'light' | 'dark' {
-        return this._theme;
-    }
-
-    public set theme(theme: 'light' | 'dark') {
-        this._wingsTheme(theme);
-    }
-
     /**
      * @NoMarkForCheckRequired
      */
