@@ -14,7 +14,6 @@ export class JigsawStepBasicDemoComponent {
         for (let i = 0; i < 6; i++) {
             this.data.push(this._createStepData());
         }
-        console.log(this.data);
     }
 
     private _createStepData() {

@@ -9,6 +9,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     cursor: pointer;
     box-sizing: border-box;
     background: $bg-body;
+    color: $font-color-default;
 
     &:hover {
         background: $bg-hover;

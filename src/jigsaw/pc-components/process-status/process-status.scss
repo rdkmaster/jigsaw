@@ -32,13 +32,13 @@ $process-status-item-prefix-cls: #{$jigsaw-prefix}-process-status-item;
             }
             .#{$jigsaw-prefix}-step-title {
                 font-size: $font-size-lg;
-                color: #222;
+                color: $font-color-heading;
                 line-height: $height-lg;
             }
 
             .#{$jigsaw-prefix}-sub-title {
                 font-size: $font-size-base;
-                color: #999;
+                color: $font-color-disabled;
                 margin-top: 5px;
             }
             .#{$jigsaw-prefix}-step-title,
