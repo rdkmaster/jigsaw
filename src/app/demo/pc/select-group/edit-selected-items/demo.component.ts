@@ -36,6 +36,10 @@ export class SelectGroupEditResultDemoComponent {
         this.selectedOption.refresh();
     }
 
+    clearSelectedItems() {
+        this.selectedOption = undefined;
+    }
+
     index = 0;
 
     changeData() {

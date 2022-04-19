@@ -5,7 +5,7 @@ import {FieldWrapper} from '@ngx-formly/core';
     selector: 'formly-wrapper-form-field',
     template: `
         <div class="jigsaw-formly-field-wrapper" [title]="to.title ? to.title : ''"
-             [ngStyle]="{height: to.fixHeightInner ? '100%' : 'calc(100% - 16px)',
+             [ngStyle]="{height: to.fixHeightInner == 'auto' ? 'auto' : (to.fixHeightInner ? '100%' : 'calc(100% - 16px)'),
                         'margin-bottom': to.fixMarginBottom ? to.fixMarginBottom : '16px'}">
             <div class="jigsaw-formly-field-wrapper-label" *ngIf="!to.hideLabel" [attr.for]="id">
                 <span [trustedHtml]="to.label" class="jigsaw-formly-field-wrapper-label-content"></span>

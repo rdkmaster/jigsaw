@@ -18,6 +18,7 @@ import {FormlyJigsawTableModule} from "@ngx-formly/jigsaw/table";
 import {FormlyTemplateModule} from "@ngx-formly/jigsaw/template";
 import {FormlyJigsawHeaderModule} from "@ngx-formly/jigsaw/header";
 import {FormlyJigsawUploadModule} from "@ngx-formly/jigsaw/upload";
+import {FormlyFieldRepeatModule} from '@ngx-formly/jigsaw/repeat';
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import {FormlyJigsawUploadModule} from "@ngx-formly/jigsaw/upload";
         FormlyTemplateModule,
         FormlyJigsawHeaderModule,
         FormlyJigsawUploadModule,
+        FormlyFieldRepeatModule,
     ]
 })
 export class FormlyJigsawModule {

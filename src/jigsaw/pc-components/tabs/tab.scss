@@ -116,13 +116,12 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                         position: relative;
                         padding: 8px 20px;
                         height: 100%;
-                        margin-right: 24px;
                         transition: color 0.3s $ease-in-out;
                         cursor: pointer;
                         text-decoration: none;
 
                         &:hover {
-                            color: $brand-hover;
+                            background: $brand-lighten;
                         }
 
                         &:active {
@@ -303,6 +302,10 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                             &.#{$jigsaw-tabs}-tab-disabled {
                                 background: $bg-disabled;
                                 color: $font-color-disabled-spec;
+                            }
+
+                            &:hover {
+                                background: $brand-lighten;
                             }
                         }
                     }
