@@ -120,7 +120,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                         cursor: pointer;
                         text-decoration: none;
 
-                        &:hover {
+                        &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
                             background: $brand-lighten;
                         }
 
@@ -304,7 +304,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                                 color: $font-color-disabled-spec;
                             }
 
-                            &:hover {
+                            &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
                                 background: $brand-lighten;
                             }
                         }
