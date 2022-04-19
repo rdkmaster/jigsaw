@@ -6,7 +6,10 @@ import {
     ViewChildren,
     ElementRef,
     QueryList,
-    ViewChild
+    ViewChild,
+    AfterViewInit,
+    Output,
+    EventEmitter
 } from "@angular/core";
 import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
 import { CommonModule } from "@angular/common";
@@ -20,12 +23,13 @@ export type alphabeticalIndexData = string[] | ArrayCollection<string>;
     selector: "jigsaw-alphabetical-index,j-alphabetical-index",
     templateUrl: "alphabetical-index.html",
     host: {
+        '[style.width]': 'width',
         "[attr.data-theme]": "theme",
         "[class.jigsaw-alphabetical-index-host]": "true",
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
+export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements AfterViewInit {
     _data: alphabeticalIndexData
 
     @Input()
@@ -37,6 +41,14 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
         this._data = value;
         this._$sortedData = this._sortByFirstLetter(this._data);
     }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public selectedItems = new ArrayCollection<any>();
+
+    @Output() public selectedItemsChange = new EventEmitter<any[]>();
 
     /**
      * @internal 
@@ -52,6 +64,12 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
 
     @ViewChild('dataList', { read: ElementRef })
     private _dataElementRefs: ElementRef;
+
+    @ViewChild('indexList', { read: ElementRef })
+    private _indexElementRefs: ElementRef;
+
+    @ViewChildren('indexListItem', { read: ElementRef })
+    private _indexItemElementRefs: QueryList<ElementRef>;
 
     private _sortByFirstLetter(arr: string[]): string[] {
         if (!String.prototype.localeCompare) {
@@ -90,6 +108,28 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent {
 
     public _$jumpTo(i: number) {
         this._dataElementRefs.nativeElement.scrollTop = this._titleElementRefs.toArray()[i].nativeElement.offsetTop;
+    }
+
+    private _setCurrent(i: number) {
+        this._indexElementRefs.nativeElement.querySelector(".index-item-active").classList.remove('index-item-active');
+        this._indexItemElementRefs.toArray()[i - 1].nativeElement.classList.add('index-item-active');
+    }
+
+    public _$selectedItemsChange($event) {
+        this.selectedItemsChange.emit($event);
+    }
+
+    ngAfterViewInit() {
+        const dataList = this._dataElementRefs.nativeElement;
+        dataList.onscroll = () => {
+            for (let i = 0; i < 27; i++) {
+                if (this._titleElementRefs.toArray()[i].nativeElement.offsetTop - 180 > dataList.scrollTop) {
+                    this._setCurrent(i);
+                    return
+                }
+            }
+        }
+        this._indexItemElementRefs.toArray()[0].nativeElement.classList.add('index-item-active');
     }
 }
 

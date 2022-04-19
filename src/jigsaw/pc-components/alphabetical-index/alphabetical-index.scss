@@ -4,39 +4,52 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 .#{$jigsaw-alphabetical-index}-host {
     position: relative;
     display: flex;
-    width: 200px;
+    min-width: 200px;
     height: 448px;
     padding: 8px 0;
 
-    .#{$jigsaw-alphabetical-index}-title {
-        padding-left: 8px;
-        font-size: $icon-size-med;
-        font-weight: bold;
-    }
+    .#{$jigsaw-alphabetical-index} {
+        width: 100%;
 
-    .#{$jigsaw-list}-host {
-        width: 180px;
-        height: 100%;
-        border: none;
-    }
+        .#{$jigsaw-alphabetical-index}-title {
+            padding-left: 8px;
+            font-size: $icon-size-med;
+            font-weight: bold;
 
-    .#{$jigsaw-alphabetical-index}-panel {
-        position: absolute;
-        top: 0;
-        right: 0;
-        display: flex;
-        flex-direction: column;
+            &.#{$jigsaw-alphabetical-index}-title-empty {
+                padding-bottom: 32px;
+            }
+        }
 
-        li {
+        .#{$jigsaw-list}-host {
+            width: 90%;
+            min-width: 180px;
+            height: 100%;
+            border: none;
+        }
+
+        .#{$jigsaw-alphabetical-index}-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
             display: flex;
-            justify-content: center;
-            height: 16px;
-            font-size: $font-size-base;
-            color: $brand-default;
-            cursor: pointer;
+            flex-direction: column;
 
-            &:hover {
-                font-weight: bold;
+            li {
+                display: flex;
+                justify-content: center;
+                height: 16px;
+                font-size: $font-size-base;
+                color: $brand-default;
+                cursor: pointer;
+
+                &:hover {
+                    font-weight: bold;
+                }
+
+                &.index-item-active {
+                    font-weight: bold;
+                }
             }
         }
     }
