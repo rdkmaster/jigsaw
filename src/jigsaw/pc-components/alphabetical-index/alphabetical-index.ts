@@ -107,6 +107,10 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     public _$jumpTo(i: number) {
+        console.log(this._dataElementRefs.nativeElement.scrollTop)
+        console.log(i)
+        console.log(this._titleElementRefs.toArray()[i])
+        console.log(this._titleElementRefs.toArray()[i].nativeElement.offsetTop)
         this._dataElementRefs.nativeElement.scrollTop = this._titleElementRefs.toArray()[i].nativeElement.offsetTop;
     }
 
@@ -123,7 +127,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         const dataList = this._dataElementRefs.nativeElement;
         dataList.onscroll = () => {
             for (let i = 0; i < 27; i++) {
-                if (this._titleElementRefs.toArray()[i].nativeElement.offsetTop - 180 > dataList.scrollTop) {
+                if (this._titleElementRefs.toArray()[i].nativeElement.offsetTop > dataList.scrollTop) {
                     this._setCurrent(i);
                     return
                 }

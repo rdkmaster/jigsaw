@@ -12,8 +12,17 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
     .#{$jigsaw-alphabetical-index} {
         width: 100%;
 
+        .#{$jigsaw-alphabetical-index}-group {
+            position: relative;
+        }
+
         .#{$jigsaw-alphabetical-index}-title {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            width: 80%;
             padding-left: 8px;
+            background: $bg-body;
             font-size: $icon-size-med;
             font-weight: bold;
 
@@ -23,8 +32,8 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
         }
 
         .#{$jigsaw-list}-host {
-            width: 90%;
-            min-width: 180px;
+            width: 100%;
+            min-width: 200px;
             height: 100%;
             border: none;
         }
@@ -32,7 +41,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
         .#{$jigsaw-alphabetical-index}-panel {
             position: absolute;
             top: 0;
-            right: 0;
+            right: 16px;
             display: flex;
             flex-direction: column;
 
