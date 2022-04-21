@@ -1,7 +1,7 @@
 import { AbstractJigsawComponent, WingsTheme } from 'jigsaw/common/common';
 import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JigsawAlphabeticalIndexModule, alphabeticalIndexData } from './alphabetical-index';
+import { JigsawAlphabeticalIndexModule } from './alphabetical-index';
 import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
 import { DropDownTrigger } from 'jigsaw/common/directive/float/float';
 import { JigsawComboSelectModule } from '../combo-select';
@@ -20,14 +20,14 @@ import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
-    private _data: alphabeticalIndexData;
+    private _data: ArrayCollection<string>;
 
     @Input()
     public get data() {
         return this._data;
     }
 
-    public set data(value: alphabeticalIndexData) {
+    public set data(value: ArrayCollection<string>) {
         this._data = value;
     }
 

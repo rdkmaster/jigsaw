@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ArrayCollection } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -86,23 +87,61 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
     ]
 
     public mixCountries = [];
-    public zhIndex = [];
-    public enIndex = [];
-    public mixIndex = [];
+    public enCountries = [];
+    public zhCountries = [];
 
-    public letters = ['#', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'w', 'x', 'y', 'z'];
-    public zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
+    data;
+
+    changeDataType(type: string) {
+        switch (type) {
+            case "en":
+                this.data = this.enCountries
+                break;
+            case "zh":
+                this.data = this.zhCountries
+                break;
+            case "mix":
+                this.data = this.mixCountries
+                break;
+            case "blank":
+                this.data = new ArrayCollection([])
+                break;
+            default:
+                this.data = this.enCountries
+        }
+    }
+
+    inputStr: string;
+
+    addData() {
+        if (this.inputStr) {
+            this.data.push(this.inputStr);
+            this.inputStr = '';
+            this.data.refresh();
+        }
+    }
 
     ngOnInit() {
         const mixCountries = [];
+        const enCountries = [];
+        const zhCountries = [];
         this.countries.forEach(item => {
+            zhCountries.push(item[1]);
+
+            enCountries.push(item[0]);
+            enCountries.push(item[2]);
+
             mixCountries.push(item[0]);
             mixCountries.push(item[1]);
             mixCountries.push(item[2]);
         })
         this.mixCountries = mixCountries;
+        this.enCountries = enCountries;
+        this.zhCountries = zhCountries;
+
+        this.data = this.enCountries;
     }
-    
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

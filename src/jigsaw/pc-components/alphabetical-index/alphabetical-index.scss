@@ -20,12 +20,11 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
         .#{$jigsaw-alphabetical-index}-title {
             position: sticky;
             top: 0;
-            z-index: 1;
-            width: 80%;
             padding-left: 8px;
             background: $bg-body;
             font-size: $icon-size-med;
             font-weight: bold;
+            z-index: 1;
         }
 
         .#{$jigsaw-list}-host {
@@ -41,6 +40,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             right: 16px;
             display: flex;
             flex-direction: column;
+            z-index: 2;
 
             li {
                 display: flex;
@@ -58,6 +58,11 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                     font-weight: bold;
                 }
             }
+        }
+
+        .ps__rail-y,
+        .ps__rail-x {
+            z-index: 2;
         }
     }
 }

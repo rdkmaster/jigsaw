@@ -1,0 +1,9 @@
+.demo-setting .demo-setting-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.demo-setting .demo-setting-item>* {
+    margin-right: 4px;
+}
