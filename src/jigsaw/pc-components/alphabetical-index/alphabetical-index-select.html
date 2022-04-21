@@ -1,8 +1,8 @@
-<jigsaw-combo-select width="100%" [theme]="theme" [autoWidth]="!optionWidth" [(value)]="_$selectedItems"
-    [clearable]="clearable" [valid]="valid" [disabled]="disabled" [placeholder]="placeholder"
-    [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [autoClose]="!multipleSelect"
-    (openChange)="_$onComboOpenChange($event)" (clear)="_$handleClearable()" (remove)="_$onTagRemove($event)">
+<jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="value" [placeholder]="placeholder" [disabled]="disabled"
+    [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
+    [textTag]="false">
     <ng-template>
-        <jigsaw-alphabetical-index></jigsaw-alphabetical-index>
+        <jigsaw-alphabetical-index [data]="data" [(value)]="value" (valueChange)="_$valueChange($event)">
+        </jigsaw-alphabetical-index>
     </ng-template>
 </jigsaw-combo-select>

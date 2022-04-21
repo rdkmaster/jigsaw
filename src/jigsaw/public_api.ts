@@ -82,6 +82,7 @@ export * from "./pc-components/textarea/index";
 export * from "./pc-components/transfer/transfer";
 export * from "./pc-components/transfer/renderer/transfer-renderer";
 export * from "./pc-components/alphabetical-index/alphabetical-index";
+export * from "./pc-components/alphabetical-index/alphabetical-index-select";
 export * from "./pc-components/header/header";
 export * from "./pc-components/tree/tree-ext";
 export * from "./pc-components/tree/ztree-types";

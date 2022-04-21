@@ -16,11 +16,12 @@ import { CommonModule } from "@angular/common";
 import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
 import { JigsawListModule } from '../list-and-tile/list';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
 
 export type alphabeticalIndexData = string[] | ArrayCollection<string>;
 @WingsTheme('alphabetical-index.scss')
 @Component({
-    selector: "jigsaw-alphabetical-index,j-alphabetical-index",
+    selector: "jigsaw-alphabetical-index, j-alphabetical-index",
     templateUrl: "alphabetical-index.html",
     host: {
         '[style.width]': 'width',
@@ -30,7 +31,7 @@ export type alphabeticalIndexData = string[] | ArrayCollection<string>;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements AfterViewInit {
-    _data: alphabeticalIndexData
+    _data: alphabeticalIndexData;
 
     @Input()
     public get data() {
@@ -42,13 +43,27 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         this._$sortedData = this._sortByFirstLetter(this._data);
     }
 
+    private _value: any;
+
     /**
+     * 选择的结果，数组形式
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public selectedItems = new ArrayCollection<any>();
+    public get value(): ArrayCollection<string> {
+        return this._value;
+    }
 
-    @Output() public selectedItemsChange = new EventEmitter<any[]>();
+    public set value(newValue: ArrayCollection<string>) {
+        if (CommonUtils.compareValue(this._value, newValue)) {
+            return;
+        }
+        this._value = newValue;
+    }
+
+    @Output()
+    public valueChange = new EventEmitter<any[]>();
 
     /**
      * @internal 
@@ -107,10 +122,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     public _$jumpTo(i: number) {
-        console.log(this._dataElementRefs.nativeElement.scrollTop)
-        console.log(i)
-        console.log(this._titleElementRefs.toArray()[i])
-        console.log(this._titleElementRefs.toArray()[i].nativeElement.offsetTop)
         this._dataElementRefs.nativeElement.scrollTop = this._titleElementRefs.toArray()[i].nativeElement.offsetTop;
     }
 
@@ -120,7 +131,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     public _$selectedItemsChange($event) {
-        this.selectedItemsChange.emit($event);
+        this.valueChange.emit($event);
     }
 
     ngAfterViewInit() {

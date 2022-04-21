@@ -14,6 +14,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
         .#{$jigsaw-alphabetical-index}-group {
             position: relative;
+            padding-bottom: 16px;
         }
 
         .#{$jigsaw-alphabetical-index}-title {
@@ -25,10 +26,6 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             background: $bg-body;
             font-size: $icon-size-med;
             font-weight: bold;
-
-            &.#{$jigsaw-alphabetical-index}-title-empty {
-                padding-bottom: 32px;
-            }
         }
 
         .#{$jigsaw-list}-host {

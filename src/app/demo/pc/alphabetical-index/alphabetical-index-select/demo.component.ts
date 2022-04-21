@@ -87,6 +87,10 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
 
     public mixCountries = [];
 
+    valueChange($event) {
+        console.log($event)
+    }
+
     ngOnInit() {
         const mixCountries = [];
         this.countries.forEach(item => {
@@ -96,7 +100,7 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
         })
         this.mixCountries = mixCountries;
     }
-    
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
