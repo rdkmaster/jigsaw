@@ -128,7 +128,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
                 letterGroup[firstLetter].push(item);
             } else {
                 this._zhToEnletters.forEach((letter, i) => {
-                    if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word) <= 0) && word.localeCompare(this._zhLetters[i]) == -1) {
+                    if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word, 'zh-CN') <= 0) && word.localeCompare(this._zhLetters[i], 'zh-CN') == -1) {
                         letterGroup[letter].push(item);
                     }
                 })

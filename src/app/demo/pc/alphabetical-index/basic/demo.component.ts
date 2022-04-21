@@ -86,9 +86,9 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
         ["pakistan", "巴基斯坦", "pak"],
     ]
 
-    public mixCountries = [];
-    public enCountries = [];
-    public zhCountries = [];
+    public mixCountries;
+    public enCountries;
+    public zhCountries;
 
     data;
 
@@ -135,9 +135,9 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
             mixCountries.push(item[1]);
             mixCountries.push(item[2]);
         })
-        this.mixCountries = mixCountries;
-        this.enCountries = enCountries;
-        this.zhCountries = zhCountries;
+        this.mixCountries = new ArrayCollection(mixCountries);
+        this.enCountries = new ArrayCollection(enCountries);
+        this.zhCountries = new ArrayCollection(zhCountries);
 
         this.data = this.enCountries;
     }
