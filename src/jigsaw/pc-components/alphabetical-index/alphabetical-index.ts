@@ -117,6 +117,27 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             letterGroup[letter] = [];
         })
 
+        // arr.forEach(item => {
+        //     if (CommonUtils.isUndefined(item)) {
+        //         return;
+        //     }
+        //     item += '';
+        //     const word = item.trim().toUpperCase();
+        //     if (/^[A-Z#]/.test(word)) {
+        //         const firstLetter = word.substr(0, 1);
+        //         letterGroup[firstLetter].push(item);
+        //     } else {
+        //         console.log(this.getFirstLetter(word))
+        //         this._zhToEnletters.forEach((letter, i) => {
+        //             if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word, 'zh-CN') <= 0) && word.localeCompare(this._zhLetters[i], 'zh-CN') == -1) {
+        //                 letterGroup[letter].push(item);
+        //             }
+        //         })
+        //     }
+        // })
+
+
+        /* 使用字典 */
         arr.forEach(item => {
             if (CommonUtils.isUndefined(item)) {
                 return;
@@ -127,11 +148,13 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
                 const firstLetter = word.substr(0, 1);
                 letterGroup[firstLetter].push(item);
             } else {
-                this._zhToEnletters.forEach((letter, i) => {
-                    if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word, 'zh-CN') <= 0) && word.localeCompare(this._zhLetters[i], 'zh-CN') == -1) {
-                        letterGroup[letter].push(item);
-                    }
-                })
+                const res = this.getFirstLetter(word);
+                if (/^[A-Z#]/.test(res)) {
+                    const firstLetter = res.substr(0, 1);
+                    letterGroup[firstLetter].push(item);
+                } else {
+                    letterGroup['#'].push(item);
+                }
             }
         })
 
@@ -162,6 +185,20 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
 
     public _$selectedItemsChange($event) {
         this.valueChange.emit($event);
+    }
+
+    public getFirstLetter(str): any {
+        if (!str || /^ +$/g.test(str)) return "";
+        var result = [];
+        for (var i = 0; i < str.length; i++) {
+            var unicode = str.charCodeAt(i);
+            var ch = str.charAt(i);
+            if (unicode >= 19968 && unicode <= 40869) {
+                ch = window['pinyin_dict_firstletter'].all.charAt(unicode - 19968);
+            }
+            result.push(ch);
+        }
+        return result.join("");
     }
 
     ngAfterViewInit() {
