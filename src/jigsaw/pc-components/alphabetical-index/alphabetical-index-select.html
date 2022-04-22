@@ -2,7 +2,8 @@
     [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
     [textTag]="false">
     <ng-template>
-        <jigsaw-alphabetical-index [data]="data" [(value)]="value" (valueChange)="_$valueChange($event)">
+        <jigsaw-alphabetical-index [data]="data" [(value)]="value" [useDict]="useDict"
+            (valueChange)="_$valueChange($event)">
         </jigsaw-alphabetical-index>
     </ng-template>
 </jigsaw-combo-select>

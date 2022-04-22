@@ -2,6 +2,29 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<div class="demo-container">
-    <jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" (valueChange)="valueChange($event)"></jigsaw-alphabetical-index-select>
-</div>
+<jigsaw-header level="1">jigsaw-alphabetical-index-select</jigsaw-header>
+<jigsaw-header>基本用法</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [useDict]="true">
+</jigsaw-alphabetical-index-select>
+
+<jigsaw-header>disabled</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [useDict]="true" [disabled]="true">
+</jigsaw-alphabetical-index-select>
+
+<jigsaw-header>valid</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [useDict]="true" [valid]="false">
+</jigsaw-alphabetical-index-select>
+
+<jigsaw-header>placeholder</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [useDict]="true" placeholder="请选择">
+</jigsaw-alphabetical-index-select>
+
+<jigsaw-header>openTrigger & closeTrigger</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [useDict]="true" openTrigger="click"
+    closeTrigger="click" (valueChange)="valueChange($event)">
+</jigsaw-alphabetical-index-select>
+
+<jigsaw-header>valueChange</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [useDict]="true"
+    (valueChange)="valueChange($event)">
+</jigsaw-alphabetical-index-select>

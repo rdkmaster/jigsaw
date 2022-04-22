@@ -16,11 +16,11 @@ import {
 } from "@angular/core";
 import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
 import { CommonModule } from "@angular/common";
-import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
+import { ArrayCollection } from '../../common/core/data/array-collection';
 import { JigsawListModule } from '../list-and-tile/list';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { CommonUtils, CallbackRemoval } from 'jigsaw/common/core/utils/common-utils';
-import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
+import { CommonUtils, CallbackRemoval } from '../../common/core/utils/common-utils';
+import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 @WingsTheme('alphabetical-index.scss')
 @Component({
     selector: "jigsaw-alphabetical-index, j-alphabetical-index",
@@ -50,14 +50,41 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             this._data = new ArrayCollection([]);
         }
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this._$sortedData = this._sortByFirstLetter(this._data);
-        this._$jumpTo(0);
+        this._sortData();
 
         if (this._removeOnRefresh) {
             this._removeOnRefresh();
         }
         this._removeOnRefresh = this._data.onRefresh(() => {
-            this._$sortedData = this._sortByFirstLetter(this._data);
+            this._sortData();
+        })
+    }
+
+    private _sortData() {
+        if (this.useDict) {
+            const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
+            const dictScript = document.getElementById(linkId) as HTMLScriptElement;
+            if (dictScript) {
+                this._sortDataAndJump()
+                return;
+            }
+            const body = document.getElementsByTagName("body")[0];
+            const script = document.createElement("script");
+            script.type = "text/javascript";
+            script.id = linkId;
+            script.onload = () => {
+                this._sortDataAndJump()
+            }
+            script.src = `pinyin_dict_firstletter.js`;
+            body.appendChild(script);
+        } else {
+            this._sortDataAndJump()
+        }
+    }
+
+    private _sortDataAndJump() {
+        this._$sortedData = this._sortByFirstLetter(this._data);
+        this.runAfterMicrotasks(() => {
             this._$jumpTo(0);
         })
     }
@@ -80,6 +107,9 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         }
         this._value = newValue;
     }
+
+    @Input()
+    public useDict: boolean = false;
 
     @Output()
     public valueChange = new EventEmitter<any[]>();
@@ -137,7 +167,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         //     }
         // })
 
-        /* 使用字典-受子民拼 */
+        /* 使用字典 */
         arr.forEach(item => {
             if (CommonUtils.isUndefined(item)) {
                 return;
@@ -148,10 +178,14 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
                 const firstLetter = word.substr(0, 1);
                 letterGroup[firstLetter].push(item);
             } else {
-                const res = this.getFirstLetter(word);
-                if (/^[A-Z#]/.test(res)) {
-                    const firstLetter = res.substr(0, 1);
-                    letterGroup[firstLetter].push(item);
+                if (this.useDict) {
+                    const res = this.getFirstLetter(word);
+                    if (/^[A-Z#]/.test(res)) {
+                        const firstLetter = res.substr(0, 1);
+                        letterGroup[firstLetter].push(item);
+                    } else {
+                        letterGroup['#'].push(item);
+                    }
                 } else {
                     letterGroup['#'].push(item);
                 }
@@ -169,7 +203,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     public _$jumpTo(i: number) {
-        if (!this._dataElementRefs) {
+        if (!this._dataElementRefs || !this._titleElementRefs) {
             return;
         }
         this._dataElementRefs.nativeElement.scrollTop = this._titleElementRefs.toArray()[i].nativeElement.offsetTop;
@@ -202,21 +236,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     ngAfterViewInit() {
-        console.log(window['pinyin_dict_firstletter']);
-        const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
-        const dictScript = document.getElementById(linkId) as HTMLScriptElement;
-        if (dictScript) {
-            return;
-        }
-        const body = document.getElementsByTagName("body")[0];
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.id = linkId;
-        script.src = `tools/pinyin_dict_firstletter.js`;
-        body.appendChild(script);
-        
-        console.log(window['pinyin_dict_firstletter']);
-
         const dataList = this._dataElementRefs.nativeElement;
         dataList.onscroll = () => {
             for (let i = 0; i < 27; i++) {

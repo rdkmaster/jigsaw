@@ -1,12 +1,11 @@
-import { AbstractJigsawComponent, WingsTheme } from 'jigsaw/common/common';
+import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
 import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { JigsawAlphabeticalIndexModule } from './alphabetical-index';
-import { RequireMarkForCheck } from 'jigsaw/common/decorator/mark-for-check';
-import { DropDownTrigger } from 'jigsaw/common/directive/float/float';
-import { JigsawComboSelectModule } from '../combo-select';
-import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
-import { CommonUtils } from 'jigsaw/common/core/utils/common-utils';
+import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
+import { DropDownTrigger } from '../../common/directive/float/float';
+import { JigsawComboSelectModule } from '../combo-select/index';
+import { ArrayCollection } from '../../common/core/data/array-collection';
+import { CommonUtils } from '../../common/core/utils/common-utils';
 
 @WingsTheme('alphabetical-index-select.scss')
 @Component({
@@ -64,6 +63,10 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
 
     @Input()
     @RequireMarkForCheck()
+    public useDict: boolean = false;
+
+    @Input()
+    @RequireMarkForCheck()
     public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
@@ -79,7 +82,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawAlphabeticalIndexModule, JigsawComboSelectModule],
+    imports: [JigsawAlphabeticalIndexModule, JigsawComboSelectModule],
     declarations: [JigsawAlphabeticalIndexSelect],
     exports: [JigsawAlphabeticalIndexSelect]
 })

@@ -75,7 +75,7 @@
               "node_modules/codemirror/addon/edit/matchbrackets.js",
               {
                 "input": "src/jigsaw/pc-components/alphabetical-index/pinyin_dict_firstletter.js",
-                "bundleName": "tools/pinyin_dict_firstletter",
+                "bundleName": "pinyin_dict_firstletter",
                 "inject": false
               }
             ]
