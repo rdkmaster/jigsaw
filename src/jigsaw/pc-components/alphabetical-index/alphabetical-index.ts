@@ -41,7 +41,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     protected _removeOnRefresh: CallbackRemoval;
 
     @Input()
-    public get data() {
+    public get data(): ArrayCollection<string> {
         return this._data;
     }
 
@@ -60,7 +60,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         })
     }
 
-    private _sortData() {
+    private _sortData(): void {
         if (this.useDict) {
             const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
             const dictScript = document.getElementById(linkId) as HTMLScriptElement;
@@ -82,14 +82,14 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         }
     }
 
-    private _sortDataAndJump() {
+    private _sortDataAndJump(): void {
         this._$sortedData = this._sortByFirstLetter(this._data);
         this.runAfterMicrotasks(() => {
             this._$jumpTo(0);
         })
     }
 
-    private _value: any;
+    private _value: ArrayCollection<string>;
 
     /**
      * 选择的结果，数组形式
@@ -112,7 +112,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     public useDict: boolean = false;
 
     @Output()
-    public valueChange = new EventEmitter<any[]>();
+    public valueChange = new EventEmitter<ArrayCollection<string>>();
 
     /**
      * @internal 
@@ -202,14 +202,14 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         return result;
     }
 
-    public _$jumpTo(i: number) {
+    public _$jumpTo(i: number): void {
         if (!this._dataElementRefs || !this._titleElementRefs) {
             return;
         }
         this._dataElementRefs.nativeElement.scrollTop = this._titleElementRefs.toArray()[i].nativeElement.offsetTop;
     }
 
-    private _setCurrent(i: number) {
+    private _setCurrent(i: number): void {
         if (!this._indexElementRefs) {
             return;
         }
@@ -221,7 +221,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         this.valueChange.emit($event);
     }
 
-    public getFirstLetter(str): any {
+    public getFirstLetter(str: string): string {
         if (!str || /^ +$/g.test(str)) return "";
         var result = [];
         for (var i = 0; i < str.length; i++) {

@@ -22,7 +22,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
     private _data: ArrayCollection<string>;
 
     @Input()
-    public get data() {
+    public get data(): ArrayCollection<string> {
         return this._data;
     }
 
@@ -30,7 +30,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
         this._data = value;
     }
 
-    private _value: any;
+    private _value: ArrayCollection<string>;
 
     /**
      * 选择的结果，数组形式
@@ -74,7 +74,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
 
     @Output()
-    public valueChange = new EventEmitter<any[]>();
+    public valueChange = new EventEmitter<ArrayCollection<string>>();
 
     public _$valueChange($event) {
         this.valueChange.emit($event)
