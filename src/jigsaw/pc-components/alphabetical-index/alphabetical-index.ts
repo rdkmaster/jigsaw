@@ -117,6 +117,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             letterGroup[letter] = [];
         })
 
+        /* 不使用字典 */
         // arr.forEach(item => {
         //     if (CommonUtils.isUndefined(item)) {
         //         return;
@@ -136,8 +137,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         //     }
         // })
 
-
-        /* 使用字典 */
+        /* 使用字典-受子民拼 */
         arr.forEach(item => {
             if (CommonUtils.isUndefined(item)) {
                 return;
@@ -202,6 +202,21 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     ngAfterViewInit() {
+        console.log(window['pinyin_dict_firstletter']);
+        const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
+        const dictScript = document.getElementById(linkId) as HTMLScriptElement;
+        if (dictScript) {
+            return;
+        }
+        const body = document.getElementsByTagName("body")[0];
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.id = linkId;
+        script.src = `tools/pinyin_dict_firstletter.js`;
+        body.appendChild(script);
+        
+        console.log(window['pinyin_dict_firstletter']);
+
         const dataList = this._dataElementRefs.nativeElement;
         dataList.onscroll = () => {
             for (let i = 0; i < 27; i++) {
