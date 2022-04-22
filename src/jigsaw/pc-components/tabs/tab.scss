@@ -35,7 +35,7 @@ $jigsaw-tabs: #{$jigsaw-prefix}-tabs;
             display: flex;
             align-items: center;
             position: absolute;
-            right: 0;
+            right: 2px;
             top: 0;
             height: 100%;
             font-size: 18px;
@@ -191,13 +191,12 @@ $jigsaw-tabs: #{$jigsaw-prefix}-tabs;
                         position: relative;
                         padding: 8px 20px;
                         height: 100%;
-                        margin-right: 24px;
                         transition: color 0.3s $ease-in-out;
                         cursor: pointer;
                         text-decoration: none;
 
                         &:hover {
-                            color: $brand-hover;
+                            background: $brand-lighten;
                         }
 
                         &:active {

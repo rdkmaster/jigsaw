@@ -908,6 +908,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object): void {
         const ele = this._rowElementRefs.toArray()[rowIndex].nativeElement;
+        const headerEle = this._headerComponents.toArray();
         const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
 
         if (ele.nextSibling.nodeName === 'TR' && ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
@@ -915,11 +916,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._allExpandedRows.splice(index, 1);
             ele.nextSibling.remove();
         } else {
-            const trustedEle = document.createElement('tr');
+            const tr = document.createElement('tr');
+            const trustedEle = document.createElement('td');
+            trustedEle.colSpan = headerEle.length;
+            tr.classList.add('jigsaw-table-row-expansion');
+            tr.insertBefore(trustedEle,tr.lastElementChild);
+
             trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
-            trustedEle.classList.add('jigsaw-table-row-expansion');
-            ele.parentNode.insertBefore(trustedEle, ele.nextSibling)
-            this._allExpandedRows.push(trustedEle);
+            ele.parentNode.insertBefore(tr, ele.nextSibling)
+            this._allExpandedRows.push(tr);
         }
     }
 
