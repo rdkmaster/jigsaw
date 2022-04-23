@@ -1,5 +1,12 @@
 import { Component, ViewEncapsulation, AfterViewInit, TemplateRef } from "@angular/core";
-import { ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData, JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData, PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer, TransferTableSourceRenderer, JigsawToast, JigsawNotification, ColumnDefine, TableCellPasswordRenderer, TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer, TableCellSelectRenderer } from 'jigsaw/public_api';
+import {
+    ArrayCollection, GraphData, GroupOptionValue, JigsawListLite, SimpleTreeData, TableData,
+    JigsawInfoAlert, JigsawWarningAlert, JigsawConfirmAlert, TabBarData, LocalPageableTableData,
+    PopupService, PopupInfo, TransferListSourceRenderer, TransferListDestRenderer, TransferTreeSourceRenderer,
+    TransferTableSourceRenderer, JigsawToast, JigsawNotification, ColumnDefine, TableCellPasswordRenderer,
+    TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer,
+    TableCellSelectRenderer
+} from 'jigsaw/public_api';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
