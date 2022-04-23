@@ -10,6 +10,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     display: inline-flex;
     width: 400px;
     height: 200px;
+    color: $font-color-default;
 
     &.#{$jigsaw-transfer}-error {
         .#{$jigsaw-transfer}-cntr {

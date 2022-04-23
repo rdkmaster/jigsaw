@@ -18,6 +18,7 @@ import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-upload-result-host]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush

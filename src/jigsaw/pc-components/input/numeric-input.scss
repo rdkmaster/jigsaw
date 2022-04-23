@@ -114,9 +114,10 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         border-left-width: 1px;
         border-left-style: solid;
         border-left-color: $border-color-default;
-        cursor: pointer;
+        color: $icon-color-stress;
         text-align: center;
         box-sizing: border-box;
+        cursor: pointer;
 
         &:first-child {
             border-bottom-width: 0.5px;
@@ -186,6 +187,10 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
             }
 
             &:hover {
+                border-color: $border-color-disabled;
+            }
+
+            &:active {
                 border-color: $border-color-disabled;
             }
         }

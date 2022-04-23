@@ -9,6 +9,7 @@ $jigsaw-tile-option: #{$jigsaw-tile}-option;
     border-radius: $border-radius-base;
     padding: 8px 0px 0px 8px;
     background: $bg-component;
+    color: $font-color-default;
 
     &.#{$jigsaw-tile}-error {
         border-color: $error-default;

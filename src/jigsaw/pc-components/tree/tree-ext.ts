@@ -27,6 +27,7 @@ export class TreeEventData {
     `],
     host: {
         '[class.jigsaw-tree-host]': 'true',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-tree-large]': 'size === "large"',
         '[class.jigsaw-tree-medium]': 'size === "medium"',
         '[class.jigsaw-tree-default]': 'size === "default"',

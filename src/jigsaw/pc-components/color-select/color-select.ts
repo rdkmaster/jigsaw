@@ -20,6 +20,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-color-select-host]': 'true',
         '[class.jigsaw-color-select-size-small]': "preSize === 'small'",
         '[class.jigsaw-color-select-size-large]': "preSize === 'large'",

@@ -8,6 +8,7 @@ import {WingsTheme} from "../../common/common";
     selector: "jigsaw-circle-progress, j-circle-progress",
     templateUrl: "circle-progress.html",
     host: {
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-circle-progress-host]": "true",
         "[class.jigsaw-circle-progress-processing]": "status === 'processing'",
         "[class.jigsaw-circle-progress-success]": "status === 'success'",

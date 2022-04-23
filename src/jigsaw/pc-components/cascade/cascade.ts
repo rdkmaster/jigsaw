@@ -75,6 +75,7 @@ export class CascadeTabContentInitData {
     multipleSelect: boolean;
     showAll: boolean;
     optionWidth: number | string;
+    theme: 'light' | 'dark';
 }
 
 /**
@@ -86,9 +87,10 @@ export class CascadeTabContentInitData {
 @WingsTheme('cascade.scss')
 @Component({
     selector: 'jigsaw-cascade, j-cascade',
-    template: '<j-tabs width="100%"></j-tabs>',
+    template: '<j-tabs [theme]="theme" width="100%"></j-tabs>',
     host: {
         '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-cascade-host]': 'true',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -356,7 +358,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             noMore: this._cascadeDataList[level].noMore,
             multipleSelect: this._cascadeDataList[level].noMore && this.multipleSelect,
             showAll: this._cascadeDataList[level].showAll,
-            optionWidth: this.optionWidth
+            optionWidth: this.optionWidth,
+            theme: this.theme
         }, !lazy);
     }
 
@@ -432,7 +435,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             </div>
             <ng-template #tile>
                 <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
-                    <j-input class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
+                    <j-input [theme]="initData?.theme || 'light'" class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
                              (valueChange)="_$handleSearching($event)">
                         <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
                     </j-input>
@@ -450,7 +453,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                     </j-tile-option>
                 </j-tile>
                 <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
-                    <j-pagination [data]="_$list" mode="simple"></j-pagination>
+                    <j-pagination [theme]="initData?.theme || 'light'" [data]="_$list" mode="simple"></j-pagination>
                 </div>
             </ng-template>
         </div>

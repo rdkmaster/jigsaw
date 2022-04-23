@@ -102,12 +102,13 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
     }
 
     .#{$jigsaw-textarea}-clear-bar {
-        cursor: pointer;
+        color: $icon-color-stress;
         font-size: 13px;
         line-height: 1;
+        cursor: pointer;
 
         &:hover {
-            color: $font-color-tag;
+            color: $brand-default;
         }
 
         &[hidden] {

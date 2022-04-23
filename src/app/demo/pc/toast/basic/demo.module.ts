@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
-import { JigsawButtonModule, JigsawNotificationModule, PopupService, JigsawHeaderModule } from "jigsaw/public_api";
+import { JigsawButtonModule, PopupService, JigsawHeaderModule, JigsawToastModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ToastBasicDemoComponent } from "./demo.component";
 
 @NgModule({
     declarations: [ToastBasicDemoComponent],
     imports: [
-        JigsawNotificationModule, JigsawDemoDescriptionModule, JigsawButtonModule, JigsawHeaderModule
+        JigsawToastModule, JigsawDemoDescriptionModule, JigsawButtonModule, JigsawHeaderModule
     ],
     providers: [PopupService],
     exports: [ToastBasicDemoComponent]

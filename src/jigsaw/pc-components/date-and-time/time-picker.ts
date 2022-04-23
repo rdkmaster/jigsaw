@@ -736,20 +736,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
-/**
- * @internal
- */
+
+@WingsTheme('time-pop.scss')
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-time-popup-host]': 'true',
         '(mousedown)': '_$stopBlur($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimePopup implements IPopupable {
+export class JigsawTimePopup extends AbstractJigsawComponent implements IPopupable {
     constructor(private _cdr: ChangeDetectorRef) {
+        super();
     }
 
     private _value: TimePopupValue;
