@@ -603,6 +603,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
  * @internal
  * Select renderer
  */
+// @dynamic
 @Component({
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px"
