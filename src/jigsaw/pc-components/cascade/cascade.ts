@@ -435,7 +435,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             </div>
             <ng-template #tile>
                 <div class="jigsaw-cascade-search-wrapper" *ngIf="_$cascade?.searchable">
-                    <j-input [(theme)]="_$componentTheme" class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
+                    <j-input [theme]="initData?.theme || 'light'" class="jigsaw-cascade-tile-search" width="100%" [(value)]="_$searchKey"
                              (valueChange)="_$handleSearching($event)">
                         <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
                     </j-input>
@@ -453,7 +453,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                     </j-tile-option>
                 </j-tile>
                 <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
-                    <j-pagination [(theme)]="_$componentTheme" [data]="_$list" mode="simple"></j-pagination>
+                    <j-pagination [theme]="initData?.theme || 'light'" [data]="_$list" mode="simple"></j-pagination>
                 </div>
             </ng-template>
         </div>
@@ -645,13 +645,6 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         this._cdr.markForCheck();
     }
 
-    /**
-     * @internal
-     * 
-     * 用来传递theme参数
-     */
-    public _$componentTheme: 'light' | 'dark';
-
     ngOnInit() {
         super.ngOnInit();
 
@@ -680,7 +673,6 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         } else if (list instanceof Array) {
             this._init(list, allSelectedData);
         }
-        this._$componentTheme = this.initData?.theme;
     }
 
     ngOnDestroy() {

@@ -84,9 +84,6 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         });
     }
 
-    @ViewChild('floatEle', { read: JigsawFloat })
-    floatEle: JigsawFloat;
-
     /**
      * 参考`JigsawDateTimePicker.disabled`
      *

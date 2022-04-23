@@ -23,7 +23,7 @@ export class MenuOptions {
     data?: SimpleTreeData;
     width?: string | number;
     height?: string | number;
-    theme?: 'light' | 'dark' | 'navigation';
+    theme?: MenuTheme;
     options?: PopupOptions;
     showBorder?: boolean;
     select?: EventEmitter<SimpleNode>;
@@ -178,12 +178,12 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public get _$realTheme(): 'light' | 'dark' | string {
+    public get _$realTheme(): MenuTheme {
         let theme = this.initData && this.initData.theme ? this.initData.theme : this.theme;
         if (theme !== 'light' && theme !== 'dark' && theme !== 'navigation') {
             theme = 'light';
         }
-        return theme;
+        return <MenuTheme>theme;
     }
 
     /**
