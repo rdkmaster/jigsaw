@@ -21,6 +21,16 @@ import { JigsawListModule } from '../list-and-tile/list';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { CommonUtils, CallbackRemoval } from '../../common/core/utils/common-utils';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
+
+export type pinyinDictionary = {
+    dynamicLoadingDict?: dictInfo;
+    getStrPinyin: (str: string) => string;
+}
+
+export type dictInfo = {
+    dictPath: string,
+    dictId: string,
+}
 @WingsTheme('alphabetical-index.scss')
 @Component({
     selector: "jigsaw-alphabetical-index, j-alphabetical-index",
@@ -37,8 +47,8 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         super(_zone);
     }
 
-    _data: ArrayCollection<string>;
-    protected _removeOnRefresh: CallbackRemoval;
+    private _data: ArrayCollection<string>;
+    private _removeOnRefresh: CallbackRemoval;
 
     @Input()
     public get data(): ArrayCollection<string> {
@@ -50,40 +60,120 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             this._data = new ArrayCollection([]);
         }
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-        this._sortData();
+
+        if (this.pinyinDictionary) {
+            this._sortDataWithDict();
+            return;
+        }
+
+        this._sortDataAndJump(false);
 
         if (this._removeOnRefresh) {
             this._removeOnRefresh();
         }
         this._removeOnRefresh = this._data.onRefresh(() => {
-            this._sortData();
+            this._sortDataAndJump(false);
         })
     }
 
-    private _sortData(): void {
-        if (this.useDict) {
-            const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
-            const dictScript = document.getElementById(linkId) as HTMLScriptElement;
-            if (dictScript) {
-                this._sortDataAndJump()
-                return;
+    private _pinyinDictionary: pinyinDictionary = {
+        dynamicLoadingDict: {
+            dictPath: `pinyin_dict_firstletter.js`,
+            dictId: `pinyin_dict_firstletter_id`,
+        },
+        getStrPinyin: (str) => {
+            if (!str || /^ +$/g.test(str)) {
+                return "";
             }
-            const body = document.getElementsByTagName("body")[0];
-            const script = document.createElement("script");
-            script.type = "text/javascript";
-            script.id = linkId;
-            script.onload = () => {
-                this._sortDataAndJump()
+            const result = [];
+            for (var i = 0; i < str.length; i++) {
+                var unicode = str.charCodeAt(i);
+                var ch = str.charAt(i);
+                if (unicode >= 19968 && unicode <= 40869) {
+                    ch = window['pinyin_dict_firstletter'].all.charAt(unicode - 19968);
+                }
+                result.push(ch);
             }
-            script.src = `pinyin_dict_firstletter.js`;
-            body.appendChild(script);
-        } else {
-            this._sortDataAndJump()
+            return result.join("");
         }
     }
 
-    private _sortDataAndJump(): void {
-        this._$sortedData = this._sortByFirstLetter(this._data);
+    @Input()
+    public get pinyinDictionary(): pinyinDictionary {
+        return this._pinyinDictionary;
+    }
+
+    public set pinyinDictionary(value: pinyinDictionary) {
+        if (!value || this._pinyinDictionary == value) {
+            return;
+        }
+        this._pinyinDictionary = value;
+        this._sortDataWithDict();
+
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+        }
+        this._removeOnRefresh = this._data.onRefresh(() => {
+            this._sortDataAndJump(true);
+        })
+    }
+
+    private _sortDataWithDict() {
+        if (!this.pinyinDictionary.dynamicLoadingDict) {
+            this._sortDataAndJump(true);
+            return
+        }
+
+        if (!this.pinyinDictionary.dynamicLoadingDict.dictPath || !this.pinyinDictionary.dynamicLoadingDict.dictId) {
+            console.error("缺少字典文件路径 或 字典文件ID");
+            return;
+        }
+        const dictId = this.pinyinDictionary.dynamicLoadingDict.dictId;
+        const dictFile = document.getElementById(dictId) as HTMLScriptElement;
+
+        if (dictFile) {
+            this._sortDataAndJump(true);
+            return;
+        }
+
+        const dictPath = this.pinyinDictionary.dynamicLoadingDict.dictPath;
+        const body = document.getElementsByTagName("body")[0];
+        const script = document.createElement("script");
+
+        script.type = "text/javascript";
+        script.id = dictId;
+        script.onload = () => {
+            this._sortDataAndJump(true);
+        }
+        script.src = dictPath;
+
+        body.appendChild(script);
+    }
+
+    // private _sortData(): void {
+    //     if (this.useDict) {
+    //         const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
+    //         const dictScript = document.getElementById(linkId) as HTMLScriptElement;
+    //         if (dictScript) {
+    //             this._sortDataAndJump()
+    //             return;
+    //         }
+    //         const body = document.getElementsByTagName("body")[0];
+    //         const script = document.createElement("script");
+    //         script.type = "text/javascript";
+    //         script.id = linkId;
+    //         script.onload = () => {
+    //             this._sortDataAndJump()
+    //         }
+    //         script.src = `pinyin_dict_firstletter.js`;
+    //         body.appendChild(script);
+    //     } else {
+    //         this._sortDataAndJump()
+    //     }
+    // }
+
+    private _sortDataAndJump(useDict: boolean): void {
+        this._$sortedData = this._sortByFirstLetter(this._data, useDict);
         this.runAfterMicrotasks(() => {
             this._$jumpTo(0);
         })
@@ -107,9 +197,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         }
         this._value = newValue;
     }
-
-    @Input()
-    public useDict: boolean = false;
 
     @Output()
     public valueChange = new EventEmitter<ArrayCollection<string>>();
@@ -136,7 +223,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     @ViewChildren('indexListItem', { read: ElementRef })
     private _indexItemElementRefs: QueryList<ElementRef>;
 
-    private _sortByFirstLetter(arr: ArrayCollection<string>): ArrayCollection<string> {
+    private _sortByFirstLetter(arr: ArrayCollection<string>, useDict: boolean): ArrayCollection<string> {
         if (!String.prototype.localeCompare) {
             return null;
         }
@@ -147,50 +234,49 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             letterGroup[letter] = [];
         })
 
-        /* 不使用字典 */
-        // arr.forEach(item => {
-        //     if (CommonUtils.isUndefined(item)) {
-        //         return;
-        //     }
-        //     item += '';
-        //     const word = item.trim().toUpperCase();
-        //     if (/^[A-Z#]/.test(word)) {
-        //         const firstLetter = word.substr(0, 1);
-        //         letterGroup[firstLetter].push(item);
-        //     } else {
-        //         console.log(this.getFirstLetter(word))
-        //         this._zhToEnletters.forEach((letter, i) => {
-        //             if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word, 'zh-CN') <= 0) && word.localeCompare(this._zhLetters[i], 'zh-CN') == -1) {
-        //                 letterGroup[letter].push(item);
-        //             }
-        //         })
-        //     }
-        // })
+        console.log(useDict)
+        if (useDict) {
+            /* 使用字典 */
+            arr.forEach(item => {
+                if (CommonUtils.isUndefined(item)) {
+                    return;
+                }
+                item += '';
+                const word = item.trim().toUpperCase();
+                if (/^[A-Z#]/.test(word)) {
+                    const firstLetter = word.substr(0, 1);
+                    letterGroup[firstLetter].push(item);
+                    return;
+                }
 
-        /* 使用字典 */
-        arr.forEach(item => {
-            if (CommonUtils.isUndefined(item)) {
-                return;
-            }
-            item += '';
-            const word = item.trim().toUpperCase();
-            if (/^[A-Z#]/.test(word)) {
-                const firstLetter = word.substr(0, 1);
-                letterGroup[firstLetter].push(item);
-            } else {
-                if (this.useDict) {
-                    const res = this.getFirstLetter(word);
-                    if (/^[A-Z#]/.test(res)) {
-                        const firstLetter = res.substr(0, 1);
-                        letterGroup[firstLetter].push(item);
-                    } else {
-                        letterGroup['#'].push(item);
-                    }
+                const res = this.pinyinDictionary.getStrPinyin(word);
+                if (/^[A-Z#]/.test(res)) {
+                    const firstLetter = res.substr(0, 1);
+                    letterGroup[firstLetter].push(item);
                 } else {
                     letterGroup['#'].push(item);
                 }
-            }
-        })
+            })
+        } else {
+            /* 不使用字典 */
+            arr.forEach(item => {
+                if (CommonUtils.isUndefined(item)) {
+                    return;
+                }
+                item += '';
+                const word = item.trim().toUpperCase();
+                if (/^[A-Z#]/.test(word)) {
+                    const firstLetter = word.substr(0, 1);
+                    letterGroup[firstLetter].push(item);
+                } else {
+                    this._zhToEnletters.forEach((letter, i) => {
+                        if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word, 'zh-CN') <= 0) && word.localeCompare(this._zhLetters[i], 'zh-CN') == -1) {
+                            letterGroup[letter].push(item);
+                        }
+                    })
+                }
+            })
+        }
 
         this._$enLetters.forEach(letter => {
             if (letterGroup[letter].length) {
@@ -222,8 +308,10 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     public getFirstLetter(str: string): string {
-        if (!str || /^ +$/g.test(str)) return "";
-        var result = [];
+        if (!str || /^ +$/g.test(str)) {
+            return "";
+        }
+        const result = [];
         for (var i = 0; i < str.length; i++) {
             var unicode = str.charCodeAt(i);
             var ch = str.charAt(i);
@@ -235,22 +323,27 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         return result.join("");
     }
 
+    private _removeOnDestroy: CallbackRemoval;
+
     ngAfterViewInit() {
         const dataList = this._dataElementRefs.nativeElement;
-        dataList.onscroll = () => {
+        this._removeOnDestroy = dataList.addEventListener('scroll', () => {
             for (let i = 0; i < 27; i++) {
-                if (this._titleElementRefs.toArray()[i].nativeElement.offsetTop > dataList.scrollTop) {
+                if (this._titleElementRefs['_results'][i].nativeElement.offsetTop > dataList.scrollTop) {
                     this._setCurrent(i);
-                    return
+                    return;
                 }
             }
-        }
+        });
         this._indexItemElementRefs.toArray()[0].nativeElement.classList.add('index-item-active');
     }
 
     ngOnDestroy() {
         if (this._removeOnRefresh) {
             this._removeOnRefresh();
+        }
+        if (this._removeOnDestroy) {
+            this._removeOnDestroy();
         }
     }
 }
