@@ -80,10 +80,6 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
 
     @Input()
     @RequireMarkForCheck()
-    public useDict: boolean = false;
-
-    @Input()
-    @RequireMarkForCheck()
     public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
 
     @Input()
