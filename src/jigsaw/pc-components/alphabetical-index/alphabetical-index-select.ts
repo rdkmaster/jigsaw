@@ -58,6 +58,11 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
         this._value = newValue;
     }
 
+    /**
+     * 配置拼音字典
+     *
+     * @NoMarkForCheckRequired
+     */
     @Input()
     pinyinDictionary: pinyinDictionary;
 
