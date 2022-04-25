@@ -7,6 +7,10 @@
 <jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries">
 </jigsaw-alphabetical-index-select>
 
+<jigsaw-header>配置拼音字典</jigsaw-header>
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [(pinyinDictionary)]="pinyinDictionary">
+</jigsaw-alphabetical-index-select>
+
 <jigsaw-header>disabled</jigsaw-header>
 <jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" [disabled]="true">
 </jigsaw-alphabetical-index-select>
@@ -20,11 +24,10 @@
 </jigsaw-alphabetical-index-select>
 
 <jigsaw-header>openTrigger & closeTrigger</jigsaw-header>
-<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" openTrigger="click"
-    closeTrigger="click" (valueChange)="valueChange($event)">
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" openTrigger="click" closeTrigger="click"
+    (valueChange)="valueChange($event)">
 </jigsaw-alphabetical-index-select>
 
 <jigsaw-header>valueChange</jigsaw-header>
-<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries"
-    (valueChange)="valueChange($event)">
+<jigsaw-alphabetical-index-select width="200px" [(data)]="mixCountries" (valueChange)="valueChange($event)">
 </jigsaw-alphabetical-index-select>

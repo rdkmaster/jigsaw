@@ -3,7 +3,7 @@
     [textTag]="false">
     <ng-template>
         <jigsaw-alphabetical-index [data]="data" [(value)]="value" [useDict]="useDict"
-            (valueChange)="_$valueChange($event)">
+            [(pinyinDictionary)]="pinyinDictionary" (valueChange)="_$valueChange($event)">
         </jigsaw-alphabetical-index>
     </ng-template>
 </jigsaw-combo-select>

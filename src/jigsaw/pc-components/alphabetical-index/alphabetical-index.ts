@@ -50,6 +50,11 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     private _data: ArrayCollection<string>;
     private _removeOnRefresh: CallbackRemoval;
 
+    /**
+     * 组件数据
+     * 
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): ArrayCollection<string> {
         return this._data;
@@ -78,6 +83,11 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
 
     private _pinyinDictionary: pinyinDictionary;
 
+    /**
+     * 拼字字典配置
+     * 
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get pinyinDictionary(): pinyinDictionary {
         return this._pinyinDictionary;

@@ -1,6 +1,6 @@
 import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
 import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, Injector, NgZone } from '@angular/core';
-import { JigsawAlphabeticalIndexModule } from './alphabetical-index';
+import { JigsawAlphabeticalIndexModule, pinyinDictionary } from './alphabetical-index';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { DropDownTrigger } from '../../common/directive/float/float';
 import { JigsawComboSelectModule } from '../combo-select/index';
@@ -25,6 +25,11 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
 
     private _data: ArrayCollection<string>;
 
+    /**
+     * 组件数据
+     * 
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get data(): ArrayCollection<string> {
         return this._data;
@@ -37,7 +42,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
     private _value: ArrayCollection<string>;
 
     /**
-     * 选择的结果，数组形式
+     * 组件选择的结果，数组形式
      *
      * @NoMarkForCheckRequired
      */
@@ -52,6 +57,9 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
         }
         this._value = newValue;
     }
+
+    @Input()
+    pinyinDictionary: pinyinDictionary;
 
     @Input()
     @RequireMarkForCheck()

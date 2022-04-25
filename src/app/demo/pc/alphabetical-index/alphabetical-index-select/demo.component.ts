@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { pinyinDictionary } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -86,6 +87,28 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
     ]
 
     public mixCountries = [];
+
+    pinyinDictionary: pinyinDictionary = {
+        dynamicLoadingDict: {
+            dictPath: `pinyin_dict_first_letter.js`,
+            dictId: `pinyin_dict_firstletter_id`,
+        },
+        getStrPinyin: (str) => {
+            if (!str || /^ +$/g.test(str)) {
+                return "";
+            }
+            const result = [];
+            for (var i = 0; i < str.length; i++) {
+                var unicode = str.charCodeAt(i);
+                var ch = str.charAt(i);
+                if (unicode >= 19968 && unicode <= 40869) {
+                    ch = window['pinyin_dict_firstletter'].all.charAt(unicode - 19968);
+                }
+                result.push(ch);
+            }
+            return result.join("");
+        }
+    }
 
     valueChange($event) {
         console.log($event)
