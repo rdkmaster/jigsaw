@@ -175,7 +175,14 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     @RequireMarkForCheck()
     public _$sortedData: ArrayCollection<string>;
 
+    /**
+     * @internal 
+     */
     public _$enLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'];
+
+    /**
+     * @internal 
+     */
     public _zhToEnletters = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
     private _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
 
@@ -255,6 +262,9 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         return result;
     }
 
+    /**
+     * @internal 
+     */
     public _$jumpTo(i: number): void {
         if (!this._dataElementRefs || !this._titleElementRefs) {
             return;
@@ -270,6 +280,9 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         this._indexItemElementRefs.toArray()[i - 1].nativeElement.classList.add('index-item-active');
     }
 
+    /**
+     * @internal 
+     */
     public _$selectedItemsChange($event) {
         this.valueChange.emit($event);
     }

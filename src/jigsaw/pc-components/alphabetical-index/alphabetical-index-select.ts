@@ -93,6 +93,9 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
     @Output()
     public valueChange = new EventEmitter<ArrayCollection<string>>();
 
+    /**
+     * @internal 
+     */
     public _$valueChange($event) {
         this.valueChange.emit($event)
     }
