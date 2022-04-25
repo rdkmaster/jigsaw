@@ -212,10 +212,15 @@ $brand-active-lighten: $blue-2;
 /* background 背景色
     $bg-body => 背景、页面背景
     $bg-component => 组件背景
-    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
-    $bg-disabled => 组件禁用背景
-    $bg-header => 表头
+    $bg-container => 不影响功能的背景（抽屉）
+    $bg-disabled => 禁用背景
+    $bg-hover => 悬停背景
+    $bg-active => 点击背景
+    $bg-header => 表头（table表头,date-picker）
+    $bg-popup => 弹框背景（dialog、auto-compelet-input、notification、toast）
     $bg-gray => tag
+    $bg-scrollbar => 滚动条
+    $bg-scrollbar-lighten => 滚动条（浅色）
 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-container: $gray-2;

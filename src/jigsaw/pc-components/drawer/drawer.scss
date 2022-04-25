@@ -2,7 +2,7 @@ $jigsaw-drawer: #{$jigsaw-prefix}-drawer;
 
 .#{$jigsaw-drawer}-host {
     .#{$jigsaw-drawer} {
-        background: $bg-container;
+        background: $bg-body;
         box-shadow: $box-shadow-lv2;
         z-index: $zindex-popover-level-0;
 
