@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild, Renderer2, ElementRef} from "@angular/core";
-import {ControlValueAccessor} from "@angular/forms";
-import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
-import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {CheckBoxStatus} from "../checkbox/typings";
+import { ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild, Renderer2, ElementRef } from "@angular/core";
+import { ControlValueAccessor } from "@angular/forms";
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
+import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { CheckBoxStatus } from "../checkbox/typings";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -275,6 +275,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._changeDetector.detectChanges();
         })
     }
+
+    /**
+     * 设置select的size大小
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public size: "small" | "medium" | "large" = "large";
 
     /**
      * 选择结果发生变化时，向外面发送事件
@@ -607,7 +615,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
         this._$listValue = new ArrayCollection([]);
         value.forEach(groupData => {
-            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
+            this._$listValue.push({ [this.groupField]: groupData[this.groupField], data: new ArrayCollection([]) })
         });
         this._$selectedItems = [];
     }
