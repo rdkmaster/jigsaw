@@ -665,6 +665,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             return;
         }
         if (CommonUtils.isUndefined(newValue)) {
+            this.runMicrotask(() => {
+                this._$handleClearable();
+            })
             return;
         }
         if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
