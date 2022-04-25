@@ -1,5 +1,5 @@
 import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
-import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, Injector, NgZone } from '@angular/core';
 import { JigsawAlphabeticalIndexModule } from './alphabetical-index';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { DropDownTrigger } from '../../common/directive/float/float';
@@ -19,6 +19,10 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
+    public constructor(protected _changeDetector: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
+        super(_zone);
+    }
+
     private _data: ArrayCollection<string>;
 
     @Input()
