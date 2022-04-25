@@ -61,42 +61,22 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         }
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
 
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+        }
+        this._removeOnRefresh = this._data.onRefresh(() => {
+            this._sortDataAndJump(!!this.pinyinDictionary);
+        })
+
         if (this.pinyinDictionary) {
             this._sortDataWithDict();
             return;
         }
 
         this._sortDataAndJump(false);
-
-        if (this._removeOnRefresh) {
-            this._removeOnRefresh();
-        }
-        this._removeOnRefresh = this._data.onRefresh(() => {
-            this._sortDataAndJump(false);
-        })
     }
 
-    private _pinyinDictionary: pinyinDictionary = {
-        dynamicLoadingDict: {
-            dictPath: `pinyin_dict_firstletter.js`,
-            dictId: `pinyin_dict_firstletter_id`,
-        },
-        getStrPinyin: (str) => {
-            if (!str || /^ +$/g.test(str)) {
-                return "";
-            }
-            const result = [];
-            for (var i = 0; i < str.length; i++) {
-                var unicode = str.charCodeAt(i);
-                var ch = str.charAt(i);
-                if (unicode >= 19968 && unicode <= 40869) {
-                    ch = window['pinyin_dict_firstletter'].all.charAt(unicode - 19968);
-                }
-                result.push(ch);
-            }
-            return result.join("");
-        }
-    }
+    private _pinyinDictionary: pinyinDictionary;
 
     @Input()
     public get pinyinDictionary(): pinyinDictionary {
@@ -149,28 +129,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
 
         body.appendChild(script);
     }
-
-    // private _sortData(): void {
-    //     if (this.useDict) {
-    //         const linkId = `jigsaw-id-pinyin-dict-firstletter}`;
-    //         const dictScript = document.getElementById(linkId) as HTMLScriptElement;
-    //         if (dictScript) {
-    //             this._sortDataAndJump()
-    //             return;
-    //         }
-    //         const body = document.getElementsByTagName("body")[0];
-    //         const script = document.createElement("script");
-    //         script.type = "text/javascript";
-    //         script.id = linkId;
-    //         script.onload = () => {
-    //             this._sortDataAndJump()
-    //         }
-    //         script.src = `pinyin_dict_firstletter.js`;
-    //         body.appendChild(script);
-    //     } else {
-    //         this._sortDataAndJump()
-    //     }
-    // }
 
     private _sortDataAndJump(useDict: boolean): void {
         this._$sortedData = this._sortByFirstLetter(this._data, useDict);
@@ -234,7 +192,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             letterGroup[letter] = [];
         })
 
-        console.log(useDict)
         if (useDict) {
             /* 使用字典 */
             arr.forEach(item => {

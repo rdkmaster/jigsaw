@@ -7,3 +7,11 @@
 .demo-setting .demo-setting-item>* {
     margin-right: 4px;
 }
+
+.demo-cntr {
+    display: flex;
+}
+
+.demo-cntr .demo-section:nth-child(1) {
+    margin-right: 32px;
+}

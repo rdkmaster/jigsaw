@@ -2,8 +2,8 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<jigsaw-header level="1">Alphabetical-Index</jigsaw-header>
-<jigsaw-header>基础用法</jigsaw-header>
+<jigsaw-header level="1">字母索引 Alphabetical-Index</jigsaw-header>
+
 <ul class="demo-setting">
     <li class="demo-setting-item">
         <div>预设数据：</div>
@@ -21,4 +21,14 @@
     </li>
 </ul>
 
-<jigsaw-alphabetical-index width="200px" [(data)]="data"></jigsaw-alphabetical-index>
+<div class="demo-cntr">
+    <section class="demo-section">
+        <jigsaw-header>基础用法</jigsaw-header>
+        <jigsaw-alphabetical-index width="200px" [(data)]="data"></jigsaw-alphabetical-index>
+    </section>
+    <section class="demo-section">
+        <jigsaw-header>配置拼音字典</jigsaw-header>
+        <jigsaw-alphabetical-index width="200px" [(data)]="data" [pinyinDictionary]="pinyinDictionary">
+        </jigsaw-alphabetical-index>
+    </section>
+</div>
