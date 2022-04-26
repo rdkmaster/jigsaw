@@ -116,7 +116,7 @@
 }
 
 .jigsaw-breadcrumb-host {
-    background: $bg-container;
+    background: $bg-component-darken;
     font-size: 16px;
 
     .jigsaw-breadcrumb-item {
@@ -137,7 +137,7 @@
     }
 
     &.jigsaw-breadcrumb-host[data-theme="light"] {
-        background: $bg-container;
+        background: $bg-component-darken;
 
         .jigsaw-breadcrumb-item {
             color: $font-color-hint;
@@ -253,7 +253,7 @@
                 line-height: 38px;
                 color: $font-color-heading;
                 font-weight: 400;
-                background: $bg-container;
+                background: $bg-component-darken;
             }
 
             .jigsaw-collapse-content {
@@ -653,7 +653,7 @@
         thead {
             tr {
                 td {
-                    background: $bg-container;
+                    background: $bg-component-darken;
                     color: $blue-9;
                     font-size: 14px;
                     border-bottom-width: 2px;
@@ -664,7 +664,7 @@
         tbody {
             tr {
                 &:nth-child(2n) {
-                    background: $bg-container;
+                    background: $bg-component-darken;
                 }
             }
         }
@@ -798,7 +798,7 @@
             }
 
             .jigsaw-nav-menu-submenus {
-                background: $bg-container;
+                background: $bg-component-darken;
             }
         }
     }

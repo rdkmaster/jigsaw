@@ -3,7 +3,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
 .#{$jigsaw-menu}-host {
-    background: $bg-body !important;
+    background: $bg-component !important;
 
     .#{$jigsaw-list}-host {
         border: $border-color-default 1px solid;

@@ -179,11 +179,11 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$jigsaw-nav-menu}-item-selected-top {
-                background: $bg-body;
+                background: $bg-component;
             }
 
             .#{$jigsaw-nav-menu}-sub-item-selected {
-                background: $bg-body;
+                background: $bg-component;
             }
         }
     }
