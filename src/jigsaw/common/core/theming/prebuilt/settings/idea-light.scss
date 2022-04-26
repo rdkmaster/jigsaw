@@ -221,15 +221,16 @@ $brand-active-lighten: $blue-2;
 
 /* background 背景色
     @大面积背景
-    $bg-body => 大面积背景色。用于页面背景
-    $bg-container => 大面积背景色。用于容器背景（卡片）
+    $bg-body => 大面积背景色，用于页面背景
+    $bg-container => 大面积背景色，用于容器背景（卡片）
 
     @组件背景
     $bg-component => 组件背景
     $bg-component-darken => 组件背景（偏灰）（date-picker）
+    $bg-transparent => 透明背景
     $bg-popup => 弹框背景（dialog、notification、toast）
     $bg-gray => 灰色背景（tag）
-    $bg-transparent => 透明背景
+    $bg-header => 表头（table）
 
     @状态
     $bg-disabled => 禁用背景
@@ -237,7 +238,6 @@ $brand-active-lighten: $blue-2;
     $bg-active => 点击背景
 
     @其他背景
-    $bg-header => 表头（table）
     $bg-scrollbar => 滚动条
     $bg-scrollbar-lighten => 滚动条（偏浅）
 */
