@@ -5,7 +5,7 @@ $jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
     width: 210px;
     height: 100%;
     border-radius: $border-radius-sm;
-    background: $bg-component;
+    background: $bg-transparent;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color-default;
@@ -21,7 +21,7 @@ $jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
         align-items: center;
         width: 100%;
         min-height: $height-huge;
-        background: $bg-header;
+        background: $bg-component-darken;
     }
 
     .#{$jigsaw-date-picker}-gr-switch {
@@ -137,7 +137,7 @@ $jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
                 height: $height-med;
                 border-bottom: 1px solid $border-color-disabled;
                 line-height: $height-med;
-                background: $bg-header;
+                background: $bg-component-darken;
                 vertical-align: initial;
 
                 th {

@@ -22,7 +22,7 @@ $jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
                 border-color: $border-color-disabled;
                 &.#{$jigsaw-radio-option}-checked {
                     border-color: $brand-disabled;
-                    background: $bg-component;
+                    background: $bg-transparent;
                     &:hover {
                         border-color: $brand-disabled;
                     }
@@ -47,7 +47,7 @@ $jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
             border-style: solid;
             border-color: $border-color-default;
             border-radius: 50%;
-            background-color: $bg-component;
+            background-color: $bg-transparent;
             margin-right: 8px;
             -webkit-transition: border-color 0.15s linear, border-width 0.3s ease;
             -moz-transition: border-color 0.15s linear, border-width 0.3s ease;

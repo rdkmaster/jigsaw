@@ -210,24 +210,38 @@ $brand-lighten: $blue-1;
 $brand-active-lighten: $blue-2;
 
 /* background 背景色
-    $bg-body => 背景、页面背景
+    @大面积背景
+    $bg-body => 大面积背景色、页面背景
+    $bg-container => 大面积背景色、容器背景（卡片）
+
+    @组件背景
     $bg-component => 组件背景
-    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
-    $bg-disabled => 组件禁用背景
-    $bg-header => 表头
-    $bg-gray => tag
+    $bg-component-darken => 组件背景（偏灰）（date-picker）
+    $bg-popup => 弹框背景（dialog、notification、toast）
+    $bg-gray => 灰色背景（tag）
+    $bg-transparent => 透明背景
+
+    @状态
+    $bg-disabled => 禁用背景
+    $bg-hover => 悬停背景
+    $bg-active => 点击背景
+
+    @其他背景
+    $bg-header => 表头（table）
+    $bg-scrollbar => 滚动条
+    $bg-scrollbar-lighten => 滚动条（偏浅）
 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-container: $gray-2;
+/*@public*/ $bg-component: $gray-1;
+/*@public*/ $bg-component-darken: $gray-2;
 /*@public*/ $bg-disabled: $gray-6;
 /*@public*/ $bg-hover: $gray-4;
 /*@public*/ $bg-active: $gray-5;
+$bg-transparent: transparent;
 $bg-popup: $gray-2;
-$bg-component: transparent;
-$bg-header: $gray-4;
+$bg-header: $gray-3;
 $bg-gray: $gray-3;
-$bg-white: #fff;
-$bg-navigation: #32404e;
 $bg-scrollbar: $gray-5;
 $bg-scrollbar-lighten: $gray-7;
 
@@ -263,7 +277,7 @@ $font-color-brand-hover: hsl(0, 0%, 100%);
 /*@public*/ $border-color-default: $gray-6;
 /*@public*/ $border-color-disabled: $gray-5;
 $border-color-popup: $gray-5;
-$border-color-shadow-cntr: $gray-6;
+$border-color-shadow-cntr: $gray-5;
 
 /* split line 分割线 */
 /*@public*/ $splitline-default: $gray-4;

@@ -125,7 +125,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items-inline {
         flex: 1;
-        background: $bg-component;
+        background: $bg-transparent;
 
         .#{$jigsaw-nav-menu}-item {
             width: 100%;

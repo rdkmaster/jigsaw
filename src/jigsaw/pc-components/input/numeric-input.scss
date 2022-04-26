@@ -18,7 +18,7 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         display: flex;
         flex: 1;
         height: 100%;
-        background: $bg-component;
+        background: $bg-transparent;
         border-width: 1px;
         border-style: solid;
         border-color: $border-color-default;
@@ -58,7 +58,7 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         border: none;
         outline: none;
         border-radius: $border-radius-base;
-        background: $bg-component;
+        background: $bg-transparent;
         color: $font-color-default;
     }
 

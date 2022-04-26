@@ -10,7 +10,7 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
     border-style: solid;
     border-color: $border-color-default;
     border-radius: $border-radius-base;
-    background: $bg-component;
+    background: $bg-transparent;
     font-size: $font-size-base;
     user-select: none;
 
@@ -39,7 +39,7 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
         text-align: center;
         width: 100%;
         padding: 8px 8px 0;
-        background: $bg-header;
+        background: $bg-component-darken;
 
         & > span {
             display: inline-block;

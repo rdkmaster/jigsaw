@@ -51,10 +51,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             tr {
                 height: 30px;
                 &:nth-child(2n) {
-                    background: $bg-component;
+                    background: $bg-transparent;
                 }
                 &:nth-child(2n-1) {
-                    background: $bg-component;
+                    background: $bg-transparent;
                 }
 
                 &.#{$jigsaw-table}-row-selected {
@@ -64,7 +64,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 }
 
                 td[rowspan] {
-                    background: $bg-component;
+                    background: $bg-transparent;
                 }
 
                 &:not(.jigsaw-table-row-expansion):hover {
