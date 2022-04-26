@@ -21,7 +21,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             tr {
                 td {
                     height: 40px;
-                    background: $bg-header;
+                    background: $bg-gray;
 
                     .#{$jigsaw-table}-header-cell {
                         display: inline-flex;
