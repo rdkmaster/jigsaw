@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Radio</jigsaw-header>
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="2">禁用和取消禁用</jigsaw-header>
+        <p class="comment">
+            通过点击无法取消单选，通过设置<code>disabled</code>可以<a (click)="radioDisabled = !radioDisabled">切换是否全部禁用</a>。这个属性不会影响到已经设了disabled为true的选项。
+        </p>
+
+        <jigsaw-radios-lite [(value)]="selectedCity" [data]="cities" [disabled]="radioDisabled">
+        </jigsaw-radios-lite>
+    </div>
+</div>
+
