@@ -15,6 +15,7 @@ export class NavigationMenuNavDemo {
     public data1: SimpleTreeData = new SimpleTreeData();
     public data2: SimpleTreeData = new SimpleTreeData();
     public data3: SimpleTreeData = new SimpleTreeData();
+    public data4: SimpleTreeData = new SimpleTreeData();
     public collapsed: boolean = true;
 
     constructor() {
@@ -52,6 +53,25 @@ export class NavigationMenuNavDemo {
         `;
         this.data2.fromXML(xmlData);
         this.data3.fromXML(xmlData);
+
+        this.data4.fromXML(`
+        <node>
+            <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true" superscript="3">
+                <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" superscript="xxxxx"></node>
+                <node label="告警统计"></node>
+                <node label="定时导出" icon="iconfont iconfont-e601"></node>
+                <node label="告警同步"></node>
+                <node label="告警提示" icon="iconfont iconfont-e52a" superscript="9"></node>
+            </node>
+            <node label="历史告警" icon="iconfont iconfont-e5f7">
+                <node label="告警查询"></node>
+            </node>
+            <node label="通知" icon="iconfont iconfont-e605">
+                <node label="通知监控"></node>
+            </node>
+            <node label="告警设置" icon="iconfont iconfont-e36f"></node>
+        </node>
+    `)
     }
 
     updateMenu() {
@@ -73,6 +93,27 @@ export class NavigationMenuNavDemo {
                 <node label="一级菜单4" icon="iconfont iconfont-e36f"></node>
             </node>
         `);
+    }
+
+    updateMenu1() {
+        this.data4.fromXML(`
+        <node>
+            <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
+                <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" superscript="1"></node>
+                <node label="告警统计"></node>
+                <node label="定时导出" icon="iconfont iconfont-e601" superscript="9"></node>
+                <node label="告警同步"></node>
+                <node label="告警提示" icon="iconfont iconfont-e52a"></node>
+            </node>
+            <node label="历史告警" icon="iconfont iconfont-e5f7">
+                <node label="告警查询"></node>
+            </node>
+            <node label="通知" icon="iconfont iconfont-e605">
+                <node label="通知监控"></node>
+            </node>
+            <node label="告警设置" icon="iconfont iconfont-e36f"></node>
+        </node>
+    `)
     }
 
     menuSelect(node: SimpleTreeData) {
