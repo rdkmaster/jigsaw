@@ -9,6 +9,8 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     color: $font-color-default;
 
     .#{$jigsaw-time-section}-time {
+        display: flex;
+        flex-direction: column;
         padding-right: 8px;
 
         .#{$jigsaw-time-section}-title {

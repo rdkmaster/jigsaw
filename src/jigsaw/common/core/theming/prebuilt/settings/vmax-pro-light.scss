@@ -219,7 +219,8 @@ $brand-active-lighten: $blue-2;
     $bg-component-darken => 组件背景（偏灰）（date-picker）
     $bg-transparent => 透明背景
     $bg-popup => 弹框背景（dialog、notification、toast）
-    $bg-gray => 灰色背景（tag）
+    $bg-gray => 灰色背景（tag、表头）
+    $bg-gray-spec => 特殊的灰色背景，亮色下为白色，深色下为亮灰色（switch）
 
     @状态
     $bg-disabled => 禁用背景
@@ -240,6 +241,7 @@ $brand-active-lighten: $blue-2;
 $bg-transparent: transparent;
 $bg-popup: $gray-1;
 $bg-gray: $gray-3;
+$bg-gray-spec: $gray-1;
 $bg-scrollbar: $gray-3;
 $bg-scrollbar-lighten: $gray-7;
 
@@ -303,5 +305,6 @@ $nav-navigation-darken: #3c4c5a;
 $nav-hover: #2a3642;
 $nav-active: #212a33;
 $nav-color: $font-color-white;
+$nav-color-disabled: #a4a7b3;
 $nav-color-active: $font-color-white;
 $nav-border: rgba(221, 221, 221, 0.5);
