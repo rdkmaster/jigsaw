@@ -274,11 +274,19 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
 
             &.#{$jigsaw-list-option}-disabled {
-                .#{$jigsaw-list-option}-wrapper:hover {
-                    .#{$jigsaw-checkbox}-host {
-                        .#{$jigsaw-checkbox}-wrapper {
-                            .#{$jigsaw-checkbox} {
-                                border-color: $border-color-disabled;
+                .#{$jigsaw-list-option}-wrapper {
+                    color: $font-color-disabled;
+
+                    .select-option-label {
+                        color: $font-color-disabled;
+                    }
+
+                    &:hover {
+                        .#{$jigsaw-checkbox}-host {
+                            .#{$jigsaw-checkbox}-wrapper {
+                                .#{$jigsaw-checkbox} {
+                                    border-color: $border-color-disabled;
+                                }
                             }
                         }
                     }
