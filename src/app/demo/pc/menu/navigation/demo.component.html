@@ -3,27 +3,32 @@
 </jigsaw-demo-description>
 
 <div class="live-demo-wrap">
-    <jigsaw-header [level]="1">导航菜单</jigsaw-header>
+    <jigsaw-header [level]="1">Navigation-Menu 导航菜单</jigsaw-header>
     <p>更多导航内置主题清请<a href="/#/pc/theme/build-in">参考这个demo</a></p>
     <div class="clearfix">
         <div class="demo-2 live-demo block">
             <jigsaw-header [level]="2">二级子菜单</jigsaw-header>
             <a (click)="updateMenu()">更新菜单数据</a><br><br>
-            <jigsaw-navigation-menu [data]="data1" (select)="menuSelect($event)" height="100%"
-                                    ></jigsaw-navigation-menu>
+            <jigsaw-navigation-menu [data]="data1" (select)="menuSelect($event)" height="100%"></jigsaw-navigation-menu>
         </div>
 
         <div class="demo-1 live-demo block">
             <jigsaw-header [level]="2">一级菜单</jigsaw-header>
-            <jigsaw-navigation-menu [data]="data2" (select)="menuSelect($event)"
-                                    ></jigsaw-navigation-menu>
+            <jigsaw-navigation-menu [data]="data2" (select)="menuSelect($event)"></jigsaw-navigation-menu>
         </div>
 
         <div class="demo-2 live-demo block">
             <jigsaw-header [level]="2">默认折叠的导航菜单</jigsaw-header>
             <a (click)="updateCollapsed()">更改折叠状态</a><br><br>
-            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" [(collapsed)]="collapsed" (collapsedChange)="collapsedChanged($event)"
-                                    ></jigsaw-navigation-menu>
+            <jigsaw-navigation-menu [data]="data3" (select)="menuSelect($event)" [(collapsed)]="collapsed"
+                (collapsedChange)="collapsedChanged($event)"></jigsaw-navigation-menu>
         </div>
+    </div>
+    <div>
+        <jigsaw-header>带徽标的导航菜单</jigsaw-header>
+        <div>
+            <a (click)="updateMenu1()">更新徽标数据</a>
+        </div>
+        <jigsaw-navigation-menu #menu [data]="data4" (select)="menuSelect($event)"></jigsaw-navigation-menu>
     </div>
 </div>

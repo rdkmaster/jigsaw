@@ -156,4 +156,8 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         this.collapsed = !this.collapsed;
         this.collapsedChange.emit(this.collapsed);
     }
+
+    public update(): void {
+        this._cdr.markForCheck();
+    }
 }

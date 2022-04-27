@@ -9,7 +9,7 @@
                 <i *ngIf="collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="menuItem.label" jigsawTooltipTheme="dark"
                     jigsawTooltipPosition="right"></i>
                 <i *ngIf="!collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'"></i>
-                <span>{{menuItem.label}}</span>
+                <span jigsaw-badge [jigsawBadgeValue]="menuItem?.badgeValue" jigsawBadgeSize="small" jigsawBadgeHorizontalOffset="10">{{menuItem.label}}</span>
                 <i *ngIf="menuItem?.nodes?.length > 0 && !collapsed"
                     class="iconfont iconfont-e24f jigsaw-nav-menu-item-arrow"></i>
             </div>
@@ -20,7 +20,7 @@
                     <i *ngIf="collapsed" [ngClass]="subMenu.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="subMenu.label" jigsawTooltipTheme="dark"
                         jigsawTooltipPosition="right"></i>
                     <i *ngIf="!collapsed" [ngClass]="subMenu.icon || 'iconfont iconfont-e231'"></i>
-                    <span>{{subMenu.label}}</span>
+                    <span jigsaw-badge [jigsawBadgeValue]="subMenu?.badgeValue" jigsawBadgeSize="small" jigsawBadgeHorizontalOffset="10">{{subMenu.label}}</span>
                 </div>
             </div>
         </div>
