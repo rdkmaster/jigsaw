@@ -277,6 +277,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     /**
+     * 设置select的size大小
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public size: "small" | "medium" | "large" = "large";
+
+    /**
      * 选择结果发生变化时，向外面发送事件
      *
      * $demo = select/basic

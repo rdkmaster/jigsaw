@@ -102,6 +102,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
 
             .iconfont {
                 color: $icon-color-disabled;
+                line-height: 1;
                 pointer-events: none;
             }
         }
