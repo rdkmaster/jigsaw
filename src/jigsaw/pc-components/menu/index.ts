@@ -8,7 +8,7 @@ import {JigsawCascadingMenu} from "../../common/directive/menu/cascading-menu";
 import { JigsawTooltipModule } from '../../common/directive/tooltip/tooltip';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { InternalUtils } from '../../common/core/utils/internal-utils';
-import { JigsawBadgeModule } from '../../common/directive/badge';
+import { JigsawBadgeModule } from '../../common/directive/badge/index';
 
 @NgModule({
     declarations: [JigsawMenu, JigsawCascadingMenu, JigsawMenuHelper, JigsawNavigationMenu],
