@@ -57,7 +57,7 @@ export class NavigationMenuNavDemo {
         this.data4.fromXML(`
         <node>
             <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true" superscript="3">
-                <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" superscript="xxxxx"></node>
+                <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" superscript="10"></node>
                 <node label="告警统计"></node>
                 <node label="定时导出" icon="iconfont iconfont-e601"></node>
                 <node label="告警同步"></node>

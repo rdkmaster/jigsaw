@@ -49,7 +49,6 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     private _removeDataRefresh: CallbackRemoval;
 
     public set data(value: SimpleTreeData) {
-        console.log(value)
         if (CommonUtils.isUndefined(value) || CommonUtils.isUndefined(value.nodes)) {
             return;
         }
