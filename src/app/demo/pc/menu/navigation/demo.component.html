@@ -29,6 +29,6 @@
         <div>
             <a (click)="updateMenu1()">更新菜单数据</a>
         </div>
-        <jigsaw-navigation-menu [data]="data4" (select)="menuSelect($event)"></jigsaw-navigation-menu>
+        <jigsaw-navigation-menu #menu [data]="data4" (select)="menuSelect($event)"></jigsaw-navigation-menu>
     </div>
 </div>
