@@ -9,6 +9,6 @@
         </div>
     </jigsaw-list>
     <ul #indexList class="jigsaw-alphabetical-index-panel">
-        <li #indexListItem *ngFor="let letter of _$enLetters; index as i" (click)="_$jumpTo(i)">{{letter}}</li>
+        <li #indexListItem *ngFor="let letter of _$alphabeticalIndex; index as i" (click)="_$jumpTo(i)">{{letter}}</li>
     </ul>
 </div>

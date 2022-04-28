@@ -1,6 +1,6 @@
 import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
 import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, Injector, NgZone } from '@angular/core';
-import { JigsawAlphabeticalIndexModule, pinyinDictionary } from './alphabetical-index';
+import { JigsawAlphabeticalIndexModule, PinyinDictionary } from './alphabetical-index';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { DropDownTrigger } from '../../common/directive/float/float';
 import { JigsawComboSelectModule } from '../combo-select/index';
@@ -64,7 +64,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    pinyinDictionary: pinyinDictionary;
+    pinyinDictionary: PinyinDictionary;
 
     @Input()
     @RequireMarkForCheck()
