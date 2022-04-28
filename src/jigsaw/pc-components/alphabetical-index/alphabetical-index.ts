@@ -157,15 +157,11 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     private _indexItemElementRefs: QueryList<ElementRef>;
 
     private _sortByFirstLetter(arr: ArrayCollection<string>): ArrayCollection<string> {
-        if (!String.prototype.localeCompare) {
-            return null;
-        }
-
         const letterGroup = {}
         const result = new ArrayCollection([]);
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter] = [];
-        })
+        });
 
         arr.forEach(item => {
             if (CommonUtils.isUndefined(item)) {
@@ -230,11 +226,11 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         this.valueChange.emit($event);
     }
 
-    private _removeOnDestroy: CallbackRemoval;
+    private _removeCheckCurrentOnDestroy: CallbackRemoval;
 
     ngAfterViewInit() {
         const dataList = this._dataElementRefs.nativeElement;
-        this._removeOnDestroy = dataList.addEventListener('scroll', () => {
+        this._removeCheckCurrentOnDestroy = dataList.addEventListener('scroll', () => {
             for (let i = 0; i < this._$alphabeticalIndex.length; i++) {
                 if (this._titleElementRefs['_results'][i].nativeElement.offsetTop > dataList.scrollTop) {
                     this._setCurrent(i);
@@ -249,8 +245,8 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         if (this._removeOnRefresh) {
             this._removeOnRefresh();
         }
-        if (this._removeOnDestroy) {
-            this._removeOnDestroy();
+        if (this._removeCheckCurrentOnDestroy) {
+            this._removeCheckCurrentOnDestroy();
         }
     }
 }
