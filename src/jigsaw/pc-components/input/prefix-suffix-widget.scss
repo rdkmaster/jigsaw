@@ -24,6 +24,7 @@ $prefix-suffix-cls: #{$jigsaw-prefix}-prefix-suffix;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 80%;
 
             &-text {
                 flex: 1;
