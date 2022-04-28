@@ -34,7 +34,7 @@ import {
     SortChangeEvent,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting
+    TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
@@ -440,9 +440,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
-            this._allExpandedRows.forEach(ele => {
-                ele.remove();
-            });
+            this._allExpandedRows
+                .filter(rowInfo => rowInfo.remainOpen ? rowInfo.rowIndex >= this._data.data.length : true)
+                .forEach(rowInfo => rowInfo.element.remove());
         })
     }
 
@@ -906,29 +906,68 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * 展开行
      */
-    public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object): void {
-        const ele = this._rowElementRefs.toArray()[rowIndex].nativeElement;
-        const headerEle = this._headerComponents.toArray();
-        const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
-
-        if (ele.nextSibling.nodeName === 'TR' && ele.nextSibling.classList.contains('jigsaw-table-row-expansion')) {
-            const index = this._allExpandedRows.findIndex(i => i && i === ele.nextSibling);
-            this._allExpandedRows.splice(index, 1);
-            ele.nextSibling.remove();
-        } else {
-            const tr = document.createElement('tr');
-            const trustedEle = document.createElement('td');
-            trustedEle.colSpan = headerEle.length;
-            tr.classList.add('jigsaw-table-row-expansion');
-            tr.insertBefore(trustedEle,tr.lastElementChild);
-
-            trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, rawHtmlContext, []);
-            ele.parentNode.insertBefore(tr, ele.nextSibling)
-            this._allExpandedRows.push(tr);
+    public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object, options?: TableRowExpandOptions): void {
+        const rowElement = this._rowElementRefs.toArray()[rowIndex]?.nativeElement;
+        if (!rowElement) {
+            return;
         }
+
+        const action = options?.action || 'toggle';
+        const expanded = rowElement.nextSibling.nodeName === 'TR' && rowElement.nextSibling.classList.contains('jigsaw-table-row-expansion');
+        if (!expanded && action == 'hide') {
+            // 该行还没打开，恰好此时人家要求关掉，那啥事不用做
+            return;
+        }
+        if (expanded && action == 'hide') {
+            // 该行已经打开，人家要求关掉
+            this._hideExpansion(rowElement);
+            return;
+        }
+        if (expanded && action == 'show') {
+            // 已经打开了，但此时人家要求再打开，需要更新一下内容
+            const rowInfo = this._allExpandedRows.find(i => i?.element === rowElement.nextSibling);
+            rowInfo.remainOpen = options?.remainOpenAfterDataChanges;
+            rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
+                CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
+            return;
+        }
+        if (!expanded && action == 'show') {
+            // 该行还没打开，人家要求打开
+            this._showExpansion(rowElement, rawHtml, rawHtmlContext, options?.remainOpenAfterDataChanges, rowIndex);
+            return;
+        }
+        if (expanded && action == 'toggle') {
+            this._hideExpansion(rowElement);
+            return;
+        }
+        if (!expanded && action == 'toggle') {
+            this._showExpansion(rowElement, rawHtml, rawHtmlContext, options?.remainOpenAfterDataChanges, rowIndex);
+            return;
+        }
+        throw new Error('internal error, should not run here!');
     }
 
-    private _allExpandedRows: HTMLTableRowElement[] = [];
+    private _allExpandedRows: { element: HTMLTableRowElement, remainOpen: boolean, rowIndex: number }[] = [];
+
+    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string, context: object, remainOpen: boolean, rowIndex: number): void {
+        const tr = document.createElement('tr');
+        const trustedEle = document.createElement('td');
+        const headerEle = this._headerComponents.toArray();
+        trustedEle.colSpan = headerEle.length;
+        tr.classList.add('jigsaw-table-row-expansion');
+        tr.insertBefore(trustedEle, tr.lastElementChild);
+
+        const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
+        trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
+        rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
+        this._allExpandedRows.push({element: tr, rowIndex, remainOpen});
+    }
+
+    private _hideExpansion(rowElement: HTMLTableRowElement): void {
+        const index = this._allExpandedRows.findIndex(i => i?.element === rowElement.nextSibling);
+        this._allExpandedRows.splice(index, 1);
+        rowElement.nextSibling.remove();
+    }
 
     ngAfterViewInit() {
         this._selectRow(this.selectedRow, true);
