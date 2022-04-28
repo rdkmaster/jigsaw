@@ -1,0 +1,21 @@
+.live-demo-wrap .live-demo .size-cntr {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    margin-bottom: 8px;
+}
+
+.live-demo-wrap .live-demo .size-title {
+    width: 80px;
+}
+
+.live-demo-wrap .live-demo .size-cntr .jigsaw-select-host {
+    margin-right: 8px;
+}
+
+.live-demo-wrap .live-demo .size-cntr .setting-title {
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    margin-right: 8px;
+}

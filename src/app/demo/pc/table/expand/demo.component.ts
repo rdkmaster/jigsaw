@@ -34,6 +34,10 @@ export class TableExpandDemoComponent {
         {
             target: "salary",
             width: "20%"
+        },
+        {
+            target: "progress",
+            visible: false
         }
     ];
 

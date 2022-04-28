@@ -420,10 +420,10 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
     templateUrl: 'tab-bar.html',
     host: {
-        '[class.jigsaw-tabs]': 'true',
-        '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tabs-bar-host]': 'true',
         '[class.jigsaw-tabs-page]': 'tabType == "page"',
         '[class.jigsaw-tabs-editable]': 'editable'
     },
@@ -510,7 +510,8 @@ export class JigsawTabBar extends JigsawTabBase {
     host: {
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

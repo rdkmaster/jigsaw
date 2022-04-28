@@ -8,7 +8,8 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     padding: 7px 8px;
     cursor: pointer;
     box-sizing: border-box;
-    background: $bg-body;
+    background: $bg-component;
+    color: $font-color-default;
 
     &:hover {
         background: $bg-hover;
@@ -33,7 +34,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         cursor: not-allowed;
 
         &:hover {
-            background: $bg-body;
+            background: $bg-component;
         }
 
         .#{$jigsaw-list-option}-title,

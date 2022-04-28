@@ -21,19 +21,19 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             tr {
                 td {
                     height: 40px;
-                    background: $bg-header;
+                    background: $bg-gray;
 
-                    .#{$jigsaw-table}-header-cell{
+                    .#{$jigsaw-table}-header-cell {
                         display: inline-flex;
                         justify-content: center;
                         align-items: center;
                         width: 100%;
 
-                        .iconfont{
+                        .iconfont {
                             margin-right: 2px;
                         }
 
-                        ng-component{
+                        ng-component {
                             width: 100%;
                         }
                     }
@@ -51,29 +51,36 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             tr {
                 height: 30px;
                 &:nth-child(2n) {
-                    background: $bg-component;
+                    background: $bg-transparent;
                 }
                 &:nth-child(2n-1) {
-                    background: $bg-component;
+                    background: $bg-transparent;
                 }
-                &:hover {
-                    td:not([rowspan]) {
-                        background: $bg-hover;
-                    }
-                }
+
                 &.#{$jigsaw-table}-row-selected {
                     td:not([rowspan]) {
                         background: $brand-active-lighten;
                     }
                 }
-                td[rowspan] {
-                    background: $bg-component;
-                }
-            }
 
-            tr.jigsaw-table-row-expansion{
-                border-left: 1px solid $border-color-default;
-                border-right: 1px solid $border-color-default;
+                td[rowspan] {
+                    background: $bg-transparent;
+                }
+
+                &:not(.jigsaw-table-row-expansion):hover {
+                    td:not([rowspan]) {
+                        background: $bg-hover;
+                    }
+                }
+
+                &.jigsaw-table-row-expansion {
+                    border-left: 1px solid $border-color-default;
+                    border-right: 1px solid $border-color-default;
+                }
+
+                &:last-of-type.jigsaw-table-row-expansion {
+                    border-bottom: 1px solid $border-color-default;
+                }
             }
         }
     }
@@ -124,7 +131,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         left: 50%;
         transform: translate(-50%, -50%);
 
-        .#{$jigsaw-table}-no-data-text{
+        .#{$jigsaw-table}-no-data-text {
             color: $font-color-hint;
             font-size: $font-size-text-base;
         }
@@ -155,7 +162,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             cursor: pointer;
         }
     }
-
 }
 
 @-moz-document url-prefix() {
@@ -164,4 +170,3 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         width: 100%;
     }
 }
-

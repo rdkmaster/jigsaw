@@ -18,9 +18,10 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common"
         </div>
     `,
     host: {
-        '[class.jigsaw-process-status]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-process-status-host]': 'true',
         '[class.jigsaw-process-status-size-small]': "preSize === 'small'",
         '[class.jigsaw-process-status-size-large]': "preSize === 'large'",
         '[class.jigsaw-process-status-direction-vertical]': "direction === 'vertical'",

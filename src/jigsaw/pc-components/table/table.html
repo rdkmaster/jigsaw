@@ -9,6 +9,7 @@
         <tr>
             <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}">
                 <jigsaw-table-header [tableData]="data"
+                                     [theme]="theme"
                                      [additionalData]="additionalData"
                                      [cellData]="head.cellData"
                                      [field]="head.field"
@@ -59,6 +60,7 @@
                         </div>
                         <jigsaw-table-cell *ngSwitchDefault class="jigsaw-table-cell-content"
                                            title="{{cell.tooltip ? cell.tooltip : ''}}"
+                                           [theme]="theme"
                                            [tableData]="data"
                                            [additionalData]="additionalData"
                                            [(cellData)]="cell.cellData"

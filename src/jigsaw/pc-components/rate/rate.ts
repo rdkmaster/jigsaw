@@ -10,7 +10,9 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     templateUrl: './rate.html',
     host: {
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-rate-host]': 'true'
     },
     providers: [
         {

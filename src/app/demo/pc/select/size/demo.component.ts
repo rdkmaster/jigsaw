@@ -3,6 +3,7 @@ import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
+    styleUrls: ["./demo.component.css"]
 })
 export class SelectSizeDemoComponent {
     cityListForSelect = new ArrayCollection([

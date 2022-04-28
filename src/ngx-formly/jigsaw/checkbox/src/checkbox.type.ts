@@ -17,6 +17,9 @@ import {JigsawCheckBox} from "@rdkmaster/jigsaw";
         </jigsaw-checkbox>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[style.display]': "'flex'",
+    },
 })
 export class FormlyFieldCheckbox extends FormlyFieldType<JigsawCheckBox> {
     defaultOptions = {

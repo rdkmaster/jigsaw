@@ -67,7 +67,7 @@ $jigsaw-breadcrumb: #{$jigsaw-prefix}-breadcrumb;
     &.#{$jigsaw-breadcrumb}-inner {
         padding: 0 8px;
         font-size: $font-size-base;
-        background: $bg-body;
+        background: $bg-component;
         .#{$jigsaw-breadcrumb}-item {
             .#{$jigsaw-breadcrumb}-icon {
                 color: $brand-default;

@@ -34,7 +34,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     align-items: center;
                     width: 40px;
                     height: 100%;
-                    margin-right: 10px;
+                    font-size: 18px;
                     text-align: center;
                 }
 
@@ -71,6 +71,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                         width: 14px;
                         height: 100%;
                         margin-right: 10px;
+                        font-size: 18px;
                         text-align: center;
                     }
 
@@ -80,7 +81,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
                     &.#{$jigsaw-nav-menu}-sub-item-selected {
                         background-color: $nav-active;
-                        color: $nav-color-active;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-collapsed {
@@ -101,7 +101,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
             .#{$jigsaw-nav-menu}-item-selected-top {
                 background-color: $nav-active;
-                color: $brand-default;
             }
         }
 
@@ -126,7 +125,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items-inline {
         flex: 1;
-        background: $bg-component;
+        background: $bg-transparent;
 
         .#{$jigsaw-nav-menu}-item {
             width: 100%;
@@ -151,10 +150,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
                 &:hover {
                     background: $bg-hover;
-                }
-
-                &.#{$jigsaw-nav-menu}-item-selected-top {
-                    color: $brand-default;
                 }
 
                 .#{$jigsaw-nav-menu}-item-arrow {
@@ -183,17 +178,12 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                 }
             }
 
-            .#{$jigsaw-nav-menu}-item-selected {
-                color: $brand-default;
-            }
-
             .#{$jigsaw-nav-menu}-item-selected-top {
-                background: $bg-body;
+                background: $bg-component;
             }
 
             .#{$jigsaw-nav-menu}-sub-item-selected {
-                color: $brand-default;
-                background: $bg-body;
+                background: $bg-component;
             }
         }
     }

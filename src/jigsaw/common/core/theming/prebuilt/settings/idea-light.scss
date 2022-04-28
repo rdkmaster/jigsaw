@@ -9,16 +9,6 @@ $blue-7: mix(#000, #41addc, 10%);
 $blue-8: mix(#000, #41addc, 20%);
 $blue-9: mix(#000, #41addc, 30%);
 $blue-10: mix(#000, #41addc, 40%);
-$blue-1-dark: #192738;
-$blue-2-dark: #1e3a59;
-$blue-3-dark: #1f4b7a;
-$blue-4-dark: #1c5c9c;
-$blue-5-dark: #196dbd;
-$blue-6-dark: #1681de;
-$blue-7-dark: #3c99e6;
-$blue-8-dark: #64b2ed;
-$blue-9-dark: #8ecaf5;
-$blue-10-dark: #bbe2fc;
 
 $cyan-1: mix(#fff, #01c5c2, 90%);
 $cyan-2: mix(#fff, #01c5c2, 80%);
@@ -139,16 +129,6 @@ $gray-7: #666666;
 $gray-8: #444444;
 $gray-9: #333333;
 $gray-10: #222222;
-$gray-1-dark: #0f111a;
-$gray-2-dark: #1b1d26;
-$gray-3-dark: #22242e;
-$gray-4-dark: #2a2c38;
-$gray-5-dark: #323543;
-$gray-6-dark: #474a59;
-$gray-7-dark: #7b7e8c;
-$gray-8-dark: #a4a7b3;
-$gray-9-dark: #d9d9d9;
-$gray-10-dark: #e5e5e5;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -238,50 +218,42 @@ $status-error: $red-6;
 /*@public*/ $brand-disabled: $blue-2;
 $brand-lighten: $blue-1;
 $brand-active-lighten: $blue-2;
-// 支持组件内部实现明暗皮肤
-$brand-default-light: $blue-6;
-$brand-hover-light: $blue-7;
-$brand-lighten-light: $blue-1;
-$brand-active-lighten-light: $blue-2;
-$brand-default-dark: $blue-6-dark;
-$brand-hover-dark: $blue-7-dark;
-$brand-lighten-dark: $blue-1-dark;
-$brand-active-dark: $blue-8-dark;
 
 /* background 背景色
-    $bg-body => 背景、页面背景
+    @大面积背景
+    $bg-body => 大面积背景色，用于页面背景
+    $bg-container => 大面积背景色，用于容器背景（卡片）
+
+    @组件背景
     $bg-component => 组件背景
-    $bg-container => 不影响功能的背景、侧边栏、白色卡片、datepicker
-    $bg-disabled => 组件禁用背景
-    $bg-header => 表头
-    $bg-gray => tag
-    $bg-body-light => 组件内部实现亮色模式
-    $bg-body-dark => 组件内部实现暗色模式
+    $bg-component-darken => 组件背景（偏灰）（date-picker）
+    $bg-transparent => 透明背景
+    $bg-popup => 弹框背景（dialog、notification、toast）
+    $bg-gray => 灰色背景（tag、表头）
+    $bg-gray-spec => 特殊的灰色背景，亮色下为白色，深色下为亮灰色（switch）
+
+    @状态
+    $bg-disabled => 禁用背景
+    $bg-hover => 悬停背景
+    $bg-active => 点击背景
+
+    @其他背景
+    $bg-scrollbar => 滚动条
+    $bg-scrollbar-lighten => 滚动条（偏浅）
 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-container: #f7f7f7;
+/*@public*/ $bg-component: $gray-1;
+/*@public*/ $bg-component-darken: #f7f7f7;
 /*@public*/ $bg-disabled: #f7f7f7;
 /*@public*/ $bg-hover: $blue-1;
 /*@public*/ $bg-active: $blue-2;
+$bg-transparent: transparent;
 $bg-popup: $gray-1;
-$bg-component: transparent;
-$bg-header: $gray-3;
 $bg-gray: $gray-3;
-$bg-white: #fff;
-$bg-navigation: #32404e;
+$bg-gray-spec: $gray-1;
 $bg-scrollbar: $gray-3;
 $bg-scrollbar-lighten: $gray-7;
-// 支持组件内部实现明暗皮肤
-$bg-body-light: $gray-1;
-$bg-container-light: $gray-2;
-$bg-gray-light: $gray-3;
-$bg-hover-light: $blue-1;
-$bg-header-light: $gray-3;
-$bg-container-dark: $gray-2-dark;
-$bg-body-dark: $gray-3-dark;
-$bg-gray-dark: $gray-3-dark;
-$bg-hover-dark: $gray-4-dark;
-$bg-header-dark: $gray-3-dark;
 
 /* font 字体颜色
     $font-color-default => 正文
@@ -293,15 +265,10 @@ $bg-header-dark: $gray-3-dark;
     $font-color-tag => 标签文字
     $font-color-white => 深底白字，纯白色（此变量色值不会变）
     $font-color-white-darken => 深底白字，暗白色
-    $font-color-default-light => 组件内部实现亮色模式
-    $font-color-disabled-light => 组件内部实现亮色模式
-    $font-color-disabled-dark => 组件内部实现暗色模式
 */
 /*@public*/ $font-color-default: $gray-7;
 /*@public*/ $font-color-disabled: $gray-4;
 /*@public*/ $font-color-heading: $gray-9;
-/*@public*/ $font-color-default-light: $gray-7;
-/*@public*/ $font-color-disabled-light: $gray-4;
 $font-color-disabled-spec: $gray-4;
 $font-color-hint: $gray-5;
 $font-color-watermark: $gray-5;
@@ -312,26 +279,15 @@ $font-color-white: hsl(0, 0%, 100%);
 $font-color-white-darken: $gray-3;
 $font-color-brand: $brand-default;
 $font-color-brand-hover: $brand-hover;
-// 支持组件内部实现明暗皮肤
-$font-color-hint-light: $gray-7;
-$font-color-heading-bold-light: $gray-9;
-$font-color-white-darken-light: $gray-6;
-$font-color-default-dark: $gray-9-dark;
-$font-color-disabled-dark: $gray-8-dark;
-$font-color-heading-bold-dark: $gray-9-dark;
-$font-color-white-darken-dark: $gray-8-dark;
 
 /* border 边框
     $border-color-default => 边框颜色
     $border-color-disabled => 边框禁用
-    $border-color-default-dark => 组件内部实现暗色模式
 */
 /*@public*/ $border-color-default: $gray-3;
 /*@public*/ $border-color-disabled: $gray-2;
 $border-color-popup: $gray-2;
 $border-color-shadow-cntr: transparent;
-$border-color-default-light: $gray-3;
-$border-color-default-dark: $gray-3-dark;
 
 /* split line 分割线 */
 /*@public*/ $splitline-default: $gray-2;
@@ -359,5 +315,6 @@ $nav-navigation-darken: $gray-3;
 $nav-hover: $blue-1;
 $nav-active: $gray-1;
 $nav-color: $font-color-default;
+$nav-color-disabled: $font-color-disabled;
 $nav-color-active: $brand-default;
 $nav-border: $border-color-default;
