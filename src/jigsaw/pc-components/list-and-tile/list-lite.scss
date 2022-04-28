@@ -14,7 +14,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         border-style: solid;
         border-color: $border-color-default;
         border-radius: $border-radius-base;
-        background: $bg-component;
+        background: $bg-transparent;
         
         .#{$jigsaw-list}-host {
             border: none;

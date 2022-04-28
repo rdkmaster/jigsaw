@@ -12,7 +12,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
         overflow: hidden;
         @include clearfix;
         color: $font-color-default;
-        background: $bg-component;
+        background: $bg-transparent;
 
         &.#{$jigsaw-tabs}-vertical-response {
             display: flex;
@@ -56,7 +56,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
     position: relative;
     overflow: hidden;
     color: $font-color-default;
-    background: $bg-component;
+    background: $bg-transparent;
 
     .#{$jigsaw-tabs-bar} {
         border-bottom-width: 1px;
@@ -210,7 +210,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                 right: 0;
                 width: 40px;
                 height: 100%;
-                background-color: var(--jigsaw-nav-background, $bg-body);
+                background-color: var(--jigsaw-nav-background, $bg-component);
                 font-size: 24px;
                 color: $icon-color-default;
                 text-align: center;
@@ -255,7 +255,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             right: 0;
             width: 40px;
             height: 100%;
-            background-color: var(--jigsaw-nav-background, $bg-body);
+            background-color: var(--jigsaw-nav-background, $bg-component);
             font-size: 24px;
             color: $icon-color-default;
             text-align: center;
@@ -273,7 +273,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             .#{$jigsaw-tabs}-nav-container {
                 .#{$jigsaw-tabs}-ink-bar {
                     height: 1px;
-                    background-color: var(--jigsaw-nav-background, $bg-body);
+                    background-color: var(--jigsaw-nav-background, $bg-component);
                     transition: unset;
                 }
 

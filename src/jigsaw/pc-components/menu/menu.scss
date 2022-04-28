@@ -3,7 +3,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
 .#{$jigsaw-menu}-host {
-    background: $bg-body !important;
+    background: $bg-component !important;
 
     .#{$jigsaw-list}-host {
         border: $border-color-default 1px solid;
@@ -114,7 +114,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     background: $nav-navigation;
 
                     .#{$jigsaw-menu}-navigation-title {
-                        color: $font-color-white-darken;
+                        color: $nav-color-disabled;
                         line-height: 40px;
                         text-align: center;
                         vertical-align: center;
@@ -127,7 +127,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 }
 
                 .#{$jigsaw-menu}-navigation-title {
-                    color: $font-color-white;
+                    color: $nav-color;
                     line-height: 40px;
                     text-align: center;
                     vertical-align: center;

@@ -5,7 +5,7 @@ $jigsaw-time-popup: #{$jigsaw-prefix}-time-popup;
     padding: 10px 6px;
     position: relative;
     border-radius: $border-radius-base;
-    background: $bg-body;
+    background: $bg-component;
 
     .#{$jigsaw-time-popup}-content {
         &-hour,

@@ -5,7 +5,7 @@ $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
     position: relative;
     width: 135px;
     height: $height-base;
-    background: $bg-component;
+    background: $bg-transparent;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color-default;
@@ -40,7 +40,7 @@ $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
             border-radius: $border-radius-sm;
             text-align: center;
             outline: none;
-            background: $bg-component;
+            background: $bg-transparent;
 
             &:hover {
                 background: $bg-hover;
