@@ -459,3 +459,5 @@ export class AdditionalTableData extends TableData {
         return this._touchedValues[fieldString];
     }
 }
+
+export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean};
