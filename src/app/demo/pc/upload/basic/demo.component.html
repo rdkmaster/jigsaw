@@ -21,7 +21,7 @@
     <section class="demo-cntr">
         <div class="demo-1">
             <jigsaw-header>上传组件</jigsaw-header>
-            <jigsaw-upload (start)="uploadStart($event)" (dataSendProgress)="uploadDataSendProgress($event)"
+            <jigsaw-upload width="300px" (start)="uploadStart($event)" (dataSendProgress)="uploadDataSendProgress($event)"
                 (progress)="uploadProgress($event)" (complete)="uploadComplete($event)" (change)="uploadChange($event)"
                 (remove)="uploadRemove($event)">
             </jigsaw-upload>
@@ -29,25 +29,25 @@
 
         <div class="demo-2">
             <jigsaw-header>仅支持单个文件</jigsaw-header>
-            <jigsaw-upload [uploadMultiple]="false"></jigsaw-upload>
+            <jigsaw-upload width="300px" [uploadMultiple]="false"></jigsaw-upload>
         </div>
 
         <div class="demo-3">
             <jigsaw-header>不显示结果</jigsaw-header>
-            <jigsaw-upload [showResult]="false"></jigsaw-upload>
+            <jigsaw-upload width="300px" [showResult]="false"></jigsaw-upload>
         </div>
 
         <div class="demo-6">
             <jigsaw-header>手动上传</jigsaw-header>
             <a (click)="uploader6.upload()">点击上传</a>
-            <jigsaw-upload #demo6 [uploadImmediately]="false"></jigsaw-upload>
+            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false"></jigsaw-upload>
         </div>
 
         <div class="demo-4">
             <jigsaw-header>配置文件类型</jigsaw-header>
             <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg', '.txt']">
             </jigsaw-radios-lite>
-            <jigsaw-upload [uploadFileType]="fileType"></jigsaw-upload>
+            <jigsaw-upload width="300px" [uploadFileType]="fileType"></jigsaw-upload>
         </div>
 
         <div class="demo-5">
