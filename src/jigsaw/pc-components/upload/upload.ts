@@ -122,7 +122,24 @@ export class JigsawUpload extends JigsawUploadBase {
             return;
         }
         this._$uploader.appendFiles(fileList);
-        this._$uploader.upload();
         this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
+        if (this.uploadImmediately) {
+            this._$uploader.upload();
+        }
+    }
+
+    @Input()
+    public uploadImmediately: boolean = true;
+
+    public upload() {
+        this._$uploader.upload();
+    }
+
+    public appendFiles(fileList: UploadFileInfo[]) {
+        this._$uploader.appendFiles(fileList);
+    }
+
+    public retryUpload(file: UploadFileInfo) {
+        this._$uploader.retryUpload(file);
     }
 }
