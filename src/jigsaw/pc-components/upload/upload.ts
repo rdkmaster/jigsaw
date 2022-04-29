@@ -128,6 +128,9 @@ export class JigsawUpload extends JigsawUploadBase {
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public uploadImmediately: boolean = true;
 
