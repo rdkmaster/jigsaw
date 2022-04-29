@@ -8,10 +8,10 @@
     <jigsaw-header class="main-header" [level]="1">Upload</jigsaw-header>
     <section>
         <jigsaw-header [level]="2">注意！</jigsaw-header>
-        <p style="width: 500px;">
+        <p>
             为了便于便于应用在更多的场合实现文件上传功能，<b>文件上传功能</b>与<b>文件上传结果显示功能</b>两部分可以单独使用，
             其中执行上传功能的部分以 <code>j-upload</code> / <code>jigsaw-upload</code> 指令的形式存在，详情请 <a
-            href="/#/pc/upload/directive">参考这个demo</a>。
+                href="/#/pc/upload/directive">参考这个demo</a>。
             结果展示的功能，则以<code>j-upload-result</code> / <code>jigsaw-upload-result</code> 组件的形式存在，
             详情请 <a href="/#/pc/upload/upload-result">参考这个demo</a>。
         </p>
@@ -20,8 +20,8 @@
         <div class="demo-1">
             <jigsaw-header>上传组件</jigsaw-header>
             <jigsaw-upload (start)="uploadStart($event)" (dataSendProgress)="uploadDataSendProgress($event)"
-                           (progress)="uploadProgress($event)" (complete)="uploadComplete($event)"
-                           (change)="uploadChange($event)" (remove)="uploadRemove($event)">
+                (progress)="uploadProgress($event)" (complete)="uploadComplete($event)" (change)="uploadChange($event)"
+                (remove)="uploadRemove($event)">
             </jigsaw-upload>
         </div>
 
@@ -33,6 +33,12 @@
         <div class="demo-3">
             <jigsaw-header>不显示结果</jigsaw-header>
             <jigsaw-upload [showResult]="false"></jigsaw-upload>
+        </div>
+
+        <div class="demo-6">
+            <jigsaw-header>手动上传</jigsaw-header>
+            <a (click)="uploader6.upload()">点击上传</a>
+            <jigsaw-upload #demo6 [uploadImmediately]="false"></jigsaw-upload>
         </div>
 
         <div class="demo-4">
@@ -47,10 +53,5 @@
             <jigsaw-upload width="100%" height="400px"></jigsaw-upload>
         </div>
 
-        <div class="demo-6">
-            <jigsaw-header>手动上传</jigsaw-header>
-            <a (click)="uploader6.upload()">点击上传</a>
-            <jigsaw-upload #demo6 [uploadImmediately]="false"></jigsaw-upload>
-        </div>
     </section>
 </div>
