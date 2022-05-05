@@ -12,7 +12,3 @@
 .demo-cntr .demo-5 {
     grid-column: span 3;
 }
-
-.demo-cntr .demo-2 {
-    grid-column-start: 3;
-}
