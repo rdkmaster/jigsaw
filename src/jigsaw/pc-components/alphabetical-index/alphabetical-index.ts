@@ -26,6 +26,15 @@ export type PinyinDictionary = {
     [key: string]: string;
 }
 
+type Letter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | '#';
+
+type LetterData = {
+    letter: Letter,
+    data: ArrayCollection<string>
+}
+
+type SortedIndexData = ArrayCollection<LetterData>;
+
 @WingsTheme('alphabetical-index.scss')
 @Component({
     selector: "jigsaw-alphabetical-index, j-alphabetical-index",
@@ -131,17 +140,17 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
      * @internal 
      */
     @RequireMarkForCheck()
-    public _$sortedData: ArrayCollection<string>;
+    public _$sortedData: SortedIndexData;
 
     /**
      * @internal 
      */
-    public _$alphabeticalIndex = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'];
+    public _$alphabeticalIndex: Letter[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'];
 
     /**
      * @internal 
      */
-    private _enLetters = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
+    private _enLetters: Letter[] = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
     private _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
 
     @ViewChildren('indexTitle', { read: ElementRef })
@@ -156,9 +165,9 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     @ViewChildren('indexListItem', { read: ElementRef })
     private _indexItemElementRefs: QueryList<ElementRef>;
 
-    private _sortByFirstLetter(arr: ArrayCollection<string>): ArrayCollection<string> {
+    private _sortByFirstLetter(arr: ArrayCollection<string>): SortedIndexData {
         const letterGroup = {}
-        const result = new ArrayCollection([]);
+        const result: SortedIndexData = new ArrayCollection([]);
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter] = [];
         });
