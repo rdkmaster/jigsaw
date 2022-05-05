@@ -1,6 +1,6 @@
 import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
 import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, Injector, NgZone } from '@angular/core';
-import { JigsawAlphabeticalIndexModule, PinyinDictionary } from './alphabetical-index';
+import { JigsawAlphabeticalIndexModule } from './alphabetical-index';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { DropDownTrigger } from '../../common/directive/float/float';
 import { JigsawComboSelectModule } from '../combo-select/index';
@@ -27,7 +27,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
 
     /**
      * 组件数据
-     * 
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -64,7 +64,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    pinyinDictionary: PinyinDictionary;
+    pinyinDictionary: string;
 
     @Input()
     @RequireMarkForCheck()
@@ -90,7 +90,7 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
     public valueChange = new EventEmitter<ArrayCollection<string>>();
 
     /**
-     * @internal 
+     * @internal
      */
     public _$valueChange($event) {
         this.valueChange.emit($event)

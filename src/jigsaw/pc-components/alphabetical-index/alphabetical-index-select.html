@@ -1,8 +1,8 @@
-<jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="value" [placeholder]="placeholder" [disabled]="disabled"
-    [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
+<jigsaw-combo-select [theme]="theme" [(value)]="value" [placeholder]="placeholder" [disabled]="disabled"
+    [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width || '150'"
     [textTag]="false">
     <ng-template>
-        <jigsaw-alphabetical-index [data]="data" [(value)]="value" [(pinyinDictionary)]="pinyinDictionary"
+        <jigsaw-alphabetical-index [data]="data" [(value)]="value" [pinyinDictionary]="pinyinDictionary"
             (valueChange)="_$valueChange($event)">
         </jigsaw-alphabetical-index>
     </ng-template>

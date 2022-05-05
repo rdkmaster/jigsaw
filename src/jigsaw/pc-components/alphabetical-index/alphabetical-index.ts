@@ -10,23 +10,16 @@ import {
     AfterViewInit,
     Output,
     EventEmitter,
-    NgZone,
-    Injector,
-    ChangeDetectorRef
 } from "@angular/core";
-import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
 import { CommonModule } from "@angular/common";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
 import { ArrayCollection } from '../../common/core/data/array-collection';
 import { JigsawListModule } from '../list-and-tile/list';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { CommonUtils, CallbackRemoval } from '../../common/core/utils/common-utils';
-import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 
-export type PinyinDictionary = {
-    [key: string]: string;
-}
-
-type Letter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | '#';
+type Letter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M'
+    | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | '#';
 
 type LetterData = {
     letter: Letter,
@@ -34,6 +27,10 @@ type LetterData = {
 }
 
 type SortedIndexData = ArrayCollection<LetterData>;
+
+const _enLetters: Letter[] = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
+const _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
+
 
 @WingsTheme('alphabetical-index.scss')
 @Component({
@@ -47,16 +44,14 @@ type SortedIndexData = ArrayCollection<LetterData>;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements AfterViewInit {
-    public constructor(protected _changeDetector: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
-        super(_zone);
-    }
+    private _removeOnDataRefresh: CallbackRemoval;
+    private _removeOnDictionaryRefresh: CallbackRemoval;
 
     private _data: ArrayCollection<string>;
-    private _removeOnRefresh: CallbackRemoval;
 
     /**
      * 组件数据
-     * 
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -70,45 +65,44 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         }
         this._data = value instanceof ArrayCollection ? value : new ArrayCollection(value);
 
-        if (this._removeOnRefresh) {
-            this._removeOnRefresh();
+        if (this._removeOnDataRefresh) {
+            this._removeOnDataRefresh();
         }
-        this._removeOnRefresh = this._data.onRefresh(() => {
+        this._removeOnDataRefresh = this._data.onRefresh(() => {
             this._sortDataAndJump();
-        })
+        });
         this._sortDataAndJump();
     }
 
-    private _pinyinDictionary: PinyinDictionary;
+    private _pinyinDictionary: string;
 
     /**
      * 拼字字典配置
-     * 
+     *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get pinyinDictionary(): PinyinDictionary {
+    public get pinyinDictionary(): string {
         return this._pinyinDictionary;
     }
 
-    public set pinyinDictionary(value: PinyinDictionary) {
+    public set pinyinDictionary(value: string) {
         if (!value || this._pinyinDictionary == value) {
-            this._pinyinDictionary = {};
             return;
         }
         this._pinyinDictionary = value;
 
-        if (this._removeOnRefresh) {
-            this._removeOnRefresh();
+        if (this._removeOnDictionaryRefresh) {
+            this._removeOnDictionaryRefresh();
         }
-        this._removeOnRefresh = this._data.onRefresh(() => {
+        this._removeOnDictionaryRefresh = this._data.onRefresh(() => {
             this._sortDataAndJump();
         })
         this._sortDataAndJump();
     }
 
     private _sortDataAndJump(): void {
-        this._$sortedData = this._sortByFirstLetter(this._data);
+        this._$sortedData = this._classifyByFirstLetter(this._data);
         this.runAfterMicrotasks(() => {
             this._$jumpTo(0);
         })
@@ -137,21 +131,10 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     public valueChange = new EventEmitter<ArrayCollection<string>>();
 
     /**
-     * @internal 
+     * @internal
+     * @NoMarkForCheckRequired
      */
-    @RequireMarkForCheck()
     public _$sortedData: SortedIndexData;
-
-    /**
-     * @internal 
-     */
-    public _$alphabeticalIndex: Letter[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'];
-
-    /**
-     * @internal 
-     */
-    private _enLetters: Letter[] = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
-    private _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
 
     @ViewChildren('indexTitle', { read: ElementRef })
     private _titleElementRefs: QueryList<ElementRef>;
@@ -165,53 +148,69 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     @ViewChildren('indexListItem', { read: ElementRef })
     private _indexItemElementRefs: QueryList<ElementRef>;
 
-    private _sortByFirstLetter(arr: ArrayCollection<string>): SortedIndexData {
+    /**
+     * @internal
+     */
+    public _$alphabeticalIndex: Letter[] = [
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'
+    ];
+
+    private _classifyByFirstLetter(arr: ArrayCollection<string>): SortedIndexData {
         const letterGroup = {}
         const result: SortedIndexData = new ArrayCollection([]);
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter] = [];
         });
 
-        arr.forEach(item => {
+        arr.forEach((item: string) => {
             if (CommonUtils.isUndefined(item)) {
                 return;
             }
-            item += '';
-            const word = item.trim().toUpperCase();
-            if (/^[A-Z#]/.test(word)) {
-                const firstLetter = word.substr(0, 1);
+            const match = String(item).match(/^\s*(\S)/);
+            if (!match) {
+                letterGroup['#'].push(item);
+                return;
+            }
+            const firstLetter = match[1].toUpperCase();
+            if (/^[A-Z]/.test(firstLetter)) {
                 letterGroup[firstLetter].push(item);
                 return;
             }
-
-            if (this.pinyinDictionary) {
-                const res = this.pinyinDictionary[item];
-                if (/^[A-Z#]/.test(res)) {
-                    const firstLetter = res.substr(0, 1);
-                    letterGroup[firstLetter].push(item);
-                } else {
-                    letterGroup['#'].push(item);
-                }
-            } else {
-                this._enLetters.forEach((letter, i) => {
-                    if ((!this._zhLetters[i - 1] || this._zhLetters[i - 1].localeCompare(word, 'zh-CN') <= 0) && word.localeCompare(this._zhLetters[i], 'zh-CN') == -1) {
-                        letterGroup[letter].push(item);
-                    }
-                })
+            const charCode = firstLetter.charCodeAt(0)
+            if (charCode < 256) {
+                // 非字母的 asc 码，含数字，都归入#
+                letterGroup['#'].push(item);
+                return;
             }
-
-        })
+            // 剩下的都是unicode了
+            if (this.pinyinDictionary && charCode >= 19968 && charCode <= 40869) {
+                const pinyin = this.pinyinDictionary.charAt(charCode - 19968);
+                if (pinyin) {
+                    letterGroup[pinyin].push(item);
+                    return;
+                }
+            }
+            // 剩下的是字典里没有的，使用通用方式处理
+            const letter = _enLetters.find((letter, i) => {
+                if (!(!_zhLetters[i - 1] || _zhLetters[i - 1].localeCompare(firstLetter, 'zh-CN') <= 0)) {
+                    return false;
+                }
+                return firstLetter.localeCompare(_zhLetters[i], 'zh-CN') == -1;
+            });
+            letterGroup[letter].push(item);
+        });
 
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter].sort((a: string, b: string) => a.localeCompare(b));
-            result.push({ letter: letter, data: letterGroup[letter] })
-        })
+            result.push({ letter: letter, data: letterGroup[letter] });
+        });
 
         return result;
     }
 
     /**
-     * @internal 
+     * @internal
      */
     public _$jumpTo(i: number): void {
         if (!this._dataElementRefs || !this._titleElementRefs) {
@@ -229,13 +228,13 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     /**
-     * @internal 
+     * @internal
      */
     public _$selectedItemsChange($event) {
         this.valueChange.emit($event);
     }
 
-    private _removeCheckCurrentOnDestroy: CallbackRemoval;
+    private _removeCheckCurrentOnDestroy: Function;
 
     ngAfterViewInit() {
         const dataList = this._dataElementRefs.nativeElement;
@@ -251,8 +250,11 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     }
 
     ngOnDestroy() {
-        if (this._removeOnRefresh) {
-            this._removeOnRefresh();
+        if (this._removeOnDataRefresh) {
+            this._removeOnDataRefresh();
+        }
+        if (this._removeOnDictionaryRefresh) {
+            this._removeOnDictionaryRefresh();
         }
         if (this._removeCheckCurrentOnDestroy) {
             this._removeCheckCurrentOnDestroy();

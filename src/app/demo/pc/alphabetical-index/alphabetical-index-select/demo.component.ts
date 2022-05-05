@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { PinyinDictionary, CommonUtils } from 'jigsaw/public_api';
+import { CommonUtils } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -92,7 +92,7 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
         console.log($event)
     }
 
-    pinyinDictionary: PinyinDictionary = {}
+    pinyinDictionary: any = {}
 
     createPinyinDictionary() {
         this.pinyinDictionary = {};
@@ -104,7 +104,7 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
             return;
         }
 
-        const dictPath = `pinyin_dict_first_letter.js`;
+        const dictPath = `pinyin-dict-first-letter.js`;
         const body = document.getElementsByTagName("body")[0];
         const script = document.createElement("script");
 
