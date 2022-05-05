@@ -70,6 +70,9 @@ export class SimpleNode {
 // 把这个属性单独拎出来在这里定义，避免这个问题，同时也避免当做public暴露给应用
 Object.defineProperty(SimpleNode.prototype, 'iconSkin', {
     get: function () {
+        if (/.svg\s*$/.test(this.iconUnicode)) {
+            return this.iconUnicode.replace("/", "-").replace(".svg", "").trim();
+        }
         return this.iconUnicode;
     },
     set: function(value: string) {
