@@ -22,7 +22,7 @@ import { JigsawUploadResult } from './upload-result';
 export class JigsawUpload extends JigsawUploadBase {
     constructor(
         private _renderer: Renderer2,
-        private _elementRef: ElementRef
+        private _elementRef: ElementRef,
         @Optional() private _translateService: TranslateService
     ) {
         super();
