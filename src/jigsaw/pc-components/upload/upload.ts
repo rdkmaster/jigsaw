@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer2, ViewChild, Output, EventEmitter} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, Optional, Renderer2, ViewChild, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IUploader, UploadFileInfo} from '../../common/directive/upload/uploader-typings';
 import {JigsawUploadBase, JigsawUploadDirective} from '../../common/directive/upload/upload.directive';
@@ -22,6 +22,7 @@ export class JigsawUpload extends JigsawUploadBase {
     constructor(
         private _renderer: Renderer2,
         private _elementRef: ElementRef,
+        private _cdr: ChangeDetectorRef,
         @Optional() private _translateService: TranslateService
     ) {
         super();
@@ -144,5 +145,13 @@ export class JigsawUpload extends JigsawUploadBase {
 
     public retryUpload(file: UploadFileInfo) {
         this._$uploader.retryUpload(file);
+    }
+
+    /**
+     * 清空所有已上传的文件
+     */
+    public clear(){
+        this._$uploader.files.splice(0, this.files.length);
+        this._cdr.markForCheck();
     }
 }
