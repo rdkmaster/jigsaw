@@ -58,7 +58,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeMask: "none" | "dark" | "light" = "none";
+    public jigsawBadgeMask: "none" | "dark" | "light" | "default" = "none";
 
     /**
      * @NoMarkForCheckRequired
