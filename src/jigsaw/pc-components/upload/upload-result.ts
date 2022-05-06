@@ -25,7 +25,10 @@ import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 })
 export class JigsawUploadResult extends AbstractJigsawComponent implements OnDestroy {
     constructor(private _translateService: TranslateService,
-                public _$cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+        /**
+        * @internal
+        */
+        public _$cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
     }
 

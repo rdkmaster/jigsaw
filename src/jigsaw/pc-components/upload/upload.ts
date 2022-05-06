@@ -62,7 +62,7 @@ export class JigsawUpload extends JigsawUploadBase {
      * @internal
      */
     @ViewChild("uploadResultEle", { read: JigsawUploadResult })
-    public _$uploadResultEle: JigsawUploadResult;
+    private _uploadResultEle: JigsawUploadResult;
 
     public get files(): UploadFileInfo[] {
         return this._$uploader.files;
@@ -158,6 +158,6 @@ export class JigsawUpload extends JigsawUploadBase {
      */
     public clear(){
         this._$uploader.files.splice(0, this.files.length);
-        this._$uploadResultEle._$cdr.markForCheck();
+        this._uploadResultEle._$cdr.markForCheck();
     }
 }
