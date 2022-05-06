@@ -23,7 +23,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         }
 
         &[ng-reflect-jigsaw-float-open="true"] {
-            .#{$jigsaw-combo-select}-arrow {
+            .#{$jigsaw-combo-select}-arrow-rotate {
                 @include prefixer(transform, translateY(-50%) rotate(180deg));
             }
         }
