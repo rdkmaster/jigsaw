@@ -82,3 +82,40 @@
         }
     }
 }
+
+.jigsaw-input-host {
+    .jigsaw-input-wrapper {
+        border-radius: 2px;
+
+        .iconfont-e14b:before {
+            content: "\e9b9";
+        }
+    }
+}
+
+.jigsaw-dialog-host .jigsaw-dialog .jigsaw-dialog-head {
+    height: 56px;
+    min-height: 56px;
+}
+
+.jigsaw-table-host {
+    border-top: 1px solid #cedbef;
+    border-left: 1px solid #cedbef;
+    border-right: 1px solid #cedbef;
+
+    table {
+        tr {
+            border-bottom: 1px solid #cedbef;
+        }
+
+        td {
+            border: none;
+            color: #2d3658;
+        }
+
+        thead tr td {
+            border: none;
+            color: #69749c;
+        }
+    }
+}
