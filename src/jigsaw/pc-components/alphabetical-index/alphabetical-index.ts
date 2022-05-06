@@ -11,26 +11,42 @@ import {
     Output,
     EventEmitter,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
-import { ArrayCollection } from '../../common/core/data/array-collection';
-import { JigsawListModule } from '../list-and-tile/list';
-import { CommonUtils, CallbackRemoval } from '../../common/core/utils/common-utils';
+import {CommonModule} from "@angular/common";
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
+import {ArrayCollection} from '../../common/core/data/array-collection';
+import {JigsawListModule} from '../list-and-tile/list';
+import {CommonUtils, CallbackRemoval} from '../../common/core/utils/common-utils';
 
 type Letter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M'
     | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | '#';
 
-type LetterData = {
+export type LetterData = {
     letter: Letter,
     data: ArrayCollection<string>
 }
 
 type SortedIndexData = ArrayCollection<LetterData>;
 
+export type PinyinDictionary = {
+    [chineseChar: string]: Letter
+};
+
 const _enLetters: Letter[] = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
 const _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
-
+// 常用3千汉字在自动归类时的错漏修正表
+const _commonChinesePinyinReviser = {
+    "椎": "Z", "搭": "D", "达": "D", "咳": "K", "磷": "L", "鳞": "L", "凛": "L", "伶": "L", "灵": "L", "玲": "L", "凌": "L",
+    "铃": "L", "陵": "L", "菱": "L", "蛉": "L", "零": "L", "龄": "L", "岭": "L", "领": "L", "令": "L", "另": "L", "溜": "L",
+    "刘": "L", "流": "L", "留": "L", "硫": "L", "馏": "L", "榴": "L", "瘤": "L", "柳": "L", "六": "L", "龙": "L", "笼": "L",
+    "聋": "L", "隆": "L", "垄": "L", "拢": "L", "楼": "L", "搂": "L", "漏": "L", "卢": "L", "芦": "L", "炉": "L", "虏": "L",
+    "鲁": "L", "陆": "L", "录": "L", "鹿": "L", "碌": "L", "路": "L", "露": "L", "驴": "L", "吕": "L", "旅": "L", "铝": "L",
+    "屡": "L", "缕": "L", "履": "L", "律": "L", "虑": "L", "率": "L", "绿": "L", "氯": "L", "滤": "L", "卵": "L", "乱": "L",
+    "掠": "L", "略": "L", "仑": "L", "伦": "L", "轮": "L", "论": "L", "罗": "L", "萝": "L", "逻": "L", "锣": "L", "箩": "L",
+    "骡": "L", "螺": "L", "裸": "L", "洛": "L", "络": "L", "骆": "L", "落": "L", "韧": "R", "仍": "R", "日": "R", "戎": "R",
+    "绒": "R", "荣": "R", "容": "R", "溶": "R", "蓉": "R", "熔": "R", "融": "R", "柔": "R", "揉": "R", "肉": "R", "如": "R",
+    "儒": "R", "乳": "R", "辱": "R", "入": "R", "软": "R", "锐": "R", "瑞": "R", "润": "R", "若": "R", "弱": "R", "他": "T"
+};
 
 @WingsTheme('alphabetical-index.scss')
 @Component({
@@ -74,19 +90,19 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         this._sortDataAndJump();
     }
 
-    private _pinyinDictionary: string;
+    private _pinyinDictionary: PinyinDictionary;
 
     /**
-     * 拼字字典配置
+     * 多音字和个性化拼音映射修正
      *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get pinyinDictionary(): string {
+    public get pinyinDictionary(): PinyinDictionary {
         return this._pinyinDictionary;
     }
 
-    public set pinyinDictionary(value: string) {
+    public set pinyinDictionary(value: PinyinDictionary) {
         if (!value || this._pinyinDictionary == value) {
             return;
         }
@@ -136,16 +152,16 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
      */
     public _$sortedData: SortedIndexData;
 
-    @ViewChildren('indexTitle', { read: ElementRef })
+    @ViewChildren('indexTitle', {read: ElementRef})
     private _titleElementRefs: QueryList<ElementRef>;
 
-    @ViewChild('dataList', { read: ElementRef })
+    @ViewChild('dataList', {read: ElementRef})
     private _dataElementRefs: ElementRef;
 
-    @ViewChild('indexList', { read: ElementRef })
+    @ViewChild('indexList', {read: ElementRef})
     private _indexElementRefs: ElementRef;
 
-    @ViewChildren('indexListItem', { read: ElementRef })
+    @ViewChildren('indexListItem', {read: ElementRef})
     private _indexItemElementRefs: QueryList<ElementRef>;
 
     /**
@@ -158,7 +174,6 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
 
     private _classifyByFirstLetter(arr: ArrayCollection<string>): SortedIndexData {
         const letterGroup = {}
-        const result: SortedIndexData = new ArrayCollection([]);
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter] = [];
         });
@@ -177,33 +192,32 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
                 letterGroup[firstLetter].push(item);
                 return;
             }
-            const charCode = firstLetter.charCodeAt(0)
+            const charCode = firstLetter.charCodeAt(0);
             if (charCode < 256) {
                 // 非字母的 asc 码，含数字，都归入#
                 letterGroup['#'].push(item);
                 return;
             }
             // 剩下的都是unicode了
-            if (this.pinyinDictionary && charCode >= 19968 && charCode <= 40869) {
-                const pinyin = this.pinyinDictionary.charAt(charCode - 19968);
-                if (pinyin) {
-                    letterGroup[pinyin].push(item);
-                    return;
-                }
+            const pinyin = this.pinyinDictionary?.[firstLetter] || _commonChinesePinyinReviser[firstLetter];
+            if (pinyin) {
+                letterGroup[pinyin].push(item);
+                return;
             }
             // 剩下的是字典里没有的，使用通用方式处理
-            const letter = _enLetters.find((letter, i) => {
-                if (!(!_zhLetters[i - 1] || _zhLetters[i - 1].localeCompare(firstLetter, 'zh-CN') <= 0)) {
+            const letter = _enLetters.find((letter, idx) => {
+                if (idx > 0 && _zhLetters[idx - 1].localeCompare(firstLetter, 'zh-CN') > 0) {
                     return false;
                 }
-                return firstLetter.localeCompare(_zhLetters[i], 'zh-CN') == -1;
+                return firstLetter.localeCompare(_zhLetters[idx], 'zh-CN') == -1;
             });
             letterGroup[letter].push(item);
         });
 
+        const result: SortedIndexData = new ArrayCollection([]);
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter].sort((a: string, b: string) => a.localeCompare(b));
-            result.push({ letter: letter, data: letterGroup[letter] });
+            result.push({letter: letter, data: letterGroup[letter]});
         });
 
         return result;
@@ -267,4 +281,5 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     declarations: [JigsawAlphabeticalIndex],
     exports: [JigsawAlphabeticalIndex]
 })
-export class JigsawAlphabeticalIndexModule { }
+export class JigsawAlphabeticalIndexModule {
+}

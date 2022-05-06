@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { CommonUtils } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
+    public mixCountries = [];
+    public selected: string = '<无>';
     public countries = [
         ["portugal", "葡萄牙", "prt"],
         ["slovenia", "斯洛文尼亚", "svn"],
@@ -86,62 +87,9 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
         ["pakistan", "巴基斯坦", "pak"],
     ]
 
-    public mixCountries = [];
-
     valueChange($event) {
-        console.log($event)
-    }
-
-    pinyinDictionary: any = {}
-
-    createPinyinDictionary() {
-        this.pinyinDictionary = {};
-        const dictId = `pinyin_dict_firstletter_id`
-        const dictFile = document.getElementById(dictId) as HTMLScriptElement;
-
-        if (dictFile) {
-            this.getStrPinyin();
-            return;
-        }
-
-        const dictPath = `pinyin-dict-first-letter.js`;
-        const body = document.getElementsByTagName("body")[0];
-        const script = document.createElement("script");
-
-        script.type = "text/javascript";
-        script.id = dictId;
-        script.onload = () => {
-            this.getStrPinyin();
-        }
-        script.src = dictPath;
-
-        body.appendChild(script);
-    }
-
-    getStrPinyin() {
-        this.mixCountries.forEach(item => {
-            if (CommonUtils.isUndefined(item)) {
-                return;
-            }
-            item += '';
-            const word = item.trim().toUpperCase();
-            if (/^[A-Z#]/.test(word)) {
-                return
-            }
-            if (!word || /^ +$/g.test(word)) {
-                return "";
-            }
-            const result = [];
-            for (var i = 0; i < word.length; i++) {
-                var unicode = word.charCodeAt(i);
-                var ch = word.charAt(i);
-                if (unicode >= 19968 && unicode <= 40869) {
-                    ch = window['pinyin_dict_firstletter'].all.charAt(unicode - 19968);
-                }
-                result.push(ch);
-            }
-            this.pinyinDictionary[item] = result.join("");
-        })
+        console.log($event);
+        this.selected = $event;
     }
 
     ngOnInit() {
@@ -152,8 +100,6 @@ export class JigsawAlphabeticalIndexSelectDemoComponent implements OnInit {
             mixCountries.push(item[2]);
         })
         this.mixCountries = mixCountries;
-
-        this.createPinyinDictionary()
     }
 
     // ====================================================================

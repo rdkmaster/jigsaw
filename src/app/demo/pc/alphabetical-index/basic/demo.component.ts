@@ -1,22 +1,38 @@
-import { Component, OnInit } from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, InternalUtils} from 'jigsaw/public_api';
+import {Component, OnInit} from "@angular/core";
+import {ArrayCollection, InternalUtils, PinyinDictionary} from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class JigsawIndexBasicDemoComponent implements OnInit {
-    public pinyinDictionary: string;
+    /**
+     * 多音字修正
+     */
+    public pinyinDictionary: PinyinDictionary = {
+        "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",
+        "侗": "D", "侧": "Z", "便": "P", "冯": "P", "凹": "W", "刨": "B", "券": "X", "刹": "S",
+        "剿": "C", "勺": "B", "匙": "C", "区": "O", "卒": "C", "单": "S", "卡": "Q", "厂": "A",
+        "厕": "S", "厦": "S", "参": "S", "句": "G", "叨": "T", "召": "Z", "吁": "X", "合": "G",
+        "吓": "H", "否": "P", "吭": "H", "呔": "D", "呲": "Z", "呵": "K", "咀": "Z", "咖": "G",
+        "咯": "G", "哦": "E", "喏": "R", "喔": "O", "嗄": "A", "嗌": "A", "圈": "J", "坏": "P",
+        "壳": "Q", "夹": "G", "奇": "J", "姥": "M", "宿": "X", "尿": "S", "峙": "S", "幢": "C"
+    };
     public data: ArrayCollection<string>;
 
-    constructor(http: HttpClient) {
-        http.get('pinyin-dict-first-letter.js', {responseType: 'text'}).subscribe(source => {
-            this.pinyinDictionary = eval(source);
-        });
-    }
-
     changeDataType(type: string) {
+        if (type == 'blank') {
+            this.data = new ArrayCollection([]);
+            return;
+        }
+        if (type == 'revise-data') {
+            this.data = new ArrayCollection([]);
+            for (let prop in this.pinyinDictionary) {
+                this.data.push(`${prop} (${this.pinyinDictionary[prop]})`);
+            }
+            return;
+        }
+
         let minEnLen = 5, maxEnLen = 15;
         let minZhLen = 2, maxZhLen = 6;
         switch (type) {
@@ -28,13 +44,10 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
                 minEnLen = 0;
                 maxEnLen = 0;
                 break;
-            case "blank":
-                this.data = new ArrayCollection([]);
-                return;
         }
         const len = InternalUtils.randomNumber(100, 200);
         const source = [];
-        for(let i = 0; i < len; i++) {
+        for (let i = 0; i < len; i++) {
             source.push(this._getRandomString(minEnLen, maxEnLen, minZhLen, maxZhLen));
         }
         this.data = new ArrayCollection(source);
@@ -66,58 +79,11 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
         }
     }
 
-
-    // createPinyinDictionary() {
-    //     this.pinyinDictionary = {};
-    //     const dictId = `pinyin_dict_first_letter_id`
-    //     const dictFile = document.getElementById(dictId) as HTMLScriptElement;
-    //     if (dictFile) {
-    //         this.getStrPinyin();
-    //         return;
-    //     }
-    //
-    //     const dictPath = `pinyin-dict-first-letter.js`;
-    //     const body = document.getElementsByTagName("body")[0];
-    //     const script = document.createElement("script");
-    //
-    //     script.type = "text/javascript";
-    //     script.id = dictId;
-    //     script.onload = () => {
-    //         this.getStrPinyin();
-    //     }
-    //     script.src = dictPath;
-    //     body.appendChild(script);
-    // }
-    //
-    // getStrPinyin() {
-    //     this._commonChineseChars.forEach(item => {
-    //         item += '';
-    //         const word = item.trim().toUpperCase();
-    //         if (/^[A-Z#]/.test(word)) {
-    //             return;
-    //         }
-    //         if (!word || /^ +$/g.test(word)) {
-    //             return;
-    //         }
-    //         const result = [];
-    //         for (let i = 0; i < word.length; i++) {
-    //             const unicode = word.charCodeAt(i);
-    //             let ch = word.charAt(i);
-    //             if (unicode >= 19968 && unicode <= 40869) {
-    //                 ch = window['pinyinDictFirstLetter'].all.charAt(unicode - 19968);
-    //             }
-    //             result.push(ch);
-    //         }
-    //         this.pinyinDictionary[item] = result.join("");
-    //     })
-    // }
-
     ngOnInit() {
         for (let i = 32; i <= 126; i++) {
             this._visibleAscChars.push(String.fromCharCode(i));
         }
         this.changeDataType('mix');
-        // this.createPinyinDictionary();
     }
 
     private _commonChineseChars = `

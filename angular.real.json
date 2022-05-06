@@ -72,12 +72,7 @@
               "node_modules/codemirror/mode/css/css.js",
               "node_modules/codemirror/mode/sass/sass.js",
               "node_modules/codemirror/mode/xml/xml.js",
-              "node_modules/codemirror/addon/edit/matchbrackets.js",
-              {
-                "input": "src/jigsaw/pc-components/alphabetical-index/pinyin-dict-first-letter.js",
-                "bundleName": "pinyin-dict-first-letter",
-                "inject": false
-              }
+              "node_modules/codemirror/addon/edit/matchbrackets.js"
             ]
           },
           "configurations": {
