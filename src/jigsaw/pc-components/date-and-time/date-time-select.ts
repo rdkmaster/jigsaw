@@ -220,10 +220,6 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @RequireMarkForCheck()
     public selectIcon: string = "iconfont iconfont-e177";
 
-    @Input()
-    @RequireMarkForCheck()
-    public selectIconRotate: boolean = false;
-
     /**
      * 是否显示确认按钮
      * @NoMarkForCheckRequired
