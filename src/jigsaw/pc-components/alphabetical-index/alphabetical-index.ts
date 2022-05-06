@@ -9,7 +9,7 @@ import {
     ViewChild,
     AfterViewInit,
     Output,
-    EventEmitter,
+    EventEmitter, NgZone, ChangeDetectorRef,
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
@@ -61,6 +61,10 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     private _removeOnDataRefresh: CallbackRemoval;
     private _removeOnDictionaryRefresh: CallbackRemoval;
 
+    public constructor(protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+        super(_zone);
+    }
+
     private _data: ArrayCollection<string>;
 
     /**
@@ -84,6 +88,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         }
         this._removeOnDataRefresh = this._data.onRefresh(() => {
             this._sortDataAndJump();
+            this._cdr.markForCheck();
         });
         this._sortDataAndJump();
     }
@@ -109,17 +114,13 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         if (this._removeOnDictionaryRefresh) {
             this._removeOnDictionaryRefresh();
         }
-        this._removeOnDictionaryRefresh = this._data.onRefresh(() => {
-            this._sortDataAndJump();
-        })
+        this._removeOnDictionaryRefresh = this._data.onRefresh(() => this._sortDataAndJump());
         this._sortDataAndJump();
     }
 
     private _sortDataAndJump(): void {
-        this._$sortedData = this._classifyByFirstLetter(this._data);
-        this.runAfterMicrotasks(() => {
-            this._$jumpTo(0);
-        })
+        this._$sortedData = this._classifyByFirstChar();
+        this.runAfterMicrotasks(() => this._$jumpTo(0));
     }
 
     private _value: ArrayCollection<string>;
@@ -170,13 +171,12 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'
     ];
 
-    private _classifyByFirstLetter(arr: ArrayCollection<string>): SortedIndexData {
-        const letterGroup = {}
+    private _classifyByFirstChar(): SortedIndexData {
+        const letterGroup = {};
         this._$alphabeticalIndex.forEach(letter => {
             letterGroup[letter] = [];
         });
-
-        arr.forEach((item: string) => {
+        this.data.forEach((item: string) => {
             if (CommonUtils.isUndefined(item)) {
                 return;
             }
@@ -185,29 +185,29 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
                 letterGroup['#'].push(item);
                 return;
             }
-            const firstLetter = match[1].toUpperCase();
-            if (/^[A-Z]/.test(firstLetter)) {
-                letterGroup[firstLetter].push(item);
+            const firstChar = match[1].toUpperCase();
+            if (/^[A-Z]/.test(firstChar)) {
+                letterGroup[firstChar].push(item);
                 return;
             }
-            const charCode = firstLetter.charCodeAt(0);
+            const charCode = firstChar.charCodeAt(0);
             if (charCode < 256) {
                 // 非字母的 asc 码，含数字，都归入#
                 letterGroup['#'].push(item);
                 return;
             }
             // 剩下的都是unicode了
-            const pinyin = this.pinyinDictionary?.[firstLetter] || _commonChinesePinyinReviser[firstLetter];
+            const pinyin = this.pinyinDictionary?.[firstChar] || _commonChinesePinyinReviser[firstChar];
             if (pinyin) {
                 letterGroup[pinyin].push(item);
                 return;
             }
             // 剩下的是字典里没有的，使用通用方式处理
             const letter = _enLetters.find((letter, idx) => {
-                if (idx > 0 && _zhLetters[idx - 1].localeCompare(firstLetter, 'zh-CN') > 0) {
+                if (idx > 0 && _zhLetters[idx - 1].localeCompare(firstChar, 'zh-CN') > 0) {
                     return false;
                 }
-                return firstLetter.localeCompare(_zhLetters[idx], 'zh-CN') == -1;
+                return firstChar.localeCompare(_zhLetters[idx], 'zh-CN') == -1;
             });
             letterGroup[letter].push(item);
         });
@@ -251,12 +251,14 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
     ngAfterViewInit() {
         const dataList = this._dataElementRefs.nativeElement;
         this._removeCheckCurrentOnDestroy = dataList.addEventListener('scroll', () => {
+            const refs = this._titleElementRefs.toArray();
             for (let i = 0; i < this._$alphabeticalIndex.length; i++) {
-                if (this._titleElementRefs['_results'][i].nativeElement.offsetTop > dataList.scrollTop) {
+                if (refs[i].nativeElement.offsetTop > dataList.scrollTop) {
                     this._setCurrent(i);
                     return;
                 }
             }
+            this._setCurrent(this._$alphabeticalIndex.length);
         });
         this._indexItemElementRefs.toArray()[0].nativeElement.classList.add('index-item-active');
     }

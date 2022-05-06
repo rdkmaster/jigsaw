@@ -57,6 +57,9 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
         this._value = newValue;
     }
 
+    @Output()
+    public valueChange = new EventEmitter<ArrayCollection<string>>();
+
     /**
      * 配置拼音字典
      *
@@ -84,9 +87,6 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
     @Input()
     @RequireMarkForCheck()
     public closeTrigger: 'mouseleave' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseleave;
-
-    @Output()
-    public valueChange = new EventEmitter<ArrayCollection<string>>();
 
     /**
      * @internal

@@ -41,6 +41,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             display: flex;
             flex-direction: column;
             z-index: 2;
+            width: 12px;
 
             li {
                 display: flex;
@@ -56,6 +57,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
                 &.index-item-active {
                     font-weight: bold;
+                    font-size: 14px;
                 }
             }
         }
