@@ -228,12 +228,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         return this._showBorder;
     }
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public selectIconRotate: boolean = true;
-
     private _selectIcon: string = "iconfont iconfont-e24c";
 
     /**
@@ -253,7 +247,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public get selectArrowClass() {
         return {
             [this.selectIcon]: true,
-            'jigsaw-combo-select-arrow-rotate': this.selectIconRotate
+            'jigsaw-combo-select-arrow-rotate': this.selectIcon == "iconfont iconfont-e24c"
         }
     }
 
